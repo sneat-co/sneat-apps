@@ -3,8 +3,10 @@
 		<ion-checkbox
 			labelPlacement="end"
 			slot="start"
+			[value]="contact.id"
 			[checked]="isChecked(contact)"
-			(ionChange)="onCheckboxChange($event, contact.id)"
+			[disabled]="isDisabled(contact)"
+			(ionChange)="onCheckboxChange($event, contact)"
 		>
 			{{
 				contact.brief.name?.full ||
@@ -21,3 +23,9 @@
 		</ion-item>
 	</ng-template>
 </ion-list>
+
+<!--checkedContactIDs: {{checkedContactIDs}}-->
+<!--<br>-->
+<!--checkedInProgress: {{checkedInProgress}}-->
+<!--<br>-->
+<!--uncheckedInProgress: {{uncheckedInProgress}}-->

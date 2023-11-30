@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
+	Inject,
 	Input,
 	OnChanges,
 	Output,
@@ -11,8 +12,17 @@ import { IonicModule } from '@ionic/angular';
 import { ContactusTeamService } from '@sneat/contactus-services';
 import { IIdAndBrief } from '@sneat/core';
 import { IContactBrief } from '@sneat/contactus-core';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team-models';
 import { Subscription } from 'rxjs';
+
+export interface ICheckChangedArgs {
+	event: CustomEvent;
+	id: string;
+	checked: boolean;
+	resolve: () => void;
+	reject: (reason?: unknown) => void;
+}
 
 @Component({
 	selector: 'sneat-contacts-checklist',
@@ -25,11 +35,8 @@ export class ContactsChecklistComponent implements OnChanges {
 	@Input() roles: string[] = ['member'];
 	@Input({ required: true }) checkedContactIDs: string[] = [];
 	@Input() noContactsMessage = 'No members found';
-	@Output() readonly checkedChange = new EventEmitter<{
-		event: CustomEvent;
-		id: string;
-		checked: boolean;
-	}>();
+
+	@Output() readonly checkedChange = new EventEmitter<ICheckChangedArgs>();
 
 	private contactusTeamSubscription?: Subscription;
 	protected contacts?: IIdAndBrief<IContactBrief>[];
@@ -39,7 +46,10 @@ export class ContactsChecklistComponent implements OnChanges {
 		contact: IIdAndBrief<IContactBrief>,
 	) => contact.id;
 
-	constructor(private readonly contactusTeamService: ContactusTeamService) {}
+	constructor(
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		private readonly contactusTeamService: ContactusTeamService,
+	) {}
 
 	private subscribeForContactBriefs(team: ITeamContext): void {
 		console.log(
@@ -79,25 +89,52 @@ export class ContactsChecklistComponent implements OnChanges {
 
 	protected isChecked(contact: IIdAndBrief<IContactBrief>): boolean {
 		const participantID = `${this.team?.id}_${contact.id}`;
-		console.log(
-			'isChecked()',
-			participantID,
-			this.checkedContactIDs,
-			contact,
-			this.team?.id,
+		return (
+			!this.uncheckedInProgress.includes(contact.id) &&
+			(this.checkedContactIDs.includes(participantID) ||
+				this.checkedInProgress.includes(contact.id))
 		);
-		return this.checkedContactIDs.includes(participantID);
 	}
 
-	protected onCheckboxChange(event: Event, id: string): void {
+	protected isDisabled(contact: IIdAndBrief<IContactBrief>): boolean {
+		return (
+			this.checkedInProgress.includes(contact.id) ||
+			this.uncheckedInProgress.includes(contact.id)
+		);
+	}
+
+	protected checkedInProgress: string[] = [];
+	protected uncheckedInProgress: string[] = [];
+
+	protected onCheckboxChange(
+		event: Event,
+		contact: IIdAndBrief<IContactBrief>,
+	): void {
 		const ce = event as CustomEvent;
+		const { id } = contact;
 		console.log('onCheckboxChange()', ce);
 		const checked = !!ce.detail.checked;
-		if (checked) {
-			this.checkedContactIDs = [...this.checkedContactIDs, id];
-		} else {
-			this.checkedContactIDs = this.checkedContactIDs.filter((v) => v !== id);
+		if (checked && !this.checkedInProgress.includes(id)) {
+			this.checkedInProgress = [...this.checkedInProgress, id];
+		} else if (!checked && !this.uncheckedInProgress.includes(id)) {
+			this.uncheckedInProgress = [...this.uncheckedInProgress, id];
 		}
-		this.checkedChange.emit({ event: ce, id, checked });
+		const clearInProgress = () => {
+			if (checked) {
+				this.checkedInProgress = this.checkedInProgress.filter((v) => v !== id);
+			} else {
+				this.uncheckedInProgress = this.uncheckedInProgress.filter(
+					(v) => v !== id,
+				);
+			}
+		};
+		new Promise<void>((resolve, reject) => {
+			this.checkedChange.emit({ event: ce, id, checked, resolve, reject });
+		})
+			.then(clearInProgress)
+			.catch((err) => {
+				clearInProgress();
+				this.errorLogger.logError(err);
+			});
 	}
 }

@@ -30,9 +30,14 @@ export interface IHappeningRequest extends ITeamRequest {
 	happeningType?: string;
 }
 
-export interface IHappeningMemberRequest extends ITeamRequest {
+export interface ITeamModuleDocShortRef {
+	id: string;
+	teamID?: string;
+}
+
+export interface IHappeningContactRequest extends ITeamRequest {
 	happeningID: string;
-	contactID: string;
+	contact: ITeamModuleDocShortRef;
 }
 
 export interface IHappeningSlotRequest extends IHappeningRequest {
@@ -179,11 +184,13 @@ export class HappeningService {
 		);
 	}
 
-	public removeParticipant(request: IHappeningMemberRequest): Observable<void> {
+	public removeParticipant(
+		request: IHappeningContactRequest,
+	): Observable<void> {
 		return this.sneatApiService.post('happenings/remove_participant', request);
 	}
 
-	public addParticipant(request: IHappeningMemberRequest): Observable<void> {
+	public addParticipant(request: IHappeningContactRequest): Observable<void> {
 		return this.sneatApiService.post('happenings/add_participant', request);
 	}
 

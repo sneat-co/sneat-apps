@@ -19,7 +19,7 @@ import { getWd2 } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { contactContextFromBrief } from '@sneat/contactus-services';
 import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
-import { IHappeningMemberRequest, TeamNavService } from '@sneat/team-services';
+import { IHappeningContactRequest, TeamNavService } from '@sneat/team-services';
 import { NEVER, Observable, takeUntil } from 'rxjs';
 import { HappeningService } from '@sneat/team-services';
 import { ScheduleModalsService } from '../services/schedule-modals.service';
@@ -218,10 +218,10 @@ This operation can NOT be undone.`)
 		if (!this.team) {
 			return NEVER;
 		}
-		const request: IHappeningMemberRequest = {
+		const request: IHappeningContactRequest = {
 			teamID: this.team.id,
 			happeningID: this.happening.id,
-			contactID: member.id,
+			contact: { id: member.id },
 		};
 		return this.happeningService.addParticipant(request);
 		// result
@@ -242,10 +242,10 @@ This operation can NOT be undone.`)
 		if (!this.team) {
 			return NEVER;
 		}
-		const request: IHappeningMemberRequest = {
+		const request: IHappeningContactRequest = {
 			teamID: this.team.id,
 			happeningID: this.happening.id,
-			contactID: member.id,
+			contact: { id: member.id },
 		};
 		return this.happeningService.removeParticipant(request);
 	};
@@ -266,10 +266,10 @@ This operation can NOT be undone.`)
 		if (!this.team) {
 			return;
 		}
-		const request: IHappeningMemberRequest = {
+		const request: IHappeningContactRequest = {
 			teamID: this.team.id,
 			happeningID: this.happening.id,
-			contactID: member.id,
+			contact: { id: member.id },
 		};
 		this.happeningService.removeParticipant(request).subscribe({
 			next: () => {

@@ -20,7 +20,7 @@ import {
 	HappeningService,
 	ICancelHappeningRequest,
 	IDeleteSlotRequest,
-	IHappeningMemberRequest,
+	IHappeningContactRequest,
 	ISlotRequest,
 } from '@sneat/team-services';
 import { NEVER, Observable } from 'rxjs';
@@ -331,10 +331,10 @@ export class SlotContextMenuComponent {
 		if (!this.team) {
 			return NEVER;
 		}
-		const request: IHappeningMemberRequest = {
+		const request: IHappeningContactRequest = {
 			teamID: this.team.id,
 			happeningID: this.happening.id,
-			contactID: member.id,
+			contact: { id: member.id },
 		};
 		return this.happeningService.addParticipant(request);
 		// result
@@ -356,10 +356,10 @@ export class SlotContextMenuComponent {
 		if (!this.team) {
 			return NEVER;
 		}
-		const request: IHappeningMemberRequest = {
+		const request: IHappeningContactRequest = {
 			teamID: this.team.id,
 			happeningID: this.happening.id,
-			contactID: member.id,
+			contact: { id: member.id },
 		};
 		return this.happeningService.removeParticipant(request);
 	};

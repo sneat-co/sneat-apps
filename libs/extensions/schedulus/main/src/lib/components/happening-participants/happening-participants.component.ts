@@ -12,6 +12,7 @@ import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import {
 	ContactsChecklistComponent,
+	ICheckChangedArgs,
 	MembersListComponent,
 } from '@sneat/contactus-shared';
 import { IHappeningContext, IHappeningBase } from '@sneat/mod-schedulus-core';
@@ -20,7 +21,7 @@ import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { IContactContext, IContactusTeamDtoAndID } from '@sneat/contactus-core';
 import {
 	HappeningService,
-	IHappeningMemberRequest,
+	IHappeningContactRequest,
 } from '@sneat/team-services';
 
 @Component({
@@ -83,41 +84,24 @@ export class HappeningParticipantsComponent implements OnChanges {
 
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 
-	public isMemberCheckChanged(args: {
-		event: CustomEvent;
-		id: string;
-		checked: boolean;
-	}): void {
+	public isMemberCheckChanged(args: ICheckChangedArgs): void {
 		console.log('isMemberCheckChanged()', args);
-		const { id, checked } = args;
-		if (!checked) {
-			this.checkedContactIDs = this.checkedContactIDs.filter((v) => v !== id);
+		// this.populateParticipants();
+		if (!this.happening?.id || !this.team?.id) {
 			return;
 		}
-		if (!this.checkedContactIDs.some((v) => v === id)) {
-			this.checkedContactIDs.push(id);
-		}
-		this.populateParticipants();
-		if (!this.happening?.id) {
-			return;
-		}
-		if (!this.team?.id) {
-			return;
-		}
-		const request: IHappeningMemberRequest = {
+		const request: IHappeningContactRequest = {
 			teamID: this.team.id,
 			happeningID: this.happening?.id,
-			contactID: id,
+			contact: { id: args.id },
 		};
-		if (args.checked) {
-			this.happeningService.addParticipant(request).subscribe({
-				next: () => console.log('member added'),
-			});
-		} else {
-			this.happeningService.removeParticipant(request).subscribe({
-				next: () => console.log('member added'),
-			});
-		}
+		const apiCall = args.checked
+			? this.happeningService.addParticipant
+			: this.happeningService.removeParticipant;
+		apiCall.bind(this.happeningService)(request).subscribe({
+			next: args.resolve,
+			error: args.reject,
+		});
 	}
 
 	private readonly emitHappeningChange = () =>
