@@ -12,11 +12,11 @@ export interface IHappeningAdjustment {
 	canceled?: ICanceled;
 }
 
-export interface IScheduleDayBrief {
+export interface ICalendarDayBrief {
 	teamID: string;
 	date: string;
 	happeningIDs?: string[];
 	happeningAdjustments: IHappeningAdjustment[];
 }
 
-export interface IScheduleDayDto extends IScheduleDayBrief {}
+export interface ICalendarDayDto extends ICalendarDayBrief {}

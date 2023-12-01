@@ -1,5 +1,5 @@
 export * from './happening';
-export * from './dto-schedule-day';
+export * from './dto-calendar-day';
 export * from './happening-types';
-export * from './schedulus';
+export * from './calendarium';
 export { IReminderDto } from './reminder';

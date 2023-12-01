@@ -19,16 +19,16 @@ import {
 	WeekdayCode2,
 	IHappeningContext,
 	IHappeningWithUiState,
-	ISchedulusTeamDto,
+	ICalendariumTeamDto,
 } from '@sneat/mod-schedulus-core';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team-components';
 import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
-import { HappeningService, ScheduleDayService } from '@sneat/team-services';
+import { HappeningService, CalendarDayService } from '@sneat/team-services';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { TeamDaysProvider } from '../../pages/calendar/team-days-provider';
-import { SchedulusTeamService } from '../../services';
+import { CalendariumTeamService } from '../../services';
 import { isToday } from '../schedule-core';
 import {
 	emptyScheduleFilter,
@@ -66,7 +66,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	// private date: Date;
 	recurrings?: IHappeningWithUiState[];
 
-	private schedulusTeamDto?: ISchedulusTeamDto | null;
+	private schedulusTeamDto?: ICalendariumTeamDto | null;
 
 	private schedulusTeamSubscription?: Subscription;
 
@@ -76,10 +76,10 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		filterService: ScheduleFilterService,
 		scheduleStateService: ScheduleStateService,
 		happeningService: HappeningService,
-		scheduleDayService: ScheduleDayService,
+		scheduleDayService: CalendarDayService,
 		afs: AngularFirestore,
 		sneatApiService: SneatApiService,
-		private readonly schedulusTeamService: SchedulusTeamService,
+		private readonly schedulusTeamService: CalendariumTeamService,
 	) {
 		this.teamDaysProvider = new TeamDaysProvider(
 			this.errorLogger,

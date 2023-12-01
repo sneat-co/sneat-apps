@@ -1,17 +1,17 @@
 import { Inject, Injectable, NgModule } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
-import { IScheduleDayBrief, IScheduleDayDto } from '@sneat/mod-schedulus-core';
+import { ICalendarDayBrief, ICalendarDayDto } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team-models';
 import { tap } from 'rxjs';
 import { ModuleTeamItemService } from './team-item.service';
 
 @Injectable()
-export class ScheduleDayService {
+export class CalendarDayService {
 	private readonly teamItemService: ModuleTeamItemService<
-		IScheduleDayBrief,
-		IScheduleDayDto
+		ICalendarDayBrief,
+		ICalendarDayDto
 	>;
 
 	constructor(
@@ -20,8 +20,8 @@ export class ScheduleDayService {
 		sneatApiService: SneatApiService,
 	) {
 		this.teamItemService = new ModuleTeamItemService(
-			'schedulus',
-			'schedule_days',
+			'calendarium',
+			'calendar_days',
 			afs,
 			sneatApiService,
 		);
@@ -44,6 +44,6 @@ export class ScheduleDayService {
 }
 
 @NgModule({
-	providers: [ScheduleDayService],
+	providers: [CalendarDayService],
 })
-export class ScheduleDayServiceModule {}
+export class CalendarDayServiceModule {}

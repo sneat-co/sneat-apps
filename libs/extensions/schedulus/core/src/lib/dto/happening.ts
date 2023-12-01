@@ -1,4 +1,4 @@
-import { IPrice, IWithTeamIDs } from '@sneat/dto';
+import { IPrice, IWithRelatedOnly, IWithTeamIDs } from '@sneat/dto';
 import { ActivityType, Repeats, WeekdayCode2 } from './happening-types';
 
 export interface ISlotParticipant {
@@ -13,14 +13,13 @@ export interface IHappeningParticipant {
 	// readonly title: string;
 }
 
-export interface IHappeningBase {
+export interface IHappeningBase extends IWithRelatedOnly {
 	readonly type: HappeningType;
 	readonly status: HappeningStatus;
 	readonly kind: HappeningKind;
 	readonly activityType?: ActivityType; // TODO: Is it same as HappeningKind?
 	readonly title: string;
 	readonly levels?: Level[];
-	readonly assetIDs?: string[];
 	readonly contactIDs?: string[];
 	readonly participants?: { [id: string]: Readonly<IHappeningParticipant> };
 	slots?: IHappeningSlot[]; // TODO: make readonly

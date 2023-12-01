@@ -28,22 +28,22 @@ const sizesExtension: ISneatExtension = {
 	emoji: '📏',
 };
 
-const calendarExtension: ISneatExtension = {
-	id: 'schedulus',
+const calendariumExtension: ISneatExtension = {
+	id: 'calendarium',
 	title: 'Calendar',
 	emoji: '🗓️',
 };
 
 export const defaultFamilyExtension: ISneatExtension[] = [
 	assetsExtension,
-	calendarExtension,
+	calendariumExtension,
 	documentsExtension,
 	sizesExtension,
 ];
 
 export const defaultFamilyMemberExtensions: ISneatExtension[] = [
 	assetsExtension,
-	calendarExtension,
+	calendariumExtension,
 	documentsExtension,
 	sizesExtension,
 ];

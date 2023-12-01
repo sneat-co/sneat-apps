@@ -102,7 +102,7 @@ export class HappeningService {
 		this.teamItemService = new ModuleTeamItemService<
 			IHappeningBrief,
 			IHappeningDto
-		>('schedulus', 'happenings', afs, sneatApiService);
+		>('calendarium', 'happenings', afs, sneatApiService);
 	}
 
 	public createHappening(
@@ -130,7 +130,6 @@ export class HappeningService {
 			...request,
 			happening: {
 				...request.happening,
-				assetIDs: ['*'], // This is required but will be ignored
 				contactIDs: ['*'], // This is required but will be ignored
 			},
 		};

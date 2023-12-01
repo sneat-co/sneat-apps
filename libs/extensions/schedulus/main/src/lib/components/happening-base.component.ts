@@ -176,7 +176,7 @@ This operation can NOT be undone.`)
 			});
 	}
 
-	selectMembers(event: Event): void {
+	protected selectMembers(event: Event): void {
 		event.stopPropagation();
 		const team = this.team;
 		if (!team) {
@@ -258,7 +258,7 @@ This operation can NOT be undone.`)
 		);
 	}
 
-	removeMember(member: IIdAndBrief<IContactBrief>): void {
+	protected removeMember(member: IIdAndBrief<IContactBrief>): void {
 		console.log('removeMember', member);
 		if (!this.happening) {
 			return;

@@ -19,9 +19,9 @@ export class MembersSelectorListComponent {
 	@Input() onAdded?: (member: IIdAndBrief<IContactBrief>) => Observable<void>;
 	@Input() onRemoved?: (member: IIdAndBrief<IContactBrief>) => Observable<void>;
 
-	disabledMemberIDs: string[] = [];
+	private disabledMemberIDs: string[] = [];
 
-	get useCheckbox(): boolean {
+	protected get useCheckbox(): boolean {
 		return true;
 		// const max = this.max;
 		// // The `!max && max !== 0` is to properly check for possible null
@@ -37,17 +37,17 @@ export class MembersSelectorListComponent {
 		// `${m.team?.id}:${m.id}`;
 		`$${m.id}`;
 
-	isSelected(member: IIdAndBrief<IContactBrief>): boolean {
+	protected isSelected(member: IIdAndBrief<IContactBrief>): boolean {
 		return !!this.selectedMembers?.some(
 			(m) => m.id === member.id /*&& m.team?.id === member?.team?.id*/,
 		);
 	}
 
-	isDisabled(memberID: string): boolean {
+	protected isDisabled(memberID: string): boolean {
 		return this.disabledMemberIDs.indexOf(memberID) >= 0;
 	}
 
-	onRadioChanged(event: Event): void {
+	protected onRadioChanged(event: Event): void {
 		event.stopPropagation();
 		console.log('onRadioChanged()', event);
 		const selectedMembers = this.selectedMembers;
@@ -58,7 +58,7 @@ export class MembersSelectorListComponent {
 		this.onIonChange(event, true);
 	}
 
-	onCheckboxChanged(event: Event): void {
+	protected onCheckboxChanged(event: Event): void {
 		console.log('onCheckboxChanged', event);
 		const ce = event as CustomEvent;
 		this.onIonChange(event, ce.detail.checked);

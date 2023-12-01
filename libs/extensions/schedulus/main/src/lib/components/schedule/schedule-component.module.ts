@@ -13,7 +13,7 @@ import { TeamCoreComponentsModule } from '@sneat/team-components';
 import { ScheduleNavServiceModule } from '@sneat/extensions/schedulus/shared';
 import {
 	HappeningServiceModule,
-	ScheduleDayServiceModule,
+	CalendarDayServiceModule,
 } from '@sneat/team-services';
 import { ScheduleModalsServiceModule } from '../../services';
 import { HappeningSlotComponent } from '../happening-slot/happening-slot.component';
@@ -52,7 +52,7 @@ import { TimingBadgeComponent } from './components';
 		TeamCoreComponentsModule,
 		FilterItemComponent,
 		HappeningServiceModule,
-		ScheduleDayServiceModule,
+		CalendarDayServiceModule,
 		ReactiveFormsModule,
 		MembersAsBadgesComponent,
 		ScheduleNavServiceModule,

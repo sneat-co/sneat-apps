@@ -7,7 +7,7 @@ import {
 	IHappeningSlot,
 	WeekdayCode2,
 	IHappeningContext,
-	ISchedulusTeamDto,
+	ICalendariumTeamDto,
 	ISchedulusTeamContext,
 } from '@sneat/mod-schedulus-core';
 import {
@@ -25,7 +25,7 @@ import {
 } from '@sneat/team-models';
 import {
 	HappeningService,
-	ScheduleDayService,
+	CalendarDayService,
 	ModuleTeamItemService,
 } from '@sneat/team-services';
 import {
@@ -205,7 +205,7 @@ export class TeamDaysProvider {
 	constructor(
 		private readonly errorLogger: IErrorLogger,
 		private readonly happeningService: HappeningService,
-		private readonly scheduleDayService: ScheduleDayService,
+		private readonly scheduleDayService: CalendarDayService,
 		afs: AngularFirestore,
 		sneatApiService: SneatApiService,
 		// private readonly regularService: IRegularHappeningService,
@@ -214,8 +214,8 @@ export class TeamDaysProvider {
 		console.log('TeamDaysProvider.constructor()');
 		// super();
 		this.recurringsTeamItemService = new ModuleTeamItemService(
-			'schedulus',
-			'recurring_happenings',
+			'calendarium',
+			'recurring_happenings', // TODO: Is this obsolete? Should we use 'happenings' instead?
 			afs,
 			sneatApiService,
 		);
@@ -253,7 +253,7 @@ export class TeamDaysProvider {
 	}
 
 	public setSchedulusTeam(
-		schedulusTeam: ITeamItemWithOptionalDto<ISchedulusTeamDto>,
+		schedulusTeam: ITeamItemWithOptionalDto<ICalendariumTeamDto>,
 	): void {
 		console.log('TeamDaysProvider.setSchedulusTeam()', schedulusTeam);
 		// if (schedulusTeam.id !== this._team?.id) {

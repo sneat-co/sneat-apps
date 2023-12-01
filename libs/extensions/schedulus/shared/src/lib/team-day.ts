@@ -1,13 +1,13 @@
 import { wdCodeToWeekdayLongName } from '@sneat/components';
 import { dateToIso } from '@sneat/core';
 import {
-	IScheduleDayDto,
+	ICalendarDayDto,
 	ITiming,
 	WeekdayCode2,
 	IHappeningContext,
 } from '@sneat/mod-schedulus-core';
 import { IErrorLogger } from '@sneat/logging';
-import { HappeningService, ScheduleDayService } from '@sneat/team-services';
+import { HappeningService, CalendarDayService } from '@sneat/team-services';
 import {
 	BehaviorSubject,
 	Observable,
@@ -41,7 +41,7 @@ export class TeamDay {
 		tap((slots) => console.log(`TeamDay[${this.isoID}].slots$ =>`, slots)),
 	);
 
-	private scheduleDayDto?: IScheduleDayDto | null;
+	private scheduleDayDto?: ICalendarDayDto | null;
 
 	public get slots(): ISlotItem[] | undefined {
 		return this._slots.value;
@@ -53,7 +53,7 @@ export class TeamDay {
 		recurrings$: Observable<RecurringSlots>,
 		private readonly errorLogger: IErrorLogger,
 		private readonly happeningService: HappeningService,
-		private readonly scheduleDayService: ScheduleDayService,
+		private readonly scheduleDayService: CalendarDayService,
 	) {
 		if (!date) {
 			throw new Error('missing required parameter: date');
