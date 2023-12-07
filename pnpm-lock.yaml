@@ -55,7 +55,7 @@ dependencies:
     version: 7.6.0
   '@nx/angular':
     specifier: 17.1.3
-    version: 17.1.3(@angular-devkit/build-angular@17.0.6)(@angular-devkit/core@17.0.6)(@angular-devkit/schematics@17.0.6)(@schematics/angular@17.0.5)(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.4)(cypress@13.6.1)(eslint@8.55.0)(nx@17.1.3)(rxjs@7.8.1)(ts-node@10.9.1)(typescript@5.2.2)
+    version: 17.1.3(@angular-devkit/build-angular@17.0.6)(@angular-devkit/core@17.0.6)(@angular-devkit/schematics@17.0.6)(@schematics/angular@17.0.6)(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.4)(cypress@13.6.1)(eslint@8.55.0)(nx@17.1.3)(rxjs@7.8.1)(ts-node@10.9.1)(typescript@5.2.2)
   '@sentry/angular-ivy':
     specifier: 7.86.0
     version: 7.86.0(@angular/common@17.0.6)(@angular/core@17.0.6)(@angular/router@17.0.6)(rxjs@7.8.1)
@@ -143,8 +143,8 @@ devDependencies:
     specifier: 17.1.3
     version: 17.1.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)
   '@schematics/angular':
-    specifier: 17.0.5
-    version: 17.0.5
+    specifier: 17.0.6
+    version: 17.0.6
   '@swc-node/register':
     specifier: 1.6.8
     version: 1.6.8(@swc/core@1.3.100)(typescript@5.2.2)
@@ -424,22 +424,6 @@ packages:
       source-map: 0.7.4
     dev: true
 
-  /@angular-devkit/core@17.0.5:
-    resolution: {integrity: sha512-e1evgRabAfOZBnmFCe8E0oufcu+FzBe5hBzS94Dm42GlxdX965/M4yVKQxIMpjivQTmjl+AWb6cF1ltBdSGZeQ==}
-    engines: {node: ^18.13.0 || >=20.9.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
-    peerDependencies:
-      chokidar: ^3.5.2
-    peerDependenciesMeta:
-      chokidar:
-        optional: true
-    dependencies:
-      ajv: 8.12.0
-      ajv-formats: 2.1.1(ajv@8.12.0)
-      jsonc-parser: 3.2.0
-      picomatch: 3.0.1
-      rxjs: 7.8.1
-      source-map: 0.7.4
-
   /@angular-devkit/core@17.0.6(chokidar@3.5.3):
     resolution: {integrity: sha512-+h9VnFHof7rKzBJ5FWrbPXWzbag31QKbUGJ/mV5BYgj39vjzPNUXBW8AaScZAlATi8+tElYXjRMvM49GnuyRLg==}
     engines: {node: ^18.13.0 || >=20.9.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
@@ -469,18 +453,6 @@ packages:
     transitivePeerDependencies:
       - chokidar
     dev: true
-
-  /@angular-devkit/schematics@17.0.5:
-    resolution: {integrity: sha512-KYPku0qTb8B+TtRbFqXGYpJOPg1k6d5bNHV6n8jTc35mlEUUghOd7HkovdfkQ3cgGNQM56a74D1CvSeruZEGsA==}
-    engines: {node: ^18.13.0 || >=20.9.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
-    dependencies:
-      '@angular-devkit/core': 17.0.5
-      jsonc-parser: 3.2.0
-      magic-string: 0.30.5
-      ora: 5.4.1
-      rxjs: 7.8.1
-    transitivePeerDependencies:
-      - chokidar
 
   /@angular-devkit/schematics@17.0.6:
     resolution: {integrity: sha512-2g769MpazA1aOzJOm2MNGosra3kxw8CbdIQQOKkvycIzroRNgN06yHcRTDC03GADgP/CkDJ6kxwJQNG+wNFL2A==}
@@ -667,7 +639,7 @@ packages:
       '@angular/core': 17.0.6(rxjs@7.8.1)(zone.js@0.14.2)
       '@angular/platform-browser': 17.0.6(@angular/animations@17.0.6)(@angular/common@17.0.6)(@angular/core@17.0.6)
       '@angular/platform-browser-dynamic': 17.0.6(@angular/common@17.0.6)(@angular/compiler@17.0.6)(@angular/core@17.0.6)(@angular/platform-browser@17.0.6)
-      '@schematics/angular': 17.0.5
+      '@schematics/angular': 17.0.6
       firebase: 10.7.0
       fs-extra: 8.1.0
       fuzzy: 0.1.3
@@ -4559,10 +4531,10 @@ packages:
       - supports-color
     dev: true
 
-  /@nrwl/angular@17.1.3(@angular-devkit/build-angular@17.0.6)(@angular-devkit/core@17.0.6)(@angular-devkit/schematics@17.0.6)(@schematics/angular@17.0.5)(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.4)(cypress@13.6.1)(eslint@8.55.0)(nx@17.1.3)(rxjs@7.8.1)(ts-node@10.9.1)(typescript@5.2.2):
+  /@nrwl/angular@17.1.3(@angular-devkit/build-angular@17.0.6)(@angular-devkit/core@17.0.6)(@angular-devkit/schematics@17.0.6)(@schematics/angular@17.0.6)(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.4)(cypress@13.6.1)(eslint@8.55.0)(nx@17.1.3)(rxjs@7.8.1)(ts-node@10.9.1)(typescript@5.2.2):
     resolution: {integrity: sha512-XiX9elBPupdJ4nDIOzgUYowfoHU1uBkzfzeCZazEkZiN6lGEhKTfQE4bw9YZDCnVJr0wKz7i0vPMownVmU6SgA==}
     dependencies:
-      '@nx/angular': 17.1.3(@angular-devkit/build-angular@17.0.6)(@angular-devkit/core@17.0.6)(@angular-devkit/schematics@17.0.6)(@schematics/angular@17.0.5)(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.4)(cypress@13.6.1)(eslint@8.55.0)(nx@17.1.3)(rxjs@7.8.1)(ts-node@10.9.1)(typescript@5.2.2)
+      '@nx/angular': 17.1.3(@angular-devkit/build-angular@17.0.6)(@angular-devkit/core@17.0.6)(@angular-devkit/schematics@17.0.6)(@schematics/angular@17.0.6)(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.4)(cypress@13.6.1)(eslint@8.55.0)(nx@17.1.3)(rxjs@7.8.1)(ts-node@10.9.1)(typescript@5.2.2)
       tslib: 2.6.2
     transitivePeerDependencies:
       - '@angular-devkit/build-angular'
@@ -4751,7 +4723,7 @@ packages:
       - '@swc/core'
       - debug
 
-  /@nx/angular@17.1.3(@angular-devkit/build-angular@17.0.6)(@angular-devkit/core@17.0.6)(@angular-devkit/schematics@17.0.6)(@schematics/angular@17.0.5)(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.4)(cypress@13.6.1)(eslint@8.55.0)(nx@17.1.3)(rxjs@7.8.1)(ts-node@10.9.1)(typescript@5.2.2):
+  /@nx/angular@17.1.3(@angular-devkit/build-angular@17.0.6)(@angular-devkit/core@17.0.6)(@angular-devkit/schematics@17.0.6)(@schematics/angular@17.0.6)(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.4)(cypress@13.6.1)(eslint@8.55.0)(nx@17.1.3)(rxjs@7.8.1)(ts-node@10.9.1)(typescript@5.2.2):
     resolution: {integrity: sha512-90Jtqf9vClTJ532GjFx9OeHrG7lD8lS31LcCnSWwNKW40cmcZ+W0Cbct9jf4G+vFqoKB2PY/mK5mxLgsZNmqKQ==}
     peerDependencies:
       '@angular-devkit/build-angular': '>= 15.0.0 < 18.0.0'
@@ -4767,7 +4739,7 @@ packages:
       '@angular-devkit/build-angular': 17.0.6(@angular/compiler-cli@17.0.6)(@swc/core@1.3.100)(@types/node@20.10.4)(jest-environment-jsdom@29.7.0)(jest@29.7.0)(ng-packagr@17.0.2)(stylus@0.59.0)(typescript@5.2.2)
       '@angular-devkit/core': 17.0.6(chokidar@3.5.3)
       '@angular-devkit/schematics': 17.0.6
-      '@nrwl/angular': 17.1.3(@angular-devkit/build-angular@17.0.6)(@angular-devkit/core@17.0.6)(@angular-devkit/schematics@17.0.6)(@schematics/angular@17.0.5)(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.4)(cypress@13.6.1)(eslint@8.55.0)(nx@17.1.3)(rxjs@7.8.1)(ts-node@10.9.1)(typescript@5.2.2)
+      '@nrwl/angular': 17.1.3(@angular-devkit/build-angular@17.0.6)(@angular-devkit/core@17.0.6)(@angular-devkit/schematics@17.0.6)(@schematics/angular@17.0.6)(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.4)(cypress@13.6.1)(eslint@8.55.0)(nx@17.1.3)(rxjs@7.8.1)(ts-node@10.9.1)(typescript@5.2.2)
       '@nx/cypress': 17.1.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.4)(cypress@13.6.1)(eslint@8.55.0)(nx@17.1.3)(typescript@5.2.2)
       '@nx/devkit': 17.1.3(nx@17.1.3)
       '@nx/eslint': 17.1.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.4)(eslint@8.55.0)(nx@17.1.3)
@@ -4777,7 +4749,7 @@ packages:
       '@nx/webpack': 17.1.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)(@types/node@20.10.4)(nx@17.1.3)(typescript@5.2.2)
       '@nx/workspace': 17.1.3(@swc-node/register@1.6.8)(@swc/core@1.3.100)
       '@phenomnomnominal/tsquery': 5.0.1(typescript@5.2.2)
-      '@schematics/angular': 17.0.5
+      '@schematics/angular': 17.0.6
       '@typescript-eslint/type-utils': 6.12.0(eslint@8.55.0)(typescript@5.2.2)
       chalk: 4.1.2
       find-cache-dir: 3.3.2
@@ -5398,12 +5370,12 @@ packages:
       - chokidar
     dev: true
 
-  /@schematics/angular@17.0.5:
-    resolution: {integrity: sha512-sOc1UG4NiV+7cGwrbWPnyW71O+NgsKaFb2agSrVduRL7o4neMDeqF04ik4Kv1jKA7sZOQfPV+3cn6XI49Mumrw==}
+  /@schematics/angular@17.0.6:
+    resolution: {integrity: sha512-AyC7Bk3Omy6PfADThhq5ci+zzdTTi2N1oZI35gw4tMK5ZxVwIACx2Zyhaz399m5c2RCDi9Hz4A2BOFq9f0j/dg==}
     engines: {node: ^18.13.0 || >=20.9.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     dependencies:
-      '@angular-devkit/core': 17.0.5
-      '@angular-devkit/schematics': 17.0.5
+      '@angular-devkit/core': 17.0.6(chokidar@3.5.3)
+      '@angular-devkit/schematics': 17.0.6
       jsonc-parser: 3.2.0
     transitivePeerDependencies:
       - chokidar
