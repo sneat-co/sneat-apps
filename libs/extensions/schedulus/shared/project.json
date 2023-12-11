@@ -29,13 +29,7 @@
 			}
 		},
 		"lint": {
-			"executor": "@nx/eslint:lint",
-			"options": {
-				"lintFilePatterns": [
-					"libs/extensions/schedulus/shared/**/*.ts",
-					"libs/extensions/schedulus/shared/**/*.html"
-				]
-			}
+			"executor": "@nx/eslint:lint"
 		}
 	}
 }

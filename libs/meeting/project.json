@@ -29,10 +29,7 @@
 			}
 		},
 		"lint": {
-			"executor": "@nx/eslint:lint",
-			"options": {
-				"lintFilePatterns": ["libs/meeting/**/*.ts", "libs/meeting/**/*.html"]
-			}
+			"executor": "@nx/eslint:lint"
 		}
 	}
 }

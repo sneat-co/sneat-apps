@@ -29,13 +29,7 @@
 			}
 		},
 		"lint": {
-			"executor": "@nx/eslint:lint",
-			"options": {
-				"lintFilePatterns": [
-					"libs/scrumspace/retrospectives/**/*.ts",
-					"libs/scrumspace/retrospectives/**/*.html"
-				]
-			}
+			"executor": "@nx/eslint:lint"
 		}
 	}
 }

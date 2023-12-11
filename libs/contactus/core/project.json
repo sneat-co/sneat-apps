@@ -31,14 +31,7 @@
 		},
 		"lint": {
 			"executor": "@nx/eslint:lint",
-			"outputs": ["{options.outputFile}"],
-			"options": {
-				"lintFilePatterns": [
-					"libs/contactus/core/**/*.ts",
-					"libs/contactus/core/**/*.html",
-					"libs/contactus/core/package.json"
-				]
-			}
+			"outputs": ["{options.outputFile}"]
 		}
 	}
 }

@@ -29,10 +29,7 @@
 			}
 		},
 		"lint": {
-			"executor": "@nx/eslint:lint",
-			"options": {
-				"lintFilePatterns": ["libs/grid/**/*.ts", "libs/grid/**/*.html"]
-			}
+			"executor": "@nx/eslint:lint"
 		}
 	}
 }
