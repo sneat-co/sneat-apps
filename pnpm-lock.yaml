@@ -75,8 +75,8 @@ dependencies:
     specifier: 10.7.0
     version: 10.7.0
   ionicons:
-    specifier: 7.2.1
-    version: 7.2.1
+    specifier: 7.2.2
+    version: 7.2.2
   rxjs:
     specifier: 7.8.1
     version: 7.8.1
@@ -4099,7 +4099,7 @@ packages:
       '@angular/forms': 17.0.6(@angular/common@17.0.6)(@angular/core@17.0.6)(@angular/platform-browser@17.0.6)(rxjs@7.8.1)
       '@angular/router': 17.0.6(@angular/common@17.0.6)(@angular/core@17.0.6)(@angular/platform-browser@17.0.6)(rxjs@7.8.1)
       '@ionic/core': 7.6.1
-      ionicons: 7.2.1
+      ionicons: 7.2.2
       jsonc-parser: 3.2.0
       rxjs: 7.8.1
       tslib: 2.6.2
@@ -4110,7 +4110,7 @@ packages:
     resolution: {integrity: sha512-o4PSRxokfRB5H3E5DAM7xivG8XFXaXD3+U/tha0QKemiMSntqgPqy0FYX0pNEwIrV3llRzFbAGNqyvB1+BG97Q==}
     dependencies:
       '@stencil/core': 4.8.2
-      ionicons: 7.2.1
+      ionicons: 7.2.2
       tslib: 2.6.2
     dev: false
 
@@ -5475,12 +5475,6 @@ packages:
 
   /@socket.io/component-emitter@3.1.0:
     resolution: {integrity: sha512-+9jVqKhRSpsc591z5vX+X5Yyw+he/HCB4iQ/RYxw35CEPaY1gnsNE43nf9n9AaYjAQrTiI/mOwKUKdUs9vf7Xg==}
-
-  /@stencil/core@4.4.0:
-    resolution: {integrity: sha512-YlLyCqGBsMEuZb3XTO/STT0TX9eSwjoVhCJgtjVfQOF+ebIMVlojTh40CmDveWiWbth687cbr6S2heeussV8Sg==}
-    engines: {node: '>=16.0.0', npm: '>=7.10.0'}
-    hasBin: true
-    dev: false
 
   /@stencil/core@4.8.2:
     resolution: {integrity: sha512-KdZEAtz9VnqMtXOkf51+8mphyRt0fN/LYgtj5M8gnveGspG8KzoyTDzlWt0wsstWIsJJ21RA1yd3AgMMZiu3MA==}
@@ -9324,10 +9318,10 @@ packages:
       strip-ansi: 6.0.1
       wrap-ansi: 6.2.0
 
-  /ionicons@7.2.1:
-    resolution: {integrity: sha512-2pvCM7DGVEtbbj48PJzQrCADCQrqjU1nUYX9l9PyEWz3ZfdnLdAouqwPxLdl8tbaF9cE7OZRSlyQD7oLOLnGoQ==}
+  /ionicons@7.2.2:
+    resolution: {integrity: sha512-I3iYIfc9Q9FRifWyFSwTAvbEABWlWY32i0sAVDDPGYnaIZVugkLCZFbEcrphW6ixVPg8tt1oLwalo/JJwbEqnA==}
     dependencies:
-      '@stencil/core': 4.4.0
+      '@stencil/core': 4.8.2
     dev: false
 
   /ip@2.0.0:
