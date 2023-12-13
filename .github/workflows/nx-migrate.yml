@@ -34,7 +34,7 @@ jobs:
 
             -   name: Install dependencies
                 if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
-                run: pnpm run install --no-immutable
+                run: pnpm install
 
             -   name: Check if has migrations
                 id: nrwl-workspace-has-migrations
