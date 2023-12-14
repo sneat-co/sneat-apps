@@ -26,7 +26,7 @@
 <!--		placeholder="filter"-->
 <!--	></ion-input>-->
 <!--</ion-item>-->
-<ng-container *ngIf="!value">
+@if (!value) {
 	<ion-item *ngIf="isFilterable" class="sneat-tiny-end-padding">
 		<!--		<ion-label *ngIf="filterLabel" color="medium">{{filterLabel}}</ion-label>-->
 		<ion-input
@@ -95,9 +95,8 @@
 	</ion-radio-group>
 	<ion-item-divider *ngIf="hiddenCount">
 		<ion-label color="medium"
-			>{{ hiddenCount }} out of {{ items?.length }} items are hidden by
-			filter</ion-label
-		>
+			>{{ hiddenCount }} out of {{ items?.length }} items are hidden by filter
+		</ion-label>
 		<ion-buttons slot="end">
 			<ion-button (click)="clearFilter()">
 				<ion-icon name="close-outline" slot="start" />
@@ -105,4 +104,4 @@
 			</ion-button>
 		</ion-buttons>
 	</ion-item-divider>
-</ng-container>
+}

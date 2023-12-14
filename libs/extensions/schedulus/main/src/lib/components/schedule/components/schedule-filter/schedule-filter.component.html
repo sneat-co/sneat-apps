@@ -25,8 +25,8 @@
 				<!--					<ion-checkbox (ionChange)="emitChanged()" slot="start" labelPlacement="end">Myself</ion-checkbox>-->
 				<!--				</ion-item>-->
 				<ion-item-divider color="light" *ngIf="showWeekdays"
-					>Weekdays</ion-item-divider
-				>
+					>Weekdays
+				</ion-item-divider>
 				<ion-grid class="ion-grid-layout" *ngIf="showWeekdays">
 					<ion-row>
 						<ion-col>
@@ -116,8 +116,8 @@
 					</ion-row>
 				</ion-grid>
 				<ion-item-divider *ngIf="showRepeats" color="light"
-					>Repeats</ion-item-divider
-				>
+					>Repeats
+				</ion-item-divider>
 				<ion-grid *ngIf="showRepeats" class="ion-grid-layout">
 					<ion-row>
 						<ion-col>
@@ -175,7 +175,7 @@
 					</ion-row>
 				</ion-grid>
 
-				<ng-container *ngIf="members && members.length <= 7; else manyMembers">
+				@if (members && members.length <= 7) {
 					<ion-item-divider color="light">
 						<ion-label>Members</ion-label>
 						<ion-buttons slot="end">
@@ -215,8 +215,7 @@
 
 					<!--						</ion-segment-button>-->
 					<!--					</ion-segment>-->
-				</ng-container>
-				<ng-template #manyMembers>
+				} @else {
 					<ion-item>
 						<ion-label color="medium">Member</ion-label>
 						<ion-select
@@ -226,8 +225,8 @@
 						>
 							<ion-select-option value="">* Anyone</ion-select-option>
 							<ion-select-option value="UNASSIGNED"
-								>- Unassigned</ion-select-option
-							>
+								>- Unassigned
+							</ion-select-option>
 							<ion-select-option
 								*ngFor="let member of members"
 								[value]="member.id"
@@ -236,20 +235,24 @@
 							</ion-select-option>
 						</ion-select>
 					</ion-item>
-				</ng-template>
+				}
 			</ion-item-group>
 		</ion-accordion>
 	</ion-accordion-group>
 	<ion-item *ngIf="!expanded && memberIDs.length">
 		<ion-label>
-			<ng-container *ngIf="selectedMembers.length === 1">Member:</ng-container>
-			<ng-container *ngIf="selectedMembers.length > 1">Members:</ng-container>
+			@if (selectedMembers.length === 1) {
+				Member:
+			}
+			@if (selectedMembers.length > 1) {
+				Members:
+			}
 			<ion-badge
 				style="margin: 0 0.5em"
 				color="light"
 				*ngFor="let member of selectedMembers"
-				>{{ member | contactTitle }}</ion-badge
-			>
+				>{{ member | contactTitle }}
+			</ion-badge>
 		</ion-label>
 		<ion-buttons slot="end">
 			<ion-button

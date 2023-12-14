@@ -160,7 +160,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 						(c) =>
 							(!filter || c.brief?.title?.toLowerCase().includes(filter)) &&
 							(!role || (c.brief?.roles && c?.brief.roles.includes(role))),
-				  );
+					);
 	}
 
 	protected readonly goContact = (
@@ -244,10 +244,6 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 				),
 			);
 	}
-
-	protected readonly contactID = (_: number, o: IIdAndBrief<IContactBrief>) =>
-		o.id;
-	protected readonly groupID = (_: number, o: IMemberGroupContext) => o.id;
 
 	private readonly setTeamContacts = (
 		contacts: IIdAndBrief<IContactBrief>[],

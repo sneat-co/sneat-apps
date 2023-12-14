@@ -19,7 +19,7 @@
 			</ion-text>
 		</ion-card-title>
 	</ion-card-header>
-	<ng-container *ngIf="table?.meta?.columns">
+	@if (table?.meta?.columns) {
 		<ion-item *ngFor="let c of table.meta.columns">
 			<ion-label>
 				{{ c.name }}
@@ -27,8 +27,8 @@
 					<ion-text
 						color="medium"
 						style="font-weight: normal; font-size: xx-small"
-						>{{ c.dbType.toUpperCase() }}</ion-text
-					>
+						>{{ c.dbType.toUpperCase() }}
+					</ion-text>
 				</ion-badge>
 			</ion-label>
 			<ion-input
@@ -37,5 +37,5 @@
 				style="text-align: right"
 			/>
 		</ion-item>
-	</ng-container>
+	}
 </ion-card>

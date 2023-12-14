@@ -3,18 +3,17 @@
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
-		<ng-container *ngIf="!isToDo">
-			<ion-title *ngIf="team; else titleNoCommune">
-				New happening &#64; {{ team.brief?.title }}
-			</ion-title>
-			<ng-template #titleNoCommune>New activity</ng-template>
-		</ng-container>
-		<ng-container *ngIf="isToDo">
+		@if (isToDo) {
 			<ion-title *ngIf="team; else titleNoCommune">
 				New task &#64; {{ team.brief?.title }}
 			</ion-title>
 			<ng-template #titleNoCommune>New task</ng-template>
-		</ng-container>
+		} @else {
+			<ion-title *ngIf="team; else titleNoCommune">
+				New happening &#64; {{ team.brief?.title }}
+			</ion-title>
+			<ng-template #titleNoCommune>New activity</ng-template>
+		}
 	</ion-toolbar>
 </ion-header>
 

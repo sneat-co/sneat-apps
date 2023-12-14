@@ -35,12 +35,11 @@
 			>
 		</ion-item>
 		<ng-container *ngSwitchCase="'authenticated'">
-			<ng-container *ngIf="userRecordLoaded; else loading">
+			@if (userRecordLoaded) {
 				<!--				<ion-item *ngIf="!authState?.user?.isAnonymous">-->
 				<!--					<ion-icon name="file-tray-full-outline" slot="start"></ion-icon>-->
 				<!--					<ion-label color="medium">No personal or favorite projects yet</ion-label>-->
 				<!--				</ion-item>-->
-				<ng-container *ngIf="projects" />
 				<ion-item
 					*ngFor="let item of projects"
 					tappable
@@ -50,13 +49,12 @@
 					<ion-icon name="file-tray-full-outline" slot="start" />
 					{{ item.project.title }}
 				</ion-item>
-			</ng-container>
-			<ng-template #loading>
+			} @else {
 				<datatug-loading-items
 					[authStatus]="authState.status"
 					title="Loading user projects..."
 				/>
-			</ng-template>
+			}
 		</ng-container>
 	</ng-container>
 	<ion-item-divider *ngIf="showDemoProjects">

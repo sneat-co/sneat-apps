@@ -7,7 +7,7 @@
 		<ion-title *ngIf="mode === 'new'">
 			New entity
 			<span *ngIf="project?.brief"
-				>@ {{ project.brief.title || project.brief.id }}</span
+				>&#64; {{ project.brief.title || project.brief.id }}</span
 			>
 		</ion-title>
 	</ion-toolbar>
@@ -17,11 +17,7 @@
 	<ion-card>
 		<ion-item>
 			<ion-label position="floating">Name</ion-label>
-			<ion-input
-				#nameInput
-				autofocus="autofocus"
-				[(ngModel)]="entity.title"
-			/>
+			<ion-input #nameInput autofocus="autofocus" [(ngModel)]="entity.title" />
 		</ion-item>
 	</ion-card>
 
@@ -39,7 +35,7 @@
 			<ion-item *ngIf="entity && !entity.fields?.length">
 				<ion-label color="medium">No properties defined yet</ion-label>
 			</ion-item>
-			<ng-container *ngIf="entity">
+			@if (entity) {
 				<ion-item *ngFor="let field of entity.fields" tappable>
 					<ion-label>
 						{{ field.id }}
@@ -56,7 +52,7 @@
 						</ion-button>
 					</ion-buttons>
 				</ion-item>
-			</ng-container>
+			}
 		</ion-list>
 	</ion-card>
 

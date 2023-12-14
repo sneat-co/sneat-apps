@@ -21,14 +21,14 @@
 		[(selectedMembers)]="selectedMembers"
 		(selectedMembersChange)="onSelectedMembersChanged($event)"
 	/>
-	<ng-container *ngIf="selectedMembers">
+	@if (selectedMembers) {
 		<ion-item *ngIf="max === 1 && (selectedMembers?.length || 0) === 1">
 			<ion-icon name="person-outline" color="medium" slot="start" />
 			<ion-label color="medium">Member</ion-label>
 			<ion-select [value]="selectedMemberID" interface="popover">
-				<ion-select-option [value]="m.id" *ngFor="let m of members || []">{{
-					m | contactTitle
-				}}</ion-select-option>
+				<ion-select-option [value]="m.id" *ngFor="let m of members || []"
+					>{{ m | contactTitle }}
+				</ion-select-option>
 			</ion-select>
 		</ion-item>
 		<ion-item *ngIf="selectedMembers && (max !== 1 || !selectedMembers.length)">
@@ -41,10 +41,13 @@
 					[members]="selectedMembers"
 					(deleteMember)="onRemoveMember($event)"
 				/>
-				<ng-container *ngIf="!selectedMembers">Loading...</ng-container>
-				<ng-container *ngIf="selectedMembers && !selectedMembers.length">
-					Nobody assigned
-				</ng-container>
+				@if (!selectedMembers.length) {
+					@if (selectedMembers) {
+						Nobody assigned
+					} @else {
+						Loading...
+					}
+				}
 			</ion-label>
 			<ion-buttons slot="end">
 				<ion-button color="tertiary" (click)="selectMembers($event)">
@@ -53,5 +56,5 @@
 				</ion-button>
 			</ion-buttons>
 		</ion-item>
-	</ng-container>
+	}
 </ion-item-group>

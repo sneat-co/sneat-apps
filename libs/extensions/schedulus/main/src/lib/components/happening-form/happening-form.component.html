@@ -21,11 +21,11 @@
 			/>
 		</ion-item>
 		<ion-item *ngIf="!happeningTitle.value">
-			<ion-label color="medium"> Enter above the name of the event. </ion-label>
+			<ion-label color="medium"> Enter above the name of the event.</ion-label>
 		</ion-item>
 	</ion-card>
 
-	<ng-container *ngIf="happeningTitle.value">
+	@if (happeningTitle.value) {
 		<ion-card>
 			<ion-item-group>
 				<sneat-happening-slot-form
@@ -79,7 +79,7 @@
 			/>
 
 			<ion-card>
-				<ng-container *ngIf="!formIsValid()">
+				@if (!formIsValid()) {
 					<ion-item>
 						<ion-label color="danger">
 							<ul>
@@ -89,13 +89,11 @@
 										happeningForm.controls['title'].errors
 									"
 								>
-									<ng-container *ngIf="isToDo"
-										>Task title is required.</ng-container
-									>
-									<ng-container *ngIf="!isToDo"
-										>Please enter a required "Title" field at top of the
-										page.</ng-container
-									>
+									@if (isToDo) {
+										Task title is required.
+									} @else {
+										Please enter a required "Title" field at top of the page.
+									}
 								</li>
 								<li
 									*ngIf="happeningType.value === 'recurring' && !slots?.length"
@@ -109,7 +107,7 @@
 							</ul>
 						</ion-label>
 					</ion-item>
-				</ng-container>
+				}
 				<!--<ion-item color="danger" *ngIf="weekdaysForm.touched && weekdaysForm.errors && weekdaysForm.errors['required']">-->
 				<!--{{ weekdaysForm.errors['required'] }}-->
 				<!--</ion-item>-->
@@ -129,8 +127,8 @@
 					>
 						<ion-label *ngIf="isToDo">Add task</ion-label>
 						<ion-label *ngIf="!isToDo"
-							>Create {{ happeningType.value }} happening</ion-label
-						>
+							>Create {{ happeningType.value }} happening
+						</ion-label>
 						<ion-spinner
 							*ngIf="isCreating"
 							slot="end"
@@ -140,5 +138,5 @@
 				</div>
 			</ion-card>
 		</ng-container>
-	</ng-container>
+	}
 </form>

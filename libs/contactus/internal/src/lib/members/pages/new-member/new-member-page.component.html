@@ -3,26 +3,28 @@
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
-		<ion-title *ngIf="team?.brief || team?.type; else titleNoCommune">
-			<ng-container *ngIf="member.type === 'animal'; else ageGroupTitle">
-				New pet
-			</ng-container>
-			<ng-template #ageGroupTitle>
-				<ng-container *ngIf="!member.ageGroup; else hasAgeGroup">
-					New member
-				</ng-container>
-				<ng-template #hasAgeGroup>
-					<ng-container *ngIf="member.ageGroup === 'child'">
-						New child
-					</ng-container>
-					<ng-container *ngIf="member.ageGroup === 'adult'">
-						New adult
-					</ng-container>
-				</ng-template>
-			</ng-template>
-			&#64; {{ team.brief?.title || team.type }}
+		<ion-title>
+			@if (team.brief || team.type) {
+				@if (member.type === "animal") {
+					New pet
+				} @else {
+					@switch (member.ageGroup) {
+						@case ("child") {
+							New child
+						}
+						@case ("adult") {
+							New adult
+						}
+						@default {
+							New member
+						}
+					}
+				}
+				&#64; {{ team.brief?.title || team.type }}
+			} @else {
+				New member
+			}
 		</ion-title>
-		<ng-template #titleNoCommune>New member</ng-template>
 	</ion-toolbar>
 </ion-header>
 

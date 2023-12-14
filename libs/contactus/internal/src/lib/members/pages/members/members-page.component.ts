@@ -168,12 +168,6 @@ export class MembersPageComponent
 		}
 	}
 
-	protected readonly memberGroupID = (_: number, o: MembersGroup) => o.id;
-	protected readonly memberGroupContextID = (
-		_: number,
-		o: IMemberGroupContext,
-	) => o.id;
-
 	override onTeamDtoChanged(): void {
 		super.onTeamDtoChanged();
 		if (!this.team) {

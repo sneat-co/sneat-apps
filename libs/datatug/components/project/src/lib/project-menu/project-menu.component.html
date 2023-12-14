@@ -14,16 +14,14 @@
 			</ion-segment-button>
 		</ion-segment>
 	</ion-item-divider>
-	<datatug-project-menu-top
-		*ngIf="tab === 'project'"
-	/>
+	<datatug-project-menu-top *ngIf="tab === 'project'" />
 	<datatug-queries-menu *ngIf="tab === 'queries'" />
-	<ng-container *ngIf="tab === 'boards'">
+	@if (tab === "boards") {
 		<ion-item-divider color="light">
 			<ion-label color="medium">Active boards</ion-label>
 		</ion-item-divider>
-		<ion-item
-			><ion-label color="medium">Not implemented yet</ion-label></ion-item
-		>
-	</ng-container>
+		<ion-item>
+			<ion-label color="medium">Not implemented yet</ion-label>
+		</ion-item>
+	}
 </ion-card>

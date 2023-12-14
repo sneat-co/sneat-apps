@@ -36,7 +36,8 @@ export class SneatCardListComponent {
 	@Input() tab?: string;
 	@Input() tabs?: ICardTab[];
 	@Input() noItemsText?: string;
-	@Input() getRouterLink?: (item: IProjItemBrief) => string | undefined;
+	@Input() getRouterLink: (item: IProjItemBrief) => string = () =>
+		undefined as unknown as string;
 
 	@Output() cardTitleClick = new EventEmitter<void>();
 	@Output() itemClick = new EventEmitter<IProjItemBrief>();

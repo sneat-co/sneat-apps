@@ -20,8 +20,8 @@
 		</ion-label>
 	</ion-item>
 
-	<ng-container *ngIf="stores; else loading">
-		<ng-container *ngIf="stores?.length; else noEntries">
+	@if (stores) {
+		@if (stores.length) {
 			<ion-item *ngFor="let store of stores" tappable (click)="goStore(store)">
 				<ion-icon [name]="storeIcon(store.type)" slot="start" />
 				{{ store.title }}
@@ -32,8 +32,7 @@
 					<ion-text color="medium">{{ store.type }}</ion-text>
 				</ion-badge>
 			</ion-item>
-		</ng-container>
-		<ng-template #noEntries>
+		} @else {
 			<ion-item>
 				<ion-label color="medium"
 					>No private repositories have been added yet</ion-label
@@ -49,12 +48,11 @@
 					</ion-button>
 				</ion-buttons>
 			</ion-item>
-		</ng-template>
-	</ng-container>
-	<ng-template #loading>
+		}
+	} @else {
 		<datatug-loading-items
 			[authStatus]="authStatus"
 			title="Loading user stores..."
 		/>
-	</ng-template>
+	}
 </ion-card>

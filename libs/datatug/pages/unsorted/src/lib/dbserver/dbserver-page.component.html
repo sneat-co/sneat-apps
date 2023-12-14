@@ -14,11 +14,7 @@
 <ion-content>
 	<ion-card>
 		<ion-item-divider [ngSwitch]="dbServer?.driver">
-			<ion-icon
-				name="logo-windows"
-				slot="start"
-				*ngSwitchCase="'sqlserver'"
-			/>
+			<ion-icon name="logo-windows" slot="start" *ngSwitchCase="'sqlserver'" />
 			<ion-label *ngSwitchCase="'sqlserver'">Microsoft SQL Server</ion-label>
 			<ion-label *ngSwitchDefault>{{ dbServer?.driver }}</ion-label>
 		</ion-item-divider>
@@ -44,8 +40,8 @@
 		</ion-item>
 		<ion-item *ngIf="!loadingSummary && !envs?.length">
 			<ion-label color="medium"
-				>Not assigned to any specific environment yet</ion-label
-			>
+				>Not assigned to any specific environment yet
+			</ion-label>
 		</ion-item>
 	</ion-card>
 	<ion-card>
@@ -56,9 +52,9 @@
 				<ion-segment-button value="unknown">
 					<ion-label>
 						Unknown
-						<ion-badge color="light" *ngIf="dbServerCatalogs?.length">{{
-							dbServerCatalogs?.length
-						}}</ion-badge>
+						<ion-badge color="light" *ngIf="dbServerCatalogs?.length"
+							>{{ dbServerCatalogs?.length }}
+						</ion-badge>
 					</ion-label>
 				</ion-segment-button>
 			</ion-segment>
@@ -76,20 +72,17 @@
 				>
 					<ion-item *ngFor="let database of dbServerSummary.databases" tappable>
 						<ion-label>{{ database.id }}</ion-label>
-						<ion-badge
-							color="light"
-							*ngFor="let env of database.environments"
-							>{{ env }}</ion-badge
-						>
+						<ion-badge color="light" *ngFor="let env of database.environments"
+							>{{ env }}
+						</ion-badge>
 					</ion-item>
 				</ng-container>
 				<ng-template #noKnownDbs>
 					<ion-item>
 						<ion-text color="medium">
 							<ion-label
-								>Nothing from this server have been added to the project
-								yet.</ion-label
-							>
+								>Nothing from this server have been added to the project yet.
+							</ion-label>
 						</ion-text>
 					</ion-item>
 				</ng-template>
@@ -98,7 +91,7 @@
 				<ion-item *ngIf="loadingCatalogs">
 					<ion-label color="medium">Loading...</ion-label>
 				</ion-item>
-				<ng-container *ngIf="dbServerCatalogs">
+				@if (dbServerCatalogs) {
 					<ion-item tappable *ngFor="let dbCatalog of dbServerCatalogs">
 						<ion-icon slot="start" name="server-outline" />
 						<ion-label>{{ dbCatalog.name }}</ion-label>
@@ -106,7 +99,7 @@
 							<ion-button title="Add to project">Add</ion-button>
 						</ion-buttons>
 					</ion-item>
-				</ng-container>
+				}
 			</ng-container>
 		</ion-list>
 	</ion-card>

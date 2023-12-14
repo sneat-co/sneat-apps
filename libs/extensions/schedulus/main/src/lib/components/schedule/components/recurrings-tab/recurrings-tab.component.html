@@ -1,14 +1,4 @@
-<ng-template #loading>
-	<ion-card>
-		<ion-card-content>
-			<ion-item class="ion-item-no-border">
-				<ion-spinner slot="start" color="medium" />
-				<ion-label color="medium">Loading...</ion-label>
-			</ion-item>
-		</ion-card-content>
-	</ion-card>
-</ng-template>
-<ng-container *ngIf="allRecurrings; else loading">
+@if (allRecurrings) {
 	<ion-item *ngIf="!!numberOfHidden" class="ion-margin sneat-no-end-padding">
 		<ion-label color="medium" *ngIf="numberOfHidden === 1"
 			>{{ numberOfHidden }} out of {{ allRecurrings.length }}
@@ -51,5 +41,14 @@
 		/>
 	</ng-template>
 
-  allRecurrings: {{allRecurrings|json}}
-</ng-container>
+	allRecurrings: {{ allRecurrings | json }}
+} @else {
+	<ion-card>
+		<ion-card-content>
+			<ion-item class="ion-item-no-border">
+				<ion-spinner slot="start" color="medium" />
+				<ion-label color="medium">Loading...</ion-label>
+			</ion-item>
+		</ion-card-content>
+	</ion-card>
+}

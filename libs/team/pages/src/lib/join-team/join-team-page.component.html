@@ -1,11 +1,11 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-title *ngIf="inviteInfo?.team?.type !== 'family'"
-			>Join team &#64; Sneat.app</ion-title
-		>
+			>Join team &#64; Sneat.app
+		</ion-title>
 		<ion-title *ngIf="inviteInfo?.team?.type === 'family'"
-			>Join family &#64; Sneat.app</ion-title
-		>
+			>Join family &#64; Sneat.app
+		</ion-title>
 	</ion-toolbar>
 </ion-header>
 
@@ -103,21 +103,20 @@
 				(click)="join()"
 			>
 				<ion-icon name="enter-outline" slot="end" />
-				<ng-container *ngIf="status !== 'joining'"
-					>Join {{ inviteInfo?.team?.type || "team" }}</ng-container
-				>
-				<ng-container *ngIf="status === 'joining'">
+				@if (status === "joining") {
 					Joining {{ inviteInfo?.team?.type || "team" }}...
 					<ion-spinner name="lines-small" />
-				</ng-container>
+				} @else {
+					Join {{ inviteInfo?.team?.type || "team" }}
+				}
 			</ion-button>
 			<ion-button
 				fill="clear"
 				disabled="true"
 				color="medium"
 				class="ion-margin-start"
-				>or</ion-button
-			>
+				>or
+			</ion-button>
 			<ion-button
 				*ngIf="inviteInfo?.team"
 				[disabled]="status !== 'reviewing' || userOwnInvite"

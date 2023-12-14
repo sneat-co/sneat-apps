@@ -5,19 +5,18 @@
 			<ion-back-button defaultHref="/" />
 		</ion-buttons>
 		<ion-title *ngIf="storeId === 'firestore'"
-			>DataTug Projects Cloud Store</ion-title
-		>
+			>DataTug Projects Cloud Store
+		</ion-title>
 		<ion-title *ngIf="storeId !== 'firestore'"
-			>DataTug projects @ {{ storeId }}</ion-title
-		>
+			>DataTug projects @ {{ storeId }}
+		</ion-title>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<ng-template #showError>
+	@if (error) {
 		<datatug-error-card [error]="error" />
-	</ng-template>
-	<ng-container *ngIf="!error; else showError">
+	} @else {
 		<ion-card>
 			<ion-list>
 				<ion-item-divider>
@@ -37,11 +36,12 @@
 						<ion-label color="medium">Please sign in to see projects</ion-label>
 					</ion-item>
 					<ng-container *ngSwitchCase="'authenticated'">
-						<ng-container *ngIf="projects; else loadingProjects">
-							<ion-item *ngIf="!projects?.length; else listOfProjects">
-								<ion-label color="medium">No projects yet</ion-label>
-							</ion-item>
-							<ng-template #listOfProjects>
+						@if (projects) {
+							@if (!projects?.length) {
+								<ion-item>
+									<ion-label color="medium">No projects yet</ion-label>
+								</ion-item>
+							} @else {
 								<ion-item
 									*ngFor="let project of projects"
 									tappable
@@ -52,19 +52,18 @@
 										<h3>{{ project.title || project.id }}</h3>
 									</ion-label>
 								</ion-item>
-							</ng-template>
-						</ng-container>
-						<ng-template #loadingProjects>
+							}
+						} @else {
 							<ion-item *ngIf="isLoading">
 								<ion-icon name="hourglass-outline" slot="start" />
 								<ion-label color="medium">Loading...</ion-label>
 							</ion-item>
 							<ion-item *ngIf="agentState?.isNotAvailable">
 								<ion-label color="medium"
-									>Repository is not available</ion-label
-								>
+									>Repository is not available
+								</ion-label>
 							</ion-item>
-						</ng-template>
+						}
 					</ng-container>
 				</ng-container>
 			</ion-list>
@@ -72,8 +71,8 @@
 		<ion-card *ngIf="agentState?.isNotAvailable">
 			<ion-card-header>
 				<ion-card-title color="warning"
-					>Agent is offline or not available</ion-card-title
-				>
+					>Agent is offline or not available
+				</ion-card-title>
 			</ion-card-header>
 			<ion-card-content>
 				<p>
@@ -82,5 +81,5 @@
 				</p>
 			</ion-card-content>
 		</ion-card>
-	</ng-container>
+	}
 </ion-content>

@@ -14,11 +14,11 @@
 			<ion-icon slot="start" name="home" />
 			<ion-select [(ngModel)]="code" interface="popover">
 				<ion-select-option *ngFor="let type of types" [value]="type.code"
-					>{{ type.emoji }} {{ type.title }}</ion-select-option
-				>
+					>{{ type.emoji }} {{ type.title }}
+				</ion-select-option>
 			</ion-select>
 		</ion-item>
-		<ng-container *ngIf="!code">
+		@if (!code) {
 			<ion-list-header>
 				<ion-label>Choose commune type</ion-label>
 			</ion-list-header>
@@ -28,7 +28,7 @@
 					<ion-radio slot="start" [value]="type.code" />
 				</ion-item>
 			</ion-radio-group>
-		</ng-container>
+		}
 		<ion-item *ngIf="!!code && code !== 'family'">
 			<ion-label>Commune name</ion-label>
 			<ion-input #nameInput [(ngModel)]="name" />

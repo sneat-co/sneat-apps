@@ -45,10 +45,8 @@
 	<!--		></sneat-members-list>-->
 	<!--	</ion-list>-->
 
-	<ng-container *ngIf="segment === 'all' && teamType === 'family'">
-		<ng-container
-			*ngFor="let group of predefinedMemberGroups; trackBy: memberGroupID"
-		>
+	@if (segment === "all" && teamType === "family") {
+		@for (group of predefinedMemberGroups; track group.id) {
 			<ion-card *ngIf="group.addLabel || group.members?.length">
 				<ion-item-divider color="light">
 					<ion-label>{{ group.emoji }}&nbsp;&nbsp;{{ group.plural }}</ion-label>
@@ -74,29 +72,30 @@
 					[hideRoles]="[group.role, 'member']"
 				/>
 			</ion-card>
-		</ng-container>
-	</ng-container>
+		}
+	}
 
-	<ng-container *ngIf="segment === 'groups'">
-		<ng-container *ngIf="teamType === 'cohabit'">
-			<ng-container *ngIf="memberGroups">
-				<ion-item-group
-					*ngFor="let group of memberGroups; trackBy: memberGroupContextID"
-				>
-					<ion-item-divider>
-						<ion-icon name="people" style="margin-right: 0.5em" />
-						<ion-label>
-							{{ group.brief?.title }}
-						</ion-label>
-						<ion-badge color="light" *ngIf="group.dto?.numberOf?.members">
-							{{ group.dto?.numberOf?.members }} members
-						</ion-badge>
-					</ion-item-divider>
-					<!--					<ng-container *ngIf="membersByGroupId[group.id]">-->
-					<!--						<sneat-members-list [members]="this.membersByGroupId[group.id]"-->
-					<!--						></sneat-members-list>-->
-					<!--					</ng-container>-->
-				</ion-item-group>
+	@if (segment === "groups") {
+		@if (teamType === "cohabit") {
+			@if (memberGroups) {
+				@for (group of memberGroups; track group.id) {
+					<ion-item-group>
+						<ion-item-divider>
+							<ion-icon name="people" style="margin-right: 0.5em" />
+							<ion-label>
+								{{ group.brief?.title }}
+							</ion-label>
+							<ion-badge color="light" *ngIf="group.dto?.numberOf?.members">
+								{{ group.dto?.numberOf?.members }} members
+							</ion-badge>
+						</ion-item-divider>
+						<!--					<ng-container *ngIf="membersByGroupId[group.id]">-->
+						<!--						<sneat-members-list [members]="this.membersByGroupId[group.id]"-->
+						<!--						></sneat-members-list>-->
+						<!--					</ng-container>-->
+					</ion-item-group>
+				}
+
 				<!--				<ng-container *ngIf="noGroupMembers && noGroupMembers.length">-->
 				<!--					<ion-item-divider>-->
 				<!--						<ion-label>No group members</ion-label>-->
@@ -104,13 +103,10 @@
 				<!--					<sneat-members-list [members]="noGroupMembers"-->
 				<!--					></sneat-members-list>-->
 				<!--				</ng-container>-->
-			</ng-container>
-		</ng-container>
-		<ng-container *ngIf="teamType !== 'cohabit'">
-			<ng-container *ngIf="memberGroups">
-				<ion-item-group
-					*ngFor="let group of memberGroups; trackBy: memberGroupContextID"
-				>
+			}
+		} @else if (memberGroups) {
+			@for (group of memberGroups; track group.id) {
+				<ion-item-group>
 					<ion-item button="button" (click)="goGroup(group)">
 						<ion-icon name="people" style="margin-right: 0.5em" />
 						<ion-label>
@@ -121,20 +117,20 @@
 						</ion-badge>
 					</ion-item>
 				</ion-item-group>
-				<!--				<ng-container *ngIf="noGroupMembers && noGroupMembers.length">-->
-				<!--					<ion-item-divider>-->
-				<!--						<ion-label>No group members</ion-label>-->
-				<!--						<ion-badge color="light" slot="end"-->
-				<!--											 style="margin-right: 1em">{{noGroupMembers.length}}</ion-badge>-->
-				<!--					</ion-item-divider>-->
-				<!--					<sneat-members-list-->
-				<!--						[members]="noGroupMembers"-->
-				<!--						[contactsByMember]="contactsByMember"-->
-				<!--					></sneat-members-list>-->
-				<!--				</ng-container>-->
-			</ng-container>
-		</ng-container>
-	</ng-container>
+			}
+			<!--				<ng-container *ngIf="noGroupMembers && noGroupMembers.length">-->
+			<!--					<ion-item-divider>-->
+			<!--						<ion-label>No group members</ion-label>-->
+			<!--						<ion-badge color="light" slot="end"-->
+			<!--											 style="margin-right: 1em">{{noGroupMembers.length}}</ion-badge>-->
+			<!--					</ion-item-divider>-->
+			<!--					<sneat-members-list-->
+			<!--						[members]="noGroupMembers"-->
+			<!--						[contactsByMember]="contactsByMember"-->
+			<!--					></sneat-members-list>-->
+			<!--				</ng-container>-->
+		}
+	}
 </ion-content>
 
 <ion-footer>

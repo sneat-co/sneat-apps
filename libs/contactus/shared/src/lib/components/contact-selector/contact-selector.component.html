@@ -1,8 +1,8 @@
 <ion-item color="primary" class="sneat-tiny-end-padding">
 	<ion-label *ngIf="!contactRole">Contact selector</ion-label>
 	<ion-label *ngIf="contactRole"
-		>{{ contactRole | titlecase }} selector</ion-label
-	>
+		>{{ contactRole | titlecase }} selector
+	</ion-label>
 	<ion-buttons slot="end">
 		<ion-button (click)="close($event)">
 			<ion-icon name="close-outline" />
@@ -11,11 +11,11 @@
 </ion-item>
 
 <ion-content>
-	<ng-container *ngIf="parentRole">
+	@if (parentRole) {
 		<ion-card-header *ngIf="!selectedParent">
 			<ion-card-subtitle
-				>Step 1 of 2: Select {{ parentRole }}</ion-card-subtitle
-			>
+				>Step 1 of 2: Select {{ parentRole }}
+			</ion-card-subtitle>
 		</ion-card-header>
 		<ion-card>
 			<ion-segment
@@ -49,10 +49,10 @@
 		</ion-card>
 		<ion-card-header *ngIf="selectedParent">
 			<ion-card-subtitle
-				>Step 2 of 2: Select {{ contactRole }}</ion-card-subtitle
-			>
+				>Step 2 of 2: Select {{ contactRole }}
+			</ion-card-subtitle>
 		</ion-card-header>
-	</ng-container>
+	}
 
 	<ion-card *ngIf="!parentRole || selectedParent">
 		<!--		<ion-item>-->
@@ -88,8 +88,7 @@
 			[isFilterable]="true"
 			radioSlot="end"
 		/>
-
-		<ng-container *ngIf="contactTab === 'new'">
+		@if (contactTab === "new") {
 			<sneat-location-form
 				*ngIf="contactType === 'location'; else notLocation"
 				contactType="location"
@@ -125,6 +124,6 @@
 					</ng-container>
 				</ng-container>
 			</ng-template>
-		</ng-container>
+		}
 	</ion-card>
 </ion-content>

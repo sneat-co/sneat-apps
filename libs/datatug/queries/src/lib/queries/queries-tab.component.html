@@ -1,4 +1,8 @@
-<ng-container *ngIf="currentFolder; else loader">
+@if (!currentFolder) {
+	<ion-item>
+		<ion-label>Loading queries...</ion-label>
+	</ion-item>
+} @else {
 	<ion-item>
 		<ion-input
 			[disabled]="!currentFolder"
@@ -23,16 +27,8 @@
 				(click)="setQueryType('SQL')"
 				[color]="type === 'SQL' ? 'success' : 'medium'"
 			>
-				<ion-icon
-					*ngIf="type === 'SQL'"
-					slot="start"
-					name="checkbox-outline"
-				/>
-				<ion-icon
-					*ngIf="type !== 'SQL'"
-					slot="start"
-					name="terminal-outline"
-				/>
+				<ion-icon *ngIf="type === 'SQL'" slot="start" name="checkbox-outline" />
+				<ion-icon *ngIf="type !== 'SQL'" slot="start" name="terminal-outline" />
 				<ion-label>SQL</ion-label>
 			</ion-button>
 			<ion-button
@@ -44,19 +40,15 @@
 					slot="start"
 					name="checkbox-outline"
 				/>
-				<ion-icon
-					*ngIf="type !== 'HTTP'"
-					slot="start"
-					name="earth-outline"
-				/>
+				<ion-icon *ngIf="type !== 'HTTP'" slot="start" name="earth-outline" />
 				<ion-label>HTTP</ion-label>
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
 	<ion-item-divider *ngIf="!isFiltering() && currentFolder.folders">
 		<ion-label *ngIf="!parentFolders?.length"
-			>{{ rootFolder | titlecase }} queries</ion-label
-		>
+			>{{ rootFolder | titlecase }} queries
+		</ion-label>
 		<ion-badge
 			*ngFor="let parentFolder of parentFolders"
 			color="light"
@@ -67,10 +59,10 @@
 			<ion-icon name="folder-open-outline" />
 			{{ parentFolder.id || "root" }}
 		</ion-badge>
-		<ng-container *ngIf="currentFolder.id && currentFolder.path !== '~'">
+		@if (currentFolder.id && currentFolder.path !== "~") {
 			&nbsp;/&nbsp;
 			<ion-badge color="light">{{ currentFolder.id }}</ion-badge>
-		</ng-container>
+		}
 		<ion-buttons slot="end">
 			<ion-button
 				title="Delete folder"
@@ -85,11 +77,7 @@
 				<ion-label>New query</ion-label>
 			</ion-button>
 			<ion-button title="New folder" (click)="newFolder()">
-				<ion-icon
-					slot="start"
-					name="add-circle-outline"
-					color="primary"
-				/>
+				<ion-icon slot="start" name="add-circle-outline" color="primary" />
 				<ion-label>New folder</ion-label>
 			</ion-button>
 		</ion-buttons>
@@ -105,33 +93,34 @@
 		<ion-icon name="folder-open-outline" slot="start" />
 		<ion-label>..</ion-label>
 	</ion-item>
-	<ng-container *ngIf="filter">
-		<ion-item
-			tappable
-			*ngFor="let item of filteredItems"
-			(click)="goQuery(item.query, 'edit', item.folders)"
-		>
-			<ion-icon name="document-text-outline" slot="start" />
-			<ion-label>
-				{{ item.query.title || item.query.id }}
-				<p *ngIf="item.folders?.length">
-					<ion-text color="medium">Folder:&nbsp;</ion-text>
-					<code
-						><span *ngFor="let p of item.folders">{{ p }}/</span></code
-					>
-				</p>
-			</ion-label>
-		</ion-item>
-	</ng-container>
+
+	@if (filter) {
+		@for (item of filteredItems || []) {
+			<ion-item
+				tappable
+				*ngFor="let item of filteredItems || []"
+				(click)="goQuery(item.query, 'edit', item.folders)"
+			>
+				<ion-icon name="document-text-outline" slot="start" />
+				<ion-label>
+					{{ item.query.title || item.query.id }}
+					<p *ngIf="item.folders?.length">
+						<ion-text color="medium">Folder:&nbsp;</ion-text>
+						<code
+							><span *ngFor="let p of item.folders">{{ p }}/</span></code
+						>
+					</p>
+				</ion-label>
+			</ion-item>
+		}
+	}
 	<ng-container *ngIf="!filter && currentFolder">
-		<ion-item
-			*ngFor="let folder of currentFolder.folders"
-			tappable
-			(click)="cd(folder.id)"
-		>
-			<ion-icon name="folder-outline" slot="start" color="primary" />
-			<ion-label>{{ folder.id }}</ion-label>
-		</ion-item>
+		@for (folder of currentFolder.folders) {
+			<ion-item tappable (click)="cd(folder.id)">
+				<ion-icon name="folder-outline" slot="start" color="primary" />
+				<ion-label>{{ folder.id }}</ion-label>
+			</ion-item>
+		}
 		<ng-container *ngFor="let query of currentFolder.items; trackBy: trackById">
 			<ion-item tappable (click)="goQuery(query)">
 				<ion-icon name="document-text-outline" slot="start" />
@@ -147,9 +136,9 @@
 					</span>
 				</ion-label>
 
-				<ion-badge slot="end" color="secondary">{{
-					query.request.queryType
-				}}</ion-badge>
+				<ion-badge slot="end" color="secondary"
+					>{{ query.request.queryType }}
+				</ion-badge>
 
 				<ion-buttons slot="end" class="ion-no-margin">
 					<ion-button
@@ -178,12 +167,8 @@
 			</ion-item>
 		</ng-container>
 	</ng-container>
-</ng-container>
-<ng-template #loader>
-	<ion-item>
-		<ion-label>Loading queries...</ion-label>
-	</ion-item>
-</ng-template>
+}
+
 <!--		<ion-item class="sql-editor ion-margin ion-no-padding" style="min-height: 0">-->
 <!--			<ngx-codemirror style="height: auto" #codemirrorComponent [(ngModel)]="sql"-->
 <!--								 [options]="codemirrorOptions"></ngx-codemirror>-->

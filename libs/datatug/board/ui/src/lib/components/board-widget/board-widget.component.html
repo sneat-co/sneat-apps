@@ -13,12 +13,12 @@
 		[boardContext]="boardContext"
 	/>
 	<div class="ion-margin-top" *ngSwitchDefault>
-		<ng-container *ngIf="!widgetDef">No widget definition</ng-container>
-		<ng-container *ngIf="widgetDef && !widgetDef.name"
-			>No widget name</ng-container
-		>
-		<ng-container *ngIf="widgetDef?.name">
+		@if (!widgetDef) {
+			No widget definition
+		} @else if (!widgetDef.name) {
+			No widget name
+		} @else {
 			To be implemented: {{ widgetDef?.name }}
-		</ng-container>
+		}
 	</div>
 </ng-container>

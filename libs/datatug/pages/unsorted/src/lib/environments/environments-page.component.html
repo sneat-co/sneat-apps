@@ -6,9 +6,9 @@
 		</ion-buttons>
 		<ion-title>
 			Environments
-			<ng-container *ngIf="project">{{
-				project.title || project.id
-			}}</ng-container>
+			@if {
+				{{ project.title || project.id }}
+			}
 		</ion-title>
 	</ion-toolbar>
 </ion-header>
