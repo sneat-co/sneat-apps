@@ -58,7 +58,7 @@
 			<!--					👩‍🏫 {{ participant }}-->
 			<!--				</ion-badge>-->
 			<!--			</ng-container>-->
-			<ng-container *ngIf="slot?.levels?.length">
+			@if (slot?.levels?.length) {
 				<ion-badge
 					color="light"
 					style="margin-right: 0.5em"
@@ -66,7 +66,7 @@
 				>
 					🎚️ {{ level[0].toUpperCase() + level.substring(1) }}
 				</ion-badge>
-			</ng-container>
+			}
 		</p>
 	</ion-label>
 	<ion-buttons *ngIf="mode === 'full'">

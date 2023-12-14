@@ -5,12 +5,11 @@
 		</ion-buttons>
 		<ng-container [ngSwitch]="team.type">
 			<ion-title *ngSwitchCase="'family'">
-				<ng-container *ngIf="contact; else titleNoContact"
-					>Family member: {{ contact | personTitle }}</ng-container
-				>
-				<ng-template #titleNoContact>
-					<ng-container>Family member</ng-container>
-				</ng-template>
+				@if (contact) {
+					Family member: {{ contact | personTitle }}
+				} @else {
+					Family member
+				}
 			</ion-title>
 			<ion-title *ngSwitchCase="'cohabit'">Housemate</ion-title>
 			<ion-title *ngSwitchCase="'work'">Worker</ion-title>

@@ -11,7 +11,7 @@
 		</ion-buttons>
 	</ion-item-divider>
 	<ng-container *ngFor="let role of contactGroup.roles; trackBy: roleID">
-		<ng-container *ngIf="role.contacts && role.contacts">
+		@if (role.contacts && role.contacts) {
 			<ion-item-sliding
 				*ngFor="let contact of role.contacts; trackBy: contactID"
 				@listItem
@@ -22,7 +22,7 @@
 					[goMember]="goMember"
 				/>
 			</ion-item-sliding>
-		</ng-container>
+		}
 		<ion-item
 			button
 			class="with-buttons"
@@ -36,13 +36,13 @@
 					color="medium"
 					*ngIf="role.finder"
 					[title]="'Find at https://' + role.finder"
-					>Find</ion-button
-				>
+					>Find
+				</ion-button>
 				<ion-button
 					color="medium"
 					(click)="addContact($event, contactGroup.id, role.id)"
-					>Add</ion-button
-				>
+					>Add
+				</ion-button>
 				<!--                <ion-button color="medium" (click)="hideRole(role.id)">-->
 				<!--                    <ion-icon name="close"></ion-icon>-->
 				<!--                </ion-button>-->

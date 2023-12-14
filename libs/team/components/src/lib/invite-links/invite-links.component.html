@@ -1,5 +1,5 @@
 <ion-skeleton-text style="width: 100%" animated *ngIf="!inviteUrlsFor" />
-<ng-container *ngIf="inviteUrlsFor">
+@if (inviteUrlsFor) {
 	<p>Share this links for mass invite:</p>
 	<ul style="list-style: none; padding: 1em">
 		<li class="ion-margin-bottom">
@@ -34,4 +34,4 @@
 			<br />
 		</li>
 	</ul>
-</ng-container>
+}

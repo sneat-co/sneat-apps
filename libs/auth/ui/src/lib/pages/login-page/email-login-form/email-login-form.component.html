@@ -104,7 +104,7 @@
 				name="lines-small"
 			/>
 		</ion-button>
-		<ng-container *ngIf="sign === 'in'">
+		@if (sign === "in") {
 			<ion-button
 				[disabled]="!!signingWith || !validEmail || !password"
 				(click)="signIn()"
@@ -132,6 +132,6 @@
 				<ion-icon name="mail-outline" slot="start" />
 				<ion-label>Get sign-in link</ion-label>
 			</ion-button>
-		</ng-container>
+		}
 	</ion-card-content>
 </ion-card>

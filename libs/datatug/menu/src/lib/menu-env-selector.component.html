@@ -5,16 +5,19 @@
 		</ion-button>
 	</ion-buttons>
 	<ion-label>
-		<ng-container *ngIf="currentEnvId">Environment</ng-container>
-		<ng-container *ngIf="!currentEnvId">Environments</ng-container>
+		@if (currentEnvId) {
+			Environment
+		} @else {
+			Environments
+		}
 		<ion-badge
 			color="light"
 			*ngIf="!currentEnvId && project?.summary?.environments"
 			class="ion-margin-start"
 		>
-			<ion-text color="medium" style="font-weight: normal">{{
-				project?.summary?.environments.length
-			}}</ion-text>
+			<ion-text color="medium" style="font-weight: normal"
+				>{{ project?.summary?.environments.length }}
+			</ion-text>
 		</ion-badge>
 	</ion-label>
 	<ion-select
@@ -26,8 +29,8 @@
 		<ion-select-option
 			*ngFor="let env of project.summary.environments"
 			[value]="env.id"
-			>{{ env.title || env.id }}</ion-select-option
-		>
+			>{{ env.title || env.id }}
+		</ion-select-option>
 	</ion-select>
 	<ion-buttons
 		slot="end"

@@ -112,7 +112,7 @@
 		</ion-row>
 	</ion-grid>
 
-	<ng-container *ngIf="editorTab === 'builder'">
+	@if (editorTab === "builder") {
 		<ion-card *ngIf="!showQueryBuilder">
 			<ion-card-content>
 				<p>
@@ -126,7 +126,7 @@
 				</p>
 			</ion-card-content>
 		</ion-card>
-		<ng-container *ngIf="showQueryBuilder">
+		@if (showQueryBuilder) {
 			<div class="hidden-lg-up">
 				<div class="ion-padding-start ion-padding-end">
 					<ion-segment value="columns">
@@ -160,17 +160,11 @@
 							</ion-label>
 						</ion-item>
 						<ion-item>
-							<ion-checkbox
-								slot="start"
-								class="ion-margin-start"
-							/>
+							<ion-checkbox slot="start" class="ion-margin-start" />
 							<ion-label color="medium">ID</ion-label>
 						</ion-item>
 						<ion-item>
-							<ion-checkbox
-								slot="start"
-								class="ion-margin-start"
-							/>
+							<ion-checkbox slot="start" class="ion-margin-start" />
 							<ion-label color="medium">Name</ion-label>
 						</ion-item>
 					</ion-list>
@@ -243,8 +237,8 @@
 					</ion-col>
 				</ion-row>
 			</ion-grid>
-		</ng-container>
-	</ng-container>
+		}
+	}
 
 	<ion-card>
 		<datatug-input-parameters
@@ -300,7 +294,7 @@
 				<ion-item>
 					<ion-label
 						[color]="activeEnv && !activeEnv.dbServerId ? 'danger' : 'medium'"
-						>@ Server
+						>&#64; Server
 					</ion-label>
 					<ion-input
 						*ngIf="activeEnv && !activeEnv.summary"

@@ -43,8 +43,8 @@
 					<ion-label
 						color="medium"
 						style="font-size: smaller; font-weight: normal"
-						>{{ contactsNumber(r.id) }}</ion-label
-					>
+						>{{ contactsNumber(r.id) }}
+					</ion-label>
 				</ion-badge>
 			</ion-label>
 		</ion-segment-button>
@@ -66,17 +66,16 @@
 		</div>
 
 		<ion-list *ngIf="segment === 'list' || team?.type !== 'family'">
-			<ion-item-sliding
-				@listItem
-				*ngFor="let contact of contacts || []; trackBy: contactID"
-			>
-				<sneat-contacts-list-item
-					[contact]="contact"
-					[goContact]="goContact"
-					[goMember]="goMember"
-					[excludeRole]="role"
-				/>
-			</ion-item-sliding>
+			@for (contact of contacts; track contact.id) {
+				<ion-item-sliding @listItem>
+					<sneat-contacts-list-item
+						[contact]="contact"
+						[goContact]="goContact"
+						[goMember]="goMember"
+						[excludeRole]="role"
+					/>
+				</ion-item-sliding>
+			}
 			<ion-item button (click)="goNewContact()" *ngIf="canAdd">
 				<ion-icon name="add" color="primary" />
 				<ion-label color="primary">Add contact</ion-label>
@@ -84,7 +83,7 @@
 		</ion-list>
 
 		<ion-list *ngIf="segment === 'groups'">
-			<ng-container *ngIf="team?.type === 'family'">
+			@if (team.type === "family") {
 				<sneat-contacts-family
 					[contacts]="allContacts"
 					[team]="team"
@@ -92,20 +91,18 @@
 					[goContact]="goContact"
 					[goMember]="goMember"
 				/>
-			</ng-container>
+			}
 			<ng-container *ngIf="groups">
-				<ion-item
-					*ngFor="let group of groups; trackBy: groupID"
-					(click)="goGroup(group)"
-					tappable
-				>
-					<ion-label>
-						{{ group.brief?.title }}
-					</ion-label>
-					<ion-badge color="light" *ngIf="group.dto?.numberOf?.members">
-						{{ group.dto?.numberOf?.members }}
-					</ion-badge>
-				</ion-item>
+				@for (group of groups; track group.id) {
+					<ion-item (click)="goGroup(group)" tappable>
+						<ion-label>
+							{{ group.brief?.title }}
+						</ion-label>
+						<ion-badge color="light" *ngIf="group.dto?.numberOf?.members">
+							{{ group.dto?.numberOf?.members }}
+						</ion-badge>
+					</ion-item>
+				}
 			</ng-container>
 		</ion-list>
 	</ion-card>

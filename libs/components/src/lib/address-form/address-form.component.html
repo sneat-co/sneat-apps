@@ -34,7 +34,7 @@
 		(countryIDChange)="onCountryChanged($event)"
 	/>
 
-	<ng-container *ngIf="countryID.value">
+	@if (countryID.value) {
 		<ion-item>
 			<ion-label color="medium">Zip code</ion-label>
 			<ion-input
@@ -76,5 +76,5 @@
 				(ionChange)="onLinesChanged()"
 			/>
 		</ion-item>
-	</ng-container>
+	}
 </ion-card>

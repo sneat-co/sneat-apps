@@ -37,7 +37,7 @@
 			</ion-segment>
 		</ion-card-header>
 		<ion-list *ngIf="tab === 'db'">
-			<ng-container *ngIf="dbServers">
+			@if (dbServers) {
 				<ion-item
 					tappable
 					*ngFor="let dbServer of dbServers"
@@ -67,10 +67,9 @@
 						>
 					</ion-buttons>
 				</ion-item>
-			</ng-container>
-			<ion-item *ngIf="!dbServers">
+			} @else {
 				<ion-label color="medium">Loading...</ion-label>
-			</ion-item>
+			}
 		</ion-list>
 		<ion-card-content *ngIf="tab !== 'db'">
 			<p>Not implemented yet.</p>

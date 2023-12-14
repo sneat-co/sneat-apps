@@ -2,8 +2,8 @@
 	<ion-toolbar color="primary">
 		<ion-title *ngIf="!member">Invite member to join</ion-title>
 		<ion-title *ngIf="member"
-			>Invite {{ member | contactTitle }} to join</ion-title
-		>
+			>Invite {{ member | contactTitle }} to join
+		</ion-title>
 		<ion-buttons slot="end">
 			<ion-button role="close" (click)="close()">
 				<ion-icon name="close-outline" />
@@ -59,8 +59,8 @@
 		<ion-card-content *ngIf="tab === 'email'">
 			<p>
 				<ion-text *ngIf="!email.value" color="danger"
-					>Email address is required for sending an invite.</ion-text
-				>
+					>Email address is required for sending an invite.
+				</ion-text>
 				<ion-text *ngIf="email.value && !email.valid" color="danger"
 					>A valid email address is required for sending an invite.
 				</ion-text>
@@ -75,8 +75,8 @@
 				fill="clear"
 				color="medium"
 				style="text-transform: none"
-				>or</ion-button
-			>
+				>or
+			</ion-button>
 			<ion-button
 				(click)="composeEmail()"
 				fill="outline"
@@ -104,9 +104,8 @@
 			</ion-button>
 			<p>
 				<ion-text color="medium"
-					>This works on mobiles or if your computer supports sending
-					SMS</ion-text
-				>
+					>This works on mobiles or if your computer supports sending SMS
+				</ion-text>
 			</p>
 		</ion-card-content>
 		<ion-card-content *ngIf="error">
@@ -114,7 +113,7 @@
 		</ion-card-content>
 	</form>
 
-	<ng-container *ngIf="tab === 'link'">
+	@if (tab === "link") {
 		<ion-card-content>
 			<ion-button
 				fill="outline"
@@ -123,9 +122,9 @@
 			>
 				<ion-icon slot="start" name="copy-outline" />
 				<ion-label style="text-transform: none"
-					>Copy invite text with a link</ion-label
-				>
+					>Copy invite text with a link
+				</ion-label>
 			</ion-button>
 		</ion-card-content>
-	</ng-container>
+	}
 </ion-content>

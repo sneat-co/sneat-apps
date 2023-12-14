@@ -1,7 +1,7 @@
-<ng-container *ngIf="weekday">
+@if (weekday) {
 	<ion-item
-		lines="full"
 		*ngIf="!weekday.day?.slots?.length; else daySlots"
+		lines="full"
 		color="light"
 	>
 		<ion-label color="medium">Nothing scheduled for this day.</ion-label>
@@ -24,7 +24,7 @@
 			(slotClicked)="slotClicked.emit($event)"
 		/>
 	</ng-template>
-	<ng-container *ngIf="(slots?.length ?? 0) < 2">
+	@if ((slots?.length ?? 0) < 2) {
 		<ion-item tappable (click)="goNewHappening({ type: 'recurring' })">
 			<ion-icon name="duplicate-outline" color="medium" slot="start" />
 			<ion-label color="medium">Add recurring</ion-label>
@@ -37,8 +37,7 @@
 			<ion-icon name="add-circle-outline" color="medium" slot="start" />
 			<ion-label color="medium">Add one-timer</ion-label>
 		</ion-item>
-	</ng-container>
-	<ng-container *ngIf="slots?.length === 2">
+	} @else if (slots?.length === 2) {
 		<ion-grid class="ion-grid-layout">
 			<ion-row>
 				<ion-col>
@@ -63,5 +62,5 @@
 				</ion-col>
 			</ion-row>
 		</ion-grid>
-	</ng-container>
-</ng-container>
+	}
+}

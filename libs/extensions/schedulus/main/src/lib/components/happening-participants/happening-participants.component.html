@@ -1,6 +1,6 @@
 <ion-card>
 	<ion-item-divider color="light">
-		<ion-label> Participants </ion-label>
+		<ion-label> Participants</ion-label>
 	</ion-item-divider>
 
 	<ion-segment value="members" [(ngModel)]="tab">
@@ -31,7 +31,8 @@
 			You can specify who teaches a lesson or a babysitter brings your kids to
 			the class.
 		</p>
-		<ng-container *ngIf="contacts.length">
+
+		@if (contacts.length) {
 			<ion-item>
 				<ion-label>Superman</ion-label>
 				<ion-badge>Teacher</ion-badge>
@@ -44,6 +45,6 @@
 				<ion-label>Bob</ion-label>
 				<ion-badge color="light">co-participant</ion-badge>
 			</ion-item>
-		</ng-container>
+		}
 	</ion-item-group>
 </ion-card>

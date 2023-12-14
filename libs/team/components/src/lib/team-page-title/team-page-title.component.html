@@ -1,16 +1,14 @@
 <ion-title>
-	<ng-container *ngIf="team; else noTeam">
-		<ng-container *ngIf="!!typeTitle; else general">
+	@if (team) {
+		@if (!!typeTitle) {
 			<span style="margin-right: 0.5em">{{ icon }}</span>
 			<span>{{ typeTitle }}</span>
-		</ng-container>
-		<ng-template #general>
+		} @else {
 			<span style="margin-right: 0.5em">{{ icon }}</span>
 			<span>{{ generalTitle }} &#64; {{ team.brief?.title || team.id }}</span>
-		</ng-template>
-	</ng-container>
-	<ng-template #noTeam>
+		}
+	} @else {
 		<span style="margin-right: 0.5em">{{ icon }}</span>
 		<span>{{ generalTitle }}</span>
-	</ng-template>
+	}
 </ion-title>

@@ -24,7 +24,7 @@
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
-	<ng-container *ngIf="tabs">
+	@if (tabs) {
 		<ion-segment [(ngModel)]="tab" (ionChange)="tabChanged.emit(tab)">
 			<ion-segment-button *ngFor="let tab of tabs" [value]="tab.id">
 				<ion-label>{{ tab.title }}</ion-label>
@@ -39,21 +39,23 @@
 				<ion-label color="medium">Add</ion-label>
 			</ion-button>
 		</ion-buttons>
-	</ng-container>
-	<ion-card-content *ngIf="isLoading">
-		<ion-skeleton-text animated="" style="width: 100%" />
-	</ion-card-content>
-	<ng-container *ngIf="!isLoading">
+	}
+	@if (isLoading) {
+		<ion-card-content>
+			<ion-skeleton-text animated="" style="width: 100%" />
+		</ion-card-content>
+	} @else {
 		<ion-list>
-			<ion-item
-				tappable
-				*ngFor="let item of items; trackBy: id"
-				(click)="itemClick && click($event, item)"
-				[routerLink]="getRouterLink && getRouterLink(item)"
-			>
-				<ion-icon *ngIf="itemIcon" [name]="itemIcon" slot="start" />
-				<ion-label>{{ item.title || item.id }}</ion-label>
-			</ion-item>
+			@for (item of items; track item.id) {
+				<ion-item
+					tappable
+					(click)="itemClick && click($event, item)"
+					[routerLink]="getRouterLink(item)"
+				>
+					<ion-icon *ngIf="itemIcon" [name]="itemIcon" slot="start" />
+					<ion-label>{{ item.title || item.id }}</ion-label>
+				</ion-item>
+			}
 			<ion-item *ngIf="mode === 'add'">
 				<ion-icon name="earth-outline" slot="start" color="medium" />
 				<ion-input
@@ -93,5 +95,5 @@
 				{{ noItemsText }}
 			</p>
 		</ion-card-content>
-	</ng-container>
+	}
 </ion-card>

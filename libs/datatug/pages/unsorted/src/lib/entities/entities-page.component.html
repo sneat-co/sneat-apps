@@ -48,8 +48,8 @@
 		<!--			</ion-segment-button>-->
 		<!--		</ion-segment>-->
 		<ion-list class="last-child-no-border">
-			<ng-container *ngIf="entities; else loadingEntities">
-				<ng-container *ngIf="entities.length; else noEntitiesYet">
+			@if (entities) {
+				@if (entities.length) {
 					<ion-item
 						*ngFor="let entity of entities; trackBy: trackById"
 						[routerLink]="entityUrl(entity)"
@@ -79,20 +79,18 @@
 							</ion-button>
 						</ion-buttons>
 					</ion-item>
-				</ng-container>
-				<ng-template #noEntitiesYet>
+				} @else {
 					<ion-item class="last-child-no-border">
 						<ion-label color="medium"
-							>No entities has been created yet.</ion-label
-						>
+							>No entities has been created yet.
+						</ion-label>
 					</ion-item>
-				</ng-template>
-			</ng-container>
-			<ng-template #loadingEntities>
+				}
+			} @else {
 				<ion-item>
 					<ion-label color="medium">Loading...</ion-label>
 				</ion-item>
-			</ng-template>
+			}
 		</ion-list>
 	</ion-card>
 

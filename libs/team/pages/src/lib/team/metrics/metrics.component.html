@@ -26,8 +26,8 @@
 			</ion-label>
 		</ion-item>
 
-		<ng-container *ngIf="team?.dto?.metrics?.length">
-			<ion-item *ngFor="let metric of team?.dto?.metrics">
+		@if (team?.dto?.metrics?.length) {
+			<ion-item *ngFor="let metric of team?.dto?.metrics || []">
 				<ion-spinner
 					slot="start"
 					name="lines-small"
@@ -52,13 +52,13 @@
 					{{ metric.title }}
 					<ng-container>
 						<i style="padding-left: 1em" *ngIf="metric?.type === 'bool'">
-							<ion-text [color]="metricColor(metric.bool?.true)">{{
-								metricLabel(metric.bool?.true)
-							}}</ion-text>
+							<ion-text [color]="metricColor(metric.bool?.true)"
+								>{{ metricLabel(metric.bool?.true) }}
+							</ion-text>
 							/
-							<ion-text [color]="metricColor(metric.bool?.false)">{{
-								metricLabel(metric.bool?.false)
-							}}</ion-text>
+							<ion-text [color]="metricColor(metric.bool?.false)"
+								>{{ metricLabel(metric.bool?.false) }}
+							</ion-text>
 						</i>
 					</ng-container>
 				</ion-label>
@@ -72,7 +72,7 @@
 					</ion-button>
 				</ion-buttons>
 			</ion-item>
-		</ng-container>
+		}
 	</ion-list>
 	<ion-card-content *ngIf="team?.dto && !team?.dto?.metrics?.length">
 		<p>No metrics for your team yet.</p>

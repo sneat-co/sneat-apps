@@ -1,15 +1,14 @@
 <ion-item-divider color="light">
 	<ion-label slot="start" (click)="onDateSelected()" tappable>
-		<ng-container *ngIf="day?.slots && day?.slots?.length"
-			><b>{{ weekday?.longTitle }}</b></ng-container
-		>
-		<ng-container *ngIf="!day?.slots || !day?.slots?.length">{{
-			weekday?.longTitle
-		}}</ng-container>
-		<ng-container *ngIf="day?.date"
-			>, {{ day?.date?.getDate() }}
-			{{ day?.date?.getMonth() | shortMonthName }}</ng-container
-		>
+		@if (day?.slots?.length) {
+			<b>{{ weekday?.longTitle }}</b>
+		} @else if (!day?.slots?.length) {
+			{{ weekday?.longTitle }}
+		}
+		@if (day?.date) {
+			, {{ day?.date?.getDate() }}
+			{{ day?.date?.getMonth() | shortMonthName }}
+		}
 	</ion-label>
 	<ion-spinner
 		style="opacity: 0.2"
@@ -26,8 +25,8 @@
 		</ion-button>
 	</ion-buttons>
 </ion-item-divider>
-<ng-container *ngIf="day?.slots && day?.slots?.length; else noSlots">
-	<ng-container *ngFor="let slot of day?.slots">
+@if (day?.slots && day?.slots?.length) {
+	<ng-container *ngFor="let slot of day?.slots || []">
 		<sneat-day-slot-item
 			*ngIf="showSlot(slot)"
 			[team]="team"
@@ -36,11 +35,10 @@
 			(slotClicked)="onSlotClicked($event)"
 		/>
 	</ng-container>
-</ng-container>
-<ng-template #noSlots>
+} @else {
 	<ion-item>
 		<ion-label color="medium" style="font-style: italic"
-			>Nothing scheduled yet for {{ weekday?.longTitle }}.</ion-label
-		>
+			>Nothing scheduled yet for {{ weekday?.longTitle }}.
+		</ion-label>
 	</ion-item>
-</ng-template>
+}

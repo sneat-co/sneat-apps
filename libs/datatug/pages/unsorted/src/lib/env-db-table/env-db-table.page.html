@@ -4,7 +4,7 @@
 			<ion-menu-button />
 			<ion-back-button defaultHref="datatug" />
 		</ion-buttons>
-		<ion-title>Table: <b>{{table?.schema}}.{{table?.name}}</b></ion-title>
+		<ion-title>Table: <b>{{ table?.schema }}.{{ table?.name }}</b></ion-title>
 	</ion-toolbar>
 </ion-header>
 
@@ -47,59 +47,57 @@
 		</ion-segment-button>
 	</ion-segment>
 
-	<ng-container *ngIf="tab === 'keys'">
-		<ion-card>
-			<ion-card-header>
-				<ion-card-title>Primary key</ion-card-title>
-			</ion-card-header>
-		</ion-card>
-		<ion-card>
-			<ion-card-header>
-				<ion-card-title>Foreign keys</ion-card-title>
-			</ion-card-header>
-		</ion-card>
-	</ng-container>
-
-	<ng-container *ngIf="tab === 'references'">
-		<ion-card>
-			<ion-list>
-				<ion-item-divider>
-					<ion-label> Tables </ion-label>
-					<ion-badge
-						slot="end"
-						class="ion-margin-end"
-						color="light"
-						style="color: gray"
-						>3</ion-badge
-					>
-				</ion-item-divider>
-				<ion-item>
-					<ion-label>SomeTable</ion-label>
-				</ion-item>
-			</ion-list>
-		</ion-card>
-		<ion-card>
-			<ion-card-header>
-				<ion-card-title>Views</ion-card-title>
-			</ion-card-header>
-		</ion-card>
-		<ion-card>
-			<ion-card-header>
-				<ion-card-title>Stored procedures</ion-card-title>
-			</ion-card-header>
-		</ion-card>
-	</ng-container>
+	@if (tab === 'keys') {
+	<ion-card>
+		<ion-card-header>
+			<ion-card-title>Primary key</ion-card-title>
+		</ion-card-header>
+	</ion-card>
+	<ion-card>
+		<ion-card-header>
+			<ion-card-title>Foreign keys</ion-card-title>
+		</ion-card-header>
+	</ion-card>
+	} @if (tab === 'references') {
+	<ion-card>
+		<ion-list>
+			<ion-item-divider>
+				<ion-label> Tables</ion-label>
+				<ion-badge
+					slot="end"
+					class="ion-margin-end"
+					color="light"
+					style="color: gray"
+					>3
+				</ion-badge>
+			</ion-item-divider>
+			<ion-item>
+				<ion-label>SomeTable</ion-label>
+			</ion-item>
+		</ion-list>
+	</ion-card>
+	<ion-card>
+		<ion-card-header>
+			<ion-card-title>Views</ion-card-title>
+		</ion-card-header>
+	</ion-card>
+	<ion-card>
+		<ion-card-header>
+			<ion-card-title>Stored procedures</ion-card-title>
+		</ion-card-header>
+	</ion-card>
+	}
 
 	<ion-card [style]="{display: tab === 'grid' ? 'block' : 'none'}">
 		<ion-item *ngIf="groupByFks?.length">
-			<ion-label> Group by </ion-label>
+			<ion-label> Group by</ion-label>
 			<ion-select
 				[(ngModel)]="groupByFk"
 				interface="popover"
 				(ionChange)="onGroupByFkChanged($event)"
 			>
 				<ion-select-option *ngFor="let fk of groupByFks" [value]="fk.name">
-					{{fk.columns[0]}} => {{fk.refTable.schema}}.{{fk.refTable.name}}
+					{{ fk.columns[0] }} => {{ fk.refTable.schema }}.{{ fk.refTable.name }}
 				</ion-select-option>
 			</ion-select>
 			<ion-buttons>
@@ -124,7 +122,7 @@
 	<div [style]="{display: tab === 'record' ? 'block' : 'none'}">
 		<ion-card>
 			<ion-item>
-				<ion-label style="font-weight: bold">{{table?.meta?.name}}</ion-label>
+				<ion-label style="font-weight: bold">{{ table?.meta?.name }}</ion-label>
 				<ion-buttons slot="end">
 					<ion-button
 						[disabled]="!currentRow?.index"
@@ -132,7 +130,7 @@
 					>
 						<ion-icon name="chevron-back-outline" />
 					</ion-button>
-					<ion-button disabled>#{{currentRow?.index + 1}}</ion-button>
+					<ion-button disabled>#{{ currentRow?.index + 1 }}</ion-button>
 					<ion-button
 						[disabled]="currentRow?.index + 1 === grid?.rows?.length"
 						(click)="setCurrentRow(currentRow.index + 1)"
@@ -141,16 +139,16 @@
 					</ion-button>
 				</ion-buttons>
 			</ion-item>
-			<ng-container *ngIf="currentRow?.data && table?.meta?.columns">
-				<ion-item *ngFor="let col of table.meta.columns">
-					<ion-label>{{col.name}}</ion-label>
-					<ion-input
-						style="text-align: right"
-						readonly
-						[value]="currentRow.data[col.name]"
-					/>
-				</ion-item>
-			</ng-container>
+			@if (currentRow?.data && table?.meta?.columns) {
+			<ion-item *ngFor="let col of table.meta.columns">
+				<ion-label>{{ col.name }}</ion-label>
+				<ion-input
+					style="text-align: right"
+					readonly
+					[value]="currentRow.data[col.name]"
+				/>
+			</ion-item>
+			}
 		</ion-card>
 
 		<ion-segment [(ngModel)]="cardTab">
@@ -158,46 +156,43 @@
 			<ion-segment-button value="refs">Referenced by</ion-segment-button>
 		</ion-segment>
 
-		<ng-container *ngIf="table?.meta && cardTab === 'fks'">
-			<ng-template #noFk><p>No foreign keys</p></ng-template>
-			<ng-container *ngIf="table?.meta?.foreignKeys?.length; else noFk">
-				<datatug-fk-card
-					*ngFor="let fk of table.meta.foreignKeys"
-					[fk]="fk"
-					[row]="currentRow?.data"
-					[tableNavParams]="tableNavParams"
-				/>
-			</ng-container>
-		</ng-container>
+		@if (table?.meta && cardTab === 'fks') { @if
+		(table?.meta?.foreignKeys?.length) {
+		<datatug-fk-card
+			*ngFor="let fk of table.meta.foreignKeys"
+			[fk]="fk"
+			[row]="currentRow?.data"
+			[tableNavParams]="tableNavParams"
+		/>
 
-		<ng-container *ngIf="table?.meta && cardTab === 'refs'">
-			<ng-template #noRefs>
-				<p>No known references.</p>
-			</ng-template>
-			<ng-container *ngIf="table?.meta?.referencedBy?.length; else noRefs">
-				<ion-card>
-					<ng-container *ngFor="let ref of table.meta.referencedBy">
-						<ion-item *ngFor="let fk of ref.foreignKeys">
-							<a
-								href="{{ref.schema}}.{{ref.name}}"
-								(click)="goTable(ref.schema, ref.name, $event)"
-								>{{ref.schema}}.{{ref.name}}</a
-							>
-							<p>
-								<ion-text
-									color="medium"
-									class="ion-margin-start"
-									style="font-size: smaller"
-								>
-									({{fk.columns.join(', ')}}) ⇒
-									({{table.meta.primaryKey.columns.join(', ')}})
-									<small>by foreign key {{fk.name}}</small></ion-text
-								>
-							</p>
-						</ion-item>
-					</ng-container>
-				</ion-card>
+		} @else {
+		<p>No foreign keys</p>
+		} } @if (table?.meta && cardTab === 'refs') { @if
+		(table?.meta?.referencedBy?.length) {
+		<ion-card>
+			<ng-container *ngFor="let ref of table.meta.referencedBy">
+				<ion-item *ngFor="let fk of ref.foreignKeys">
+					<a
+						href="{{ref.schema}}.{{ref.name}}"
+						(click)="goTable(ref.schema, ref.name, $event)"
+						>{{ ref.schema }}.{{ ref.name }}</a
+					>
+					<p>
+						<ion-text
+							color="medium"
+							class="ion-margin-start"
+							style="font-size: smaller"
+						>
+							({{ fk.columns.join(', ') }}) ⇒ ({{
+							table.meta.primaryKey.columns.join(', ') }})
+							<small>by foreign key {{ fk.name }}</small></ion-text
+						>
+					</p>
+				</ion-item>
 			</ng-container>
-		</ng-container>
+		</ion-card>
+		} @else {
+		<p>No known references.</p>
+		} }
 	</div>
 </ion-content>

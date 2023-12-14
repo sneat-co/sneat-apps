@@ -4,7 +4,7 @@
 			<ion-card>
 				<ion-item class="sneat-no-end-padding">
 					<ion-label style="font-weight: bold">
-						<ng-container *ngIf="contact?.brief?.gender">
+						@if (contact?.brief?.gender) {
 							<ng-container [ngSwitch]="contact?.brief?.gender">
 								<span *ngSwitchCase="'male'" class="ion-margin-end">🧑</span>
 								<span *ngSwitchCase="'female'" class="ion-margin-end">👩</span>
@@ -17,7 +17,7 @@
 										? "Me"
 										: "(no title)")
 							}}
-						</ng-container>
+						}
 					</ion-label>
 					<ion-buttons slot="end">
 						<ion-button

@@ -39,7 +39,7 @@
 			[formControl]="gender"
 		/>
 
-		<ng-container *ngIf="gender.value || ageGroup.value">
+		@if (gender.value || ageGroup.value) {
 			<ion-item-divider *ngIf="!ageGroup.value">
 				<ion-label>Age group</ion-label>
 			</ion-item-divider>
@@ -48,7 +48,7 @@
 				[items]="ageGroups"
 				[formControl]="ageGroup"
 			/>
-		</ng-container>
+		}
 	</form>
 </ion-content>
 <ion-footer>

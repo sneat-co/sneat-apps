@@ -1,4 +1,4 @@
-<ng-container *ngIf="selectOptions">
+@if (selectOptions) {
 	<ion-radio-group
 		(blur)="onTouched()"
 		[(ngModel)]="value"
@@ -6,9 +6,9 @@
 		(ionChange)="onValChanged($event)"
 	>
 		<ion-list-header>
-			<ion-label style="font-weight: bold">{{
-				radioGroupLabel || label
-			}}</ion-label>
+			<ion-label style="font-weight: bold"
+				>{{ radioGroupLabel || label }}
+			</ion-label>
 		</ion-list-header>
 		<ion-item *ngFor="let o of selectOptions">
 			<ion-label>{{ o.title || o.value }}</ion-label>
@@ -31,4 +31,4 @@
 			</ion-select>
 		</ion-item>
 	</ng-template>
-</ng-container>
+}

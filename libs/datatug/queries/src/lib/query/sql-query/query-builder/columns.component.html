@@ -26,7 +26,7 @@
 				</ion-button>
 			</ion-buttons>
 		</ion-item>
-		<ng-container *ngIf="expanded === 'ft'">
+		@if (expanded === "ft") {
 			<ion-item>
 				<ion-checkbox slot="start" class="ion-margin-start" />
 				<ion-label>ID</ion-label>
@@ -57,7 +57,7 @@
 					</ion-button>
 				</ion-buttons>
 			</ion-item>
-		</ng-container>
+		}
 		<ion-item>
 			<ion-checkbox slot="start" />
 			<ion-label
@@ -81,7 +81,7 @@
 				</ion-button>
 			</ion-buttons>
 		</ion-item>
-		<ng-container *ngIf="expanded === 'st'">
+		@if {
 			<ion-item>
 				<ion-checkbox slot="start" class="ion-margin-start" />
 				<ion-label>ID</ion-label>
@@ -112,14 +112,14 @@
 					</ion-button>
 				</ion-buttons>
 			</ion-item>
-		</ng-container>
+		}
 		<ion-item-divider style="font-weight: bold">
 			<ion-label>Aggregates</ion-label>
 		</ion-item-divider>
 		<ion-item class="ion-padding-start">
 			<ion-label color="medium" style="font-size: smaller"
-				>GROUP BY required to enable</ion-label
-			>
+				>GROUP BY required to enable
+			</ion-label>
 		</ion-item>
 	</ion-list>
 </ion-card>

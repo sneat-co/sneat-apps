@@ -10,13 +10,13 @@
 		</ion-button>
 	</ion-buttons>
 </ion-item-divider>
-<ng-container *ngIf="parameters?.length; else noParameters">
+@if (parameters?.length) {
 	<ion-item *ngFor="let param of parameters">
 		<ion-label>
 			{{ param.def.id }}
-			<ion-badge color="light" style="font-weight: normal"
-				><ion-text color="medium">{{ param.def.type }}</ion-text></ion-badge
-			>
+			<ion-badge color="light" style="font-weight: normal">
+				<ion-text color="medium">{{ param.def.type }}</ion-text>
+			</ion-badge>
 		</ion-label>
 		<ion-input
 			*ngIf="param.def.type === 'integer' || param.def.type === 'number'"
@@ -30,9 +30,8 @@
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
-</ng-container>
-<ng-template #noParameters>
+} @else {
 	<ion-item>
 		<ion-label color="medium">No input parameters</ion-label>
 	</ion-item>
-</ng-template>
+}

@@ -57,7 +57,7 @@
 	[team]="team"
 />
 
-<ng-container *ngIf="show.communicationChannels">
+@if (show.communicationChannels) {
 	<ion-segment [(ngModel)]="tab">
 		<ion-segment-button value="emails">Emails</ion-segment-button>
 		<ion-segment-button value="phones">Phones</ion-segment-button>
@@ -75,7 +75,7 @@
 		[phones]="newPerson.phones"
 		(phonesChange)="onPhoneChanged($event)"
 	/>
-</ng-container>
+}
 
 <!--<ion-button *ngIf="wizardStep === 'emails' || wizardStep === 'phones'"-->
 <!--						class="ion-margin"-->

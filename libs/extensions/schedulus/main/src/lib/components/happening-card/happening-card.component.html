@@ -6,11 +6,11 @@
 		(click)="goHappening($event)"
 	>
 		<ion-label>
-			<ng-container *ngIf="date">
+			@if (date) {
 				<b>{{ wd | wdToWeekday }}</b
 				>, {{ date.getDate() }} {{ date.getMonth() | longMonthName }}
 				&mdash;
-			</ng-container>
+			}
 
 			<ion-text color="primary" style="font-weight: bold">
 				{{ happening?.brief?.title || happening?.dto?.title || "Loading..." }}
@@ -51,9 +51,9 @@
 				"
 				(deleteMember)="removeMember($event)"
 			/>
-			<ng-container *ngIf="!happening?.brief?.contactIDs?.length || 0 > 1">
+			@if (!happening?.brief?.contactIDs?.length || 0 > 1) {
 				Nobody assigned
-			</ng-container>
+			}
 		</ion-label>
 		<ion-buttons slot="end">
 			<ion-button color="tertiary" (click)="selectMembers($event)">
