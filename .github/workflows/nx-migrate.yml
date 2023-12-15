@@ -28,7 +28,7 @@ jobs:
 #                    echo "IS_OUTDATED=$IS_OUTDATED"
 #                    echo "is_changed=$IS_OUTDATED" >> $GITHUB_OUTPUT
 
-            -   name: Update @nx/workspace
+            -   name: Run `nx migrate latest`
                 run: pnpm run nx migrate latest
 
             -   name: Check if package.json is changed
