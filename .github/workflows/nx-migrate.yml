@@ -32,6 +32,10 @@ jobs:
                 if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
                 run: pnpm run nx migrate latest
 
+            -   name:  Show package.json changes
+                if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
+                run: git diff package.json
+
             -   name: Install dependencies
                 if: steps.nrwl-workspace-outdated.outputs.outdated == 'true'
                 run: pnpm install
