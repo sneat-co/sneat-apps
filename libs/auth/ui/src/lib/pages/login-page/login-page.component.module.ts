@@ -15,12 +15,9 @@ import { LoginWithTelegramComponent } from './login-with-telegram.component';
 		FormsModule,
 		IonicModule,
 		LoginPageRoutingModule, // TODO: Why we need a 2nd separate module for routing?
-	],
-	declarations: [
-		LoginPageComponent,
-		EmailLoginFormComponent,
 		LoginWithTelegramComponent,
 	],
+	declarations: [LoginPageComponent, EmailLoginFormComponent],
 	exports: [LoginPageComponent],
 })
 export class LoginPageComponentModule {}

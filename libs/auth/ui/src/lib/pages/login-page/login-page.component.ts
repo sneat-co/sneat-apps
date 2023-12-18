@@ -53,7 +53,8 @@ export class LoginPageComponent {
 		private readonly afAuth: AngularFireAuth,
 		private readonly navController: NavController,
 		private readonly userService: SneatUserService,
-		private readonly authStateService: SneatAuthStateService, // private readonly toastController: ToastController,
+		private readonly authStateService: SneatAuthStateService,
+		// private readonly toastController: ToastController,
 	) {
 		console.log('LoginPageComponent.constructor()');
 		this.appTitle = appInfo.appTitle;
