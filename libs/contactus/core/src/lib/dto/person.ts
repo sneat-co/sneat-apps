@@ -57,7 +57,7 @@ export function isPersonNotReady(
 ): boolean {
 	const nameIsEmpty = isNameEmpty(p.name);
 	const isMissingRequiredFields =
-		(!!requires.lastName?.required && !p.name?.last) ||
+		(!!requires.lastName?.required && !p.name?.lastName) ||
 		(!!requires.ageGroup?.required && !p.ageGroup) ||
 		(!!requires.gender?.required && !p.gender);
 	return nameIsEmpty || isMissingRequiredFields;

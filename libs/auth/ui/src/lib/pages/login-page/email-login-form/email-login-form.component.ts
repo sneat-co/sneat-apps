@@ -93,17 +93,17 @@ export class EmailLoginFormComponent {
 		// this.signingWith = 'email';
 		this.email = this.email.trim();
 		const email = this.email;
-		const first = this.firstName.trim();
-		const last = this.lastName.trim();
+		const firstName = this.firstName.trim();
+		const lastName = this.lastName.trim();
 		if (!email) {
 			alert('Email is a required field');
 			return;
 		}
-		if (!first) {
+		if (!firstName) {
 			alert('First name is a required field');
 			return;
 		}
-		if (!last) {
+		if (!lastName) {
 			alert('Last name is a required field');
 			return;
 		}
@@ -135,12 +135,12 @@ export class EmailLoginFormComponent {
 						authProvider: 'password',
 						email,
 						ianaTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-						name: { first, last },
+						names: { firstName, lastName },
 						team: this.appInfo.requiredTeamType
 							? {
 									type: this.appInfo.requiredTeamType,
 									title: teamTitle,
-							  }
+								}
 							: undefined,
 					};
 					this.userRecordService.initUserRecord(request).subscribe({

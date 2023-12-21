@@ -18,7 +18,7 @@ import {
 	emptyContactBase,
 	Gender,
 	IEmail,
-	IName,
+	IPersonNames,
 	IPersonRequirements,
 	IPhone,
 	IRelatedPerson,
@@ -145,7 +145,7 @@ export class PersonWizardComponent implements OnChanges {
 					moduleID: 'contactus',
 					collection: 'contacts',
 					itemID,
-			  }
+				}
 			: undefined;
 	}
 
@@ -210,7 +210,7 @@ export class PersonWizardComponent implements OnChanges {
 		}
 	}
 
-	protected onNameChanged(name: IName): void {
+	protected onNameChanged(name: IPersonNames): void {
 		console.log('PersonFormComponent.onNameChanged()', name);
 		if (!this.show.nameNext && !isNameEmpty(name)) {
 			this.show = { ...this.show, nameNext: true };

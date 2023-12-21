@@ -162,8 +162,8 @@ export class SneatUserService {
 		const userRecord: IUserRecord | null = userDocSnapshot.exists()
 			? (userDocSnapshot.data() as IUserRecord)
 			: authUser
-			  ? { title: authUser.displayName || authUser.email || authUser.uid }
-			  : null;
+				? { title: authUser.displayName || authUser.email || authUser.uid }
+				: null;
 
 		this.userState$.next({
 			...authState,
@@ -178,7 +178,7 @@ export class SneatUserService {
 			authProvider: authUser?.providerId,
 		};
 		if (authUser?.displayName) {
-			request = { ...request, name: { full: authUser.displayName } };
+			request = { ...request, names: { fullName: authUser.displayName } };
 		}
 		this.userRecordService.initUserRecord(request).subscribe({
 			next: (userDto) => {

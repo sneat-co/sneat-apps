@@ -9,8 +9,8 @@
 			(ionChange)="onCheckboxChange($event, contact)"
 		>
 			{{
-				contact.brief.name?.full ||
-					contact.brief.name?.first + " " + contact.brief.name?.last
+				contact.brief.name?.fullName ||
+					contact.brief.name?.firstName + " " + contact.brief.name?.lastName
 			}}
 			<!--TODO: use pipe-->
 		</ion-checkbox>

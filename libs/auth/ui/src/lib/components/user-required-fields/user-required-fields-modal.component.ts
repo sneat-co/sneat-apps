@@ -90,9 +90,9 @@ export class UserRequiredFieldsModalComponent extends SneatBaseComponent {
 		const ageGroup = this.ageGroup.value as AgeGroupID;
 
 		const request: IInitUserRecordRequest = {
-			name: {
-				first: this.firstName.value || undefined,
-				last: this.lastName.value || undefined,
+			names: {
+				firstName: this.firstName.value || undefined,
+				lastName: this.lastName.value || undefined,
 			},
 			gender,
 			ageGroup,
