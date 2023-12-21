@@ -23,7 +23,7 @@ import {
 import { IonicModule, IonInput } from '@ionic/angular';
 import { createSetFocusToInput } from '@sneat/components';
 import { excludeEmpty } from '@sneat/core';
-import { IName, isNameEmpty } from '@sneat/contactus-core';
+import { IPersonNames, isNameEmpty } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IFormField } from '@sneat/core';
 
@@ -44,7 +44,7 @@ const maxNameLenValidator = Validators.maxLength(50);
 	imports: [CommonModule, IonicModule, FormsModule, ReactiveFormsModule],
 })
 export class NamesFormComponent implements OnChanges, AfterViewInit {
-	@Input({ required: true }) name?: IName = {};
+	@Input({ required: true }) name?: IPersonNames = {};
 	@Input() isActive = true;
 	@Input() disabled = false;
 	@Input() fields?: INamesFormFields;
@@ -59,7 +59,7 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 	// @ViewChild('nextButton', {static: false}) nextButton?: IonButton;
 
 	@Output() readonly keyupEnter = new EventEmitter<Event>();
-	@Output() readonly namesChanged = new EventEmitter<IName>();
+	@Output() readonly namesChanged = new EventEmitter<IPersonNames>();
 
 	@Output() readonly next = new EventEmitter<Event>();
 
@@ -175,20 +175,20 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 	private onInputChangeName(): void {
 		const name = this.name;
 		if (name) {
-			if (name.first) {
-				this.firstName.setValue(name.first);
+			if (name.firstName) {
+				this.firstName.setValue(name.firstName);
 			}
-			if (name.last) {
-				this.lastName.setValue(name.last);
+			if (name.lastName) {
+				this.lastName.setValue(name.lastName);
 			}
-			if (name.middle) {
-				this.middleName.setValue(name.middle);
+			if (name.middleName) {
+				this.middleName.setValue(name.middleName);
 			}
-			if (name.nick) {
-				this.nickName.setValue(name.nick);
+			if (name.nickName) {
+				this.nickName.setValue(name.nickName);
 			}
-			if (name.full) {
-				this.fullName.setValue(name.full);
+			if (name.fullName) {
+				this.fullName.setValue(name.fullName);
 			}
 		}
 		if (this.initialNameChange) {
@@ -263,11 +263,11 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 
 	private setName(): void {
 		this.name = excludeEmpty({
-			first: this.firstName.value || '',
-			last: this.lastName.value || '',
-			middle: this.middleName.value || '',
-			full: this.fullName.value || '',
-			nick: this.nickName.value || '',
+			firstName: this.firstName.value || '',
+			lastName: this.lastName.value || '',
+			middleName: this.middleName.value || '',
+			fullName: this.fullName.value || '',
+			nickName: this.nickName.value || '',
 		});
 		if (this.isFullNameChanged && isNameEmpty(this.name)) {
 			this.isFullNameChanged = false;
@@ -275,12 +275,12 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 		this.namesChanged.emit(this.name);
 	}
 
-	public names(): IName {
+	public names(): IPersonNames {
 		return excludeEmpty({
-			first: this.firstName.value || '',
-			last: this.lastName.value || '',
-			middle: this.lastName.value || '',
-			full: this.fullName.value || '',
+			firstName: this.firstName.value || '',
+			lastName: this.lastName.value || '',
+			middleName: this.lastName.value || '',
+			fullName: this.fullName.value || '',
 		});
 	}
 

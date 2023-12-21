@@ -1,10 +1,15 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { IIdAndOptionalBriefAndOptionalDto } from '@sneat/core';
-import { IName, IPerson, IPersonBrief } from '@sneat/contactus-core';
+import { IPersonNames, IPerson, IPersonBrief } from '@sneat/contactus-core';
 
-export function personName(name?: IName): string | undefined {
+export function personName(name?: IPersonNames): string | undefined {
 	return (
-		name && (name.full || name.nick || name.first || name.last || name.middle)
+		name &&
+		(name.fullName ||
+			name.nickName ||
+			name.firstName ||
+			name.lastName ||
+			name.middleName)
 	);
 }
 

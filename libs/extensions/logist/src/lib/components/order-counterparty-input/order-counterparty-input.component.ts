@@ -93,7 +93,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 				type: 'company',
 				countryID: counterparty.countryID,
 				title: counterparty.title,
-				name: { full: counterparty.title },
+				name: { fullName: counterparty.title },
 			},
 		});
 		this.contact = undefined;
@@ -101,10 +101,10 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 			? this.order?.dto?.counterparties?.filter(
 					(c) =>
 						c.contactID === this.contactID && c.role === this.counterpartyRole,
-			  )
+				)
 			: this.order?.dto?.counterparties?.filter(
 					(c) => c.role === this.counterpartyRole,
-			  );
+				);
 		if (counterparties && counterparties.length === 1) {
 			const counterparty = counterparties[0];
 			this.contact = contactFromCounterparty(counterparty);

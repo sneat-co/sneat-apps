@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SneatApiService } from '@sneat/api';
-import { AgeGroupID, Gender, IName } from '@sneat/contactus-core';
+import { AgeGroupID, Gender, IPersonNames } from '@sneat/contactus-core';
 import { excludeUndefined, TeamType } from '@sneat/core';
 import { IUserDto } from '@sneat/dto';
 import { Observable, share } from 'rxjs';
@@ -31,7 +31,7 @@ export interface IInitUserRecordRequest {
 	readonly authProvider?: string;
 	readonly gender?: Gender;
 	readonly ageGroup?: AgeGroupID;
-	readonly name?: IName;
+	readonly names?: IPersonNames;
 	readonly email?: string;
 	readonly emailIsVerified?: boolean;
 	readonly ianaTimezone?: string;
