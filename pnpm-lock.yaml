@@ -69,8 +69,8 @@ dependencies:
     specifier: 5.5.4
     version: 5.5.4
   date-fns:
-    specifier: 3.0.5
-    version: 3.0.5
+    specifier: 3.0.6
+    version: 3.0.6
   firebase:
     specifier: 10.7.1
     version: 10.7.1
@@ -7882,8 +7882,8 @@ packages:
       whatwg-mimetype: 3.0.0
       whatwg-url: 11.0.0
 
-  /date-fns@3.0.5:
-    resolution: {integrity: sha512-Q4Tq5c5s/Zl/zbgdWf6pejn9ru7UwdIlLfvEEg1hVsQNQ7LKt76qIduagIT9OPK7+JCv1mAKherdU6bOqGYDnw==}
+  /date-fns@3.0.6:
+    resolution: {integrity: sha512-W+G99rycpKMMF2/YD064b2lE7jJGUe+EjOES7Q8BIGY8sbNdbgcs9XFTZwvzc9Jx1f3k7LB7gZaZa7f8Agzljg==}
     dev: false
 
   /dayjs@1.11.10:
