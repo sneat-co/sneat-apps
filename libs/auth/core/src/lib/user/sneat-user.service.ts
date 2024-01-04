@@ -8,6 +8,7 @@ import {
 	collection,
 	doc,
 	onSnapshot,
+	Unsubscribe,
 } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { IUserRecord } from '@sneat/auth-models';
@@ -18,7 +19,7 @@ import {
 	ISneatAuthUser,
 	SneatAuthStateService,
 } from '../sneat-auth-state-service';
-import { BehaviorSubject, Observable, ReplaySubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import {
 	IInitUserRecordRequest,
 	UserRecordService,
@@ -32,7 +33,7 @@ const UsersCollection = 'users';
 
 @Injectable({ providedIn: 'root' }) // TODO: lazy loading
 export class SneatUserService {
-	private userDocSubscription?: Subscription;
+	// private userDocSubscription?: Subscription;
 	private readonly userCollection: CollectionReference<IUserRecord>;
 	private readonly userDocRef = (uid: string) => doc(this.userCollection, uid);
 
@@ -46,6 +47,8 @@ export class SneatUserService {
 		initialSneatAuthState,
 	);
 	public readonly userState = this.userState$.asObservable();
+
+	private unsubscribeFromUserDoc?: Unsubscribe;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -70,9 +73,9 @@ export class SneatUserService {
 		return this.uid;
 	}
 
-	public get userTitle(): string | undefined {
-		return this.$userTitle;
-	}
+	// public get userTitle(): string | undefined {
+	// 	return this.$userTitle;
+	// }
 
 	public setUserCountry(countryID: string): Observable<void> {
 		return this.sneatApiService.post('users/set_user_country', { countryID });
@@ -90,8 +93,9 @@ export class SneatUserService {
 		if (this.uid === authUser?.uid) {
 			return;
 		}
-		this.userDocSubscription?.unsubscribe();
-		this.userDocSubscription = undefined;
+		if (this.unsubscribeFromUserDoc) {
+			this.unsubscribeFromUserDoc();
+		}
 		if (!authUser) {
 			if (this.userState$.value?.record !== null) {
 				this.userState$.next({ ...this.userState$.value });
@@ -116,7 +120,7 @@ export class SneatUserService {
 		// 		}) => exists: ${userDocSnapshot.exists()}`,
 		// 	);
 		// });
-		onSnapshot(userDocRef, {
+		this.unsubscribeFromUserDoc = onSnapshot(userDocRef, {
 			next: (userDocSnapshot) => {
 				this.userDocChanged(userDocSnapshot, authState);
 			},
@@ -190,8 +194,9 @@ export class SneatUserService {
 
 	private onUserSignedOut(): void {
 		this.uid = undefined;
-		if (this.userDocSubscription) {
-			this.userDocSubscription.unsubscribe();
+		if (this.unsubscribeFromUserDoc) {
+			this.unsubscribeFromUserDoc();
+			this.unsubscribeFromUserDoc = undefined;
 		}
 	}
 
