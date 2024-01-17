@@ -33,7 +33,7 @@ runs:
                 echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
 
         -   name: Cache PNPM store directory
-            uses: actions/cache@v3
+            uses: actions/cache@v4
             with:
                 path: |
                     /home/runner/.cache/Cypress
