@@ -70,7 +70,6 @@ jobs:
             GCLOUD_PROJECT: demo-local-sneat-app
             FIREBASE_AUTH_EMULATOR_HOST: 127.0.0.1:9099
             FIRESTORE_EMULATOR_HOST: 127.0.0.1:8080
-            FIREBASE_EMULATORS_PATH: ${{ github.workspace }}/emulator-cache
 
         steps:
             -   name: Checkout repository
@@ -86,6 +85,15 @@ jobs:
                     chrome-version: latest
             -   run: chrome --version
 
+            -   name: Cache firebase emulators
+                uses: actions/cache@v4
+                with:
+                    path: ${{ github.workspace }}/emulator-cache
+                    key: ${{ runner.os }}-firebase-emulators-${{ hashFiles('emulator-cache/**') }}
+                    restore-keys: |
+                        ${{ runner.os }}-firebase-emulators-
+                continue-on-error: true
+
             -   name: Install Firebase
                 run: curl -sL https://firebase.tools | bash
             #    -   name: Install Firebase
@@ -93,14 +101,6 @@ jobs:
 
             -   uses: ./.github/actions/pnpm
 
-#            -   name: Cache firebase emulators
-#                uses: actions/cache@v4
-#                with:
-#                    path: ${{ env.FIREBASE_EMULATORS_PATH }}
-#                    key: ${{ runner.os }}-firebase-emulators-${{ hashFiles('emulator-cache/**') }}
-#                    restore-keys: |
-#                        ${{ runner.os }}-firebase-emulators-
-#                continue-on-error: true
 
             # Running pnpm install --force bellow because at the moment, @angular/fire is not supporting Angular 17.
             # It can be removed once @angular/fire is updated to 17 as well.
