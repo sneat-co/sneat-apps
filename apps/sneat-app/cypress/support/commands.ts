@@ -1,5 +1,5 @@
 // ***********************************************
-import { IFirebaseConfig, baseEnvironmentConfig } from '@sneat/app';
+import { IFirebaseConfig } from '@sneat/app';
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
 // existing commands.
@@ -15,13 +15,27 @@ import {
 	createUserWithEmailAndPassword,
 	fetchSignInMethodsForEmail,
 } from 'firebase/auth';
-import { FirebaseOptions, initializeApp } from 'firebase/app';
+import { initializeApp } from 'firebase/app';
 import {
 	connectFirestoreEmulator,
 	getFirestore as getLibFirestore,
 } from '@firebase/firestore';
 
-const FIREBASE_CONFIG: IFirebaseConfig = baseEnvironmentConfig.firebaseConfig;
+const FIREBASE_CONFIG: IFirebaseConfig = {
+	useEmulators: true,
+	emulator: {
+		host: '127.0.0.1',
+		authPort: 9099,
+		firestorePort: 8080,
+	},
+	apiKey: 'AIzaSyAYGGhSQQ8gUcyPUcUOFW7tTSYduRD3cuw',
+	authDomain: 'sneat.app',
+	projectId: 'demo-local-sneat-app', // In real app The 'demo-' prefix is added if useEmulators is true
+	// 	storageBucket: 'sneat-team.appspot.com',
+	// 	messagingSenderId: '724666284649',
+	appId: '1:724666284649:web:080ffaab56bb71e49740f8',
+	measurementId: 'G-RRM3BNCN0S',
+};
 
 // noinspection HttpUrlsUsage
 const emulatorConfig = FIREBASE_CONFIG.emulator;
@@ -33,8 +47,7 @@ const AUTH_ENDPOINT = `http://${emulatorConfig.host}:${emulatorConfig.authPort}`
 const TEST_USER_EMAIL = 'test@gmail.com';
 const TEST_USER_PASS = 'password';
 
-const getFirebaseApp = () =>
-	initializeApp(FIREBASE_CONFIG as unknown as FirebaseOptions);
+const getFirebaseApp = () => initializeApp(FIREBASE_CONFIG);
 const getAuth = () => getLibAuth(getFirebaseApp());
 const getFirestore = () => getLibFirestore(getFirebaseApp());
 

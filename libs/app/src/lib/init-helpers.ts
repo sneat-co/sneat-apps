@@ -4,7 +4,10 @@ function firebaseApiKey(useEmulators: boolean, apiKey: string): string {
 	return useEmulators ? 'emulator-does-not-need-api-key' : apiKey;
 }
 
-function firebaseProjectId(useEmulators: boolean, projectId: string): string {
+export function firebaseProjectId(
+	useEmulators: boolean,
+	projectId: string,
+): string {
 	return useEmulators ? 'demo-' + projectId : projectId;
 }
 
