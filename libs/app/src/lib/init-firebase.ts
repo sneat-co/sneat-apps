@@ -8,7 +8,6 @@ import {
 } from '@angular/fire/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-import { environmentConfig } from '../environments/environment';
 
 export function ImportFirebaseModules(firebaseConfig: IFirebaseConfig) {
 	// console.log('ImportFirebaseModules');
@@ -19,13 +18,13 @@ export function ImportFirebaseModules(firebaseConfig: IFirebaseConfig) {
 			const fbApp = injector.get(FirebaseApp);
 			const firestore = getFirestore(fbApp);
 			const { emulator } = firebaseConfig;
-			if (firebaseConfig.useEmulators && emulator?.firestorePort) {
+			if (firebaseConfig.useEmulators && emulator) {
 				console.log(
-					`using firebase firestore emulator on ${environmentConfig.firebaseBaseUrl}:${emulator.firestorePort}`,
+					`using firebase firestore emulator on ${emulator.host}:${emulator.firestorePort}`,
 				);
 				connectFirestoreEmulator(
 					firestore,
-					environmentConfig.firebaseBaseUrl!,
+					emulator.host,
 					emulator.firestorePort,
 				);
 			}
@@ -37,9 +36,10 @@ export function ImportFirebaseModules(firebaseConfig: IFirebaseConfig) {
 			const auth = getAuth(fbApp);
 			const { emulator } = firebaseConfig;
 			if (firebaseConfig.useEmulators && emulator?.authPort) {
+				// noinspection HttpUrlsUsage
 				connectAuthEmulator(
 					auth,
-					`http://${environmentConfig.firebaseBaseUrl}:${emulator.authPort}`,
+					`http://${emulator.host}:${emulator.authPort}`,
 				);
 			}
 			return auth;

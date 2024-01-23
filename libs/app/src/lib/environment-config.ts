@@ -3,6 +3,7 @@ import { InjectionToken } from '@angular/core';
 export interface IFirebaseConfig {
 	useEmulators?: boolean;
 	emulator?: {
+		host: '127.0.0.1' | 'localhost';
 		authPort: number;
 		firestorePort: number;
 	};

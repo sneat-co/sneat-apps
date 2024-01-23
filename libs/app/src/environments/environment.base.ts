@@ -13,6 +13,7 @@ const useEmulators = true;
 const firebaseConfig: IFirebaseConfig = {
 	useEmulators,
 	emulator: {
+		host: '127.0.0.1',
 		authPort: 9099,
 		firestorePort: 8080,
 	},
@@ -30,5 +31,4 @@ export const baseEnvironmentConfig: IEnvironmentConfig = {
 	useEmulators,
 	agents: {},
 	firebaseConfig,
-	firebaseBaseUrl: 'localhost',
 };

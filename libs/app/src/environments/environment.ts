@@ -14,5 +14,4 @@ const useEmulators = true;
 export const environmentConfig: IEnvironmentConfig = {
 	...baseEnvironmentConfig,
 	useEmulators,
-	firebaseBaseUrl: 'localhost',
 };
