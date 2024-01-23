@@ -83,7 +83,6 @@ jobs:
                 uses: browser-actions/setup-chrome@v1
                 with:
                     chrome-version: latest
-            -   run: chrome --version
 
             -   name: Cache firebase emulators
                 uses: actions/cache@v4
