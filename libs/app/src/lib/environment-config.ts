@@ -1,12 +1,14 @@
 import { InjectionToken } from '@angular/core';
 
+export interface IFirebaseEmulatorConfig {
+	host: '127.0.0.1' | 'localhost';
+	authPort: number;
+	firestorePort: number;
+}
+
 export interface IFirebaseConfig {
 	useEmulators?: boolean;
-	emulator?: {
-		host: '127.0.0.1' | 'localhost';
-		authPort: number;
-		firestorePort: number;
-	};
+	emulator?: IFirebaseEmulatorConfig;
 	//
 	projectId: string;
 	appId: string;

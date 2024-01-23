@@ -1,3 +1,4 @@
+export * from './environments';
 export * from './lib/sneat-base-app';
 export * from './lib/environment-config';
 export * from './lib/sneat-application.module';

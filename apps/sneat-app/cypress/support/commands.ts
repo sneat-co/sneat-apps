@@ -1,4 +1,5 @@
 // ***********************************************
+import { IFirebaseConfig, baseEnvironmentConfig } from '@sneat/app';
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
 // existing commands.
@@ -20,23 +21,15 @@ import {
 	getFirestore as getLibFirestore,
 } from '@firebase/firestore';
 
-const EMULATOR_CONFIG = {
-	authPort: 9099,
-	firestorePort: 8080,
-};
-const FIREBASE_CONFIG = {
-	useEmulators: true,
-	emulator: EMULATOR_CONFIG,
-	apiKey: 'emulator-does-not-need-api-key',
-	authDomain: 'sneat.app',
-	projectId: 'demo-local-sneat-app',
-	appId: '1:5233273170:web:61e8d4f12d03a07e',
-	measurementId: 'G-CMCYD6HVGN',
-	nickname: 'Sneat.app',
-	messagingSenderId: 5233273170,
-};
-const HOST = '127.0.0.1';
-const AUTH_ENDPOINT = `http://${HOST}:${EMULATOR_CONFIG.authPort}`;
+const FIREBASE_CONFIG: IFirebaseConfig = baseEnvironmentConfig.firebaseConfig;
+
+// noinspection HttpUrlsUsage
+const emulatorConfig = FIREBASE_CONFIG.emulator;
+if (!emulatorConfig) {
+	throw new Error('Firebase config has no emulator configuration');
+}
+// noinspection HttpUrlsUsage
+const AUTH_ENDPOINT = `http://${emulatorConfig.host}:${emulatorConfig.authPort}`;
 const TEST_USER_EMAIL = 'test@gmail.com';
 const TEST_USER_PASS = 'password';
 
@@ -69,8 +62,8 @@ Cypress.Commands.add('initializeFirebaseEmulators', () => {
 		(() => {
 			connectFirestoreEmulator(
 				getFirestore(),
-				HOST,
-				EMULATOR_CONFIG.firestorePort,
+				emulatorConfig.host,
+				emulatorConfig.firestorePort,
 			);
 			connectAuthEmulator(getAuth(), AUTH_ENDPOINT, { disableWarnings: true });
 			sessionStorage.clear();
