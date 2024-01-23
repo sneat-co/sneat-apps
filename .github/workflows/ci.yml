@@ -94,8 +94,8 @@ jobs:
                 continue-on-error: true
 
             -   name: Install Firebase Tools
-                run: curl -Lo ./firebase_bin https://firebase.tools/bin/linux/v12.9.1
-                #                run: curl -sL https://firebase.tools | bash
+#                run: curl -Lo ./firebase_bin https://firebase.tools/bin/linux/v12.9.1
+                run: curl -sL https://firebase.tools | bash
                 #        run: pnpm install -g firebase-tools
 
             -   uses: ./.github/actions/pnpm
