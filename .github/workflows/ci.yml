@@ -93,14 +93,14 @@ jobs:
 
             -   uses: ./.github/actions/pnpm
 
-            -   name: Cache firebase emulators
-                uses: actions/cache@v4
-                with:
-                    path: ${{ env.FIREBASE_EMULATORS_PATH }}
-                    key: ${{ runner.os }}-firebase-emulators-${{ hashFiles('emulator-cache/**') }}
-                    restore-keys: |
-                        ${{ runner.os }}-firebase-emulators-
-                continue-on-error: true
+#            -   name: Cache firebase emulators
+#                uses: actions/cache@v4
+#                with:
+#                    path: ${{ env.FIREBASE_EMULATORS_PATH }}
+#                    key: ${{ runner.os }}-firebase-emulators-${{ hashFiles('emulator-cache/**') }}
+#                    restore-keys: |
+#                        ${{ runner.os }}-firebase-emulators-
+#                continue-on-error: true
 
             # Running pnpm install --force bellow because at the moment, @angular/fire is not supporting Angular 17.
             # It can be removed once @angular/fire is updated to 17 as well.
@@ -109,11 +109,13 @@ jobs:
 
             -   name: Run emulators
                 run: |
-                    pnpm run cy:emulators &
+                    pnpm run firebase-emulators:ci &
                     sleep 10
 
             -   name: Build and serve application
-                run: pnpm run cy:serve:ci &
+                run: |
+                    pnpm run cy:serve:ci &
+                    sleep 5
 
             -   name: Run e2e tests
                 uses: cypress-io/github-action@v6
