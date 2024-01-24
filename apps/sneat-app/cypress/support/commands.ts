@@ -1,4 +1,5 @@
 // ***********************************************
+import { FirebaseApp } from '@angular/fire/app';
 import { IFirebaseConfig } from '@sneat/app';
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
@@ -47,7 +48,14 @@ const AUTH_ENDPOINT = `http://${emulatorConfig.host}:${emulatorConfig.authPort}`
 const TEST_USER_EMAIL = 'test@gmail.com';
 const TEST_USER_PASS = 'password';
 
-const getFirebaseApp = () => initializeApp(FIREBASE_CONFIG);
+let firebaseApp: FirebaseApp;
+const getFirebaseApp = () => {
+	if (!firebaseApp) {
+		firebaseApp = initializeApp(FIREBASE_CONFIG);
+	}
+	return firebaseApp;
+};
+
 const getAuth = () => getLibAuth(getFirebaseApp());
 const getFirestore = () => getLibFirestore(getFirebaseApp());
 
