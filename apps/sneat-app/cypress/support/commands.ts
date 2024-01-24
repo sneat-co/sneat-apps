@@ -80,6 +80,7 @@ Cypress.Commands.add('initializeFirebaseEmulators', () => {
 			);
 			connectAuthEmulator(getAuth(), AUTH_ENDPOINT, { disableWarnings: true });
 			sessionStorage.clear();
+			return 0; // To eliminate warning
 		})(),
 	);
 });
