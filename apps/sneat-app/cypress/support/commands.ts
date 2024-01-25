@@ -17,10 +17,10 @@ import {
 	fetchSignInMethodsForEmail,
 } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
-import {
-	connectFirestoreEmulator,
-	getFirestore as getLibFirestore,
-} from '@firebase/firestore';
+// import {
+// 	connectFirestoreEmulator,
+// 	getFirestore as getLibFirestore,
+// } from '@firebase/firestore';
 
 const FIREBASE_CONFIG: IFirebaseConfig = {
 	useEmulators: true,
@@ -57,7 +57,7 @@ const getFirebaseApp = () => {
 };
 
 const getAuth = () => getLibAuth(getFirebaseApp());
-const getFirestore = () => getLibFirestore(getFirebaseApp());
+// const getFirestore = () => getLibFirestore(getFirebaseApp());
 
 const signInProgrammatically = (email: string, password: string) => {
 	const signIn = signInWithEmailAndPassword(getAuth(), email, password).catch(
@@ -78,20 +78,25 @@ Cypress.Commands.add('login', (email, password) => {
 	});
 });
 
-Cypress.Commands.add('initializeFirebaseEmulators', () => {
+const initializeFirebaseEmulators = () => {
 	return cy.wrap(
 		(() => {
-			connectFirestoreEmulator(
-				getFirestore(),
-				emulatorConfig.host,
-				emulatorConfig.firestorePort,
-			);
+			// connectFirestoreEmulator(
+			// 	getFirestore(),
+			// 	emulatorConfig.host,
+			// 	emulatorConfig.firestorePort,
+			// );
 			connectAuthEmulator(getAuth(), AUTH_ENDPOINT, { disableWarnings: true });
 			sessionStorage.clear();
 			return 0; // To eliminate warning
 		})(),
 	);
-});
+};
+
+Cypress.Commands.add(
+	'initializeFirebaseEmulators',
+	initializeFirebaseEmulators,
+);
 
 Cypress.Commands.add('deleteAllAuthUsers', () => {
 	cy.request(
