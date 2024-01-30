@@ -42,7 +42,7 @@ export type ContainerType = 'unknown' | '20ft' | '40ft';
 export type FreightFlag = 'hazardous' | 'letter_of_credit';
 
 export interface IFreightLoad {
-	readonly flags?: ReadonlyArray<FreightFlag>;
+	readonly flags?: readonly FreightFlag[];
 	readonly grossWeightKg?: number;
 	readonly numberOfPallets?: number;
 	readonly volumeM3?: number; // 1m3 = 1000L
@@ -157,7 +157,7 @@ export interface IOrderRoute {
 }
 
 export function getSegmentsByContainerID(
-	segments?: ReadonlyArray<IContainerSegment>,
+	segments?: readonly IContainerSegment[],
 	id?: string,
 ): IContainerSegment[] | undefined {
 	return segments?.filter((s) => s.containerID === id);
@@ -174,8 +174,8 @@ export function getSegmentCounterparty(
 }
 
 export interface ILogistOrderDto extends IFreightOrderBrief, IWithModified {
-	readonly contacts?: ReadonlyArray<IOrderContact>;
-	readonly counterparties?: ReadonlyArray<IOrderCounterparty>;
+	readonly contacts?: readonly IOrderContact[];
+	readonly counterparties?: readonly IOrderCounterparty[];
 	readonly route?: IOrderRoute;
 	// buyer?: IOrderCounterparty;
 	// buyerRef?: string;
@@ -187,18 +187,16 @@ export interface ILogistOrderDto extends IFreightOrderBrief, IWithModified {
 	// shipperRef?: string;
 	// agent?: IOrderCounterparty;
 	// agentRef?: string;
-	readonly shippingPoints?: ReadonlyArray<IOrderShippingPoint>;
-	readonly containers?: ReadonlyArray<IOrderContainer>;
-	readonly containerPoints?: ReadonlyArray<IContainerPoint>;
-	readonly segments?: ReadonlyArray<IContainerSegment>;
+	readonly shippingPoints?: readonly IOrderShippingPoint[];
+	readonly containers?: readonly IOrderContainer[];
+	readonly containerPoints?: readonly IContainerPoint[];
+	readonly segments?: readonly IContainerSegment[];
 	readonly declarations?: IFreightDeclaration[];
 	// readonly specialInstructions?: string;
 	readonly issued?: IDocIssued;
 }
 
-export interface ILogistOrderBrief extends IFreightOrderBrief {
-	// TODO: Why?
-}
+export type ILogistOrderBrief = IFreightOrderBrief
 
 export type ILogistOrderContext = ITeamItemNavContext<
 	ILogistOrderBrief,
@@ -206,7 +204,7 @@ export type ILogistOrderContext = ITeamItemNavContext<
 >;
 
 export interface ICreateLogistOrderRequest extends ITeamRequest {
-	readonly numberOfContainers?: { [size: string]: number };
+	readonly numberOfContainers?: Record<string, number>;
 	readonly order: ILogistOrderDto;
 }
 
@@ -235,13 +233,13 @@ export interface IAddContainerPointsRequest extends ILogistOrderRequest {
 
 export interface IAddContainerPoint {
 	readonly id: string;
-	readonly tasks: ReadonlyArray<ShippingPointTask>;
+	readonly tasks: readonly ShippingPointTask[];
 }
 
 export interface IAddOrderShippingPointRequest extends ILogistOrderRequest {
-	readonly tasks?: ReadonlyArray<ShippingPointTask>;
+	readonly tasks?: readonly ShippingPointTask[];
 	readonly locationContactID: string;
-	readonly containers?: ReadonlyArray<IAddContainerPoint>;
+	readonly containers?: readonly IAddContainerPoint[];
 }
 
 export interface INewContainerPoint {
@@ -274,21 +272,21 @@ export interface IOrderSegmentKey {
 }
 
 export interface IOrderSegment extends IOrderSegmentKey {
-	containerSegments: ReadonlyArray<IContainerSegment>;
+	containerSegments: readonly IContainerSegment[];
 }
 
 function groupBy<T>(
-	x: ReadonlyArray<T>,
+	x: readonly T[],
 	f: (v: T) => string,
-): { [id: string]: ReadonlyArray<T> } {
-	return x.reduce(
-		(a: { [id: string]: T[] }, b: T) => ((a[f(b)] ||= []).push(b), a),
-		{},
-	);
+): Record<string, readonly T[]> {
+	return x.reduce((a: Record<string, T[]>, b: T) => {
+		(a[f(b)] ||= []).push(b);
+		return a;
+	}, {});
 }
 
 export function getOrderSegments(
-	segments?: ReadonlyArray<IContainerSegment>,
+	segments?: readonly IContainerSegment[],
 ): IOrderSegment[] {
 	if (!segments) {
 		return [];
@@ -336,7 +334,7 @@ export interface IAddSegmentsRequest extends ILogistOrderRequest {
 
 export interface IUpdateShippingPointRequest
 	extends IOrderShippingPointRequest {
-	readonly setNumbers?: { [field: string]: number };
+	readonly setNumbers?: Record<string, number>;
 	readonly setStrings?: {
 		[key in ShippingPointStringField]: string | undefined;
 	};
