@@ -45,14 +45,10 @@ type RecurringsByWeekday = {
 };
 
 const emptyRecurringsByWeekday = () =>
-	wd2.reduce(
-		(o, wd) => {
-			o[wd] = [];
-			return o;
-		},
-		// tslint:disable-next-line:no-object-literal-type-assertion
-		{} as RecurringsByWeekday,
-	);
+	wd2.reduce((o, wd) => {
+		o[wd] = [];
+		return o;
+	}, {} as RecurringsByWeekday);
 
 // export function happeningDtoToSlot(id: string, dto: ISingleHappeningDto): ISlotItem {
 // 	if (!dto.title) {
@@ -164,7 +160,7 @@ export class TeamDaysProvider {
 		IHappeningBrief,
 		IHappeningDto
 	>;
-	private readonly singlesByDate: { [date: string]: ISlotItem[] } = {};
+	private readonly singlesByDate: Record<string, ISlotItem[]> = {};
 	private readonly recurringByWd: RecurringsByWeekday =
 		emptyRecurringsByWeekday();
 
@@ -181,7 +177,7 @@ export class TeamDaysProvider {
 		distinctUntilChanged(),
 	);
 
-	private readonly days: { [d: string]: TeamDay } = {};
+	private readonly days: Record<string, TeamDay> = {};
 
 	private readonly recurrings$: Observable<RecurringSlots> =
 		this.schedulusTeam$.pipe(
@@ -375,7 +371,6 @@ export class TeamDaysProvider {
 			// const $regulars = this.regularService.watchByCommuneId(this.communeId)
 			.pipe(
 				tap((recurrings) => {
-					// tslint:disable-next-line:no-this-assignment
 					recurrings.forEach((recurring) => this.processRecurring(recurring));
 				}),
 			);

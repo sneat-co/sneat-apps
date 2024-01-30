@@ -33,11 +33,11 @@ export interface ISlotItem {
 	timing: ITiming;
 	repeats: Repeats;
 	location?: SlotLocation;
-	participants?: { [id: string]: ISlotParticipant };
+	participants?: Record<string, ISlotParticipant>;
 	levels?: Level[];
 }
 
-export type SlotsByWeekday = { [wd: string]: ISlotItem[] };
+export type SlotsByWeekday = Record<string, ISlotItem[]>;
 
 export interface RecurringSlots {
 	byWeekday: SlotsByWeekday;

@@ -1,4 +1,3 @@
-//tslint:disable:no-unsafe-any
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IListItemBrief } from '@sneat/dto';
 import { IListContext } from '@sneat/team-models';
@@ -39,7 +38,6 @@ export abstract class BaseListItemPage extends BaseListPage {
 
 	override setList(list: IListContext): void {
 		super.setList(list);
-		// tslint:disable-next-line:no-this-assignment
 		const { itemId } = this;
 		if (itemId && list.dto?.items) {
 			const listItemInfo = list.dto.items.find((item) => item.id === itemId);
@@ -53,7 +51,6 @@ export abstract class BaseListItemPage extends BaseListPage {
 		console.log('BaseListItemPage.onQueryParamsChanged', queryParams);
 	}
 
-	// tslint:disable-next-line:prefer-function-over-method
 	protected onListItemInfoChanged(listItemInfo?: IListItemBrief): void {
 		console.log('BaseListItemPage.onListItemInfoChanged', listItemInfo);
 	}

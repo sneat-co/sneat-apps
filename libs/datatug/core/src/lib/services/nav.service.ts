@@ -152,7 +152,7 @@ export class NavService {
 		navController: NavController,
 		url: string,
 		navOptions: NavigationOptions,
-		event: { name: string; params?: { [key: string]: unknown } },
+		event: { name: string; params?: Record<string, unknown> },
 	): void {
 		console.log('navForward()', event.name, event.params);
 		navController = navController || this.navController;
@@ -169,7 +169,7 @@ export class NavService {
 		team: IRecord<ITeamDto>,
 		url: string,
 		eventName: string,
-		params?: { [key: string]: unknown },
+		params?: Record<string, unknown>,
 	): void => {
 		params = { ...(params || {}), team: team.id };
 		this.navForward(

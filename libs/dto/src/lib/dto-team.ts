@@ -23,7 +23,7 @@ export interface ITeamDto extends ITotalsHolder {
 	// active?: ITeamMeetings;
 	// last?: ITeamMeetings;
 	upcomingRetro?: {
-		itemsByUserAndType?: { [user: string]: { [itemType: string]: number } };
+		itemsByUserAndType?: Record<string, Record<string, number>>;
 	};
 
 	noContactRoles?: string[]; // lists roles that have no contacts. For example families that have no plumber contacts.

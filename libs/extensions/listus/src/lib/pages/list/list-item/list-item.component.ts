@@ -1,4 +1,3 @@
-//tslint:disable:no-unsafe-any
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IonItemSliding } from '@ionic/angular';
 import { listItemAnimations } from '@sneat/core';
@@ -94,7 +93,6 @@ export class ListItemComponent {
 		this.setIsDone(this.listItemWithUiState, isDone);
 	}
 
-	// tslint:disable-next-line:prefer-function-over-method
 	setIsDone(
 		item?: IListItemWithUiState,
 		isDone?: boolean,

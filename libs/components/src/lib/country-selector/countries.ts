@@ -4,7 +4,7 @@ export interface ICountry {
 	emoji: string;
 }
 
-export const countriesByID: { [id: string]: ICountry } = {
+export const countriesByID: Record<string, ICountry> = {
 	AU: { id: 'AU', title: 'Australia', emoji: '🇦🇺' },
 	EE: { id: 'EE', title: 'Estonia', emoji: '🇪🇪' },
 	LV: { id: 'LV', title: 'Latvia', emoji: '🇱🇻' },

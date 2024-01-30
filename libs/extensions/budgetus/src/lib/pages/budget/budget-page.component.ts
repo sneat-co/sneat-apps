@@ -1,4 +1,3 @@
-//tslint:disable:no-unsafe-any
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Member } from '@sneat/contactus-core';
@@ -67,11 +66,10 @@ export class BudgetPageComponent extends TeamBaseComponent {
 			? 0
 			: this.members.reduce(
 					(s, m) =>
-						// tslint:disable-next-line:align
 						s +
 						m.totals.per(this.period, this.showIncomes(), this.showExpenses()),
 					0,
-			  );
+				);
 		this.total =
 			this.assetGroups.reduce(
 				(s, g) =>

@@ -101,8 +101,7 @@ export class CommuneDocumentPageComponent
 						changed = true;
 					}
 					const updateDatetime = (field: string) => {
-						// tslint:disable-next-line:no-magic-numbers
-						const v = document[field] && document[field].substr(0, 10);
+						const v = document[field]?.substring(0, 'yyyy-MM-dd'.length);
 						if (docDto[field] !== v) {
 							docDto[field] = v;
 							changed = true;

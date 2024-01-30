@@ -30,7 +30,7 @@ import { LogistOrderService } from '../../services';
 export class DispatcherComponent implements OnChanges {
 	@Input() order?: ILogistOrderContext;
 	@Input() counterparty?: IOrderCounterparty;
-	@Input() orderDispatchers?: ReadonlyArray<IOrderCounterparty>;
+	@Input() orderDispatchers?: readonly IOrderCounterparty[];
 
 	@Output() orderChange = new EventEmitter<ILogistOrderContext>();
 

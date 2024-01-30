@@ -10,7 +10,7 @@ interface Brief {
 	readonly title: string;
 }
 
-function items<B>(o: { [id: string]: B }): readonly IIdAndBriefDemo<B>[] {
+function items<B>(o: Record<string, B>): readonly IIdAndBriefDemo<B>[] {
 	return Object.keys(o).map((id) => ({ id, brief: o[id] }));
 }
 
@@ -23,7 +23,7 @@ function items<B>(o: { [id: string]: B }): readonly IIdAndBriefDemo<B>[] {
 	imports: [CommonModule],
 })
 export class WebstormTypeErrDemoComponent {
-	protected readonly _items: { [id: string]: Brief } = {
+	protected readonly _items: Record<string, Brief> = {
 		first: { title: 'First' },
 	};
 

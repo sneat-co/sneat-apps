@@ -27,7 +27,7 @@ export interface ICreateContactBaseRequest extends ITeamRequest {
 	parentContactID?: string;
 	roles?: string[];
 	relatedToAssets?: IContact2Asset[];
-	relatedToContacts?: { [id: string]: IContact2ContactInRequest };
+	relatedToContacts?: Record<string, IContact2ContactInRequest>;
 }
 
 export interface ICreateContactPersonRequest extends ICreateContactBaseRequest {

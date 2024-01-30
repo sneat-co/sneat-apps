@@ -10,7 +10,7 @@ export interface IUserRecord {
 	readonly emailIsVerified?: boolean;
 	readonly avatar?: IAvatar;
 	readonly teamIDs?: readonly string[];
-	readonly teams?: { [id: string]: IUserTeamBrief };
+	readonly teams?: Record<string, IUserTeamBrief>;
 }
 
 export enum TeamMemberTypeEnum {

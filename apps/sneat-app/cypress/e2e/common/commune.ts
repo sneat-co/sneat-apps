@@ -47,14 +47,17 @@ export const getFamilyMemberRelationTypeRadioButton = (
 		);
 	}
 
-	return cy
-		.get(
-			'sneat-new-commune-page sneat-radio-group-to-select ion-radio-group ion-radio',
-		)
-		.eq(familyMemberRelationRadioIndexMap.get(relationType)!)
-		.shadow()
-		.find('label')
-		.should('include.text', relationType);
+	return (
+		cy
+			.get(
+				'sneat-new-commune-page sneat-radio-group-to-select ion-radio-group ion-radio',
+			)
+			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+			.eq(familyMemberRelationRadioIndexMap.get(relationType)!)
+			.shadow()
+			.find('label')
+			.should('include.text', relationType)
+	);
 };
 
 export const selectNumberOfChildren = (numberOfChildren: number) =>
@@ -102,14 +105,17 @@ export const getFamilyLivingSituationRadioButton = (
 		);
 	}
 
-	return cy
-		.get(
-			'sneat-new-commune-page sneat-radio-group-to-select ion-radio-group ion-radio',
-		)
-		.eq(dwellingTypeRadioIndexMap.get(livingSituation)!)
-		.shadow()
-		.find('label')
-		.should('include.text', livingSituation);
+	return (
+		cy
+			.get(
+				'sneat-new-commune-page sneat-radio-group-to-select ion-radio-group ion-radio',
+			)
+			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+			.eq(dwellingTypeRadioIndexMap.get(livingSituation)!)
+			.shadow()
+			.find('label')
+			.should('include.text', livingSituation)
+	);
 };
 
 enum NewCommuneSummaryItem {

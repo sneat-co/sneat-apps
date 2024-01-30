@@ -1,4 +1,3 @@
-//tslint:disable:no-unsafe-any
 import { CommuneBasePage } from 'sneat-shared/pages/commune-base-page';
 import { Asset } from 'sneat-shared/models/ui/ui-asset';
 import { IAssetDto, IVehicle } from 'sneat-shared/models/dto/dto-asset';

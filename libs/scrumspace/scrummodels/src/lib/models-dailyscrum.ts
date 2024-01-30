@@ -6,7 +6,7 @@ import { ITeamItemNavContext } from '@sneat/team-models';
 
 export type TaskType = 'done' | 'risk' | 'todo' | 'plan' | 'qna' | 'kudos';
 
-export interface IScrumBrief extends IMemberBrief {}
+export type IScrumBrief = IMemberBrief;
 
 export interface IScrumDto extends IScrumBrief, IMeeting {
 	// Key as: YYYY-MM-DD

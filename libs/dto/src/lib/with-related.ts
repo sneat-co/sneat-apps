@@ -11,30 +11,26 @@ export interface IRelationship {
 	created: IWithCreatedShort;
 }
 
-export type IRelationships = Readonly<{
-	[relationshipID: string]: IRelationship;
-}>;
+export type IRelationships = Readonly<Record<string, IRelationship>>;
 
 export interface IRelatedItem {
 	readonly relatedAs?: IRelationships; // if related contact is a child of the current contact, then relatedAs = {"child": ...}
 	readonly relatesAs?: IRelationships; // if related contact is a child of the current contact, then relatesAs = {"parent": ...}
 }
 
-export type IRelatedItemsByID = Readonly<{
-	[itemID: string]: IRelatedItem;
-}>;
+export type IRelatedItemsByID = Readonly<Record<string, IRelatedItem>>;
 
-export type IRelatedItemsByCollection = Readonly<{
-	[collectionID: string]: IRelatedItemsByID;
-}>;
+export type IRelatedItemsByCollection = Readonly<
+	Record<string, IRelatedItemsByID>
+>;
 
-export type IRelatedItemsByModule = Readonly<{
-	[moduleID: string]: IRelatedItemsByCollection;
-}>;
+export type IRelatedItemsByModule = Readonly<
+	Record<string, IRelatedItemsByCollection>
+>;
 
-export type IRelatedItemsByTeam = Readonly<{
-	[teamID: string]: IRelatedItemsByModule;
-}>;
+export type IRelatedItemsByTeam = Readonly<
+	Record<string, IRelatedItemsByModule>
+>;
 
 export interface IWithRelatedOnly {
 	readonly related?: IRelatedItemsByTeam;

@@ -13,7 +13,7 @@ export class OrdersFilterComponent {
 
 	@Output() readonly filterChange = new EventEmitter<IOrdersFilter>();
 
-	contactByRole: { [role: string]: IContactContext | undefined } = {};
+	contactByRole: Record<string, IContactContext | undefined> = {};
 	direction: OrderDirection | '' = '';
 	status: 'draft' | 'active' | 'complete' | 'canceled' = 'active';
 	counterpartyID = '';

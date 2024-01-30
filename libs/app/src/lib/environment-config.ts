@@ -23,7 +23,7 @@ export interface IFirebaseConfig {
 export interface IEnvironmentConfig {
 	production: boolean;
 	useEmulators: boolean;
-	agents: { [id: string]: string };
+	agents: Record<string, string>;
 	firebaseConfig: IFirebaseConfig;
 	firebaseBaseUrl?: string;
 }

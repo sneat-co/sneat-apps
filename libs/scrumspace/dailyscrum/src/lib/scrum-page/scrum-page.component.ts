@@ -71,7 +71,7 @@ export class ScrumPageComponent
 	public personalMetrics?: IMetric[];
 	public timer?: Timer;
 	public expandedMemberId?: string | null;
-	private scrumsById: { [id: string]: IScrumDto } = {};
+	private scrumsById: Record<string, IScrumDto> = {};
 	private subscriptions: Subscription[] = []; // TODO: replace with subs from BAsePage?
 
 	constructor(
@@ -274,8 +274,8 @@ export class ScrumPageComponent
 			this.prevScrumDate = ScrumPageComponent.getDateFromId(this.prevScrumID);
 		}
 		if (team.members) {
-			this.spectators = team.members.filter(
-				(m) => m.roles?.indexOf(MemberRoleSpectator),
+			this.spectators = team.members.filter((m) =>
+				m.roles?.indexOf(MemberRoleSpectator),
 			);
 			const uid = this.currentUserId;
 			const member = Object.values(team.members).find((m) => m.userID === uid);

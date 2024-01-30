@@ -95,7 +95,7 @@
 	</ion-item>
 
 	@if (filter) {
-		@for (item of filteredItems || []) {
+		@for (item of filteredItems || []; track item.id) {
 			<ion-item
 				tappable
 				*ngFor="let item of filteredItems || []"
@@ -115,7 +115,7 @@
 		}
 	}
 	<ng-container *ngIf="!filter && currentFolder">
-		@for (folder of currentFolder.folders) {
+		@for (folder of currentFolder.folders; track folder.id) {
 			<ion-item tappable (click)="cd(folder.id)">
 				<ion-icon name="folder-outline" slot="start" color="primary" />
 				<ion-label>{{ folder.id }}</ion-label>

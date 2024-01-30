@@ -11,7 +11,7 @@ export interface IAnalyticsCallOptions {
 export interface IAnalyticsService {
 	logEvent(
 		eventName: string,
-		eventParams?: { [key: string]: unknown },
+		eventParams?: Record<string, unknown>,
 		options?: IAnalyticsCallOptions,
 	): void;
 

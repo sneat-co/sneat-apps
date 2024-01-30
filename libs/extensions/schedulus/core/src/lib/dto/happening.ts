@@ -21,11 +21,11 @@ export interface IHappeningBase extends IWithRelatedOnly {
 	readonly title: string;
 	readonly levels?: Level[];
 	readonly contactIDs?: string[];
-	readonly participants?: { [id: string]: Readonly<IHappeningParticipant> };
+	readonly participants?: Record<string, Readonly<IHappeningParticipant>>;
 	slots?: IHappeningSlot[]; // TODO: make readonly
 }
 
-export interface IHappeningBrief extends IHappeningBase {}
+export type IHappeningBrief = IHappeningBase;
 
 export interface IWithDates {
 	dates?: string[];

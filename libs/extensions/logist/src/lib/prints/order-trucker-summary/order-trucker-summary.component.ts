@@ -31,7 +31,7 @@ export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 	selfCounterparty?: IOrderCounterparty;
 	ship?: IOrderCounterparty;
 	shippingLine?: IOrderCounterparty;
-	points?: ReadonlyArray<IContainerInfo>;
+	points?: readonly IContainerInfo[];
 
 	buyerRefNumber?: string;
 

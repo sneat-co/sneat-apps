@@ -10,7 +10,7 @@ import {
 	MemberRole,
 } from '.';
 
-export interface IPersonBrief extends IContactBase {}
+export type IPersonBrief = IContactBase;
 
 export interface IPerson extends IContactBase {
 	readonly email?: string; // TODO: Document how email is different from emails

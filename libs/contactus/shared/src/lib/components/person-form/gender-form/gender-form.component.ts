@@ -16,12 +16,12 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 const animationTimings = '150ms';
 
-type GenderOption = {
+interface GenderOption {
 	id: Gender;
 	title: string;
 	icon: string;
 	emoji?: string;
-};
+}
 
 const gendersOptions: readonly GenderOption[] = [
 	{ id: GenderMale, title: 'Male', icon: 'man-outline', emoji: '👨' },

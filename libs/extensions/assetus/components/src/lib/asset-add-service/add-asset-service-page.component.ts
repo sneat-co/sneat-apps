@@ -19,7 +19,6 @@ export class AddAssetServicePageComponent extends AssetBasePage {
 		super('AddAssetServicePageComponent', params);
 	}
 
-	// tslint:disable-next-line:prefer-function-over-method
 	selectProvider(serviceProvider: DtoServiceProvider): void {
 		console.log('selectProvider() => id:', serviceProvider.id);
 	}
@@ -61,7 +60,7 @@ export class AddAssetServicePageComponent extends AssetBasePage {
 					this.serviceProviders = this.serviceType
 						? result.values.filter(
 								(v) => v.serviceTypes && v.serviceTypes.includes(serviceType),
-						  )
+							)
 						: result.values;
 				});
 		}

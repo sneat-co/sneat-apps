@@ -49,7 +49,7 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 		{ id: 'internal', title: 'Internal' },
 	];
 
-	private numberOfContainers: { [size: string]: number } = {};
+	private numberOfContainers: Record<string, number> = {};
 
 	readonly = false;
 
@@ -142,7 +142,7 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 		this.order = order;
 	}
 
-	onNumberOfContainersChanged(v: { [size: string]: number }): void {
+	onNumberOfContainersChanged(v: Record<string, number>): void {
 		console.log(
 			'NewLogistOrderPageComponent.onNumberOfContainersChanged():',
 			v,

@@ -34,7 +34,7 @@ export class NewSegmentService {
 			params.order,
 			{ path: 'new-segments' },
 			excludeUndefined({ container: params.container?.id }),
-			params as unknown as { [id: string]: unknown },
+			params as unknown as Record<string, unknown>,
 		);
 		// navController.navigateForward('new-segments', { relativeTo: route }).catch(console.error);
 	}

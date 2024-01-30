@@ -19,4 +19,4 @@ export interface ICalendarDayBrief {
 	happeningAdjustments: IHappeningAdjustment[];
 }
 
-export interface ICalendarDayDto extends ICalendarDayBrief {}
+export type ICalendarDayDto = ICalendarDayBrief;

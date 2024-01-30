@@ -39,7 +39,7 @@ export interface ITimerState {
 	activeMemberId?: string;
 	at?: Timestamp | string;
 	by?: IByUser;
-	secondsByMember?: { [member: string]: number };
+	secondsByMember?: Record<string, number>;
 	isToggling?: boolean;
 }
 

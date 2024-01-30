@@ -40,9 +40,7 @@ export abstract class TeamModuleService<Dto> extends ModuleTeamItemService<
 
 	watchBriefs<ItemBrief>(
 		teamID: string,
-		getBriefs: (dto?: Dto) => Readonly<{
-			[id: string]: ItemBrief;
-		}>,
+		getBriefs: (dto?: Dto) => Readonly<Record<string, ItemBrief>>,
 	): Observable<IIdAndBrief<ItemBrief>[]> {
 		const o = this.watchTeamModuleRecord(teamID);
 		return o.pipe(

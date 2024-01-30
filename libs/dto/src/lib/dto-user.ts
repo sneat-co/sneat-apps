@@ -63,7 +63,6 @@ export function addCommuneToUserDto(
 	};
 }
 
-// tslint:disable-next-line:no-unnecessary-class
 export class UserModel {
 	public static getCommuneInfoByShortId(
 		id: string,

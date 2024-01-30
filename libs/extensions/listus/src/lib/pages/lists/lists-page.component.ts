@@ -1,4 +1,3 @@
-//tslint:disable:no-unsafe-any
 import { Component, Inject, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonInput, IonItemSliding, PopoverController } from '@ionic/angular';
@@ -223,7 +222,6 @@ export class ListsPageComponent extends TeamBaseComponent {
 
 	trackByGroupIndex = (index: number, group: IListGroup) => group.type;
 
-	// tslint:disable-next-line:prefer-function-over-method
 	trackById(index: number, item: IListInfo): string | number {
 		return (
 			(item.id && `id:${item.id}`) ||

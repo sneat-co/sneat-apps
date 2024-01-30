@@ -46,9 +46,9 @@ const teamBriefFromUserTeamInfo = (v: IUserTeamBrief): ITeamBrief => ({
 export class TeamService {
 	private userID?: string;
 
-	private currentUserTeams?: { [id: string]: IUserTeamBrief };
+	private currentUserTeams?: Record<string, IUserTeamBrief>;
 
-	private teams$: { [id: string]: BehaviorSubject<ITeamContext> } = {};
+	private teams$: Record<string, BehaviorSubject<ITeamContext>> = {};
 	private subscriptions: Subscription[] = [];
 
 	private readonly sfs: SneatFirestoreService<ITeamBrief, ITeamDto>;

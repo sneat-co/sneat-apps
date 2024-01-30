@@ -51,11 +51,10 @@ export interface IAssetBrief extends ITitled {
 }
 
 export interface IAssetusTeamDto extends ITitled {
-	assets?: { [id: string]: IAssetBrief };
+	assets?: Record<string, IAssetBrief>;
 }
 
-export interface IAssetusTeamContext
-	extends INavContext<IAssetusTeamDto, IAssetusTeamDto> {}
+export type IAssetusTeamContext = INavContext<IAssetusTeamDto, IAssetusTeamDto>;
 
 export interface IAssetMainData extends IAssetBrief {
 	parentAssetID?: string;

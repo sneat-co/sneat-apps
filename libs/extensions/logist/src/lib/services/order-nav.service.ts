@@ -14,8 +14,8 @@ export class OrderNavService {
 		direction: 'forward' | 'back',
 		order: ILogistOrderContext,
 		url?: { path: string; fragment?: string },
-		params?: { [id: string]: unknown },
-		state?: { [id: string]: unknown },
+		params?: Record<string, unknown>,
+		state?: Record<string, unknown>,
 	): Promise<boolean> {
 		const { id, team } = order;
 		let u = `/space/${team.type}/${team.id}/order/${id}`;

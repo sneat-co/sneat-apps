@@ -13,8 +13,6 @@ import { BaseListPage } from '../base-list-page';
 	templateUrl: './add-to-watch-page.component.html',
 	providers: [CommuneBasePageParams],
 })
-
-// tslint:disable-next-line:component-class-suffix
 export class AddToWatchPageComponent
 	extends BaseListPage
 	implements CommuneBasePage
@@ -51,9 +49,7 @@ export class AddToWatchPageComponent
 	find(): void {
 		console.log('yes');
 		const result = this.ts.searchMovies(this.searchText);
-		// tslint:disable-next-line:no-any
 		result.subscribe((movies) => {
-			// tslint:disable-next-line:no-any
 			movies.forEach((movie) => {
 				movie.idTmdb = movie.id;
 				delete movie.id;
@@ -68,7 +64,6 @@ export class AddToWatchPageComponent
 		if (!movie) {
 			throw new Error('Missing required parameter item');
 		}
-		// tslint:disable-next-line:max-line-length
 		console.log(
 			`AddToWatchPage.addListItem(item={id:${movie.id}, title: ${movie.title})`,
 			'this.shortListId',

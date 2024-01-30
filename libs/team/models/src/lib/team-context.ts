@@ -7,7 +7,7 @@ export interface ITeamRef {
 }
 
 export function zipMapBriefsWithIDs<Brief>(
-	briefs?: Readonly<{ [id: string]: Brief }>,
+	briefs?: Readonly<Record<string, Brief>>,
 ): readonly IIdAndBrief<Brief>[] {
 	return briefs
 		? Object.keys(briefs).map((id) => ({ id, brief: briefs[id] }))
@@ -15,7 +15,7 @@ export function zipMapBriefsWithIDs<Brief>(
 }
 
 export function zipMapDTOsWithIDs<DTO>(
-	o?: Readonly<{ [id: string]: DTO }>,
+	o?: Readonly<Record<string, DTO>>,
 ): readonly IIdAndBrief<DTO>[] {
 	return o ? Object.keys(o).map((id) => ({ id, brief: o[id] })) : [];
 }

@@ -10,7 +10,7 @@ export class OrderTruckersComponent implements OnChanges {
 	@Input({ required: true }) team?: ITeamContext;
 	@Input() order?: ILogistOrderContext;
 
-	public truckers?: ReadonlyArray<IOrderCounterparty>;
+	public truckers?: readonly IOrderCounterparty[];
 	hasUnassignedSegments = false;
 
 	ngOnChanges(changes: SimpleChanges): void {

@@ -161,13 +161,9 @@ export class NewListItemComponent {
 					// }
 					this.isAdding = false;
 					this.added.emit({ brief: listItemBrief, state: {} });
-					setTimeout(
-						() => {
-							this.focus();
-						},
-						// tslint:disable-next-line:no-magic-numbers
-						100,
-					);
+					setTimeout(() => {
+						this.focus();
+					}, 100);
 				},
 				error: (err) => {
 					this.errorLogger.logError(err, 'Failed to add item to list');
@@ -186,7 +182,6 @@ export class NewListItemComponent {
 		const worker = async () => {
 			const toast = await this.toastCtrl.create({
 				...opts,
-				// tslint:disable-next-line:no-magic-numbers
 				duration: opts.duration || 2000,
 				buttons: [{ role: 'cancel', text: 'OK' }],
 			});

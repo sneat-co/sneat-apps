@@ -47,7 +47,7 @@ export interface ILogistTeamBrief {
 	readonly orderNumberPrefix?: string;
 }
 
-export interface ILogistTeamDto extends ILogistTeamBrief {}
+export type ILogistTeamDto = ILogistTeamBrief;
 
 export type ILogistTeamContext = INavContext<ILogistTeamBrief, ILogistTeamDto>;
 

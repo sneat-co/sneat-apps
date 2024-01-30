@@ -37,5 +37,5 @@ export interface IBoardWidgetInstance {
 
 export interface IBoardContext {
 	mode: 'edit' | 'view';
-	parameters: { [name: string]: IParameterValueWithoutID };
+	parameters: Record<string, IParameterValueWithoutID>;
 }

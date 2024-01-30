@@ -61,9 +61,10 @@ export class MembersListComponent implements OnChanges {
 	@Input() public members?: readonly IIdAndBrief<IContactBrief>[];
 	@Input() public role?: string;
 	@Output() selfRemoved = new EventEmitter<void>();
-	@Input() public contactsByMember: {
-		[id: string]: readonly IIdAndBrief<IContactBrief>[];
-	} = {};
+	@Input() public contactsByMember: Record<
+		string,
+		readonly IIdAndBrief<IContactBrief>[]
+	> = {};
 
 	@Input() public hideRoles: readonly string[] = ['member'];
 

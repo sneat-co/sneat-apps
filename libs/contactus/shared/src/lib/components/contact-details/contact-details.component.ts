@@ -57,7 +57,7 @@ export class ContactDetailsComponent implements OnChanges {
 	@Input({ required: true }) public team?: ITeamRef;
 	@Input({ required: true }) public contact?: IContactContext;
 
-	private userTeamBriefs?: { [id: string]: IUserTeamBrief };
+	private userTeamBriefs?: Record<string, IUserTeamBrief>;
 	private currentUserContactID?: string;
 
 	protected get contactWithBriefAndOptionalDto():
@@ -97,7 +97,7 @@ export class ContactDetailsComponent implements OnChanges {
 					moduleID: 'contactus',
 					collection: 'contacts',
 					itemID,
-			  }
+				}
 			: undefined;
 	}
 
@@ -138,7 +138,9 @@ export class ContactDetailsComponent implements OnChanges {
 		);
 	}
 
-	private setRelatedAs(): void {}
+	// private setRelatedAs(): void {
+	// 	console.log('setRelatedAs() - not implemented yet');
+	// }
 
 	protected get currentUserID() {
 		return this.params.userService.currentUserID;
@@ -231,7 +233,6 @@ export class ContactDetailsComponent implements OnChanges {
 	}
 
 	changeGender(event: Event): void {
-		// tslint:disable-next-line:no-any
 		const gender = (event as CustomEvent).detail.value as Gender;
 		console.debug(`CommuneMemberPageComponent.changeGender(${gender})`);
 

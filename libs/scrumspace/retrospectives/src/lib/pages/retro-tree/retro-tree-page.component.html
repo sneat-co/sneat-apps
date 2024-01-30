@@ -3,11 +3,11 @@
 		<ion-back-button
 			slot="start"
 			[defaultHref]="defaultBackUrl"
-		></ion-back-button>
+		/>
 		<ion-title>
 			Retrospective
 			<ng-container *ngIf="team"
-				>@ {{ team?.data?.title || team?.id }}</ng-container
+				>&#64; {{ team?.data?.title || team?.id }}</ng-container
 			>
 			: {{ meetingId }}
 		</ion-title>
@@ -18,16 +18,10 @@
 	<ion-row>
 		<ion-col size="12" size-lg="3" *ngFor="let category of categories">
 			<h2 class="ion-padding">{{ category.title }}</h2>
-			<angular-dnd-tree
-				[treeId]="positive.ID"
-				[rootItem]="category"
-				<!--
-				[spec]="treeSpec"
-				--
-			>
+			<angular-dnd-tree [treeId]="positive.ID" [rootItem]="category">
 				(moved)="itemMoved($event)" >
 				<ng-template angularDndTreeItem let-node>
-					<sneat-retro-item-card [treeNode]="node"></sneat-retro-item-card>
+					<sneat-retro-item-card [treeNode]="node" />
 				</ng-template>
 			</angular-dnd-tree>
 			<ion-card *ngIf="isAllowedToAddItems()">
@@ -35,7 +29,7 @@
 					[teamId]="team?.id"
 					[meetingId]="meetingId"
 					[retroItemType]="category.ID"
-				></sneat-add-retro-item>
+				/>
 			</ion-card>
 		</ion-col>
 	</ion-row>

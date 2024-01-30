@@ -1,4 +1,3 @@
-//tslint:disable:no-unsafe-any
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
 	AlertController,
@@ -40,7 +39,6 @@ export class AssetLiabilitiesComponent {
 
 	liabilitiesByServiceType: AssetLiabilitiesByServiceType[];
 
-	// tslint:disable-next-line:no-output-on-prefix // TODO: remove
 	@Output() serviceAdded = new EventEmitter<{ type: LiabilityServiceType }>();
 
 	@Input() set asset(v: IAssetDto | undefined) {
@@ -66,7 +64,6 @@ export class AssetLiabilitiesComponent {
 		if (!this.assetDto) {
 			return;
 		}
-		// tslint:disable-next-line:no-this-assignment
 		const { assetDto } = this;
 
 		if (!assetDto) {
@@ -120,7 +117,6 @@ export class AssetLiabilitiesComponent {
 		}
 	}
 
-	// tslint:disable-next-line:prefer-function-over-method
 	trackByServiceType(
 		i: number,
 		service: AssetLiabilitiesByServiceType,

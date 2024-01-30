@@ -17,7 +17,6 @@ export class MovieService implements IMovieService {
 		// super(rxStoreProvider, MovieKind);
 	}
 
-	// tslint:disable-next-line:prefer-function-over-method
 	addCommuneItem(
 		dto: IMovieDto,
 		// tx?: IRxReadwriteTransaction<ListusAppSchema>,

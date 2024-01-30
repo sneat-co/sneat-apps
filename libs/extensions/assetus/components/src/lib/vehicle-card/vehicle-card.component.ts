@@ -1,4 +1,3 @@
-//tslint:disable:no-unsafe-any
 import { CommonModule } from '@angular/common';
 import {
 	Component,
@@ -86,7 +85,6 @@ export class VehicleCardComponent implements OnChanges {
 		}
 	}
 
-	// tslint:disable-next-line:prefer-function-over-method
 	editRegNumber(): void {
 		alert('Editing registration number is not implemented yet');
 	}

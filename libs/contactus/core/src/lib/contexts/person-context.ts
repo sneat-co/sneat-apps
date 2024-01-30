@@ -25,7 +25,7 @@ export class Member {
 
 	constructor(
 		public member: IMemberContext,
-		public isChecked: boolean = false,
+		public isChecked = false,
 	) {
 		this.totals = new Totals(member.dto?.totals);
 	}

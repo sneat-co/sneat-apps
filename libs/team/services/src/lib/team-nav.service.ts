@@ -247,7 +247,7 @@ export class TeamNavService {
 		navController: NavController,
 		url: string,
 		navOptions: NavigationOptions,
-		analyticsEvent: { name: string; params?: { [id: string]: unknown } },
+		analyticsEvent: { name: string; params?: Record<string, unknown> },
 	): void {
 		console.log(
 			'navForward()',
@@ -269,7 +269,7 @@ export class TeamNavService {
 		team: ITeamRef,
 		url: string,
 		eventName: string,
-		params?: { [id: string]: unknown },
+		params?: Record<string, unknown>,
 	): void => {
 		params = { ...(params || {}), team: team.id };
 		this.navForward(
