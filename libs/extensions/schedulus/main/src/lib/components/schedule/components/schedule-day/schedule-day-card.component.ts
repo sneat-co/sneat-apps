@@ -82,7 +82,6 @@ export class ScheduleDayCardComponent
 
 	private createSlides(): void {
 		if (!this.teamDaysProvider) {
-			return;
 			throw new Error('!this.teamDaysProvider');
 		}
 		const current = getToday();

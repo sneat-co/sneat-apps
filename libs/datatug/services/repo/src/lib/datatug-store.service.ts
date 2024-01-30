@@ -17,9 +17,7 @@ import { storeCanProvideListOfProjects } from '@sneat/core';
 
 @Injectable()
 export class DatatugStoreService {
-	private readonly projectsByStore: {
-		[storeId: string]: Observable<IProjectBase[]>;
-	} = {};
+	private readonly projectsByStore: Record<string, Observable<IProjectBase[]>> = {};
 
 	private datatugUserState?: IDatatugUserState;
 
@@ -93,19 +91,14 @@ export const recordsetToGridDef = (
 				return false;
 			}
 			const colDef = recordset.def?.columns?.find(
-				(cDef) => cDef.name === c.name,
+				(cDef: { name: unknown }) => cDef.name === c.name,
 			);
-			if (
-				colDef?.hideIf?.parameters?.find(
-					(pId) =>
-						recordset.parameters?.find(
-							(p) => p.id === pId && p.value !== undefined,
-						),
-				)
-			) {
-				return false;
-			}
-			return true;
+			return !colDef?.hideIf?.parameters?.find((pId: unknown) =>
+				recordset.parameters?.find(
+					(p: { id: unknown; value: unknown }) =>
+						p.id === pId && p.value !== undefined,
+				),
+			);
 		})
 		.map((col) => {
 			const { c } = col;
@@ -117,7 +110,7 @@ export const recordsetToGridDef = (
 			};
 			return gridCol;
 		});
-	const reducer = (r: { [id: string]: unknown }, v: unknown, i: number) => {
+	const reducer = (r: Record<string, unknown>, v: unknown, i: number) => {
 		r['' + i] = v;
 		return r;
 	};

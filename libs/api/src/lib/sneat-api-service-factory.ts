@@ -11,15 +11,11 @@ export const getStoreUrl = (storeId: string): string => {
 		console.log('firestoreStoreAgent', v);
 		return v.endsWith('/') ? v.substring(0, v.length - 1) : v;
 	}
-	if (
-		!storeId ||
-		storeId.startsWith('http://') ||
-		storeId.startsWith('https://')
-	) {
+	if (!storeId || storeId.match(/https?:\/\//)) {
 		return storeId;
 	}
 	if (storeId.startsWith('http-')) {
-		return storeId.replace('http-', 'http://');
+		return storeId.replace('http-', 'http' + '://');
 	}
 	if (storeId.startsWith('https-')) {
 		return storeId.replace('https-', 'https://');

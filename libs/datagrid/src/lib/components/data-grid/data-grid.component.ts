@@ -178,7 +178,9 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 			}
 			if (this.tabulatorOptions) {
 				this.tabulatorOptions = { ...this.tabulatorOptions, data: this.data };
-				this.tabulator?.setData(this.data);
+				this.tabulator
+					?.setData(this.data)
+					.catch(this.errorLogger.logErrorHandler('Failed to set data'));
 			} else {
 				this.createTabulatorGrid();
 			}

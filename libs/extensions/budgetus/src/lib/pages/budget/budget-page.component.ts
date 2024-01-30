@@ -123,10 +123,13 @@ export class BudgetPageComponent extends TeamBaseComponent {
 			this.errorLogger.logError('no team context');
 			return;
 		}
-		this.teamParams.teamNavService.navigateForwardToTeamPage(
-			this.team,
-			'new-liability',
-		);
+		this.teamParams.teamNavService
+			.navigateForwardToTeamPage(this.team, 'new-liability')
+			.catch(
+				this.errorLogger.logErrorHandler(
+					'Failed to navigate to new liability page',
+				),
+			);
 	}
 
 	readonly trackById = (i: number, item: { id: string } | undefined) =>

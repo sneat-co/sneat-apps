@@ -68,8 +68,6 @@ export class InviteService {
 			// fullName: this.fullName,
 		};
 		return this.sneatApiService.post('invites/accept_personal_invite', request);
-
-		return throwError(() => 'not implemented');
 	}
 
 	public acceptInviteByUnauthenticatedUser(

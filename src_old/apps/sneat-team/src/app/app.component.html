@@ -21,7 +21,7 @@
 								slot="start"
 								[ios]="p.icon + '-outline'"
 								[md]="p.icon + '-sharp'"
-							></ion-icon>
+							/>
 							<ion-label>{{ p.title }}</ion-label>
 						</ion-item>
 					</ion-menu-toggle>
@@ -35,12 +35,12 @@
 							slot="start"
 							ios="bookmark-outline"
 							md="bookmark-sharp"
-						></ion-icon>
+						/>
 						<ion-label>{{ label }}</ion-label>
 					</ion-item>
 				</ion-list>
 			</ion-content>
 		</ion-menu>
-		<ion-router-outlet id="main-content"></ion-router-outlet>
+		<ion-router-outlet id="main-content" />
 	</ion-split-pane>
 </ion-app>

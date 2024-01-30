@@ -51,8 +51,8 @@ export class EnvDbPageComponent implements OnDestroy, AfterViewInit {
 		resizable: true,
 	};
 
-	allRows: { [tab: string]: IRecordsetInfo[] } = {};
-	filteredRows: { [tab: string]: IRecordsetInfo[] } = {};
+	allRows: Record<string, IRecordsetInfo[]> = {};
+	filteredRows: Record<string, IRecordsetInfo[]> = {};
 
 	private tabulator: Tabulator;
 
@@ -106,7 +106,7 @@ export class EnvDbPageComponent implements OnDestroy, AfterViewInit {
 			return row;
 		};
 		if (this.filteredRows[this.tab]) {
-			this.tabulator.setData(this.filteredRows[this.tab]);
+			this.tabulator.setData(this.filteredRows[this.tab]).catch(console.error);
 		} else if (!this.allRows[this.tab]) {
 			switch (this.tab) {
 				case 'tables':
@@ -128,7 +128,7 @@ export class EnvDbPageComponent implements OnDestroy, AfterViewInit {
 		}
 		this.filteredRows[this.tab] = rows;
 		if (this.tabulator) {
-			this.tabulator.setData(rows);
+			this.tabulator.setData(rows).catch(console.error);
 		} else {
 			this.createTabulator();
 		}
