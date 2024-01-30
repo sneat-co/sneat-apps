@@ -34,7 +34,7 @@ export const getStoreUrl = (storeId: string): string => {
 
 @Injectable({ providedIn: 'root' })
 export class SneatApiServiceFactory {
-	private services: { [id: string]: ISneatApiService } = {};
+	private services: Record<string, ISneatApiService> = {};
 
 	constructor(
 		private readonly httpClient: HttpClient,

@@ -153,7 +153,6 @@ export class AssetAddDocumentComponent
 		// 	vehicle.nextServiceDue = this.nextServiceDue;
 		// }
 
-		// tslint:disable-next-line:no-this-assignment
 		// const { engine } = this;
 		// if (engine) {
 		// 	const engineLower = engine.toLowerCase();

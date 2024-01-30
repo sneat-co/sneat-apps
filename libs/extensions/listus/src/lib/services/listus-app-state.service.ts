@@ -1,4 +1,3 @@
-//tslint:disable:no-unsafe-any
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 

@@ -16,7 +16,6 @@ import { Observable, throwError } from 'rxjs';
 
 @Pipe({ name: 'encodeSmsText' })
 export class EncodeSmsText implements PipeTransform {
-	// tslint:disable-next-line:prefer-function-over-method
 	transform(text: string): string | undefined {
 		return encodeURIComponent(text);
 	}

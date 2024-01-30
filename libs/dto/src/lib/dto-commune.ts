@@ -81,7 +81,7 @@ export interface ICommuneDto extends IDemoRecord, ITitledRecord, ITotalsHolder {
 	readonly userID: string;
 	readonly order?: number;
 	readonly numberOf?: TeamCounts;
-	readonly membersCountByRole?: { [id: string]: number };
+	readonly membersCountByRole?: Record<string, number>;
 	readonly noContactRoles?: string[];
 	// readonly groups?: ICommuneDtoMemberGroupInfo[];
 	// readonly members?: readonly ITeamMemberInfo[];

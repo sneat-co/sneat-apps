@@ -1,4 +1,4 @@
-type O = { [id: string]: unknown };
+type O = Record<string, unknown>;
 
 export function excludeUndefined<T>(o: T): T {
 	if (!o) {

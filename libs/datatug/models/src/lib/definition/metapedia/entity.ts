@@ -15,7 +15,7 @@ export interface IEntity extends IOptionallyTitled {
 			contentType: 'json' | 'csv' | 'xml';
 			url: string;
 			source: string;
-			mapping: { [id: string]: string };
+			mapping: Record<string, string>;
 		}[];
 	};
 }

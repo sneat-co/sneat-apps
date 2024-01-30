@@ -178,8 +178,8 @@ export class Timer {
 					operation === TimerOperationEnum.start
 						? TimerStatusEnum.active
 						: operation === TimerOperationEnum.stop
-						? TimerStatusEnum.stopped
-						: undefined,
+							? TimerStatusEnum.stopped
+							: undefined,
 				activeMemberId: member,
 			};
 			this.emitTick();
@@ -352,7 +352,7 @@ export class Timer {
 
 @Injectable()
 export class TimerFactory {
-	private readonly timers: { [id: string]: Timer } = {};
+	private readonly timers: Record<string, Timer> = {};
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,

@@ -11,8 +11,8 @@ export interface IEnvironmentFull extends IEnvironmentBase {
 }
 
 export interface IEnvironmentSummary extends IEnvironmentBase {
-	vars?: { [id: string]: string };
-	connections?: { [id: string]: IConnection };
+	vars?: Record<string, string>;
+	connections?: Record<string, IConnection>;
 	dbServers?: IEnvDbServer[];
 }
 
@@ -23,7 +23,7 @@ export interface IEnvDbServer extends IDbServer {
 }
 
 export interface IProjectEnv {
-	webAPIs?: { [id: string]: IWebApiEnv };
+	webAPIs?: Record<string, IWebApiEnv>;
 }
 
 export interface IWebApiEnv {

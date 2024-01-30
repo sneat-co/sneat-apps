@@ -31,9 +31,9 @@ export class DispatchPointComponent implements OnChanges {
 	@Input() disabled = false;
 
 	shippingPoint?: IOrderShippingPoint;
-	segments?: ReadonlyArray<IContainerSegment>;
-	containerPoints?: ReadonlyArray<IContainerPoint>;
-	containers?: ReadonlyArray<IOrderContainer>;
+	segments?: readonly IContainerSegment[];
+	containerPoints?: readonly IContainerPoint[];
+	containers?: readonly IOrderContainer[];
 	dispatcher?: IOrderCounterparty;
 
 	@Input() deleting = false;

@@ -22,7 +22,7 @@ interface selected {
 	readonly dirty: boolean;
 }
 
-export type TasksByID = { [id: string]: selected | undefined };
+export type TasksByID = Record<string, selected | undefined>;
 
 @Component({
 	selector: 'sneat-shipping-points-selector',
@@ -36,8 +36,8 @@ export class ShippingPointsSelectorComponent implements OnChanges {
 	tab: 'new' | 'existing' = 'existing';
 
 	protected newContact?: IContactContext;
-	protected newShippingPoints?: ReadonlyArray<IOrderShippingPoint>;
-	protected shippingPoints?: ReadonlyArray<IOrderShippingPoint>;
+	protected newShippingPoints?: readonly IOrderShippingPoint[];
+	protected shippingPoints?: readonly IOrderShippingPoint[];
 
 	protected readonly tasksByShippingPoint: TasksByID = {};
 
@@ -58,7 +58,7 @@ export class ShippingPointsSelectorComponent implements OnChanges {
 			const selected = this.tasksByShippingPoint[sp.id];
 			if (!selected?.dirty) {
 				const container = this.container;
-				let tasks: ReadonlyArray<ShippingPointTask> = [];
+				let tasks: readonly ShippingPointTask[] = [];
 				if (container) {
 					tasks =
 						this.order?.dto?.containerPoints?.find(
@@ -103,7 +103,7 @@ export class ShippingPointsSelectorComponent implements OnChanges {
 			dirty: false,
 		};
 		const checked = !!ce.detail.checked;
-		let tasks: ReadonlyArray<ShippingPointTask> = [];
+		let tasks: readonly ShippingPointTask[] = [];
 		if (checked) {
 			if (!selected.tasks.includes(task)) {
 				tasks = [...selected.tasks, task];

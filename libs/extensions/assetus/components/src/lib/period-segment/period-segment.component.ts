@@ -1,4 +1,3 @@
-//tslint:disable:no-unsafe-any
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Period } from '@sneat/dto';
 

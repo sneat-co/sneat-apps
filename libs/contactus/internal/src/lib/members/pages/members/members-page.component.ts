@@ -60,9 +60,10 @@ export class MembersPageComponent
 	implements AfterViewInit
 {
 	private prevMembersCount?: number;
-	public contactsByMember: {
-		[id: string]: readonly IIdAndBrief<IContactBrief>[];
-	} = {};
+	public contactsByMember: Record<
+		string,
+		readonly IIdAndBrief<IContactBrief>[]
+	> = {};
 	public adults: MembersGroup = {
 		id: MemberGroupTypeAdults,
 		emoji: '🧓',
@@ -222,7 +223,6 @@ export class MembersPageComponent
 										// 	m.dto.relatedContacts,
 										// );
 									} else if (this.contactsByMember[m.id]) {
-										// tslint:disable-next-line:no-dynamic-delete
 										delete this.contactsByMember[m.id];
 									}
 								}

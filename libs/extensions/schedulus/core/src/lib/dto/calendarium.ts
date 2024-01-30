@@ -8,11 +8,10 @@ export interface ICalendarHappeningBrief
 		IWithRelatedOnly {}
 
 export interface ICalendariumTeamDto {
-	recurringHappenings?: { [id: string]: ICalendarHappeningBrief };
+	recurringHappenings?: Record<string, ICalendarHappeningBrief>;
 }
 
-export interface ICalendariumTeamDtoWithID
-	extends IIdAndDto<ICalendariumTeamDto> {}
+export type ICalendariumTeamDtoWithID = IIdAndDto<ICalendariumTeamDto>;
 
-export interface ISchedulusTeamContext
-	extends ITeamItemWithOptionalDto<ICalendariumTeamDto> {}
+export type ISchedulusTeamContext =
+	ITeamItemWithOptionalDto<ICalendariumTeamDto>;

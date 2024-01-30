@@ -59,8 +59,8 @@ export class MonthPageComponent {
 			s === 'expense'
 				? a.totals.expenses.count
 				: s === 'income'
-				? a.totals.count
-				: true,
+					? a.totals.count
+					: true,
 		);
 		this.balance = 0;
 		switch (this.segment) {
@@ -113,12 +113,10 @@ export class MonthPageComponent {
 			case 'This':
 				return `${monthNames[monthIndex]} ${d.getFullYear()}`;
 			case 'Previous':
-				// tslint:disable-next-line:no-magic-numbers
 				return `${
 					monthNames[monthIndex === 0 ? 11 : monthIndex - 1]
 				} ${d.getFullYear()}`;
 			case 'Next':
-				// tslint:disable-next-line:no-magic-numbers
 				return `${
 					monthNames[monthIndex === 11 ? 0 : monthIndex + 1]
 				} ${d.getFullYear()}`;
@@ -182,7 +180,6 @@ export class MonthPageComponent {
 		this.expandedAssetId = '';
 	}
 
-	// tslint:disable-next-line:prefer-function-over-method
 	trackById(i: number, record: IRecord): RxRecordKey | undefined {
 		return record.id;
 	}

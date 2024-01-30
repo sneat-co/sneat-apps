@@ -45,19 +45,15 @@ export class Total {
 			result += this.dto.day;
 		}
 		if (this.dto.week !== undefined) {
-			// tslint:disable-next-line:no-magic-numbers
 			result += Math.round(this.dto.week / 7);
 		}
 		if (this.dto.month !== undefined) {
-			// tslint:disable-next-line:no-magic-numbers
 			result += Math.round(this.dto.month / 30);
 		}
 		if (this.dto.quarter !== undefined) {
-			// tslint:disable-next-line:no-magic-numbers
 			result += Math.round(this.dto.quarter / 61);
 		}
 		if (this.dto.year !== undefined) {
-			// tslint:disable-next-line:no-magic-numbers
 			result += Math.round(this.dto.year / 365);
 		}
 		return result;
@@ -72,19 +68,15 @@ export class Total {
 			result += this.dto.week;
 		}
 		if (this.dto.month !== undefined) {
-			// tslint:disable-next-line:no-magic-numbers
 			result += Math.round(this.dto.month / 4.33);
 		}
 		if (this.dto.day !== undefined) {
-			// tslint:disable-next-line:no-magic-numbers
 			result += this.dto.day * 7;
 		}
 		if (this.dto.quarter !== undefined) {
-			// tslint:disable-next-line:no-magic-numbers
 			result += Math.round(this.dto.quarter / 13);
 		}
 		if (this.dto.year !== undefined) {
-			// tslint:disable-next-line:no-magic-numbers
 			result += Math.round(this.dto.year / 52);
 		}
 		return result;
@@ -99,19 +91,15 @@ export class Total {
 			result += this.dto.month;
 		}
 		if (this.dto.day !== undefined) {
-			// tslint:disable-next-line:no-magic-numbers
 			result += this.dto.day * 30;
 		}
 		if (this.dto.week !== undefined) {
-			// tslint:disable-next-line:no-magic-numbers
 			result += this.dto.week * 4.33;
 		}
 		if (this.dto.year !== undefined) {
-			// tslint:disable-next-line:no-magic-numbers
 			result += Math.round(this.dto.year / 12);
 		}
 		if (this.dto.quarter !== undefined) {
-			// tslint:disable-next-line:no-magic-numbers
 			result += Math.round(this.dto.quarter / 3);
 		}
 		return result;
@@ -126,19 +114,15 @@ export class Total {
 			result += this.dto.quarter;
 		}
 		if (this.dto.day !== undefined) {
-			// tslint:disable-next-line:no-magic-numbers
 			result += this.dto.day * 61;
 		}
 		if (this.dto.week !== undefined) {
-			// tslint:disable-next-line:no-magic-numbers
 			result += this.dto.week * 13;
 		}
 		if (this.dto.month !== undefined) {
-			// tslint:disable-next-line:no-magic-numbers
 			result += this.dto.month * 3;
 		}
 		if (this.dto.year !== undefined) {
-			// tslint:disable-next-line:no-magic-numbers
 			result += Math.round(this.dto.year / 4);
 		}
 		return result;
@@ -153,19 +137,15 @@ export class Total {
 			result += this.dto.year;
 		}
 		if (this.dto.day !== undefined) {
-			// tslint:disable-next-line:no-magic-numbers
 			result += this.dto.day * 365;
 		}
 		if (this.dto.week !== undefined) {
-			// tslint:disable-next-line:no-magic-numbers
 			result += this.dto.week * 52;
 		}
 		if (this.dto.month !== undefined) {
-			// tslint:disable-next-line:no-magic-numbers
 			result += this.dto.month * 12;
 		}
 		if (this.dto.quarter !== undefined) {
-			// tslint:disable-next-line:no-magic-numbers
 			result += this.dto.quarter * 4;
 		}
 		return result;
@@ -209,14 +189,12 @@ export class Totals {
 	balance(per: 'month' | 'day'): number {
 		switch (per) {
 			case 'month':
-				// tslint:disable-next-line:no-magic-numbers
 				return (
 					Math.round(
 						(this.incomes.perMonth() - this.expenses.perMonth()) * 100,
 					) / 100
 				);
 			case 'day':
-				// tslint:disable-next-line:no-magic-numbers
 				return (
 					Math.round((this.incomes.perDay() - this.expenses.perDay()) * 100) /
 					100

@@ -1134,7 +1134,7 @@ const emojiKeywords: [string, string[]][] = [
 	],
 ];
 
-const emojiByKeyword: { [kw: string]: string } = {};
+const emojiByKeyword: Record<string, string> = {};
 emojiKeywords
 	.filter((item) => item[0] && item[1] && item[1].length)
 	.forEach((item) => {

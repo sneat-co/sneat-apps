@@ -35,7 +35,7 @@ export abstract class TeamItemPageBaseComponent<
 		this.item = item;
 	}
 
-	protected abstract briefs(): Readonly<{ [id: string]: Brief }> | undefined;
+	protected abstract briefs(): Readonly<Record<string, Brief>> | undefined;
 
 	private itemSubscription?: Subscription;
 

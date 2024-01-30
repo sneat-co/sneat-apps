@@ -35,7 +35,7 @@ export interface IProjectSummary extends IProjectBase {
 	readonly entities?: IProjEntity[];
 	readonly environments?: IProjEnv[];
 	readonly agents?: IStore[];
-	readonly tags?: { [tag: string]: number };
+	readonly tags?: Record<string, number>;
 	readonly default?: {
 		readonly agent?: string;
 	};
@@ -90,8 +90,4 @@ export interface IApiDefinition {
 
 export type FieldType = string | number;
 
-export interface IDefaultValues {
-	[entity: string]: {
-		[field: string]: FieldType;
-	};
-}
+export type IDefaultValues = Record<string, Record<string, FieldType>>;

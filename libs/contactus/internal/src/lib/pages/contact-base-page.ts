@@ -62,7 +62,7 @@ export abstract class ContactBasePage extends TeamItemPageBaseComponent<
 		this.contact = item;
 	}
 
-	protected override briefs(): { [id: string]: IContactBrief } | undefined {
+	protected override briefs(): Record<string, IContactBrief> | undefined {
 		return this.contactusTeam?.dto?.contacts;
 	}
 

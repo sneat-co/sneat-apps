@@ -18,7 +18,7 @@ export interface IDatatugUser extends IUserRecord {
 	datatug?: IDatatugBriefForUser;
 }
 
-export type IDatatugStoreBriefsById = { [id: string]: IDatatugStoreBrief };
+export type IDatatugStoreBriefsById = Record<string, IDatatugStoreBrief>;
 
 export interface IDatatugBriefForUser {
 	stores?: IDatatugStoreBriefsById;
@@ -28,7 +28,7 @@ export interface IDatatugStoreBrief {
 	readonly title: string;
 	readonly type: DatatugProjStoreType;
 	readonly url?: string;
-	readonly projects?: { [id: string]: IProjectBrief };
+	readonly projects?: Record<string, IProjectBrief>;
 }
 
 export interface IDatatugStoreBriefWithId extends IDatatugStoreBrief {
@@ -106,9 +106,9 @@ export function allUserProjectsAsFlatList(
 	return projects;
 }
 
-export function projectsBriefFromDictToFlatList(projects?: {
-	[id: string]: IProjectBrief;
-}): IDatatugProjectBriefWithId[] {
+export function projectsBriefFromDictToFlatList(
+	projects?: Record<string, IProjectBrief>,
+): IDatatugProjectBriefWithId[] {
 	const result: IDatatugProjectBriefWithId[] = [];
 	if (projects) {
 		for (const id in projects) {

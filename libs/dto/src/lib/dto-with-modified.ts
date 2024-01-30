@@ -1,4 +1,7 @@
-export type timestamp = { seconds: number; nanoseconds: number };
+export interface timestamp {
+	seconds: number;
+	nanoseconds: number;
+}
 export const emptyTimestamp: timestamp = { seconds: 0, nanoseconds: 0 };
 
 export interface IWithCreatedShort {

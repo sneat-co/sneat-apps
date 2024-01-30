@@ -74,7 +74,7 @@ export class InvitePersonalPageComponent implements OnInit {
 			this.sneatApiService
 				.getAsAnonymous<{
 					invite?: IPersonalInvite;
-					members?: { [id: string]: IMemberBrief };
+					members?: Record<string, IMemberBrief>;
 				}>(
 					'invites/personal',
 					new HttpParams({

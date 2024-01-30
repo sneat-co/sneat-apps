@@ -17,7 +17,7 @@ interface IRetroCount {
 }
 
 interface IMeetingMemberWithCounts extends IMeetingMember {
-	counts?: { [id: string]: IRetroCount };
+	counts?: Record<string, IRetroCount>;
 }
 
 @Component({
@@ -46,11 +46,11 @@ export class RetroMembersComponent implements OnChanges {
 				if (retrospective) {
 					const members = this.retrospective?.dto?.members;
 					if (members) {
-						this.participants = members.filter(
-							(m) => m.roles?.includes(MemberRoleEnum.contributor),
+						this.participants = members.filter((m) =>
+							m.roles?.includes(MemberRoleEnum.contributor),
 						);
-						this.spectators = members?.filter(
-							(m) => m.roles?.includes(MemberRoleEnum.spectator),
+						this.spectators = members?.filter((m) =>
+							m.roles?.includes(MemberRoleEnum.spectator),
 						);
 					}
 				}
@@ -59,11 +59,11 @@ export class RetroMembersComponent implements OnChanges {
 				// Check for this.retrospective?.data?.userIDs is not great
 				if (this.team?.dto && !this.retrospective?.dto?.userIDs) {
 					const { dto } = this.team;
-					this.participants = dto.members?.filter(
-						(m) => m.roles?.includes(MemberRoleEnum.contributor),
+					this.participants = dto.members?.filter((m) =>
+						m.roles?.includes(MemberRoleEnum.contributor),
 					);
-					this.spectators = dto.members?.filter(
-						(m) => m.roles?.includes(MemberRoleEnum.spectator),
+					this.spectators = dto.members?.filter((m) =>
+						m.roles?.includes(MemberRoleEnum.spectator),
 					);
 				}
 			}

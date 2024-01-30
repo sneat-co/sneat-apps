@@ -35,7 +35,7 @@ export interface DocTypeDef {
 	fields?: IDocTypeStandardFields;
 }
 
-export const standardDocTypesByID: { [id: string]: DocTypeDef } = {
+export const standardDocTypesByID: Record<string, DocTypeDef> = {
 	other: {
 		id: 'other',
 		title: 'Other',
@@ -110,9 +110,7 @@ export interface IDocumentBase {
 	expiresOn?: string; // ISO date string 'YYYY-MM-DD'
 }
 
-export interface IDocumentBrief extends IDocumentBase {
-	// id: string;
-}
+export type IDocumentBrief = IDocumentBase;
 
 export interface IDocData {
 	number?: string;

@@ -14,9 +14,7 @@ export interface IMake {
 	models: IModel[];
 }
 
-export const carMakes: {
-	[make: string]: IMake;
-} = {
+export const carMakes: Record<string, IMake> = {
 	Audi: {
 		models: [
 			{ id: 'A1', engines },

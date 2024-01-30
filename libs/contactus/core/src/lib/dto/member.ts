@@ -65,7 +65,7 @@ export interface IMemberBase
 	readonly avatar?: IAvatar;
 }
 
-export interface IMemberBrief extends IContactBrief {}
+export type IMemberBrief = IContactBrief;
 
 export interface IMemberDto extends IMemberBase {
 	position?: string;
@@ -74,9 +74,7 @@ export interface IMemberDto extends IMemberBase {
 
 export interface IWithContactGroups {
 	groupIDs?: readonly string[];
-	groups: {
-		[id: string]: IContactGroupBrief;
-	};
+	groups: Record<string, IContactGroupBrief>;
 }
 
 // export function newCommuneMemberInfo(id: string, m: IMemberDto): ITeamMemberInfo {

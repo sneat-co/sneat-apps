@@ -24,7 +24,6 @@ export function wdCodeToWeekdayLongName(wd?: WeekdayCode2): string {
 
 @Pipe({ name: 'wdToWeekday' })
 export class WdToWeekdayPipe implements PipeTransform {
-	// tslint:disable-next-line:prefer-function-over-method
 	transform(wd?: WeekdayCode2): string {
 		return wdCodeToWeekdayLongName(wd);
 	}

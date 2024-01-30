@@ -1,4 +1,3 @@
-//tslint:disable:no-unsafe-any
 import { Component, OnInit } from '@angular/core';
 import { CommuneBasePage } from 'sneat-shared/pages/commune-base-page';
 import {
@@ -66,7 +65,6 @@ export class AssetGroupPageComponent extends CommuneBasePage implements OnInit {
 		this.period = period;
 	}
 
-	// tslint:disable-next-line:prefer-function-over-method
 	trackById(i: number, record: IRecord): RxRecordKey | undefined {
 		return record.id;
 	}

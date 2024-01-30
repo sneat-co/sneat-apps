@@ -32,7 +32,7 @@ export class OrderTruckerComponent implements OnChanges {
 
 	// public segments?: ReadonlyArray<IContainerSegment>;
 
-	public orderSegments?: ReadonlyArray<IOrderSegment>;
+	public orderSegments?: readonly IOrderSegment[];
 
 	deleting = false;
 

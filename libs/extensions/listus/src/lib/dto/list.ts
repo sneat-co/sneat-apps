@@ -21,7 +21,7 @@ export interface IListItemCommon extends IListCommon {
 	category?: string;
 }
 
-export interface IListItemBase extends IListItemCommon {}
+export type IListItemBase = IListItemCommon;
 export interface IListItemBrief extends IListItemBase {
 	id: string;
 	readonly created?: string; // UTC datetime
@@ -68,7 +68,6 @@ export interface IListDto extends IListBase, IWithRestrictions, IWithCreated {
 	commune?: IShortTeamInfo; // Used just for in-memory columns?
 }
 
-// tslint:disable-next-line:no-unnecessary-class
 export class ListItemInfoModel {
 	static trackBy: (
 		index: number,
@@ -77,11 +76,10 @@ export class ListItemInfoModel {
 		!item
 			? index
 			: (!!item.id && `id:${item.id}`) ||
-			  (item.subListId && `subList:${item.subListId}`) ||
-			  item.title;
+				(item.subListId && `subList:${item.subListId}`) ||
+				item.title;
 }
 
-// tslint:disable-next-line:no-unnecessary-class
 export class ListItemModel {
 	static equalListItems(...items: IListItemBrief[]): boolean {
 		const { id, title, subListId, category, subListType } = items[0];

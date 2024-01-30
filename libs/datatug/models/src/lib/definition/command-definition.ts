@@ -21,7 +21,7 @@ export interface ISqlCommandDefinition extends ICommandDefinition {
 export interface IHttpCommandRequestDefinition {
 	method: HttpMethod;
 	url: string; // e.g. https://{env.}/some-path/{ctx.some-param}
-	headers?: { [name: string]: string };
+	headers?: Record<string, string>;
 	body?: string;
 }
 

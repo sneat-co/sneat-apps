@@ -1,4 +1,3 @@
-//tslint:disable:no-unsafe-any
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -6,9 +5,7 @@ import { last, map, mapTo, mergeMap } from 'rxjs/operators';
 import { Actor, Genre, IMovie } from '../dto';
 import { ITmdbService } from './interfaces';
 
-interface GenresById {
-	[id: number]: Genre;
-}
+type GenresById = Record<number, Genre>;
 
 // interface ActorsById {
 // 	[castId: number]: Actor;
@@ -71,7 +68,6 @@ export class TmdbService extends ITmdbService {
 		const url = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${this.api}`;
 		// https://api.themoviedb.org/3/movie/13009/credits?api_key=1fc63e90ce0e426f9534b0b97a9248b6
 		return this.httpClient.get(url).pipe(
-			// tslint:disable-next-line:no-any arrow-return-shorthand
 			map((response: unknown) => {
 				// console.log('loadActors', movieId, response);
 				return (response as { cast: Actor[] }).cast;
@@ -125,7 +121,6 @@ export class TmdbService extends ITmdbService {
 		);
 	}
 
-	// tslint:disable-next-line:prefer-function-over-method
 	addingGenres(genres: Genre[], movies: IMovie[]): void {
 		movies.forEach((movie) => {
 			if (movie.genre_ids) {
@@ -136,7 +131,6 @@ export class TmdbService extends ITmdbService {
 		});
 	}
 
-	// tslint:disable-next-line:prefer-function-over-method
 	getGenresMovies(movies: IMovie[]): number[] {
 		const genreIds: number[] = [];
 		// console.log(movies);

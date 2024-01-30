@@ -1,4 +1,3 @@
-//tslint:disable:no-unsafe-any
 import { Component, Input, OnInit } from '@angular/core';
 import { Period } from 'sneat-shared/models/types';
 import { Asset } from 'sneat-shared/models/ui/ui-asset';

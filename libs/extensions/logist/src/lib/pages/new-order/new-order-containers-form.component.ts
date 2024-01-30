@@ -8,9 +8,9 @@ import { ILogistOrderContext } from '../../dto';
 })
 export class NewOrderContainersFormComponent {
 	@Input() order?: ILogistOrderContext;
-	@Output() readonly numberOfContainersChange = new EventEmitter<{
-		[size: string]: number;
-	}>();
+	@Output() readonly numberOfContainersChange = new EventEmitter<
+		Record<string, number>
+	>();
 
 	size20ft = 0;
 	size20ftHighCube = 0;

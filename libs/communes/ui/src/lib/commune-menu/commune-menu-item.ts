@@ -4,12 +4,13 @@ import { CommuneType, PreloadPages } from '@sneat/core';
 export interface CommuneMenuItem {
 	code: string;
 	defaultEmoji?: string;
-	byCommuneType?: {
-		[communeType: string]: {
+	byCommuneType?: Record<
+		string,
+		{
 			emoji?: string;
 			title?: string;
-		};
-	};
+		}
+	>;
 	defaultTitle: string;
 	pages: {
 		main: CommunePages | undefined;

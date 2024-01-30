@@ -41,13 +41,11 @@ export function localDateToIso(d: Date): string {
 export function getWeekdayDate(d: Date, day: number): Date {
 	d = new Date(d.getFullYear(), d.getMonth(), d.getDate());
 	const dateDay = d.getDay();
-	// tslint:disable-next-line:no-magic-numbers
 	const diff = d.getDate() - dateDay + day + (dateDay === 0 ? -6 : 0) + 1; // adjust when day is sunday
 	return new Date(d.setDate(diff));
 }
 
 export function getWeekID(d: Date): number {
 	d = getWeekdayDate(d, 1);
-	// tslint:disable-next-line:binary-expression-operand-order no-magic-numbers
 	return (d.getFullYear() * 100 + (1 + d.getMonth())) * 100 + d.getDate();
 }

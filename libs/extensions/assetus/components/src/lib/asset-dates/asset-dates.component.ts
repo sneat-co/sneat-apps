@@ -1,4 +1,3 @@
-//tslint:disable:no-unsafe-any
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IAssetDto, IVehicle } from 'sneat-shared/models/dto/dto-asset';
 import { IRealEstate } from 'sneat-shared/models/dto/dto-models';
@@ -65,7 +64,6 @@ export class AssetDatesComponent {
 
 	items: AssetDate[];
 
-	// tslint:disable-next-line:prefer-function-over-method
 	trackByName(i: number, v: AssetDate): string {
 		return v.name;
 	}

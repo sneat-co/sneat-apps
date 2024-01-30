@@ -115,7 +115,6 @@ export class MovieInfoPageComponent
 	}
 
 	public toggleIsWatched(): void {
-		// tslint:disable-next-line:no-this-assignment
 		const { movie, isWatched } = this;
 		if (!movie) {
 			throw new Error('!movie');
@@ -140,7 +139,6 @@ export class MovieInfoPageComponent
 		if (!this.commune) {
 			throw new Error('!this.commune');
 		}
-		// tslint:disable-next-line:max-line-length
 		console.log(
 			`AddToWatchPage.addListItem(item={id:${movie.id}, title: ${movie.title})`,
 			'this.shortListId',

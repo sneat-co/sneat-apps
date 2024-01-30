@@ -1,4 +1,3 @@
-//tslint:disable:no-unsafe-any
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { emptyTimestamp } from '@sneat/dto';
 import { IListBrief, IListDto, IMovie, ListType } from '../dto';
@@ -55,7 +54,7 @@ export abstract class BaseListPage extends TeamItemPageBaseComponent<
 	}
 
 	protected override briefs():
-		| Readonly<{ [id: string]: IListBrief }>
+		| Readonly<Record<string, IListBrief>>
 		| undefined {
 		throw new Error('not implemented due to refactoring');
 		// const briefs: IListBrief[] = [];

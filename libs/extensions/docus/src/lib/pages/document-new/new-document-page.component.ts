@@ -1,4 +1,3 @@
-//tslint:disable:no-unsafe-any
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';

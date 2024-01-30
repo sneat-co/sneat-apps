@@ -277,7 +277,7 @@ export class EmailLoginFormComponent {
 	private errorHandler(
 		m: string,
 		eventName?: string,
-		eventParams?: { [key: string]: string },
+		eventParams?: Record<string, string>,
 	): (err: unknown) => void {
 		return (err) => this.handleError(err, m, eventName, eventParams);
 	}
@@ -286,7 +286,7 @@ export class EmailLoginFormComponent {
 		err: unknown,
 		m: string,
 		eventName?: string,
-		eventParams?: { [key: string]: string },
+		eventParams?: Record<string, string>,
 	): void {
 		this.setSigningWith(undefined);
 		if (eventName) {

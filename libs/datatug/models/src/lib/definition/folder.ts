@@ -12,14 +12,14 @@ export interface IFolderItemWithId extends IFolderItem {
 
 // IFolder holds information about a folder with a brief summary of it children items
 export interface IFolder extends IProjItemBrief {
-	readonly boards?: { [id: string]: IFolderItem };
-	readonly queries?: { [id: string]: IFolderItem };
-	readonly numberOf?: { [id: string]: number };
+	readonly boards?: Record<string, IFolderItem>;
+	readonly queries?: Record<string, IFolderItem>;
+	readonly numberOf?: Record<string, number>;
 }
 
-export function folderItemsAsList(items: {
-	[id: string]: IFolderItem;
-}): IFolderItemWithId[] {
+export function folderItemsAsList(
+	items: Record<string, IFolderItem>,
+): IFolderItemWithId[] {
 	return Object.keys(items)
 		.map((id) => ({ id, name: items[id].name }))
 		.sort((a, b) => (a.name > b.name ? 1 : -1));

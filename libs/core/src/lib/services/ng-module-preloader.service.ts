@@ -41,9 +41,10 @@ export class NgModulePreloaderService {
 		 'terms': './pages/commune/term/terms/terms.module#TermsPageModule',
 		 'tasks': './pages/commune/todo/tasks/tasks-page.module#TasksPageModule',
 	 */
-	private readonly configs: {
-		[id: string]: { path: string; type: Type<unknown> };
-	} = {}; // Use addPreloadConfigs
+	private readonly configs: Record<
+		string,
+		{ path: string; type: Type<unknown> }
+	> = {}; // Use addPreloadConfigs
 
 	private warned = false;
 

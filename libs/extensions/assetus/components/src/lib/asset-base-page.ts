@@ -66,7 +66,7 @@ export abstract class AssetBasePage extends TeamItemPageBaseComponent<
 		this.asset = item;
 	}
 
-	protected override briefs(): { [id: string]: IAssetBrief } | undefined {
+	protected override briefs(): Record<string, IAssetBrief> | undefined {
 		return this.assetusTeam?.dto?.assets;
 	}
 }

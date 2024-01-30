@@ -20,11 +20,8 @@ export class StaffPageComponent extends MembersBasePage {
 		super(params, membersService, preloader);
 	}
 
-	get memberType(): MemberType {
-		return 'staff';
-	}
+	readonly memberType: MemberType = 'staff';
 
-	// tslint:disable-next-line:prefer-function-over-method
 	trackById(i: number, record: IRecord): RxRecordKey | undefined {
 		return record.id;
 	}

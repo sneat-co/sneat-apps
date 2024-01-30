@@ -41,7 +41,6 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 	public listItems?: IListItemWithUiState[];
 	public listType?: ListType;
 	public isHideWatched = false;
-	// tslint:disable-next-line:no-any
 	@ViewChild('newListItem', { static: false })
 	newListItem?: NewListItemComponent;
 	addingItems: IListItemWithUiState[] = [];
@@ -150,10 +149,10 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			list.dto === undefined
 				? undefined
 				: list.dto?.items
-				  ? list.dto.items.map((item) => {
+					? list.dto.items.map((item) => {
 							return { brief: item, state: {} };
-				    })
-				  : [];
+						})
+					: [];
 		if (this.allListItems && this.addingItems.length) {
 			this.addingItems = this.addingItems.filter(
 				(v) => !this.listItems?.some((li) => li.brief.id === v.brief.id),

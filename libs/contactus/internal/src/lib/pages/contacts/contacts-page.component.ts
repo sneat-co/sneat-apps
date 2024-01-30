@@ -46,7 +46,7 @@ import { Subscription } from 'rxjs';
 })
 export class ContactsPageComponent extends TeamItemsBaseComponent {
 	public allContacts?: IIdAndBrief<IContactBrief>[];
-	public contactsByRole?: { [role: string]: IIdAndBrief<IContactBrief>[] };
+	public contactsByRole?: Record<string, IIdAndBrief<IContactBrief>[]>;
 	public contacts?: IIdAndBrief<IContactBrief>[];
 	public groups: IMemberGroupContext[] = [];
 	public segment: 'list' | 'groups' = 'groups';
@@ -139,7 +139,6 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 	}
 
 	get canAdd(): boolean {
-		// tslint:disable-next-line:no-this-assignment
 		const { role } = this;
 		return role !== 'tenant' && role !== 'landlord';
 	}
@@ -250,7 +249,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 	): void => {
 		console.log('ContactsPageComponent.setTeamContacts()', contacts);
 		this.allContacts = contacts;
-		const contactsByRole: { [role: string]: IIdAndBrief<IContactBrief>[] } = {
+		const contactsByRole: Record<string, IIdAndBrief<IContactBrief>[]> = {
 			'': [],
 		};
 		contacts.forEach((c) => {

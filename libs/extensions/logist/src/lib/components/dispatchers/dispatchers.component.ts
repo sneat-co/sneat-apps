@@ -16,7 +16,7 @@ export class DispatchersComponent implements OnChanges {
 	@Input() order?: ILogistOrderContext;
 	@Output() readonly orderChange = new EventEmitter<ILogistOrderContext>();
 
-	protected dispatchers?: ReadonlyArray<IOrderCounterparty>;
+	protected dispatchers?: readonly IOrderCounterparty[];
 
 	protected readonly counterpartyKey = (i: number, c: IOrderCounterparty) =>
 		`${c.contactID}&${c.role}`;

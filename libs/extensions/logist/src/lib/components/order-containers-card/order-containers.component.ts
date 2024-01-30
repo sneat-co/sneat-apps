@@ -24,7 +24,7 @@ export class OrderContainersComponent implements OnChanges {
 
 	protected selectedContainer?: IOrderContainer;
 
-	containers?: ReadonlyArray<IOrderContainer>;
+	containers?: readonly IOrderContainer[];
 
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 

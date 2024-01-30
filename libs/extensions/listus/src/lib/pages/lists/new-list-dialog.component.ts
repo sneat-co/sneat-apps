@@ -29,13 +29,9 @@ export class NewListDialogComponent implements AfterViewInit {
 	) {}
 
 	ngAfterViewInit(): void {
-		setTimeout(
-			() => {
-				this.listNameInput?.setFocus().catch(this.errorLogger.logError);
-			},
-			// tslint:disable-next-line:no-magic-numbers
-			250,
-		);
+		setTimeout(() => {
+			this.listNameInput?.setFocus().catch(this.errorLogger.logError);
+		}, 250);
 	}
 
 	createList(): void {
