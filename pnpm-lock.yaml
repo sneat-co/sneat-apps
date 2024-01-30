@@ -58,7 +58,7 @@ dependencies:
     version: 7.6.6
   '@nx/angular':
     specifier: 17.3.0
-    version: 17.3.0(@angular-devkit/build-angular@17.1.1)(@angular-devkit/core@17.1.1)(@angular-devkit/schematics@17.1.1)(@schematics/angular@17.1.1)(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(cypress@13.6.3)(eslint@8.56.0)(nx@17.3.0)(rxjs@7.8.1)(ts-node@10.9.2)(typescript@5.3.3)
+    version: 17.3.0(@angular-devkit/build-angular@17.1.1)(@angular-devkit/core@17.1.1)(@angular-devkit/schematics@17.1.1)(@schematics/angular@17.1.1)(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(cypress@13.6.4)(eslint@8.56.0)(nx@17.3.0)(rxjs@7.8.1)(ts-node@10.9.2)(typescript@5.3.3)
   '@sentry/angular-ivy':
     specifier: 7.98.0
     version: 7.98.0(@angular/common@17.1.1)(@angular/core@17.1.1)(@angular/router@17.1.1)(rxjs@7.8.1)
@@ -126,7 +126,7 @@ devDependencies:
     version: 17.1.1
   '@nx/cypress':
     specifier: 17.3.0
-    version: 17.3.0(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(cypress@13.6.3)(eslint@8.56.0)(nx@17.3.0)(typescript@5.3.3)
+    version: 17.3.0(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(cypress@13.6.4)(eslint@8.56.0)(nx@17.3.0)(typescript@5.3.3)
   '@nx/eslint':
     specifier: 17.3.0
     version: 17.3.0(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(eslint@8.56.0)(nx@17.3.0)
@@ -170,8 +170,8 @@ devDependencies:
     specifier: ^7.0.3
     version: 7.0.3
   cypress:
-    specifier: 13.6.3
-    version: 13.6.3
+    specifier: 13.6.4
+    version: 13.6.4
   eslint:
     specifier: 8.56.0
     version: 8.56.0
@@ -3459,10 +3459,10 @@ packages:
       - supports-color
     dev: true
 
-  /@nrwl/angular@17.3.0(@angular-devkit/build-angular@17.1.1)(@angular-devkit/core@17.1.1)(@angular-devkit/schematics@17.1.1)(@schematics/angular@17.1.1)(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(cypress@13.6.3)(eslint@8.56.0)(nx@17.3.0)(rxjs@7.8.1)(ts-node@10.9.2)(typescript@5.3.3):
+  /@nrwl/angular@17.3.0(@angular-devkit/build-angular@17.1.1)(@angular-devkit/core@17.1.1)(@angular-devkit/schematics@17.1.1)(@schematics/angular@17.1.1)(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(cypress@13.6.4)(eslint@8.56.0)(nx@17.3.0)(rxjs@7.8.1)(ts-node@10.9.2)(typescript@5.3.3):
     resolution: {integrity: sha512-IREmSxoqL2onB9rWXe8qESZCefJJEtzgB8JHsduNHqsbYxPyrrG2IR5sAsoDg8sTyQkInSxWaRCQsYfrNTt4Bg==}
     dependencies:
-      '@nx/angular': 17.3.0(@angular-devkit/build-angular@17.1.1)(@angular-devkit/core@17.1.1)(@angular-devkit/schematics@17.1.1)(@schematics/angular@17.1.1)(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(cypress@13.6.3)(eslint@8.56.0)(nx@17.3.0)(rxjs@7.8.1)(ts-node@10.9.2)(typescript@5.3.3)
+      '@nx/angular': 17.3.0(@angular-devkit/build-angular@17.1.1)(@angular-devkit/core@17.1.1)(@angular-devkit/schematics@17.1.1)(@schematics/angular@17.1.1)(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(cypress@13.6.4)(eslint@8.56.0)(nx@17.3.0)(rxjs@7.8.1)(ts-node@10.9.2)(typescript@5.3.3)
       tslib: 2.6.2
     transitivePeerDependencies:
       - '@angular-devkit/build-angular'
@@ -3503,10 +3503,10 @@ packages:
       - webpack-cli
     dev: false
 
-  /@nrwl/cypress@17.3.0(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(cypress@13.6.3)(eslint@8.56.0)(nx@17.3.0)(typescript@5.3.3):
+  /@nrwl/cypress@17.3.0(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(cypress@13.6.4)(eslint@8.56.0)(nx@17.3.0)(typescript@5.3.3):
     resolution: {integrity: sha512-p2r/FWXNlEZ7G36cxStu4Okk6M3V+D0WRo4vtSuHtWWaAclQ92c79k4wMawLcN4JANMQdPtMsK968ptAFLtcaQ==}
     dependencies:
-      '@nx/cypress': 17.3.0(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(cypress@13.6.3)(eslint@8.56.0)(nx@17.3.0)(typescript@5.3.3)
+      '@nx/cypress': 17.3.0(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(cypress@13.6.4)(eslint@8.56.0)(nx@17.3.0)(typescript@5.3.3)
     transitivePeerDependencies:
       - '@babel/traverse'
       - '@swc-node/register'
@@ -3653,7 +3653,7 @@ packages:
       - '@swc/core'
       - debug
 
-  /@nx/angular@17.3.0(@angular-devkit/build-angular@17.1.1)(@angular-devkit/core@17.1.1)(@angular-devkit/schematics@17.1.1)(@schematics/angular@17.1.1)(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(cypress@13.6.3)(eslint@8.56.0)(nx@17.3.0)(rxjs@7.8.1)(ts-node@10.9.2)(typescript@5.3.3):
+  /@nx/angular@17.3.0(@angular-devkit/build-angular@17.1.1)(@angular-devkit/core@17.1.1)(@angular-devkit/schematics@17.1.1)(@schematics/angular@17.1.1)(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(cypress@13.6.4)(eslint@8.56.0)(nx@17.3.0)(rxjs@7.8.1)(ts-node@10.9.2)(typescript@5.3.3):
     resolution: {integrity: sha512-Y+WQg4jIejgN5ZXnsEfJ6cffjBp4VDi9e0djcxsi21AyWHOUWK4imEDtsNpDx81Nd9hTEDoz6jCf3v+8wbNQtA==}
     peerDependencies:
       '@angular-devkit/build-angular': '>= 15.0.0 < 18.0.0'
@@ -3669,8 +3669,8 @@ packages:
       '@angular-devkit/build-angular': 17.1.1(@angular/compiler-cli@17.1.1)(@swc/core@1.3.107)(@types/node@20.11.10)(jest-environment-jsdom@29.7.0)(jest@29.7.0)(ng-packagr@17.1.2)(stylus@0.59.0)(typescript@5.3.3)
       '@angular-devkit/core': 17.1.1
       '@angular-devkit/schematics': 17.1.1
-      '@nrwl/angular': 17.3.0(@angular-devkit/build-angular@17.1.1)(@angular-devkit/core@17.1.1)(@angular-devkit/schematics@17.1.1)(@schematics/angular@17.1.1)(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(cypress@13.6.3)(eslint@8.56.0)(nx@17.3.0)(rxjs@7.8.1)(ts-node@10.9.2)(typescript@5.3.3)
-      '@nx/cypress': 17.3.0(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(cypress@13.6.3)(eslint@8.56.0)(nx@17.3.0)(typescript@5.3.3)
+      '@nrwl/angular': 17.3.0(@angular-devkit/build-angular@17.1.1)(@angular-devkit/core@17.1.1)(@angular-devkit/schematics@17.1.1)(@schematics/angular@17.1.1)(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(cypress@13.6.4)(eslint@8.56.0)(nx@17.3.0)(rxjs@7.8.1)(ts-node@10.9.2)(typescript@5.3.3)
+      '@nx/cypress': 17.3.0(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(cypress@13.6.4)(eslint@8.56.0)(nx@17.3.0)(typescript@5.3.3)
       '@nx/devkit': 17.3.0(nx@17.3.0)
       '@nx/eslint': 17.3.0(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(eslint@8.56.0)(nx@17.3.0)
       '@nx/jest': 17.3.0(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(nx@17.3.0)(ts-node@10.9.2)(typescript@5.3.3)
@@ -3725,7 +3725,7 @@ packages:
       - webpack-cli
     dev: false
 
-  /@nx/cypress@17.3.0(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(cypress@13.6.3)(eslint@8.56.0)(nx@17.3.0)(typescript@5.3.3):
+  /@nx/cypress@17.3.0(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(cypress@13.6.4)(eslint@8.56.0)(nx@17.3.0)(typescript@5.3.3):
     resolution: {integrity: sha512-KRGdGZvQBA+G3nz4zA0Ra/qgIrNryf0N9IwAwrfGVgr/PbJNv2mig3nI+KJwu8K3xkD+e/Nt8qAiSjf4SxdSXg==}
     peerDependencies:
       cypress: '>= 3 < 14'
@@ -3733,12 +3733,12 @@ packages:
       cypress:
         optional: true
     dependencies:
-      '@nrwl/cypress': 17.3.0(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(cypress@13.6.3)(eslint@8.56.0)(nx@17.3.0)(typescript@5.3.3)
+      '@nrwl/cypress': 17.3.0(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(cypress@13.6.4)(eslint@8.56.0)(nx@17.3.0)(typescript@5.3.3)
       '@nx/devkit': 17.3.0(nx@17.3.0)
       '@nx/eslint': 17.3.0(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(eslint@8.56.0)(nx@17.3.0)
       '@nx/js': 17.3.0(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@20.11.10)(nx@17.3.0)(typescript@5.3.3)
       '@phenomnomnominal/tsquery': 5.0.1(typescript@5.3.3)
-      cypress: 13.6.3
+      cypress: 13.6.4
       detect-port: 1.5.1
       semver: 7.5.3
       tslib: 2.6.2
@@ -6467,8 +6467,8 @@ packages:
     resolution: {integrity: sha512-d4ZVpCW31eWwCMe1YT3ur7mUDnTXbgwyzaL320DrcRT45rfjYxkt5QWLrmOJ+/UEAI2+fQgKe/fCjR8l4TpRgw==}
     dev: true
 
-  /cypress@13.6.3:
-    resolution: {integrity: sha512-d/pZvgwjAyZsoyJ3FOsJT5lDsqnxQ/clMqnNc++rkHjbkkiF2h9s0JsZSyyH4QXhVFW3zPFg82jD25roFLOdZA==}
+  /cypress@13.6.4:
+    resolution: {integrity: sha512-pYJjCfDYB+hoOoZuhysbbYhEmNW7DEDsqn+ToCLwuVowxUXppIWRr7qk4TVRIU471ksfzyZcH+mkoF0CQUKnpw==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
     hasBin: true
     requiresBuild: true
