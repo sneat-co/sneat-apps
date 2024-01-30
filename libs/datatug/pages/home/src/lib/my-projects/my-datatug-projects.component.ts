@@ -8,14 +8,14 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	DatatugUserService,
 	IDatatugUserState,
-} from '@sneat/datatug/services/base';
+} from '@sneat/datatug-services-base';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth-core';
 import { STORE_TYPE_GITHUB } from '@sneat/core';
 import { NewProjectService } from '@sneat/datatug/project';
 import { DatatugNavService } from '@sneat/datatug-services-nav';
-import { IProjectContext } from '@sneat/datatug/nav';
+import { IProjectContext } from '@sneat/datatug-nav';
 
 @Component({
 	selector: 'datatug-my-projects',

@@ -10,7 +10,7 @@ import { DatatugComponentsProjectModule } from '@sneat/datatug/components/projec
 import { DatatugServicesNavModule } from '@sneat/datatug-services-nav';
 import { DatatugCoreModule } from '@sneat/datatug-core';
 import { DatatugServicesProjectModule } from '@sneat/datatug-services-project';
-import { DatatugServicesUnsortedModule } from '@sneat/datatug/services/unsorted';
+import { DatatugServicesUnsortedModule } from '@sneat/datatug-services-unsorted';
 import { DatatugServicesStoreModule } from '@sneat/datatug-services-repo';
 import { DatatugFoldersUiModule } from '@sneat/datatug/folders/ui';
 

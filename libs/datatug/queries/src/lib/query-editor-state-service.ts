@@ -17,7 +17,7 @@ import {
 import { QueriesService } from './queries.service';
 import { IProjectRef } from '@sneat/datatug-core';
 import { DatatugNavContextService } from '@sneat/datatug-services-nav';
-import { IProjectContext } from '@sneat/datatug/nav';
+import { IProjectContext } from '@sneat/datatug-nav';
 import { filter } from 'rxjs/operators';
 import { IQueryEditorState, IQueryState } from '@sneat/datatug/editor';
 
@@ -89,7 +89,7 @@ export class QueryEditorStateService {
 			? {
 					...$state.value,
 					currentQueryId: id,
-			  }
+				}
 			: { currentQueryId: id, activeQueries: [] };
 		$state.next(newState);
 	}
@@ -178,10 +178,10 @@ export class QueryEditorStateService {
 					targetDbModel: def?.dbModel
 						? this.currentProject?.summary?.dbModels?.find(
 								(m) => m.id === def.dbModel,
-						  )
+							)
 						: this.currentProject?.summary?.dbModels?.length === 1
-						? this.currentProject?.summary?.dbModels[0]
-						: undefined,
+							? this.currentProject?.summary?.dbModels[0]
+							: undefined,
 				};
 			}
 			this.updateQueryState(state);

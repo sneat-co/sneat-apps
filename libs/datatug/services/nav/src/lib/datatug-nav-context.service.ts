@@ -17,7 +17,7 @@ import {
 } from '@sneat/datatug-services-project';
 import { IProjectSummary } from '@sneat/datatug-models';
 import { AppContextService, IProjectRef } from '@sneat/datatug-core';
-import { EnvironmentService } from '@sneat/datatug/services/unsorted';
+import { EnvironmentService } from '@sneat/datatug-services-unsorted';
 import {
 	IDatatugNavContext,
 	IEnvContext,
@@ -25,7 +25,7 @@ import {
 	IEnvDbTableContext,
 	IProjectContext,
 	populateProjectBriefFromSummaryIfMissing,
-} from '@sneat/datatug/nav';
+} from '@sneat/datatug-nav';
 import { parseStoreRef } from '@sneat/core';
 import { newRandomId } from '@sneat/random';
 
@@ -57,10 +57,14 @@ export class DatatugNavContextService {
 		.asObservable()
 		.pipe(map(populateProjectBriefFromSummaryIfMissing), shareReplay(1));
 
-	private readonly $currentFolder = new BehaviorSubject<string>(undefined);
+	private readonly $currentFolder = new BehaviorSubject<string | undefined>(
+		undefined,
+	);
 	public readonly currentFolder = this.$currentFolder.asObservable();
 
-	private readonly $currentEnv = new BehaviorSubject<IEnvContext>(undefined);
+	private readonly $currentEnv = new BehaviorSubject<IEnvContext | undefined>(
+		undefined,
+	);
 	public readonly currentEnv = this.$currentEnv.asObservable().pipe(
 		distinctUntilChanged((x, y) => (!x && !y) || x?.id === y?.id),
 		tap((v) =>
@@ -104,9 +108,11 @@ export class DatatugNavContextService {
 			),
 		});
 		this.navEndSubscription = appContext.currentApp
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-expect-error
 			.pipe(distinctUntilKeyChanged('appCode'))
 			.subscribe((app) => {
-				if (app.appCode !== 'datatug') {
+				if (app?.appCode !== 'datatug') {
 					if (this.navEndSubscription) {
 						this.navEndSubscription.unsubscribe();
 					}
@@ -175,7 +181,7 @@ export class DatatugNavContextService {
 
 	private onProjectSummaryChanged(
 		projRef: IProjectRef,
-		summary: IProjectSummary,
+		summary?: IProjectSummary,
 	): void {
 		if (!summary) {
 			// this.errorLogger.logError(new Error('Returned empty project summary'),
@@ -197,12 +203,14 @@ export class DatatugNavContextService {
 		if (this.$currentEnv.value?.id === id) {
 			return;
 		}
-		const envContext: IEnvContext = id && {
-			id,
-			brief: this.$currentProj.value?.summary?.environments.find(
-				(env) => env.id === id,
-			),
-		};
+		const envContext: IEnvContext | undefined = id
+			? {
+					id,
+					brief: this.$currentProj.value?.summary?.environments?.find(
+						(env) => env.id === id,
+					),
+				}
+			: undefined;
 
 		if (id && this.$currentProj.value?.ref) {
 			this.envService.getEnvSummary(this.$currentProj.value.ref, id).subscribe({
@@ -216,6 +224,7 @@ export class DatatugNavContextService {
 					if (this.$currentEnv.value?.id === envSummary.id) {
 						this.$currentEnv.next({
 							...envContext,
+							id: envContext?.id || '',
 							summary: envSummary,
 						});
 					}
@@ -244,7 +253,7 @@ export class DatatugNavContextService {
 		const m = url.match(reStore);
 		// console.log('processStore', url, m);
 		const storeId = m && m[1];
-		this.$currentStoreId.next(storeId);
+		this.$currentStoreId.next(storeId || undefined);
 	}
 
 	private processProject(url: string): void {
@@ -270,7 +279,7 @@ export class DatatugNavContextService {
 			const projectContext: IProjectContext = {
 				// brief: {access: undefined, title: undefined},
 				store: { ref: parseStoreRef(currentStoreId) },
-				ref: { projectId: id, storeId: currentStoreId },
+				ref: { projectId: id, storeId: currentStoreId || '' },
 			};
 			this.setCurrentProject(projectContext);
 		}
@@ -280,7 +289,7 @@ export class DatatugNavContextService {
 		const m = url.match(reEnv);
 		const id = m && m[1];
 		if (id || !location.search.includes('env=')) {
-			this.setCurrentEnvironment(id);
+			this.setCurrentEnvironment(id || undefined);
 		}
 		// console.log('processEnvironment', id);
 	}
@@ -290,7 +299,7 @@ export class DatatugNavContextService {
 		const id = m && m[1];
 		// console.log('processEnvDb', id);
 		if (this.$currentEnvDb.value?.id !== id) {
-			this.$currentEnvDb.next({ id });
+			this.$currentEnvDb.next({ id: id || '' });
 		}
 	}
 
@@ -316,7 +325,7 @@ export class DatatugNavContextService {
 			this.$currentEnvDbTable.next({ name, schema });
 			console.log('currentTable:', this.$currentEnvDbTable.value);
 			this.projectService
-				.getFull(project.ref)
+				.getFull(project?.ref || { projectId: '', storeId: '' })
 				.pipe(first())
 				.subscribe({
 					next: (p) => {
@@ -328,7 +337,7 @@ export class DatatugNavContextService {
 								return; // TODO(help-wanted): Do it with a pipe operator that cancels subscription when table changes
 							}
 							const envId = this.$currentEnv.value?.id;
-							const env = p.environments.find((e) => e.id === envId);
+							const env = p.environments?.find((e) => e.id === envId);
 							if (!env) {
 								this.errorLogger.logError('unknown environment: ' + envId);
 								return;

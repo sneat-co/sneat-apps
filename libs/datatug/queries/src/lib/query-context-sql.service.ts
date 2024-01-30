@@ -12,7 +12,7 @@ import {
 	IDbCatalogObjectWithRefs,
 	SqlParser,
 	TableService,
-} from '@sneat/datatug/services/unsorted';
+} from '@sneat/datatug-services-unsorted';
 
 const equalRecordsets = (a?: IAstRecordset, b?: IAstRecordset): boolean =>
 	(!a && !b) || (a?.name === b?.name && a?.schema === b?.schema);
@@ -74,7 +74,7 @@ export class QueryContextSqlService {
 			? [
 					...((this.ast.from && [this.ast.from]) || []),
 					...(this.ast.joins || []),
-			  ]
+				]
 			: []; //.filter(rs => this.tables.find(t => t.name === rs.name && t.schema === rs.schema));
 	}
 
@@ -145,7 +145,7 @@ export class QueryContextSqlService {
 			table.referencedBy
 				? table.referencedBy.map((refBy) => ({
 						rs: { schema: refBy.schema, name: refBy.name },
-				  }))
+					}))
 				: [],
 		);
 	}

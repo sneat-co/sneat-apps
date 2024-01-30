@@ -4,7 +4,7 @@ import { SneatApiService } from '@sneat/api';
 import { CreateNamedRequest } from '@sneat/datatug-dto';
 import { ISchema } from '@sneat/datatug-models';
 import { IRecord } from '@sneat/data';
-import { createProjItem } from '@sneat/datatug/services/base';
+import { createProjItem } from '@sneat/datatug-services-base';
 
 @Injectable()
 export class SchemaService {

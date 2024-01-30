@@ -14,7 +14,7 @@ import {
 	ProjectItem,
 	ProjectItemType,
 } from '@sneat/datatug-models';
-import { IProjectContext } from '@sneat/datatug/nav';
+import { IProjectContext } from '@sneat/datatug-nav';
 import {
 	DatatugNavContextService,
 	DatatugNavService,
@@ -26,7 +26,7 @@ import {
 	EntityService,
 	EnvironmentService,
 	SchemaService,
-} from '@sneat/datatug/services/unsorted';
+} from '@sneat/datatug-services-unsorted';
 import { IProjectRef } from '@sneat/datatug-core';
 import { parseStoreRef } from '@sneat/core';
 

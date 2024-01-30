@@ -3,7 +3,7 @@ import { IonInput, PopoverController, ViewDidEnter } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ProjectService } from '@sneat/datatug-services-project';
 import { DatatugNavService } from '@sneat/datatug-services-nav';
-import { IProjectContext } from '@sneat/datatug/nav';
+import { IProjectContext } from '@sneat/datatug-nav';
 import { parseStoreRef } from '@sneat/core';
 
 @Component({

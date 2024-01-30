@@ -5,7 +5,7 @@ import {
 	DatatugNavContextService,
 	DatatugNavService,
 } from '@sneat/datatug-services-nav';
-import { IProjectContext } from '@sneat/datatug/nav';
+import { IProjectContext } from '@sneat/datatug-nav';
 
 @Component({
 	selector: 'datatug-menu-env-selector',

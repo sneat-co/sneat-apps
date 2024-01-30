@@ -8,9 +8,9 @@ import {
 	IProjEnv,
 } from '@sneat/datatug-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { EnvironmentService } from '@sneat/datatug/services/unsorted';
+import { EnvironmentService } from '@sneat/datatug-services-unsorted';
 import { DatatugNavContextService } from '@sneat/datatug-services-nav';
-import { IProjectContext } from '@sneat/datatug/nav';
+import { IProjectContext } from '@sneat/datatug-nav';
 
 @Component({
 	selector: 'datatug-environment',

@@ -19,7 +19,7 @@ import {
 } from '@sneat/datatug-models';
 import { ProjectService } from '@sneat/datatug-services-project';
 import { DatatugNavService, ProjectTracker } from '@sneat/datatug-services-nav';
-import { IProjectContext } from '@sneat/datatug/nav';
+import { IProjectContext } from '@sneat/datatug-nav';
 import { Subject } from 'rxjs';
 
 interface IRecordsetInfo {

@@ -55,7 +55,7 @@
 			"@sneat/datatug/folders/ui": ["libs/datatug/folders/ui/src/index.ts"],
 			"@sneat/datatug/menu": ["libs/datatug/menu/src/index.ts"],
 			"@sneat/datatug-models": ["libs/datatug/models/src/index.ts"],
-			"@sneat/datatug/nav": ["libs/datatug/nav/src/index.ts"],
+			"@sneat/datatug-nav": ["libs/datatug/nav/src/index.ts"],
 			"@sneat/datatug/pages/home": ["libs/datatug/pages/home/src/index.ts"],
 			"@sneat/datatug/pages/my": ["libs/datatug/pages/my/src/index.ts"],
 			"@sneat/datatug/pages/signed-out": [
@@ -67,7 +67,7 @@
 			"@sneat/datatug/project": ["libs/datatug/project/src/index.ts"],
 			"@sneat/datatug/queries": ["libs/datatug/queries/src/index.ts"],
 			"@sneat/datatug/routes": ["libs/datatug/routes/src/index.ts"],
-			"@sneat/datatug/services/base": [
+			"@sneat/datatug-services-base": [
 				"libs/datatug/services/base/src/index.ts"
 			],
 			"@sneat/datatug-services-nav": ["libs/datatug/services/nav/src/index.ts"],
@@ -77,7 +77,7 @@
 			"@sneat/datatug-services-repo": [
 				"libs/datatug/services/repo/src/index.ts"
 			],
-			"@sneat/datatug/services/unsorted": [
+			"@sneat/datatug-services-unsorted": [
 				"libs/datatug/services/unsorted/src/index.ts"
 			],
 			"@sneat/datetime": ["libs/datetime/src/index.ts"],

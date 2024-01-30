@@ -34,8 +34,8 @@ export function newProjectBriefFromSummary(
 }
 
 export function populateProjectBriefFromSummaryIfMissing(
-	p: IProjectContext,
-): IProjectContext {
+	p?: IProjectContext,
+): IProjectContext | undefined {
 	if (p?.summary && !p.brief) {
 		p = { ...p, brief: newProjectBriefFromSummary(p.summary) };
 	}

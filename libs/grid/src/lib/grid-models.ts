@@ -1,10 +1,10 @@
 import { ColumnDefinition } from 'tabulator-tables';
 
-// export interface IGridDef {
-// 	columns: IGridColumn[];
-// 	rows?: unknown[];
-// 	groupBy?: string;
-// }
+export interface IGridDef {
+	columns: IGridColumn[];
+	rows?: unknown[];
+	groupBy?: string;
+}
 
 export interface IGridColumn extends ColumnDefinition {
 	dbType: string;

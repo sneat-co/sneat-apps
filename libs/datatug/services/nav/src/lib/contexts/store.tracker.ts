@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 // 	deps: [ActivatedRoute],
 // })
 export class StoreTracker {
-	public readonly storeId: Observable<string>;
+	public readonly storeId: Observable<string | null>;
 
 	constructor(
 		private readonly stopNotifier: Observable<unknown>,

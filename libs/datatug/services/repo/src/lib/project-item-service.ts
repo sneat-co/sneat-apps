@@ -4,7 +4,12 @@ import { Injectable } from '@angular/core';
 import { IProjectRef } from '@sneat/datatug-core';
 import { IProjItemBrief, IProjItemsFolder } from '@sneat/datatug-models';
 import { StoreApiService } from './store-api.service';
-import { Firestore as AngularFirestore } from '@angular/fire/firestore';
+import {
+	collection,
+	doc,
+	docSnapshots,
+	Firestore as AngularFirestore,
+} from '@angular/fire/firestore';
 
 // const notImplemented = 'not implemented';
 
@@ -20,7 +25,7 @@ export class ProjectItemServiceFactory {
 
 // TODO: why it's complaining about TS1219?
 export class ProjectItemService<ProjItem extends IProjItemBrief> {
-	private cache: { [id: string]: ProjItem } = {};
+	private cache: Record<string, ProjItem> = {};
 
 	constructor(
 		private readonly db: AngularFirestore,
@@ -88,22 +93,22 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 		folderPath: string,
 	): Observable<T | null | undefined> {
 		console.log('watchFirestoreFolder', projectId, folderPath);
-		return this.db
-			.collection('datatug_projects')
-			.doc(projectId)
-			.collection('queries')
-			.doc('~')
-			.snapshotChanges()
-			.pipe(
-				map((changes) => {
-					console.log('folder changes:', changes.type);
-					if (changes.type === 'deleted') {
-						return null;
-					}
-					if (changes.type) return changes.payload.data() as T;
+		const datatugProjects = collection(this.db, 'datatug_projects');
+		const project = doc(datatugProjects, projectId);
+		const queries = collection(project, 'queries');
+		const d = doc(queries, '~');
+
+		return docSnapshots(d).pipe(
+			map((changes) => {
+				if (!changes) {
 					return undefined;
-				}),
-			);
+				}
+				if (!changes.exists()) {
+					return null;
+				}
+				return changes.data() as unknown as T;
+			}),
+		);
 	}
 
 	private putProjItemsToCache(folder: IProjItemsFolder, path: string): void {
@@ -150,14 +155,12 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
 		projItem: ProjItem,
 		itemPath = this.itemPath,
 	): Observable<ProjItem> {
-		const params: {
-			[param: string]: string | string[];
-		} = {
+		const params: Record<string, string | string[]> = {
 			project: projectRef.projectId,
 			id: projItem.id,
 		};
 		if (projectRef.storeId === 'firestore') {
-			params.store = projectRef.storeId;
+			params['store'] = projectRef.storeId;
 		}
 		return this.storeApiService.put(
 			projectRef.storeId,

@@ -67,7 +67,9 @@ export type ContactType =
 	| typeof ContactTypeCompany
 	| typeof ContactTypeLocation
 	| typeof ContactTypeAnimal
-	| typeof ContactTypeVehicle;
+	| typeof ContactTypeVehicle
+	| 'landlord'
+	| 'tenant';
 
 export type MemberContactType =
 	| typeof ContactTypePerson

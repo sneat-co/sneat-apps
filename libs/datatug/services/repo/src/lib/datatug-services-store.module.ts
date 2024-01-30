@@ -4,7 +4,7 @@ import { DatatugStoreService } from './datatug-store.service';
 import { StoreApiService } from './store-api.service';
 import { AgentStateService } from './agent-state.service';
 import { AgentService } from './agent.service';
-import { DatatugServicesBaseModule } from '@sneat/datatug/services/base';
+import { DatatugServicesBaseModule } from '@sneat/datatug-services-base';
 
 @NgModule({
 	imports: [HttpClientModule, DatatugServicesBaseModule],

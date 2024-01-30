@@ -12,9 +12,9 @@ import {
 	DatatugStoreService,
 	IAgentState,
 } from '@sneat/datatug-services-repo';
-import { IDatatugStoreContext, IProjectContext } from '@sneat/datatug/nav';
+import { IDatatugStoreContext, IProjectContext } from '@sneat/datatug-nav';
 import { NewProjectService } from '@sneat/datatug/project';
-import { DatatugUserService } from '@sneat/datatug/services/base';
+import { DatatugUserService } from '@sneat/datatug-services-base';
 import { IErrorLogger } from '@sneat/logging';
 import { merge, Subject } from 'rxjs';
 import { filter, takeUntil, tap } from 'rxjs/operators';

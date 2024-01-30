@@ -4,9 +4,9 @@ import { Subject } from 'rxjs';
 import { IonInput, PopoverController } from '@ionic/angular';
 import { EntityFieldDialogComponent } from './entity-field-dialog/entity-field-dialog.component';
 import { IEntity, IEntityFieldDef } from '@sneat/datatug-models';
-import { IProjectContext } from '@sneat/datatug/nav';
+import { IProjectContext } from '@sneat/datatug-nav';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { EntityService } from '@sneat/datatug/services/unsorted';
+import { EntityService } from '@sneat/datatug-services-unsorted';
 import {
 	DatatugNavContextService,
 	DatatugNavService,

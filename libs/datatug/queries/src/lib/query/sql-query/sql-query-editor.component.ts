@@ -14,7 +14,7 @@ import {
 	EnvironmentService,
 	IAstQuery,
 	SqlParser,
-} from '@sneat/datatug/services/unsorted';
+} from '@sneat/datatug-services-unsorted';
 import {
 	ICommandResponseItem,
 	ICommandResponseWithRecordset,
@@ -33,7 +33,7 @@ import {
 	DatatugNavContextService,
 	ProjectTracker,
 } from '@sneat/datatug-services-nav';
-import { IEnvContext, IProjectContext } from '@sneat/datatug/nav';
+import { IEnvContext, IProjectContext } from '@sneat/datatug-nav';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ViewDidEnter } from '@ionic/angular';
@@ -85,7 +85,7 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 	public sql = '';
 	public queryAst?: IAstQuery;
 	public project?: IProjectContext;
-	public environments?: ReadonlyArray<IQueryEnvState>;
+	public environments?: readonly IQueryEnvState[];
 	public dbDriver: 'sqlite3' | 'sqlserver' = 'sqlite3';
 
 	public parameters?: IParameter[];
@@ -106,8 +106,8 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 		private readonly coordinator: Coordinator,
 		private readonly queryEditorStateService: QueryEditorStateService,
 		private readonly envService: EnvironmentService,
-	) // private readonly changeDetector: ChangeDetectorRef,
-	{
+	) {
+		// private readonly changeDetector: ChangeDetectorRef,
 		console.log('SqlQueryEditorComponent.constructor()', location.hash);
 		this.queryEditorStateService.queryEditorState
 			.pipe(distinctUntilChanged())
@@ -346,7 +346,7 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 		});
 	}
 
-	private setQueryId(id: string, isNew: boolean = false): void {
+	private setQueryId(id: string, isNew = false): void {
 		if (this.queryId == id) {
 			return;
 		}
@@ -398,7 +398,7 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 							queryType: query.request.queryType,
 							text: (query.request as ISqlQueryRequest).text,
 						} as ISqlQueryRequest,
-				  },
+					},
 		);
 		this.sql = (query.request as ISqlQueryRequest)?.text;
 		if (query.targets?.length && !this.targetCatalog) {

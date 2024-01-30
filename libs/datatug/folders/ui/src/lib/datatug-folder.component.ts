@@ -25,7 +25,7 @@ import {
 	EntityService,
 	EnvironmentService,
 	SchemaService,
-} from '@sneat/datatug/services/unsorted';
+} from '@sneat/datatug-services-unsorted';
 import { DatatugFoldersService } from '@sneat/datatug/folders/core';
 import { DatatugBoardService } from '@sneat/datatug/board/core';
 
@@ -175,7 +175,7 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
 							? folderItemsAsList(folder.boards).map((v) => ({
 									id: v.id,
 									title: v.name,
-							  }))
+								}))
 							: [];
 						console.log('DatatugFolderComponent => folder:', folder);
 					},
