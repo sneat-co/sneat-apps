@@ -4,9 +4,10 @@ import { IProjectRef } from '@sneat/datatug-core';
 
 export class ProjectItemsByAgent<T> {
 	// private readonly byAgent: {[store: string]: {[id: string]: T[]}} = {};
-	public readonly byRepo$: {
-		[repo: string]: { [id: string]: BehaviorSubject<T[]> };
-	} = {};
+	public readonly byRepo$: Record<
+		string,
+		Record<string, BehaviorSubject<T[]>>
+	> = {};
 
 	public getItems$(from: IProjectRef): Observable<T[]> {
 		const { storeId, projectId } = from;

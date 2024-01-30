@@ -14,7 +14,7 @@ export class DatatugStoreGithubService implements IDatatugStoreService {
 
 		interface urlAndHeaders {
 			url: string;
-			headers?: { [name: string]: string };
+			headers?: Record<string, string>;
 		}
 
 		const [repo, org] = projectId.split('@');
