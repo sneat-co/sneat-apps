@@ -210,14 +210,13 @@ export class ContainerEndpointComponent implements OnChanges {
 				`ContainerEndpointComponent.createSetContainerEndpointFieldsRequest(): invalid parameters: endpointSide=${endpointSide}, containerID=${containerID}, shippingPointID=${shippingPointID}, orderID=${orderID}, teamID=${teamID}`,
 			);
 		}
-		const request: ISetContainerEndpointFieldsRequest = {
+		return {
 			teamID,
 			orderID,
 			shippingPointID,
 			containerID,
 			side: endpointSide,
 		};
-		return request;
 	}
 
 	private readonly setTimeField = (

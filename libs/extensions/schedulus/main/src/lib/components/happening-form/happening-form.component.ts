@@ -210,10 +210,7 @@ export class HappeningFormComponent
 		if (!this.happeningForm.valid) {
 			return false;
 		}
-		if (!this.slots?.length) {
-			return false;
-		}
-		return true;
+		return !!this.slots?.length;
 	}
 
 	private makeHappeningDto(): IHappeningDto {

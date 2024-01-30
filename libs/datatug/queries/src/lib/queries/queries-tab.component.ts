@@ -229,7 +229,7 @@ export class QueriesTabComponent {
 		if (!path) {
 			throw new Error('path is a required parameter');
 		}
-		if (!!folder && folder !== null) {
+		if (!folder) {
 			throw new Error('folder argument expected to have value or be null');
 		}
 		if (path !== this.currentFolder.path) {

@@ -19,7 +19,7 @@ const periodMs = 10000;
 
 @Injectable()
 export class AgentStateService {
-	private watchers: { [storeId: string]: Observable<IAgentState> } = {};
+	private watchers: Record<string, Observable<IAgentState>> = {};
 
 	constructor(private repoApiService: StoreApiService) {}
 

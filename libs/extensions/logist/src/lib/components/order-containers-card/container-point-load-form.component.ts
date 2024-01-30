@@ -83,6 +83,7 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 	}
 
 	protected does(task?: ShippingPointTask): boolean {
+		// noinspection UnnecessaryLocalVariableJS
 		const v = !!task && !!this.containerPoint?.tasks?.includes(task);
 		// console.log('does', task, v);
 		return v;

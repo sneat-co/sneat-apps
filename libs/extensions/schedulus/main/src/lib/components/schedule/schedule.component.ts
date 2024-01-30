@@ -339,14 +339,10 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 			if (!this.hasWeekday(r.brief?.slots || r.dto?.slots, weekdays)) {
 				return false;
 			}
-			if (
+			return !(
 				repeats?.length &&
 				!r.brief?.slots?.some((slot) => repeats.includes(slot.repeats))
-			) {
-				return false;
-			}
-
-			return true;
+			);
 		});
 		console.log(
 			`ScheduleComponent.filterRecurrings(')`,
@@ -382,8 +378,8 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	): boolean {
 		return (
 			!weekdays ||
-			!!slots?.some(
-				(slot) => slot.weekdays?.some((wd) => weekdays.includes(wd)),
+			!!slots?.some((slot) =>
+				slot.weekdays?.some((wd) => weekdays.includes(wd)),
 			)
 		);
 	}

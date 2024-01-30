@@ -1,23 +1,23 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { merge, Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { filter, takeUntil, tap } from 'rxjs/operators';
+import { ViewDidEnter, ViewDidLeave } from '@ionic/angular';
+import { parseStoreRef } from '@sneat/core';
 import {
 	IProjectBase,
 	projectsBriefFromDictToFlatList,
 } from '@sneat/datatug-models';
-import { IErrorLogger } from '@sneat/logging';
+import { DatatugNavService, StoreTracker } from '@sneat/datatug-services-nav';
 import {
 	AgentStateService,
 	DatatugStoreService,
 	IAgentState,
 } from '@sneat/datatug-services-repo';
-import { DatatugNavService, StoreTracker } from '@sneat/datatug-services-nav';
-import { ViewDidEnter, ViewDidLeave } from '@ionic/angular';
+import { IDatatugStoreContext, IProjectContext } from '@sneat/datatug/nav';
 import { NewProjectService } from '@sneat/datatug/project';
 import { DatatugUserService } from '@sneat/datatug/services/base';
-import { IDatatugStoreContext, IProjectContext } from '@sneat/datatug/nav';
-import { parseStoreRef } from '@sneat/core';
+import { IErrorLogger } from '@sneat/logging';
+import { merge, Subject } from 'rxjs';
+import { filter, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
 	selector: 'datatug-store-page',
@@ -57,8 +57,7 @@ export class DatatugStorePageComponent
 		const store = window.history.state.store as IDatatugStoreContext;
 		if (store) {
 			// this.storeId = store.id;
-			const projects = projectsBriefFromDictToFlatList(store.brief.projects);
-			this.projects = projects;
+			this.projects = projectsBriefFromDictToFlatList(store.brief.projects);
 		}
 		this.storeTracker = new StoreTracker(this.destroyed, route);
 		datatugUserService.datatugUserState.subscribe((state) => {

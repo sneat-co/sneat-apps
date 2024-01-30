@@ -29,7 +29,7 @@ export class NewProjectFormComponent implements ViewDidEnter {
 
 	ionViewDidEnter(): void {
 		setTimeout(() => {
-			this.titleInput?.setFocus();
+			this.titleInput?.setFocus().catch(console.error);
 		}, 100);
 	}
 

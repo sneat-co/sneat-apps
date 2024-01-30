@@ -24,15 +24,12 @@ export function isMatchingScheduleFilter(
 	if (f.text && !h.dto?.title?.toLowerCase().includes(f.text)) {
 		return false;
 	}
-	if (
+	return !(
 		f.contactIDs?.length &&
 		!f.contactIDs.some(
 			(fmID) =>
 				(fmID === '' && !Object.keys(h.dto?.participants || {}).length) ||
 				h.dto?.contactIDs?.some((hmID) => hmID == fmID),
 		)
-	) {
-		return false;
-	}
-	return true;
+	);
 }

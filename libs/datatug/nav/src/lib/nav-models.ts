@@ -75,10 +75,5 @@ export interface IAgentContext {
 }
 
 export const getStoreId = (repo: string): string => {
-	if (repo.startsWith('http://')) {
-		return repo.replace('http://', 'http-');
-	} else if (repo.startsWith('https://')) {
-		return repo.replace('https://', 'https-');
-	}
-	return repo;
+	return (repo || '').replace(/(https?):\/\//, '$1-');
 };
