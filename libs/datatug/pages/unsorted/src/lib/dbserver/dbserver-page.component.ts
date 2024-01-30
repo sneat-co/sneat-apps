@@ -10,7 +10,7 @@ import {
 	IDbServerSummary,
 } from '@sneat/datatug-models';
 import { ProjectContextService } from '@sneat/datatug-services-project';
-import { DbServerService } from '@sneat/datatug/services/unsorted';
+import { DbServerService } from '@sneat/datatug-services-unsorted';
 
 @Component({
 	selector: 'datatug-dbserver',

@@ -5,7 +5,7 @@ import { SneatApiService } from '@sneat/api';
 import { StoreApiService } from '@sneat/datatug-services-repo';
 import { CreateNamedRequest } from '@sneat/datatug-dto';
 import { IEnvironmentSummary } from '@sneat/datatug-models';
-import { createProjItem } from '@sneat/datatug/services/base';
+import { createProjItem } from '@sneat/datatug-services-base';
 import { startWith, tap } from 'rxjs/operators';
 import { IProjectRef } from '@sneat/datatug-core';
 import {
@@ -17,7 +17,7 @@ const getEnvCacheKey = (projectRef: IProjectRef, env: string): string => {
 	return `${projectRef.projectId}@${projectRef.storeId}/${env}`;
 };
 
-const envSummaryCache: { [key: string]: IEnvironmentSummary } = {};
+const envSummaryCache: Record<string, IEnvironmentSummary> = {};
 
 @Injectable()
 export class EnvironmentService {
@@ -42,7 +42,7 @@ export class EnvironmentService {
 	public getEnvSummary(
 		projectRef: IProjectRef,
 		env: string,
-		forceReload: boolean = false,
+		forceReload = false,
 	): Observable<IEnvironmentSummary> {
 		if (!projectRef) {
 			return throwError(() => '"projRef" is a required parameter');

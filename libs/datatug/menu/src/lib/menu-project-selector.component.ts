@@ -18,7 +18,7 @@ import {
 	DatatugNavService,
 } from '@sneat/datatug-services-nav';
 import { NewProjectService } from '@sneat/datatug/project';
-import { IProjectContext } from '@sneat/datatug/nav';
+import { IProjectContext } from '@sneat/datatug-nav';
 import { parseStoreRef } from '@sneat/core';
 
 @Component({

@@ -6,10 +6,10 @@ import {
 } from '@sneat/datatug-services-nav';
 import { IProjectSummary } from '@sneat/datatug-models';
 import { Observable, Subject } from 'rxjs';
-import { IProjectContext } from '@sneat/datatug/nav';
+import { IProjectContext } from '@sneat/datatug-nav';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { takeUntil } from 'rxjs/operators';
-import { DatatugUserService } from '@sneat/datatug/services/base';
+import { DatatugUserService } from '@sneat/datatug-services-base';
 
 interface IProjectTopLevelPage {
 	path: ProjectTopLevelPage | '';

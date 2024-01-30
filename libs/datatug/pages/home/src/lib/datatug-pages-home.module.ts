@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { CopyrightComponentModule } from '@sneat/components';
 import { NewProjectFormModule } from '@sneat/datatug/project';
-import { DatatugServicesBaseModule } from '@sneat/datatug/services/base';
+import { DatatugServicesBaseModule } from '@sneat/datatug-services-base';
 import { DatatugServicesStoreModule } from '@sneat/datatug-services-repo';
 import { WormholeModule } from '@sneat/wormhole';
 import { DatatugHomePageComponent } from './datatug-home-page.component';

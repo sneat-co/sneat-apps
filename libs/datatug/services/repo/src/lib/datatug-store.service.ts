@@ -1,23 +1,25 @@
+import {
+	DatatugUserService,
+	IDatatugUserState,
+} from '@sneat/datatug-services-base';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, shareReplay } from 'rxjs/operators';
 import {
+	IParameter,
 	IProjectBase,
 	projectsBriefFromDictToFlatList,
 } from '@sneat/datatug-models';
 import { getStoreUrl } from '@sneat/api';
 import { IRecordset } from '@sneat/datatug-dto';
 import { IGridColumn, IGridDef } from '@sneat/grid';
-import {
-	DatatugUserService,
-	IDatatugUserState,
-} from '@sneat/datatug/services/base';
 import { storeCanProvideListOfProjects } from '@sneat/core';
 
 @Injectable()
 export class DatatugStoreService {
-	private readonly projectsByStore: Record<string, Observable<IProjectBase[]>> = {};
+	private readonly projectsByStore: Record<string, Observable<IProjectBase[]>> =
+		{};
 
 	private datatugUserState?: IDatatugUserState;
 
@@ -93,10 +95,9 @@ export const recordsetToGridDef = (
 			const colDef = recordset.def?.columns?.find(
 				(cDef: { name: unknown }) => cDef.name === c.name,
 			);
-			return !colDef?.hideIf?.parameters?.find((pId: unknown) =>
+			return !colDef?.hideIf?.parameters?.find((pId: string) =>
 				recordset.parameters?.find(
-					(p: { id: unknown; value: unknown }) =>
-						p.id === pId && p.value !== undefined,
+					(p: IParameter) => p.id === pId && p.value !== undefined,
 				),
 			);
 		})

@@ -1,6 +1,10 @@
 import { IDatatugStoreService } from './datatug-store.service.interface';
 import { Observable, throwError } from 'rxjs';
-import { Firestore as AngularFirestore } from '@angular/fire/firestore';
+import {
+	doc,
+	docSnapshots,
+	Firestore as AngularFirestore,
+} from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { IProjectSummary } from '@sneat/datatug-models';
@@ -21,17 +25,15 @@ export class DatatugStoreFirestoreService implements IDatatugStoreService {
 			return throwError(() => 'path should start with a "/", got: ' + path);
 		}
 		path = `datatug_projects/${projectId}${path || ''}`;
-		return this.db
-			.doc(path)
-			.snapshotChanges()
-			.pipe(
-				map((changes) => {
-					if (changes.type === 'deleted') {
-						return null;
-					}
-					if (changes.type) return changes.payload.data() as T;
-					return undefined;
-				}),
-			);
+		const d = doc(this.db, path);
+
+		return docSnapshots(d).pipe(
+			map((changes) => {
+				if (!changes.exists()) {
+					return null;
+				}
+				return changes.data() as unknown as T;
+			}),
+		);
 	}
 }

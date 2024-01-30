@@ -9,13 +9,13 @@ import {
 } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { IEntity, IProjEntity } from '@sneat/datatug-models';
-import { IProjectContext } from '@sneat/datatug/nav';
+import { IProjectContext } from '@sneat/datatug-nav';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	DatatugNavContextService,
 	DatatugNavService,
 } from '@sneat/datatug-services-nav';
-import { EntityService } from '@sneat/datatug/services/unsorted';
+import { EntityService } from '@sneat/datatug-services-unsorted';
 import { IRecord } from '@sneat/data';
 
 type Entities = IRecord<IEntity>[];

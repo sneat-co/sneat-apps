@@ -1,4 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
+import { IProjectContext } from '@sneat/datatug-nav';
 import { combineLatest, Observable } from 'rxjs';
 import { StoreTracker } from './store.tracker';
 import {
@@ -14,7 +15,6 @@ import {
 	isValidProjectRef,
 	routingParamProjectId,
 } from '@sneat/datatug-core';
-import { IProjectContext } from '@sneat/datatug/nav';
 
 export class ProjectTracker {
 	public readonly storeTracker: StoreTracker;
@@ -37,14 +37,14 @@ export class ProjectTracker {
 		this.storeTracker = new StoreTracker(stopNotifier, route);
 		this.projectId = route.paramMap.pipe(
 			takeUntil(stopNotifier),
-			map((paramMap) => paramMap.get(routingParamProjectId)),
+			map((paramMap) => paramMap.get(routingParamProjectId) || ''),
 		);
 		this.projectRef = combineLatest([
 			this.storeTracker.storeId,
 			this.projectId,
 		]).pipe(
 			filter(([storeId, projectId]) => !!storeId && !!projectId),
-			map(([storeId, projectId]) => ({ storeId, projectId })),
+			map(([storeId, projectId]) => ({ storeId: storeId || '', projectId })),
 		);
 		const project = window.history.state.project as IProjectContext;
 		if (isValidProjectRef(project?.ref)) {

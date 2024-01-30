@@ -2,7 +2,7 @@ import { Component, Inject, OnDestroy } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { IDbServer } from '@sneat/datatug-models';
-import { DbServerService } from '@sneat/datatug/services/unsorted';
+import { DbServerService } from '@sneat/datatug-services-unsorted';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({

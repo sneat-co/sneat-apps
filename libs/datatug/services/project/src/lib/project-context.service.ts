@@ -13,7 +13,7 @@ export class ProjectContextService {
 		return this.$current.value;
 	}
 
-	public setCurrent(value: IProjectRef): void {
+	public setCurrent(value?: IProjectRef): void {
 		console.log('ProjectContextService.setCurrent()', value);
 		this.$current.next(value);
 	}

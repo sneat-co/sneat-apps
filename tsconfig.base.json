@@ -34,6 +34,20 @@
 			"@sneat/datatug-core": ["libs/datatug/core/src/index.ts"],
 			"@sneat/datatug-dto": ["libs/datatug/dto/src/index.ts"],
 			"@sneat/datatug-models": ["libs/datatug/models/src/index.ts"],
+			"@sneat/datatug-nav": ["libs/datatug/nav/src/index.ts"],
+			"@sneat/datatug-services-base": [
+				"libs/datatug/services/base/src/index.ts"
+			],
+			"@sneat/datatug-services-nav": ["libs/datatug/services/nav/src/index.ts"],
+			"@sneat/datatug-services-project": [
+				"libs/datatug/services/project/src/index.ts"
+			],
+			"@sneat/datatug-services-repo": [
+				"libs/datatug/services/repo/src/index.ts"
+			],
+			"@sneat/datatug-services-unsorted": [
+				"libs/datatug/services/unsorted/src/index.ts"
+			],
 			"@sneat/datetime": ["libs/datetime/src/index.ts"],
 			"@sneat/dto": ["libs/dto/src/index.ts"],
 			"@sneat/extensions/assetus/components": [

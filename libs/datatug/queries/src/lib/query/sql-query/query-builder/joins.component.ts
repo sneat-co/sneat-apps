@@ -3,7 +3,7 @@ import {
 	IAstJoin,
 	IAstQuery,
 	SqlParser,
-} from '@sneat/datatug/services/unsorted';
+} from '@sneat/datatug-services-unsorted';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISqlChanged } from '../intefaces';
 import {

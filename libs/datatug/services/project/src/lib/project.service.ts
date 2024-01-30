@@ -1,30 +1,41 @@
-import { Inject, Injectable } from '@angular/core';
-import { Firestore as AngularFirestore } from '@angular/fire/firestore';
-import { Observable, ReplaySubject, throwError } from 'rxjs';
-import { map, shareReplay, take, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
+import {
+	AngularFirestore,
+	AngularFirestoreCollection,
+} from '@angular/fire/compat/firestore';
 import { getStoreUrl, SneatApiServiceFactory } from '@sneat/api';
+import { PrivateTokenStoreService } from '@sneat/auth-core';
+import {
+	GITLAB_REPO_PREFIX,
+	STORE_ID_GITHUB_COM,
+	STORE_TYPE_GITHUB,
+} from '@sneat/core';
 import {
 	IProjectRef,
 	isValidProjectRef,
 	projectRefToString,
 } from '@sneat/datatug-core';
 import { IProjectFull, IProjectSummary } from '@sneat/datatug-models';
-import { PrivateTokenStoreService } from '@sneat/auth-core';
+import { DatatugStoreServiceFactory } from '@sneat/datatug-services-repo';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
-	GITLAB_REPO_PREFIX,
-	STORE_ID_GITHUB_COM,
-	STORE_TYPE_GITHUB,
-} from '@sneat/core';
-import { DatatugStoreServiceFactory } from '@sneat/datatug-services-repo';
+	map,
+	Observable,
+	ReplaySubject,
+	shareReplay,
+	take,
+	tap,
+	throwError,
+} from 'rxjs';
 
 @Injectable()
 export class ProjectService {
-	private projects: { [id: string]: Observable<IProjectFull> } = {};
-	private projSummary: {
-		[id: string]: ReplaySubject<IProjectSummary | undefined>;
-	} = {};
+	private projects: Record<string, Observable<IProjectFull>> = {};
+	private projSummary: Record<
+		string,
+		ReplaySubject<IProjectSummary | undefined>
+	> = {};
 	private readonly projectsCollection: AngularFirestoreCollection;
 
 	constructor(
@@ -180,10 +191,10 @@ export class ProjectService {
 		const sneatApiService =
 			this.sneatApiServiceFactory.getSneatApiService(storeId);
 		return sneatApiService
-			.post<ICreateProjectData, { id: string }>(
-				'/datatug/projects/create_project?store=firestore',
-				projData,
-			)
+			.post<
+				ICreateProjectData,
+				{ id: string }
+			>('/datatug/projects/create_project?store=firestore', projData)
 			.pipe(map((response) => response.id));
 	}
 }

@@ -6,7 +6,7 @@ import {
 	IProjBoard,
 	IProjItemBrief,
 } from '@sneat/datatug-models';
-import { IProjectContext } from '@sneat/datatug/nav';
+import { IProjectContext } from '@sneat/datatug-nav';
 import {
 	DatatugNavContextService,
 	DatatugNavService,

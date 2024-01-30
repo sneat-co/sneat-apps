@@ -24,7 +24,7 @@ import {
 	IRecordsetResult,
 } from '@sneat/datatug-dto';
 import { IGridDef } from '@sneat/grid';
-import { IEnvDbTableContext, IProjectContext } from '@sneat/datatug/nav';
+import { IEnvDbTableContext, IProjectContext } from '@sneat/datatug-nav';
 import { Subject } from 'rxjs';
 import { CellPopoverComponent } from '@sneat/datatug/components/datagrid';
 

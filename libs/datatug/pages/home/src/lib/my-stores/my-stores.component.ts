@@ -11,9 +11,9 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DatatugNavService } from '@sneat/datatug-services-nav';
 import { NavController } from '@ionic/angular';
-import { DatatugUserService } from '@sneat/datatug/services/base';
+import { DatatugUserService } from '@sneat/datatug-services-base';
 import { AuthStatus } from '@sneat/auth-core';
-import { IDatatugStoreContext } from '@sneat/datatug/nav';
+import { IDatatugStoreContext } from '@sneat/datatug-nav';
 import { parseStoreRef } from '@sneat/core';
 
 @Component({

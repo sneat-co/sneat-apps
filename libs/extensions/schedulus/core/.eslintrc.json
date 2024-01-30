@@ -41,15 +41,6 @@
         "plugin:@nx/angular-template"
       ],
       "rules": {}
-    },
-    {
-      "files": [
-        "*.json-TODO-fails-on-package.json"
-      ],
-      "parser": "jsonc-eslint-parser",
-      "rules": {
-        "@nx/dependency-checks": "error"
-      }
     }
   ]
 }

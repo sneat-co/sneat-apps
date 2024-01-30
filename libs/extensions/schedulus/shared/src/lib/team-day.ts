@@ -61,9 +61,6 @@ export class TeamDay {
 		this.date = date;
 		this.dateID = dateToIso(date);
 		console.log('TeamDay.constructor()', this.dateID, this.date);
-		// if (this.dateID === '2022-07-01') {
-		// 	throw new Error('suxx');
-		// }
 		if (!this.dateID) {
 			throw new Error('dateID is missing');
 		}

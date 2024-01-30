@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { NavigationOptions } from '@ionic/angular/providers/nav-controller';
 import {
 	IProjBoard,
 	IProjEntity,
@@ -12,7 +12,7 @@ import {
 	getStoreId,
 	IDatatugStoreContext,
 	IProjectContext,
-} from '@sneat/datatug/nav';
+} from '@sneat/datatug-nav';
 import { IProjectRef, isValidProjectRef } from '@sneat/datatug-core';
 import { IStoreRef, storeRefToId } from '@sneat/core';
 
@@ -39,7 +39,7 @@ export class DatatugNavService {
 			throw new Error('store.ref is a required parameter');
 		}
 		const storeId = storeRefToId(store.ref);
-		const options: NavigationOptions = store.brief
+		const options: NavigationOptions | undefined = store.brief
 			? { state: { store } }
 			: undefined;
 		this.navRoot(
@@ -51,13 +51,17 @@ export class DatatugNavService {
 
 	goProject(project: IProjectContext, page?: ProjectTopLevelPage): void {
 		console.log('DatatugNavService.goProject()', project, page);
-		const storeRef: IStoreRef = project.store.ref;
-		const storeId = storeRef?.id || project.ref?.storeId || storeRef?.type;
-		const url = ['store', storeId, 'project', project.ref.projectId];
+		const storeRef: IStoreRef | undefined = project.store?.ref;
+		const storeId: string =
+			storeRef?.id || project.ref?.storeId || storeRef?.type || '';
+		if (!project.ref.projectId) {
+			return;
+		}
+		const url = ['store', storeId, 'project', project.ref.projectId || ''];
 		if (page) {
 			url.push(page);
 		}
-		const options: NavigationOptions = project.brief
+		const options: NavigationOptions | undefined = project.brief
 			? { state: { project } }
 			: undefined;
 		this.navRoot(url, 'Failed to navigate to project page ' + page, options);
@@ -143,7 +147,7 @@ export class DatatugNavService {
 	goProjPage(
 		project: IProjectContext,
 		projPage: string,
-		state?: unknown,
+		state?: Record<string, unknown>,
 	): void {
 		if (!project) {
 			throw new Error('project is a required parameter');

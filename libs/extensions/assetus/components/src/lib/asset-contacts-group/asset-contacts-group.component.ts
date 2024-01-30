@@ -1,14 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ContactType } from 'sneat-shared/models/types';
-import { IContact2Asset } from 'sneat-shared/models/dto/dto-contact';
+import { ContactType, IContact2Asset } from '@sneat/contactus-core';
 
 @Component({
 	selector: 'sneat-asset-contacts-group',
 	templateUrl: './asset-contacts-group.component.html',
 })
 export class AssetContactsGroupComponent {
-	@Input() contactRelation: ContactType;
-	@Input() contacts: IContact2Asset[];
+	@Input() contactRelation?: ContactType;
+	@Input() contacts?: IContact2Asset[];
 
 	get title(): string {
 		switch (this.contactRelation) {
@@ -17,7 +16,7 @@ export class AssetContactsGroupComponent {
 			case 'tenant':
 				return 'Tenants';
 			default:
-				return this.contactRelation;
+				return this.contactRelation || '';
 		}
 	}
 
@@ -28,7 +27,7 @@ export class AssetContactsGroupComponent {
 			case 'tenant':
 				return 'Add tenant';
 			default:
-				return this.contactRelation;
+				return 'Add' + this.contactRelation || '';
 		}
 	}
 

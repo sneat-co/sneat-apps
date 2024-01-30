@@ -5,7 +5,7 @@ import { takeUntil, takeWhile } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { RecordsetValue } from '@sneat/datatug-dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { EntityService } from '@sneat/datatug/services/unsorted';
+import { EntityService } from '@sneat/datatug-services-unsorted';
 import {
 	routingParamEntityId,
 	routingParamProjectId,

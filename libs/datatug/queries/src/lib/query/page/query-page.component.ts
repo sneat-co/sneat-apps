@@ -11,13 +11,13 @@ import {
 } from '@sneat/datatug-models';
 import { Coordinator } from '@sneat/datatug/executor';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { EnvironmentService } from '@sneat/datatug/services/unsorted';
+import { EnvironmentService } from '@sneat/datatug-services-unsorted';
 import { RandomIdService } from '@sneat/random';
 import {
 	DatatugNavContextService,
 	ProjectTracker,
 } from '@sneat/datatug-services-nav';
-import { IProjectContext, newProjectContextFromRef } from '@sneat/datatug/nav';
+import { IProjectContext, newProjectContextFromRef } from '@sneat/datatug-nav';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ViewDidEnter } from '@ionic/angular';
@@ -67,7 +67,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 	public envId?: string;
 	public envDbServerId?: string;
 	// noinspection SqlDialectInspection,SqlNoDataSourceInspection
-	public environments?: ReadonlyArray<IQueryEnvState>;
+	public environments?: readonly IQueryEnvState[];
 
 	private readonly destroyed = new Subject<void>();
 
@@ -183,7 +183,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 					if (!activeEnv.summary && currentEnv.summary) {
 						activeEnv = { ...activeEnv, summary: currentEnv.summary };
 					}
-					let environments: ReadonlyArray<IQueryEnvState> = this.queryState
+					let environments: readonly IQueryEnvState[] = this.queryState
 						.environments || [activeEnv];
 					if (!environments.find((item) => item.id == id)) {
 						environments = [...environments, activeEnv];
@@ -382,7 +382,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 		});
 	}
 
-	private setQueryId(id?: string | null, isNew: boolean = false): void {
+	private setQueryId(id?: string | null, isNew = false): void {
 		if (this.queryId === id) {
 			return;
 		}
@@ -419,7 +419,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 							queryType: query.request.queryType,
 							text: (query.request as ISqlQueryRequest).text,
 						} as ISqlQueryRequest,
-				  },
+					},
 		);
 	}
 

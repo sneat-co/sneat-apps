@@ -25,7 +25,7 @@ export class TableService {
 
 		interface urlAndHeaders {
 			url: string;
-			headers?: { [name: string]: string };
+			headers?: Record<string, string>;
 		}
 
 		const connectTo: Observable<urlAndHeaders> = this.privateTokenStoreService
@@ -51,7 +51,7 @@ export class TableService {
 
 		interface urlAndHeaders {
 			url: string;
-			headers?: { [name: string]: string };
+			headers?: Record<string, string>;
 		}
 
 		const connectTo: Observable<urlAndHeaders> = this.privateTokenStoreService

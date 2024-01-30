@@ -35,7 +35,7 @@ export function storeRefToId(ref: IStoreRef): string {
 	}
 }
 
-export function parseStoreRef(storeId: string): IStoreRef {
+export function parseStoreRef(storeId?: string): IStoreRef {
 	if (!storeId) {
 		throw new Error('storeId is a required parameter');
 	}

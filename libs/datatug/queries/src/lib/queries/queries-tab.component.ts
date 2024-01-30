@@ -15,7 +15,7 @@ import {
 	DatatugNavContextService,
 	DatatugNavService,
 } from '@sneat/datatug-services-nav';
-import { IProjectContext } from '@sneat/datatug/nav';
+import { IProjectContext } from '@sneat/datatug-nav';
 
 interface FilteredItem {
 	folders: string[];
