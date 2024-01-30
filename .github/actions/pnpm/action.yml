@@ -15,7 +15,7 @@ runs:
         -   name: Setup NodeJS
             uses: actions/setup-node@v4
             with:
-                node-version: '16'
+                node-version: '20'
 
         -   name: Install PNPM
             uses: pnpm/action-setup@v2
