@@ -17,14 +17,20 @@ runs:
             with:
                 node-version: '20'
 
-        -   name: Install PNPM
-            shell: sh
-            run: npm install pnpm@8 -g
+        - name: Set up PNPM (corepack)
+          id: pnpm-setup
+          shell: sh
+          run: corepack enable
+
+#        -   name: Install PNPM
+
+#            shell: sh
+#            run: npm install pnpm@8 -g
+
 #            uses: pnpm/action-setup@v2
 #            with:
 #                version: 8
 #                run_install: false
-
 
         -   run: pnpm --version
             shell: sh
