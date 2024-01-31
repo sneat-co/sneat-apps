@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, IonicModule } from '@ionic/angular';
 import {
 	folderItemsAsList,
 	IFolder,
@@ -11,15 +12,17 @@ import {
 	DatatugNavContextService,
 	DatatugNavService,
 } from '@sneat/datatug-services-nav';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { IErrorLogger } from '@sneat/logging';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { DatatugBoardService } from '@sneat/datatug/board/core';
+import { DatatugBoardService } from '@sneat/datatug-board-core';
 import { DatatugFoldersService } from '@sneat/datatug/folders/core';
 
 @Component({
 	selector: 'datatug-boards',
 	templateUrl: './boards-page.component.html',
+	standalone: true,
+	imports: [CommonModule, IonicModule, SneatCardListComponent],
 })
 export class BoardsPageComponent implements OnInit, OnDestroy {
 	tab = 'shared';

@@ -27,9 +27,9 @@
 
 // For some reason this one is not importing from common SCSS file.
 // But maybe it's just OK as we need it only in DataTug for now
-@import '../../../node_modules/tabulator-tables/dist/css/tabulator.min.css';
+//@import '../../../node_modules/tabulator-tables/dist/css/tabulator.min.css';
 
-@import '../../../styles/sneat';
+//@import '../../../styles/sneat';
 
 ion-item ion-buttons[slot='end'] {
 	margin-right: -1em; // TODO: Replace this dirty workaround with proper fix

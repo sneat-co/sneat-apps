@@ -1,4 +1,6 @@
 export * from './services';
+export * from './period-segment/period-segment.component';
+export * from './asset-card/asset-card.component';
 export * from './asset-add';
 export * from './asset-add/add-asset-base-component';
 export * from './services/asset-service.dto';

@@ -112,7 +112,7 @@
 					</sneat-new-company-form>
 					<ng-container *ngSwitchDefault>
 						<ion-item-divider>
-							<ion-label>{{ contactRole | titlecase }}</ion-label>
+							<ion-label>{{ contactRole || "" | titlecase }}</ion-label>
 						</ion-item-divider>
 						<sneat-basic-contact-form
 							[team]="team"

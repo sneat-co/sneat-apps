@@ -7,10 +7,11 @@ import {
 	OnInit,
 } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ITeamMemberInfo } from '@sneat/contactus-core';
 import { AnalyticsService, IAnalyticsService } from '@sneat/core';
 import { IRecord } from '@sneat/data';
 import { secondsToStr } from '@sneat/datetime';
-import { ITeamMemberInfo, MemberRoleSpectator } from '@sneat/dto';
+// import { ITeamMemberInfo, MemberRoleSpectator } from '@sneat/dto';
 import {
 	getMeetingIdFromDate,
 	getToday,
@@ -46,6 +47,7 @@ export class ScrumPageComponent
 	public scrumID?: string;
 
 	public scrum: IScrumDto = {
+		type: 'staff',
 		userIDs: [],
 		statuses: [],
 	};
@@ -178,17 +180,18 @@ export class ScrumPageComponent
 				break;
 			}
 			case 'prev': {
-				const prevScrumId =
-					this.scrum?.scrumIds?.prev ||
-					(this.isToday && this.team?.dto?.last?.scrum?.id);
-				if (!prevScrumId) {
-					this.errorLogger.logError(
-						`Attempted to go PREV non-existing scrum (teamId=${this.team?.id}, scrumId=${this.scrumID})`,
-					);
-					return;
-				}
-				this.setScrumId(prevScrumId);
-				break;
+				throw new Error('Not implemented');
+				// const prevScrumId =
+				// 	this.scrum?.scrumIds?.prev ||
+				// 	(this.isToday && this.team?.dto?.last?.scrum?.id);
+				// if (!prevScrumId) {
+				// 	this.errorLogger.logError(
+				// 		`Attempted to go PREV non-existing scrum (teamId=${this.team?.id}, scrumId=${this.scrumID})`,
+				// 	);
+				// 	return;
+				// }
+				// this.setScrumId(prevScrumId);
+				// break;
 			}
 			case 'next': {
 				if (!this.scrum?.scrumIds?.next) {
@@ -261,48 +264,51 @@ export class ScrumPageComponent
 	}
 
 	protected override onTeamDtoChanged(): void {
-		const team = this.team?.dto;
-		if (!team) {
+		const teamDto = this.team?.dto;
+		if (!teamDto) {
 			return;
 		}
 		if (this.scrumID && !this.timer) {
 			this.setTimer(this.team.id, this.scrumID);
 		}
-		const lastScrumId = team.last?.scrum?.id;
-		if (this.isToday && lastScrumId && lastScrumId !== this.scrumID) {
-			this.prevScrumID = lastScrumId;
-			this.prevScrumDate = ScrumPageComponent.getDateFromId(this.prevScrumID);
-		}
-		if (team.members) {
-			this.spectators = team.members.filter((m) =>
-				m.roles?.indexOf(MemberRoleSpectator),
-			);
-			const uid = this.currentUserId;
-			const member = Object.values(team.members).find((m) => m.userID === uid);
-			if (member) {
-				this.userMemberId = member.id;
-				this.setStatuses();
-			}
-		} else {
-			this.spectators = [];
-		}
-		if (team.metrics) {
-			this.teamMetrics = team.metrics
-				.filter((m) => m.mode === 'team')
-				.map(() => {
-					// const m3 = this.teamMetrics?.find((m2) => m2.id === m.id);
-					// return { ...m, value: m3?.value } as IMetric;
-					throw new Error('not implemented');
-				});
-			this.personalMetrics = team.metrics
-				.filter((m) => m.mode === 'personal')
-				.map(() => {
-					// const m3 = this.personalMetrics?.find((m2) => m2.id === m.id);
-					// return { ...m, value: m3?.value } as IMetric;
-					throw new Error('not implemented');
-				});
-		}
-		this.merge(this.scrum, undefined, team.members);
+		throw new Error('not implemented yet');
+		// const lastScrumId = teamDto.last?.scrum?.id;
+		// if (this.isToday && lastScrumId && lastScrumId !== this.scrumID) {
+		// 	this.prevScrumID = lastScrumId;
+		// 	this.prevScrumDate = ScrumPageComponent.getDateFromId(this.prevScrumID);
+		// }
+		// if (teamDto.members) {
+		// 	this.spectators = teamDto.members.filter((m) =>
+		// 		m.roles?.indexOf(MemberRoleSpectator),
+		// 	);
+		// 	const uid = this.currentUserId;
+		// 	const member = Object.values(teamDto.members).find(
+		// 		(m) => m.userID === uid,
+		// 	);
+		// 	if (member) {
+		// 		this.userMemberId = member.id;
+		// 		this.setStatuses();
+		// 	}
+		// } else {
+		// 	this.spectators = [];
+		// }
+		// if (teamDto.metrics) {
+		// 	this.teamMetrics = teamDto.metrics
+		// 		.filter((m) => m.mode === 'team')
+		// 		.map(() => {
+		// 			// const m3 = this.teamMetrics?.find((m2) => m2.id === m.id);
+		// 			// return { ...m, value: m3?.value } as IMetric;
+		// 			throw new Error('not implemented');
+		// 		});
+		// 	this.personalMetrics = teamDto.metrics
+		// 		.filter((m) => m.mode === 'personal')
+		// 		.map(() => {
+		// 			// const m3 = this.personalMetrics?.find((m2) => m2.id === m.id);
+		// 			// return { ...m, value: m3?.value } as IMetric;
+		// 			throw new Error('not implemented');
+		// 		});
+		// }
+		// this.merge(this.scrum, undefined, teamDto.members);
 	}
 
 	protected override unsubscribe(reason?: string): void {
@@ -354,7 +360,8 @@ export class ScrumPageComponent
 				// }
 				console.log('this.scrum', this.scrum);
 				if (this.team?.dto) {
-					this.merge(this.scrum, undefined, this.team.dto.members);
+					throw new Error('not implemented yet');
+					// this.merge(this.scrum, undefined, this.team.dto.members);
 				}
 				this.prevScrumID = scrum?.scrumIds?.prev;
 				if (this.prevScrumID) {
@@ -373,7 +380,8 @@ export class ScrumPageComponent
 			case this.prevScrumID:
 				// this.prevScrum = scrum || {...this.prevScrum, statuses: []};
 				if (this.team?.dto) {
-					this.merge(this.scrum, undefined, this.team.dto.members);
+					throw new Error('not implemented yet');
+					// this.merge(this.scrum, undefined, this.team.dto.members);
 				}
 				console.log(`mapped to previous scrum ${id}:`, this.scrum);
 				break;
@@ -558,49 +566,50 @@ export class ScrumPageComponent
 		if (id === this.scrumID) {
 			return;
 		}
-		try {
-			this.prevScrumID = undefined;
-			this.prevScrumDate = undefined;
-			this.nextScrumID = undefined;
-			this.nextScrumDate = undefined;
-			const todayId = getMeetingIdFromDate(getToday());
-			if (id === 'today') {
-				id = todayId;
-			}
-			this.scrumID = id;
-			if (this.team) {
-				this.setTimer(this.team.id, id);
-			}
-			this.scrumDate = ScrumPageComponent.getDateFromId(id);
-			console.log(`setCurrentScrum() id=${id}, scrumDate:`, this.scrumDate);
-			const scrum = this.scrumsById[id];
-			console.log('setCurrentScrum() => scrum:', id, scrum, this.scrumsById);
-			this.scrum = scrum;
-			this.isToday = id === todayId;
-			console.log(`isToday=${this.isToday}, id=${id}, todayId=${todayId}`);
-			{
-				/*if (scrum) - we need to set prevScrumId even if no scrum record */
-				this.prevScrumID =
-					scrum?.scrumIds?.prev ||
-					(this.isToday && this.team?.dto?.last?.scrum?.id) ||
-					undefined;
-				if (this.prevScrumID) {
-					this.prevScrumDate = ScrumPageComponent.getDateFromId(
-						this.prevScrumID,
-					);
-				}
-				this.nextScrumID = scrum?.scrumIds?.next;
-				if (this.nextScrumID) {
-					this.nextScrumDate = ScrumPageComponent.getDateFromId(
-						this.nextScrumID,
-					);
-				}
-			}
-			if (this.team) {
-				this.subscribeScrum(this.team.id, this.scrumID, 'setCurrentScrum');
-			}
-		} catch (e) {
-			this.errorLogger.logError(e, `Failed in setCurrentScrum(${id})`);
-		}
+		throw new Error('not implemented yet');
+		// try {
+		// 	this.prevScrumID = undefined;
+		// 	this.prevScrumDate = undefined;
+		// 	this.nextScrumID = undefined;
+		// 	this.nextScrumDate = undefined;
+		// 	const todayId = getMeetingIdFromDate(getToday());
+		// 	if (id === 'today') {
+		// 		id = todayId;
+		// 	}
+		// 	this.scrumID = id;
+		// 	if (this.team) {
+		// 		this.setTimer(this.team.id, id);
+		// 	}
+		// 	this.scrumDate = ScrumPageComponent.getDateFromId(id);
+		// 	console.log(`setCurrentScrum() id=${id}, scrumDate:`, this.scrumDate);
+		// 	const scrum = this.scrumsById[id];
+		// 	console.log('setCurrentScrum() => scrum:', id, scrum, this.scrumsById);
+		// 	this.scrum = scrum;
+		// 	this.isToday = id === todayId;
+		// 	console.log(`isToday=${this.isToday}, id=${id}, todayId=${todayId}`);
+		// 	{
+		// 		/*if (scrum) - we need to set prevScrumId even if no scrum record */
+		// 		this.prevScrumID =
+		// 			scrum?.scrumIds?.prev ||
+		// 			(this.isToday && this.team?.dto?.last?.scrum?.id) ||
+		// 			undefined;
+		// 		if (this.prevScrumID) {
+		// 			this.prevScrumDate = ScrumPageComponent.getDateFromId(
+		// 				this.prevScrumID,
+		// 			);
+		// 		}
+		// 		this.nextScrumID = scrum?.scrumIds?.next;
+		// 		if (this.nextScrumID) {
+		// 			this.nextScrumDate = ScrumPageComponent.getDateFromId(
+		// 				this.nextScrumID,
+		// 			);
+		// 		}
+		// 	}
+		// 	if (this.team) {
+		// 		this.subscribeScrum(this.team.id, this.scrumID, 'setCurrentScrum');
+		// 	}
+		// } catch (e) {
+		// 	this.errorLogger.logError(e, `Failed in setCurrentScrum(${id})`);
+		// }
 	}
 }

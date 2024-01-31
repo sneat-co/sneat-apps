@@ -146,7 +146,7 @@ export class EntityService {
 							? {
 									...entity,
 									state: 'deleting',
-							  }
+								}
 							: entity,
 					),
 				);
@@ -174,9 +174,11 @@ export class EntityService {
 							entities$.next(
 								entities.map((entity) => {
 									if (entity.id === entityId && entity.state === 'deleting') {
-										const v = { ...entity };
-										delete v.state;
-										return v;
+										throw new Error('not implemented');
+										// const v = { ...entity };
+
+										// delete v.state;
+										// return v;
 									}
 									return entity;
 								}),
