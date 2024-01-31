@@ -51,8 +51,8 @@ dependencies:
     specifier: 5.36.0
     version: 5.36.0(@ionic-native/core@5.36.0)(rxjs@7.8.1)
   '@ionic/angular':
-    specifier: 7.6.7
-    version: 7.6.7(@angular/core@17.1.1)(@angular/forms@17.1.1)(@angular/router@17.1.1)(rxjs@7.8.1)(zone.js@0.14.3)
+    specifier: 7.7.0
+    version: 7.7.0(@angular/core@17.1.1)(@angular/forms@17.1.1)(@angular/router@17.1.1)(rxjs@7.8.1)(zone.js@0.14.3)
   '@ionic/core':
     specifier: 7.7.0
     version: 7.7.0
@@ -3064,8 +3064,8 @@ packages:
       rxjs: 7.8.1
     dev: false
 
-  /@ionic/angular@7.6.7(@angular/core@17.1.1)(@angular/forms@17.1.1)(@angular/router@17.1.1)(rxjs@7.8.1)(zone.js@0.14.3):
-    resolution: {integrity: sha512-sEFgxOnfPuPqtdxnHTXcnGOMlViNDf08UfpevS95d7XMPxHvCxD8deCk3XQCVIZ07SnjNEj1Tbm53kFGS7lebA==}
+  /@ionic/angular@7.7.0(@angular/core@17.1.1)(@angular/forms@17.1.1)(@angular/router@17.1.1)(rxjs@7.8.1)(zone.js@0.14.3):
+    resolution: {integrity: sha512-jEPgg8J1ZX5mBiz80LUOmAOtMOZuVFE5ZVNxSuMzTFdD6j4rSFowuOmci4DZoewyveQgPx5h4Kg+rLuQrxTYow==}
     peerDependencies:
       '@angular/core': '>=14.0.0'
       '@angular/forms': '>=14.0.0'
@@ -3076,20 +3076,12 @@ packages:
       '@angular/core': 17.1.1(rxjs@7.8.1)(zone.js@0.14.3)
       '@angular/forms': 17.1.1(@angular/common@17.1.1)(@angular/core@17.1.1)(@angular/platform-browser@17.1.1)(rxjs@7.8.1)
       '@angular/router': 17.1.1(@angular/common@17.1.1)(@angular/core@17.1.1)(@angular/platform-browser@17.1.1)(rxjs@7.8.1)
-      '@ionic/core': 7.6.7
+      '@ionic/core': 7.7.0
       ionicons: 7.2.2
       jsonc-parser: 3.2.0
       rxjs: 7.8.1
       tslib: 2.6.2
       zone.js: 0.14.3
-    dev: false
-
-  /@ionic/core@7.6.7:
-    resolution: {integrity: sha512-cb5mYBVmD1u5rQJBtT7erkSpOVprb8Qu55fh/vA+PTfD7p7QQxFxn5DJBUFQTIx/E2+BqgxkvZz/p2xmB5dUfg==}
-    dependencies:
-      '@stencil/core': 4.12.0
-      ionicons: 7.2.2
-      tslib: 2.6.2
     dev: false
 
   /@ionic/core@7.7.0:
