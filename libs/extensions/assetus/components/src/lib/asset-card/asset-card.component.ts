@@ -1,21 +1,28 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Period } from 'sneat-shared/models/types';
-import { Asset } from 'sneat-shared/models/ui/ui-asset';
+import { CommonModule } from '@angular/common';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
+import { Period } from '@sneat/dto';
+import { IAssetDtoBase } from '@sneat/mod-assetus-core';
 
 @Component({
 	selector: 'sneat-asset-card',
 	templateUrl: './asset-card.component.html',
+	standalone: true,
+	imports: [CommonModule, IonicModule],
 })
-export class AssetCardComponent implements OnInit {
-	@Input() period: Period;
-	@Input() asset: Asset;
+export class AssetCardComponent implements OnChanges {
+	@Input() period?: Period;
+	@Input({ required: true }) asset?: IAssetDtoBase;
 
-	segment: 'expenses' | 'income' = 'expenses';
+	protected segment: 'expenses' | 'income' = 'expenses';
 
-	ngOnInit(): void {
-		const { incomes, expenses } = this.asset.totals;
-		if (incomes && (!expenses || incomes.count > expenses.count)) {
-			this.segment = 'income';
+	ngOnChanges(changes: SimpleChanges): void {
+		if (changes['asset'] && this.asset) {
+			const incomes = this.asset.totals?.incomes,
+				expenses = this.asset.totals?.expenses;
+			if (incomes && (!expenses || incomes.count > expenses.count)) {
+				this.segment = 'income';
+			}
 		}
 	}
 

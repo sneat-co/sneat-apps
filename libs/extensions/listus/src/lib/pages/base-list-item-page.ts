@@ -1,6 +1,6 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { IListItemBrief } from '@sneat/dto';
-import { IListContext } from '@sneat/team-models';
+import { IListContext } from '../contexts';
+import { IListItemBrief } from '../dto';
 import { ListusComponentBaseParams } from '../listus-component-base-params';
 import { BaseListPage } from './base-list-page';
 
