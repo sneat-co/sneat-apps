@@ -155,7 +155,7 @@
 				<ion-item-divider>
 					<ion-label>Personal metrics</ion-label>
 				</ion-item-divider>
-				<app-metrics [metrics]="personalMetrics" />
+				<sneat-metrics [metrics]="personalMetrics" />
 			</ion-card>
 
 			<sneat-my-retro-items [teamId]="team?.id" tabAutoSelect="true" />
@@ -177,7 +177,7 @@
 					/>
 					<ion-label> Shared metrics </ion-label>
 				</ion-item-divider>
-				<app-metrics *ngIf="teamMetrics" [metrics]="teamMetrics" />
+				<sneat-metrics *ngIf="teamMetrics" [metrics]="teamMetrics" />
 			</ion-card>
 
 			<ng-container *ngIf="!displayStatuses">
@@ -198,7 +198,7 @@
 				<ion-card
 					*ngFor="let status of displayStatuses; trackBy: trackByMember"
 				>
-					<app-scrum-card
+					<sneat-scrum-card
 						viewMode="team"
 						(expandChanged)="onScrumExpandChanged(status.member.id, $event)"
 						[isExpanded]="status.member.id === expandedMemberId"

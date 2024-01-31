@@ -1,48 +1,66 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { CommuneBasePage } from 'sneat-shared/pages/commune-base-page';
+import { Period } from '@sneat/dto';
+import { IAssetContext, IAssetDtoGroup } from '@sneat/mod-assetus-core';
 import {
-	IAssetGroupService,
-	IAssetService,
-} from 'sneat-shared/services/interfaces';
-import { IAssetDtoGroup } from 'sneat-shared/models/dto/dto-asset';
-import { Period } from 'sneat-shared/models/types';
-import { Asset } from 'sneat-shared/models/ui/ui-asset';
-import { AssetFactory } from 'sneat-shared/models/ui/ui-asset-factory';
-import { CommuneBasePageParams } from 'sneat-shared/services/params';
-import { IRecord, RxRecordKey } from 'rxstore';
+	TeamComponentBaseParams,
+	TeamPageBaseComponent,
+} from '@sneat/team-components';
+import { Observable } from 'rxjs';
+
+interface IAssetGroupService {
+	watchById(id: string): Observable<IAssetDtoGroup>;
+}
+
+interface IAssetService {
+	assetsByGroupID(groupID: string): Observable<IAssetContext[]>;
+}
+
+class AssetFactory {
+	newAsset(asset: IAssetContext): IAssetContext {
+		return asset;
+	}
+}
 
 @Component({
 	selector: 'sneat-asset-group',
 	templateUrl: './asset-group-page.component.html',
-	providers: [CommuneBasePageParams],
+	providers: [TeamComponentBaseParams],
 	standalone: true,
 	imports: [CommonModule, IonicModule],
 })
-export class AssetGroupPageComponent extends CommuneBasePage implements OnInit {
+export class AssetGroupPageComponent
+	extends TeamPageBaseComponent
+	implements OnInit
+{
 	public period: Period = 'month';
-	public assetGroup: IAssetDtoGroup | undefined;
-	public assets: Asset[] | undefined;
+	public assetGroup?: IAssetDtoGroup;
+	public assets?: IAssetContext[];
 
 	constructor(
-		params: CommuneBasePageParams,
+		params: TeamComponentBaseParams,
+		route: ActivatedRoute,
 		private readonly assetGroupsService: IAssetGroupService,
 		private readonly assetService: IAssetService,
 		private readonly assetFactory: AssetFactory,
 	) {
-		super('budget', params);
+		super('AssetGroupPageComponent', route, params);
 		this.assetGroup = window.history.state.assetGroupDto as IAssetDtoGroup;
 	}
 
 	ngOnInit(): void {
-		super.ngOnInit();
+		// super.ngOnInit();
 		this.route.queryParams.subscribe((params) => {
-			const groupId = params.id;
+			const groupId = params['id'] as string | undefined;
 			console.log('AssetGroupPage(): params=', params, 'groupId:', groupId);
-			this.subscriptions.push(
-				this.assetGroupsService.watchById(groupId).subscribe(
-					(assetGroup) => {
+			if (!groupId) {
+				return;
+			}
+			this.subs.add(
+				this.assetGroupsService.watchById(groupId).subscribe({
+					next: (assetGroup: IAssetDtoGroup) => {
 						console.log(
 							'AssetGroupPage(): watchAssetGroup=',
 							groupId,
@@ -50,12 +68,12 @@ export class AssetGroupPageComponent extends CommuneBasePage implements OnInit {
 						);
 						this.assetGroup = assetGroup;
 					},
-					(err) => {
+					error: (err: unknown) => {
 						console.error(err);
 					},
-				),
+				}),
 			);
-			this.subscriptions.push(
+			this.subs.add(
 				this.assetService.assetsByGroupID(groupId).subscribe((assets) => {
 					this.assets =
 						(assets && assets.map((a) => this.assetFactory.newAsset(a))) ||
@@ -67,9 +85,5 @@ export class AssetGroupPageComponent extends CommuneBasePage implements OnInit {
 
 	periodChanged(period: Period): void {
 		this.period = period;
-	}
-
-	trackById(i: number, record: IRecord): RxRecordKey | undefined {
-		return record.id;
 	}
 }
