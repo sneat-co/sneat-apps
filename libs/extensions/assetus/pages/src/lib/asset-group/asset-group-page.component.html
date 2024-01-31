@@ -31,7 +31,7 @@
 		<sneat-period-segment [period]="period" (changed)="periodChanged($event)" />
 	</div>
 	<ng-container *ngIf="assets">
-		<ng-container *ngFor="let asset of assets; trackBy: trackById">
+		<ng-container *ngFor="let asset of assets">
 			<sneat-asset-card [asset]="asset" [period]="period" />
 		</ng-container>
 	</ng-container>

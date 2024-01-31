@@ -3,6 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { Period } from '@sneat/dto';
+import {
+	AssetCardComponent,
+	PeriodSegmentComponent,
+} from '@sneat/extensions/assetus/components';
 import { IAssetContext, IAssetDtoGroup } from '@sneat/mod-assetus-core';
 import {
 	TeamComponentBaseParams,
@@ -29,7 +33,12 @@ class AssetFactory {
 	templateUrl: './asset-group-page.component.html',
 	providers: [TeamComponentBaseParams],
 	standalone: true,
-	imports: [CommonModule, IonicModule],
+	imports: [
+		CommonModule,
+		IonicModule,
+		PeriodSegmentComponent,
+		AssetCardComponent,
+	],
 })
 export class AssetGroupPageComponent
 	extends TeamPageBaseComponent
