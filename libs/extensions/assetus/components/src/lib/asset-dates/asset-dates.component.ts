@@ -1,7 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IAssetDto, IVehicle } from 'sneat-shared/models/dto/dto-asset';
-import { IRealEstate } from 'sneat-shared/models/dto/dto-models';
-import { IBusinessLogic } from 'sneat-shared/services/interfaces';
+import { IonicModule } from '@ionic/angular';
+import { IAssetDtoBase, IVehicleAssetDto } from '@sneat/mod-assetus-core';
 
 interface AssetDate {
 	name: string;
@@ -12,16 +12,18 @@ interface AssetDate {
 @Component({
 	selector: 'sneat-asset-dates',
 	templateUrl: './asset-dates.component.html',
+	standalone: true,
+	imports: [CommonModule, IonicModule],
 })
 export class AssetDatesComponent {
-	private assetDto: IAssetDto;
+	private assetDto?: IAssetDtoBase;
 
-	@Input() set asset(v: IAssetDto) {
+	@Input() set asset(v: IAssetDtoBase) {
 		console.log('AssetDatesComponent => asset:', v);
 		this.assetDto = v;
-		switch (v.categoryId) {
-			case 'vehicles': {
-				const vehicle = v as IVehicle;
+		switch (v.category) {
+			case 'vehicle': {
+				const vehicle = v as IVehicleAssetDto;
 				this.items = [
 					{
 						name: 'nctExpires',
@@ -41,13 +43,13 @@ export class AssetDatesComponent {
 				];
 				break;
 			}
-			case 'real_estate': {
-				const property = v as IRealEstate;
+			case 'dwelling': {
+				// const property = v as IDwelling;
 				this.items = [
 					{
 						name: 'leaseExpires',
 						title: 'Lease expires',
-						value: property.leaseExpires,
+						value: 'property.leaseExpires',
 					},
 				];
 				break;
@@ -60,9 +62,9 @@ export class AssetDatesComponent {
 
 	@Output() changed = new EventEmitter<{ name: string; value: string }>();
 
-	constructor(private readonly businessLogic: IBusinessLogic) {}
+	// constructor(private readonly businessLogic: IBusinessLogic) {}
 
-	items: AssetDate[];
+	protected items?: AssetDate[];
 
 	trackByName(i: number, v: AssetDate): string {
 		return v.name;
@@ -87,12 +89,13 @@ export class AssetDatesComponent {
 				title = name;
 				break;
 		}
-		if (this.assetDto.id) {
-			this.businessLogic
-				.changeAssetDate(this.assetDto.id, name, value, title)
-				.subscribe((assetDto) => {
-					this.assetDto = assetDto;
-				});
-		}
+		throw new Error('not implemented yet, title=' + title);
+		// if (this.assetDto.id) {
+		// 	this.businessLogic
+		// 		.changeAssetDate(this.assetDto.id, name, value, title)
+		// 		.subscribe((assetDto) => {
+		// 			this.assetDto = assetDto;
+		// 		});
+		// }
 	}
 }

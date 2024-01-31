@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -21,7 +21,7 @@ import { ITmdbService } from '../watchlist';
 	styleUrls: ['./movie-card.component.scss'],
 	animations: [listItemAnimations],
 	standalone: true,
-	imports: [IonicModule, CommonModule],
+	imports: [IonicModule, CommonModule, NgOptimizedImage],
 })
 export class MovieCardComponent implements OnChanges {
 	@Input()

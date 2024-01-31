@@ -38,7 +38,13 @@
 	</ion-toolbar>
 </ion-header>
 <ion-content class="cardy">
-	<img alt="List image" *ngIf="list?.brief?.img" [src]="list?.brief?.img" />
+	<img
+		alt="List image"
+		*ngIf="list?.brief?.img"
+		[ngSrc]="list?.brief?.img || ''"
+		width="100"
+		height="100"
+	/>
 
 	<!--	<div class="ion-padding-top ion-padding-horizontal">-->
 	<!--	</div>-->
@@ -116,7 +122,7 @@
 					isReordering || listMode !== 'reorder' || doneFilter !== 'all'
 				"
 			>
-				<ion-reorder *ngFor="let item of listItems; trackBy: itemId">
+				<ion-reorder *ngFor="let item of listItems || []; trackBy: itemId">
 					<sneat-list-item
 						[showDoneCheckbox]="doneFilter !== 'all'"
 						[doneFilter]="doneFilter"
@@ -287,11 +293,17 @@
 		<ng-container *ngSwitchCase="'watch'" />
 		<ng-container *ngSwitchDefault>
 			<ion-card
-				*ngFor="let item of listItems; trackBy: itemId"
+				*ngFor="let item of listItems || []; trackBy: itemId"
 				button
 				(click)="goListItem(item.brief)"
 			>
-				<img alt="Item image" *ngIf="item.brief.img" [src]="item.brief.img" />
+				<img
+					alt="Item image"
+					*ngIf="item.brief.img"
+					[ngSrc]="item.brief.img || ''"
+					width="100"
+					height="100"
+				/>
 				<ion-card-content>
 					<h2>{{ item.brief.title }}</h2>
 					Short description here

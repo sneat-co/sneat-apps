@@ -1,21 +1,22 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import {
 	AlertController,
+	IonicModule,
 	ModalController,
 	PopoverController,
 } from '@ionic/angular';
-import { LiabilityServiceType } from 'sneat-shared/models/types';
-import { DtoLiability } from 'sneat-shared/models/dto/dto-liability';
-import { IAssetDto } from 'sneat-shared/models/dto/dto-asset';
-import { DtoServiceType } from 'sneat-shared/models/dto/dto-service-provider';
+import { ISelectItem, MultiSelectorComponent } from '@sneat/components';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
-	IAssetService,
-	IErrorLogger,
-	ILiabilityService,
-	IServiceTypeService,
-} from 'sneat-shared/services/interfaces';
-import { ModalSelectorItem } from 'sneat-shared/components/modals/modal-selector/modal-selector-models';
-import { ModalSelectorComponent } from 'sneat-shared/components/modals/modal-selector/modal-selector.component';
+	AssetCategory,
+	DtoLiability,
+	DtoServiceType,
+	IAssetDtoBase,
+	LiabilityServiceType,
+} from '@sneat/mod-assetus-core';
+import { Observable } from 'rxjs';
+import { AssetService } from '../services';
 
 interface AssetLiabilitiesByServiceType {
 	type: LiabilityServiceType;
@@ -23,25 +24,39 @@ interface AssetLiabilitiesByServiceType {
 	liabilities?: DtoLiability[];
 }
 
+interface IServiceTypeService {
+	serviceTypesByAssetCategory(
+		a: unknown,
+		category: AssetCategory,
+	): Observable<{ values: DtoServiceType[] }>;
+}
+
+interface ILiabilityService {
+	getByAssetId(
+		assetId: string,
+	): Observable<{ values: { serviceTypes: LiabilityServiceType[] }[] }>;
+}
+
 @Component({
 	selector: 'sneat-asset-liabilities',
 	templateUrl: './asset-liabilities.component.html',
-	// styleUrls: ['./asset-liabilities.component.scss'],
+	standalone: true,
+	imports: [CommonModule, IonicModule],
 })
 export class AssetLiabilitiesComponent {
-	assetDto: IAssetDto | undefined;
+	assetDto: IAssetDtoBase | undefined;
 
-	@Input() addTitle: string;
+	@Input() addTitle?: string;
 
-	@Input() liabilityType: 'service' | 'tax';
+	@Input() liabilityType?: 'service' | 'tax';
 
-	serviceTypes: DtoServiceType[];
+	serviceTypes?: DtoServiceType[];
 
-	liabilitiesByServiceType: AssetLiabilitiesByServiceType[];
+	liabilitiesByServiceType?: AssetLiabilitiesByServiceType[];
 
 	@Output() serviceAdded = new EventEmitter<{ type: LiabilityServiceType }>();
 
-	@Input() set asset(v: IAssetDto | undefined) {
+	@Input() set asset(v: IAssetDtoBase | undefined) {
 		this.assetDto = v;
 		if (this.liabilityType) {
 			this.load();
@@ -51,13 +66,13 @@ export class AssetLiabilitiesComponent {
 	handleError = (err: unknown): void => console.log(err);
 
 	constructor(
-		private readonly assetService: IAssetService,
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		private readonly assetService: AssetService,
 		private readonly liabilityService: ILiabilityService,
 		private readonly alertCtrl: AlertController,
 		private readonly modalCtrl: ModalController,
 		private readonly popoverCtrl: PopoverController,
 		private readonly serviceTypeService: IServiceTypeService,
-		private readonly errorLogger: IErrorLogger,
 	) {}
 
 	load(): void {
@@ -70,9 +85,9 @@ export class AssetLiabilitiesComponent {
 			throw new Error('!assetDto');
 		}
 
-		if (assetDto.categoryId) {
+		if (assetDto.category) {
 			this.serviceTypeService
-				.serviceTypesByAssetCategory(undefined, assetDto.categoryId)
+				.serviceTypesByAssetCategory(undefined, assetDto.category)
 				.subscribe((result) => {
 					this.serviceTypes = result.values;
 					this.liabilitiesByServiceType = this.serviceTypes
@@ -103,7 +118,7 @@ export class AssetLiabilitiesComponent {
 								const liabilities = selectResult.values;
 								console.log('liabilities:', liabilities);
 								this.liabilitiesByServiceType =
-									this.liabilitiesByServiceType.filter(
+									this.liabilitiesByServiceType?.filter(
 										(service) =>
 											!liabilities.some(
 												(l) =>
@@ -156,8 +171,10 @@ export class AssetLiabilitiesComponent {
 		if (!this.assetDto.id) {
 			throw new Error('!this.assetDto.id');
 		}
+		throw new Error('not implemented yet, serviceType=' + service);
+		/*
 		this.assetService
-			.updateRecord(undefined, this.assetDto.id, (dto) => {
+			.updateAsset(undefined, this.assetDto.id, (dto) => {
 				let changed = false;
 				if (!dto.notUsedServiceTypes) {
 					dto.notUsedServiceTypes = [];
@@ -176,6 +193,7 @@ export class AssetLiabilitiesComponent {
 					this.errorLogger.logError(err, 'Failed to update asset record');
 				},
 			);
+			*/
 	}
 
 	async addService(type?: LiabilityServiceType): Promise<void> {
@@ -184,18 +202,19 @@ export class AssetLiabilitiesComponent {
 			this.serviceAdded.emit({ type });
 		} else {
 			try {
-				const items: ModalSelectorItem[] = this.serviceTypes.map((v) => ({
-					value: v.id,
-					label: v.title || (v.id as string),
-				}));
+				const items: ISelectItem[] =
+					this.serviceTypes?.map((v) => ({
+						id: v.id || '',
+						title: v.title || (v.id as string),
+					})) || [];
 				const modal = await this.popoverCtrl.create({
-					component: ModalSelectorComponent,
+					component: MultiSelectorComponent,
 					componentProps: {
 						title: this.addTitle,
 						items,
-						onSelect: (item: ModalSelectorItem) => {
+						onSelect: (item: ISelectItem) => {
 							this.serviceAdded.emit({
-								type: item.value as LiabilityServiceType,
+								type: item.id as LiabilityServiceType,
 							});
 						},
 					},
