@@ -1,4 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
 import { CommuneBasePage } from 'sneat-shared/pages/commune-base-page';
 import {
 	IAssetGroupService,
@@ -15,6 +17,8 @@ import { IRecord, RxRecordKey } from 'rxstore';
 	selector: 'sneat-asset-group',
 	templateUrl: './asset-group-page.component.html',
 	providers: [CommuneBasePageParams],
+	standalone: true,
+	imports: [CommonModule, IonicModule],
 })
 export class AssetGroupPageComponent extends CommuneBasePage implements OnInit {
 	public period: Period = 'month';
