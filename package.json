@@ -51,7 +51,7 @@
     "@sneat/random": "0.0.4",
     "@types/tabulator-tables": "5.5.7",
     "date-fns": "3.3.1",
-    "firebase": "10.7.2",
+    "firebase": "10.8.0",
     "ionicons": "7.2.2",
     "rxjs": "7.8.1",
     "tabulator-tables": "5.5.4",
