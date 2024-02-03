@@ -5,17 +5,13 @@ import { routingParamTableType } from '@sneat/datatug-core';
 export const datatugProjEnvDbRoutes: Routes = [
 	{
 		path: 'table/:' + routingParamTableType,
-		loadChildren: () =>
-			import('@sneat/datatug/pages/unsorted').then(
-				(m) => m.EnvDbTablePageModule,
-			),
+		loadComponent: () =>
+			import('@sneat/datatug-pages').then((m) => m.EnvDbTablePageComponent),
 	},
 	{
 		path: 'view/:' + routingParamTableType,
-		loadChildren: () =>
-			import('@sneat/datatug/pages/unsorted').then(
-				(m) => m.EnvDbTablePageModule,
-			),
+		loadComponent: () =>
+			import('@sneat/datatug-pages').then((m) => m.EnvDbTablePageComponent),
 	},
 ];
 

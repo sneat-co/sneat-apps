@@ -61,7 +61,7 @@
 			"@sneat/datatug/pages/signed-out": [
 				"libs/datatug/pages/signed-out/src/index.ts"
 			],
-			"@sneat/datatug/pages/unsorted": [
+			"@sneat/datatug-pages": [
 				"libs/datatug/pages/unsorted/src/index.ts"
 			],
 			"@sneat/datatug/project": ["libs/datatug/project/src/index.ts"],

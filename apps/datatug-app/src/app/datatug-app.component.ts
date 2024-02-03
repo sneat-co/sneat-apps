@@ -6,8 +6,8 @@ import { Component, Injector, Type } from '@angular/core';
 	templateUrl: 'datatug-app.component.html',
 })
 export class DatatugAppComponent {
-	menu: Promise<Type<unknown>>;
-	menuInjector: Injector;
+	menu?: Promise<Type<unknown>>;
+	menuInjector?: Injector;
 
 	// constructor(
 	// 	private readonly injector: Injector,

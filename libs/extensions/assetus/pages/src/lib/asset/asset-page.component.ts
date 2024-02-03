@@ -50,9 +50,9 @@ export class AssetPageComponent extends AssetBasePage {
 	constructor(route: ActivatedRoute, params: AssetComponentBaseParams) {
 		super('AssetPageComponent', route, params);
 		// const path = location.pathname;
-		// if (path.indexOf('vehicle') >= 0) {
+		// if (path.includes('vehicle')) {
 		// 	this.assetTypeId = 'vehicles';
-		// } else if (path.indexOf('property') >= 0) {
+		// } else if (path.includes('property')) {
 		// 	this.assetTypeId = 'real_estate';
 		// }
 	}

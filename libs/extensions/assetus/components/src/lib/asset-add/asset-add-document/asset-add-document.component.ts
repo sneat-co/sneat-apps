@@ -157,9 +157,9 @@ export class AssetAddDocumentComponent
 		// if (engine) {
 		// 	const engineLower = engine.toLowerCase();
 		// 	request.engine = engine;
-		// 	if (engineLower.indexOf('petrol') >= 0) {
+		// 	if (engineLower.includes('petrol')) {
 		// 		request.fuelType = 'petrol';
-		// 	} else if (engineLower.indexOf('diesel') >= 0) {
+		// 	} else if (engineLower.includes('diesel')) {
 		// 		request.fuelType = 'diesel';
 		// 	}
 		// 	const size = engine.match(/(\d+(\.\d)?)+L/);

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-	selector: 'datatug-project-menu',
+	selector: 'sneat-datatug-project-menu',
 	templateUrl: './project-menu.component.html',
 })
 export class ProjectMenuComponent {

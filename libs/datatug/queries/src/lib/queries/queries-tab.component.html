@@ -47,7 +47,7 @@
 	</ion-item>
 	<ion-item-divider *ngIf="!isFiltering() && currentFolder.folders">
 		<ion-label *ngIf="!parentFolders?.length"
-			>{{ rootFolder | titlecase }} queries
+			>{{ rootFolder || "" | titlecase }} queries
 		</ion-label>
 		<ion-badge
 			*ngFor="let parentFolder of parentFolders"
@@ -95,7 +95,7 @@
 	</ion-item>
 
 	@if (filter) {
-		@for (item of filteredItems || []; track item.id) {
+		@for (item of filteredItems || []; track item.query.id) {
 			<ion-item
 				tappable
 				*ngFor="let item of filteredItems || []"
@@ -160,7 +160,7 @@
 			<ion-item *ngIf="query.request.queryType === 'SQL'">
 				<small>
 					<small>
-						<datatug-sql [sql]="getText(query)" />
+						<sneat-datatug-sql [sql]="getText(query)" />
 					</small>
 				</small>
 				<!--							<pre *ngIf="query.text" style="font-size: smaller">{{query.text}}</pre>-->

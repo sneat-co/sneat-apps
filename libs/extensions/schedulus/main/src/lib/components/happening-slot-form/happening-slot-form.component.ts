@@ -301,7 +301,7 @@ export class HappeningSlotFormComponent
 }
 
 // function ionTimeToMinutes(v: string): number {
-// 	if (v.indexOf('T') >= 0) {
+// 	if (v.includes('T')) {
 // 		v = v.split('T')[1];
 // 	}
 // 	const [hours, minutes] = v.split(':')

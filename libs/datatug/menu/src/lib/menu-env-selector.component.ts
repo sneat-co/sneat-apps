@@ -8,7 +8,7 @@ import {
 import { IProjectContext } from '@sneat/datatug-nav';
 
 @Component({
-	selector: 'datatug-menu-env-selector',
+	selector: 'sneat-datatug-menu-env-selector',
 	templateUrl: 'menu-env-selector.component.html',
 })
 export class MenuEnvSelectorComponent {

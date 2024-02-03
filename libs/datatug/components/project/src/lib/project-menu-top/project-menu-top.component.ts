@@ -12,21 +12,21 @@ import { takeUntil } from 'rxjs/operators';
 import { DatatugUserService } from '@sneat/datatug-services-base';
 
 interface IProjectTopLevelPage {
-	path: ProjectTopLevelPage | '';
+	path: ProjectTopLevelPage;
 	title: string;
 	icon: string;
-	count?: (proj: IProjectSummary) => number;
+	count?: (proj: IProjectSummary) => number | undefined;
 	buttons?: { path: ProjectTopLevelPage; icon: string }[];
 }
 
 @Component({
-	selector: 'datatug-project-menu-top',
+	selector: 'sneat-datatug-project-menu-top',
 	templateUrl: './project-menu-top.component.html',
 })
 export class ProjectMenuTopComponent implements OnDestroy {
 	public readonly projTopLevelPages: IProjectTopLevelPage[] = [
 		{
-			path: '',
+			path: 'overview',
 			title: 'Overview',
 			icon: 'home-outline',
 		},
@@ -69,7 +69,7 @@ export class ProjectMenuTopComponent implements OnDestroy {
 			path: 'tags',
 			title: 'Tags',
 			icon: 'pricetags-outline',
-			count: (proj) => proj?.tags?.length,
+			count: (proj) => Object.keys(proj?.tags || {}).length,
 		},
 		{
 			path: 'widgets',
@@ -79,7 +79,7 @@ export class ProjectMenuTopComponent implements OnDestroy {
 	];
 
 	project?: IProjectContext;
-	public currentFolder: Observable<string>;
+	public currentFolder: Observable<string | undefined>;
 
 	private destroyed = new Subject<void>();
 
@@ -100,7 +100,7 @@ export class ProjectMenuTopComponent implements OnDestroy {
 		this.currentFolder = datatugNavContextService.currentFolder;
 	}
 
-	private setProject = (project: IProjectContext) => {
+	private setProject = (project?: IProjectContext) => {
 		console.log('ProjectMenuTopComponent.setProject()', project);
 		this.project = project;
 	};
@@ -115,7 +115,7 @@ export class ProjectMenuTopComponent implements OnDestroy {
 		event.preventDefault();
 		event.stopPropagation();
 		const project = this.project;
-		this.nav.goProjPage(project, page, { project });
+		this.nav.goProjPage(page, project, { project });
 		return false;
 	}
 }

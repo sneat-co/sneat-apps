@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DatatugFolderComponent } from './datatug-folder.component';
-import { DatatugFoldersCoreModule } from '@sneat/datatug/folders/core';
+import { DatatugFoldersCoreModule } from '@sneat/datatug-folders-core';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
-import { SneatCardListModule } from '@sneat/components';
+import { SneatCardListComponent } from '@sneat/components';
 
 const exports = [DatatugFolderComponent];
 
@@ -13,7 +13,7 @@ const exports = [DatatugFolderComponent];
 		CommonModule,
 		IonicModule,
 		FormsModule,
-		SneatCardListModule,
+		SneatCardListComponent,
 		DatatugFoldersCoreModule,
 	],
 	declarations: [...exports],

@@ -21,6 +21,12 @@
 				}
 			},
 			"dependsOn": [
+				"datagrid",
+				"datatug-nav",
+				"datatug-components-parameters",
+				"datatug-components-sqleditor",
+				" datatug-services-nav",
+				"datatug-services-unsorted",
 				"datatug-board-core"
 			],
 			"defaultConfiguration": "production"
@@ -32,6 +38,12 @@
 				"jestConfig": "libs/datatug/board/ui/jest.config.ts"
 			},
 			"dependsOn": [
+				"datagrid",
+				"datatug-nav",
+				"datatug-components-parameters",
+				"datatug-components-sqleditor",
+				" datatug-services-nav",
+				"datatug-services-unsorted",
 				"datatug-board-core"
 			]
 		},

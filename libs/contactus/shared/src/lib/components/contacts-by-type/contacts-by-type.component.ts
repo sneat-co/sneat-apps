@@ -59,7 +59,7 @@ export class ContactsByTypeComponent implements OnChanges {
 	// 		if (!dto.noContactRoles) {
 	// 			dto = {...dto, noContactRoles: [role]};
 	// 			return {dto, changed: true};
-	// 		} else if (dto.noContactRoles.indexOf(role) < 0) {
+	// 		} else if (!dto.noContactRoles.includes(role)) {
 	// 			dto.noContactRoles.push(role);
 	// 			return {dto, changed: true};
 	// 		}
@@ -82,7 +82,7 @@ export class ContactsByTypeComponent implements OnChanges {
 		let otherContacts = (this.otherContacts = !filter
 			? contacts
 			: contacts &&
-			  contacts.filter((c) => c.brief?.title?.toLowerCase().includes(filter)));
+				contacts.filter((c) => c.brief?.title?.toLowerCase().includes(filter)));
 
 		defaultFamilyContactGroups.forEach((group) => {
 			const rolesWithContacts: IContactRoleWithContacts[] = [];
@@ -100,8 +100,8 @@ export class ContactsByTypeComponent implements OnChanges {
 						otherContacts = otherContacts.filter((oc) => !eq(oc.id, c.id));
 					});
 					if (roleWithContacts.contacts.length && filter) {
-						roleWithContacts.contacts = roleWithContacts.contacts.filter(
-							(c) => c?.brief?.title?.toLowerCase().includes(filter),
+						roleWithContacts.contacts = roleWithContacts.contacts.filter((c) =>
+							c?.brief?.title?.toLowerCase().includes(filter),
 						);
 						if (roleWithContacts.contacts.length) {
 							rolesWithContacts.push(roleWithContacts);

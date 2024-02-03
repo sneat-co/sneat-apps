@@ -50,9 +50,7 @@ export class ListsPageComponent extends TeamBaseComponent {
 	}
 
 	public isCollapsed(group: IListGroup): boolean {
-		return (
-			!!group.title && (this.collapsedGroups?.indexOf(group.title) || -1) >= 0
-		);
+		return !!group.title && (this.collapsedGroups?.includes(group.title) || -1);
 	}
 
 	public clickGroup(group: IListGroup): void {

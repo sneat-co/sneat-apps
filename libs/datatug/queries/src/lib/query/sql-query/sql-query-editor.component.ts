@@ -8,7 +8,7 @@ import {
 	ISqlQueryTarget,
 	QueryType,
 } from '@sneat/datatug-models';
-import { Coordinator } from '@sneat/datatug/executor';
+import { Coordinator } from '@sneat/datatug-executor';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	EnvironmentService,
@@ -41,13 +41,13 @@ import {
 	IQueryEditorState,
 	IQueryEnvState,
 	IQueryState,
-} from '@sneat/datatug/editor';
+} from '@sneat/datatug-editor';
 import { QueriesService } from '../../queries.service';
 import { QueryContextSqlService } from '../../query-context-sql.service';
 import { parseStoreRef } from '@sneat/core';
 
 @Component({
-	selector: 'datatug-sql-query',
+	selector: 'sneat-datatug-sql-query',
 	templateUrl: './sql-query-editor.component.html',
 	styleUrls: ['./sql-query-editor.component.scss'],
 })

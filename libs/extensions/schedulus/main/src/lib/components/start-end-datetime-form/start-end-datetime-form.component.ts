@@ -325,7 +325,7 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 			this.startDate.value,
 		);
 		let startDate = this.startDate.value || '';
-		if (startDate.indexOf('T') >= 0) {
+		if (startDate.includes('T')) {
 			startDate = startDate.split('T')[0];
 			this.startDate.setValue(startDate);
 			console.log('startDate.setValue()', this.startDate.value);

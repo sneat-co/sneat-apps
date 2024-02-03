@@ -13,15 +13,15 @@
 			<ion-button
 				class="ion-padding-horizontal"
 				slot="end"
-				[disabled]="queryState?.isSaving"
+				[disabled]="queryState.isSaving"
 				[fill]="isChanged ? 'solid' : 'clear'"
 				[color]="isChanged ? 'danger' : 'medium'"
 				title="Save changes"
 				(click)="saveChanges()"
 			>
 				<ion-icon name="save-outline" slot="start" />
-				<ion-label *ngIf="!queryState?.isSaving">Save</ion-label>
-				<ion-label *ngIf="queryState?.isSaving">Saving...</ion-label>
+				<ion-label *ngIf="!queryState.isSaving">Save</ion-label>
+				<ion-label *ngIf="queryState.isSaving">Saving...</ion-label>
 			</ion-button>
 		</ion-buttons>
 	</ion-toolbar>
@@ -32,7 +32,7 @@
 		<ion-item>
 			<ion-input
 				placeholder="Title - is required"
-				[value]="queryState?.title"
+				[value]="queryState.title"
 				(ionChange)="queryTitleChanged($event)"
 				readonly="false"
 			/>
@@ -50,10 +50,8 @@
 		</ion-item>
 	</ion-card>
 
-	<!--	<datatug-sql-query *ngIf="queryState?.queryType === 'SQL'"-->
+	<!--	<sneat-datatug-sql-query *ngIf="queryState?.queryType === 'SQL'"-->
 	<!--										 [currentProject]="project"-->
-	<!--	></datatug-sql-query>-->
-	<datatug-http-query-editor
-		*ngIf="queryState?.queryType === 'HTTP'"
-	/>
+	<!--	></sneat-datatug-sql-query>-->
+	<sneat-datatug-http-query-editor *ngIf="queryState.queryType === 'HTTP'" />
 </ion-content>

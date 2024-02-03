@@ -13,11 +13,12 @@ import {
 import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
-import 'codemirror/mode/javascript/javascript';
-import 'codemirror/mode/sql/sql';
+// import { javascript, sql } from '@codemirror/lang-javascript';
+// import 'codemirror/mode/javascript/javascript';
+// import 'codemirror/mode/sql/sql';
 
 @Component({
-	selector: 'datatug-sql',
+	selector: 'sneat-datatug-sql',
 	templateUrl: './sql-editor.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

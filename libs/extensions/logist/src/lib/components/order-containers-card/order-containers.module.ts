@@ -4,14 +4,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { DialogHeaderComponent, SelectFromListModule } from '@sneat/components';
-import { DatagridModule } from '@sneat/datagrid';
+import { DataGridComponent } from '@sneat/datagrid';
 import { ContactInputModule } from '@sneat/contactus-shared';
 import { FreightLoadFormModule } from '../freight-load-form/freight-load-form.module';
 import { LogistSelectorsModule } from '../logist-selectors.module';
 import { NewContainerComponent } from '../new-container/new-container.component';
 import { OrderContainersGridModule } from '../order-containers-grid/order-containers-grid.module';
 import { OrderFormModule } from '../order-form.module';
-import { ShippingPointsSelectorModule } from '../shipping-points-selector/shipping-points-selector.module';
+import { ShippingPointsSelectorModule } from '../shipping-points-selector';
 import { ContainerEndpointComponent } from './container-endpoint.component';
 import { ContainerPointLoadFormComponent } from './container-point-load-form.component';
 import { ContainerSegmentsComponent } from './container-segments.component';
@@ -27,7 +27,7 @@ import { OrderContainersComponent } from './order-containers.component';
 		FormsModule,
 		SelectFromListModule,
 		ReactiveFormsModule,
-		DatagridModule,
+		DataGridComponent,
 		ShippingPointsSelectorModule,
 		DialogHeaderComponent,
 		FreightLoadFormModule,

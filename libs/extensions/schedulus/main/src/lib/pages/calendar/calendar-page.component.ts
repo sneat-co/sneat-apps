@@ -96,7 +96,7 @@ export class CalendarPageComponent extends TeamBaseComponent {
 	onTabChanged(tab: ScheduleTab): void {
 		this.tab = tab;
 		let { href } = location;
-		if (href.indexOf('?') < 0) {
+		if (!href.includes('?')) {
 			href += '?tab=';
 		}
 		href = href.replace(/tab=\w*/, `tab=${this.tab}`);

@@ -54,7 +54,7 @@ export class ListusAppStateService extends IListusAppStateService {
 	public setGroupCollapsed(id: string, isCollapsed: boolean): void {
 		const appState = this.getAppState();
 		if (isCollapsed) {
-			if (appState.collapsedGroups.indexOf(id) < 0) {
+			if (!appState.collapsedGroups.includes(id)) {
 				appState.collapsedGroups.push(id);
 			}
 		} else {

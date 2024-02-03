@@ -146,13 +146,13 @@ export class ScheduleFilterComponent
 	}
 
 	// repeatChecked(id: string): boolean {
-	// 	return this.repeats.indexOf(id) >= 0;
+	// 	return this.repeats.includes(id);
 	// }
 
 	public repeatChanged(event: Event): void {
 		const ce = event as CustomEvent;
 		const { checked, value } = ce.detail;
-		const found = this.repeats.indexOf(value) >= 0;
+		const found = this.repeats.includes(value);
 		if (checked) {
 			if (!found) {
 				this.repeats.push(value);

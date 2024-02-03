@@ -329,7 +329,7 @@
 			"projectType": "application",
 			"root": "apps/datatug",
 			"sourceRoot": "apps/datatug/src",
-			"prefix": "datatug",
+			"prefix": "sneat-datatug",
 			"architect": {
 				"build": {
 					"builder": "@angular-devkit/build-angular:browser",
@@ -1165,7 +1165,7 @@
 			"projectType": "library",
 			"root": "libs/datatug/menu",
 			"sourceRoot": "libs/datatug/menu/src",
-			"prefix": "datatug",
+			"prefix": "sneat-datatug",
 			"architect": {
 				"test": {
 					"builder": "@nrwl/jest:jest",

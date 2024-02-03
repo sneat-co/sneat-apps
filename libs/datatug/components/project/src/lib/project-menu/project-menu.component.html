@@ -14,8 +14,8 @@
 			</ion-segment-button>
 		</ion-segment>
 	</ion-item-divider>
-	<datatug-project-menu-top *ngIf="tab === 'project'" />
-	<datatug-queries-menu *ngIf="tab === 'queries'" />
+	<sneat-datatug-project-menu-top *ngIf="tab === 'project'" />
+	<sneat-datatug-queries-menu *ngIf="tab === 'queries'" />
 	@if (tab === "boards") {
 		<ion-item-divider color="light">
 			<ion-label color="medium">Active boards</ion-label>

@@ -19,7 +19,7 @@ import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({
-	selector: 'datatug-menu-store-selector',
+	selector: 'sneat-datatug-menu-store-selector',
 	templateUrl: 'menu-store-selector.component.html',
 })
 export class MenuStoreSelectorComponent implements OnDestroy, OnChanges {

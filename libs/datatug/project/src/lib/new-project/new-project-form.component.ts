@@ -1,14 +1,31 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, Input, ViewChild } from '@angular/core';
-import { IonInput, PopoverController, ViewDidEnter } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
+import {
+	IonicModule,
+	IonInput,
+	PopoverController,
+	ViewDidEnter,
+} from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ProjectService } from '@sneat/datatug-services-project';
+import {
+	DatatugServicesProjectModule,
+	ProjectService,
+} from '@sneat/datatug-services-project';
 import { DatatugNavService } from '@sneat/datatug-services-nav';
 import { IProjectContext } from '@sneat/datatug-nav';
 import { parseStoreRef } from '@sneat/core';
 
 @Component({
-	selector: 'datatug-new-project-form',
+	selector: 'sneat-datatug-new-project-form',
 	templateUrl: 'new-project-form.component.html',
+	standalone: true,
+	imports: [
+		CommonModule,
+		IonicModule,
+		FormsModule,
+		DatatugServicesProjectModule,
+	],
 })
 export class NewProjectFormComponent implements ViewDidEnter {
 	store = 'cloud';

@@ -39,6 +39,6 @@ export function isSlotVisible(
 	return (
 		((!!slot.happening && filter.showRecurrings) ||
 			(!!slot.happening && filter.showSingles)) &&
-		(!filter || slot.title.toLowerCase().indexOf(filter.text) >= 0)
+		(!filter || slot.title.toLowerCase().includes(filter.text))
 	);
 }

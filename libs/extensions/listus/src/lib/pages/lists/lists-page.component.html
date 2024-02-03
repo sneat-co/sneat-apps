@@ -102,8 +102,7 @@
 						<ion-badge
 							slot="end"
 							*ngIf="
-								list.restrictions &&
-								list.restrictions.indexOf('adults_only') >= 0
+								list.restrictions && list.restrictions.includes('adults_only')
 							"
 							color="light"
 							style="font-weight: normal"

@@ -22,7 +22,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 const reSqlParams = /@(\w+)/;
 
 @Component({
-	selector: 'datatug-sql-query-widget',
+	selector: 'sneat-datatug-sql-query-widget',
 	templateUrl: './sql-query-widget.component.html',
 })
 export class SqlQueryWidgetComponent implements OnChanges, OnDestroy {

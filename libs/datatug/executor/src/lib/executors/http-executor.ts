@@ -41,7 +41,7 @@ export class HttpExecutor implements IRequestExecutor, ICommandExecutor {
 				}
 				const result: ICommandResponse = {
 					commandId: command.id,
-					items: of(httpResponseItem),
+					items: [httpResponseItem],
 				};
 				return result;
 			}),

@@ -5,22 +5,20 @@ import { routingParamDbCatalogId } from '@sneat/datatug-core';
 export const datatugProjEnvRoutes: Routes = [
 	{
 		path: '',
-		loadChildren: () =>
-			import('@sneat/datatug/pages/unsorted').then(
-				(m) => m.EnvironmentPageModule,
-			),
+		loadComponent: () =>
+			import('@sneat/datatug-pages').then((m) => m.EnvironmentPageComponent),
 	},
 	{
 		path: 'db/:' + routingParamDbCatalogId,
 		loadChildren: () =>
-			import('@sneat/datatug/routes').then(
+			import('./datatug-routing-proj-env-db').then(
 				(m) => m.DatatugProjEnvDbRoutingModule,
 			),
 	},
 	{
 		path: 'servers',
-		loadChildren: () =>
-			import('@sneat/datatug/pages/unsorted').then((m) => m.ServersPageModule),
+		loadComponent: () =>
+			import('@sneat/datatug-pages').then((m) => m.ServersPageComponent),
 	},
 ];
 

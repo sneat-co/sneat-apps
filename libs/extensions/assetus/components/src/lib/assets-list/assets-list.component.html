@@ -10,7 +10,7 @@
 		*ngFor="let asset of assets; trackBy: id"
 		tappable
 		(click)="goAsset(asset)"
-		[class]="{ deleting: deletingIDs.indexOf(asset.id) >= 0 }"
+		[class]="{ deleting: deletingIDs.includes(asset.id) }"
 	>
 		<ion-label *ngIf="asset.brief.title">
 			{{ asset.brief.title }}
@@ -37,7 +37,7 @@
 			<!--				</ion-button>-->
 			<ion-button
 				(click)="delete(asset)"
-				[disabled]="deletingIDs.indexOf(asset.id) >= 0"
+				[disabled]="deletingIDs.includes(asset.id)"
 			>
 				<ion-icon name="close-outline" />
 			</ion-button>

@@ -4,8 +4,8 @@
 	<ion-segment-button value="card">Card</ion-segment-button>
 </ion-segment>
 <div class="ion-margin-top" [ngSwitch]="tab">
-	<datatug-sql [sql]="sql" *ngSwitchCase="'SQL'" />
-	<datatug-grid-widget
+	<sneat-datatug-sql [sql]="sql" *ngSwitchCase="'SQL'" />
+	<sneat-datatug-grid-widget
 		[style.display]="tab === 'grid' ? 'block' : 'none'"
 		[recordset]="recordset"
 		[hideColumns]="data?.hideColumns"

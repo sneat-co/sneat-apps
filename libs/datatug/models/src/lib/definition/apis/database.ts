@@ -31,10 +31,15 @@ export interface IReferencedBy {
 	foreignKeys: IForeignKey[];
 }
 
+export interface ITableRef {
+	name: string;
+	schema: string;
+	catalog?: string;
+}
 export interface IForeignKey {
 	name: string;
 	columns: string[];
-	refTable: { name: string; schema: string; catalog?: string };
+	refTable: ITableRef;
 }
 
 export interface IDatabaseFull extends IEnvDatabaseBase {

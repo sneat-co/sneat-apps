@@ -17,6 +17,7 @@ import { IProjectRef, isValidProjectRef } from '@sneat/datatug-core';
 import { IStoreRef, storeRefToId } from '@sneat/core';
 
 export type ProjectTopLevelPage =
+	| 'overview'
 	| 'boards'
 	| 'dbmodels'
 	| 'entities'
@@ -49,12 +50,12 @@ export class DatatugNavService {
 		);
 	}
 
-	goProject(project: IProjectContext, page?: ProjectTopLevelPage): void {
+	goProject(project?: IProjectContext, page?: ProjectTopLevelPage): void {
 		console.log('DatatugNavService.goProject()', project, page);
-		const storeRef: IStoreRef | undefined = project.store?.ref;
+		const storeRef: IStoreRef | undefined = project?.store?.ref;
 		const storeId: string =
-			storeRef?.id || project.ref?.storeId || storeRef?.type || '';
-		if (!project.ref.projectId) {
+			storeRef?.id || project?.ref?.storeId || storeRef?.type || '';
+		if (!project?.ref.projectId) {
 			return;
 		}
 		const url = ['store', storeId, 'project', project.ref.projectId || ''];
@@ -68,10 +69,13 @@ export class DatatugNavService {
 	}
 
 	goEnvironment(
-		project: IProjectContext,
+		project?: IProjectContext,
 		projEnv?: IProjEnv,
 		envId?: string,
 	): void {
+		if (!project) {
+			return;
+		}
 		const url = this.projectPageUrl(project.ref, 'env', projEnv?.id || envId);
 		this.navForward(
 			url,
@@ -85,6 +89,9 @@ export class DatatugNavService {
 		projEntity: IProjEntity,
 		entityId?: string,
 	): void {
+		if (!project) {
+			return;
+		}
 		const url = this.projectPageUrl(
 			project.ref,
 			'entity',
@@ -145,8 +152,8 @@ export class DatatugNavService {
 	}
 
 	goProjPage(
-		project: IProjectContext,
 		projPage: string,
+		project?: IProjectContext,
 		state?: Record<string, unknown>,
 	): void {
 		if (!project) {

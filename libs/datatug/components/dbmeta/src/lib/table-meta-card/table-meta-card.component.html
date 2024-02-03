@@ -31,28 +31,29 @@
 	</ion-segment>
 	<ion-list *ngSwitchCase="'cols'">
 		<ng-container *ngIf="meta?.columns?.length">
-			<ion-item *ngFor="let c of meta.columns">
+			<ion-item *ngFor="let c of meta?.columns || []">
 				<ion-badge
 					class="ion-margin-end"
 					title="Primary key"
 					color="medium"
-					*ngIf="meta.primaryKey?.columns?.indexOf(c.name) >= 0"
+					*ngIf="meta?.primaryKey?.columns?.includes(c.name)"
 					>PK
 				</ion-badge>
 				<ion-badge
 					*ngIf="colFk(c)"
 					class="ion-margin-end"
 					tappable
-					title="Foreign key: {{ colFk(c).name }} => {{
-						colFk(c).refTable.name
+					title="Foreign key: {{ colFk(c)?.name }} => {{
+						colFk(c)?.refTable?.name
 					}}"
 					color="medium"
 					>FK
 				</ion-badge>
 				<ion-label
 					[style]="{
-						fontWeight:
-							meta.primaryKey?.columns?.indexOf(c.name) >= 0 ? 'bold' : ''
+						fontWeight: meta?.primaryKey?.columns?.includes(c.name)
+							? 'bold'
+							: ''
 					}"
 				>
 					{{ c.name }}
@@ -75,8 +76,8 @@
 	<ion-list *ngSwitchCase="'keys'">
 		<ion-item>
 			<ion-label *ngIf="meta?.primaryKey">
-				Primary key: {{ meta.primaryKey.name }} ({{
-					meta.primaryKey.columns?.join(", ")
+				Primary key: {{ meta?.primaryKey?.name }} ({{
+					meta?.primaryKey?.columns?.join(", ")
 				}})
 			</ion-label>
 		</ion-item>
@@ -111,7 +112,7 @@
 		<ion-item-group *ngIf="meta?.referencedBy?.length">
 			<!--				<ion-item-divider>Referenced by</ion-item-divider>-->
 			<ion-list>
-				<ion-item tappable *ngFor="let referencedBy of meta.referencedBy">
+				<ion-item tappable *ngFor="let referencedBy of meta?.referencedBy">
 					<ion-label>
 						<h3>{{ referencedBy.schema }}.{{ referencedBy.name }}</h3>
 						<ion-text color="medium" [title]="referencedBy.foreignKeys[0].name">

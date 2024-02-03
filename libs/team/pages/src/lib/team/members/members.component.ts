@@ -68,8 +68,8 @@ export class MembersComponent implements OnChanges {
 	private setMembersCount(team?: IContactusTeamDto): void {
 		if (team) {
 			const count = (role: MemberRole): number =>
-				zipMapBriefsWithIDs(team.contacts)?.filter(
-					(m) => m.brief.roles?.indexOf(role) || -1 >= 0,
+				zipMapBriefsWithIDs(team.contacts)?.filter((m) =>
+					m.brief.roles?.includes(role),
 				)?.length || 0;
 			this.contributorsCount = count(MemberRoleContributor);
 			this.spectatorsCount = count(MemberRoleSpectator);

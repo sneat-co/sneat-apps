@@ -21,6 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
 // Workaround: https://stackoverflow.com/questions/65025005/angularfireauth-emulator-login-is-lost-on-page-reload
 import { RANDOM_ID_OPTIONS, RandomModule } from '@sneat/random';
 // import { GuiGridModule } from '@generic-ui/ngx-grid';
+import { environment } from '../environments/environment';
 
 initFirebase(environment.firebaseConfig);
 

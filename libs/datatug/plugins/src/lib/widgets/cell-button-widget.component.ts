@@ -8,7 +8,7 @@ export interface ICellButtonWidgetSettings {
 }
 
 @Component({
-	selector: 'datatug-cell-button-widget',
+	selector: 'sneat-datatug-cell-button-widget',
 	template:
 		'<button [type]="btnType" [title]="text" (click)="click()">{{text}}</button>',
 })

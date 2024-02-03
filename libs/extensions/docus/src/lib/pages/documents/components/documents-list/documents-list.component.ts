@@ -54,8 +54,8 @@ export class DocumentsListComponent
 			this.allDocuments?.filter(
 				(d) =>
 					!text ||
-					(d.brief?.title && d.brief.title.toLowerCase().indexOf(text) >= 0) ||
-					(d.brief?.type && d.brief.type.toLowerCase().indexOf(text) >= 0),
+					(d.brief?.title && d.brief.title.toLowerCase().includes(text)) ||
+					(d.brief?.type && d.brief.type.toLowerCase().includes(text)),
 			) || [];
 	}
 }

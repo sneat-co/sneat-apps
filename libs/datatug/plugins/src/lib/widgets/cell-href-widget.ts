@@ -7,7 +7,7 @@ export interface ICellHrefWidgetSettings {
 }
 
 @Component({
-	selector: 'datatug-cell-href-widget',
+	selector: 'sneat-datatug-cell-href-widget',
 	template: '<a [href]="href" [title]="text">{{text}}</a>',
 })
 export class CellHrefWidgetComponent {

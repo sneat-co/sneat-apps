@@ -1,0 +1,78 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-menu-button />
+			<ion-back-button
+				[defaultHref]="project?.ref && '/store/' + project?.ref?.storeId"
+			/>
+		</ion-buttons>
+		<ion-title color="medium">Project</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content color="light">
+	<ion-card>
+		<ion-item>
+			<ion-label color="medium" style="font-weight: bold">Title</ion-label>
+			<ion-input
+				style="font-weight: bold"
+				readonly
+				[value]="project?.brief?.title || 'Loading...'"
+			/>
+			<ion-select
+				slot="end"
+				interface="popover"
+				placeholder="Go to..."
+				(ionChange)="goTo($event)"
+			>
+				<ion-select-option value="boards">Boards</ion-select-option>
+				<ion-select-option value="queries">Queries</ion-select-option>
+				<ion-select-option value="tags">Tags</ion-select-option>
+			</ion-select>
+		</ion-item>
+		<!--		<ion-item>-->
+		<!--			<ion-label color="medium" style="font-weight: bold;">ID</ion-label>-->
+		<!--			<ion-input readonly [value]="project?.ref?.projectId" color="medium"></ion-input>-->
+		<!--		</ion-item>-->
+		<ion-item *ngIf="project?.ref && project?.ref?.storeId !== 'firestore'">
+			<ion-label color="medium" style="font-weight: bold">Store</ion-label>
+			<ion-input readonly [value]="project?.ref?.storeId" color="medium" />
+		</ion-item>
+	</ion-card>
+
+	<!--	<sneat-datatug-card-list [projItemType]="DbModel"-->
+	<!--					   title="DB models"-->
+	<!--					   itemIcon="server-outline"-->
+	<!--					   [isLoading]="!project"-->
+	<!--					   [items]="project?.summary?.dbModels"-->
+	<!--					   [getRouterLink]="getItemLink('dbmodel')"-->
+	<!--					   (itemClick)="goDbModel($event)"-->
+	<!--					   [create]="createSchema"-->
+	<!--					   (cardTitleClick)="goProjFolder(DbModel)"-->
+	<!--	<sneat-datatug-card-list [projItemType]="Entity"-->
+	<!--							 title="Entities"-->
+	<!--							 itemIcon="pricetag-outline"-->
+	<!--							 [isLoading]="!project"-->
+	<!--							 [items]="project?.entities"-->
+	<!--							 [create]="createEntity"-->
+	<!--							 (itemClick)="goEntity($event)"-->
+	<!--							 (cardTitleClick)="goProjFolder(Entity)"/>-->
+
+	<sneat-datatug-folder [path]="'~'" [projectRef]="project?.ref" />
+	<!--	<sneat-datatug-card-list [projItemType]="Agent"-->
+	<!--							 title="Agents"-->
+	<!--							 itemIcon="cube-outline"-->
+	<!--							 [isLoading]="!project"-->
+	<!--							 [items]="project?.agents"-->
+	<!--							 (itemClick)="goEntity($event)"-->
+	<!--							 (cardTitleClick)="goProjFolder(Agent)"-->
+	<!--	></sneat-datatug-card-list>-->
+	<!--	<sneat-datatug-card-list [projItemType]="Variable"-->
+	<!--						title="Variables"-->
+	<!--						itemIcon="cog-outline"-->
+	<!--						[isLoading]="!project"-->
+	<!--						[items]="undefined"-->
+	<!--						(itemClick)="goEntity($event)"-->
+	<!--						(cardTitleClick)="goFolder(Variable)"-->
+	<!--	></sneat-datatug-card-list>-->
+</ion-content>

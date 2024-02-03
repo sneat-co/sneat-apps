@@ -83,7 +83,7 @@ export class CopyListItemsPageComponent implements OnInit {
 		};
 		console.log(`CopyListItemsPage.onItemToggled(${value}, ${checked})`);
 		if (checked) {
-			if (this.selectedListItemIds.indexOf(value) < 0) {
+			if (!this.selectedListItemIds.includes(value)) {
 				this.selectedListItemIds.push(value);
 			}
 		} else {

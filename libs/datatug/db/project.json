@@ -1,0 +1,36 @@
+{
+	"name": "datatug-db",
+	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "libs/datatug/db/src",
+	"prefix": "sneat-datatug",
+	"tags": [],
+	"projectType": "library",
+	"targets": {
+		"build": {
+			"executor": "@nx/angular:package",
+			"outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+			"options": {
+				"project": "libs/datatug/db/ng-package.json"
+			},
+			"configurations": {
+				"production": {
+					"tsConfig": "libs/datatug/db/tsconfig.lib.prod.json"
+				},
+				"development": {
+					"tsConfig": "libs/datatug/db/tsconfig.lib.json"
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"test": {
+			"executor": "@nx/jest:jest",
+			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+			"options": {
+				"jestConfig": "libs/datatug/db/jest.config.ts"
+			}
+		},
+		"lint": {
+			"executor": "@nx/eslint:lint"
+		}
+	}
+}

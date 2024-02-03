@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { IRecord } from '@sneat/data';
 import { Observable, of, throwError } from 'rxjs';
 
 import { SneatApiService } from '@sneat/api';
 import { StoreApiService } from '@sneat/datatug-services-repo';
 import { CreateNamedRequest } from '@sneat/datatug-dto';
-import { IEnvironmentSummary } from '@sneat/datatug-models';
+import { IEnvironmentSummary, IOptionallyTitled } from '@sneat/datatug-models';
 import { createProjItem } from '@sneat/datatug-services-base';
 import { startWith, tap } from 'rxjs/operators';
 import { IProjectRef } from '@sneat/datatug-core';
@@ -28,7 +29,9 @@ export class EnvironmentService {
 		private readonly storeApiService: StoreApiService, // private readonly http: HttpClient,
 	) {}
 
-	createEnvironment = (request: CreateNamedRequest): Observable<unknown> =>
+	createEnvironment = (
+		request: CreateNamedRequest,
+	): Observable<IRecord<IOptionallyTitled>> =>
 		createProjItem<IEnvironmentSummary>(
 			this.api,
 			'datatug/environment/create_environment',

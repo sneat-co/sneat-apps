@@ -44,7 +44,7 @@ export class MembersSelectorListComponent {
 	}
 
 	protected isDisabled(memberID: string): boolean {
-		return this.disabledMemberIDs.indexOf(memberID) >= 0;
+		return this.disabledMemberIDs.includes(memberID);
 	}
 
 	protected onRadioChanged(event: Event): void {

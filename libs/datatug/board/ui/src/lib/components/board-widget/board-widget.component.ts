@@ -8,7 +8,7 @@ import {
 } from '@sneat/datatug-models';
 
 @Component({
-	selector: 'datatug-board-widget',
+	selector: 'sneat-datatug-board-widget',
 	templateUrl: './board-widget.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -4,7 +4,7 @@
 			{{ row[0] }}
 		</td>
 		<td>
-			<datatug-json-grid
+			<sneat-datatug-json-grid
 				*ngIf="isArray(row[1]); else notArray"
 				[jsonGrid]="grid(row[1])"
 			/>
@@ -14,7 +14,7 @@
 						row[1] | json
 					}}</span>
 					<ng-template #table>
-						<datatug-json-table
+						<sneat-datatug-json-table
 							[path]="path + '.' + row[0]"
 							[level]="level + 1"
 							[json]="row[1]"

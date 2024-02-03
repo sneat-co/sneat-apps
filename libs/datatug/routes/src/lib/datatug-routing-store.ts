@@ -5,15 +5,13 @@ import { routingParamProjectId } from '@sneat/datatug-core';
 export const datatugStoreRoutes: Routes = [
 	{
 		path: '',
-		loadChildren: () =>
-			import('@sneat/datatug/pages/unsorted').then(
-				(m) => m.DatatugStorePageModule,
-			),
+		loadComponent: () =>
+			import('@sneat/datatug-pages').then((m) => m.DatatugStorePageComponent),
 	},
 	{
 		path: 'diff',
-		loadChildren: () =>
-			import('@sneat/datatug/pages/unsorted').then((m) => m.DiffPageModule),
+		loadComponent: () =>
+			import('@sneat/datatug-pages').then((m) => m.DiffPageComponent),
 	},
 	{
 		path: 'project/:' + routingParamProjectId,
@@ -28,10 +26,8 @@ export const datatugStoreRoutes: Routes = [
 	},
 	{
 		path: 'environment',
-		loadChildren: () =>
-			import('@sneat/datatug/pages/unsorted').then(
-				(m) => m.EnvironmentPageModule,
-			),
+		loadComponent: () =>
+			import('@sneat/datatug-pages').then((m) => m.EnvironmentPageComponent),
 	},
 ];
 

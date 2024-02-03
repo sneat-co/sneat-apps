@@ -8,12 +8,12 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { IRecordset } from '@sneat/datatug-dto';
+import { IGridDef } from '@sneat/grid';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { recordsetToGridDef } from '@sneat/datatug-services-repo';
-import { IGridDef } from '@sneat/grid';
 
 @Component({
-	selector: 'datatug-grid-widget',
+	selector: 'sneat-datatug-grid-widget',
 	templateUrl: './grid-widget.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

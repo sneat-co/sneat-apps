@@ -95,7 +95,7 @@ export class LogistOrderPageComponent
 			console.log('onTabChanged', event);
 			// this.changeDetector?.markForCheck();
 			let { href } = location;
-			if (href.indexOf('?') < 0) {
+			if (!href.includes('?')) {
 				href += '?tab=';
 			}
 			href = href.replace(/tab=\w*/, `tab=${this.tab}`);

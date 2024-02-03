@@ -31,7 +31,7 @@ export class RolesFormComponent extends TeamRelatedFormComponent {
 	override onTeamTypeChanged(team?: ITeamContext): void {
 		switch (team?.type) {
 			case 'educator':
-				if (location.pathname.indexOf('staff') >= 0) {
+				if (location.pathname.includes('staff')) {
 					this.roles = [
 						{ id: 'teacher', title: 'Teacher', icon: 'person' },
 						{ id: 'administrator', title: 'Administrator', icon: 'robot' },

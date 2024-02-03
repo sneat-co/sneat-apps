@@ -30,7 +30,7 @@ export class ContactsListItemComponent {
 	}
 
 	hideRole(role: string): boolean {
-		return this.hideRoles.indexOf(role) >= 0 || role == this.excludeRole;
+		return this.hideRoles.includes(role) || role == this.excludeRole;
 	}
 
 	constructor(
