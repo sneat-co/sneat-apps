@@ -10,7 +10,7 @@ import { IBoardContext, IBoardDef } from '@sneat/datatug-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({
-	selector: 'datatug-board',
+	selector: 'sneat-datatug-board',
 	templateUrl: './board.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

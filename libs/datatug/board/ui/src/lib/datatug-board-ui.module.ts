@@ -4,7 +4,8 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
-import { DatatugComponentsDatagridModule } from '@sneat/datatug/components/datagrid';
+import { DatagridModule } from '@sneat/datagrid';
+
 import { DatatugComponentsSqlEditorModule } from '@sneat/datatug/components/sqleditor';
 import { DatatugComponentsParametersModule } from '@sneat/datatug/components/parameters';
 import { BoardComponent } from './components/board/board.component';
@@ -25,7 +26,7 @@ import { BoardRowComponent } from './components/board-row/board-row.component';
 		RouterModule,
 		// TableMetaCardModule,
 		CodemirrorModule,
-		DatatugComponentsDatagridModule,
+		DatagridModule,
 		DatatugComponentsSqlEditorModule,
 		DatatugComponentsParametersModule,
 	],

@@ -31,6 +31,14 @@
 			"@sneat/core": ["libs/core/src/index.ts"],
 			"@sneat/data": ["libs/data/src/index.ts"],
 			"@sneat/datagrid": ["libs/datagrid/src/index.ts"],
+			"@sneat/datatug-board-core": ["libs/datatug/board/core/src/index.ts"],
+			"@sneat/datatug-board-ui": ["libs/datatug/board/ui/src/index.ts"],
+			"@sneat/datatug-components-parameters": [
+				"libs/datatug/components/parameters/src/index.ts"
+			],
+			"@sneat/datatug-components-sqleditor": [
+				"libs/datatug/components/sqleditor/src/index.ts"
+			],
 			"@sneat/datatug-core": ["libs/datatug/core/src/index.ts"],
 			"@sneat/datatug-dto": ["libs/datatug/dto/src/index.ts"],
 			"@sneat/datatug-models": ["libs/datatug/models/src/index.ts"],

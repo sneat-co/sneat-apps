@@ -16,7 +16,7 @@ import {
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({
-	selector: 'datatug-parameter-lookup',
+	selector: 'sneat-datatug-parameter-lookup',
 	templateUrl: './parameter-lookup.component.html',
 })
 export class ParameterLookupComponent implements OnInit {
@@ -59,8 +59,11 @@ export class ParameterLookupComponent implements OnInit {
 		});
 	}
 
-	rowClicked = (event: Event, row: { getData: () => unknown }): void => {
-		const data = row.getData();
+	rowClicked = (event: Event, row: unknown): void => {
+		const data = (row as { getData: () => unknown }).getData() as Record<
+			string,
+			undefined
+		>;
 		const value = this.parameter?.lookup?.keyFields.map((f) => data[f])[0];
 		console.log('ParameterLookupComponent.rowClicked', row, data, value);
 		if (this.parameter?.type) {

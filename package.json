@@ -38,6 +38,7 @@
     "@angular/platform-browser": "17.1.2",
     "@angular/platform-browser-dynamic": "17.1.2",
     "@angular/router": "17.1.2",
+    "@ctrl/ngx-codemirror": "^7.0.0",
     "@firebase/firestore": "4.4.2",
     "@firebase/firestore-types": "3.0.0",
     "@ionic-native/core": "5.36.0",
@@ -113,4 +114,3 @@
     "*.{html,ts,js,css,md}": "prettier --write"
   }
 }
-
