@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { IPersonNames } from '@sneat/auth-models';
 import { IIdAndOptionalBriefAndOptionalDto } from '@sneat/core';
-import { IPersonNames, IPerson, IPersonBrief } from '@sneat/contactus-core';
+import { IPerson, IPersonBrief } from '@sneat/contactus-core';
 
 export function personName(name?: IPersonNames): string | undefined {
 	return (
@@ -27,5 +28,19 @@ export class PersonTitle implements PipeTransform {
 			p?.id ||
 			'NO TITLE'
 		);
+	}
+}
+
+@Pipe({ name: 'personNames' })
+export class PersonNamesPipe implements PipeTransform {
+	transform(names?: IPersonNames): string | undefined {
+		if (!names) {
+			return undefined;
+		}
+		if (names.fullName) return names.fullName;
+		if (!!names.firstName && !!names.lastName) {
+			return `${names.firstName} ${names.lastName}`;
+		}
+		return JSON.stringify(names);
 	}
 }

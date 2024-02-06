@@ -2,11 +2,11 @@ import { Inject, Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { SneatUserService } from '@sneat/auth-core';
+import { trimNames } from '@sneat/auth-models';
 import { IIdAndBrief } from '@sneat/core';
 import {
 	IContactBrief,
 	IMemberBrief,
-	trimNames,
 	IAcceptPersonalInviteRequest,
 	IAddTeamMemberResponse,
 	ICreateTeamMemberRequest,

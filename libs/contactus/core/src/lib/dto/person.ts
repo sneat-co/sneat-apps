@@ -1,3 +1,4 @@
+import { isNameEmpty } from '@sneat/auth-models';
 import { excludeUndefined } from '@sneat/core';
 import { IWithRelatedOnly, IWithTeamIDs } from '@sneat/dto';
 import {
@@ -6,7 +7,6 @@ import {
 	MemberContactType,
 	IContactBase,
 	IPersonRequirements,
-	isNameEmpty,
 	MemberRole,
 } from '.';
 

@@ -1,5 +1,6 @@
 import { EnumAsUnionOfKeys, TeamType } from '@sneat/core';
 import { IAvatar } from './avatar';
+import { IPersonNames } from './person-names';
 
 // Does not contain an ID as it's a key.
 // Use IRecord<IUserRecord> to keep record paired with ID
@@ -11,6 +12,7 @@ export interface IUserRecord {
 	readonly avatar?: IAvatar;
 	readonly teamIDs?: readonly string[];
 	readonly teams?: Record<string, IUserTeamBrief>;
+	readonly names?: IPersonNames;
 }
 
 export enum TeamMemberTypeEnum {

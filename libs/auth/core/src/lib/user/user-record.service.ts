@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SneatApiService } from '@sneat/api';
-import { AgeGroupID, Gender, IPersonNames } from '@sneat/contactus-core';
+import { IPersonNames } from '@sneat/auth-models';
+import { AgeGroupID, Gender } from '@sneat/contactus-core';
 import { excludeUndefined, TeamType } from '@sneat/core';
 import { IUserDto } from '@sneat/dto';
 import { Observable, share } from 'rxjs';

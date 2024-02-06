@@ -1,10 +1,10 @@
 <ion-item-divider>
 	<ion-label *ngIf="authState?.status === 'authenticated'"
-		>Signed in as</ion-label
-	>
+		>Signed in as
+	</ion-label>
 	<ion-label *ngIf="authState?.status !== 'authenticated'"
-		>Authentication</ion-label
-	>
+		>Authentication
+	</ion-label>
 </ion-item-divider>
 <ion-item *ngIf="!authState">
 	<ion-label>Loading....</ion-label>
@@ -14,7 +14,7 @@
 </ion-item>
 <ion-item routerLink="/login" *ngIf="authState?.status === 'notAuthenticated'">
 	<ion-icon slot="start" name="person-circle-outline" />
-	<ion-label color="primary"> Please sign in </ion-label>
+	<ion-label color="primary"> Please sign in</ion-label>
 </ion-item>
 <ion-item
 	*ngIf="authState?.status === 'authenticated'"
@@ -30,12 +30,16 @@
 	<ion-icon slot="start" name="person-circle-outline" />
 
 	<ion-label color="medium">
-		{{
-			authState?.user?.displayName ||
-				authState?.user?.email ||
-				authState?.user?.phoneNumber ||
-				authState?.user?.uid
-		}}
+		@if (user?.record?.names) {
+			{{ user?.record?.names | personNames }}
+		} @else {
+			{{
+				authState?.user?.displayName ||
+					authState?.user?.email ||
+					authState?.user?.phoneNumber ||
+					authState?.user?.uid
+			}}
+		}
 	</ion-label>
 
 	<ion-buttons slot="end">

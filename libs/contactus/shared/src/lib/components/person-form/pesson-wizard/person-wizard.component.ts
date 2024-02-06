@@ -11,6 +11,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SneatUserService } from '@sneat/auth-core';
+import { IPersonNames, isNameEmpty } from '@sneat/auth-models';
 import { excludeUndefined, formNexInAnimation, TeamType } from '@sneat/core';
 import { IFormField } from '@sneat/core';
 import {
@@ -18,11 +19,9 @@ import {
 	emptyContactBase,
 	Gender,
 	IEmail,
-	IPersonNames,
 	IPersonRequirements,
 	IPhone,
 	IRelatedPerson,
-	isNameEmpty,
 	MemberContactType,
 	PetKind,
 } from '@sneat/contactus-core';

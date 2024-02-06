@@ -1,29 +1,43 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth-core';
+import {
+	ISneatAuthState,
+	ISneatUserState,
+	SneatAuthStateService,
+	SneatUserService,
+} from '@sneat/auth-core';
 import { gitHash } from '../app-version/git-version';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IonicModule, MenuController, NavController } from '@ionic/angular';
+import { personName, SneatPipesModule } from '../pipes';
 
 @Component({
 	selector: 'sneat-auth-menu-item',
 	templateUrl: './auth-menu-item.component.html',
 	standalone: true,
-	imports: [IonicModule, CommonModule, RouterModule],
+	imports: [IonicModule, CommonModule, RouterModule, SneatPipesModule],
 })
 export class AuthMenuItemComponent {
 	protected readonly gitHash2 = gitHash;
 
 	public authState?: ISneatAuthState;
 
+	protected user?: ISneatUserState;
+
 	constructor(
 		@Inject(ErrorLogger)
 		private readonly errorLogger: IErrorLogger,
 		private readonly navCtrl: NavController,
-		readonly authStateService: SneatAuthStateService,
+		private readonly authStateService: SneatAuthStateService,
+		private readonly userService: SneatUserService,
 		private readonly menuController: MenuController,
 	) {
+		userService.userState.subscribe({
+			next: (userState) => {
+				this.user = userState;
+			},
+		});
 		authStateService.authState.subscribe({
 			next: (authState) => (this.authState = authState),
 			error: errorLogger.logErrorHandler('failed to get auth state'),
@@ -57,4 +71,6 @@ export class AuthMenuItemComponent {
 		}
 		return false;
 	}
+
+	protected readonly personName = personName;
 }

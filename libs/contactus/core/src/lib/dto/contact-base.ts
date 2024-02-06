@@ -1,12 +1,5 @@
-import { IAvatar } from '@sneat/auth-models';
-import {
-	AgeGroupID,
-	ContactType,
-	IPersonNames,
-	PetKind,
-	Gender,
-	IAddress,
-} from '.';
+import { IAvatar, IPersonNames } from '@sneat/auth-models';
+import { AgeGroupID, ContactType, PetKind, Gender, IAddress } from '.';
 
 export interface IContactBase {
 	readonly type: ContactType;

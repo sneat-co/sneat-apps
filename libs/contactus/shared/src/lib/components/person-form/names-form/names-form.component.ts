@@ -23,7 +23,7 @@ import {
 import { IonicModule, IonInput } from '@ionic/angular';
 import { createSetFocusToInput } from '@sneat/components';
 import { excludeEmpty } from '@sneat/core';
-import { IPersonNames, isNameEmpty } from '@sneat/contactus-core';
+import { IPersonNames, isNameEmpty } from '@sneat/auth-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IFormField } from '@sneat/core';
 
