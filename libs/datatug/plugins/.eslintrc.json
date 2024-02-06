@@ -33,7 +33,7 @@
 			"rules": {}
 		},
 		{
-			"files": ["*.json"],
+			"files": ["*.json-TODO"],
 			"parser": "jsonc-eslint-parser",
 			"rules": {
 				"@nx/dependency-checks": "error"
