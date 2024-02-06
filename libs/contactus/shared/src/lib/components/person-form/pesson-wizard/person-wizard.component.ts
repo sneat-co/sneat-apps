@@ -215,7 +215,7 @@ export class PersonWizardComponent implements OnChanges {
 			this.show = { ...this.show, nameNext: true };
 		}
 		this.setRelatedPerson(
-			{ ...this.newPerson, name },
+			{ ...this.newPerson, names: name },
 			{ name: 'name', hasValue: false },
 		);
 	}
@@ -475,7 +475,7 @@ export class PersonWizardComponent implements OnChanges {
 		const p = this.newPerson;
 		switch (name) {
 			case 'name':
-				return !!p.name && Object.values(p.name).some((v) => !!v);
+				return !!p.names && Object.values(p.names).some((v) => !!v);
 			case 'ageGroup':
 				return !!p.ageGroup;
 			case 'gender':

@@ -93,7 +93,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 				type: 'company',
 				countryID: counterparty.countryID,
 				title: counterparty.title,
-				name: { fullName: counterparty.title },
+				names: { fullName: counterparty.title },
 			},
 		});
 		this.contact = undefined;

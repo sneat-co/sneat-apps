@@ -148,10 +148,10 @@ export class NewMemberFormComponent implements OnChanges {
 		if (this.personRequirements.gender?.required && !this.member.gender) {
 			throw new Error('Gender is a required field');
 		}
-		const displayName = personName(this.member.name);
+		const displayName = personName(this.member.names);
 		const duplicateMember = zipMapBriefsWithIDs(
 			this.contactusTeam?.dto?.contacts,
-		)?.find((m) => personName(m.brief.name) === displayName);
+		)?.find((m) => personName(m.brief.names) === displayName);
 		if (duplicateMember) {
 			alert('There is already a member with same name: ' + displayName);
 			return;

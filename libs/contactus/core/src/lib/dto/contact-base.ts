@@ -5,7 +5,7 @@ export interface IContactBase {
 	readonly type: ContactType;
 	readonly title?: string;
 	readonly shortTitle?: string;
-	readonly name?: IPersonNames;
+	readonly names?: IPersonNames;
 	readonly countryID?: string;
 	readonly userID?: string;
 	readonly gender?: Gender;

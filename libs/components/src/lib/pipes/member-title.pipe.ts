@@ -11,7 +11,7 @@ export function getContactTitle(
 		shortTitle ||
 		m?.brief?.title ||
 		m?.dto?.title ||
-		personName(m?.brief?.name) ||
+		personName(m?.brief?.names) ||
 		m?.id ||
 		'MEMBER is UNDEFINED'
 	);

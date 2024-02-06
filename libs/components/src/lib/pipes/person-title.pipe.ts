@@ -24,7 +24,7 @@ export class PersonTitle implements PipeTransform {
 			shortTitle ||
 			p?.dto?.title ||
 			p?.brief?.title ||
-			personName(p?.brief?.name) ||
+			personName(p?.brief?.names) ||
 			p?.id ||
 			'NO TITLE'
 		);

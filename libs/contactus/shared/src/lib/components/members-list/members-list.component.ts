@@ -86,8 +86,6 @@ export class MembersListComponent implements OnChanges {
 		//
 	}
 
-	protected readonly id = (_: number, o: IIdAndBrief<IContactBrief>) => o.id;
-
 	protected isAgeOptionsVisible(member: IIdAndBrief<IContactBrief>): boolean {
 		const teamDto = this.team?.dto;
 		// console.log('MembersListComponent.isAgeOptionsVisible()', member, teamDto);

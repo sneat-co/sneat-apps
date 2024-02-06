@@ -57,8 +57,8 @@ export class MemberService extends ContactService {
 		request: ICreateTeamMemberRequest,
 	): Observable<IAddTeamMemberResponse> {
 		console.log(`MemberService.addMember()`, request);
-		if (request.name) {
-			request = { ...request, name: trimNames(request.name) };
+		if (request.names) {
+			request = { ...request, names: trimNames(request.names) };
 		}
 		return this.sneatApiService.post<IAddTeamMemberResponse>(
 			'contactus/create_member',

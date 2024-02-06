@@ -51,7 +51,7 @@ export interface IRelatedToRequest {
 
 export const emptyContactBase: IContactBase = {
 	type: '' as ContactType,
-	name: {},
+	names: {},
 };
 
 // // Default value: 'optional'

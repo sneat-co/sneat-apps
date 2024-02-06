@@ -231,7 +231,7 @@ export class JoinTeamPageComponent extends SneatBaseComponent {
 			...this.inviteInfo,
 			member: {
 				...this.inviteInfo.member,
-				name: this.newPerson.name,
+				names: this.newPerson.names,
 				gender: this.newPerson.gender,
 				ageGroup: this.newPerson.ageGroup,
 			},
