@@ -8,7 +8,7 @@ import {
 import { IBoardContext, ITabsWidgetSettings } from '@sneat/datatug-models';
 
 @Component({
-	selector: 'datatug-tabs-widget',
+	selector: 'sneat-datatug-tabs-widget',
 	templateUrl: './tabs-widget.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

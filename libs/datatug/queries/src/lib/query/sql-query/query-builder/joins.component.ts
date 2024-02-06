@@ -12,7 +12,7 @@ import {
 } from '../../../query-context-sql.service';
 
 @Component({
-	selector: 'datatug-qe-joins',
+	selector: 'sneat-datatug-qe-joins',
 	templateUrl: 'joins.component.html',
 })
 export class JoinsComponent {

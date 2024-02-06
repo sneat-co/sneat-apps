@@ -1,16 +1,16 @@
 <ion-segment [(ngModel)]="selectedTab">
 	<ion-segment-button
-		*ngFor="let tab of tabsWidgetSettings?.tabs"
+		*ngFor="let tab of tabsWidgetSettings?.tabs || []"
 		[value]="tab.title"
 	>
 		<ion-label style="text-transform: none">{{ tab.title }}</ion-label>
 	</ion-segment-button>
 </ion-segment>
-<ng-container *ngFor="let tab of tabsWidgetSettings?.tabs">
+<ng-container *ngFor="let tab of tabsWidgetSettings?.tabs || []">
 	<div *ngIf="(tab.title === selectedTab && level) || level === 0">
-		<datatug-board-widget
-			[level]="level + 1"
-			[widgetDef]="tab.widget"
-		/>
+		<!--		<sneat-datatug-board-widget-->
+		<!--			[level]="level + 1"-->
+		<!--			[widgetDef]="tab.widget"-->
+		<!--		/>-->
 	</div>
 </ng-container>

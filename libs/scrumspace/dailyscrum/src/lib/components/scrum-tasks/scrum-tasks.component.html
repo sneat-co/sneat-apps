@@ -54,8 +54,8 @@
 					taskType === 'risk'
 						? 'danger'
 						: taskType === 'qna'
-						? 'primary'
-						: undefined
+							? 'primary'
+							: undefined
 				"
 			>
 				{{ task.title }}
@@ -71,7 +71,7 @@
 				</ion-button>
 				<ion-button
 					[color]="
-						task.thumbUps && task.thumbUps.indexOf(currentMemberId) >= 0
+						task.thumbUps && task.thumbUps.includes(currentMemberId)
 							? 'success'
 							: 'medium'
 					"

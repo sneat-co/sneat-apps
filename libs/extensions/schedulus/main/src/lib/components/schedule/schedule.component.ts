@@ -330,7 +330,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 		const filtered = this.allRecurrings?.filter((r) => {
 			const title = r.brief?.title || r.dto?.title;
-			if (title && title.trim().toLowerCase().indexOf(text) < 0) {
+			if (title && !title.trim().toLowerCase().includes(text)) {
 				return false;
 			}
 			if (!r.brief || !this.hasContact(r.brief, contactIDs)) {
@@ -457,7 +457,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 			);
 		} else {
 			const isoDate = `&date=${localDateToIso(d)}`;
-			if (location.href.indexOf('&date') < 0) {
+			if (!location.href.includes('&date')) {
 				history.replaceState(
 					history.state,
 					document.title,

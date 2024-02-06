@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { IJsonGridData } from '@datatug/plugins';
+import { IJsonGridData } from '@sneat/datatug-plugins';
 
 @Component({
-	selector: 'datatug-json-grid',
+	selector: 'sneat-datatug-json-grid',
 	templateUrl: 'json-grid.component.html',
 	styleUrls: ['json-component.scss'],
 })

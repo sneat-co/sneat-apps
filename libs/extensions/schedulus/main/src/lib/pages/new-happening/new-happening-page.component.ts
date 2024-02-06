@@ -43,7 +43,7 @@ export class NewHappeningPageComponent extends ScheduleBasePage {
 
 	constructor(route: ActivatedRoute, params: TeamComponentBaseParams) {
 		super('NewHappeningPageComponent', route, params);
-		this.isToDo = location.pathname.indexOf('/new-task') >= 0;
+		this.isToDo = location.pathname.includes('/new-task');
 		this.date = (history.state.date as string) || '';
 		console.log('date', this.date);
 
@@ -116,7 +116,7 @@ export class NewHappeningPageComponent extends ScheduleBasePage {
 	private onHappeningTypeChanged(happeningType: HappeningType): void {
 		console.log('onHappeningTypeChanged()', happeningType);
 		let { href } = location;
-		if (href.indexOf('?') < 0) {
+		if (!href.includes('?')) {
 			href += '?type=';
 		}
 		href = href.replace(/type=\w*/, `type=${happeningType}`);

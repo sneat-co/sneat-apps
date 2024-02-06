@@ -19,18 +19,18 @@ import {
 } from '@sneat/datatug-models';
 import { CreateNamedRequest } from '@sneat/datatug-dto';
 import { IRecord } from '@sneat/data';
-import { DatatugNavService } from '@sneat/datatug=services/nav';
+import { DatatugNavService } from '@sneat/datatug-services-nav';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	EntityService,
 	EnvironmentService,
 	SchemaService,
 } from '@sneat/datatug-services-unsorted';
-import { DatatugFoldersService } from '@sneat/datatug/folders/core';
-import { DatatugBoardService } from '@sneat/datatug/board/core';
+import { DatatugFoldersService } from '@sneat/datatug-folders-core';
+import { DatatugBoardService } from '@sneat/datatug-board-core';
 
 @Component({
-	selector: 'datatug-folder',
+	selector: 'sneat-datatug-folder',
 	templateUrl: 'datatug-folder.component.html',
 })
 export class DatatugFolderComponent implements OnChanges, OnDestroy {
@@ -158,9 +158,13 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
 				page = 'env' as ProjectItemType;
 				break;
 		}
-		this.datatugNavService.goProjPage({ ref: this.projectRef }, page, {
-			projectContext: { ref: this.projectRef },
-		});
+		this.datatugNavService.goProjPage(
+			page,
+			{ ref: this.projectRef },
+			{
+				projectContext: { ref: this.projectRef },
+			},
+		);
 	}
 
 	private subscribeForFolder(): void {

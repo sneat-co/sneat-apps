@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { IAssetDtoBase, IVehicleAssetDto } from '@sneat/mod-assetus-core';
 
@@ -13,7 +14,7 @@ interface AssetDate {
 	selector: 'sneat-asset-dates',
 	templateUrl: './asset-dates.component.html',
 	standalone: true,
-	imports: [CommonModule, IonicModule],
+	imports: [CommonModule, IonicModule, FormsModule],
 })
 export class AssetDatesComponent {
 	private assetDto?: IAssetDtoBase;

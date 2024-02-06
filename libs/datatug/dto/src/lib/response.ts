@@ -5,7 +5,7 @@ import { IRecordsetResult } from './execute';
 export interface ICommandResponse {
 	readonly commandId: string;
 	readonly elapsed?: number;
-	readonly items: Observable<ICommandResponseItem> | ICommandResponseItem[];
+	readonly items: /*Observable<ICommandResponseItem> |*/ ICommandResponseItem[];
 }
 
 // export interface IRxCommandResponse {

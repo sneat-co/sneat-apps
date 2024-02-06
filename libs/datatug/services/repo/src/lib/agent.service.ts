@@ -22,7 +22,7 @@ export class AgentService {
 		console.log(`AgentService.select(${agentId})`, request);
 		if (!request.proj) {
 			return throwError(() => 'Client side check failed: !request.proj');
-		} else if (request.proj.indexOf('@') >= 0) {
+		} else if (request.proj.includes('@')) {
 			return throwError(
 				() =>
 					'Client side check failed: "@" character in project ID, store is supposed to be passed independently',
@@ -75,7 +75,7 @@ export class AgentService {
 		}
 		if (!request.projectId) {
 			return throwError(() => 'Client side check failed: !request.proj');
-		} else if (request.projectId.indexOf('@') >= 0) {
+		} else if (request.projectId.includes('@')) {
 			return throwError(
 				() =>
 					'Client side check failed: "@" character in project ID, store is supposed to be passed independently',

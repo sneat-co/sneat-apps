@@ -13,15 +13,15 @@
 			<ion-button
 				class="ion-padding-horizontal"
 				slot="end"
-				[disabled]="queryState?.isSaving"
+				[disabled]="queryState.isSaving"
 				[fill]="isChanged ? 'solid' : 'clear'"
 				[color]="isChanged ? 'danger' : 'medium'"
 				title="Save changes"
 				(click)="saveChanges()"
 			>
 				<ion-icon name="save-outline" slot="start" />
-				<ion-label *ngIf="!queryState?.isSaving">Save</ion-label>
-				<ion-label *ngIf="queryState?.isSaving">Saving...</ion-label>
+				<ion-label *ngIf="!queryState.isSaving">Save</ion-label>
+				<ion-label *ngIf="queryState.isSaving">Saving...</ion-label>
 			</ion-button>
 		</ion-buttons>
 	</ion-toolbar>
@@ -34,7 +34,7 @@
 				<ion-item>
 					<ion-input
 						[placeholder]="queryNamePlaceholder"
-						[value]="queryState?.title"
+						[value]="queryState.title"
 						(ionChange)="queryTitleChanged($event)"
 						readonly="false"
 					/>
@@ -50,7 +50,7 @@
 				<ion-item>
 					<ion-label
 						[color]="
-							!queryState?.targetDbModel?.id &&
+							!queryState.targetDbModel?.id &&
 							currentProject?.summary?.dbModels?.length
 								? 'danger'
 								: 'medium'
@@ -62,10 +62,10 @@
 						interface="popover"
 						placeholder="DB model"
 						[disabled]="!currentProject?.summary?.dbModels?.length"
-						[value]="queryState?.targetDbModel?.id"
+						[value]="queryState.targetDbModel?.id"
 					>
 						<ion-select-option
-							*ngFor="let dbModel of currentProject?.summary?.dbModels"
+							*ngFor="let dbModel of currentProject?.summary?.dbModels || []"
 							[value]="dbModel.id"
 						>
 							{{ dbModel.title || dbModel.id }}
@@ -97,7 +97,7 @@
 	</ion-segment>
 
 	<ion-card *ngIf="editorTab === 'text'">
-		<datatug-sql
+		<sneat-datatug-sql
 			[sql]="sql"
 			(sqlChanged)="onSqlChanged($event)"
 			[lineNumbers]="true"
@@ -177,7 +177,7 @@
 						size-md="6"
 						class="hidden-md-down ion-no-margin ion-no-padding"
 					>
-						<datatug-qe-joins
+						<sneat-datatug-qe-joins
 							[sql]="sql"
 							[queryAst]="queryAst"
 							[sqlParser]="sqlParser"
@@ -233,7 +233,7 @@
 						size-md="6"
 						class="hidden-md-down ion-no-margin ion-no-padding"
 					>
-						<datatug-qe-columns />
+						<sneat-datatug-qe-columns />
 					</ion-col>
 				</ion-row>
 			</ion-grid>
@@ -241,8 +241,8 @@
 	}
 
 	<ion-card>
-		<datatug-input-parameters
-			[paramDefs]="queryState?.def?.parameters"
+		<sneat-datatug-input-parameters
+			[paramDefs]="queryState.def?.parameters"
 			(paramValues)="onParametersChanged($event)"
 		/>
 	</ion-card>
@@ -251,7 +251,7 @@
 		<ion-segment [value]="activeEnv?.id" (ionChange)="envChanged($event)">
 			<ion-segment-button
 				[value]="env.id"
-				*ngFor="let env of queryState?.environments"
+				*ngFor="let env of queryState?.environments || []"
 			>
 				<ion-grid>
 					<ion-row>
@@ -319,7 +319,7 @@
 								(ionChange)="serverChanged($event)"
 							>
 								<ion-select-option
-									*ngFor="let dbServer of activeEnv?.summary?.dbServers"
+									*ngFor="let dbServer of activeEnv?.summary?.dbServers || []"
 									[value]="getDbServerId(dbServer)"
 								>
 									{{ dbServer.driver }} : {{ dbServer.host }}
@@ -348,7 +348,7 @@
 						(ionChange)="catalogChanged($event)"
 					>
 						<ion-select-option
-							*ngFor="let catalog of activeEnv?.dbServer?.catalogs"
+							*ngFor="let catalog of activeEnv?.dbServer?.catalogs || []"
 							[value]="catalog"
 						>
 							{{ catalog }}
@@ -392,8 +392,11 @@
 		style="margin-left: 0.6rem; margin-right: 0.6rem"
 		*ngIf="activeEnv?.recordsets"
 	>
-		<datatug-grid-widget
-			*ngFor="let recordset of activeEnv?.recordsets; trackBy: trackByIndex"
+		<sneat-datatug-grid-widget
+			*ngFor="
+				let recordset of activeEnv?.recordsets || [];
+				trackBy: trackByIndex
+			"
 			[recordset]="recordset"
 		/>
 	</div>

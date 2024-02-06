@@ -2,7 +2,7 @@
 	"name": "contactus-core",
 	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/contactus/core/src",
-	"prefix": "lib",
+	"prefix": "sneat",
 	"tags": [],
 	"projectType": "library",
 	"targets": {

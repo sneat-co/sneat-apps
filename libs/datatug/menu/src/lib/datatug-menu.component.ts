@@ -19,7 +19,7 @@ import {
 } from '@sneat/auth-core';
 
 @Component({
-	selector: 'datatug-menu',
+	selector: 'sneat-datatug-menu',
 	templateUrl: './datatug-menu.component.html',
 	styleUrls: ['./datatug-menu.component.scss'],
 })

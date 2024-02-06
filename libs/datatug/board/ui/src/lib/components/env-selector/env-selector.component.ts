@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IErrorLogger } from '@sneat/logging';
+import { Component, Inject } from '@angular/core';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { DatatugNavContextService } from '@sneat/datatug-services-nav';
 import { IProjEnv } from '@sneat/datatug-models';
 
@@ -9,7 +9,7 @@ export interface IEnv {
 }
 
 @Component({
-	selector: 'datatug-env-selector',
+	selector: 'sneat-datatug-env-selector',
 	templateUrl: './env-selector.component.html',
 })
 export class EnvSelectorComponent {

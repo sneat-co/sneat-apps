@@ -17,15 +17,13 @@ export class PupilsPageComponent /*extends MembersBasePage*/ {
 		// if (filter) {
 		// 	const v = filter.toLowerCase();
 		// 	this.filteredMembers = this.members.filter(m => m.title && m.title.toLowerCase()
-		// 		.indexOf(v) >= 0);
+		// 		.includes(v));
 		// } else {
 		// 	this.filteredMembers = undefined;
 		// }
 	}
 
-	constructor() // membersService: IMemberService, // params: CommuneBasePageParams,
-	// preloader: NgModulePreloaderService,
-	{
+	constructor() { // preloader: NgModulePreloaderService, // membersService: IMemberService, // params: CommuneBasePageParams,
 		// super(params, membersService, preloader);
 	}
 

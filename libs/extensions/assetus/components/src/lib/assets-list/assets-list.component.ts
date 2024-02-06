@@ -52,8 +52,7 @@ export class AssetsListComponent implements OnChanges {
 			this.assets = allAssets?.filter(
 				(asset) =>
 					(!assetType || asset?.brief?.category === assetType) &&
-					(!filter ||
-						(asset?.brief?.title?.toLowerCase().indexOf(f) || -1) >= 0),
+					(!filter || asset?.brief?.title?.toLowerCase().includes(f) || -1),
 			);
 		}
 		this.assets = this.assets?.sort((a, b) => {

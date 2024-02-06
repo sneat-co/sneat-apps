@@ -8,7 +8,7 @@ export interface ICellButtonWidgetSettings {
 }
 
 @Component({
-	selector: 'datatug-cell-button-widget',
+	selector: 'sneat-datatug-cell-button-widget',
 	template:
 		'<button [type]="btnType" [title]="text" (click)="click()">{{text}}</button>',
 })
@@ -37,6 +37,6 @@ export class CellButtonWidgetComponent {
 			alert('Button is missing a javascript handler');
 			return;
 		}
-		eval(this.settings?.javaScript);
+		throw new Error('eval disabled for now due to warning'); // eval(this.settings?.javaScript);
 	}
 }

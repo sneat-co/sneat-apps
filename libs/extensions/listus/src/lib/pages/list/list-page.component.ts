@@ -64,7 +64,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		super('ListPage', route, params);
 		console.log('ListPage.constructor(), userId:', this.currentUserId);
 		this.preloader.markAsPreloaded('list');
-		if (location.pathname.indexOf('/lists') >= 0) {
+		if (location.pathname.includes('/lists')) {
 			// TODO: document why & how it is possible
 			return;
 		}
@@ -122,13 +122,13 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 	// ngOnInit(): void {
 	// 	super.ngOnInit();
 	// 	const { pathname } = location;
-	// 	if (pathname.indexOf('/lists') >= 0) {
+	// 	if (pathname.includes('/lists')) {
 	// 		return;
 	// 	}
-	// 	if (pathname.indexOf('/recipes') >= 0) {
+	// 	if (pathname.includes('/recipes')) {
 	// 		this.segment = 'cards';
 	// 		this.listType = 'recipe';
-	// 	} else if (pathname.indexOf('/to-watch') >= 0) {
+	// 	} else if (pathname.includes('/to-watch')) {
 	// 		this.segment = 'cards';
 	// 		this.listType = 'watch';
 	// 	}

@@ -14,7 +14,7 @@ const orderBys = ['count', 'title'];
 type OrderBy = (typeof orderBys)[number];
 
 @Component({
-	selector: 'datatug-sql-queries',
+	selector: 'sneat-datatug-sql-queries',
 	templateUrl: './queries-page.component.html',
 	styleUrls: ['./queries-page.component.scss'],
 })
@@ -53,17 +53,14 @@ export class QueriesPageComponent
 			const tab = q.get('tab') as Tab;
 			if (!tab) {
 				this.updateUrlWithCurrentTab();
-			} else if (tab !== this.tab && tabs.indexOf(tab) >= 0) {
+			} else if (tab !== this.tab && tabs.includes(tab)) {
 				this.tab = tab;
 			}
 
 			const orderBy = q.get(paramOrderTagsBy) as OrderBy;
 			if (!orderBy) {
 				this.updateUrlWithOrderTagsBy();
-			} else if (
-				orderBy != this.orderTagsBy &&
-				orderBys.indexOf(orderBy) >= 0
-			) {
+			} else if (orderBy != this.orderTagsBy && orderBys.includes(orderBy)) {
 				this.orderTagsBy = orderBy;
 			}
 		});

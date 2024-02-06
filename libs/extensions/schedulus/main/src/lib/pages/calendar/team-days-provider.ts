@@ -440,7 +440,7 @@ export class TeamDaysProvider {
 	// 					if (!id) {
 	// 						throw new Error('!id');
 	// 					}
-	// 					if (processedEventIds.indexOf(id) >= 0) {
+	// 					if (processedEventIds.includes(id)) {
 	// 						return;
 	// 					}
 	// 					processedEventIds.push(id);

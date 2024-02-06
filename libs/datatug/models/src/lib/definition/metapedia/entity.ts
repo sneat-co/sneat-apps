@@ -2,6 +2,8 @@ import { IOptionallyTitled } from '../../core';
 import { IFieldCheckDef } from '../checks';
 import { DataType } from '../types';
 
+export type EntityContentType = 'json' | 'csv' | 'xml';
+
 export interface IEntity extends IOptionallyTitled {
 	extends?: { def: string };
 	fields: IEntityFieldDef[];
@@ -12,7 +14,7 @@ export interface IEntity extends IOptionallyTitled {
 	};
 	options?: {
 		sources?: {
-			contentType: 'json' | 'csv' | 'xml';
+			contentType: EntityContentType;
 			url: string;
 			source: string;
 			mapping: Record<string, string>;

@@ -2,7 +2,7 @@
 	"name": "extensions-schedulus-core",
 	"$schema": "../../../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/extensions/schedulus/core/src",
-	"prefix": "lib",
+	"prefix": "sneat",
 	"tags": [],
 	"projectType": "library",
 	"targets": {

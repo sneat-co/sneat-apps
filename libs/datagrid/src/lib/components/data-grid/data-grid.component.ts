@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
 	AfterViewInit,
 	Component,
@@ -10,6 +11,9 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -84,6 +88,14 @@ Tabulator.registerModule([
 		<div id="tabulator" #tabulatorDiv></div>
 		<p class="ion-margin-start">Rows: {{ data?.length }}</p>
 	`,
+	standalone: true,
+	imports: [
+		CommonModule,
+		IonicModule,
+		RouterModule,
+		FormsModule,
+		// CodemirrorModule,
+	],
 })
 export class DataGridComponent implements AfterViewInit, OnChanges {
 	@Input() layout?: 'fitData' | 'fitColumns' = 'fitColumns';

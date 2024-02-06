@@ -5,7 +5,7 @@ import {
 } from '@sneat/datatug-models';
 import { RegExpCheck } from './regexp_check';
 import { IValueCheck } from './interfaces';
-import { EnumValidCheck } from '@sneat/datatug/checks';
+import { EnumValidCheck } from '@sneat/datatug-checks';
 
 export const newFieldCheckFromDef = (def: IFieldCheckDef): IValueCheck => {
 	switch (def.type) {

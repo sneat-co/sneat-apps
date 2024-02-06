@@ -1,6 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
-import { currencyFlag, LookupPipe } from '@datatug/plugins';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
+import { DatatugComponentsJsontugModule } from '@sneat/datatug-components-jsontug';
+import { currencyFlag, LookupPipe } from '@sneat/datatug-plugins';
 
 export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT' | 'PATCH';
 
@@ -16,12 +20,19 @@ export interface IHttpApiEndpoint {
 }
 
 @Component({
-	selector: 'datatug-http-query-editor',
+	selector: 'sneat-datatug-http-query-editor',
 	templateUrl: 'http-query-editor.component.html',
+	standalone: true,
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		DatatugComponentsJsontugModule,
+	],
 })
 export class HttpQueryEditorComponent {
-	tab = 'headers';
-	queryDef: IHttpQueryDef = {
+	protected tab = 'headers';
+	protected queryDef: IHttpQueryDef = {
 		method: 'GET',
 		url: 'https://api.coinbase.com/v2/currencies',
 	};
@@ -59,19 +70,18 @@ export class HttpQueryEditorComponent {
 
 	run(): void {
 		let req: HttpRequest<unknown>;
-		switch (this.queryDef.method) {
+		const { method, url } = this.queryDef;
+		switch (method) {
 			case 'GET':
+				req = new HttpRequest(method, url);
+				break;
 			case 'DELETE':
-				req = new HttpRequest(this.queryDef.method, this.queryDef.url);
+				req = new HttpRequest(method, url);
 				break;
 			case 'POST':
 			case 'PUT':
 			case 'PATCH':
-				req = new HttpRequest(
-					this.queryDef.method,
-					this.queryDef.url,
-					this.queryDef.body,
-				);
+				req = new HttpRequest(method, url, this.queryDef.body);
 		}
 		this.httpClient.request(req).subscribe((event) => {
 			console.log('RESPONSE:', event);

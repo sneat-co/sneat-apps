@@ -96,7 +96,7 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 		// this.contacts = !filter && !role
 		//     ? this.allContacts
 		//     : this.allContacts.filter(c =>
-		//         (!filter || c.title.toLowerCase().indexOf(filter) >= 0)
+		//         (!filter || c.title.toLowerCase().includes(filter))
 		//         && (!role || c.roles && c.roles.includes(role))
 		//     );
 	}

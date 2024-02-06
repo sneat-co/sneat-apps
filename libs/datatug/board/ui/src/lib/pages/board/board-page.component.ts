@@ -1,5 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { DatatugBoardUiModule } from '../../datatug-board-ui.module';
 import { distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -15,17 +19,26 @@ import {
 	IProjBoard,
 } from '@sneat/datatug-models';
 import { DatatugNavContextService } from '@sneat/datatug-services-nav';
-import { ParameterLookupService } from '@sneat/datatug/components/parameters';
-import { DatatugBoardService } from '@sneat/datatug/board/core';
+import { ParameterLookupService } from '@sneat/datatug-components-parameters';
+import { DatatugBoardService } from '@sneat/datatug-board-core';
 
 @Component({
-	selector: 'datatug-board-page',
+	selector: 'sneat-datatug-board-page',
 	templateUrl: './board-page.component.html',
+	standalone: true,
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		// BoardServiceModule,
+		DatatugBoardUiModule,
+	],
+	providers: [QueryParamsService],
 })
 export class BoardPageComponent implements OnInit, OnDestroy {
 	boardId?: string | null;
 
-	projBoard: IProjBoard;
+	projBoard?: IProjBoard;
 
 	boardDef?: IBoardDef;
 
@@ -80,7 +93,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 			dataTugNavContext.currentProject
 				.pipe(
 					filter((p) => !!p?.ref),
-					map((p) => projectRefToString(p.ref)),
+					map((p) => projectRefToString(p?.ref)),
 					distinctUntilChanged(),
 					filter((p) => !!p),
 				)

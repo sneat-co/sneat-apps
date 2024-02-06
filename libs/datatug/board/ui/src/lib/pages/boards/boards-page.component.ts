@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { AlertController, IonicModule } from '@ionic/angular';
+import { SneatCardListComponent } from '@sneat/components';
 import {
 	folderItemsAsList,
 	IFolder,
@@ -12,14 +13,14 @@ import {
 	DatatugNavContextService,
 	DatatugNavService,
 } from '@sneat/datatug-services-nav';
-import { IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DatatugBoardService } from '@sneat/datatug-board-core';
-import { DatatugFoldersService } from '@sneat/datatug/folders/core';
+import { DatatugFoldersService } from '@sneat/datatug-folders-core';
 
 @Component({
-	selector: 'datatug-boards',
+	selector: 'sneat-datatug-boards',
 	templateUrl: './boards-page.component.html',
 	standalone: true,
 	imports: [CommonModule, IonicModule, SneatCardListComponent],
@@ -73,7 +74,7 @@ export class BoardsPageComponent implements OnInit, OnDestroy {
 		this.destroyed.complete();
 	}
 
-	private setProject(project: IProjectContext): void {
+	private setProject(project?: IProjectContext): void {
 		const path = this.folderPath;
 		if (
 			project?.ref?.projectId &&
@@ -99,8 +100,13 @@ export class BoardsPageComponent implements OnInit, OnDestroy {
 	};
 
 	public getLinkToBoard = (item: IProjItemBrief) =>
-		this.project &&
-		this.datatugNavService.projectPageUrl(this.project.ref, 'board', item.id);
+		(this.project &&
+			this.datatugNavService.projectPageUrl(
+				this.project.ref,
+				'board',
+				item.id,
+			)) ||
+		'';
 
 	ngOnInit() {
 		this.defaultHref =

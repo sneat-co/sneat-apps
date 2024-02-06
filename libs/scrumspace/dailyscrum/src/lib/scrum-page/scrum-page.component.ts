@@ -440,7 +440,7 @@ export class ScrumPageComponent
 		);
 		throw new Error('not implemented');
 		// this.allStatuses = members
-		// 	.filter((m) => m.roles?.indexOf(MemberRoleEnum.contributor) >= 0)
+		// 	.filter((m) => m.roles?.includes(MemberRoleEnum.contributor))
 		// 	.map((member) => ({
 		// 		member,
 		// 		byType: {},

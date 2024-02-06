@@ -1,4 +1,9 @@
-import { AnalyticsService, IAnalyticsService } from '@sneat/core';
+import { TeamMemberTypeEnum } from '@sneat/auth-models';
+import {
+	AnalyticsService,
+	EnumAsUnionOfKeys,
+	IAnalyticsService,
+} from '@sneat/core';
 import { BehaviorSubject, from, Observable, share, throwError } from 'rxjs';
 import { Inject, Injectable } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -26,10 +31,7 @@ export enum AuthStatuses {
 	notAuthenticated = 'notAuthenticated',
 }
 
-export type AuthStatus =
-	| AuthStatuses.authenticated
-	| AuthStatuses.authenticating
-	| AuthStatuses.notAuthenticated;
+export type AuthStatus = EnumAsUnionOfKeys<typeof AuthStatuses>;
 
 export interface ISneatAuthUser extends UserInfo {
 	isAnonymous: boolean;

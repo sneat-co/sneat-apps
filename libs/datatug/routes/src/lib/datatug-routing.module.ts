@@ -6,14 +6,14 @@ import { SNEAT_AUTH_GUARDS } from '@sneat/auth-core';
 export const datatugRoutes: Routes = [
 	{
 		path: '',
-		loadChildren: () =>
-			import('@sneat/datatug/pages/home').then((m) => m.DatatugPagesHomeModule),
+		loadComponent: () =>
+			import('@sneat/datatug-pages').then((m) => m.DatatugHomePageComponent),
 	},
 	{
 		path: 'my',
 		...SNEAT_AUTH_GUARDS,
-		loadChildren: () =>
-			import('@sneat/datatug/pages/my').then((m) => m.DatatugMyPageModule),
+		loadComponent: () =>
+			import('@sneat/datatug-pages').then((m) => m.DatatugMyPageComponent),
 	},
 	{
 		path: 'store/:' + routingParamStoreId,

@@ -2,7 +2,7 @@
 	"name": "datatug-nav",
 	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/datatug/nav/src",
-	"prefix": "lib",
+	"prefix": "sneat",
 	"tags": [],
 	"projectType": "library",
 	"targets": {

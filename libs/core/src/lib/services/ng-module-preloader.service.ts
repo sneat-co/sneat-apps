@@ -85,13 +85,13 @@ export class NgModulePreloaderService {
 		return; // TODO: Enable preloading once migrated to Angular Ivy
 		// setTimeout(
 		// 	() => {
-		// 		paths = paths.filter(p => this.preloaded.indexOf(p) < 0);
+		// 		paths = paths.filter(p => !this.preloaded.includes(p));
 		// 		if (!paths.length) {
 		// 			return;
 		// 		}
 		// 		console.log('preloading:', paths);
 		// 		paths.forEach(p => {
-		// 			if (this.preloaded.indexOf(p) >= 0) {
+		// 			if (this.preloaded.includes(p)) {
 		// 				return;
 		// 			}
 		// 			const config = this.configs[p];

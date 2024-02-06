@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { Period } from '@sneat/dto';
 import { IAssetContext } from '@sneat/mod-assetus-core';
@@ -9,7 +9,7 @@ import { IAssetContext } from '@sneat/mod-assetus-core';
 	selector: 'sneat-asset-card',
 	templateUrl: './asset-card.component.html',
 	standalone: true,
-	imports: [CommonModule, IonicModule, RouterLink],
+	imports: [CommonModule, IonicModule, RouterModule],
 })
 export class AssetCardComponent implements OnChanges {
 	@Input() period?: Period;

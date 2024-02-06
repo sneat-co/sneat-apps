@@ -1,4 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnDestroy } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { IProjectRef } from '@sneat/datatug-core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
@@ -9,7 +11,7 @@ import {
 	ISqlQueryRequest,
 	QueryType,
 } from '@sneat/datatug-models';
-import { Coordinator } from '@sneat/datatug/executor';
+import { Coordinator } from '@sneat/datatug-executor';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { EnvironmentService } from '@sneat/datatug-services-unsorted';
 import { RandomIdService } from '@sneat/random';
@@ -20,22 +22,32 @@ import {
 import { IProjectContext, newProjectContextFromRef } from '@sneat/datatug-nav';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { ViewDidEnter } from '@ionic/angular';
+import { IonicModule, ViewDidEnter } from '@ionic/angular';
 import {
 	IQueryEditorState,
 	IQueryEnvState,
 	IQueryState,
-} from '@sneat/datatug/editor';
+} from '@sneat/datatug-editor';
 import {
 	isQueryChanged,
 	QueryEditorStateService,
-} from '../../query-editor-state-service';
-import { QueriesService } from '../../queries.service';
-import { QueryContextSqlService } from '../../query-context-sql.service';
+	QueryContextSqlService,
+	QueriesService,
+	SqlQueryComponentModule,
+	HttpQueryEditorComponent,
+} from '../..';
 
 @Component({
-	selector: 'datatug-sql-editor',
+	selector: 'sneat-datatug-sql-editor',
 	templateUrl: './query-page.component.html',
+	standalone: true,
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		HttpQueryEditorComponent,
+		SqlQueryComponentModule,
+	],
 })
 export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 	public project?: IProjectContext;

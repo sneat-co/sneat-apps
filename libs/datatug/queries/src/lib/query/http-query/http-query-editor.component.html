@@ -11,11 +11,7 @@
 				<ion-label>Run</ion-label>
 			</ion-button>
 		</ion-buttons>
-		<ion-input
-			type="text"
-			placeholder="URL"
-			[(ngModel)]="queryDef.url"
-		/>
+		<ion-input type="text" placeholder="URL" [value]="queryDef.url" />
 	</ion-item>
 	<ion-segment [(ngModel)]="tab">
 		<ion-segment-button value="headers">Headers</ion-segment-button>
@@ -23,12 +19,7 @@
 		<ion-segment-button value="body" *ngIf="takesBody">Body</ion-segment-button>
 	</ion-segment>
 	<ion-item>
-		<ion-input
-			type="text"
-			name="name"
-			slot="start"
-			placeholder="Name"
-		/>
+		<ion-input type="text" name="name" slot="start" placeholder="Name" />
 		<ion-input type="text" name="value" placeholder="Value" />
 		<ion-buttons slot="end">
 			<ion-button color="medium">
@@ -91,13 +82,10 @@
 				<ion-item>
 					<ion-checkbox value="currency_country" slot="start" />
 					<ion-label>Currency country as:</ion-label>
-					<ion-input
-						placeholder="property name"
-						value="country_code"
-					/>
+					<ion-input placeholder="property name" value="country_code" />
 				</ion-item>
 			</ion-list>
-			<datatug-json-table
+			<sneat-datatug-json-table
 				[pipes]="isCurrencyPipeEnabled ? [currencyPipe] : undefined"
 				[json]="response.body"
 			/>

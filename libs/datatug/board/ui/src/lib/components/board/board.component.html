@@ -1,6 +1,6 @@
 @if (!!boardDef?.rows?.length) {
-	<datatug-board-row
-		*ngFor="let boardRowDef of boardDef?.rows"
+	<sneat-datatug-board-row
+		*ngFor="let boardRowDef of boardDef?.rows || []"
 		[boardRowDef]="boardRowDef"
 		[boardContext]="boardContext"
 	/>

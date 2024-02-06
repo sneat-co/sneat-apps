@@ -1,0 +1,92 @@
+{
+	"name": "datatug-app",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"projectType": "application",
+	"sourceRoot": "apps/datatug-app/src",
+	"prefix": "sneat",
+	"targets": {
+		"build": {
+			"executor": "@angular-devkit/build-angular:browser",
+			"outputs": ["{options.outputPath}"],
+			"options": {
+				"outputPath": "dist/apps/datatug-app",
+				"index": "apps/datatug-app/src/index.html",
+				"main": "apps/datatug-app/src/main.ts",
+				"polyfills": ["zone.js"],
+				"tsConfig": "apps/datatug-app/tsconfig.app.json",
+				"inlineStyleLanguage": "scss",
+				"assets": [
+					"apps/datatug-app/src/favicon.ico",
+					"apps/datatug-app/src/assets",
+					{
+						"glob": "**/*.svg",
+						"input": "node_modules/ionicons/dist/ionicons/svg",
+						"output": "./svg"
+					}
+				],
+				"styles": ["apps/datatug-app/src/styles.scss"],
+				"scripts": []
+			},
+			"configurations": {
+				"production": {
+					"budgets": [
+						{
+							"type": "initial",
+							"maximumWarning": "1mb",
+							"maximumError": "2mb"
+						},
+						{
+							"type": "anyComponentStyle",
+							"maximumWarning": "2kb",
+							"maximumError": "4kb"
+						}
+					],
+					"fileReplacements": [
+						{
+							"replace": "apps/datatug-app/src/environments/environment.ts",
+							"with": "apps/datatug-app/src/environments/environment.prod.ts"
+						}
+					],
+					"outputHashing": "all"
+				},
+				"development": {
+					"buildOptimizer": false,
+					"optimization": false,
+					"vendorChunk": true,
+					"extractLicenses": false,
+					"sourceMap": true,
+					"namedChunks": true
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"serve": {
+			"executor": "@angular-devkit/build-angular:dev-server",
+			"configurations": {
+				"production": {
+					"buildTarget": "datatug-app:build:production"
+				},
+				"development": {
+					"buildTarget": "datatug-app:build:development"
+				}
+			},
+			"defaultConfiguration": "development"
+		},
+		"extract-i18n": {
+			"executor": "@angular-devkit/build-angular:extract-i18n",
+			"options": {
+				"buildTarget": "datatug-app:build"
+			}
+		},
+		"lint": {
+			"executor": "@nx/eslint:lint"
+		},
+		"test": {
+			"executor": "@nx/jest:jest",
+			"outputs": ["{workspaceRoot}/coverage/apps/datatug-app"],
+			"options": {
+				"jestConfig": "apps/datatug-app/jest.config.ts"
+			}
+		}
+	}
+}

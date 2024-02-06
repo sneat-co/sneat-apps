@@ -43,7 +43,7 @@ export class MetricsComponent {
 		this.deletingMetrics.push(...this.demoMetrics);
 		const complete = () =>
 			(this.deletingMetrics = this.deletingMetrics.filter(
-				(v) => this.demoMetrics.indexOf(v) < 0,
+				(v) => !this.demoMetrics.includes(v),
 			));
 		this.teamService.deleteMetrics(this.team.id, this.demoMetrics).subscribe({
 			complete,
@@ -55,7 +55,7 @@ export class MetricsComponent {
 	}
 
 	public isDeletingMetric(metric: ITeamMetric): boolean {
-		return !!metric.id && this.deletingMetrics.indexOf(metric.id) >= 0;
+		return !!metric.id && this.deletingMetrics.includes(metric.id);
 	}
 
 	public deleteMetric(metric: ITeamMetric): void {

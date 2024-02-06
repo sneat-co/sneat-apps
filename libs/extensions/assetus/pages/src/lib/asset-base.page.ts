@@ -24,7 +24,7 @@ export abstract class AssetBasePage extends CommuneBasePage implements OnInit {
 	}
 
 	ionViewDidEnter(): void {
-		if (location.href.indexOf('?') < 0 && this.asset) {
+		if (!location.href.includes('?') && this.asset) {
 			history.replaceState(
 				{
 					communeDto: this.commune && this.commune.dto,

@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { IonInput, ModalController } from '@ionic/angular';
-// import { ParameterLookupComponent } from "./parameter-lookup.component";
 import { share } from 'rxjs/operators';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IParameterDef, IParameterValueWithoutID } from '@sneat/datatug-models';
 import { AgentService } from '@sneat/datatug-services-repo';
+// import { ParameterLookupComponent } from "./parameter-lookup.component";
 
 @Injectable()
 export class ParameterLookupService {

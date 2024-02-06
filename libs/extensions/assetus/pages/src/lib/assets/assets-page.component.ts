@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { IIdAndBrief } from '@sneat/core';
@@ -29,6 +29,7 @@ import { AssetsBasePage } from '../assets-base.page';
 		CommonModule,
 		FormsModule,
 		IonicModule,
+		RouterModule,
 		AssetsListComponentModule,
 		TeamCoreComponentsModule,
 		ContactusServicesModule,

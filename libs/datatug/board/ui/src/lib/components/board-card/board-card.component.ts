@@ -33,7 +33,7 @@ export class BoardCardTabService {
 }
 
 @Component({
-	selector: 'datatug-board-card',
+	selector: 'sneat-datatug-board-card',
 	templateUrl: './board-card.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	providers: [BoardCardTabService],

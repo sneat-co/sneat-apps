@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
-import { DatagridModule } from '@sneat/datagrid';
+import { DataGridComponent } from '@sneat/datagrid';
 import { FreightLoadFormModule } from '../freight-load-form/freight-load-form.module';
 import { ContainerPointComponent } from './container-point.component';
 import { DispatchPointContainersGridComponent } from './dispatch-point-containers-grid.component';
@@ -19,7 +19,7 @@ import { DispatcherComponent } from './dispatcher.component';
 		FormsModule,
 		ReactiveFormsModule,
 		FreightLoadFormModule,
-		DatagridModule,
+		DataGridComponent,
 	],
 	declarations: [
 		DispatchersComponent,

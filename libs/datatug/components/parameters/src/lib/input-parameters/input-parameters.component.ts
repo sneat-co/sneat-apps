@@ -14,7 +14,7 @@ import {
 } from '@sneat/datatug-models';
 
 @Component({
-	selector: 'datatug-input-parameters',
+	selector: 'sneat-datatug-input-parameters',
 	templateUrl: './input-parameters.component.html',
 })
 export class InputParametersComponent implements OnChanges {

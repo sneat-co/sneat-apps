@@ -88,7 +88,7 @@ export const recordsetToGridDef = (
 			const { c } = col;
 			if (
 				!c?.name ||
-				(hideColumns && c?.name && hideColumns.indexOf(c.name) >= 0)
+				(hideColumns && c?.name && hideColumns.includes(c.name))
 			) {
 				return false;
 			}

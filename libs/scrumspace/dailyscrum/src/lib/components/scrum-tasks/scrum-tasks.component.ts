@@ -195,7 +195,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 		if (!this.member) {
 			throw new Error('!member');
 		}
-		const oldState = task.thumbUps.indexOf(this.currentMemberId || '') >= 0;
+		const oldState = task.thumbUps.includes(this.currentMemberId || '');
 		if (oldState) {
 			task.thumbUps = task.thumbUps.filter((v) => v !== this.currentMemberId);
 		} else {

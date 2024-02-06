@@ -29,7 +29,7 @@ interface IParentFolder extends IQueryFolder {
 type QueryType = 'SQL' | 'GraphQL' | 'HTTP';
 
 @Component({
-	selector: 'datatug-queries-tab',
+	selector: 'sneat-datatug-queries-tab',
 	templateUrl: 'queries-tab.component.html',
 })
 export class QueriesTabComponent {
@@ -135,7 +135,7 @@ export class QueriesTabComponent {
 	private populateFilteredItems(path: string[], folder: IQueryFolder): void {
 		const f = this.filter.toLowerCase();
 		folder?.items?.forEach((item) => {
-			if ((item.title || item.id).toLowerCase().indexOf(f) >= 0) {
+			if ((item.title || item.id).toLowerCase().includes(f)) {
 				this.filteredItems?.push({ query: item, folders: path });
 			}
 		});

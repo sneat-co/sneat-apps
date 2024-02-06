@@ -6,7 +6,7 @@ import { DbServerService } from '@sneat/datatug-services-unsorted';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({
-	selector: 'datatug-add-db-serve',
+	selector: 'sneat-datatug-add-db-serve',
 	templateUrl: './add-db-server.component.html',
 })
 export class AddDbServerComponent implements OnDestroy {

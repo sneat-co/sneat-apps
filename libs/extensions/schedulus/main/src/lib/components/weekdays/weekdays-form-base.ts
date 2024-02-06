@@ -14,7 +14,7 @@ const weekdayRequired: ValidatorFn = (
 	control: AbstractControl,
 ): ValidationErrors | null => {
 	const formGroup = control as UntypedFormGroup;
-	const weekdaySelected = Object.values(formGroup.value).indexOf(true) >= 0;
+	const weekdaySelected = Object.values(formGroup.value).includes(true);
 	if (weekdaySelected) {
 		return null;
 	}

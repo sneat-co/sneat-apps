@@ -2,7 +2,7 @@ import { ColumnDefinition } from 'tabulator-tables';
 
 export interface IGridDef {
 	columns: IGridColumn[];
-	rows?: unknown[];
+	rows?: Record<string, unknown>[];
 	groupBy?: string;
 }
 

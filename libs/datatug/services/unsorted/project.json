@@ -2,7 +2,7 @@
 	"name": "datatug-services-unsorted",
 	"$schema": "../../../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/datatug/services/unsorted/src",
-	"prefix": "lib",
+	"prefix": "sneat",
 	"tags": [],
 	"projectType": "library",
 	"targets": {

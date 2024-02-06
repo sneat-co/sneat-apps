@@ -93,9 +93,12 @@ export function allUserStoresAsFlatList(
 }
 
 export function allUserProjectsAsFlatList(
-	stores: IDatatugStoreBriefsById,
+	stores?: IDatatugStoreBriefsById,
 ): IProjectAndStore[] {
 	const projects: IProjectAndStore[] = [];
+	if (!stores) {
+		return projects;
+	}
 	for (const storeId in stores) {
 		const store = { id: storeId, ...stores[storeId] };
 		for (const projectId in store.projects) {
@@ -126,7 +129,7 @@ export interface IProjStoreRef extends IStoreRef {
 }
 
 export interface IProjectBrief {
-	readonly access: ProjectAccess;
+	readonly access?: ProjectAccess;
 	readonly title: string;
 	readonly titleOverride?: string;
 }

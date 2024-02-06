@@ -2,7 +2,7 @@
 	"name": "datatug-services-project",
 	"$schema": "../../../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/datatug/services/project/src",
-	"prefix": "lib",
+	"prefix": "sneat",
 	"tags": [],
 	"projectType": "library",
 	"targets": {

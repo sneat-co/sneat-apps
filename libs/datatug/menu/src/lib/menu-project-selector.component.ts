@@ -17,12 +17,12 @@ import {
 	DatatugNavContextService,
 	DatatugNavService,
 } from '@sneat/datatug-services-nav';
-import { NewProjectService } from '@sneat/datatug/project';
+import { NewProjectService } from '@sneat/datatug-project';
 import { IProjectContext } from '@sneat/datatug-nav';
 import { parseStoreRef } from '@sneat/core';
 
 @Component({
-	selector: 'datatug-menu-project-selector',
+	selector: 'sneat-datatug-menu-project-selector',
 	templateUrl: 'menu-project-selector.component.html',
 })
 export class MenuProjectSelectorComponent implements OnChanges {

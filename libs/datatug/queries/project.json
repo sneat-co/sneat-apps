@@ -1,0 +1,36 @@
+{
+	"name": "datatug-queries",
+	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "libs/datatug/queries/src",
+	"prefix": "sneat",
+	"tags": [],
+	"projectType": "library",
+	"targets": {
+		"build": {
+			"executor": "@nx/angular:package",
+			"outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+			"options": {
+				"project": "libs/datatug/queries/ng-package.json"
+			},
+			"configurations": {
+				"production": {
+					"tsConfig": "libs/datatug/queries/tsconfig.lib.prod.json"
+				},
+				"development": {
+					"tsConfig": "libs/datatug/queries/tsconfig.lib.json"
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"test": {
+			"executor": "@nx/jest:jest",
+			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+			"options": {
+				"jestConfig": "libs/datatug/queries/jest.config.ts"
+			}
+		},
+		"lint": {
+			"executor": "@nx/eslint:lint"
+		}
+	}
+}

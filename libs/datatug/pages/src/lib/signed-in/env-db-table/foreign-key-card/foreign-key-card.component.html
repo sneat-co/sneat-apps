@@ -1,0 +1,41 @@
+<ion-card>
+	<ion-card-header>
+		<ion-card-title>
+			<a
+				[href]="fk?.refTable?.name ?? '#'"
+				(click)="goTable($event, fk?.refTable)"
+				>{{ fk?.refTable?.schema }} .{{ fk?.refTable?.name }}</a
+			>
+			<ion-text
+				color="medium"
+				class="ion-margin-start"
+				style="font-size: smaller"
+			>
+				⇐
+				<span [title]="fkTitle()"
+					>with foreign key {{ fk?.name }} (<b>{{ fk?.columns?.join(", ") }}</b
+					>)</span
+				>
+			</ion-text>
+		</ion-card-title>
+	</ion-card-header>
+	@if (table?.meta?.columns) {
+		<ion-item *ngFor="let c of table?.meta?.columns || []">
+			<ion-label>
+				{{ c.name }}
+				<ion-badge color="light">
+					<ion-text
+						color="medium"
+						style="font-weight: normal; font-size: xx-small"
+						>{{ c.dbType.toUpperCase() }}
+					</ion-text>
+				</ion-badge>
+			</ion-label>
+			<ion-input
+				readonly
+				[value]="colValue(c.name)"
+				style="text-align: right"
+			/>
+		</ion-item>
+	}
+</ion-card>
