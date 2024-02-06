@@ -37,6 +37,6 @@ export class CellButtonWidgetComponent {
 			alert('Button is missing a javascript handler');
 			return;
 		}
-		eval(this.settings?.javaScript);
+		throw new Error('eval disabled for now due to warning'); // eval(this.settings?.javaScript);
 	}
 }
