@@ -54,11 +54,11 @@ dependencies:
     specifier: 5.36.0
     version: 5.36.0(@ionic-native/core@5.36.0)(rxjs@7.8.1)
   '@ionic/angular':
-    specifier: 7.7.0
-    version: 7.7.0(@angular/core@17.1.2)(@angular/forms@17.1.2)(@angular/router@17.1.2)(rxjs@7.8.1)(zone.js@0.14.3)
+    specifier: 7.7.1
+    version: 7.7.1(@angular/core@17.1.2)(@angular/forms@17.1.2)(@angular/router@17.1.2)(rxjs@7.8.1)(zone.js@0.14.3)
   '@ionic/core':
-    specifier: 7.7.0
-    version: 7.7.0
+    specifier: 7.7.1
+    version: 7.7.1
   '@nx/angular':
     specifier: 18.0.2
     version: 18.0.2(@angular-devkit/build-angular@17.1.2)(@angular-devkit/core@17.1.2)(@angular-devkit/schematics@17.1.2)(@schematics/angular@17.1.2)(@swc-node/register@1.8.0)(@swc/core@1.4.0)(@types/node@20.11.16)(cypress@13.6.4)(eslint@8.56.0)(nx@18.0.2)(rxjs@7.8.1)(ts-node@10.9.2)(typescript@5.3.3)
@@ -3189,8 +3189,8 @@ packages:
       rxjs: 7.8.1
     dev: false
 
-  /@ionic/angular@7.7.0(@angular/core@17.1.2)(@angular/forms@17.1.2)(@angular/router@17.1.2)(rxjs@7.8.1)(zone.js@0.14.3):
-    resolution: {integrity: sha512-jEPgg8J1ZX5mBiz80LUOmAOtMOZuVFE5ZVNxSuMzTFdD6j4rSFowuOmci4DZoewyveQgPx5h4Kg+rLuQrxTYow==}
+  /@ionic/angular@7.7.1(@angular/core@17.1.2)(@angular/forms@17.1.2)(@angular/router@17.1.2)(rxjs@7.8.1)(zone.js@0.14.3):
+    resolution: {integrity: sha512-4XnxJ7zWKLj1rKH9tz6zffLM3OZutnSq8FjLA9FH3Jl+zTpDf6S2JVO6+L+tEiz6/sJZQfVrTIABM1sNnrfiWw==}
     peerDependencies:
       '@angular/core': '>=14.0.0'
       '@angular/forms': '>=14.0.0'
@@ -3201,7 +3201,7 @@ packages:
       '@angular/core': 17.1.2(rxjs@7.8.1)(zone.js@0.14.3)
       '@angular/forms': 17.1.2(@angular/common@17.1.2)(@angular/core@17.1.2)(@angular/platform-browser@17.1.2)(rxjs@7.8.1)
       '@angular/router': 17.1.2(@angular/common@17.1.2)(@angular/core@17.1.2)(@angular/platform-browser@17.1.2)(rxjs@7.8.1)
-      '@ionic/core': 7.7.0
+      '@ionic/core': 7.7.1
       ionicons: 7.2.2
       jsonc-parser: 3.2.0
       rxjs: 7.8.1
@@ -3209,8 +3209,8 @@ packages:
       zone.js: 0.14.3
     dev: false
 
-  /@ionic/core@7.7.0:
-    resolution: {integrity: sha512-ewbvX8u4+FNRBAw1nqBuCy4dI8OLTxoqZgm4qRs4zbrNLJInwTpYjCPzYueN0KE9ufP0n9HhS23lfcrQzJC7Hg==}
+  /@ionic/core@7.7.1:
+    resolution: {integrity: sha512-Su4VFwztN8vKyHsIgHMmzQ1ZrIajNzMR7hg2fcv15Y2yrzLpK06PcUf9QutBM9KyP0wQIngwfnO68vrAnqR+xQ==}
     dependencies:
       '@stencil/core': 4.12.0
       ionicons: 7.2.2
