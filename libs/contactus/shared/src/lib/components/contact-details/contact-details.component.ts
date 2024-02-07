@@ -14,6 +14,7 @@ import {
 	IContactDto,
 	IContactContext,
 } from '@sneat/contactus-core';
+import { NewDebtFormComponent } from '@sneat/debtus-shared';
 import { IRelatedItem, IRelationships, ITeamModuleDocRef } from '@sneat/dto';
 import { ITeamRef, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { MemberPages } from '../../constants';
@@ -51,6 +52,7 @@ import {
 		PersonWizardComponent,
 		RelationshipFormComponent,
 		GenderFormComponent,
+		NewDebtFormComponent,
 	],
 })
 export class ContactDetailsComponent implements OnChanges {

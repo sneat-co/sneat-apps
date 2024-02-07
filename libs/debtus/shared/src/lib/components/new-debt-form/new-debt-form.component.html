@@ -1,0 +1,19 @@
+<ion-card>
+	<ion-card-header>
+		<ion-card-title>New debt</ion-card-title>
+	</ion-card-header>
+	<ion-item>
+		<ion-label>Currency</ion-label>
+		<ion-select [formControl]="currency" placeholder="Select Currency">
+			@for (currency of currencies; track currency) {
+				<ion-select-option [value]="currency">{{ currency }}</ion-select-option>
+			}
+		</ion-select>
+	</ion-item>
+	<ion-item>
+		<ion-label>Amount</ion-label>
+		<ion-input type="number" [formControl]="amount" />
+	</ion-item>
+
+	<ion-button (click)="submit()">Add debt</ion-button>
+</ion-card>
