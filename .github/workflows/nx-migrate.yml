@@ -44,7 +44,7 @@ jobs:
 
             -   name: Install dependencies
                 if: steps.package-json-changed.outputs.is_changed == 'true'
-                run: pnpm install
+                run: pnpm install --no-frozen-lockfile
 
             -   name: Check if has migrations
                 id: nx-workspace-has-migrations
