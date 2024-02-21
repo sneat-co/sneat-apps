@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, Input } from '@angular/core';
+import { Component, forwardRef, Inject, Input } from '@angular/core';
 import {
 	FormControl,
 	FormGroup,
@@ -8,6 +8,10 @@ import {
 } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { IContactContext } from '@sneat/contactus-core';
+import {
+	ContactInputComponent,
+	ContactInputModule,
+} from '@sneat/contactus-shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team-models';
 import {
@@ -20,7 +24,13 @@ import {
 	selector: 'sneat-debtus-new-debt-form',
 	templateUrl: './new-debt-form.component.html',
 	standalone: true,
-	imports: [CommonModule, IonicModule, ReactiveFormsModule],
+	imports: [
+		CommonModule,
+		IonicModule,
+		ReactiveFormsModule,
+		// ContactInputModule,
+		// forwardRef(() => ContactInputComponent),
+	],
 	providers: [DebtusService],
 })
 export class NewDebtFormComponent {
