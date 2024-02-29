@@ -83,7 +83,7 @@
     "@swc/core": "1.4.2",
     "@swc/helpers": "~0.5.2",
     "@types/jest": "29.5.12",
-    "@types/node": "20.11.22",
+    "@types/node": "20.11.23",
     "@typescript-eslint/eslint-plugin": "7.1.0",
     "@typescript-eslint/parser": "7.1.0",
     "autoprefixer": "10.4.17",
