@@ -107,10 +107,9 @@ jobs:
             #                run: pnpm install --force
 
             -   name: Run emulators
-                run: pnpm run firebase-emulators:ci
-
-            -   name: Wait for emulators to start
-                run: sleep 10
+                run: |
+                    pnpm run firebase-emulators:ci
+                    sleep 10
 
             -   name: Build and serve application
                 run: |
