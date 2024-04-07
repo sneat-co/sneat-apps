@@ -26,10 +26,7 @@ import {
 	RowContextMenuSignature,
 } from 'tabulator-tables';
 import { IGridColumn } from '@sneat/grid';
-import {
-	TabulatorColumn,
-	TabulatorOptions,
-} from '../../tabulator/tabulator-options';
+import { TabulatorColumn, TabulatorOptions } from '../../tabulator';
 
 class AdvertModule extends Module {
 	public static override moduleName = 'advert';
@@ -39,7 +36,7 @@ class AdvertModule extends Module {
 		console.log('AdvertModule.constructor()');
 	}
 
-	initialize() {
+	override initialize() {
 		console.log('AdvertModule.initialize()');
 	}
 }
