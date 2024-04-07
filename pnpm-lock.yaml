@@ -75,8 +75,8 @@ dependencies:
     specifier: ^0.0.6
     version: 0.0.6(@angular/common@17.3.3)(@angular/core@17.3.3)(rxjs@7.8.1)
   '@types/tabulator-tables':
-    specifier: 5.32.1
-    version: 5.32.1
+    specifier: 6.2.0
+    version: 6.2.0
   codemirror:
     specifier: ^6.0.1
     version: 6.0.1(@lezer/common@1.2.1)
@@ -5574,8 +5574,8 @@ packages:
   /@types/stack-utils@2.0.3:
     resolution: {integrity: sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==}
 
-  /@types/tabulator-tables@5.32.1:
-    resolution: {integrity: sha512-sLbwDdWZCd7PFL6J0vc3JRNZ2znZjEwF/P+0Mw0lSdc+oY2PlXo+4cCLHc2QpatV5AuCfWMu7OY3kKrYRNqpnQ==}
+  /@types/tabulator-tables@6.2.0:
+    resolution: {integrity: sha512-dKEz3X/1SuEBa25RpbPhG4a5mVa+/nL5G4hHDWf+W+Xs6m1HREN9lX2qVhEIoJSeTqfqpvze8Fw5+qbCakH86g==}
     dev: false
 
   /@types/tern@0.23.9:
