@@ -26,28 +26,28 @@
 			>
 				<ion-segment-button value="incomes">
 					<ion-label>
-						<b>Income</b>
-						<br />
-						<small>${{ totals?.incomes?.perMonth() }}</small>
+						💸 <b>Income</b>
+						&dash;
+						<small>${{ totals?.incomes?.perMonth() || 0 }}/month</small>
 					</ion-label>
 				</ion-segment-button>
 				<ion-segment-button value="expenses">
 					<ion-label>
-						<b>Expenses</b>
-						<br />
-						<small>${{ totals?.expenses?.perMonth() }}</small>
+						🧾 <b>Expenses</b>
+						&dash;
+						<small>${{ totals?.expenses?.perMonth() || 0 }}/month</small>
 					</ion-label>
 				</ion-segment-button>
 				<ion-segment-button value="balance">
 					<ion-label>
 						<b>Balance</b>
-						<br />
+						&dash;
 						<small *ngIf="(totals?.balance('month') || 0) === 0">$0</small>
 						<small *ngIf="(totals?.balance('month') || 0) > 0">
-							+${{ totals?.balance("month") }}
+							+${{ totals?.balance("month") }}/month
 						</small>
 						<small *ngIf="(totals?.balance('month') || 0) < 0">
-							-${{ totals?.balance("month") }}
+							-${{ totals?.balance("month") }}/month
 						</small>
 					</ion-label>
 				</ion-segment-button>
