@@ -28,15 +28,13 @@ import {
 	InviteModalComponent,
 	InviteModalModule,
 } from '@sneat/team-components';
-import {
-	ContactService,
-	IUpdateContactRequest,
-} from '@sneat/contactus-services';
+import { ContactService } from '@sneat/contactus-services';
 import { IContactusTeamDtoAndID } from '@sneat/contactus-core';
 import { ITeamContext } from '@sneat/team-models';
 import { TeamNavService } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { ContactRoleBadgesComponent } from '../contact-role-badges/contact-role-badges.component';
+import { InlistAgeGroupComponent } from '../inlist-options/inlist-age-group.component';
 
 @Component({
 	selector: 'sneat-members-list',
@@ -52,6 +50,7 @@ import { ContactRoleBadgesComponent } from '../contact-role-badges/contact-role-
 		InviteModalModule,
 		RouterModule,
 		ContactRoleBadgesComponent,
+		InlistAgeGroupComponent,
 	],
 })
 // TODO: Is it deprecated and should we migrated to Contacts list?
@@ -98,31 +97,6 @@ export class MembersListComponent implements OnChanges {
 
 	protected isInviteButtonVisible(member: IIdAndBrief<IContactBrief>): boolean {
 		return member.brief?.type === 'person' && !member.brief?.userID;
-	}
-
-	protected setAgeGroup(
-		event: Event,
-		member: IIdAndBrief<IContactBrief>,
-		ageGroup: AgeGroupID,
-	): void {
-		console.log('MembersListComponent.setAgeGroup()', member, ageGroup);
-		event.preventDefault();
-		event.stopPropagation();
-		const teamID = this.team?.id;
-		if (!teamID) {
-			return;
-		}
-		const request: IUpdateContactRequest = {
-			teamID,
-			contactID: member.id,
-			ageGroup,
-		};
-		this.contactService.updateContact(request).subscribe({
-			next: () => console.log('age group updated'),
-			error: this.errorLogger.logErrorHandler(
-				'failed to update contact with age group',
-			),
-		});
 	}
 
 	public genderIcon(m: IIdAndBrief<IContactBrief>) {

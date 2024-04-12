@@ -51,16 +51,11 @@
 						/>
 					</ng-container>
 				</ion-label>
-				<ion-buttons slot="end" *ngIf="isAgeOptionsVisible(member)">
-					<ion-button (click)="setAgeGroup($event, member, 'adult')">
-						<ion-icon slot="start" name="radio-button-off-outline" />
-						<ion-label>Adult</ion-label>
-					</ion-button>
-					<ion-button (click)="setAgeGroup($event, member, 'child')">
-						<ion-icon slot="start" name="radio-button-off-outline" />
-						<ion-label>Child</ion-label>
-					</ion-button>
-				</ion-buttons>
+				<sneat-inlist-age-group
+					*ngIf="isAgeOptionsVisible(member)"
+					[contactID]="member.id"
+					[team]="team"
+				/>
 				<ion-buttons slot="end">
 					<ion-button
 						*ngIf="isInviteButtonVisible(member)"

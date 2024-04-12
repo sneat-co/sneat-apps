@@ -1,0 +1,15 @@
+<ion-buttons slot="end">
+	@if (selectedOption) {
+		<ion-button disabled>
+			<ion-spinner slot="start" name="lines-small" />
+			<ion-label>{{ selectedOption.title || selectedOption.id }}</ion-label>
+		</ion-button>
+	} @else {
+		@for (option of options; track option.id) {
+			<ion-button (click)="onOptionSelected($event, option)">
+				<ion-icon slot="start" name="radio-button-off-outline" />
+				<ion-label>{{ option.title || option.id }}</ion-label>
+			</ion-button>
+		}
+	}
+</ion-buttons>
