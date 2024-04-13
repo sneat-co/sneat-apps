@@ -20,7 +20,7 @@
 			name="first_name"
 			[formControl]="firstName"
 			(keyup.enter)="nameKeyupEnter($event)"
-			(ionChange)="onNameChanged($event)"
+			(keyup)="onNameChanged($event)"
 		/>
 	</ion-item>
 	<ion-item *ngIf="!fields?.lastName?.hide">
@@ -30,7 +30,7 @@
 			name="last_name"
 			[formControl]="lastName"
 			(keyup.enter)="nameKeyupEnter($event)"
-			(ionChange)="onNameChanged($event)"
+			(keyup)="onNameChanged($event)"
 		/>
 	</ion-item>
 	<ion-item *ngIf="!fields?.middleName?.hide">
@@ -50,7 +50,7 @@
 			name="full_name"
 			[formControl]="fullName"
 			(keyup.enter)="nameKeyupEnter($event)"
-			(ionChange)="onFullNameChanged($event)"
+			(keyup)="onFullNameChanged($event)"
 		/>
 	</ion-item>
 </ion-card>

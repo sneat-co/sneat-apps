@@ -1,7 +1,7 @@
 <form [formGroup]="addMemberForm" (ngSubmit)="submit()">
 	<sneat-person-form-wizard
 		[team]="team"
-		[disabled]="disabled"
+		[disabled]="isSubmitting"
 		[newPerson]="member"
 		[requires]="personRequirements"
 		[fields]="{ contactType: { hide: true } }"
@@ -21,12 +21,15 @@
 		<ion-button
 			size="large"
 			(click)="submit()"
-			[disabled]="!team || addMemberForm.disabled || !addMemberForm.valid"
+			[disabled]="
+				!team || addMemberForm.disabled || !addMemberForm.valid || isSubmitting
+			"
 		>
 			<ion-spinner
 				name="lines-small"
-				*ngIf="addMemberForm.disabled"
+				*ngIf="isSubmitting"
 				slot="start"
+				class="ion-margin-end"
 			/>
 			<ion-label>Add member</ion-label>
 		</ion-button>

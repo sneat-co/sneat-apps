@@ -122,7 +122,7 @@ export class RelationshipFormComponent
 								FamilyMemberRelation.child,
 								FamilyMemberRelation.sibling,
 								FamilyMemberRelation.cousin,
-						  ] as FamilyMemberRelation[])
+							] as FamilyMemberRelation[])
 						: ([
 								FamilyMemberRelation.spouse,
 								FamilyMemberRelation.partner,
@@ -133,7 +133,7 @@ export class RelationshipFormComponent
 								FamilyMemberRelation.parentInLaw,
 								FamilyMemberRelation.grandparent,
 								FamilyMemberRelation.grandparentInLaw,
-						  ] as FamilyMemberRelation[]),
+							] as FamilyMemberRelation[]),
 				);
 				break;
 			}
@@ -153,7 +153,7 @@ export class RelationshipFormComponent
 		const value = ce.detail.value as string;
 		console.log('onRelationshipChanged()', value);
 		const created: IWithCreatedShort = {
-			on: new Date().toISOString().substring(0, 10),
+			at: new Date().toISOString().substring(0, 10),
 			by: this.userService.currentUserID as unknown as string,
 		};
 		this.relatedAs = [value];

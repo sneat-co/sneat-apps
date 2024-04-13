@@ -9,17 +9,17 @@ import {
 	ViewChild,
 } from '@angular/core';
 import {
-	FormControl,
+	// FormControl,
 	FormsModule,
 	ReactiveFormsModule,
 	UntypedFormGroup,
-	Validators,
+	// Validators,
 } from '@angular/forms';
-import { IonicModule, IonInput, IonRadio } from '@ionic/angular';
-import { TeamMemberType } from '@sneat/auth-models';
+import { IonicModule } from '@ionic/angular';
+// import { TeamMemberType } from '@sneat/auth-models';
 import { PersonWizardComponent } from '@sneat/contactus-shared';
 import { formNexInAnimation } from '@sneat/core';
-import { createSetFocusToInput, personName } from '@sneat/components';
+import { personName } from '@sneat/components';
 import { RoutingState } from '@sneat/core';
 import {
 	emptyMemberPerson,
@@ -28,7 +28,7 @@ import {
 	IMemberPerson,
 	IPersonRequirements,
 	IRelatedPerson,
-	isRelatedPersonNotReady,
+	// isRelatedPersonNotReady,
 	isRelatedPersonReady,
 } from '@sneat/contactus-core';
 import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
@@ -55,7 +55,7 @@ export class NewMemberFormComponent implements OnChanges {
 	};
 
 	private readonly hasNavHistory: boolean;
-	public disabled = false;
+	public isSubmitting = false;
 
 	protected canSubmit = false;
 
@@ -68,20 +68,20 @@ export class NewMemberFormComponent implements OnChanges {
 
 	@ViewChild(PersonWizardComponent, { static: false })
 	personFormComponent?: PersonWizardComponent;
-	@ViewChild('emailInput', { static: false }) emailInput?: IonInput;
-	@ViewChild('genderFirstInput', { static: false }) genderFirstInput?: IonRadio;
+	// @ViewChild('emailInput', { static: false }) emailInput?: IonInput;
+	// @ViewChild('genderFirstInput', { static: false }) genderFirstInput?: IonRadio;
 
-	public get isPersonFormReady(): boolean {
-		return isRelatedPersonNotReady(this.member, this.personRequirements);
-	}
+	// public get isPersonFormReady(): boolean {
+	// 	return isRelatedPersonNotReady(this.member, this.personRequirements);
+	// }
+	//
+	// public readonly setFocusToInput = createSetFocusToInput(
+	// 	this.params.errorLogger,
+	// );
 
-	public readonly setFocusToInput = createSetFocusToInput(
-		this.params.errorLogger,
-	);
-
-	public readonly memberType = new FormControl<TeamMemberType>('member', [
-		Validators.required,
-	]);
+	// public readonly memberType = new FormControl<TeamMemberType>('member', [
+	// 	Validators.required,
+	// ]);
 
 	public addMemberForm = new UntypedFormGroup({
 		// email: this.email,
@@ -165,7 +165,7 @@ export class NewMemberFormComponent implements OnChanges {
 			teamID: team.id,
 		};
 
-		this.disabled = true;
+		this.isSubmitting = true;
 		this.addMemberForm.disable();
 		this.params.memberService.createMember(request).subscribe({
 			next: (member) => {
@@ -191,6 +191,9 @@ export class NewMemberFormComponent implements OnChanges {
 			error: (err) => {
 				this.params.errorLogger.logError(err, 'Failed to create a new member');
 				this.addMemberForm.enable();
+				setTimeout(() => {
+					this.isSubmitting = false;
+				}, 1000);
 			},
 		});
 

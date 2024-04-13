@@ -5,7 +5,7 @@ export interface timestamp {
 export const emptyTimestamp: timestamp = { seconds: 0, nanoseconds: 0 };
 
 export interface IWithCreatedShort {
-	readonly on: string;
+	readonly at: string;
 	readonly by: string;
 }
 
