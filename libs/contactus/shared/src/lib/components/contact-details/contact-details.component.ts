@@ -30,6 +30,7 @@ import {
 	PersonWizardComponent,
 	RelationshipFormComponent,
 } from '../person-form';
+import { RelatedContactComponent } from './related-contact.component';
 
 @Component({
 	selector: 'sneat-contact-details',
@@ -51,11 +52,14 @@ import {
 		PersonWizardComponent,
 		RelationshipFormComponent,
 		GenderFormComponent,
+		RelatedContactComponent,
 	],
 })
 export class ContactDetailsComponent implements OnChanges {
 	@Input({ required: true }) public team?: ITeamRef;
 	@Input({ required: true }) public contact?: IContactContext;
+
+	protected relatedContactsOfCurrentTeam?: readonly IIdAndBrief<IRelatedItem>[];
 
 	private userTeamBriefs?: Record<string, IUserTeamBrief>;
 	private currentUserContactID?: string;
@@ -105,6 +109,24 @@ export class ContactDetailsComponent implements OnChanges {
 		if (changes['team']) {
 			this.setCurrentUserContactID();
 			this.setRelatedToCurrentUser();
+		}
+		if (changes['contact']) {
+			const teamID = this.team?.id;
+			if (teamID && this.contact?.dto?.related) {
+				const related = this.contact.dto.related[teamID];
+				if (!related) {
+					return;
+				}
+				const contactus = related['contactus'];
+				if (!contactus) {
+					return;
+				}
+				const contacts = contactus['contacts'];
+				if (!contacts) {
+					return;
+				}
+				this.relatedContactsOfCurrentTeam = zipMapBriefsWithIDs(contacts);
+			}
 		}
 	}
 

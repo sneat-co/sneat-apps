@@ -40,15 +40,6 @@ export abstract class AssetBasePage extends TeamItemPageBaseComponent<
 		);
 	}
 
-	protected onRouteParamsChanged(
-		params: ParamMap,
-		itemID?: string,
-		teamID?: string,
-	): void {
-		// Nothing to do
-		console.log('onRouteParamsChanged', params, itemID, teamID);
-	}
-
 	protected override watchItemChanges(): Observable<IAssetContext> {
 		if (!this.asset?.id) {
 			return throwError(() => new Error('no asset context'));

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { distinctUntilChanged, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ITeamContext } from '@sneat/team-models';
@@ -24,9 +24,9 @@ export class TeamContextService {
 }
 
 export function trackTeamIdAndTypeFromRouteParameter(
-	route: ActivatedRoute,
+	paramMap$: Observable<ParamMap>,
 ): Observable<ITeamContext | undefined> {
-	return route.paramMap.pipe(
+	return paramMap$.pipe(
 		map((params) => {
 			const id = params.get('teamID'),
 				type = params.get('teamType') as TeamType;

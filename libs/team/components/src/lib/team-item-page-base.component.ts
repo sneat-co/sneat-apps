@@ -1,7 +1,8 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { INavContext, TeamItem } from '@sneat/core';
 import { ModuleTeamItemService } from '@sneat/team-services';
-import { Observable, Subscription, tap } from 'rxjs';
+import { distinctUntilChanged, map, Observable, Subscription, tap } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { TeamPageBaseComponent } from './team-page-base-component';
 import { TeamComponentBaseParams } from './team-component-base-params';
 
@@ -19,7 +20,7 @@ export abstract class TeamItemPageBaseComponent<
 		teamParams: TeamComponentBaseParams,
 		defaultBackPage: string,
 		private readonly itemName: TeamItem,
-		private readonly teamItemService: ModuleTeamItemService<Brief, Dto>,
+		protected readonly teamItemService: ModuleTeamItemService<Brief, Dto>,
 	) {
 		super(className, route, teamParams);
 		this.defaultBackPage = defaultBackPage;
@@ -27,43 +28,55 @@ export abstract class TeamItemPageBaseComponent<
 		if (item) {
 			this.setItemContext(item);
 		}
-		this.trackUrlParams();
+		this.trackRouteParamMap(route.paramMap.pipe(this.takeUntilNeeded()));
 	}
 
 	protected setItemContext(item?: INavContext<Brief, Dto>): void {
-		console.log('TeamItemBaseComponent/setItemContext', item);
-		this.item = item;
+		console.log('TeamItemBaseComponent.setItemContext()', item, {
+			...this.item,
+		});
+		if (item && this.item?.id === item?.id) {
+			this.item = {
+				id: item.id,
+				brief: item.brief || item.dto || this.item.brief,
+				dto: item.dto || this.item.dto,
+			};
+		} else {
+			this.item = item;
+		}
 	}
 
 	protected abstract briefs(): Readonly<Record<string, Brief>> | undefined;
 
 	private itemSubscription?: Subscription;
 
-	protected abstract onRouteParamsChanged(
-		params: ParamMap,
-		itemID?: string,
-		teamID?: string,
-	): void;
-
+	// Caller of this method will track changing of team & item IDs in route and close observable
 	protected abstract watchItemChanges(): Observable<INavContext<Brief, Dto>>;
 
-	private trackUrlParams(): void {
-		this.route.paramMap.pipe(this.takeUntilNeeded()).subscribe({
-			next: (params) => {
-				const itemID = params.get(this.itemName + 'ID') || undefined;
-				const teamID = params.get('teamID') || this.team?.id;
-				this.onRouteParamsChanged(params, itemID, teamID);
+	protected override trackRouteParamMap(paramMap$: Observable<ParamMap>): void {
+		super.trackRouteParamMap(paramMap$);
+		this.trackRouteParamItemID(paramMap$);
+	}
+
+	private trackRouteParamItemID(paramMap$: Observable<ParamMap>): void {
+		const itemIdParam = paramMap$.pipe(
+			map((params) => params.get(this.itemName + 'ID') || ''),
+			distinctUntilChanged(),
+		);
+
+		itemIdParam.subscribe({
+			next: (itemID) => {
 				if (itemID) {
 					const item = this.item;
 					if (item?.id !== itemID || !this.itemSubscription) {
 						this.setItemContext({ ...item, id: itemID });
 						this.setBriefFromTeam(itemID);
 						this.itemSubscription?.unsubscribe();
-						this.onRouteParamsChanged(params, itemID, teamID);
 						this.itemSubscription = this.watchItemChanges()
 							.pipe(
 								this.takeUntilNeeded(),
-								tap((item) => console.log('watchItemChanges', item)),
+								takeUntil(this.teamIDChanged$),
+								tap((item) => console.log('watchItemChanges() => item:', item)),
 							)
 							.subscribe({
 								next: (item) => {

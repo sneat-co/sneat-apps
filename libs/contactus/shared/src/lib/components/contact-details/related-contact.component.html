@@ -1,0 +1,12 @@
+<ion-item (click)="goContact()" tappable class="with-buttons">
+	<ion-icon slot="start" [name]="contactBrief?.gender | genderIconName" />
+	<ion-label>
+		{{ contactBrief?.names?.firstName }} {{ contactBrief?.names?.lastName }}
+		<br /><br />
+		<b>contact brief:</b>
+		{{ contactBrief | json }}
+		<!--		<br>-->
+		<!--		<br>-->
+		<!--		<b>related:</b> {{ relatedItem|json }}-->
+	</ion-label>
+</ion-item>

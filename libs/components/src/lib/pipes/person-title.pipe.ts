@@ -20,6 +20,7 @@ export class PersonTitle implements PipeTransform {
 		p?: IIdAndOptionalBriefAndOptionalDto<IPersonBrief, IPerson>,
 		shortTitle?: string,
 	): string {
+		console.log('PersonTitle.transform()', { ...p }, shortTitle);
 		return (
 			shortTitle ||
 			p?.dto?.title ||

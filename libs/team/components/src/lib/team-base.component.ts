@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
 import { IContactusTeamDto, IMemberContext } from '@sneat/contactus-core';
@@ -29,6 +29,7 @@ import { TeamComponentBaseParams } from './team-component-base-params';
 export abstract class TeamBaseComponent extends SneatBaseComponent {
 	protected readonly teamIDChanged = new Subject<string | undefined>();
 	protected readonly teamTypeChanged = new Subject<TeamType | undefined>();
+
 	protected readonly teamBriefChanged = new Subject<
 		ITeamBrief | undefined | null
 	>();
@@ -131,7 +132,7 @@ export abstract class TeamBaseComponent extends SneatBaseComponent {
 			this.logErrorHandler = teamParams.errorLogger.logErrorHandler;
 
 			this.getTeamContextFromRouteState();
-			this.trackTeamIdFromRouteParams(route);
+			this.trackRouteParamMap(route.paramMap.pipe(this.takeUntilNeeded()));
 			this.cleanupOnUserLogout();
 		} catch (e) {
 			this.teamParams.errorLogger.logError(
@@ -172,15 +173,15 @@ export abstract class TeamBaseComponent extends SneatBaseComponent {
 	}
 
 	protected onTeamIdChanged(): void {
-		console.log(
-			`${this.className}.onTeamIdChanged()`,
+		this.console.log(
+			`${this.className}: TeamBaseComponent.onTeamIdChanged()`,
 			this.className,
 			this.team?.id,
 		);
 	}
 
 	protected onTeamDtoChanged(): void {
-		console.log(
+		this.console.log(
 			`${this.className}.onTeamDtoChanged()`,
 			this.className,
 			this.team?.dto,
@@ -191,15 +192,23 @@ export abstract class TeamBaseComponent extends SneatBaseComponent {
 		return takeUntil(this.destroyed);
 	}
 
-	private trackTeamIdFromRouteParams(route: ActivatedRoute): void {
-		trackTeamIdAndTypeFromRouteParameter(route)
-			.pipe(
-				// tap(v => console.log('trackTeamIdFromRouteParams 1', v)),
-				this.takeUntilNeeded(),
-				// tap(v => console.log('trackTeamIdFromRouteParams 2', v)),
-				// distinctUntilChanged((previous, current) => previous?.id === current?.id),
-				// tap(v => console.log('trackTeamIdFromRouteParams 3', v)),
-			)
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function
+	protected onRouteParamsChanged(params: ParamMap): void {}
+
+	protected trackRouteParamMap(paramMap$: Observable<ParamMap>): void {
+		this.trackTeamIdFromRouteParams(paramMap$);
+		paramMap$.subscribe({
+			next: (paramMap) => this.onRouteParamsChanged(paramMap),
+		});
+	}
+
+	private trackTeamIdFromRouteParams(paramMap$: Observable<ParamMap>): void {
+		trackTeamIdAndTypeFromRouteParameter(paramMap$)
+			// .pipe(
+			// // tap(v => console.log('trackTeamIdFromRouteParams 1', v)),
+			// // distinctUntilChanged((previous, current) => previous?.id === current?.id),
+			// // tap(v => console.log('trackTeamIdFromRouteParams 3', v)),
+			// )
 			.subscribe({
 				next: this.onTeamIdChangedInUrl,
 				error: this.logErrorHandler,
@@ -222,7 +231,7 @@ export abstract class TeamBaseComponent extends SneatBaseComponent {
 	};
 
 	private subscribeForTeamChanges(team: ITeamContext): void {
-		console.log(`${this.className}.subscribeForTeamChanges()`, team);
+		this.console.log(`${this.className}.subscribeForTeamChanges()`, team);
 		this.teamService
 			.watchTeam(team)
 			.pipe(takeUntil(this.teamIDChanged$), this.takeUntilNeeded())
@@ -245,13 +254,16 @@ export abstract class TeamBaseComponent extends SneatBaseComponent {
 	protected onContactusTeamChanged(
 		contactusTeam: IIdAndOptionalDto<IContactusTeamDto>,
 	): void {
-		console.log(`${this.className}.onContactusTeamChanged()`, contactusTeam);
+		this.console.log(
+			`${this.className}.onContactusTeamChanged()`,
+			contactusTeam,
+		);
 		this.contactusTeam = contactusTeam;
 	}
 
 	private getTeamContextFromRouteState(): void {
 		const team = history.state?.team as ITeamContext;
-		console.log(`${this.className}.getTeamContextFromRouteState()`, team);
+		this.console.log(`${this.className}.getTeamContextFromRouteState()`, team);
 		if (!team?.id) {
 			return;
 		}
@@ -288,7 +300,7 @@ export abstract class TeamBaseComponent extends SneatBaseComponent {
 	// }
 
 	private setNewTeamContext(teamContext?: ITeamContext): void {
-		console.log(
+		this.console.log(
 			`${this.className}.setNewTeamContext(id=${teamContext?.id}), previous id=${this.teamContext?.id}`,
 			teamContext,
 		);
@@ -309,7 +321,7 @@ export abstract class TeamBaseComponent extends SneatBaseComponent {
 			teamContext?.brief,
 		);
 		const dtoChanged = this.teamContext?.dto != teamContext?.dto;
-		console.log(
+		this.console.log(
 			`${this.className} extends TeamPageComponent.setNewTeamContext(id=${teamContext?.id}) => idChanged=${idChanged}, teamTypeChanged=${teamTypeChanged}, briefChanged=${briefChanged}, dtoChanged=${dtoChanged}`,
 		);
 		this.teamContext = teamContext;
@@ -392,7 +404,7 @@ export abstract class TeamBaseComponent extends SneatBaseComponent {
 
 	private readonly onTeamContextChanged = (team: ITeamContext): void => {
 		const dtoChanged = team.dto !== this.teamContext?.dto;
-		console.log(
+		this.console.log(
 			`${this.className}.onTeamContextChanged() => dtoChanged=${dtoChanged}, team:`,
 			team,
 		);
@@ -409,7 +421,7 @@ export abstract class TeamBaseComponent extends SneatBaseComponent {
 		if (dtoChanged) {
 			this.onTeamDtoChanged();
 		}
-		// console.log(`${this.className} => loaded team record:`, newTeam);
+		// this.console.log(`${this.className} => loaded team record:`, newTeam);
 		// if (newTeam.id === this.teamContext?.id) {
 		// 	this.setNewTeamContext({ ...this.teamContext, ...newTeam });
 		// 	// this.teamContext = ;

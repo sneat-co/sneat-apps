@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { ChangeDetectorRef, Inject, Injectable } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import {
 	APP_INFO,
@@ -19,6 +19,7 @@ import { SneatUserService } from '@sneat/auth-core';
 export class TeamComponentBaseParams {
 	// TODO: verify it should be declared in providers attribute for each page or can be just on app level?
 	constructor(
+		// public readonly changeDetectorRef: ChangeDetectorRef,
 		public readonly navController: NavController,
 		public readonly userService: SneatUserService,
 		public readonly teamService: TeamService,

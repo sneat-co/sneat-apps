@@ -19,9 +19,11 @@ import { eq, SneatNavService } from '@sneat/core';
 import { IAddress, IContactContext } from '@sneat/contactus-core';
 import {
 	ContactService,
+	ContactusTeamService,
 	IContactRequest,
 	IUpdateContactRequest,
 } from '@sneat/contactus-services';
+import { distinctUntilChanged, map } from 'rxjs';
 import { ContactBasePage } from '../contact-base-page';
 
 @Component({
@@ -42,7 +44,7 @@ import { ContactBasePage } from '../contact-base-page';
 		ContactDetailsComponent,
 	],
 })
-export class ContactPageComponent extends ContactBasePage implements OnInit {
+export class ContactPageComponent extends ContactBasePage {
 	public segment: 'contact' | 'members' | 'assets' = 'contact';
 
 	constructor(
@@ -55,53 +57,8 @@ export class ContactPageComponent extends ContactBasePage implements OnInit {
 		this.defaultBackPage = 'contacts';
 	}
 
-	ngOnInit(): void {
-		// super.ngOnInit();
-		this.route.paramMap.subscribe((params) => {
-			const contactId = params.get('contactID') || undefined;
-			{
-				const contact = window.history.state.contact as IContactContext;
-				if (contact && eq(contact.id, contactId)) {
-					this.contact = contact;
-					// if (!eq(this.communeRealId, contact.communeId)) {
-					// 	this.setPageCommuneIds('ContactPage.contactFromHistoryState', { real: contact.communeId });
-					// }
-				} else if (contactId) {
-					const team = this.team;
-					if (!team) {
-						return;
-					}
-					this.contact = { id: contactId, team };
-				}
-			}
-			this.onContactChanged();
-		});
-	}
-
-	private watchContact(): void {
-		if (!this.contact?.id) {
-			return;
-		}
-		const team = this.team;
-		if (!team) {
-			return;
-		}
-		this.contactsService
-			.watchContactById(team, this.contact?.id)
-			.pipe(this.takeUntilNeeded())
-			.subscribe({
-				next: (contact) => {
-					if (!contact) {
-						return;
-					}
-					this.contact = contact;
-				},
-				error: this.errorLogger.logErrorHandler('failed to get contact by ID'),
-			});
-	}
-
-	onContactChanged(): void {
-		this.watchContact();
+	override onContactIdChanged(contactID: string): void {
+		super.onContactIdChanged(contactID);
 		this.watchChildContacts();
 	}
 

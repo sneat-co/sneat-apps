@@ -3,6 +3,12 @@ import { createSetFocusToInput } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { Subject, Subscription } from 'rxjs';
 
+export interface IConsole {
+	log(...data: unknown[]): void;
+	warn(...data: unknown[]): void;
+	trace(...data: unknown[]): void;
+}
+
 @Injectable()
 export abstract class SneatBaseComponent implements OnDestroy {
 	// Signals that the component is destroyed and should not be used anymore
@@ -12,11 +18,13 @@ export abstract class SneatBaseComponent implements OnDestroy {
 	// Passes focus to the input element
 	protected readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
 
+	protected readonly console: IConsole = console;
+
 	protected constructor(
 		@Inject(new InjectionToken('className')) public readonly className: string,
 		@Inject(ErrorLogger) protected readonly errorLogger: IErrorLogger,
 	) {
-		console.log(`${this.className}.SneatBaseComponent.constructor()`);
+		this.console.log(`${this.className}.SneatBaseComponent.constructor()`);
 	}
 
 	public ngOnDestroy(): void {
@@ -26,7 +34,9 @@ export abstract class SneatBaseComponent implements OnDestroy {
 	}
 
 	protected unsubscribe(reason?: string): void {
-		console.log(`${this.className}.unsubscribe(reason: ${reason})`);
+		this.console.log(
+			`${this.className}.SneatBaseComponent.unsubscribe(reason: ${reason})`,
+		);
 		this.subs.unsubscribe();
 	}
 }

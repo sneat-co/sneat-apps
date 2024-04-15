@@ -125,39 +125,44 @@ export abstract class BaseListPage extends TeamItemPageBaseComponent<
 			});
 	}
 
-	protected override onRouteParamsChanged(params: ParamMap) {
-		const id = params.get('listID'),
-			type = params.get('listType'),
-			teamID = params.get('teamID') || this.team?.id;
-		if (!id) {
-			this.listSubscription?.unsubscribe();
-			this.listSubscription = undefined;
-			return;
-		}
-		if (this.list?.id == id) {
-			return;
-		}
-		this.listSubscription?.unsubscribe();
-		this.listSubscription = undefined;
-		const title = id.charAt(0).toUpperCase() + id.slice(1);
-		if (!teamID) {
-			throw new Error('no team context');
-		}
-		const team = { id: teamID };
-		this.setList({
-			id,
-			brief: {
-				createdAt: emptyTimestamp,
-				createdBy: '',
-				type: type as ListType,
-				title,
-			},
-			team,
-		});
+	override trackRouteParamMap(paramMap$: Observable<ParamMap>): void {
+		super.trackRouteParamMap(paramMap$);
+		paramMap$.subscribe({
+			next: (params) => {
+				const id = params.get('listID'),
+					type = params.get('listType'),
+					teamID = params.get('teamID') || this.team?.id;
+				if (!id) {
+					this.listSubscription?.unsubscribe();
+					this.listSubscription = undefined;
+					return;
+				}
+				if (this.list?.id == id) {
+					return;
+				}
+				this.listSubscription?.unsubscribe();
+				this.listSubscription = undefined;
+				const title = id.charAt(0).toUpperCase() + id.slice(1);
+				if (!teamID) {
+					throw new Error('no team context');
+				}
+				const team = { id: teamID };
+				this.setList({
+					id,
+					brief: {
+						createdAt: emptyTimestamp,
+						createdBy: '',
+						type: type as ListType,
+						title,
+					},
+					team,
+				});
 
-		if (!this.list?.brief?.type) {
-			throw new Error('unknown list type');
-		}
-		this.subscribeForListChanges(team, this.list.brief.type, id);
+				if (!this.list?.brief?.type) {
+					throw new Error('unknown list type');
+				}
+				this.subscribeForListChanges(team, this.list.brief.type, id);
+			},
+		});
 	}
 }
