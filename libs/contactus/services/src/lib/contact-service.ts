@@ -21,8 +21,10 @@ import { ContactusTeamService } from './contactus-team.service';
 import { map, Observable, throwError } from 'rxjs';
 import {
 	IContactRequest,
+	IContactRequestWithOptionalMessage,
 	ISetContactsStatusRequest,
 	IUpdateContactRequest,
+	validateContactRequest,
 } from './dto';
 
 @Injectable({ providedIn: 'root' })
@@ -177,20 +179,18 @@ export class ContactService extends ModuleTeamItemService<
 	}
 
 	public removeTeamMember(
-		// TODO: move to members service?
-		teamID: string,
-		contactID: string,
+		request: IContactRequestWithOptionalMessage,
 	): Observable<ITeamContext> {
-		console.log(`removeTeamMember(teamID=${teamID}, contactID=${contactID})`);
-
-		if (!teamID) {
-			return throwError(() => 'teamID parameters is required');
+		console.log(
+			`removeTeamMember(teamID=${request.teamID}, contactID=${request.contactID})`,
+		);
+		try {
+			validateContactRequest(request);
+		} catch (ex) {
+			return throwError(() => ex);
 		}
-		if (!contactID) {
-			return throwError(() => 'contactID is required parameter');
-		}
 
-		const request: IContactRequest = { teamID, contactID };
+		// const request: IContactRequest = { teamID, contactID };
 		return this.sneatApiService.post('contactus/remove_member', request);
 	}
 }

@@ -92,7 +92,7 @@ export class TeamMemberPageComponent
 			return;
 		}
 		this.contactService
-			.removeTeamMember(this.team.id, this.member?.id)
+			.removeTeamMember({ teamID: this.team.id, contactID: this.member?.id })
 			.subscribe({
 				next: () => {
 					this.navController

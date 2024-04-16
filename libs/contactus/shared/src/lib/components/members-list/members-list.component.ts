@@ -170,30 +170,32 @@ export class MembersListComponent implements OnChanges {
 		}
 		this.selfRemove = member.brief?.userID === this.userService.currentUserID;
 		const teamID = this.team.id;
-		this.contactService.removeTeamMember(teamID, member.id).subscribe({
-			next: (team) => {
-				if (teamID !== this.team?.id) {
-					return;
-				}
-				this.team = team;
-				console.log('updated team:', team);
-				if (this.selfRemove) {
-					this.selfRemoved.emit();
-				}
-				if (
-					!team ||
-					(this.userService.currentUserID &&
-						team?.dto?.userIDs?.indexOf(this.userService.currentUserID)) ||
-					-1 < 0
-				) {
-					this.navService.navigateToTeams('back');
-				}
-			},
-			error: (err: unknown) => {
-				this.selfRemove = undefined;
-				this.errorLogger.logError(err, 'Failed to remove member from team');
-			},
-		});
+		this.contactService
+			.removeTeamMember({ teamID, contactID: member.id })
+			.subscribe({
+				next: (team) => {
+					if (teamID !== this.team?.id) {
+						return;
+					}
+					this.team = team;
+					console.log('updated team:', team);
+					if (this.selfRemove) {
+						this.selfRemoved.emit();
+					}
+					if (
+						!team ||
+						(this.userService.currentUserID &&
+							team?.dto?.userIDs?.indexOf(this.userService.currentUserID)) ||
+						-1 < 0
+					) {
+						this.navService.navigateToTeams('back');
+					}
+				},
+				error: (err: unknown) => {
+					this.selfRemove = undefined;
+					this.errorLogger.logError(err, 'Failed to remove member from team');
+				},
+			});
 	}
 
 	// public goAddMember(): void {

@@ -165,14 +165,16 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 			this.errorLogger.logError('Failed to get current user ID');
 			return;
 		}
-		this.contactService.removeTeamMember(team.id, userID).subscribe({
-			next: (response: unknown) => console.log('left team:', response),
-			error: (err: unknown) =>
-				this.errorLogger.logError(
-					err,
-					`Failed to leave a team: ${team.brief.title}`,
-				),
-		});
+		this.contactService
+			.removeTeamMember({ teamID: team.id, contactID: userID })
+			.subscribe({
+				next: (response: unknown) => console.log('left team:', response),
+				error: (err: unknown) =>
+					this.errorLogger.logError(
+						err,
+						`Failed to leave a team: ${team.brief.title}`,
+					),
+			});
 	}
 
 	private watchUserRecord(): void {
