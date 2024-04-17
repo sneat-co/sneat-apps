@@ -191,7 +191,7 @@ export class ContactService extends ModuleTeamItemService<
 		}
 
 		// const request: IContactRequest = { teamID, contactID };
-		return this.sneatApiService.post('contactus/remove_member', request);
+		return this.sneatApiService.post('contactus/remove_team_member', request);
 	}
 }
 
