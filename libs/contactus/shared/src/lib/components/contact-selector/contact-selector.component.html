@@ -33,7 +33,7 @@
 				[(ngModel)]="parentContactID"
 				(ngModelChange)="onParentContactIDChanged($event)"
 				[isFilterable]="true"
-				radioSlot="end"
+				labelPlacement="start"
 			/>
 
 			<sneat-new-company-form
@@ -86,7 +86,7 @@
 			[(ngModel)]="selectedSubContactID"
 			(ngModelChange)="onContactSelected($event)"
 			[isFilterable]="true"
-			radioSlot="end"
+			labelPlacement="start"
 		/>
 		@if (contactTab === "new") {
 			<sneat-location-form

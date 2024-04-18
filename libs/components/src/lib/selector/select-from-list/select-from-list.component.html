@@ -55,7 +55,7 @@
 	<ion-item-divider *ngIf="items && !items?.length">
 		<ion-label>No items yet.</ion-label>
 	</ion-item-divider>
-	<ion-item-group *ngIf="!radioSlot">
+	<ion-item-group *ngIf="!labelPlacement">
 		<ion-item
 			*ngFor="let item of displayItems || []; trackBy: id"
 			button
@@ -67,31 +67,38 @@
 				[name]="item.iconName"
 				[color]="item.labelColor || 'medium'"
 			/>
-			<ion-label *ngIf="!radioSlot" [color]="item.labelColor">
+			<ion-label *ngIf="!labelPlacement" [color]="item.labelColor">
 				<span class="ion-margin-end">{{ item.emoji }}</span>
 				{{ item.title }}
 			</ion-label>
 		</ion-item>
 	</ion-item-group>
 	<ion-radio-group
-		*ngIf="radioSlot"
+		*ngIf="labelPlacement"
 		[(ngModel)]="value"
 		(ionChange)="onRadioChanged($event)"
 	>
-		<ion-item
-			lines="full"
-			*ngFor="let item of displayItems || []; trackBy: id"
-			(click)="select(item)"
-			tappable="true"
-		>
-			<ion-radio
-				[slot]="radioSlot"
-				[value]="item.id"
-				[labelPlacement]="radioSlot === 'start' ? 'end' : 'start'"
+		<ion-list>
+			<ion-item
+				lines="full"
+				*ngFor="let item of displayItems || []; trackBy: id"
+				(click)="select(item)"
+				tappable="true"
 			>
-				{{ item.emoji }} {{ item.title }}
-			</ion-radio>
-		</ion-item>
+				<ion-radio
+					[value]="item.id"
+					[labelPlacement]="labelPlacement"
+					[justify]="
+						justify ||
+						(!labelPlacement || labelPlacement === 'start'
+							? 'space-between'
+							: 'start')
+					"
+				>
+					{{ item.emoji }} {{ item.title }}
+				</ion-radio>
+			</ion-item>
+		</ion-list>
 	</ion-radio-group>
 	<ion-item-divider *ngIf="hiddenCount">
 		<ion-label color="medium"

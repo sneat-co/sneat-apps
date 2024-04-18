@@ -39,7 +39,8 @@ export class SelectFromListComponent
 	@Input() isLoading?: boolean;
 	@Input() items?: readonly ISelectItem[];
 	@Input() items$: Observable<ISelectItem[]> = NEVER;
-	@Input() radioSlot?: 'start' | 'end';
+	@Input() labelPlacement?: 'start' | 'end' | 'fixed' | 'stacked';
+	@Input() justify?: 'start' | 'end' | 'space-between';
 	@Input() other: 'top' | 'bottom' | 'none' = 'none';
 	@Input() canAdd = false;
 
