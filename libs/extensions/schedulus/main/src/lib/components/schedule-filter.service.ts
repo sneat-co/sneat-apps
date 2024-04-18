@@ -5,6 +5,9 @@ export const emptyScheduleFilter: IScheduleFilter = {
 	text: '',
 	showRecurrings: true,
 	showSingles: true,
+	contactIDs: [],
+	weekdays: [],
+	repeats: [],
 };
 
 export class ScheduleFilterService {

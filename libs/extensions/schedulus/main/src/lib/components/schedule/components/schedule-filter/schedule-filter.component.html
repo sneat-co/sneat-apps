@@ -175,11 +175,14 @@
 					</ion-row>
 				</ion-grid>
 
-				<sneat-contacts-filter [contactIDs]="contactIDs" />
+				<sneat-contacts-filter
+					[contactIDs]="filter.contactIDs"
+					(contactIDsChange)="onSelectedContactsChanged($event)"
+				/>
 			</ion-item-group>
 		</ion-accordion>
 	</ion-accordion-group>
-	<ion-item *ngIf="!expanded && contactIDs.length">
+	<ion-item *ngIf="!expanded && filter.contactIDs.length">
 		<ion-label>
 			@if (selectedContacts.length === 1) {
 				Member:

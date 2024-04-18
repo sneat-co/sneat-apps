@@ -85,7 +85,7 @@ export class ScheduleDayComponent implements OnChanges, OnDestroy {
 	private applyFilter(): void {
 		if (this.allSlots?.length) {
 			this.slots = this.allSlots.filter((slot) =>
-				isSlotVisible(slot, this.filter),
+				isSlotVisible(this.team?.id, slot, this.filter),
 			);
 			this.slotsHiddenByFilter = this.allSlots.length - this.slots.length;
 			console.log(
