@@ -6,7 +6,11 @@
 			label="Country of registration"
 			(countryIDChange)="countryChanged($event)"
 		/>
-		<sneat-asset-reg-number [team]="team" [asset]="vehicleAsset" />
+		<sneat-asset-reg-number
+			*ngIf="vehicleAsset?.brief?.countryID"
+			[team]="team"
+			[asset]="vehicleAsset"
+		/>
 	</ion-list>
 </ion-card>
 

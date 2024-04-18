@@ -43,6 +43,7 @@ export class SelectFromListComponent
 	@Input() justify?: 'start' | 'end' | 'space-between';
 	@Input() other: 'top' | 'bottom' | 'none' = 'none';
 	@Input() canAdd = false;
+	@Input() filterItem?: (item: ISelectItem, filter: string) => boolean;
 
 	@Input() readonly = false;
 
@@ -103,7 +104,11 @@ export class SelectFromListComponent
 		const f = this.filter.trim().toLowerCase();
 		console.log('SelectFromListComponent.applyFilter', f);
 		this.displayItems = f
-			? this.items?.filter((v) => v.title.toLowerCase().includes(f))
+			? this.items?.filter(
+					(v) =>
+						v.title.toLowerCase().includes(f) ||
+						(this.filterItem && this.filterItem(v, f)),
+				)
 			: this.items;
 		this.hiddenCount =
 			(this.items?.length || 0) - (this.displayItems?.length || 0);

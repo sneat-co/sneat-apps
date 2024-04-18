@@ -20,6 +20,7 @@
 		</ion-button>
 	</ion-buttons>
 </ion-item>
+
 <!--<ion-item *ngIf="isFilterable && !value">-->
 <!--	<ion-input-->
 <!--		[(ngModel)]="filter"-->
@@ -52,6 +53,7 @@
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
+	<ng-content />
 	<ion-item-divider *ngIf="items && !items?.length">
 		<ion-label>No items yet.</ion-label>
 	</ion-item-divider>

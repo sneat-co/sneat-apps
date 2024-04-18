@@ -7,5 +7,27 @@
 	[(ngModel)]="countryID"
 	(ngModelChange)="onChanged()"
 	[readonly]="readonly"
+	[filterItem]="filterCountryByCode"
 	labelPlacement="start"
-/>
+>
+	<ion-segment
+		*ngIf="!countryID"
+		[(ngModel)]="geoRegion"
+		(ionChange)="onRegionChanged()"
+	>
+		<ion-segment-button value="All">All</ion-segment-button>
+		<ion-segment-button value="Europe"
+			><small>Europe</small></ion-segment-button
+		>
+		<ion-segment-button value="Asia"><small>Asia</small></ion-segment-button>
+		<ion-segment-button value="Americas"
+			><small>Americas</small></ion-segment-button
+		>
+		<ion-segment-button value="Africa"
+			><small>Africa</small></ion-segment-button
+		>
+		<ion-segment-button value="Pacific Ocean"
+			><small>Pacific</small></ion-segment-button
+		>
+	</ion-segment>
+</sneat-select-from-list>
