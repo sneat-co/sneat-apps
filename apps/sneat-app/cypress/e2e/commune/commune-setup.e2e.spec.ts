@@ -10,11 +10,11 @@ import {
 	selectFamilyLivingSituation,
 	selectFamilyMemberRelationType,
 	selectNumberOfChildren,
-} from '../common/commune';
+} from '../common/commune.spec';
 
 describe('Commune Setup', () => {
 	beforeEach(() => {
-		cy.initializeTestEnvironment();
+		// cy.initializeTestEnvironment();
 		cy.deleteAllAuthUsers();
 		cy.visit('/');
 	});

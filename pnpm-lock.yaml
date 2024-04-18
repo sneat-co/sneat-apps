@@ -54,11 +54,11 @@ dependencies:
     specifier: 5.36.0
     version: 5.36.0(@ionic-native/core@5.36.0)(rxjs@7.8.1)
   '@ionic/angular':
-    specifier: 7.8.5
-    version: 7.8.5(@angular/core@17.3.5)(@angular/forms@17.3.5)(@angular/router@17.3.5)(rxjs@7.8.1)(zone.js@0.14.4)
+    specifier: 8.0.0
+    version: 8.0.0(@angular/core@17.3.5)(@angular/forms@17.3.5)(@angular/router@17.3.5)(rxjs@7.8.1)(zone.js@0.14.4)
   '@ionic/core':
-    specifier: 7.8.5
-    version: 7.8.5
+    specifier: 8.0.0
+    version: 8.0.0
   '@nx/angular':
     specifier: 18.3.1
     version: 18.3.1(@angular-devkit/build-angular@17.3.5)(@angular-devkit/core@17.3.5)(@angular-devkit/schematics@17.3.5)(@schematics/angular@17.3.5)(@swc-node/register@1.9.0)(@swc/core@1.4.15)(@types/node@20.12.7)(eslint@8.57.0)(nx@18.3.1)(rxjs@7.8.1)(typescript@5.4.5)
@@ -3558,19 +3558,19 @@ packages:
       rxjs: 7.8.1
     dev: false
 
-  /@ionic/angular@7.8.5(@angular/core@17.3.5)(@angular/forms@17.3.5)(@angular/router@17.3.5)(rxjs@7.8.1)(zone.js@0.14.4):
-    resolution: {integrity: sha512-5boGpc5Vjarw43k9xAJ/+4BKM7qPXEk4QaiWhH4vv0yl+3XLIuF9qe4qqDMNybTXo3X0ckm9CeK+0aFwhlUPbg==}
+  /@ionic/angular@8.0.0(@angular/core@17.3.5)(@angular/forms@17.3.5)(@angular/router@17.3.5)(rxjs@7.8.1)(zone.js@0.14.4):
+    resolution: {integrity: sha512-43bSCht78J3RSGhBkkZP7lJ+ny3cry8ndigwnO9hVnt8FqshVZFmFpJPuB3Sh1pdJDDYUBjFyFE0V42+KM1+kA==}
     peerDependencies:
-      '@angular/core': '>=14.0.0'
-      '@angular/forms': '>=14.0.0'
-      '@angular/router': '>=14.0.0'
+      '@angular/core': '>=16.0.0'
+      '@angular/forms': '>=16.0.0'
+      '@angular/router': '>=16.0.0'
       rxjs: '>=7.5.0'
-      zone.js: '>=0.11.0'
+      zone.js: '>=0.13.0'
     dependencies:
       '@angular/core': 17.3.5(rxjs@7.8.1)(zone.js@0.14.4)
       '@angular/forms': 17.3.5(@angular/common@17.3.5)(@angular/core@17.3.5)(@angular/platform-browser@17.3.5)(rxjs@7.8.1)
       '@angular/router': 17.3.5(@angular/common@17.3.5)(@angular/core@17.3.5)(@angular/platform-browser@17.3.5)(rxjs@7.8.1)
-      '@ionic/core': 7.8.5
+      '@ionic/core': 8.0.0
       ionicons: 7.3.1
       jsonc-parser: 3.2.1
       rxjs: 7.8.1
@@ -3578,8 +3578,8 @@ packages:
       zone.js: 0.14.4
     dev: false
 
-  /@ionic/core@7.8.5:
-    resolution: {integrity: sha512-stnh6wxjsL0ZOEU0F26hki2HcCo8M4XF7yD6WxJqhElG0qq5ytYC/9wpR18pj8GOuNvFtRAV/QFZ7jqWu5NcSQ==}
+  /@ionic/core@8.0.0:
+    resolution: {integrity: sha512-jW1LA5mSUYmG4Go9EBWPiLv0Uxwm9vF8+3gwYNeLxJrRwzsirc1qBW/zvDTqcbyMwopAfwtb690iSv5e3i1CwA==}
     dependencies:
       '@stencil/core': 4.12.2
       ionicons: 7.3.1
