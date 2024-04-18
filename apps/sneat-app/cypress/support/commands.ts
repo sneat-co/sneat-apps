@@ -111,7 +111,7 @@ Cypress.Commands.add('createUser', (email: string, password: string) =>
 	cy.wrap(createUserWithEmailAndPassword(getAuth(), email, password)),
 );
 
-Cypress.Commands.add('initializeTestEnvironment', () => {
+const initializeTestEnvironment = () => {
 	cy.initializeFirebaseEmulators();
 	return cy.userExists(TEST_USER_EMAIL).then((userExists) => {
 		if (userExists) {
@@ -122,7 +122,9 @@ Cypress.Commands.add('initializeTestEnvironment', () => {
 			.createUser(TEST_USER_EMAIL, TEST_USER_PASS)
 			.login(TEST_USER_EMAIL, TEST_USER_PASS);
 	});
-});
+};
+
+Cypress.Commands.add('initializeTestEnvironment', initializeTestEnvironment);
 
 Cypress.Commands.add('userExists', (email: string) =>
 	cy.wrap(
