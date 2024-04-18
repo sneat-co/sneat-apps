@@ -2,6 +2,7 @@
 	*ngIf="!vehicleAsset?.dto?.engineType"
 	label="Engine type"
 	[items]="engineTypes"
+	labelPlacement="start"
 	(changed)="onEngineTypeChanged($event)"
 />
 
