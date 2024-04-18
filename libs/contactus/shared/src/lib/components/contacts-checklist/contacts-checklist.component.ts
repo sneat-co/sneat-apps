@@ -33,7 +33,7 @@ export interface ICheckChangedArgs {
 export class ContactsChecklistComponent implements OnChanges {
 	@Input({ required: true }) team?: ITeamContext;
 	@Input() roles: string[] = ['member'];
-	@Input({ required: true }) checkedContactIDs: string[] = [];
+	@Input({ required: true }) checkedContactIDs: readonly string[] = [];
 	@Input() noContactsMessage = 'No members found';
 
 	@Output() readonly checkedChange = new EventEmitter<ICheckChangedArgs>();
@@ -88,7 +88,8 @@ export class ContactsChecklistComponent implements OnChanges {
 	}
 
 	protected isChecked(contact: IIdAndBrief<IContactBrief>): boolean {
-		const participantID = `${this.team?.id}_${contact.id}`;
+		// const participantID = `${this.team?.id}_${contact.id}`;
+		const participantID = contact.id;
 		return (
 			!this.uncheckedInProgress.includes(contact.id) &&
 			(this.checkedContactIDs.includes(participantID) ||

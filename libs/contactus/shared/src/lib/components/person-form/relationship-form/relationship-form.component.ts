@@ -19,7 +19,8 @@ import {
 	relationshipTitle,
 } from '@sneat/contactus-core';
 import {
-	IRelatedItemsByTeam,
+	getRelatedItemByKey,
+	IRelatedItemsByModule,
 	IRelationships,
 	ITeamModuleDocRef,
 	ITitledRecord,
@@ -49,7 +50,7 @@ export class RelationshipFormComponent
 	@Input({ required: true }) public ageGroup?: AgeGroupID;
 
 	@Input({ required: true }) public relatedTo?: ITeamModuleDocRef;
-	@Input() public allRelated?: IRelatedItemsByTeam;
+	@Input() public allRelated?: IRelatedItemsByModule;
 	@Input() public relatedAs?: string[];
 
 	@Output() readonly relatedAsChange = new EventEmitter<IRelationships>();
@@ -90,10 +91,13 @@ export class RelationshipFormComponent
 					this.relatedTo,
 				);
 			}
-			const relatedItem =
-				this.allRelated[this.relatedTo.teamID]?.[this.relatedTo.moduleID]?.[
-					this.relatedTo.collection
-				]?.[this.relatedTo.itemID];
+			const relatedItem = getRelatedItemByKey(
+				this.allRelated,
+				this.relatedTo.moduleID,
+				this.relatedTo.collection,
+				this.relatedTo.teamID,
+				this.relatedTo.itemID,
+			);
 			if (relatedItem) {
 				const relatedAsIDs = Object.keys(relatedItem.relatedAs || {});
 				this.relatedAs = relatedAsIDs;

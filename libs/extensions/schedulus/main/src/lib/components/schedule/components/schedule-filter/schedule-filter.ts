@@ -1,3 +1,4 @@
+import { getRelatedItemIDs } from '@sneat/dto';
 import { WeekdayCode2, IHappeningContext } from '@sneat/mod-schedulus-core';
 
 export interface IScheduleFilter {
@@ -28,7 +29,13 @@ export function isMatchingScheduleFilter(
 		f.contactIDs.length &&
 		!f.contactIDs.some(
 			(fmID) =>
-				(fmID === '' && !Object.keys(h.dto?.participants || {}).length) ||
+				(fmID === '' &&
+					!getRelatedItemIDs(
+						h.dto?.related || h.brief?.related,
+						h.team.id,
+						'contactus',
+						'contacts',
+					).length) ||
 				h.dto?.contactIDs?.some((hmID) => hmID == fmID),
 		)
 	);

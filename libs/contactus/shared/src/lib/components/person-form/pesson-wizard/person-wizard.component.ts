@@ -26,8 +26,9 @@ import {
 	PetKind,
 } from '@sneat/contactus-core';
 import {
+	getRelatedItemIDs,
 	IRelatedItem,
-	IRelatedItemsByTeam,
+	IRelatedItemsByModule,
 	IRelationships,
 	ITeamModuleDocRef,
 } from '@sneat/dto';
@@ -321,16 +322,13 @@ export class PersonWizardComponent implements OnChanges {
 		const userID = this.relatedToUser?.itemID || '';
 
 		const userRelatedItem: IRelatedItem = {
+			keys: [{ teamID, itemID: userID }],
 			relatedAs: relatedAs,
 		};
 
-		const related: IRelatedItemsByTeam = {
-			[teamID]: {
-				contactus: {
-					contacts: {
-						[userID]: userRelatedItem,
-					},
-				},
+		const related: IRelatedItemsByModule = {
+			contactus: {
+				contacts: [userRelatedItem],
 			},
 		};
 
@@ -482,8 +480,11 @@ export class PersonWizardComponent implements OnChanges {
 				return !!p.gender;
 			case 'relatedAs':
 				return (
-					Object.keys(
-						p.related?.[this.team?.id || '']?.['contactus']?.['contacts'] || {},
+					getRelatedItemIDs(
+						p.related,
+						this.team?.id || '',
+						'contactus',
+						'contacts',
 					).length > 0
 				);
 			case 'roles':

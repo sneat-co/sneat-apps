@@ -2,6 +2,7 @@ import { Component, Inject, Input } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { IContactBrief, IContactusTeamDtoAndID } from '@sneat/contactus-core';
 import { excludeUndefined, IIdAndBrief } from '@sneat/core';
+import { hasRelatedItemID } from '@sneat/dto';
 import {
 	HappeningUIState,
 	IHappeningContext,
@@ -75,8 +76,14 @@ export class SlotContextMenuComponent {
 			zipMapBriefsWithIDs(this.contactusTeam?.dto?.contacts)?.map((mb) =>
 				contactContextFromBrief(mb, team),
 			) || [];
-		const selectedMembers = members.filter(
-			(m) => (this.happening?.brief?.participants || {})[m.id],
+		const selectedMembers = members.filter((m) =>
+			hasRelatedItemID(
+				this.happening?.dto?.related || this.happening?.brief?.related,
+				this.team?.id || '',
+				'contactus',
+				'contacts',
+				m.id,
+			),
 		);
 		const options: ISelectMembersOptions = {
 			members,
@@ -117,7 +124,7 @@ export class SlotContextMenuComponent {
 						happeningSlot,
 						dateID: this.dateID,
 						adjustment: this.slot?.adjustment,
-				  }
+					}
 				: undefined;
 		this.scheduleModalsService
 			.editSingleHappeningSlot(

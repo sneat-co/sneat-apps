@@ -1,6 +1,7 @@
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { dateToIso, INavContext } from '@sneat/core';
+import { hasRelatedItemID } from '@sneat/dto';
 import {
 	IHappeningBrief,
 	IHappeningDto,
@@ -381,10 +382,18 @@ export class TeamDaysProvider {
 	private processRecurring(
 		recurring: ITeamItemNavContext<IHappeningBrief, IHappeningDto>,
 	): void {
+		if (!this.team?.id) {
+			return;
+		}
 		if (
 			this.memberId &&
-			(!recurring.dto?.participants ||
-				!recurring?.dto.participants[this.memberId])
+			hasRelatedItemID(
+				recurring.dto?.related || recurring?.brief?.related,
+				this.team.id,
+				'contactus',
+				'contacts',
+				this.memberId,
+			)
 		) {
 			return;
 		}

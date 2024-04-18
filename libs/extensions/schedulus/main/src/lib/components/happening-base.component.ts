@@ -13,6 +13,7 @@ import {
 import { ModalController } from '@ionic/angular';
 import { IContactBrief, IContactusTeamDtoAndID } from '@sneat/contactus-core';
 import { IIdAndBrief, isoStringsToDate } from '@sneat/core';
+import { getRelatedItemIDs } from '@sneat/dto';
 import { IHappeningContext, WeekdayCode2 } from '@sneat/mod-schedulus-core';
 import { MembersSelectorService } from '@sneat/contactus-shared';
 import { getWd2 } from '@sneat/extensions/schedulus/shared';
@@ -162,7 +163,7 @@ This operation can NOT be undone.`)
 			: {
 					...this.happening,
 					team: this.team || { id: '' },
-			  };
+				};
 
 		this.happeningService
 			.deleteHappening(happening)
@@ -194,11 +195,13 @@ This operation can NOT be undone.`)
 		this.membersSelectorService
 			.selectMembersInModal({
 				selectedMembers:
-					teamMembers?.filter(
-						(m) =>
-							Object.keys(this.happening?.brief?.participants || [])?.some(
-								(id) => id === m.id,
-							),
+					teamMembers?.filter((m) =>
+						getRelatedItemIDs(
+							this.happening?.brief?.related,
+							this.team.id,
+							'contactus',
+							'contacts',
+						).includes(m.id),
 					) || [],
 				members: teamMembers,
 				onAdded: this.onMemberAdded,

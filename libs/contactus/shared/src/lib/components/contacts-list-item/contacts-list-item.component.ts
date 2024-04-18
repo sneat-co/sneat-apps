@@ -26,7 +26,8 @@ export class ContactsListItemComponent {
 	];
 
 	protected get relatedContacts(): readonly IIdAndBrief<IRelatedItem>[] {
-		return zipMapBriefsWithIDs(this.contact?.dto?.related);
+		throw new Error('not implemented yet');
+		// return zipMapBriefsWithIDs(this.contact?.dto?.related);
 	}
 
 	hideRole(role: string): boolean {

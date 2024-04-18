@@ -21,7 +21,7 @@ export interface IHappeningBase extends IWithRelatedOnly {
 	readonly title: string;
 	readonly levels?: Level[];
 	readonly contactIDs?: string[];
-	readonly participants?: Record<string, Readonly<IHappeningParticipant>>;
+	// readonly participants?: Record<string, Readonly<IHappeningParticipant>>;
 	slots?: IHappeningSlot[]; // TODO: make readonly
 }
 
@@ -192,5 +192,4 @@ export interface ISingleHappeningDto extends IHappeningDto {
 export interface DtoSingleTask extends ISingleHappeningDto {
 	isCompleted: boolean;
 	completion?: number; // In percents, max value is 100.
-	responsibles?: IHappeningParticipant[];
 }

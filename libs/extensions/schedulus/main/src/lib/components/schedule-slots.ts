@@ -1,19 +1,25 @@
-import { IRelatedItemsByTeam } from '@sneat/dto';
+import {
+	getRelatedItemIDs,
+	hasRelatedItemID,
+	IRelatedItemsByModule,
+} from '@sneat/dto';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { IScheduleFilter } from './schedule/components';
 
 export function hasContact(
 	teamID: string,
 	contactIDs: readonly string[],
-	related?: IRelatedItemsByTeam,
+	related?: IRelatedItemsByModule,
 ): boolean {
 	if (!contactIDs.length) {
 		return true;
 	}
-	const teamRelated = related && related[teamID];
-	const contactusRelated = teamRelated && teamRelated['contactus'];
-	const relatedContacts = contactusRelated && contactusRelated['contacts'];
-	const relatedContactIDs = Object.keys(relatedContacts || {});
+	const relatedContactIDs = getRelatedItemIDs(
+		related,
+		teamID,
+		'contactus',
+		'contacts',
+	);
 	console.log(
 		'hasContact() related=',
 		related,

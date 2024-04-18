@@ -14,7 +14,12 @@ import {
 	IContactDto,
 	IContactContext,
 } from '@sneat/contactus-core';
-import { IRelatedItem, IRelationships, ITeamModuleDocRef } from '@sneat/dto';
+import {
+	getRelatedItemByKey,
+	IRelatedItem,
+	IRelationships,
+	ITeamModuleDocRef,
+} from '@sneat/dto';
 import { ITeamRef, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { MemberPages } from '../../constants';
 import { ContactComponentBaseParams } from '../../contact-component-base-params';
@@ -113,11 +118,7 @@ export class ContactDetailsComponent implements OnChanges {
 		if (changes['contact']) {
 			const teamID = this.team?.id;
 			if (teamID && this.contact?.dto?.related) {
-				const related = this.contact.dto.related[teamID];
-				if (!related) {
-					return;
-				}
-				const contactus = related['contactus'];
+				const contactus = this.contact.dto.related['contactus'];
 				if (!contactus) {
 					return;
 				}
@@ -125,7 +126,8 @@ export class ContactDetailsComponent implements OnChanges {
 				if (!contacts) {
 					return;
 				}
-				this.relatedContactsOfCurrentTeam = zipMapBriefsWithIDs(contacts);
+				throw new Error('Not implemented yet');
+				// this.relatedContactsOfCurrentTeam = zipMapBriefsWithIDs(contacts);
 			}
 		}
 	}
@@ -142,10 +144,13 @@ export class ContactDetailsComponent implements OnChanges {
 		}
 		const { userContactID } = userTeamBrief;
 		this.currentUserContactID = userContactID;
-		const relatedContact =
-			this.contact?.dto?.related?.[this.team.id]?.['contactus']?.['contacts']?.[
-				'userContactID'
-			];
+		const relatedContact = getRelatedItemByKey(
+			this.contact?.dto?.related,
+			'contactus',
+			'contacts',
+			this.team.id,
+			userContactID,
+		);
 		this.relatedAs = relatedContact?.relatedAs;
 		const relationshipIDs = Object.keys(this.relatedAs || {});
 		this.firstRelatedAs =
@@ -180,7 +185,8 @@ export class ContactDetailsComponent implements OnChanges {
 	}
 
 	protected get relatedContacts(): readonly IIdAndBrief<IRelatedItem>[] {
-		return zipMapBriefsWithIDs(this.contact?.dto?.related);
+		throw new Error('not implemented yet');
+		// return zipMapBriefsWithIDs(this.contact?.dto?.related);
 	}
 
 	protected goMember(id: string): void {

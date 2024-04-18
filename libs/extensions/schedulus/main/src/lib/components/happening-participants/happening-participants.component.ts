@@ -15,6 +15,7 @@ import {
 	ICheckChangedArgs,
 	MembersListComponent,
 } from '@sneat/contactus-shared';
+import { addRelatedItem, getRelatedItemIDs } from '@sneat/dto';
 import { IHappeningContext, IHappeningBase } from '@sneat/mod-schedulus-core';
 import { contactContextFromBrief } from '@sneat/contactus-services';
 import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
@@ -48,12 +49,16 @@ export class HappeningParticipantsComponent implements OnChanges {
 		console.log(
 			'HappeningParticipantsComponent.ngOnChanges()',
 			changes,
-			this.happening?.dto?.participants,
+			this.happening?.dto?.related,
 		);
 		if (changes['happening']) {
-			this.checkedContactIDs = Object.keys(
-				this.happening?.dto?.participants || {},
+			this.checkedContactIDs = getRelatedItemIDs(
+				this.happening?.dto?.related || this.happening?.brief?.related,
+				this.team?.id || '',
+				'contactus',
+				'contacts',
 			);
+			console.log('checkedContactIDs', this.checkedContactIDs, this.happening);
 		}
 	}
 
@@ -66,7 +71,7 @@ export class HappeningParticipantsComponent implements OnChanges {
 	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
 
 	public isToDo = false;
-	public checkedContactIDs: string[] = [];
+	public checkedContactIDs: readonly string[] = [];
 	public contacts: number[] = [];
 	public tab: 'members' | 'others' = 'members';
 
@@ -86,7 +91,7 @@ export class HappeningParticipantsComponent implements OnChanges {
 
 	public isMemberCheckChanged(args: ICheckChangedArgs): void {
 		console.log('isMemberCheckChanged()', args);
-		// this.populateParticipants();
+		this.populateParticipants();
 		if (!this.happening?.id || !this.team?.id) {
 			return;
 		}
@@ -116,25 +121,29 @@ export class HappeningParticipantsComponent implements OnChanges {
 			return;
 		}
 		let happeningBase: IHappeningBase = {
-			...brief,
-			participants: {},
+			...(dto || brief),
 		};
 		this.checkedContactIDs.forEach((contactID) => {
-			if (!happeningBase.participants) {
-				happeningBase = { ...happeningBase, participants: { [contactID]: {} } };
-			} else {
-				happeningBase.participants[this.team?.id + '_' + contactID] = {}; // TODO: Should be readonly
-			}
+			happeningBase = {
+				...happeningBase,
+				related: addRelatedItem(
+					happeningBase.related,
+					this.team?.id || '',
+					'contactus',
+					'contacts',
+					contactID,
+				),
+			};
 		});
 		this.happening = {
 			...this.happening,
 			brief: {
-				...this.happening.brief,
+				...(this.happening.brief || {}),
 				...happeningBase,
 			},
 			dto: {
 				// TODO: It does not make much sense to update DTO as brief should be enough?
-				...this.happening.dto,
+				...(this.happening.dto || {}),
 				...happeningBase,
 			},
 		};
