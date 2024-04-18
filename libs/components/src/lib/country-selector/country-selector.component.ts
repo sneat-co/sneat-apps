@@ -58,10 +58,14 @@ export class CountrySelectorComponent implements OnChanges {
 		this.setCountries();
 	}
 
-	protected filterCountryByCode(item: ISelectItem, filter: string): boolean {
-		const country = item as ICountry;
-		return !!country.id3?.includes(filter.trim().toUpperCase());
-	}
+	protected readonly filterCountryByCode = (
+		item: ISelectItem,
+		filter: string,
+	) => {
+		const f = filter.trim().toUpperCase();
+		const c = item as ICountry;
+		return c.id === f || c.id3.startsWith(f);
+	};
 
 	private setCountries(): void {
 		this.countries = countries.filter(
