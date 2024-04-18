@@ -1,28 +1,13 @@
-import { IRelatedItemsByTeam } from '@sneat/dto';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
-import { IScheduleFilter } from './schedule/components';
+import { IScheduleFilter } from './schedule/components/schedule-filter';
 
 export function hasContact(
-	teamID: string,
-	contactIDs: readonly string[],
-	related?: IRelatedItemsByTeam,
+	item: { contactIDs?: string[] } | undefined,
+	contactIDs?: string[],
 ): boolean {
-	if (!contactIDs.length) {
-		return true;
-	}
-	const teamRelated = related && related[teamID];
-	const contactusRelated = teamRelated && teamRelated['contactus'];
-	const relatedContacts = contactusRelated && contactusRelated['contacts'];
-	const relatedContactIDs = Object.keys(relatedContacts || {});
-	console.log(
-		'hasContact() related=',
-		related,
-		'relatedContactIDs:',
-		relatedContactIDs,
-	);
 	return (
-		(!relatedContactIDs.length && contactIDs.includes('')) ||
-		relatedContactIDs.some((id) => contactIDs.includes(id))
+		!contactIDs?.length ||
+		!!item?.contactIDs?.some((id) => contactIDs.includes(id))
 	);
 }
 
@@ -33,24 +18,20 @@ export function hasContact(
 // }
 
 export function isSlotVisible(
-	teamID: string,
 	slot: ISlotItem,
 	filter: IScheduleFilter,
 ): boolean {
-	const related =
-		slot.happening?.dto?.related || slot.happening?.brief?.related;
-	if (related && !hasContact(teamID, filter.contactIDs, related)) {
+	const { happening } = slot;
+	const { contactIDs, repeats } = filter;
+	if (happening?.brief && !hasContact(happening?.brief, contactIDs)) {
 		return false;
 	}
 	// if (!hasWeekday(happening?.brief?.slots || happening?.dto?.slots, weekdays)) {
 	// 	return false;
 	// }
-	const happeningBrief = slot.happening?.brief || slot.happening?.dto;
 	if (
-		filter.repeats?.length &&
-		!happeningBrief?.slots?.some((slot) =>
-			filter.repeats.includes(slot.repeats),
-		)
+		repeats?.length &&
+		!happening?.brief?.slots?.some((slot) => repeats.includes(slot.repeats))
 	) {
 		return false;
 	}

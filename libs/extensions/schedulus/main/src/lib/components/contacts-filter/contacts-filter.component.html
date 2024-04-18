@@ -5,12 +5,8 @@
 
 @if (members && members.length <= 7) {
 	<ion-item-divider color="light">
-		<ion-label>Members & Contacts</ion-label>
+		<ion-label>Members</ion-label>
 		<ion-buttons slot="end">
-			<ion-button title="Choose members and contacts" color="medium">
-				<ion-icon name="add-outine" />
-				<ion-label>Choose</ion-label>
-			</ion-button>
 			<ion-button
 				*ngIf="contactIDs.length"
 				title="Clear members filter"

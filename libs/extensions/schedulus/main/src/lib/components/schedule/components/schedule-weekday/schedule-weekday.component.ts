@@ -61,11 +61,7 @@ export class ScheduleWeekdayComponent implements OnDestroy {
 	}
 
 	showSlot(slot: ISlotItem): boolean {
-		return isSlotVisible(
-			this.team?.id,
-			slot,
-			this.filter || emptyScheduleFilter,
-		);
+		return isSlotVisible(slot, this.filter || emptyScheduleFilter);
 	}
 
 	onDateSelected(): void {

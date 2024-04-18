@@ -82,7 +82,7 @@ export class ContactsFilterComponent
 			// a dropdown
 			this.contactIDs = this.contactID ? [this.contactID] : [];
 		} else if (checked === true) {
-			this.contactIDs = [...this.contactIDs, value];
+			this.contactIDs = [...this.contactID, value];
 		} else if (checked === false) {
 			this.contactIDs = this.contactIDs.filter((id) => id !== value);
 		}

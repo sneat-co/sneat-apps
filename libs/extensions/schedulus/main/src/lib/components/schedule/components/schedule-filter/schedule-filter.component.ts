@@ -34,10 +34,11 @@ export class ScheduleFilterComponent extends WeekdaysFormBase {
 	@Input() showWeekdays = false;
 	@Input() showRepeats = false;
 	readonly text = new FormControl<string>('');
-	weekdays: readonly WeekdayCode2[] = [];
-	repeats: readonly string[] = [];
+	weekdays: WeekdayCode2[] = [];
+	repeats: string[] = [];
 
 	contactID = '';
+	contactIDs: string[] = [];
 	selectedContacts: IIdAndBrief<IContactBrief>[] = [];
 	members?: IIdAndBrief<IContactBrief>[];
 
@@ -50,12 +51,12 @@ export class ScheduleFilterComponent extends WeekdaysFormBase {
 		return (
 			!!this.text.value?.trim() ||
 			!!this.weekdays?.length ||
-			!!this.filter.contactIDs.length ||
+			!!this.contactIDs?.length ||
 			!!this.repeats?.length
 		);
 	}
 
-	protected filter: IScheduleFilter = emptyScheduleFilter;
+	private filter: IScheduleFilter = emptyScheduleFilter;
 
 	constructor(
 		private readonly filterService: ScheduleFilterService,
@@ -67,14 +68,6 @@ export class ScheduleFilterComponent extends WeekdaysFormBase {
 		});
 	}
 
-	protected onSelectedContactsChanged(contactIDs: readonly string[]): void {
-		console.log(
-			'ScheduleFilterComponent.onSelectedContactsChanged()',
-			contactIDs,
-		);
-		this.onFilterChanged({ ...this.filter, contactIDs: [...contactIDs] });
-	}
-
 	private readonly onFilterChanged = (filter: IScheduleFilter): void => {
 		if (this.filter === filter) {
 			return;
@@ -84,11 +77,16 @@ export class ScheduleFilterComponent extends WeekdaysFormBase {
 		this.text.setValue(filter.text || '');
 		const { contactIDs } = filter;
 		if (contactIDs) {
-			if (this.filter.contactIDs.length === 1) {
+			this.contactIDs = [...contactIDs];
+			if (contactIDs.length === 1) {
 				this.contactID = contactIDs[0];
 				this.accordionValue = 'filter';
 				this.expanded = true;
 			}
+		}
+		if (!contactIDs?.length) {
+			this.contactIDs = [];
+			this.contactID = '';
 		}
 		this.weekdays = filter.weekdays || [];
 		this.repeats = filter.repeats || [];
@@ -100,10 +98,7 @@ export class ScheduleFilterComponent extends WeekdaysFormBase {
 		event?.stopPropagation();
 		this.resetting = true;
 		try {
-			this.filter = {
-				...this.filter,
-				contactIDs: [],
-			};
+			this.contactIDs = [];
 			this.repeats = [];
 			this.weekdays = [];
 			this.contactID = '';
@@ -145,7 +140,7 @@ export class ScheduleFilterComponent extends WeekdaysFormBase {
 		const found = this.repeats.includes(value);
 		if (checked) {
 			if (!found) {
-				this.repeats = [...this.repeats, value];
+				this.repeats.push(value);
 			}
 		} else if (found) {
 			this.repeats = this.repeats.filter((r) => r !== value);
@@ -159,11 +154,13 @@ export class ScheduleFilterComponent extends WeekdaysFormBase {
 			return;
 		}
 		let filter: IScheduleFilter = {
-			...this.filter,
 			text: this.text.value || '',
 			showRecurrings: true,
 			showSingles: true,
 		};
+		if (this.contactIDs.length) {
+			filter = { ...filter, contactIDs: [...this.contactIDs] };
+		}
 		this.weekdays = this.selectedWeekdayCodes();
 		if (this.weekdays.length) {
 			filter = { ...filter, weekdays: this.weekdays };

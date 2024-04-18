@@ -2,9 +2,9 @@ import { WeekdayCode2, IHappeningContext } from '@sneat/mod-schedulus-core';
 
 export interface IScheduleFilter {
 	readonly text: string;
-	readonly contactIDs: readonly string[];
-	readonly weekdays: readonly WeekdayCode2[];
-	readonly repeats: readonly string[];
+	readonly contactIDs?: string[];
+	readonly weekdays?: WeekdayCode2[];
+	readonly repeats?: string[];
 	readonly showRecurrings: boolean;
 	readonly showSingles: boolean;
 }
@@ -25,7 +25,7 @@ export function isMatchingScheduleFilter(
 		return false;
 	}
 	return !(
-		f.contactIDs.length &&
+		f.contactIDs?.length &&
 		!f.contactIDs.some(
 			(fmID) =>
 				(fmID === '' && !Object.keys(h.dto?.participants || {}).length) ||
