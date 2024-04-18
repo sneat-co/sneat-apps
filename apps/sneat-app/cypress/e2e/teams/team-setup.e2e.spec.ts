@@ -1,9 +1,9 @@
-import { runSignUpTest } from '../common/auth';
+import { runSignUpTest } from '../common/auth.spec';
 import {
 	assertNewTeamButtonIsVisible,
 	assertSpacesDropdownIsVisible,
 	clickNewTeamButton,
-} from '../common/teams';
+} from '../common/teams.spec';
 
 describe('Team Setup', () => {
 	beforeEach(() => {

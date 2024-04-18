@@ -3,8 +3,8 @@ import {
 	MOCK_USER_PASS,
 	runSignInTest,
 	runSignUpTest,
-} from '../common/auth';
-import { assertNewTeamButtonIsVisible } from '../common/teams';
+} from '../common/auth.spec';
+import { assertNewTeamButtonIsVisible } from '../common/teams.spec';
 
 describe('Email Auth', () => {
 	beforeEach(() => {

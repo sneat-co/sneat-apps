@@ -10,7 +10,7 @@ import {
 	selectFamilyLivingSituation,
 	selectFamilyMemberRelationType,
 	selectNumberOfChildren,
-} from '../common/commune';
+} from '../common/commune.spec';
 
 describe('Commune Setup', () => {
 	beforeEach(() => {
