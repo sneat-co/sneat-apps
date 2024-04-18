@@ -34,6 +34,7 @@ import {
 	emptyScheduleFilter,
 	ScheduleFilterService,
 } from '../schedule-filter.service';
+import { hasContact } from '../schedule-slots';
 import { IScheduleFilter } from './components/schedule-filter/schedule-filter';
 import { ScheduleFilterComponent } from './components/schedule-filter/schedule-filter.component';
 import { ScheduleStateService } from './schedule-state.service';
@@ -317,7 +318,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 				};
 				return result;
 			}) || [];
-		this.recurrings = this.filterRecurrings(this.filter || emptyScheduleFilter);
+		this.recurrings = this.filterRecurrings(this.filter);
 		console.log('populateRecurrings()', this.allRecurrings, this.recurrings);
 	}
 
@@ -326,23 +327,34 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		filter: IScheduleFilter,
 	): IHappeningWithUiState[] | undefined {
 		const text = filter.text.toLowerCase();
-		const { contactIDs, repeats, weekdays } = filter;
 
 		const filtered = this.allRecurrings?.filter((r) => {
 			const title = r.brief?.title || r.dto?.title;
-			if (title && !title.trim().toLowerCase().includes(text)) {
-				return false;
+			let hide = '';
+
+			if (!hide && title && !title.trim().toLowerCase().includes(text)) {
+				hide = 'title';
 			}
-			if (!r.brief || !this.hasContact(r.brief, contactIDs)) {
-				return false;
+			if (
+				!hide &&
+				(!r.brief ||
+					!hasContact(
+						this.team.id,
+						filter.contactIDs,
+						r.brief.related || r.brief.related,
+					))
+			) {
+				hide = 'contactIDs';
 			}
-			if (!this.hasWeekday(r.brief?.slots || r.dto?.slots, weekdays)) {
-				return false;
+			const slots = r.dto?.slots || r.brief?.slots;
+			if (!hide && !this.hasWeekday(slots, filter.weekdays)) {
+				hide = 'weekdays';
 			}
-			return !(
-				repeats?.length &&
-				!r.brief?.slots?.some((slot) => repeats.includes(slot.repeats))
-			);
+			if (!hide && !this.hasRepeats(filter.repeats, slots)) {
+				hide = 'repeats';
+			}
+			console.log('hide =>', hide);
+			return !hide;
 		});
 		console.log(
 			`ScheduleComponent.filterRecurrings(')`,
@@ -355,29 +367,23 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		return filtered;
 	}
 
-	// TODO: Decouple and reuse
-	private hasContact(
-		item:
-			| {
-					contactIDs?: string[];
-			  }
-			| undefined,
-		contactIDs?: string[],
+	// noinspection JSMethodCanBeStatic
+
+	protected hasRepeats(
+		repeats: readonly string[],
+		slots?: IHappeningSlot[],
 	): boolean {
 		return (
-			!contactIDs?.length ||
-			!!item?.contactIDs?.some((id) => contactIDs.includes(id))
+			!repeats.length || !!slots?.some((slot) => repeats.includes(slot.repeats))
 		);
 	}
 
-	// noinspection JSMethodCanBeStatic
-
 	private hasWeekday(
-		slots: IHappeningSlot[] | undefined,
-		weekdays?: WeekdayCode2[],
+		slots: readonly IHappeningSlot[] | undefined,
+		weekdays: readonly WeekdayCode2[],
 	): boolean {
 		return (
-			!weekdays ||
+			!weekdays.length ||
 			!!slots?.some((slot) =>
 				slot.weekdays?.some((wd) => weekdays.includes(wd)),
 			)
