@@ -14,7 +14,7 @@ import {
 
 describe('Commune Setup', () => {
 	beforeEach(() => {
-		cy.initializeTestEnvironment();
+		// cy.initializeTestEnvironment();
 		cy.deleteAllAuthUsers();
 		cy.visit('/');
 	});
