@@ -8,15 +8,19 @@ export const getStartFamilySpaceButton = () =>
 	);
 
 export type CommuneType = 'Family' | 'Friends';
+
 export const selectCommuneType = (communeType: CommuneType) =>
 	getCommuneTypeRadioButton(communeType).click();
+
 export const getCommuneTypeRadioButton = (communeType: CommuneType) => {
-	return cy
-		.get('sneat-new-commune-page ion-radio-group ion-radio')
-		.eq(communeType === 'Family' ? 0 : 1)
-		.shadow()
-		.find('label')
-		.should('include.text', ` ${communeType}`);
+	return (
+		cy
+			.get('sneat-new-commune-page ion-radio-group ion-item')
+			.eq(communeType === 'Family' ? 0 : 1)
+			// .shadow()
+			.find('label')
+			.should('include.text', ` ${communeType}`)
+	);
 };
 
 const preferNotToSay = 'I prefer not to disclose at this stage';
