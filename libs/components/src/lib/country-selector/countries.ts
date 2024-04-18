@@ -8,7 +8,7 @@ export type GeoRegion =
 
 export interface ICountry {
 	id: string;
-	id3?: string;
+	id3: string;
 	geoRegions: GeoRegion[];
 	title: string;
 	emoji: string;
@@ -1741,6 +1741,7 @@ export const countriesByID: Record<string, ICountry> = {
 
 export const unknownCountry: ICountry = {
 	id: '--',
+	id3: '---',
 	title: 'Unknown',
 	geoRegions: [],
 	emoji: '🏳️',
