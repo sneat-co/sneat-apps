@@ -14,8 +14,8 @@ import {
 
 describe('Commune Setup', () => {
 	beforeEach(() => {
+		cy.initializeTestEnvironment();
 		cy.deleteAllAuthUsers();
-		cy.initializeFirebaseEmulators().initializeTestEnvironment();
 		cy.visit('/');
 	});
 
