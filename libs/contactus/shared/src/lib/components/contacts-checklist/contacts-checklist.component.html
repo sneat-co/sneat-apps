@@ -1,27 +1,28 @@
 <ion-list>
-	<ion-item *ngFor="let contact of contacts || []; trackBy: contactID">
-		<ion-checkbox
-			labelPlacement="end"
-			slot="start"
-			[value]="contact.id"
-			[checked]="isChecked(contact)"
-			[disabled]="isDisabled(contact)"
-			(ionChange)="onCheckboxChange($event, contact)"
-		>
-			{{
-				contact.brief.names?.fullName ||
-					contact.brief.names?.firstName + " " + contact.brief.names?.lastName
-			}}
-			<!--TODO: use pipe-->
-		</ion-checkbox>
-	</ion-item>
-	<ng-template #noContacts>
+	@for (contact of contacts; track contact.id) {
 		<ion-item>
+			<ion-checkbox
+				labelPlacement="end"
+				justify="start"
+				[value]="contact.id"
+				[checked]="isChecked(contact)"
+				[disabled]="isDisabled(contact)"
+				(ionChange)="onCheckboxChange($event, contact)"
+			>
+				{{
+					contact.brief.names?.fullName ||
+						contact.brief.names?.firstName + " " + contact.brief.names?.lastName
+				}}
+				<!--TODO: use pipe-->
+			</ion-checkbox>
+		</ion-item>
+	} @empty {
+		<ion-item *ngIf="contacts">
 			<ion-label>
 				{{ noContactsMessage || "No contacts" }}
 			</ion-label>
 		</ion-item>
-	</ng-template>
+	}
 </ion-list>
 
 <!--checkedContactIDs: {{checkedContactIDs}}-->

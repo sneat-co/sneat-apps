@@ -59,7 +59,7 @@ export class HappeningParticipantsComponent implements OnChanges {
 
 	public get membersTabLabel(): string {
 		return this.team?.brief?.type === 'family'
-			? 'Family member'
+			? 'Family members'
 			: 'Team members';
 	}
 

@@ -16,6 +16,7 @@ import {
 	CalendarDayServiceModule,
 } from '@sneat/team-services';
 import { ScheduleModalsServiceModule } from '../../services';
+import { ContactsFilterComponent } from '../contacts-filter/contacts-filter.component';
 import { HappeningSlotComponent } from '../happening-slot/happening-slot.component';
 import {
 	DaySlotItemComponent,
@@ -59,6 +60,7 @@ import { TimingBadgeComponent } from './components';
 		MembersSelectorModule,
 		ScheduleModalsServiceModule,
 		HappeningSlotComponent,
+		ContactsFilterComponent,
 	],
 	exports: [ScheduleComponent],
 	declarations: [

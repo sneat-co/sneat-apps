@@ -24,25 +24,22 @@ import { IScheduleFilter } from './schedule-filter';
 	selector: 'sneat-schedule-filter',
 	templateUrl: 'schedule-filter.component.html',
 })
-export class ScheduleFilterComponent
-	extends WeekdaysFormBase
-	implements OnChanges
-{
+export class ScheduleFilterComponent extends WeekdaysFormBase {
 	@ViewChild(IonAccordionGroup) accordionGroup?: IonAccordionGroup;
 	public expanded = false;
 	public accordionValue?: string;
 	private resetting = false;
-	@Input() contactusTeam?: IContactusTeamDtoAndID;
+
 	@Input({ required: true }) team?: ITeamContext;
 	@Input() showWeekdays = false;
 	@Input() showRepeats = false;
 	readonly text = new FormControl<string>('');
 	weekdays: WeekdayCode2[] = [];
-	memberIDs: string[] = [];
-	selectedMembers: IIdAndBrief<IContactBrief>[] = [];
 	repeats: string[] = [];
-	memberID = '';
 
+	contactID = '';
+	contactIDs: string[] = [];
+	selectedContacts: IIdAndBrief<IContactBrief>[] = [];
 	members?: IIdAndBrief<IContactBrief>[];
 
 	readonly repeatWeekly = new FormControl<boolean>(false);
@@ -54,7 +51,7 @@ export class ScheduleFilterComponent
 		return (
 			!!this.text.value?.trim() ||
 			!!this.weekdays?.length ||
-			!!this.memberIDs?.length ||
+			!!this.contactIDs?.length ||
 			!!this.repeats?.length
 		);
 	}
@@ -80,43 +77,31 @@ export class ScheduleFilterComponent
 		this.text.setValue(filter.text || '');
 		const { contactIDs } = filter;
 		if (contactIDs) {
-			this.memberIDs = [...contactIDs];
+			this.contactIDs = [...contactIDs];
 			if (contactIDs.length === 1) {
-				this.memberID = contactIDs[0];
+				this.contactID = contactIDs[0];
 				this.accordionValue = 'filter';
 				this.expanded = true;
 			}
 		}
 		if (!contactIDs?.length) {
-			this.memberIDs = [];
-			this.memberID = '';
+			this.contactIDs = [];
+			this.contactID = '';
 		}
-		this.setSelectedMembers();
 		this.weekdays = filter.weekdays || [];
 		this.repeats = filter.repeats || [];
 		// TODO: reset weekday & repeats controls
 		this.emitChanged();
 	};
 
-	ngOnChanges(changes: SimpleChanges): void {
-		console.log('ScheduleFilterComponent.ngOnChanges()', changes);
-		// TODO: call base class method?
-		this.members = zipMapBriefsWithIDs(this.contactusTeam?.dto?.contacts)?.map(
-			(m) => ({
-				...m,
-				team: this.team || { id: '' },
-			}),
-		);
-	}
-
 	clearFilter(event?: Event): void {
 		event?.stopPropagation();
 		this.resetting = true;
 		try {
-			this.memberIDs = [];
+			this.contactIDs = [];
 			this.repeats = [];
 			this.weekdays = [];
-			this.memberID = '';
+			this.contactID = '';
 
 			const resetFormControlOptions = {
 				onlySelf: true,
@@ -173,8 +158,8 @@ export class ScheduleFilterComponent
 			showRecurrings: true,
 			showSingles: true,
 		};
-		if (this.memberIDs.length) {
-			filter = { ...filter, contactIDs: [...this.memberIDs] };
+		if (this.contactIDs.length) {
+			filter = { ...filter, contactIDs: [...this.contactIDs] };
 		}
 		this.weekdays = this.selectedWeekdayCodes();
 		if (this.weekdays.length) {
@@ -185,34 +170,5 @@ export class ScheduleFilterComponent
 		}
 		this.filter = filter;
 		this.filterService.next(filter);
-	}
-
-	clearMembers(): void {
-		this.memberIDs = [];
-		this.emitChanged();
-	}
-
-	onMemberChanged(event: Event): void {
-		console.log('ScheduleFilterComponent.onMemberChanged()', event);
-		event.stopPropagation();
-		const cs = event as CustomEvent;
-		const { checked, value } = cs.detail;
-		if (checked === undefined) {
-			// a dropdown
-			this.memberIDs = this.memberID ? [this.memberID] : [];
-		} else if (checked === true) {
-			this.memberIDs.push(value);
-		} else if (checked === false) {
-			this.memberIDs = this.memberIDs.filter((id) => id !== value);
-		}
-		this.setSelectedMembers();
-		this.emitChanged();
-	}
-
-	private setSelectedMembers(): void {
-		const members = this.members || [];
-		this.selectedMembers = this.memberIDs.map(
-			(mID) => members.find((m) => m.id == mID) as IIdAndBrief<IContactBrief>,
-		);
 	}
 }

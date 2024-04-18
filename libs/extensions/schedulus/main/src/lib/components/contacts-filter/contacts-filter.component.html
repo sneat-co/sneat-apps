@@ -1,0 +1,68 @@
+<!--<ion-segment>-->
+<!--	<ion-segment-button>Members</ion-segment-button>-->
+<!--	<ion-segment-button>Contacts</ion-segment-button>-->
+<!--</ion-segment>-->
+
+@if (members && members.length <= 7) {
+	<ion-item-divider color="light">
+		<ion-label>Members</ion-label>
+		<ion-buttons slot="end">
+			<ion-button
+				*ngIf="contactIDs.length"
+				title="Clear members filter"
+				color="medium"
+				(click)="clearMembers()"
+			>
+				<ion-icon name="close" />
+			</ion-button>
+		</ion-buttons>
+	</ion-item-divider>
+	@for (member of members; track member.id) {
+		<ion-item>
+			<ion-checkbox
+				justify="start"
+				labelPlacement="end"
+				[value]="member.id"
+				[checked]="contactIDs.includes(member.id)"
+				(ionChange)="onContactCheckChanged($event)"
+				>{{ member | contactTitle }}</ion-checkbox
+			>
+			<ion-buttons slot="end">
+				<ion-button><ion-icon name="person-circle-outline" /></ion-button>
+			</ion-buttons>
+		</ion-item>
+	}
+	<ion-item>
+		<ion-checkbox
+			value=""
+			labelPlacement="end"
+			justify="start"
+			[checked]="contactIDs.includes('')"
+			(ionChange)="onContactCheckChanged($event)"
+			><small>Unassigned only</small>
+		</ion-checkbox>
+	</ion-item>
+	<!--					<ion-segment [(ngModel)]="memberID" color="dark" (ionChange)="onMemberChanged($event)">-->
+	<!--						<ion-segment-button value="">Anyone</ion-segment-button>-->
+	<!--						<ion-segment-button [value]="member.id" *ngFor="let member of members">-->
+
+	<!--						</ion-segment-button>-->
+	<!--					</ion-segment>-->
+} @else {
+	<ion-item>
+		<ion-label color="medium">Member</ion-label>
+		<ion-select
+			interface="popover"
+			[(ngModel)]="contactID"
+			(ionChange)="onContactCheckChanged($event)"
+		>
+			<ion-select-option value="">* Anyone</ion-select-option>
+			<ion-select-option value="UNASSIGNED">- Unassigned </ion-select-option>
+			@for (member of members; track member.id) {
+				<ion-select-option [value]="member.id">
+					{{ member | contactTitle }}
+				</ion-select-option>
+			}
+		</ion-select>
+	</ion-item>
+}

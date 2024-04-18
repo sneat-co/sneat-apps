@@ -1,3 +1,4 @@
+import { Directive } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -5,7 +6,7 @@ import { TeamComponentBaseParams } from './team-component-base-params';
 import { TeamBaseComponent } from './team-base.component';
 import { TeamModuleService } from '@sneat/team-services';
 
-export class TeamModuleBaseComponent<
+export abstract class TeamModuleBaseComponent<
 	Brief,
 	Dto extends Brief,
 > extends TeamBaseComponent {
