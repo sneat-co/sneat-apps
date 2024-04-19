@@ -10,7 +10,6 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { IMemberContext } from '@sneat/contactus-core';
 import { dateToIso, localDateToIso } from '@sneat/core';
@@ -78,7 +77,6 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		scheduleStateService: ScheduleStateService,
 		happeningService: HappeningService,
 		scheduleDayService: CalendarDayService,
-		afs: AngularFirestore,
 		sneatApiService: SneatApiService,
 		private readonly schedulusTeamService: CalendariumTeamService,
 	) {
@@ -86,7 +84,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 			this.errorLogger,
 			happeningService,
 			scheduleDayService,
-			afs,
+			scheduleDayService.afs,
 			sneatApiService,
 		);
 

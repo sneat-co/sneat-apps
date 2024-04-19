@@ -16,7 +16,7 @@ export class CalendarDayService {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		afs: AngularFirestore,
+		public readonly afs: AngularFirestore,
 		sneatApiService: SneatApiService,
 	) {
 		this.teamItemService = new ModuleTeamItemService(
