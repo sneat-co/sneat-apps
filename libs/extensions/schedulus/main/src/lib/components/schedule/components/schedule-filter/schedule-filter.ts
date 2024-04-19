@@ -32,9 +32,9 @@ export function isMatchingScheduleFilter(
 				(fmID === '' &&
 					!getRelatedItemIDs(
 						h.dto?.related || h.brief?.related,
-						h.team.id,
 						'contactus',
 						'contacts',
+						h.team.id,
 					).length) ||
 				h.dto?.contactIDs?.some((hmID) => hmID == fmID),
 		)

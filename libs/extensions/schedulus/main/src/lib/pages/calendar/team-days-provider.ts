@@ -389,9 +389,9 @@ export class TeamDaysProvider {
 			this.memberId &&
 			hasRelatedItemID(
 				recurring.dto?.related || recurring?.brief?.related,
-				this.team.id,
 				'contactus',
 				'contacts',
+				this.team.id,
 				this.memberId,
 			)
 		) {

@@ -42,15 +42,15 @@ export interface IWithRelatedAndRelatedIDs extends IWithRelatedOnly {
 
 export const addRelatedItem = (
 	related: IRelatedItemsByModule | undefined,
-	teamID: string,
 	module: string,
 	collection: string,
+	teamID: string,
 	itemID: string,
 ) => {
 	related = related || {};
 	let collectionRelated = related[module] || {};
 	let relatedItems = collectionRelated[collection] || {};
-	if (!hasRelatedItemID(related, teamID, module, collection, itemID)) {
+	if (!hasRelatedItemID(related, module, collection, teamID, itemID)) {
 		relatedItems = [...(relatedItems || []), { keys: [{ teamID, itemID }] }];
 		collectionRelated = { ...collectionRelated, [collection]: relatedItems };
 		related = { ...related, [module]: collectionRelated };
@@ -77,9 +77,9 @@ export const getRelatedItemByKey = (
 
 export const getRelatedItemIDs = (
 	related: IRelatedItemsByModule | undefined,
-	teamID: string,
 	module: string,
 	collection: string,
+	teamID?: string,
 ): readonly string[] => {
 	if (!related) {
 		return [];
@@ -87,16 +87,18 @@ export const getRelatedItemIDs = (
 	const collectionRelated = (related || {})[module] || {};
 	const relatedItems = collectionRelated[collection];
 	const itemIDs = relatedItems
-		?.map((i) => i.keys.filter((k) => k.teamID === teamID).map((k) => k.itemID))
+		?.map((i) =>
+			i.keys.filter((k) => !teamID || k.teamID === teamID).map((k) => k.itemID),
+		)
 		?.flat();
 	return itemIDs || [];
 };
 
 export const hasRelatedItemID = (
 	related: IRelatedItemsByModule | undefined,
-	teamID: string,
 	module: string,
 	collection: string,
+	teamID: string,
 	itemID: string,
 ): boolean => {
 	if (!related) {

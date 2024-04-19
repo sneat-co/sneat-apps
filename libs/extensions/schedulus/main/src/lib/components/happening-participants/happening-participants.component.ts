@@ -54,9 +54,9 @@ export class HappeningParticipantsComponent implements OnChanges {
 		if (changes['happening']) {
 			this.checkedContactIDs = getRelatedItemIDs(
 				this.happening?.dto?.related || this.happening?.brief?.related,
-				this.team?.id || '',
 				'contactus',
 				'contacts',
+				this.team?.id,
 			);
 			console.log('checkedContactIDs', this.checkedContactIDs, this.happening);
 		}
@@ -128,9 +128,9 @@ export class HappeningParticipantsComponent implements OnChanges {
 				...happeningBase,
 				related: addRelatedItem(
 					happeningBase.related,
-					this.team?.id || '',
 					'contactus',
 					'contacts',
+					this.team?.id || '',
 					contactID,
 				),
 			};

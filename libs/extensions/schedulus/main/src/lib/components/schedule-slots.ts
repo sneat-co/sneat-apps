@@ -1,8 +1,4 @@
-import {
-	getRelatedItemIDs,
-	hasRelatedItemID,
-	IRelatedItemsByModule,
-} from '@sneat/dto';
+import { getRelatedItemIDs, IRelatedItemsByModule } from '@sneat/dto';
 import { ISlotItem } from '@sneat/extensions/schedulus/shared';
 import { IScheduleFilter } from './schedule/components';
 
@@ -16,9 +12,9 @@ export function hasContact(
 	}
 	const relatedContactIDs = getRelatedItemIDs(
 		related,
-		teamID,
 		'contactus',
 		'contacts',
+		teamID,
 	);
 	console.log(
 		'hasContact() related=',

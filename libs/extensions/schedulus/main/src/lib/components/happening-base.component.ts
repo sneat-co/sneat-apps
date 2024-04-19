@@ -198,9 +198,9 @@ This operation can NOT be undone.`)
 					teamMembers?.filter((m) =>
 						getRelatedItemIDs(
 							this.happening?.brief?.related,
-							this.team.id,
 							'contactus',
 							'contacts',
+							this.team.id,
 						).includes(m.id),
 					) || [],
 				members: teamMembers,

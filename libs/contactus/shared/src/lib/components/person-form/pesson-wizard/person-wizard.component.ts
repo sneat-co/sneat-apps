@@ -480,12 +480,8 @@ export class PersonWizardComponent implements OnChanges {
 				return !!p.gender;
 			case 'relatedAs':
 				return (
-					getRelatedItemIDs(
-						p.related,
-						this.team?.id || '',
-						'contactus',
-						'contacts',
-					).length > 0
+					getRelatedItemIDs(p.related, 'contactus', 'contacts', this.team?.id)
+						.length > 0
 				);
 			case 'roles':
 				return !!p.roles?.length;

@@ -79,9 +79,9 @@ export class SlotContextMenuComponent {
 		const selectedMembers = members.filter((m) =>
 			hasRelatedItemID(
 				this.happening?.dto?.related || this.happening?.brief?.related,
-				this.team?.id || '',
 				'contactus',
 				'contacts',
+				this.team?.id || '',
 				m.id,
 			),
 		);
