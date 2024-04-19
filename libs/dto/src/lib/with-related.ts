@@ -86,9 +86,10 @@ export const getRelatedItemIDs = (
 	}
 	const collectionRelated = (related || {})[module] || {};
 	const relatedItems = collectionRelated[collection];
-	return relatedItems
-		.map((i) => i.keys.filter((k) => k.teamID === teamID).map((k) => k.itemID))
-		.flat();
+	const itemIDs = relatedItems
+		?.map((i) => i.keys.filter((k) => k.teamID === teamID).map((k) => k.itemID))
+		?.flat();
+	return itemIDs || [];
 };
 
 export const hasRelatedItemID = (
