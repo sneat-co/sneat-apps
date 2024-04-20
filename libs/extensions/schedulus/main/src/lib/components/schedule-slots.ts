@@ -39,9 +39,13 @@ export function isSlotVisible(
 	slot: ISlotItem,
 	filter: IScheduleFilter,
 ): boolean {
-	const related =
-		slot.happening?.dto?.related || slot.happening?.brief?.related;
-	if (!hasContact(teamID, filter.contactIDs, related)) {
+	if (
+		!hasContact(
+			teamID,
+			filter.contactIDs,
+			slot.happening?.dto?.related || slot.happening?.brief?.related,
+		)
+	) {
 		return false;
 	}
 	// if (!hasWeekday(happening?.brief?.slots || happening?.dto?.slots, weekdays)) {
