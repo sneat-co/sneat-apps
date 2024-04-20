@@ -185,8 +185,7 @@ export class ContactDetailsComponent implements OnChanges {
 	}
 
 	protected get relatedContacts(): readonly IIdAndBrief<IRelatedItem>[] {
-		throw new Error('not implemented yet');
-		// return zipMapBriefsWithIDs(this.contact?.dto?.related);
+		return []; //zipMapBriefsWithIDs(this.contact?.dto?.related);
 	}
 
 	protected goMember(id: string): void {
