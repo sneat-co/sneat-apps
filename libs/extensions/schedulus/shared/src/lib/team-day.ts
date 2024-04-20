@@ -10,13 +10,19 @@ import { IErrorLogger } from '@sneat/logging';
 import { HappeningService, CalendarDayService } from '@sneat/team-services';
 import {
 	BehaviorSubject,
+	map,
 	Observable,
 	shareReplay,
 	Subject,
 	takeUntil,
 } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { getWd2, ISlotItem, RecurringSlots } from './view-models';
+import {
+	getWd2,
+	ISlotItem,
+	RecurringSlots,
+	sortSlotItems,
+} from './view-models';
 
 export class TeamDay {
 	private readonly destroyed = new Subject<void>();
@@ -39,6 +45,7 @@ export class TeamDay {
 		shareReplay(1),
 		takeUntil(this.destroyed),
 		tap((slots) => console.log(`TeamDay[${this.isoID}].slots$ =>`, slots)),
+		map((slots) => slots?.sort(sortSlotItems)),
 	);
 
 	private scheduleDayDto?: ICalendarDayDto | null;

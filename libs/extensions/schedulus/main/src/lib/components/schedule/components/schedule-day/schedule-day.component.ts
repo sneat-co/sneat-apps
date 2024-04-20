@@ -15,6 +15,7 @@ import {
 	jsDayToWeekday,
 	NewHappeningParams,
 	ScheduleNavService,
+	sortSlotItems,
 	WeekdayNumber,
 } from '@sneat/extensions/schedulus/shared';
 import { ITeamContext } from '@sneat/team-models';
@@ -84,9 +85,9 @@ export class ScheduleDayComponent implements OnChanges, OnDestroy {
 
 	private applyFilter(): void {
 		if (this.allSlots?.length) {
-			this.slots = this.allSlots.filter((slot) =>
-				isSlotVisible(this.team?.id, slot, this.filter),
-			);
+			this.slots = this.allSlots
+				.filter((slot) => isSlotVisible(this.team?.id, slot, this.filter))
+				.sort(sortSlotItems);
 			this.slotsHiddenByFilter = this.allSlots.length - this.slots.length;
 			console.log(
 				this.logPrefix() + '.applyFilter() =>',

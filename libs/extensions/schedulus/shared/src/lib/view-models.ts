@@ -21,6 +21,11 @@ export interface NewHappeningParams {
 	date?: string;
 }
 
+export const sortSlotItems = (a: ISlotItem, b: ISlotItem): number =>
+	a.timing.start.time === b.timing.start.time
+		? a.title.localeCompare(b.title)
+		: a.timing.start.time.localeCompare(b.timing.start.time);
+
 export interface ISlotItem {
 	// id: string; Not sure how to make an ID yet
 	slotID: string;
