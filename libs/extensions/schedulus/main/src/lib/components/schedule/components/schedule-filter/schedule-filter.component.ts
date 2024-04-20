@@ -154,7 +154,11 @@ export class ScheduleFilterComponent extends WeekdaysFormBase {
 		this.emitChanged();
 	}
 
-	emitChanged(): void {
+	protected onTextKeyUp(): void {
+		this.emitChanged();
+	}
+
+	protected emitChanged(): void {
 		if (this.resetting) {
 			return;
 		}

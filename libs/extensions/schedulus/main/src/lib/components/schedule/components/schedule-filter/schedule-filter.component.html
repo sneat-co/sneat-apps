@@ -10,7 +10,7 @@
 				<ion-input
 					label="Filter"
 					[formControl]="text"
-					(ionChange)="emitChanged()"
+					(keyup)="onTextKeyUp()"
 					(click)="$event.stopPropagation()"
 					placeholder="text to search"
 				/>
