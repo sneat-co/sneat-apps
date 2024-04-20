@@ -41,7 +41,7 @@ export function isSlotVisible(
 ): boolean {
 	const related =
 		slot.happening?.dto?.related || slot.happening?.brief?.related;
-	if (related && !hasContact(teamID, filter.contactIDs, related)) {
+	if (!hasContact(teamID, filter.contactIDs, related)) {
 		return false;
 	}
 	// if (!hasWeekday(happening?.brief?.slots || happening?.dto?.slots, weekdays)) {
