@@ -299,7 +299,12 @@ export class HappeningService {
 	): Observable<IHappeningContext[]> {
 		const date = dateToIso(new Date());
 		console.log('watchSingles()', team.id, date, dateCondition);
-		const filter = [HappeningService.statusFilter(statuses)];
+		const typeCondition: IFilter = {
+			field: 'type',
+			operator: '==',
+			value: 'single',
+		};
+		const filter = [typeCondition, HappeningService.statusFilter(statuses)];
 		if (dateCondition) {
 			filter.push({ ...dateCondition, value: date });
 		}
