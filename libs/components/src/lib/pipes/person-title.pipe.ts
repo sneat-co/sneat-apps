@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { IPersonNames } from '@sneat/auth-models';
-import { IIdAndOptionalBriefAndOptionalDto } from '@sneat/core';
+import { IIdAndOptionalBriefAndOptionalDbo } from '@sneat/core';
 import { IPerson, IPersonBrief } from '@sneat/contactus-core';
 
 export function personName(name?: IPersonNames): string | undefined {
@@ -17,7 +17,7 @@ export function personName(name?: IPersonNames): string | undefined {
 @Pipe({ name: 'personTitle' })
 export class PersonTitle implements PipeTransform {
 	transform(
-		p?: IIdAndOptionalBriefAndOptionalDto<IPersonBrief, IPerson>,
+		p?: IIdAndOptionalBriefAndOptionalDbo<IPersonBrief, IPerson>,
 		shortTitle?: string,
 	): string {
 		console.log('PersonTitle.transform()', { ...p }, shortTitle);

@@ -12,7 +12,7 @@ import {
 	AssetCategory,
 	DtoLiability,
 	DtoServiceType,
-	IAssetDtoBase,
+	IAssetDboBase,
 	LiabilityServiceType,
 } from '@sneat/mod-assetus-core';
 import { Observable } from 'rxjs';
@@ -44,7 +44,7 @@ interface ILiabilityService {
 	imports: [CommonModule, IonicModule],
 })
 export class AssetLiabilitiesComponent {
-	assetDto: IAssetDtoBase | undefined;
+	assetDto: IAssetDboBase | undefined;
 
 	@Input() addTitle?: string;
 
@@ -56,7 +56,7 @@ export class AssetLiabilitiesComponent {
 
 	@Output() serviceAdded = new EventEmitter<{ type: LiabilityServiceType }>();
 
-	@Input() set asset(v: IAssetDtoBase | undefined) {
+	@Input() set asset(v: IAssetDboBase | undefined) {
 		this.assetDto = v;
 		if (this.liabilityType) {
 			this.load();

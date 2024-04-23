@@ -10,11 +10,11 @@ import { IIdAndBrief } from '@sneat/core';
 import {
 	IAssetContext,
 	IDocTypeStandardFields,
-	IDocumentAssetDto,
-	IDocumentDto,
-	IDocumentMainData,
 	AssetDocumentType,
 	standardDocTypesByID,
+	IAssetDocumentExtra,
+	IAssetDbo,
+	IAssetDboBase,
 } from '@sneat/mod-assetus-core';
 import {
 	AddAssetBaseComponent,
@@ -154,7 +154,7 @@ export class NewDocumentPageComponent
 		if (!this.team) {
 			return;
 		}
-		const dto: IDocumentDto = {
+		const dto: IAssetDboBase<IAssetDocumentExtra> = {
 			status: 'draft',
 			category: 'document',
 			possession: 'owning',
@@ -164,17 +164,20 @@ export class NewDocumentPageComponent
 			updatedBy: '-',
 			title: this.docTitle,
 			type: this.docType,
-			number: this.docNumber,
 			memberIDs: this.contact?.id ? [this.contact.id] : undefined,
+			extra: {
+				type: 'document',
+				number: this.docNumber,
+			},
 		};
-		const request: ICreateAssetRequest<IDocumentMainData> = {
+		const request: ICreateAssetRequest<IAssetDocumentExtra> = {
 			teamID: this.team.id,
 			memberID: this?.contact?.id,
-			dto,
-		} as unknown as ICreateAssetRequest<IDocumentMainData>;
+			asset: dto,
+		};
 
 		this.assetService
-			.createAsset<IDocumentMainData, IDocumentAssetDto>(this.team, request)
+			.createAsset<IAssetDocumentExtra>(this.team, request)
 			.subscribe({
 				next: this.onDocCreated,
 				error: (err: unknown) => {
@@ -183,7 +186,7 @@ export class NewDocumentPageComponent
 			});
 	}
 
-	private onDocCreated = (doc: IAssetContext<IDocumentAssetDto>): void => {
+	private onDocCreated = (doc: IAssetContext<IAssetDocumentExtra>): void => {
 		const team = this.team;
 		if (!team) {
 			return;

@@ -1,7 +1,7 @@
 import { Directive, Inject, Input } from '@angular/core';
 import { IonItemSliding, ToastController } from '@ionic/angular';
 import { eq } from '@sneat/core';
-import { IAssetContext, IDocumentAssetDto } from '@sneat/mod-assetus-core';
+import { IAssetContext, IAssetDocumentExtra } from '@sneat/mod-assetus-core';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team-models';
@@ -10,7 +10,7 @@ import { ignoreElements } from 'rxjs/operators';
 @Directive()
 export abstract class DocumentsBaseComponent {
 	@Input() team?: ITeamContext;
-	@Input() allDocuments?: IAssetContext<IDocumentAssetDto>[];
+	@Input() allDocuments?: IAssetContext<IAssetDocumentExtra>[];
 
 	public static readonly metadata = {
 		inputs: ['team', 'allDocuments'],
@@ -22,7 +22,10 @@ export abstract class DocumentsBaseComponent {
 		protected readonly toastCtrl: ToastController,
 	) {}
 
-	deleteDocument(asset: IAssetContext, slidingItem: IonItemSliding): void {
+	deleteDocument(
+		asset: IAssetContext<IAssetDocumentExtra>,
+		slidingItem: IonItemSliding,
+	): void {
 		this.asset
 			.deleteAsset(this.team?.id || '', asset.id)
 			.pipe(ignoreElements())

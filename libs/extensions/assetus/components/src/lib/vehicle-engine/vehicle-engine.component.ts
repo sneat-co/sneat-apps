@@ -11,7 +11,8 @@ import {
 	EngineTypes,
 	FuelType,
 	FuelTypes,
-	IVehicleAssetContext,
+	IAssetContext,
+	IAssetVehicleExtra,
 } from '@sneat/mod-assetus-core';
 
 @Component({
@@ -21,12 +22,13 @@ import {
 	imports: [CommonModule, IonicModule, SelectFromListModule],
 })
 export class VehicleEngineComponent {
-	@Input() public vehicleAsset?: IVehicleAssetContext;
-	@Output() public readonly vehicleAssetChange =
-		new EventEmitter<IVehicleAssetContext>();
+	@Input() public vehicleAsset?: IAssetContext<IAssetVehicleExtra>;
+	@Output() public readonly vehicleAssetChange = new EventEmitter<
+		IAssetContext<IAssetVehicleExtra>
+	>();
 
 	protected get hasBattery(): boolean {
-		const et = this.vehicleAsset?.dto?.engineType;
+		const et = this.vehicleAsset?.dto?.extra?.engineType;
 		return (
 			et === EngineTypeElectric ||
 			et === EngineTypePHEV ||
@@ -35,7 +37,7 @@ export class VehicleEngineComponent {
 	}
 
 	protected get hasCombustion(): boolean {
-		const et = this.vehicleAsset?.dto?.engineType;
+		const et = this.vehicleAsset?.dto?.extra?.engineType;
 		return (
 			et === EngineTypeCombustion ||
 			et === EngineTypePHEV ||
@@ -97,7 +99,14 @@ export class VehicleEngineComponent {
 			}
 			this.vehicleAsset = {
 				...this.vehicleAsset,
-				dto: { ...this.vehicleAsset.dto, engineType, engineFuel },
+				dto: {
+					...this.vehicleAsset.dto,
+					extra: {
+						...(this.vehicleAsset.dto?.extra || { type: 'vehicle' }),
+						engineType,
+						engineFuel,
+					},
+				},
 			};
 			this.vehicleAssetChange.emit(this.vehicleAsset);
 		}

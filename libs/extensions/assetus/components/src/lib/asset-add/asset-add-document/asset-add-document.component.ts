@@ -5,10 +5,8 @@ import { timestamp } from '@sneat/dto';
 import {
 	AssetPossession,
 	AssetVehicleType,
-	IDocumentAssetDto,
-	IDocumentMainData,
-	IDocumentAssetContext,
-	IVehicleAssetContext,
+	IAssetContext,
+	IAssetDocumentExtra,
 } from '@sneat/mod-assetus-core';
 import { TeamComponentBaseParams } from '@sneat/team-components';
 import { ITeamContext } from '@sneat/team-models';
@@ -27,7 +25,7 @@ export class AssetAddDocumentComponent
 	implements OnChanges
 {
 	@Input() public override team?: ITeamContext;
-	@Input() public documentAsset?: IDocumentAssetContext;
+	@Input() public documentAsset?: IAssetContext<IAssetDocumentExtra>;
 
 	documentType?: AssetVehicleType;
 	documentTypes: ISelectItem[] = [
@@ -52,17 +50,16 @@ export class AssetAddDocumentComponent
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team'] && this.team) {
-			const a: IDocumentAssetContext = this.documentAsset ?? {
+			const a: IAssetContext<IAssetDocumentExtra> = this.documentAsset ?? {
 				id: '',
 				team: this.team ?? { id: '' },
 				dto: {
 					status: 'draft',
 					category: 'vehicle',
+					extra: { type: 'document' },
 					teamID: this.team?.id,
 					type: this.documentType,
 					title: '',
-					make: '',
-					model: '',
 					possession: undefined as unknown as AssetPossession,
 					createdAt: new Date().toISOString() as unknown as timestamp,
 					createdBy: '-',
@@ -83,7 +80,7 @@ export class AssetAddDocumentComponent
 		super('AssetAddVehicleComponent', route, teamParams, assetService);
 	}
 
-	protected onAssetChanged(asset: IVehicleAssetContext): void {
+	protected onAssetChanged(asset: IAssetContext): void {
 		console.log('onAssetChanged', asset, this.documentAsset);
 	}
 
@@ -122,7 +119,7 @@ export class AssetAddDocumentComponent
 			throw new Error('no asset');
 		}
 		this.isSubmitting = true;
-		let request: ICreateAssetRequest<IDocumentMainData> = {
+		let request: ICreateAssetRequest<IAssetDocumentExtra> = {
 			asset: {
 				...assetDto,
 				status: 'active',
@@ -170,9 +167,6 @@ export class AssetAddDocumentComponent
 		// 	}
 		// }
 
-		this.createAssetAndGoToAssetPage<IDocumentMainData, IDocumentAssetDto>(
-			request,
-			this.team,
-		);
+		this.createAssetAndGoToAssetPage<IAssetDocumentExtra>(request, this.team);
 	}
 }

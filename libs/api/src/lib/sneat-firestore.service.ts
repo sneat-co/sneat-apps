@@ -9,7 +9,7 @@ import {
 	onSnapshot,
 	limit,
 } from '@angular/fire/firestore';
-import { IIdAndOptionalBriefAndOptionalDto } from '@sneat/core';
+import { IIdAndOptionalBriefAndOptionalDbo } from '@sneat/core';
 import { QuerySnapshot, QueryOrderByConstraint } from 'firebase/firestore';
 import { WhereFilterOp } from '@firebase/firestore-types';
 import { INavContext } from '@sneat/core';
@@ -46,13 +46,13 @@ export class SneatFirestoreService<Brief, Dto extends Brief> {
 	watchByID<Dto2 extends Dto>(
 		collection: CollectionReference<Dto2>,
 		id: string,
-	): Observable<IIdAndOptionalBriefAndOptionalDto<Brief, Dto2>> {
+	): Observable<IIdAndOptionalBriefAndOptionalDbo<Brief, Dto2>> {
 		return this.watchByDocRef(doc(collection, id));
 	}
 
 	watchByDocRef<Dto2 extends Dto>(
 		docRef: DocumentReference<Dto2>,
-	): Observable<IIdAndOptionalBriefAndOptionalDto<Brief, Dto2>> {
+	): Observable<IIdAndOptionalBriefAndOptionalDbo<Brief, Dto2>> {
 		console.log(`SneatFirestoreService.watchByDocRef(${docRef.path})`, docRef);
 		const subj = new Subject<DocumentSnapshot<Dto2>>();
 		// const snapshots = docSnapshots<Dto2>(docRef);

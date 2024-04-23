@@ -8,30 +8,30 @@ export interface IIdAndOptionalBrief<Brief> {
 	readonly brief?: Brief | null;
 }
 
-export interface IIdAndOptionalDto<Dto> {
+export interface IIdAndOptionalDto<Dbo> {
 	readonly id: string;
-	readonly dto?: Dto | null;
+	readonly dto?: Dbo | null;
 }
 
-export interface IIdAndDto<Dto> {
+export interface IIdAndDto<Dbo> {
 	readonly id: string;
-	readonly dto: Dto;
+	readonly dto: Dbo;
 }
 
-export interface IIdAndOptionalBriefAndOptionalDto<Brief, Dto extends Brief> {
+export interface IIdAndOptionalBriefAndOptionalDbo<Brief, Dbo extends Brief> {
 	readonly id: string;
 	readonly brief?: Brief | null;
-	readonly dto?: Dto | null;
+	readonly dto?: Dbo | null;
 }
 
-export interface IIdAndBriefAndOptionalDto<Brief, Dto extends Brief> {
+export interface IIdAndBriefAndOptionalDto<Brief, Dbo extends Brief> {
 	readonly id: string;
 	readonly brief: Brief;
-	readonly dto?: Dto | null;
+	readonly dto?: Dbo | null;
 }
 
-export interface IIdAndBriefAndDto<Brief, Dto extends Brief> {
+export interface IIdAndBriefAndDto<Brief, Dbo extends Brief> {
 	readonly id: string;
 	readonly brief: Brief;
-	readonly dto: Dto;
+	readonly dto: Dbo;
 }

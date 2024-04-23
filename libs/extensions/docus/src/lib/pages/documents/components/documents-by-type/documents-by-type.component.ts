@@ -11,7 +11,7 @@ import { listItemAnimations } from '@sneat/core';
 import { eq } from '@sneat/core';
 import {
 	IAssetContext,
-	IDocumentAssetDto,
+	IAssetDocumentExtra,
 	standardDocTypesByID,
 } from '@sneat/mod-assetus-core';
 import { AssetService } from '@sneat/extensions/assetus/components';
@@ -22,7 +22,7 @@ interface IDocumentType {
 	id: string;
 	title: string;
 	emoji?: string;
-	documents?: IAssetContext<IDocumentAssetDto>[];
+	documents?: IAssetContext<IAssetDocumentExtra>[];
 	expanded?: boolean;
 }
 
@@ -43,7 +43,7 @@ export class DocumentsByTypeComponent
 
 	@Output() goNewDoc = new EventEmitter<string>();
 	@Output() goDocType = new EventEmitter<string>();
-	@Output() goDoc = new EventEmitter<IAssetContext<IDocumentAssetDto>>();
+	@Output() goDoc = new EventEmitter<IAssetContext<IAssetDocumentExtra>>();
 
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
@@ -70,8 +70,6 @@ export class DocumentsByTypeComponent
 		}
 		this.goNewDoc.emit(docType.id);
 	}
-
-	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log(

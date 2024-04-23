@@ -8,7 +8,7 @@ import {
 	FuelType,
 } from './assetus-types';
 // import { IContact2Asset } from './dto-contact2item';
-import { IDocData, IDocumentBrief } from './dto-document';
+import { IAssetDocumentExtra } from './dto-document';
 import {
 	IDemoRecord,
 	ITitled,
@@ -54,16 +54,23 @@ export interface IAssetusTeamDto extends ITitled {
 	assets?: Record<string, IAssetBrief>;
 }
 
+export interface IAssetExtra {
+	type: AssetType | 'empty';
+}
+
+export interface IAssetEmptyExtra extends IAssetExtra {
+	type: 'empty';
+}
+
 export type IAssetusTeamContext = INavContext<IAssetusTeamDto, IAssetusTeamDto>;
 
 export interface IAssetMainData extends IAssetBrief {
 	parentAssetID?: string;
 	desc?: string;
 	memberIDs?: string[];
-	regNumber?: string;
 }
 
-export interface IAssetDtoBase
+export interface IAssetDboBase<Extra extends IAssetExtra = IAssetExtra>
 	extends IAssetMainData,
 		IDemoRecord,
 		ITotalsHolder,
@@ -77,11 +84,12 @@ export interface IAssetDtoBase
 	membersInfo?: ITitledRecord[];
 	liabilities?: AssetLiabilityInfo[];
 	notUsedServiceTypes?: LiabilityServiceType[];
+	extra?: Extra;
 }
 
-export interface IDwelling {
-	address?: string;
-	rent?: 'landlord' | 'tenant';
+export interface IAssetDbo<Extra extends IAssetExtra>
+	extends IAssetDboBase<Extra> {
+	readonly userIDs?: string[]; // TODO - define actual fields
 }
 
 export interface IEngine {
@@ -93,7 +101,7 @@ export interface IEngine {
 	engineSerialNumber?: string;
 }
 
-export interface IVehicleData extends IEngine {
+export interface IAssetVehicleExtra extends IAssetExtra, IEngine {
 	vin?: string;
 	number?: string;
 	nctExpires?: string; // ISO date string 'YYYY-MM-DD'
@@ -103,17 +111,6 @@ export interface IVehicleData extends IEngine {
 	nextServiceDue?: string; // ISO date string 'YYYY-MM-DD'
 	nextServiceDueTaskId?: string;
 }
-
-export interface IVehicleAssetDto extends IAssetDtoBase, IVehicleData {}
-
-export interface IVehicleMainData extends IAssetMainData, IVehicleData {}
-
-export interface IDocumentAssetDto
-	extends IDocumentBrief,
-		IDocData,
-		IAssetDtoBase {}
-
-export interface IDocumentMainData extends IAssetMainData, IDocData {}
 
 export interface IAssetCategory extends ITitledRecord {
 	id: AssetCategory;

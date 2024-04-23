@@ -5,9 +5,11 @@ import { IFilter, SneatApiService } from '@sneat/api';
 import {
 	AssetCategory,
 	IAssetBrief,
-	IAssetDtoBase,
+	IAssetDboBase,
 	IAssetMainData,
 	IAssetContext,
+	IAssetExtra,
+	IAssetDbo,
 } from '@sneat/mod-assetus-core';
 import { ITeamContext } from '@sneat/team-models';
 import { ModuleTeamItemService } from '@sneat/team-services';
@@ -19,7 +21,7 @@ import { ICreateAssetRequest, IUpdateAssetRequest } from './asset-service.dto';
 })
 export class AssetService extends ModuleTeamItemService<
 	IAssetBrief,
-	IAssetDtoBase
+	IAssetDboBase
 > {
 	constructor(afs: AngularFirestore, sneatApiService: SneatApiService) {
 		super('assetus', 'assets', afs, sneatApiService);
@@ -36,13 +38,13 @@ export class AssetService extends ModuleTeamItemService<
 		return this.sneatApiService.post('assets/update_asset', request);
 	}
 
-	public createAsset<A extends IAssetMainData, D extends IAssetDtoBase>(
+	public createAsset<Extra extends IAssetExtra>(
 		team: ITeamContext,
-		request: ICreateAssetRequest<A>,
-	): Observable<IAssetContext<D>> {
+		request: ICreateAssetRequest<Extra>,
+	): Observable<IAssetContext<Extra>> {
 		console.log(`AssetService.createAsset()`, request);
 		request = { ...request, asset: { ...request.asset, isRequest: true } };
-		return this.createTeamItem<IAssetBrief, D>(
+		return this.createTeamItem<IAssetBrief, IAssetDbo<Extra>>(
 			'assets/create_asset?assetCategory=' + request.asset.category,
 			team,
 			request,
@@ -51,10 +53,10 @@ export class AssetService extends ModuleTeamItemService<
 
 	public readonly watchAssetByID = this.watchTeamItemByIdWithTeamRef;
 
-	watchTeamAssets<Dto extends IAssetDtoBase>(
+	watchTeamAssets<Extra extends IAssetExtra>(
 		team: ITeamContext,
 		category?: AssetCategory,
-	): Observable<IAssetContext<Dto>[]> {
+	): Observable<IAssetContext<Extra>[]> {
 		// console.log('watchAssetsByTeamID()', team.id);
 		const filter: IFilter[] | undefined = category
 			? [
@@ -63,8 +65,10 @@ export class AssetService extends ModuleTeamItemService<
 						operator: '==',
 						value: category,
 					},
-			  ]
+				]
 			: undefined;
-		return this.watchModuleTeamItemsWithTeamRef<Dto>(team, { filter });
+		return this.watchModuleTeamItemsWithTeamRef<IAssetDbo<Extra>>(team, {
+			filter,
+		});
 	}
 }

@@ -4,13 +4,13 @@ import { ISelectItem } from '@sneat/components';
 import { timestamp } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team-components';
 import {
-	IVehicleAssetContext,
 	AssetPossession,
 	AssetVehicleType,
 	EngineTypes,
 	FuelTypes,
-	IVehicleAssetDto,
-	IVehicleMainData,
+	IAssetContext,
+	IAssetDbo,
+	IAssetVehicleExtra,
 } from '@sneat/mod-assetus-core';
 import { format, parseISO } from 'date-fns';
 import { AssetService } from '../../services';
@@ -26,7 +26,7 @@ export class AssetAddVehicleComponent
 	extends AddAssetBaseComponent
 	implements OnChanges
 {
-	@Input() public vehicleAsset?: IVehicleAssetContext;
+	@Input() public vehicleAsset?: IAssetContext<IAssetVehicleExtra>;
 
 	protected vehicleType?: AssetVehicleType;
 	protected readonly vehicleTypes: ISelectItem[] = [
@@ -51,19 +51,22 @@ export class AssetAddVehicleComponent
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team'] && this.team) {
-			const a: IVehicleAssetContext = this.vehicleAsset ?? {
+			const a: IAssetContext<IAssetVehicleExtra> = this.vehicleAsset ?? {
 				id: '',
 				team: this.team ?? { id: '' },
 				dto: {
 					status: 'draft',
 					category: 'vehicle',
+					extra: {
+						type: 'vehicle',
+						engineFuel: FuelTypes.unknown,
+						engineType: EngineTypes.unknown,
+					},
 					teamID: this.team?.id,
 					type: this.vehicleType,
 					title: '',
 					make: '',
 					model: '',
-					engineFuel: FuelTypes.unknown,
-					engineType: EngineTypes.unknown,
 					possession: undefined as unknown as AssetPossession,
 					createdAt: new Date().toISOString() as unknown as timestamp,
 					createdBy: '-',
@@ -84,8 +87,8 @@ export class AssetAddVehicleComponent
 		super('AssetAddVehicleComponent', route, teamParams, assetService);
 	}
 
-	protected onAssetChanged(asset: IVehicleAssetContext): void {
-		console.log('onAssetChanged', asset, this.vehicleAsset);
+	protected onAssetChanged(asset: IAssetContext): void {
+		this.vehicleAsset = asset as IAssetContext<IAssetVehicleExtra>;
 	}
 
 	onVehicleTypeChanged(): void {
@@ -123,7 +126,7 @@ export class AssetAddVehicleComponent
 			throw new Error('no asset');
 		}
 		this.isSubmitting = true;
-		let request: ICreateAssetRequest<IVehicleMainData> = {
+		let request: ICreateAssetRequest<IAssetVehicleExtra> = {
 			asset: {
 				...assetDto,
 				status: 'active',
@@ -171,9 +174,6 @@ export class AssetAddVehicleComponent
 		// 	}
 		// }
 
-		this.createAssetAndGoToAssetPage<IVehicleMainData, IVehicleAssetDto>(
-			request,
-			this.team,
-		);
+		this.createAssetAndGoToAssetPage<IAssetVehicleExtra>(request, this.team);
 	}
 }

@@ -1,7 +1,7 @@
 import {
 	IIdAndBrief,
 	IIdAndBriefAndDto,
-	IIdAndOptionalBriefAndOptionalDto,
+	IIdAndOptionalBriefAndOptionalDbo,
 	IIdAndOptionalDto,
 } from '@sneat/core';
 import { ITeamRef } from './team-context';
@@ -9,7 +9,7 @@ import { ITeamRef } from './team-context';
 export interface ITeamItemWithOptionalBriefAndOptionalDto<
 	Brief,
 	Dto extends Brief,
-> extends IIdAndOptionalBriefAndOptionalDto<Brief, Dto> {
+> extends IIdAndOptionalBriefAndOptionalDbo<Brief, Dto> {
 	readonly team: ITeamRef;
 }
 

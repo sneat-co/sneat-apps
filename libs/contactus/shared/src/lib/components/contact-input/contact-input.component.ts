@@ -8,7 +8,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { countryFlagEmoji } from '@sneat/components';
-import { IIdAndOptionalBriefAndOptionalDto } from '@sneat/core';
+import { IIdAndOptionalBriefAndOptionalDbo } from '@sneat/core';
 import {
 	ContactRole,
 	ContactType,
@@ -83,7 +83,7 @@ export class ContactInputComponent implements OnChanges {
 
 	private getTitle(
 		showFlag: boolean,
-		contact?: IIdAndOptionalBriefAndOptionalDto<IContactBrief, IContactDto>,
+		contact?: IIdAndOptionalBriefAndOptionalDbo<IContactBrief, IContactDto>,
 	): string {
 		if (!contact) {
 			return '';
@@ -91,7 +91,7 @@ export class ContactInputComponent implements OnChanges {
 		const title = contact?.brief?.title || '';
 		const flag = showFlag
 			? countryFlagEmoji(contact?.brief?.countryID || contact?.dto?.countryID) +
-			  ' '
+				' '
 			: '';
 		return flag + title;
 	}

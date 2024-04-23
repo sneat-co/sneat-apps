@@ -1,10 +1,10 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import {
 	IAssetBrief,
-	IAssetDtoBase,
+	IAssetDboBase,
 	IAssetusTeamContext,
 	IAssetContext,
-	IVehicleAssetContext,
+	IAssetVehicleExtra,
 } from '@sneat/mod-assetus-core';
 import { TeamItemPageBaseComponent } from '@sneat/team-components';
 import { NEVER, Observable, throwError } from 'rxjs';
@@ -12,14 +12,14 @@ import { AssetComponentBaseParams } from './asset-component-base-params';
 
 export abstract class AssetBasePage extends TeamItemPageBaseComponent<
 	IAssetBrief,
-	IAssetDtoBase
+	IAssetDboBase
 > {
 	protected assetusTeam?: IAssetusTeamContext;
 
 	protected asset?: IAssetContext;
 
-	protected get vehicleAsset(): IVehicleAssetContext {
-		return this.asset as IVehicleAssetContext;
+	protected get vehicleAsset(): IAssetContext<IAssetVehicleExtra> {
+		return this.asset as IAssetContext<IAssetVehicleExtra>;
 	}
 
 	protected readonly assetService = this.params.assetService;

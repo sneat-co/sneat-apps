@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IMemberContext } from '@sneat/contactus-core';
-import { IDocumentAssetDto, IDocumentDto } from '@sneat/mod-assetus-core';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team-components';
-import { IAssetContext } from '@sneat/mod-assetus-core';
+import { IAssetContext, IAssetDocumentExtra } from '@sneat/mod-assetus-core';
 
 @Component({
 	selector: 'sneat-documents-page',
@@ -17,8 +16,8 @@ import { IAssetContext } from '@sneat/mod-assetus-core';
 export class DocumentsPageComponent extends TeamBaseComponent {
 	public segment: 'type' | 'owner' | 'list' = 'type';
 
-	public documents: IAssetContext<IDocumentAssetDto>[];
-	public rootDocs?: IAssetContext<IDocumentAssetDto>[];
+	public documents: IAssetContext<IAssetDocumentExtra>[];
+	public rootDocs?: IAssetContext<IAssetDocumentExtra>[];
 	filter = '';
 
 	constructor(
@@ -28,7 +27,7 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 	) {
 		super('DocumentsPageComponent', route, params);
 		this.documents = window.history.state
-			.documents as IAssetContext<IDocumentAssetDto>[];
+			.documents as IAssetContext<IAssetDocumentExtra>[];
 	}
 
 	protected override onTeamIdChanged() {
@@ -40,7 +39,7 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 		console.log('DocumentsPage.loadDocuments()');
 		if (this.team?.id) {
 			this.assetService
-				.watchTeamAssets<IDocumentDto>(this.team)
+				.watchTeamAssets<IAssetDocumentExtra>(this.team)
 				.pipe(this.takeUntilNeeded())
 				.subscribe({
 					next: (documents) => {
@@ -54,7 +53,7 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 		console.log(`goType(${type})`);
 	}
 
-	public goDoc(doc: IAssetContext<IDocumentAssetDto>) {
+	public goDoc(doc: IAssetContext<IAssetDocumentExtra>) {
 		if (!this.team) {
 			this.errorLogger.logError(
 				'not able to navigate to document without team context',

@@ -13,7 +13,7 @@ import { CountrySelectorComponent } from '@sneat/components';
 import {
 	carMakes,
 	IAssetContext,
-	IVehicleAssetContext,
+	IAssetVehicleExtra,
 } from '@sneat/mod-assetus-core';
 import { ITeamContext } from '@sneat/team-models';
 import { AssetPossessionCardComponent } from '../asset-possesion-card/asset-possession-card.component';
@@ -43,9 +43,8 @@ import { VehicleEngineComponent } from '../vehicle-engine/vehicle-engine.compone
 export class VehicleCardComponent implements OnChanges {
 	@Input({ required: true }) team?: ITeamContext;
 
-	@Input({ required: true }) vehicleAsset?: IVehicleAssetContext;
-	@Output() readonly vehicleAssetChange =
-		new EventEmitter<IVehicleAssetContext>();
+	@Input({ required: true }) vehicleAsset?: IAssetContext<IAssetVehicleExtra>;
+	@Output() readonly vehicleAssetChange = new EventEmitter<IAssetContext>();
 
 	protected readonly regNumber = new FormControl<string>('');
 
@@ -113,7 +112,7 @@ export class VehicleCardComponent implements OnChanges {
 
 	protected onAssetChanged(asset: IAssetContext): void {
 		console.log('onVehicleAssetChanged', asset, this.vehicleAsset);
-		this.vehicleAsset = asset as IVehicleAssetContext;
+		this.vehicleAsset = asset as IAssetContext<IAssetVehicleExtra>;
 		this.vehicleAssetChange.emit(this.vehicleAsset);
 	}
 

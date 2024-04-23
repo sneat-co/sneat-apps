@@ -1,9 +1,14 @@
-import { IAssetMainData } from '@sneat/mod-assetus-core';
+import {
+	IAssetDboBase,
+	IAssetExtra,
+	IAssetMainData,
+} from '@sneat/mod-assetus-core';
 import { ITeamRequest } from '@sneat/team-models';
 
-export interface ICreateAssetRequest<A extends IAssetMainData>
+export interface ICreateAssetRequest<Extra extends IAssetExtra>
 	extends ITeamRequest {
-	readonly asset: A;
+	readonly asset: IAssetDboBase<Extra>;
+	readonly memberID?: string;
 }
 
 export interface IAssetRequest extends ITeamRequest {

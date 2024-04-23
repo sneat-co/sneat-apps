@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { IAssetDtoBase, IVehicleAssetDto } from '@sneat/mod-assetus-core';
+import { IAssetDboBase, IVehicleAssetDto } from '@sneat/mod-assetus-core';
 
 interface AssetDate {
 	name: string;
@@ -17,9 +17,9 @@ interface AssetDate {
 	imports: [CommonModule, IonicModule, FormsModule],
 })
 export class AssetDatesComponent {
-	private assetDto?: IAssetDtoBase;
+	private assetDto?: IAssetDboBase;
 
-	@Input() set asset(v: IAssetDtoBase) {
+	@Input() set asset(v: IAssetDboBase) {
 		console.log('AssetDatesComponent => asset:', v);
 		this.assetDto = v;
 		switch (v.category) {

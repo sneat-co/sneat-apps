@@ -1,10 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IIdAndOptionalBriefAndOptionalDto } from '@sneat/core';
+import { IIdAndOptionalBriefAndOptionalDbo } from '@sneat/core';
 import { IContactBrief, IContactDto } from '@sneat/contactus-core';
 import { personName } from './person-title.pipe';
 
 export function getContactTitle(
-	m: IIdAndOptionalBriefAndOptionalDto<IContactBrief, IContactDto>,
+	m: IIdAndOptionalBriefAndOptionalDbo<IContactBrief, IContactDto>,
 	shortTitle?: string,
 ): string {
 	return (
@@ -20,7 +20,7 @@ export function getContactTitle(
 @Pipe({ name: 'contactTitle' })
 export class ContactTitlePipe implements PipeTransform {
 	transform(
-		m?: IIdAndOptionalBriefAndOptionalDto<IContactBrief, IContactDto>,
+		m?: IIdAndOptionalBriefAndOptionalDbo<IContactBrief, IContactDto>,
 		shortTitle?: string,
 	): string {
 		return m ? getContactTitle(m, shortTitle) : '';

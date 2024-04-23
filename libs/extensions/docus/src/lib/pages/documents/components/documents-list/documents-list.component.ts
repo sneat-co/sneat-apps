@@ -10,7 +10,11 @@ import {
 import { ToastController } from '@ionic/angular';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IAssetContext, IDocumentAssetDto } from '@sneat/mod-assetus-core';
+import {
+	IAssetContext,
+	IAssetDbo,
+	IAssetDocumentExtra,
+} from '@sneat/mod-assetus-core';
 import { DocumentsBaseComponent } from '../documents-base.component';
 
 @Component({
@@ -24,10 +28,10 @@ export class DocumentsListComponent
 {
 	@Input() public filter = '';
 	@Output() public readonly goDoc = new EventEmitter<
-		IAssetContext<IDocumentAssetDto>
+		IAssetContext<IAssetDocumentExtra>
 	>();
 
-	protected filteredDocs?: IAssetContext<IDocumentAssetDto>[];
+	protected filteredDocs?: IAssetContext<IAssetDocumentExtra>[];
 
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
