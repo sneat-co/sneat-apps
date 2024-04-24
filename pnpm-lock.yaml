@@ -137,7 +137,7 @@ importers:
         version: 17.3.5
       '@nx/cypress':
         specifier: 18.3.3
-        version: 18.3.3(@babel/traverse@7.24.0)(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(cypress@13.8.0)(js-yaml@4.1.0)(nx@18.3.3(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10)))(typescript@5.4.5)
+        version: 18.3.3(@babel/traverse@7.24.0)(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(cypress@13.8.1)(js-yaml@4.1.0)(nx@18.3.3(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10)))(typescript@5.4.5)
       '@nx/eslint':
         specifier: 18.3.3
         version: 18.3.3(@babel/traverse@7.24.0)(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(js-yaml@4.1.0)(nx@18.3.3(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10)))
@@ -184,8 +184,8 @@ importers:
         specifier: ^7.0.3
         version: 7.0.3
       cypress:
-        specifier: 13.8.0
-        version: 13.8.0
+        specifier: 13.8.1
+        version: 13.8.1
       eslint:
         specifier: 8.57.0
         version: 8.57.0
@@ -3881,8 +3881,8 @@ packages:
   cuint@0.2.2:
     resolution: {integrity: sha512-d4ZVpCW31eWwCMe1YT3ur7mUDnTXbgwyzaL320DrcRT45rfjYxkt5QWLrmOJ+/UEAI2+fQgKe/fCjR8l4TpRgw==}
 
-  cypress@13.8.0:
-    resolution: {integrity: sha512-Qau//mtrwEGOU9cn2YjavECKyDUwBh8J2tit+y9s1wsv6C3BX+rlv6I9afmQnL8PmEEzJ6be7nppMHacFzZkTw==}
+  cypress@13.8.1:
+    resolution: {integrity: sha512-Uk6ovhRbTg6FmXjeZW/TkbRM07KPtvM5gah1BIMp4Y2s+i/NMxgaLw0+PbYTOdw1+egE0FP3mWRiGcRkjjmhzA==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
     hasBin: true
 
@@ -9937,9 +9937,9 @@ snapshots:
       - vue-template-compiler
       - webpack-cli
 
-  '@nrwl/cypress@18.3.3(@babel/traverse@7.24.0)(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(cypress@13.8.0)(js-yaml@4.1.0)(nx@18.3.3(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10)))(typescript@5.4.5)':
+  '@nrwl/cypress@18.3.3(@babel/traverse@7.24.0)(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(cypress@13.8.1)(js-yaml@4.1.0)(nx@18.3.3(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10)))(typescript@5.4.5)':
     dependencies:
-      '@nx/cypress': 18.3.3(@babel/traverse@7.24.0)(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(cypress@13.8.0)(js-yaml@4.1.0)(nx@18.3.3(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10)))(typescript@5.4.5)
+      '@nx/cypress': 18.3.3(@babel/traverse@7.24.0)(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(cypress@13.8.1)(js-yaml@4.1.0)(nx@18.3.3(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10)))(typescript@5.4.5)
     transitivePeerDependencies:
       - '@babel/traverse'
       - '@swc-node/register'
@@ -10131,9 +10131,9 @@ snapshots:
       - vue-template-compiler
       - webpack-cli
 
-  '@nx/cypress@18.3.3(@babel/traverse@7.24.0)(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(cypress@13.8.0)(js-yaml@4.1.0)(nx@18.3.3(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10)))(typescript@5.4.5)':
+  '@nx/cypress@18.3.3(@babel/traverse@7.24.0)(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(cypress@13.8.1)(js-yaml@4.1.0)(nx@18.3.3(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10)))(typescript@5.4.5)':
     dependencies:
-      '@nrwl/cypress': 18.3.3(@babel/traverse@7.24.0)(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(cypress@13.8.0)(js-yaml@4.1.0)(nx@18.3.3(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10)))(typescript@5.4.5)
+      '@nrwl/cypress': 18.3.3(@babel/traverse@7.24.0)(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(cypress@13.8.1)(js-yaml@4.1.0)(nx@18.3.3(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10)))(typescript@5.4.5)
       '@nx/devkit': 18.3.3(nx@18.3.3(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10)))
       '@nx/eslint': 18.3.3(@babel/traverse@7.24.0)(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(js-yaml@4.1.0)(nx@18.3.3(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10)))
       '@nx/js': 18.3.3(@babel/traverse@7.24.0)(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10))(@types/node@20.12.7)(nx@18.3.3(@swc-node/register@1.9.0(@swc/core@1.5.0(@swc/helpers@0.5.10))(@swc/types@0.1.6)(typescript@5.4.5))(@swc/core@1.5.0(@swc/helpers@0.5.10)))(typescript@5.4.5)
@@ -10142,7 +10142,7 @@ snapshots:
       semver: 7.6.0
       tslib: 2.6.2
     optionalDependencies:
-      cypress: 13.8.0
+      cypress: 13.8.1
     transitivePeerDependencies:
       - '@babel/traverse'
       - '@swc-node/register'
@@ -12119,7 +12119,7 @@ snapshots:
 
   cuint@0.2.2: {}
 
-  cypress@13.8.0:
+  cypress@13.8.1:
     dependencies:
       '@cypress/request': 3.0.1
       '@cypress/xvfb': 1.2.4(supports-color@8.1.1)
