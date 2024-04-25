@@ -36,7 +36,7 @@
     "@angular/fire": "17.0.1",
     "@angular/forms": "17.3.6",
     "@angular/platform-browser": "17.3.6",
-    "@angular/platform-browser-dynamic": "17.3.5",
+    "@angular/platform-browser-dynamic": "17.3.6",
     "@angular/router": "17.3.6",
     "@ctrl/ngx-codemirror": "^7.0.0",
     "@firebase/firestore": "4.6.1",
