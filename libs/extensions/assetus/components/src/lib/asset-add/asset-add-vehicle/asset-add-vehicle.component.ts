@@ -4,12 +4,10 @@ import { ISelectItem } from '@sneat/components';
 import { timestamp } from '@sneat/dto';
 import { TeamComponentBaseParams } from '@sneat/team-components';
 import {
-	AssetPossession,
 	AssetVehicleType,
 	EngineTypes,
 	FuelTypes,
 	IAssetContext,
-	IAssetDbo,
 	IAssetVehicleContext,
 	IAssetVehicleExtra,
 } from '@sneat/mod-assetus-core';
