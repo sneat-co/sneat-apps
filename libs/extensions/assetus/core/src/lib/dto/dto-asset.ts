@@ -1,4 +1,5 @@
 import { INavContext } from '@sneat/core';
+import { IAssetContext } from '../contexts';
 import {
 	AssetCategory,
 	AssetPossession,
@@ -54,11 +55,18 @@ export interface IAssetusTeamDto extends ITitled {
 	assets?: Record<string, IAssetBrief>;
 }
 
-export interface IAssetExtra {
-	type: AssetType | 'empty';
+export type AssetExtraType =
+	| 'empty'
+	| 'vehicle'
+	| 'dwelling'
+	| 'document'
+	| string;
+
+export interface IAssetExtra<Type extends AssetExtraType> {
+	type: Type; // Workaround for code completion, not supposed to be used.
 }
 
-export interface IAssetEmptyExtra extends IAssetExtra {
+export interface IAssetEmptyExtra extends IAssetExtra<'empty'> {
 	type: 'empty';
 }
 
@@ -70,8 +78,11 @@ export interface IAssetMainData extends IAssetBrief {
 	memberIDs?: string[];
 }
 
-export interface IAssetDboBase<Extra extends IAssetExtra = IAssetExtra>
-	extends IAssetMainData,
+export interface IAssetDboBase<
+	ExtraType extends AssetExtraType = string,
+	Extra extends IAssetExtra<ExtraType> = IAssetExtra<ExtraType>,
+> extends IWithAssetExtra<ExtraType, Extra>,
+		IAssetMainData,
 		IDemoRecord,
 		ITotalsHolder,
 		IWithModified {
@@ -84,11 +95,20 @@ export interface IAssetDboBase<Extra extends IAssetExtra = IAssetExtra>
 	membersInfo?: ITitledRecord[];
 	liabilities?: AssetLiabilityInfo[];
 	notUsedServiceTypes?: LiabilityServiceType[];
+}
+
+export interface IWithAssetExtra<
+	ExtraType extends AssetExtraType,
+	Extra extends IAssetExtra<ExtraType>,
+> {
+	extraType: ExtraType;
 	extra?: Extra;
 }
 
-export interface IAssetDbo<Extra extends IAssetExtra>
-	extends IAssetDboBase<Extra> {
+export interface IAssetDbo<
+	ExtraType extends AssetExtraType,
+	Extra extends IAssetExtra<ExtraType>,
+> extends IAssetDboBase<ExtraType, Extra> {
 	readonly userIDs?: string[]; // TODO - define actual fields
 }
 
@@ -101,7 +121,7 @@ export interface IEngine {
 	engineSerialNumber?: string;
 }
 
-export interface IAssetVehicleExtra extends IAssetExtra, IEngine {
+export interface IAssetVehicleExtra extends IAssetExtra<'vehicle'>, IEngine {
 	vin?: string;
 	number?: string;
 	nctExpires?: string; // ISO date string 'YYYY-MM-DD'
@@ -111,6 +131,8 @@ export interface IAssetVehicleExtra extends IAssetExtra, IEngine {
 	nextServiceDue?: string; // ISO date string 'YYYY-MM-DD'
 	nextServiceDueTaskId?: string;
 }
+
+export type IAssetVehicleContext = IAssetContext<'vehicle', IAssetVehicleExtra>
 
 export interface IAssetCategory extends ITitledRecord {
 	id: AssetCategory;

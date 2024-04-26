@@ -12,6 +12,7 @@ import {
 	FuelType,
 	FuelTypes,
 	IAssetContext,
+	IAssetVehicleContext,
 	IAssetVehicleExtra,
 } from '@sneat/mod-assetus-core';
 
@@ -22,10 +23,9 @@ import {
 	imports: [CommonModule, IonicModule, SelectFromListModule],
 })
 export class VehicleEngineComponent {
-	@Input() public vehicleAsset?: IAssetContext<IAssetVehicleExtra>;
-	@Output() public readonly vehicleAssetChange = new EventEmitter<
-		IAssetContext<IAssetVehicleExtra>
-	>();
+	@Input() public vehicleAsset?: IAssetVehicleContext;
+	@Output() public readonly vehicleAssetChange =
+		new EventEmitter<IAssetVehicleContext>();
 
 	protected get hasBattery(): boolean {
 		const et = this.vehicleAsset?.dto?.extra?.engineType;

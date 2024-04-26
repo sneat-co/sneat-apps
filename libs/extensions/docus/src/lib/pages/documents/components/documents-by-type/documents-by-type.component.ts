@@ -10,8 +10,7 @@ import { ToastController } from '@ionic/angular';
 import { listItemAnimations } from '@sneat/core';
 import { eq } from '@sneat/core';
 import {
-	IAssetContext,
-	IAssetDocumentExtra,
+	IAssetDocumentContext,
 	standardDocTypesByID,
 } from '@sneat/mod-assetus-core';
 import { AssetService } from '@sneat/extensions/assetus/components';
@@ -22,7 +21,7 @@ interface IDocumentType {
 	id: string;
 	title: string;
 	emoji?: string;
-	documents?: IAssetContext<IAssetDocumentExtra>[];
+	documents?: IAssetDocumentContext[];
 	expanded?: boolean;
 }
 
@@ -43,7 +42,7 @@ export class DocumentsByTypeComponent
 
 	@Output() goNewDoc = new EventEmitter<string>();
 	@Output() goDocType = new EventEmitter<string>();
-	@Output() goDoc = new EventEmitter<IAssetContext<IAssetDocumentExtra>>();
+	@Output() goDoc = new EventEmitter<IAssetDocumentContext>();
 
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,

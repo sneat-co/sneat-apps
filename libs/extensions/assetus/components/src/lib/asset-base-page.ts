@@ -5,6 +5,7 @@ import {
 	IAssetusTeamContext,
 	IAssetContext,
 	IAssetVehicleExtra,
+	IAssetVehicleContext,
 } from '@sneat/mod-assetus-core';
 import { TeamItemPageBaseComponent } from '@sneat/team-components';
 import { NEVER, Observable, throwError } from 'rxjs';
@@ -18,8 +19,8 @@ export abstract class AssetBasePage extends TeamItemPageBaseComponent<
 
 	protected asset?: IAssetContext;
 
-	protected get vehicleAsset(): IAssetContext<IAssetVehicleExtra> {
-		return this.asset as IAssetContext<IAssetVehicleExtra>;
+	protected get vehicleAsset(): IAssetVehicleContext {
+		return this.asset as IAssetVehicleContext;
 	}
 
 	protected readonly assetService = this.params.assetService;

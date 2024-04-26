@@ -3,6 +3,7 @@ import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IContactusTeamDtoAndID } from '@sneat/contactus-core';
 import {
+	AssetExtraType,
 	IAssetDboBase,
 	IAssetExtra,
 	IAssetMainData,
@@ -39,33 +40,35 @@ export abstract class AddAssetBaseComponent extends SneatBaseComponent {
 		super(className, teamParams.errorLogger);
 	}
 
-	protected createAssetAndGoToAssetPage<Extra extends IAssetExtra>(
-		request: ICreateAssetRequest<Extra>,
-		team: ITeamContext,
-	): void {
+	protected createAssetAndGoToAssetPage<
+		ExtraType extends AssetExtraType,
+		Extra extends IAssetExtra<ExtraType>,
+	>(request: ICreateAssetRequest<ExtraType, Extra>, team: ITeamContext): void {
 		if (!this.team) {
 			throw new Error('no team context');
 		}
-		this.assetService.createAsset<Extra>(this.team, request).subscribe({
-			next: (asset) => {
-				this.teamParams.teamNavService
-					.navigateForwardToTeamPage(team, 'asset/' + asset.id, {
-						replaceUrl: true,
-						state: { asset, team },
-					})
-					.catch(
-						this.teamParams.errorLogger.logErrorHandler(
-							`failed to navigate to team page`,
-						),
+		this.assetService
+			.createAsset<ExtraType, Extra>(this.team, request)
+			.subscribe({
+				next: (asset) => {
+					this.teamParams.teamNavService
+						.navigateForwardToTeamPage(team, 'asset/' + asset.id, {
+							replaceUrl: true,
+							state: { asset, team },
+						})
+						.catch(
+							this.teamParams.errorLogger.logErrorHandler(
+								`failed to navigate to team page`,
+							),
+						);
+				},
+				error: (err) => {
+					this.isSubmitting = false;
+					this.teamParams.errorLogger.logError(
+						err,
+						'Failed to create a new asset',
 					);
-			},
-			error: (err) => {
-				this.isSubmitting = false;
-				this.teamParams.errorLogger.logError(
-					err,
-					'Failed to create a new asset',
-				);
-			},
-		});
+				},
+			});
 	}
 }

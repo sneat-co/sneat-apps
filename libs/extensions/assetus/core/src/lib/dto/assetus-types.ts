@@ -23,6 +23,7 @@ export type AssetVehicleType =
 	| 'van';
 export type AssetRealEstateType = 'house' | 'apartment' | 'land';
 export type AssetType = AssetVehicleType | AssetRealEstateType | string;
+
 export const EngineTypeUnknown = '';
 export const EngineTypeOther = 'other';
 export const EngineTypePHEV = 'phev';

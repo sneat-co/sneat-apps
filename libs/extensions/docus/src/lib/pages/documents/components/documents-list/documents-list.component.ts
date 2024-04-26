@@ -13,6 +13,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	IAssetContext,
 	IAssetDbo,
+	IAssetDocumentContext,
 	IAssetDocumentExtra,
 } from '@sneat/mod-assetus-core';
 import { DocumentsBaseComponent } from '../documents-base.component';
@@ -27,11 +28,9 @@ export class DocumentsListComponent
 	implements OnChanges
 {
 	@Input() public filter = '';
-	@Output() public readonly goDoc = new EventEmitter<
-		IAssetContext<IAssetDocumentExtra>
-	>();
+	@Output() public readonly goDoc = new EventEmitter<IAssetDocumentContext>();
 
-	protected filteredDocs?: IAssetContext<IAssetDocumentExtra>[];
+	protected filteredDocs?: IAssetDocumentContext[];
 
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,

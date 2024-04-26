@@ -1,3 +1,4 @@
+import { IAssetContext } from '../contexts';
 import { IAssetDboBase, IAssetExtra } from './dto-asset';
 import { IWithAssetIDs, IWithMemberIDs, IWithTag } from '@sneat/dto';
 
@@ -101,8 +102,7 @@ export const standardDocTypesByID: Record<string, DocTypeDef> = {
 	},
 };
 
-export interface IAssetDocumentExtra extends IAssetExtra {
-	type: 'document';
+export interface IAssetDocumentExtra extends IAssetExtra<'document'> {
 	docType?: AssetDocumentType;
 	number?: string;
 	batchNumber?: string;
@@ -111,3 +111,8 @@ export interface IAssetDocumentExtra extends IAssetExtra {
 	issuedBy?: string;
 	expiresOn?: string; // ISO date string 'YYYY-MM-DD'
 }
+
+export type IAssetDocumentContext = IAssetContext<
+	'document',
+	IAssetDocumentExtra
+>;

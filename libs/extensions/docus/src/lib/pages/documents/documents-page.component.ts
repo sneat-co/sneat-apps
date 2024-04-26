@@ -6,7 +6,11 @@ import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team-components';
-import { IAssetContext, IAssetDocumentExtra } from '@sneat/mod-assetus-core';
+import {
+	IAssetContext,
+	IAssetDocumentContext,
+	IAssetDocumentExtra,
+} from '@sneat/mod-assetus-core';
 
 @Component({
 	selector: 'sneat-documents-page',
@@ -16,8 +20,8 @@ import { IAssetContext, IAssetDocumentExtra } from '@sneat/mod-assetus-core';
 export class DocumentsPageComponent extends TeamBaseComponent {
 	public segment: 'type' | 'owner' | 'list' = 'type';
 
-	public documents: IAssetContext<IAssetDocumentExtra>[];
-	public rootDocs?: IAssetContext<IAssetDocumentExtra>[];
+	public documents: IAssetDocumentContext[];
+	public rootDocs?: IAssetDocumentContext[];
 	filter = '';
 
 	constructor(
@@ -26,8 +30,10 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 		private assetService: AssetService,
 	) {
 		super('DocumentsPageComponent', route, params);
-		this.documents = window.history.state
-			.documents as IAssetContext<IAssetDocumentExtra>[];
+		this.documents = window.history.state.documents as IAssetContext<
+			'document',
+			IAssetDocumentExtra
+		>[];
 	}
 
 	protected override onTeamIdChanged() {
@@ -39,7 +45,7 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 		console.log('DocumentsPage.loadDocuments()');
 		if (this.team?.id) {
 			this.assetService
-				.watchTeamAssets<IAssetDocumentExtra>(this.team)
+				.watchTeamAssets<'document', IAssetDocumentExtra>(this.team)
 				.pipe(this.takeUntilNeeded())
 				.subscribe({
 					next: (documents) => {
@@ -53,7 +59,7 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 		console.log(`goType(${type})`);
 	}
 
-	public goDoc(doc: IAssetContext<IAssetDocumentExtra>) {
+	public goDoc(doc: IAssetDocumentContext) {
 		if (!this.team) {
 			this.errorLogger.logError(
 				'not able to navigate to document without team context',

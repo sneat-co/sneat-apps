@@ -6,10 +6,10 @@ import {
 	AssetCategory,
 	IAssetBrief,
 	IAssetDboBase,
-	IAssetMainData,
 	IAssetContext,
-	IAssetExtra,
 	IAssetDbo,
+	AssetExtraType,
+	IAssetExtra,
 } from '@sneat/mod-assetus-core';
 import { ITeamContext } from '@sneat/team-models';
 import { ModuleTeamItemService } from '@sneat/team-services';
@@ -21,7 +21,7 @@ import { ICreateAssetRequest, IUpdateAssetRequest } from './asset-service.dto';
 })
 export class AssetService extends ModuleTeamItemService<
 	IAssetBrief,
-	IAssetDboBase
+	IAssetDboBase<string, IAssetExtra<string>>
 > {
 	constructor(afs: AngularFirestore, sneatApiService: SneatApiService) {
 		super('assetus', 'assets', afs, sneatApiService);
@@ -38,13 +38,16 @@ export class AssetService extends ModuleTeamItemService<
 		return this.sneatApiService.post('assets/update_asset', request);
 	}
 
-	public createAsset<Extra extends IAssetExtra>(
+	public createAsset<
+		ExtraType extends AssetExtraType,
+		Extra extends IAssetExtra<ExtraType>,
+	>(
 		team: ITeamContext,
-		request: ICreateAssetRequest<Extra>,
-	): Observable<IAssetContext<Extra>> {
+		request: ICreateAssetRequest<ExtraType, Extra>,
+	): Observable<IAssetContext<ExtraType, Extra>> {
 		console.log(`AssetService.createAsset()`, request);
 		request = { ...request, asset: { ...request.asset, isRequest: true } };
-		return this.createTeamItem<IAssetBrief, IAssetDbo<Extra>>(
+		return this.createTeamItem<IAssetBrief, IAssetDbo<ExtraType, Extra>>(
 			'assets/create_asset?assetCategory=' + request.asset.category,
 			team,
 			request,
@@ -53,10 +56,13 @@ export class AssetService extends ModuleTeamItemService<
 
 	public readonly watchAssetByID = this.watchTeamItemByIdWithTeamRef;
 
-	watchTeamAssets<Extra extends IAssetExtra>(
+	watchTeamAssets<
+		ExtraType extends AssetExtraType,
+		Extra extends IAssetExtra<ExtraType>,
+	>(
 		team: ITeamContext,
 		category?: AssetCategory,
-	): Observable<IAssetContext<Extra>[]> {
+	): Observable<IAssetContext<ExtraType, Extra>[]> {
 		// console.log('watchAssetsByTeamID()', team.id);
 		const filter: IFilter[] | undefined = category
 			? [
@@ -67,8 +73,11 @@ export class AssetService extends ModuleTeamItemService<
 					},
 				]
 			: undefined;
-		return this.watchModuleTeamItemsWithTeamRef<IAssetDbo<Extra>>(team, {
-			filter,
-		});
+		return this.watchModuleTeamItemsWithTeamRef<IAssetDbo<ExtraType, Extra>>(
+			team,
+			{
+				filter,
+			},
+		);
 	}
 }

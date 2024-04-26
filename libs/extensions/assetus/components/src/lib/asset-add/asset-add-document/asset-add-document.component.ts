@@ -6,6 +6,7 @@ import {
 	AssetPossession,
 	AssetVehicleType,
 	IAssetContext,
+	IAssetDocumentContext,
 	IAssetDocumentExtra,
 } from '@sneat/mod-assetus-core';
 import { TeamComponentBaseParams } from '@sneat/team-components';
@@ -25,7 +26,7 @@ export class AssetAddDocumentComponent
 	implements OnChanges
 {
 	@Input() public override team?: ITeamContext;
-	@Input() public documentAsset?: IAssetContext<IAssetDocumentExtra>;
+	@Input() public documentAsset?: IAssetDocumentContext;
 
 	documentType?: AssetVehicleType;
 	documentTypes: ISelectItem[] = [
@@ -50,12 +51,13 @@ export class AssetAddDocumentComponent
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team'] && this.team) {
-			const a: IAssetContext<IAssetDocumentExtra> = this.documentAsset ?? {
+			const a: IAssetContext<'document'> = this.documentAsset ?? {
 				id: '',
 				team: this.team ?? { id: '' },
 				dto: {
 					status: 'draft',
 					category: 'vehicle',
+					extraType: 'document',
 					extra: { type: 'document' },
 					teamID: this.team?.id,
 					type: this.documentType,
@@ -119,7 +121,7 @@ export class AssetAddDocumentComponent
 			throw new Error('no asset');
 		}
 		this.isSubmitting = true;
-		let request: ICreateAssetRequest<IAssetDocumentExtra> = {
+		let request: ICreateAssetRequest<'document', IAssetDocumentExtra> = {
 			asset: {
 				...assetDto,
 				status: 'active',
@@ -167,6 +169,6 @@ export class AssetAddDocumentComponent
 		// 	}
 		// }
 
-		this.createAssetAndGoToAssetPage<IAssetDocumentExtra>(request, this.team);
+		this.createAssetAndGoToAssetPage(request, this.team);
 	}
 }

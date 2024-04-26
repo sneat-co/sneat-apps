@@ -15,6 +15,7 @@ import {
 	IAssetDocumentExtra,
 	IAssetDbo,
 	IAssetDboBase,
+	IAssetDocumentContext,
 } from '@sneat/mod-assetus-core';
 import {
 	AddAssetBaseComponent,
@@ -154,7 +155,7 @@ export class NewDocumentPageComponent
 		if (!this.team) {
 			return;
 		}
-		const dto: IAssetDboBase<IAssetDocumentExtra> = {
+		const dto: IAssetDboBase<'document', IAssetDocumentExtra> = {
 			status: 'draft',
 			category: 'document',
 			possession: 'owning',
@@ -165,19 +166,20 @@ export class NewDocumentPageComponent
 			title: this.docTitle,
 			type: this.docType,
 			memberIDs: this.contact?.id ? [this.contact.id] : undefined,
+			extraType: 'document',
 			extra: {
 				type: 'document',
 				number: this.docNumber,
 			},
 		};
-		const request: ICreateAssetRequest<IAssetDocumentExtra> = {
+		const request: ICreateAssetRequest<'document', IAssetDocumentExtra> = {
 			teamID: this.team.id,
 			memberID: this?.contact?.id,
 			asset: dto,
 		};
 
 		this.assetService
-			.createAsset<IAssetDocumentExtra>(this.team, request)
+			.createAsset<'document', IAssetDocumentExtra>(this.team, request)
 			.subscribe({
 				next: this.onDocCreated,
 				error: (err: unknown) => {
@@ -186,7 +188,7 @@ export class NewDocumentPageComponent
 			});
 	}
 
-	private onDocCreated = (doc: IAssetContext<IAssetDocumentExtra>): void => {
+	private onDocCreated = (doc: IAssetDocumentContext): void => {
 		const team = this.team;
 		if (!team) {
 			return;

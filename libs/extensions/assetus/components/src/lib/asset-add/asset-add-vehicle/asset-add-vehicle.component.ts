@@ -10,6 +10,7 @@ import {
 	FuelTypes,
 	IAssetContext,
 	IAssetDbo,
+	IAssetVehicleContext,
 	IAssetVehicleExtra,
 } from '@sneat/mod-assetus-core';
 import { format, parseISO } from 'date-fns';
@@ -26,7 +27,7 @@ export class AssetAddVehicleComponent
 	extends AddAssetBaseComponent
 	implements OnChanges
 {
-	@Input() public vehicleAsset?: IAssetContext<IAssetVehicleExtra>;
+	@Input() public vehicleAsset?: IAssetVehicleContext;
 
 	protected vehicleType?: AssetVehicleType;
 	protected readonly vehicleTypes: ISelectItem[] = [
@@ -51,12 +52,13 @@ export class AssetAddVehicleComponent
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team'] && this.team) {
-			const a: IAssetContext<IAssetVehicleExtra> = this.vehicleAsset ?? {
+			const a: IAssetVehicleContext = this.vehicleAsset ?? {
 				id: '',
 				team: this.team ?? { id: '' },
 				dto: {
 					status: 'draft',
 					category: 'vehicle',
+					extraType: 'vehicle',
 					extra: {
 						type: 'vehicle',
 						engineFuel: FuelTypes.unknown,
@@ -64,10 +66,10 @@ export class AssetAddVehicleComponent
 					},
 					teamID: this.team?.id,
 					type: this.vehicleType,
-					title: '',
+					title: 'My vehicle',
 					make: '',
 					model: '',
-					possession: undefined as unknown as AssetPossession,
+					possession: 'owning',
 					createdAt: new Date().toISOString() as unknown as timestamp,
 					createdBy: '-',
 					updatedAt: new Date().toISOString() as unknown as timestamp,
@@ -88,7 +90,7 @@ export class AssetAddVehicleComponent
 	}
 
 	protected onAssetChanged(asset: IAssetContext): void {
-		this.vehicleAsset = asset as IAssetContext<IAssetVehicleExtra>;
+		this.vehicleAsset = asset as IAssetVehicleContext;
 	}
 
 	onVehicleTypeChanged(): void {
@@ -126,7 +128,7 @@ export class AssetAddVehicleComponent
 			throw new Error('no asset');
 		}
 		this.isSubmitting = true;
-		let request: ICreateAssetRequest<IAssetVehicleExtra> = {
+		let request: ICreateAssetRequest<'vehicle', IAssetVehicleExtra> = {
 			asset: {
 				...assetDto,
 				status: 'active',
@@ -174,6 +176,6 @@ export class AssetAddVehicleComponent
 		// 	}
 		// }
 
-		this.createAssetAndGoToAssetPage<IAssetVehicleExtra>(request, this.team);
+		this.createAssetAndGoToAssetPage(request, this.team);
 	}
 }
