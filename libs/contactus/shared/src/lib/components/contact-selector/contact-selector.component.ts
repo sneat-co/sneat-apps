@@ -162,7 +162,7 @@ export class ContactSelectorComponent
 	private watchContactBriefs(): void {
 		const team = this.team;
 		this.contactBriefsSub = this.contactusTeamService
-			.watchContactBriefs(this.team)
+			.watchContactBriefs(this.team.id)
 			.pipe(map((contacts) => contacts.map((c) => ({ ...c, team }))))
 			.subscribe((contacts) => {
 				this.allContacts = contacts;
@@ -197,7 +197,7 @@ export class ContactSelectorComponent
 			this.parentType || this.parentRole
 				? allContactBriefs?.filter(
 						filterByTypeRoleAndParentID(this.parentType, this.parentRole),
-				  ) || []
+					) || []
 				: undefined;
 		this.contacts = allContactBriefs?.filter(
 			filterByTypeRoleAndParentID(

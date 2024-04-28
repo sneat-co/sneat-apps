@@ -32,6 +32,14 @@ export type IRelatedItemsByModule = Readonly<
 	Record<string, IRelatedItemsByCollection>
 >;
 
+export function getRelatedItems(
+	moduleId: string,
+	collectionId: string,
+	related?: IRelatedItemsByModule,
+): readonly IRelatedItem[] {
+	return (related && related[moduleId]?.[collectionId]) || [];
+}
+
 export interface IWithRelatedOnly {
 	readonly related?: IRelatedItemsByModule;
 }

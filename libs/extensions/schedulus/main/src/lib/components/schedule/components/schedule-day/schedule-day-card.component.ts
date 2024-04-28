@@ -13,7 +13,7 @@ import { ITeamContext } from '@sneat/team-models';
 import { TeamDaysProvider } from '../../../../pages/calendar';
 import { ScheduleNavService } from '@sneat/extensions/schedulus/shared';
 import {
-	ISlotItem,
+	IHappeningSlotUiItem,
 	NewHappeningParams,
 } from '@sneat/extensions/schedulus/shared';
 import { getToday, ScheduleStateService } from '../../schedule-state.service';
@@ -49,10 +49,12 @@ export class ScheduleDayCardComponent
 		super('ScheduleDayCardComponent', errorLogger, scheduleSateService);
 	}
 
-	@Input() onSlotClicked?: (args: { slot: ISlotItem; event: Event }) => void =
-		() => {
-			throw new Error('onSlotClicked not set');
-		};
+	@Input() onSlotClicked?: (args: {
+		slot: IHappeningSlotUiItem;
+		event: Event;
+	}) => void = () => {
+		throw new Error('onSlotClicked not set');
+	};
 
 	ngAfterViewInit(): void {
 		console.log('ngAfterViewInit(), shiftDays=', this.shiftDays);

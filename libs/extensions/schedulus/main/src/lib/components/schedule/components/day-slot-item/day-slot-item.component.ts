@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PopoverController, PopoverOptions } from '@ionic/angular';
 import { IContactusTeamDtoAndID } from '@sneat/contactus-core';
-import { ISlotItem } from '@sneat/extensions/schedulus/shared';
+import { IHappeningSlotUiItem } from '@sneat/extensions/schedulus/shared';
 import { ITeamContext } from '@sneat/team-models';
 import { SlotContextMenuComponent } from '../slot-context-menu/slot-context-menu.component';
 import { HappeningUIState } from '@sneat/mod-schedulus-core';
@@ -11,7 +11,7 @@ import { HappeningUIState } from '@sneat/mod-schedulus-core';
 	templateUrl: './day-slot-item.component.html',
 })
 export class DaySlotItemComponent {
-	@Input() public slot?: ISlotItem;
+	@Input() public slot?: IHappeningSlotUiItem;
 
 	@Input() dateID?: string;
 
@@ -22,7 +22,7 @@ export class DaySlotItemComponent {
 	@Input() contactusTeam?: IContactusTeamDtoAndID;
 
 	@Output() readonly slotClicked = new EventEmitter<{
-		slot: ISlotItem;
+		slot: IHappeningSlotUiItem;
 		event: Event;
 	}>();
 

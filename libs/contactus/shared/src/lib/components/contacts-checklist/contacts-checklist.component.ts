@@ -56,7 +56,7 @@ export class ContactsChecklistComponent implements OnChanges {
 			`ContactsChecklistComponent.subscribeForContactBriefs(team=${team?.id})`,
 		);
 		this.contactusTeamSubscription = this.contactusTeamService
-			.watchContactBriefs(team)
+			.watchContactBriefs(team.id)
 			// .pipe(takeUntilDestroyed())
 			.subscribe({
 				next: (contacts) => {

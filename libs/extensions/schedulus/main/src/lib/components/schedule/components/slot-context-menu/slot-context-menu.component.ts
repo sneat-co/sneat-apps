@@ -9,7 +9,7 @@ import {
 	HappeningStatus,
 	IHappeningSlot,
 } from '@sneat/mod-schedulus-core';
-import { ISlotItem } from '@sneat/extensions/schedulus/shared';
+import { IHappeningSlotUiItem } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	ISelectMembersOptions,
@@ -38,7 +38,7 @@ export class SlotContextMenuComponent {
 	@Input() contactusTeam?: IContactusTeamDtoAndID;
 
 	@Input() dateID?: string;
-	@Input() public slot?: ISlotItem;
+	@Input() public slot?: IHappeningSlotUiItem;
 	happeningState?: HappeningUIState;
 
 	public get happening(): IHappeningContext | undefined {
@@ -183,7 +183,7 @@ export class SlotContextMenuComponent {
 	}
 
 	private stopEvent(event: Event): {
-		slot: ISlotItem;
+		slot: IHappeningSlotUiItem;
 		happening: IHappeningContext;
 		team: ITeamContext;
 	} {

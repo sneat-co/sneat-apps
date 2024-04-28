@@ -41,7 +41,7 @@ export class RelatedContactComponent implements OnChanges, OnDestroy {
 			if (newTeam && prevTeam?.id !== newTeam?.id) {
 				console.log('Team changed');
 				this.contactusTeamService
-					.watchContactBriefs(newTeam)
+					.watchContactBriefs(newTeam.id)
 					.pipe(takeUntil(this.destroyed))
 					.subscribe((briefs) => {
 						this.teamContacts = briefs;

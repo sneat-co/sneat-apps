@@ -32,14 +32,16 @@
 			>&nbsp;&mdash; canceled
 		</ion-text>
 
-		<sneat-members-as-badges
-			*ngIf="mode === 'full'"
-			[showDelete]="false"
-			[members]="
-				slot?.happening?.brief?.contactIDs || []
-					| selectedMembers: contactusTeam?.dto?.contacts
-			"
-		/>
+		<!--		<sneat-members-as-badges-->
+		<!--			*ngIf="mode === 'full'"-->
+		<!--			[showDelete]="false"-->
+		<!--			[members]="-->
+		<!--				slot?.happening?.brief?.contactIDs || []-->
+		<!--					| selectedMembers: contactusTeam?.dto?.contacts-->
+		<!--			"-->
+		<!--		/>-->
+
+		<sneat-happening-slot-participants [happeningSlot]="slot" />
 
 		<p
 			*ngIf="

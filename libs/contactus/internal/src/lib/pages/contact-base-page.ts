@@ -80,7 +80,7 @@ export abstract class ContactBasePage extends TeamItemPageBaseComponent<
 	private watchTeamContactusEntry(): void {
 		if (this.team?.id) {
 			this.contactusTeamService
-				.watchContactBriefs(this.team)
+				.watchContactBriefs(this.team.id)
 				.pipe(this.takeUntilNeeded(), takeUntil(this.teamIDChanged$))
 				.subscribe({
 					next: (contacts) => {

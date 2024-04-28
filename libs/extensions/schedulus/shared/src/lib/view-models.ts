@@ -21,12 +21,15 @@ export interface NewHappeningParams {
 	readonly date?: string;
 }
 
-export const sortSlotItems = (a: ISlotItem, b: ISlotItem): number =>
+export const sortSlotItems = (
+	a: IHappeningSlotUiItem,
+	b: IHappeningSlotUiItem,
+): number =>
 	a.timing.start.time === b.timing.start.time
 		? a.title.localeCompare(b.title)
 		: a.timing.start.time.localeCompare(b.timing.start.time);
 
-export interface ISlotItem {
+export interface IHappeningSlotUiItem {
 	// readonly id: string; Not sure how to make an ID yet
 	readonly slotID: string;
 	readonly adjustment?: IHappeningAdjustment;
@@ -42,7 +45,7 @@ export interface ISlotItem {
 	readonly levels?: Level[];
 }
 
-export type SlotsByWeekday = Record<string, ISlotItem[]>;
+export type SlotsByWeekday = Record<string, IHappeningSlotUiItem[]>;
 
 export interface RecurringSlots {
 	readonly byWeekday: SlotsByWeekday;

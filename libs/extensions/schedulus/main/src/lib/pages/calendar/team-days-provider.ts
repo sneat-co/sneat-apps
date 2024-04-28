@@ -12,7 +12,7 @@ import {
 	ISchedulusTeamContext,
 } from '@sneat/mod-schedulus-core';
 import {
-	ISlotItem,
+	IHappeningSlotUiItem,
 	RecurringSlots,
 	TeamDay,
 	wd2,
@@ -42,7 +42,7 @@ import {
 import { tap } from 'rxjs/operators';
 
 type RecurringsByWeekday = {
-	[wd in WeekdayCode2]: ISlotItem[];
+	[wd in WeekdayCode2]: IHappeningSlotUiItem[];
 };
 
 const emptyRecurringsByWeekday = () =>
@@ -97,7 +97,7 @@ const emptyRecurringsByWeekday = () =>
 const slotItemsFromRecurringSlot = (
 	r: IHappeningContext,
 	rs: IHappeningSlot,
-): ISlotItem[] => {
+): IHappeningSlotUiItem[] => {
 	const si = {
 		// date: rs.start.date,
 		slotID: rs.id,
@@ -131,7 +131,10 @@ const groupRecurringSlotsByWeekday = (
 				brief: rh.brief,
 				team: schedulusTeam.team,
 			};
-			const slotItems: ISlotItem[] = slotItemsFromRecurringSlot(happening, rs);
+			const slotItems: IHappeningSlotUiItem[] = slotItemsFromRecurringSlot(
+				happening,
+				rs,
+			);
 			slotItems.forEach((si) => {
 				if (si.wd) {
 					let weekday = slots.byWeekday[si.wd];
@@ -161,7 +164,7 @@ export class TeamDaysProvider {
 		IHappeningBrief,
 		IHappeningDto
 	>;
-	private readonly singlesByDate: Record<string, ISlotItem[]> = {};
+	private readonly singlesByDate: Record<string, IHappeningSlotUiItem[]> = {};
 	private readonly recurringByWd: RecurringsByWeekday =
 		emptyRecurringsByWeekday();
 
@@ -415,7 +418,7 @@ export class TeamDaysProvider {
 					if (slot.repeats === 'weekly' && !wd) {
 						throw new Error(`slot.repeats === 'weekly' && !wd=${wd}`);
 					}
-					const slotItem: ISlotItem = {
+					const slotItem: IHappeningSlotUiItem = {
 						slotID: slot.id,
 						wd: wd,
 						happening: recurring,
@@ -492,7 +495,7 @@ export class TeamDaysProvider {
 
 	private loadEvents(
 		...dates: Date[]
-	): Observable<{ dateKey: string; events: ISlotItem[] }> {
+	): Observable<{ dateKey: string; events: IHappeningSlotUiItem[] }> {
 		console.log('loadEvents()', dates);
 		return EMPTY;
 		// const dateISOs = dates.map(localDateToIso);

@@ -4,7 +4,7 @@ import { dateToIso, isoStringsToDate } from '@sneat/core';
 import { ITeamContext } from '@sneat/team-models';
 import { Subject, takeUntil } from 'rxjs';
 import { TeamDaysProvider } from '../../../../pages/calendar/team-days-provider';
-import { ISlotItem } from '@sneat/extensions/schedulus/shared';
+import { IHappeningSlotUiItem } from '@sneat/extensions/schedulus/shared';
 import { addDays, ScheduleStateService } from '../../schedule-state.service';
 
 @Component({
@@ -24,10 +24,12 @@ export class ScheduleDayTabComponent implements OnDestroy {
 	@Input() team: ITeamContext = { id: '' };
 	@Input() teamDaysProvider?: TeamDaysProvider;
 
-	@Input() onSlotClicked?: (args: { slot: ISlotItem; event: Event }) => void =
-		(args: { slot: ISlotItem; event: Event }) => {
-			console.error('onSlotClicked is not set', args);
-		};
+	@Input() onSlotClicked?: (args: {
+		slot: IHappeningSlotUiItem;
+		event: Event;
+	}) => void = (args: { slot: IHappeningSlotUiItem; event: Event }) => {
+		console.error('onSlotClicked is not set', args);
+	};
 
 	constructor(
 		private readonly scheduleSateService: ScheduleStateService,

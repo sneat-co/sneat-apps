@@ -20,7 +20,7 @@ import {
 	IHappeningWithUiState,
 	ICalendariumTeamDto,
 } from '@sneat/mod-schedulus-core';
-import { ISlotItem } from '@sneat/extensions/schedulus/shared';
+import { IHappeningSlotUiItem } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team-components';
 import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
@@ -213,7 +213,10 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	// 		.catch(this.errorLogger.logErrorHandler('failed to navigate to new happening page'));
 	// };
 
-	readonly onSlotClicked = (args: { slot: ISlotItem; event: Event }): void => {
+	readonly onSlotClicked = (args: {
+		slot: IHappeningSlotUiItem;
+		event: Event;
+	}): void => {
 		console.log('ScheduleComponent.onSlotClicked()', args);
 		if (!this.team) {
 			throw new Error('!team');

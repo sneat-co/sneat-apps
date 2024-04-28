@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ITeamContext } from '@sneat/team-models';
 import { TeamDaysProvider } from '../../../../pages/calendar/team-days-provider';
-import { ISlotItem } from '@sneat/extensions/schedulus/shared';
+import { IHappeningSlotUiItem } from '@sneat/extensions/schedulus/shared';
 
 @Component({
 	selector: 'sneat-week-tab',
@@ -11,11 +11,11 @@ export class ScheduleWeekTabComponent {
 	@Input() team: ITeamContext = { id: '' };
 	@Input() teamDaysProvider?: TeamDaysProvider;
 	@Output() readonly slotClicked = new EventEmitter<{
-		slot: ISlotItem;
+		slot: IHappeningSlotUiItem;
 		event: Event;
 	}>();
 
-	onSlotClicked(args: { slot: ISlotItem; event: Event }): void {
+	onSlotClicked(args: { slot: IHappeningSlotUiItem; event: Event }): void {
 		console.log('ScheduleWeekTabComponent.onSlotClicked()', args);
 		this.slotClicked.emit(args);
 	}

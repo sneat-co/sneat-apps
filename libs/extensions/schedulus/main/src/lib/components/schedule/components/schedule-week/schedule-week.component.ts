@@ -12,7 +12,7 @@ import { WeekdayCode2 } from '@sneat/mod-schedulus-core';
 import { ITeamContext } from '@sneat/team-models';
 import { TeamDaysProvider } from '../../../../pages/calendar';
 import {
-	ISlotItem,
+	IHappeningSlotUiItem,
 	NewHappeningParams,
 	TeamDay,
 } from '@sneat/extensions/schedulus/shared';
@@ -38,7 +38,10 @@ export class ScheduleWeekComponent implements OnChanges {
 
 	@Output() goNew = new EventEmitter<NewHappeningParams>();
 	@Output() dateSelected = new EventEmitter<Date>();
-	@Output() slotClicked = new EventEmitter<{ slot: ISlotItem; event: Event }>();
+	@Output() slotClicked = new EventEmitter<{
+		slot: IHappeningSlotUiItem;
+		event: Event;
+	}>();
 
 	weekdays: Weekday[] = createWeekdays();
 
@@ -52,7 +55,7 @@ export class ScheduleWeekComponent implements OnChanges {
 		this.dateSelected.next(date);
 	}
 
-	onSlotClicked(args: { slot: ISlotItem; event: Event }): void {
+	onSlotClicked(args: { slot: IHappeningSlotUiItem; event: Event }): void {
 		console.log('ScheduleWeekComponent.onSlotClicked()', args);
 		this.slotClicked.emit(args);
 	}

@@ -110,7 +110,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 			return;
 		}
 
-		this.contactusTeamService.watchContactBriefs(this.team).subscribe({
+		this.contactusTeamService.watchContactBriefs(this.team.id).subscribe({
 			next: (contacts) => {
 				this.setTeamContacts(contacts || []);
 				this.applyFilter(this.filter, this.role);
