@@ -53,11 +53,11 @@ export class HappeningSlotParticipantsComponent
 	}
 
 	public ngOnChanges(changes: SimpleChanges): void {
-		console.log(
-			'HappeningSlotParticipantsComponent.ngOnChanges()',
-			this.happeningSlot?.slotID,
-			changes,
-		);
+		// console.log(
+		// 	'HappeningSlotParticipantsComponent.ngOnChanges()',
+		// 	this.happeningSlot?.slotID,
+		// 	changes,
+		// );
 		const { happeningSlot } = changes;
 		if (happeningSlot) {
 			const previous = happeningSlot.previousValue as IHappeningSlotUiItem;
@@ -79,17 +79,17 @@ export class HappeningSlotParticipantsComponent
 	}
 
 	private onTeamIDChanged(teamID: string): void {
-		console.log('HappeningSlotParticipantsComponent.onTeamIDChanged()', teamID);
+		// console.log('HappeningSlotParticipantsComponent.onTeamIDChanged()', teamID);
 		this.contactusService
 			.watchContactBriefs(teamID)
 			.pipe(takeUntil(this.teamID$), takeUntil(this.destroyed))
 			.subscribe({
 				next: (contacts) => {
-					console.log(
-						'HappeningSlotParticipantsComponent.contacts =>',
-						this.happeningSlot?.slotID,
-						contacts,
-					);
+					// console.log(
+					// 	'HappeningSlotParticipantsComponent.contacts =>',
+					// 	this.happeningSlot?.slotID,
+					// 	contacts,
+					// );
 					this.teamContacts = contacts;
 					this.populateContacts();
 				},
@@ -101,12 +101,12 @@ export class HappeningSlotParticipantsComponent
 		if (!teamID) {
 			return;
 		}
-		console.log(
-			'HappeningSlotParticipantsComponent.populateContacts()',
-			teamID,
-			this.happeningSlot?.slotID,
-			this.happeningSlot?.wd,
-		);
+		// console.log(
+		// 	'HappeningSlotParticipantsComponent.populateContacts()',
+		// 	teamID,
+		// 	this.happeningSlot?.slotID,
+		// 	this.happeningSlot?.wd,
+		// );
 		const contacts = (this.relatedItems || []).map((relatedItem) => {
 			const key = relatedItem.keys.find((k) => k.teamID == teamID);
 			const id = key?.itemID;
