@@ -217,14 +217,15 @@ export class HappeningSlotFormComponent
 			};
 		}
 		if (formValue.locationTitle || formValue.locationAddress) {
-			const l: SlotLocation = {};
+			let l: SlotLocation = {};
 			slot = { ...slot, location: l };
 			if (formValue.locationTitle) {
-				l.title = formValue.locationTitle;
+				l = { ...l, title: formValue.locationTitle };
 			}
 			if (formValue.locationAddress) {
-				l.address = formValue.locationAddress;
+				l = { ...l, address: formValue.locationAddress };
 			}
+			slot = { ...slot, location: l };
 		}
 		if (!this.happening?.brief) {
 			throw new Error('!this.happening?.brief');

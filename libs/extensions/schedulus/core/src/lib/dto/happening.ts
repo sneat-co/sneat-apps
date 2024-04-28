@@ -21,14 +21,14 @@ export interface IHappeningBase extends IWithRelatedOnly {
 	readonly title: string;
 	readonly levels?: Level[];
 	readonly contactIDs?: string[];
+	readonly slots?: IHappeningSlot[];
 	// readonly participants?: Record<string, Readonly<IHappeningParticipant>>;
-	slots?: IHappeningSlot[]; // TODO: make readonly
 }
 
 export type IHappeningBrief = IHappeningBase;
 
 export interface IWithDates {
-	dates?: string[];
+	readonly dates?: string[];
 }
 
 export interface IWithTeamDates extends IWithTeamIDs, IWithDates {
@@ -110,12 +110,12 @@ export type HappeningStatus = 'draft' | 'active' | 'canceled' | 'archived';
 export type HappeningKind = 'appointment' | 'activity' | 'task';
 
 export interface SlotLocation {
-	title?: string;
-	address?: string;
+	readonly title?: string;
+	readonly address?: string;
 }
 
 interface IFortnightly {
-	title: string;
+	readonly title: string;
 }
 
 /*
@@ -141,9 +141,9 @@ export interface ITiming {
 }
 
 export interface IHappeningSlotSingleRef {
-	repeats: Repeats;
-	weekday?: WeekdayCode2;
-	week?: number;
+	readonly repeats: Repeats;
+	readonly weekday?: WeekdayCode2;
+	readonly week?: number;
 }
 
 export interface IHappeningSlotTiming extends ITiming {
@@ -190,6 +190,6 @@ export interface ISingleHappeningDto extends IHappeningDto {
 }
 
 export interface DtoSingleTask extends ISingleHappeningDto {
-	isCompleted: boolean;
-	completion?: number; // In percents, max value is 100.
+	readonly isCompleted: boolean;
+	readonly completion?: number; // In percents, max value is 100.
 }

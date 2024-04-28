@@ -11,14 +11,14 @@ import {
 } from '@sneat/mod-schedulus-core';
 
 export interface ISchedulePageParams {
-	member?: string;
-	date?: string;
+	readonly member?: string;
+	readonly date?: string;
 }
 
 export interface NewHappeningParams {
-	type?: HappeningType;
-	wd?: WeekdayCode2;
-	date?: string;
+	readonly type?: HappeningType;
+	readonly wd?: WeekdayCode2;
+	readonly date?: string;
 }
 
 export const sortSlotItems = (a: ISlotItem, b: ISlotItem): number =>
@@ -27,25 +27,25 @@ export const sortSlotItems = (a: ISlotItem, b: ISlotItem): number =>
 		: a.timing.start.time.localeCompare(b.timing.start.time);
 
 export interface ISlotItem {
-	// id: string; Not sure how to make an ID yet
-	slotID: string;
-	adjustment?: IHappeningAdjustment;
-	wd?: WeekdayCode2;
-	// date: string;
-	error?: unknown;
-	happening: IHappeningContext;
-	title: string;
-	timing: ITiming;
-	repeats: Repeats;
-	location?: SlotLocation;
-	participants?: Record<string, ISlotParticipant>;
-	levels?: Level[];
+	// readonly id: string; Not sure how to make an ID yet
+	readonly slotID: string;
+	readonly adjustment?: IHappeningAdjustment;
+	readonly wd?: WeekdayCode2;
+	// readonly date: string;
+	readonly error?: unknown;
+	readonly happening: IHappeningContext;
+	readonly title: string;
+	readonly timing: ITiming;
+	readonly repeats: Repeats;
+	readonly location?: SlotLocation;
+	readonly participants?: Readonly<Record<string, ISlotParticipant>>;
+	readonly levels?: Level[];
 }
 
 export type SlotsByWeekday = Record<string, ISlotItem[]>;
 
 export interface RecurringSlots {
-	byWeekday: SlotsByWeekday;
+	readonly byWeekday: SlotsByWeekday;
 }
 
 export const wd2: WeekdayCode2[] = ['mo', 'tu', 'we', 'th', 'fr', 'sa', 'su'];
