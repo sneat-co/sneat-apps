@@ -3,8 +3,12 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { ContactusServicesModule } from '@sneat/contactus-services';
 import { IAssetCategory } from '@sneat/mod-assetus-core';
-import { AddAssetComponentsModule } from '@sneat/extensions/assetus/components';
+import {
+	AddAssetComponentsModule,
+	AssetusServicesModule,
+} from '@sneat/extensions/assetus/components';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
@@ -22,6 +26,8 @@ import {
 		IonicModule,
 		AddAssetComponentsModule,
 		TeamCoreComponentsModule,
+		ContactusServicesModule,
+		AssetusServicesModule,
 	],
 })
 export class NewAssetPageComponent extends TeamBaseComponent {
