@@ -1,3 +1,5 @@
+import { CommandModule } from '@angular/cli/src/command-builder/command-module';
+import { CommonModule } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -6,7 +8,7 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { IonicModule, ToastController } from '@ionic/angular';
 import { listItemAnimations } from '@sneat/core';
 import { eq } from '@sneat/core';
 import {
@@ -27,6 +29,8 @@ interface IDocumentType {
 
 @Component({
 	selector: 'sneat-documents-by-type',
+	standalone: true,
+	imports: [CommonModule, IonicModule],
 	templateUrl: './documents-by-type.component.html',
 	styleUrls: ['./documents-by-type.component.scss'],
 	animations: [listItemAnimations],

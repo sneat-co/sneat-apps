@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -7,21 +8,18 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { IonicModule, ToastController } from '@ionic/angular';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import {
-	IAssetContext,
-	IAssetDbo,
-	IAssetDocumentContext,
-	IAssetDocumentExtra,
-} from '@sneat/mod-assetus-core';
+import { IAssetDocumentContext } from '@sneat/mod-assetus-core';
 import { DocumentsBaseComponent } from '../documents-base.component';
 
 @Component({
 	selector: 'sneat-documents-list',
 	templateUrl: './documents-list.component.html',
+	standalone: true,
 	...DocumentsBaseComponent.metadata,
+	imports: [CommonModule, IonicModule],
 })
 export class DocumentsListComponent
 	extends DocumentsBaseComponent

@@ -4,9 +4,9 @@ import { Route } from '@angular/router';
 export const docusRoutes: Route[] = [
 	{
 		path: 'documents',
-		loadChildren: () =>
-			import('./pages/documents/documents-page.module').then(
-				(m) => m.DocumentsPageModule,
+		loadComponent: () =>
+			import('./pages/documents/documents-page.component').then(
+				(m) => m.DocumentsPageComponent,
 			),
 		// ...guardRoute,
 	},

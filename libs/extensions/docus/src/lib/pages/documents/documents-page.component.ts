@@ -1,21 +1,44 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { FilterItemComponent } from '@sneat/components';
 import { IMemberContext } from '@sneat/contactus-core';
-import { AssetService } from '@sneat/extensions/assetus/components';
+import { ContactusServicesModule } from '@sneat/contactus-services';
+import {
+	AssetService,
+	AssetusServicesModule,
+} from '@sneat/extensions/assetus/components';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
+	TeamCoreComponentsModule,
 } from '@sneat/team-components';
 import {
 	IAssetContext,
 	IAssetDocumentContext,
 	IAssetDocumentExtra,
 } from '@sneat/mod-assetus-core';
+import { DocumentsByTypeComponent } from './components/documents-by-type/documents-by-type.component';
+import { DocumentsListComponent } from './components/documents-list/documents-list.component';
 
 @Component({
 	selector: 'sneat-documents-page',
 	templateUrl: './documents-page.component.html',
+	standalone: true,
 	providers: [TeamComponentBaseParams],
+	imports: [
+		CommonModule,
+		IonicModule,
+		DocumentsListComponent,
+		FilterItemComponent,
+		DocumentsByTypeComponent,
+		FormsModule,
+		TeamCoreComponentsModule,
+		ContactusServicesModule,
+		AssetusServicesModule,
+	],
 })
 export class DocumentsPageComponent extends TeamBaseComponent {
 	public segment: 'type' | 'owner' | 'list' = 'type';
