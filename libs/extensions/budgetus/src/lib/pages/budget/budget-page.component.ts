@@ -1,6 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
 import { Member } from '@sneat/contactus-core';
+import { ContactusServicesModule } from '@sneat/contactus-services';
 import { Period } from '@sneat/dto';
 import { AssetGroup } from '@sneat/mod-assetus-core';
 import {
@@ -14,6 +18,8 @@ type LiabilitiesMode = 'incomes' | 'expenses' | 'balance';
 @Component({
 	selector: 'sneat-budget-page',
 	templateUrl: './budget-page.component.html',
+	standalone: true,
+	imports: [CommonModule, FormsModule, IonicModule, ContactusServicesModule],
 	providers: [TeamComponentBaseParams],
 })
 export class BudgetPageComponent extends TeamBaseComponent {

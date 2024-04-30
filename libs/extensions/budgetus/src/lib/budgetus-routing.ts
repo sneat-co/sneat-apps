@@ -4,8 +4,10 @@ import { Route } from '@angular/router';
 export const budgetusRoutes: Route[] = [
 	{
 		path: 'budget',
-		loadChildren: () =>
-			import('./pages/budget/budget.module').then((m) => m.BudgetPageModule),
+		loadComponent: () =>
+			import('./pages/budget/budget-page.component').then(
+				(m) => m.BudgetPageComponent,
+			),
 		// ...guardRoute,
 	},
 ];
