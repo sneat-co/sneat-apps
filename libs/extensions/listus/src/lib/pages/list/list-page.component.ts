@@ -1,3 +1,4 @@
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import {
 	AfterViewInit,
 	ChangeDetectorRef,
@@ -5,11 +6,18 @@ import {
 	NgZone,
 	ViewChild,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { ContactusServicesModule } from '@sneat/contactus-services';
+import { SharedWithModule } from '@sneat/contactus-shared';
+import { ListusCoreServicesModule } from '../../services/listus-core-services.module';
+import { TeamComponentBaseParams } from '@sneat/team-components';
 import { IListInfo, IListItemBrief, IMovie, ListType } from '../../dto';
 import { IListContext } from '../../contexts';
 import { takeUntil } from 'rxjs';
 import { ListusComponentBaseParams } from '../../listus-component-base-params';
+import { MovieCardComponent } from '../../movie-card';
 import {
 	IDeleteListItemsRequest,
 	IReorderListItemsRequest,
@@ -18,15 +26,35 @@ import {
 import { ListService } from '../../services/list.service';
 import { IListusAppStateService } from '../../services/listus-app-state.service';
 import { BaseListPage } from '../base-list-page';
+import { CopyListItemsPageModule } from '../dialogs/copy-list-items/copy-list-items.module';
 import { ListDialogsService } from '../dialogs/ListDialogs.service';
 import { IListItemWithUiState } from './list-item-with-ui-state';
+import { ListItemComponent } from './list-item/list-item.component';
 import { NewListItemComponent } from './new-list-item.component';
 
 @Component({
 	selector: 'sneat-list',
 	templateUrl: './list-page.component.html',
+	standalone: true,
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		CopyListItemsPageModule,
+		MovieCardComponent,
+		SharedWithModule,
+		ListusCoreServicesModule,
+		NgOptimizedImage,
+		ContactusServicesModule,
+		ListItemComponent,
+		NewListItemComponent,
+	],
 	styleUrls: ['./list-page.component.scss'],
-	providers: [ListusComponentBaseParams],
+	providers: [
+		TeamComponentBaseParams,
+		ListusComponentBaseParams,
+		ListDialogsService,
+	],
 })
 export class ListPageComponent extends BaseListPage implements AfterViewInit {
 	public isPersisting = false;

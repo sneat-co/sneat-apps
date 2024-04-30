@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -6,7 +7,8 @@ import {
 	Output,
 	ViewChild,
 } from '@angular/core';
-import { IonInput, ToastController } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
+import { IonicModule, IonInput, ToastController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { RandomIdService } from '@sneat/random';
 import { IListContext } from '../../contexts';
@@ -20,6 +22,8 @@ import { IListItemWithUiState } from './list-item-with-ui-state';
 
 @Component({
 	selector: 'sneat-new-list-item',
+	standalone: true,
+	imports: [CommonModule, IonicModule, FormsModule],
 	template: `
 		<form (ngSubmit)="add()">
 			<ion-item>

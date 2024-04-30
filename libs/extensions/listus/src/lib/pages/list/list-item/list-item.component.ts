@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IonItemSliding } from '@ionic/angular';
+import { IonicModule, IonItemSliding } from '@ionic/angular';
 import { listItemAnimations } from '@sneat/core';
 import { IListItemBrief } from '../../../dto';
 import { IListContext } from '../../../contexts';
@@ -15,6 +16,8 @@ import { IListItemWithUiState } from '../list-item-with-ui-state';
 
 @Component({
 	selector: 'sneat-list-item',
+	standalone: true,
+	imports: [CommonModule, IonicModule],
 	templateUrl: './list-item.component.html',
 	styleUrls: ['./list-item.component.scss'],
 	animations: [listItemAnimations],

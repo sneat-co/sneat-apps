@@ -1,19 +1,41 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { IonInput, IonItemSliding, PopoverController } from '@ionic/angular';
+import {
+	IonicModule,
+	IonInput,
+	IonItemSliding,
+	PopoverController,
+} from '@ionic/angular';
+import { ContactusServicesModule } from '@sneat/contactus-services';
 import { APP_INFO, eq, IAppInfo } from '@sneat/core';
+import { ListusCoreServicesModule } from '../../services/listus-core-services.module';
 import { IListGroup, IListInfo, ListType } from '../../dto';
-import { TeamBaseComponent } from '@sneat/team-components';
+import {
+	TeamBaseComponent,
+	TeamComponentBaseParams,
+} from '@sneat/team-components';
 import { createShortTeamInfoFromDto } from '@sneat/team-models';
 import { Subscription } from 'rxjs';
 import { ListusComponentBaseParams } from '../../listus-component-base-params';
-import { IListusAppStateService } from '../../services/listus-app-state.service';
+import { IListusAppStateService } from '../../services';
 import { NewListDialogComponent } from './new-list-dialog.component';
+import { NewListDialogModule } from './new-list-dialog.module';
 
 @Component({
 	selector: 'sneat-lists-page',
 	templateUrl: './lists-page.component.html',
-	providers: [ListusComponentBaseParams],
+	standalone: true,
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		ListusCoreServicesModule,
+		NewListDialogModule,
+		ContactusServicesModule,
+	],
+	providers: [TeamComponentBaseParams, ListusComponentBaseParams],
 })
 export class ListsPageComponent extends TeamBaseComponent {
 	@ViewChild('newListTitle', { static: false }) newListTitle?: IonInput;
