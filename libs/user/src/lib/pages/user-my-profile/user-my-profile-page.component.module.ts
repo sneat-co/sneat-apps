@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { UserCountryComponent } from '@sneat/components';
+import { ContactusServicesModule } from '@sneat/contactus-services';
 import { TeamsCardModule } from '@sneat/team-components';
 import { UserMyProfilePageComponent } from './user-my-profile-page.component';
 import { UserMyProfilePageRoutingModule } from './user-my-profile-page.routing.module';
@@ -13,6 +14,7 @@ import { UserMyProfilePageRoutingModule } from './user-my-profile-page.routing.m
 		UserMyProfilePageRoutingModule,
 		TeamsCardModule,
 		UserCountryComponent,
+		ContactusServicesModule,
 	],
 	declarations: [UserMyProfilePageComponent],
 })

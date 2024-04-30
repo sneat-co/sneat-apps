@@ -5,6 +5,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { TeamMemberType, TeamMemberTypeEnum } from '@sneat/auth-models';
 import {
+	ContactusServicesModule,
 	ContactusTeamService,
 	MemberGroupService,
 	MemberService,
@@ -53,6 +54,7 @@ interface MembersGroup {
 		FormsModule,
 		TeamCoreComponentsModule,
 		MembersListComponent,
+		ContactusServicesModule,
 	],
 })
 export class MembersPageComponent
