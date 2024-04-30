@@ -24,7 +24,10 @@ import {
 	TeamCoreComponentsModule,
 	TeamItemsBaseComponent,
 } from '@sneat/team-components';
-import { ContactusTeamService } from '@sneat/contactus-services';
+import {
+	ContactusServicesModule,
+	ContactusTeamService,
+} from '@sneat/contactus-services';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -42,6 +45,7 @@ import { Subscription } from 'rxjs';
 		SneatPipesModule,
 		ContactsListModule,
 		ContactsByTypeComponent,
+		ContactusServicesModule,
 	],
 })
 export class ContactsPageComponent extends TeamItemsBaseComponent {

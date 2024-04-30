@@ -27,9 +27,7 @@ export const contactContextFromBrief = (
 	team,
 });
 
-@Injectable({
-	providedIn: 'root',
-})
+@Injectable()
 export class MemberService extends ContactService {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -37,7 +35,6 @@ export class MemberService extends ContactService {
 		contactusTeamService: ContactusTeamService,
 		sneatApiService: SneatApiService,
 		userService: SneatUserService,
-		private readonly teamService: TeamService,
 	) {
 		super(afs, sneatApiService, contactusTeamService, userService);
 	}

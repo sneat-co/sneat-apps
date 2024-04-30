@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgModule } from '@angular/core';
 import { TeamComponentBaseParams } from '@sneat/team-components';
 import {
 	ContactService,
@@ -18,3 +18,8 @@ export class ContactComponentBaseParams {
 		public readonly contactusTeamService: ContactusTeamService,
 	) {}
 }
+
+@NgModule({
+	providers: [ContactComponentBaseParams, TeamComponentBaseParams],
+})
+export class ContactComponentBaseParamsModule {}

@@ -4,7 +4,7 @@ import { IContactRoleBrief } from '@sneat/contactus-core';
 import { Observable, of } from 'rxjs';
 import { defaultFamilyContactGroups } from './contact-group-service';
 
-@Injectable({ providedIn: 'root' }) // TODO: Dedicated module?
+@Injectable()
 export class ContactRoleService {
 	getContactRoleByID(id: string): Observable<IIdAndBrief<IContactRoleBrief>> {
 		for (const cg of defaultFamilyContactGroups) {

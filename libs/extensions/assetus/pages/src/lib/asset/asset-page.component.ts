@@ -3,13 +3,16 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { ContactusServicesModule } from '@sneat/contactus-services';
 import { LiabilityServiceType } from '@sneat/mod-assetus-core';
 import {
 	AssetBasePage,
 	AssetComponentBaseParams,
+	AssetusServicesModule,
 	ModuleAssetRealEstate,
 	VehicleCardComponent,
 } from '@sneat/extensions/assetus/components';
+import { TeamComponentBaseParams } from '@sneat/team-components';
 
 interface LiabilityServiceBrief {
 	type: LiabilityServiceType;
@@ -19,7 +22,7 @@ interface LiabilityServiceBrief {
 @Component({
 	selector: 'sneat-asset-page',
 	templateUrl: './asset-page.component.html',
-	providers: [AssetComponentBaseParams],
+	providers: [TeamComponentBaseParams, AssetComponentBaseParams],
 	standalone: true,
 	imports: [
 		CommonModule,
@@ -28,6 +31,8 @@ interface LiabilityServiceBrief {
 		ModuleAssetRealEstate,
 		VehicleCardComponent,
 		IonicModule,
+		ContactusServicesModule,
+		AssetusServicesModule,
 	],
 })
 export class AssetPageComponent extends AssetBasePage {

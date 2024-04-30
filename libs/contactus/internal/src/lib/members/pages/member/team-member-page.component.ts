@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import {
 	ContactComponentBaseParams,
+	ContactComponentBaseParamsModule,
 	ContactDetailsComponent,
 } from '@sneat/contactus-shared';
 import { MemberRelationship } from '@sneat/contactus-core';
@@ -15,7 +16,7 @@ import { MemberBasePage } from '../member-base-page';
 @Component({
 	selector: 'sneat-team-member-page',
 	templateUrl: './team-member-page.component.html',
-	providers: [MemberComponentBaseParams, ContactComponentBaseParams],
+	providers: [MemberComponentBaseParams],
 	standalone: true,
 	imports: [
 		CommonModule,
@@ -23,6 +24,7 @@ import { MemberBasePage } from '../member-base-page';
 		IonicModule,
 		SneatPipesModule,
 		ContactDetailsComponent,
+		ContactComponentBaseParamsModule,
 	],
 })
 export class TeamMemberPageComponent

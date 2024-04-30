@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ParamMap } from '@angular/router';
 import { distinctUntilChanged, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ITeamContext } from '@sneat/team-models';

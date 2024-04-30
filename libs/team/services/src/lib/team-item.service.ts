@@ -34,6 +34,9 @@ abstract class TeamItemBaseService<Brief, Dto extends Brief> {
 		if (!this.collectionName) {
 			throw new Error('collectionName is required');
 		}
+		console.log(
+			`TeamItemBaseService.constructor() collectionName=${this.collectionName}`,
+		);
 		this.sfs = new SneatFirestoreService<Brief, Dto>();
 	}
 
@@ -183,6 +186,7 @@ export class GlobalTeamItemService<
 	}
 }
 
+// intentionally not abstract
 export class ModuleTeamItemService<
 	Brief,
 	Dto extends Brief,

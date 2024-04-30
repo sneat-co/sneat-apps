@@ -1,3 +1,4 @@
+export * from './team-service.module';
 export * from './team-nav.service';
 export * from './team.service';
 export * from './team-item.service';

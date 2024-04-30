@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgModule } from '@angular/core';
 import { TeamComponentBaseParams } from '@sneat/team-components';
 import { HappeningService } from '@sneat/team-services';
 
@@ -9,3 +9,8 @@ export class HappeningComponentBaseParams {
 		public readonly happeningService: HappeningService,
 	) {}
 }
+
+@NgModule({
+	providers: [HappeningComponentBaseParams, TeamComponentBaseParams],
+})
+export class HappeningComponentBaseParamsModule {}

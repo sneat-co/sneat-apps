@@ -16,9 +16,7 @@ import { ModuleTeamItemService } from '@sneat/team-services';
 import { Observable } from 'rxjs';
 import { ICreateAssetRequest, IUpdateAssetRequest } from './asset-service.dto';
 
-@Injectable({
-	providedIn: 'root',
-})
+@Injectable()
 export class AssetService extends ModuleTeamItemService<
 	IAssetBrief,
 	IAssetDboBase<string, IAssetExtra<string>>

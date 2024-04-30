@@ -25,6 +25,7 @@ import {
 	TeamCoreComponentsModule,
 } from '@sneat/team-components';
 import { IMemberContext } from '@sneat/contactus-core';
+import { CalendariumServicesModule } from '../../services/calendarium-services.module';
 
 @Component({
 	selector: 'sneat-schedule-page',
@@ -39,6 +40,7 @@ import { IMemberContext } from '@sneat/contactus-core';
 		TeamCoreComponentsModule,
 		ScheduleComponentModule,
 		ContactusServicesModule,
+		CalendariumServicesModule,
 	],
 })
 export class CalendarPageComponent extends TeamBaseComponent {

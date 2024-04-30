@@ -3,8 +3,13 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { ContactusServicesModule } from '@sneat/contactus-services';
+import { TeamComponentBaseParams } from '@sneat/team-components';
 import { HappeningServiceModule } from '@sneat/team-services';
-import { HappeningComponentBaseParams } from '../../components/happening-component-base-params';
+import {
+	HappeningComponentBaseParams,
+	HappeningComponentBaseParamsModule,
+} from '../../components/happening-component-base-params';
 import { HappeningFormComponent } from '../../components/happening-form/happening-form.component';
 import { HappeningSlotComponentsModule } from '../../components/happening-slot-components.module';
 import { HappeningBasePage } from './happening-base-page';
@@ -20,8 +25,9 @@ import { HappeningBasePage } from './happening-base-page';
 		HappeningSlotComponentsModule,
 		HappeningServiceModule,
 		HappeningFormComponent,
+		ContactusServicesModule,
+		HappeningComponentBaseParamsModule,
 	],
-	providers: [HappeningComponentBaseParams], // TODO: get rid of it by using a dedicated module
 })
 export class HappeningPageComponent extends HappeningBasePage {
 	constructor(route: ActivatedRoute, params: HappeningComponentBaseParams) {

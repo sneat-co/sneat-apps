@@ -11,6 +11,7 @@ import {
 	InviteLinksComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team-components';
+import { TeamServiceModule } from '@sneat/team-services';
 import { MembersComponent } from '../members/members.component';
 import { TeamPageBaseComponent } from './TeamPageBaseComponent';
 
@@ -29,6 +30,7 @@ import { TeamPageBaseComponent } from './TeamPageBaseComponent';
 		MembersListComponent,
 		ContactusServicesModule,
 		MembersComponent,
+		TeamServiceModule,
 	],
 })
 export class TeamPageComponent extends TeamPageBaseComponent {

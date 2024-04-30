@@ -42,7 +42,7 @@ const teamBriefFromUserTeamInfo = (v: IUserTeamBrief): ITeamBrief => ({
 // 	// watchRecord()
 // }
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class TeamService {
 	private userID?: string;
 
@@ -115,9 +115,9 @@ export class TeamService {
 			.pipe(map((response) => response.team));
 	}
 
-	public getTeam(ref: ITeamRef): Observable<ITeamContext> {
-		return this.watchTeam(ref).pipe(first());
-	}
+	// public getTeam(ref: ITeamRef): Observable<ITeamContext> {
+	// 	return this.watchTeam(ref).pipe(first());
+	// }
 
 	public watchTeam(ref: ITeamRef): Observable<ITeamContext> {
 		console.log(`TeamService.watchTeam(ref=${JSON.stringify(ref)})`);

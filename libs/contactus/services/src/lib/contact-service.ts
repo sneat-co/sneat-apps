@@ -27,7 +27,7 @@ import {
 	validateContactRequest,
 } from './dto';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ContactService extends ModuleTeamItemService<
 	IContactBrief,
 	IContactDto

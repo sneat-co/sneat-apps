@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
@@ -10,26 +10,25 @@ import {
 } from '@sneat/components';
 import {
 	ContactComponentBaseParams,
+	ContactComponentBaseParamsModule,
 	ContactContactsComponent,
 	ContactDetailsComponent,
 	ContactRolesInputModule,
 	ContactsListModule,
 } from '@sneat/contactus-shared';
-import { eq, SneatNavService } from '@sneat/core';
-import { IAddress, IContactContext } from '@sneat/contactus-core';
+import { SneatNavService } from '@sneat/core';
+import { IAddress } from '@sneat/contactus-core';
 import {
 	ContactService,
-	ContactusTeamService,
+	ContactusServicesModule,
 	IContactRequest,
 	IUpdateContactRequest,
 } from '@sneat/contactus-services';
-import { distinctUntilChanged, map } from 'rxjs';
 import { ContactBasePage } from '../contact-base-page';
 
 @Component({
 	selector: 'sneat-contact-page',
 	templateUrl: './contact-page.component.html',
-	providers: [ContactComponentBaseParams],
 	standalone: true,
 	imports: [
 		CommonModule,
@@ -42,10 +41,12 @@ import { ContactBasePage } from '../contact-base-page';
 		ContactRolesInputModule,
 		ContactContactsComponent,
 		ContactDetailsComponent,
+		ContactusServicesModule,
+		ContactComponentBaseParamsModule,
 	],
 })
 export class ContactPageComponent extends ContactBasePage {
-	public segment: 'contact' | 'members' | 'assets' = 'contact';
+	protected segment: 'contact' | 'members' | 'assets' = 'contact';
 
 	constructor(
 		route: ActivatedRoute,
