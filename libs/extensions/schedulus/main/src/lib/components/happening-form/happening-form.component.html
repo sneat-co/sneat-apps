@@ -54,22 +54,7 @@
 		</ion-card>
 
 		<ng-container *ngIf="happening?.id || happening?.brief?.slots">
-			<ion-card>
-				<ion-item-divider color="light">
-					<ion-label>Pricing</ion-label>
-				</ion-item-divider>
-				<ion-item>
-					<ion-input
-						type="number"
-						[label]="priceLabel"
-						style="text-align: right"
-					/>
-					<ion-select value="EUR" disabled="disabled">
-						<ion-select-option value="EUR">EUR</ion-select-option>
-						<ion-select-option value="USD">USD</ion-select-option>
-					</ion-select>
-				</ion-item>
-			</ion-card>
+			<sneat-happening-pricing [happening]="happening" />
 
 			<sneat-happening-participants
 				[team]="team"

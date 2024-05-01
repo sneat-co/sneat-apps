@@ -5,7 +5,7 @@ import { IContactBrief } from '@sneat/contactus-core';
 @Pipe({ name: 'selectedMembers' })
 export class SelectedMembersPipe implements PipeTransform {
 	transform(
-		selectedIDs: string[],
+		selectedIDs: readonly string[],
 		memberBriefs?: Record<string, IContactBrief>,
 	): IIdAndBrief<IContactBrief>[] {
 		return selectedIDs.map((id) => {

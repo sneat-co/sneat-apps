@@ -21,10 +21,10 @@ export class HappeningSlotsComponent {
 
 	@Output() addSlotDismissed = new EventEmitter<void>();
 	@Output() slotAdded = new EventEmitter<IHappeningSlot>();
-	@Output() slotRemoved = new EventEmitter<IHappeningSlot[]>();
+	@Output() slotRemoved = new EventEmitter<readonly IHappeningSlot[]>();
 	@Output() slotSelected = new EventEmitter<IHappeningSlot>();
 
-	get slots(): IHappeningSlot[] | undefined {
+	get slots(): readonly IHappeningSlot[] | undefined {
 		return this.happening?.brief?.slots;
 	}
 

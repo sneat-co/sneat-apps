@@ -56,6 +56,11 @@
 	--inner-padding-end: 0.25em;
 }
 
+.sneat-no-end-padding-margin {
+	--inner-padding-end: 0;
+	--margin-end: 0;
+}
+
 .sneat-no-end-padding {
 	--inner-padding-end: 0;
 }

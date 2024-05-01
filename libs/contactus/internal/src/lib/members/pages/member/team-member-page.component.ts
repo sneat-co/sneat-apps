@@ -4,12 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
+import { ContactusServicesModule } from '@sneat/contactus-services';
 import {
 	ContactComponentBaseParams,
 	ContactComponentBaseParamsModule,
 	ContactDetailsComponent,
 } from '@sneat/contactus-shared';
 import { MemberRelationship } from '@sneat/contactus-core';
+import { TeamComponentBaseParams } from '@sneat/team-components';
 import { MemberComponentBaseParams } from '../../member-component-base-params';
 import { MemberBasePage } from '../member-base-page';
 
@@ -25,6 +27,7 @@ import { MemberBasePage } from '../member-base-page';
 		SneatPipesModule,
 		ContactDetailsComponent,
 		ContactComponentBaseParamsModule,
+		ContactusServicesModule,
 	],
 })
 export class TeamMemberPageComponent

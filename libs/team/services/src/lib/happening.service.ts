@@ -126,13 +126,6 @@ export class HappeningService {
 				() => 'Single occurrence happening cannot have recurring slots',
 			);
 		}
-		request = {
-			...request,
-			happening: {
-				...request.happening,
-				contactIDs: ['*'], // This is required but will be ignored
-			},
-		};
 		try {
 			validateHappeningDto(request.happening);
 		} catch (e) {

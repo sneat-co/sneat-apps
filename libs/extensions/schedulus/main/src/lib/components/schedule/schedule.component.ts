@@ -372,7 +372,7 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 	protected hasRepeats(
 		repeats: readonly string[],
-		slots?: IHappeningSlot[],
+		slots?: readonly IHappeningSlot[],
 	): boolean {
 		return (
 			!repeats.length || !!slots?.some((slot) => repeats.includes(slot.repeats))

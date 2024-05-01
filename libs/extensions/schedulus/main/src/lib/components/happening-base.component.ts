@@ -276,28 +276,6 @@ This operation can NOT be undone.`)
 		};
 		this.happeningService.removeParticipant(request).subscribe({
 			next: () => {
-				if (this.happening?.brief?.contactIDs) {
-					this.happening = {
-						...this.happening,
-						brief: {
-							...this.happening.brief,
-							contactIDs: this.happening.brief.contactIDs.filter(
-								(id) => id !== member.id,
-							),
-						},
-					};
-				}
-				if (this.happening?.dto?.contactIDs) {
-					this.happening = {
-						...this.happening,
-						dto: {
-							...this.happening.dto,
-							contactIDs: this.happening.dto.contactIDs.filter(
-								(id) => id !== member.id,
-							),
-						},
-					};
-				}
 				this.changeDetectorRef.markForCheck();
 			},
 			error: this.errorLogger.logErrorHandler(

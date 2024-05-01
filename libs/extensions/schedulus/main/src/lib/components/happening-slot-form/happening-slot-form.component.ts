@@ -58,7 +58,7 @@ export class HappeningSlotFormComponent
 
 	@Input() isToDo = false;
 
-	get slots(): IHappeningSlot[] | undefined {
+	get slots(): readonly IHappeningSlot[] | undefined {
 		return this.happening?.brief?.slots;
 	}
 

@@ -43,15 +43,15 @@
 	/>
 	<ion-item>
 		<ion-label color="medium">
-			<sneat-members-as-badges
-				*ngIf="happening?.brief?.contactIDs?.length || 0 > 1"
-				[members]="
-					happening?.dto?.contactIDs || happening?.brief?.contactIDs || []
-						| selectedMembers: contactusTeam?.dto?.contacts
-				"
-				(deleteMember)="removeMember($event)"
-			/>
-			@if (!happening?.brief?.contactIDs?.length || 0 > 1) {
+			@if (!hasRelatedContacts()) {
+				<sneat-members-as-badges
+					[members]="
+						getRelatedContactIDs()
+							| selectedMembers: contactusTeam?.dto?.contacts
+					"
+					(deleteMember)="removeMember($event)"
+				/>
+			} @else {
 				Nobody assigned
 			}
 		</ion-label>

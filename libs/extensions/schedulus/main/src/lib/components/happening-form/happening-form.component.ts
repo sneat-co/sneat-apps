@@ -37,6 +37,7 @@ import { takeUntil } from 'rxjs';
 import { HappeningParticipantsComponent } from '../happening-participants/happening-participants.component';
 import { HappeningSlotComponentsModule } from '../happening-slot-components.module';
 import { HappeningSlotsComponent } from '../happening-slots/happening-slots.component';
+import { HappeningPricingComponent } from './happening-pricing.component';
 
 @Component({
 	selector: 'sneat-happening-form',
@@ -51,6 +52,7 @@ import { HappeningSlotsComponent } from '../happening-slots/happening-slots.comp
 		SneatPipesModule,
 		HappeningServiceModule,
 		HappeningParticipantsComponent,
+		HappeningPricingComponent,
 	],
 })
 export class HappeningFormComponent
@@ -72,7 +74,7 @@ export class HappeningFormComponent
 
 	isCreating = false;
 
-	public get slots(): IHappeningSlot[] | undefined {
+	public get slots(): readonly IHappeningSlot[] | undefined {
 		return this.happening?.brief?.slots;
 	}
 
@@ -91,12 +93,6 @@ export class HappeningFormComponent
 	private readonly logErrorHandler = this.errorLogger.logErrorHandler;
 	private readonly logError = this.errorLogger.logError;
 	private readonly hasNavHistory: boolean;
-
-	protected get priceLabel(): string {
-		return this.happening?.brief?.type === 'recurring'
-			? 'Price per visit'
-			: 'Price';
-	}
 
 	public isToDo = false;
 

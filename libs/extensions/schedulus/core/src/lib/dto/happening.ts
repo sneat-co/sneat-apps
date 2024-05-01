@@ -13,6 +13,28 @@ export interface IHappeningParticipant {
 	// readonly title: string;
 }
 
+export interface ITerm {
+	readonly length: number;
+	readonly unit:
+		| 'single'
+		| 'second'
+		| 'minute'
+		| 'hour'
+		| 'day'
+		| 'week'
+		| 'month'
+		| 'quarter'
+		| 'year';
+}
+
+export interface IHappeningPrice {
+	readonly term: ITerm;
+	readonly amount?: {
+		readonly currency: string;
+		readonly value: number;
+	};
+}
+
 export interface IHappeningBase extends IWithRelatedOnly {
 	readonly type: HappeningType;
 	readonly status: HappeningStatus;
@@ -20,8 +42,9 @@ export interface IHappeningBase extends IWithRelatedOnly {
 	readonly activityType?: ActivityType; // TODO: Is it same as HappeningKind?
 	readonly title: string;
 	readonly levels?: Level[];
-	readonly contactIDs?: string[];
-	readonly slots?: IHappeningSlot[];
+	// readonly contactIDs?: readonly string[]; // obsolete
+	readonly slots?: readonly IHappeningSlot[];
+	readonly prices?: readonly IHappeningPrice[];
 	// readonly participants?: Record<string, Readonly<IHappeningParticipant>>;
 }
 
@@ -186,7 +209,6 @@ export interface ISingleHappeningDto extends IHappeningDto {
 	readonly dtStarts?: number; // UTC
 	readonly dtEnds?: number; // UTC
 	readonly weekdays?: WeekdayCode2[];
-	readonly prices?: IPrice[];
 }
 
 export interface DtoSingleTask extends ISingleHappeningDto {
