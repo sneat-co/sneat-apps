@@ -13,23 +13,26 @@ export interface IHappeningParticipant {
 	// readonly title: string;
 }
 
+export type TermUnit =
+	| 'single'
+	| 'second'
+	| 'minute'
+	| 'hour'
+	| 'day'
+	| 'week'
+	| 'month'
+	| 'quarter'
+	| 'year';
+
 export interface ITerm {
 	readonly length: number;
-	readonly unit:
-		| 'single'
-		| 'second'
-		| 'minute'
-		| 'hour'
-		| 'day'
-		| 'week'
-		| 'month'
-		| 'quarter'
-		| 'year';
+	readonly unit: TermUnit;
 }
 
 export interface IHappeningPrice {
+	readonly id: string;
 	readonly term: ITerm;
-	readonly amount?: {
+	readonly amount: {
 		readonly currency: string;
 		readonly value: number;
 	};

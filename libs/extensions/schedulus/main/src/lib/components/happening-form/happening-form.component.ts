@@ -37,7 +37,7 @@ import { takeUntil } from 'rxjs';
 import { HappeningParticipantsComponent } from '../happening-participants/happening-participants.component';
 import { HappeningSlotComponentsModule } from '../happening-slot-components.module';
 import { HappeningSlotsComponent } from '../happening-slots/happening-slots.component';
-import { HappeningPricingComponent } from './happening-pricing.component';
+import { HappeningPricesComponent } from './happening-prices/happening-prices.component';
 
 @Component({
 	selector: 'sneat-happening-form',
@@ -52,7 +52,7 @@ import { HappeningPricingComponent } from './happening-pricing.component';
 		SneatPipesModule,
 		HappeningServiceModule,
 		HappeningParticipantsComponent,
-		HappeningPricingComponent,
+		HappeningPricesComponent,
 	],
 })
 export class HappeningFormComponent

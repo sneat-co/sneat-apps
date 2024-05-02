@@ -1,0 +1,38 @@
+<ion-card>
+	<ion-item-divider color="light">
+		<ion-label>Pricing 2</ion-label>
+		<ion-buttons slot="end">
+			<ion-button (click)="showNewPriceForm = true">
+				<ion-icon name="add" slot="start" />
+				<ion-label>Add price</ion-label>
+			</ion-button>
+		</ion-buttons>
+	</ion-item-divider>
+	@if (!happening?.dto) {
+		<ion-item>
+			<ion-spinner slot="start" name="lines-small" />
+			<ion-label>Loading...</ion-label>
+		</ion-item>
+	} @else {
+		@for (
+			price of happening?.dto?.prices || happening?.brief?.prices || [];
+			track price.id
+		) {
+			<ion-item>
+				<ion-label>
+					{{ price.amount.value }} {{ price.amount.currency | currency }} for
+					{{ price.term.length }} {{ price.term.unit }}
+				</ion-label>
+			</ion-item>
+		} @empty {
+			<ion-item *ngIf="!showNewPriceForm">
+				<ion-label>No pricing information available</ion-label>
+			</ion-item>
+		}
+	}
+	<sneat-happening-price-form
+		*ngIf="showNewPriceForm"
+		[happening]="happening"
+		(canceled)="onNewPriceFormCanceled()"
+	/>
+</ion-card>

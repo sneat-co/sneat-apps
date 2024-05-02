@@ -1,16 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
 
 @Component({
-	selector: 'sneat-happening-pricing',
-	templateUrl: 'happening-pricing.component.html',
+	selector: 'sneat-happening-price-form',
+	templateUrl: 'happening-price-form.component.html',
 	standalone: true,
-	imports: [CommonModule, IonicModule],
+	imports: [CommonModule, IonicModule, ReactiveFormsModule],
 })
-export class HappeningPricingComponent {
+export class HappeningPriceFormComponent {
 	@Input({ required: true }) happening?: IHappeningContext;
+
+	@Output() readonly canceled = new EventEmitter<void>();
 
 	protected get priceLabel(): string {
 		return this.happening?.brief?.type === 'recurring'
