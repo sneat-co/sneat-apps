@@ -120,7 +120,8 @@ ion-item.ion-item-no-border {
 }
 
 ion-list.last-child-no-border ion-item:last-child {
-	--inner-border-width: 0;
+	--border: none;
+	--inner-borderh: none;
 }
 
 ion-badge.badge-count {

@@ -29,13 +29,17 @@ export interface ITerm {
 	readonly unit: TermUnit;
 }
 
+export type CurrencyCode = 'USD' | 'EUR' | 'RUB' | string;
+
+export interface IAmount {
+	readonly currency: CurrencyCode;
+	readonly value: number;
+}
+
 export interface IHappeningPrice {
 	readonly id: string;
 	readonly term: ITerm;
-	readonly amount: {
-		readonly currency: string;
-		readonly value: number;
-	};
+	readonly amount: IAmount;
 }
 
 export interface IHappeningBase extends IWithRelatedOnly {

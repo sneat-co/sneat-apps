@@ -62,4 +62,6 @@ export class RadioGroupToSelectComponent implements ControlValueAccessor {
 	writeValue(obj: object | undefined): void {
 		this.value = obj;
 	}
+
+	protected readonly screenLeft = screenLeft;
 }

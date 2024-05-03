@@ -1,43 +1,48 @@
-@if (selectOptions) {
+@if (value) {
+	<ion-item>
+		<ion-select
+			[label]="selectLabel || label"
+			(ionBlur)="onTouched()"
+			[(ngModel)]="value"
+			*ngIf="!!value"
+			interface="popover"
+			(ionChange)="onValChanged($event)"
+		>
+			@for (o of selectOptions; track o.value) {
+				<ion-select-option [value]="o.value">{{
+					o.title || o.value
+				}}</ion-select-option>
+			}
+		</ion-select>
+	</ion-item>
+} @else if (selectOptions) {
 	<ion-radio-group
 		[disabled]="disabled"
 		(blur)="onTouched()"
 		[(ngModel)]="value"
-		*ngIf="!value; else useSelect"
 		(ionChange)="onValChanged($event)"
 	>
 		<ion-list lines="full">
 			<ion-list-header>
-				<ion-label style="font-weight: bold"
+				<ion-label *ngIf="!disabled" style="font-weight: bold"
 					>{{ radioGroupLabel || label }}
 				</ion-label>
+				<ion-label *ngIf="disabled" color="medium">{{
+					radioGroupLabel || label
+				}}</ion-label>
 			</ion-list-header>
-			<ion-item *ngFor="let o of selectOptions">
-				<ion-radio
-					[slot]="slot"
-					[value]="o.value"
-					[disabled]="disabled"
-					labelPlacement="end"
-					justify="start"
-					>{{ o.title || o.value }}</ion-radio
-				>
-			</ion-item>
+			@for (o of selectOptions; track o.value) {
+				<ion-item>
+					<ion-radio
+						[slot]="slot"
+						[value]="o.value"
+						[disabled]="disabled"
+						labelPlacement="end"
+						justify="start"
+						>{{ o.title || o.value }}
+					</ion-radio>
+				</ion-item>
+			}
 		</ion-list>
 	</ion-radio-group>
-	<ng-template #useSelect>
-		<ion-item>
-			<ion-label>{{ selectLabel || label }}</ion-label>
-			<ion-select
-				(ionBlur)="onTouched()"
-				[(ngModel)]="value"
-				*ngIf="!!value"
-				interface="popover"
-				(ionChange)="onValChanged($event)"
-			>
-				<ion-select-option *ngFor="let o of selectOptions" [value]="o.value">
-					{{ o.title || o.value }}
-				</ion-select-option>
-			</ion-select>
-		</ion-item>
-	</ng-template>
 }
