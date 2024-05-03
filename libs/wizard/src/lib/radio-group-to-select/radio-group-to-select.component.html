@@ -1,5 +1,6 @@
 @if (selectOptions) {
 	<ion-radio-group
+		[disabled]="disabled"
 		(blur)="onTouched()"
 		[(ngModel)]="value"
 		*ngIf="!value; else useSelect"
@@ -15,6 +16,7 @@
 				<ion-radio
 					[slot]="slot"
 					[value]="o.value"
+					[disabled]="disabled"
 					labelPlacement="end"
 					justify="start"
 					>{{ o.title || o.value }}</ion-radio

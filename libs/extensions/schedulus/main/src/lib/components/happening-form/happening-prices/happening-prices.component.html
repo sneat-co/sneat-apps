@@ -2,7 +2,7 @@
 	<ion-item-divider color="light">
 		<ion-label>Pricing 2</ion-label>
 		<ion-buttons slot="end">
-			<ion-button (click)="showNewPriceForm = true">
+			<ion-button color="primary" (click)="openNewPriceForm()">
 				<ion-icon name="add" slot="start" />
 				<ion-label>Add price</ion-label>
 			</ion-button>
@@ -25,14 +25,11 @@
 				</ion-label>
 			</ion-item>
 		} @empty {
-			<ion-item *ngIf="!showNewPriceForm">
-				<ion-label>No pricing information available</ion-label>
+			<ion-item>
+				<ion-label color="medium"
+					><i>No pricing information available</i></ion-label
+				>
 			</ion-item>
 		}
 	}
-	<sneat-happening-price-form
-		*ngIf="showNewPriceForm"
-		[happening]="happening"
-		(canceled)="onNewPriceFormCanceled()"
-	/>
 </ion-card>

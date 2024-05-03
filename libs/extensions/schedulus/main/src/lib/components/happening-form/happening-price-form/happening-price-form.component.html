@@ -1,21 +1,47 @@
-<ion-item-divider>
-	<ion-label>New price</ion-label>
-</ion-item-divider>
-<ion-item>
-	<ion-label>Per</ion-label>
-	<ion-select interface="popover">
-		<ion-select-option value="single">Single event</ion-select-option>
-		<ion-select-option value="hour">Hour</ion-select-option>
-		<ion-select-option value="day">Day</ion-select-option>
-	</ion-select>
-</ion-item>
-<ion-item class="sneat-no-end-padding-margin">
-	<ion-input type="number" [label]="priceLabel" style="text-align: right" />
-	<ion-select value="EUR" disabled="disabled">
-		<ion-select-option value="EUR">EUR</ion-select-option>
-		<ion-select-option value="USD">USD</ion-select-option>
-	</ion-select>
-	<ion-buttons slot="end">
-		<ion-button color="medium"><ion-icon name="close" /></ion-button>
-	</ion-buttons>
-</ion-item>
+<ion-content>
+	<ion-item color="primary">
+		<ion-label>New price</ion-label>
+		<ion-buttons slot="end">
+			<ion-button (click)="modalCtrl.dismiss()">
+				<ion-icon name="close" slot="icon-only" />
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+	<ion-item>
+		<ion-label color="medium">
+			<i>Enter price and then choose term period</i>
+		</ion-label>
+	</ion-item>
+	<ion-item class="sneat-no-end-padding-margin">
+		<ion-input
+			type="number"
+			[formControl]="priceValue"
+			[label]="priceLabel"
+			style="text-align: right"
+		/>
+		<ion-select value="EUR" disabled="disabled">
+			<ion-select-option value="EUR">EUR</ion-select-option>
+			<ion-select-option value="USD">USD</ion-select-option>
+		</ion-select>
+		<ion-buttons slot="end">
+			<ion-button color="medium">
+				<ion-icon name="close" />
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+	<ion-item>
+		<sneat-radio-group-to-select
+			label="Paid per"
+			[disabled]="!priceValue.value"
+			[selectOptions]="[
+				{ value: 'single', title: 'Single event' },
+				{ value: 'hour', title: 'Hour' },
+				{ value: 'day', title: 'Day' },
+				{ value: 'week', title: 'Week' },
+				{ value: 'month', title: 'Month' },
+				{ value: 'quarter', title: 'Quarter' },
+				{ value: 'year', title: 'year' }
+			]"
+		/>
+	</ion-item>
+</ion-content>

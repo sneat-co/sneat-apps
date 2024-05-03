@@ -24,6 +24,8 @@ export class RadioGroupToSelectComponent implements ControlValueAccessor {
 
 	@Input() selectOptions?: SelectOption[];
 
+	@Input() disabled = false;
+
 	private onChange: (v: object | undefined) => void = () => void 0;
 	public onTouched: () => void = () => void 0;
 
