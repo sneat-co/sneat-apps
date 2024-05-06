@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
+import { ContactusServicesModule } from '@sneat/contactus-services';
 import {
 	HappeningType,
 	WeekdayCode2,
@@ -26,6 +27,7 @@ import { ScheduleBasePage } from '../schedule-base-page';
 		ReactiveFormsModule,
 		SneatPipesModule,
 		HappeningFormComponent,
+		ContactusServicesModule,
 	],
 	providers: [TeamComponentBaseParams],
 })
