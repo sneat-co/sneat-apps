@@ -214,10 +214,10 @@ export class HappeningService {
 		return this.sneatApiService.post('happenings/delete_prices', request);
 	}
 
-	public addHappeningPrices(
+	public setHappeningPrices(
 		request: IHappeningPricesRequest,
 	): Observable<void> {
-		return this.sneatApiService.post('happenings/add_prices', request);
+		return this.sneatApiService.post('happenings/set_prices', request);
 	}
 
 	public adjustSlot(

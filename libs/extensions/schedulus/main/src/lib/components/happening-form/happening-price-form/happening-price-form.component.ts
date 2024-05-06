@@ -129,7 +129,7 @@ export class HappeningPriceFormComponent {
 			happeningID,
 			prices: [
 				{
-					id: this.termUnit + termLength,
+					id: '',
 					term: {
 						unit: this.termUnit,
 						length: termLength,
@@ -143,7 +143,7 @@ export class HappeningPriceFormComponent {
 		};
 
 		this.isSubmitting = true;
-		this.happeningService.addHappeningPrices(request).subscribe({
+		this.happeningService.setHappeningPrices(request).subscribe({
 			error: this.errorLogger.logErrorHandler(
 				'failed to add price to a happening',
 			),

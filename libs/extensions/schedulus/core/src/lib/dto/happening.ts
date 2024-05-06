@@ -40,6 +40,7 @@ export interface IHappeningPrice {
 	readonly id: string;
 	readonly term: ITerm;
 	readonly amount: IAmount;
+	readonly expenseQuantity?: number;
 }
 
 export interface IHappeningBase extends IWithRelatedOnly {

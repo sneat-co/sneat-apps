@@ -19,15 +19,22 @@
 			track price.id
 		) {
 			<ion-item class="sneat-no-end-padding-margin">
-				<ion-label>
+				<ion-checkbox
+					justify="start"
+					labelPlacement="end"
+					[value]="price.id"
+					[checked]="!!price.expenseQuantity"
+					[disabled]="updatingPriceIDs.includes(price.id)"
+					(ionChange)="priceChecked(price, $event)"
+				>
 					<b>{{
 						price.amount.value | decimal64p2 | currency: price.amount.currency
 					}}</b>
 					for {{ price.term.length }} {{ price.term.unit }}
-				</ion-label>
+				</ion-checkbox>
 				<ion-buttons slot="end">
 					<ion-button
-						*ngIf="!isDeleting.includes(price.id)"
+						*ngIf="!updatingPriceIDs.includes(price.id)"
 						color="medium"
 						(click)="deletePrice(price)"
 					>
@@ -43,4 +50,11 @@
 			</ion-item>
 		}
 	}
+	<ion-item>
+		<ion-label color="medium"
+			><i
+				>Check price above to add it as expense to budget calculation.</i
+			></ion-label
+		>
+	</ion-item>
 </ion-card>
