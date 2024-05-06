@@ -22,7 +22,10 @@ import {
 	IContactContext,
 	ICreateContactRequest,
 } from '@sneat/contactus-core';
-import { AssetService } from '@sneat/extensions/assetus/components';
+import {
+	AssetService,
+	AssetusServicesModule,
+} from '@sneat/extensions/assetus/components';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
@@ -32,6 +35,7 @@ import { first, takeUntil } from 'rxjs';
 import {
 	ContactGroupService,
 	ContactRoleService,
+	ContactusServicesModule,
 } from '@sneat/contactus-services';
 
 @Component({
@@ -45,6 +49,8 @@ import {
 		IonicModule,
 		ContactRoleFormModule,
 		PersonWizardComponent,
+		ContactusServicesModule,
+		AssetusServicesModule,
 	],
 })
 export class NewContactPageComponent
@@ -90,7 +96,7 @@ export class NewContactPageComponent
 		return this.contactRole?.brief
 			? `${
 					this.contactRole.brief.emoji
-			  } New ${this.contactRole.brief.title.toLowerCase()}`
+				} New ${this.contactRole.brief.title.toLowerCase()}`
 			: 'New contact';
 	}
 

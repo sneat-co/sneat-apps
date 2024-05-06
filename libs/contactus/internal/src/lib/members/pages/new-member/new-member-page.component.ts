@@ -3,6 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule, IonInput } from '@ionic/angular';
+import { ContactusServicesModule } from '@sneat/contactus-services';
 import { ContactComponentBaseParams } from '@sneat/contactus-shared';
 import { emptyMemberPerson, IMemberPerson } from '@sneat/contactus-core';
 import {
@@ -22,6 +23,7 @@ import { NewMemberFormComponent } from './new-member-form.component';
 		CommonModule,
 		IonicModule,
 		FormsModule,
+		ContactusServicesModule,
 		NewMemberFormComponent,
 		InviteLinksComponent,
 	],
