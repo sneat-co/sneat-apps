@@ -51,7 +51,7 @@ export class ErrorLoggerService implements IErrorLogger {
 				}
 			}
 		}
-		if (options?.show) {
+		if (options?.show || options?.show === undefined) {
 			this.showError(e, options?.showDuration);
 		}
 		return; // return message ? { error: e, message } : e;
