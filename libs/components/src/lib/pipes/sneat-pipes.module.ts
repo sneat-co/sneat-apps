@@ -1,5 +1,6 @@
 import { NgModule, PipeTransform, Type } from '@angular/core';
 import { CountryFlagPipe, CountryTitle } from './country-emoji.pipe';
+import { Decimal64p2Pipe } from './decimal64p2.pipe';
 import {
 	GenderColorPipe,
 	GenderEmojiPipe,
@@ -27,6 +28,7 @@ const pipes: Type<PipeTransform>[] = [
 	SelectedMembersPipe,
 	CountryFlagPipe,
 	CountryTitle,
+	Decimal64p2Pipe,
 ];
 
 @NgModule({

@@ -4,13 +4,22 @@ import {
 	ChangeDetectorRef,
 	Component,
 	EventEmitter,
+	Inject,
 	Input,
 	Output,
-	ViewChild,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonicModule, IonSelect, ModalController } from '@ionic/angular';
-import { CurrencyCode, IHappeningContext } from '@sneat/mod-schedulus-core';
+import { IonicModule, ModalController } from '@ionic/angular';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import {
+	CurrencyCode,
+	IHappeningContext,
+	TermUnit,
+} from '@sneat/mod-schedulus-core';
+import {
+	HappeningService,
+	IHappeningPricesRequest,
+} from '@sneat/team-services';
 import { SelectOption, WizardModule } from '@sneat/wizard';
 
 @Component({
@@ -34,9 +43,13 @@ export class HappeningPriceFormComponent {
 
 	@Output() readonly canceled = new EventEmitter<void>();
 
+	protected isSubmitting = false;
+
 	constructor(
-		protected changeDetectorRef: ChangeDetectorRef,
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		protected readonly changeDetectorRef: ChangeDetectorRef,
 		protected readonly modalCtrl: ModalController,
+		protected readonly happeningService: HappeningService,
 	) {
 		this.setTermLengths();
 	}
@@ -50,9 +63,9 @@ export class HappeningPriceFormComponent {
 	);
 
 	protected readonly termLength = new FormControl<number | undefined>(1);
-	protected termUnit?: string;
+	protected termUnit?: TermUnit;
 
-	protected termLengths: SelectOption[] = [];
+	protected termPeriods: SelectOption[] = [];
 
 	protected onTermLengthChange(): void {
 		// console.log('onTermLengthChange', event);
@@ -72,7 +85,7 @@ export class HappeningPriceFormComponent {
 
 	private setTermLengths(): void {
 		const isPlural = (this.termLength.value || 0) > 1;
-		this.termLengths = [
+		this.termPeriods = [
 			{ value: 'single', title: 'Single event' },
 			{ value: 'hour', title: isPlural ? 'Hours' : 'Hour' },
 			{ value: 'day', title: isPlural ? 'Days' : 'Day' },
@@ -80,5 +93,72 @@ export class HappeningPriceFormComponent {
 			{ value: 'month', title: 'Month' },
 			{ value: 'year', title: 'Year' },
 		];
+	}
+
+	protected submitAddPrice(event: Event): void {
+		console.log('submitAddPrice');
+		event.stopPropagation();
+		event.preventDefault();
+
+		const teamID = this.happening?.team?.id,
+			happeningID = this.happening?.id;
+
+		if (!happeningID) {
+			this.errorLogger.logError('!happeningID');
+			return;
+		}
+		if (!teamID) {
+			this.errorLogger.logError('!teamID');
+			return;
+		}
+		if (!this.termUnit) {
+			this.errorLogger.logError('!termUnit');
+			return;
+		}
+		const termLength: number = this.termLength.value || 0;
+		if (!termLength) {
+			this.errorLogger.logError('!termLength');
+			return;
+		}
+
+		const amountValue = this.priceValue.value || 0;
+		const currency = this.priceCurrency.value || '';
+
+		const request: IHappeningPricesRequest = {
+			teamID,
+			happeningID,
+			prices: [
+				{
+					id: this.termUnit + termLength,
+					term: {
+						unit: this.termUnit,
+						length: termLength,
+					},
+					amount: {
+						value: amountValue,
+						currency,
+					},
+				},
+			],
+		};
+
+		this.isSubmitting = true;
+		this.happeningService.addHappeningPrices(request).subscribe({
+			error: this.errorLogger.logErrorHandler(
+				'failed to add price to a happening',
+			),
+			complete: () => {
+				this.isSubmitting = false;
+			},
+			next: () => {
+				this.modalCtrl
+					.dismiss()
+					.catch(
+						this.errorLogger.logErrorHandler(
+							'Failed to dismiss new happening price modal',
+						),
+					);
+			},
+		});
 	}
 }

@@ -13,6 +13,7 @@ import {
 	validateHappeningDto,
 	WeekdayCode2,
 	IHappeningContext,
+	IHappeningPrice,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext, ITeamRequest } from '@sneat/team-models';
@@ -21,43 +22,51 @@ import { map, Observable, tap, throwError } from 'rxjs';
 import { ModuleTeamItemService } from './team-item.service';
 
 export interface ICreateHappeningRequest {
-	teamID: string;
-	happening: IHappeningDto;
+	readonly teamID: string;
+	readonly happening: IHappeningDto;
 }
 
 export interface IHappeningRequest extends ITeamRequest {
-	happeningID: string;
-	happeningType?: string;
+	readonly happeningID: string;
+	readonly happeningType?: string;
 }
 
 export interface ITeamModuleDocShortRef {
-	id: string;
-	teamID?: string;
+	readonly id: string;
+	readonly teamID?: string;
 }
 
 export interface IHappeningContactRequest extends ITeamRequest {
-	happeningID: string;
-	contact: ITeamModuleDocShortRef;
+	readonly happeningID: string;
+	readonly contact: ITeamModuleDocShortRef;
 }
 
 export interface IHappeningSlotRequest extends IHappeningRequest {
-	slot: IHappeningSlot;
+	readonly slot: IHappeningSlot;
+}
+
+export interface IHappeningPricesRequest extends IHappeningRequest {
+	readonly prices: readonly IHappeningPrice[];
+}
+
+export interface IDeleteHappeningPricesRequest extends IHappeningRequest {
+	readonly priceIDs: readonly string[];
 }
 
 export interface IHappeningSlotDateRequest extends IHappeningSlotRequest {
-	date?: string;
+	readonly date?: string;
 }
 
 export interface ISlotsRefRequest extends IHappeningRequest {
-	date?: string;
-	slotIDs?: string[];
+	readonly date?: string;
+	readonly slotIDs?: readonly string[];
 }
 
 export interface ISlotRequest extends IHappeningRequest {
-	date?: string;
-	slotID?: string;
-	weekday?: WeekdayCode2;
-	reason?: string;
+	readonly date?: string;
+	readonly slotID?: string;
+	readonly weekday?: WeekdayCode2;
+	readonly reason?: string;
 }
 
 export type IDeleteSlotRequest = ISlotRequest;
@@ -197,6 +206,18 @@ export class HappeningService {
 			slot,
 		};
 		return this.sneatApiService.post('happenings/update_slot', request);
+	}
+
+	public deleteHappeningPrices(
+		request: IDeleteHappeningPricesRequest,
+	): Observable<void> {
+		return this.sneatApiService.post('happenings/delete_prices', request);
+	}
+
+	public addHappeningPrices(
+		request: IHappeningPricesRequest,
+	): Observable<void> {
+		return this.sneatApiService.post('happenings/add_prices', request);
 	}
 
 	public adjustSlot(

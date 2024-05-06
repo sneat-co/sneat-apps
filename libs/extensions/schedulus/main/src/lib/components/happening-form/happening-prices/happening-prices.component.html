@@ -1,6 +1,6 @@
 <ion-card>
 	<ion-item-divider color="light">
-		<ion-label>Pricing 2</ion-label>
+		<ion-label>Pricing</ion-label>
 		<ion-buttons slot="end">
 			<ion-button color="primary" (click)="openNewPriceForm()">
 				<ion-icon name="add" slot="start" />
@@ -18,11 +18,22 @@
 			price of happening?.dto?.prices || happening?.brief?.prices || [];
 			track price.id
 		) {
-			<ion-item>
+			<ion-item class="sneat-no-end-padding-margin">
 				<ion-label>
-					{{ price.amount.value }} {{ price.amount.currency | currency }} for
-					{{ price.term.length }} {{ price.term.unit }}
+					<b>{{
+						price.amount.value | decimal64p2 | currency: price.amount.currency
+					}}</b>
+					for {{ price.term.length }} {{ price.term.unit }}
 				</ion-label>
+				<ion-buttons slot="end">
+					<ion-button
+						*ngIf="!isDeleting.includes(price.id)"
+						color="medium"
+						(click)="deletePrice(price)"
+					>
+						<ion-icon name="close" />
+					</ion-button>
+				</ion-buttons>
 			</ion-item>
 		} @empty {
 			<ion-item>

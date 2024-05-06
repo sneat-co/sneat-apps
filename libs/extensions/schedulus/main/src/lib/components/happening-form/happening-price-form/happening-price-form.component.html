@@ -40,7 +40,7 @@
 				[(ngModel)]="termUnit"
 				interface="popover"
 			>
-				@for (o of termLengths; track o.value) {
+				@for (o of termPeriods; track o.value) {
 					<ion-select-option [value]="o.value">{{ o.title }}</ion-select-option>
 				}
 			</ion-select>
@@ -49,7 +49,7 @@
 			*ngIf="!termUnit"
 			label="Per"
 			[(ngModel)]="termUnit"
-			[selectOptions]="termLengths"
+			[selectOptions]="termPeriods"
 		/>
 		<ion-item *ngIf="termUnit">
 			<ion-label *ngIf="!priceValue.value" color="danger"
@@ -58,9 +58,13 @@
 			<ion-label *ngIf="!termLength.value && priceValue.value" color="danger"
 				><i>Term length is required</i></ion-label
 			>
-			<ion-button slot="end" [disabled]="!priceValue.value || !termLength.value"
-				>Add price</ion-button
+			<ion-button
+				slot="end"
+				[disabled]="!priceValue.value || !termLength.value"
+				(click)="submitAddPrice($event)"
 			>
+				<ion-label>Add price</ion-label>
+			</ion-button>
 		</ion-item>
 	</ion-list>
 </ion-content>
