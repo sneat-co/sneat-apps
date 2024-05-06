@@ -51,43 +51,36 @@ export class ErrorLoggerService implements IErrorLogger {
 				}
 			}
 		}
-		if (options?.show === undefined || options.show) {
-			if ((e as { message?: string }).message) {
-				message =
-					(message && `${message}: ${(e as { message?: string }).message}`) ||
-					(e as { message?: string }).message;
-			} else if (!message) {
-				message = (e as object).toString();
-			}
-			if (message) {
-				console.log('e:', e instanceof HttpErrorResponse);
-				if (e instanceof HttpErrorResponse) {
-					this.showError(
-						{
-							clientMessage: message,
-							serverMessage: e.error?.error?.message,
-						},
-						options?.showDuration,
-					);
-				}
-			}
+		if (options?.show) {
+			this.showError(e, options?.showDuration);
 		}
 		return; // return message ? { error: e, message } : e;
 	};
 
-	public showError(
-		details: { clientMessage: string; serverMessage?: string },
-		duration?: number,
-	): void {
-		if (!details.clientMessage) {
+	public showError(e: unknown, duration?: number): void {
+		let clientMessage: string | undefined;
+
+		if ((e as { message?: string }).message) {
+			clientMessage =
+				(clientMessage &&
+					`${clientMessage}: ${(e as { message?: string }).message}`) ||
+				(e as { message?: string }).message;
+		} else if (!clientMessage) {
+			clientMessage = (e as object).toString();
+		}
+		if (!clientMessage) {
 			throw new Error('showError() have not received a message to display');
 		}
 		if (duration && duration < 0) {
 			throw new Error('showError received negative duration');
 		}
-		let message = details.clientMessage;
-		if (details.serverMessage) {
-			message += `.\n\nServer returned error message: ${details.serverMessage}`;
+
+		let message = clientMessage;
+
+		const serverMessage: string | undefined =
+			e instanceof HttpErrorResponse ? e.error?.error?.message : undefined;
+		if (serverMessage) {
+			message += `.\n\nServer returned error message: ${serverMessage}`;
 		}
 		this.toastController
 			.create({
@@ -121,10 +114,9 @@ export class ErrorLoggerService implements IErrorLogger {
 					),
 			)
 			.catch(
-				this.logErrorHandler(
-					'Failed to create a toast dialog with error message:',
-					{ show: false },
-				),
+				this.logErrorHandler('Failed to create a toast with error message:', {
+					show: false,
+				}),
 			);
 	}
 }
