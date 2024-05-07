@@ -54,7 +54,10 @@
 		</ion-card>
 
 		<ng-container *ngIf="happening?.id || happening?.brief?.slots">
-			<sneat-happening-pricing [happening]="happening" />
+			<sneat-happening-pricing
+				[happening]="happening"
+				(happeningChange)="onHappeningChanged($event)"
+			/>
 
 			<sneat-happening-participants
 				[team]="team"

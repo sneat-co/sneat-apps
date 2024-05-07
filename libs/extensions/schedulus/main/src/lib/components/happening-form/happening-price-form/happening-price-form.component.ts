@@ -13,7 +13,9 @@ import { IonicModule, ModalController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	CurrencyCode,
+	IHappeningBrief,
 	IHappeningContext,
+	IHappeningPrice,
 	TermUnit,
 } from '@sneat/mod-schedulus-core';
 import {
@@ -37,6 +39,8 @@ import { SelectOption, WizardModule } from '@sneat/wizard';
 })
 export class HappeningPriceFormComponent {
 	@Input({ required: true }) happening?: IHappeningContext;
+
+	@Output() happeningChange = new EventEmitter<IHappeningContext>();
 
 	// @ViewChild('termLengthSelect', { static: false })
 	// termLengthSelect?: IonSelect;
@@ -95,14 +99,79 @@ export class HappeningPriceFormComponent {
 		];
 	}
 
-	protected submitAddPrice(event: Event): void {
+	protected addPrice(event: Event): void {
 		console.log('submitAddPrice');
 		event.stopPropagation();
 		event.preventDefault();
 
-		const teamID = this.happening?.team?.id,
-			happeningID = this.happening?.id;
+		const termLength: number = this.termLength.value || 0;
+		if (!termLength) {
+			this.errorLogger.logError('!termLength');
+			return;
+		}
 
+		const amountValue = (this.priceValue.value || 0) * 100;
+		const currency = this.priceCurrency.value || '';
+
+		if (!this.termUnit) {
+			this.errorLogger.logError('!termUnit');
+			return;
+		}
+
+		const price: IHappeningPrice = {
+			id: '',
+			term: {
+				unit: this.termUnit,
+				length: termLength,
+			},
+			amount: {
+				value: amountValue,
+				currency,
+			},
+		};
+
+		if (this.happening?.id && this.happening?.team?.id) {
+			this.submitPrice(price);
+		} else {
+			this.addPriceToNewHappening(price);
+		}
+	}
+
+	private addPriceToNewHappening(price: IHappeningPrice): void {
+		price = { ...price, id: `${price.term.unit}${price.term.length}` };
+
+		const pushPrice = <T extends IHappeningBrief>(h: T): T => {
+			return { ...h, prices: [...(h.prices || []), price] };
+		};
+		if (this.happening?.brief) {
+			this.happening = {
+				...this.happening,
+				brief: pushPrice(this.happening.brief),
+			};
+		}
+		if (this.happening?.dto) {
+			this.happening = {
+				...this.happening,
+				dto: pushPrice(this.happening.dto),
+			};
+		}
+		this.happeningChange.emit(this.happening);
+		this.dismissModal();
+	}
+
+	private dismissModal(): void {
+		this.modalCtrl
+			.dismiss()
+			.catch(
+				this.errorLogger.logErrorHandler(
+					'Failed to dismiss new happening price modal',
+				),
+			);
+	}
+
+	private submitPrice(price: IHappeningPrice): void {
+		const happeningID = this.happening?.id || '';
+		const teamID = this.happening?.team?.id || '';
 		if (!happeningID) {
 			this.errorLogger.logError('!happeningID');
 			return;
@@ -111,35 +180,11 @@ export class HappeningPriceFormComponent {
 			this.errorLogger.logError('!teamID');
 			return;
 		}
-		if (!this.termUnit) {
-			this.errorLogger.logError('!termUnit');
-			return;
-		}
-		const termLength: number = this.termLength.value || 0;
-		if (!termLength) {
-			this.errorLogger.logError('!termLength');
-			return;
-		}
-
-		const amountValue = this.priceValue.value || 0;
-		const currency = this.priceCurrency.value || '';
 
 		const request: IHappeningPricesRequest = {
 			teamID,
 			happeningID,
-			prices: [
-				{
-					id: '',
-					term: {
-						unit: this.termUnit,
-						length: termLength,
-					},
-					amount: {
-						value: amountValue,
-						currency,
-					},
-				},
-			],
+			prices: [price],
 		};
 
 		this.isSubmitting = true;
@@ -151,13 +196,7 @@ export class HappeningPriceFormComponent {
 				this.isSubmitting = false;
 			},
 			next: () => {
-				this.modalCtrl
-					.dismiss()
-					.catch(
-						this.errorLogger.logErrorHandler(
-							'Failed to dismiss new happening price modal',
-						),
-					);
+				this.dismissModal();
 			},
 		});
 	}
