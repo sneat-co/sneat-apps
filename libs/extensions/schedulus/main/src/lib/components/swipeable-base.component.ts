@@ -11,8 +11,8 @@ import {
 	addDays,
 	getToday,
 	IDateChanged,
-	ScheduleStateService,
-} from './calendar/schedule-state.service';
+	CalendarStateService,
+} from './calendar/calendar-state.service';
 import { Parity, Swipeable } from './swipeable-ui';
 
 // @Injectable()
@@ -39,7 +39,7 @@ export abstract class SwipeableBaseComponent extends SneatBaseComponent {
 	protected constructor(
 		className: string,
 		errorLogger: IErrorLogger,
-		protected readonly scheduleSateService: ScheduleStateService,
+		protected readonly scheduleSateService: CalendarStateService,
 		private readonly stepDays: number,
 	) {
 		super(className, errorLogger);

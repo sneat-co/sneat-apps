@@ -1,23 +1,29 @@
 import { Route } from '@angular/router';
 // import {guardRoute} from '../../utils/guard-route';
 
-export const schedulusRoutes: Route[] = [
+export const calendariumRoutes: Route[] = [
 	{
 		path: 'calendar',
 		loadComponent: () =>
-			import('./pages/calendar').then((m) => m.CalendarPageComponent),
+			import('./pages/calendar/calendar-page.component').then(
+				(m) => m.CalendarPageComponent,
+			),
 		// ...guardRoute,
 	},
 	{
 		path: 'new-happening',
 		loadComponent: () =>
-			import('./pages/new-happening').then((m) => m.NewHappeningPageComponent),
+			import('./pages/new-happening/new-happening-page.component').then(
+				(m) => m.NewHappeningPageComponent,
+			),
 		// ...guardRoute,
 	},
 	{
 		path: 'happening/:happeningID',
 		loadComponent: () =>
-			import('./pages/happening').then((m) => m.HappeningPageComponent),
+			import('./pages/happening/happening-page.component').then(
+				(m) => m.HappeningPageComponent,
+			),
 		// ...guardRoute,
 	},
 	// {

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
-import { ScheduleModalsService } from '../../services';
+import { CalendarModalsService } from '../../services/calendar-modals.service';
 import { IHappeningContext, IHappeningSlot } from '@sneat/mod-schedulus-core';
 
 @Component({
@@ -24,7 +24,7 @@ export class HappeningSlotComponent {
 		start: { time: '' },
 	};
 
-	constructor(private readonly scheduleModalsService: ScheduleModalsService) {}
+	constructor(private readonly scheduleModalsService: CalendarModalsService) {}
 
 	protected deleting = false;
 

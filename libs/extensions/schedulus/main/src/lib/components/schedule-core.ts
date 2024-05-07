@@ -8,8 +8,8 @@ import {
 } from '@sneat/components';
 import { WeekdayCode2 } from '@sneat/mod-schedulus-core';
 import { wd2 } from '@sneat/extensions/schedulus/shared';
-import { addDays } from './calendar/schedule-state.service';
-import { Weekday } from './calendar/components';
+import { addDays } from './calendar/calendar-state.service';
+import { Weekday } from './calendar/weekday';
 import { Parity } from './swipeable-ui';
 
 export function isToday(date: Date): boolean {

@@ -1,0 +1,20 @@
+import { ActivatedRoute } from '@angular/router';
+import {
+	TeamBaseComponent,
+	TeamComponentBaseParams,
+} from '@sneat/team-components';
+
+export class CalendarBasePage extends TeamBaseComponent {
+	public override get defaultBackUrl(): string {
+		const t = this.team;
+		return t ? `/space/${t.type}/${t.id}/calendar` : '';
+	}
+
+	constructor(
+		className: string,
+		route: ActivatedRoute,
+		teamParams: TeamComponentBaseParams,
+	) {
+		super(className, route, teamParams);
+	}
+}

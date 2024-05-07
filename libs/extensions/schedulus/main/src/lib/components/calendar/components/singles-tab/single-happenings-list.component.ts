@@ -4,8 +4,11 @@ import { IHappeningContext } from '@sneat/mod-schedulus-core';
 import { ITeamContext } from '@sneat/team-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
-import { ScheduleFilterService } from '../../../schedule-filter.service';
-import { IScheduleFilter, isMatchingScheduleFilter } from '../schedule-filter';
+import { CalendarFilterService } from '../../../calendar-filter.service';
+import {
+	ICalendarFilter,
+	isMatchingScheduleFilter,
+} from '../calendar-filter/calendar-filter';
 
 @Component({
 	selector: 'sneat-single-happenings-list',
@@ -18,13 +21,13 @@ export class SingleHappeningsListComponent
 	@Input({ required: true }) team: ITeamContext = { id: '' };
 	@Input({ required: true }) public happenings?: IHappeningContext[];
 
-	private filter?: IScheduleFilter;
+	private filter?: ICalendarFilter;
 
 	protected happeningsMatchingFilter?: IHappeningContext[];
 
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
-		readonly filterService: ScheduleFilterService,
+		readonly filterService: CalendarFilterService,
 	) {
 		super('SingleHappeningsListComponent', errorLogger);
 		filterService.filter.pipe(takeUntil(this.destroyed)).subscribe((filter) => {

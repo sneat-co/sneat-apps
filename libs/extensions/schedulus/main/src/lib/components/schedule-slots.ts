@@ -1,6 +1,6 @@
 import { getRelatedItemIDs, IRelatedItemsByModule } from '@sneat/dto';
 import { IHappeningSlotUiItem } from '@sneat/extensions/schedulus/shared';
-import { IScheduleFilter } from './calendar/components';
+import { ICalendarFilter } from './calendar/components/calendar-filter/calendar-filter';
 
 export function hasContact(
 	teamID: string,
@@ -37,7 +37,7 @@ export function hasContact(
 export function isSlotVisible(
 	teamID: string,
 	slot: IHappeningSlotUiItem,
-	filter: IScheduleFilter,
+	filter: ICalendarFilter,
 ): boolean {
 	if (
 		!hasContact(
