@@ -5,6 +5,7 @@ import {
 	Component,
 	Inject,
 	Input,
+	signal,
 } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
@@ -33,7 +34,7 @@ export class HappeningPricesComponent {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly changeDetector: ChangeDetectorRef,
+		// private readonly changeDetector: ChangeDetectorRef,
 		private readonly modalCtrl: ModalController,
 		private readonly happeningService: HappeningService,
 	) {}
@@ -77,9 +78,9 @@ export class HappeningPricesComponent {
 			return;
 		}
 
-		this.updatingPriceIDs = [...this.updatingPriceIDs, price.id];
+		this.updatingPriceIDs.set([...this.updatingPriceIDs(), price.id]);
 
-		this.changeDetector.markForCheck();
+		// this.changeDetector.markForCheck();
 
 		this.happeningService
 			.deleteHappeningPrices({
@@ -92,24 +93,24 @@ export class HappeningPricesComponent {
 					`Failed to delete happening price with ID=${price.id}`,
 				),
 				complete: () => {
-					this.updatingPriceIDs = this.updatingPriceIDs.filter(
-						(id) => id !== price.id,
+					this.updatingPriceIDs.set(
+						this.updatingPriceIDs().filter((id) => id !== price.id),
 					);
-					this.changeDetector.markForCheck();
+					// this.changeDetector.markForCheck();
 				},
 			});
 	}
 
-	protected updatingPriceIDs: readonly string[] = [];
+	protected updatingPriceIDs = signal<readonly string[]>([]);
 
 	protected priceChecked(price: IHappeningPrice, event: Event): void {
 		console.log('priceChecked()', event);
 		event.stopPropagation();
 		event.preventDefault();
 
-		this.updatingPriceIDs = [...this.updatingPriceIDs, price.id];
+		this.updatingPriceIDs.set([...this.updatingPriceIDs(), price.id]);
 
-		this.changeDetector.markForCheck();
+		// this.changeDetector.markForCheck();
 
 		const isChecked = !!(event as CustomEvent).detail.checked;
 
@@ -120,10 +121,10 @@ export class HappeningPricesComponent {
 		};
 		this.happeningService.setHappeningPrices(request).subscribe({
 			complete: () => {
-				this.updatingPriceIDs = this.updatingPriceIDs.filter(
-					(id) => id !== price.id,
+				this.updatingPriceIDs.set(
+					this.updatingPriceIDs().filter((id) => id !== price.id),
 				);
-				this.changeDetector.markForCheck();
+				// this.changeDetector.markForCheck();
 			},
 		});
 	}

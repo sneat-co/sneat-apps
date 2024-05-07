@@ -24,7 +24,7 @@
 					labelPlacement="end"
 					[value]="price.id"
 					[checked]="!!price.expenseQuantity"
-					[disabled]="updatingPriceIDs.includes(price.id)"
+					[disabled]="updatingPriceIDs().includes(price.id)"
 					(ionChange)="priceChecked(price, $event)"
 				>
 					<b>{{
@@ -34,7 +34,7 @@
 				</ion-checkbox>
 				<ion-buttons slot="end">
 					<ion-button
-						*ngIf="!updatingPriceIDs.includes(price.id)"
+						*ngIf="!updatingPriceIDs().includes(price.id)"
 						color="medium"
 						(click)="deletePrice(price)"
 					>
