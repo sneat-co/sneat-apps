@@ -4,7 +4,7 @@ import {
 	ISlotParticipant,
 	ITiming,
 	Level,
-	Repeats,
+	RepeatPeriod,
 	SlotLocation,
 	WeekdayCode2,
 	IHappeningContext,
@@ -39,7 +39,7 @@ export interface IHappeningSlotUiItem {
 	readonly happening: IHappeningContext;
 	readonly title: string;
 	readonly timing: ITiming;
-	readonly repeats: Repeats;
+	readonly repeats: RepeatPeriod;
 	readonly location?: SlotLocation;
 	readonly participants?: Readonly<Record<string, ISlotParticipant>>;
 	readonly levels?: Level[];

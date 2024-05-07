@@ -1,17 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { object } from '@angular/fire/database';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { Member } from '@sneat/contactus-core';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { Period } from '@sneat/dto';
+import {
+	CalendariumServicesModule,
+	CalendariumTeamService,
+} from '@sneat/extensions/schedulus/main';
 import { AssetGroup } from '@sneat/mod-assetus-core';
+import { ICalendariumTeamDto, RepeatPeriod } from '@sneat/mod-schedulus-core';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team-components';
 import { Totals } from '@sneat/team-models';
+import { takeUntil } from 'rxjs';
 import { BudgetPeriodsComponent } from './budget-periods.component';
 import { LiabilitiesMode } from './budget-types';
 
@@ -25,13 +32,14 @@ import { LiabilitiesMode } from './budget-types';
 		IonicModule,
 		ContactusServicesModule,
 		BudgetPeriodsComponent,
+		CalendariumServicesModule,
 	],
 	providers: [TeamComponentBaseParams],
 })
 export class BudgetPageComponent extends TeamBaseComponent {
 	public total?: number;
 	public liabilitiesMode: LiabilitiesMode = 'expenses';
-	public period: Period = 'week';
+	public period: RepeatPeriod = 'weekly';
 	// public showIncomes: boolean = true;
 	// public showExpenses: boolean = true;
 
@@ -46,6 +54,7 @@ export class BudgetPageComponent extends TeamBaseComponent {
 	constructor(
 		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
+		private readonly calendariumTeamService: CalendariumTeamService,
 		// private readonly assetGroupsService: IAssetGroupService,
 		// private readonly memberService: IMemberService,
 	) {
@@ -56,6 +65,22 @@ export class BudgetPageComponent extends TeamBaseComponent {
 				this.liabilitiesMode = tab as LiabilitiesMode;
 			}
 		});
+	}
+
+	protected calendariumTeamDto?: ICalendariumTeamDto;
+
+	override onTeamIdChanged(): void {
+		if (!this.team.id) {
+			return;
+		}
+		this.calendariumTeamService
+			.watchTeamModuleRecord(this.team?.id)
+			.pipe(takeUntil(this.teamIDChanged$))
+			.subscribe({
+				next: (teamCalendarium) => {
+					this.calendariumTeamDto = teamCalendarium.dto || undefined;
+				},
+			});
 	}
 
 	public showIncomes(): boolean {
@@ -74,25 +99,26 @@ export class BudgetPageComponent extends TeamBaseComponent {
 		if (!this.assetGroups) {
 			return;
 		}
-		const membersTotal: number = !this.members
-			? 0
-			: this.members.reduce(
-					(s, m) =>
-						s +
-						m.totals.per(this.period, this.showIncomes(), this.showExpenses()),
-					0,
-				);
-		this.total =
-			this.assetGroups.reduce(
-				(s, g) =>
-					s +
-					g.totals.per(this.period, this.showIncomes(), this.showExpenses()),
-				0,
-			) + membersTotal;
+		// const membersTotal: number = !this.members
+		// 	? 0
+		// 	: this.members.reduce(
+		// 			(s, m) =>
+		// 				s +
+		// 				m.totals.per(this.period, this.showIncomes(), this.showExpenses()),
+		// 			0,
+		// 		);
+		// this.total =
+		// 	this.assetGroups.reduce(
+		// 		(s, g) =>
+		// 			s +
+		// 			g.totals.per(this.period, this.showIncomes(), this.showExpenses()),
+		// 		0,
+		// 	) + membersTotal;
 	}
 
 	public memberBalance(m: Member): number {
-		return m.totals.per(this.period, this.showIncomes(), this.showExpenses());
+		// return m.totals.per(this.period, this.showIncomes(), this.showExpenses());
+		return 0;
 	}
 
 	public goAssetGroup(assetGroup: AssetGroup): void {

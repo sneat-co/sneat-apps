@@ -1,23 +1,28 @@
+<!--happeningLiabilitiesByPeriod: {{happeningLiabilitiesByPeriod()|json}}-->
 <ion-accordion-group [value]="period" (ionChange)="onPeriodChanged($event)">
-	<ion-accordion value="day">
+	<ion-accordion value="daily">
 		<ion-item slot="header" color="light">
 			<ion-label>Daily {{ liabilitiesMode }}</ion-label>
 		</ion-item>
 		<div class="ion-padding" slot="content">Weekly content</div>
 	</ion-accordion>
-	<ion-accordion value="week">
+	<ion-accordion value="weekly">
 		<ion-item slot="header" color="light">
 			<ion-label>Weekly {{ liabilitiesMode }}</ion-label>
 		</ion-item>
-		<div class="ion-padding" slot="content">Weekly content</div>
+		<sneat-budget-period
+			slot="content"
+			[period]="period"
+			[happeningLiabilities]="happeningLiabilitiesByPeriod()[period]"
+		/>
 	</ion-accordion>
-	<ion-accordion value="month">
+	<ion-accordion value="monthly">
 		<ion-item slot="header" color="light">
 			<ion-label>Monthly {{ liabilitiesMode }}</ion-label>
 		</ion-item>
 		<div class="ion-padding" slot="content">Monthly content</div>
 	</ion-accordion>
-	<ion-accordion value="year">
+	<ion-accordion value="yearly">
 		<ion-item slot="header" color="light">
 			<ion-label>Yearly {{ liabilitiesMode }}</ion-label>
 		</ion-item>

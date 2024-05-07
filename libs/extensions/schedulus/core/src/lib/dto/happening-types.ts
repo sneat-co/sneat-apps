@@ -5,7 +5,7 @@ export type RepeatsWeek =
 	| 'week-3d'
 	| 'week-4th'
 	| 'week-last';
-export type Repeats =
+export type RepeatPeriod =
 	| 'UNKNOWN'
 	| 'once'
 	| 'weekly'

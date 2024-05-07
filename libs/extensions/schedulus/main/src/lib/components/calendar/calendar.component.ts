@@ -78,7 +78,7 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 		happeningService: HappeningService,
 		calendarDayService: CalendarDayService,
 		sneatApiService: SneatApiService,
-		private readonly schedulusTeamService: CalendariumTeamService,
+		private readonly calendariumTeamService: CalendariumTeamService,
 	) {
 		this.teamDaysProvider = new TeamDaysProvider(
 			this.errorLogger,
@@ -263,7 +263,7 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 		console.log('ScheduleComponent.onTeamIdChanged()', this.team?.id);
 		this.schedulusTeamSubscription?.unsubscribe();
 		if (this.team?.id) {
-			this.schedulusTeamSubscription = this.schedulusTeamService
+			this.schedulusTeamSubscription = this.calendariumTeamService
 				.watchTeamModuleRecord(this.team.id)
 				.subscribe({
 					next: (schedulusTeam) => {

@@ -91,123 +91,125 @@
 					<!--</small>-->
 				</div>
 			</ion-item>
-			<ng-container *ngIf="members">
-				<ng-container *ngFor="let member of members; trackBy: trackById">
-					<ion-item
-						*ngIf="member.totals.per(period, showIncomes(), showExpenses())"
-					>
-						<ion-label>{{ member.emoji }} {{ member.title }}</ion-label>
-						<div slot="end" style="text-align: right">
-							<span
-								class="positive"
-								*ngIf="liabilitiesMode === 'incomes' && memberBalance(member)"
-								>${{ memberBalance(member).toLocaleString() }}</span
-							>
-							<span
-								class="negative"
-								*ngIf="liabilitiesMode === 'expenses' && memberBalance(member)"
-								>${{ memberBalance(member).toLocaleString() }}</span
-							>
-							<span
-								*ngIf="
-									liabilitiesMode === 'balance' && memberBalance(member) === 0
-								"
-								>${{ memberBalance(member).toLocaleString() }}</span
-							>
-							<span
-								class="positive"
-								*ngIf="
-									liabilitiesMode === 'balance' && memberBalance(member) > 0
-								"
-								>${{ memberBalance(member).toLocaleString() }}</span
-							>
-							<span
-								class="negative"
-								*ngIf="
-									liabilitiesMode === 'balance' && memberBalance(member) < 0
-								"
-								>-${{ memberBalance(member).toLocaleString() }}</span
-							>
-						</div>
-					</ion-item>
-				</ng-container>
-			</ng-container>
-			<ng-container
-				*ngFor="let assetGroup of assetGroups || []; trackBy: trackById"
-			>
-				<ion-item
-					*ngIf="assetGroup.totals.per(period, showIncomes(), showExpenses())"
-					tappable
-					routerDirection="forward"
-					(click)="goAssetGroup(assetGroup)"
-				>
-					<ion-label>
-						<h2>{{ assetGroup.context.brief?.title }}</h2>
-						<small *ngIf="assetGroup.context.dto?.desc">{{
-							assetGroup.context.dto?.desc
-						}}</small>
-						<ion-badge *ngIf="!assetGroup.numberOf.assets" color="light"
-							>no assets
-						</ion-badge>
-						<ion-badge *ngIf="assetGroup.numberOf.assets" color="light">
-							{{ assetGroup?.context?.dto?.numberOf?.assets }}
-							<ng-container *ngIf="assetGroup.numberOf.assets === 1"
-								>asset
-							</ng-container>
-							<ng-container *ngIf="assetGroup.numberOf.assets > 1"
-								>assets
-							</ng-container>
-						</ion-badge>
-					</ion-label>
-					<div
-						slot="end"
-						style="text-align: right"
-						*ngIf="assetGroup.totals.per(period, showIncomes(), showExpenses())"
-					>
-						<span
-							class="positive"
-							*ngIf="
-								assetGroup.totals.per(
-									period,
-									this.showIncomes(),
-									showExpenses()
-								) > 0
-							"
-						>
-							${{
-								assetGroup.totals
-									.per(period, showIncomes(), showExpenses())
-									.toLocaleString()
-							}}
-						</span>
-						<span
-							class="negative"
-							*ngIf="
-								assetGroup.totals.per(
-									period,
-									this.showIncomes(),
-									showExpenses()
-								) < 0
-							"
-						>
-							-${{
-								(-assetGroup.totals.per(
-									period,
-									showIncomes(),
-									showExpenses()
-								)).toLocaleString()
-							}}
-						</span>
-						<!--<small style="border-top: 1px solid lightgray; display: block; font-style: italic; color: lightgray">-->
-						<!--per {{period}}-->
-						<!--</small>-->
-					</div>
-				</ion-item>
-			</ng-container>
+			<!--			<ng-container *ngIf="members">-->
+			<!--				<ng-container *ngFor="let member of members; trackBy: trackById">-->
+			<!--					<ion-item-->
+			<!--						*ngIf="member.totals.per(period, showIncomes(), showExpenses())"-->
+			<!--					>-->
+			<!--						<ion-label>{{ member.emoji }} {{ member.title }}</ion-label>-->
+			<!--						<div slot="end" style="text-align: right">-->
+			<!--							<span-->
+			<!--								class="positive"-->
+			<!--								*ngIf="liabilitiesMode === 'incomes' && memberBalance(member)"-->
+			<!--								>${{ memberBalance(member).toLocaleString() }}</span-->
+			<!--							>-->
+			<!--							<span-->
+			<!--								class="negative"-->
+			<!--								*ngIf="liabilitiesMode === 'expenses' && memberBalance(member)"-->
+			<!--								>${{ memberBalance(member).toLocaleString() }}</span-->
+			<!--							>-->
+			<!--							<span-->
+			<!--								*ngIf="-->
+			<!--									liabilitiesMode === 'balance' && memberBalance(member) === 0-->
+			<!--								"-->
+			<!--								>${{ memberBalance(member).toLocaleString() }}</span-->
+			<!--							>-->
+			<!--							<span-->
+			<!--								class="positive"-->
+			<!--								*ngIf="-->
+			<!--									liabilitiesMode === 'balance' && memberBalance(member) > 0-->
+			<!--								"-->
+			<!--								>${{ memberBalance(member).toLocaleString() }}</span-->
+			<!--							>-->
+			<!--							<span-->
+			<!--								class="negative"-->
+			<!--								*ngIf="-->
+			<!--									liabilitiesMode === 'balance' && memberBalance(member) < 0-->
+			<!--								"-->
+			<!--								>-${{ memberBalance(member).toLocaleString() }}</span-->
+			<!--							>-->
+			<!--						</div>-->
+			<!--					</ion-item>-->
+			<!--				</ng-container>-->
+			<!--			</ng-container>-->
+			<!--			<ng-container-->
+			<!--				*ngFor="let assetGroup of assetGroups || []; trackBy: trackById"-->
+			<!--			>-->
+			<!--				<ion-item-->
+			<!--					*ngIf="assetGroup.totals.per(period, showIncomes(), showExpenses())"-->
+			<!--					tappable-->
+			<!--					routerDirection="forward"-->
+			<!--					(click)="goAssetGroup(assetGroup)"-->
+			<!--				>-->
+			<!--					<ion-label>-->
+			<!--						<h2>{{ assetGroup.context.brief?.title }}</h2>-->
+			<!--						<small *ngIf="assetGroup.context.dto?.desc">{{-->
+			<!--							assetGroup.context.dto?.desc-->
+			<!--						}}</small>-->
+			<!--						<ion-badge *ngIf="!assetGroup.numberOf.assets" color="light"-->
+			<!--							>no assets-->
+			<!--						</ion-badge>-->
+			<!--						<ion-badge *ngIf="assetGroup.numberOf.assets" color="light">-->
+			<!--							{{ assetGroup?.context?.dto?.numberOf?.assets }}-->
+			<!--							<ng-container *ngIf="assetGroup.numberOf.assets === 1"-->
+			<!--								>asset-->
+			<!--							</ng-container>-->
+			<!--							<ng-container *ngIf="assetGroup.numberOf.assets > 1"-->
+			<!--								>assets-->
+			<!--							</ng-container>-->
+			<!--						</ion-badge>-->
+			<!--					</ion-label>-->
+			<!--					<div-->
+			<!--						slot="end"-->
+			<!--						style="text-align: right"-->
+			<!--						*ngIf="assetGroup.totals.per(period, showIncomes(), showExpenses())"-->
+			<!--					>-->
+			<!--						<span-->
+			<!--							class="positive"-->
+			<!--							*ngIf="-->
+			<!--								assetGroup.totals.per(-->
+			<!--									period,-->
+			<!--									this.showIncomes(),-->
+			<!--									showExpenses()-->
+			<!--								) > 0-->
+			<!--							"-->
+			<!--						>-->
+			<!--							${{-->
+			<!--								assetGroup.totals-->
+			<!--									.per(period, showIncomes(), showExpenses())-->
+			<!--									.toLocaleString()-->
+			<!--							}}-->
+			<!--						</span>-->
+			<!--						<span-->
+			<!--							class="negative"-->
+			<!--							*ngIf="-->
+			<!--								assetGroup.totals.per(-->
+			<!--									period,-->
+			<!--									this.showIncomes(),-->
+			<!--									showExpenses()-->
+			<!--								) < 0-->
+			<!--							"-->
+			<!--						>-->
+			<!--							-${{-->
+			<!--								(-assetGroup.totals.per(-->
+			<!--									period,-->
+			<!--									showIncomes(),-->
+			<!--									showExpenses()-->
+			<!--								)).toLocaleString()-->
+			<!--							}}-->
+			<!--						</span>-->
+			<!--						&lt;!&ndash;<small style="border-top: 1px solid lightgray; display: block; font-style: italic; color: lightgray">&ndash;&gt;-->
+			<!--						&lt;!&ndash;per {{period}}&ndash;&gt;-->
+			<!--						&lt;!&ndash;</small>&ndash;&gt;-->
+			<!--					</div>-->
+			<!--				</ion-item>-->
+			<!--			</ng-container>-->
 		</ion-list>
 
 		<sneat-budget-periods
 			*ngIf="liabilitiesMode === 'expenses' || liabilitiesMode === 'incomes'"
+			[team]="team"
+			[recurringHappenings]="calendariumTeamDto?.recurringHappenings"
 			[(period)]="period"
 			[liabilitiesMode]="liabilitiesMode"
 		/>

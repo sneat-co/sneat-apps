@@ -1,5 +1,5 @@
 import { IPrice, IWithRelatedOnly, IWithTeamIDs } from '@sneat/dto';
-import { ActivityType, Repeats, WeekdayCode2 } from './happening-types';
+import { ActivityType, RepeatPeriod, WeekdayCode2 } from './happening-types';
 
 export interface ISlotParticipant {
 	readonly roles?: string[];
@@ -172,13 +172,13 @@ export interface ITiming {
 }
 
 export interface IHappeningSlotSingleRef {
-	readonly repeats: Repeats;
+	readonly repeats: RepeatPeriod;
 	readonly weekday?: WeekdayCode2;
 	readonly week?: number;
 }
 
 export interface IHappeningSlotTiming extends ITiming {
-	readonly repeats: Repeats;
+	readonly repeats: RepeatPeriod;
 	readonly weekdays?: WeekdayCode2[];
 	readonly weeks?: number[];
 	readonly fortnightly?: {
