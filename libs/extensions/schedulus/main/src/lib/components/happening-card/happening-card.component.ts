@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
+import { IContactBrief } from '@sneat/contactus-core';
+import { IIdAndBrief } from '@sneat/core';
 import { getRelatedItemIDs } from '@sneat/dto';
+import { IHappeningContactRequest } from '@sneat/team-services';
 import {
 	HappeningBaseComponent,
 	HappeningComponent,
@@ -27,5 +30,28 @@ export class HappeningCardComponent extends HappeningComponent {
 			'contactus',
 			'contacts',
 		);
+	}
+
+	protected removeMember(member: IIdAndBrief<IContactBrief>): void {
+		console.log('removeMember', member);
+		if (!this.happening) {
+			return;
+		}
+		if (!this.team) {
+			return;
+		}
+		const request: IHappeningContactRequest = {
+			teamID: this.team.id,
+			happeningID: this.happening.id,
+			contact: { id: member.id },
+		};
+		this.happeningService.removeParticipant(request).subscribe({
+			next: () => {
+				this.changeDetectorRef.markForCheck();
+			},
+			error: this.errorLogger.logErrorHandler(
+				'Failed to remove member from happening',
+			),
+		});
 	}
 }

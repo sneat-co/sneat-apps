@@ -260,29 +260,6 @@ This operation can NOT be undone.`)
 			changes,
 		);
 	}
-
-	protected removeMember(member: IIdAndBrief<IContactBrief>): void {
-		console.log('removeMember', member);
-		if (!this.happening) {
-			return;
-		}
-		if (!this.team) {
-			return;
-		}
-		const request: IHappeningContactRequest = {
-			teamID: this.team.id,
-			happeningID: this.happening.id,
-			contact: { id: member.id },
-		};
-		this.happeningService.removeParticipant(request).subscribe({
-			next: () => {
-				this.changeDetectorRef.markForCheck();
-			},
-			error: this.errorLogger.logErrorHandler(
-				'Failed to remove member from happening',
-			),
-		});
-	}
 }
 
 @Directive()
