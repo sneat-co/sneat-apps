@@ -36,7 +36,7 @@ export class NgModulePreloaderService {
 		 'lists': './shared/listus/commune/list/lists/lists.module#ListsPageModule',
 		 'pupils': './pages/commune/members/pupils/pupils.module#PupilsPageModule',
 		 'real-estates': './pages/commune/asset/real-estate/real-estate.module#RealEstatePageModule',
-		 'schedule': './pages/commune/schedule/schedule/schedule-page.module#SchedulePageModule',
+		 'schedule': './pages/commune/calendar/schedule/schedule-page.module#SchedulePageModule',
 		 'tenants': './pages/commune/contact/contacts/commune-contacts.page.module#CommuneContactsPageModule',
 		 'terms': './pages/commune/term/terms/terms.module#TermsPageModule',
 		 'tasks': './pages/commune/todo/tasks/tasks-page.module#TasksPageModule',

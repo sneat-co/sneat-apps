@@ -35,7 +35,7 @@ import { ScheduleFilterComponent } from './components';
 import { ScheduleStateService } from './schedule-state.service';
 import { ScheduleWeekComponent } from './components';
 import { ScheduleWeekdayComponent } from './components';
-import { ScheduleComponent } from '../schedule/schedule.component';
+import { ScheduleComponent } from '../calendar/schedule.component';
 import { HappeningCardComponent } from '../happening-card/happening-card.component';
 import { SinglesTabComponent } from './components';
 import { ScheduleWeekCardComponent } from './components';

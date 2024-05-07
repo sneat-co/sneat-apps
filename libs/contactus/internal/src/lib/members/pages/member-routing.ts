@@ -41,7 +41,7 @@ const routes: Route[] = [
 	// },
 	// {
 	// 	path: 'member-schedule',
-	// 	loadChildren: () => import('../../schedule/schedule/schedule-page.module')
+	// 	loadChildren: () => import('../../calendar/schedule/schedule-page.module')
 	// 		.then(m => m.SchedulePageModule),
 	// 	...guardRoute,
 	// },
