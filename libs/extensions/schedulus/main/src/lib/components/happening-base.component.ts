@@ -23,7 +23,7 @@ import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { IHappeningContactRequest, TeamNavService } from '@sneat/team-services';
 import { NEVER, Observable, takeUntil } from 'rxjs';
 import { HappeningService } from '@sneat/team-services';
-import { ScheduleModalsService } from '../services/schedule-modals.service';
+import { CalendarModalsService } from '../services/calendar-modals.service';
 
 @Injectable()
 export class HappeningBaseComponentParams {
@@ -33,7 +33,7 @@ export class HappeningBaseComponentParams {
 		public readonly teamNavService: TeamNavService,
 		public readonly membersSelectorService: MembersSelectorService,
 		public readonly modalController: ModalController,
-		public readonly scheduleModalsService: ScheduleModalsService,
+		public readonly scheduleModalsService: CalendarModalsService,
 	) {}
 }
 

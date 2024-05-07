@@ -12,20 +12,18 @@ import {
 } from '@sneat/extensions/schedulus/shared';
 import {
 	emptyScheduleFilter,
-	ScheduleFilterService,
-} from '../../components/schedule-filter.service';
-import {
-	IScheduleFilter,
-	ScheduleComponentModule,
-	ScheduleTab,
-} from '../../components';
+	CalendarFilterService,
+} from '../../components/calendar-filter.service';
+import { ICalendarFilter } from '../../components/calendar/components/calendar-filter/calendar-filter';
+import { CalendarComponentModule } from '../../components/calendar/calendar-component.module';
+import { CalendarTab } from '../../components/calendar/calendar-component-types';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
 	TeamCoreComponentsModule,
 } from '@sneat/team-components';
 import { IMemberContext } from '@sneat/contactus-core';
-import { CalendariumServicesModule } from '../../services/calendarium-services.module';
+import { CalendariumServicesModule } from '../../services';
 
 @Component({
 	selector: 'sneat-schedule-page',
@@ -38,20 +36,20 @@ import { CalendariumServicesModule } from '../../services/calendarium-services.m
 		CommonModule,
 		IonicModule,
 		TeamCoreComponentsModule,
-		ScheduleComponentModule,
+		CalendarComponentModule,
 		ContactusServicesModule,
 		CalendariumServicesModule,
 	],
 })
 export class CalendarPageComponent extends TeamBaseComponent {
-	public tab: ScheduleTab = 'day';
+	public tab: CalendarTab = 'day';
 	public date = '';
 	member?: IMemberContext;
 
 	constructor(
 		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
-		private filterService: ScheduleFilterService,
+		private filterService: CalendarFilterService,
 		private readonly scheduleNavService: ScheduleNavService,
 	) {
 		super('SchedulePageComponent', route, params);
@@ -67,10 +65,10 @@ export class CalendarPageComponent extends TeamBaseComponent {
 		});
 	}
 
-	private filter: IScheduleFilter = emptyScheduleFilter;
+	private filter: ICalendarFilter = emptyScheduleFilter;
 
 	private readonly onQueryParamsChanged = (queryParams: ParamMap) => {
-		const tab = queryParams.get('tab') as ScheduleTab;
+		const tab = queryParams.get('tab') as CalendarTab;
 		if (tab) {
 			switch (tab) {
 				case 'day':
@@ -95,7 +93,7 @@ export class CalendarPageComponent extends TeamBaseComponent {
 		}
 	};
 
-	onTabChanged(tab: ScheduleTab): void {
+	onTabChanged(tab: CalendarTab): void {
 		this.tab = tab;
 		let { href } = location;
 		if (!href.includes('?')) {

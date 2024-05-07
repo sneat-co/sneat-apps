@@ -14,7 +14,7 @@ import {
 import { TeamComponentBaseParams } from '@sneat/team-components';
 import { first, takeUntil } from 'rxjs';
 import { HappeningFormComponent } from '../../components/happening-form/happening-form.component';
-import { ScheduleBasePage } from '../schedule-base-page';
+import { CalendarBasePage } from '../calendar-base-page';
 
 @Component({
 	selector: 'sneat-happening-new',
@@ -31,7 +31,7 @@ import { ScheduleBasePage } from '../schedule-base-page';
 	],
 	providers: [TeamComponentBaseParams],
 })
-export class NewHappeningPageComponent extends ScheduleBasePage {
+export class NewHappeningPageComponent extends CalendarBasePage {
 	@ViewChild('happeningPageFormComponent')
 	happeningPageFormComponent?: HappeningFormComponent;
 

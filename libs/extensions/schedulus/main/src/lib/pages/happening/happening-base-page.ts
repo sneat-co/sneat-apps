@@ -2,9 +2,9 @@ import { ActivatedRoute } from '@angular/router';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
 import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 import { HappeningComponentBaseParams } from '../../components/happening-component-base-params';
-import { ScheduleBasePage } from '../schedule-base-page';
+import { CalendarBasePage } from '../calendar-base-page';
 
-export abstract class HappeningBasePage extends ScheduleBasePage {
+export abstract class HappeningBasePage extends CalendarBasePage {
 	private readonly happeningID$ = new Subject<string>();
 	public happening?: IHappeningContext;
 

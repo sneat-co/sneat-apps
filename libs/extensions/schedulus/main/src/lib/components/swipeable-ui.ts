@@ -5,12 +5,13 @@ import {
 	wdCodeToWeekdayLongName,
 } from '@sneat/components';
 import { dateToIso, getWeekdayDate } from '@sneat/core';
+// noinspection ES6PreferShortImport
+import { Weekday } from '../components/calendar/weekday';
 import { Observable } from 'rxjs';
-import { TeamDaysProvider } from '../pages/calendar';
+import { TeamDaysProvider } from '../services/team-days-provider';
 import { getWd2 } from '@sneat/extensions/schedulus/shared';
 import { Week } from './schedule-core';
-import { IDateChanged } from './calendar/schedule-state.service';
-import { Weekday } from './calendar/components';
+import { IDateChanged } from './calendar/calendar-state.service';
 
 export type Parity = 'odd' | 'even'; // TODO: change to 'current' | 'next' | 'prev';
 

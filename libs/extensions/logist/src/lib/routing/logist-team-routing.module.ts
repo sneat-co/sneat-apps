@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { contactusRoutes, membersRoutes } from '@sneat/contactus-internal';
-import { schedulusRoutes } from '@sneat/extensions/schedulus/main';
+import { calendariumRoutes } from '@sneat/extensions/schedulus/main';
 import { TeamComponentBaseParams } from '@sneat/team-components';
 import { LogistMenuModule } from '../components';
 import { LogistTeamMenuComponent } from '../components';
@@ -89,7 +89,7 @@ export const logistRoutes: Routes = [
 	},
 	...contactusRoutes,
 	...membersRoutes,
-	...schedulusRoutes,
+	...calendariumRoutes,
 ];
 
 @NgModule({
