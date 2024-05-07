@@ -136,14 +136,43 @@ export class HappeningPricesComponent {
 		event.stopPropagation();
 		event.preventDefault();
 
-		this.updatingPriceIDs.set([...this.updatingPriceIDs(), price.id]);
+		if (!this.happening) {
+			return;
+		}
 
 		const isChecked = !!(event as CustomEvent).detail.checked;
+		const expenseQuantity = isChecked ? 1 : 0;
+
+		if (!this.happening?.id) {
+			const setPrices = <T extends IHappeningBrief>(h: T): T => ({
+				...h,
+				prices: h.prices?.map((p) =>
+					p.id === price.id ? { ...p, expenseQuantity } : p,
+				),
+			});
+
+			if (this.happening?.brief) {
+				this.happening = {
+					...this.happening,
+					brief: setPrices(this.happening.brief),
+				};
+			}
+			if (this.happening?.dto) {
+				this.happening = {
+					...this.happening,
+					dto: setPrices(this.happening.dto),
+				};
+			}
+			this.happeningChange.emit(this.happening);
+			return;
+		}
+
+		this.updatingPriceIDs.set([...this.updatingPriceIDs(), price.id]);
 
 		const request: IHappeningPricesRequest = {
 			teamID: this.happening?.team?.id || '',
 			happeningID: this.happening?.id || '',
-			prices: [{ ...price, expenseQuantity: isChecked ? 1 : 0 }],
+			prices: [{ ...price, expenseQuantity }],
 		};
 		this.happeningService.setHappeningPrices(request).subscribe({
 			complete: () => {
