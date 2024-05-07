@@ -76,15 +76,15 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 		filterService: ScheduleFilterService,
 		scheduleStateService: ScheduleStateService,
 		happeningService: HappeningService,
-		scheduleDayService: CalendarDayService,
+		calendarDayService: CalendarDayService,
 		sneatApiService: SneatApiService,
 		private readonly schedulusTeamService: CalendariumTeamService,
 	) {
 		this.teamDaysProvider = new TeamDaysProvider(
 			this.errorLogger,
 			happeningService,
-			scheduleDayService,
-			scheduleDayService.afs,
+			calendarDayService,
+			calendarDayService.afs,
 			sneatApiService,
 		);
 
