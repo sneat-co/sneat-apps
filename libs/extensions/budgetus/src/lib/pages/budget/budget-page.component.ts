@@ -12,24 +12,31 @@ import {
 	TeamComponentBaseParams,
 } from '@sneat/team-components';
 import { Totals } from '@sneat/team-models';
-
-type LiabilitiesMode = 'incomes' | 'expenses' | 'balance';
+import { BudgetPeriodsComponent } from './budget-periods.component';
+import { LiabilitiesMode } from './budget-types';
 
 @Component({
 	selector: 'sneat-budget-page',
 	templateUrl: './budget-page.component.html',
 	standalone: true,
-	imports: [CommonModule, FormsModule, IonicModule, ContactusServicesModule],
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		ContactusServicesModule,
+		BudgetPeriodsComponent,
+	],
 	providers: [TeamComponentBaseParams],
 })
 export class BudgetPageComponent extends TeamBaseComponent {
 	public total?: number;
-	public liabilitiesMode: LiabilitiesMode = 'balance';
+	public liabilitiesMode: LiabilitiesMode = 'expenses';
+	public period: Period = 'week';
 	// public showIncomes: boolean = true;
 	// public showExpenses: boolean = true;
 
 	public assetGroups: AssetGroup[] | undefined;
-	public period: Period;
+
 	public members: Member[] | undefined;
 
 	public get totals(): Totals | undefined {
@@ -49,7 +56,6 @@ export class BudgetPageComponent extends TeamBaseComponent {
 				this.liabilitiesMode = tab as LiabilitiesMode;
 			}
 		});
-		this.period = 'month';
 	}
 
 	public showIncomes(): boolean {

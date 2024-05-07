@@ -1,0 +1,26 @@
+<ion-accordion-group [value]="period" (ionChange)="onPeriodChanged($event)">
+	<ion-accordion value="day">
+		<ion-item slot="header" color="light">
+			<ion-label>Daily {{ liabilitiesMode }}</ion-label>
+		</ion-item>
+		<div class="ion-padding" slot="content">Weekly content</div>
+	</ion-accordion>
+	<ion-accordion value="week">
+		<ion-item slot="header" color="light">
+			<ion-label>Weekly {{ liabilitiesMode }}</ion-label>
+		</ion-item>
+		<div class="ion-padding" slot="content">Weekly content</div>
+	</ion-accordion>
+	<ion-accordion value="month">
+		<ion-item slot="header" color="light">
+			<ion-label>Monthly {{ liabilitiesMode }}</ion-label>
+		</ion-item>
+		<div class="ion-padding" slot="content">Monthly content</div>
+	</ion-accordion>
+	<ion-accordion value="year">
+		<ion-item slot="header" color="light">
+			<ion-label>Yearly {{ liabilitiesMode }}</ion-label>
+		</ion-item>
+		<div class="ion-padding" slot="content">Yearly content</div>
+	</ion-accordion>
+</ion-accordion-group>

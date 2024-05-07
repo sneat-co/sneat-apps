@@ -6,8 +6,8 @@
 		<ion-title>
 			⚖️ Budget
 			<ng-container *ngIf="team.brief?.title"
-				>&#64; {{ team.brief?.title }}</ng-container
-			>
+				>&#64; {{ team.brief?.title }}
+			</ng-container>
 		</ion-title>
 		<ion-buttons slot="end">
 			<ion-button [disabled]="!team" (click)="goNew()" title="Add liability">
@@ -24,31 +24,31 @@
 				[value]="liabilitiesMode"
 				(ionChange)="liabilitiesModeChanged($event)"
 			>
-				<ion-segment-button value="incomes">
-					<ion-label>
-						💸 <b>Income</b>
-						&dash;
-						<small>${{ totals?.incomes?.perMonth() || 0 }}/month</small>
-					</ion-label>
-				</ion-segment-button>
 				<ion-segment-button value="expenses">
 					<ion-label>
 						🧾 <b>Expenses</b>
-						&dash;
-						<small>${{ totals?.expenses?.perMonth() || 0 }}/month</small>
+						<!--						&dash;-->
+						<!--						<small>${{ totals?.expenses?.perMonth() || 0 }}/month</small>-->
+					</ion-label>
+				</ion-segment-button>
+				<ion-segment-button value="incomes">
+					<ion-label>
+						💸 <b>Income</b>
+						<!--						&dash;-->
+						<!--						<small>${{ totals?.incomes?.perMonth() || 0 }}/month</small>-->
 					</ion-label>
 				</ion-segment-button>
 				<ion-segment-button value="balance">
 					<ion-label>
 						<b>Balance</b>
-						&dash;
-						<small *ngIf="(totals?.balance('month') || 0) === 0">$0</small>
-						<small *ngIf="(totals?.balance('month') || 0) > 0">
-							+${{ totals?.balance("month") }}/month
-						</small>
-						<small *ngIf="(totals?.balance('month') || 0) < 0">
-							-${{ totals?.balance("month") }}/month
-						</small>
+						<!--						&dash;-->
+						<!--						<small *ngIf="(totals?.balance('month') || 0) === 0">$0</small>-->
+						<!--						<small *ngIf="(totals?.balance('month') || 0) > 0">-->
+						<!--							+${{ totals?.balance("month") }}/month-->
+						<!--						</small>-->
+						<!--						<small *ngIf="(totals?.balance('month') || 0) < 0">-->
+						<!--							-${{ totals?.balance("month") }}/month-->
+						<!--						</small>-->
 					</ion-label>
 				</ion-segment-button>
 			</ion-segment>
@@ -152,11 +152,11 @@
 						<ion-badge *ngIf="assetGroup.numberOf.assets" color="light">
 							{{ assetGroup?.context?.dto?.numberOf?.assets }}
 							<ng-container *ngIf="assetGroup.numberOf.assets === 1"
-								>asset</ng-container
-							>
+								>asset
+							</ng-container>
 							<ng-container *ngIf="assetGroup.numberOf.assets > 1"
-								>assets</ng-container
-							>
+								>assets
+							</ng-container>
 						</ion-badge>
 					</ion-label>
 					<div
@@ -206,34 +206,10 @@
 			</ng-container>
 		</ion-list>
 
-		<ng-container *ngIf="liabilitiesMode === 'expenses'">
-			<div class="ion-padding">
-				<h3>Unspecified expenses</h3>
-			</div>
-			<ion-list>
-				<ion-item-group>
-					<ion-item-divider>Birthdays</ion-item-divider>
-					<ion-item button>
-						<ion-label>Violet Parr</ion-label>
-						<ion-badge color="light">date</ion-badge>
-						<ion-badge color="light">budget</ion-badge>
-					</ion-item>
-					<ion-item button>
-						<ion-label>Helen Parr</ion-label>
-						<ion-badge color="light">budget</ion-badge>
-					</ion-item>
-				</ion-item-group>
-			</ion-list>
-			<ion-list>
-				<ion-item-group>
-					<ion-item-divider>Vehicles</ion-item-divider>
-					<ion-item button>
-						<ion-label>Peugeout 307sw</ion-label>
-						<ion-badge color="light">service</ion-badge>
-						<ion-badge color="light">tax rate</ion-badge>
-					</ion-item>
-				</ion-item-group>
-			</ion-list>
-		</ng-container>
+		<sneat-budget-periods
+			*ngIf="liabilitiesMode === 'expenses' || liabilitiesMode === 'incomes'"
+			[(period)]="period"
+			[liabilitiesMode]="liabilitiesMode"
+		/>
 	</ion-card>
 </ion-content>
