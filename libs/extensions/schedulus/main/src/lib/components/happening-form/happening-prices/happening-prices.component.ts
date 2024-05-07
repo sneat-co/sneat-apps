@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
-	ChangeDetectorRef,
 	Component,
 	Inject,
 	Input,
@@ -34,7 +33,6 @@ export class HappeningPricesComponent {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		// private readonly changeDetector: ChangeDetectorRef,
 		private readonly modalCtrl: ModalController,
 		private readonly happeningService: HappeningService,
 	) {}
@@ -80,8 +78,6 @@ export class HappeningPricesComponent {
 
 		this.updatingPriceIDs.set([...this.updatingPriceIDs(), price.id]);
 
-		// this.changeDetector.markForCheck();
-
 		this.happeningService
 			.deleteHappeningPrices({
 				teamID,
@@ -96,7 +92,6 @@ export class HappeningPricesComponent {
 					this.updatingPriceIDs.set(
 						this.updatingPriceIDs().filter((id) => id !== price.id),
 					);
-					// this.changeDetector.markForCheck();
 				},
 			});
 	}
@@ -110,8 +105,6 @@ export class HappeningPricesComponent {
 
 		this.updatingPriceIDs.set([...this.updatingPriceIDs(), price.id]);
 
-		// this.changeDetector.markForCheck();
-
 		const isChecked = !!(event as CustomEvent).detail.checked;
 
 		const request: IHappeningPricesRequest = {
@@ -124,7 +117,6 @@ export class HappeningPricesComponent {
 				this.updatingPriceIDs.set(
 					this.updatingPriceIDs().filter((id) => id !== price.id),
 				);
-				// this.changeDetector.markForCheck();
 			},
 		});
 	}
