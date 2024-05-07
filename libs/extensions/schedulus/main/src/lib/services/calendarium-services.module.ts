@@ -1,11 +1,7 @@
 import { NgModule } from '@angular/core';
-import {
-	CalendariumTeamService,
-	ScheduleModalsService,
-	ScheduleService,
-} from '.';
+import { CalendariumTeamService, ScheduleModalsService } from '.';
 
 @NgModule({
-	providers: [CalendariumTeamService, ScheduleService, ScheduleModalsService],
+	providers: [CalendariumTeamService, ScheduleModalsService],
 })
 export class CalendariumServicesModule {}
