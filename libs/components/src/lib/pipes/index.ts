@@ -8,3 +8,4 @@ export * from './long-month-name.pipe';
 export * from './short-month-name.pipe';
 export * from './selected-members.pipe';
 export * from './country-emoji.pipe';
+export * from './decimal64p2.pipe';
