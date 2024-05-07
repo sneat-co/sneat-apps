@@ -9,8 +9,8 @@ import { ScheduleFilterService } from '../../../schedule-filter.service';
 	templateUrl: 'recurrings-tab.component.html',
 })
 export class RecurringsTabComponent {
-	@Input() recurrings?: IHappeningWithUiState[];
-	@Input() allRecurrings?: IHappeningWithUiState[];
+	@Input() recurrings?: readonly IHappeningWithUiState[];
+	@Input() allRecurrings?: readonly IHappeningWithUiState[];
 	@Input() team: ITeamContext = { id: '' };
 	public readonly resetFilter: (event: Event) => void;
 

@@ -8,7 +8,7 @@ export interface ICalendarHappeningBrief
 		IWithRelatedOnly {}
 
 export interface ICalendariumTeamDto {
-	recurringHappenings?: Record<string, ICalendarHappeningBrief>;
+	readonly recurringHappenings?: Record<string, ICalendarHappeningBrief>;
 }
 
 export type ICalendariumTeamDtoWithID = IIdAndDto<ICalendariumTeamDto>;

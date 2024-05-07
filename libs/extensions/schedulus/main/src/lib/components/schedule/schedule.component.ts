@@ -61,10 +61,10 @@ export class ScheduleComponent implements AfterViewInit, OnChanges, OnDestroy {
 	@Output() readonly dateChanged = new EventEmitter<string>();
 	public showRecurrings = true;
 	public showEvents = true;
-	allRecurrings?: IHappeningWithUiState[];
+	allRecurrings?: readonly IHappeningWithUiState[];
 
 	// private date: Date;
-	recurrings?: IHappeningWithUiState[];
+	recurrings?: readonly IHappeningWithUiState[];
 
 	private schedulusTeamDto?: ICalendariumTeamDto | null;
 
