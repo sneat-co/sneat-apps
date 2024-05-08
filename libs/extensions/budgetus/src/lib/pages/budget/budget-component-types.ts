@@ -13,13 +13,13 @@ export interface IHappeningLiability extends ILiabilityBase {
 	readonly happening: IHappeningContext;
 }
 
-export interface PeriodLiabilities {
+export interface IPeriodLiabilities {
 	readonly happenings: IHappeningLiability[];
 	readonly contacts: Record<string, IContactLiability>;
 }
 
 export type LiabilitiesByPeriod = Partial<
-	Record<RepeatPeriod, PeriodLiabilities>
+	Record<RepeatPeriod, IPeriodLiabilities>
 >;
 
 export interface IContactLiability extends ILiabilityBase {

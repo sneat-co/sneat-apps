@@ -35,6 +35,8 @@ export class BudgetPeriodsComponent implements OnChanges {
 
 	@Input({ required: true }) period: RepeatPeriod = 'weekly';
 
+	showBy: 'event' | 'contact' = 'event';
+
 	@Output() readonly periodChange = new EventEmitter<RepeatPeriod>();
 
 	protected onPeriodChanged(event: Event): void {
@@ -48,6 +50,13 @@ export class BudgetPeriodsComponent implements OnChanges {
 		if (changes['recurringHappenings']) {
 			this.updateLiabilitiesByPeriod(this.recurringHappenings);
 		}
+	}
+
+	protected changeShowBy(showBy: 'event' | 'contact', event: Event): boolean {
+		event.stopPropagation();
+		event.preventDefault();
+		this.showBy = showBy;
+		return false;
 	}
 
 	private updateLiabilitiesByPeriod(

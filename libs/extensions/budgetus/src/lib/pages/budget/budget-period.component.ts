@@ -3,7 +3,10 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { IAmount, RepeatPeriod } from '@sneat/mod-schedulus-core';
-import { IHappeningLiability } from './budget-component-types';
+import {
+	IHappeningLiability,
+	IPeriodLiabilities,
+} from './budget-component-types';
 
 @Component({
 	selector: 'sneat-budget-period',
@@ -16,9 +19,10 @@ export class BudgetPeriodComponent {
 	tab: 'by_event' | 'by_contact' = 'by_event';
 
 	@Input({ required: true }) period?: RepeatPeriod;
+	@Input({ required: true }) showBy?: 'event' | 'contact' = 'event';
 
 	@Input({ required: true })
-	happeningLiabilities?: readonly IHappeningLiability[];
+	periodLiabilities?: IPeriodLiabilities;
 
 	protected getAmounts(liability: IHappeningLiability): readonly IAmount[] {
 		const result: IAmount[] = [];

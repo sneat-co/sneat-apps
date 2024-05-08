@@ -8,7 +8,7 @@ import { ITeamContext } from '@sneat/team-models';
 import {
 	IHappeningLiability,
 	LiabilitiesByPeriod,
-	PeriodLiabilities,
+	IPeriodLiabilities,
 } from './budget-component-types';
 
 export function getLiabilitiesByPeriod(
@@ -29,6 +29,7 @@ function processHappening(
 	byPeriod: LiabilitiesByPeriod,
 	happening: IIdAndBrief<ICalendarHappeningBrief>,
 ): void {
+	console.log('budget.processHappening()', happening);
 	const slots =
 		happening.brief.slots?.filter(
 			(s) => s.repeats === 'weekly' || s.repeats === 'monthly',
@@ -45,7 +46,7 @@ function processSlot(
 	happening: IIdAndBrief<ICalendarHappeningBrief>,
 	slot: IHappeningSlot,
 ): void {
-	const liabilities: PeriodLiabilities = byPeriod[slot.repeats] || {
+	const liabilities: IPeriodLiabilities = byPeriod[slot.repeats] || {
 		happenings: [],
 		contacts: {},
 	};
@@ -66,7 +67,7 @@ function processSlot(
 	if (prices.length) {
 		for (let priceIdx = 0; priceIdx < (prices.length || 0); priceIdx++) {
 			const price = prices[priceIdx];
-			hLiability = processPrice(hLiability, slot, price);
+			hLiability = processPrice(hLiability, slot, price, liabilities);
 		}
 		if (hLiabilityIndex >= 0) {
 			liabilities.happenings[hLiabilityIndex] = hLiability;
@@ -80,6 +81,7 @@ function processPrice(
 	happeningLiability: IHappeningLiability,
 	slot: IHappeningSlot,
 	price: IHappeningPrice,
+	liabilities: IPeriodLiabilities,
 ): IHappeningLiability {
 	if (slot.repeats === 'weekly' && slot.weekdays) {
 		for (let wdIdx = 0; wdIdx < (slot?.weekdays?.length || 0); wdIdx++) {
@@ -93,6 +95,32 @@ function processPrice(
 					[price.amount.currency]: amountValue,
 				},
 			};
+			const happeningContacts =
+				happeningLiability.happening.brief?.related?.['contactus']?.[
+					'contacts'
+				];
+			happeningContacts?.forEach((relatedContact) => {
+				const contactKey = relatedContact.keys.find(
+					(k) => k.teamID === happeningLiability.happening.team.id,
+				);
+				if (!contactKey) {
+					return;
+				}
+				let contactLiability = liabilities.contacts[contactKey.itemID];
+				if (!contactLiability) {
+					contactLiability = {
+						contact: {
+							id: contactKey.teamID,
+							team: happeningLiability.happening.team,
+						},
+						valuesByCurrency: {},
+					};
+				}
+				contactLiability.valuesByCurrency[price.amount.currency] =
+					(contactLiability.valuesByCurrency[price.amount.currency] || 0) +
+					price.amount.value;
+				liabilities.contacts[contactKey.itemID] = contactLiability;
+			});
 		}
 	}
 	return happeningLiability;
