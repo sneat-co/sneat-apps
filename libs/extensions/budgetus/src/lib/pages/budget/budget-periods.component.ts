@@ -16,10 +16,7 @@ import {
 } from '@sneat/mod-schedulus-core';
 import { ITeamContext } from '@sneat/team-models';
 import { getHappeningLiabilitiesByPeriod } from './budget-calc-periods';
-import {
-	HappeningLiabilitiesByPeriod,
-	LiabilitiesMode,
-} from './budget-component-types';
+import { LiabilitiesByPeriod, LiabilitiesMode } from './budget-component-types';
 import { BudgetPeriodComponent } from './budget-period.component';
 
 @Component({
@@ -45,8 +42,9 @@ export class BudgetPeriodsComponent implements OnChanges {
 		this.periodChange.emit(this.period);
 	}
 
-	protected readonly happeningLiabilitiesByPeriod =
-		signal<HappeningLiabilitiesByPeriod>({});
+	protected readonly happeningLiabilitiesByPeriod = signal<LiabilitiesByPeriod>(
+		{},
+	);
 
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['recurringHappenings']) {

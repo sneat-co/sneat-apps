@@ -1,12 +1,15 @@
 import { ICalendarHappeningBrief } from '@sneat/mod-schedulus-core';
 import { ITeamContext } from '@sneat/team-models';
-import { HappeningLiabilitiesByPeriod } from './budget-component-types';
+import {
+	LiabilitiesByPeriod,
+	PeriodLiabilities,
+} from './budget-component-types';
 
 export function getHappeningLiabilitiesByPeriod(
 	recurringHappenings: Record<string, ICalendarHappeningBrief>,
 	team: ITeamContext,
-): HappeningLiabilitiesByPeriod {
-	const byPeriod: HappeningLiabilitiesByPeriod = {};
+): LiabilitiesByPeriod {
+	const byPeriod: LiabilitiesByPeriod = {};
 
 	Object.entries(recurringHappenings).forEach((entry) => {
 		const [id, brief] = entry;
@@ -17,8 +20,13 @@ export function getHappeningLiabilitiesByPeriod(
 			) || [];
 
 		slots.forEach((slot) => {
-			const periodLiabilities = byPeriod[slot.repeats] || [];
-			let liability = periodLiabilities.find((l) => l.happening.id === id);
+			const periodLiabilities: PeriodLiabilities = byPeriod[slot.repeats] || {
+				happenings: [],
+				contacts: [],
+			};
+			let liability = periodLiabilities.happenings.find(
+				(l) => l.happening.id === id,
+			);
 			if (!liability) {
 				liability = {
 					happening: { id, brief, team },
@@ -53,11 +61,11 @@ export function getHappeningLiabilitiesByPeriod(
 			}
 
 			if (
-				!periodLiabilities.some(
+				!periodLiabilities.happenings.some(
 					(l) => l.happening.id === liability.happening.id,
 				)
 			) {
-				periodLiabilities.push(liability);
+				periodLiabilities.happenings.push(liability);
 				byPeriod[slot.repeats] = periodLiabilities;
 			}
 		});
