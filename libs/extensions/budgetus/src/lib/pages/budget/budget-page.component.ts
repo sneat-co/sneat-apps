@@ -19,8 +19,8 @@ import {
 } from '@sneat/team-components';
 import { Totals } from '@sneat/team-models';
 import { takeUntil } from 'rxjs';
+import { LiabilitiesMode } from './budget-component-types';
 import { BudgetPeriodsComponent } from './budget-periods.component';
-import { LiabilitiesMode } from './budget-types';
 
 @Component({
 	selector: 'sneat-budget-page',

@@ -1,21 +1,16 @@
 import { CommonModule } from '@angular/common';
-import {
-	Component,
-	Input,
-	OnChanges,
-	signal,
-	SimpleChanges,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { IAmount, RepeatPeriod } from '@sneat/mod-schedulus-core';
-import { IHappeningLiability } from './budget-components-types';
+import { IHappeningLiability } from './budget-component-types';
 
 @Component({
 	selector: 'sneat-budget-period',
 	templateUrl: 'budget-period.component.html',
 	standalone: true,
 	imports: [CommonModule, IonicModule, FormsModule],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BudgetPeriodComponent {
 	tab: 'by_event' | 'by_contact' = 'by_event';
@@ -32,11 +27,4 @@ export class BudgetPeriodComponent {
 		});
 		return result;
 	}
-
-	protected tabClicked(event: Event): void {
-		event.stopPropagation();
-		event.preventDefault();
-	}
-
-	protected readonly encodeURI = encodeURI;
 }

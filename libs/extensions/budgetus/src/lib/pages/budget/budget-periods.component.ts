@@ -15,9 +15,12 @@ import {
 	RepeatPeriod,
 } from '@sneat/mod-schedulus-core';
 import { ITeamContext } from '@sneat/team-models';
-import { IHappeningLiability } from './budget-components-types';
+import { getHappeningLiabilitiesByPeriod } from './budget-calc-periods';
+import {
+	HappeningLiabilitiesByPeriod,
+	LiabilitiesMode,
+} from './budget-component-types';
 import { BudgetPeriodComponent } from './budget-period.component';
-import { LiabilitiesMode } from './budget-types';
 
 @Component({
 	selector: 'sneat-budget-periods',
@@ -42,9 +45,8 @@ export class BudgetPeriodsComponent implements OnChanges {
 		this.periodChange.emit(this.period);
 	}
 
-	protected readonly happeningLiabilitiesByPeriod = signal<{
-		[id: string]: readonly IHappeningLiability[];
-	}>({}); // TODO: must be better way to define using strongly typed key?
+	protected readonly happeningLiabilitiesByPeriod =
+		signal<HappeningLiabilitiesByPeriod>({});
 
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['recurringHappenings']) {
@@ -60,65 +62,11 @@ export class BudgetPeriodsComponent implements OnChanges {
 			this.happeningLiabilitiesByPeriod.set({});
 			return;
 		}
-		const byPeriod: {
-			[id: string]: IHappeningLiability[];
-		} = {};
 
-		Object.entries(recurringHappenings).forEach((entry) => {
-			const [id, brief] = entry;
-
-			const slots =
-				brief.slots?.filter(
-					(s) => s.repeats === 'weekly' || s.repeats === 'monthly',
-				) || [];
-
-			slots.forEach((slot) => {
-				const periodLiabilities = byPeriod[slot.repeats] || [];
-				let liability = periodLiabilities.find((l) => l.happening.id === id);
-				if (!liability) {
-					liability = {
-						happening: { id, brief, team: this.team },
-						valuesByCurrency: {},
-					};
-				}
-
-				const prices = brief.prices?.filter((p) => p.expenseQuantity) || [];
-
-				if (prices.length && slots.length) {
-					for (let priceIdx = 0; priceIdx < (prices.length || 0); priceIdx++) {
-						const price = prices[priceIdx];
-						if (this.period === 'weekly' && slot.weekdays) {
-							for (
-								let wdIdx = 0;
-								wdIdx < (slot?.weekdays?.length || 0);
-								wdIdx++
-							) {
-								let amountValue: number =
-									liability.valuesByCurrency[price.amount.currency] || 0;
-								amountValue += price.amount.value;
-								liability = {
-									...liability,
-									valuesByCurrency: {
-										...liability?.valuesByCurrency,
-										[price.amount.currency]: amountValue,
-									},
-								};
-							}
-						}
-					}
-				}
-
-				if (
-					!periodLiabilities.some(
-						(l) => l.happening.id === liability.happening.id,
-					)
-				) {
-					periodLiabilities.push(liability);
-					byPeriod[slot.repeats] = periodLiabilities;
-				}
-			});
-		});
-
-		this.happeningLiabilitiesByPeriod.set(byPeriod);
+		const result = getHappeningLiabilitiesByPeriod(
+			recurringHappenings,
+			this.team,
+		);
+		this.happeningLiabilitiesByPeriod.set(result);
 	}
 }
