@@ -15,7 +15,7 @@ import {
 	RepeatPeriod,
 } from '@sneat/mod-schedulus-core';
 import { ITeamContext } from '@sneat/team-models';
-import { getHappeningLiabilitiesByPeriod } from './budget-calc-periods';
+import { getLiabilitiesByPeriod } from './budget-calc-periods';
 import { LiabilitiesByPeriod, LiabilitiesMode } from './budget-component-types';
 import { BudgetPeriodComponent } from './budget-period.component';
 
@@ -42,29 +42,24 @@ export class BudgetPeriodsComponent implements OnChanges {
 		this.periodChange.emit(this.period);
 	}
 
-	protected readonly happeningLiabilitiesByPeriod = signal<LiabilitiesByPeriod>(
-		{},
-	);
+	protected readonly liabilitiesByPeriod = signal<LiabilitiesByPeriod>({});
 
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['recurringHappenings']) {
-			this.updateHappeningLiabilitiesByPeriod(this.recurringHappenings);
+			this.updateLiabilitiesByPeriod(this.recurringHappenings);
 		}
 	}
 
-	private updateHappeningLiabilitiesByPeriod(
+	private updateLiabilitiesByPeriod(
 		recurringHappenings?: Record<string, ICalendarHappeningBrief>,
 	): void {
 		console.log('updateHappeningLiabilitiesByPeriod()');
 		if (!recurringHappenings) {
-			this.happeningLiabilitiesByPeriod.set({});
+			this.liabilitiesByPeriod.set({});
 			return;
 		}
 
-		const result = getHappeningLiabilitiesByPeriod(
-			recurringHappenings,
-			this.team,
-		);
-		this.happeningLiabilitiesByPeriod.set(result);
+		const result = getLiabilitiesByPeriod(recurringHappenings, this.team);
+		this.liabilitiesByPeriod.set(result);
 	}
 }

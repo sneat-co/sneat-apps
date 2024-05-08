@@ -13,9 +13,7 @@
 		<sneat-budget-period
 			slot="content"
 			[period]="period"
-			[happeningLiabilities]="
-				happeningLiabilitiesByPeriod()[period]?.happenings
-			"
+			[happeningLiabilities]="liabilitiesByPeriod()[period]?.happenings"
 		/>
 	</ion-accordion>
 	<ion-accordion value="monthly">
