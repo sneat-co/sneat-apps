@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Input,
+	OnChanges,
+	SimpleChanges,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { IAmount, RepeatPeriod } from '@sneat/mod-schedulus-core';
@@ -15,7 +21,7 @@ import {
 	imports: [CommonModule, IonicModule, FormsModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BudgetPeriodComponent {
+export class BudgetPeriodComponent implements OnChanges {
 	tab: 'by_event' | 'by_contact' = 'by_event';
 
 	@Input({ required: true }) period?: RepeatPeriod;
@@ -30,5 +36,14 @@ export class BudgetPeriodComponent {
 			result.push({ currency, value });
 		});
 		return result;
+	}
+
+	public ngOnChanges(changes: SimpleChanges): void {
+		if (changes['periodLiabilities']) {
+			console.log(
+				'BudgetPeriodComponent.ngOnChanges: periodLiabilities:',
+				this.periodLiabilities,
+			);
+		}
 	}
 }
