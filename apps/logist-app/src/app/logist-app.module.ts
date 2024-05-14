@@ -4,7 +4,7 @@ import { DefaultSneatAppApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
 import {
 	CONTACT_ROLES_BY_TYPE,
 	ContactRolesByType,
-	ImportFirebaseModules,
+	getAngularFireProviders,
 	SneatApplicationModule,
 } from '@sneat/app';
 import { CommunesUiModule } from '@sneat/communes-ui';
@@ -30,9 +30,11 @@ const appInfo: IAppInfo = {
 
 console.log('logist-app.module: environment:', environment);
 
-const firebaseModules = ImportFirebaseModules(environment.firebaseConfig);
+const angularFireProviders = getAngularFireProviders(
+	environment.firebaseConfig,
+);
 
-console.log('firebaseModules', firebaseModules);
+console.log('firebaseModules', angularFireProviders);
 
 const contactRolesByType: ContactRolesByType = {
 	company: [
@@ -95,7 +97,6 @@ const contactRolesByType: ContactRolesByType = {
 
 @NgModule({
 	imports: [
-		...firebaseModules,
 		BrowserAnimationsModule,
 		SneatApplicationModule.defaultSneatApplicationImports(environment),
 		// SneatAuthServicesModule,
@@ -105,6 +106,7 @@ const contactRolesByType: ContactRolesByType = {
 		LogistAppRoutingModule,
 	],
 	providers: [
+		...angularFireProviders,
 		...coreProviders,
 		{
 			provide: SneatApiBaseUrl,

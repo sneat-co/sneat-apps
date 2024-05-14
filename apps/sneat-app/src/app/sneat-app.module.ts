@@ -4,7 +4,7 @@ import { init } from '@sentry/angular';
 import { DefaultSneatAppApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
 import {
 	CONTACT_ROLES_BY_TYPE,
-	ImportFirebaseModules,
+	getAngularFireProviders,
 	SneatApplicationModule,
 } from '@sneat/app';
 // eslint-disable-next-line @nx/enforce-module-boundaries
@@ -43,7 +43,6 @@ const appInfo: IAppInfo = {
 	declarations: [SneatAppComponent, SneatAppMenuComponent],
 	imports: [
 		...SneatApplicationModule.defaultSneatApplicationImports(environment),
-		ImportFirebaseModules(environment.firebaseConfig),
 		AppVersionComponent,
 		// SneatAuthServicesModule,
 		AuthMenuItemComponent,
@@ -53,6 +52,7 @@ const appInfo: IAppInfo = {
 		SneatAppRoutingModule,
 	],
 	providers: [
+		getAngularFireProviders(environment.firebaseConfig),
 		...coreProviders,
 		{
 			provide: SneatApiBaseUrl,

@@ -9,7 +9,7 @@ import {
 import { getAuth } from 'firebase/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
-export function ImportFirebaseModules(firebaseConfig: IFirebaseConfig) {
+export function getAngularFireProviders(firebaseConfig: IFirebaseConfig) {
 	// console.log('ImportFirebaseModules');
 	return [
 		provideFirebaseApp(() => initFirebase(firebaseConfig)),
