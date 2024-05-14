@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { captureException, showReportDialog } from '@sentry/angular-ivy';
+import { captureException, showReportDialog } from '@sentry/angular';
 import { IErrorLogger, ILogErrorOptions } from './interfaces';
 
 const defaultErrorToastDuration = 7000;

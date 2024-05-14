@@ -47,7 +47,7 @@
     "@ionic/angular": "8.1.1",
     "@ionic/core": "8.1.1",
     "@nx/angular": "19.0.3",
-    "@sentry/angular-ivy": "7.114.0",
+    "@sentry/angular": "8.0.0",
     "@sentry/browser": "8.0.0",
     "@sneat/random": "0.0.4",
     "@sneat/wormhole": "^0.0.6",
@@ -116,4 +116,3 @@
     "*.{html,ts,js,css,md}": "prettier --write"
   }
 }
-

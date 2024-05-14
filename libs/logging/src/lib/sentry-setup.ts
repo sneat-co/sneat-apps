@@ -1,5 +1,5 @@
 import { Provider, ErrorHandler, APP_INITIALIZER } from '@angular/core';
-import { createErrorHandler, TraceService, init } from '@sentry/angular-ivy';
+import { createErrorHandler, TraceService, init } from '@sentry/angular';
 import { Router } from '@angular/router';
 
 export function initSentry(): void {
