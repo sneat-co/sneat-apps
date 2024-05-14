@@ -3,9 +3,16 @@ import { Component, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule, IonInput } from '@ionic/angular';
-import { ContactusServicesModule } from '@sneat/contactus-services';
+import {
+	ContactusServicesModule,
+	ContactusTeamContextService,
+} from '@sneat/contactus-services';
 import { ContactComponentBaseParams } from '@sneat/contactus-shared';
-import { emptyMemberPerson, IMemberPerson } from '@sneat/contactus-core';
+import {
+	emptyMemberPerson,
+	IContactusTeamDtoAndID,
+	IMemberPerson,
+} from '@sneat/contactus-core';
 import {
 	TeamPageBaseComponent,
 	TeamComponentBaseParams,
@@ -41,7 +48,11 @@ export class NewMemberPageComponent extends TeamPageBaseComponent {
 		return url && this.defaultBackPage ? url + '/' + this.defaultBackPage : url;
 	}
 
-	constructor(route: ActivatedRoute, params: TeamComponentBaseParams) {
+	constructor(
+		route: ActivatedRoute,
+		params: TeamComponentBaseParams,
+		contactusTeamContextService: ContactusTeamContextService,
+	) {
 		super('NewMemberPageComponent', route, params);
 		this.trackFirstTeamTypeChanged();
 		route.queryParams.subscribe((params) => {
@@ -66,7 +77,15 @@ export class NewMemberPageComponent extends TeamPageBaseComponent {
 				this.member = { ...this.member, roles: roles.split(',') };
 			}
 		});
+
+		contactusTeamContextService.contactusTeamContext$.subscribe({
+			next: (contactusTeam) => {
+				this.contactusTeam = contactusTeam;
+			},
+		});
 	}
+
+	protected contactusTeam?: IContactusTeamDtoAndID;
 
 	private readonly trackFirstTeamTypeChanged = (): void => {
 		console.log('NewMemberPageComponent.trackFirstTeamTypeChanged()');
