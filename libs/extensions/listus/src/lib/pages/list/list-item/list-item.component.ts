@@ -9,8 +9,8 @@ import { ListusComponentBaseParams } from '../../../listus-component-base-params
 import {
 	IListItemIDsRequest,
 	ISetListItemsIsComplete,
-} from '../../../services/interfaces';
-import { ListService } from '../../../services/list.service';
+} from '../../../services';
+import { ListService } from '../../../services';
 import { ListDialogsService } from '../../dialogs/ListDialogs.service';
 import { IListItemWithUiState } from '../list-item-with-ui-state';
 
