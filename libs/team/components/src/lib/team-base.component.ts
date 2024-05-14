@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
-import { IContactusTeamDto, IMemberContext } from '@sneat/contactus-core';
-import { IIdAndOptionalDto, ILogger, TeamType } from '@sneat/core';
+import { ILogger, TeamType } from '@sneat/core';
 import { equalTeamBriefs, ITeamBrief, ITeamDto } from '@sneat/dto';
 import { ILogErrorOptions } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
@@ -38,9 +37,6 @@ export abstract class TeamBaseComponent extends SneatBaseComponent {
 	>();
 	protected teamContext?: ITeamContext; // TODO: check - is it duplication of team?
 
-	protected contactusTeam?: IIdAndOptionalDto<IContactusTeamDto>;
-
-	protected route: ActivatedRoute;
 	protected readonly navController: NavController;
 	// protected readonly activeCommuneService: IActiveCommuneService;
 	protected readonly userService: SneatUserService;
@@ -51,10 +47,6 @@ export abstract class TeamBaseComponent extends SneatBaseComponent {
 	protected readonly logger: ILogger;
 	// protected readonly willLeave = new Subject<void>();
 	protected defaultBackPage?: string;
-
-	public selectedMembers?: readonly IMemberContext[];
-
-	viewMode: 'list' | 'grid' = 'grid';
 
 	protected readonly logError: (
 		e: unknown,
@@ -115,7 +107,7 @@ export abstract class TeamBaseComponent extends SneatBaseComponent {
 	protected constructor(
 		// we need this fake token so we can implement Angular interfaces
 		className: string,
-		route: ActivatedRoute,
+		protected readonly route: ActivatedRoute,
 		readonly teamParams: TeamComponentBaseParams,
 	) {
 		super(className, teamParams.errorLogger);
@@ -241,26 +233,6 @@ export abstract class TeamBaseComponent extends SneatBaseComponent {
 			});
 	}
 
-	private subscribeForContactusTeamChanges(team: ITeamContext): void {
-		this.teamParams.contactusTeamService
-			.watchTeamModuleRecord(team.id)
-			.pipe(takeUntil(this.teamIDChanged$), this.takeUntilNeeded())
-			.subscribe({
-				next: (o) => this.onContactusTeamChanged(o),
-				error: this.errorLogger.logErrorHandler('failed to get team record'),
-			});
-	}
-
-	protected onContactusTeamChanged(
-		contactusTeam: IIdAndOptionalDto<IContactusTeamDto>,
-	): void {
-		this.console.log(
-			`${this.className}.onContactusTeamChanged()`,
-			contactusTeam,
-		);
-		this.contactusTeam = contactusTeam;
-	}
-
 	private getTeamContextFromRouteState(): void {
 		const team = history.state?.team as ITeamContext;
 		this.console.log(`${this.className}.getTeamContextFromRouteState()`, team);
@@ -330,77 +302,77 @@ export abstract class TeamBaseComponent extends SneatBaseComponent {
 			this.onTeamIdChanged();
 			if (teamContext) {
 				setTimeout(() => this.subscribeForTeamChanges(teamContext), 1);
-				setTimeout(() => this.subscribeForContactusTeamChanges(teamContext), 1);
+				// setTimeout(() => this.subscribeForContactusTeamChanges(teamContext), 1);
+				// }
 			}
+			if (teamTypeChanged && teamContext?.type) {
+				// console.log('emitting teamTypeChanged$', teamContext.type);
+				this.teamTypeChanged.next(teamContext.type);
+			}
+			if (briefChanged) {
+				this.teamBriefChanged.next(teamContext?.brief);
+			}
+			if (dtoChanged) {
+				this.teamDtoChanged.next(teamContext?.dto);
+			}
+			if (!teamContext) {
+				this.unsubscribe('no team context');
+				return;
+			}
+			const { id } = teamContext;
+			if (!id) {
+				this.logError(
+					'setNewTeamContext() is called with team context without ID',
+				);
+				return;
+			}
+			// this.subs.add(
+			// 	this.userService.userChanged
+			// 		.pipe(
+			// 			first(), // TODO: Cancel if user signed out
+			// 			mergeMap(() => {
+			// 				return this.teamService.watchTeam(id).pipe(
+			// 					this.takeUntilNeeded(),
+			// 				);
+			// 			}),
+			// 			tap(newTeam => {
+			// 				if (newTeam && teamContext.type && teamContext.type != newTeam.type) {
+			// 					throw new Error(`loaded team=${id} with type=${newTeam.type} while expected to have type=${teamContext.type}`);
+			// 				}
+			// 			}),
+			// 		)
+			// 		.subscribe({
+			// 			next: this.onTeamLoaded,
+			// 			error: this.logErrorHandler(`failed to load team by id=${id}`),
+			// 		}),
+			// );
 		}
-		if (teamTypeChanged && teamContext?.type) {
-			// console.log('emitting teamTypeChanged$', teamContext.type);
-			this.teamTypeChanged.next(teamContext.type);
-		}
-		if (briefChanged) {
-			this.teamBriefChanged.next(teamContext?.brief);
-		}
-		if (dtoChanged) {
-			this.teamDtoChanged.next(teamContext?.dto);
-		}
-		if (!teamContext) {
-			this.unsubscribe('no team context');
-			return;
-		}
-		const { id } = teamContext;
-		if (!id) {
-			this.logError(
-				'setNewTeamContext() is called with team context without ID',
-			);
-			return;
-		}
-		// this.subs.add(
-		// 	this.userService.userChanged
-		// 		.pipe(
-		// 			first(), // TODO: Cancel if user signed out
-		// 			mergeMap(() => {
-		// 				return this.teamService.watchTeam(id).pipe(
-		// 					this.takeUntilNeeded(),
-		// 				);
-		// 			}),
-		// 			tap(newTeam => {
-		// 				if (newTeam && teamContext.type && teamContext.type != newTeam.type) {
-		// 					throw new Error(`loaded team=${id} with type=${newTeam.type} while expected to have type=${teamContext.type}`);
-		// 				}
-		// 			}),
-		// 		)
-		// 		.subscribe({
-		// 			next: this.onTeamLoaded,
-		// 			error: this.logErrorHandler(`failed to load team by id=${id}`),
-		// 		}),
-		// );
-	}
 
-	// private setTeamContext = (teamContext?: ITeamContext | null): void => {
-	// 	console.log('setTeamContext()', teamContext);
-	// 	try {
-	// 		if (teamContext?.id) {
-	// 			if (this.teamContext?.id !== teamContext.id) {
-	// 				this.setNewTeamContext(teamContext);
-	// 			} else {
-	// 				this.updateExistingTeamContext(teamContext);
-	// 			}
-	// 		} else if (this.teamContext) {
-	// 			const hadData = !!this.teamContext.dto;
-	// 			const hadId = !!this.teamContext.id;
-	// 			this.teamContext = undefined;
-	// 			if (hadId) {
-	// 				this.onTeamIdChanged();
-	// 			}
-	// 			if (hadData) {
-	// 				this.onTeamDtoChanged();
-	// 			}
-	// 		}
-	//
-	// 	} catch (e) {
-	// 		this.logError(e, 'Failed to set team id');
-	// 	}
-	// };
+		// private setTeamContext = (teamContext?: ITeamContext | null): void => {
+		// 	console.log('setTeamContext()', teamContext);
+		// 	try {
+		// 		if (teamContext?.id) {
+		// 			if (this.teamContext?.id !== teamContext.id) {
+		// 				this.setNewTeamContext(teamContext);
+		// 			} else {
+		// 				this.updateExistingTeamContext(teamContext);
+		// 			}
+		// 		} else if (this.teamContext) {
+		// 			const hadData = !!this.teamContext.dto;
+		// 			const hadId = !!this.teamContext.id;
+		// 			this.teamContext = undefined;
+		// 			if (hadId) {
+		// 				this.onTeamIdChanged();
+		// 			}
+		// 			if (hadData) {
+		// 				this.onTeamDtoChanged();
+		// 			}
+		// 		}
+		//
+		// 	} catch (e) {
+		// 		this.logError(e, 'Failed to set team id');
+		// 	}
+	}
 
 	private readonly onTeamContextChanged = (team: ITeamContext): void => {
 		const dtoChanged = team.dto !== this.teamContext?.dto;

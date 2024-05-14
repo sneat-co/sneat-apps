@@ -1,7 +1,11 @@
 import { ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IIdAndBrief, TopMenuService } from '@sneat/core';
-import { IContactusTeamDtoAndID, IContactBrief } from '@sneat/contactus-core';
+import { IIdAndBrief, IIdAndOptionalDto, TopMenuService } from '@sneat/core';
+import {
+	IContactusTeamDtoAndID,
+	IContactBrief,
+	IContactusTeamDto,
+} from '@sneat/contactus-core';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
@@ -24,11 +28,9 @@ export abstract class TeamPageBaseComponent
 		super(className, route, params);
 	}
 
-	protected override onContactusTeamChanged(
-		contactusTeam: IContactusTeamDtoAndID,
-	) {
+	protected onContactusTeamChanged(contactusTeam: IContactusTeamDtoAndID) {
 		console.log('TeamPage.onContactusTeamChanged()', contactusTeam);
-		super.onContactusTeamChanged(contactusTeam);
+		// super.onContactusTeamChanged(contactusTeam);
 		this.members = zipMapBriefsWithIDs(contactusTeam?.dto?.contacts)
 			.filter((c) => c.brief?.roles?.includes('member'))
 			.map((c) => ({ ...c, team: this.team }));
@@ -37,17 +39,5 @@ export abstract class TeamPageBaseComponent
 			this.members,
 		);
 		this.cd.markForCheck();
-	}
-
-	protected goMembers(event: Event): void {
-		event.stopPropagation();
-		event.preventDefault();
-		this.teamParams.teamNavService
-			.navigateForwardToTeamPage(this.team, 'members', {
-				state: {
-					contactusTeam: this.contactusTeam,
-				},
-			})
-			.catch(console.error);
 	}
 }

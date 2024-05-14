@@ -10,7 +10,6 @@ import {
 } from '@ionic/angular';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { APP_INFO, eq, IAppInfo } from '@sneat/core';
-import { ListusCoreServicesModule } from '../../services/listus-core-services.module';
 import { IListGroup, IListInfo, ListType } from '../../dto';
 import {
 	TeamBaseComponent,
@@ -19,7 +18,10 @@ import {
 import { createShortTeamInfoFromDto } from '@sneat/team-models';
 import { Subscription } from 'rxjs';
 import { ListusComponentBaseParams } from '../../listus-component-base-params';
-import { IListusAppStateService } from '../../services';
+import {
+	IListusAppStateService,
+	ListusCoreServicesModule,
+} from '../../services';
 import { NewListDialogComponent } from './new-list-dialog.component';
 import { NewListDialogModule } from './new-list-dialog.module';
 

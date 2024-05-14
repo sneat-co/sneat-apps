@@ -23,6 +23,8 @@ export class LogistOrdersPageComponent extends TeamBaseComponent {
 	private ordersSubscription?: Subscription;
 	private filter: IOrdersFilter = defaultFilter;
 
+	protected viewMode: 'list' | 'grid' = 'grid';
+
 	constructor(
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,

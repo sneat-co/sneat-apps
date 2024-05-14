@@ -27,7 +27,6 @@ export class TeamComponentBaseParams {
 		public readonly userService: SneatUserService,
 		public readonly teamService: TeamService,
 		public readonly teamNavService: TeamNavService,
-		public readonly contactusTeamService: ContactusTeamService,
 		public readonly contactService: ContactService,
 		// public readonly contactusTeamService: ContactusTeamService,
 		public readonly preloader: NgModulePreloaderService,

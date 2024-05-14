@@ -68,7 +68,7 @@ export abstract class BaseListPage extends TeamItemPageBaseComponent<
 		return this.params.listService;
 	}
 
-	public setList(list: IListContext): void {
+	protected setList(list: IListContext): void {
 		console.log('BaseListPage.setList()', list, 'this.list:', this.list);
 		if (!list.brief && list.id == this.list?.id && this.list.brief) {
 			list = { ...list, brief: this.list.brief };

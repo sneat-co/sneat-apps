@@ -7,13 +7,7 @@ import {
 	IContactContext,
 } from '@sneat/contactus-core';
 import { TeamItemPageBaseComponent } from '@sneat/team-components';
-import {
-	distinctUntilChanged,
-	map,
-	Observable,
-	takeUntil,
-	throwError,
-} from 'rxjs';
+import { Observable, takeUntil, throwError } from 'rxjs';
 
 export abstract class ContactBasePage extends TeamItemPageBaseComponent<
 	IContactBrief,
@@ -64,7 +58,7 @@ export abstract class ContactBasePage extends TeamItemPageBaseComponent<
 	}
 
 	protected override briefs(): Record<string, IContactBrief> | undefined {
-		return this.contactusTeam?.dto?.contacts;
+		throw new Error('Method not implemented.'); // return this.contactusTeam?.dto?.contacts;
 	}
 
 	protected onContactIdChanged(contactID: string): void {

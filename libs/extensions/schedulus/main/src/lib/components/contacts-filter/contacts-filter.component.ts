@@ -12,7 +12,10 @@ import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import { IContactBrief, IContactusTeamDto } from '@sneat/contactus-core';
-import { ContactusTeamService } from '@sneat/contactus-services';
+import {
+	ContactusTeamContextService,
+	ContactusTeamService,
+} from '@sneat/contactus-services';
 import { ContactusModuleBaseComponent } from '@sneat/contactus-shared';
 import { IIdAndBrief, IIdAndOptionalDto } from '@sneat/core';
 import { TeamComponentBaseParams } from '@sneat/team-components';
@@ -44,12 +47,20 @@ export class ContactsFilterComponent
 		protected contactusTeamService: ContactusTeamService,
 	) {
 		super('ContactsFilterComponent', route, teamParams, contactusTeamService);
+		const contactusTeamContextService = new ContactusTeamContextService(
+			teamParams.errorLogger,
+			this.destroyed,
+			this.teamIDChanged$,
+			contactusTeamService,
+		);
+		contactusTeamContextService.contactusTeamContext$.subscribe({
+			next: this.onContactusTeamChanged,
+		});
 	}
 
-	override onContactusTeamChanged(
+	private onContactusTeamChanged(
 		contactusTeam: IIdAndOptionalDto<IContactusTeamDto>,
 	): void {
-		super.onContactusTeamChanged(contactusTeam);
 		const contactBriefs = zipMapBriefsWithIDs(
 			contactusTeam?.dto?.contacts,
 		)?.map((m) => ({

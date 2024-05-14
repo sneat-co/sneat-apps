@@ -4,9 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatCardListComponent } from '@sneat/components';
-import { ContactusServicesModule } from '@sneat/contactus-services';
+import { IContactusTeamDto } from '@sneat/contactus-core';
+import {
+	ContactusServicesModule,
+	ContactusTeamContextService,
+	ContactusTeamService,
+} from '@sneat/contactus-services';
 import { MembersListComponent } from '@sneat/contactus-shared';
-import { TopMenuService } from '@sneat/core';
+import { IIdAndOptionalDto, TopMenuService } from '@sneat/core';
 import {
 	InviteLinksComponent,
 	TeamComponentBaseParams,
@@ -34,12 +39,39 @@ import { TeamPageBaseComponent } from './TeamPageBaseComponent';
 	],
 })
 export class TeamPageComponent extends TeamPageBaseComponent {
+	protected contactusTeam?: IIdAndOptionalDto<IContactusTeamDto>;
+
 	constructor(
 		route: ActivatedRoute,
 		params: TeamComponentBaseParams,
 		topMenuService: TopMenuService,
 		cd: ChangeDetectorRef, // readonly navService: TeamNavService,
+		contactusTeamService: ContactusTeamService,
 	) {
 		super('TeamPageComponent', route, params, topMenuService, cd);
+		const contactusTeamContextService = new ContactusTeamContextService(
+			params.errorLogger,
+			this.destroyed,
+			this.teamIDChanged$,
+			contactusTeamService,
+		);
+		contactusTeamContextService.contactusTeamContext$.subscribe({
+			next: (contactusTeam) => {
+				this.contactusTeam = contactusTeam;
+				this.onContactusTeamChanged(contactusTeam);
+			},
+		});
+	}
+
+	protected goMembers(event: Event): void {
+		event.stopPropagation();
+		event.preventDefault();
+		this.teamParams.teamNavService
+			.navigateForwardToTeamPage(this.team, 'members', {
+				state: {
+					contactusTeam: this.contactusTeam,
+				},
+			})
+			.catch(console.error);
 	}
 }

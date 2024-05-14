@@ -3,6 +3,7 @@ export * from './list.service';
 export * from './interfaces';
 export * from './list-item.service';
 export * from './listus-app-state.service';
+export * from './listus-core-services.module';
 // export * from './listus-db.service';
 
 // import { Provider } from '@angular/core';

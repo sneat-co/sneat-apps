@@ -24,9 +24,9 @@ import { TeamNavService, TeamService } from '@sneat/team-services';
 	templateUrl: './members.component.html',
 	standalone: true,
 	imports: [CommonModule, FormsModule, IonicModule],
-})
+}) // TODO: use or delete unused MembersComponent
 export class MembersComponent implements OnChanges {
-	@Input() public contactusTeam?: IContactusTeamDtoAndID;
+	@Input({ required: true }) public contactusTeam?: IContactusTeamDtoAndID;
 
 	public membersRoleTab: MemberRole | '*' = MemberRoleContributor;
 	public contributorsCount?: number;
@@ -52,9 +52,8 @@ export class MembersComponent implements OnChanges {
 
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['contactusTeam']) {
-			const contactusTeam = this.contactusTeam;
 			try {
-				this.setMembersCount(contactusTeam?.dto);
+				this.setMembersCount(this.contactusTeam?.dto);
 			} catch (e) {
 				this.errorLogger.logError(e, 'Failed to process team changes');
 			}
@@ -65,7 +64,7 @@ export class MembersComponent implements OnChanges {
 		// this.unsubscribe('onSelfRemoved');
 	}
 
-	private setMembersCount(team?: IContactusTeamDto): void {
+	private setMembersCount(team?: IContactusTeamDto | null): void {
 		if (team) {
 			const count = (role: MemberRole): number =>
 				zipMapBriefsWithIDs(team.contacts)?.filter((m) =>

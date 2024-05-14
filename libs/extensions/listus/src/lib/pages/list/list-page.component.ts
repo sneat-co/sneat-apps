@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { SharedWithModule } from '@sneat/contactus-shared';
-import { ListusCoreServicesModule } from '../../services/listus-core-services.module';
+import { ListusCoreServicesModule } from '../../services';
 import { TeamComponentBaseParams } from '@sneat/team-components';
 import { IListInfo, IListItemBrief, IMovie, ListType } from '../../dto';
 import { IListContext } from '../../contexts';
@@ -22,9 +22,9 @@ import {
 	IDeleteListItemsRequest,
 	IReorderListItemsRequest,
 	ISetListItemsIsComplete,
-} from '../../services/interfaces';
-import { ListService } from '../../services/list.service';
-import { IListusAppStateService } from '../../services/listus-app-state.service';
+} from '../../services';
+import { ListService } from '../../services';
+import { IListusAppStateService } from '../../services';
 import { BaseListPage } from '../base-list-page';
 import { CopyListItemsPageModule } from '../dialogs/copy-list-items/copy-list-items.module';
 import { ListDialogsService } from '../dialogs/ListDialogs.service';
@@ -168,7 +168,8 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		this.applyFilter();
 	}
 
-	public override setList(list: IListContext): void {
+	protected override setList(list: IListContext): void {
+		console.log('setList()', list);
 		if (this.isReordering) {
 			return;
 		}
@@ -192,14 +193,14 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		this.applyFilter();
 	}
 
-	public isWatched(movie: IMovie, userId: string): boolean {
-		console.log(movie, 'userId', userId);
-		console.warn('isWatched is not implemented yet');
-		return false;
-		//return this.listusDbService.isWatched(movie, userId);
-	}
+	// protected isWatched(movie: IMovie, userId: string): boolean {
+	// 	console.log(movie, 'userId', userId);
+	// 	console.warn('isWatched is not implemented yet');
+	// 	return false;
+	// 	//return this.listusDbService.isWatched(movie, userId);
+	// }
 
-	public removeIsWatchedFromWatchlist(): void {
+	protected removeIsWatchedFromWatchlist(): void {
 		this.errorLogger.logError(
 			'removeIsWatchedFromWatchlist is not implemented yet',
 		);
@@ -219,7 +220,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		// 	});
 	}
 
-	goListItem(item: IListItemBrief): void {
+	protected goListItem(item: IListItemBrief): void {
 		console.log(`goListItem(${item.id}), subListId=${item.subListId}`, item);
 		if (!this.team) {
 			return;
@@ -234,7 +235,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		}
 	}
 
-	reorder(e: Event): void {
+	protected reorder(e: Event): void {
 		const event = e as CustomEvent<{
 			from: number;
 			to: number;
@@ -302,7 +303,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		// 	});
 	}
 
-	newItem(): void {
+	protected newItem(): void {
 		if (!this.list) {
 			throw new Error('!this.listItems');
 		}
@@ -341,11 +342,11 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		}
 	}
 
-	focusAddInput(): void {
+	protected focusAddInput(): void {
 		(this.newListItem as NewListItemComponent).focus();
 	}
 
-	public openCopyListItemsDialog(
+	protected openCopyListItemsDialog(
 		listItem?: IListItemBrief,
 		event?: Event,
 	): void {
@@ -376,12 +377,12 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		}
 	}
 
-	public deleteCompleted(): void {
+	protected deleteCompleted(): void {
 		console.log('deleteCompleted()');
 		this.deleteItems(this.allListItems?.filter((li) => li.brief.isDone));
 	}
 
-	public deleteAll(): void {
+	protected deleteAll(): void {
 		console.log('deleteAll()');
 		this.deleteItems(this.allListItems);
 	}
@@ -416,7 +417,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		});
 	}
 
-	public reactivateCompleted(): void {
+	protected reactivateCompleted(): void {
 		console.log('reactivateCompleted()');
 		if (!this.list?.brief || !this.team || !this.allListItems) {
 			return;
@@ -453,7 +454,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			});
 	}
 
-	public goGroceries(): void {
+	protected goGroceries(): void {
 		if (!this.team) {
 			this.errorLogger.logError('no team context');
 			return;

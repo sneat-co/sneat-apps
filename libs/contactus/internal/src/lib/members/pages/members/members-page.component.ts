@@ -190,10 +190,7 @@ export class MembersPageComponent
 	}
 
 	private loadData(source: string): void {
-		console.log(
-			`MembersPageComponent.loadData(source=${source})`,
-			this.contactusTeam?.dto?.contacts,
-		);
+		console.log(`MembersPageComponent.loadData(source=${source})`);
 
 		// this.unsubscribe();
 		const team = this.team;
@@ -202,39 +199,39 @@ export class MembersPageComponent
 		}
 		// this.noGroupMembers = this.team?.brief && isTeamSupportsMemberGroups(this.team.brief.type) ? [] : undefined;
 
-		const contactusTeam = this.contactusTeam;
-
-		if (contactusTeam?.dto?.contacts) {
-			// this.processContactusTeamDto(contactusTeam.dto);
-		} else {
-			this.contactService
-				.watchContactsWithRole(team, 'team_member') // TODO: use constant
-				.pipe(takeUntil(this.teamIDChanged$))
-				.subscribe({
-					next: (members) => {
-						console.log(
-							`MembersPageComponent.loadData(source=${source}), members =>`,
-							members,
-						);
-						if (members?.length) {
-							// TODO: deep equal
-							members.forEach((m) => {
-								if (m.id) {
-									if (m.dto?.related) {
-										// this.contactsByMember[m.id] = zipMapBriefsWithIDs(
-										// 	m.dto.relatedContacts,
-										// );
-									} else if (this.contactsByMember[m.id]) {
-										delete this.contactsByMember[m.id];
-									}
-								}
-							});
-							this.members = members;
-							this.processMembers();
-						}
-					},
-				});
-		}
+		// const contactusTeam = this.teamModuleDto;
+		//
+		// if (contactusTeam?.dto?.contacts) {
+		// 	this.processContactusTeamDto(contactusTeam.dto);
+		// } else {
+		// 	this.contactService
+		// 		.watchContactsWithRole(team, 'team_member') // TODO: use constant
+		// 		.pipe(takeUntil(this.teamIDChanged$))
+		// 		.subscribe({
+		// 			next: (members) => {
+		// 				console.log(
+		// 					`MembersPageComponent.loadData(source=${source}), members =>`,
+		// 					members,
+		// 				);
+		// 				if (members?.length) {
+		// 					// TODO: deep equal
+		// 					members.forEach((m) => {
+		// 						if (m.id) {
+		// 							if (m.dto?.related) {
+		// 								// this.contactsByMember[m.id] = zipMapBriefsWithIDs(
+		// 								// 	m.dto.relatedContacts,
+		// 								// );
+		// 							} else if (this.contactsByMember[m.id]) {
+		// 								delete this.contactsByMember[m.id];
+		// 							}
+		// 						}
+		// 					});
+		// 					this.members = members;
+		// 					this.processMembers();
+		// 				}
+		// 			},
+		// 		});
+		// }
 
 		if (team.type && isTeamSupportsMemberGroups(team.type)) {
 			throw new Error('not implemented yet due to refactoring');
