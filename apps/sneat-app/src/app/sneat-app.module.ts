@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { BrowserTracing } from '@sentry/browser';
-import { init, instrumentAngularRouting } from '@sentry/angular-ivy';
+import { browserTracingIntegration } from '@sentry/browser';
+import { init } from '@sentry/angular-ivy';
 import { DefaultSneatAppApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
 import {
 	CONTACT_ROLES_BY_TYPE,
@@ -8,7 +8,7 @@ import {
 	SneatApplicationModule,
 } from '@sneat/app';
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { CommunesUiModule } from '@sneat/communes-ui';
+import { CommunesUiModule } from '@sneat/communes-ui'; // TODO: fix this!
 import { AppVersionComponent, AuthMenuItemComponent } from '@sneat/components';
 import { APP_INFO, coreProviders, IAppInfo } from '@sneat/core';
 import { RANDOM_ID_OPTIONS } from '@sneat/random';
@@ -23,14 +23,7 @@ if (environment.production) {
 	console.log('SneatAppModule: PRODUCTION mode');
 	init({
 		dsn: 'https://2cdec43e82bc42e98821becbfe251778@o355000.ingest.sentry.io/6395241',
-		integrations: [
-			new BrowserTracing({
-				// shouldCreateSpanForRequest(url: string): boolean {
-				// 	return url.startsWith('https://sneat.app');
-				// },
-				routingInstrumentation: instrumentAngularRouting,
-			}),
-		],
+		integrations: [browserTracingIntegration()],
 
 		// Set tracesSampleRate to 1.0 to capture 100%
 		// of transactions for performance monitoring.
