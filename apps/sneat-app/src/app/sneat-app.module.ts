@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { browserTracingIntegration } from '@sentry/browser';
-import { init } from '@sentry/angular-ivy';
+import { init } from '@sentry/angular';
 import { DefaultSneatAppApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
 import {
 	CONTACT_ROLES_BY_TYPE,
