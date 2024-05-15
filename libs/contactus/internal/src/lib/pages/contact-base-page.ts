@@ -1,5 +1,8 @@
 import { ActivatedRoute } from '@angular/router';
-import { ContactusTeamService } from '@sneat/contactus-services';
+import {
+	ContactService,
+	ContactusTeamService,
+} from '@sneat/contactus-services';
 import { ContactComponentBaseParams } from '@sneat/contactus-shared';
 import {
 	IContactBrief,
@@ -18,6 +21,7 @@ export abstract class ContactBasePage extends TeamItemPageBaseComponent<
 	}
 
 	protected readonly contactusTeamService: ContactusTeamService;
+	protected readonly contactService: ContactService;
 
 	protected constructor(
 		className: string,
@@ -34,7 +38,7 @@ export abstract class ContactBasePage extends TeamItemPageBaseComponent<
 			params.contactService,
 		);
 		this.contactusTeamService = params.contactusTeamService;
-		// this.contactService = params.contactService;
+		this.contactService = params.contactService;
 		this.defaultBackPage = 'contacts';
 		// this.trackContactId();
 	}

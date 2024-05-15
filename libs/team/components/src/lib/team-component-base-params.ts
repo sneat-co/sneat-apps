@@ -8,10 +8,7 @@ import {
 	NgModulePreloaderService,
 } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import {
-	ContactService,
-	ContactusTeamService,
-} from '@sneat/contactus-services';
+import { ContactService } from '@sneat/contactus-services';
 import { TeamNavService, TeamService } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 
@@ -27,7 +24,6 @@ export class TeamComponentBaseParams {
 		public readonly userService: SneatUserService,
 		public readonly teamService: TeamService,
 		public readonly teamNavService: TeamNavService,
-		public readonly contactService: ContactService,
 		// public readonly contactusTeamService: ContactusTeamService,
 		public readonly preloader: NgModulePreloaderService,
 	) {}

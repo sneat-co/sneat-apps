@@ -42,7 +42,6 @@ export abstract class TeamBaseComponent extends SneatBaseComponent {
 	protected readonly userService: SneatUserService;
 	// protected readonly communeService: ICommuneService;
 	protected readonly teamService: TeamService;
-	protected readonly contactService: ContactService;
 	// protected readonly authStateService: IAuthStateService;
 	protected readonly logger: ILogger;
 	// protected readonly willLeave = new Subject<void>();
@@ -108,7 +107,7 @@ export abstract class TeamBaseComponent extends SneatBaseComponent {
 		// we need this fake token so we can implement Angular interfaces
 		className: string,
 		protected readonly route: ActivatedRoute,
-		readonly teamParams: TeamComponentBaseParams,
+		protected readonly teamParams: TeamComponentBaseParams,
 	) {
 		super(className, teamParams.errorLogger);
 		// console.log(`${className} extends TeamBasePageDirective.constructor()`);
@@ -117,7 +116,6 @@ export abstract class TeamBaseComponent extends SneatBaseComponent {
 
 			this.navController = teamParams.navController;
 			this.teamService = teamParams.teamService;
-			this.contactService = teamParams.contactService;
 			this.userService = teamParams.userService;
 			this.logger = teamParams.loggerFactory.getLogger(this.className);
 			this.logError = teamParams.errorLogger.logError;

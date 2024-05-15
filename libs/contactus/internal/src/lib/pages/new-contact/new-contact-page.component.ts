@@ -35,6 +35,7 @@ import { first, takeUntil } from 'rxjs';
 import {
 	ContactGroupService,
 	ContactRoleService,
+	ContactService,
 	ContactusServicesModule,
 } from '@sneat/contactus-services';
 
@@ -108,6 +109,7 @@ export class NewContactPageComponent
 		route: ActivatedRoute,
 		private readonly assetService: AssetService,
 		private readonly contactGroupService: ContactGroupService,
+		private readonly contactService: ContactService,
 		private readonly contactRoleService: ContactRoleService, // private readonly businessLogic: IBusinessLogic,
 	) {
 		super('NewContactPageComponent', route, params);
