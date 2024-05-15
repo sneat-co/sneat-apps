@@ -15,31 +15,33 @@ export class ContactusTeamContextService {
 		private readonly teamID$: Observable<string | undefined>,
 		private readonly contactusTeamService: ContactusTeamService,
 	) {
-		destroyed$.subscribe(() => {
-			this.contactusTeamContext.complete();
-		});
+		destroyed$.subscribe(this.contactusTeamContext.complete);
 		teamID$.pipe(takeUntil(destroyed$)).subscribe({
 			next: this.subscribeForContactusTeamChanges,
 		});
 	}
 
-	private subscribeForContactusTeamChanges(teamID?: string): void {
-		console.log(`subscribeForContactusTeamChanges(teamID=${teamID})`);
+	private readonly subscribeForContactusTeamChanges = (
+		teamID?: string,
+	): void => {
 		if (!teamID) {
 			return;
 		}
+		// console.log(`subscribeForContactusTeamChanges(teamID=${teamID})`);
 		this.contactusTeamService
 			.watchTeamModuleRecord(teamID)
 			.pipe(takeUntil(this.teamID$), takeUntil(this.destroyed$))
 			.subscribe({
-				next: (o) => this.onContactusTeamChanged(o),
+				next: this.onContactusTeamChanged,
 				error: this.errorLogger.logErrorHandler(
 					'failed to get contactus team record',
 				),
 			});
-	}
+	};
 
-	private onContactusTeamChanged(contactusTeam: IContactusTeamDtoAndID): void {
+	private readonly onContactusTeamChanged = (
+		contactusTeam: IContactusTeamDtoAndID,
+	): void => {
 		this.contactusTeamContext.next(contactusTeam);
-	}
+	};
 }
