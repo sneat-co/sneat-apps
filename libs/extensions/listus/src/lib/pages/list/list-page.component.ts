@@ -13,7 +13,7 @@ import { ContactusServicesModule } from '@sneat/contactus-services';
 import { SharedWithModule } from '@sneat/contactus-shared';
 import { ListusCoreServicesModule } from '../../services';
 import { TeamComponentBaseParams } from '@sneat/team-components';
-import { IListInfo, IListItemBrief, IMovie, ListType } from '../../dto';
+import { IListInfo, IListItemBrief, ListType } from '../../dto';
 import { IListContext } from '../../contexts';
 import { takeUntil } from 'rxjs';
 import { ListusComponentBaseParams } from '../../listus-component-base-params';
@@ -31,6 +31,12 @@ import { ListDialogsService } from '../dialogs/ListDialogs.service';
 import { IListItemWithUiState } from './list-item-with-ui-state';
 import { ListItemComponent } from './list-item/list-item.component';
 import { NewListItemComponent } from './new-list-item.component';
+
+type ListPageSegment = 'list' | 'cards' | 'recipes' | 'settings' | 'discover';
+type ListPagePerforming =
+	| 'reactivating completed'
+	| 'deleting completed'
+	| 'clear list';
 
 @Component({
 	selector: 'sneat-list',
@@ -57,25 +63,23 @@ import { NewListItemComponent } from './new-list-item.component';
 	],
 })
 export class ListPageComponent extends BaseListPage implements AfterViewInit {
-	public isPersisting = false;
-	public listMode: 'reorder' | 'swipe' = 'swipe';
-	public doneFilter: 'all' | 'active' | 'completed' = 'all';
-	public segment: 'list' | 'cards' | 'recipes' | 'settings' | 'discover' =
-		'list';
-	public isReordering = false;
-	public allListItems?: IListItemWithUiState[];
-	public completedListItems?: IListItemWithUiState[];
-	public activeListItems?: IListItemWithUiState[];
-	public listItems?: IListItemWithUiState[];
-	public listType?: ListType;
-	public isHideWatched = false;
+	protected isPersisting = false;
+	protected isHideWatched = false;
+	protected isReordering = false;
+
+	protected listMode: 'reorder' | 'swipe' = 'swipe';
+	protected doneFilter: 'all' | 'active' | 'completed' = 'all';
+	protected segment: ListPageSegment = 'list';
+	protected allListItems?: IListItemWithUiState[];
+	protected listItems?: IListItemWithUiState[];
+	protected listType?: ListType;
 	@ViewChild('newListItem', { static: false })
-	newListItem?: NewListItemComponent;
-	addingItems: IListItemWithUiState[] = [];
-	public performing?:
-		| 'reactivating completed'
-		| 'deleting completed'
-		| 'clear list';
+	public newListItem?: NewListItemComponent;
+	protected addingItems: IListItemWithUiState[] = [];
+	protected performing?: ListPagePerforming;
+
+	protected completedListItems?: IListItemWithUiState[];
+	protected activeListItems?: IListItemWithUiState[];
 
 	constructor(
 		route: ActivatedRoute,
