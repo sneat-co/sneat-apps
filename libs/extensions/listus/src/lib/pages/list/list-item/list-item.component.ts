@@ -62,7 +62,7 @@ export class ListItemComponent {
 		return this.params.teamParams.errorLogger;
 	}
 
-	public isSpinning(): boolean {
+	protected isSpinning(): boolean {
 		if (!this.listItemWithUiState) {
 			return false;
 		}
@@ -77,11 +77,11 @@ export class ListItemComponent {
 		this.itemClicked.emit(item);
 	}
 
-	isDone(item?: IListItemWithUiState): boolean {
+	protected isDone(item?: IListItemWithUiState): boolean {
 		return !!item?.brief.isDone;
 	}
 
-	onIsDoneCheckboxChanged(event: Event): void {
+	protected onIsDoneCheckboxChanged(event: Event): void {
 		event.stopPropagation();
 		event.preventDefault();
 		if (!this.listItemWithUiState) {
@@ -96,7 +96,7 @@ export class ListItemComponent {
 		this.setIsDone(this.listItemWithUiState, isDone);
 	}
 
-	setIsDone(
+	protected setIsDone(
 		item?: IListItemWithUiState,
 		isDone?: boolean,
 		ionSliding?: IonItemSliding,
@@ -141,7 +141,7 @@ export class ListItemComponent {
 		}
 	}
 
-	deleteFromList(
+	protected deleteFromList(
 		item: IListItemBrief,
 		ionSliding?: IonItemSliding | HTMLElement,
 	): void {
@@ -180,7 +180,10 @@ export class ListItemComponent {
 		});
 	}
 
-	public openCopyListItemDialog(listItem: IListItemBrief, event: Event): void {
+	protected openCopyListItemDialog(
+		listItem: IListItemBrief,
+		event: Event,
+	): void {
 		console.log(`openCopyListItemDialog()`, listItem);
 		event.stopPropagation();
 

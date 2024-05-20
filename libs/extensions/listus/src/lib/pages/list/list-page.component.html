@@ -13,14 +13,14 @@
 					{{ list?.brief?.title }} to buy
 				</ng-container>
 				<ng-container *ngSwitchCase="'to-cook'"
-					>{{ list?.brief?.title }} to cook</ng-container
-				>
-				<ng-container *ngSwitchCase="'recipes'">{{
-					list?.brief?.title
-				}}</ng-container>
+					>{{ list?.brief?.title }} to cook
+				</ng-container>
+				<ng-container *ngSwitchCase="'recipes'"
+					>{{ list?.brief?.title }}
+				</ng-container>
 				<ng-container *ngSwitchCase="'to-watch'"
-					>To watch: {{ list?.brief?.title }}</ng-container
-				>
+					>To watch: {{ list?.brief?.title }}
+				</ng-container>
 				<ng-container *ngSwitchDefault>
 					<span *ngIf="listGroupTitle">{{ listGroupTitle }}: </span>
 					{{ list?.brief?.title }}
@@ -55,14 +55,14 @@
 			(ionChange)="onIsDoneFilterChanged($event)"
 		>
 			<ion-segment-button value="all" style="text-transform: none"
-				>All</ion-segment-button
-			>
+				>All
+			</ion-segment-button>
 			<ion-segment-button value="active" style="text-transform: none"
-				>Active</ion-segment-button
-			>
+				>Active
+			</ion-segment-button>
 			<ion-segment-button value="completed" style="text-transform: none"
-				>Completed</ion-segment-button
-			>
+				>Completed
+			</ion-segment-button>
 		</ion-segment>
 		<!--		<div class="segment" [ngSwitch]="list?.brief?.type">-->
 		<!--			<ion-segment [(ngModel)]="segment" *ngSwitchCase="'recipes'">-->
@@ -94,8 +94,8 @@
 			*ngIf="doneFilter === 'all' && (allListItems?.length || 0) > 1"
 		>
 			<ion-label slot="end" color="medium" style="font-size: smaller"
-				>List mode:</ion-label
-			>
+				>List mode:
+			</ion-label>
 			<ion-select
 				slot="end"
 				interface="popover"
@@ -122,19 +122,21 @@
 					isReordering || listMode !== 'reorder' || doneFilter !== 'all'
 				"
 			>
-				<ion-reorder *ngFor="let item of listItems || []; trackBy: itemId">
-					<sneat-list-item
-						[showDoneCheckbox]="doneFilter !== 'all'"
-						[doneFilter]="doneFilter"
-						[listMode]="doneFilter === 'all' ? listMode : 'swipe'"
-						[listItemWithUiState]="item"
-						[listItems]="listItems"
-						[team]="team"
-						[list]="list"
-						(itemClicked)="goListItem($event)"
-						(listChanged)="setList($event)"
-					/>
-				</ion-reorder>
+				@for (item of listItems; track item.brief.id) {
+					<ion-reorder>
+						<sneat-list-item
+							[showDoneCheckbox]="doneFilter !== 'all'"
+							[doneFilter]="doneFilter"
+							[listMode]="doneFilter === 'all' ? listMode : 'swipe'"
+							[listItemWithUiState]="item"
+							[listItems]="listItems"
+							[team]="team"
+							[list]="list"
+							(itemClicked)="goListItem($event)"
+							(listChanged)="setList($event)"
+						/>
+					</ion-reorder>
+				}
 			</ion-reorder-group>
 		</ion-list>
 

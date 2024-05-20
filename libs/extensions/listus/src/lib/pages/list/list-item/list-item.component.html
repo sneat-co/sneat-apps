@@ -20,7 +20,15 @@
 				[class.done]="doneFilter !== 'completed' && isDone(listItemWithUiState)"
 				class="ion-text-wrap"
 			>
-				<ng-container *ngIf="listItem.emoji">{{ listItem.emoji }}</ng-container>
+				@if (listItem.emoji) {
+					{{ listItem.emoji }}
+				} @else {
+					<!--
+					TODO(help-wanted): This is a hack to make an item with and without emoji to be aligned.
+					Needs a better solution.
+					-->
+					&nbsp;&nbsp;&nbsp;&nbsp;
+				}
 				{{ listItem.title }}
 				<ion-text
 					*ngIf="listItem.quantity"
