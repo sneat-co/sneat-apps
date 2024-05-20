@@ -34,8 +34,11 @@ export abstract class BaseListPage extends TeamItemPageBaseComponent<
 		);
 	}
 
-	protected override setItemContext(item?: IListContext): void {
+	protected override setItemContext(item: IListContext): void {
 		console.log('BaseListPage.setItemContext()', item);
+		if (item && !item?.type) {
+			item = { ...item, type: item.id.split('!')[0] as ListType };
+		}
 		super.setItemContext(item);
 		if (item) {
 			this.setList(item);
@@ -97,6 +100,7 @@ export abstract class BaseListPage extends TeamItemPageBaseComponent<
 						this.listID.charAt(0).toUpperCase() + this.listID.slice(1);
 					this.setList({
 						id: this.listID,
+						type: this.listType,
 						brief: {
 							createdAt: emptyTimestamp,
 							createdBy: '',

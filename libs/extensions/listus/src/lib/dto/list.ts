@@ -22,6 +22,7 @@ export interface IListItemCommon extends IListCommon {
 }
 
 export type IListItemBase = IListItemCommon;
+
 export interface IListItemBrief extends IListItemBase {
 	id: string;
 	readonly created?: string; // UTC datetime

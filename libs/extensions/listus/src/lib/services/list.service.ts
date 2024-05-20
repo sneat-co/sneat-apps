@@ -74,17 +74,13 @@ export class ListService extends ModuleTeamItemService<IListBrief, IListDto> {
 		params: IListItemsCommandParams,
 	): Observable<IListItemResult> {
 		console.log('createListItems', params);
-		const listType: ListType | undefined =
-			params.list?.brief?.type ||
-			params.list?.dto?.type ||
-			(params.list.id === 'groceries' ? 'to-buy' : undefined);
-		if (!listType) {
-			return throwError(() => 'list is of unknown type');
+		if (!params.list.type) {
+			return throwError(() => 'list is of unknown type: ' + params.list.type);
 		}
 		const request: ICreateListItemsRequest = {
 			teamID: params.team.id,
 			listID: params.list.id,
-			listType,
+			// listType: params.list.type,
 			items: params.items,
 		};
 		return this.sneatApiService.post('listus/list_items_create', request);
@@ -103,7 +99,7 @@ export class ListService extends ModuleTeamItemService<IListBrief, IListDto> {
 			new HttpParams({
 				fromObject: {
 					teamID: request.teamID,
-					listType: request.listType,
+					// listType: request.listType,
 					listID: request.listID,
 				},
 			}),
@@ -132,6 +128,7 @@ export class ListService extends ModuleTeamItemService<IListBrief, IListDto> {
 		dto?: IListDto | null,
 	): IListContext => ({
 		id,
+		type,
 		dto,
 		brief: dto,
 		team,

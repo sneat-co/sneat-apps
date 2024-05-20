@@ -30,7 +30,7 @@ import { CopyListItemsPageModule } from '../dialogs/copy-list-items/copy-list-it
 import { ListDialogsService } from '../dialogs/ListDialogs.service';
 import { IListItemWithUiState } from './list-item-with-ui-state';
 import { ListItemComponent } from './list-item/list-item.component';
-import { NewListItemComponent } from './new-list-item.component';
+import { NewListItemComponent } from './new-list-item/new-list-item.component';
 
 type ListPageSegment = 'list' | 'cards' | 'recipes' | 'settings' | 'discover';
 type ListPagePerforming =
@@ -258,7 +258,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			const request: IReorderListItemsRequest = {
 				teamID: this.team.id,
 				listID: this.list.id,
-				listType: this.list.brief?.type,
+				// listType: this.list.brief?.type,
 				itemIDs: [movingItem.brief.id],
 				toIndex: event.detail.to,
 			};
@@ -406,7 +406,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		const request: IDeleteListItemsRequest = {
 			teamID: this.team.id,
 			listID: this.list.id,
-			listType: this.list.brief.type,
+			// listType: this.list.brief.type,
 			itemIDs: deletingItems.map((li) => li.brief.id),
 		};
 		this.changeDetectorRef.markForCheck();
@@ -428,7 +428,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		const request: ISetListItemsIsComplete = {
 			teamID: this.team.id,
 			listID: this.list.id,
-			listType: this.list.brief.type,
+			// listType: this.list.brief.type,
 			isDone: false,
 			itemIDs: this.allListItems
 				.filter((li) => li.brief.isDone)

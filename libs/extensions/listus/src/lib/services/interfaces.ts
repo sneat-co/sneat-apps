@@ -87,7 +87,7 @@ export interface ICreateListRequest extends ITeamRequest, IListBrief {}
 
 export interface IListRequest extends ITeamRequest {
 	readonly listID: string;
-	readonly listType: ListType;
+	// readonly listType: ListType;
 }
 
 export interface ICreateListItemRequest extends IListItemBase {

@@ -11,46 +11,20 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, IonInput, ToastController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { RandomIdService } from '@sneat/random';
-import { IListContext } from '../../contexts';
 import { ITeamContext } from '@sneat/team-models';
+import { IListContext } from '../../../contexts';
 import {
 	detectEmoji,
 	ICreateListItemRequest,
 	ListService,
-} from '../../services';
-import { IListItemWithUiState } from './list-item-with-ui-state';
+} from '../../../services';
+import { IListItemWithUiState } from '../list-item-with-ui-state';
 
 @Component({
 	selector: 'sneat-new-list-item',
 	standalone: true,
 	imports: [CommonModule, IonicModule, FormsModule],
-	template: `
-		<form (ngSubmit)="add()">
-			<ion-item>
-				<ion-icon name="bag-add-outline" slot="start" color="medium" />
-				<!--suppress AngularUndefinedBinding -->
-				<ion-input
-					[disabled]="disabled"
-					#newItemInput
-					autofocus="true"
-					[(ngModel)]="title"
-					name="title"
-					placeholder="New item"
-					(ionFocus)="focused()"
-				/>
-				<ion-button
-					[color]="isFocused && title.trim() ? 'primary' : 'medium'"
-					[disabled]="disabled"
-					[fill]="title.trim() ? 'solid' : 'outline'"
-					size="small"
-					(click)="add()"
-					slot="end"
-				>
-					Add
-				</ion-button>
-			</ion-item>
-		</form>
-	`,
+	templateUrl: './new-list-item.component.html',
 })
 export class NewListItemComponent {
 	isFocused = false;
@@ -60,7 +34,7 @@ export class NewListItemComponent {
 	@Input() isDone = false;
 	@Input() disabled = false;
 	@Input({ required: true }) team?: ITeamContext;
-	@Input() list?: IListContext;
+	@Input({ required: true }) list?: IListContext;
 
 	@ViewChild('newItemInput', { static: false }) newItemInput?: IonInput;
 
@@ -77,12 +51,12 @@ export class NewListItemComponent {
 		private readonly listService: ListService,
 	) {}
 
-	focused(): void {
+	protected focused(): void {
 		console.log('focused');
 		this.isFocused = true;
 	}
 
-	add(): void {
+	protected add(): void {
 		console.log('add()');
 		if (!this.title.trim()) {
 			return;
@@ -109,12 +83,13 @@ export class NewListItemComponent {
 		this.createListItem(item);
 	}
 
-	clear(): void {
+	protected clear(): void {
 		console.log('NewListItem.clear()');
 		this.title = '';
 	}
 
-	focus(): void {
+	// Is intentionally public to be called from wrapping component.
+	public focus(): void {
 		console.log('NewListItem.focus()');
 		if (!this.newItemInput) {
 			this.errorLogger.logError('!this.newItemInput');
@@ -123,7 +98,7 @@ export class NewListItemComponent {
 		this.newItemInput.setFocus().catch(this.errorLogger.logError);
 	}
 
-	createListItem(listItemBrief: ICreateListItemRequest): void {
+	protected createListItem(listItemBrief: ICreateListItemRequest): void {
 		console.log('ListPage.createListItem', listItemBrief, this.list, this.team);
 		if (!listItemBrief) {
 			throw new Error('movie is a required parameter');

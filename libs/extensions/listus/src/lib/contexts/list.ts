@@ -8,5 +8,5 @@ export interface IListKey {
 
 export interface IListContext
 	extends ITeamItemNavContext<IListBrief, IListDto> {
-	type?: ListType;
+	type: ListType;
 }

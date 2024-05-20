@@ -117,7 +117,7 @@ export class ListItemComponent {
 			const request: ISetListItemsIsComplete = {
 				teamID: this.team.id,
 				listID: this.list.id,
-				listType: this.list.brief.type,
+				// listType: this.list.brief.type,
 				itemIDs: [item.brief.id],
 				isDone: !!isDone,
 			};
@@ -161,7 +161,7 @@ export class ListItemComponent {
 		const request: IListItemIDsRequest = {
 			teamID: this.team?.id,
 			listID: this.list?.id,
-			listType: this.list?.brief?.type,
+			// listType: this.list?.brief?.type,
 			itemIDs: [item.id],
 		};
 		this.listService.deleteListItems(request).subscribe({
