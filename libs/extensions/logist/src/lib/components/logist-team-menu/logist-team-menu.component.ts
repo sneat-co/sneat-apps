@@ -43,7 +43,8 @@ export class LogistTeamMenuComponent
 		super('LogistTeamMenuComponent', route, teamParams);
 	}
 
-	ngOnInit(): void {
+	override ngOnInit(): void {
+		super.ngOnInit();
 		this.router.events.subscribe((e) => {
 			if (e instanceof ActivationStart && e.snapshot.outlet === 'menu')
 				this.outlet?.deactivate();
