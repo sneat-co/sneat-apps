@@ -122,7 +122,7 @@ export class NewContactPageComponent
 	//
 	// }
 
-	ngOnInit(): void {
+	override ngOnInit(): void {
 		this.route.queryParamMap
 			.pipe(takeUntil(this.destroyed))
 			.subscribe(this.onUrlParamsChanged);

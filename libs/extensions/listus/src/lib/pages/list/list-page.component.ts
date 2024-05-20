@@ -72,7 +72,6 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 	protected segment: ListPageSegment = 'list';
 	protected allListItems?: IListItemWithUiState[];
 	protected listItems?: IListItemWithUiState[];
-	protected listType?: ListType;
 	@ViewChild('newListItem', { static: false })
 	public newListItem?: NewListItemComponent;
 	protected addingItems: IListItemWithUiState[] = [];

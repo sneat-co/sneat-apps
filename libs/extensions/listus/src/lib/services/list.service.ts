@@ -66,25 +66,8 @@ export class ListService extends ModuleTeamItemService<IListBrief, IListDto> {
 		return this.sneatApiService.post(`listus/list_items_reorder?`, request);
 	}
 
-	getFullListID(type: ListType, shortID: string): string {
+	private getFullListID(type: ListType, shortID: string): string {
 		return `${type}:${shortID}`;
-	}
-
-	public watchList(
-		team: ITeamContext,
-		listType: ListType,
-		listID: string,
-	): Observable<IListContext> {
-		console.log('watchList', team, listType, listID);
-		const id = this.getFullListID(listType, listID);
-		const doc = this.listDocRef(team.id, id);
-		return this.sfs
-			.watchByDocRef(doc)
-			.pipe(
-				map((listContext) =>
-					this.onListSnapshot(team, listID, listType, listContext.dto),
-				),
-			);
 	}
 
 	public createListItems(

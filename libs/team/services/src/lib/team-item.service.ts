@@ -232,6 +232,13 @@ export class ModuleTeamItemService<
 
 	private readonly teamRef = (id: string) => doc(this.teamsCollection, id);
 
+	public watchModuleTeamItem<Dto2 extends Dto>(
+		team: ITeamRef,
+		itemID: string,
+	): Observable<IIdAndBriefAndDto<Brief, Dto2>[]> {
+		throw new Error('Method not implemented.');
+	}
+
 	public watchModuleTeamItemsWithTeamRef<Dto2 extends Dto>(
 		team: ITeamRef,
 		queryArgs?: IQueryArgs,

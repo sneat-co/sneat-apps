@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
@@ -13,6 +13,7 @@ import {
 } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { SneatBaseComponent } from '@sneat/ui';
+import { alert } from 'ionicons/icons';
 import {
 	distinctUntilChanged,
 	MonoTypeOperatorFunction,
@@ -24,8 +25,16 @@ import {
 import { takeUntil } from 'rxjs/operators';
 import { TeamComponentBaseParams } from './team-component-base-params';
 
-@Injectable() // we need this decorator so we can implement Angular interfaces
-export abstract class TeamBaseComponent extends SneatBaseComponent {
+// @Component({
+// 	selector: 'sneat-team-base-component',
+// 	standalone: true,
+// 	template: '',
+// }) // we need this decorator so we can implement Angular interfaces
+@Injectable()
+export abstract class TeamBaseComponent
+	extends SneatBaseComponent
+	implements OnInit
+{
 	protected readonly teamIDChanged = new Subject<string | undefined>();
 	protected readonly teamTypeChanged = new Subject<TeamType | undefined>();
 
@@ -111,6 +120,8 @@ export abstract class TeamBaseComponent extends SneatBaseComponent {
 	) {
 		super(className, teamParams.errorLogger);
 		// console.log(`${className} extends TeamBasePageDirective.constructor()`);
+		this.logError = teamParams.errorLogger.logError;
+		this.logErrorHandler = teamParams.errorLogger.logErrorHandler;
 		try {
 			this.route = route;
 
@@ -118,19 +129,21 @@ export abstract class TeamBaseComponent extends SneatBaseComponent {
 			this.teamService = teamParams.teamService;
 			this.userService = teamParams.userService;
 			this.logger = teamParams.loggerFactory.getLogger(this.className);
-			this.logError = teamParams.errorLogger.logError;
-			this.logErrorHandler = teamParams.errorLogger.logErrorHandler;
-
 			this.getTeamContextFromRouteState();
-			this.trackRouteParamMap(route.paramMap.pipe(this.takeUntilNeeded()));
 			this.cleanupOnUserLogout();
 		} catch (e) {
-			this.teamParams.errorLogger.logError(
+			this.errorLogger.logError(
 				e,
-				`Failed in (${this.className}).constructor()`,
+				`Failed in ${this.className}:TeamBaseComponent.constructor()`,
 			);
 			throw e;
 		}
+	}
+
+	// eslint-disable-next-line @angular-eslint/contextual-lifecycle
+	public ngOnInit(): void {
+		// We can't call this in constructor as some members of the child class may not be initialized yet
+		this.trackRouteParamMap(this.route.paramMap.pipe(this.takeUntilNeeded()));
 	}
 
 	// public ionViewWillLeave(): void {
@@ -403,7 +416,7 @@ export abstract class TeamBaseComponent extends SneatBaseComponent {
 	protected saveNotes(event: Event): void {
 		event.preventDefault();
 		event.stopPropagation();
-		alert('Saving noes is not implemented yet');
+		// alert('Saving noes is not implemented yet');
 	}
 
 	protected teamPageUrl(page: string): string {

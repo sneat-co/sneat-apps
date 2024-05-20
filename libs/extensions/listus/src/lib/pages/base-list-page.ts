@@ -1,20 +1,22 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { INavContext } from '@sneat/core';
 import { emptyTimestamp } from '@sneat/dto';
 import { IListBrief, IListDto, IMovie, ListType } from '../dto';
 import { IListContext } from '../contexts';
 import { TeamItemPageBaseComponent } from '@sneat/team-components';
 import { ITeamContext } from '@sneat/team-models';
 import { NEVER, Observable, Subscription } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { ListusComponentBaseParams } from '../listus-component-base-params';
 
 export abstract class BaseListPage extends TeamItemPageBaseComponent<
 	IListBrief,
 	IListDto
 > {
-	public list?: IListContext;
-	public listGroupTitle?: string;
-	protected listSubscription?: Subscription;
+	protected list?: IListContext;
+	protected listGroupTitle?: string;
+	protected listID?: string;
+	protected listType?: ListType;
 
 	protected constructor(
 		className: string,
@@ -32,25 +34,12 @@ export abstract class BaseListPage extends TeamItemPageBaseComponent<
 		);
 	}
 
-	protected override watchItemChanges(): Observable<IListContext> {
-		// console.log(`${this.className}=>BaseListPage.watchItemChanges()`);
-		return NEVER; // Do nothing as we need to get list type
-		// if (!this.team) {
-		// 	return throwError(() => new Error('no team context'));
-		// }
-		// if (!this.list) {
-		// 	return throwError(() => new Error('no list context'));
-		// }
-		// if (!this.list.type) {
-		// 	return throwError(() => new Error(`list  context has no list type: ${JSON.stringify(this.list)}`));
-		// }
-		// return this.listService.watchList(this.team, this.list.type, this.list.id);
-	}
-
 	protected override setItemContext(item?: IListContext): void {
 		console.log('BaseListPage.setItemContext()', item);
 		super.setItemContext(item);
-		this.list = item;
+		if (item) {
+			this.setList(item);
+		}
 	}
 
 	protected override briefs():
@@ -64,7 +53,7 @@ export abstract class BaseListPage extends TeamItemPageBaseComponent<
 		// return briefs;
 	}
 
-	public get listService() {
+	protected get listService() {
 		return this.params.listService;
 	}
 
@@ -77,7 +66,7 @@ export abstract class BaseListPage extends TeamItemPageBaseComponent<
 		this.list = list;
 	}
 
-	goMoviePage(movie: IMovie): void {
+	protected goMoviePage(movie: IMovie): void {
 		console.log('goMoviePage', movie);
 		if (!this.list) {
 			this.errorLogger.logError('not able to navigate without list context');
@@ -97,72 +86,29 @@ export abstract class BaseListPage extends TeamItemPageBaseComponent<
 			.catch(this.errorLogger.logError);
 	}
 
-	protected subscribeForListChanges(
-		team: ITeamContext,
-		listType: ListType,
-		listID: string,
-	): void {
-		console.log(
-			`BaseListPage.subscribeForListChanges(${team.id}, ${listType}, ${listID})`,
+	override getItemID$(paramMap$: Observable<ParamMap>): Observable<string> {
+		return paramMap$.pipe(
+			map((params) => {
+				this.listID = params.get('listID') || undefined;
+				this.listType = params.get('listType') as ListType;
+
+				if (this.listID && this.listType) {
+					const title =
+						this.listID.charAt(0).toUpperCase() + this.listID.slice(1);
+					this.setList({
+						id: this.listID,
+						brief: {
+							createdAt: emptyTimestamp,
+							createdBy: '',
+							type: this.listType,
+							title,
+						},
+						team: this.team,
+					});
+				}
+
+				return `${this.listType}!${this.listID}`;
+			}),
 		);
-		if (this.listSubscription) {
-			this.errorLogger.logError(
-				'got duplicate attempt to subscribe to list changes',
-			);
-			return;
-		}
-		this.listService
-			.watchList(team, listType, listID)
-			.pipe(this.takeUntilNeeded())
-			.pipe(
-				tap((list) =>
-					console.log('BaseListPage.subscribeForListChanges() =>', list),
-				),
-			)
-			.subscribe({
-				next: (list) => this.setList(list),
-				error: this.errorLogger.logErrorHandler('failed to load list'),
-			});
-	}
-
-	override trackRouteParamMap(paramMap$: Observable<ParamMap>): void {
-		super.trackRouteParamMap(paramMap$);
-		paramMap$.subscribe({
-			next: (params) => {
-				const id = params.get('listID'),
-					type = params.get('listType'),
-					teamID = params.get('teamID') || this.team?.id;
-				if (!id) {
-					this.listSubscription?.unsubscribe();
-					this.listSubscription = undefined;
-					return;
-				}
-				if (this.list?.id == id) {
-					return;
-				}
-				this.listSubscription?.unsubscribe();
-				this.listSubscription = undefined;
-				const title = id.charAt(0).toUpperCase() + id.slice(1);
-				if (!teamID) {
-					throw new Error('no team context');
-				}
-				const team = { id: teamID };
-				this.setList({
-					id,
-					brief: {
-						createdAt: emptyTimestamp,
-						createdBy: '',
-						type: type as ListType,
-						title,
-					},
-					team,
-				});
-
-				if (!this.list?.brief?.type) {
-					throw new Error('unknown list type');
-				}
-				this.subscribeForListChanges(team, this.list.brief.type, id);
-			},
-		});
 	}
 }
