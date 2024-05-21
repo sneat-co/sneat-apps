@@ -70,7 +70,9 @@
 						interface="popover"
 						(ionChange)="repeatsChanged()"
 					>
+						<ion-select-option value="daily">Daily</ion-select-option>
 						<ion-select-option value="weekly">Weekly</ion-select-option>
+						<ion-select-option value="yearly">Yearly</ion-select-option>
 						<!--			<ion-select-option value="fortnightly">Fortnightly</ion-select-option>-->
 						<ion-select-option value="week-1st"
 							>Every 1st week of a month
@@ -114,6 +116,36 @@
 			</ion-col>
 		</ion-row>
 	</ion-grid>
+	@if (happens === "yearly") {
+		<ion-list>
+			<ion-item>
+				<ion-input
+					slot="end"
+					type="number"
+					min="1"
+					max="31"
+					label="On"
+					labelPlacement="start"
+					placeholder="day"
+				/>
+				<ion-select slot="end" value="05" interface="popover">
+					<ion-select-option value="01">January</ion-select-option>
+					<ion-select-option value="02">February</ion-select-option>
+					<ion-select-option value="03">March</ion-select-option>
+					<ion-select-option value="04">April</ion-select-option>
+					<ion-select-option value="05">May</ion-select-option>
+					<ion-select-option value="06">June</ion-select-option>
+					<ion-select-option value="07">July</ion-select-option>
+					<ion-select-option value="08">August</ion-select-option>
+					<ion-select-option value="09">September</ion-select-option>
+					<ion-select-option value="10">October</ion-select-option>
+					<ion-select-option value="11">November</ion-select-option>
+					<ion-select-option value="12">December</ion-select-option>
+				</ion-select>
+				<ion-button slot="end" (click)="addSlot()"> Add slot </ion-button>
+			</ion-item>
+		</ion-list>
+	}
 	<form
 		[formGroup]="weekdaysForm"
 		*ngIf="happens.startsWith('week') && showWeekday"
@@ -199,7 +231,7 @@
 							(click)="addSlot()"
 							size="medium"
 						>
-							<ion-label>Add slot</ion-label>
+							<ion-label>Add slot 2</ion-label>
 						</ion-button>
 					</ion-item>
 				</ion-col>

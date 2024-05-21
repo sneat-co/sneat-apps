@@ -21,7 +21,6 @@ import { BudgetPeriodComponent } from './budget-period.component';
 @Component({
 	selector: 'sneat-budget-periods',
 	templateUrl: './budget-periods.component.html',
-	styleUrl: './budget-periods.component.scss',
 	standalone: true,
 	imports: [CommonModule, IonicModule, BudgetPeriodComponent],
 })
@@ -70,13 +69,5 @@ export class BudgetPeriodsComponent implements OnChanges {
 
 		const result = getLiabilitiesByPeriod(recurringHappenings, this.team);
 		this.liabilitiesByPeriod.set(result);
-	}
-
-	protected changeShowBy(showBy: 'event' | 'contact', event: Event): boolean {
-		event.stopPropagation();
-		event.preventDefault();
-		this.showBy = showBy;
-		// this.showByChange.emit(showBy);
-		return false;
 	}
 }

@@ -4,40 +4,13 @@
 	(ionChange)="onPeriodChanged($event)"
 >
 	@for (period of periods; track period) {
-		<ion-accordion [value]="period">
-			<ion-item slot="header" color="light">
-				<ion-label>{{ period | titlecase }} {{ liabilitiesMode }}</ion-label>
-				@if (activePeriod === period) {
-					<ion-buttons slot="end">
-						<ion-button color="medium" (click)="changeShowBy('event', $event)">
-							<ion-label
-								[class.selected-item-segment]="showBy === 'event'"
-								[class.unselected-item-segment]="showBy !== 'event'"
-								>By event
-							</ion-label>
-						</ion-button>
-						<ion-button
-							color="medium"
-							(click)="changeShowBy('contact', $event)"
-						>
-							<ion-label
-								[class.selected-item-segment]="showBy === 'contact'"
-								[class.unselected-item-segment]="showBy !== 'contact'"
-								>By person
-							</ion-label>
-						</ion-button>
-					</ion-buttons>
-				}
-			</ion-item>
-			<div slot="content">
-				<sneat-budget-period
-					slot="content"
-					[liabilitiesMode]="liabilitiesMode"
-					[period]="activePeriod"
-					[showBy]="showBy"
-					[periodLiabilities]="liabilitiesByPeriod()[period]"
-				/>
-			</div>
-		</ion-accordion>
+		<sneat-budget-period
+			[(showBy)]="showBy"
+			[liabilitiesMode]="liabilitiesMode"
+			[activePeriod]="activePeriod"
+			[period]="period"
+			[showBy]="showBy"
+			[liabilitiesByPeriod]="liabilitiesByPeriod()"
+		/>
 	}
 </ion-accordion-group>

@@ -16,10 +16,11 @@ import {
 	HappeningType,
 	IHappeningSlot,
 	ITiming,
-	RepeatsWeek,
+	MonthlyWeek,
 	SlotLocation,
 	WeekdayCode2,
 	IHappeningContext,
+	IHappeningSlotTiming,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { newRandomId } from '@sneat/random';
@@ -27,7 +28,13 @@ import { takeUntil } from 'rxjs';
 import { StartEndDatetimeFormComponent } from '../start-end-datetime-form/start-end-datetime-form.component';
 import { WeekdaysFormBase } from '../weekdays/weekdays-form-base';
 
-type Happens = 'once' | 'weekly' | RepeatsWeek | 'fortnightly';
+type Happens =
+	| 'once'
+	| 'daily'
+	| 'weekly'
+	| MonthlyWeek
+	| 'yearly'
+	| 'fortnightly';
 
 @Component({
 	selector: 'sneat-happening-slot-form',
@@ -120,8 +127,7 @@ export class HappeningSlotFormComponent
 				: this.repeats.value;
 	}
 
-	addSlot(timing?: ITiming): void {
-		// this.touchAllFormFields(this.slotForm);
+	private addWeeklySlot(timing?: ITiming): void {
 		this.weekdaysForm.markAsTouched({ onlySelf: true });
 		this.slotForm.markAsTouched();
 		console.log(
@@ -227,6 +233,10 @@ export class HappeningSlotFormComponent
 			}
 			slot = { ...slot, location: l };
 		}
+		this.addSlotToHappening(slot);
+	}
+
+	private addSlotToHappening(slot: IHappeningSlot): void {
 		if (!this.happening?.brief) {
 			throw new Error('!this.happening?.brief');
 		}
@@ -240,6 +250,29 @@ export class HappeningSlotFormComponent
 		console.log('happening:', this.happening);
 		this.slotAdded.emit(slot);
 		this.happeningChange.emit(this.happening);
+	}
+
+	private addYearlySlot(): void {
+		alert('not implemented yet');
+		const slot: IHappeningSlot = {
+			id: 'y1',
+			start: { time: '' },
+			repeats: 'yearly',
+			dates: ['may-21'],
+		};
+		this.addSlotToHappening(slot);
+	}
+
+	protected addSlot(timing?: ITiming): void {
+		switch (this.happens) {
+			case 'weekly':
+				this.addWeeklySlot(timing);
+				break;
+			case 'yearly':
+				this.addYearlySlot();
+				break;
+		}
+		// this.touchAllFormFields(this.slotForm);
 	}
 
 	// onTimeStartsChanged(event: Event): void {

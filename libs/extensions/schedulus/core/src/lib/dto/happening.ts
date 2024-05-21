@@ -180,6 +180,7 @@ export interface IHappeningSlotSingleRef {
 export interface IHappeningSlotTiming extends ITiming {
 	readonly repeats: RepeatPeriod;
 	readonly weekdays?: WeekdayCode2[];
+	readonly dates?: string[];
 	readonly weeks?: number[];
 	readonly fortnightly?: {
 		odd: IFortnightly;
