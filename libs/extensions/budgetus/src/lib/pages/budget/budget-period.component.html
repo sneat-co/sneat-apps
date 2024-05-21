@@ -1,17 +1,26 @@
 @if (showBy === "contact") {
-	<div class="ion-padding">
-		Contacts liabilities: {{ periodLiabilities?.contacts | json }}
-	</div>
-} @else if (showBy === "event") {
-	@for (
-		happeningLiability of periodLiabilities?.happenings;
-		track happeningLiability.happening.id
-	) {
+	@for (liability of periodLiabilities?.contacts; track liability.contact.id) {
 		<ion-item>
-			@for (amount of getAmounts(happeningLiability); track amount.currency) {
+			@for (amount of getAmounts(liability); track amount.currency) {
 				{{ amount.value | currency: amount.currency }}
 			}
-			for {{ happeningLiability.happening.brief?.title }}
+			for {{ liability.contact.brief?.title }}
 		</ion-item>
+	} @empty {
+		<div class="ion-padding">No {{ period }} contact {{ liabilitiesMode }}</div>
+	}
+} @else if (showBy === "event") {
+	@for (
+		liability of periodLiabilities?.happenings;
+		track liability.happening.id
+	) {
+		<ion-item>
+			@for (amount of getAmounts(liability); track amount.currency) {
+				{{ amount.value | decimal64p2 | currency: amount.currency }}
+			}
+			for {{ liability.happening.brief?.title }}
+		</ion-item>
+	} @empty {
+		<div class="ion-padding">No {{ period }} event {{ liabilitiesMode }}</div>
 	}
 }

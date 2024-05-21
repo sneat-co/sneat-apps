@@ -46,11 +46,10 @@ function processSlot(
 	happening: IIdAndBrief<ICalendarHappeningBrief>,
 	slot: IHappeningSlot,
 ): void {
-	const liabilities: IPeriodLiabilities = byPeriod[slot.repeats] || {
+	let liabilities: IPeriodLiabilities = byPeriod[slot.repeats] || {
 		happenings: [],
-		contacts: {},
+		contacts: [],
 	};
-	byPeriod[slot.repeats] = liabilities;
 	const hLiabilityIndex = liabilities.happenings.findIndex(
 		(l) => l.happening.id === happening.id,
 	);
@@ -70,11 +69,20 @@ function processSlot(
 			hLiability = processPrice(hLiability, slot, price, liabilities);
 		}
 		if (hLiabilityIndex >= 0) {
-			liabilities.happenings[hLiabilityIndex] = hLiability;
+			liabilities = {
+				...liabilities,
+				happenings: liabilities.happenings.map((h) =>
+					h.happening.id == hLiability.happening.id ? hLiability : h,
+				),
+			};
 		} else {
-			liabilities.happenings.push(hLiability);
+			liabilities = {
+				...liabilities,
+				happenings: [...liabilities.happenings, hLiability],
+			};
 		}
 	}
+	byPeriod[slot.repeats] = liabilities;
 }
 
 function processPrice(
@@ -106,7 +114,9 @@ function processPrice(
 				if (!contactKey) {
 					return;
 				}
-				let contactLiability = liabilities.contacts[contactKey.itemID];
+				let contactLiability = liabilities.contacts.find(
+					(c) => c.contact.id == contactKey.itemID,
+				);
 				if (!contactLiability) {
 					contactLiability = {
 						contact: {
@@ -119,7 +129,10 @@ function processPrice(
 				contactLiability.valuesByCurrency[price.amount.currency] =
 					(contactLiability.valuesByCurrency[price.amount.currency] || 0) +
 					price.amount.value;
-				liabilities.contacts[contactKey.itemID] = contactLiability;
+				liabilities = {
+					...liabilities,
+					contacts: [...liabilities.contacts, contactLiability],
+				};
 			});
 		}
 	}

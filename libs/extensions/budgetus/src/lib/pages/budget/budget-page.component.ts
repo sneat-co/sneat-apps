@@ -39,7 +39,7 @@ import { BudgetPeriodsComponent } from './budget-periods.component';
 export class BudgetPageComponent extends TeamBaseComponent {
 	public total?: number;
 	public liabilitiesMode: LiabilitiesMode = 'expenses';
-	public period: RepeatPeriod = 'weekly';
+	public activePeriod: RepeatPeriod = 'weekly';
 	// public showIncomes: boolean = true;
 	// public showExpenses: boolean = true;
 

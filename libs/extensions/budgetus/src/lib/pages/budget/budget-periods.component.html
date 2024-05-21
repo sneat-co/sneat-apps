@@ -1,46 +1,43 @@
 <!--happeningLiabilitiesByPeriod: {{happeningLiabilitiesByPeriod()|json}}-->
-<ion-accordion-group [value]="period" (ionChange)="onPeriodChanged($event)">
-	<ion-accordion value="daily">
-		<ion-item slot="header" color="light">
-			<ion-label>Daily {{ liabilitiesMode }}</ion-label>
-		</ion-item>
-		<div class="ion-padding" slot="content">Weekly content</div>
-	</ion-accordion>
-	<ion-accordion value="weekly">
-		<ion-item slot="header" color="light">
-			<ion-label>Weekly {{ liabilitiesMode }}</ion-label>
-			<ion-buttons slot="end">
-				<ion-button
-					(click)="changeShowBy('event', $event)"
-					[color]="showBy === 'event' ? 'dark' : 'medium'"
-				>
-					<ion-label>By event</ion-label>
-				</ion-button>
-				<ion-button
-					(click)="changeShowBy('contact', $event)"
-					[color]="showBy === 'contact' ? 'dark' : 'medium'"
-				>
-					<ion-label>By person</ion-label>
-				</ion-button>
-			</ion-buttons>
-		</ion-item>
-		<sneat-budget-period
-			slot="content"
-			[period]="period"
-			[showBy]="showBy"
-			[periodLiabilities]="liabilitiesByPeriod()[period]"
-		/>
-	</ion-accordion>
-	<ion-accordion value="monthly">
-		<ion-item slot="header" color="light">
-			<ion-label>Monthly {{ liabilitiesMode }}</ion-label>
-		</ion-item>
-		<div class="ion-padding" slot="content">Monthly content</div>
-	</ion-accordion>
-	<ion-accordion value="yearly">
-		<ion-item slot="header" color="light">
-			<ion-label>Yearly {{ liabilitiesMode }}</ion-label>
-		</ion-item>
-		<div class="ion-padding" slot="content">Yearly content</div>
-	</ion-accordion>
+<ion-accordion-group
+	[value]="activePeriod"
+	(ionChange)="onPeriodChanged($event)"
+>
+	@for (period of periods; track period) {
+		<ion-accordion [value]="period">
+			<ion-item slot="header" color="light">
+				<ion-label>{{ period | titlecase }} {{ liabilitiesMode }}</ion-label>
+				@if (activePeriod === period) {
+					<ion-buttons slot="end">
+						<ion-button color="medium" (click)="changeShowBy('event', $event)">
+							<ion-label
+								[class.selected-item-segment]="showBy === 'event'"
+								[class.unselected-item-segment]="showBy !== 'event'"
+								>By event
+							</ion-label>
+						</ion-button>
+						<ion-button
+							color="medium"
+							(click)="changeShowBy('contact', $event)"
+						>
+							<ion-label
+								[class.selected-item-segment]="showBy === 'contact'"
+								[class.unselected-item-segment]="showBy !== 'contact'"
+								>By person
+							</ion-label>
+						</ion-button>
+					</ion-buttons>
+				}
+			</ion-item>
+			<div slot="content">
+				<sneat-budget-period
+					slot="content"
+					[liabilitiesMode]="liabilitiesMode"
+					[period]="activePeriod"
+					[showBy]="showBy"
+					[periodLiabilities]="liabilitiesByPeriod()[period]"
+				/>
+			</div>
+		</ion-accordion>
+	}
 </ion-accordion-group>

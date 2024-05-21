@@ -9,7 +9,6 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { Period } from '@sneat/dto';
 import {
 	ICalendarHappeningBrief,
 	RepeatPeriod,
@@ -22,6 +21,7 @@ import { BudgetPeriodComponent } from './budget-period.component';
 @Component({
 	selector: 'sneat-budget-periods',
 	templateUrl: './budget-periods.component.html',
+	styleUrl: './budget-periods.component.scss',
 	standalone: true,
 	imports: [CommonModule, IonicModule, BudgetPeriodComponent],
 })
@@ -33,15 +33,22 @@ export class BudgetPeriodsComponent implements OnChanges {
 	>;
 	@Input({ required: true }) liabilitiesMode: LiabilitiesMode = 'balance';
 
-	@Input({ required: true }) period: RepeatPeriod = 'weekly';
+	@Input({ required: true }) activePeriod: RepeatPeriod = 'weekly';
+
+	protected readonly periods: RepeatPeriod[] = [
+		'daily',
+		'weekly',
+		'monthly',
+		'yearly',
+	];
 
 	showBy: 'event' | 'contact' = 'event';
 
-	@Output() readonly periodChange = new EventEmitter<RepeatPeriod>();
+	@Output() readonly activePeriodChange = new EventEmitter<RepeatPeriod>();
 
 	protected onPeriodChanged(event: Event): void {
-		this.period = (event as CustomEvent).detail.value;
-		this.periodChange.emit(this.period);
+		this.activePeriod = (event as CustomEvent).detail.value;
+		this.activePeriodChange.emit(this.activePeriod);
 	}
 
 	protected readonly liabilitiesByPeriod = signal<LiabilitiesByPeriod>({});
@@ -50,13 +57,6 @@ export class BudgetPeriodsComponent implements OnChanges {
 		if (changes['recurringHappenings']) {
 			this.updateLiabilitiesByPeriod(this.recurringHappenings);
 		}
-	}
-
-	protected changeShowBy(showBy: 'event' | 'contact', event: Event): boolean {
-		event.stopPropagation();
-		event.preventDefault();
-		this.showBy = showBy;
-		return false;
 	}
 
 	private updateLiabilitiesByPeriod(
@@ -70,5 +70,13 @@ export class BudgetPeriodsComponent implements OnChanges {
 
 		const result = getLiabilitiesByPeriod(recurringHappenings, this.team);
 		this.liabilitiesByPeriod.set(result);
+	}
+
+	protected changeShowBy(showBy: 'event' | 'contact', event: Event): boolean {
+		event.stopPropagation();
+		event.preventDefault();
+		this.showBy = showBy;
+		// this.showByChange.emit(showBy);
+		return false;
 	}
 }

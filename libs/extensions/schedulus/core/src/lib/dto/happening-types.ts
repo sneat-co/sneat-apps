@@ -8,6 +8,7 @@ export type RepeatsWeek =
 export type RepeatPeriod =
 	| 'UNKNOWN'
 	| 'once'
+	| 'daily'
 	| 'weekly'
 	| RepeatsWeek
 	| 'fortnightly'
@@ -15,3 +16,4 @@ export type RepeatPeriod =
 	| 'yearly';
 export type ActivityType = 'appointment' | 'school' | 'lesson' | 'todo'; // TODO: Is it same as HappeningKind?
 export type EventType = 'workshop' | 'fixture' | 'appointment';
+export type ShowBy = 'event' | 'contact';

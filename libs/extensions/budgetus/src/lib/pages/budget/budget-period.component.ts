@@ -8,17 +8,19 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { SneatPipesModule } from '@sneat/components';
 import { IAmount, RepeatPeriod } from '@sneat/mod-schedulus-core';
 import {
-	IHappeningLiability,
+	ILiabilityBase,
 	IPeriodLiabilities,
+	LiabilitiesMode,
 } from './budget-component-types';
 
 @Component({
 	selector: 'sneat-budget-period',
 	templateUrl: 'budget-period.component.html',
 	standalone: true,
-	imports: [CommonModule, IonicModule, FormsModule],
+	imports: [CommonModule, IonicModule, FormsModule, SneatPipesModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BudgetPeriodComponent implements OnChanges {
@@ -27,10 +29,11 @@ export class BudgetPeriodComponent implements OnChanges {
 	@Input({ required: true }) period?: RepeatPeriod;
 	@Input({ required: true }) showBy?: 'event' | 'contact' = 'event';
 
-	@Input({ required: true })
-	periodLiabilities?: IPeriodLiabilities;
+	@Input({ required: true }) liabilitiesMode: LiabilitiesMode = 'balance';
 
-	protected getAmounts(liability: IHappeningLiability): readonly IAmount[] {
+	@Input({ required: true }) periodLiabilities?: IPeriodLiabilities;
+
+	protected getAmounts(liability: ILiabilityBase): readonly IAmount[] {
 		const result: IAmount[] = [];
 		Object.entries(liability.valuesByCurrency).forEach(([currency, value]) => {
 			result.push({ currency, value });

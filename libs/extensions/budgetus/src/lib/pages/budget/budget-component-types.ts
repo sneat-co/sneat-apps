@@ -14,8 +14,8 @@ export interface IHappeningLiability extends ILiabilityBase {
 }
 
 export interface IPeriodLiabilities {
-	readonly happenings: IHappeningLiability[];
-	readonly contacts: Record<string, IContactLiability>;
+	readonly happenings: readonly IHappeningLiability[];
+	readonly contacts: readonly IContactLiability[];
 }
 
 export type LiabilitiesByPeriod = Partial<
