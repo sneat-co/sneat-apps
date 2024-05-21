@@ -30,8 +30,8 @@ export class StartEndDatesRangeFormComponent implements OnChanges {
 		const ce = event as CustomEvent;
 		const checked = ce.detail.checked;
 		this.startEnabled.set(checked);
-		let start = this.timing?.start || { time: '' };
-		if (!start.date) {
+		let start = this.timing?.start;
+		if (!start?.date) {
 			start = { ...start, date: new Date().toISOString().substring(0, 10) };
 			const timing = { ...this.timing, start };
 			this.timing = timing;
@@ -48,7 +48,7 @@ export class StartEndDatesRangeFormComponent implements OnChanges {
 	protected onStartChanged(event: Event): void {
 		const ce = event as CustomEvent;
 		const date = ce.detail.value;
-		const start: IDateTime = this.timing?.start || { time: '' };
+		const start: IDateTime | undefined = this.timing?.start;
 		const timing = { ...this.timing, start: { ...start, date } };
 		this.timingChange.emit(timing);
 	}
@@ -56,7 +56,7 @@ export class StartEndDatesRangeFormComponent implements OnChanges {
 	protected onEndChanged(event: Event): void {
 		const ce = event as CustomEvent;
 		const date = ce.detail.value;
-		const end: IDateTime = this.timing?.end || { time: '' };
+		const end: IDateTime | undefined = this.timing?.end;
 		const timing: ITiming = {
 			...this.timing,
 			end: { ...end, date },

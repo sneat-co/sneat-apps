@@ -162,14 +162,14 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 		// 	this.setRepeatsBasedOnHappeningType();
 		// }
 		if (!this.startDate.dirty) {
-			const startDate = this.timing.start.date;
+			const startDate = this.timing.start?.date;
 			if (startDate) {
 				this.startDate.setValue(startDate);
 				console.log('startDate.setValue()', this.startDate.value);
 			}
 		}
 		if (!this.startTime.dirty) {
-			this.startTime.setValue(this.timing.start.time || '');
+			this.startTime.setValue(this.timing.start?.time || '');
 		}
 		if (!this.endDate.dirty) {
 			this.endDate.setValue(this.timing.end?.date || '');
@@ -354,8 +354,8 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 			start: { ...(slot.start || {}), time: this.startTime.value || '' },
 		};
 		if (
-			this.timing.start.time &&
-			!this.timing.start.date &&
+			this.timing.start?.time &&
+			!this.timing.start?.date &&
 			this.startDate.value
 		) {
 			this.timing = {

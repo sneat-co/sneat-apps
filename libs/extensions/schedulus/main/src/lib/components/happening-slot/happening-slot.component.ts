@@ -21,7 +21,6 @@ export class HappeningSlotComponent {
 	@Input({ required: true }) public slot: IHappeningSlot = {
 		id: '',
 		repeats: 'UNKNOWN',
-		start: { time: '' },
 	};
 
 	constructor(private readonly scheduleModalsService: CalendarModalsService) {}

@@ -25,9 +25,9 @@ export const sortSlotItems = (
 	a: IHappeningSlotUiItem,
 	b: IHappeningSlotUiItem,
 ): number =>
-	a.timing.start.time === b.timing.start.time
+	a.timing.start?.time === b.timing.start?.time
 		? a.title.localeCompare(b.title)
-		: a.timing.start.time.localeCompare(b.timing.start.time);
+		: a.timing.start?.time?.localeCompare(b.timing.start?.time || '') || 0;
 
 export interface IHappeningSlotUiItem {
 	// readonly id: string; Not sure how to make an ID yet

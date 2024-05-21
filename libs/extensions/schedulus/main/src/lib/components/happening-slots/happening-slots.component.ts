@@ -32,8 +32,6 @@ export class HappeningSlotsComponent {
 
 	public addSlotParams?: AddSlotParams;
 
-	protected readonly id = (_: number, o: IHappeningSlot) => o.id;
-
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger, // private readonly modalController: ModalController,
 	) {}

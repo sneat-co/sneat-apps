@@ -1,5 +1,8 @@
 <ion-item>
-	<ion-badge color="light" slot="start">{{ slot.start.time }}</ion-badge>
+	@if (slot.start?.time) {
+		<ion-badge color="light" slot="start">{{ slot.start?.time }}</ion-badge>
+	}
+
 	<ion-label text-wrap>
 		<p>
 			<ion-badge
@@ -9,18 +12,14 @@
 				>{{ wd | wdToWeekday }}</ion-badge
 			>
 		</p>
-		<p
-			*ngIf="
-				slot.location && (slot.location.title || slot.location.address);
-				else noLocation
-			"
-		>
-			&#64; {{ slot.location.title || slot.location.address }}, ends at
-			{{ slot.end?.time }}
-		</p>
-		<ng-template #noLocation>
+		@if (slot.location && (slot.location.title || slot.location.address)) {
+			<p>
+				&#64; {{ slot.location.title || slot.location.address }}, ends at
+				{{ slot.end?.time }}
+			</p>
+		} @else {
 			<p>Ends at {{ slot.end?.time }}</p>
-		</ng-template>
+		}
 	</ion-label>
 	<ion-buttons slot="end">
 		<ion-button

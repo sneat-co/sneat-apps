@@ -62,7 +62,7 @@
 <ng-container *ngIf="happeningType === 'recurring'">
 	<ion-grid class="ion-grid-layout">
 		<ion-row>
-			<ion-col size="6">
+			<ion-col>
 				<ion-item color="light" lines="full">
 					<ion-select
 						label="Repeats"
@@ -72,7 +72,9 @@
 					>
 						<ion-select-option value="daily">Daily</ion-select-option>
 						<ion-select-option value="weekly">Weekly</ion-select-option>
-						<ion-select-option value="yearly">Yearly</ion-select-option>
+						<ion-select-option value="monthly"
+							>Monthly (specific date)</ion-select-option
+						>
 						<!--			<ion-select-option value="fortnightly">Fortnightly</ion-select-option>-->
 						<ion-select-option value="week-1st"
 							>Every 1st week of a month
@@ -89,10 +91,11 @@
 						<ion-select-option value="week-last"
 							>Every last week of a month
 						</ion-select-option>
+						<ion-select-option value="yearly">Yearly</ion-select-option>
 					</ion-select>
 				</ion-item>
 			</ion-col>
-			<ion-col>
+			<ion-col *ngIf="happens.startsWith('week')">
 				<ion-item color="light" lines="full">
 					<ion-checkbox
 						color="medium"
@@ -116,128 +119,153 @@
 			</ion-col>
 		</ion-row>
 	</ion-grid>
-	@if (happens === "yearly") {
-		<ion-list>
-			<ion-item>
-				<ion-input
-					slot="end"
-					type="number"
-					min="1"
-					max="31"
-					label="On"
-					labelPlacement="start"
-					placeholder="day"
-				/>
-				<ion-select slot="end" value="05" interface="popover">
-					<ion-select-option value="01">January</ion-select-option>
-					<ion-select-option value="02">February</ion-select-option>
-					<ion-select-option value="03">March</ion-select-option>
-					<ion-select-option value="04">April</ion-select-option>
-					<ion-select-option value="05">May</ion-select-option>
-					<ion-select-option value="06">June</ion-select-option>
-					<ion-select-option value="07">July</ion-select-option>
-					<ion-select-option value="08">August</ion-select-option>
-					<ion-select-option value="09">September</ion-select-option>
-					<ion-select-option value="10">October</ion-select-option>
-					<ion-select-option value="11">November</ion-select-option>
-					<ion-select-option value="12">December</ion-select-option>
-				</ion-select>
-				<ion-button slot="end" (click)="addSlot()"> Add slot </ion-button>
-			</ion-item>
-		</ion-list>
+
+	@if (happens.startsWith("week") && showWeekday) {
+		<form [formGroup]="weekdaysForm">
+			<ion-grid class="grid-layout">
+				<ion-row>
+					<ion-col size="6">
+						<ion-item lines="none">
+							<ion-checkbox
+								slot="start"
+								value="mo"
+								[formControl]="weekdayMo"
+								(ionChange)="onWeekdayChange()"
+								labelPlacement="end"
+								>Monday
+							</ion-checkbox>
+						</ion-item>
+						<ion-item lines="none">
+							<ion-checkbox
+								slot="start"
+								value="tu"
+								[formControl]="weekdayTu"
+								(ionChange)="onWeekdayChange()"
+								labelPlacement="end"
+								>Tuesday
+							</ion-checkbox>
+						</ion-item>
+						<ion-item lines="none">
+							<ion-checkbox
+								slot="start"
+								value="we"
+								[formControl]="weekdayWe"
+								labelPlacement="end"
+								>Wednesday
+							</ion-checkbox>
+						</ion-item>
+						<ion-item lines="none">
+							<ion-checkbox
+								slot="start"
+								value="th"
+								[formControl]="weekdayTh"
+								(ionChange)="onWeekdayChange()"
+								labelPlacement="end"
+								>Thursday
+							</ion-checkbox>
+						</ion-item>
+					</ion-col>
+					<ion-col size="6">
+						<ion-item lines="none">
+							<ion-checkbox
+								slot="start"
+								value="fr"
+								[formControl]="weekdayFr"
+								(ionChange)="onWeekdayChange()"
+								labelPlacement="end"
+								>Friday
+							</ion-checkbox>
+						</ion-item>
+						<ion-item lines="none">
+							<ion-checkbox
+								slot="start"
+								value="sa"
+								[formControl]="weekdaySa"
+								(ionChange)="onWeekdayChange()"
+								labelPlacement="end"
+								>Saturday
+							</ion-checkbox>
+						</ion-item>
+						<ion-item lines="none">
+							<ion-checkbox
+								slot="start"
+								value="su"
+								[formControl]="weekdaySu"
+								(ionChange)="onWeekdayChange()"
+								labelPlacement="end"
+								>Sunday
+							</ion-checkbox>
+						</ion-item>
+						<ion-item lines="none">
+							<ion-button
+								style="width: 100%"
+								color="primary"
+								(click)="addSlot()"
+								size="medium"
+							>
+								<ion-label>Add slot 2</ion-label>
+							</ion-button>
+						</ion-item>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</form>
 	}
-	<form
-		[formGroup]="weekdaysForm"
-		*ngIf="happens.startsWith('week') && showWeekday"
-	>
-		<ion-grid class="grid-layout">
+	@if (happens === "yearly") {
+		@if (yearlyMonth) {
+			<ion-item>
+				<ion-select
+					interface="popover"
+					[ngModel]="yearlyMonth"
+					label="Month"
+					(ionChange)="setYearlyMonth($event.detail.value)"
+				>
+					@for (month of months; track month) {
+						<ion-select-option [value]="month">{{ month }}</ion-select-option>
+					}
+				</ion-select>
+			</ion-item>
+		} @else {
+			<ion-item-divider>Select month</ion-item-divider>
+			<ion-item>
+				@for (month of months; track month) {
+					<ion-button
+						class="ion-margin-end"
+						color="light"
+						(click)="setYearlyMonth(month)"
+						>{{ month }}</ion-button
+					>
+				}
+			</ion-item>
+		}
+	}
+	@if (happens === "monthly" || (happens === "yearly" && yearlyMonth)) {
+		<ion-item-divider>Choose day</ion-item-divider>
+		<ion-grid>
+			@for (i of [].constructor(5); track i; let rowIndex = $index) {
+				<ion-row>
+					@for (i of [].constructor(5); track i) {
+						<ion-col size="2">
+							<ion-button
+								color="light"
+								(click)="setMonthlyDay($index + rowIndex * 5 + 1)"
+								>{{ $index + rowIndex * 5 + 1 }}
+							</ion-button>
+						</ion-col>
+					}
+				</ion-row>
+			}
 			<ion-row>
-				<ion-col size="6">
-					<ion-item lines="none">
-						<ion-checkbox
-							slot="start"
-							value="mo"
-							[formControl]="weekdayMo"
-							(ionChange)="onWeekdayChange()"
-							labelPlacement="end"
-							>Monday
-						</ion-checkbox>
-					</ion-item>
-					<ion-item lines="none">
-						<ion-checkbox
-							slot="start"
-							value="tu"
-							[formControl]="weekdayTu"
-							(ionChange)="onWeekdayChange()"
-							labelPlacement="end"
-							>Tuesday
-						</ion-checkbox>
-					</ion-item>
-					<ion-item lines="none">
-						<ion-checkbox
-							slot="start"
-							value="we"
-							[formControl]="weekdayWe"
-							labelPlacement="end"
-							>Wednesday
-						</ion-checkbox>
-					</ion-item>
-					<ion-item lines="none">
-						<ion-checkbox
-							slot="start"
-							value="th"
-							[formControl]="weekdayTh"
-							(ionChange)="onWeekdayChange()"
-							labelPlacement="end"
-							>Thursday
-						</ion-checkbox>
-					</ion-item>
-				</ion-col>
-				<ion-col size="6">
-					<ion-item lines="none">
-						<ion-checkbox
-							slot="start"
-							value="fr"
-							[formControl]="weekdayFr"
-							(ionChange)="onWeekdayChange()"
-							labelPlacement="end"
-							>Friday
-						</ion-checkbox>
-					</ion-item>
-					<ion-item lines="none">
-						<ion-checkbox
-							slot="start"
-							value="sa"
-							[formControl]="weekdaySa"
-							(ionChange)="onWeekdayChange()"
-							labelPlacement="end"
-							>Saturday
-						</ion-checkbox>
-					</ion-item>
-					<ion-item lines="none">
-						<ion-checkbox
-							slot="start"
-							value="su"
-							[formControl]="weekdaySu"
-							(ionChange)="onWeekdayChange()"
-							labelPlacement="end"
-							>Sunday
-						</ion-checkbox>
-					</ion-item>
-					<ion-item lines="none">
-						<ion-button
-							style="width: 100%"
-							color="primary"
-							(click)="addSlot()"
-							size="medium"
-						>
-							<ion-label>Add slot 2</ion-label>
+				@for (i of [].constructor(numberOfDaysInMonth - 25); track i) {
+					<ion-col size="2">
+						<ion-button color="light" (click)="setMonthlyDay($index + 25 + 1)"
+							>{{ $index + 25 + 1 }}
 						</ion-button>
-					</ion-item>
-				</ion-col>
+					</ion-col>
+				}
 			</ion-row>
 		</ion-grid>
-	</form>
+	}
 </ng-container>
 <ion-item *ngIf="error">
 	<ion-label color="danger">{{ error }}</ion-label>

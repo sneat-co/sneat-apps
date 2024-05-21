@@ -21,6 +21,7 @@ import {
 	WeekdayCode2,
 	IHappeningContext,
 	IHappeningSlotTiming,
+	Month,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { newRandomId } from '@sneat/random';
@@ -32,6 +33,7 @@ type Happens =
 	| 'once'
 	| 'daily'
 	| 'weekly'
+	| 'monthly'
 	| MonthlyWeek
 	| 'yearly'
 	| 'fortnightly';
@@ -125,6 +127,9 @@ export class HappeningSlotFormComponent
 			!this.repeats.value || this.repeats.value == 'once'
 				? 'weekly'
 				: this.repeats.value;
+		if (this.happens === 'monthly') {
+			this.numberOfDaysInMonth = 28;
+		}
 	}
 
 	private addWeeklySlot(timing?: ITiming): void {
@@ -236,6 +241,71 @@ export class HappeningSlotFormComponent
 		this.addSlotToHappening(slot);
 	}
 
+	protected monthlyDay?: number;
+	protected yearlyMonth?: Month;
+
+	protected readonly months: string[] = [
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December',
+	];
+
+	protected numberOfDaysInMonth = 30;
+
+	protected setYearlyMonth(month: string): void {
+		this.yearlyMonth = month as Month;
+		switch (this.yearlyMonth) {
+			case 'February':
+				this.numberOfDaysInMonth = 28;
+				break;
+			case 'January':
+			case 'March':
+			case 'May':
+			case 'July':
+			case 'August':
+			case 'October':
+			case 'December':
+				this.numberOfDaysInMonth = 31;
+				break;
+			case 'April':
+			case 'June':
+			case 'September':
+			case 'November':
+				this.numberOfDaysInMonth = 30;
+				break;
+		}
+	}
+
+	protected setMonthlyDay(day: number): void {
+		this.monthlyDay = day;
+		let slot: IHappeningSlot = {
+			id: newRandomId({ len: 3 }),
+			repeats: this.happens,
+		};
+
+		switch (this.happens) {
+			case 'monthly':
+				slot = { ...slot, day };
+				break;
+			case 'yearly':
+				if (!this.yearlyMonth) {
+					return;
+				}
+				slot = { ...slot, day, month: this.yearlyMonth };
+				break;
+		}
+		this.addSlotToHappening(slot);
+	}
+
 	private addSlotToHappening(slot: IHappeningSlot): void {
 		if (!this.happening?.brief) {
 			throw new Error('!this.happening?.brief');
@@ -252,25 +322,24 @@ export class HappeningSlotFormComponent
 		this.happeningChange.emit(this.happening);
 	}
 
-	private addYearlySlot(): void {
-		alert('not implemented yet');
-		const slot: IHappeningSlot = {
-			id: 'y1',
-			start: { time: '' },
-			repeats: 'yearly',
-			dates: ['may-21'],
-		};
-		this.addSlotToHappening(slot);
-	}
+	// private addYearlySlot(): void {
+	// 	alert('not implemented yet');
+	// 	const slot: IHappeningSlot = {
+	// 		id: 'y1',
+	// 		repeats: 'yearly',
+	// 		day: ['may-21'],
+	// 	};
+	// 	this.addSlotToHappening(slot);
+	// }
 
 	protected addSlot(timing?: ITiming): void {
 		switch (this.happens) {
 			case 'weekly':
 				this.addWeeklySlot(timing);
 				break;
-			case 'yearly':
-				this.addYearlySlot();
-				break;
+			// case 'yearly':
+			// 	this.addYearlySlot();
+			// 	break;
 		}
 		// this.touchAllFormFields(this.slotForm);
 	}

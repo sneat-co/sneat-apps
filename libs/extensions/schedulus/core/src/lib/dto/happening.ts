@@ -129,7 +129,10 @@ export function validateSingleHappeningSlot(
 }
 
 function validateHappeningSlot(slot: IHappeningSlot, index: number): void {
-	if (!slot.start.time) {
+	if (
+		!slot.start?.time &&
+		!(slot.repeats.startsWith('monthly') || slot.repeats.startsWith('yearly'))
+	) {
 		throw new Error(`slots[${index}]: slot has no start time: ${slot}`);
 	}
 }
@@ -162,11 +165,11 @@ type MonthlyDay = -5 | -4 | -3 | -2 | -1
 
 export interface IDateTime {
 	readonly date?: string;
-	readonly time: string;
+	readonly time?: string;
 }
 
 export interface ITiming {
-	readonly start: IDateTime;
+	readonly start?: IDateTime;
 	readonly end?: IDateTime;
 	readonly durationMinutes?: number;
 }
@@ -177,10 +180,25 @@ export interface IHappeningSlotSingleRef {
 	readonly week?: number;
 }
 
+export type Month =
+	| 'January'
+	| 'February'
+	| 'March'
+	| 'April'
+	| 'May'
+	| 'June'
+	| 'July'
+	| 'August'
+	| 'September'
+	| 'October'
+	| 'November'
+	| 'December';
+
 export interface IHappeningSlotTiming extends ITiming {
 	readonly repeats: RepeatPeriod;
 	readonly weekdays?: WeekdayCode2[];
-	readonly dates?: string[];
+	readonly day?: number;
+	readonly month?: Month;
 	readonly weeks?: number[];
 	readonly fortnightly?: {
 		odd: IFortnightly;
@@ -204,7 +222,6 @@ export interface IHappeningSlot extends IHappeningSlotTiming {
 }
 
 export const emptyTiming: ITiming = {
-	start: { date: '', time: '' },
 	// durationMinutes: 0,
 };
 

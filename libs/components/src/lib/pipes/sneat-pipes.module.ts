@@ -1,6 +1,6 @@
 import { NgModule, PipeTransform, Type } from '@angular/core';
 import { CountryFlagPipe, CountryTitle } from './country-emoji.pipe';
-import { Decimal64p2Pipe } from './decimal64p2.pipe';
+import { Decimal64p2Pipe, Numeral2Pipe } from './decimal64p2.pipe';
 import {
 	GenderColorPipe,
 	GenderEmojiPipe,
@@ -29,10 +29,11 @@ const pipes: Type<PipeTransform>[] = [
 	CountryFlagPipe,
 	CountryTitle,
 	Decimal64p2Pipe,
+	Numeral2Pipe,
 ];
 
 @NgModule({
-	declarations: pipes,
+	declarations: [pipes, Numeral2Pipe],
 	exports: pipes,
 })
 export class SneatPipesModule {}

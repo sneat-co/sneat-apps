@@ -229,7 +229,7 @@ export class HappeningService {
 		slot = {
 			repeats: 'once',
 			id: slot.id,
-			start: { ...slot.start, date },
+			start: { time: slot.start?.time || '', date },
 			end: slot.end,
 			durationMinutes: slot.durationMinutes,
 		};
