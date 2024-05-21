@@ -114,7 +114,7 @@ export class JoinTeamPageComponent extends SneatBaseComponent {
 			});
 		}
 
-		this.authStateService.authState.pipe(takeUntil(this.destroyed)).subscribe({
+		this.authStateService.authState.pipe(takeUntil(this.destroyed$)).subscribe({
 			next: (authState) => {
 				this.userID = authState.user?.uid;
 				this.authStatus = authState.status;

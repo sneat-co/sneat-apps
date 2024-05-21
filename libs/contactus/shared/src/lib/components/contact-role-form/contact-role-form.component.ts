@@ -75,7 +75,7 @@ export class ContactRoleFormComponent
 		super('ContactRoleFormComponent', errorLogger);
 		contactGroupService
 			.getContactGroups()
-			.pipe(takeUntil(this.destroyed))
+			.pipe(takeUntil(this.destroyed$))
 			.subscribe({
 				next: (groups) => {
 					this.groups = groups;

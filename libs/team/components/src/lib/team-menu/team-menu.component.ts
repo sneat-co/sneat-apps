@@ -41,7 +41,7 @@ export class TeamMenuComponent extends TeamBaseComponent {
 		private readonly menuCtrl: MenuController,
 	) {
 		super('TeamMenuComponent', route, params);
-		params.userService.userState.pipe(takeUntil(this.destroyed)).subscribe({
+		params.userService.userState.pipe(takeUntil(this.destroyed$)).subscribe({
 			next: this.trackUserState,
 			error: this.errorLogger.logErrorHandler('failed to get user stage'),
 		});

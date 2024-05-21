@@ -51,16 +51,18 @@ export class TeamPageComponent extends TeamPageBaseComponent {
 		super('TeamPageComponent', route, params, topMenuService, cd);
 		const contactusTeamContextService = new ContactusTeamContextService(
 			params.errorLogger,
-			this.destroyed,
+			this.destroyed$,
 			this.teamIDChanged$,
 			contactusTeamService,
 		);
-		contactusTeamContextService.contactusTeamContext$.subscribe({
-			next: (contactusTeam) => {
-				this.contactusTeam = contactusTeam;
-				this.onContactusTeamChanged(contactusTeam);
-			},
-		});
+		contactusTeamContextService.contactusTeamContext$
+			.pipe(this.takeUntilNeeded())
+			.subscribe({
+				next: (contactusTeam) => {
+					this.contactusTeam = contactusTeam;
+					this.onContactusTeamChanged(contactusTeam);
+				},
+			});
 	}
 
 	protected goMembers(event: Event): void {

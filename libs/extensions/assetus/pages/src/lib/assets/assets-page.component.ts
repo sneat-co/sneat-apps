@@ -125,7 +125,7 @@ export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewIn
 		if (this.team?.id) {
 			this.assetusTeamService
 				.watchAssetBriefs(this.team)
-				.pipe(takeUntil(this.destroyed))
+				.pipe(takeUntil(this.destroyed$))
 				.subscribe({
 					next: (assets: IIdAndBrief<IAssetBrief>[]) => {
 						console.log(

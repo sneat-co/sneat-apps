@@ -93,18 +93,17 @@ export class CalendarDayCardComponent
 		this.date = current;
 		const next = new Date();
 		next.setDate(this.date.getDate() + 1);
-		const destroyed = this.destroyed.asObservable();
 		this.oddSlide = swipeableDay(
 			'odd',
 			current,
 			this.teamDaysProvider,
-			destroyed,
+			this.destroyed$,
 		);
 		this.evenSlide = swipeableDay(
 			'even',
 			next,
 			this.teamDaysProvider,
-			destroyed,
+			this.destroyed$,
 		);
 		this.onDateChanged({ date: current, shiftDirection: '' });
 	}

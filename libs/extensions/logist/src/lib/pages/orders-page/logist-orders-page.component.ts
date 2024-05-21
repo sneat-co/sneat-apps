@@ -56,7 +56,7 @@ export class LogistOrdersPageComponent extends TeamBaseComponent {
 			}
 			this.ordersSubscription = this.ordersService
 				.watchFreightOrders(teamId, excludeEmpty(this.filter))
-				.pipe(takeUntil(this.destroyed))
+				.pipe(takeUntil(this.destroyed$))
 				.subscribe({
 					next: (orders) => {
 						console.log(

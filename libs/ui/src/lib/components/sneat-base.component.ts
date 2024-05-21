@@ -5,14 +5,18 @@ import { Subject, Subscription } from 'rxjs';
 
 export interface IConsole {
 	log(...data: unknown[]): void;
+
 	warn(...data: unknown[]): void;
+
 	trace(...data: unknown[]): void;
 }
 
 @Injectable()
 export abstract class SneatBaseComponent implements OnDestroy {
+	private readonly destroyed = new Subject<void>();
 	// Signals that the component is destroyed and should not be used anymore
-	protected readonly destroyed = new Subject<void>();
+	protected readonly destroyed$ = this.destroyed.asObservable();
+
 	// All active subscriptions of a component. Will be unsubscribed on destroy
 	protected readonly subs = new Subscription();
 	// Passes focus to the input element
@@ -28,9 +32,13 @@ export abstract class SneatBaseComponent implements OnDestroy {
 	}
 
 	public ngOnDestroy(): void {
-		this.unsubscribe(`${this.className}.SneatBaseComponent.ngOnDestroy()`);
+		console.log(`${this.className}.SneatBaseComponent.ngOnDestroy()`);
+		this.destroyed$.subscribe(() => {
+			console.log(`${this.className}.SneatBaseComponent => destroyed$!`);
+		});
 		this.destroyed.next();
 		this.destroyed.complete();
+		this.unsubscribe(`${this.className}.SneatBaseComponent.ngOnDestroy()`);
 	}
 
 	protected unsubscribe(reason?: string): void {

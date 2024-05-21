@@ -92,7 +92,7 @@ export class RetrospectivePageComponent
 					filter((uid) => !!uid),
 					first(),
 					mergeMap(() => this.route.queryParamMap),
-					takeUntil(this.destroyed),
+					takeUntil(this.destroyed$),
 				)
 				.subscribe({
 					next: (queryParams) => {
@@ -144,7 +144,7 @@ export class RetrospectivePageComponent
 					const teamId = this.team.id;
 					this.retroSub = this.retrospectiveService
 						.watchRetro(teamId, id)
-						.pipe(takeUntil(this.destroyed.asObservable())) // TODO(StackOverflow): Do we need .asObservable() here?
+						.pipe(takeUntil(this.destroyed$.asObservable())) // TODO(StackOverflow): Do we need .asObservable() here?
 						.subscribe({
 							next: (retrospective) =>
 								this.setRetro(teamId, { id, dto: retrospective }),

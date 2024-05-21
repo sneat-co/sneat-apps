@@ -67,14 +67,14 @@ export abstract class TeamBaseComponent
 	) => (error: unknown) => void;
 
 	public readonly teamIDChanged$ = this.teamIDChanged.asObservable().pipe(
-		takeUntil(this.destroyed),
+		takeUntil(this.destroyed$),
 		distinctUntilChanged(),
 		tap((id) => console.log(this.className + '=> teamIDChanged$: ' + id)),
 	);
 
 	public readonly teamTypeChanged$: Observable<TeamType | undefined> =
 		this.teamTypeChanged.pipe(
-			takeUntil(this.destroyed),
+			takeUntil(this.destroyed$),
 			distinctUntilChanged(),
 			// tap(v => console.log('teamTypeChanged$ before replay =>', v)),
 			shareReplay(1),
@@ -83,11 +83,11 @@ export abstract class TeamBaseComponent
 
 	public readonly teamBriefChanged$ = this.teamBriefChanged
 		.asObservable()
-		.pipe(takeUntil(this.destroyed), distinctUntilChanged(equalTeamBriefs));
+		.pipe(takeUntil(this.destroyed$), distinctUntilChanged(equalTeamBriefs));
 
 	public readonly teamDtoChanged$ = this.teamDtoChanged
 		.asObservable()
-		.pipe(takeUntil(this.destroyed), distinctUntilChanged());
+		.pipe(takeUntil(this.destroyed$), distinctUntilChanged());
 
 	public get team(): ITeamContext {
 		// TODO: Document why we do not allow undefined
@@ -192,7 +192,7 @@ export abstract class TeamBaseComponent
 	}
 
 	protected takeUntilNeeded<T>(): MonoTypeOperatorFunction<T> {
-		return takeUntil(this.destroyed);
+		return takeUntil(this.destroyed$);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function

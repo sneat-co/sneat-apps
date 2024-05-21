@@ -441,7 +441,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		this.performing = 'reactivating completed';
 		this.listService
 			.setListItemsIsCompleted(request)
-			.pipe(takeUntil(this.destroyed))
+			.pipe(takeUntil(this.destroyed$))
 			.subscribe({
 				next: () => {
 					console.log('reactivated all previously completed items');

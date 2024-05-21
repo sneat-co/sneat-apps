@@ -124,7 +124,7 @@ export class NewContactPageComponent
 
 	override ngOnInit(): void {
 		this.route.queryParamMap
-			.pipe(takeUntil(this.destroyed))
+			.pipe(takeUntil(this.destroyed$))
 			.subscribe(this.onUrlParamsChanged);
 	}
 
@@ -137,7 +137,7 @@ export class NewContactPageComponent
 		if (contactGroupID && !this.contactGroup) {
 			this.contactGroupService
 				.getContactGroupByID(contactGroupID, this.team)
-				.pipe(first(), takeUntil(this.destroyed))
+				.pipe(first(), takeUntil(this.destroyed$))
 				.subscribe({
 					next: (contactGroup) => {
 						this.contactGroup = contactGroup;

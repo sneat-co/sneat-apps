@@ -53,7 +53,7 @@ export class NewHappeningPageComponent extends CalendarBasePage {
 		if (type && this.team && !this.happening) {
 			this.createHappeningContext(type);
 		}
-		route.queryParamMap.pipe(takeUntil(this.destroyed), first()).subscribe({
+		route.queryParamMap.pipe(takeUntil(this.destroyed$), first()).subscribe({
 			next: (queryParams) => {
 				console.log(
 					'NewHappeningPage.constructor() => queryParams:',

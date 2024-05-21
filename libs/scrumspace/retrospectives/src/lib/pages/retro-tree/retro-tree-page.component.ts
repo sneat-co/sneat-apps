@@ -141,7 +141,7 @@ export class RetroTreePageComponent extends TeamBaseComponent {
 			// TODO: Make this call after team decided
 			this.retrospectiveService
 				.watchRetro(this.team.id, this.meetingId)
-				.pipe(takeUntil(this.destroyed.asObservable())) // TODO(StackOverflow): Do we need .asObservable() here?
+				.pipe(takeUntil(this.destroyed$.asObservable())) // TODO(StackOverflow): Do we need .asObservable() here?
 				.subscribe({
 					next: (retrospective) => {
 						this.retrospective = retrospective;

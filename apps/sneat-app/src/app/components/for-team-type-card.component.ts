@@ -58,7 +58,7 @@ export class ForTeamTypeCardComponent
 
 	private watchUserRecord(): void {
 		this.subscription = this.userService.userState
-			.pipe(takeUntil(this.destroyed))
+			.pipe(takeUntil(this.destroyed$))
 			.subscribe({
 				next: (user) => {
 					this.teams = zipMapBriefsWithIDs(user.record?.teams)

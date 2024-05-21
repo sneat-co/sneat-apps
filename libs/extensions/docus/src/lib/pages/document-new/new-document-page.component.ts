@@ -115,7 +115,7 @@ export class NewDocumentPageComponent
 	private trackUrlMemberID(): void {
 		this.route.queryParams
 			.pipe(
-				takeUntil(this.destroyed),
+				takeUntil(this.destroyed$),
 				map((qp) => qp['contact'] as string),
 				distinctUntilChanged(),
 			)
@@ -127,7 +127,7 @@ export class NewDocumentPageComponent
 	private trackUrlDocType(): void {
 		this.route.queryParams
 			.pipe(
-				takeUntil(this.destroyed),
+				takeUntil(this.destroyed$),
 				map((qp) => qp['type'] as string),
 				distinctUntilChanged(),
 			)

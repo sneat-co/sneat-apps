@@ -30,10 +30,12 @@ export class SingleHappeningsListComponent
 		readonly filterService: CalendarFilterService,
 	) {
 		super('SingleHappeningsListComponent', errorLogger);
-		filterService.filter.pipe(takeUntil(this.destroyed)).subscribe((filter) => {
-			this.filter = filter;
-			this.applyFilter();
-		});
+		filterService.filter
+			.pipe(takeUntil(this.destroyed$))
+			.subscribe((filter) => {
+				this.filter = filter;
+				this.applyFilter();
+			});
 	}
 
 	protected readonly happeningID = (_: number, h: IHappeningContext) => h.id;

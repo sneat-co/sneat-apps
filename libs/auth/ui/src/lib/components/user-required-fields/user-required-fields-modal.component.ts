@@ -71,7 +71,7 @@ export class UserRequiredFieldsModalComponent extends SneatBaseComponent {
 		private readonly sneatUserService: SneatUserService,
 	) {
 		super('UserRequiredFieldsModalComponent', errorLogger);
-		this.sneatUserService.userState.pipe(takeUntil(this.destroyed)).subscribe({
+		this.sneatUserService.userState.pipe(takeUntil(this.destroyed$)).subscribe({
 			next: (userState) => (this.userState = userState),
 		});
 	}

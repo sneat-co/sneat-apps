@@ -37,7 +37,7 @@ export class NewLogistCompanyPageComponent
 		super('NewLogistCompanyPageComponent', route, teamParams);
 		const roles = contactRolesByType['company'];
 		this.contactTypes = roles;
-		route.queryParamMap.pipe(first(), takeUntil(this.destroyed)).subscribe({
+		route.queryParamMap.pipe(first(), takeUntil(this.destroyed$)).subscribe({
 			next: (value) => {
 				this.contactRole = (value.get('role') as ContactRole) || undefined;
 			},

@@ -63,13 +63,13 @@ export class CalendarWeekCardComponent
 			'odd',
 			current,
 			this.teamDaysProvider,
-			this.destroyed.asObservable(),
+			this.destroyed$,
 		);
 		this.evenSlide = swipeableWeek(
 			'even',
 			next,
 			this.teamDaysProvider,
-			this.destroyed.asObservable(),
+			this.destroyed$,
 		);
 	}
 

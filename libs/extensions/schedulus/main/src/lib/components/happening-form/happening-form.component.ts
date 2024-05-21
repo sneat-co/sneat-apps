@@ -296,7 +296,7 @@ export class HappeningFormComponent
 
 			this.happeningService
 				.createHappening({ teamID: team.id, happening })
-				.pipe(takeUntil(this.destroyed))
+				.pipe(takeUntil(this.destroyed$))
 				.subscribe({
 					next: () => {
 						console.log('new happening created');

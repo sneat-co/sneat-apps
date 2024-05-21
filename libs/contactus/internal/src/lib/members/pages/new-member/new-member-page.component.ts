@@ -48,12 +48,14 @@ export class NewMemberPageComponent extends TeamPageBaseComponent {
 		return url && this.defaultBackPage ? url + '/' + this.defaultBackPage : url;
 	}
 
-	constructor(
-		route: ActivatedRoute,
-		params: TeamComponentBaseParams,
-		contactusTeamContextService: ContactusTeamContextService,
-	) {
-		super('NewMemberPageComponent', route, params);
+	constructor(route: ActivatedRoute, params: ContactComponentBaseParams) {
+		super('NewMemberPageComponent', route, params.teamParams);
+		const contactusTeamContextService = new ContactusTeamContextService(
+			params.errorLogger,
+			this.destroyed$,
+			this.teamIDChanged$,
+			params.contactusTeamService,
+		);
 		this.trackFirstTeamTypeChanged();
 		route.queryParams.subscribe((params) => {
 			const group = params['group'];
@@ -78,11 +80,13 @@ export class NewMemberPageComponent extends TeamPageBaseComponent {
 			}
 		});
 
-		contactusTeamContextService.contactusTeamContext$.subscribe({
-			next: (contactusTeam) => {
-				this.contactusTeam = contactusTeam;
-			},
-		});
+		contactusTeamContextService.contactusTeamContext$
+			.pipe(this.takeUntilNeeded())
+			.subscribe({
+				next: (contactusTeam) => {
+					this.contactusTeam = contactusTeam;
+				},
+			});
 	}
 
 	protected contactusTeam?: IContactusTeamDtoAndID;
@@ -92,7 +96,7 @@ export class NewMemberPageComponent extends TeamPageBaseComponent {
 		try {
 			this.teamTypeChanged$
 				.pipe(
-					takeUntil(this.destroyed),
+					takeUntil(this.destroyed$),
 					filter((v) => !!v),
 					first(),
 				)

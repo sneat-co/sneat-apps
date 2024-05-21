@@ -121,7 +121,7 @@ export class SinglesTabComponent
 			return undefined;
 		}
 
-		return singles$.pipe(takeUntil(this.destroyed)).subscribe({
+		return singles$.pipe(takeUntil(this.destroyed$)).subscribe({
 			next: (singles) => {
 				processSingles(singles);
 				this.changeDetectorRef.detectChanges();

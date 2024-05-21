@@ -46,7 +46,7 @@ export class HappeningSlotParticipantsComponent
 	) {
 		super('HappeningSlotParticipantsComponent', errorLogger);
 		this.teamID$
-			.pipe(takeUntil(this.destroyed), distinctUntilChanged())
+			.pipe(takeUntil(this.destroyed$), distinctUntilChanged())
 			.subscribe((teamID) => {
 				this.onTeamIDChanged(teamID);
 			});
@@ -82,7 +82,7 @@ export class HappeningSlotParticipantsComponent
 		// console.log('HappeningSlotParticipantsComponent.onTeamIDChanged()', teamID);
 		this.contactusService
 			.watchContactBriefs(teamID)
-			.pipe(takeUntil(this.teamID$), takeUntil(this.destroyed))
+			.pipe(takeUntil(this.teamID$), takeUntil(this.destroyed$))
 			.subscribe({
 				next: (contacts) => {
 					// console.log(

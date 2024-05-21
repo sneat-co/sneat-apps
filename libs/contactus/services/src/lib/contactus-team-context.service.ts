@@ -15,7 +15,9 @@ export class ContactusTeamContextService {
 		private readonly teamID$: Observable<string | undefined>,
 		private readonly contactusTeamService: ContactusTeamService,
 	) {
-		destroyed$.subscribe(this.contactusTeamContext.complete);
+		// TypeError: this._throwIfClosed is not a function at Subject.js:54:18
+		// destroyed$.subscribe(this.contactusTeamContext.complete);
+
 		teamID$.pipe(takeUntil(destroyed$)).subscribe({
 			next: this.subscribeForContactusTeamChanges,
 		});

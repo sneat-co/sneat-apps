@@ -49,13 +49,15 @@ export class ContactsFilterComponent
 		super('ContactsFilterComponent', route, teamParams, contactusTeamService);
 		const contactusTeamContextService = new ContactusTeamContextService(
 			teamParams.errorLogger,
-			this.destroyed,
+			this.destroyed$,
 			this.teamIDChanged$,
 			contactusTeamService,
 		);
-		contactusTeamContextService.contactusTeamContext$.subscribe({
-			next: this.onContactusTeamChanged,
-		});
+		contactusTeamContextService.contactusTeamContext$
+			.pipe(this.takeUntilNeeded())
+			.subscribe({
+				next: this.onContactusTeamChanged,
+			});
 	}
 
 	private onContactusTeamChanged(

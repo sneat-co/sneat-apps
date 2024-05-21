@@ -96,7 +96,7 @@ export class HappeningSlotFormComponent
 		if (preselectedWd) {
 			this.weekdaysForm.controls[preselectedWd].setValue(true);
 		}
-		this.weekdaysForm.valueChanges.pipe(takeUntil(this.destroyed)).subscribe({
+		this.weekdaysForm.valueChanges.pipe(takeUntil(this.destroyed$)).subscribe({
 			next: () => (this.error = undefined),
 		});
 	}
