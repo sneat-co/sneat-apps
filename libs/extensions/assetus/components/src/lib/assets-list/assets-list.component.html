@@ -10,7 +10,8 @@
 		<ion-item
 			tappable
 			(click)="goAsset(asset)"
-			[class]="{ deleting: deletingIDs.includes(asset.id) }"
+			class="sneat-tiny-end-padding"
+			[class.deleting]="deletingIDs.includes(asset.id)"
 		>
 			<ion-label
 				[color]="deletingIDs.includes(asset.id) ? 'medium' : undefined"
