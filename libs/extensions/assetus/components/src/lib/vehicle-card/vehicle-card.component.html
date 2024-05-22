@@ -15,6 +15,19 @@
 </ion-card>
 
 <ion-card>
+	<ion-item>
+		<ion-input label="Registraion #" />
+		<ion-buttons>
+			<ion-button color="medium">Skip</ion-button>
+			<ion-button color="primary" fill="solid">
+				<ion-icon name="search-outline" />
+				<ion-label>Find</ion-label>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+</ion-card>
+
+<ion-card>
 	<sneat-make-model-card
 		*ngIf="vehicleAsset?.dto?.type && vehicleAsset?.dto?.countryID"
 		[assetType]="vehicleAsset?.dto?.type"
