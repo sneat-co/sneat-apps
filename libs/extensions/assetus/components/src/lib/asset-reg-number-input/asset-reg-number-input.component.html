@@ -1,12 +1,23 @@
 <ion-item>
 	<ion-input
 		label="Registration #"
-		[formControl]="regNumber"
+		[formControl]="regNumberControl"
 		[placeholder]="placeholder"
 		(keyup.enter)="submit()"
 	/>
-	<ion-buttons slot="end" *ngIf="showSave">
+	<ion-buttons slot="end">
+		<ion-button color="medium" *ngIf="!regNumberControl.value">Skip</ion-button>
 		<ion-button
+			color="primary"
+			fill="solid"
+			(click)="validate()"
+			[disabled]="!regNumberControl.value"
+		>
+			<ion-icon name="search-outline" />
+			<ion-label>Validate</ion-label>
+		</ion-button>
+		<ion-button
+			*ngIf="showSave"
 			[color]="isSaving ? 'primary' : undefined"
 			[disabled]="isSaving"
 			(click)="submit()"

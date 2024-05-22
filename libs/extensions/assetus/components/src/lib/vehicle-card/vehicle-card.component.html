@@ -7,29 +7,23 @@
 			(countryIDChange)="countryChanged($event)"
 		/>
 		<sneat-asset-reg-number
-			*ngIf="vehicleAsset?.brief?.countryID"
+			*ngIf="vehicleAsset?.dto?.countryID"
 			[team]="team"
-			[asset]="vehicleAsset"
+			[assetID]="vehicleAsset?.id"
+			[regNumber]="vehicleAsset?.dto?.regNumber"
+			[countyID]="vehicleAsset?.dto?.countryID"
+			[hideSaveButton]="true"
 		/>
 	</ion-list>
 </ion-card>
 
 <ion-card>
-	<ion-item>
-		<ion-input label="Registraion #" />
-		<ion-buttons>
-			<ion-button color="medium">Skip</ion-button>
-			<ion-button color="primary" fill="solid">
-				<ion-icon name="search-outline" />
-				<ion-label>Find</ion-label>
-			</ion-button>
-		</ion-buttons>
-	</ion-item>
-</ion-card>
-
-<ion-card>
 	<sneat-make-model-card
-		*ngIf="vehicleAsset?.dto?.type && vehicleAsset?.dto?.countryID"
+		*ngIf="
+			vehicleAsset?.dto?.type &&
+			vehicleAsset?.dto?.countryID &&
+			vehicleAsset?.dto?.regNumber !== undefined
+		"
 		[assetType]="vehicleAsset?.dto?.type"
 		[make]="vehicleAsset?.dto?.make"
 		[model]="vehicleAsset?.dto?.model"

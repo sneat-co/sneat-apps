@@ -90,6 +90,7 @@ export class VehicleCardComponent implements OnChanges {
 	}
 
 	countryChanged(value: string): void {
+		console.log('countryChanged', value, this.vehicleAsset?.dto);
 		if (this.vehicleAsset?.dto) {
 			this.vehicleAsset = {
 				...this.vehicleAsset,
