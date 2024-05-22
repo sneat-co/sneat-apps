@@ -33,8 +33,6 @@ export class AssetsListComponent implements OnChanges {
 		private readonly teamNavService: TeamNavService,
 	) {}
 
-	protected readonly id = (_: number, o: IIdAndBrief<IAssetBrief>) => o.id;
-
 	ngOnChanges(changes: SimpleChanges): void {
 		const { allAssets, assetType, filter } = this;
 		if (!allAssets) {
