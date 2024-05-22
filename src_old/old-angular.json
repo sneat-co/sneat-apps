@@ -2439,48 +2439,6 @@
 			},
 			"tags": []
 		},
-		"extensions-debtus": {
-			"projectType": "library",
-			"root": "libs/extensions/debtus",
-			"sourceRoot": "libs/extensions/debtus/src",
-			"prefix": "sneat",
-			"architect": {
-				"build": {
-					"builder": "@nrwl/angular:ng-packagr-lite",
-					"outputs": ["dist/libs/extensions/debtus"],
-					"options": {
-						"project": "libs/extensions/debtus/ng-package.json"
-					},
-					"configurations": {
-						"production": {
-							"tsConfig": "libs/extensions/debtus/tsconfig.lib.prod.json"
-						},
-						"development": {
-							"tsConfig": "libs/extensions/debtus/tsconfig.lib.json"
-						}
-					},
-					"defaultConfiguration": "production"
-				},
-				"test": {
-					"builder": "@nrwl/jest:jest",
-					"outputs": ["coverage/libs/extensions/debtus"],
-					"options": {
-						"jestConfig": "libs/extensions/debtus/jest.config.js",
-						"passWithNoTests": true
-					}
-				},
-				"lint": {
-					"builder": "@nrwl/linter:eslint",
-					"options": {
-						"lintFilePatterns": [
-							"libs/extensions/debtus/src/**/*.ts",
-							"libs/extensions/debtus/src/**/*.html"
-						]
-					}
-				}
-			},
-			"tags": []
-		},
 		"extensions-docus": {
 			"projectType": "library",
 			"root": "libs/extensions/docus",
