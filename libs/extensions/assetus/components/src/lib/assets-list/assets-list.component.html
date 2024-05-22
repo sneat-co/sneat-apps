@@ -12,7 +12,9 @@
 			(click)="goAsset(asset)"
 			[class]="{ deleting: deletingIDs.includes(asset.id) }"
 		>
-			<ion-label>
+			<ion-label
+				[color]="deletingIDs.includes(asset.id) ? 'medium' : undefined"
+			>
 				@if (asset.brief.make && asset.brief.model) {
 					{{ asset.brief.make }}/{{ asset.brief.model }}
 				}
@@ -40,7 +42,7 @@
 				<!--					<ion-icon name="add"></ion-icon>-->
 				<!--				</ion-button>-->
 				<ion-button
-					(click)="delete(asset)"
+					(click)="delete($event, asset)"
 					[disabled]="deletingIDs.includes(asset.id)"
 				>
 					<ion-icon name="close-outline" />

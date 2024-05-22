@@ -17,7 +17,7 @@ import { AssetService } from '../services';
 	templateUrl: './assets-list.component.html',
 })
 export class AssetsListComponent implements OnChanges {
-	assets?: IIdAndBrief<IAssetBrief>[];
+	protected assets?: IIdAndBrief<IAssetBrief>[];
 
 	@Input() allAssets?: IIdAndBrief<IAssetBrief>[];
 	@Input({ required: true }) team?: ITeamContext;
@@ -70,7 +70,7 @@ export class AssetsListComponent implements OnChanges {
 		);
 	}
 
-	public goAsset(asset: IIdAndBrief<IAssetBrief>): void {
+	protected goAsset(asset: IIdAndBrief<IAssetBrief>): void {
 		if (!asset) {
 			return;
 		}
@@ -101,7 +101,9 @@ export class AssetsListComponent implements OnChanges {
 			);
 	}
 
-	delete(asset: IIdAndBrief<IAssetBrief>): void {
+	protected delete(event: Event, asset: IIdAndBrief<IAssetBrief>): void {
+		event.stopPropagation();
+		event.preventDefault();
 		const { id, brief } = asset;
 		this.deletingIDs.push(id);
 		const deleteCompleted = () =>
