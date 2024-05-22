@@ -6,6 +6,7 @@ import {
 	OnChanges,
 	Output,
 	SimpleChanges,
+	ViewChild,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
@@ -14,7 +15,6 @@ import {
 	carMakes,
 	IAssetContext,
 	IAssetVehicleContext,
-	IAssetVehicleExtra,
 } from '@sneat/mod-assetus-core';
 import { ITeamContext } from '@sneat/team-models';
 import { AssetPossessionCardComponent } from '../asset-possesion-card/asset-possession-card.component';
@@ -73,6 +73,9 @@ export class VehicleCardComponent implements OnChanges {
 		this.yearBuildVal = v.toString();
 	}
 
+	@ViewChild(AssetRegNumberInputComponent, { static: false })
+	regNumberInputComponent?: AssetRegNumberInputComponent;
+
 	ngOnChanges(changes: SimpleChanges): void {
 		// if (changes['team'] && this.team?.dto?.countryID && this.vehicleAsset?.dto && !this.vehicleAsset.dto.countryID) {
 		// 	this.vehicleAsset = { ...this.vehicleAsset, dto: { ...this.vehicleAsset.dto, countryID: this.team.dto.countryID } };
@@ -85,16 +88,33 @@ export class VehicleCardComponent implements OnChanges {
 		}
 	}
 
-	editRegNumber(): void {
-		alert('Editing registration number is not implemented yet');
-	}
-
 	countryChanged(value: string): void {
 		console.log('countryChanged', value, this.vehicleAsset?.dto);
 		if (this.vehicleAsset?.dto) {
 			this.vehicleAsset = {
 				...this.vehicleAsset,
 				dto: { ...this.vehicleAsset.dto, countryID: value },
+			};
+			this.vehicleAssetChange.emit(this.vehicleAsset);
+			setTimeout(
+				() => this.regNumberInputComponent?.focusToRegNumberInput(),
+				100,
+			);
+		}
+	}
+
+	protected regNumberSkipped = false;
+
+	protected onRegNumberSkipped(): void {
+		this.regNumberSkipped = true;
+	}
+
+	protected onRegNumberChanged(value: string): void {
+		this.regNumber.setValue(value);
+		if (this.vehicleAsset?.dto) {
+			this.vehicleAsset = {
+				...this.vehicleAsset,
+				dto: { ...this.vehicleAsset.dto, regNumber: value },
 			};
 			this.vehicleAssetChange.emit(this.vehicleAsset);
 		}

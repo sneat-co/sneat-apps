@@ -4,8 +4,8 @@
 			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<ion-title *ngIf="commune; else titleNoCommune"
-			>Add dwelling &#64; {{ commune.title }}</ion-title
-		>
+			>Add dwelling &#64; {{ commune.title }}
+		</ion-title>
 		<ng-template #titleNoCommune>
 			<ion-title>Add dwelling</ion-title>
 		</ng-template>
@@ -19,7 +19,10 @@
 			<ion-input formControlName="title" />
 		</ion-item>
 	</form>
-	<sneat-country-selector [countryID]="country" />
+	<sneat-country-selector
+		[countryID]="country"
+		[defaultCountryID]="team?.dto?.countryID"
+	/>
 	<form [formGroup]="form">
 		<ion-item>
 			<ion-label>Eir code</ion-label>

@@ -22,6 +22,8 @@ import { countries, GeoRegion, ICountry, unknownCountry } from './countries';
 export class CountrySelectorComponent implements OnChanges {
 	@Input({ required: true }) countryID?: string;
 
+	@Input() defaultCountryID?: string;
+
 	@Input() readonly = false;
 	@Input() disabled = false;
 	@Input() label = 'search';
@@ -51,6 +53,14 @@ export class CountrySelectorComponent implements OnChanges {
 		}
 		if (changes['country'] && this.countryID === '--' && !this.canBeUnknown) {
 			this.countryID = undefined;
+		}
+		if (
+			changes['defaultCountryID'] &&
+			!this.countryID &&
+			this.defaultCountryID
+		) {
+			this.countryID = this.defaultCountryID;
+			this.countryIDChange.emit(this.countryID);
 		}
 	}
 

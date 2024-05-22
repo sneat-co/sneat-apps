@@ -7,9 +7,10 @@ import {
 	OnChanges,
 	Output,
 	SimpleChanges,
+	ViewChild,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, IonInput } from '@ionic/angular';
 import { AssetService, IUpdateAssetRequest } from '../services';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team-models';
@@ -30,6 +31,13 @@ export class AssetRegNumberInputComponent implements OnChanges {
 	@Input() placeholder = '';
 
 	@Output() regNumberChange = new EventEmitter<string>();
+
+	@Input() isSkipped = false;
+	@Output() isSkippedChange = new EventEmitter<boolean>();
+
+	@ViewChild(IonInput, { static: true }) regNumberInput!: IonInput;
+
+	protected validatedRegNumber?: string;
 
 	protected isSaving = false;
 	protected readonly regNumberControl = new FormControl('');
@@ -53,8 +61,22 @@ export class AssetRegNumberInputComponent implements OnChanges {
 		);
 	}
 
+	protected get isValidated(): boolean {
+		return this.validatedRegNumber === this.regNumberControl.value?.trim();
+	}
 	protected validate(): void {
 		console.log('validate');
+		this.validatedRegNumber = this.regNumberControl.value?.trim();
+		this.skipOrNext();
+	}
+
+	protected skipOrNext(): void {
+		console.log('skipOrNext');
+		const regNumber = this.regNumberControl.value?.trim();
+		if (regNumber) {
+			this.regNumberChange.emit(regNumber);
+		}
+		this.isSkippedChange.emit();
 	}
 
 	protected submit(): void {
@@ -86,5 +108,11 @@ export class AssetRegNumberInputComponent implements OnChanges {
 				this.errorLogger.logError(e, 'Failed to save registration number');
 			},
 		});
+	}
+
+	public focusToRegNumberInput(): void {
+		this.regNumberInput
+			.setFocus()
+			.catch((e) => console.error('Failed to focus to reg number input', e));
 	}
 }

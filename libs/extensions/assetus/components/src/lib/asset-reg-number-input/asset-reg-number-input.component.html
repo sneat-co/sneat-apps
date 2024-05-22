@@ -6,12 +6,19 @@
 		(keyup.enter)="submit()"
 	/>
 	<ion-buttons slot="end">
-		<ion-button color="medium" *ngIf="!regNumberControl.value">Skip</ion-button>
+		<ion-button color="medium" *ngIf="!isSkipped" (click)="skipOrNext()">
+			@if (regNumberControl.value) {
+				Next
+			} @else {
+				Skip
+			}
+		</ion-button>
 		<ion-button
-			color="primary"
 			fill="solid"
-			(click)="validate()"
+			color="primary"
+			*ngIf="!isValidated"
 			[disabled]="!regNumberControl.value"
+			(click)="validate()"
 		>
 			<ion-icon name="search-outline" />
 			<ion-label>Validate</ion-label>

@@ -3,6 +3,7 @@
 		<sneat-country-selector
 			[countryID]="vehicleAsset?.brief?.countryID"
 			[readonly]="!!vehicleAsset?.brief?.countryID"
+			[defaultCountryID]="team?.dto?.countryID"
 			label="Country of registration"
 			(countryIDChange)="countryChanged($event)"
 		/>
@@ -13,6 +14,9 @@
 			[regNumber]="vehicleAsset?.dto?.regNumber"
 			[countyID]="vehicleAsset?.dto?.countryID"
 			[hideSaveButton]="true"
+			[isSkipped]="regNumberSkipped"
+			(isSkippedChange)="onRegNumberSkipped()"
+			(regNumberChange)="onRegNumberChanged($event)"
 		/>
 	</ion-list>
 </ion-card>
@@ -22,7 +26,7 @@
 		*ngIf="
 			vehicleAsset?.dto?.type &&
 			vehicleAsset?.dto?.countryID &&
-			vehicleAsset?.dto?.regNumber !== undefined
+			(regNumberSkipped || vehicleAsset?.dto?.regNumber !== undefined)
 		"
 		[assetType]="vehicleAsset?.dto?.type"
 		[make]="vehicleAsset?.dto?.make"
