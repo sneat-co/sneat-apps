@@ -1,4 +1,3 @@
-//
 import { ICommuneDto } from '@sneat/dto';
 import {
 	IListBrief,
@@ -6,7 +5,6 @@ import {
 	IListItemBase,
 	IListItemBrief,
 	IListItemDto,
-	ListType,
 } from '../dto';
 import { IListContext } from '../contexts';
 import { ITeamContext, ITeamRequest } from '@sneat/team-models';
