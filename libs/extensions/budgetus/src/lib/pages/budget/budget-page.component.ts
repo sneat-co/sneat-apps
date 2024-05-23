@@ -1,12 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
-import { object } from '@angular/fire/database';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { Member } from '@sneat/contactus-core';
 import { ContactusServicesModule } from '@sneat/contactus-services';
-import { Period } from '@sneat/dto';
 import {
 	CalendariumServicesModule,
 	CalendariumTeamService,

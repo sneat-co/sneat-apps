@@ -1,11 +1,7 @@
 import { ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IIdAndBrief, IIdAndOptionalDto, TopMenuService } from '@sneat/core';
-import {
-	IContactusTeamDtoAndID,
-	IContactBrief,
-	IContactusTeamDto,
-} from '@sneat/contactus-core';
+import { IIdAndBrief, TopMenuService } from '@sneat/core';
+import { IContactusTeamDtoAndID, IContactBrief } from '@sneat/contactus-core';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,

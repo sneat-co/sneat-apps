@@ -14,7 +14,6 @@ import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import { IAmount, RepeatPeriod, ShowBy } from '@sneat/mod-schedulus-core';
 import {
-	AmountsByCurrency,
 	ILiabilityBase,
 	IPeriodLiabilities,
 	LiabilitiesByPeriod,
