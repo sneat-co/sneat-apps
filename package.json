@@ -74,6 +74,8 @@
 		"@angular/cli": "18.0.0",
 		"@angular/compiler-cli": "18.0.0",
 		"@angular/language-service": "18.0.0",
+		"@eslint/eslintrc": "^2.1.1",
+		"@eslint/js": "~8.57.0",
 		"@nx/cypress": "19.0.6",
 		"@nx/eslint": "19.0.6",
 		"@nx/eslint-plugin": "19.0.6",
