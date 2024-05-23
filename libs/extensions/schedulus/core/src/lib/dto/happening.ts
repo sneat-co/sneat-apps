@@ -1,4 +1,4 @@
-import { IPrice, IWithRelatedOnly, IWithTeamIDs } from '@sneat/dto';
+import { IWithRelatedOnly, IWithTeamIDs } from '@sneat/dto';
 import { ActivityType, RepeatPeriod, WeekdayCode2 } from './happening-types';
 
 export interface ISlotParticipant {

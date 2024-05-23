@@ -13,7 +13,7 @@ import { ContactusServicesModule } from '@sneat/contactus-services';
 import { SharedWithModule } from '@sneat/contactus-shared';
 import { ListusCoreServicesModule } from '../../services';
 import { TeamComponentBaseParams } from '@sneat/team-components';
-import { IListInfo, IListItemBrief, ListType } from '../../dto';
+import { IListInfo, IListItemBrief } from '../../dto';
 import { IListContext } from '../../contexts';
 import { takeUntil } from 'rxjs';
 import { ListusComponentBaseParams } from '../../listus-component-base-params';

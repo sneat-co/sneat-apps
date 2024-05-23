@@ -8,7 +8,6 @@ import {
 	NgModulePreloaderService,
 } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ContactService } from '@sneat/contactus-services';
 import { TeamNavService, TeamService } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 

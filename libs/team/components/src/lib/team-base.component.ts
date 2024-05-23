@@ -1,11 +1,10 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
 import { ILogger, TeamType } from '@sneat/core';
 import { equalTeamBriefs, ITeamBrief, ITeamDto } from '@sneat/dto';
 import { ILogErrorOptions } from '@sneat/logging';
-import { ContactService } from '@sneat/contactus-services';
 import { ITeamContext } from '@sneat/team-models';
 import {
 	TeamService,
@@ -13,7 +12,6 @@ import {
 } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { SneatBaseComponent } from '@sneat/ui';
-import { alert } from 'ionicons/icons';
 import {
 	distinctUntilChanged,
 	MonoTypeOperatorFunction,

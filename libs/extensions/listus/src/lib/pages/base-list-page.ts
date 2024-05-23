@@ -1,12 +1,10 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { INavContext } from '@sneat/core';
 import { emptyTimestamp } from '@sneat/dto';
 import { IListBrief, IListDto, IMovie, ListType } from '../dto';
 import { IListContext } from '../contexts';
 import { TeamItemPageBaseComponent } from '@sneat/team-components';
-import { ITeamContext } from '@sneat/team-models';
-import { NEVER, Observable, Subscription } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ListusComponentBaseParams } from '../listus-component-base-params';
 
 export abstract class BaseListPage extends TeamItemPageBaseComponent<
