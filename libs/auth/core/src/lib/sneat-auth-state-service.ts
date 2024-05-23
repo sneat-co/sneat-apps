@@ -1,4 +1,3 @@
-import { TeamMemberTypeEnum } from '@sneat/auth-models';
 import {
 	AnalyticsService,
 	EnumAsUnionOfKeys,
@@ -12,14 +11,17 @@ import {
 	Auth,
 	AuthProvider,
 	UserCredential,
-	FacebookAuthProvider,
-	GoogleAuthProvider,
-	GithubAuthProvider,
-	OAuthProvider,
 	UserInfo,
 	signInWithEmailLink,
 	signInWithPopup,
 } from '@angular/fire/auth';
+
+import {
+	GoogleAuthProvider,
+	OAuthProvider,
+	GithubAuthProvider,
+	FacebookAuthProvider,
+} from 'firebase/auth';
 
 // TODO: fix & remove this eslint hint @nrwl/nx/enforce-module-boundaries
 // eslint-disable-next-line @nx/enforce-module-boundaries

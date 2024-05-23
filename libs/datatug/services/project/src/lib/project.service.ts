@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import {
-	AngularFirestore,
-	AngularFirestoreCollection,
-} from '@angular/fire/compat/firestore';
+// import {
+// 	AngularFirestore,
+// 	AngularFirestoreCollection,
+// } from '@angular/fire/compat/firestore';
 import { getStoreUrl, SneatApiServiceFactory } from '@sneat/api';
 import { PrivateTokenStoreService } from '@sneat/auth-core';
 import {
@@ -36,18 +36,19 @@ export class ProjectService {
 		string,
 		ReplaySubject<IProjectSummary | undefined>
 	> = {};
-	private readonly projectsCollection: AngularFirestoreCollection;
+	// private readonly projectsCollection: AngularFirestoreCollection;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly db: AngularFirestore,
+		// db: AngularFirestore,
 		private readonly http: HttpClient,
 		private readonly privateTokenStoreService: PrivateTokenStoreService,
 		private readonly sneatApiServiceFactory: SneatApiServiceFactory,
 		private readonly datatugStoreServiceFactory: DatatugStoreServiceFactory,
 	) {
-		this.projectsCollection =
-			db.collection<IProjectSummary>('datatug_projects');
+		throw new Error('Not implemented');
+		// this.projectsCollection =
+		// 	db.collection<IProjectSummary>('datatug_projects');
 	}
 
 	public watchProjectSummary(
@@ -101,18 +102,19 @@ export class ProjectService {
 		id: string,
 	): Observable<IProjectSummary | undefined> {
 		console.log(`ProjectService.firestoreChanges(${id})`);
-		return this.projectsCollection
-			.doc(id)
-			.snapshotChanges()
-			.pipe(
-				tap((v) => console.log(`project[${id}] snapshotChange:`, v)),
-				map((value) =>
-					value.type === 'removed'
-						? undefined
-						: (value.payload.data() as IProjectSummary),
-				),
-				shareReplay(1),
-			);
+		return throwError(() => 'Not implemented');
+		// return this.projectsCollection
+		// 	.doc(id)
+		// 	.snapshotChanges()
+		// 	.pipe(
+		// 		tap((v) => console.log(`project[${id}] snapshotChange:`, v)),
+		// 		map((value) =>
+		// 			value.type === 'removed'
+		// 				? undefined
+		// 				: (value.payload.data() as IProjectSummary),
+		// 		),
+		// 		shareReplay(1),
+		// 	);
 	}
 
 	public getFull(projectRef: IProjectRef): Observable<IProjectFull> {
