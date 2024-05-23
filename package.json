@@ -2,7 +2,7 @@
 	"name": "sneat",
 	"version": "0.0.0",
 	"license": "MIT",
-	"packageManager": "^pnpm@9.1.2",
+	"packageManager": "pnpm@9.1.2",
 	"scripts": {
 		"nx": "nx",
 		"ng": "nx",
