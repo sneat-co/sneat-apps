@@ -138,6 +138,12 @@ importers:
       '@angular/language-service':
         specifier: 18.0.0
         version: 18.0.0
+      '@eslint/eslintrc':
+        specifier: ^2.1.1
+        version: 2.1.4
+      '@eslint/js':
+        specifier: ~8.57.0
+        version: 8.57.0
       '@nx/cypress':
         specifier: 19.0.6
         version: 19.0.6(@babel/traverse@7.24.5)(@swc-node/register@1.9.1(@swc/core@1.5.7(@swc/helpers@0.5.11))(@swc/types@0.1.7)(typescript@5.4.5))(@swc/core@1.5.7(@swc/helpers@0.5.11))(@types/node@20.12.12)(cypress@13.10.0)(nx@19.0.6(@swc-node/register@1.9.1(@swc/core@1.5.7(@swc/helpers@0.5.11))(@swc/types@0.1.7)(typescript@5.4.5))(@swc/core@1.5.7(@swc/helpers@0.5.11)))(typescript@5.4.5)
