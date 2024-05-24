@@ -69,11 +69,11 @@ importers:
         specifier: 19.0.6
         version: 19.0.6(@angular-devkit/build-angular@18.0.1(@angular/compiler-cli@18.0.0(@angular/compiler@18.0.0(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6)))(typescript@5.4.5))(@swc/core@1.5.7(@swc/helpers@0.5.11))(@types/node@20.12.12)(chokidar@3.6.0)(jest-environment-jsdom@29.7.0)(jest@29.7.0(@types/node@20.12.12)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.5.7(@swc/helpers@0.5.11))(@types/node@20.12.12)(typescript@5.4.5)))(ng-packagr@17.3.0(@angular/compiler-cli@18.0.0(@angular/compiler@18.0.0(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6)))(typescript@5.4.5))(tslib@2.6.2)(typescript@5.4.5))(stylus@0.59.0)(typescript@5.4.5))(@angular-devkit/core@18.0.1(chokidar@3.6.0))(@angular-devkit/schematics@18.0.1(chokidar@3.6.0))(@babel/traverse@7.24.5)(@schematics/angular@18.0.1(chokidar@3.6.0))(@swc-node/register@1.9.1(@swc/core@1.5.7(@swc/helpers@0.5.11))(@swc/types@0.1.7)(typescript@5.4.5))(@swc/core@1.5.7(@swc/helpers@0.5.11))(@types/node@20.12.12)(esbuild@0.19.12)(eslint@8.57.0)(nx@19.0.6(@swc-node/register@1.9.1(@swc/core@1.5.7(@swc/helpers@0.5.11))(@swc/types@0.1.7)(typescript@5.4.5))(@swc/core@1.5.7(@swc/helpers@0.5.11)))(rxjs@7.8.1)(typescript@5.4.5)
       '@sentry/angular':
-        specifier: 8.3.0
-        version: 8.3.0(@angular/common@18.0.0(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1))(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(@angular/router@18.0.0(@angular/common@18.0.0(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1))(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(@angular/platform-browser@18.0.0(@angular/animations@18.0.0(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6)))(@angular/common@18.0.0(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1))(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6)))(rxjs@7.8.1))(rxjs@7.8.1)
+        specifier: 8.4.0
+        version: 8.4.0(@angular/common@18.0.0(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1))(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(@angular/router@18.0.0(@angular/common@18.0.0(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1))(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(@angular/platform-browser@18.0.0(@angular/animations@18.0.0(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6)))(@angular/common@18.0.0(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1))(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6)))(rxjs@7.8.1))(rxjs@7.8.1)
       '@sentry/browser':
-        specifier: 8.3.0
-        version: 8.3.0
+        specifier: 8.4.0
+        version: 8.4.0
       '@sneat/random':
         specifier: 0.0.4
         version: 0.0.4(@angular/common@18.0.0(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1))(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))
@@ -241,8 +241,8 @@ importers:
         specifier: 16.1.0
         version: 16.1.0(postcss@8.4.38)
       postcss-preset-env:
-        specifier: 9.5.13
-        version: 9.5.13(postcss@8.4.38)
+        specifier: 9.5.14
+        version: 9.5.14(postcss@8.4.38)
       postcss-url:
         specifier: 10.1.3
         version: 10.1.3(postcss@8.4.38)
@@ -2649,45 +2649,45 @@ packages:
     resolution: {integrity: sha512-ho9QOUiS4wqKRzbKFWUGU8iecfcdrjnrjBXbzJEQ6GNIOz7iDniLMNXYRP7P+xanWQGLPDIOVR2lGaryPdTXDw==}
     engines: {node: ^18.19.1 || ^20.11.1 || >=22.0.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
 
-  '@sentry-internal/browser-utils@8.3.0':
-    resolution: {integrity: sha512-wsd62oBaUckCa8JcPkNvtoFm+Jb1neb0ydZ15fCjLG++BcLVfrhUak7a3CzNrtUbzP/yk+b5rtIv5lWpaScrbw==}
+  '@sentry-internal/browser-utils@8.4.0':
+    resolution: {integrity: sha512-Mfm3TK3KUlghhuKM3rjTeD4D5kAiB7iVNFoaDJIJBVKa67M9BvlNTnNJMDi7+9rV4RuLQYxXn0p5HEZJFYp3Zw==}
     engines: {node: '>=14.18'}
 
-  '@sentry-internal/feedback@8.3.0':
-    resolution: {integrity: sha512-sY9t0fEZ2VuQDptiHVi7K01FG+P5FaPAXzGqq8q/+JH5nZ1A8eJSYzPf0Ck0KlfDE0MFUTV/7CDaLYblox0e0A==}
+  '@sentry-internal/feedback@8.4.0':
+    resolution: {integrity: sha512-1/WshI2X9seZAQXrOiv6/LU08fbSSvJU0b1ZWMhn+onb/FWPomsL/UN0WufCYA65S5JZGdaWC8fUcJxWC8PATQ==}
     engines: {node: '>=14.18'}
 
-  '@sentry-internal/replay-canvas@8.3.0':
-    resolution: {integrity: sha512-ZCbh2iVmFKi4q7BgXBpAGIPzKibIn8EYnjUvjH7SmAp2XEMO4qknxpfxJ8E+r7j7buKFZubCQp13ZX2mIOMnVg==}
+  '@sentry-internal/replay-canvas@8.4.0':
+    resolution: {integrity: sha512-g+U4IPQdODCg7fQQVNvH6ix05Tl1mOQXXRexgtp+tXdys4sHQSBUYraJYZy+mY3OGnLRgKFqELM0fnffJSpuyQ==}
     engines: {node: '>=14.18'}
 
-  '@sentry-internal/replay@8.3.0':
-    resolution: {integrity: sha512-PD/cTGB0vSMXbi0PlY1f/fGZhCnHIrBKPzMQR4l009lPYGKpp42ei0ZZXHANtIvKjXsQcKbJS2BP//HSVPJ34Q==}
+  '@sentry-internal/replay@8.4.0':
+    resolution: {integrity: sha512-RSzQwCF/QTi5/5XAuj0VJImAhu4MheeHYvAbr/PuMSF4o1j89gBA7e3boA4u8633IqUeu5w3S5sb6jVrKaVifg==}
     engines: {node: '>=14.18'}
 
-  '@sentry/angular@8.3.0':
-    resolution: {integrity: sha512-StJvyl8HSXi2z7Wo2iN1U/M691xB8Ws2hC5b6TemwnP+uLW/jyzh9lpcyS6xAXAcbZLc0ZRW8fmGsTaF5Fsulg==}
+  '@sentry/angular@8.4.0':
+    resolution: {integrity: sha512-kA0BfcBzrp7CNDxV7hoaf8rDs2zFkIG+XF1Ah5l3dbiO/L1gFVR7pTQ8n+6KsGEFutF3kGqAd4oiKALafCQ46Q==}
     engines: {node: '>=14.18'}
     peerDependencies:
-      '@angular/common': '>= 14.x <= 17.x'
-      '@angular/core': '>= 14.x <= 17.x'
-      '@angular/router': '>= 14.x <= 17.x'
+      '@angular/common': '>= 14.x <= 18.x'
+      '@angular/core': '>= 14.x <= 18.x'
+      '@angular/router': '>= 14.x <= 18.x'
       rxjs: ^6.5.5 || ^7.x
 
-  '@sentry/browser@8.3.0':
-    resolution: {integrity: sha512-086BOWKqfhkOjvix4jt/58Kmwxm5plJLzjx/PsLbLjyqQiKYWE0KIjIBwbQiCpWcIHyiAf6tyQLcSOwcwgCOpQ==}
+  '@sentry/browser@8.4.0':
+    resolution: {integrity: sha512-hmXeIZBdN0A6yCuoMTcigGxLl42nbeb205fXtouwE7Maa0qM2HM+Ijq0sHzbhxR3zU0JXDtcJh1k6wtJOREJ3g==}
     engines: {node: '>=14.18'}
 
-  '@sentry/core@8.3.0':
-    resolution: {integrity: sha512-X7r0WujE7DILtgA5zt4hmHMBTF3xbjJB7Dgrw1Hv5C7WG5qkNqhDPpnRX7WswtHcLSgVPY2GRTQ5Iid7i33zEQ==}
+  '@sentry/core@8.4.0':
+    resolution: {integrity: sha512-0eACPlJvKloFIlcT1c/vjGnvqxLxpGyGuSsU7uonrkmBqIRwLYXWtR4PoHapysKtjPVoHAn9au50ut6ymC2V8Q==}
     engines: {node: '>=14.18'}
 
-  '@sentry/types@8.3.0':
-    resolution: {integrity: sha512-DbwRTdx5xn8c2EhElD1UneDbcfqz220INPJYiATGJ9pR+cV5kGohyxI6lJxebPdPhPLEFQqYdLXGA6Cjm/uC6A==}
+  '@sentry/types@8.4.0':
+    resolution: {integrity: sha512-mHUaaYEQCNukzYsTLp4rP2NNO17vUf+oSGS6qmhrsGqmGNICKw2CIwJlPPGeAkq9Y4tiUOye2m5OT1xsOtxLIw==}
     engines: {node: '>=14.18'}
 
-  '@sentry/utils@8.3.0':
-    resolution: {integrity: sha512-WFaUZy0OWsF6Mrjenxj4N8zGzA6+pdH2lCV60/IB+V5PvGPgl40MUyjN6aLA/E9BRpqwLNQRMroZjln+J/3aiA==}
+  '@sentry/utils@8.4.0':
+    resolution: {integrity: sha512-oDF0RVWW0AyEnsP1x4McHUvQSAxJgx3G6wM9Sb4wc1F8rwsHnCtGHc+WRZ5Gd2AXC5EGkfbg5919+1ku/L4Dww==}
     engines: {node: '>=14.18'}
 
   '@sigstore/bundle@2.3.1':
@@ -6325,8 +6325,8 @@ packages:
     peerDependencies:
       postcss: ^8.1.0
 
-  postcss-nesting@12.1.4:
-    resolution: {integrity: sha512-CcHOq94K137E+U4Ommu7pexcpp0Tjm24zl4UcqWs1oSLAr5cLI+jLrqQ5h/bdjhMX6cMbzunyustVNnvrzF8Zg==}
+  postcss-nesting@12.1.5:
+    resolution: {integrity: sha512-N1NgI1PDCiAGWPTYrwqm8wpjv0bgDmkYHH72pNsqTCv9CObxjxftdYu6AKtGN+pnJa7FQjMm3v4sp8QJbFsYdQ==}
     engines: {node: ^14 || ^16 || >=18}
     peerDependencies:
       postcss: ^8.4
@@ -6414,8 +6414,8 @@ packages:
     peerDependencies:
       postcss: ^8.4
 
-  postcss-preset-env@9.5.13:
-    resolution: {integrity: sha512-YQMwWu6MAc4Envrjf/mW2BTrb5J8WkrJ4dV2VostZVDhrmEPpYREOyhmvtlFLDxK1/AmTDY8aXjZViMC1qKu/w==}
+  postcss-preset-env@9.5.14:
+    resolution: {integrity: sha512-gTMi+3kENN/mN+K59aR+vEOjlkujTmmXJcM9rnAqGh9Y/euQ/ypdp9rd8mO1eoIjAD8vNS15+xbkBxoi+65BqQ==}
     engines: {node: ^14 || ^16 || >=18}
     peerDependencies:
       postcss: ^8.4
@@ -6451,6 +6451,10 @@ packages:
 
   postcss-selector-parser@6.0.16:
     resolution: {integrity: sha512-A0RVJrX+IUkVZbW3ClroRWurercFhieevHB38sr2+l9eUClMqome3LmEmnhlNy+5Mr2EYN6B2Kaw9wYdd+VHiw==}
+    engines: {node: '>=4'}
+
+  postcss-selector-parser@6.1.0:
+    resolution: {integrity: sha512-UMz42UD0UY0EApS0ZL9o1XnLhSTtvvvLe5Dc2H2O56fvRZi+KulDyf5ctDhhtYJBGKStV2FL1fy6253cmLgqVQ==}
     engines: {node: '>=4'}
 
   postcss-svgo@6.0.3:
@@ -9179,13 +9183,17 @@ snapshots:
     dependencies:
       postcss: 8.4.38
 
-  '@csstools/selector-resolve-nested@1.1.0(postcss-selector-parser@6.0.16)':
+  '@csstools/selector-resolve-nested@1.1.0(postcss-selector-parser@6.1.0)':
     dependencies:
-      postcss-selector-parser: 6.0.16
+      postcss-selector-parser: 6.1.0
 
   '@csstools/selector-specificity@3.1.1(postcss-selector-parser@6.0.16)':
     dependencies:
       postcss-selector-parser: 6.0.16
+
+  '@csstools/selector-specificity@3.1.1(postcss-selector-parser@6.1.0)':
+    dependencies:
+      postcss-selector-parser: 6.1.0
 
   '@csstools/utilities@1.0.0(postcss@8.4.38)':
     dependencies:
@@ -10855,64 +10863,64 @@ snapshots:
     transitivePeerDependencies:
       - chokidar
 
-  '@sentry-internal/browser-utils@8.3.0':
+  '@sentry-internal/browser-utils@8.4.0':
     dependencies:
-      '@sentry/core': 8.3.0
-      '@sentry/types': 8.3.0
-      '@sentry/utils': 8.3.0
+      '@sentry/core': 8.4.0
+      '@sentry/types': 8.4.0
+      '@sentry/utils': 8.4.0
 
-  '@sentry-internal/feedback@8.3.0':
+  '@sentry-internal/feedback@8.4.0':
     dependencies:
-      '@sentry/core': 8.3.0
-      '@sentry/types': 8.3.0
-      '@sentry/utils': 8.3.0
+      '@sentry/core': 8.4.0
+      '@sentry/types': 8.4.0
+      '@sentry/utils': 8.4.0
 
-  '@sentry-internal/replay-canvas@8.3.0':
+  '@sentry-internal/replay-canvas@8.4.0':
     dependencies:
-      '@sentry-internal/replay': 8.3.0
-      '@sentry/core': 8.3.0
-      '@sentry/types': 8.3.0
-      '@sentry/utils': 8.3.0
+      '@sentry-internal/replay': 8.4.0
+      '@sentry/core': 8.4.0
+      '@sentry/types': 8.4.0
+      '@sentry/utils': 8.4.0
 
-  '@sentry-internal/replay@8.3.0':
+  '@sentry-internal/replay@8.4.0':
     dependencies:
-      '@sentry-internal/browser-utils': 8.3.0
-      '@sentry/core': 8.3.0
-      '@sentry/types': 8.3.0
-      '@sentry/utils': 8.3.0
+      '@sentry-internal/browser-utils': 8.4.0
+      '@sentry/core': 8.4.0
+      '@sentry/types': 8.4.0
+      '@sentry/utils': 8.4.0
 
-  '@sentry/angular@8.3.0(@angular/common@18.0.0(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1))(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(@angular/router@18.0.0(@angular/common@18.0.0(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1))(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(@angular/platform-browser@18.0.0(@angular/animations@18.0.0(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6)))(@angular/common@18.0.0(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1))(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6)))(rxjs@7.8.1))(rxjs@7.8.1)':
+  '@sentry/angular@8.4.0(@angular/common@18.0.0(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1))(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(@angular/router@18.0.0(@angular/common@18.0.0(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1))(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(@angular/platform-browser@18.0.0(@angular/animations@18.0.0(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6)))(@angular/common@18.0.0(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1))(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6)))(rxjs@7.8.1))(rxjs@7.8.1)':
     dependencies:
       '@angular/common': 18.0.0(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1)
       '@angular/core': 18.0.0(rxjs@7.8.1)(zone.js@0.14.6)
       '@angular/router': 18.0.0(@angular/common@18.0.0(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1))(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(@angular/platform-browser@18.0.0(@angular/animations@18.0.0(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6)))(@angular/common@18.0.0(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1))(@angular/core@18.0.0(rxjs@7.8.1)(zone.js@0.14.6)))(rxjs@7.8.1)
-      '@sentry/browser': 8.3.0
-      '@sentry/core': 8.3.0
-      '@sentry/types': 8.3.0
-      '@sentry/utils': 8.3.0
+      '@sentry/browser': 8.4.0
+      '@sentry/core': 8.4.0
+      '@sentry/types': 8.4.0
+      '@sentry/utils': 8.4.0
       rxjs: 7.8.1
       tslib: 2.6.2
 
-  '@sentry/browser@8.3.0':
+  '@sentry/browser@8.4.0':
     dependencies:
-      '@sentry-internal/browser-utils': 8.3.0
-      '@sentry-internal/feedback': 8.3.0
-      '@sentry-internal/replay': 8.3.0
-      '@sentry-internal/replay-canvas': 8.3.0
-      '@sentry/core': 8.3.0
-      '@sentry/types': 8.3.0
-      '@sentry/utils': 8.3.0
+      '@sentry-internal/browser-utils': 8.4.0
+      '@sentry-internal/feedback': 8.4.0
+      '@sentry-internal/replay': 8.4.0
+      '@sentry-internal/replay-canvas': 8.4.0
+      '@sentry/core': 8.4.0
+      '@sentry/types': 8.4.0
+      '@sentry/utils': 8.4.0
 
-  '@sentry/core@8.3.0':
+  '@sentry/core@8.4.0':
     dependencies:
-      '@sentry/types': 8.3.0
-      '@sentry/utils': 8.3.0
+      '@sentry/types': 8.4.0
+      '@sentry/utils': 8.4.0
 
-  '@sentry/types@8.3.0': {}
+  '@sentry/types@8.4.0': {}
 
-  '@sentry/utils@8.3.0':
+  '@sentry/utils@8.4.0':
     dependencies:
-      '@sentry/types': 8.3.0
+      '@sentry/types': 8.4.0
 
   '@sigstore/bundle@2.3.1':
     dependencies:
@@ -15224,12 +15232,12 @@ snapshots:
       icss-utils: 5.1.0(postcss@8.4.38)
       postcss: 8.4.38
 
-  postcss-nesting@12.1.4(postcss@8.4.38):
+  postcss-nesting@12.1.5(postcss@8.4.38):
     dependencies:
-      '@csstools/selector-resolve-nested': 1.1.0(postcss-selector-parser@6.0.16)
-      '@csstools/selector-specificity': 3.1.1(postcss-selector-parser@6.0.16)
+      '@csstools/selector-resolve-nested': 1.1.0(postcss-selector-parser@6.1.0)
+      '@csstools/selector-specificity': 3.1.1(postcss-selector-parser@6.1.0)
       postcss: 8.4.38
-      postcss-selector-parser: 6.0.16
+      postcss-selector-parser: 6.1.0
 
   postcss-normalize-charset@6.0.2(postcss@8.4.38):
     dependencies:
@@ -15300,7 +15308,7 @@ snapshots:
       postcss: 8.4.38
       postcss-value-parser: 4.2.0
 
-  postcss-preset-env@9.5.13(postcss@8.4.38):
+  postcss-preset-env@9.5.14(postcss@8.4.38):
     dependencies:
       '@csstools/postcss-cascade-layers': 4.0.6(postcss@8.4.38)
       '@csstools/postcss-color-function': 3.0.16(postcss@8.4.38)
@@ -15355,7 +15363,7 @@ snapshots:
       postcss-image-set-function: 6.0.3(postcss@8.4.38)
       postcss-lab-function: 6.0.16(postcss@8.4.38)
       postcss-logical: 7.0.1(postcss@8.4.38)
-      postcss-nesting: 12.1.4(postcss@8.4.38)
+      postcss-nesting: 12.1.5(postcss@8.4.38)
       postcss-opacity-percentage: 2.0.0(postcss@8.4.38)
       postcss-overflow-shorthand: 5.0.1(postcss@8.4.38)
       postcss-page-break: 3.0.4(postcss@8.4.38)
@@ -15390,6 +15398,11 @@ snapshots:
       postcss-selector-parser: 6.0.16
 
   postcss-selector-parser@6.0.16:
+    dependencies:
+      cssesc: 3.0.0
+      util-deprecate: 1.0.2
+
+  postcss-selector-parser@6.1.0:
     dependencies:
       cssesc: 3.0.0
       util-deprecate: 1.0.2
