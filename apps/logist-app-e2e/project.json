@@ -3,6 +3,7 @@
 	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "apps/logist-app-e2e/src",
 	"projectType": "application",
+	"implicitDependencies": ["logist-app"],
 	"targets": {
 		"e2e": {
 			"executor": "@nx/cypress:cypress",
@@ -20,6 +21,5 @@
 			"executor": "@nx/eslint:lint",
 			"outputs": ["{options.outputFile}"]
 		}
-	},
-	"implicitDependencies": ["logist-app"]
+	}
 }
