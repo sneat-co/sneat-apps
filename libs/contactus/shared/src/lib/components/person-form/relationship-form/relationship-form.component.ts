@@ -59,7 +59,7 @@ export class RelationshipFormComponent
 
 	@Input({ required: true }) public relatedItems?: IRelatedItemsByModule;
 
-	protected relatedAsRelationships?: readonly IRelationshipWithID[];
+	protected rolesOfItem?: readonly IRelationshipWithID[];
 
 	@Output() readonly relatedAsChange = new EventEmitter<IRelationshipRoles>();
 
@@ -110,20 +110,20 @@ export class RelationshipFormComponent
 				this.relatedTo.itemID,
 			);
 			if (relatedItem) {
-				const relatedAsRelationships: IRelationshipWithID[] = [];
-				Object.entries(relatedItem.rolesToItem || {}).forEach(([id, rel]) => {
-					const relatedAsItem: IRelationshipWithID = {
+				const rolesOfItem: IRelationshipWithID[] = [];
+				Object.entries(relatedItem.rolesOfItem || {}).forEach(([id, rel]) => {
+					const roleOfItem: IRelationshipWithID = {
 						id,
 						...rel,
 					};
-					relatedAsRelationships.push(relatedAsItem);
+					rolesOfItem.push(roleOfItem);
 				});
-				this.relatedAsRelationships = relatedAsRelationships;
+				this.rolesOfItem = rolesOfItem;
 				return;
 			}
 		}
 		this.relatedAsSingle.setValue('');
-		this.relatedAsRelationships = undefined;
+		this.rolesOfItem = undefined;
 	}
 
 	//
