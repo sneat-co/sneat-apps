@@ -4,7 +4,7 @@ import { ContactRole, IContactBrief, IContactDto } from '@sneat/contactus-core';
 import { IRelatedItem, IRelationships } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
-import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
+import { ITeamContext } from '@sneat/team-models';
 import { TeamNavService } from '@sneat/team-services';
 
 @Component({
