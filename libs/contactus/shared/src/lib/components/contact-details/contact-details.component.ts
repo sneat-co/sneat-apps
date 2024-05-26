@@ -20,7 +20,7 @@ import {
 	IRelationships,
 	ITeamModuleDocRef,
 } from '@sneat/dto';
-import { ITeamRef, zipMapBriefsWithIDs } from '@sneat/team-models';
+import { ITeamRef } from '@sneat/team-models';
 import { MemberPages } from '../../constants';
 import { ContactComponentBaseParams } from '../../contact-component-base-params';
 import { ContactContactsComponent } from '../contact-contacts';
@@ -67,7 +67,7 @@ export class ContactDetailsComponent implements OnChanges {
 	protected relatedContactsOfCurrentTeam?: readonly IIdAndBrief<IRelatedItem>[];
 
 	private userTeamBriefs?: Record<string, IUserTeamBrief>;
-	private currentUserContactID?: string;
+	private userContactID?: string;
 
 	protected get contactWithBriefAndOptionalDto():
 		| IIdAndBriefAndOptionalDto<IContactBrief, IContactDto>
@@ -84,38 +84,44 @@ export class ContactDetailsComponent implements OnChanges {
 	protected tab: 'communicationChannels' | 'roles' | 'peers' | 'locations' =
 		'peers';
 
-	protected relatedToCurrentUser?: ITeamModuleDocRef;
+	protected relatedToContactOfCurrentUser?: ITeamModuleDocRef;
 
 	constructor(private readonly params: ContactComponentBaseParams) {
-		params.userService.userChanged.subscribe(() => {
-			this.setRelatedToCurrentUser();
+		params.userService.userState.subscribe({
+			next: (userState) => {
+				this.userTeamBriefs = userState?.record?.teams;
+				this.setUserContactID();
+			},
 		});
 		params.userService.userState.subscribe({
 			next: (state) => {
 				this.userTeamBriefs = state?.record?.teams;
-				this.setCurrentUserContactID();
+				this.setUserContactID();
 			},
 		});
 	}
 
 	private setRelatedToCurrentUser(): void {
-		const itemID = this.params.userService.currentUserID;
-		this.relatedToCurrentUser = itemID
+		this.relatedToContactOfCurrentUser = this.userContactID
 			? {
 					teamID: this.team?.id || '',
 					moduleID: 'contactus',
 					collection: 'contacts',
-					itemID,
+					itemID: this.userContactID,
 				}
 			: undefined;
 	}
 
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team']) {
-			this.setCurrentUserContactID();
+			this.setUserContactID();
 			this.setRelatedToCurrentUser();
 		}
 		if (changes['contact']) {
+			console.log(
+				'ContactDetailsComponent.ngOnChanges(): contact changed:',
+				changes['contact'],
+			);
 			const teamID = this.team?.id;
 			if (teamID && this.contact?.dto?.related) {
 				const contactus = this.contact.dto.related['contactus'];
@@ -132,23 +138,28 @@ export class ContactDetailsComponent implements OnChanges {
 		}
 	}
 
-	private setCurrentUserContactID(): void {
-		if (!this.team?.id || !this.userTeamBriefs) {
-			this.currentUserContactID = undefined;
-			return;
+	private setUserContactID(): void {
+		const userContactID =
+			this.userTeamBriefs?.[this.team?.id || '']?.userContactID;
+		if (userContactID != this.userContactID) {
+			this.userContactID = userContactID;
+			this.onUserContactIDChanged();
 		}
-		const userTeamBrief = this.userTeamBriefs[this.team.id];
-		if (!userTeamBrief) {
-			this.currentUserContactID = undefined;
-			return;
+	}
+
+	private onUserContactIDChanged(): void {
+		this.setRelatedToCurrentUser();
+		if (this.userContactID && this.team?.id) {
+			this.setRelatedAs(this.team.id, this.userContactID);
 		}
-		const { userContactID } = userTeamBrief;
-		this.currentUserContactID = userContactID;
+	}
+
+	private setRelatedAs(teamID: string, userContactID: string): void {
 		const relatedContact = getRelatedItemByKey(
 			this.contact?.dto?.related,
 			'contactus',
 			'contacts',
-			this.team.id,
+			teamID,
 			userContactID,
 		);
 		this.relatedAs = relatedContact?.relatedAs;
@@ -219,7 +230,7 @@ export class ContactDetailsComponent implements OnChanges {
 	protected onRelatedAsChanged(relatedAs: IRelationships): void {
 		console.log('onRelatedAsChanged()', relatedAs);
 
-		const userContactID = this.currentUserContactID;
+		const userContactID = this.userContactID;
 		if (!userContactID) {
 			throw new Error('onRelatedAsChanged() - userContactID is not set');
 		}

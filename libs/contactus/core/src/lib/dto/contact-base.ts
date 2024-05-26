@@ -1,7 +1,8 @@
 import { IAvatar, IPersonNames } from '@sneat/auth-models';
+import { IWithRelatedOnly } from '@sneat/dto';
 import { AgeGroupID, ContactType, PetKind, Gender, IAddress } from '.';
 
-export interface IContactBase {
+export interface IContactBase extends IWithRelatedOnly {
 	readonly type: ContactType;
 	readonly title?: string;
 	readonly shortTitle?: string;
