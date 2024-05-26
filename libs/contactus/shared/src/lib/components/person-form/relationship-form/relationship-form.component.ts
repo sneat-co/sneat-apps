@@ -50,8 +50,10 @@ export class RelationshipFormComponent
 	@Input({ required: true }) public ageGroup?: AgeGroupID;
 
 	@Input({ required: true }) public relatedTo?: ITeamModuleDocRef;
-	@Input() public allRelated?: IRelatedItemsByModule;
-	@Input() public relatedAs?: string[];
+
+	@Input({ required: true }) public relatedItems?: IRelatedItemsByModule;
+
+	protected relatedAs?: string[]; // TODO: Should it not to be an input?
 
 	@Output() readonly relatedAsChange = new EventEmitter<IRelationships>();
 
@@ -74,7 +76,7 @@ export class RelationshipFormComponent
 		if (changes['ageGroup'] || changes['team']) {
 			this.setRelationships();
 		}
-		if (changes['relatedTo'] || changes['allRelated']) {
+		if (changes['relatedTo'] || changes['relatedItems']) {
 			this.onRelatedChanged();
 		}
 	}
@@ -82,9 +84,12 @@ export class RelationshipFormComponent
 	private onRelatedChanged(): void {
 		console.log(
 			'RelationshipFormComponent.onRelatedToChanged()',
+			'relatedTo:',
 			this.relatedTo,
+			'relatedItems:',
+			this.relatedItems,
 		);
-		if (this.relatedTo && this.allRelated) {
+		if (this.relatedTo && this.relatedItems) {
 			if (!this.relatedTo.teamID) {
 				console.error(
 					'onRelatedChanged(): relatedTo.teamID is not set',
@@ -92,7 +97,7 @@ export class RelationshipFormComponent
 				);
 			}
 			const relatedItem = getRelatedItemByKey(
-				this.allRelated,
+				this.relatedItems,
 				this.relatedTo.moduleID,
 				this.relatedTo.collection,
 				this.relatedTo.teamID,
