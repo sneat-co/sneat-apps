@@ -13,7 +13,7 @@
 		<ng-container
 			*ngFor="let relatedContact of relatedContacts; trackBy: contactID"
 		>
-			<ion-badge *ngIf="firstRelated(relatedContact.brief.relatedAs)">
+			<ion-badge *ngIf="firstRelated(relatedContact.brief.rolesOfItem)">
 				firstRelated(relatedContact.brief.relatedAs) &#125;&#125; of
 				<a
 					[href]="relatedContact.id"

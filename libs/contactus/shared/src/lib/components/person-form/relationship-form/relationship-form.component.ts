@@ -20,8 +20,10 @@ import {
 } from '@sneat/contactus-core';
 import {
 	getRelatedItemByKey,
+	IRelatedItem,
 	IRelatedItemsByModule,
-	IRelationships,
+	IRelationshipRole,
+	IRelationshipRoles,
 	ITeamModuleDocRef,
 	ITitledRecord,
 	IWithCreatedShort,
@@ -34,6 +36,10 @@ const getRelOptions = (r: FamilyMemberRelation[]): ITitledRecord[] => [
 	{ id: MemberRelationshipOther, title: 'Other' },
 	{ id: MemberRelationshipUndisclosed, title: 'Undisclosed' },
 ];
+
+interface IRelationshipWithID extends IRelationshipRole {
+	readonly id: string;
+}
 
 @Component({
 	selector: 'sneat-relationship-form',
@@ -53,9 +59,9 @@ export class RelationshipFormComponent
 
 	@Input({ required: true }) public relatedItems?: IRelatedItemsByModule;
 
-	protected relatedAs?: string[]; // TODO: Should it not to be an input?
+	protected relatedAsRelationships?: readonly IRelationshipWithID[];
 
-	@Output() readonly relatedAsChange = new EventEmitter<IRelationships>();
+	@Output() readonly relatedAsChange = new EventEmitter<IRelationshipRoles>();
 
 	@Input() public isActive = false;
 	@Input() public disabled = false;
@@ -104,16 +110,20 @@ export class RelationshipFormComponent
 				this.relatedTo.itemID,
 			);
 			if (relatedItem) {
-				const relatedAsIDs = Object.keys(relatedItem.relatedAs || {});
-				this.relatedAs = relatedAsIDs;
-				this.relatedAsSingle.setValue(
-					relatedAsIDs.length == 1 ? relatedAsIDs[0] : '',
-				);
+				const relatedAsRelationships: IRelationshipWithID[] = [];
+				Object.entries(relatedItem.rolesToItem || {}).forEach(([id, rel]) => {
+					const relatedAsItem: IRelationshipWithID = {
+						id,
+						...rel,
+					};
+					relatedAsRelationships.push(relatedAsItem);
+				});
+				this.relatedAsRelationships = relatedAsRelationships;
 				return;
 			}
 		}
 		this.relatedAsSingle.setValue('');
-		this.relatedAs = undefined;
+		this.relatedAsRelationships = undefined;
 	}
 
 	//
@@ -165,7 +175,7 @@ export class RelationshipFormComponent
 			at: new Date().toISOString().substring(0, 10),
 			by: this.userService.currentUserID as unknown as string,
 		};
-		this.relatedAs = [value];
+		// this.relatedAsRelationships = [value];
 		this.relatedAsChange.emit({ [value]: { created } });
 	}
 }

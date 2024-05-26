@@ -1,7 +1,12 @@
 import { IFormField } from '@sneat/core';
+import { ITeamRequest } from '@sneat/team-models';
 import { IContact2Asset } from './contact2item';
 import { IContactBase } from './contact-base';
-import { IWithRelatedAndRelatedIDs, TeamMemberType } from '@sneat/dto';
+import {
+	ITeamModuleDocRef,
+	IWithRelatedAndRelatedIDs,
+	TeamMemberType,
+} from '@sneat/dto';
 import { IMemberPerson, IPersonRecord } from './person';
 
 export interface IEmail {
@@ -34,19 +39,14 @@ export type MemberContactType =
 	| typeof ContactTypePerson
 	| typeof ContactTypeAnimal;
 
-export interface IRelatedToRequest {
-	readonly teamID: string;
-	readonly moduleID: string;
-	readonly collection: string;
-	readonly itemID: string;
-	readonly add?: {
-		readonly relatedAs?: string[];
-		readonly relatesAs?: string[];
-	};
-	readonly remove?: {
-		readonly relatedAs?: string[];
-		readonly relatesAs?: string[];
-	};
+export interface IRelatedRolesRequest {
+	readonly rolesOfItem?: string[];
+	readonly rolesToItem?: string[];
+}
+
+export interface IRelatedToRequest extends ITeamModuleDocRef {
+	readonly add?: IRelatedRolesRequest;
+	readonly remove?: IRelatedRolesRequest;
 }
 
 export const emptyContactBase: IContactBase = {

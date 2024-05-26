@@ -1,5 +1,5 @@
 <ion-card @formNextIn>
-	<ion-item-group *ngIf="!relatedAs">
+	<ion-item-group *ngIf="!relatedAsRelationships">
 		<ion-item-divider [color]="isActive ? 'primary' : 'light'">
 			<ion-label
 				><b>{{ label }}</b
@@ -18,7 +18,7 @@
 			</ion-item>
 		</ion-radio-group>
 	</ion-item-group>
-	<ion-item *ngIf="relatedAs">
+	<ion-item *ngIf="relatedAsRelationships">
 		<ion-icon name="people-outline" slot="start" />
 		<ion-select
 			[formControl]="relatedAsSingle"
@@ -33,5 +33,14 @@
 				>{{ rel.title }}</ion-select-option
 			>
 		</ion-select>
+	</ion-item>
+	<ion-item>
+		relatedAsRelationships: {{relatedAsRelationships|json}}
+	</ion-item>
+	<ion-item>
+		badges:
+		@for (rel of relatedAsRelationships; track rel.id) {
+			<ion-badge>{{rel.id}}</ion-badge>
+		}
 	</ion-item>
 </ion-card>

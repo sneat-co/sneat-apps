@@ -7,11 +7,11 @@ export interface ITeamModuleDocRef {
 	readonly itemID: string;
 }
 
-export interface IRelationship {
-	created: IWithCreatedShort;
+export interface IRelationshipRole {
+	readonly created: IWithCreatedShort;
 }
 
-export type IRelationships = Readonly<Record<string, IRelationship>>;
+export type IRelationshipRoles = Readonly<Record<string, IRelationshipRole>>;
 
 export interface IRelatedItemKey {
 	readonly teamID: string;
@@ -19,9 +19,9 @@ export interface IRelatedItemKey {
 }
 
 export interface IRelatedItem {
-	keys: readonly IRelatedItemKey[];
-	readonly relatedAs?: IRelationships; // if related contact is a child of the current contact, then relatedAs = {"child": ...}
-	readonly relatesAs?: IRelationships; // if related contact is a child of the current contact, then relatesAs = {"parent": ...}
+	readonly keys: readonly IRelatedItemKey[];
+	readonly rolesOfItem?: IRelationshipRoles; // if related item is a child of the current record, then rolesOfItem = {"child": ...}
+	readonly rolesToItem?: IRelationshipRoles; // if related item is a child of the current contact, then rolesToItem = {"parent": ...}
 }
 
 export type IRelatedItemsByCollection = Readonly<

@@ -17,7 +17,7 @@ import {
 import {
 	getRelatedItemByKey,
 	IRelatedItem,
-	IRelationships,
+	IRelationshipRoles,
 	ITeamModuleDocRef,
 } from '@sneat/dto';
 import { ITeamRef } from '@sneat/team-models';
@@ -77,7 +77,7 @@ export class ContactDetailsComponent implements OnChanges {
 			: undefined;
 	}
 
-	protected relatedAs?: IRelationships;
+	protected rolesOfItem?: IRelationshipRoles;
 
 	protected firstRelatedAs?: string;
 
@@ -162,15 +162,15 @@ export class ContactDetailsComponent implements OnChanges {
 			teamID,
 			userContactID,
 		);
-		this.relatedAs = relatedContact?.relatedAs;
-		const relationshipIDs = Object.keys(this.relatedAs || {});
+		this.rolesOfItem = relatedContact?.rolesOfItem;
+		const relationshipIDs = Object.keys(this.rolesOfItem || {});
 		this.firstRelatedAs =
 			relationshipIDs.length > 0 ? relationshipIDs[0] : undefined;
 		console.log(
 			'userContactID',
 			userContactID,
-			'relatedAs',
-			this.relatedAs,
+			'rolesOfItem',
+			this.rolesOfItem,
 			'contact',
 			this.contact,
 		);
@@ -227,7 +227,7 @@ export class ContactDetailsComponent implements OnChanges {
 			.catch(this.params.errorLogger.logError);
 	}
 
-	protected onRelatedAsChanged(relatedAs: IRelationships): void {
+	protected onRelatedAsChanged(relatedAs: IRelationshipRoles): void {
 		console.log('onRelatedAsChanged()', relatedAs);
 
 		const userContactID = this.userContactID;
@@ -245,7 +245,7 @@ export class ContactDetailsComponent implements OnChanges {
 				collection: 'contacts',
 				itemID: userContactID,
 				add: {
-					relatedAs: relationshipIDs,
+					rolesOfItem: relationshipIDs,
 				},
 			},
 		};

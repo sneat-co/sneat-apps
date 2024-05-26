@@ -1,7 +1,7 @@
 import { Component, Inject, Input } from '@angular/core';
 import { IIdAndBrief, IIdAndBriefAndOptionalDto } from '@sneat/core';
 import { ContactRole, IContactBrief, IContactDto } from '@sneat/contactus-core';
-import { IRelatedItem, IRelationships } from '@sneat/dto';
+import { IRelatedItem, IRelationshipRoles } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
 import { ITeamContext } from '@sneat/team-models';
@@ -62,7 +62,7 @@ export class ContactsListItemComponent {
 	protected readonly contactID = (_: number, v: IIdAndBrief<IRelatedItem>) =>
 		v.id;
 
-	protected firstRelated(contactRelationships?: IRelationships): string {
+	protected firstRelated(contactRelationships?: IRelationshipRoles): string {
 		if (!contactRelationships) {
 			return '';
 		}
