@@ -1,6 +1,7 @@
 const { FlatCompat } = require('@eslint/eslintrc');
 const nxEslintPlugin = require('@nx/eslint-plugin');
 const eslintPluginJson = require('eslint-plugin-json');
+const pluginTemplatePlugin = require('@angular-eslint/eslint-plugin-template');
 const js = require('@eslint/js');
 
 const compat = new FlatCompat({
@@ -13,6 +14,7 @@ module.exports = [
 		plugins: {
 			'@nx': nxEslintPlugin,
 			json: eslintPluginJson,
+			template: pluginTemplatePlugin,
 		},
 	},
 	{
@@ -47,9 +49,5 @@ module.exports = [
 			...config.rules,
 		},
 	})),
-	{
-		files: ['**/*.html'],
-		rules: { '@angular-eslint/template/prefer-self-closing-tags': ['error'] },
-	},
 	{ ignores: ['node_modules\r', 'src_old\r'] },
 ];

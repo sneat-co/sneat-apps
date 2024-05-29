@@ -1,0 +1,32 @@
+<h1 class="ion-padding" *ngIf="!dwellingType">New dwelling</h1>
+<h1 class="ion-padding" *ngIf="dwellingType">New {{ dwellingType }}</h1>
+
+<ion-card *ngIf="!dwellingType">
+	<sneat-select-from-list
+		[(ngModel)]="dwellingType"
+		(ngModelChange)="onDwellingTypeChanged()"
+		[isFilterable]="false"
+		title="Type"
+		[items]="dwellingTypes"
+	/>
+</ion-card>
+
+<sneat-add-dwelling-card
+	*ngIf="dwellingType"
+	[team]="team"
+	[(dwellingAsset)]="dwellingAsset"
+	(dwellingAssetChange)="onAssetChanged($event)"
+/>
+
+<ion-button
+	*ngIf="dwellingAsset?.dto?.type || dwellingAsset?.dto?.countryID"
+	[color]="dwellingAsset?.dto?.type ? 'primary' : 'light'"
+	size="large"
+	class="ion-margin"
+	expand="full"
+	[disabled]="!team || isSubmitting"
+	(click)="submitDwellingForm()"
+>
+	<ng-container *ngIf="!isSubmitting">Add dwelling</ng-container>
+	<ng-container *ngIf="isSubmitting">Adding dwelling...</ng-container>
+</ion-button>

@@ -132,7 +132,22 @@ export interface IAssetVehicleExtra extends IAssetExtra<'vehicle'>, IEngine {
 	nextServiceDueTaskId?: string;
 }
 
-export type IAssetVehicleContext = IAssetContext<'vehicle', IAssetVehicleExtra>
+export type IAssetVehicleContext = IAssetContext<'vehicle', IAssetVehicleExtra>;
+
+export interface IAssetDwellingExtra extends IAssetExtra<'dwelling'> {
+	address: string;
+	rent_price?: {
+		value: number;
+		currency: string;
+	};
+	numberOfBedrooms?: number;
+	area?: string;
+}
+
+export type IAssetDwellingContext = IAssetContext<
+	'dwelling',
+	IAssetDwellingExtra
+>;
 
 export interface IAssetCategory extends ITitledRecord {
 	id: AssetCategory;
