@@ -92,7 +92,7 @@ export abstract class ContactBasePage extends TeamItemPageBaseComponent<
 							const contactID = this.contact.id;
 							const contact = contacts.find((c) => c.id === contactID);
 							if (contact) {
-								this.setItemContext({ brief: contact.brief, ...this.contact });
+								this.setItemContext({ ...this.contact, brief: contact.brief });
 								// this.contact = { brief: contact.brief, ...this.contact };
 								// this.teamParams.changeDetectorRef.detectChanges();
 							}

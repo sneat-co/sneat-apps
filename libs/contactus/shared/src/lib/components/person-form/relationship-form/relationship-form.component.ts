@@ -20,8 +20,10 @@ import {
 } from '@sneat/contactus-core';
 import {
 	getRelatedItemByKey,
+	IRelatedItem,
 	IRelatedItemsByModule,
-	IRelationships,
+	IRelationshipRole,
+	IRelationshipRoles,
 	ITeamModuleDocRef,
 	ITitledRecord,
 	IWithCreatedShort,
@@ -34,6 +36,10 @@ const getRelOptions = (r: FamilyMemberRelation[]): ITitledRecord[] => [
 	{ id: MemberRelationshipOther, title: 'Other' },
 	{ id: MemberRelationshipUndisclosed, title: 'Undisclosed' },
 ];
+
+interface IRelationshipWithID extends IRelationshipRole {
+	readonly id: string;
+}
 
 @Component({
 	selector: 'sneat-relationship-form',
@@ -50,10 +56,12 @@ export class RelationshipFormComponent
 	@Input({ required: true }) public ageGroup?: AgeGroupID;
 
 	@Input({ required: true }) public relatedTo?: ITeamModuleDocRef;
-	@Input() public allRelated?: IRelatedItemsByModule;
-	@Input() public relatedAs?: string[];
 
-	@Output() readonly relatedAsChange = new EventEmitter<IRelationships>();
+	@Input({ required: true }) public relatedItems?: IRelatedItemsByModule;
+
+	protected rolesOfItem?: readonly IRelationshipWithID[];
+
+	@Output() readonly relatedAsChange = new EventEmitter<IRelationshipRoles>();
 
 	@Input() public isActive = false;
 	@Input() public disabled = false;
@@ -74,7 +82,7 @@ export class RelationshipFormComponent
 		if (changes['ageGroup'] || changes['team']) {
 			this.setRelationships();
 		}
-		if (changes['relatedTo'] || changes['allRelated']) {
+		if (changes['relatedTo'] || changes['relatedItems']) {
 			this.onRelatedChanged();
 		}
 	}
@@ -82,9 +90,12 @@ export class RelationshipFormComponent
 	private onRelatedChanged(): void {
 		console.log(
 			'RelationshipFormComponent.onRelatedToChanged()',
+			'relatedTo:',
 			this.relatedTo,
+			'relatedItems:',
+			this.relatedItems,
 		);
-		if (this.relatedTo && this.allRelated) {
+		if (this.relatedTo && this.relatedItems) {
 			if (!this.relatedTo.teamID) {
 				console.error(
 					'onRelatedChanged(): relatedTo.teamID is not set',
@@ -92,23 +103,27 @@ export class RelationshipFormComponent
 				);
 			}
 			const relatedItem = getRelatedItemByKey(
-				this.allRelated,
+				this.relatedItems,
 				this.relatedTo.moduleID,
 				this.relatedTo.collection,
 				this.relatedTo.teamID,
 				this.relatedTo.itemID,
 			);
 			if (relatedItem) {
-				const relatedAsIDs = Object.keys(relatedItem.relatedAs || {});
-				this.relatedAs = relatedAsIDs;
-				this.relatedAsSingle.setValue(
-					relatedAsIDs.length == 1 ? relatedAsIDs[0] : '',
-				);
+				const rolesOfItem: IRelationshipWithID[] = [];
+				Object.entries(relatedItem.rolesOfItem || {}).forEach(([id, rel]) => {
+					const roleOfItem: IRelationshipWithID = {
+						id,
+						...rel,
+					};
+					rolesOfItem.push(roleOfItem);
+				});
+				this.rolesOfItem = rolesOfItem;
 				return;
 			}
 		}
 		this.relatedAsSingle.setValue('');
-		this.relatedAs = undefined;
+		this.rolesOfItem = undefined;
 	}
 
 	//
@@ -160,7 +175,7 @@ export class RelationshipFormComponent
 			at: new Date().toISOString().substring(0, 10),
 			by: this.userService.currentUserID as unknown as string,
 		};
-		this.relatedAs = [value];
+		// this.relatedAsRelationships = [value];
 		this.relatedAsChange.emit({ [value]: { created } });
 	}
 }

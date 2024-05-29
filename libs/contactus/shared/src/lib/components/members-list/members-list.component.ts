@@ -18,7 +18,7 @@ import {
 } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import { IIdAndBrief, listAddRemoveAnimation } from '@sneat/core';
-import { AgeGroupID, IContactBrief } from '@sneat/contactus-core';
+import { IContactBrief } from '@sneat/contactus-core';
 import {
 	ScheduleNavService,
 	ScheduleNavServiceModule,

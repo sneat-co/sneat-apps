@@ -29,7 +29,7 @@ import {
 	getRelatedItemIDs,
 	IRelatedItem,
 	IRelatedItemsByModule,
-	IRelationships,
+	IRelationshipRoles,
 	ITeamModuleDocRef,
 } from '@sneat/dto';
 import { ITeamContext } from '@sneat/team-models';
@@ -302,8 +302,8 @@ export class PersonWizardComponent implements OnChanges {
 		);
 	}
 
-	protected onRelatedAsChanged(relatedAs: IRelationships): void {
-		console.log('onRelationshipChanged()', relatedAs, typeof relatedAs);
+	protected onRelatedAsChanged(rolesOfItem: IRelationshipRoles): void {
+		console.log('onRelationshipChanged()', rolesOfItem, typeof rolesOfItem);
 		// if ((typeof relatedAs as unknown) === 'string') {
 		// 	console.error('onRelationshipChanged() relatedAs is string:', relatedAs);
 		// 	return;
@@ -323,7 +323,7 @@ export class PersonWizardComponent implements OnChanges {
 
 		const userRelatedItem: IRelatedItem = {
 			keys: [{ teamID, itemID: userID }],
-			relatedAs: relatedAs,
+			rolesOfItem,
 		};
 
 		const related: IRelatedItemsByModule = {
@@ -337,11 +337,11 @@ export class PersonWizardComponent implements OnChanges {
 				...this.newPerson,
 				related,
 			},
-			{ name: 'relatedAs', hasValue: !!relatedAs },
+			{ name: 'relatedAs', hasValue: !!rolesOfItem },
 		);
 		if (!this.newPerson.ageGroup) {
-			const relationship = Object.keys(relatedAs || []).length
-				? Object.keys(relatedAs)[0]
+			const relationship = Object.keys(rolesOfItem || []).length
+				? Object.keys(rolesOfItem)[0]
 				: undefined;
 			if (
 				relationship === 'parent' ||

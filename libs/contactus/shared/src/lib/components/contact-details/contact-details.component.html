@@ -29,7 +29,10 @@
 						</ion-button>
 					</ion-buttons>
 				</ion-item>
-				<ion-item-divider mode="md" *ngIf="contact?.brief?.gender && relatedAs">
+				<ion-item-divider
+					mode="md"
+					*ngIf="contact?.brief?.gender && rolesOfItem"
+				>
 					<ion-label
 						*ngIf="
 							contact?.brief?.gender === 'male' && firstRelatedAs === 'child'
@@ -66,8 +69,8 @@
 					contact?.brief?.userID !== currentUserID
 				"
 				[team]="team"
-				[relatedTo]="relatedToCurrentUser"
-				[allRelated]="contact?.dto?.related"
+				[relatedTo]="relatedToContactOfCurrentUser"
+				[relatedItems]="contact?.dto?.related || contact?.brief?.related"
 				[ageGroup]="contact?.brief?.ageGroup"
 				(relatedAsChange)="onRelatedAsChanged($event)"
 			/>
