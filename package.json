@@ -84,7 +84,7 @@
 		"@nx/workspace": "19.1.1",
 		"@schematics/angular": "18.0.2",
 		"@swc-node/register": "1.9.1",
-		"@swc/core": "1.5.22",
+		"@swc/core": "1.5.24",
 		"@swc/helpers": "~0.5.11",
 		"@types/jest": "29.5.12",
 		"@types/node": "20.12.13",
