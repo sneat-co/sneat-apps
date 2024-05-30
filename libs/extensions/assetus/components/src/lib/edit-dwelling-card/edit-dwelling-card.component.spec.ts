@@ -1,21 +1,21 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { AssetAddVehicleComponent } from './asset-add-vehicle.component';
+import { AddDwellingCardComponent } from './edit-dwelling-card.component';
 
-describe('AssetAddVehicleComponent', () => {
-	let component: AssetAddVehicleComponent;
-	let fixture: ComponentFixture<AssetAddVehicleComponent>;
+describe('MakeModelEngineComponent', () => {
+	let component: AddDwellingCardComponent;
+	let fixture: ComponentFixture<AddDwellingCardComponent>;
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [AssetAddVehicleComponent],
+			declarations: [AddDwellingCardComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));
 
 	beforeEach(() => {
-		fixture = TestBed.createComponent(AssetAddVehicleComponent);
+		fixture = TestBed.createComponent(AddDwellingCardComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});

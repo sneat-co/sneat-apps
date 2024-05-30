@@ -1,0 +1,61 @@
+<ion-card>
+	<ion-list>
+		<ion-item>
+			<ion-input
+				label="Title"
+				placeholder="Dwelling Title"
+				[(ngModel)]="this.title"
+				(ngModelChange)="onBriefFieldChanged('title', $event)"
+			/>
+		</ion-item>
+		<sneat-country-selector
+			[countryID]="dwellingAsset?.brief?.countryID"
+			[readonly]="!!dwellingAsset?.brief?.countryID"
+			[defaultCountryID]="team?.dto?.countryID"
+			label="Country of registration"
+			(countryIDChange)="onCountryChanged($event)"
+		/>
+		<ion-item>
+			<ion-input
+				label="Address"
+				placeholder="Address"
+				[(ngModel)]="this.address"
+				(ngModelChange)="onExtraFieldChanged('address', $event)"
+			/>
+		</ion-item>
+	</ion-list>
+</ion-card>
+
+<sneat-asset-possession-card
+	[asset]="dwellingAsset"
+	(assetChange)="onAssetChanged($event)"
+/>
+
+<ion-card>
+	<ion-list>
+		<ion-item *ngIf="dwellingAsset?.dto?.possession === 'renting'">
+			<ion-input
+				label="Rent price"
+				placeholder="Rent price"
+				[(ngModel)]="this.rent_price_amount"
+				(ngModelChange)="onRentPriceFieldChanged('value', $event)"
+			/>
+		</ion-item>
+		<ion-item>
+			<ion-input
+				label="Number of bedrooms"
+				placeholder="Number of bedrooms"
+				[(ngModel)]="this.number_of_bedrooms"
+				(ngModelChange)="onExtraFieldChanged('numberOfBedrooms', $event)"
+			/>
+		</ion-item>
+		<ion-item>
+			<ion-input
+				label="Area"
+				placeholder="Area"
+				[(ngModel)]="this.areaSqM"
+				(ngModelChange)="onExtraFieldChanged('areaSqM', $event)"
+			/>
+		</ion-item>
+	</ion-list>
+</ion-card>

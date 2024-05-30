@@ -10,10 +10,21 @@ import {
 import { MakeModelCardComponent } from '../make-model-card/make-model-card.component';
 import { VehicleCardComponent } from '../vehicle-card/vehicle-card.component';
 import { AssetAddDocumentComponent } from './asset-add-document/asset-add-document.component';
-
 import { AssetAddVehicleComponent } from './asset-add-vehicle/asset-add-vehicle.component';
+import { AssetAddDwellingComponent } from './asset-add-dwelling/asset-add-dwelling.component';
+import { AddDwellingCardComponent } from '../edit-dwelling-card/edit-dwelling-card.component';
 
 @NgModule({
+	declarations: [
+		AssetAddDocumentComponent,
+		AssetAddVehicleComponent,
+		AssetAddDwellingComponent,
+	],
+	exports: [
+		AssetAddDocumentComponent,
+		AssetAddVehicleComponent,
+		AssetAddDwellingComponent,
+	],
 	imports: [
 		CommonModule,
 		FormsModule,
@@ -23,8 +34,7 @@ import { AssetAddVehicleComponent } from './asset-add-vehicle/asset-add-vehicle.
 		VehicleCardComponent,
 		MakeModelCardComponent,
 		VehicleCardComponent,
+		AddDwellingCardComponent,
 	],
-	declarations: [AssetAddDocumentComponent, AssetAddVehicleComponent],
-	exports: [AssetAddDocumentComponent, AssetAddVehicleComponent],
 })
 export class AddAssetComponentsModule {}

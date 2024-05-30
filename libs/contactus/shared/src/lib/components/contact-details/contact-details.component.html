@@ -29,7 +29,10 @@
 						</ion-button>
 					</ion-buttons>
 				</ion-item>
-				<ion-item-divider mode="md" *ngIf="contact?.brief?.gender && rolesOfItem">
+				<ion-item-divider
+					mode="md"
+					*ngIf="contact?.brief?.gender && rolesOfItem"
+				>
 					<ion-label
 						*ngIf="
 							contact?.brief?.gender === 'male' && firstRelatedAs === 'child'
