@@ -12,7 +12,7 @@ import { VehicleCardComponent } from '../vehicle-card/vehicle-card.component';
 import { AssetAddDocumentComponent } from './asset-add-document/asset-add-document.component';
 import { AssetAddVehicleComponent } from './asset-add-vehicle/asset-add-vehicle.component';
 import { AssetAddDwellingComponent } from './asset-add-dwelling/asset-add-dwelling.component';
-import { AddDwellingCardComponent } from '../add-dwelling-card/add-dwelling-card.component';
+import { AddDwellingCardComponent } from '../edit-dwelling-card/edit-dwelling-card.component';
 
 @NgModule({
 	declarations: [

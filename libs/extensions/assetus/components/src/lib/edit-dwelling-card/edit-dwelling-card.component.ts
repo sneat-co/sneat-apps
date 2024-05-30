@@ -18,8 +18,8 @@ import { ITeamContext } from '@sneat/team-models';
 import { AssetPossessionCardComponent } from '../asset-possesion-card/asset-possession-card.component';
 
 @Component({
-	selector: 'sneat-add-dwelling-card',
-	templateUrl: './add-dwelling-card.component.html',
+	selector: 'sneat-edit-dwelling-card',
+	templateUrl: './edit-dwelling-card.component.html',
 	standalone: true,
 	imports: [
 		CommonModule,
@@ -44,16 +44,6 @@ export class AddDwellingCardComponent implements OnChanges {
 	protected number_of_bedrooms?: number;
 	protected areaSqM?: number;
 
-	constructor() {
-		this.title = this.dwellingAsset?.dto?.title || '';
-		this.address = this.dwellingAsset?.dto?.extra?.address || '';
-		this.rent_price_amount = this.dwellingAsset?.dto?.extra?.rent_price?.value;
-		this.rent_price_currency =
-			this.dwellingAsset?.dto?.extra?.rent_price?.currency || 'USD';
-		this.number_of_bedrooms = this.dwellingAsset?.dto?.extra?.numberOfBedrooms;
-		this.areaSqM = this.dwellingAsset?.dto?.extra?.areaSqM;
-	}
-
 	ngOnChanges(changes: SimpleChanges): void {
 		if (
 			changes['team'] &&
@@ -66,6 +56,18 @@ export class AddDwellingCardComponent implements OnChanges {
 				dto: { ...this.dwellingAsset.dto, countryID: this.team.dto.countryID },
 			};
 			this.dwellingAssetChange.emit(this.dwellingAsset);
+		}
+
+		if (changes['dwellingAsset']) {
+			this.title = this.dwellingAsset?.dto?.title || '';
+			this.address = this.dwellingAsset?.dto?.extra?.address || '';
+			this.rent_price_amount =
+				this.dwellingAsset?.dto?.extra?.rent_price?.value;
+			this.rent_price_currency =
+				this.dwellingAsset?.dto?.extra?.rent_price?.currency || 'USD';
+			this.number_of_bedrooms =
+				this.dwellingAsset?.dto?.extra?.numberOfBedrooms;
+			this.areaSqM = this.dwellingAsset?.dto?.extra?.areaSqM;
 		}
 	}
 

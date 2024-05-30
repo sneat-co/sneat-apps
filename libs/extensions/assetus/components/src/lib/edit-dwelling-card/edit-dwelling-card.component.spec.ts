@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { AddDwellingCardComponent } from './add-dwelling-card.component';
+import { AddDwellingCardComponent } from './edit-dwelling-card.component';
 
 describe('MakeModelEngineComponent', () => {
 	let component: AddDwellingCardComponent;

@@ -96,6 +96,14 @@ export class AssetAddDwellingComponent
 			throw new Error('no asset');
 		}
 		this.isSubmitting = true;
+
+		if (assetDto.extra) {
+			if (assetDto.extra.numberOfBedrooms)
+				assetDto.extra.numberOfBedrooms = +assetDto.extra?.numberOfBedrooms;
+			if (assetDto.extra.areaSqM)
+				assetDto.extra.areaSqM = +assetDto.extra?.areaSqM;
+		}
+
 		const request: ICreateAssetRequest<'dwelling', IAssetDwellingExtra> = {
 			asset: {
 				...assetDto,

@@ -135,10 +135,10 @@ export interface IAssetVehicleExtra extends IAssetExtra<'vehicle'>, IEngine {
 export type IAssetVehicleContext = IAssetContext<'vehicle', IAssetVehicleExtra>;
 
 export interface IAssetDwellingExtra extends IAssetExtra<'dwelling'> {
-	address: string;
+	address?: string;
 	rent_price?: {
-		value: number;
-		currency: string;
+		value?: number;
+		currency?: string;
 	};
 	numberOfBedrooms?: number;
 	areaSqM?: number;
