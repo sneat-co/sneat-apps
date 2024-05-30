@@ -141,7 +141,7 @@ export interface IAssetDwellingExtra extends IAssetExtra<'dwelling'> {
 		currency: string;
 	};
 	numberOfBedrooms?: number;
-	area?: string;
+	areaSqM?: number;
 }
 
 export type IAssetDwellingContext = IAssetContext<

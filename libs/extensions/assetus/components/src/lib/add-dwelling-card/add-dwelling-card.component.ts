@@ -37,23 +37,21 @@ export class AddDwellingCardComponent implements OnChanges {
 	@Input({ required: true }) dwellingAsset?: IAssetDwellingContext;
 	@Output() readonly dwellingAssetChange = new EventEmitter<IAssetContext>();
 
-	public title = '';
-	public address = '';
-	public rent_price_amount = 0;
-	public rent_price_currency = 'USD';
-	public number_of_bedrooms = 0;
-	public area = '';
+	protected title = '';
+	protected address = '';
+	protected rent_price_amount?: number;
+	protected rent_price_currency = 'USD';
+	protected number_of_bedrooms?: number;
+	protected areaSqM?: number;
 
 	constructor() {
 		this.title = this.dwellingAsset?.dto?.title || '';
 		this.address = this.dwellingAsset?.dto?.extra?.address || '';
-		this.rent_price_amount =
-			this.dwellingAsset?.dto?.extra?.rent_price?.value || 0;
+		this.rent_price_amount = this.dwellingAsset?.dto?.extra?.rent_price?.value;
 		this.rent_price_currency =
 			this.dwellingAsset?.dto?.extra?.rent_price?.currency || 'USD';
-		this.number_of_bedrooms =
-			this.dwellingAsset?.dto?.extra?.numberOfBedrooms || 0;
-		this.area = this.dwellingAsset?.dto?.extra?.area || '';
+		this.number_of_bedrooms = this.dwellingAsset?.dto?.extra?.numberOfBedrooms;
+		this.areaSqM = this.dwellingAsset?.dto?.extra?.areaSqM;
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -101,11 +99,7 @@ export class AddDwellingCardComponent implements OnChanges {
 	}
 
 	protected onRentPriceFieldChanged(field: string, value: string): void {
-		if (
-			this.dwellingAsset?.dto &&
-			this.dwellingAsset?.dto?.extra &&
-			this.dwellingAsset?.dto?.extra?.rent_price
-		) {
+		if (this.dwellingAsset?.dto?.extra?.rent_price) {
 			this.dwellingAsset = {
 				...this.dwellingAsset,
 				dto: {
@@ -123,7 +117,7 @@ export class AddDwellingCardComponent implements OnChanges {
 		}
 	}
 
-	countryChanged(value: string): void {
+	protected onCountryChanged(value: string): void {
 		console.log('countryChanged', value, this.dwellingAsset?.dto);
 		if (this.dwellingAsset?.dto) {
 			this.dwellingAsset = {

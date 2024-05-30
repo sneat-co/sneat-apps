@@ -13,7 +13,7 @@
 			[readonly]="!!dwellingAsset?.brief?.countryID"
 			[defaultCountryID]="team?.dto?.countryID"
 			label="Country of registration"
-			(countryIDChange)="countryChanged($event)"
+			(countryIDChange)="onCountryChanged($event)"
 		/>
 		<ion-item>
 			<ion-input
@@ -51,10 +51,10 @@
 		</ion-item>
 		<ion-item>
 			<ion-input
-				label="Area"
-				placeholder="Area"
-				[(ngModel)]="this.area"
-				(ngModelChange)="onExtraFieldChanged('area', $event)"
+				label="areaSqM"
+				placeholder="areaSqM"
+				[(ngModel)]="this.areaSqM"
+				(ngModelChange)="onExtraFieldChanged('areaSqM', $event)"
 			/>
 		</ion-item>
 	</ion-list>

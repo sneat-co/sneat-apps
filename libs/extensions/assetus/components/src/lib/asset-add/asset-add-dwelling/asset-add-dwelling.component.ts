@@ -22,8 +22,6 @@ export class AssetAddDwellingComponent
 	extends AddAssetBaseComponent
 	implements OnChanges
 {
-	protected readonly id = (_: number, o: { id: string }) => o.id;
-
 	@Input() public dwellingAsset?: IAssetDwellingContext;
 
 	protected dwellingType?: AssetRealEstateType;
@@ -69,7 +67,7 @@ export class AssetAddDwellingComponent
 		}
 	}
 
-	onDwellingTypeChanged(): void {
+	protected onDwellingTypeChanged(): void {
 		if (this.dwellingAsset?.dto) {
 			this.dwellingAsset = {
 				...this.dwellingAsset,
@@ -85,13 +83,13 @@ export class AssetAddDwellingComponent
 		this.dwellingAsset = asset as IAssetDwellingContext;
 	}
 
-	submitDwellingForm(): void {
+	protected submitDwellingForm(): void {
 		console.log('submitDwellingForm', this.dwellingAsset);
 		if (!this.team) {
-			throw 'no team context';
+			throw new Error('no team context');
 		}
 		if (!this.dwellingAsset) {
-			throw 'no dwellingType';
+			throw new Error('no dwellingType');
 		}
 		const assetDto = this.dwellingAsset?.dto;
 		if (!assetDto) {
