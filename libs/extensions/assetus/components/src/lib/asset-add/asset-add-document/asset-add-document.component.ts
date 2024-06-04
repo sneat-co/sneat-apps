@@ -108,8 +108,8 @@ export class AssetAddDocumentComponent
 			: '';
 	}
 
-	submitVehicleForm(): void {
-		console.log('submitVehicleForm', this.documentAsset);
+	submitDocumentForm(): void {
+		console.log('submitDocumentForm', this.documentAsset);
 		if (!this.team) {
 			throw 'no team context';
 		}

@@ -121,7 +121,15 @@ export interface IEngine {
 	engineSerialNumber?: string;
 }
 
-export interface IAssetVehicleExtra extends IAssetExtra<'vehicle'>, IEngine {
+export interface IWithMakeAndModel {
+	make: string;
+	model: string;
+}
+
+export interface IAssetVehicleExtra
+	extends IAssetExtra<'vehicle'>,
+		IWithMakeAndModel,
+		IEngine {
 	vin?: string;
 	number?: string;
 	nctExpires?: string; // ISO date string 'YYYY-MM-DD'

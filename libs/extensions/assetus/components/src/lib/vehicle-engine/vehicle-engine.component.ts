@@ -97,12 +97,19 @@ export class VehicleEngineComponent {
 					engineFuel = FuelTypes.other;
 					break;
 			}
+			const vehicleExtra: IAssetVehicleExtra = this.vehicleAsset.dto?.extra || {
+				type: 'vehicle',
+				make: '',
+				model: '',
+				engineType: '',
+				engineFuel: '',
+			};
 			this.vehicleAsset = {
 				...this.vehicleAsset,
 				dto: {
 					...this.vehicleAsset.dto,
 					extra: {
-						...(this.vehicleAsset.dto?.extra || { type: 'vehicle' }),
+						...vehicleExtra,
 						engineType,
 						engineFuel,
 					},

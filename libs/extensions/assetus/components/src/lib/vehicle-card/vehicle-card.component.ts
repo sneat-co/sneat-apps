@@ -15,6 +15,7 @@ import {
 	carMakes,
 	IAssetContext,
 	IAssetVehicleContext,
+	IAssetVehicleExtra,
 } from '@sneat/mod-assetus-core';
 import { ITeamContext } from '@sneat/team-models';
 import { AssetPossessionCardComponent } from '../asset-possesion-card/asset-possession-card.component';
@@ -120,12 +121,18 @@ export class VehicleCardComponent implements OnChanges {
 		}
 	}
 
-	makeChanged(value: string): void {
-		this.makeVal = value;
+	makeChanged(make: string): void {
+		this.makeVal = make;
 		if (this.vehicleAsset?.dto) {
 			this.vehicleAsset = {
 				...this.vehicleAsset,
-				dto: { ...this.vehicleAsset.dto, make: value },
+				dto: {
+					...this.vehicleAsset.dto,
+					extra: {
+						...(this.vehicleAsset.dto.extra as IAssetVehicleExtra),
+						make,
+					},
+				},
 			};
 			this.vehicleAssetChange.emit(this.vehicleAsset);
 		}
@@ -138,11 +145,17 @@ export class VehicleCardComponent implements OnChanges {
 		this.vehicleAssetChange.emit(this.vehicleAsset);
 	}
 
-	modelChanged(value: string): void {
+	modelChanged(model: string): void {
 		if (this.vehicleAsset?.dto) {
 			this.vehicleAsset = {
 				...this.vehicleAsset,
-				dto: { ...this.vehicleAsset.dto, model: value },
+				dto: {
+					...this.vehicleAsset.dto,
+					extra: {
+						...(this.vehicleAsset.dto.extra as IAssetVehicleExtra),
+						model,
+					},
+				},
 			};
 			this.vehicleAssetChange.emit(this.vehicleAsset);
 		}

@@ -11,7 +11,7 @@
 	/>
 </ion-card>
 
-<ion-card *ngIf="documentAsset?.dto?.model">
+<ion-card>
 	<ion-item>
 		<!-- Datetime in popover with input -->
 		<ion-input label="Taxed till" [value]="taxExpires" />
@@ -41,13 +41,13 @@
 </ion-card>
 
 <ion-button
-	*ngIf="documentAsset?.dto?.model || documentAsset?.dto?.regNumber"
-	[color]="documentAsset?.dto?.model ? 'primary' : 'light'"
+	*ngIf="documentAsset?.dto?.regNumber"
+	[color]="documentAsset?.dto?.regNumber ? 'primary' : 'light'"
 	size="large"
 	class="ion-margin"
 	expand="full"
 	[disabled]="!team || isSubmitting"
-	(click)="submitVehicleForm()"
+	(click)="submitDocumentForm()"
 >
 	<ng-container *ngIf="!isSubmitting">Add vehicle</ng-container>
 	<ng-container *ngIf="isSubmitting">Adding vehicle...</ng-container>

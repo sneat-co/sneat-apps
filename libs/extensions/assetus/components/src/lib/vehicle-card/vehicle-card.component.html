@@ -29,12 +29,12 @@
 			(regNumberSkipped || vehicleAsset?.dto?.regNumber !== undefined)
 		"
 		[assetType]="vehicleAsset?.dto?.type"
-		[make]="vehicleAsset?.dto?.make"
-		[model]="vehicleAsset?.dto?.model"
+		[make]="vehicleAsset?.dto?.extra?.make"
+		[model]="vehicleAsset?.dto?.extra?.model"
 		(makeChange)="makeChanged($event)"
 		(modelChange)="modelChanged($event)"
 	/>
-	<ng-container *ngIf="vehicleAsset?.dto?.model">
+	<ng-container *ngIf="vehicleAsset?.dto?.extra?.model">
 		<ion-item-divider>
 			<ion-label>Engine</ion-label>
 		</ion-item-divider>
@@ -46,7 +46,7 @@
 </ion-card>
 
 <sneat-asset-possession-card
-	*ngIf="vehicleAsset?.dto?.model"
+	*ngIf="vehicleAsset?.dto?.extra?.model"
 	[asset]="vehicleAsset"
 	(assetChange)="onAssetChanged($event)"
 />
