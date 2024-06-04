@@ -1,15 +1,9 @@
-const { FlatCompat } = require('@eslint/eslintrc');
 const baseConfig = require('../../eslint.config.js');
-const js = require('@eslint/js');
-
-const compat = new FlatCompat({
-	baseDirectory: __dirname,
-	recommendedConfig: js.configs.recommended,
-});
+const { compatConfig } = require('../../eslint.lib.config.js');
 
 module.exports = [
 	...baseConfig,
-	...compat.extends('plugin:cypress/recommended'),
+	...compatConfig(__dirname).extends('plugin:cypress/recommended'),
 	{
 		files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
 		rules: {},
