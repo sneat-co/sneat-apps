@@ -209,9 +209,7 @@ export class QueryEditorStateService {
 		if ($state.value) {
 			const state: IQueryEditorState = {
 				currentQueryId: queryState.id,
-				activeQueries: [...$state.value.activeQueries, queryState] || [
-					queryState,
-				],
+				activeQueries: [...($state.value.activeQueries || []), queryState],
 			};
 			$state.next(state);
 		}
