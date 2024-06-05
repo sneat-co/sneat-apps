@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'contactus-shared',
 	preset: '../../../jest.preset.js',

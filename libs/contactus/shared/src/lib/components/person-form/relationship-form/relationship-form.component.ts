@@ -20,7 +20,6 @@ import {
 } from '@sneat/contactus-core';
 import {
 	getRelatedItemByKey,
-	IRelatedItem,
 	IRelatedItemsByModule,
 	IRelationshipRole,
 	IRelationshipRoles,

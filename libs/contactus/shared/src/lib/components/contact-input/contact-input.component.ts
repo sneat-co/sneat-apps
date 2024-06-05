@@ -113,10 +113,7 @@ export class ContactInputComponent implements OnChanges {
 	}
 
 	get contactLink(): string {
-		return (
-			`/company/${this.team?.type}/${this.team?.id}/contact/${this.contact?.id}` ||
-			''
-		);
+		return `/company/${this.team?.type}/${this.team?.id}/contact/${this.contact?.id}`;
 	}
 
 	reset(event: Event): void {

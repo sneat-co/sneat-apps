@@ -1,7 +1,11 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import { ContactRole, ContactType } from '@sneat/dto';
+import {
+	ContactRole,
+	ContactType,
+	IContactContext,
+} from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IContactContext, ITeamContext } from '@sneat/team-models';
+import { ITeamContext } from '@sneat/team-models';
 import {
 	ContactSelectorService,
 	IContactSelectorOptions,
@@ -38,10 +42,7 @@ export class SubcontactInputComponent {
 	) {}
 
 	get contactLink(): string {
-		return (
-			`/company/${this.team?.type}/${this.team?.id}/contact/${this.contact?.id}` ||
-			''
-		);
+		return `/company/${this.team?.type}/${this.team?.id}/contact/${this.contact?.id}`;
 	}
 
 	reset(event: Event): void {
