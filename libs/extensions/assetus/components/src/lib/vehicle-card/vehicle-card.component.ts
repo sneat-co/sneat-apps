@@ -84,8 +84,10 @@ export class VehicleCardComponent implements OnChanges {
 		// }
 		if (changes['vehicleAsset']) {
 			if (!this.regNumber.dirty) {
-				const extra = this.vehicleAsset?.brief?.extra as IAssetVehicleExtra;
-				this.regNumber.setValue(extra.regNumber || '');
+				const extra = this.vehicleAsset?.brief?.extra as
+					| IAssetVehicleExtra
+					| undefined;
+				this.regNumber.setValue(extra?.regNumber || '');
 			}
 		}
 	}

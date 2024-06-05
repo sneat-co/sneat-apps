@@ -1,4 +1,5 @@
 <ion-card>
+	Vehicle card
 	<ion-list>
 		<sneat-country-selector
 			[countryID]="vehicleAsset?.brief?.countryID"
@@ -26,7 +27,7 @@
 		*ngIf="
 			vehicleAsset?.dto?.type &&
 			vehicleAsset?.dto?.countryID &&
-			(regNumberSkipped || vehicleAsset?.dto?.extra?.regNumber !== undefined)
+			(regNumberSkipped || !!vehicleAsset?.dto?.extra?.regNumber)
 		"
 		[assetType]="vehicleAsset?.dto?.type"
 		[make]="vehicleAsset?.dto?.extra?.make"
