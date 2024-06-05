@@ -8,12 +8,10 @@ import {
 } from '@sneat/contactus-core';
 import { IIdAndBrief } from '@sneat/core';
 import {
-	IAssetContext,
 	IDocTypeStandardFields,
 	AssetDocumentType,
 	standardDocTypesByID,
 	IAssetDocumentExtra,
-	IAssetDbo,
 	IAssetDboBase,
 	IAssetDocumentContext,
 } from '@sneat/mod-assetus-core';

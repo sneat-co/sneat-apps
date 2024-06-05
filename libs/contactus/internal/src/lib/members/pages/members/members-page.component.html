@@ -8,7 +8,7 @@
 			generalTitle="Members"
 			icon="👪"
 			[titlesByTeamType]="{
-				family: 'Family members'
+				family: 'Family members',
 			}"
 		/>
 		<ion-buttons slot="end">
@@ -137,13 +137,13 @@
 	<ion-toolbar color="light">
 		<ion-label *ngIf="team.dto && segment === 'all'">
 			<b>Total</b>:
-			{{ team.dto.numberOf?.members ?? 0 }}
-			{{ team.dto.numberOf?.members === 1 ? "member" : "members" }}
+			<!--			{{ team.dto.numberOf?.members ?? 0 }}-->
+			<!--			{{ team.dto.numberOf?.members === 1 ? "member" : "members" }}-->
 		</ion-label>
 		<ion-label *ngIf="team.dto && segment === 'groups'">
 			<b>Total</b>:
-			{{ team.dto.numberOf?.memberGroups || 0 }}
-			{{ team.dto.numberOf?.memberGroups === 1 ? "group" : "groups" }}
+			<!--			{{ team.dto.numberOf?.memberGroups || 0 }}-->
+			<!--			{{ team.dto.numberOf?.memberGroups === 1 ? "group" : "groups" }}-->
 		</ion-label>
 		<ion-label *ngIf="!team.dto">Loading...</ion-label>
 		<ion-buttons slot="end">

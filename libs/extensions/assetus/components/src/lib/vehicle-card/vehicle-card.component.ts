@@ -84,7 +84,8 @@ export class VehicleCardComponent implements OnChanges {
 		// }
 		if (changes['vehicleAsset']) {
 			if (!this.regNumber.dirty) {
-				this.regNumber.setValue(this.vehicleAsset?.brief?.regNumber || '');
+				const extra = this.vehicleAsset?.brief?.extra as IAssetVehicleExtra;
+				this.regNumber.setValue(extra.regNumber || '');
 			}
 		}
 	}
@@ -113,9 +114,16 @@ export class VehicleCardComponent implements OnChanges {
 	protected onRegNumberChanged(value: string): void {
 		this.regNumber.setValue(value);
 		if (this.vehicleAsset?.dto) {
+			const extra = {
+				...(this.vehicleAsset.dto.extra as IAssetVehicleExtra),
+				regNumber: value,
+			};
 			this.vehicleAsset = {
 				...this.vehicleAsset,
-				dto: { ...this.vehicleAsset.dto, regNumber: value },
+				dto: {
+					...this.vehicleAsset.dto,
+					extra,
+				},
 			};
 			this.vehicleAssetChange.emit(this.vehicleAsset);
 		}

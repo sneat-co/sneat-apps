@@ -4,6 +4,7 @@ export const AssetPossessionUndisclosed = 'undisclosed',
 	AssetPossessionLeasing = 'leasing';
 
 export type AssetStatus = 'active' | 'archived' | 'draft';
+
 export type AssetCategory =
 	| 'undefined'
 	| 'dwelling'

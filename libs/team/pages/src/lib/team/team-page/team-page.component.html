@@ -52,13 +52,6 @@
 					<ion-item routerLink="./assets" detail>
 						<ion-icon name="car-sport-outline" slot="start" />
 						<ion-label>Assets</ion-label>
-						<ion-badge
-							slot="end"
-							color="light"
-							class="badge-count"
-							*ngIf="team.dto?.numberOf?.assets"
-							>{{ team.dto?.numberOf?.assets }}</ion-badge
-						>
 					</ion-item>
 					<ion-item routerLink="./calendar" detail="">
 						<ion-icon name="calendar-outline" slot="start" />

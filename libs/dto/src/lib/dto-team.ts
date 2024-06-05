@@ -16,7 +16,7 @@ export interface ITeamDto extends ITotalsHolder {
 	// readonly members?: IMemberBrief[];
 	// readonly assets?: IAssetBrief[];
 	// readonly contacts?: IContactBrief[];
-	readonly numberOf?: TeamCounts;
+	// readonly numberOf?: TeamCounts;
 	// readonly recurringHappenings?: { [id: string]: IHappeningBrief }; // TODO: Move to ISchedulusTeamDto
 
 	metrics: ITeamMetric[];

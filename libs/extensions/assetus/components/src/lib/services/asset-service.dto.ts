@@ -2,7 +2,6 @@ import {
 	AssetExtraType,
 	IAssetDboBase,
 	IAssetExtra,
-	IAssetMainData,
 } from '@sneat/mod-assetus-core';
 import { ITeamRequest } from '@sneat/team-models';
 

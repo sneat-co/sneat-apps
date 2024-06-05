@@ -16,10 +16,14 @@
 			<ion-label
 				[color]="deletingIDs.includes(asset.id) ? 'medium' : undefined"
 			>
-				@if (asset.brief.make && asset.brief.model) {
-					{{ asset.brief.make }}/{{ asset.brief.model }}
+				@if (asset.brief.extra?.["make"] && asset.brief.extra?.["model"]) {
+					{{ asset.brief.extra?.["make"] }}/{{ asset.brief.extra?.["model"] }}
 				}
-				@if (asset.brief.title && asset.brief.make && asset.brief.model) {
+				@if (
+					asset.brief.title &&
+					asset.brief.extra?.["make"] &&
+					asset.brief.extra?.["model"]
+				) {
 					&mdash;
 				}
 				@if (asset.brief.title) {
@@ -27,16 +31,16 @@
 				}
 			</ion-label>
 			<ion-badge
-				*ngIf="asset.brief.yearOfBuild && !asset.brief.regNumber"
+				*ngIf="asset.brief.yearOfBuild && !asset.brief.extra?.['regNumber']"
 				color="light"
 				style="font-weight: normal"
 				>{{ asset.brief.yearOfBuild }}
 			</ion-badge>
 			<ion-badge
-				*ngIf="asset.brief.regNumber"
+				*ngIf="asset.brief.extra?.['regNumber']"
 				color="light"
 				style="font-weight: normal"
-				>{{ asset.brief.regNumber }}
+				>{{ asset.brief.extra?.["regNumber"] }}
 			</ion-badge>
 			<ion-buttons slot="end">
 				<!--				<ion-button (click)="add2Asset($event)">-->

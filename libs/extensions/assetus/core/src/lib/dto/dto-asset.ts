@@ -37,15 +37,16 @@ export interface ISubAssetInfo extends ITitledRecord {
 	expires?: string; // ISO date string 'YYYY-MM-DD'
 }
 
-export interface IAssetBrief extends ITitled {
+export interface IAssetBrief<
+	ExtraType extends AssetExtraType = string,
+	Extra extends IAssetExtra<ExtraType> = IAssetExtra<ExtraType>,
+> extends ITitled,
+		IWithAssetExtra<ExtraType, Extra> {
 	isRequest?: boolean;
 	status: AssetStatus;
 	category: AssetCategory;
 	countryID?: CountryId;
 	type?: AssetType; // E.g. subcategory - for example for documents could be: passport, visa, etc.
-	make?: string;
-	model?: string;
-	regNumber?: string;
 	yearOfBuild?: number; // TODO: consider using only `dateOfBuild`
 	dateOfBuild?: string; // ISO date string 'YYYY-MM-DD'
 	possession: AssetPossession;
@@ -56,6 +57,7 @@ export interface IAssetusTeamDto extends ITitled {
 }
 
 export type AssetExtraType =
+	| 'unknown'
 	| 'empty'
 	| 'vehicle'
 	| 'dwelling'
@@ -64,6 +66,11 @@ export type AssetExtraType =
 
 export interface IAssetExtra<Type extends AssetExtraType> {
 	type: Type; // Workaround for code completion, not supposed to be used.
+	[key: string]: unknown;
+}
+
+export interface IUnknownAssetExtra extends IAssetExtra<string> {
+	type: 'unknown';
 }
 
 export interface IAssetEmptyExtra extends IAssetExtra<'empty'> {
@@ -72,21 +79,17 @@ export interface IAssetEmptyExtra extends IAssetExtra<'empty'> {
 
 export type IAssetusTeamContext = INavContext<IAssetusTeamDto, IAssetusTeamDto>;
 
-export interface IAssetMainData extends IAssetBrief {
-	parentAssetID?: string;
-	desc?: string;
-	memberIDs?: string[];
-}
-
 export interface IAssetDboBase<
 	ExtraType extends AssetExtraType = string,
 	Extra extends IAssetExtra<ExtraType> = IAssetExtra<ExtraType>,
-> extends IWithAssetExtra<ExtraType, Extra>,
-		IAssetMainData,
+> extends IAssetBrief<ExtraType, Extra>,
 		IDemoRecord,
 		ITotalsHolder,
 		IWithModified {
 	teamID?: string;
+	parentAssetID?: string;
+	desc?: string;
+	memberIDs?: string[];
 	parentCategoryID?: AssetCategory;
 	sameAssetID?: string; // A link to realtor's or tenant's asset ID
 	groupId?: string; // TODO: document what it is
@@ -131,7 +134,7 @@ export interface IAssetVehicleExtra
 		IWithMakeAndModel,
 		IEngine {
 	vin?: string;
-	number?: string;
+	regNumber?: string;
 	nctExpires?: string; // ISO date string 'YYYY-MM-DD'
 	nctExpiresTaskId?: string;
 	taxExpires?: string; // ISO date string 'YYYY-MM-DD'

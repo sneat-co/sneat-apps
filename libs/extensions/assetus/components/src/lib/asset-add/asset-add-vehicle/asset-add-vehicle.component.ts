@@ -98,8 +98,15 @@ export class AssetAddVehicleComponent
 				dto: {
 					...this.vehicleAsset.dto,
 					type: this.vehicleType,
-					make: '',
-					model: '',
+					extraType: 'vehicle',
+					extra: {
+						type: 'vehicle',
+						make: '',
+						model: '',
+						regNumber: '',
+						engineType: '',
+						engineFuel: '',
+					},
 				},
 			};
 		}

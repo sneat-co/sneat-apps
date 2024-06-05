@@ -21,7 +21,7 @@
 <ion-card *ngIf="vehicleAsset?.dto?.extra?.model" />
 
 <ion-button
-	*ngIf="vehicleAsset?.dto?.extra?.model || vehicleAsset?.dto?.regNumber"
+	*ngIf="vehicleAsset?.dto?.extra?.model || vehicleAsset?.dto?.extra?.regNumber"
 	[color]="vehicleAsset?.dto?.extra?.model ? 'primary' : 'light'"
 	size="large"
 	class="ion-margin"

@@ -2,12 +2,7 @@ import { Component, Inject, InjectionToken, Input } from '@angular/core';
 import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IContactusTeamDtoAndID } from '@sneat/contactus-core';
-import {
-	AssetExtraType,
-	IAssetDboBase,
-	IAssetExtra,
-	IAssetMainData,
-} from '@sneat/mod-assetus-core';
+import { AssetExtraType, IAssetExtra } from '@sneat/mod-assetus-core';
 import { TeamComponentBaseParams } from '@sneat/team-components';
 import { ITeamContext } from '@sneat/team-models';
 import { SneatBaseComponent } from '@sneat/ui';

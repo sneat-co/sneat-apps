@@ -4,7 +4,6 @@ import {
 	IAssetDboBase,
 	IAssetusTeamContext,
 	IAssetContext,
-	IAssetVehicleExtra,
 	IAssetVehicleContext,
 } from '@sneat/mod-assetus-core';
 import { TeamItemPageBaseComponent } from '@sneat/team-components';

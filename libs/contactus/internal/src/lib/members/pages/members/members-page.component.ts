@@ -61,7 +61,6 @@ export class MembersPageComponent
 	extends MembersBasePage
 	implements AfterViewInit
 {
-	private prevMembersCount?: number;
 	public contactsByMember: Record<
 		string,
 		readonly IIdAndBrief<IContactBrief>[]
@@ -176,17 +175,15 @@ export class MembersPageComponent
 		if (!this.team) {
 			throw new Error('!this.commune');
 		}
-		console.log(
-			`MembersPageComponent.onTeamDtoChanged() => members: oldCount=${this.prevMembersCount}, newCount=${this.team.dto?.numberOf?.members}`,
-		);
-		if (this.team?.dto?.numberOf?.members) {
-			this.loadingStubs = Array(this.team?.dto?.numberOf?.members).fill(1);
-		}
+		console.log(`MembersPageComponent.onTeamDtoChanged()`);
+		// if (this.team?.dto?.numberOf?.members) {
+		// 	this.loadingStubs = Array(this.team?.dto?.numberOf?.members).fill(1);
+		// }
 		// if (!isNaN(this.prevMembersCount) && this.prevMembersCount != this.commune.numberOf.members) {
 		//     this.loadData();
 		// }
 		this.loadData('onTeamDtoChanged');
-		this.prevMembersCount = this.team?.dto?.numberOf?.members || 0;
+		// this.prevMembersCount = this.team?.dto?.numberOf?.members || 0;
 	}
 
 	private loadData(source: string): void {

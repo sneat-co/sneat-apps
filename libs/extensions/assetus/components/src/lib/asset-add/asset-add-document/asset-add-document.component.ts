@@ -93,8 +93,10 @@ export class AssetAddDocumentComponent
 				dto: {
 					...this.documentAsset.dto,
 					type: this.documentType,
-					make: '',
-					model: '',
+					extraType: 'document',
+					extra: {
+						type: 'document',
+					},
 				},
 			};
 		}

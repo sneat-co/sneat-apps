@@ -232,12 +232,12 @@ export class Commune implements ITeamContext {
 	// 	return t === 'educator' || t === 'sport_club' || t === 'cohabit';
 	// }
 
-	public get numberOf(): TeamCounts {
-		if (this.team.dto?.numberOf) {
-			return this.team.dto.numberOf;
-		}
-		return newTeamCounts(this.team.dto?.numberOf);
-	}
+	// public get numberOf(): TeamCounts {
+	// 	if (this.team.dto?.numberOf) {
+	// 		return this.team.dto.numberOf;
+	// 	}
+	// 	return newTeamCounts(this.team.dto?.numberOf);
+	// }
 
 	private _membersCountByRole?: { role: string; count: number }[];
 

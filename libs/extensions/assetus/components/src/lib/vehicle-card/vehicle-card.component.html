@@ -11,7 +11,7 @@
 			*ngIf="vehicleAsset?.dto?.countryID"
 			[team]="team"
 			[assetID]="vehicleAsset?.id"
-			[regNumber]="vehicleAsset?.dto?.regNumber"
+			[regNumber]="vehicleAsset?.dto?.extra?.regNumber"
 			[countyID]="vehicleAsset?.dto?.countryID"
 			[hideSaveButton]="true"
 			[isSkipped]="regNumberSkipped"
@@ -26,7 +26,7 @@
 		*ngIf="
 			vehicleAsset?.dto?.type &&
 			vehicleAsset?.dto?.countryID &&
-			(regNumberSkipped || vehicleAsset?.dto?.regNumber !== undefined)
+			(regNumberSkipped || vehicleAsset?.dto?.extra?.regNumber !== undefined)
 		"
 		[assetType]="vehicleAsset?.dto?.type"
 		[make]="vehicleAsset?.dto?.extra?.make"
