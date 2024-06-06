@@ -49,7 +49,7 @@ export class AssetAddDwellingComponent
 					category: 'dwelling',
 					extraType: 'dwelling',
 					extra: {
-						type: 'dwelling',
+						extraType: 'dwelling',
 						address: '',
 						rent_price: { value: 0, currency: 'USD' },
 					},

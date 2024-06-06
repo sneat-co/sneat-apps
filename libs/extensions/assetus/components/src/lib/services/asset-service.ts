@@ -18,8 +18,8 @@ import { ICreateAssetRequest, IUpdateAssetRequest } from './asset-service.dto';
 
 @Injectable()
 export class AssetService extends ModuleTeamItemService<
-	IAssetBrief<string, IAssetExtra<string>>,
-	IAssetDboBase<string, IAssetExtra<string>>
+	IAssetBrief<string>,
+	IAssetDboBase<string>
 > {
 	constructor(afs: AngularFirestore, sneatApiService: SneatApiService) {
 		super('assetus', 'assets', afs, sneatApiService);
@@ -38,7 +38,7 @@ export class AssetService extends ModuleTeamItemService<
 
 	public createAsset<
 		ExtraType extends AssetExtraType,
-		Extra extends IAssetExtra<ExtraType>,
+		Extra extends IAssetExtra,
 	>(
 		team: ITeamContext,
 		request: ICreateAssetRequest<ExtraType, Extra>,
@@ -57,10 +57,7 @@ export class AssetService extends ModuleTeamItemService<
 
 	public readonly watchAssetByID = this.watchTeamItemByIdWithTeamRef;
 
-	watchTeamAssets<
-		ExtraType extends AssetExtraType,
-		Extra extends IAssetExtra<ExtraType>,
-	>(
+	watchTeamAssets<ExtraType extends AssetExtraType, Extra extends IAssetExtra>(
 		team: ITeamContext,
 		category?: AssetCategory,
 	): Observable<IAssetContext<ExtraType, Extra>[]> {

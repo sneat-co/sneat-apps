@@ -102,7 +102,7 @@ export const standardDocTypesByID: Record<string, DocTypeDef> = {
 	},
 };
 
-export interface IAssetDocumentExtra extends IAssetExtra<'document'> {
+export interface IAssetDocumentExtra extends IAssetExtra {
 	docType?: AssetDocumentType;
 	number?: string;
 	batchNumber?: string;

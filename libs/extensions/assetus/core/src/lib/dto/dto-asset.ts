@@ -39,7 +39,7 @@ export interface ISubAssetInfo extends ITitledRecord {
 
 export interface IAssetBrief<
 	ExtraType extends AssetExtraType = string,
-	Extra extends IAssetExtra<ExtraType> = IAssetExtra<ExtraType>,
+	Extra extends IAssetExtra = IAssetExtra,
 > extends ITitled,
 		IWithAssetExtra<ExtraType, Extra> {
 	isRequest?: boolean;
@@ -64,24 +64,24 @@ export type AssetExtraType =
 	| 'document'
 	| string;
 
-export interface IAssetExtra<Type extends AssetExtraType> {
-	type: Type; // Workaround for code completion, not supposed to be used.
+export interface IAssetExtra {
+	// extraType: Type; // Workaround for code completion, not supposed to be used.
 	[key: string]: unknown;
 }
 
-export interface IUnknownAssetExtra extends IAssetExtra<string> {
-	type: 'unknown';
+export interface IUnknownAssetExtra extends IAssetExtra {
+	extraType: 'unknown';
 }
 
-export interface IAssetEmptyExtra extends IAssetExtra<'empty'> {
-	type: 'empty';
+export interface IAssetEmptyExtra extends IAssetExtra {
+	extraType: 'empty';
 }
 
 export type IAssetusTeamContext = INavContext<IAssetusTeamDto, IAssetusTeamDto>;
 
 export interface IAssetDboBase<
 	ExtraType extends AssetExtraType = string,
-	Extra extends IAssetExtra<ExtraType> = IAssetExtra<ExtraType>,
+	Extra extends IAssetExtra = IAssetExtra,
 > extends IAssetBrief<ExtraType, Extra>,
 		IDemoRecord,
 		ITotalsHolder,
@@ -102,7 +102,7 @@ export interface IAssetDboBase<
 
 export interface IWithAssetExtra<
 	ExtraType extends AssetExtraType,
-	Extra extends IAssetExtra<ExtraType>,
+	Extra extends IAssetExtra,
 > {
 	extraType: ExtraType;
 	extra?: Extra;
@@ -110,7 +110,7 @@ export interface IWithAssetExtra<
 
 export interface IAssetDbo<
 	ExtraType extends AssetExtraType,
-	Extra extends IAssetExtra<ExtraType>,
+	Extra extends IAssetExtra,
 > extends IAssetDboBase<ExtraType, Extra> {
 	readonly userIDs?: string[]; // TODO - define actual fields
 }
@@ -130,7 +130,7 @@ export interface IWithMakeAndModel {
 }
 
 export interface IAssetVehicleExtra
-	extends IAssetExtra<'vehicle'>,
+	extends IAssetExtra,
 		IWithMakeAndModel,
 		IEngine {
 	vin?: string;
@@ -145,7 +145,7 @@ export interface IAssetVehicleExtra
 
 export type IAssetVehicleContext = IAssetContext<'vehicle', IAssetVehicleExtra>;
 
-export interface IAssetDwellingExtra extends IAssetExtra<'dwelling'> {
+export interface IAssetDwellingExtra extends IAssetExtra {
 	address?: string;
 	rent_price?: {
 		value?: number;

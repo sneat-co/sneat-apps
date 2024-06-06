@@ -166,7 +166,6 @@ export class NewDocumentPageComponent
 			memberIDs: this.contact?.id ? [this.contact.id] : undefined,
 			extraType: 'document',
 			extra: {
-				type: 'document',
 				number: this.docNumber,
 			},
 		};

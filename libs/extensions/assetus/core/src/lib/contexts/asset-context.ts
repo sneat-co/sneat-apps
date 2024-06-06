@@ -3,7 +3,7 @@ import { AssetExtraType, IAssetBrief, IAssetDbo, IAssetExtra } from '../dto';
 
 export type IAssetContext<
 	ExtraType extends AssetExtraType = string,
-	Extra extends IAssetExtra<ExtraType> = IAssetExtra<ExtraType>,
+	Extra extends IAssetExtra = IAssetExtra,
 > = ITeamItemNavContext<
 	IAssetBrief<ExtraType, Extra>,
 	IAssetDbo<ExtraType, Extra>

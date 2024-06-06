@@ -37,7 +37,7 @@ export abstract class AddAssetBaseComponent extends SneatBaseComponent {
 
 	protected createAssetAndGoToAssetPage<
 		ExtraType extends AssetExtraType,
-		Extra extends IAssetExtra<ExtraType>,
+		Extra extends IAssetExtra,
 	>(request: ICreateAssetRequest<ExtraType, Extra>, team: ITeamContext): void {
 		if (!this.team) {
 			throw new Error('no team context');
