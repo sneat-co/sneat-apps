@@ -44,6 +44,7 @@ Thumbs.db
 .nx/cache
 .nx/workspace-data
 /.nx/
+migrations.json
 
 **/*.log
 **/cypress/downloads
