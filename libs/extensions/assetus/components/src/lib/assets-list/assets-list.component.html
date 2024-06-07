@@ -16,15 +16,24 @@
 			<ion-label
 				[color]="deletingIDs.includes(asset.id) ? 'medium' : undefined"
 			>
-				@if (asset.brief.extra?.["make"] && asset.brief.extra?.["model"]) {
-					{{ asset.brief.extra?.["make"] }}/{{ asset.brief.extra?.["model"] }}
-				}
-				@if (
-					asset.brief.title &&
-					asset.brief.extra?.["make"] &&
-					asset.brief.extra?.["model"]
-				) {
-					&mdash;
+				@switch (asset.brief.extraType) {
+					@case ("vehicle") {
+						@if (asset.brief.extra?.["make"] && asset.brief.extra?.["model"]) {
+							{{ asset.brief.extra?.["make"] }}/{{
+								asset.brief.extra?.["model"]
+							}}
+						}
+						@if (
+							asset.brief.title &&
+							asset.brief.extra?.["make"] &&
+							asset.brief.extra?.["model"]
+						) {
+							&mdash;
+						}
+					}
+					@case ("dwelling") {
+						{{ asset.brief.extra?.["address"] || asset.brief.title }}
+					}
 				}
 				@if (asset.brief.title) {
 					{{ asset.brief.title }}
