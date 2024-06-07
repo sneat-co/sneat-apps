@@ -40,8 +40,8 @@ export interface ISubAssetInfo extends ITitledRecord {
 export interface IAssetBrief<
 	ExtraType extends AssetExtraType = string,
 	Extra extends IAssetExtra = IAssetExtra,
-> extends ITitled,
-		IWithAssetExtra<ExtraType, Extra> {
+> extends IWithAssetExtra<ExtraType, Extra> {
+	title?: string;
 	isRequest?: boolean;
 	status: AssetStatus;
 	category: AssetCategory;

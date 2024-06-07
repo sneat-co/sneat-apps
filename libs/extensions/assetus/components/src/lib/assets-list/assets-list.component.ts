@@ -24,6 +24,15 @@ export class AssetsListComponent implements OnChanges {
 	@Input() assetType?: AssetCategory;
 	@Input() filter = '';
 
+	@Input() sorter: (
+		a: IIdAndBrief<IAssetBrief>,
+		b: IIdAndBrief<IAssetBrief>,
+	) => number = () => {
+		// if (a.brief && b.brief && a.brief.title > b.brief?.title) return 1;
+		// if (a.brief && b.brief && a.brief.title < b.brief?.title) return -1;
+		return 0;
+	};
+
 	public deletingIDs: string[] = [];
 
 	constructor(
@@ -53,11 +62,7 @@ export class AssetsListComponent implements OnChanges {
 					(!filter || asset?.brief?.title?.toLowerCase().includes(f) || -1),
 			);
 		}
-		this.assets = this.assets?.sort((a, b) => {
-			if (a.brief && b.brief && a.brief.title > b.brief?.title) return 1;
-			if (a.brief && b.brief && a.brief.title < b.brief?.title) return -1;
-			return 0;
-		});
+		this.assets = this.assets?.sort(this.sorter);
 		console.log(
 			'AssetsListComponent.ngOnChanges =>',
 			changes,

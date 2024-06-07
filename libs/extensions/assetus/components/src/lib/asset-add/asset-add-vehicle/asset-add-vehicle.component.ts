@@ -66,7 +66,6 @@ export class AssetAddVehicleComponent
 					},
 					teamID: this.team?.id,
 					type: this.vehicleType,
-					title: 'My vehicle',
 					possession: 'owning',
 					createdAt: new Date().toISOString() as unknown as timestamp,
 					createdBy: '-',
