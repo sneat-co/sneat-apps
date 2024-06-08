@@ -6,7 +6,11 @@
 		(keyup.enter)="submit()"
 	/>
 	<ion-buttons slot="end">
-		<ion-button color="medium" *ngIf="!isSkipped" (click)="skipOrNext()">
+		<ion-button
+			color="medium"
+			*ngIf="!isSkipped && !assetID"
+			(click)="skipOrNext()"
+		>
 			@if (regNumberControl.value) {
 				Next
 			} @else {
@@ -16,12 +20,21 @@
 		<ion-button
 			fill="solid"
 			color="primary"
-			*ngIf="!isValidated"
+			*ngIf="!isValidated && (!assetID || regNumberControl.dirty)"
 			[disabled]="!regNumberControl.value"
 			(click)="validate()"
 		>
 			<ion-icon name="search-outline" />
 			<ion-label>Validate</ion-label>
+		</ion-button>
+		<ion-button
+			*ngIf="assetID && regNumberControl.dirty"
+			(click)="
+				regNumberControl.setValue(regNumber || '');
+				regNumberControl.markAsPristine()
+			"
+		>
+			<ion-label>Cancel</ion-label>
 		</ion-button>
 		<ion-button
 			*ngIf="showSave"
