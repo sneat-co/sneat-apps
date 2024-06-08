@@ -20,6 +20,6 @@ export class OrderPrintPageBaseComponent extends OrderPageBaseComponent {
 	protected counterpartyByRole(
 		role: CounterpartyRole,
 	): IOrderCounterparty | undefined {
-		return this.order?.dto?.counterparties?.find((c) => c.role === role);
+		return this.order?.dbo?.counterparties?.find((c) => c.role === role);
 	}
 }

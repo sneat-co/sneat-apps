@@ -152,9 +152,12 @@ export abstract class TeamBaseComponent
 	protected onUserIdChanged(): void {
 		if (!this.currentUserId) {
 			this.subs.unsubscribe();
-			if (this.team && this.team.dto) {
-				// TODO: What if it is a public team? Should we keep dto or hide brief as well?
-				this.setNewTeamContext({ ...this.team, dto: undefined });
+			if (this.team && this.team.dbo) {
+				this.setNewTeamContext({
+					...this.team,
+					brief: undefined,
+					dbo: undefined,
+				});
 			}
 		}
 	}
@@ -185,7 +188,7 @@ export abstract class TeamBaseComponent
 		this.console.log(
 			`${this.className}.onTeamDtoChanged()`,
 			this.className,
-			this.team?.dto,
+			this.team?.dbo,
 		);
 	}
 
@@ -301,7 +304,7 @@ export abstract class TeamBaseComponent
 			this.teamContext?.brief,
 			teamContext?.brief,
 		);
-		const dtoChanged = this.teamContext?.dto != teamContext?.dto;
+		const dtoChanged = this.teamContext?.dbo != teamContext?.dbo;
 		this.console.log(
 			`${this.className} extends TeamPageComponent.setNewTeamContext(id=${teamContext?.id}) => idChanged=${idChanged}, teamTypeChanged=${teamTypeChanged}, briefChanged=${briefChanged}, dtoChanged=${dtoChanged}`,
 		);
@@ -322,7 +325,7 @@ export abstract class TeamBaseComponent
 				this.teamBriefChanged.next(teamContext?.brief);
 			}
 			if (dtoChanged) {
-				this.teamDtoChanged.next(teamContext?.dto);
+				this.teamDtoChanged.next(teamContext?.dbo);
 			}
 			if (!teamContext) {
 				this.unsubscribe('no team context');
@@ -384,13 +387,13 @@ export abstract class TeamBaseComponent
 	}
 
 	private readonly onTeamContextChanged = (team: ITeamContext): void => {
-		const dtoChanged = team.dto !== this.teamContext?.dto;
+		const dtoChanged = team.dbo !== this.teamContext?.dbo;
 		this.console.log(
 			`${this.className}.onTeamContextChanged() => dtoChanged=${dtoChanged}, team:`,
 			team,
 		);
-		if (!team.brief && team.dto) {
-			team = { ...team, brief: team.dto };
+		if (!team.brief && team.dbo) {
+			team = { ...team, brief: team.dbo };
 		}
 		if (!team.type) {
 			if (team.brief?.type) {

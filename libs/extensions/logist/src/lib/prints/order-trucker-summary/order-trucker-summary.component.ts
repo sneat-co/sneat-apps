@@ -45,7 +45,7 @@ export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 			next: (params) => {
 				this.truckerID = params['truckerID'];
 				console.log('truckerID', this.truckerID);
-				if (this.order?.dto) {
+				if (this.order?.dbo) {
 					this.setTrucker();
 				}
 			},
@@ -53,14 +53,14 @@ export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 	}
 
 	private setTrucker(): void {
-		this.truckerCounterparty = this?.order?.dto?.counterparties?.find(
+		this.truckerCounterparty = this?.order?.dbo?.counterparties?.find(
 			(c) => c.role === 'trucker' && c.contactID === this.truckerID,
 		);
 	}
 
 	protected override onOrderChanged(order: ILogistOrderContext) {
 		super.onOrderChanged(order);
-		const counterparties = this.order?.dto?.counterparties;
+		const counterparties = this.order?.dbo?.counterparties;
 		if (this.truckerID) {
 			this.setTrucker();
 		}
@@ -71,21 +71,21 @@ export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 		);
 		this.ship = counterparties?.find((c) => c.role === 'ship');
 		this.shippingLine = counterparties?.find((c) => c.role === 'shipping_line');
-		this.points = order.dto?.segments
+		this.points = order.dbo?.segments
 			?.filter((s) => s.byContactID === this.truckerID)
 			.map((segment) => {
-				const container = order?.dto?.containers?.find(
+				const container = order?.dbo?.containers?.find(
 					(c) => c.id === segment.containerID,
 				);
-				const toPick = order?.dto?.containerPoints?.find(
+				const toPick = order?.dbo?.containerPoints?.find(
 					(p) =>
 						p.containerID === segment.containerID &&
 						p.shippingPointID === segment.from.shippingPointID,
 				)?.toLoad;
-				const from = order?.dto?.shippingPoints?.find(
+				const from = order?.dbo?.shippingPoints?.find(
 					(p) => p.id === segment.from.shippingPointID,
 				);
-				const dispatcher = order?.dto?.counterparties?.find(
+				const dispatcher = order?.dbo?.counterparties?.find(
 					(c) => c.contactID === from?.counterparty?.contactID,
 				);
 				const containerInfo: IContainerInfo = {

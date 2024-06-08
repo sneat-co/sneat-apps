@@ -74,7 +74,7 @@ export class RecurringCardComponent implements OnDestroy {
 			id: happeningWithUiState.id,
 			team: { id: this.team?.id },
 			brief: happeningWithUiState.brief,
-			dto: happeningWithUiState.dto,
+			dbo: happeningWithUiState.dbo,
 		};
 		this.happeningService
 			.deleteHappening(happening)

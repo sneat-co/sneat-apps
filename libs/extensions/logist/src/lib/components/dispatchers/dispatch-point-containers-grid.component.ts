@@ -78,7 +78,7 @@ export class DispatchPointContainersGridComponent implements OnChanges {
 		const shippingPointID = this.shippingPoint?.id;
 
 		const containerPoints = shippingPointID
-			? this.order?.dto?.containerPoints?.filter(
+			? this.order?.dbo?.containerPoints?.filter(
 					(cp) => cp.shippingPointID === shippingPointID,
 			  )
 			: [];
@@ -86,7 +86,7 @@ export class DispatchPointContainersGridComponent implements OnChanges {
 			cp: IContainerPoint,
 			i: number,
 		): IDispatchPointContainerRow => {
-			const container = this.order?.dto?.containers?.find(
+			const container = this.order?.dbo?.containers?.find(
 				(c) => c.id === cp.containerID,
 			);
 			const tasks = cp.tasks
@@ -128,7 +128,7 @@ export class DispatchPointContainersGridComponent implements OnChanges {
 			'this.containerPoints:',
 			this.containerPoints,
 			'order',
-			this.order?.dto,
+			this.order?.dbo,
 		);
 	}
 }

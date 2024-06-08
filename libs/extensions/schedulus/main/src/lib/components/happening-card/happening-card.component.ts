@@ -26,7 +26,7 @@ export class HappeningCardComponent extends HappeningComponent {
 
 	protected getRelatedContactIDs(): readonly string[] {
 		return getRelatedItemIDs(
-			this.happening?.dto?.related || this.happening?.brief?.related,
+			this.happening?.dbo?.related || this.happening?.brief?.related,
 			'contactus',
 			'contacts',
 		);

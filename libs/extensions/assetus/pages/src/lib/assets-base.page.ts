@@ -46,7 +46,7 @@ export abstract class AssetsBasePage extends TeamBaseComponent {
 			this.assets = undefined;
 			return;
 		}
-		if (!this.assets && this.assetusTeam?.dto) {
+		if (!this.assets && this.assetusTeam?.dbo) {
 			throw new Error('not implemented');
 			// this.assets = this.assetusTeam?.dto?.assets;
 		}

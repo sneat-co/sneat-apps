@@ -3,8 +3,8 @@
 		<ion-buttons slot="end">
 			<ion-menu-button />
 		</ion-buttons>
-		<ion-title *ngIf="team.dto || team.type">
-			{{ team.dto?.title || team.type === "family" ? "Family" : team.id }}
+		<ion-title *ngIf="team.dbo || team.type">
+			{{ team.dbo?.title || team.type === "family" ? "Family" : team.id }}
 			<ion-text color="medium" *ngIf="topMenuService.isTopMenuHidden | async"
 				>&#64; sneat.app</ion-text
 			>

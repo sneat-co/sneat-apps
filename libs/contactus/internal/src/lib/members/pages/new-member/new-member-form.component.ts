@@ -150,7 +150,7 @@ export class NewMemberFormComponent implements OnChanges {
 		}
 		const displayName = personName(this.member.names);
 		const duplicateMember = zipMapBriefsWithIDs(
-			this.contactusTeam?.dto?.contacts,
+			this.contactusTeam?.dbo?.contacts,
 		)?.find((m) => personName(m.brief.names) === displayName);
 		if (duplicateMember) {
 			alert('There is already a member with same name: ' + displayName);
@@ -160,7 +160,7 @@ export class NewMemberFormComponent implements OnChanges {
 		const request: ICreateTeamMemberRequest = {
 			...this.member,
 			status: 'active',
-			countryID: team.dto?.countryID || '--',
+			countryID: team.dbo?.countryID || '--',
 			roles: ['contributor'],
 			teamID: team.id,
 		};

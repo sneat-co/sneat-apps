@@ -7,7 +7,7 @@ import {
 	ContactRoleFormModule,
 	PersonWizardComponent,
 } from '@sneat/contactus-shared';
-import { IIdAndBrief, IIdAndDto, IIdAndOptionalDto } from '@sneat/core';
+import { IIdAndBrief, IIdAndDto, IIdAndOptionalDbo } from '@sneat/core';
 import {
 	ContactToAssetRelation,
 	ContactToContactRelation,
@@ -88,7 +88,7 @@ export class NewContactPageComponent
 
 	public asset?: IAssetContext;
 
-	contactGroup?: IIdAndOptionalDto<IContactGroupDto>;
+	contactGroup?: IIdAndOptionalDbo<IContactGroupDto>;
 	contactRole?: IIdAndBrief<IContactRoleBrief>;
 
 	assetRelation?: ContactToAssetRelation;
@@ -197,7 +197,7 @@ export class NewContactPageComponent
 	}
 
 	public onContactRoleIDChanged(contactRoleID?: string): void {
-		const brief = this.contactGroup?.dto?.roles?.find(
+		const brief = this.contactGroup?.dbo?.roles?.find(
 			(r) => r.id === contactRoleID,
 		);
 		this.contactRole = brief && { id: brief.id, brief };

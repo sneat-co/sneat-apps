@@ -28,7 +28,7 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 	public order: ILogistOrderContext = {
 		id: '',
 		team: this.team || { id: '', type: 'company' },
-		dto: {
+		dbo: {
 			status: 'draft',
 			direction: 'export',
 			createdAt: { seconds: 0, nanoseconds: 0 },
@@ -66,8 +66,8 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 
 	get formIsValid(): boolean {
 		return (
-			!!this.order.dto?.route?.origin?.countryID &&
-			!!this.order.dto?.route?.destination?.countryID
+			!!this.order.dbo?.route?.origin?.countryID &&
+			!!this.order.dbo?.route?.destination?.countryID
 		);
 	}
 
@@ -81,8 +81,8 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 			.pipe(this.takeUntilNeeded(), takeUntil(this.teamIDChanged$))
 			.subscribe({
 				next: (logistTeam) => {
-					if (logistTeam.dto?.contactID) {
-						this.loadTeamContact(logistTeam.dto.contactID);
+					if (logistTeam.dbo?.contactID) {
+						this.loadTeamContact(logistTeam.dbo.contactID);
 					}
 				},
 				error: this.errorLogger.logErrorHandler(
@@ -109,16 +109,16 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 
 	private readonly processTeamContact = (contact: IContactContext): void => {
 		console.log('contact:', contact);
-		const contactDto = contact.dto;
+		const contactDto = contact.dbo;
 		if (!contactDto) {
 			return;
 		}
-		const orderDto = this.order.dto;
+		const orderDto = this.order.dbo;
 		if (!orderDto) {
 			return;
 		}
 
-		contact.dto.roles?.forEach((role) => {
+		contact.dbo.roles?.forEach((role) => {
 			const orderCounterparty: IOrderCounterparty = {
 				contactID: contact.id,
 				title: contactDto.title || contact.id,
@@ -128,7 +128,7 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 			};
 			this.order = {
 				...this.order,
-				dto: {
+				dbo: {
 					...orderDto,
 					counterparties: [
 						...(orderDto.counterparties || []),
@@ -156,10 +156,10 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 		if (!this.team?.id) {
 			throw new Error('no team context');
 		}
-		if (!this.order?.dto) {
+		if (!this.order?.dbo) {
 			throw new Error('!this.order?.dto');
 		}
-		if (!this.order?.dto?.counterparties?.some((c) => c.role === 'buyer')) {
+		if (!this.order?.dbo?.counterparties?.some((c) => c.role === 'buyer')) {
 			alert('Buyer is required');
 			return;
 		}
@@ -189,7 +189,7 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 		const request: ICreateLogistOrderRequest = excludeUndefined({
 			teamID: this.team.id,
 			order: {
-				...this.order.dto,
+				...this.order.dbo,
 				direction: this.direction,
 				route: undefined, //TODO: decide what to do //Object.keys(this.order?.dto?.route || {}).length ? this.order.dto.route : undefined,
 			},
@@ -224,7 +224,7 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 			'NewLogistOrderPageComponent.onCounterpartiesAdded():',
 			counterparties,
 		);
-		const orderDto = this.order.dto;
+		const orderDto = this.order.dbo;
 		if (!orderDto) {
 			return;
 		}
@@ -237,7 +237,7 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 		);
 		this.order = {
 			...this.order,
-			dto: {
+			dbo: {
 				...orderDto,
 				counterparties: [...orderCounterparties, ...counterparties],
 			},

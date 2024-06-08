@@ -44,12 +44,12 @@ export class TruckerSegmentComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order'] || changes['segment']) {
-			this.from = this.order?.dto?.counterparties?.find(
+			this.from = this.order?.dbo?.counterparties?.find(
 				(c) =>
 					c.contactID === this.orderSegment?.from?.contactID &&
 					c.role == this.orderSegment?.from?.role,
 			);
-			this.to = this.order?.dto?.counterparties?.find(
+			this.to = this.order?.dbo?.counterparties?.find(
 				(c) =>
 					c.contactID === this.orderSegment?.to?.contactID &&
 					c.role == this.orderSegment?.to?.role,

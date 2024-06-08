@@ -32,7 +32,7 @@ export class OrderContainersComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order']) {
-			this.containers = this.order?.dto?.containers || [];
+			this.containers = this.order?.dbo?.containers || [];
 			if (this.containers?.length) {
 				const selectedContainer = this.selectedContainer;
 				if (selectedContainer) {

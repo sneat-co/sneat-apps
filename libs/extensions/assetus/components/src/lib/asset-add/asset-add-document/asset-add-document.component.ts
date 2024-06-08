@@ -54,7 +54,7 @@ export class AssetAddDocumentComponent
 			const a: IAssetContext<'document'> = this.documentAsset ?? {
 				id: '',
 				team: this.team ?? { id: '' },
-				dto: {
+				dbo: {
 					status: 'draft',
 					category: 'vehicle',
 					extraType: 'document',
@@ -87,11 +87,11 @@ export class AssetAddDocumentComponent
 	}
 
 	onVehicleTypeChanged(): void {
-		if (this.documentAsset?.dto) {
+		if (this.documentAsset?.dbo) {
 			this.documentAsset = {
 				...this.documentAsset,
-				dto: {
-					...this.documentAsset.dto,
+				dbo: {
+					...this.documentAsset.dbo,
 					type: this.documentType,
 					extraType: 'document',
 					extra: {},
@@ -116,7 +116,7 @@ export class AssetAddDocumentComponent
 		if (!this.documentType) {
 			throw 'no vehicleType';
 		}
-		const assetDto = this.documentAsset?.dto;
+		const assetDto = this.documentAsset?.dbo;
 		if (!assetDto) {
 			throw new Error('no asset');
 		}

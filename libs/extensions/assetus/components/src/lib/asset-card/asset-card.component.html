@@ -5,7 +5,7 @@
 >
 	<ion-card-header>
 		<ion-card-title>
-			{{ asset?.dto?.title }}
+			{{ asset?.dbo?.title }}
 		</ion-card-title>
 	</ion-card-header>
 	<!--	<ion-list>-->
@@ -62,8 +62,8 @@
 	<!--</ion-item>-->
 	<!--</ion-list>-->
 	<!--</ion-card-content>-->
-	<ion-card-content *ngIf="asset?.dto?.subAssets">
-		<ion-item *ngFor="let subAsset of asset?.dto?.subAssets || []">
+	<ion-card-content *ngIf="asset?.dbo?.subAssets">
+		<ion-item *ngFor="let subAsset of asset?.dbo?.subAssets || []">
 			<ion-label>
 				<h3>{{ subAsset.title }}</h3>
 			</ion-label>

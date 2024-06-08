@@ -71,8 +71,8 @@ export class LocationFormComponent implements OnChanges {
 		}
 		this.contact = {
 			...this.contact,
-			dto: {
-				...this.contact?.dto,
+			dbo: {
+				...this.contact?.dbo,
 				type: this.contactType,
 				address,
 			},
@@ -91,20 +91,20 @@ export class LocationFormComponent implements OnChanges {
 			this.contact = {
 				id: '',
 				// team: this.team,
-				dto: brief,
+				dbo: brief,
 				team: this.team,
 			};
 		}
 		const title = this.title.value || '';
-		const dto = (this.contact?.dto || {}) as IContactDto;
+		const dbo = (this.contact?.dbo || {}) as IContactDto;
 		this.contact = {
 			...this.contact,
-			dto: { ...dto, title },
+			dbo: { ...dbo, title },
 		};
 		this.contactChange.emit(this.contact);
 	}
 
-	emitContactChange(): void {
+	private emitContactChange(): void {
 		this.contactChange.emit(this.contact);
 	}
 
@@ -122,11 +122,11 @@ export class LocationFormComponent implements OnChanges {
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log('LocationFormComponent.ngOnChanges()', changes);
 		if (changes['contactType']) {
-			if (!this.contact?.dto && this.contactType && this.team) {
+			if (!this.contact?.dbo && this.contactType && this.team) {
 				this.contact = {
 					id: this.contact?.id || '',
 					// team: this.team,
-					dto: { type: this.contactType },
+					dbo: { type: this.contactType },
 					team: this.team,
 				};
 				this.emitContactChange();
@@ -147,7 +147,7 @@ export class LocationFormComponent implements OnChanges {
 	}
 
 	submit(): void {
-		const contactDto = this.contact?.dto;
+		const contactDto = this.contact?.dbo;
 		if (!contactDto) {
 			alert('contact brief is not defined');
 			return;

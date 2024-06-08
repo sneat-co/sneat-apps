@@ -151,8 +151,8 @@ export function docSnapshotToDto<Brief, Dto extends Brief>(
 	docSnapshot: DocumentSnapshot<Dto>,
 ): INavContext<Brief, Dto> {
 	if (!docSnapshot.exists) {
-		return { id, brief: null, dto: null };
+		return { id, brief: null, dbo: null };
 	}
 	const dto: Dto | undefined = docSnapshot.data();
-	return { id, dto, brief: dto ? dto2brief(id, dto) : undefined };
+	return { id, dbo: dto, brief: dto ? dto2brief(id, dto) : undefined };
 }

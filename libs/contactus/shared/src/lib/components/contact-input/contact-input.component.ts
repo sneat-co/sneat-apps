@@ -63,7 +63,7 @@ export class ContactInputComponent implements OnChanges {
 			(!!this.parentRole || !!this.parentType) &&
 			!!(
 				this.parentContact?.brief?.countryID ||
-				this.parentContact?.dto?.countryID
+				this.parentContact?.dbo?.countryID
 			)
 		);
 	}
@@ -90,7 +90,7 @@ export class ContactInputComponent implements OnChanges {
 		}
 		const title = contact?.brief?.title || '';
 		const flag = showFlag
-			? countryFlagEmoji(contact?.brief?.countryID || contact?.dto?.countryID) +
+			? countryFlagEmoji(contact?.brief?.countryID || contact?.dbo?.countryID) +
 				' '
 			: '';
 		return flag + title;

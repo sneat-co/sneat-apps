@@ -47,36 +47,36 @@ export class AddDwellingCardComponent implements OnChanges {
 	ngOnChanges(changes: SimpleChanges): void {
 		if (
 			changes['team'] &&
-			this.team?.dto?.countryID &&
-			this.dwellingAsset?.dto &&
-			!this.dwellingAsset.dto.countryID
+			this.team?.dbo?.countryID &&
+			this.dwellingAsset?.dbo &&
+			!this.dwellingAsset.dbo.countryID
 		) {
 			this.dwellingAsset = {
 				...this.dwellingAsset,
-				dto: { ...this.dwellingAsset.dto, countryID: this.team.dto.countryID },
+				dbo: { ...this.dwellingAsset.dbo, countryID: this.team.dbo.countryID },
 			};
 			this.dwellingAssetChange.emit(this.dwellingAsset);
 		}
 
 		if (changes['dwellingAsset']) {
-			this.title = this.dwellingAsset?.dto?.title || '';
-			this.address = this.dwellingAsset?.dto?.extra?.address?.lines || '';
+			this.title = this.dwellingAsset?.dbo?.title || '';
+			this.address = this.dwellingAsset?.dbo?.extra?.address?.lines || '';
 			this.rent_price_amount =
-				this.dwellingAsset?.dto?.extra?.rent_price?.value;
+				this.dwellingAsset?.dbo?.extra?.rent_price?.value;
 			this.rent_price_currency =
-				this.dwellingAsset?.dto?.extra?.rent_price?.currency || 'USD';
+				this.dwellingAsset?.dbo?.extra?.rent_price?.currency || 'USD';
 			this.number_of_bedrooms =
-				this.dwellingAsset?.dto?.extra?.numberOfBedrooms;
-			this.areaSqM = this.dwellingAsset?.dto?.extra?.areaSqM;
+				this.dwellingAsset?.dbo?.extra?.numberOfBedrooms;
+			this.areaSqM = this.dwellingAsset?.dbo?.extra?.areaSqM;
 		}
 	}
 
 	protected onBriefFieldChanged(field: string, value: string): void {
-		if (this.dwellingAsset?.dto) {
+		if (this.dwellingAsset?.dbo) {
 			this.dwellingAsset = {
 				...this.dwellingAsset,
-				dto: {
-					...this.dwellingAsset.dto,
+				dbo: {
+					...this.dwellingAsset.dbo,
 					[field]: value,
 				},
 			};
@@ -85,13 +85,13 @@ export class AddDwellingCardComponent implements OnChanges {
 	}
 
 	protected onExtraFieldChanged(field: string, value: string): void {
-		if (this.dwellingAsset?.dto && this.dwellingAsset?.dto?.extra) {
+		if (this.dwellingAsset?.dbo && this.dwellingAsset?.dbo?.extra) {
 			this.dwellingAsset = {
 				...this.dwellingAsset,
-				dto: {
-					...this.dwellingAsset.dto,
+				dbo: {
+					...this.dwellingAsset.dbo,
 					extra: {
-						...this.dwellingAsset.dto.extra,
+						...this.dwellingAsset.dbo.extra,
 						[field]: value,
 					},
 				},
@@ -101,15 +101,15 @@ export class AddDwellingCardComponent implements OnChanges {
 	}
 
 	protected onRentPriceFieldChanged(field: string, value: string): void {
-		if (this.dwellingAsset?.dto?.extra?.rent_price) {
+		if (this.dwellingAsset?.dbo?.extra?.rent_price) {
 			this.dwellingAsset = {
 				...this.dwellingAsset,
-				dto: {
-					...this.dwellingAsset.dto,
+				dbo: {
+					...this.dwellingAsset.dbo,
 					extra: {
-						...this.dwellingAsset.dto.extra,
+						...this.dwellingAsset.dbo.extra,
 						rent_price: {
-							...this.dwellingAsset.dto.extra.rent_price,
+							...this.dwellingAsset.dbo.extra.rent_price,
 							[field]: value,
 						},
 					},
@@ -120,18 +120,18 @@ export class AddDwellingCardComponent implements OnChanges {
 	}
 
 	protected onCountryChanged(value: string): void {
-		console.log('countryChanged', value, this.dwellingAsset?.dto);
-		if (this.dwellingAsset?.dto) {
+		console.log('countryChanged', value, this.dwellingAsset?.dbo);
+		if (this.dwellingAsset?.dbo) {
 			this.dwellingAsset = {
 				...this.dwellingAsset,
-				dto: { ...this.dwellingAsset.dto, countryID: value },
+				dbo: { ...this.dwellingAsset.dbo, countryID: value },
 			};
 			this.dwellingAssetChange.emit(this.dwellingAsset);
 		}
 	}
 
 	protected onAssetChanged(asset: IAssetContext): void {
-		console.log(asset.dto);
+		console.log(asset.dbo);
 		this.dwellingAsset = asset as IAssetDwellingContext;
 		this.dwellingAssetChange.emit(this.dwellingAsset);
 	}

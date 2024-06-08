@@ -44,7 +44,7 @@ export class AssetAddDwellingComponent
 			this.dwellingAsset = this.dwellingAsset ?? {
 				id: '',
 				team: this.team ?? { id: '' },
-				dto: {
+				dbo: {
 					status: 'draft',
 					category: 'dwelling',
 					extraType: 'dwelling',
@@ -65,11 +65,11 @@ export class AssetAddDwellingComponent
 	}
 
 	protected onDwellingTypeChanged(): void {
-		if (this.dwellingAsset?.dto) {
+		if (this.dwellingAsset?.dbo) {
 			this.dwellingAsset = {
 				...this.dwellingAsset,
-				dto: {
-					...this.dwellingAsset.dto,
+				dbo: {
+					...this.dwellingAsset.dbo,
 					type: this.dwellingType,
 				},
 			};
@@ -88,7 +88,7 @@ export class AssetAddDwellingComponent
 		if (!this.dwellingAsset) {
 			throw new Error('no dwellingType');
 		}
-		const assetDto = this.dwellingAsset?.dto;
+		const assetDto = this.dwellingAsset?.dbo;
 		if (!assetDto) {
 			throw new Error('no asset');
 		}

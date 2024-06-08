@@ -259,7 +259,7 @@ export class ContactSelectorComponent
 		// 	...contact,
 		// 	parentContact: this.selectedParent,
 		// };
-		const c = { ...contact, brief: contact.dto };
+		const c = { ...contact, brief: contact.dbo };
 		this.emitOnSelected(c);
 		this.close(undefined);
 	}
@@ -271,7 +271,7 @@ export class ContactSelectorComponent
 	}
 
 	protected onParentContactCreated(contact: IContactContext): void {
-		const parentContact = { ...contact, brief: contact.dto, team: this.team };
+		const parentContact = { ...contact, brief: contact.dbo, team: this.team };
 		this.parentItems?.push(this.getParentItem(parentContact));
 		this.onParentContactChanged(parentContact);
 	}
@@ -282,7 +282,7 @@ export class ContactSelectorComponent
 		// 	parentContact: this.selectedContact,
 		// };
 		// this.selectedSubContactID = contact?.id
-		this.selectedContact = { ...contact, brief: contact.dto };
+		this.selectedContact = { ...contact, brief: contact.dbo };
 		this.emitOnSelected(this.selectedContact);
 	}
 

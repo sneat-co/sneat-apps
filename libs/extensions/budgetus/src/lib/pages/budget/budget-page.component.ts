@@ -76,7 +76,7 @@ export class BudgetPageComponent extends TeamBaseComponent {
 			.pipe(takeUntil(this.teamIDChanged$))
 			.subscribe({
 				next: (teamCalendarium) => {
-					this.calendariumTeamDto = teamCalendarium.dto || undefined;
+					this.calendariumTeamDto = teamCalendarium.dbo || undefined;
 				},
 			});
 	}
@@ -115,6 +115,7 @@ export class BudgetPageComponent extends TeamBaseComponent {
 	}
 
 	public memberBalance(m: Member): number {
+		console.log('memberBalance', m);
 		// return m.totals.per(this.period, this.showIncomes(), this.showExpenses());
 		return 0;
 	}

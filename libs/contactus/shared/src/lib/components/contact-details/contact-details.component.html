@@ -70,7 +70,7 @@
 				"
 				[team]="team"
 				[relatedTo]="relatedToContactOfCurrentUser"
-				[relatedItems]="contact?.dto?.related || contact?.brief?.related"
+				[relatedItems]="contact?.dbo?.related || contact?.brief?.related"
 				[ageGroup]="contact?.brief?.ageGroup"
 				(relatedAsChange)="onRelatedAsChanged($event)"
 			/>

@@ -58,6 +58,6 @@ export abstract class AssetBasePage extends TeamItemPageBaseComponent<
 	}
 
 	protected override briefs(): Record<string, IAssetBrief> | undefined {
-		return this.assetusTeam?.dto?.assets;
+		return this.assetusTeam?.dbo?.assets;
 	}
 }

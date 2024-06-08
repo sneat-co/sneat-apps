@@ -82,7 +82,7 @@ export const defaultFamilyContactGroupDTOs: readonly IIdAndDto<IContactGroupDto>
 	[
 		{
 			id: 'family',
-			dto: {
+			dbo: {
 				emoji: '👪',
 				title: 'Family',
 				roles: [
@@ -94,7 +94,7 @@ export const defaultFamilyContactGroupDTOs: readonly IIdAndDto<IContactGroupDto>
 		},
 		{
 			id: 'kid',
-			dto: {
+			dbo: {
 				emoji: '🚸',
 				title: 'Kids',
 				roles: [
@@ -107,7 +107,7 @@ export const defaultFamilyContactGroupDTOs: readonly IIdAndDto<IContactGroupDto>
 		},
 		{
 			id: 'house',
-			dto: {
+			dbo: {
 				emoji: '🏠',
 				title: 'House',
 				roles: [
@@ -121,7 +121,7 @@ export const defaultFamilyContactGroupDTOs: readonly IIdAndDto<IContactGroupDto>
 		},
 		{
 			id: 'med',
-			dto: {
+			dbo: {
 				emoji: '⚕️',
 				title: 'Medical',
 				roles: [
@@ -132,7 +132,7 @@ export const defaultFamilyContactGroupDTOs: readonly IIdAndDto<IContactGroupDto>
 		},
 		{
 			id: 'vehicle',
-			dto: {
+			dbo: {
 				emoji: '🚗',
 				title: 'Vehicle',
 				roles: [contactTypeMechanic, contactTypeInsurer],
@@ -141,7 +141,7 @@ export const defaultFamilyContactGroupDTOs: readonly IIdAndDto<IContactGroupDto>
 	];
 
 export const defaultFamilyContactGroups: readonly IIdAndDto<IContactGroupDto>[] =
-	defaultFamilyContactGroupDTOs.map((cg) => ({ ...cg, brief: cg.dto }));
+	defaultFamilyContactGroupDTOs.map((cg) => ({ ...cg, brief: cg.dbo }));
 
 @Injectable()
 export class ContactGroupService {
@@ -169,7 +169,7 @@ export class ContactGroupService {
 	): Observable<IIdAndDto<IContactGroupDto>> {
 		const cg = defaultFamilyContactGroups.find((cg) => cg.id === id);
 		if (!cg) {
-			return of({ id, team, dto: { title: id } });
+			return of({ id, team, dbo: { title: id } });
 		}
 		return of(cg);
 	}

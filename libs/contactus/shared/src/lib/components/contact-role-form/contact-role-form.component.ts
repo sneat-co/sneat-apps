@@ -57,8 +57,8 @@ export class ContactRoleFormComponent
 		return (
 			this.groups?.map((g) => ({
 				id: g.id,
-				title: g.dto.title,
-				emoji: g.dto.emoji,
+				title: g.dbo.title,
+				emoji: g.dbo.emoji,
 			})) || []
 		);
 	}

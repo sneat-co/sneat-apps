@@ -64,7 +64,7 @@ export class OrderContainersSelectorComponent implements OnChanges, OnInit {
 			this.containers = [this.container];
 			return;
 		}
-		this.containers = this.order?.dto?.containers?.map((c) => ({
+		this.containers = this.order?.dbo?.containers?.map((c) => ({
 			id: c.id,
 			type: c.type,
 			number: c.number,

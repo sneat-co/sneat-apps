@@ -17,7 +17,7 @@ import {
 	ContactusTeamService,
 } from '@sneat/contactus-services';
 import { ContactusModuleBaseComponent } from '@sneat/contactus-shared';
-import { IIdAndBrief, IIdAndOptionalDto } from '@sneat/core';
+import { IIdAndBrief, IIdAndOptionalDbo } from '@sneat/core';
 import { TeamComponentBaseParams } from '@sneat/team-components';
 import { zipMapBriefsWithIDs } from '@sneat/team-models';
 
@@ -61,10 +61,10 @@ export class ContactsFilterComponent
 	}
 
 	private onContactusTeamChanged(
-		contactusTeam: IIdAndOptionalDto<IContactusTeamDto>,
+		contactusTeam: IIdAndOptionalDbo<IContactusTeamDto>,
 	): void {
 		const contactBriefs = zipMapBriefsWithIDs(
-			contactusTeam?.dto?.contacts,
+			contactusTeam?.dbo?.contacts,
 		)?.map((m) => ({
 			...m,
 			team: this.team || { id: '' },

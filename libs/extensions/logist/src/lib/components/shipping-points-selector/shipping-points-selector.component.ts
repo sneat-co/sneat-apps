@@ -54,14 +54,14 @@ export class ShippingPointsSelectorComponent implements OnChanges {
 
 	setShippingPoints(): void {
 		console.log('setShippingPoints()');
-		this.order?.dto?.shippingPoints?.forEach((sp) => {
+		this.order?.dbo?.shippingPoints?.forEach((sp) => {
 			const selected = this.tasksByShippingPoint[sp.id];
 			if (!selected?.dirty) {
 				const container = this.container;
 				let tasks: readonly ShippingPointTask[] = [];
 				if (container) {
 					tasks =
-						this.order?.dto?.containerPoints?.find(
+						this.order?.dbo?.containerPoints?.find(
 							(cp) =>
 								cp.containerID === container.id && cp.shippingPointID === sp.id,
 						)?.tasks || [];
@@ -70,7 +70,7 @@ export class ShippingPointsSelectorComponent implements OnChanges {
 			}
 		});
 		this.shippingPoints = [
-			...(this.order?.dto?.shippingPoints || []),
+			...(this.order?.dbo?.shippingPoints || []),
 			...(this.newShippingPoints || []),
 		];
 	}
@@ -117,7 +117,7 @@ export class ShippingPointsSelectorComponent implements OnChanges {
 			const container = this.container;
 			if (container) {
 				const containerTasks =
-					this.order?.dto?.containerPoints?.find(
+					this.order?.dbo?.containerPoints?.find(
 						(cp) =>
 							cp.containerID === container.id &&
 							cp.shippingPointID === shippingPointID,
@@ -166,8 +166,8 @@ export class ShippingPointsSelectorComponent implements OnChanges {
 					},
 					location: {
 						contactID: contact.id,
-						countryID: contact.dto?.countryID || '--',
-						title: contact?.dto?.title || contact.id,
+						countryID: contact.dbo?.countryID || '--',
+						title: contact?.dbo?.title || contact.id,
 					},
 				},
 			];

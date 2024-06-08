@@ -13,7 +13,7 @@
 			}
 
 			<ion-text color="primary" style="font-weight: bold">
-				{{ happening?.brief?.title || happening?.dto?.title || "Loading..." }}
+				{{ happening?.brief?.title || happening?.dbo?.title || "Loading..." }}
 			</ion-text>
 			<!--			<p *ngIf='Object.keys(happening?.dto?.participants || {}).length'>-->
 			<!--				<ion-badge-->
@@ -37,7 +37,7 @@
 		[slot]="slot"
 		[happening]="happening"
 		*ngFor="
-			let slot of happening?.dto?.slots || happening?.brief?.slots || [];
+			let slot of happening?.dbo?.slots || happening?.brief?.slots || [];
 			trackBy: index
 		"
 	/>
@@ -47,7 +47,7 @@
 				<sneat-members-as-badges
 					[members]="
 						getRelatedContactIDs()
-							| selectedMembers: contactusTeam?.dto?.contacts
+							| selectedMembers: contactusTeam?.dbo?.contacts
 					"
 					(deleteMember)="removeMember($event)"
 				/>

@@ -178,10 +178,10 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		}
 		super.setList(list);
 		this.allListItems =
-			list.dto === undefined
+			list.dbo === undefined
 				? undefined
-				: list.dto?.items
-					? list.dto.items.map((item) => {
+				: list.dbo?.items
+					? list.dbo.items.map((item) => {
 							return { brief: item, state: {} };
 						})
 					: [];

@@ -37,7 +37,7 @@
 			(ionChange)="onContactRoleIDChanged($event)"
 		>
 			<ion-item
-				*ngFor="let r of contactGroup.dto.roles || []; trackBy: roleBriefID"
+				*ngFor="let r of contactGroup.dbo.roles || []; trackBy: roleBriefID"
 			>
 				<ion-radio slot="start" [value]="r.id" />
 				<ion-label>{{ r.emoji }} {{ r.title || r.id | titlecase }}</ion-label>
@@ -67,7 +67,7 @@
 				(ionChange)="onContactRoleIDChanged($event)"
 			>
 				<ion-select-option
-					*ngFor="let r of contactGroup?.dto?.roles || []; trackBy: roleBriefID"
+					*ngFor="let r of contactGroup?.dbo?.roles || []; trackBy: roleBriefID"
 					[value]="r.id"
 					>{{ r.emoji }} {{ r.title || r.id }}</ion-select-option
 				>

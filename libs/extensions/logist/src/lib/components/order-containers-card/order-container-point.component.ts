@@ -114,7 +114,7 @@ export class OrderContainerPointComponent implements OnChanges {
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['containerPoint'] || changes['order']) {
 			this.shippingPoint = this.containerPoint?.shippingPointID
-				? this.order?.dto?.shippingPoints?.find(
+				? this.order?.dbo?.shippingPoints?.find(
 						(sp) => sp.id === this.containerPoint?.shippingPointID,
 				  )
 				: undefined;

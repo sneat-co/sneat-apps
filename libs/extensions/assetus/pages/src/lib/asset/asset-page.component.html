@@ -11,7 +11,7 @@
 			>{{ asset?.brief?.title }}</ion-title
 		>
 		<ng-template #titleNoAsset>
-			<ng-container [ngSwitch]="asset?.dto?.category">
+			<ng-container [ngSwitch]="asset?.dbo?.category">
 				<ion-title *ngSwitchCase="'vehicle'">Vehicle</ion-title>
 				<ion-title *ngSwitchCase="'real_estate'">Property</ion-title>
 				<ion-title *ngSwitchDefault>Asset</ion-title>

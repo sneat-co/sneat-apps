@@ -103,7 +103,7 @@ export class NewDocumentPageComponent
 			const team = this.team;
 			if (team) {
 				const contactusTeam = this.contactusTeam;
-				this.members = zipMapBriefsWithIDs(contactusTeam?.dto?.contacts).map(
+				this.members = zipMapBriefsWithIDs(contactusTeam?.dbo?.contacts).map(
 					(contact) => contactContextFromBrief(contact, team),
 				);
 			}

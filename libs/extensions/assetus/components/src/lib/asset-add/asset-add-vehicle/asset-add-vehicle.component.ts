@@ -53,7 +53,7 @@ export class AssetAddVehicleComponent
 			const a: IAssetVehicleContext = this.vehicleAsset ?? {
 				id: '',
 				team: this.team ?? { id: '' },
-				dto: {
+				dbo: {
 					status: 'draft',
 					category: 'vehicle',
 					extraType: 'vehicle',
@@ -90,11 +90,11 @@ export class AssetAddVehicleComponent
 	}
 
 	onVehicleTypeChanged(): void {
-		if (this.vehicleAsset?.dto) {
+		if (this.vehicleAsset?.dbo) {
 			this.vehicleAsset = {
 				...this.vehicleAsset,
-				dto: {
-					...this.vehicleAsset.dto,
+				dbo: {
+					...this.vehicleAsset.dbo,
 					type: this.vehicleType,
 					extraType: 'vehicle',
 					extra: {
@@ -125,7 +125,7 @@ export class AssetAddVehicleComponent
 		if (!this.vehicleType) {
 			throw 'no vehicleType';
 		}
-		const assetDto = this.vehicleAsset?.dto;
+		const assetDto = this.vehicleAsset?.dbo;
 		if (!assetDto) {
 			throw new Error('no asset');
 		}

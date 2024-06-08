@@ -5,7 +5,7 @@ export class AssetGroup {
 	public readonly totals: Totals;
 
 	constructor(public readonly context: IAssetGroupContext) {
-		this.totals = new Totals(context.dto?.totals);
+		this.totals = new Totals(context.dbo?.totals);
 	}
 
 	get id(): string {
@@ -13,6 +13,6 @@ export class AssetGroup {
 	}
 
 	public get numberOf(): IAssetDtoGroupCounts {
-		return this.context.dto?.numberOf || {};
+		return this.context.dbo?.numberOf || {};
 	}
 }

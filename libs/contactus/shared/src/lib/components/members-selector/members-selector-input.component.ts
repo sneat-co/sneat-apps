@@ -47,7 +47,7 @@ export class MembersSelectorInputComponent {
 		}
 		const options: ISelectMembersOptions = {
 			selectedMembers: this.selectedMembers,
-			members: zipMapBriefsWithIDs(contactusTeam.dto?.contacts)?.map((m) =>
+			members: zipMapBriefsWithIDs(contactusTeam.dbo?.contacts)?.map((m) =>
 				contactContextFromBrief(m, team),
 			),
 			max: this.max,

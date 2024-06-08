@@ -11,7 +11,7 @@ import {
 	ContactusTeamService,
 } from '@sneat/contactus-services';
 import { MembersListComponent } from '@sneat/contactus-shared';
-import { IIdAndOptionalDto, TopMenuService } from '@sneat/core';
+import { IIdAndOptionalDbo, TopMenuService } from '@sneat/core';
 import {
 	InviteLinksComponent,
 	TeamComponentBaseParams,
@@ -39,7 +39,7 @@ import { TeamPageBaseComponent } from './TeamPageBaseComponent';
 	],
 })
 export class TeamPageComponent extends TeamPageBaseComponent {
-	protected contactusTeam?: IIdAndOptionalDto<IContactusTeamDto>;
+	protected contactusTeam?: IIdAndOptionalDbo<IContactusTeamDto>;
 
 	constructor(
 		route: ActivatedRoute,

@@ -36,7 +36,7 @@ export class AddAssetServicePageComponent extends AssetBasePage {
 
 	protected defaultBackParams(url: string): string {
 		if (this.asset) {
-			return `${url}?asset=${this.asset.dto.id}`;
+			return `${url}?asset=${this.asset.dbo.id}`;
 		}
 		return super.defaultBackParams(url);
 	}
@@ -44,7 +44,7 @@ export class AddAssetServicePageComponent extends AssetBasePage {
 	protected setAssetDto(assetDto: IAssetDto): void {
 		super.setAssetDto(assetDto);
 		if (this.asset) {
-			if (!this.asset.dto.categoryId) {
+			if (!this.asset.dbo.categoryId) {
 				throw new Error('!this.asset.dto.categoryId');
 			}
 			this.setDefaultBackUrl();
@@ -52,7 +52,7 @@ export class AddAssetServicePageComponent extends AssetBasePage {
 				.getServiceProvidersByAssetCategoryId(
 					undefined,
 					'ie',
-					this.asset.dto.categoryId,
+					this.asset.dbo.categoryId,
 				)
 				.subscribe((result) => {
 					console.log('serviceProviders:', result.values);

@@ -28,10 +28,10 @@ export class AssetPossessionCardComponent {
 	);
 
 	protected onPossessionChanged(possession: string): void {
-		if (this.asset?.dto) {
+		if (this.asset?.dbo) {
 			this.asset = {
 				...this.asset,
-				dto: { ...this.asset.dto, possession: possession as AssetPossession },
+				dbo: { ...this.asset.dbo, possession: possession as AssetPossession },
 			};
 			this.assetChange.emit(this.asset);
 		}

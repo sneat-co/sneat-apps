@@ -30,7 +30,7 @@ export function newEmptyHappeningContext(
 		status,
 		title: '',
 	};
-	return { id: '', team, brief, dto: { ...brief } };
+	return { id: '', team, brief, dbo: { ...brief } };
 }
 
 export type CancelOperationState =

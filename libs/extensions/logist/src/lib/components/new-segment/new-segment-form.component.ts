@@ -118,7 +118,7 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 		if (!this.order) {
 			return;
 		}
-		const toPorts = this.order?.dto?.counterparties?.filter(
+		const toPorts = this.order?.dbo?.counterparties?.filter(
 			(c) => c.role === 'port_from',
 		);
 		if (toPorts?.length == 1) {

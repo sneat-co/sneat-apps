@@ -1,12 +1,12 @@
 <sneat-select-from-list
-	*ngIf="!vehicleAsset?.dto?.extra?.engineType"
+	*ngIf="!vehicleAsset?.dbo?.extra?.engineType"
 	label="Engine type"
 	[items]="engineTypes"
 	labelPlacement="start"
 	(valueChange)="onEngineTypeChanged($event)"
 />
 
-<ion-item-group *ngIf="vehicleAsset?.dto?.extra?.engineFuel">
+<ion-item-group *ngIf="vehicleAsset?.dbo?.extra?.engineFuel">
 	<ion-item *ngIf="hasCombustion">
 		<ion-input label="Size CC" />
 	</ion-item>

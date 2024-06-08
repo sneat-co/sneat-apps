@@ -45,8 +45,8 @@ export abstract class TeamItemPageBaseComponent<
 		if (item && this.item?.id === item?.id) {
 			this.item = {
 				id: item.id,
-				brief: item.brief || item.dto || this.item.brief,
-				dto: item.dto || this.item.dto,
+				brief: item.brief || item.dbo || this.item.brief,
+				dbo: item.dbo || this.item.dbo,
 			};
 		} else {
 			this.item = item;

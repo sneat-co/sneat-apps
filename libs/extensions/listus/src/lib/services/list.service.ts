@@ -40,11 +40,11 @@ export class ListService extends ModuleTeamItemService<IListBrief, IListDto> {
 			.pipe(
 				map((list) => {
 					if (!list.brief) {
-						if (!list.dto) {
+						if (!list.dbo) {
 							throw new Error('response does not have either brief or dto');
 						}
-						const title = list.dto.title || list.id;
-						list = { ...list, brief: { ...list.dto, title } };
+						const title = list.dbo.title || list.id;
+						list = { ...list, brief: { ...list.dbo, title } };
 					}
 					return list;
 				}),
@@ -116,7 +116,7 @@ export class ListService extends ModuleTeamItemService<IListBrief, IListDto> {
 		const listDocRef = this.listDocRef(team.id, id);
 		return this.sfs.getByDocRef(listDocRef).pipe(
 			map((listContext) => {
-				return this.onListSnapshot(team, listID, listType, listContext.dto);
+				return this.onListSnapshot(team, listID, listType, listContext.dbo);
 			}),
 		);
 	}
@@ -125,12 +125,12 @@ export class ListService extends ModuleTeamItemService<IListBrief, IListDto> {
 		team: ITeamContext,
 		id: string,
 		type: ListType,
-		dto?: IListDto | null,
+		dbo?: IListDto | null,
 	): IListContext => ({
 		id,
 		type,
-		dto,
-		brief: dto,
+		dbo,
+		brief: dbo,
 		team,
 	});
 

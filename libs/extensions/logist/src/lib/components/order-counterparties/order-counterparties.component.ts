@@ -68,7 +68,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
 	}
 
 	private setCounterparties(): void {
-		const counterparties = this.order?.dto?.counterparties || [];
+		const counterparties = this.order?.dbo?.counterparties || [];
 
 		this.counterparties = counterparties
 			.filter((c) => c.role === this.contactRole)
@@ -115,13 +115,13 @@ export class OrderCounterpartiesComponent implements OnChanges {
 					'OrderCounterpartiesCardComponent.openContactSelector() contact:',
 					contact,
 				);
-				if (!this.order?.dto) {
+				if (!this.order?.dbo) {
 					return;
 				}
 				if (!contact?.brief) {
 					return;
 				}
-				if (!this.order?.dto) {
+				if (!this.order?.dbo) {
 					return;
 				}
 				const counterparty: IOrderCounterparty = {
@@ -133,10 +133,10 @@ export class OrderCounterpartiesComponent implements OnChanges {
 				};
 				this.order = {
 					...this.order,
-					dto: {
-						...this.order.dto,
+					dbo: {
+						...this.order.dbo,
 						counterparties: [
-							...(this.order.dto.counterparties || []),
+							...(this.order.dbo.counterparties || []),
 							counterparty,
 						],
 					},

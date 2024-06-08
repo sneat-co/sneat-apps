@@ -149,10 +149,10 @@ export class HappeningPriceFormComponent {
 				brief: pushPrice(this.happening.brief),
 			};
 		}
-		if (this.happening?.dto) {
+		if (this.happening?.dbo) {
 			this.happening = {
 				...this.happening,
-				dto: pushPrice(this.happening.dto),
+				dbo: pushPrice(this.happening.dbo),
 			};
 		}
 		this.happeningChange.emit(this.happening);

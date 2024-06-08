@@ -86,7 +86,7 @@ export class MembersListComponent implements OnChanges {
 	}
 
 	protected isAgeOptionsVisible(member: IIdAndBrief<IContactBrief>): boolean {
-		const teamDto = this.team?.dto;
+		const teamDto = this.team?.dbo;
 		// console.log('MembersListComponent.isAgeOptionsVisible()', member, teamDto);
 		return (
 			teamDto?.type === 'family' &&
@@ -185,7 +185,7 @@ export class MembersListComponent implements OnChanges {
 					if (
 						!team ||
 						(this.userService.currentUserID &&
-							team?.dto?.userIDs?.indexOf(this.userService.currentUserID)) ||
+							team?.dbo?.userIDs?.indexOf(this.userService.currentUserID)) ||
 						-1 < 0
 					) {
 						this.navService.navigateToTeams('back');

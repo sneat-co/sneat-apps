@@ -1,11 +1,5 @@
 import { TeamType } from '@sneat/core';
-import {
-	DtoTotal,
-	DtoTotals,
-	newTeamCounts,
-	Period,
-	TeamCounts,
-} from '@sneat/dto';
+import { DtoTotal, DtoTotals, Period } from '@sneat/dto';
 import { ITeamContext } from '../team-context';
 
 export class Total {
@@ -212,7 +206,7 @@ export class Commune implements ITeamContext {
 		public readonly team: ITeamContext,
 		public readonly shortId?: string,
 	) {
-		this.totals = new Totals(team.dto?.totals);
+		this.totals = new Totals(team.dbo?.totals);
 	}
 
 	public get id(): string {
@@ -220,11 +214,11 @@ export class Commune implements ITeamContext {
 	}
 
 	public get type(): TeamType | undefined {
-		return this.team.dto?.type;
+		return this.team.dbo?.type;
 	}
 
 	public get title(): string | undefined {
-		return this.team.dto?.title;
+		return this.team.dbo?.title;
 	}
 
 	// public get isSupportingMemberGroups(): boolean {

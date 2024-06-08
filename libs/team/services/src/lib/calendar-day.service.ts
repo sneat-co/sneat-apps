@@ -36,7 +36,7 @@ export class CalendarDayService {
 					console.log(
 						'ScheduleDayService.watchTeamDay() => scheduleDay',
 						scheduleDay,
-						scheduleDay.dto,
+						scheduleDay.dbo,
 					),
 				),
 			);

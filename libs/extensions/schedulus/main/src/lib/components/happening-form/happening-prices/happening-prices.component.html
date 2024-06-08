@@ -8,14 +8,14 @@
 			</ion-button>
 		</ion-buttons>
 	</ion-item-divider>
-	@if (!happening?.dto) {
+	@if (!happening?.dbo) {
 		<ion-item>
 			<ion-spinner slot="start" name="lines-small" />
 			<ion-label>Loading...</ion-label>
 		</ion-item>
 	} @else {
 		@for (
-			price of happening?.dto?.prices || happening?.brief?.prices || [];
+			price of happening?.dbo?.prices || happening?.brief?.prices || [];
 			track price.id
 		) {
 			<ion-item class="sneat-no-end-padding-margin">

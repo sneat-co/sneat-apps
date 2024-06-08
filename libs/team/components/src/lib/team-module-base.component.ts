@@ -29,9 +29,9 @@ export abstract class TeamModuleBaseComponent<
 			.pipe(takeUntil(this.teamIDChanged$))
 			.subscribe({
 				next: (o) => {
-					console.log('teamModuleDto loaded', o.dto);
-					this.teamModuleDto$.next(o.dto);
-					this.onTeamModuleDtoChanged(o.dto || null);
+					console.log('teamModuleDto loaded', o.dbo);
+					this.teamModuleDto$.next(o.dbo);
+					this.onTeamModuleDtoChanged(o.dbo || null);
 				},
 				error: (err) => {
 					console.error('Failed to load team module record', err);

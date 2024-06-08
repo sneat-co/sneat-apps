@@ -48,7 +48,7 @@ function contextFromDto(
 		team,
 		id,
 		brief: briefFromDto(id, dto),
-		dto,
+		dbo: dto,
 	};
 }
 

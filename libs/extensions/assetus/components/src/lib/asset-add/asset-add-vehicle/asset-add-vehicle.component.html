@@ -18,11 +18,11 @@
 	(vehicleAssetChange)="onAssetChanged($event)"
 />
 
-<ion-card *ngIf="vehicleAsset?.dto?.extra?.model" />
+<ion-card *ngIf="vehicleAsset?.dbo?.extra?.model" />
 
 <ion-button
-	*ngIf="vehicleAsset?.dto?.extra?.model || vehicleAsset?.dto?.extra?.regNumber"
-	[color]="vehicleAsset?.dto?.extra?.model ? 'primary' : 'light'"
+	*ngIf="vehicleAsset?.dbo?.extra?.model || vehicleAsset?.dbo?.extra?.regNumber"
+	[color]="vehicleAsset?.dbo?.extra?.model ? 'primary' : 'light'"
 	size="large"
 	class="ion-margin"
 	expand="full"

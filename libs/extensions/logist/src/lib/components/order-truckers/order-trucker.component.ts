@@ -48,7 +48,7 @@ export class OrderTruckerComponent implements OnChanges {
 		if (changes['order'] || changes['trucker']) {
 			const contactID = this.trucker?.contactID;
 			this.orderSegments = getOrderSegments(
-				this.order?.dto?.segments?.filter((s) => s.byContactID === contactID),
+				this.order?.dbo?.segments?.filter((s) => s.byContactID === contactID),
 			);
 		}
 	}

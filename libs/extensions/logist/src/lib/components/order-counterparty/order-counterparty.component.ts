@@ -66,7 +66,7 @@ export class OrderCounterpartyComponent implements OnChanges {
 			changes['order'] ||
 			(changes['counterpartyRole'] && this.order && this.counterpartyRole)
 		) {
-			this.counterparty = this.order?.dto?.counterparties?.find(
+			this.counterparty = this.order?.dbo?.counterparties?.find(
 				(c) => c.role === this.counterpartyRole,
 			);
 			if (!this.isRefNumberChanged) {
@@ -94,22 +94,22 @@ export class OrderCounterpartyComponent implements OnChanges {
 				...this.counterparty,
 				refNumber: this.refNumber,
 			};
-			if (this.order?.dto) {
-				const i = this.order.dto?.counterparties?.findIndex(
+			if (this.order?.dbo) {
+				const i = this.order.dbo?.counterparties?.findIndex(
 					(c) => c.role === this.counterpartyRole,
 				);
 				this.order = {
 					...this.order,
-					dto: {
-						...this.order.dto,
+					dbo: {
+						...this.order.dbo,
 						counterparties:
-							i !== undefined && i >= 0 && this.order.dto?.counterparties
+							i !== undefined && i >= 0 && this.order.dbo?.counterparties
 								? [
-										...this.order.dto.counterparties.slice(0, i),
+										...this.order.dbo.counterparties.slice(0, i),
 										this.counterparty,
-										...this.order.dto.counterparties.slice(i + 1),
+										...this.order.dbo.counterparties.slice(i + 1),
 								  ]
-								: [...(this.order.dto.counterparties || []), this.counterparty],
+								: [...(this.order.dbo.counterparties || []), this.counterparty],
 					},
 				};
 			}

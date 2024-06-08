@@ -123,8 +123,8 @@ export class ContactDetailsComponent implements OnChanges {
 				changes['contact'],
 			);
 			const teamID = this.team?.id;
-			if (teamID && this.contact?.dto?.related) {
-				const contactus = this.contact.dto.related['contactus'];
+			if (teamID && this.contact?.dbo?.related) {
+				const contactus = this.contact.dbo.related['contactus'];
 				if (!contactus) {
 					return;
 				}
@@ -156,7 +156,7 @@ export class ContactDetailsComponent implements OnChanges {
 
 	private setRelatedAs(teamID: string, userContactID: string): void {
 		const relatedContact = getRelatedItemByKey(
-			this.contact?.dto?.related,
+			this.contact?.dbo?.related,
 			'contactus',
 			'contacts',
 			teamID,

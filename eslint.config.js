@@ -49,5 +49,7 @@ module.exports = [
 			...config.rules,
 		},
 	})),
-	{ ignores: ['node_modules\r', 'src_old\r'] },
+	{
+		ignores: ['node_modules', 'src_old'],
+	},
 ];

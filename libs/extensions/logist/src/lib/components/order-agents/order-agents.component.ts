@@ -40,7 +40,7 @@ export class OrderAgentsComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order']) {
-			this.counterparties = this.order?.dto?.counterparties?.filter((c) =>
+			this.counterparties = this.order?.dbo?.counterparties?.filter((c) =>
 				c.role.endsWith('_agent'),
 			);
 		}

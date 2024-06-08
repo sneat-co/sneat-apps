@@ -105,7 +105,7 @@ export class CopyListItemsPageComponent implements OnInit {
 				.subscribe({
 					next: (list) => {
 						console.log('loaded list:', list);
-						this.listItems = (list && list.dto?.items) || [];
+						this.listItems = (list && list.dbo?.items) || [];
 						this.setSelected();
 					},
 					error: this.errorLogger.logError,

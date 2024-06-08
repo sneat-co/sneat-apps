@@ -69,29 +69,29 @@ export class ContainerPrintDocComponent extends OrderPrintPageBaseComponent {
 
 	override onOrderChanged(order: ILogistOrderContext): void {
 		if (this.containerID) {
-			this.container = order.dto?.containers?.find(
+			this.container = order.dbo?.containers?.find(
 				(c) => c.id === this.containerID,
 			);
-		} else if (order.dto?.containers?.length) {
-			this.container = order.dto?.containers?.[0];
+		} else if (order.dbo?.containers?.length) {
+			this.container = order.dbo?.containers?.[0];
 			if (!this.containerID) {
 				this.containerID = this.container?.id;
 			}
 		}
 		if (this.containerID) {
-			this.points = this.order?.dto?.containerPoints
+			this.points = this.order?.dbo?.containerPoints
 				?.filter((p) => p.containerID === this.containerID)
 				.map((containerPoint) => {
-					const shippingPoint = this.order?.dto?.shippingPoints?.find(
+					const shippingPoint = this.order?.dbo?.shippingPoints?.find(
 						(p) => p.id === containerPoint.shippingPointID,
 					);
 					const counterparty = shippingPoint
-						? this.order?.dto?.counterparties?.find(
+						? this.order?.dbo?.counterparties?.find(
 								(p) => p.contactID === shippingPoint.counterparty.contactID,
 						  )
 						: undefined;
 					const location = shippingPoint
-						? this.order?.dto?.counterparties?.find(
+						? this.order?.dbo?.counterparties?.find(
 								(p) => p.contactID === shippingPoint.location.contactID,
 						  )
 						: undefined;
@@ -118,7 +118,7 @@ export class ContainerPrintDocComponent extends OrderPrintPageBaseComponent {
 			const byContactID = this.points?.find(
 				(p) => !!p.containerPoint.arrival?.byContactID,
 			)?.containerPoint.arrival?.byContactID;
-			this.by = this.order?.dto?.counterparties?.find(
+			this.by = this.order?.dbo?.counterparties?.find(
 				(c) => c.contactID === byContactID,
 			);
 			this.points = this.points?.sort((a, b) => {

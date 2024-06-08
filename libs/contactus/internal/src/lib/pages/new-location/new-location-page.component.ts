@@ -19,7 +19,7 @@ import { ContactBasePage } from '../contact-base-page';
 export class NewLocationPageComponent extends ContactBasePage {
 	newLocation: IContactContext = {
 		id: '',
-		dto: { type: 'location' },
+		dbo: { type: 'location' },
 		team: this.team,
 	};
 

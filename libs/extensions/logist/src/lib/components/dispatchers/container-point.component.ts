@@ -67,7 +67,7 @@ export class ContainerPointComponent implements OnChanges {
 		if (changes['order'] || changes['container'] || changes['shippingPoint']) {
 			const containerID = this.container?.id;
 			const shippingPointID = this.shippingPoint?.id;
-			this.containerPoint = this.order?.dto?.containerPoints?.find(
+			this.containerPoint = this.order?.dbo?.containerPoints?.find(
 				(cp) =>
 					cp.containerID === containerID &&
 					cp.shippingPointID === shippingPointID,
@@ -89,7 +89,7 @@ export class ContainerPointComponent implements OnChanges {
 			}
 
 			const containerSegments = getSegmentsByContainerID(
-				this.order?.dto?.segments,
+				this.order?.dbo?.segments,
 				this.container?.id,
 			);
 			this.arriveSegment = containerSegments?.find(
@@ -107,11 +107,11 @@ export class ContainerPointComponent implements OnChanges {
 			}
 
 			this.truckerTo = getSegmentCounterparty(
-				this.order?.dto,
+				this.order?.dbo,
 				this.arriveSegment,
 			);
 			this.truckerFrom = getSegmentCounterparty(
-				this.order?.dto,
+				this.order?.dbo,
 				this.departSegment,
 			);
 		}

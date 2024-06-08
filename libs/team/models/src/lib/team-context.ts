@@ -46,6 +46,6 @@ export function createShortTeamInfoFromDto(team: ITeamContext): IShortTeamInfo {
 	return {
 		id: team.id,
 		type: team.type,
-		title: team?.dto?.title || team.brief?.title,
+		title: team?.dbo?.title || team.brief?.title,
 	};
 }

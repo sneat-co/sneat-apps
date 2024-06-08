@@ -1,10 +1,10 @@
 <ion-card>
-	<ion-item lines="full" *ngIf="!asset?.dto?.possession" color="light">
+	<ion-item lines="full" *ngIf="!asset?.dbo?.possession" color="light">
 		<ion-label>Possession</ion-label>
 	</ion-item>
 	<sneat-select-from-list
 		[items]="possessionOptions"
-		[value]="asset?.dto?.possession || ''"
+		[value]="asset?.dbo?.possession || ''"
 		label="Possession"
 		[isFilterable]="false"
 		labelPlacement="end"

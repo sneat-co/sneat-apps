@@ -13,7 +13,7 @@
 			<ion-col size="6">
 				<sneat-transit-point-item
 					label="From"
-					[transitPoint]="order.dto?.route?.origin"
+					[transitPoint]="order.dbo?.route?.origin"
 					(transitPointChange)="onTransitPointChanged($event)"
 				>
 					></sneat-transit-point-item
@@ -22,7 +22,7 @@
 			<ion-col size="6">
 				<sneat-transit-point-item
 					label="To"
-					[transitPoint]="order.dto?.route?.destination"
+					[transitPoint]="order.dbo?.route?.destination"
 					(transitPointChange)="onTransitPointChanged($event)"
 				/>
 			</ion-col>

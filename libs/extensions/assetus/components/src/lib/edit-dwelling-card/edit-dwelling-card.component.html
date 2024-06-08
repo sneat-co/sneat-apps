@@ -11,7 +11,7 @@
 		<sneat-country-selector
 			[countryID]="dwellingAsset?.brief?.countryID"
 			[readonly]="!!dwellingAsset?.brief?.countryID"
-			[defaultCountryID]="team?.dto?.countryID"
+			[defaultCountryID]="team?.dbo?.countryID"
 			label="Country of registration"
 			(countryIDChange)="onCountryChanged($event)"
 		/>
@@ -33,7 +33,7 @@
 
 <ion-card>
 	<ion-list>
-		<ion-item *ngIf="dwellingAsset?.dto?.possession === 'renting'">
+		<ion-item *ngIf="dwellingAsset?.dbo?.possession === 'renting'">
 			<ion-input
 				label="Rent price"
 				placeholder="Rent price"

@@ -91,7 +91,7 @@ abstract class TeamItemBaseService<Brief, Dto extends Brief> {
 			const dto = docSnapshot.data();
 			const { id } = docSnapshot;
 			const brief: Brief = dto;
-			return { id, brief, dto };
+			return { id, brief, dbo: dto };
 		});
 	}
 
@@ -121,8 +121,8 @@ abstract class TeamItemBaseService<Brief, Dto extends Brief> {
 					const item: ITeamItemWithBriefAndDto<Brief, Dto> = {
 						team,
 						id: response.id,
-						dto: response.dto,
-						brief: { id: response.id, ...response.dto } as unknown as Brief,
+						dbo: response.dbo,
+						brief: { id: response.id, ...response.dbo } as unknown as Brief,
 					};
 					return item;
 				}),
@@ -236,6 +236,7 @@ export class ModuleTeamItemService<
 		team: ITeamRef,
 		itemID: string,
 	): Observable<IIdAndBriefAndDto<Brief, Dto2>[]> {
+		console.log(team, itemID);
 		throw new Error('Method not implemented.');
 	}
 

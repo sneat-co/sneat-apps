@@ -39,8 +39,8 @@ export abstract class BaseListItemPage extends BaseListPage {
 	override setList(list: IListContext): void {
 		super.setList(list);
 		const { itemId } = this;
-		if (itemId && list.dto?.items) {
-			const listItemInfo = list.dto.items.find((item) => item.id === itemId);
+		if (itemId && list.dbo?.items) {
+			const listItemInfo = list.dbo.items.find((item) => item.id === itemId);
 			this.listItemInfo = listItemInfo;
 			this.onListItemInfoChanged(listItemInfo);
 		}

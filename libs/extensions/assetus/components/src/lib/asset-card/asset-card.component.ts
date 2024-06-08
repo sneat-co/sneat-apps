@@ -19,8 +19,8 @@ export class AssetCardComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['asset'] && this.asset) {
-			const incomes = this.asset?.dto?.totals?.incomes,
-				expenses = this.asset?.dto?.totals?.expenses;
+			const incomes = this.asset?.dbo?.totals?.incomes,
+				expenses = this.asset?.dbo?.totals?.expenses;
 			if (incomes && (!expenses || incomes.count > expenses.count)) {
 				this.segment = 'income';
 			}

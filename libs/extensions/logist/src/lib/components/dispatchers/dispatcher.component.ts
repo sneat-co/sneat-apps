@@ -70,7 +70,7 @@ export class DispatcherComponent implements OnChanges {
 
 	private setOrder(counterpartyChanged: boolean): void {
 		const contactID = this.counterparty?.contactID;
-		this.locations = this.order?.dto?.counterparties?.filter(
+		this.locations = this.order?.dbo?.counterparties?.filter(
 			(l) => l.parent?.contactID === contactID,
 		);
 		if (counterpartyChanged && !this.refNumber.dirty) {
@@ -124,7 +124,7 @@ export class DispatcherComponent implements OnChanges {
 					'OrderCounterpartiesCardComponent.openContactSelector() contact:',
 					contact,
 				);
-				if (!this.order?.dto) {
+				if (!this.order?.dbo) {
 					alert('Order is not loaded');
 					return;
 				}

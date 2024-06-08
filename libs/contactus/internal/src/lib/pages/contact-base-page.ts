@@ -88,7 +88,7 @@ export abstract class ContactBasePage extends TeamItemPageBaseComponent<
 							'this.contact:',
 							this.contact,
 						);
-						if (this.contact?.id && !this.contact?.dto) {
+						if (this.contact?.id && !this.contact?.dbo) {
 							const contactID = this.contact.id;
 							const contact = contacts.find((c) => c.id === contactID);
 							if (contact) {

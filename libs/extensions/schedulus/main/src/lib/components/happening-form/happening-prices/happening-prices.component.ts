@@ -98,8 +98,8 @@ export class HappeningPricesComponent {
 			if (happening?.brief) {
 				happening = { ...happening, brief: removePrice(happening.brief) };
 			}
-			if (happening?.dto) {
-				happening = { ...happening, dto: removePrice(happening.dto) };
+			if (happening?.dbo) {
+				happening = { ...happening, dbo: removePrice(happening.dbo) };
 			}
 			this.happeningChange.emit(happening);
 			return;
@@ -157,10 +157,10 @@ export class HappeningPricesComponent {
 					brief: setPrices(this.happening.brief),
 				};
 			}
-			if (this.happening?.dto) {
+			if (this.happening?.dbo) {
 				this.happening = {
 					...this.happening,
-					dto: setPrices(this.happening.dto),
+					dbo: setPrices(this.happening.dbo),
 				};
 			}
 			this.happeningChange.emit(this.happening);

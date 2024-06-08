@@ -27,7 +27,7 @@ export abstract class TeamPageBaseComponent
 	protected onContactusTeamChanged(contactusTeam: IContactusTeamDtoAndID) {
 		console.log('TeamPage.onContactusTeamChanged()', contactusTeam);
 		// super.onContactusTeamChanged(contactusTeam);
-		this.members = zipMapBriefsWithIDs(contactusTeam?.dto?.contacts)
+		this.members = zipMapBriefsWithIDs(contactusTeam?.dbo?.contacts)
 			.filter((c) => c.brief?.roles?.includes('member'))
 			.map((c) => ({ ...c, team: this.team }));
 		console.log(

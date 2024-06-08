@@ -43,7 +43,7 @@ export function isSlotVisible(
 		!hasContact(
 			teamID,
 			filter.contactIDs,
-			slot.happening?.dto?.related || slot.happening?.brief?.related,
+			slot.happening?.dbo?.related || slot.happening?.brief?.related,
 		)
 	) {
 		return false;
@@ -51,7 +51,7 @@ export function isSlotVisible(
 	// if (!hasWeekday(happening?.brief?.slots || happening?.dto?.slots, weekdays)) {
 	// 	return false;
 	// }
-	const happeningBrief = slot.happening?.brief || slot.happening?.dto;
+	const happeningBrief = slot.happening?.brief || slot.happening?.dbo;
 	if (
 		filter.repeats?.length &&
 		!happeningBrief?.slots?.some((slot) =>

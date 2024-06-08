@@ -2,7 +2,7 @@ import {
 	IIdAndBrief,
 	IIdAndBriefAndDto,
 	IIdAndOptionalBriefAndOptionalDbo,
-	IIdAndOptionalDto,
+	IIdAndOptionalDbo,
 } from '@sneat/core';
 import { ITeamRef } from './team-context';
 
@@ -13,7 +13,7 @@ export interface ITeamItemWithOptionalBriefAndOptionalDto<
 	readonly team: ITeamRef;
 }
 
-export interface ITeamItemWithOptionalDto<Dto> extends IIdAndOptionalDto<Dto> {
+export interface ITeamItemWithOptionalDto<Dto> extends IIdAndOptionalDbo<Dto> {
 	readonly team: ITeamRef;
 }
 

@@ -54,7 +54,7 @@ export class DispatchPointComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order'] || changes['dispatchPoint']) {
-			const orderDto = this.order?.dto;
+			const orderDto = this.order?.dbo;
 			const contactID = this.dispatchPoint?.contactID;
 			this.dispatcher = orderDto?.counterparties?.find(
 				(c) => c.contactID === contactID && c.role === 'dispatcher',
@@ -71,12 +71,12 @@ export class DispatchPointComponent implements OnChanges {
 			this.containerPoints = orderDto?.containerPoints?.filter(
 				(cp) => cp.shippingPointID === shippingPointID,
 			);
-			this.segments = this.order?.dto?.segments?.filter(
+			this.segments = this.order?.dbo?.segments?.filter(
 				(s) =>
 					s.from.shippingPointID === shippingPointID ||
 					s.to.shippingPointID === shippingPointID,
 			);
-			this.containers = this.order?.dto?.containers?.filter(
+			this.containers = this.order?.dbo?.containers?.filter(
 				(c) =>
 					this.segments?.some((s) => s.containerID === c.id) ||
 					this.containerPoints?.some((cp) => cp.containerID === c.id),

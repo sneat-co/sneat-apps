@@ -3,16 +3,16 @@
 		<sneat-country-selector
 			[countryID]="vehicleAsset?.brief?.countryID"
 			[readonly]="!!vehicleAsset?.brief?.countryID"
-			[defaultCountryID]="team?.dto?.countryID"
+			[defaultCountryID]="team?.dbo?.countryID"
 			label="Country of registration"
 			(countryIDChange)="countryChanged($event)"
 		/>
 		<sneat-asset-reg-number
-			*ngIf="vehicleAsset?.dto?.countryID"
+			*ngIf="vehicleAsset?.dbo?.countryID"
 			[team]="team"
 			[assetID]="vehicleAsset?.id"
-			[regNumber]="vehicleAsset?.dto?.extra?.regNumber"
-			[countyID]="vehicleAsset?.dto?.countryID"
+			[regNumber]="vehicleAsset?.dbo?.extra?.regNumber"
+			[countyID]="vehicleAsset?.dbo?.countryID"
 			[hideSaveButton]="true"
 			[isSkipped]="regNumberSkipped"
 			(isSkippedChange)="onRegNumberSkipped()"
@@ -24,17 +24,17 @@
 <ion-card>
 	<sneat-make-model-card
 		*ngIf="
-			vehicleAsset?.dto?.type &&
-			vehicleAsset?.dto?.countryID &&
-			(regNumberSkipped || !!vehicleAsset?.dto?.extra?.regNumber)
+			vehicleAsset?.dbo?.type &&
+			vehicleAsset?.dbo?.countryID &&
+			(regNumberSkipped || !!vehicleAsset?.dbo?.extra?.regNumber)
 		"
-		[assetType]="vehicleAsset?.dto?.type"
-		[make]="vehicleAsset?.dto?.extra?.make"
-		[model]="vehicleAsset?.dto?.extra?.model"
+		[assetType]="vehicleAsset?.dbo?.type"
+		[make]="vehicleAsset?.dbo?.extra?.make"
+		[model]="vehicleAsset?.dbo?.extra?.model"
 		(makeChange)="makeChanged($event)"
 		(modelChange)="modelChanged($event)"
 	/>
-	<ng-container *ngIf="vehicleAsset?.dto?.extra?.model">
+	<ng-container *ngIf="vehicleAsset?.dbo?.extra?.model">
 		<ion-item-divider>
 			<ion-label>Engine</ion-label>
 		</ion-item-divider>
@@ -46,7 +46,7 @@
 </ion-card>
 
 <sneat-asset-possession-card
-	*ngIf="vehicleAsset?.dto?.extra?.model"
+	*ngIf="vehicleAsset?.dbo?.extra?.model"
 	[asset]="vehicleAsset"
 	(assetChange)="onAssetChanged($event)"
 />

@@ -51,12 +51,12 @@ export class SegmentContainerComponent implements OnChanges {
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['containerID'] || changes['order']) {
 			const containerID = this.segment?.containerID;
-			this.container = this.order?.dto?.containers?.find(
+			this.container = this.order?.dbo?.containers?.find(
 				(c) => c.id === containerID,
 			);
 
 			const fromShippingPointID = this.segment?.from?.shippingPointID;
-			this.from = this.order?.dto?.containerPoints?.find(
+			this.from = this.order?.dbo?.containerPoints?.find(
 				(p) =>
 					p.containerID === containerID &&
 					p.shippingPointID === fromShippingPointID,

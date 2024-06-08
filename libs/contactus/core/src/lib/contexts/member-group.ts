@@ -14,7 +14,7 @@ export class MemberGroup {
 	constructor(memberGroup: IMemberGroupContext) {
 		this.id = memberGroup.id;
 		this.brief = memberGroup.brief;
-		this.dto = memberGroup.dto;
+		this.dto = memberGroup.dbo;
 	}
 
 	public get numberOf(): IContactGroupDtoCounts {

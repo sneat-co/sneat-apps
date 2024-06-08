@@ -160,7 +160,7 @@ export class TeamService {
 	public onTeamUpdated(team: ITeamContext): void {
 		console.log(
 			'TeamService.onTeamUpdated',
-			team ? { id: team.id, dto: { ...team.dto } } : team,
+			team ? { id: team.id, dto: { ...team.dbo } } : team,
 		);
 		let team$ = this.teams$[team.id];
 		if (team$) {

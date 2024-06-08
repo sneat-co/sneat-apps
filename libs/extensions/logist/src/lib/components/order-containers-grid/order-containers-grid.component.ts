@@ -37,7 +37,7 @@ export class OrderContainersGridComponent implements OnChanges {
 				row.select();
 				const data = row.getData() as IOrderContainerWithIndex;
 				this.containerSelected.emit(
-					this.order?.dto?.containers?.find((c) => c.id === data.id),
+					this.order?.dbo?.containers?.find((c) => c.id === data.id),
 				);
 			},
 		},
@@ -143,7 +143,7 @@ export class OrderContainersGridComponent implements OnChanges {
 	) {}
 
 	ngOnChanges(/*changes: SimpleChanges*/): void {
-		const containers = this.order?.dto?.containers?.map((c, i) => ({
+		const containers = this.order?.dbo?.containers?.map((c, i) => ({
 			...c,
 			i: i + 1,
 		}));

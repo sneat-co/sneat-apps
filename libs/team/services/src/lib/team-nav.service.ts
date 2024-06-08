@@ -6,7 +6,7 @@ import { IContactContext, IContactusTeamDto } from '@sneat/contactus-core';
 import {
 	AnalyticsService,
 	IAnalyticsService,
-	IIdAndOptionalDto,
+	IIdAndOptionalDbo,
 } from '@sneat/core';
 import { IRecord } from '@sneat/data';
 import { ITeamDto } from '@sneat/dto';
@@ -162,7 +162,7 @@ export class TeamNavService {
 
 	public navigateToAddMember = (
 		navController: NavController,
-		team: IIdAndOptionalDto<IContactusTeamDto>,
+		team: IIdAndOptionalDbo<IContactusTeamDto>,
 	): void =>
 		this.navToTeamPage(
 			navController,

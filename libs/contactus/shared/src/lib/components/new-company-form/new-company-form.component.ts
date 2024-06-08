@@ -60,7 +60,7 @@ export class NewCompanyFormComponent implements OnChanges {
 		if (changes['team'] && this.team) {
 			if (!this.contact) {
 				const brief: IContactBrief = { type: 'company' };
-				this.contact = { id: '', dto: brief, team: this.team };
+				this.contact = { id: '', dbo: brief, team: this.team };
 				// } else {
 				// 	this.contact = { ...this.contact, team: this.team };
 			}
@@ -74,8 +74,8 @@ export class NewCompanyFormComponent implements OnChanges {
 		try {
 			return (
 				!!this.contactRole &&
-				!!this.contact?.dto?.title &&
-				!!validateAddress(this.contact.dto?.address)
+				!!this.contact?.dbo?.title &&
+				!!validateAddress(this.contact.dbo?.address)
 			);
 		} catch (e) {
 			// console.error(e);
@@ -94,7 +94,7 @@ export class NewCompanyFormComponent implements OnChanges {
 			alert('Contact team is a required field');
 			return;
 		}
-		if (!this.contact?.dto?.title) {
+		if (!this.contact?.dbo?.title) {
 			alert('Contact title is a required field');
 			return;
 		}
@@ -103,12 +103,12 @@ export class NewCompanyFormComponent implements OnChanges {
 			return;
 		}
 		try {
-			const address = validateAddress(this.contact.dto?.address);
+			const address = validateAddress(this.contact.dbo?.address);
 			const request: ICreateContactCompanyRequest = excludeEmpty({
 				status: 'active',
 				type: 'company' as ContactType,
 				company: excludeEmpty({
-					title: this.contact.dto?.title?.trim() || '',
+					title: this.contact.dbo?.title?.trim() || '',
 					address,
 					roles: [this.contactRole],
 				}),

@@ -64,7 +64,7 @@ export class NewListItemComponent {
 		let id = '';
 		for (let i = 0; i < 100; i++) {
 			id = this.randomService.newRandomId({ len: 3 });
-			if (!this.list?.dto?.items?.some((item) => item.id === id)) {
+			if (!this.list?.dbo?.items?.some((item) => item.id === id)) {
 				break;
 			}
 		}

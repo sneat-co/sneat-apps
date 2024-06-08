@@ -78,7 +78,7 @@ export class ContactsByTypeComponent implements OnChanges {
 		const filter = this.filter;
 		const contacts = this.contacts || [];
 		console.log('setContactGroups()', this.team, filter, contacts);
-		const noContactRoles = this.team?.dto?.noContactRoles;
+		const noContactRoles = this.team?.dbo?.noContactRoles;
 		let otherContacts = (this.otherContacts = !filter
 			? contacts
 			: contacts &&
@@ -86,7 +86,7 @@ export class ContactsByTypeComponent implements OnChanges {
 
 		defaultFamilyContactGroups.forEach((group) => {
 			const rolesWithContacts: IContactRoleWithContacts[] = [];
-			group.dto?.roles?.forEach((role) => {
+			group.dbo?.roles?.forEach((role) => {
 				const roleWithContacts: IContactRoleWithContacts = {
 					...role,
 					contacts: contacts.filter((c) => c.brief?.roles?.includes(role.id)),
@@ -114,9 +114,9 @@ export class ContactsByTypeComponent implements OnChanges {
 			});
 
 			const groupWithContacts: IContactGroupWithContacts = {
-				...group.dto,
+				...group.dbo,
 				id: group.id,
-				title: group.dto?.title || '',
+				title: group.dbo?.title || '',
 				roles: rolesWithContacts,
 			};
 

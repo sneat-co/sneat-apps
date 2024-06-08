@@ -221,7 +221,7 @@ export class HappeningFormComponent
 		}
 		const activityFormValue = this.happeningForm.value;
 		const dto: IHappeningDto = {
-			...this.happening.dto,
+			...this.happening.dbo,
 			...this.happening.brief,
 			teamIDs: [this.team.id], // TODO: should be already in this.happening.brief
 			title: activityFormValue.title, // TODO: should be already in this.happening.brief

@@ -93,11 +93,11 @@ export class VehicleCardComponent implements OnChanges {
 	}
 
 	countryChanged(value: string): void {
-		console.log('countryChanged', value, this.vehicleAsset?.dto);
-		if (this.vehicleAsset?.dto) {
+		console.log('countryChanged', value, this.vehicleAsset?.dbo);
+		if (this.vehicleAsset?.dbo) {
 			this.vehicleAsset = {
 				...this.vehicleAsset,
-				dto: { ...this.vehicleAsset.dto, countryID: value },
+				dbo: { ...this.vehicleAsset.dbo, countryID: value },
 			};
 			this.vehicleAssetChange.emit(this.vehicleAsset);
 			setTimeout(
@@ -115,15 +115,15 @@ export class VehicleCardComponent implements OnChanges {
 
 	protected onRegNumberChanged(value: string): void {
 		this.regNumber.setValue(value);
-		if (this.vehicleAsset?.dto) {
+		if (this.vehicleAsset?.dbo) {
 			const extra = {
-				...(this.vehicleAsset.dto.extra as IAssetVehicleExtra),
+				...(this.vehicleAsset.dbo.extra as IAssetVehicleExtra),
 				regNumber: value,
 			};
 			this.vehicleAsset = {
 				...this.vehicleAsset,
-				dto: {
-					...this.vehicleAsset.dto,
+				dbo: {
+					...this.vehicleAsset.dbo,
 					extra,
 				},
 			};
@@ -133,13 +133,13 @@ export class VehicleCardComponent implements OnChanges {
 
 	makeChanged(make: string): void {
 		this.makeVal = make;
-		if (this.vehicleAsset?.dto) {
+		if (this.vehicleAsset?.dbo) {
 			this.vehicleAsset = {
 				...this.vehicleAsset,
-				dto: {
-					...this.vehicleAsset.dto,
+				dbo: {
+					...this.vehicleAsset.dbo,
 					extra: {
-						...(this.vehicleAsset.dto.extra as IAssetVehicleExtra),
+						...(this.vehicleAsset.dbo.extra as IAssetVehicleExtra),
 						make,
 					},
 				},
@@ -156,13 +156,13 @@ export class VehicleCardComponent implements OnChanges {
 	}
 
 	protected modelChanged(model: string): void {
-		if (this.vehicleAsset?.dto) {
+		if (this.vehicleAsset?.dbo) {
 			this.vehicleAsset = {
 				...this.vehicleAsset,
-				dto: {
-					...this.vehicleAsset.dto,
+				dbo: {
+					...this.vehicleAsset.dbo,
 					extra: {
-						...(this.vehicleAsset.dto.extra as IAssetVehicleExtra),
+						...(this.vehicleAsset.dbo.extra as IAssetVehicleExtra),
 						model,
 					},
 				},

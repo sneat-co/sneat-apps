@@ -84,7 +84,7 @@ export class OrderCardComponent {
 		if (!order?.id) {
 			throw new Error('No order context');
 		}
-		if (this.order?.dto?.status === status) {
+		if (this.order?.dbo?.status === status) {
 			return;
 		}
 		this.orderService

@@ -98,18 +98,18 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 		});
 		this.contact = undefined;
 		const counterparties = this.contactID
-			? this.order?.dto?.counterparties?.filter(
+			? this.order?.dbo?.counterparties?.filter(
 					(c) =>
 						c.contactID === this.contactID && c.role === this.counterpartyRole,
 				)
-			: this.order?.dto?.counterparties?.filter(
+			: this.order?.dbo?.counterparties?.filter(
 					(c) => c.role === this.counterpartyRole,
 				);
 		if (counterparties && counterparties.length === 1) {
 			const counterparty = counterparties[0];
 			this.contact = contactFromCounterparty(counterparty);
 			if (counterparty.parent) {
-				const parentCounterparty = this.order?.dto?.counterparties?.find(
+				const parentCounterparty = this.order?.dbo?.counterparties?.find(
 					(c) => c.contactID === counterparty.parent?.contactID,
 				);
 				if (parentCounterparty) {
@@ -136,7 +136,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 		if (!order) {
 			return;
 		}
-		let orderDto = order?.dto;
+		let orderDto = order?.dbo;
 
 		if (!orderDto) {
 			console.error('onContactChanged(): !this.order.dto');
@@ -237,7 +237,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 					break;
 			}
 			if (order) {
-				order = { ...order, dto: orderDto };
+				order = { ...order, dbo: orderDto };
 			}
 			this.emitOrder(order);
 			this.counterpartyChange.emit(newCounterparty);

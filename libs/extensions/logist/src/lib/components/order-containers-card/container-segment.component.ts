@@ -61,12 +61,12 @@ export class ContainerSegmentComponent implements OnChanges {
 	) {}
 
 	private setForm(): void {
-		this.from = this.order?.dto?.counterparties?.find(
+		this.from = this.order?.dbo?.counterparties?.find(
 			(c) =>
 				c.contactID === this.segment?.from?.contactID &&
 				c.role == this.segment?.from?.role,
 		);
-		this.fromPoint = this.order?.dto?.containerPoints?.find(
+		this.fromPoint = this.order?.dbo?.containerPoints?.find(
 			(p) =>
 				p.containerID == this.segment?.containerID &&
 				p.shippingPointID === this.segment?.from?.shippingPointID,
@@ -81,12 +81,12 @@ export class ContainerSegmentComponent implements OnChanges {
 				this.arriveDate.setValue(this.fromPoint?.arrival?.scheduledDate || '');
 			}
 		}
-		this.to = this.order?.dto?.counterparties?.find(
+		this.to = this.order?.dbo?.counterparties?.find(
 			(c) =>
 				c.contactID === this.segment?.to?.contactID &&
 				c.role == this.segment?.to?.role,
 		);
-		this.by = this.order?.dto?.counterparties?.find(
+		this.by = this.order?.dbo?.counterparties?.find(
 			(c) => c.contactID === this.segment?.byContactID && c.role == 'trucker',
 		);
 	}

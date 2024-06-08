@@ -22,7 +22,7 @@ export function isMatchingScheduleFilter(
 	if (!f) {
 		return true;
 	}
-	if (f.text && !h.dto?.title?.toLowerCase().includes(f.text)) {
+	if (f.text && !h.dbo?.title?.toLowerCase().includes(f.text)) {
 		return false;
 	}
 	return !(
@@ -31,7 +31,7 @@ export function isMatchingScheduleFilter(
 			(fmID) =>
 				fmID === '' &&
 				!getRelatedItemIDs(
-					h.dto?.related || h.brief?.related,
+					h.dbo?.related || h.brief?.related,
 					'contactus',
 					'contacts',
 					h.team.id,

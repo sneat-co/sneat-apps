@@ -49,11 +49,11 @@ export class HappeningParticipantsComponent implements OnChanges {
 		console.log(
 			'HappeningParticipantsComponent.ngOnChanges()',
 			changes,
-			this.happening?.dto?.related,
+			this.happening?.dbo?.related,
 		);
 		if (changes['happening']) {
 			this.checkedContactIDs = getRelatedItemIDs(
-				this.happening?.dto?.related || this.happening?.brief?.related,
+				this.happening?.dbo?.related || this.happening?.brief?.related,
 				'contactus',
 				'contacts',
 				this.team?.id,
@@ -82,7 +82,7 @@ export class HappeningParticipantsComponent implements OnChanges {
 		if (!team || !contactusTeam) {
 			return;
 		}
-		return zipMapBriefsWithIDs(contactusTeam?.dto?.contacts).map((m) =>
+		return zipMapBriefsWithIDs(contactusTeam?.dbo?.contacts).map((m) =>
 			contactContextFromBrief(m, team),
 		);
 	}
@@ -116,12 +116,12 @@ export class HappeningParticipantsComponent implements OnChanges {
 		if (!this.happening) {
 			return;
 		}
-		const { brief, dto } = this.happening;
-		if (!brief || !dto) {
+		const { brief, dbo } = this.happening;
+		if (!brief || !dbo) {
 			return;
 		}
 		let happeningBase: IHappeningBase = {
-			...(dto || brief),
+			...(dbo || brief),
 		};
 		this.checkedContactIDs.forEach((contactID) => {
 			happeningBase = {
@@ -141,9 +141,9 @@ export class HappeningParticipantsComponent implements OnChanges {
 				...(this.happening.brief || {}),
 				...happeningBase,
 			},
-			dto: {
+			dbo: {
 				// TODO: It does not make much sense to update DTO as brief should be enough?
-				...(this.happening.dto || {}),
+				...(this.happening.dbo || {}),
 				...happeningBase,
 			},
 		};

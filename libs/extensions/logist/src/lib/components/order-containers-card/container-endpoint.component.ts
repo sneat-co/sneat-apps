@@ -174,7 +174,7 @@ export class ContainerEndpointComponent implements OnChanges {
 			this.actualTime.setValue(this.endpoint?.actualTime || '');
 
 			// this.actualDate.setValue(this.endpoint?.actualDate || '');
-			const byCounterparty = this.order?.dto?.counterparties?.find(
+			const byCounterparty = this.order?.dbo?.counterparties?.find(
 				(c) => c.contactID === this.endpoint?.byContactID,
 			);
 			if (this.team) {

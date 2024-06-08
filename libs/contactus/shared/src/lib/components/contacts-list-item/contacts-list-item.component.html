@@ -33,32 +33,32 @@
 
 	<ion-buttons slot="end">
 		<ion-button
-			*ngIf="contact?.dto?.email"
-			href="mailto:{{ contact?.dto?.email }}"
+			*ngIf="contact?.dbo?.email"
+			href="mailto:{{ contact?.dbo?.email }}"
 			color="primary"
-			[title]="contact?.dto?.email"
+			[title]="contact?.dbo?.email"
 			(click)="$event.stopPropagation()"
 			>&#64;
 		</ion-button>
 		<ion-button
-			*ngIf="contact?.dto?.phone"
-			href="tel:{{ contact?.dto?.phone }}"
+			*ngIf="contact?.dbo?.phone"
+			href="tel:{{ contact?.dbo?.phone }}"
 			color="primary"
-			[title]="contact?.dto?.phone"
+			[title]="contact?.dbo?.phone"
 			(click)="$event.stopPropagation()"
 		>
 			<ion-icon name="call" />
 		</ion-button>
-		<ion-button *ngIf="!contact?.dto?.email" color="light">&#64;</ion-button>
-		<ion-button *ngIf="!contact?.dto?.phone" color="light">
+		<ion-button *ngIf="!contact?.dbo?.email" color="light">&#64;</ion-button>
+		<ion-button *ngIf="!contact?.dbo?.phone" color="light">
 			<ion-icon name="call" />
 		</ion-button>
 	</ion-buttons>
 </ion-item>
 
-<ion-item *ngIf="showAddress && contact?.dto?.address">
+<ion-item *ngIf="showAddress && contact?.dbo?.address">
 	<ion-label>Address</ion-label>
-	<ion-textarea readonly="readonly" [value]="contact?.dto?.address" />
+	<ion-textarea readonly="readonly" [value]="contact?.dbo?.address" />
 </ion-item>
 <ion-item-options slot="end">
 	<ion-item-option color="warning" (click)="archiveContact()"

@@ -205,7 +205,7 @@ export class ScrumPageComponent
 				break;
 			}
 		}
-		if (this.team?.dto) {
+		if (this.team?.dbo) {
 			// this.merge(this.scrum, undefined, this.team.dto?.members);
 			throw new Error('not implmented');
 		}
@@ -264,7 +264,7 @@ export class ScrumPageComponent
 	}
 
 	protected override onTeamDtoChanged(): void {
-		const teamDto = this.team?.dto;
+		const teamDto = this.team?.dbo;
 		if (!teamDto) {
 			return;
 		}
@@ -359,7 +359,7 @@ export class ScrumPageComponent
 				// 	this.setTotalElapsed();
 				// }
 				console.log('this.scrum', this.scrum);
-				if (this.team?.dto) {
+				if (this.team?.dbo) {
 					throw new Error('not implemented yet');
 					// this.merge(this.scrum, undefined, this.team.dto.members);
 				}
@@ -379,7 +379,7 @@ export class ScrumPageComponent
 				break;
 			case this.prevScrumID:
 				// this.prevScrum = scrum || {...this.prevScrum, statuses: []};
-				if (this.team?.dto) {
+				if (this.team?.dbo) {
 					throw new Error('not implemented yet');
 					// this.merge(this.scrum, undefined, this.team.dto.members);
 				}

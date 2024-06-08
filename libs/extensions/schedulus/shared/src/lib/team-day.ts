@@ -112,9 +112,9 @@ export class TeamDay {
 			.subscribe({
 				next: (scheduleDay) => {
 					const changed =
-						this.scheduleDayDto != scheduleDay.dto ||
-						(this.scheduleDayDto && !!scheduleDay.dto);
-					this.scheduleDayDto = scheduleDay.dto;
+						this.scheduleDayDto != scheduleDay.dbo ||
+						(this.scheduleDayDto && !!scheduleDay.dbo);
+					this.scheduleDayDto = scheduleDay.dbo;
 					if (changed) {
 						this.joinRecurringsWithSinglesAndEmit();
 					}
@@ -169,7 +169,7 @@ export class TeamDay {
 			this.singles = [];
 
 			singleHappenings.forEach((happening) => {
-				const slot = happening.dto?.slots && happening.dto?.slots[0];
+				const slot = happening.dbo?.slots && happening.dbo?.slots[0];
 				if (!slot) {
 					return;
 				}
@@ -180,7 +180,7 @@ export class TeamDay {
 				};
 				const slotItem: IHappeningSlotUiItem = {
 					slotID: slot.id,
-					title: happening.brief?.title || happening?.dto?.title || 'NO TITLE',
+					title: happening.brief?.title || happening?.dbo?.title || 'NO TITLE',
 					timing,
 					repeats: 'once',
 					happening,

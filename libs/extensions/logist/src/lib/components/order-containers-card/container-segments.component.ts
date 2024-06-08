@@ -68,7 +68,7 @@ export class ContainerSegmentsComponent implements OnChanges {
 		if (changes['order'] || changes['container']) {
 			const containerID = this.container?.id;
 			this.containerSegments = containerID
-				? this.order?.dto?.segments?.filter(
+				? this.order?.dbo?.segments?.filter(
 						(s) => s.containerID === containerID,
 				  )
 				: undefined;
@@ -77,13 +77,13 @@ export class ContainerSegmentsComponent implements OnChanges {
 			}
 			this.routeRows = this.containerSegments?.map((segment, i) => {
 				const fromPoint: IOrderShippingPoint | undefined =
-					this.order?.dto?.shippingPoints?.find(
+					this.order?.dbo?.shippingPoints?.find(
 						(sp) => sp.id === segment.from.shippingPointID,
 					);
-				const toPoint = this.order?.dto?.shippingPoints?.find(
+				const toPoint = this.order?.dbo?.shippingPoints?.find(
 					(sp) => sp.id === segment.to.shippingPointID,
 				);
-				const by = this.order?.dto?.counterparties?.find(
+				const by = this.order?.dbo?.counterparties?.find(
 					(c) => c.contactID === segment.byContactID,
 				);
 				const from = fromPoint

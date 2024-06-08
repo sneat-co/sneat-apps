@@ -82,7 +82,7 @@ export class MovieInfoPageComponent
 		if (!this.team) {
 			throw new Error('!this.team');
 		}
-		if (!this.list?.dto) {
+		if (!this.list?.dbo) {
 			throw new Error('!this.list.dto');
 		}
 		if (!this.movie) {

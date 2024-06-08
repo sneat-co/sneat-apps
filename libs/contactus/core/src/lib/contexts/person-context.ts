@@ -27,7 +27,7 @@ export class Member {
 		public member: IMemberContext,
 		public isChecked = false,
 	) {
-		this.totals = new Totals(member.dto?.totals);
+		this.totals = new Totals(member.dbo?.totals);
 	}
 
 	public get id(): string {
@@ -39,6 +39,6 @@ export class Member {
 	}
 
 	public get emoji(): string {
-		return this.member.dto?.ageGroup === 'child' ? '🧒' : '🧑';
+		return this.member.dbo?.ageGroup === 'child' ? '🧒' : '🧑';
 	}
 }

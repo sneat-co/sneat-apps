@@ -68,10 +68,10 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 	@Output() readonly deleted = new EventEmitter<string>();
 
 	get date(): Date | undefined {
-		if (!this.happening?.dto?.dates?.length) {
+		if (!this.happening?.dbo?.dates?.length) {
 			return undefined;
 		}
-		return isoStringsToDate(this.happening.dto.dates[0]);
+		return isoStringsToDate(this.happening.dbo.dates[0]);
 	}
 
 	get wd(): WeekdayCode2 | undefined {
@@ -188,7 +188,7 @@ This operation can NOT be undone.`)
 			return;
 		}
 		const teamMembers: IIdAndBrief<IContactBrief>[] | undefined =
-			zipMapBriefsWithIDs(this.contactusTeam?.dto?.contacts)?.map((m) =>
+			zipMapBriefsWithIDs(this.contactusTeam?.dbo?.contacts)?.map((m) =>
 				contactContextFromBrief(m, team),
 			);
 

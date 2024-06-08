@@ -11,9 +11,7 @@ import {
 	EngineTypes,
 	FuelType,
 	FuelTypes,
-	IAssetContext,
 	IAssetVehicleContext,
-	IAssetVehicleExtra,
 } from '@sneat/mod-assetus-core';
 
 @Component({
@@ -28,7 +26,7 @@ export class VehicleEngineComponent {
 		new EventEmitter<IAssetVehicleContext>();
 
 	protected get hasBattery(): boolean {
-		const et = this.vehicleAsset?.dto?.extra?.engineType;
+		const et = this.vehicleAsset?.dbo?.extra?.engineType;
 		return (
 			et === EngineTypeElectric ||
 			et === EngineTypePHEV ||
@@ -37,7 +35,7 @@ export class VehicleEngineComponent {
 	}
 
 	protected get hasCombustion(): boolean {
-		const et = this.vehicleAsset?.dto?.extra?.engineType;
+		const et = this.vehicleAsset?.dbo?.extra?.engineType;
 		return (
 			et === EngineTypeCombustion ||
 			et === EngineTypePHEV ||
@@ -62,7 +60,7 @@ export class VehicleEngineComponent {
 	protected onEngineTypeChanged(v: string): void {
 		let engineType: EngineType = EngineTypes.unknown;
 		let engineFuel: FuelType = FuelTypes.unknown;
-		if (this.vehicleAsset?.dto) {
+		if (this.vehicleAsset?.dbo) {
 			switch (v) {
 				case FuelTypes.diesel:
 					engineType = EngineTypes.combustion;
@@ -99,10 +97,10 @@ export class VehicleEngineComponent {
 			}
 			this.vehicleAsset = {
 				...this.vehicleAsset,
-				dto: {
-					...this.vehicleAsset.dto,
+				dbo: {
+					...this.vehicleAsset.dbo,
 					extra: {
-						...(this.vehicleAsset.dto?.extra || { make: '', model: '' }),
+						...(this.vehicleAsset.dbo?.extra || { make: '', model: '' }),
 						engineType: engineType,
 						engineFuel: engineFuel,
 					},

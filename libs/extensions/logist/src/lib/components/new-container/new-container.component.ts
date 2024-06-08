@@ -74,7 +74,7 @@ export class NewContainerComponent {
 		}
 		if (
 			this.containerNumber?.trim() &&
-			this?.order?.dto?.containers?.some(
+			this?.order?.dbo?.containers?.some(
 				(c) => c.number === this.containerNumber.trim(),
 			)
 		) {

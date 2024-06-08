@@ -77,9 +77,9 @@ function processHappeningContext(
 	h: IHappeningContext,
 	team: ITeamContext,
 ): IHappeningContext {
-	if (h.dto) {
+	if (h.dbo) {
 		try {
-			validateHappeningDto(h.dto);
+			validateHappeningDto(h.dbo);
 		} catch (e) {
 			console.warn(`Received invalid happening DTO (id=${h.id}: ${e}`);
 		}
@@ -161,7 +161,7 @@ export class HappeningService {
 		const request: IHappeningRequest = {
 			teamID: happening.team?.id || '',
 			happeningID: happening.id,
-			happeningType: happening.brief?.type || happening.dto?.type,
+			happeningType: happening.brief?.type || happening.dbo?.type,
 		};
 		return this.sneatApiService.delete(
 			'happenings/delete_happening',

@@ -32,7 +32,7 @@
 					<!--					<ion-input [value]="order?.dto?.created?.at" readonly="readonly"></ion-input>-->
 					<ion-input
 						[value]="
-							(order?.dto?.createdAt?.seconds || 0) * 1000 | date: 'dd MMM yyyy'
+							(order?.dbo?.createdAt?.seconds || 0) * 1000 | date: 'dd MMM yyyy'
 						"
 						readonly="readonly"
 					/>
@@ -45,7 +45,7 @@
 					<ion-select
 						[disabled]="!team || !order?.id"
 						interface="popover"
-						[value]="order?.dto?.status"
+						[value]="order?.dbo?.status"
 						(ionChange)="onUserChangedOrderStatus($event)"
 					>
 						<ion-select-option value="active">Active</ion-select-option>

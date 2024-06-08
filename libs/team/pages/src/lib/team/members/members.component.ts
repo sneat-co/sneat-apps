@@ -53,7 +53,7 @@ export class MembersComponent implements OnChanges {
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['contactusTeam']) {
 			try {
-				this.setMembersCount(this.contactusTeam?.dto);
+				this.setMembersCount(this.contactusTeam?.dbo);
 			} catch (e) {
 				this.errorLogger.logError(e, 'Failed to process team changes');
 			}

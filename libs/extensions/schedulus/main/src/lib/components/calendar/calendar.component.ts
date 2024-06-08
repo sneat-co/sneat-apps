@@ -271,7 +271,7 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 							'ScheduleComponent.onTeamIdChanged() => schedulusTeam:',
 							schedulusTeam,
 						);
-						this.schedulusTeamDto = schedulusTeam?.dto;
+						this.schedulusTeamDto = schedulusTeam?.dbo;
 						const schedulusTeamContext = { team: this.team, ...schedulusTeam };
 						this.teamDaysProvider.setSchedulusTeam(schedulusTeamContext);
 						this.populateRecurrings();
@@ -330,7 +330,7 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 		const text = filter.text.toLowerCase();
 
 		const filtered = this.allRecurrings?.filter((r) => {
-			const title = r.brief?.title || r.dto?.title;
+			const title = r.brief?.title || r.dbo?.title;
 			let hide = '';
 
 			if (!hide && title && !title.trim().toLowerCase().includes(text)) {
@@ -347,7 +347,7 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 			) {
 				hide = 'contactIDs';
 			}
-			const slots = r.dto?.slots || r.brief?.slots;
+			const slots = r.dbo?.slots || r.brief?.slots;
 			if (!hide && !this.hasWeekday(slots, filter.weekdays)) {
 				hide = 'weekdays';
 			}

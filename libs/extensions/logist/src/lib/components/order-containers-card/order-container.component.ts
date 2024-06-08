@@ -76,7 +76,7 @@ export class OrderContainerComponent implements OnChanges {
 		if (changes['order'] || changes['container']) {
 			const containerID = this.container?.id;
 			this.containerSegments = containerID
-				? this.order?.dto?.segments?.filter(
+				? this.order?.dbo?.segments?.filter(
 						(s) => s.containerID === containerID,
 				  )
 				: undefined;
@@ -87,7 +87,7 @@ export class OrderContainerComponent implements OnChanges {
 				this.containerSegments,
 			);
 			this.containerPoints = containerID
-				? this.order?.dto?.containerPoints?.filter(
+				? this.order?.dbo?.containerPoints?.filter(
 						(cp) => cp.containerID === containerID,
 				  )
 				: undefined;
@@ -245,7 +245,7 @@ export class OrderContainerComponent implements OnChanges {
 		if (!order || !container) {
 			return;
 		}
-		if (order.dto?.shippingPoints?.length) {
+		if (order.dbo?.shippingPoints?.length) {
 			this.shippingPointsSelectorService
 				.selectShippingPointsInModal(order, container)
 				.then((points) => console.log('points', points))

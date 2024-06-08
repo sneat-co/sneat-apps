@@ -120,11 +120,11 @@ const groupRecurringSlotsByWeekday = (
 	const slots: RecurringSlots = {
 		byWeekday: {},
 	};
-	if (!schedulusTeam?.dto?.recurringHappenings) {
+	if (!schedulusTeam?.dbo?.recurringHappenings) {
 		console.log(logPrefix + ', no slots for team:', schedulusTeam);
 		return slots;
 	}
-	zipMapBriefsWithIDs(schedulusTeam.dto.recurringHappenings).forEach((rh) => {
+	zipMapBriefsWithIDs(schedulusTeam.dbo.recurringHappenings).forEach((rh) => {
 		rh.brief.slots?.forEach((rs) => {
 			const happening: IHappeningContext = {
 				id: rh.id,
@@ -352,11 +352,11 @@ export class TeamDaysProvider {
 			'TeamDaysProvider.processRecurringBriefs()',
 			this.schedulusTeam$.value,
 		);
-		if (!this.schedulusTeam$.value?.dto?.recurringHappenings) {
+		if (!this.schedulusTeam$.value?.dbo?.recurringHappenings) {
 			return;
 		}
 		zipMapBriefsWithIDs(
-			this.schedulusTeam$.value?.dto?.recurringHappenings,
+			this.schedulusTeam$.value?.dbo?.recurringHappenings,
 		).forEach((rh) => {
 			this.processRecurring({
 				id: rh.id,
@@ -391,7 +391,7 @@ export class TeamDaysProvider {
 		if (
 			this.memberId &&
 			hasRelatedItemID(
-				recurring.dto?.related || recurring?.brief?.related,
+				recurring.dbo?.related || recurring?.brief?.related,
 				'contactus',
 				'contacts',
 				this.team.id,

@@ -73,12 +73,12 @@ export class SlotContextMenuComponent {
 			return;
 		}
 		const members =
-			zipMapBriefsWithIDs(this.contactusTeam?.dto?.contacts)?.map((mb) =>
+			zipMapBriefsWithIDs(this.contactusTeam?.dbo?.contacts)?.map((mb) =>
 				contactContextFromBrief(mb, team),
 			) || [];
 		const selectedMembers = members.filter((m) =>
 			hasRelatedItemID(
-				this.happening?.dto?.related || this.happening?.brief?.related,
+				this.happening?.dbo?.related || this.happening?.brief?.related,
 				'contactus',
 				'contacts',
 				this.team?.id || '',
@@ -114,7 +114,7 @@ export class SlotContextMenuComponent {
 			return;
 		}
 		const slotID = this.slot?.slotID;
-		const slots = happening?.dto?.slots || happening?.brief?.slots;
+		const slots = happening?.dbo?.slots || happening?.brief?.slots;
 		const happeningSlot: IHappeningSlot | undefined = slots?.find(
 			(slot) => slot.id === slotID,
 		);
@@ -242,10 +242,10 @@ export class SlotContextMenuComponent {
 				brief: { ...happening.brief, status },
 			};
 		}
-		if (happening.dto) {
+		if (happening.dbo) {
 			happening = {
 				...happening,
-				dto: { ...happening.dto, status },
+				dbo: { ...happening.dbo, status },
 			};
 		}
 		this.slot = {

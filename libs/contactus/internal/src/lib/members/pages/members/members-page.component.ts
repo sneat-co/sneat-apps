@@ -31,7 +31,6 @@ import {
 	TeamCoreComponentsModule,
 } from '@sneat/team-components';
 import { zipMapBriefsWithIDs } from '@sneat/team-models';
-import { takeUntil } from 'rxjs';
 import { MembersBasePage } from '../../members-base-page';
 
 interface MembersGroup {
@@ -280,7 +279,7 @@ export class MembersPageComponent
 						addedToGroup = true;
 						break;
 				}
-				if (m.dto?.type === TeamMemberTypeEnum.pet) {
+				if (m.dbo?.type === TeamMemberTypeEnum.pet) {
 					addedToGroup = true;
 					pets.push(m);
 				}

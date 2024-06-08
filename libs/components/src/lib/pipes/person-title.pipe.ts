@@ -23,7 +23,7 @@ export class PersonTitle implements PipeTransform {
 		console.log('PersonTitle.transform()', { ...p }, shortTitle);
 		return (
 			shortTitle ||
-			p?.dto?.title ||
+			p?.dbo?.title ||
 			p?.brief?.title ||
 			personName(p?.brief?.names) ||
 			p?.id ||

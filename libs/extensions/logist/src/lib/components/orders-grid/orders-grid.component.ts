@@ -114,17 +114,17 @@ export class OrdersGridComponent implements OnChanges {
 				id: o.id,
 				status: o.brief?.status,
 				direction: o.brief?.direction,
-				dispatch_agent: o.dto?.counterparties?.find(
+				dispatch_agent: o.dbo?.counterparties?.find(
 					(c) => c.role === 'dispatch_agent',
 				),
-				receive_agent: o.dto?.counterparties?.find(
+				receive_agent: o.dbo?.counterparties?.find(
 					(c) => c.role === 'receive_agent',
 				),
-				buyer: o.dto?.counterparties?.find((c) => c.role === 'buyer'),
-				consignee: o.dto?.counterparties?.find((c) => c.role === 'consignee'),
-				containers: o.dto?.containers?.length?.toString(),
-				shippingPoints: o.dto?.shippingPoints?.length?.toString(),
-				segments: o.dto?.segments?.length?.toString(),
+				buyer: o.dbo?.counterparties?.find((c) => c.role === 'buyer'),
+				consignee: o.dbo?.counterparties?.find((c) => c.role === 'consignee'),
+				containers: o.dbo?.containers?.length?.toString(),
+				shippingPoints: o.dbo?.shippingPoints?.length?.toString(),
+				segments: o.dbo?.segments?.length?.toString(),
 			}));
 		}
 	}

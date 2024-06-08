@@ -28,11 +28,11 @@
 				@for (doc of docType.documents; track doc.id) {
 					<ion-item-sliding #slidingItem>
 						<ion-item button (click)="goDoc.emit(doc)">
-							<ion-badge color="light" *ngIf="doc.dto?.countryID" slot="start"
-								>{{ doc.dto?.countryID }}
+							<ion-badge color="light" *ngIf="doc.dbo?.countryID" slot="start"
+								>{{ doc.dbo?.countryID }}
 							</ion-badge>
 							<ion-badge
-								*ngIf="!doc.dto?.countryID"
+								*ngIf="!doc.dbo?.countryID"
 								slot="start"
 								style="opacity: 0"
 								>--
@@ -40,8 +40,8 @@
 							<ion-label *ngIf="doc.brief?.title">{{
 								doc.brief?.title
 							}}</ion-label>
-							<ion-label *ngIf="doc.dto?.extra?.number"
-								># {{ doc.dto?.extra?.number }}</ion-label
+							<ion-label *ngIf="doc.dbo?.extra?.number"
+								># {{ doc.dbo?.extra?.number }}</ion-label
 							>
 						</ion-item>
 						<!--                <ion-item-options side="start">-->

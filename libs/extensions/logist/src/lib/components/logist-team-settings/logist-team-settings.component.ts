@@ -138,12 +138,12 @@ export class LogistTeamSettingsComponent
 		if (changes['logistTeam']) {
 			if (!this.orderNumberPrefix.dirty) {
 				this.orderNumberPrefix.setValue(
-					this.logistTeam?.dto?.orderNumberPrefix || '',
+					this.logistTeam?.dbo?.orderNumberPrefix || '',
 				);
 			}
-			const contactID = this.logistTeam?.dto?.contactID;
+			const contactID = this.logistTeam?.dbo?.contactID;
 			if (!contactID) {
-				if (this.logistTeam?.dto == null) {
+				if (this.logistTeam?.dbo == null) {
 					this.address = null;
 				}
 				return;
@@ -156,8 +156,8 @@ export class LogistTeamSettingsComponent
 				.watchContactById(team, contactID)
 				.pipe(takeUntil(this.destroyed))
 				.subscribe((contact) => {
-					this.address = contact?.dto?.address || this.address;
-					this.roles = contact?.dto?.roles || [];
+					this.address = contact?.dbo?.address || this.address;
+					this.roles = contact?.dbo?.roles || [];
 					console.log(
 						'LogistTeamSettingsComponent.ngOnChanges(): roles:',
 						this.roles,

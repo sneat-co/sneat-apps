@@ -18,10 +18,10 @@ export class OrderRouteCardComponent {
 	onTransitPointChanged(point: ITransitPoint): void {
 		console.log('OrderRouteCardComponent.onTransitPointChanged()', point);
 		let order = this.order;
-		if (!order?.dto) {
+		if (!order?.dbo) {
 			return;
 		}
-		let route = order?.dto?.route || {};
+		let route = order?.dbo?.route || {};
 		switch (point.id) {
 			case 'origin':
 				route = { ...route, origin: point };
@@ -30,7 +30,7 @@ export class OrderRouteCardComponent {
 				route = { ...route, destination: point };
 				break;
 		}
-		order = { ...order, dto: { ...order.dto, route } };
+		order = { ...order, dbo: { ...order.dbo, route } };
 		this.orderChange.emit(order);
 	}
 }

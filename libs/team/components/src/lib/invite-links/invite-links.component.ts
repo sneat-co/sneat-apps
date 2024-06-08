@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject, Input, OnChanges, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController } from '@ionic/angular';
-import { IIdAndOptionalDto } from '@sneat/core';
+import { IIdAndOptionalDbo } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactusTeamDto } from '@sneat/contactus-core';
 import { TeamNavService } from '@sneat/team-services';
@@ -32,7 +32,7 @@ export const stringHash = (s: string): number => {
 	imports: [CommonModule, IonicModule, FormsModule],
 })
 export class InviteLinksComponent implements OnChanges, OnDestroy {
-	@Input() public contactusTeam?: IIdAndOptionalDto<IContactusTeamDto>;
+	@Input() public contactusTeam?: IIdAndOptionalDbo<IContactusTeamDto>;
 
 	public inviteUrlsFor?: {
 		contributors: string;
