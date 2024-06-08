@@ -6,7 +6,7 @@
 	[items]="countries"
 	[(ngModel)]="countryID"
 	(ngModelChange)="onChanged()"
-	[readonly]="readonly"
+	[isReadonly]="readonly"
 	[filterItem]="filterCountryByCode"
 	labelPlacement="start"
 >

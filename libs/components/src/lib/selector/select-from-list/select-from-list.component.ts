@@ -45,14 +45,12 @@ export class SelectFromListComponent
 	@Input() canAdd = false;
 	@Input() filterItem?: (item: ISelectItem, filter: string) => boolean;
 
-	@Input() readonly = false;
+	@Input() isReadonly = false;
 
 	// @Input() ngModel?: string;
 	// @Output() readonly ngModelChange = new EventEmitter<string>();
 
 	private destroyed = new Subject<void>();
-
-	@Output() changed = new EventEmitter<string>();
 
 	@ViewChild(IonInput, { static: false }) addInput?: IonInput;
 	@ViewChild('filterInput', { static: false }) filterInput?: IonInput;

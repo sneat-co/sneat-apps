@@ -49,7 +49,6 @@ export class AssetAddDwellingComponent
 					category: 'dwelling',
 					extraType: 'dwelling',
 					extra: {
-						extraType: 'dwelling',
 						rent_price: { value: 0, currency: 'USD' },
 					},
 					teamID: this.team?.id,

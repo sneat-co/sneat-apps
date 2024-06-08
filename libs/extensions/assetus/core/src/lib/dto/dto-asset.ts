@@ -66,16 +66,7 @@ export type AssetExtraType =
 	| string;
 
 export interface IAssetExtra {
-	// extraType: Type; // Workaround for code completion, not supposed to be used.
 	[key: string]: unknown;
-}
-
-export interface IUnknownAssetExtra extends IAssetExtra {
-	extraType: 'unknown';
-}
-
-export interface IAssetEmptyExtra extends IAssetExtra {
-	extraType: 'empty';
 }
 
 export type IAssetusTeamContext = INavContext<IAssetusTeamDto, IAssetusTeamDto>;

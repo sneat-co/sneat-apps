@@ -155,7 +155,7 @@ export class VehicleCardComponent implements OnChanges {
 		this.vehicleAssetChange.emit(this.vehicleAsset);
 	}
 
-	modelChanged(model: string): void {
+	protected modelChanged(model: string): void {
 		if (this.vehicleAsset?.dto) {
 			this.vehicleAsset = {
 				...this.vehicleAsset,

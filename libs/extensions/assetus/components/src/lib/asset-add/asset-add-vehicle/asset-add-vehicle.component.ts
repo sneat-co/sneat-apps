@@ -58,7 +58,6 @@ export class AssetAddVehicleComponent
 					category: 'vehicle',
 					extraType: 'vehicle',
 					extra: {
-						extraType: 'vehicle',
 						make: '',
 						model: '',
 						engineFuel: FuelTypes.unknown,
@@ -99,7 +98,6 @@ export class AssetAddVehicleComponent
 					type: this.vehicleType,
 					extraType: 'vehicle',
 					extra: {
-						extraType: 'vehicle',
 						make: '',
 						model: '',
 						regNumber: '',

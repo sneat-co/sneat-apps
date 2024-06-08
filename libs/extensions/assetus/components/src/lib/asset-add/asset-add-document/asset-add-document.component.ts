@@ -58,7 +58,7 @@ export class AssetAddDocumentComponent
 					status: 'draft',
 					category: 'vehicle',
 					extraType: 'document',
-					extra: { extraType: 'document' },
+					extra: {},
 					teamID: this.team?.id,
 					type: this.documentType,
 					title: '',
@@ -94,9 +94,7 @@ export class AssetAddDocumentComponent
 					...this.documentAsset.dto,
 					type: this.documentType,
 					extraType: 'document',
-					extra: {
-						extraType: 'document',
-					},
+					extra: {},
 				},
 			};
 		}
