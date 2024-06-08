@@ -24,9 +24,10 @@
 <ion-card>
 	<sneat-make-model-card
 		*ngIf="
-			vehicleAsset?.dbo?.type &&
-			vehicleAsset?.dbo?.countryID &&
-			(regNumberSkipped || !!vehicleAsset?.dbo?.extra?.regNumber)
+			vehicleAsset?.id ||
+			(vehicleAsset?.dbo?.type &&
+				vehicleAsset?.dbo?.countryID &&
+				(regNumberSkipped || !!vehicleAsset?.dbo?.extra?.regNumber))
 		"
 		[assetType]="vehicleAsset?.dbo?.type"
 		[make]="vehicleAsset?.dbo?.extra?.make"
