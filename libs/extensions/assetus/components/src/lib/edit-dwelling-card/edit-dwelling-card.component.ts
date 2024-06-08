@@ -60,7 +60,7 @@ export class AddDwellingCardComponent implements OnChanges {
 
 		if (changes['dwellingAsset']) {
 			this.title = this.dwellingAsset?.dto?.title || '';
-			this.address = this.dwellingAsset?.dto?.extra?.address || '';
+			this.address = this.dwellingAsset?.dto?.extra?.address?.lines || '';
 			this.rent_price_amount =
 				this.dwellingAsset?.dto?.extra?.rent_price?.value;
 			this.rent_price_currency =

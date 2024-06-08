@@ -1,17 +1,17 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';
-import { TeamComponentBaseParams } from '@sneat/team-components';
-import { AssetService } from '../../services/asset-service';
-import { AddAssetBaseComponent } from '../add-asset-base-component';
+import { timestamp } from '@sneat/dto';
 import {
 	AssetRealEstateType,
 	IAssetContext,
 	IAssetDwellingContext,
 	IAssetDwellingExtra,
 } from '@sneat/mod-assetus-core';
-import { timestamp } from '@sneat/dto';
+import { TeamComponentBaseParams } from '@sneat/team-components';
 import { ICreateAssetRequest } from '../../services';
+import { AssetService } from '../../services/asset-service';
+import { AddAssetBaseComponent } from '../add-asset-base-component';
 
 @Component({
 	selector: 'sneat-asset-add-dwelling',
@@ -41,7 +41,7 @@ export class AssetAddDwellingComponent
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team'] && this.team) {
-			const a: IAssetDwellingContext = this.dwellingAsset ?? {
+			this.dwellingAsset = this.dwellingAsset ?? {
 				id: '',
 				team: this.team ?? { id: '' },
 				dto: {
@@ -50,7 +50,6 @@ export class AssetAddDwellingComponent
 					extraType: 'dwelling',
 					extra: {
 						extraType: 'dwelling',
-						address: '',
 						rent_price: { value: 0, currency: 'USD' },
 					},
 					teamID: this.team?.id,
@@ -63,7 +62,6 @@ export class AssetAddDwellingComponent
 					updatedBy: '-',
 				},
 			};
-			this.dwellingAsset = a;
 		}
 	}
 

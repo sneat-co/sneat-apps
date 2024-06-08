@@ -1,3 +1,4 @@
+import { IAddress } from '@sneat/contactus-core';
 import { INavContext } from '@sneat/core';
 import { IAssetContext } from '../contexts';
 import {
@@ -146,7 +147,7 @@ export interface IAssetVehicleExtra
 export type IAssetVehicleContext = IAssetContext<'vehicle', IAssetVehicleExtra>;
 
 export interface IAssetDwellingExtra extends IAssetExtra {
-	address?: string;
+	address?: IAddress;
 	rent_price?: {
 		value?: number;
 		currency?: string;
