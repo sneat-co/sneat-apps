@@ -136,15 +136,15 @@ export class HappeningSlotFormComponent
 		private readonly alertCtrl: AlertController,
 		protected readonly modalCtrl: ModalController,
 	) {
-		super('RecurringSlotFormComponent', true, errorLogger);
+		super('RecurringSlotFormComponent', errorLogger, true);
 		// const now = new Date();
 		const preselectedWd = window.history.state.wd as WeekdayCode2;
 		if (preselectedWd) {
-			this.weekdaysForm.controls[preselectedWd].setValue(true);
+			this.weekdayById[preselectedWd].set(true);
 		}
-		this.weekdaysForm.valueChanges.pipe(takeUntil(this.destroyed$)).subscribe({
-			next: () => (this.error = undefined),
-		});
+		// this.weekdaysForm.valueChanges.pipe(takeUntil(this.destroyed$)).subscribe({
+		// 	next: () => (this.error = undefined),
+		// });
 	}
 
 	// ngOnChanges(changes: SimpleChanges): void {
@@ -178,7 +178,7 @@ export class HappeningSlotFormComponent
 	}
 
 	private addWeeklySlot(timing?: ITiming): void {
-		this.weekdaysForm.markAsTouched({ onlySelf: true });
+		// this.weekdaysForm.markAsTouched({ onlySelf: true });
 		this.slotForm.markAsTouched();
 		console.log(
 			'addSlot()',
@@ -186,15 +186,11 @@ export class HappeningSlotFormComponent
 			' => this.slotForm.errors:',
 			this.slotForm.controls['locationTitle']?.errors,
 		);
-		if (this.happeningType === 'recurring' && !this.weekdaysForm.valid) {
+		if (this.happeningType === 'recurring' && !this.hasWeekdaySelected()) {
 			this.error = 'At least 1 weekday should be selected';
 		}
 		if (!this.startEndDatetimeForm?.isValid) {
 			console.log('startEndDatetimeForm is not valid');
-			return;
-		}
-		if (this.happeningType === 'recurring' && !this.weekdaysForm.valid) {
-			console.log('weekdaysForm is not valid');
 			return;
 		}
 		// if (!this.weekdaysForm.valid) {
@@ -259,9 +255,7 @@ export class HappeningSlotFormComponent
 		if (this.happeningType === 'recurring') {
 			slot = {
 				...slot,
-				weekdays: Object.entries(this.weekdaysForm.value)
-					.filter((entry) => entry[1])
-					.map((entry) => entry[0]) as WeekdayCode2[],
+				weekdays: this.selectedWeekdayCodes(),
 			};
 		}
 		if (formValue.locationTitle || formValue.locationAddress) {
@@ -394,8 +388,8 @@ export class HappeningSlotFormComponent
 		console.log('addMonthlySlot()', timing);
 		if (this.monthlyMode.value === 'monthly-day') {
 			this.addDaySlot();
-		} else {
-			this.weekdaysForm.markAsTouched();
+			// } else {
+			// this.weekdaysForm.markAsTouched();
 		}
 	}
 
@@ -466,8 +460,7 @@ export class HappeningSlotFormComponent
 		if (changes['wd']) {
 			const wd = this.wd;
 			if (wd) {
-				const formControl = this.weekdaysForm.controls[wd];
-				formControl.setValue(true);
+				this.weekdayById[wd].set(true);
 			}
 		}
 	}

@@ -32,8 +32,8 @@
 						<ion-col>
 							<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
 								<ion-checkbox
-									[formControl]="weekdayMo"
-									(ionChange)="emitChanged()"
+									[checked]="weekdayMo()"
+									(ionChange)="onWeekdayChanged('mo', $event.detail.checked)"
 									slot="start"
 									labelPlacement="end"
 									class="sneat-small-end-margin"
@@ -44,8 +44,8 @@
 						<ion-col>
 							<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
 								<ion-checkbox
-									[formControl]="weekdayTu"
-									(ionChange)="emitChanged()"
+									[checked]="weekdayTu()"
+									(ionChange)="onWeekdayChanged('tu', $event.detail.checked)"
 									slot="start"
 									labelPlacement="end"
 									class="sneat-small-end-margin"
@@ -56,8 +56,8 @@
 						<ion-col>
 							<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
 								<ion-checkbox
-									[formControl]="weekdayWe"
-									(ionChange)="emitChanged()"
+									[checked]="weekdayWe()"
+									(ionChange)="onWeekdayChanged('we', $event.detail.checked)"
 									slot="start"
 									labelPlacement="end"
 									class="sneat-small-end-margin"
@@ -68,8 +68,8 @@
 						<ion-col>
 							<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
 								<ion-checkbox
-									[formControl]="weekdayTh"
-									(ionChange)="emitChanged()"
+									[checked]="weekdayTh()"
+									(ionChange)="onWeekdayChanged('th', $event.detail.checked)"
 									slot="start"
 									labelPlacement="end"
 									class="sneat-small-end-margin"
@@ -80,8 +80,8 @@
 						<ion-col>
 							<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
 								<ion-checkbox
-									[formControl]="weekdayFr"
-									(ionChange)="emitChanged()"
+									[checked]="weekdayFr()"
+									(ionChange)="onWeekdayChanged('fr', $event.detail.checked)"
 									slot="start"
 									labelPlacement="end"
 									class="sneat-small-end-margin"
@@ -92,8 +92,8 @@
 						<ion-col>
 							<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
 								<ion-checkbox
-									[formControl]="weekdaySa"
-									(ionChange)="emitChanged()"
+									[checked]="weekdaySa()"
+									(ionChange)="onWeekdayChanged('sa', $event.detail.checked)"
 									slot="start"
 									labelPlacement="end"
 									class="sneat-small-end-margin"
@@ -104,8 +104,8 @@
 						<ion-col>
 							<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
 								<ion-checkbox
-									[formControl]="weekdaySu"
-									(ionChange)="emitChanged()"
+									[checked]="weekdaySu()"
+									(ionChange)="onWeekdayChanged('su', $event.detail.checked)"
 									slot="start"
 									labelPlacement="end"
 									class="sneat-small-end-margin"

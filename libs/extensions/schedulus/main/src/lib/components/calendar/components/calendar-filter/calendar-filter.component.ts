@@ -54,7 +54,7 @@ export class CalendarFilterComponent extends WeekdaysFormBase {
 		private readonly filterService: CalendarFilterService,
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 	) {
-		super('ScheduleFilterComponent', false, errorLogger);
+		super('ScheduleFilterComponent', errorLogger, false);
 		filterService.filter.subscribe({
 			next: this.onFilterChanged,
 		});
@@ -108,9 +108,7 @@ export class CalendarFilterComponent extends WeekdaysFormBase {
 				emitViewToModelChange: false,
 			};
 			this.text.setValue('', resetFormControlOptions);
-			Object.values(this.weekdayById).forEach((wd) =>
-				wd.setValue(false, resetFormControlOptions),
-			);
+			Object.values(this.weekdayById).forEach((wd) => wd.set(false));
 			this.repeatWeekly.setValue(false);
 			this.repeatMonthly.setValue(false);
 			this.repeatQuarterly.setValue(false);
@@ -148,6 +146,14 @@ export class CalendarFilterComponent extends WeekdaysFormBase {
 	}
 
 	protected onTextKeyUp(): void {
+		this.emitChanged();
+	}
+
+	protected override onWeekdayChanged(
+		wd: WeekdayCode2,
+		checked: boolean,
+	): void {
+		super.onWeekdayChanged(wd, checked);
 		this.emitChanged();
 	}
 

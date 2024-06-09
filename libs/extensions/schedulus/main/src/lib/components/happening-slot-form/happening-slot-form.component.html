@@ -82,9 +82,9 @@
 						(ionChange)="onRepeatsChanged($event.detail.value)"
 					>
 						@for (repeatOption of repeatsOptions; track repeatOption.id) {
-							<ion-select-option [value]="repeatOption.id">{{
-								repeatOption.title
-							}}</ion-select-option>
+							<ion-select-option [value]="repeatOption.id"
+								>{{ repeatOption.title }}
+							</ion-select-option>
 						}
 					</ion-select>
 				</ion-item>
@@ -95,8 +95,8 @@
 						color="medium"
 						labelPlacement="end"
 						slot="end"
-						[formControl]="weekdaysCheckbox"
-						(ionChange)="onWeekdaysCheckboxChange()"
+						[checked]="weekdaysCheckbox()"
+						(ionChange)="onWeekdaysCheckboxChange($event.detail.checked)"
 					>
 						<ion-label color="medium">W-days</ion-label>
 					</ion-checkbox>
@@ -104,8 +104,8 @@
 						color="medium"
 						labelPlacement="end"
 						slot="end"
-						[formControl]="weekendCheckbox"
-						(ionChange)="onWeekendCheckboxChange()"
+						[checked]="weekendCheckbox()"
+						(ionChange)="onWeekendCheckboxChange($event.detail.checked)"
 					>
 						<ion-label color="medium">W-end</ion-label>
 					</ion-checkbox>
@@ -131,7 +131,7 @@
 
 	@if (showWeekdays()) {
 		<ion-item-divider>Choose day of the week</ion-item-divider>
-		<form [formGroup]="weekdaysForm">
+		<form>
 			<ion-grid class="grid-layout">
 				<ion-row>
 					<ion-col size="6">
@@ -139,8 +139,8 @@
 							<ion-checkbox
 								slot="start"
 								value="mo"
-								[formControl]="weekdayMo"
-								(ionChange)="onWeekdayChange()"
+								[checked]="weekdayMo()"
+								(ionChange)="onWeekdayChanged('mo', $event.detail.checked)"
 								labelPlacement="end"
 								>Monday
 							</ion-checkbox>
@@ -149,8 +149,8 @@
 							<ion-checkbox
 								slot="start"
 								value="tu"
-								[formControl]="weekdayTu"
-								(ionChange)="onWeekdayChange()"
+								[checked]="weekdayTu()"
+								(ionChange)="onWeekdayChanged('tu', $event.detail.checked)"
 								labelPlacement="end"
 								>Tuesday
 							</ion-checkbox>
@@ -159,7 +159,8 @@
 							<ion-checkbox
 								slot="start"
 								value="we"
-								[formControl]="weekdayWe"
+								[checked]="weekdayWe()"
+								(ionChange)="onWeekdayChanged('we', $event.detail.checked)"
 								labelPlacement="end"
 								>Wednesday
 							</ion-checkbox>
@@ -168,8 +169,8 @@
 							<ion-checkbox
 								slot="start"
 								value="th"
-								[formControl]="weekdayTh"
-								(ionChange)="onWeekdayChange()"
+								[checked]="weekdayTh()"
+								(ionChange)="onWeekdayChanged('th', $event.detail.checked)"
 								labelPlacement="end"
 								>Thursday
 							</ion-checkbox>
@@ -180,8 +181,8 @@
 							<ion-checkbox
 								slot="start"
 								value="fr"
-								[formControl]="weekdayFr"
-								(ionChange)="onWeekdayChange()"
+								[checked]="weekdayFr()"
+								(ionChange)="onWeekdayChanged('fr', $event.detail.checked)"
 								labelPlacement="end"
 								>Friday
 							</ion-checkbox>
@@ -190,8 +191,8 @@
 							<ion-checkbox
 								slot="start"
 								value="sa"
-								[formControl]="weekdaySa"
-								(ionChange)="onWeekdayChange()"
+								[checked]="weekdaySa()"
+								(ionChange)="onWeekdayChanged('sa', $event.detail.checked)"
 								labelPlacement="end"
 								>Saturday
 							</ion-checkbox>
@@ -200,8 +201,8 @@
 							<ion-checkbox
 								slot="start"
 								value="su"
-								[formControl]="weekdaySu"
-								(ionChange)="onWeekdayChange()"
+								[checked]="weekdaySu()"
+								(ionChange)="onWeekdayChanged('su', $event.detail.checked)"
 								labelPlacement="end"
 								>Sunday
 							</ion-checkbox>

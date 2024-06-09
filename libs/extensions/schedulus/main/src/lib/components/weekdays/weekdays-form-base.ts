@@ -1,35 +1,63 @@
-import {
-	AbstractControl,
-	FormControl,
-	FormGroup,
-	UntypedFormGroup,
-	ValidationErrors,
-	ValidatorFn,
-} from '@angular/forms';
+import { computed, signal } from '@angular/core';
+// import {
+// 	AbstractControl,
+// 	FormGroup,
+// 	UntypedFormGroup,
+// 	ValidationErrors,
+// 	ValidatorFn,
+// } from '@angular/forms';
 import { WeekdayCode2 } from '@sneat/mod-schedulus-core';
 import { IErrorLogger } from '@sneat/logging';
 import { SneatBaseComponent } from '@sneat/ui';
 
-const weekdayRequired: ValidatorFn = (
-	control: AbstractControl,
-): ValidationErrors | null => {
-	const formGroup = control as UntypedFormGroup;
-	const weekdaySelected = Object.values(formGroup.value).includes(true);
-	if (weekdaySelected) {
-		return null;
-	}
-	return { required: 'Please select at least 1 weekday.' };
-};
+// const weekdayRequired: ValidatorFn = (
+// 	control: AbstractControl,
+// ): ValidationErrors | null => {
+// 	const formGroup = control as UntypedFormGroup;
+// 	const weekdaySelected = Object.values(formGroup.value).includes(true);
+// 	if (weekdaySelected) {
+// 		return null;
+// 	}
+// 	return { required: 'Please select at least 1 weekday.' };
+// };
 
 export abstract class WeekdaysFormBase extends SneatBaseComponent {
-	readonly weekdaysCheckbox = new FormControl<boolean>(false);
-	readonly weekendCheckbox = new FormControl<boolean>(false);
+	protected readonly weekdayMo = signal(false);
+	protected readonly weekdayTu = signal(false);
+	protected readonly weekdayWe = signal(false);
+	protected readonly weekdayTh = signal(false);
+	protected readonly weekdayFr = signal(false);
+	protected readonly weekdaySa = signal(false);
+	protected readonly weekdaySu = signal(false);
 
-	protected onWeekdaysCheckboxChange(): void {
-		const checked = this.weekdaysCheckbox.value;
+	protected readonly hasWeekdaySelected = computed(
+		() =>
+			this.weekdayMo() ||
+			this.weekdayTu() ||
+			this.weekdayWe() ||
+			this.weekdayTh() ||
+			this.weekdayFr() ||
+			this.weekdaySa() ||
+			this.weekdaySu(),
+	);
+
+	protected readonly weekdaysCheckbox = computed(
+		() =>
+			this.weekdayMo() &&
+			this.weekdayTu() &&
+			this.weekdayWe() &&
+			this.weekdayTh() &&
+			this.weekdayFr(),
+	);
+
+	protected readonly weekendCheckbox = computed(
+		() => this.weekdaySa() && this.weekdaySu(),
+	);
+
+	protected onWeekdaysCheckboxChange(checked: boolean): void {
 		Object.entries(this.weekdayById).forEach((c) => {
 			if (!this.isWeekend(c[0])) {
-				c[1].setValue(checked);
+				c[1].set(checked);
 			}
 		});
 	}
@@ -38,33 +66,18 @@ export abstract class WeekdaysFormBase extends SneatBaseComponent {
 		return day === 'sa' || day === 'su';
 	}
 
-	protected onWeekendCheckboxChange(): void {
-		const checked = this.weekendCheckbox.value;
+	protected onWeekendCheckboxChange(checked: boolean): void {
 		Object.entries(this.weekdayById).forEach((c) => {
 			if (this.isWeekend(c[0])) {
-				c[1].setValue(checked);
+				c[1].set(checked);
 			}
 		});
 	}
 
-	protected onWeekdayChange(): void {
-		this.weekdaysCheckbox.setValue(
-			this.weekdayMo.value &&
-				this.weekdayTu.value &&
-				this.weekdayWe.value &&
-				this.weekdayTh.value &&
-				this.weekdayFr.value,
-		);
-		this.weekendCheckbox.setValue(this.weekdaySa.value && this.weekdaySu.value);
+	protected onWeekdayChanged(wd: WeekdayCode2, checked: boolean): void {
+		console.log('onWeekdayChanged', wd, checked);
+		this.weekdayById[wd].set(checked);
 	}
-
-	readonly weekdayMo = new FormControl<boolean>(false);
-	readonly weekdayTu = new FormControl<boolean>(false);
-	readonly weekdayWe = new FormControl<boolean>(false);
-	readonly weekdayTh = new FormControl<boolean>(false);
-	readonly weekdayFr = new FormControl<boolean>(false);
-	readonly weekdaySa = new FormControl<boolean>(false);
-	readonly weekdaySu = new FormControl<boolean>(false);
 
 	protected readonly weekdayById = {
 		mo: this.weekdayMo,
@@ -76,42 +89,17 @@ export abstract class WeekdaysFormBase extends SneatBaseComponent {
 		su: this.weekdaySu,
 	};
 
-	readonly weekdaysForm = new FormGroup( // TODO: Make typed
-		{
-			mo: this.weekdayMo,
-			tu: this.weekdayTu,
-			we: this.weekdayWe,
-			th: this.weekdayTh,
-			fr: this.weekdayFr,
-			sa: this.weekdaySa,
-			su: this.weekdaySu,
-		},
-		weekdayRequired,
+	protected readonly selectedWeekdayCodes = computed(() =>
+		Object.entries(this.weekdayById)
+			.filter(([, c]) => c())
+			.map(([wd]) => wd as WeekdayCode2),
 	);
 
 	protected constructor(
 		className: string,
-		isWeekdayRequired: boolean,
 		errorLogger: IErrorLogger,
+		protected readonly isWeekdayRequired: boolean,
 	) {
 		super(className, errorLogger);
-		this.weekdaysForm = new UntypedFormGroup(
-			{
-				mo: this.weekdayMo,
-				tu: this.weekdayTu,
-				we: this.weekdayWe,
-				th: this.weekdayTh,
-				fr: this.weekdayFr,
-				sa: this.weekdaySa,
-				su: this.weekdaySu,
-			},
-			isWeekdayRequired ? weekdayRequired : undefined,
-		);
-	}
-
-	protected selectedWeekdayCodes(): WeekdayCode2[] {
-		return Object.entries(this.weekdayById)
-			.filter(([, c]) => c.value)
-			.map(([wd]) => wd as WeekdayCode2);
 	}
 }
