@@ -95,6 +95,8 @@ export class HappeningSlotFormComponent
 		Validators.required,
 	);
 
+	protected readonly monthlyDate = signal(0);
+
 	protected onMonthlyModeChanged(s: string): void {
 		this.monthlyMode.setValue(s as unknown as MonthlyMode);
 		this.setShowWeekdays();
@@ -122,7 +124,10 @@ export class HappeningSlotFormComponent
 	timeForm = new UntypedFormGroup({
 		repeats: this.repeats,
 	});
-	happens: Exclude<Happens, 'once'> = 'weekly';
+
+	protected readonly happens = signal<Exclude<Happens, 'once'> | undefined>(
+		undefined,
+	);
 
 	protected readonly showWeekdays = signal(false);
 
@@ -156,10 +161,11 @@ export class HappeningSlotFormComponent
 
 	onRepeatsChanged(value: string | undefined): void {
 		this.repeats.setValue(value as Happens);
-		this.happens =
+		this.happens.set(
 			!this.repeats.value || this.repeats.value == 'once'
 				? 'weekly'
-				: this.repeats.value;
+				: this.repeats.value,
+		);
 		this.setShowWeekdays();
 	}
 
@@ -249,15 +255,7 @@ export class HappeningSlotFormComponent
 		if (!this.timing) {
 			throw new Error('!this.timing');
 		}
-		const repeats = this.happens;
-		if (!repeats) {
-			throw new Error('!repeats');
-		}
-		let slot: IHappeningSlot = {
-			...this.timing,
-			id: newRandomId({ len: 3 }),
-			repeats,
-		};
+		let slot = this.initiateSlot();
 		if (this.happeningType === 'recurring') {
 			slot = {
 				...slot,
@@ -280,7 +278,18 @@ export class HappeningSlotFormComponent
 		this.addSlotToHappening(slot);
 	}
 
-	protected monthlyDay?: number;
+	private initiateSlot(): IHappeningSlot {
+		const repeats = this.happens();
+		if (!repeats) {
+			throw new Error('!repeats');
+		}
+		return {
+			...this.timing,
+			id: newRandomId({ len: 3 }),
+			repeats,
+		};
+	}
+
 	protected yearlyMonth?: Month;
 
 	protected readonly monthDays: readonly number[][] = [
@@ -332,13 +341,17 @@ export class HappeningSlotFormComponent
 	}
 
 	protected setMonthlyDay(day: number): void {
-		this.monthlyDay = day;
+		this.monthlyDate.set(day);
+	}
+
+	protected addDaySlot(): void {
+		const day = this.monthlyDate();
 		let slot: IHappeningSlot = {
 			id: newRandomId({ len: 3 }),
-			repeats: this.happens,
+			repeats: 'monthly',
 		};
 
-		switch (this.happens) {
+		switch (this.happens()) {
 			case 'monthly':
 				slot = { ...slot, day };
 				break;
@@ -368,24 +381,35 @@ export class HappeningSlotFormComponent
 		this.happeningChange.emit(this.happening);
 	}
 
-	// private addYearlySlot(): void {
-	// 	alert('not implemented yet');
-	// 	const slot: IHappeningSlot = {
-	// 		id: 'y1',
-	// 		repeats: 'yearly',
-	// 		day: ['may-21'],
-	// 	};
-	// 	this.addSlotToHappening(slot);
-	// }
+	private addYearlySlot(): void {
+		const slot: IHappeningSlot = {
+			id: 'y1',
+			repeats: 'yearly',
+			// day: ['may-21'],
+		};
+		this.addSlotToHappening(slot);
+	}
+
+	protected addMonthlySlot(timing?: ITiming): void {
+		console.log('addMonthlySlot()', timing);
+		if (this.monthlyMode.value === 'monthly-day') {
+			this.addDaySlot();
+		} else {
+			this.weekdaysForm.markAsTouched();
+		}
+	}
 
 	protected addSlot(timing?: ITiming): void {
-		switch (this.happens) {
+		switch (this.happens()) {
 			case 'weekly':
 				this.addWeeklySlot(timing);
 				break;
-			// case 'yearly':
-			// 	this.addYearlySlot();
-			// 	break;
+			case 'monthly':
+				this.addMonthlySlot(timing);
+				break;
+			case 'yearly':
+				this.addYearlySlot();
+				break;
 		}
 		// this.touchAllFormFields(this.slotForm);
 	}

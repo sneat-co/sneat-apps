@@ -222,7 +222,7 @@
 			</ion-grid>
 		</form>
 	}
-	@if (happens === "yearly") {
+	@if (happens() === "yearly") {
 		@if (yearlyMonth) {
 			<ion-item>
 				<ion-select
@@ -252,8 +252,8 @@
 	}
 
 	@if (
-		(happens === "monthly" && monthlyMode.value === "monthly-day") ||
-		(happens === "yearly" && yearlyMonth)
+		(happens() === "monthly" && monthlyMode.value === "monthly-day") ||
+		(happens() === "yearly" && yearlyMonth)
 	) {
 		<ion-item-divider>Choose date</ion-item-divider>
 		<ion-grid>
