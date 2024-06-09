@@ -38,11 +38,6 @@ const contactTypeFamilyMember: IContactRoleBriefWithID = {
 		title: 'Friend',
 		emoji: '🚸',
 	},
-	contactTypeParentOfFriend: IContactRoleBriefWithID = {
-		id: ContactRoleParentOfFriend,
-		title: 'Parent of a friend',
-		emoji: '🚸',
-	},
 	// contactTypeGP: IContactRoleBrief = { id: 'gp', title: 'Family doctor', emoji: '👩‍⚕️', finder: 'gpconnect.app' },
 	contactTypePlumber: IContactRoleBriefWithID = {
 		id: 'plumber',
@@ -101,7 +96,6 @@ export const defaultFamilyContactGroupDTOs: readonly IIdAndDto<IContactGroupDto>
 					contactTypeTeacher,
 					contactTypeBabysitter,
 					contactTypeFriendOfKid,
-					contactTypeParentOfFriend,
 				],
 			},
 		},
