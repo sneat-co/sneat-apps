@@ -27,38 +27,6 @@
 <!--	</ion-segment>-->
 <!--</ion-item-divider>-->
 
-<ion-item-divider color="light" *ngIf="mode !== 'modal'">When</ion-item-divider>
-<form [formGroup]="timeForm">
-	<!--		<ion-item-divider color="light">When</ion-item-divider>-->
-	<sneat-start-end-datetime-form
-		#startEndDatetimeForm
-		[date]="date"
-		[mode]="happeningType"
-		[timing]="timing"
-		addSlotLabel="Add slot"
-		(timingChange)="onTimingChanged($event)"
-		(addClick)="addSlot($event)"
-	/>
-</form>
-<!--			<ion-item-divider color="light">Where</ion-item-divider>-->
-<!--			<ion-item class="ion-padding-start">-->
-<!--				<ion-textarea label="Address / room / directions" labelPlacement="stacked"></ion-textarea>-->
-<!--			</ion-item>-->
-
-<!-- @if ("tab === 'where'") { -->
-<!--	<ion-item-divider color="light">Where</ion-item-divider>-->
-<!--	<ion-item>-->
-<!--		<ion-label position="floating">Address / room / directions</ion-label>-->
-<!--		<ion-textarea></ion-textarea>-->
-<!--	</ion-item>-->
-<!-- }-->
-
-<!--<ng-container *ngIf="tab === 'when'">-->
-
-<!--</ng-container>-->
-
-<!--happeningType: {{happeningType}}, happens: {{happens}};-->
-
 <ng-container *ngIf="happeningType === 'recurring'">
 	<sneat-select-from-list
 		*ngIf="!repeats.value"
@@ -120,7 +88,7 @@
 		<!--		</ion-item-divider>-->
 		<sneat-select-from-list
 			label="On"
-			[value]="monthlyMode.value || ''"
+			[value]="monthlyMode()"
 			[items]="monthlyModes"
 			(valueChange)="onMonthlyModeChanged($event)"
 			labelPlacement="end"
@@ -207,17 +175,6 @@
 								>Sunday
 							</ion-checkbox>
 						</ion-item>
-						<ion-item lines="none">
-							<ion-button
-								style="width: 100%"
-								color="primary"
-								(click)="addSlot()"
-								size="medium"
-							>
-								<ion-icon name="add" slot="start"></ion-icon>
-								<ion-label>Add slot</ion-label>
-							</ion-button>
-						</ion-item>
 					</ion-col>
 				</ion-row>
 			</ion-grid>
@@ -253,7 +210,7 @@
 	}
 
 	@if (
-		(happens() === "monthly" && monthlyMode.value === "monthly-day") ||
+		(happens() === "monthly" && monthlyMode() === "monthly-day") ||
 		(happens() === "yearly" && yearlyMonth)
 	) {
 		<ion-item-divider>Choose date</ion-item-divider>
@@ -281,6 +238,56 @@
 		</ion-grid>
 	}
 </ng-container>
-<ion-item *ngIf="error">
-	<ion-label color="danger">{{ error }}</ion-label>
-</ion-item>
+
+@if (
+	(happens() === "weekly" && hasWeekdaySelected()) ||
+	(happens() && happens() !== "weekly")
+) {
+	<ion-item-divider color="light" *ngIf="mode !== 'modal'"
+		>When</ion-item-divider
+	>
+	<form [formGroup]="timeForm">
+		<!--		<ion-item-divider color="light">When</ion-item-divider>-->
+		<sneat-start-end-datetime-form
+			#startEndDatetimeForm
+			[date]="date"
+			[mode]="happeningType"
+			[timing]="timing"
+			addSlotLabel="Add slot"
+			(timingChange)="onTimingChanged($event)"
+			(addClick)="addSlot($event)"
+		/>
+	</form>
+}
+
+<!--			<ion-item-divider color="light">Where</ion-item-divider>-->
+<!--			<ion-item class="ion-padding-start">-->
+<!--				<ion-textarea label="Address / room / directions" labelPlacement="stacked"></ion-textarea>-->
+<!--			</ion-item>-->
+
+<!-- @if ("tab === 'where'") { -->
+<!--	<ion-item-divider color="light">Where</ion-item-divider>-->
+<!--	<ion-item>-->
+<!--		<ion-label position="floating">Address / room / directions</ion-label>-->
+<!--		<ion-textarea></ion-textarea>-->
+<!--	</ion-item>-->
+<!-- }-->
+
+<!--<ng-container *ngIf="tab === 'when'">-->
+
+<!--</ng-container>-->
+
+<!--happeningType: {{happeningType}}, happens: {{happens}};-->
+
+<ion-list lines="none">
+	<ion-item *ngIf="error">
+		<ion-label color="danger">{{ error }}</ion-label>
+	</ion-item>
+
+	<ion-item *ngIf="showAddSlotButton()">
+		<ion-button slot="end" color="primary" (click)="addSlot()" size="medium">
+			<ion-icon name="add" slot="start"></ion-icon>
+			<ion-label>Add slot</ion-label>
+		</ion-button>
+	</ion-item>
+</ion-list>

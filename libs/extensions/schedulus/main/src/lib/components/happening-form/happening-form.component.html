@@ -14,6 +14,8 @@
 		<ion-item>
 			<ion-input
 				#titleInput
+				label="Title"
+				labelPlacement="floating"
 				[formControl]="happeningTitle"
 				(keyup.enter)="onTitleEnter()"
 				placeholder="Title"

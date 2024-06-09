@@ -1,5 +1,6 @@
 import {
 	Component,
+	computed,
 	EventEmitter,
 	Inject,
 	Input,
@@ -88,16 +89,12 @@ export class HappeningSlotFormComponent
 		{ id: 'yearly', title: 'Yearly' },
 	];
 
-	monthlyMode = new FormControl<MonthlyMode | undefined>(
-		undefined,
-		Validators.required,
-	);
+	protected readonly monthlyMode = signal<MonthlyMode | ''>('');
 
 	protected readonly monthlyDate = signal(0);
 
 	protected onMonthlyModeChanged(s: string): void {
-		this.monthlyMode.setValue(s as unknown as MonthlyMode);
-		this.setShowWeekdays();
+		this.monthlyMode.set(s as unknown as MonthlyMode);
 	}
 
 	protected numberOfDaysInMonth = 28;
@@ -127,7 +124,16 @@ export class HappeningSlotFormComponent
 		undefined,
 	);
 
-	protected readonly showWeekdays = signal(false);
+	protected readonly showWeekdays = computed(
+		() =>
+			this.happens() === 'weekly' ||
+			(this.happens() === 'monthly' &&
+				this.monthlyMode()?.startsWith('monthly-week')),
+	);
+
+	protected readonly showAddSlotButton = computed(
+		() => this.happens() === 'weekly' && this.hasWeekdaySelected(),
+	);
 
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
@@ -163,15 +169,6 @@ export class HappeningSlotFormComponent
 			!this.repeats.value || this.repeats.value == 'once'
 				? 'weekly'
 				: this.repeats.value,
-		);
-		this.setShowWeekdays();
-	}
-
-	private setShowWeekdays(): void {
-		this.showWeekdays.set(
-			this.repeats?.value === 'weekly' ||
-				(this.repeats?.value === 'monthly' &&
-					!!this.monthlyMode.value?.startsWith('monthly-week')),
 		);
 	}
 
@@ -384,7 +381,7 @@ export class HappeningSlotFormComponent
 
 	protected addMonthlySlot(timing?: ITiming): void {
 		console.log('addMonthlySlot()', timing);
-		if (this.monthlyMode.value === 'monthly-day') {
+		if (this.monthlyMode() === 'monthly-day') {
 			this.addDaySlot();
 			// } else {
 			// this.weekdaysForm.markAsTouched();
@@ -392,6 +389,7 @@ export class HappeningSlotFormComponent
 	}
 
 	protected addSlot(timing?: ITiming): void {
+		console.log('addSlot()', timing);
 		switch (this.happens()) {
 			case 'weekly':
 				this.addWeeklySlot(timing);
