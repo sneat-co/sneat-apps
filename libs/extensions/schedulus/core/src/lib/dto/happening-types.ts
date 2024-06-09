@@ -1,16 +1,17 @@
 export type WeekdayCode2 = 'mo' | 'tu' | 'we' | 'th' | 'fr' | 'sa' | 'su';
-export type MonthlyWeek =
-	| 'monthly-1st-week'
-	| 'monthly-2nd-week'
-	| 'monthly-3d-week'
-	| 'monthly-4th-week'
-	| 'week-last-week';
+export type MonthlyMode =
+	| 'monthly-day'
+	| 'monthly-week-1'
+	| 'monthly-week-2'
+	| 'monthly-week-3'
+	| 'monthly-week-4'
+	| 'monthly-week-last';
 export type RepeatPeriod =
 	| 'UNKNOWN'
 	| 'once'
 	| 'daily'
 	| 'weekly'
-	| MonthlyWeek
+	| MonthlyMode
 	| 'fortnightly'
 	| 'monthly'
 	| 'yearly';

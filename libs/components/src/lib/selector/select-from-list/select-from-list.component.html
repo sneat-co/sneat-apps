@@ -81,6 +81,9 @@
 		(ionChange)="onRadioChanged($event)"
 	>
 		<ion-list>
+			<ion-item-divider *ngIf="listLabel === 'divider'">
+				<ion-label>{{ label }}</ion-label>
+			</ion-item-divider>
 			<ion-item
 				lines="full"
 				*ngFor="let item of displayItems || []; trackBy: id"

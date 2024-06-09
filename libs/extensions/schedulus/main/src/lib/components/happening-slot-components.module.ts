@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { SneatPipesModule } from '@sneat/components';
+import { SelectFromListModule, SneatPipesModule } from '@sneat/components';
 import { HappeningCommonModule } from './happening-common.module';
 import { HappeningSlotFormComponent } from './happening-slot-form/happening-slot-form.component';
 import { HappeningSlotsComponent } from './happening-slots/happening-slots.component';
@@ -20,6 +20,7 @@ import { TimeSelectorComponent } from './start-end-datetime-form/time-selector.c
 		HappeningCommonModule,
 		SneatPipesModule,
 		StartEndDatesRangeFormComponent,
+		SelectFromListModule,
 	],
 	declarations: [
 		HappeningSlotsComponent,

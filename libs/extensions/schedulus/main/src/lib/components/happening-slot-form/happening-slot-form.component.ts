@@ -6,21 +6,22 @@ import {
 	OnChanges,
 	OnDestroy,
 	Output,
+	signal,
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
 import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
+import { ISelectItem } from '@sneat/components';
 import {
 	emptyTiming,
 	HappeningType,
 	IHappeningSlot,
 	ITiming,
-	MonthlyWeek,
+	MonthlyMode,
 	SlotLocation,
 	WeekdayCode2,
 	IHappeningContext,
-	IHappeningSlotTiming,
 	Month,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -34,7 +35,6 @@ type Happens =
 	| 'daily'
 	| 'weekly'
 	| 'monthly'
-	| MonthlyWeek
 	| 'yearly'
 	| 'fortnightly';
 
@@ -79,6 +79,26 @@ export class HappeningSlotFormComponent
 	// maxDate = '' + (new Date().getFullYear() + 5);
 
 	repeats = new FormControl<Happens>('weekly', Validators.required);
+	monthlyMode = new FormControl<MonthlyMode | undefined>(
+		undefined,
+		Validators.required,
+	);
+
+	protected onMonthlyModeChanged(s: string): void {
+		this.monthlyMode.setValue(s as unknown as MonthlyMode);
+		this.setShowWeekdays();
+	}
+
+	protected numberOfDaysInMonth = 28;
+
+	protected readonly monthlyModes: readonly ISelectItem[] = [
+		{ id: 'monthly-day', title: 'Specific day' },
+		{ id: 'monthly-week-1', title: 'First week' },
+		{ id: 'monthly-week-2', title: 'Second week' },
+		{ id: 'monthly-week-3', title: 'Third week' },
+		{ id: 'monthly-week-4', title: 'Fourth week' },
+		{ id: 'monthly-week-last', title: 'Last week' },
+	];
 
 	slotForm = new UntypedFormGroup({
 		locationTitle: new FormControl<string>(''),
@@ -92,7 +112,8 @@ export class HappeningSlotFormComponent
 		repeats: this.repeats,
 	});
 	happens: Exclude<Happens, 'once'> = 'weekly';
-	showWeekday = true;
+
+	protected readonly showWeekdays = signal(true);
 
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
@@ -127,9 +148,15 @@ export class HappeningSlotFormComponent
 			!this.repeats.value || this.repeats.value == 'once'
 				? 'weekly'
 				: this.repeats.value;
-		if (this.happens === 'monthly') {
-			this.numberOfDaysInMonth = 28;
-		}
+		this.setShowWeekdays();
+	}
+
+	private setShowWeekdays(): void {
+		this.showWeekdays.set(
+			this.repeats?.value === 'weekly' ||
+				(this.repeats?.value === 'monthly' &&
+					!!this.monthlyMode.value?.startsWith('monthly-week')),
+		);
 	}
 
 	private addWeeklySlot(timing?: ITiming): void {
@@ -244,6 +271,15 @@ export class HappeningSlotFormComponent
 	protected monthlyDay?: number;
 	protected yearlyMonth?: Month;
 
+	protected readonly monthDays: readonly number[][] = [
+		[1, 2, 3, 4, 5],
+		[6, 7, 8, 9, 10],
+		[11, 12, 13, 14, 15],
+		[16, 17, 18, 19, 20],
+		[21, 22, 23, 24, 25],
+		[26, 27, 28, 29, 30, 31],
+	];
+
 	protected readonly months: string[] = [
 		'January',
 		'February',
@@ -258,8 +294,6 @@ export class HappeningSlotFormComponent
 		'November',
 		'December',
 	];
-
-	protected numberOfDaysInMonth = 30;
 
 	protected setYearlyMonth(month: string): void {
 		this.yearlyMonth = month as Month;

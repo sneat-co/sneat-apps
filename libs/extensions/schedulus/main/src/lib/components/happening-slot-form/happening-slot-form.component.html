@@ -72,30 +72,12 @@
 					>
 						<ion-select-option value="daily">Daily</ion-select-option>
 						<ion-select-option value="weekly">Weekly</ion-select-option>
-						<ion-select-option value="monthly"
-							>Monthly (specific date)</ion-select-option
-						>
-						<!--			<ion-select-option value="fortnightly">Fortnightly</ion-select-option>-->
-						<ion-select-option value="week-1st"
-							>Every 1st week of a month
-						</ion-select-option>
-						<ion-select-option value="week-2nd"
-							>Every 2nd week of a month
-						</ion-select-option>
-						<ion-select-option value="week-3d"
-							>Every 3d week of a month
-						</ion-select-option>
-						<ion-select-option value="week-4th"
-							>Every 4th week of a month
-						</ion-select-option>
-						<ion-select-option value="week-last"
-							>Every last week of a month
-						</ion-select-option>
+						<ion-select-option value="monthly">Monthly</ion-select-option>
 						<ion-select-option value="yearly">Yearly</ion-select-option>
 					</ion-select>
 				</ion-item>
 			</ion-col>
-			<ion-col *ngIf="happens.startsWith('week')">
+			<ion-col *ngIf="showWeekdays()">
 				<ion-item color="light" lines="full">
 					<ion-checkbox
 						color="medium"
@@ -120,7 +102,23 @@
 		</ion-row>
 	</ion-grid>
 
-	@if (happens.startsWith("week") && showWeekday) {
+	@if (repeats.value === "monthly") {
+		<!--		<ion-item-divider>-->
+		<!--			<ion-label>On</ion-label>-->
+		<!--		</ion-item-divider>-->
+		<sneat-select-from-list
+			label="On"
+			[value]="monthlyMode.value || ''"
+			[items]="monthlyModes"
+			(valueChange)="onMonthlyModeChanged($event)"
+			labelPlacement="end"
+			listLabel="divider"
+			justify="start"
+		/>
+	}
+
+	@if (showWeekdays()) {
+		<ion-item-divider>Choose day of the week</ion-item-divider>
 		<form [formGroup]="weekdaysForm">
 			<ion-grid class="grid-layout">
 				<ion-row>
@@ -203,7 +201,8 @@
 								(click)="addSlot()"
 								size="medium"
 							>
-								<ion-label>Add slot 2</ion-label>
+								<ion-icon name="add" slot="start"></ion-icon>
+								<ion-label>Add slot</ion-label>
 							</ion-button>
 						</ion-item>
 					</ion-col>
@@ -233,37 +232,39 @@
 						class="ion-margin-end"
 						color="light"
 						(click)="setYearlyMonth(month)"
-						>{{ month }}</ion-button
-					>
+						>{{ month }}
+					</ion-button>
 				}
 			</ion-item>
 		}
 	}
-	@if (happens === "monthly" || (happens === "yearly" && yearlyMonth)) {
-		<ion-item-divider>Choose day</ion-item-divider>
+
+	@if (
+		(happens === "monthly" && monthlyMode.value === "monthly-day") ||
+		(happens === "yearly" && yearlyMonth)
+	) {
+		<ion-item-divider>Choose date</ion-item-divider>
 		<ion-grid>
-			@for (i of [].constructor(5); track i; let rowIndex = $index) {
+			@for (daysRow of monthDays; let rowIndex = $index; track rowIndex) {
 				<ion-row>
-					@for (i of [].constructor(5); track i) {
+					@for (day of daysRow; track day) {
 						<ion-col size="2">
-							<ion-button
-								color="light"
-								(click)="setMonthlyDay($index + rowIndex * 5 + 1)"
-								>{{ $index + rowIndex * 5 + 1 }}
+							<ion-button color="light" (click)="setMonthlyDay(day)"
+								>{{ day }}
 							</ion-button>
 						</ion-col>
 					}
 				</ion-row>
 			}
-			<ion-row>
-				@for (i of [].constructor(numberOfDaysInMonth - 25); track i) {
-					<ion-col size="2">
-						<ion-button color="light" (click)="setMonthlyDay($index + 25 + 1)"
-							>{{ $index + 25 + 1 }}
-						</ion-button>
-					</ion-col>
-				}
-			</ion-row>
+			<!--			<ion-row>-->
+			<!--				@for (i of [].constructor(numberOfDaysInMonth - 25); track i) {-->
+			<!--					<ion-col size="2">-->
+			<!--						<ion-button color="light" (click)="setMonthlyDay($index + 25 + 1)"-->
+			<!--							>{{ $index + 25 + 1 }}-->
+			<!--						</ion-button>-->
+			<!--					</ion-col>-->
+			<!--				}-->
+			<!--			</ion-row>-->
 		</ion-grid>
 	}
 </ng-container>
