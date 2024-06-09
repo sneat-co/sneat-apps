@@ -52,37 +52,31 @@ export class HappeningSlotFormComponent
 {
 	@Input({ required: true }) mode?: 'modal' | 'in-form';
 	@Input() happening?: IHappeningContext;
+	@Input() wd?: WeekdayCode2;
+	@Input() date?: string;
+	@Input() isToDo = false;
+
+	@Output() readonly slotAdded = new EventEmitter<IHappeningSlot>();
+	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
+	@Output() readonly eventTimesChanged = new EventEmitter<ITiming>();
 
 	@ViewChild('startEndDatetimeForm')
 	startEndDatetimeForm?: StartEndDatetimeFormComponent;
 
-	public timing: ITiming = emptyTiming;
+	protected timing: ITiming = emptyTiming;
 
-	public error?: string;
+	protected error?: string;
 
-	public tab: 'when' | 'where' = 'when';
+	protected tab: 'when' | 'where' = 'when';
 
-	get happeningType(): HappeningType | undefined {
+	protected get happeningType(): HappeningType | undefined {
 		return this.happening?.brief?.type;
 	}
-
-	@Input() wd?: WeekdayCode2;
-	@Input() date?: string;
-
-	@Input() isToDo = false;
-
-	get slots(): readonly IHappeningSlot[] | undefined {
-		return this.happening?.brief?.slots;
-	}
-
-	@Output() slotAdded = new EventEmitter<IHappeningSlot>();
-	@Output() happeningChange = new EventEmitter<IHappeningContext>();
-	@Output() eventTimesChanged = new EventEmitter<ITiming>();
 
 	// minDate = '2000';
 	// maxDate = '' + (new Date().getFullYear() + 5);
 
-	repeats = new FormControl<Happens | undefined>(
+	protected readonly repeats = new FormControl<Happens | undefined>(
 		undefined,
 		Validators.required,
 	);
@@ -117,7 +111,7 @@ export class HappeningSlotFormComponent
 		{ id: 'monthly-week-last', title: 'Last week' },
 	];
 
-	slotForm = new UntypedFormGroup({
+	protected readonly slotForm = new UntypedFormGroup({
 		locationTitle: new FormControl<string>(''),
 		locationAddress: new FormControl<string>(''),
 	});
@@ -125,7 +119,7 @@ export class HappeningSlotFormComponent
 	// dateForm = new FormGroup({
 	// 	date: new FormControl(undefined, Validators.required),
 	// });
-	timeForm = new UntypedFormGroup({
+	protected readonly timeForm = new UntypedFormGroup({
 		repeats: this.repeats,
 	});
 
@@ -163,7 +157,7 @@ export class HappeningSlotFormComponent
 	// 		.catch(this.errorLogger.logErrorHandler('failed to dismiss modal'));
 	// }
 
-	onRepeatsChanged(value: string | undefined): void {
+	protected onRepeatsChanged(value: string | undefined): void {
 		this.repeats.setValue(value as Happens);
 		this.happens.set(
 			!this.repeats.value || this.repeats.value == 'once'
