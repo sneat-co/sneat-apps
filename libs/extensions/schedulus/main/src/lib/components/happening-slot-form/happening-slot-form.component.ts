@@ -153,11 +153,11 @@ export class HappeningSlotFormComponent
 	// 	}
 	// }
 
-	dismissModal(): void {
-		this.modalCtrl
-			.dismiss()
-			.catch(this.errorLogger.logErrorHandler('failed to dismiss modal'));
-	}
+	// dismissModal(): void {
+	// 	this.modalCtrl
+	// 		.dismiss()
+	// 		.catch(this.errorLogger.logErrorHandler('failed to dismiss modal'));
+	// }
 
 	onRepeatsChanged(value: string | undefined): void {
 		this.repeats.setValue(value as Happens);
