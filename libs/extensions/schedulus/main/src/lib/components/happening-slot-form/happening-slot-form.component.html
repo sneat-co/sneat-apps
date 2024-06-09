@@ -60,7 +60,18 @@
 <!--happeningType: {{happeningType}}, happens: {{happens}};-->
 
 <ng-container *ngIf="happeningType === 'recurring'">
-	<ion-grid class="ion-grid-layout">
+	<sneat-select-from-list
+		*ngIf="!repeats.value"
+		label="Repeats"
+		listLabelColor="light"
+		[value]="repeats.value || ''"
+		[items]="repeatsOptions"
+		(valueChange)="onRepeatsChanged($event)"
+		labelPlacement="end"
+		listLabel="divider"
+		justify="start"
+	/>
+	<ion-grid *ngIf="repeats.value" class="ion-grid-layout">
 		<ion-row>
 			<ion-col>
 				<ion-item color="light" lines="full">
@@ -68,12 +79,13 @@
 						label="Repeats"
 						[formControl]="repeats"
 						interface="popover"
-						(ionChange)="repeatsChanged()"
+						(ionChange)="onRepeatsChanged($event.detail.value)"
 					>
-						<ion-select-option value="daily">Daily</ion-select-option>
-						<ion-select-option value="weekly">Weekly</ion-select-option>
-						<ion-select-option value="monthly">Monthly</ion-select-option>
-						<ion-select-option value="yearly">Yearly</ion-select-option>
+						@for (repeatOption of repeatsOptions; track repeatOption.id) {
+							<ion-select-option [value]="repeatOption.id">{{
+								repeatOption.title
+							}}</ion-select-option>
+						}
 					</ion-select>
 				</ion-item>
 			</ion-col>

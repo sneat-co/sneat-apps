@@ -36,6 +36,12 @@ export class SelectFromListComponent
 	@Input() filterLabel = 'Find';
 	@Input() label = 'Please choose';
 	@Input() listLabel?: 'divider';
+	@Input() listLabelColor?:
+		| 'light'
+		| 'medium'
+		| 'primary'
+		| 'secondary'
+		| 'tertiary';
 	@Input() isFilterable?: boolean;
 	@Input() isLoading?: boolean;
 	@Input() items?: readonly ISelectItem[];

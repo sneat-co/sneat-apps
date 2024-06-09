@@ -78,7 +78,18 @@ export class HappeningSlotFormComponent
 	// minDate = '2000';
 	// maxDate = '' + (new Date().getFullYear() + 5);
 
-	repeats = new FormControl<Happens>('weekly', Validators.required);
+	repeats = new FormControl<Happens | undefined>(
+		undefined,
+		Validators.required,
+	);
+
+	protected readonly repeatsOptions: readonly ISelectItem[] = [
+		{ id: 'daily', title: 'Daily' },
+		{ id: 'weekly', title: 'Weekly' },
+		{ id: 'monthly', title: 'Monthly' },
+		{ id: 'yearly', title: 'Yearly' },
+	];
+
 	monthlyMode = new FormControl<MonthlyMode | undefined>(
 		undefined,
 		Validators.required,
@@ -113,7 +124,7 @@ export class HappeningSlotFormComponent
 	});
 	happens: Exclude<Happens, 'once'> = 'weekly';
 
-	protected readonly showWeekdays = signal(true);
+	protected readonly showWeekdays = signal(false);
 
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
@@ -143,7 +154,8 @@ export class HappeningSlotFormComponent
 			.catch(this.errorLogger.logErrorHandler('failed to dismiss modal'));
 	}
 
-	repeatsChanged(): void {
+	onRepeatsChanged(value: string | undefined): void {
+		this.repeats.setValue(value as Happens);
 		this.happens =
 			!this.repeats.value || this.repeats.value == 'once'
 				? 'weekly'
