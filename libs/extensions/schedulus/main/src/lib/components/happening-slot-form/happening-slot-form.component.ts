@@ -26,7 +26,6 @@ import {
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { newRandomId } from '@sneat/random';
-import { takeUntil } from 'rxjs';
 import { StartEndDatetimeFormComponent } from '../start-end-datetime-form/start-end-datetime-form.component';
 import { WeekdaysFormBase } from '../weekdays/weekdays-form-base';
 
@@ -42,6 +41,11 @@ type Happens =
 	selector: 'sneat-happening-slot-form',
 	templateUrl: './happening-slot-form.component.html',
 })
+/*
+ INTENTIONALLY not decoupling weekdays form (WeekdaysFormBase) into a separate component
+ as markup of the form is tightly coupled with the weekdays form
+ as weekend & weekdays checkboxes are in the header of the form
+ */
 export class HappeningSlotFormComponent
 	extends WeekdaysFormBase
 	implements OnChanges, OnDestroy
