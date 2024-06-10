@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
 import {
+	ChangeDetectionStrategy,
 	Component,
 	EventEmitter,
 	Inject,
 	Input,
 	OnChanges,
 	Output,
+	signal,
 	SimpleChanges,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
@@ -29,6 +31,7 @@ export interface ICheckChangedArgs {
 	templateUrl: './contacts-checklist.component.html',
 	standalone: true,
 	imports: [CommonModule, IonicModule],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactsChecklistComponent implements OnChanges {
 	@Input({ required: true }) team?: ITeamContext;
@@ -39,7 +42,9 @@ export class ContactsChecklistComponent implements OnChanges {
 	@Output() readonly checkedChange = new EventEmitter<ICheckChangedArgs>();
 
 	private contactusTeamSubscription?: Subscription;
-	protected contacts?: IIdAndBrief<IContactBrief>[];
+	protected readonly contacts = signal<
+		IIdAndBrief<IContactBrief>[] | undefined
+	>(undefined);
 
 	protected readonly contactID = (
 		_: number,
@@ -65,9 +70,11 @@ export class ContactsChecklistComponent implements OnChanges {
 						contacts,
 					);
 					const roles = this.roles;
-					this.contacts = contacts
-						.filter((c) => roles?.some((r) => c.brief?.roles?.includes(r)))
-						.map((c) => ({ id: c.id, brief: c.brief as IContactBrief }));
+					this.contacts.set(
+						contacts
+							.filter((c) => roles?.some((r) => c.brief?.roles?.includes(r)))
+							.map((c) => ({ id: c.id, brief: c.brief as IContactBrief })),
+					);
 				},
 			});
 	}

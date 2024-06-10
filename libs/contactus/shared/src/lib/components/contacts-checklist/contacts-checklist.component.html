@@ -1,5 +1,5 @@
 <ion-list>
-	@for (contact of contacts; track contact.id) {
+	@for (contact of contacts(); track contact.id) {
 		<ion-item>
 			<ion-checkbox
 				labelPlacement="end"
@@ -17,16 +17,12 @@
 			</ion-checkbox>
 		</ion-item>
 	} @empty {
-		<ion-item *ngIf="contacts">
-			<ion-label>
-				{{ noContactsMessage || "No contacts" }}
-			</ion-label>
+		<ion-item>
+			@if (contacts()) {
+				<ion-label>{{ noContactsMessage || "No contacts" }}</ion-label>
+			} @else {
+				<ion-label>Loading...</ion-label>
+			}
 		</ion-item>
 	}
 </ion-list>
-
-<!--checkedContactIDs: {{checkedContactIDs}}-->
-<!--<br>-->
-<!--checkedInProgress: {{checkedInProgress}}-->
-<!--<br>-->
-<!--uncheckedInProgress: {{uncheckedInProgress}}-->

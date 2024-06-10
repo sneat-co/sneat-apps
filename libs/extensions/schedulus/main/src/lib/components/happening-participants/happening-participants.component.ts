@@ -70,7 +70,6 @@ export class HappeningParticipantsComponent implements OnChanges {
 
 	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
 
-	public isToDo = false;
 	public checkedContactIDs: readonly string[] = [];
 	public contacts: number[] = [];
 	public tab: 'members' | 'others' = 'members';
@@ -91,8 +90,16 @@ export class HappeningParticipantsComponent implements OnChanges {
 
 	public isMemberCheckChanged(args: ICheckChangedArgs): void {
 		console.log('isMemberCheckChanged()', args);
+		if (args.checked && !this.checkedContactIDs.includes(args.id)) {
+			this.checkedContactIDs = [...this.checkedContactIDs, args.id];
+		} else if (!args.checked && this.checkedContactIDs.includes(args.id)) {
+			this.checkedContactIDs = this.checkedContactIDs.filter(
+				(id) => id !== args.id,
+			);
+		}
 		this.populateParticipants();
 		if (!this.happening?.id || !this.team?.id) {
+			args.resolve();
 			return;
 		}
 		const request: IHappeningContactRequest = {

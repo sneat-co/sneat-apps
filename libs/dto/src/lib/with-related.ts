@@ -113,8 +113,8 @@ export const hasRelatedItemID = (
 		return false;
 	}
 	const collectionRelated = (related || {})[module] || {};
-	const relatedItems = collectionRelated[collection] || {};
-	return !relatedItems.some((i) =>
+	const relatedItems = collectionRelated[collection];
+	return !relatedItems?.some((i) =>
 		i.keys.some((k) => k.itemID === itemID && k.teamID === teamID),
 	);
 };
