@@ -131,8 +131,25 @@ export class HappeningSlotFormComponent
 				this.monthlyMode()?.startsWith('monthly-week')),
 	);
 
+	protected readonly showTimeForm = computed(() => {
+		const happens = this.happens();
+		const monthlyMode = this.monthlyMode();
+		const monthlyDate = this.monthlyDate();
+		const hasWeekdaySelected = this.hasWeekdaySelected();
+		return (
+			(happens === 'weekly' && hasWeekdaySelected) ||
+			(happens === 'monthly' &&
+				((monthlyMode === 'monthly-day' && !!monthlyDate) ||
+					(monthlyMode.includes('week') && hasWeekdaySelected)))
+		);
+	});
+
 	protected readonly showAddSlotButton = computed(
-		() => this.happens() === 'weekly' && this.hasWeekdaySelected(),
+		() =>
+			(this.happens() === 'weekly' && this.hasWeekdaySelected()) ||
+			(this.happens() === 'monthly' &&
+				this.monthlyMode() === 'monthly-day' &&
+				!!this.monthlyDate()),
 	);
 
 	constructor(

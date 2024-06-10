@@ -196,14 +196,14 @@ export type Month =
 
 export interface IHappeningSlotTiming extends ITiming {
 	readonly repeats: RepeatPeriod;
-	readonly weekdays?: WeekdayCode2[];
+	readonly weekdays?: readonly WeekdayCode2[];
 	readonly day?: number;
 	readonly month?: Month;
-	readonly weeks?: number[];
-	readonly fortnightly?: {
-		odd: IFortnightly;
-		even: IFortnightly;
-	};
+	readonly weeks?: readonly number[];
+	readonly fortnightly?: Readonly<{
+		readonly odd: IFortnightly;
+		readonly even: IFortnightly;
+	}>;
 }
 
 export type Level = 'beginners' | 'intermediate' | 'advanced';

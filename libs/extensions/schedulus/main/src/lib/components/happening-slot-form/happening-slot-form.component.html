@@ -239,13 +239,11 @@
 	}
 </ng-container>
 
-@if (
-	(happens() === "weekly" && hasWeekdaySelected()) ||
-	(happens() && happens() !== "weekly")
-) {
+happens: {{ happens() }}; monthlyMode: {{ monthlyMode() }}
+@if (showTimeForm()) {
 	<ion-item-divider color="light" *ngIf="mode !== 'modal'"
-		>When</ion-item-divider
-	>
+		>When
+	</ion-item-divider>
 	<form [formGroup]="timeForm">
 		<!--		<ion-item-divider color="light">When</ion-item-divider>-->
 		<sneat-start-end-datetime-form

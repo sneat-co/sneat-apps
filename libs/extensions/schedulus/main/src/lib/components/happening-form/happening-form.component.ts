@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import {
 	AfterViewInit,
+	ChangeDetectionStrategy,
 	Component,
 	EventEmitter,
 	Inject,
@@ -21,14 +22,14 @@ import { IonicModule, IonInput } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import { IContactusTeamDtoAndID } from '@sneat/contactus-core';
 import { RoutingState } from '@sneat/core';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	HappeningType,
+	IHappeningContext,
 	IHappeningDto,
 	IHappeningSlot,
 	WeekdayCode2,
-	IHappeningContext,
 } from '@sneat/mod-schedulus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team-components';
 import { ITeamContext } from '@sneat/team-models';
 import { HappeningService, HappeningServiceModule } from '@sneat/team-services';
@@ -43,6 +44,7 @@ import { HappeningPricesComponent } from './happening-prices/happening-prices.co
 	selector: 'sneat-happening-form',
 	templateUrl: 'happening-form.component.html',
 	standalone: true,
+	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
 		CommonModule,
 		IonicModule,
