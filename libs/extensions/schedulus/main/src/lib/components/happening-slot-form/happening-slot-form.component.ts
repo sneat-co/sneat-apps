@@ -24,6 +24,7 @@ import {
 	WeekdayCode2,
 	IHappeningContext,
 	Month,
+	RepeatPeriod,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { newRandomId } from '@sneat/random';
@@ -77,11 +78,6 @@ export class HappeningSlotFormComponent
 	// minDate = '2000';
 	// maxDate = '' + (new Date().getFullYear() + 5);
 
-	protected readonly repeats = new FormControl<Happens | undefined>(
-		undefined,
-		Validators.required,
-	);
-
 	protected readonly repeatsOptions: readonly ISelectItem[] = [
 		{ id: 'daily', title: 'Daily' },
 		{ id: 'weekly', title: 'Weekly' },
@@ -113,19 +109,11 @@ export class HappeningSlotFormComponent
 		locationAddress: new FormControl<string>(''),
 	});
 
-	// dateForm = new FormGroup({
-	// 	date: new FormControl(undefined, Validators.required),
-	// });
-	protected readonly timeForm = new UntypedFormGroup({
-		repeats: this.repeats,
-	});
-
-	protected readonly happens = signal<Exclude<Happens, 'once'> | undefined>(
-		undefined,
-	);
+	protected readonly happens = signal<Exclude<Happens, 'once'> | ''>('');
 
 	protected readonly showWeekdays = computed(
 		() =>
+			this.happens() === 'daily' ||
 			this.happens() === 'weekly' ||
 			(this.happens() === 'monthly' &&
 				this.monthlyMode()?.startsWith('monthly-week')),
@@ -184,13 +172,22 @@ export class HappeningSlotFormComponent
 	// 		.catch(this.errorLogger.logErrorHandler('failed to dismiss modal'));
 	// }
 
-	protected onRepeatsChanged(value: string | undefined): void {
-		this.repeats.setValue(value as Happens);
-		this.happens.set(
-			!this.repeats.value || this.repeats.value == 'once'
+	protected onRepeatsChanged(value: string): void {
+		const happens =
+			!value || value === 'once'
 				? 'weekly'
-				: this.repeats.value,
-		);
+				: (value as Exclude<Happens, 'once'>);
+		this.happens.set(happens);
+		if (happens === 'daily') {
+			Object.values(this.weekdayById).forEach((c) => c.set(true));
+		}
+	}
+
+	override onWeekdayChanged(wd: WeekdayCode2, checked: boolean): void {
+		super.onWeekdayChanged(wd, checked);
+		if (!checked && this.happens() === 'daily') {
+			this.happens.set('weekly');
+		}
 	}
 
 	private addWeeklySlot(timing?: ITiming): void {
@@ -289,14 +286,14 @@ export class HappeningSlotFormComponent
 	}
 
 	private initiateSlot(): IHappeningSlot {
-		const repeats = this.happens();
-		if (!repeats) {
-			throw new Error('!repeats');
+		const happens = this.happens();
+		if (!happens) {
+			throw new Error('!happens');
 		}
 		return {
 			...this.timing,
 			id: newRandomId({ len: 3 }),
-			repeats,
+			repeats: happens as RepeatPeriod,
 		};
 	}
 
@@ -412,6 +409,7 @@ export class HappeningSlotFormComponent
 	protected addSlot(timing?: ITiming): void {
 		console.log('addSlot()', timing);
 		switch (this.happens()) {
+			case 'daily':
 			case 'weekly':
 				this.addWeeklySlot(timing);
 				break;

@@ -35,7 +35,7 @@ export class BudgetPeriodsComponent implements OnChanges {
 	@Input({ required: true }) activePeriod: RepeatPeriod = 'weekly';
 
 	protected readonly periods: RepeatPeriod[] = [
-		'daily',
+		// 'daily',
 		'weekly',
 		'monthly',
 		'yearly',

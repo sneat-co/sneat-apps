@@ -9,7 +9,7 @@ export type MonthlyMode =
 export type RepeatPeriod =
 	| 'UNKNOWN'
 	| 'once'
-	| 'daily'
+	// | 'daily'
 	| 'weekly'
 	| MonthlyMode
 	| 'fortnightly'

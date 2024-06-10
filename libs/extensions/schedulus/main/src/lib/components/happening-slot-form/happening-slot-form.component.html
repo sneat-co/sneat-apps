@@ -29,23 +29,23 @@
 
 <ng-container *ngIf="happeningType === 'recurring'">
 	<sneat-select-from-list
-		*ngIf="!repeats.value"
+		*ngIf="!happens()"
 		label="Repeats"
 		listLabelColor="light"
-		[value]="repeats.value || ''"
+		[value]="happens()"
 		[items]="repeatsOptions"
 		(valueChange)="onRepeatsChanged($event)"
 		labelPlacement="end"
 		listLabel="divider"
 		justify="start"
 	/>
-	<ion-grid *ngIf="repeats.value" class="ion-grid-layout">
+	<ion-grid *ngIf="happens()" class="ion-grid-layout">
 		<ion-row>
 			<ion-col>
 				<ion-item color="light" lines="full">
 					<ion-select
 						label="Repeats"
-						[formControl]="repeats"
+						[value]="happens()"
 						interface="popover"
 						(ionChange)="onRepeatsChanged($event.detail.value)"
 					>
@@ -82,7 +82,7 @@
 		</ion-row>
 	</ion-grid>
 
-	@if (repeats.value === "monthly") {
+	@if (happens() === "monthly") {
 		<!--		<ion-item-divider>-->
 		<!--			<ion-label>On</ion-label>-->
 		<!--		</ion-item-divider>-->
@@ -245,7 +245,7 @@
 		*ngIf="mode !== 'modal' && happens() !== 'daily'"
 		>When
 	</ion-item-divider>
-	<form [formGroup]="timeForm">
+	<form>
 		<!--		<ion-item-divider color="light">When</ion-item-divider>-->
 		<sneat-start-end-datetime-form
 			#startEndDatetimeForm

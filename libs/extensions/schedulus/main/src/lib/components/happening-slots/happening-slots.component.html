@@ -51,12 +51,28 @@
 
 		<ion-label text-wrap>
 			<p>
-				<ion-badge
-					*ngFor="let wd of slot.weekdays || []"
-					color="light"
-					style="margin-right: 4px"
-					>{{ wd | wdToWeekday }}
-				</ion-badge>
+				@if (slot.weekdays?.length === 7) {
+					Every day
+				} @else if (
+					slot.weekdays?.length === 5 &&
+					!slot.weekdays?.includes("sa") &&
+					!slot.weekdays?.includes("su")
+				) {
+					Weekdays
+				} @else if (
+					slot.weekdays?.length === 2 &&
+					slot.weekdays?.includes("sa") &&
+					slot.weekdays?.includes("su")
+				) {
+					Weekends
+				} @else {
+					<ion-badge
+						*ngFor="let wd of slot.weekdays || []"
+						color="light"
+						style="margin-right: 4px"
+						>{{ wd | wdToWeekday }}
+					</ion-badge>
+				}
 			</p>
 			<p>
 				@if (slot.location && (slot.location.title || slot.location.address)) {
