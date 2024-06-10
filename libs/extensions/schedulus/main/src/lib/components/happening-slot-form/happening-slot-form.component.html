@@ -280,7 +280,7 @@
 
 <ion-list lines="none" *ngIf="error() || showAddSlotButton()">
 	<ion-item *ngIf="error()">
-		<ion-label color="danger">{{ error }}</ion-label>
+		<ion-label color="danger">{{ error() }}</ion-label>
 	</ion-item>
 
 	<ion-item *ngIf="showAddSlotButton()">
