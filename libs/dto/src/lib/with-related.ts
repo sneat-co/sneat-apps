@@ -57,7 +57,7 @@ export const addRelatedItem = (
 ) => {
 	related = related || {};
 	let collectionRelated = related[module] || {};
-	let relatedItems = collectionRelated[collection] || {};
+	let relatedItems = collectionRelated[collection] || [];
 	if (!hasRelatedItemID(related, module, collection, teamID, itemID)) {
 		relatedItems = [...(relatedItems || []), { keys: [{ teamID, itemID }] }];
 		collectionRelated = { ...collectionRelated, [collection]: relatedItems };
