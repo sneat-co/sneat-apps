@@ -111,17 +111,25 @@
 
 				<div class="ion-padding" *ngIf="!happening?.id">
 					<ion-button
-						[disabled]="isCreating"
+						[disabled]="isCreating()"
 						[color]="formIsValid() ? 'primary' : 'medium'"
 						size="large"
 						(click)="submit()"
 					>
-						<ion-label *ngIf="isToDo">Add task</ion-label>
-						<ion-label *ngIf="!isToDo"
-							>Create {{ happeningType.value }} happening
-						</ion-label>
+						@if (isToDo) {
+							<ion-label>Add task</ion-label>
+						} @else {
+							@switch (happeningType.value) {
+								@case ("recurring") {
+									<ion-label>Create recurring happening</ion-label>
+								}
+								@case ("single") {
+									<ion-label>Create one-timer happening</ion-label>
+								}
+							}
+						}
 						<ion-spinner
-							*ngIf="isCreating"
+							*ngIf="isCreating()"
 							slot="end"
 							class="ion-margin-horizontal"
 						/>

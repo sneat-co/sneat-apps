@@ -8,6 +8,7 @@ import {
 	Input,
 	OnChanges,
 	Output,
+	signal,
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
@@ -74,7 +75,7 @@ export class HappeningFormComponent
 	@ViewChild('happeningSlotsComponent', { static: false })
 	happeningSlotsComponent?: HappeningSlotsComponent;
 
-	isCreating = false;
+	protected readonly isCreating = signal(false);
 
 	public get slots(): readonly IHappeningSlot[] | undefined {
 		return this.happening?.brief?.slots;
@@ -280,7 +281,7 @@ export class HappeningFormComponent
 				return;
 			}
 
-			this.isCreating = true;
+			this.isCreating.set(true);
 
 			let happening = this.makeHappeningDto();
 
@@ -321,15 +322,15 @@ export class HappeningFormComponent
 						}
 					},
 					error: (err: unknown) => {
-						this.isCreating = false;
+						this.isCreating.set(false);
 						this.logError(err, 'failed to create new happening');
 					},
 					complete: () => {
-						this.isCreating = false;
+						this.isCreating.set(false);
 					},
 				});
 		} catch (e) {
-			this.isCreating = false;
+			this.isCreating.set(false);
 			this.errorLogger.logError(e, 'failed to create new happening');
 		}
 	}

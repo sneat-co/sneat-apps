@@ -43,6 +43,12 @@ export class HappeningParticipantsComponent implements OnChanges {
 	@Input({ required: true }) contactusTeam?: IContactusTeamDtoAndID;
 	@Input({ required: true }) happening?: IHappeningContext;
 
+	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
+
+	public checkedContactIDs: readonly string[] = [];
+	public contacts: number[] = [];
+	public tab: 'members' | 'others' = 'members';
+
 	constructor(private readonly happeningService: HappeningService) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -68,27 +74,21 @@ export class HappeningParticipantsComponent implements OnChanges {
 			: 'Team members';
 	}
 
-	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
-
-	public checkedContactIDs: readonly string[] = [];
-	public contacts: number[] = [];
-	public tab: 'members' | 'others' = 'members';
-
-	public get members(): readonly IContactContext[] | undefined {
-		const contactusTeam = this.contactusTeam,
-			team = this.team;
-
-		if (!team || !contactusTeam) {
-			return;
-		}
-		return zipMapBriefsWithIDs(contactusTeam?.dbo?.contacts).map((m) =>
-			contactContextFromBrief(m, team),
-		);
-	}
+	// protected get members(): readonly IContactContext[] | undefined {
+	// 	const contactusTeam = this.contactusTeam,
+	// 		team = this.team;
+	//
+	// 	if (!team || !contactusTeam) {
+	// 		return;
+	// 	}
+	// 	return zipMapBriefsWithIDs(contactusTeam?.dbo?.contacts).map((m) =>
+	// 		contactContextFromBrief(m, team),
+	// 	);
+	// }
 
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 
-	public isMemberCheckChanged(args: ICheckChangedArgs): void {
+	protected isMemberCheckChanged(args: ICheckChangedArgs): void {
 		console.log('isMemberCheckChanged()', args);
 		if (args.checked && !this.checkedContactIDs.includes(args.id)) {
 			this.checkedContactIDs = [...this.checkedContactIDs, args.id];

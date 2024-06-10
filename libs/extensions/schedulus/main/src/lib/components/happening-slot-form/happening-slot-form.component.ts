@@ -286,9 +286,12 @@ export class HappeningSlotFormComponent
 	}
 
 	private initiateSlot(): IHappeningSlot {
-		const happens = this.happens();
+		let happens = this.happens();
 		if (!happens) {
 			throw new Error('!happens');
+		}
+		if (happens === 'daily') {
+			happens = 'weekly';
 		}
 		return {
 			...this.timing,
