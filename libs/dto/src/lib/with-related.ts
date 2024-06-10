@@ -114,7 +114,7 @@ export const hasRelatedItemID = (
 	}
 	const collectionRelated = (related || {})[module] || {};
 	const relatedItems = collectionRelated[collection];
-	return !relatedItems?.some((i) =>
+	return relatedItems?.some((i) =>
 		i.keys.some((k) => k.itemID === itemID && k.teamID === teamID),
 	);
 };
