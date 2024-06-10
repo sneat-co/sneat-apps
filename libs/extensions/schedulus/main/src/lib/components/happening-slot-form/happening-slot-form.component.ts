@@ -66,7 +66,7 @@ export class HappeningSlotFormComponent
 
 	protected timing: ITiming = emptyTiming;
 
-	protected error?: string;
+	protected readonly error = signal('');
 
 	protected tab: 'when' | 'where' = 'when';
 
@@ -137,6 +137,7 @@ export class HappeningSlotFormComponent
 		const monthlyDate = this.monthlyDate();
 		const hasWeekdaySelected = this.hasWeekdaySelected();
 		return (
+			happens === 'daily' ||
 			(happens === 'weekly' && hasWeekdaySelected) ||
 			(happens === 'monthly' &&
 				((monthlyMode === 'monthly-day' && !!monthlyDate) ||
@@ -144,13 +145,16 @@ export class HappeningSlotFormComponent
 		);
 	});
 
-	protected readonly showAddSlotButton = computed(
-		() =>
-			(this.happens() === 'weekly' && this.hasWeekdaySelected()) ||
-			(this.happens() === 'monthly' &&
-				this.monthlyMode() === 'monthly-day' &&
-				!!this.monthlyDate()),
-	);
+	protected readonly showAddSlotButton = computed(() => {
+		const happens = this.happens();
+		const monthlyMode = this.monthlyMode();
+		const monthlyDate = this.monthlyDate();
+		return (
+			happens === 'daily' ||
+			(happens === 'weekly' && this.hasWeekdaySelected()) ||
+			(happens === 'monthly' && monthlyMode === 'monthly-day' && !!monthlyDate)
+		);
+	});
 
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
@@ -199,7 +203,7 @@ export class HappeningSlotFormComponent
 			this.slotForm.controls['locationTitle']?.errors,
 		);
 		if (this.happeningType === 'recurring' && !this.hasWeekdaySelected()) {
-			this.error = 'At least 1 weekday should be selected';
+			this.error.set('At least 1 weekday should be selected');
 		}
 		if (!this.startEndDatetimeForm?.isValid) {
 			console.log('startEndDatetimeForm is not valid');

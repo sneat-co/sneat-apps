@@ -11,20 +11,27 @@
 	</ion-segment>
 
 	<ion-card>
-		<ion-item>
-			<ion-input
-				#titleInput
-				label="Title"
-				labelPlacement="floating"
-				[formControl]="happeningTitle"
-				(keyup.enter)="onTitleEnter()"
-				placeholder="Title"
-				type="text"
-			/>
-		</ion-item>
-		<ion-item *ngIf="!happeningTitle.value">
-			<ion-label color="medium"> Enter above the name of the event.</ion-label>
-		</ion-item>
+		<ion-list
+			class="ion-no-padding"
+			[lines]="happeningTitle.value ? 'none' : undefined"
+		>
+			<ion-item>
+				<ion-input
+					#titleInput
+					label="Title"
+					labelPlacement="floating"
+					[formControl]="happeningTitle"
+					(keyup.enter)="onTitleEnter()"
+					placeholder="Title"
+					type="text"
+				/>
+			</ion-item>
+			<ion-item *ngIf="!happeningTitle.value">
+				<ion-label color="medium">
+					Enter above the name of the event.</ion-label
+				>
+			</ion-item>
+		</ion-list>
 	</ion-card>
 
 	@if (happeningTitle.value) {

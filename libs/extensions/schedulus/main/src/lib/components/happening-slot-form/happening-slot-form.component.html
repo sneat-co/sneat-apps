@@ -239,9 +239,10 @@
 	}
 </ng-container>
 
-happens: {{ happens() }}; monthlyMode: {{ monthlyMode() }}
 @if (showTimeForm()) {
-	<ion-item-divider color="light" *ngIf="mode !== 'modal'"
+	<ion-item-divider
+		color="light"
+		*ngIf="mode !== 'modal' && happens() !== 'daily'"
 		>When
 	</ion-item-divider>
 	<form [formGroup]="timeForm">
@@ -277,8 +278,8 @@ happens: {{ happens() }}; monthlyMode: {{ monthlyMode() }}
 
 <!--happeningType: {{happeningType}}, happens: {{happens}};-->
 
-<ion-list lines="none">
-	<ion-item *ngIf="error">
+<ion-list lines="none" *ngIf="error() || showAddSlotButton()">
+	<ion-item *ngIf="error()">
 		<ion-label color="danger">{{ error }}</ion-label>
 	</ion-item>
 
