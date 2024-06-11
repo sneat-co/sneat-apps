@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
+	ChangeDetectorRef,
 	Component,
 	EventEmitter,
 	Inject,
@@ -53,6 +54,7 @@ export class ContactsChecklistComponent implements OnChanges {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		private readonly changeDetectorRef: ChangeDetectorRef,
 		private readonly contactusTeamService: ContactusTeamService,
 	) {}
 
@@ -128,6 +130,7 @@ export class ContactsChecklistComponent implements OnChanges {
 			this.uncheckedInProgress = [...this.uncheckedInProgress, id];
 		}
 		const clearInProgress = () => {
+			console.log('clearInProgress()', id, checked);
 			if (checked) {
 				this.checkedInProgress = this.checkedInProgress.filter((v) => v !== id);
 			} else {
@@ -135,14 +138,18 @@ export class ContactsChecklistComponent implements OnChanges {
 					(v) => v !== id,
 				);
 			}
+			this.changeDetectorRef.markForCheck();
 		};
 		new Promise<void>((resolve, reject) => {
 			this.checkedChange.emit({ event: ce, id, checked, resolve, reject });
 		})
 			.then(clearInProgress)
 			.catch((err) => {
-				clearInProgress();
 				this.errorLogger.logError(err);
+
+				// Restore checkbox state with a delay
+				// to allow users to see that check change was registered and processed
+				setTimeout(clearInProgress, 500);
 			});
 	}
 }

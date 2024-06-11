@@ -185,28 +185,28 @@ export class HappeningService {
 		);
 	}
 
-	public removeParticipant(
+	public readonly removeParticipant = (
 		request: IHappeningContactRequest,
-	): Observable<void> {
-		return this.sneatApiService.post('happenings/remove_participant', request);
-	}
+	): Observable<void> =>
+		this.sneatApiService.post('happenings/remove_participant', request);
 
-	public addParticipant(request: IHappeningContactRequest): Observable<void> {
-		return this.sneatApiService.post('happenings/add_participant', request);
-	}
+	public readonly addParticipant = (
+		request: IHappeningContactRequest,
+	): Observable<void> =>
+		this.sneatApiService.post('happenings/add_participant', request);
 
-	public updateSlot(
+	public readonly updateSlot = (
 		teamID: string,
 		happeningID: string,
 		slot: IHappeningSlot,
-	): Observable<void> {
+	): Observable<void> => {
 		const request: IHappeningSlotRequest = {
 			teamID,
 			happeningID,
 			slot,
 		};
 		return this.sneatApiService.post('happenings/update_slot', request);
-	}
+	};
 
 	public deleteHappeningPrices(
 		request: IDeleteHappeningPricesRequest,

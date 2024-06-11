@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+	ChangeDetectionStrategy,
 	Component,
 	EventEmitter,
 	Input,
@@ -37,6 +38,7 @@ import {
 		ContactsChecklistComponent,
 		FormsModule,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HappeningParticipantsComponent implements OnChanges {
 	@Input({ required: true }) team?: ITeamContext; // TODO: Can we get rid of this?
@@ -90,14 +92,7 @@ export class HappeningParticipantsComponent implements OnChanges {
 
 	protected isMemberCheckChanged(args: ICheckChangedArgs): void {
 		console.log('isMemberCheckChanged()', args);
-		if (args.checked && !this.checkedContactIDs.includes(args.id)) {
-			this.checkedContactIDs = [...this.checkedContactIDs, args.id];
-		} else if (!args.checked && this.checkedContactIDs.includes(args.id)) {
-			this.checkedContactIDs = this.checkedContactIDs.filter(
-				(id) => id !== args.id,
-			);
-		}
-		this.populateParticipants();
+		// this.populateParticipants();
 		if (!this.happening?.id || !this.team?.id) {
 			args.resolve();
 			return;
@@ -110,8 +105,17 @@ export class HappeningParticipantsComponent implements OnChanges {
 		const apiCall = args.checked
 			? this.happeningService.addParticipant
 			: this.happeningService.removeParticipant;
-		apiCall.bind(this.happeningService)(request).subscribe({
-			next: args.resolve,
+		apiCall(request).subscribe({
+			next: () => {
+				if (args.checked && !this.checkedContactIDs.includes(args.id)) {
+					this.checkedContactIDs = [...this.checkedContactIDs, args.id];
+				} else if (!args.checked && this.checkedContactIDs.includes(args.id)) {
+					this.checkedContactIDs = this.checkedContactIDs.filter(
+						(id) => id !== args.id,
+					);
+				}
+				args.resolve();
+			},
 			error: args.reject,
 		});
 	}
