@@ -240,10 +240,8 @@
 </ng-container>
 
 @if (showTimeForm()) {
-	<ion-item-divider
-		color="light"
-		*ngIf="mode !== 'modal' && happens() !== 'daily'"
-		>When
+	<ion-item-divider color="light">
+		<ion-label>When</ion-label>
 	</ion-item-divider>
 	<form>
 		<!--		<ion-item-divider color="light">When</ion-item-divider>-->

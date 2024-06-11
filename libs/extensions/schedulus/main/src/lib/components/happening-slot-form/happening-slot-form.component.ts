@@ -187,6 +187,12 @@ export class HappeningSlotFormComponent
 		super.onWeekdayChanged(wd, checked);
 		if (!checked && this.happens() === 'daily') {
 			this.happens.set('weekly');
+		} else if (
+			checked &&
+			this.happens() === 'weekly' &&
+			this.allWeekdaysSelected()
+		) {
+			this.happens.set('daily');
 		}
 	}
 

@@ -54,6 +54,10 @@ export abstract class WeekdaysFormBase extends SneatBaseComponent {
 		() => this.weekdaySa() && this.weekdaySu(),
 	);
 
+	protected readonly allWeekdaysSelected = computed(
+		() => this.weekdaysCheckbox() && this.weekendCheckbox(),
+	);
+
 	protected onWeekdaysCheckboxChange(checked: boolean): void {
 		Object.entries(this.weekdayById).forEach((c) => {
 			if (!this.isWeekend(c[0])) {
