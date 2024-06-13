@@ -11,7 +11,7 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, UntypedFormGroup } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
 import { ISelectItem } from '@sneat/components';
 import {
@@ -53,7 +53,8 @@ export class HappeningSlotFormComponent
 	implements OnChanges, OnDestroy
 {
 	@Input({ required: true }) mode?: 'modal' | 'in-form';
-	@Input() happening?: IHappeningContext;
+	@Input({ required: true }) happening?: IHappeningContext;
+	@Input() slot?: IHappeningSlot;
 	@Input() wd?: WeekdayCode2;
 	@Input() date?: string;
 	@Input() isToDo = false;
@@ -485,6 +486,18 @@ export class HappeningSlotFormComponent
 			const wd = this.wd;
 			if (wd) {
 				this.weekdayById[wd].set(true);
+			}
+		}
+		if (changes['slot']) {
+			const slot = this.slot;
+			if (slot) {
+				if (slot.repeats !== 'once' && slot.repeats !== 'UNKNOWN') {
+					this.happens.set(slot?.repeats);
+				}
+				slot.weekdays?.forEach((wd) => {
+					this.weekdayById[wd].set(true);
+				});
+				this.timing = slot;
 			}
 		}
 	}

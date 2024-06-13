@@ -15,7 +15,11 @@
 	<ion-label><i>No slots have been added yet.</i></ion-label>
 </ion-item>
 @for (slot of slots; track slot.id) {
-	<ion-item button="button" class="with-buttons" (click)="selectSlot(slot)">
+	<ion-item
+		button="button"
+		class="with-buttons"
+		(click)="selectSlot($event, slot)"
+	>
 		@if (slot.start || slot.end) {
 			<ion-buttons slot="start">
 				<div style="text-align: center">
@@ -87,7 +91,18 @@
 			</p>
 		</ion-label>
 		<ion-buttons slot="end">
-			<ion-button (click)="removeSlot(slot)" color="medium">
+			<ion-button
+				title="Edit"
+				color="medium"
+				(click)="showEditSlot($event, slot)"
+			>
+				<ion-icon name="create-outline" />
+			</ion-button>
+			<ion-button
+				*ngIf="!happening?.id || (happening?.brief?.slots?.length || 0) > 1"
+				(click)="removeSlot(slot)"
+				color="medium"
+			>
 				<ion-icon name="close" />
 			</ion-button>
 		</ion-buttons>
@@ -95,15 +110,21 @@
 }
 <ion-modal
 	#addSlotModal
-	[isOpen]="isShowingAddSlot"
-	(ionModalDidDismiss)="onAddSlotModalDismissed($event)"
+	[isOpen]="isShowingSlotFormModal"
+	(ionModalDidDismiss)="onSlotFormModalDismissed($event)"
 >
 	<!--	class="auto-height"-->
 
 	<ng-template>
 		<ion-header>
 			<ion-toolbar color="primary">
-				<ion-title>New slot</ion-title>
+				<ion-title>
+					@if (editingSlot) {
+						{{ happening?.brief?.title || "Edit happening" }}
+					} @else {
+						New slot
+					}
+				</ion-title>
 				<ion-buttons slot="end">
 					<ion-button (click)="addSlotModal.dismiss()">
 						<ion-icon name="close" slot="icon-only" />
@@ -118,6 +139,7 @@
 				mode="modal"
 				[wd]="addSlotParams?.wd"
 				[(happening)]="happening"
+				[slot]="editingSlot"
 				[isToDo]="false"
 				(slotAdded)="onSlotAdded($event)"
 				(happeningChange)="onHappeningChanged($event)"
