@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
 	Component,
 	computed,
@@ -11,9 +12,18 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { FormControl, UntypedFormGroup } from '@angular/forms';
-import { AlertController, ModalController } from '@ionic/angular';
-import { ISelectItem } from '@sneat/components';
+import {
+	FormControl,
+	FormsModule,
+	ReactiveFormsModule,
+	UntypedFormGroup,
+} from '@angular/forms';
+import { AlertController, IonicModule, ModalController } from '@ionic/angular';
+import {
+	ISelectItem,
+	SelectFromListModule,
+	SneatPipesModule,
+} from '@sneat/components';
 import {
 	emptyTiming,
 	HappeningType,
@@ -42,6 +52,16 @@ type Happens =
 @Component({
 	selector: 'sneat-happening-slot-form',
 	templateUrl: './happening-slot-form.component.html',
+	standalone: true,
+	imports: [
+		CommonModule,
+		IonicModule,
+		FormsModule,
+		ReactiveFormsModule,
+		SneatPipesModule,
+		SelectFromListModule,
+		StartEndDatetimeFormComponent,
+	],
 })
 /*
  INTENTIONALLY not decoupling weekdays form (WeekdaysFormBase) into a separate component
@@ -411,9 +431,11 @@ export class HappeningSlotFormComponent
 		console.log('addMonthlySlot()', timing);
 		if (this.monthlyMode() === 'monthly-day') {
 			this.addDaySlot();
-			// } else {
-			// this.weekdaysForm.markAsTouched();
 		}
+	}
+
+	protected saveChanges(): void {
+		console.log('saveChanges()');
 	}
 
 	protected addSlot(timing?: ITiming): void {

@@ -1,11 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { IonicModule, ModalController } from '@ionic/angular';
+import { SneatPipesModule } from '@sneat/components';
 import {
 	IHappeningSlot,
 	WeekdayCode2,
 	IHappeningContext,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { HappeningSlotFormComponent } from '../happening-slot-form/happening-slot-form.component';
 
 export interface AddSlotParams {
 	wd?: WeekdayCode2;
@@ -14,6 +17,13 @@ export interface AddSlotParams {
 @Component({
 	selector: 'sneat-happening-slots',
 	templateUrl: './happening-slots.component.html',
+	standalone: true,
+	imports: [
+		CommonModule,
+		IonicModule,
+		SneatPipesModule,
+		HappeningSlotFormComponent,
+	],
 })
 export class HappeningSlotsComponent {
 	@Input() happening?: IHappeningContext;

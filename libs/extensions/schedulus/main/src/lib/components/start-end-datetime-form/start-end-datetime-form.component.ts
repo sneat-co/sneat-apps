@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
 	AfterViewInit,
 	Component,
@@ -9,8 +10,14 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { IonInput, ModalController } from '@ionic/angular';
+import {
+	FormControl,
+	FormsModule,
+	ReactiveFormsModule,
+	UntypedFormGroup,
+	Validators,
+} from '@angular/forms';
+import { IonicModule, IonInput, ModalController } from '@ionic/angular';
 import {
 	dateToIso,
 	isoStringsToDate,
@@ -21,10 +28,21 @@ import { emptyTiming, HappeningType, ITiming } from '@sneat/mod-schedulus-core';
 import { dateToTimeOnlyStr } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { isTomorrow } from '../schedule-core';
+import { StartEndDatesRangeFormComponent } from '../start-end-dates-range-form/start-end-dates-range-form.component';
+import { TimeSelectorComponent } from './time-selector.component';
 
 @Component({
 	selector: 'sneat-start-end-datetime-form',
 	templateUrl: 'start-end-datetime-form.component.html',
+	standalone: true,
+	imports: [
+		CommonModule,
+		IonicModule,
+		ReactiveFormsModule,
+		FormsModule,
+		TimeSelectorComponent,
+		StartEndDatesRangeFormComponent,
+	],
 })
 export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 	@Input() addSlotLabel?: string;

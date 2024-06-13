@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
 	AfterViewInit,
 	ChangeDetectionStrategy,
@@ -10,7 +11,7 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { IonicModule, ModalController } from '@ionic/angular';
 import {
 	emptyHappeningSlot,
 	IHappeningAdjustment,
@@ -22,11 +23,14 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team-models';
 import { HappeningService } from '@sneat/team-services';
 import { Subject, takeUntil } from 'rxjs';
+import { StartEndDatetimeFormComponent } from '../start-end-datetime-form/start-end-datetime-form.component';
 
 @Component({
 	selector: 'sneat-single-slot-form',
 	templateUrl: './single-slot-form.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	standalone: true,
+	imports: [CommonModule, IonicModule, StartEndDatetimeFormComponent],
 })
 export class SingleSlotFormComponent
 	implements AfterViewInit, OnChanges, OnDestroy
