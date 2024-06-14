@@ -6,7 +6,7 @@ import {
 	IHappeningSlot,
 	IHappeningContext,
 } from '@sneat/mod-schedulus-core';
-import { SingleSlotFormComponent } from './single-slot-form.component';
+import { HappeningSlotModalComponent } from './happening-slot-modal.component';
 
 @Injectable()
 export class HappeningSlotModalService {
@@ -31,7 +31,7 @@ export class HappeningSlotModalService {
 		const happeningSlot =
 			recurring?.happeningSlot || (slots && slots[0]) || emptyHappeningSlot;
 		const modal = await this.modalController.create({
-			component: SingleSlotFormComponent,
+			component: HappeningSlotModalComponent,
 			componentProps: {
 				team,
 				happening,

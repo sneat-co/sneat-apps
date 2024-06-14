@@ -27,12 +27,12 @@ import { StartEndDatetimeFormComponent } from '../start-end-datetime-form/start-
 
 @Component({
 	selector: 'sneat-single-slot-form',
-	templateUrl: './single-slot-form.component.html',
+	templateUrl: './happening-slot-modal.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	standalone: true,
 	imports: [CommonModule, IonicModule, StartEndDatetimeFormComponent],
 })
-export class SingleSlotFormComponent
+export class HappeningSlotModalComponent
 	implements AfterViewInit, OnChanges, OnDestroy
 {
 	private readonly destroyed = new Subject<void>();

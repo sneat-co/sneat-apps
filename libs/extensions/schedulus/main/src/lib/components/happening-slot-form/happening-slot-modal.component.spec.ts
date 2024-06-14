@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { SingleSlotFormComponent } from './single-slot-form.component';
+import { HappeningSlotModalComponent } from './happening-slot-modal.component';
 
 describe('SingleSlotFormComponent', () => {
-	let component: SingleSlotFormComponent;
-	let fixture: ComponentFixture<SingleSlotFormComponent>;
+	let component: HappeningSlotModalComponent;
+	let fixture: ComponentFixture<HappeningSlotModalComponent>;
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [SingleSlotFormComponent],
+			declarations: [HappeningSlotModalComponent],
 		}).compileComponents();
 	}));
 
 	beforeEach(() => {
-		fixture = TestBed.createComponent(SingleSlotFormComponent);
+		fixture = TestBed.createComponent(HappeningSlotModalComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});
