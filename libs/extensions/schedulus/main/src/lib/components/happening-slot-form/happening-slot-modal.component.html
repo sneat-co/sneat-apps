@@ -12,32 +12,33 @@
 </ion-header>
 
 <ion-content>
-	<ion-item-group>
-		<ion-item-divider color="light">When</ion-item-divider>
-		<sneat-start-end-datetime-form
-			mode="single"
-			[timing]="adjustment?.slot || happeningSlot"
-			[date]="this.dateID"
-			(timingChange)="onTimingChanged($event)"
-		/>
+	<sneat-happening-slot-form [happening]="happening" mode="modal" />
+	<!--	<ion-item-group>-->
+	<!--		<ion-item-divider color="light">When</ion-item-divider>-->
+	<!--		<sneat-start-end-datetime-form-->
+	<!--			mode="single"-->
+	<!--			[timing]="adjustment?.slot || happeningSlot"-->
+	<!--			[date]="this.dateID"-->
+	<!--			(timingChange)="onTimingChanged($event)"-->
+	<!--		/>-->
 
-		<ion-item-divider color="light">Where</ion-item-divider>
-		<ion-item>
-			<ion-label position="floating">Address</ion-label>
-			<ion-textarea />
-		</ion-item>
-		<div class="ion-padding">
-			<ion-button color="primary" size="large" (click)="save($event)">
-				Save changes
-			</ion-button>
-			<ion-button
-				color="danger"
-				fill="clear"
-				class="ion-margin-horizontal"
-				(click)="close($event)"
-			>
-				Cancel
-			</ion-button>
-		</div>
-	</ion-item-group>
+	<!--		<ion-item-divider color="light">Where</ion-item-divider>-->
+	<!--		<ion-item>-->
+	<!--			<ion-label position="floating">Address</ion-label>-->
+	<!--			<ion-textarea />-->
+	<!--		</ion-item>-->
+	<!--		<div class="ion-padding">-->
+	<!--			<ion-button color="primary" size="large" (click)="save($event)">-->
+	<!--				Save changes-->
+	<!--			</ion-button>-->
+	<!--			<ion-button-->
+	<!--				color="danger"-->
+	<!--				fill="clear"-->
+	<!--				class="ion-margin-horizontal"-->
+	<!--				(click)="close($event)"-->
+	<!--			>-->
+	<!--				Cancel-->
+	<!--			</ion-button>-->
+	<!--		</div>-->
+	<!--	</ion-item-group>-->
 </ion-content>

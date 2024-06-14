@@ -29,13 +29,18 @@ export class HappeningSlotComponent {
 
 	protected deleting = false;
 
-	async editSingleHappeningSlot(event: Event): Promise<void> {
+	async editHappeningSlot(event: Event): Promise<void> {
+		if (!this.happening) {
+			return Promise.reject('no happening');
+		}
 		if (!this.happening) {
 			return Promise.reject('no happening');
 		}
 		await this.happeningSlotModalService.editSingleHappeningSlot(
 			event,
 			this.happening,
+			undefined,
+			this.slot,
 		);
 	}
 }

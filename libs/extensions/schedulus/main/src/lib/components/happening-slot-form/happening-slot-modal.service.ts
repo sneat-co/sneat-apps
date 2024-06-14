@@ -16,11 +16,12 @@ export class HappeningSlotModalService {
 		event: Event,
 		happening: IHappeningContext,
 		recurring?: {
-			happeningSlot?: IHappeningSlot;
 			dateID: string;
 			adjustment?: IHappeningAdjustment;
 		},
+		slot?: IHappeningSlot,
 	): Promise<void> {
+		console.log('editSingleHappeningSlot', happening, recurring, slot);
 		event.stopPropagation();
 		event.preventDefault();
 		const team = happening.team;
@@ -28,14 +29,12 @@ export class HappeningSlotModalService {
 			return Promise.reject('no team context');
 		}
 		const slots = happening?.brief?.slots;
-		const happeningSlot =
-			recurring?.happeningSlot || (slots && slots[0]) || emptyHappeningSlot;
 		const modal = await this.modalController.create({
 			component: HappeningSlotModalComponent,
 			componentProps: {
 				team,
 				happening,
-				happeningSlot,
+				slot,
 				adjustment: recurring?.adjustment,
 				dateID: recurring?.dateID,
 				isModal: true,

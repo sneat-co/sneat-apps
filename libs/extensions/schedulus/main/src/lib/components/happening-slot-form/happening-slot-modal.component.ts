@@ -24,13 +24,19 @@ import { ITeamContext } from '@sneat/team-models';
 import { HappeningService } from '@sneat/team-services';
 import { Subject, takeUntil } from 'rxjs';
 import { StartEndDatetimeFormComponent } from '../start-end-datetime-form/start-end-datetime-form.component';
+import { HappeningSlotFormComponent } from './happening-slot-form.component';
 
 @Component({
 	selector: 'sneat-single-slot-form',
 	templateUrl: './happening-slot-modal.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	standalone: true,
-	imports: [CommonModule, IonicModule, StartEndDatetimeFormComponent],
+	imports: [
+		CommonModule,
+		IonicModule,
+		StartEndDatetimeFormComponent,
+		HappeningSlotFormComponent,
+	],
 })
 export class HappeningSlotModalComponent
 	implements AfterViewInit, OnChanges, OnDestroy
