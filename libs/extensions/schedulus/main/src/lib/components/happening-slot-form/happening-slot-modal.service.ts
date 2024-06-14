@@ -19,22 +19,21 @@ export class HappeningSlotModalService {
 			dateID: string;
 			adjustment?: IHappeningAdjustment;
 		},
-		slot?: IHappeningSlot,
+		happeningSlot?: IHappeningSlot,
 	): Promise<void> {
-		console.log('editSingleHappeningSlot', happening, recurring, slot);
+		console.log('editSingleHappeningSlot', happening, recurring, happeningSlot);
 		event.stopPropagation();
 		event.preventDefault();
 		const team = happening.team;
 		if (!team) {
 			return Promise.reject('no team context');
 		}
-		const slots = happening?.brief?.slots;
 		const modal = await this.modalController.create({
 			component: HappeningSlotModalComponent,
 			componentProps: {
 				team,
 				happening,
-				slot,
+				happeningSlot,
 				adjustment: recurring?.adjustment,
 				dateID: recurring?.dateID,
 				isModal: true,

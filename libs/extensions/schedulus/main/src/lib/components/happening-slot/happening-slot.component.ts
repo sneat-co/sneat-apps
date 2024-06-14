@@ -29,7 +29,7 @@ export class HappeningSlotComponent {
 
 	protected deleting = false;
 
-	async editHappeningSlot(event: Event): Promise<void> {
+	protected async editHappeningSlot(event: Event): Promise<void> {
 		if (!this.happening) {
 			return Promise.reject('no happening');
 		}

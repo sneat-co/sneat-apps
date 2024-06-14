@@ -1,13 +1,16 @@
 <form [formGroup]="happeningForm" (ngSubmit)="submit()">
 	<ion-segment
+		*ngIf="!happening?.id"
 		class="ion-padding-horizontal"
 		[formControl]="happeningType"
 		(ionChange)="onHappeningTypeChanged($event)"
 	>
-		<ion-segment-button value="recurring">Recurring</ion-segment-button>
-		<ion-segment-button value="single">One-timer</ion-segment-button>
-		<!--				<ion-segment-button value="single" *ngIf="!isToDo">One-timer</ion-segment-button>-->
-		<!--				<ion-segment-button value="single" *ngIf="isToDo">Once</ion-segment-button>-->
+		<ion-segment-button value="recurring" [disabled]="!!happening?.id"
+			>Recurring</ion-segment-button
+		>
+		<ion-segment-button value="single" [disabled]="!!happening?.id"
+			>One-timer</ion-segment-button
+		>
 	</ion-segment>
 
 	<ion-card>
@@ -17,6 +20,7 @@
 		>
 			<ion-item>
 				<ion-input
+					style="font-weight: bold"
 					#titleInput
 					label="Title"
 					labelPlacement="floating"

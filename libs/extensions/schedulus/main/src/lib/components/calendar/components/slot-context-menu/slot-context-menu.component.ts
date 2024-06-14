@@ -115,22 +115,21 @@ export class SlotContextMenuComponent {
 		}
 		const slotID = this.slot?.slotID;
 		const slots = happening?.dbo?.slots || happening?.brief?.slots;
-		const happeningSlot: IHappeningSlot | undefined = slots?.find(
+		const slot: IHappeningSlot | undefined = slots?.find(
 			(slot) => slot.id === slotID,
 		);
-		const recurring =
-			happeningSlot && this.dateID
-				? {
-						happeningSlot,
-						dateID: this.dateID,
-						adjustment: this.slot?.adjustment,
-					}
-				: undefined;
+		const recurring = this.dateID
+			? {
+					dateID: this.dateID,
+					adjustment: this.slot?.adjustment,
+				}
+			: undefined;
 		this.happeningSlotModalService
 			.editSingleHappeningSlot(
 				event,
 				{ ...happening, team: this.team },
 				recurring,
+				slot,
 			)
 			.catch(
 				this.errorLogger.logErrorHandler(
