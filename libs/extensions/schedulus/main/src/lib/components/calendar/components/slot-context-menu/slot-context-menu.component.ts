@@ -25,7 +25,7 @@ import {
 	ISlotRequest,
 } from '@sneat/team-services';
 import { NEVER, Observable } from 'rxjs';
-import { CalendarModalsService } from '../../../../services/calendar-modals.service';
+import { HappeningSlotModalService } from '../../../happening-slot-form/happening-slot-modal.service';
 
 const notImplemented = 'Sorry, not implemented yet';
 
@@ -61,7 +61,7 @@ export class SlotContextMenuComponent {
 		private readonly popoverController: PopoverController,
 		private readonly happeningService: HappeningService,
 		private readonly membersSelectorService: MembersSelectorService,
-		private readonly scheduleModalsService: CalendarModalsService,
+		private readonly happeningSlotModalService: HappeningSlotModalService,
 	) {}
 
 	assign(event: Event, to: 'member' | 'contact'): void {
@@ -126,7 +126,7 @@ export class SlotContextMenuComponent {
 						adjustment: this.slot?.adjustment,
 					}
 				: undefined;
-		this.scheduleModalsService
+		this.happeningSlotModalService
 			.editSingleHappeningSlot(
 				event,
 				{ ...happening, team: this.team },

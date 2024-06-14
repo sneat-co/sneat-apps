@@ -6,10 +6,10 @@ import {
 	IHappeningSlot,
 	IHappeningContext,
 } from '@sneat/mod-schedulus-core';
-import { SingleSlotFormComponent } from '../components/single-slot-form/single-slot-form.component';
+import { SingleSlotFormComponent } from './single-slot-form.component';
 
 @Injectable()
-export class CalendarModalsService {
+export class HappeningSlotModalService {
 	constructor(private readonly modalController: ModalController) {}
 
 	async editSingleHappeningSlot(
@@ -47,6 +47,6 @@ export class CalendarModalsService {
 
 @NgModule({
 	imports: [IonicModule],
-	providers: [CalendarModalsService],
+	providers: [HappeningSlotModalService],
 })
-export class ScheduleModalsServiceModule {}
+export class HappeningSlotModalServiceModule {}

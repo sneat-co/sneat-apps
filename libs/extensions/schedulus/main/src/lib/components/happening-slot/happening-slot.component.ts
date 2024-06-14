@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
-import { CalendarModalsService } from '../../services/calendar-modals.service';
 import { IHappeningContext, IHappeningSlot } from '@sneat/mod-schedulus-core';
+import { HappeningSlotModalService } from '../happening-slot-form/happening-slot-modal.service';
 
 @Component({
 	selector: 'sneat-happening-slot',
@@ -23,7 +23,9 @@ export class HappeningSlotComponent {
 		repeats: 'UNKNOWN',
 	};
 
-	constructor(private readonly scheduleModalsService: CalendarModalsService) {}
+	constructor(
+		private readonly happeningSlotModalService: HappeningSlotModalService,
+	) {}
 
 	protected deleting = false;
 
@@ -31,7 +33,7 @@ export class HappeningSlotComponent {
 		if (!this.happening) {
 			return Promise.reject('no happening');
 		}
-		await this.scheduleModalsService.editSingleHappeningSlot(
+		await this.happeningSlotModalService.editSingleHappeningSlot(
 			event,
 			this.happening,
 		);
