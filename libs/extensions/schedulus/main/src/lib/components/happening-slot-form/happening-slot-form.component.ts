@@ -18,7 +18,7 @@ import {
 	ReactiveFormsModule,
 	UntypedFormGroup,
 } from '@angular/forms';
-import { AlertController, IonicModule, ModalController } from '@ionic/angular';
+import { IonicModule, ModalController } from '@ionic/angular';
 import {
 	ISelectItem,
 	SelectFromListModule,
@@ -38,6 +38,7 @@ import {
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { newRandomId } from '@sneat/random';
+import { HappeningService } from '@sneat/team-services';
 import { StartEndDatetimeFormComponent } from '../start-end-datetime-form/start-end-datetime-form.component';
 import { WeekdaysFormBase } from '../weekdays/weekdays-form-base';
 
@@ -178,8 +179,8 @@ export class HappeningSlotFormComponent
 
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
-		private readonly alertCtrl: AlertController,
 		protected readonly modalCtrl: ModalController,
+		private readonly happeningService: HappeningService,
 	) {
 		super('RecurringSlotFormComponent', errorLogger, true);
 		// const now = new Date();
@@ -228,7 +229,7 @@ export class HappeningSlotFormComponent
 		}
 	}
 
-	private addWeeklySlot(timing?: ITiming): void {
+	private addWeeklySlot(timing?: ITiming): IHappeningSlot | undefined {
 		// this.weekdaysForm.markAsTouched({ onlySelf: true });
 		this.slotForm.markAsTouched();
 		console.log(
@@ -242,7 +243,7 @@ export class HappeningSlotFormComponent
 		}
 		if (!this.startEndDatetimeForm?.isValid) {
 			console.log('startEndDatetimeForm is not valid');
-			return;
+			return undefined;
 		}
 		// if (!this.weekdaysForm.valid) {
 		// 	this.showWeekday = false;
@@ -296,7 +297,7 @@ export class HappeningSlotFormComponent
 		// 	return;
 		// }
 		if (!this.slotForm.valid) {
-			return;
+			return undefined;
 		}
 		const formValue = this.slotForm.value;
 		if (!this.timing) {
@@ -320,7 +321,7 @@ export class HappeningSlotFormComponent
 			}
 			slot = { ...slot, location: l };
 		}
-		this.addSlotToHappening(slot);
+		return slot;
 	}
 
 	private initiateSlot(): IHappeningSlot {
@@ -333,7 +334,7 @@ export class HappeningSlotFormComponent
 		}
 		return {
 			...this.timing,
-			id: newRandomId({ len: 3 }),
+			id: this.slot?.id ?? newRandomId({ len: 3 }),
 			repeats: happens as RepeatPeriod,
 		};
 	}
@@ -392,7 +393,7 @@ export class HappeningSlotFormComponent
 		this.monthlyDate.set(day);
 	}
 
-	protected addDaySlot(): void {
+	protected addDaySlot(): IHappeningSlot | undefined {
 		const day = this.monthlyDate();
 		let slot: IHappeningSlot = {
 			id: newRandomId({ len: 3 }),
@@ -410,7 +411,7 @@ export class HappeningSlotFormComponent
 				slot = { ...slot, day, month: this.yearlyMonth };
 				break;
 		}
-		this.addSlotToHappening(slot);
+		return slot;
 	}
 
 	private addSlotToHappening(slot: IHappeningSlot): void {
@@ -429,41 +430,70 @@ export class HappeningSlotFormComponent
 		this.happeningChange.emit(this.happening);
 	}
 
-	private addYearlySlot(): void {
-		const slot: IHappeningSlot = {
+	private addYearlySlot(): IHappeningSlot {
+		return {
 			id: 'y1',
 			repeats: 'yearly',
 			// day: ['may-21'],
 		};
-		this.addSlotToHappening(slot);
 	}
 
-	protected addMonthlySlot(timing?: ITiming): void {
+	protected addMonthlySlot(timing?: ITiming): IHappeningSlot | undefined {
 		console.log('addMonthlySlot()', timing);
 		if (this.monthlyMode() === 'monthly-day') {
-			this.addDaySlot();
+			return this.addDaySlot();
 		}
+		return undefined;
 	}
+
+	protected readonly isUpdating = signal(false);
 
 	protected saveChanges(): void {
 		console.log('saveChanges()');
+		const slot = this.getSlot();
+		const teamID = this.happening?.team?.id;
+		const happeningID = this.happening?.id;
+		if (!teamID || !happeningID || !slot) {
+			return;
+		}
+		this.isUpdating.set(true);
+		this.happeningService.updateSlot(teamID, happeningID, slot).subscribe({
+			next: () => {
+				this.modalCtrl
+					.dismiss()
+					.catch(this.errorLogger.logErrorHandler('failed to dismiss modal'));
+			},
+			error: (err) => {
+				this.errorLogger.logError(err, 'failed to update happening slot');
+				this.isUpdating.set(false);
+			},
+		});
 	}
 
 	protected addSlot(timing?: ITiming): void {
 		console.log('addSlot()', timing);
+		const slot = this.getSlot(timing);
+		if (slot) {
+			this.addSlotToHappening(slot);
+		}
+		// this.touchAllFormFields(this.slotForm);
+	}
+
+	private getSlot(timing?: ITiming): IHappeningSlot | undefined {
+		let slot: IHappeningSlot | undefined;
 		switch (this.happens()) {
 			case 'daily':
 			case 'weekly':
-				this.addWeeklySlot(timing);
+				slot = this.addWeeklySlot(timing);
 				break;
 			case 'monthly':
-				this.addMonthlySlot(timing);
+				slot = this.addMonthlySlot(timing);
 				break;
 			case 'yearly':
-				this.addYearlySlot();
+				slot = this.addYearlySlot();
 				break;
 		}
-		// this.touchAllFormFields(this.slotForm);
+		return slot;
 	}
 
 	// onTimeStartsChanged(event: Event): void {

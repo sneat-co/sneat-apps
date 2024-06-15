@@ -3,7 +3,7 @@
 	<ion-buttons slot="end">
 		<ion-button
 			title="Add slot"
-			(click)="showAddSlot()"
+			(click)="showAddSlot($event)"
 			[color]="slots?.length ? 'primary' : 'danger'"
 		>
 			<ion-icon name="add-outline" slot="start" />
@@ -89,6 +89,7 @@
 					Ends at {{ slot.end.time }}
 				}
 			</p>
+			SlotID: {{ slot.id }}
 		</ion-label>
 		<ion-buttons slot="end">
 			<ion-button
@@ -108,43 +109,43 @@
 		</ion-buttons>
 	</ion-item>
 }
-<ion-modal
-	#addSlotModal
-	[isOpen]="isShowingSlotFormModal"
-	(ionModalDidDismiss)="onSlotFormModalDismissed($event)"
->
-	<!--	class="auto-height"-->
+<!--<ion-modal-->
+<!--	#addSlotModal-->
+<!--	[isOpen]="isShowingSlotFormModal"-->
+<!--	(ionModalDidDismiss)="onSlotFormModalDismissed($event)"-->
+<!--&gt;-->
+<!--	&lt;!&ndash;	class="auto-height"&ndash;&gt;-->
 
-	<ng-template>
-		<ion-header>
-			<ion-toolbar color="primary">
-				<ion-title>
-					@if (editingSlot) {
-						{{ happening?.brief?.title || "Edit happening" }}
-					} @else {
-						New slot
-					}
-				</ion-title>
-				<ion-buttons slot="end">
-					<ion-button (click)="addSlotModal.dismiss()">
-						<ion-icon name="close" slot="icon-only" />
-					</ion-button>
-				</ion-buttons>
-			</ion-toolbar>
-		</ion-header>
-		<ion-content>
-			<!--			<div class="modal-wrapper">-->
-			<sneat-happening-slot-form
-				class="modal-content"
-				mode="modal"
-				[wd]="addSlotParams?.wd"
-				[(happening)]="happening"
-				[slot]="editingSlot"
-				[isToDo]="false"
-				(slotAdded)="onSlotAdded($event)"
-				(happeningChange)="onHappeningChanged($event)"
-			/>
-			<!--			</div>-->
-		</ion-content>
-	</ng-template>
-</ion-modal>
+<!--	<ng-template>-->
+<!--		<ion-header>-->
+<!--			<ion-toolbar color="primary">-->
+<!--				<ion-title>-->
+<!--					@if (editingSlot) {-->
+<!--						{{ happening?.brief?.title || "Edit happening" }}-->
+<!--					} @else {-->
+<!--						New slot-->
+<!--					}-->
+<!--				</ion-title>-->
+<!--				<ion-buttons slot="end">-->
+<!--					<ion-button (click)="addSlotModal.dismiss()">-->
+<!--						<ion-icon name="close" slot="icon-only" />-->
+<!--					</ion-button>-->
+<!--				</ion-buttons>-->
+<!--			</ion-toolbar>-->
+<!--		</ion-header>-->
+<!--		<ion-content>-->
+<!--			&lt;!&ndash;			<div class="modal-wrapper">&ndash;&gt;-->
+<!--			<sneat-happening-slot-form-->
+<!--				class="modal-content"-->
+<!--				mode="modal"-->
+<!--				[wd]="addSlotParams?.wd"-->
+<!--				[(happening)]="happening"-->
+<!--				[slot]="editingSlot"-->
+<!--				[isToDo]="false"-->
+<!--				(slotAdded)="onSlotAdded($event)"-->
+<!--				(happeningChange)="onHappeningChanged($event)"-->
+<!--			/>-->
+<!--			&lt;!&ndash;			</div>&ndash;&gt;-->
+<!--		</ion-content>-->
+<!--	</ng-template>-->
+<!--</ion-modal>-->

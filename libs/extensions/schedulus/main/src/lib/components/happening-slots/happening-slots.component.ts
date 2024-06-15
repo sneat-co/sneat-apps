@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import {
 	IHappeningSlot,
@@ -9,6 +9,10 @@ import {
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { HappeningSlotFormComponent } from '../happening-slot-form/happening-slot-form.component';
+import {
+	HappeningSlotModalService,
+	HappeningSlotModalServiceModule,
+} from '../happening-slot-form/happening-slot-modal.service';
 
 export interface AddSlotParams {
 	wd?: WeekdayCode2;
@@ -23,6 +27,7 @@ export interface AddSlotParams {
 		IonicModule,
 		SneatPipesModule,
 		HappeningSlotFormComponent,
+		HappeningSlotModalServiceModule,
 	],
 })
 export class HappeningSlotsComponent {
@@ -39,13 +44,13 @@ export class HappeningSlotsComponent {
 		return this.happening?.brief?.slots;
 	}
 
-	protected isShowingSlotFormModal = false;
-
-	protected addSlotParams?: AddSlotParams;
+	// protected isShowingSlotFormModal = false;
+	//
+	// protected addSlotParams?: AddSlotParams;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger, // private readonly modalController: ModalController,
-		private readonly modalController: ModalController,
+		private readonly happeningSlotModalService: HappeningSlotModalService,
 	) {}
 
 	protected removeSlot(slot: IHappeningSlot): void {
@@ -70,7 +75,7 @@ export class HappeningSlotsComponent {
 
 	protected onSlotAdded(slot: IHappeningSlot): void {
 		console.log('HappeningSlotsComponent.onSlotAdded()');
-		this.isShowingSlotFormModal = false;
+		// this.isShowingSlotFormModal = false;
 		this.slotAdded.emit(slot);
 	}
 
@@ -84,22 +89,36 @@ export class HappeningSlotsComponent {
 	protected showEditSlot(event: Event, slot: IHappeningSlot): void {
 		event.stopPropagation();
 		event.preventDefault();
-		this.addSlotParams = undefined;
-		this.editingSlot = slot;
-		this.isShowingSlotFormModal = true;
+		if (!this.happening) {
+			return;
+		}
+		this.happeningSlotModalService
+			.editSingleHappeningSlot(event, this.happening, undefined, slot)
+			.catch(this.errorLogger.logErrorHandler('failed to open edit modal'));
+
+		// this.addSlotParams = undefined;
+		// this.editingSlot = slot;
+		// this.isShowingSlotFormModal = true;
 	}
 
-	protected showAddSlot(params?: AddSlotParams): void {
+	protected showAddSlot(event: Event, params?: AddSlotParams): void {
 		console.log('RecurringSlotsComponent.showAddSlot(), params:', params);
-		this.editingSlot = undefined;
-		this.addSlotParams = params;
-		this.isShowingSlotFormModal = true;
+		if (!this.happening) {
+			return;
+		}
+		this.happeningSlotModalService
+			.editSingleHappeningSlot(event, this.happening)
+			.catch(this.errorLogger.logErrorHandler('failed to open edit modal'));
+
+		// this.editingSlot = undefined;
+		// this.addSlotParams = params;
+		// this.isShowingSlotFormModal = true;
 	}
 
-	onSlotFormModalDismissed(event: Event): void {
-		console.log('onAddSlotModalDismissed(), event:', event);
-		this.editingSlot = undefined;
-		this.isShowingSlotFormModal = false;
-		this.addSlotDismissed.next();
-	}
+	// onSlotFormModalDismissed(event: Event): void {
+	// 	console.log('onAddSlotModalDismissed(), event:', event);
+	// 	this.editingSlot = undefined;
+	// 	this.isShowingSlotFormModal = false;
+	// 	this.addSlotDismissed.next();
+	// }
 }

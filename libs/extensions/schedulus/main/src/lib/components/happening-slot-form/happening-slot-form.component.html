@@ -288,6 +288,7 @@
 			<ion-button
 				slot="end"
 				color="primary"
+				[disabled]="isUpdating()"
 				(click)="saveChanges()"
 				size="medium"
 			>

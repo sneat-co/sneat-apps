@@ -1,7 +1,6 @@
 import { Injectable, NgModule } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
 import {
-	emptyHappeningSlot,
 	IHappeningAdjustment,
 	IHappeningSlot,
 	IHappeningContext,
@@ -44,7 +43,6 @@ export class HappeningSlotModalService {
 }
 
 @NgModule({
-	imports: [IonicModule],
 	providers: [HappeningSlotModalService],
 })
 export class HappeningSlotModalServiceModule {}
