@@ -49,6 +49,17 @@ type Happens =
 	| 'yearly'
 	| 'fortnightly';
 
+export type HappeningSlotFormMode = 'modal' | 'in-form';
+
+export interface IHappeningSlotFormComponentInputs {
+	mode?: HappeningSlotFormMode;
+	happening?: IHappeningContext;
+	slot?: IHappeningSlot;
+	wd?: WeekdayCode2;
+	date?: string;
+	isToDo?: boolean;
+}
+
 @Component({
 	selector: 'sneat-happening-slot-form',
 	templateUrl: './happening-slot-form.component.html',
@@ -70,9 +81,9 @@ type Happens =
  */
 export class HappeningSlotFormComponent
 	extends WeekdaysFormBase
-	implements OnChanges, OnDestroy
+	implements OnChanges, OnDestroy, IHappeningSlotFormComponentInputs
 {
-	@Input({ required: true }) mode?: 'modal' | 'in-form';
+	@Input({ required: true }) mode?: HappeningSlotFormMode;
 	@Input({ required: true }) happening?: IHappeningContext;
 	@Input() slot?: IHappeningSlot;
 	@Input() wd?: WeekdayCode2;

@@ -19,9 +19,9 @@ export class HappeningSlotModalService {
 			dateID: string;
 			adjustment?: IHappeningAdjustment;
 		},
-		happeningSlot?: IHappeningSlot,
+		slot?: IHappeningSlot,
 	): Promise<void> {
-		console.log('editSingleHappeningSlot', happening, recurring, happeningSlot);
+		console.log('editSingleHappeningSlot', happening, recurring, slot);
 		event.stopPropagation();
 		event.preventDefault();
 		const team = happening.team;
@@ -33,7 +33,7 @@ export class HappeningSlotModalService {
 			componentProps: {
 				team,
 				happening,
-				happeningSlot,
+				slot,
 				adjustment: recurring?.adjustment,
 				dateID: recurring?.dateID,
 				isModal: true,

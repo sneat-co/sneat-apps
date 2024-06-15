@@ -24,7 +24,10 @@ import { ITeamContext } from '@sneat/team-models';
 import { HappeningService } from '@sneat/team-services';
 import { Subject, takeUntil } from 'rxjs';
 import { StartEndDatetimeFormComponent } from '../start-end-datetime-form/start-end-datetime-form.component';
-import { HappeningSlotFormComponent } from './happening-slot-form.component';
+import {
+	HappeningSlotFormComponent,
+	IHappeningSlotFormComponentInputs,
+} from './happening-slot-form.component';
 
 @Component({
 	selector: 'sneat-single-slot-form',
@@ -39,13 +42,17 @@ import { HappeningSlotFormComponent } from './happening-slot-form.component';
 	],
 })
 export class HappeningSlotModalComponent
-	implements AfterViewInit, OnChanges, OnDestroy
+	implements
+		AfterViewInit,
+		OnChanges,
+		OnDestroy,
+		IHappeningSlotFormComponentInputs
 {
 	private readonly destroyed = new Subject<void>();
 
 	@Input({ required: true }) team?: ITeamContext;
 	@Input() happening?: IHappeningContext;
-	@Input() happeningSlot: IHappeningSlot = emptyHappeningSlot;
+	@Input() slot: IHappeningSlot = emptyHappeningSlot;
 	@Input() adjustment?: IHappeningAdjustment;
 
 	@Input() dateID?: string; // For re-scheduling recurring event for a specific day
@@ -76,12 +83,12 @@ export class HappeningSlotModalComponent
 		// 	this.errorLogger.logError('timing has no durationMinutes');
 		// 	return;
 		// }
-		this.happeningSlot = { ...this.happeningSlot, ...timing };
+		this.slot = { ...this.slot, ...timing };
 		this.emitHappeningSlotChange();
 	}
 
 	private emitHappeningSlotChange(): void {
-		this.happeningSlotChange.emit(this.happeningSlot);
+		this.happeningSlotChange.emit(this.slot);
 	}
 
 	async close(event: Event): Promise<void> {
@@ -105,7 +112,7 @@ export class HappeningSlotModalComponent
 		}
 		if (this.happening?.brief?.type === 'single' || !this.dateID) {
 			this.happeningService
-				.updateSlot(this.team.id, this.happening.id, this.happeningSlot)
+				.updateSlot(this.team.id, this.happening.id, this.slot)
 				.pipe(takeUntil(this.destroyed))
 				.subscribe({
 					next: () =>
@@ -118,12 +125,7 @@ export class HappeningSlotModalComponent
 				});
 		} else if (this.happening?.brief?.type === 'recurring' && this.dateID) {
 			this.happeningService
-				.adjustSlot(
-					this.team.id,
-					this.happening.id,
-					this.happeningSlot,
-					this.dateID,
-				)
+				.adjustSlot(this.team.id, this.happening.id, this.slot, this.dateID)
 				.pipe(takeUntil(this.destroyed))
 				.subscribe({
 					next: () =>
@@ -138,7 +140,7 @@ export class HappeningSlotModalComponent
 	}
 
 	ngAfterViewInit(): void {
-		console.log('ngAfterViewInit', this.happeningSlot);
+		console.log('ngAfterViewInit', this.slot);
 		this.processHappening();
 	}
 
