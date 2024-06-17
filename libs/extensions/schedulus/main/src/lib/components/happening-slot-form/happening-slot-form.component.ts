@@ -35,6 +35,7 @@ import {
 	IHappeningContext,
 	Month,
 	RepeatPeriod,
+	IHappeningSlotWithID,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { newRandomId } from '@sneat/random';
@@ -55,6 +56,7 @@ export type HappeningSlotFormMode = 'modal' | 'in-form';
 export interface IHappeningSlotFormComponentInputs {
 	mode?: HappeningSlotFormMode;
 	happening?: IHappeningContext;
+	slotID?: string;
 	slot?: IHappeningSlot;
 	wd?: WeekdayCode2;
 	date?: string;
@@ -86,7 +88,7 @@ export class HappeningSlotFormComponent
 {
 	@Input({ required: true }) mode?: HappeningSlotFormMode;
 	@Input({ required: true }) happening?: IHappeningContext;
-	@Input() slot?: IHappeningSlot;
+	@Input() slot?: IHappeningSlotWithID;
 	@Input() wd?: WeekdayCode2;
 	@Input() date?: string;
 	@Input() isToDo = false;
@@ -229,7 +231,7 @@ export class HappeningSlotFormComponent
 		}
 	}
 
-	private addWeeklySlot(timing?: ITiming): IHappeningSlot | undefined {
+	private addWeeklySlot(timing?: ITiming): IHappeningSlotWithID | undefined {
 		// this.weekdaysForm.markAsTouched({ onlySelf: true });
 		this.slotForm.markAsTouched();
 		console.log(
@@ -324,7 +326,7 @@ export class HappeningSlotFormComponent
 		return slot;
 	}
 
-	private initiateSlot(): IHappeningSlot {
+	private initiateSlot(): IHappeningSlotWithID {
 		let happens = this.happens();
 		if (!happens) {
 			throw new Error('!happens');
@@ -334,8 +336,8 @@ export class HappeningSlotFormComponent
 		}
 		return {
 			...this.timing,
-			id: this.slot?.id ?? newRandomId({ len: 3 }),
 			repeats: happens as RepeatPeriod,
+			id: '',
 		};
 	}
 
@@ -393,10 +395,10 @@ export class HappeningSlotFormComponent
 		this.monthlyDate.set(day);
 	}
 
-	protected addDaySlot(): IHappeningSlot | undefined {
+	protected addDaySlot(): IHappeningSlotWithID | undefined {
 		const day = this.monthlyDate();
-		let slot: IHappeningSlot = {
-			id: newRandomId({ len: 3 }),
+		let slot: IHappeningSlotWithID = {
+			id: '',
 			repeats: 'monthly',
 		};
 
@@ -414,7 +416,7 @@ export class HappeningSlotFormComponent
 		return slot;
 	}
 
-	private addSlotToHappening(slot: IHappeningSlot): void {
+	private addSlotToHappening(slotID: string, slot: IHappeningSlot): void {
 		if (!this.happening?.brief) {
 			throw new Error('!this.happening?.brief');
 		}
@@ -422,7 +424,7 @@ export class HappeningSlotFormComponent
 			...this.happening,
 			brief: {
 				...this.happening.brief,
-				slots: [...(this.happening.brief.slots || []), slot],
+				slots: { ...this.happening.brief.slots, [slotID]: slot },
 			},
 		};
 		console.log('happening:', this.happening);
@@ -430,15 +432,15 @@ export class HappeningSlotFormComponent
 		this.happeningChange.emit(this.happening);
 	}
 
-	private addYearlySlot(): IHappeningSlot {
+	private addYearlySlot(): IHappeningSlotWithID {
 		return {
-			id: 'y1',
+			id: '',
 			repeats: 'yearly',
 			// day: ['may-21'],
 		};
 	}
 
-	protected addMonthlySlot(timing?: ITiming): IHappeningSlot | undefined {
+	protected addMonthlySlot(timing?: ITiming): IHappeningSlotWithID | undefined {
 		console.log('addMonthlySlot()', timing);
 		if (this.monthlyMode() === 'monthly-day') {
 			return this.addDaySlot();
@@ -474,26 +476,24 @@ export class HappeningSlotFormComponent
 		console.log('addSlot()', timing);
 		const slot = this.getSlot(timing);
 		if (slot) {
-			this.addSlotToHappening(slot);
+			this.addSlotToHappening(newRandomId({ len: 3 }), slot);
 		}
 		// this.touchAllFormFields(this.slotForm);
 	}
 
-	private getSlot(timing?: ITiming): IHappeningSlot | undefined {
-		let slot: IHappeningSlot | undefined;
-		switch (this.happens()) {
+	private getSlot(timing?: ITiming): IHappeningSlotWithID | undefined {
+		const happens = this.happens();
+		switch (happens) {
 			case 'daily':
 			case 'weekly':
-				slot = this.addWeeklySlot(timing);
-				break;
+				return this.addWeeklySlot(timing);
 			case 'monthly':
-				slot = this.addMonthlySlot(timing);
-				break;
+				return this.addMonthlySlot(timing);
 			case 'yearly':
-				slot = this.addYearlySlot();
-				break;
+				return this.addYearlySlot();
+			default:
+				throw new Error(`unknown happens: ${happens}`);
 		}
-		return slot;
 	}
 
 	// onTimeStartsChanged(event: Event): void {

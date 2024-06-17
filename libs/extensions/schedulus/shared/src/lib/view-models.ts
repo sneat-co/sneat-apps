@@ -8,6 +8,7 @@ import {
 	SlotLocation,
 	WeekdayCode2,
 	IHappeningContext,
+	ISlotAdjustment,
 } from '@sneat/mod-schedulus-core';
 
 export interface ISchedulePageParams {
@@ -32,7 +33,7 @@ export const sortSlotItems = (
 export interface IHappeningSlotUiItem {
 	// readonly id: string; Not sure how to make an ID yet
 	readonly slotID: string;
-	readonly adjustment?: IHappeningAdjustment;
+	readonly adjustment?: ISlotAdjustment;
 	readonly wd?: WeekdayCode2;
 	// readonly date: string;
 	readonly error?: unknown;

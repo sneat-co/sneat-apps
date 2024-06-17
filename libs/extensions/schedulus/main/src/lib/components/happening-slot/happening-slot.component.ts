@@ -2,7 +2,12 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
-import { IHappeningContext, IHappeningSlot } from '@sneat/mod-schedulus-core';
+import {
+	emptyHappeningSlot,
+	IHappeningContext,
+	IHappeningSlot,
+	IHappeningSlotWithID,
+} from '@sneat/mod-schedulus-core';
 import { HappeningSlotModalService } from '../happening-slot-form/happening-slot-modal.service';
 
 @Component({
@@ -18,10 +23,8 @@ import { HappeningSlotModalService } from '../happening-slot-form/happening-slot
 })
 export class HappeningSlotComponent {
 	@Input({ required: true }) public happening?: IHappeningContext;
-	@Input({ required: true }) public slot: IHappeningSlot = {
-		id: '',
-		repeats: 'UNKNOWN',
-	};
+	@Input({ required: true }) public slot: IHappeningSlotWithID =
+		emptyHappeningSlot;
 
 	constructor(
 		private readonly happeningSlotModalService: HappeningSlotModalService,

@@ -15,9 +15,9 @@ import { IonicModule, ModalController } from '@ionic/angular';
 import {
 	emptyHappeningSlot,
 	IHappeningAdjustment,
-	IHappeningSlot,
 	ITiming,
 	IHappeningContext,
+	IHappeningSlotWithID,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team-models';
@@ -52,7 +52,7 @@ export class HappeningSlotModalComponent
 
 	@Input({ required: true }) team?: ITeamContext;
 	@Input() happening?: IHappeningContext;
-	@Input() slot: IHappeningSlot = emptyHappeningSlot;
+	@Input() slot: IHappeningSlotWithID = emptyHappeningSlot;
 	@Input() adjustment?: IHappeningAdjustment;
 
 	@Input() dateID?: string; // For re-scheduling recurring event for a specific day
@@ -60,7 +60,8 @@ export class HappeningSlotModalComponent
 	@Input() isModal = false;
 
 	@Output() readonly validChanged = new EventEmitter<boolean>();
-	@Output() readonly happeningSlotChange = new EventEmitter<IHappeningSlot>();
+	@Output() readonly happeningSlotChange =
+		new EventEmitter<IHappeningSlotWithID>();
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,

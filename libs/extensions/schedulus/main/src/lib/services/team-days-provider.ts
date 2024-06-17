@@ -96,11 +96,12 @@ const emptyRecurringsByWeekday = () =>
 
 const slotItemsFromRecurringSlot = (
 	r: IHappeningContext,
+	slotID: string,
 	rs: IHappeningSlot,
 ): IHappeningSlotUiItem[] => {
 	const si = {
 		// date: rs.start.date,
-		slotID: rs.id,
+		slotID: slotID,
 		happening: r,
 		title: r.brief?.title || r.id,
 		levels: r.brief?.levels,
@@ -125,16 +126,13 @@ const groupRecurringSlotsByWeekday = (
 		return slots;
 	}
 	zipMapBriefsWithIDs(schedulusTeam.dbo.recurringHappenings).forEach((rh) => {
-		rh.brief.slots?.forEach((rs) => {
+		Object.entries(rh.brief.slots || {})?.forEach(([slotID, rs]) => {
 			const happening: IHappeningContext = {
 				id: rh.id,
 				brief: rh.brief,
 				team: schedulusTeam.team,
 			};
-			const slotItems: IHappeningSlotUiItem[] = slotItemsFromRecurringSlot(
-				happening,
-				rs,
-			);
+			const slotItems = slotItemsFromRecurringSlot(happening, slotID, rs);
 			slotItems.forEach((si) => {
 				if (si.wd) {
 					let weekday = slots.byWeekday[si.wd];
@@ -413,13 +411,13 @@ export class TeamDaysProvider {
 			throw new Error(`!brief.title`);
 		}
 		if (brief.slots) {
-			brief.slots.forEach((slot) => {
+			Object.entries(brief.slots).forEach(([slotID, slot]) => {
 				slot.weekdays?.forEach((wd) => {
 					if (slot.repeats === 'weekly' && !wd) {
 						throw new Error(`slot.repeats === 'weekly' && !wd=${wd}`);
 					}
 					const slotItem: IHappeningSlotUiItem = {
-						slotID: slot.id,
+						slotID,
 						wd: wd,
 						happening: recurring,
 						title: brief.title,

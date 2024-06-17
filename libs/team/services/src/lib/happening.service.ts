@@ -14,6 +14,7 @@ import {
 	WeekdayCode2,
 	IHappeningContext,
 	IHappeningPrice,
+	IHappeningSlotWithID,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext, ITeamRequest } from '@sneat/team-models';
@@ -42,7 +43,7 @@ export interface IHappeningContactRequest extends ITeamRequest {
 }
 
 export interface IHappeningSlotRequest extends IHappeningRequest {
-	readonly slot: IHappeningSlot;
+	readonly slot: IHappeningSlotWithID;
 }
 
 export interface IHappeningPricesRequest extends IHappeningRequest {
@@ -129,7 +130,10 @@ export class HappeningService {
 		}
 		if (
 			request.happening.type === 'single' &&
-			request.happening.slots?.some((slot) => slot.repeats !== 'once')
+			request.happening.slots &&
+			Object.values(request.happening.slots).some(
+				(slot) => slot.repeats !== 'once',
+			)
 		) {
 			return throwError(
 				() => 'Single occurrence happening cannot have recurring slots',
@@ -198,7 +202,7 @@ export class HappeningService {
 	public readonly updateSlot = (
 		teamID: string,
 		happeningID: string,
-		slot: IHappeningSlot,
+		slot: IHappeningSlotWithID,
 	): Observable<void> => {
 		const request: IHappeningSlotRequest = {
 			teamID,
@@ -223,12 +227,12 @@ export class HappeningService {
 	public adjustSlot(
 		teamID: string,
 		happeningID: string,
-		slot: IHappeningSlot,
+		slot: IHappeningSlotWithID,
 		date: string,
 	): Observable<void> {
 		slot = {
-			repeats: 'once',
 			id: slot.id,
+			repeats: 'once',
 			start: { time: slot.start?.time || '', date },
 			end: slot.end,
 			durationMinutes: slot.durationMinutes,

@@ -1,11 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Inject,
+	Input,
+	OnChanges,
+	Output,
+	signal,
+	SimpleChanges,
+} from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import {
 	IHappeningSlot,
 	WeekdayCode2,
 	IHappeningContext,
+	IHappeningSlotWithID,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { HappeningSlotFormComponent } from '../happening-slot-form/happening-slot-form.component';
@@ -30,19 +40,21 @@ export interface AddSlotParams {
 		HappeningSlotModalServiceModule,
 	],
 })
-export class HappeningSlotsComponent {
+export class HappeningSlotsComponent implements OnChanges {
 	@Input() happening?: IHappeningContext;
 
 	@Input() wd?: WeekdayCode2;
 
-	@Output() addSlotDismissed = new EventEmitter<void>();
-	@Output() slotAdded = new EventEmitter<IHappeningSlot>();
-	@Output() slotRemoved = new EventEmitter<readonly IHappeningSlot[]>();
-	@Output() slotSelected = new EventEmitter<IHappeningSlot>();
+	@Output() readonly addSlotDismissed = new EventEmitter<void>();
+	@Output() readonly slotAdded = new EventEmitter<IHappeningSlot>();
+	// @Output() readonly slotRemoved = new EventEmitter<
+	// 	readonly IHappeningSlotWithID[]
+	// >();
+	@Output() readonly slotSelected = new EventEmitter<IHappeningSlot>();
 
-	protected get slots(): readonly IHappeningSlot[] | undefined {
-		return this.happening?.brief?.slots;
-	}
+	protected readonly slots = signal<IHappeningSlotWithID[] | undefined>(
+		undefined,
+	);
 
 	// protected isShowingSlotFormModal = false;
 	//
@@ -53,7 +65,7 @@ export class HappeningSlotsComponent {
 		private readonly happeningSlotModalService: HappeningSlotModalService,
 	) {}
 
-	protected removeSlot(slot: IHappeningSlot): void {
+	protected removeSlot(slot: IHappeningSlotWithID): void {
 		if (!this.happening?.brief) {
 			throw new Error('!this.happening?.brief');
 		}
@@ -62,10 +74,14 @@ export class HappeningSlotsComponent {
 			...this.happening,
 			brief: {
 				...this.happening.brief,
-				slots: this.happening.brief.slots?.filter((v) => v !== slot) || [],
+				slots: Object.fromEntries(
+					Object.entries(this.happening.brief.slots || {}).filter(
+						([id]) => id !== slot.id,
+					),
+				),
 			},
 		});
-		this.slotRemoved.emit(this.happening.brief?.slots || []);
+		// this.slotRemoved.emit(this.happening.brief?.slots || []);
 	}
 
 	protected selectSlot(event: Event, slot: IHappeningSlot): void {
@@ -113,6 +129,16 @@ export class HappeningSlotsComponent {
 		// this.editingSlot = undefined;
 		// this.addSlotParams = params;
 		// this.isShowingSlotFormModal = true;
+	}
+
+	public ngOnChanges(changes: SimpleChanges): void {
+		if (changes['happening']) {
+			this.slots.set(
+				Object.entries(this.happening?.brief?.slots || {}).map(
+					([id, slot]) => ({ ...slot, id }),
+				),
+			);
+		}
 	}
 
 	// onSlotFormModalDismissed(event: Event): void {

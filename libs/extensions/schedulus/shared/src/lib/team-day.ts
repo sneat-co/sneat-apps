@@ -169,7 +169,10 @@ export class TeamDay {
 			this.singles = [];
 
 			singleHappenings.forEach((happening) => {
-				const slot = happening.dbo?.slots && happening.dbo?.slots[0];
+				const slotIDs: readonly string[] = Object.keys(
+					happening.dbo?.slots || {},
+				);
+				const slot = slotIDs?.length && happening.dbo?.slots?.[slotIDs[0]];
 				if (!slot) {
 					return;
 				}
@@ -179,7 +182,7 @@ export class TeamDay {
 					durationMinutes: slot.durationMinutes,
 				};
 				const slotItem: IHappeningSlotUiItem = {
-					slotID: slot.id,
+					slotID: slotIDs[0],
 					title: happening.brief?.title || happening?.dbo?.title || 'NO TITLE',
 					timing,
 					repeats: 'once',
@@ -217,20 +220,19 @@ export class TeamDay {
 
 	private joinRecurringsWithSinglesAndEmit(): void {
 		const slots: IHappeningSlotUiItem[] = [];
+
 		const weekdaySlots = this.recurringSlots?.byWeekday[this.wd]?.map(
 			(wdSlot) => {
-				console.log(
-					'joinRecurringsWithSinglesAndEmit, wdSlot',
-					this.wd,
-					wdSlot,
-					this.scheduleDayDto,
-				);
+				// console.log(
+				// 	'joinRecurringsWithSinglesAndEmit, wdSlot',
+				// 	this.wd,
+				// 	wdSlot,
+				// 	this.scheduleDayDto,
+				// );
 				if (this.scheduleDayDto) {
-					const adjustment = this.scheduleDayDto?.happeningAdjustments?.find(
-						(a) =>
-							a.happeningID === wdSlot.happening.id &&
-							a.slot.id === wdSlot.slotID,
-					);
+					const adjustment =
+						this.scheduleDayDto?.happeningAdjustments?.[wdSlot.happening.id]
+							?.slots?.[wdSlot.slotID];
 					if (adjustment) {
 						return { ...wdSlot, adjustment };
 					}

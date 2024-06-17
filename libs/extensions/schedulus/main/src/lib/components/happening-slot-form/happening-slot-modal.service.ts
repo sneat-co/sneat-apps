@@ -1,9 +1,9 @@
 import { Injectable, NgModule } from '@angular/core';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import {
-	IHappeningAdjustment,
 	IHappeningSlot,
 	IHappeningContext,
+	ISlotAdjustment,
 } from '@sneat/mod-schedulus-core';
 import { HappeningSlotModalComponent } from './happening-slot-modal.component';
 
@@ -16,7 +16,7 @@ export class HappeningSlotModalService {
 		happening: IHappeningContext,
 		recurring?: {
 			dateID: string;
-			adjustment?: IHappeningAdjustment;
+			adjustment?: ISlotAdjustment;
 		},
 		slot?: IHappeningSlot,
 	): Promise<void> {

@@ -48,7 +48,7 @@ export class SlotContextMenuComponent {
 	public get isCancelled(): boolean {
 		return (
 			this.happening?.brief?.status === 'canceled' ||
-			!!this.slot?.adjustment?.canceled
+			!!this.slot?.adjustment?.cancellation
 		);
 	}
 
@@ -115,9 +115,9 @@ export class SlotContextMenuComponent {
 		}
 		const slotID = this.slot?.slotID;
 		const slots = happening?.dbo?.slots || happening?.brief?.slots;
-		const slot: IHappeningSlot | undefined = slots?.find(
-			(slot) => slot.id === slotID,
-		);
+		const slot: IHappeningSlot | undefined = slotID
+			? slots?.[slotID]
+			: undefined;
 		const recurring = this.dateID
 			? {
 					dateID: this.dateID,
@@ -321,7 +321,7 @@ export class SlotContextMenuComponent {
 		if (!slots) {
 			return n;
 		}
-		slots.forEach((slot) => {
+		Object.values(slots).forEach((slot) => {
 			slot.weekdays?.forEach(() => n++);
 		});
 		return n;

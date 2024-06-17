@@ -54,7 +54,7 @@ export function isSlotVisible(
 	const happeningBrief = slot.happening?.brief || slot.happening?.dbo;
 	if (
 		filter.repeats?.length &&
-		!happeningBrief?.slots?.some((slot) =>
+		!Object.values(happeningBrief?.slots || {}).some((slot) =>
 			filter.repeats.includes(slot.repeats),
 		)
 	) {

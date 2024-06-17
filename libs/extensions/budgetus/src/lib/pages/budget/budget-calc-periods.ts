@@ -29,14 +29,11 @@ function processHappening(
 	byPeriod: LiabilitiesByPeriod,
 	happening: IIdAndBrief<ICalendarHappeningBrief>,
 ): void {
-	console.log('budget.processHappening()', happening);
-	const slots =
-		happening.brief.slots?.filter(
-			(s) => s.repeats === 'weekly' || s.repeats === 'monthly',
-		) || [];
-
-	slots.forEach((slot) => {
-		processSlot(team, byPeriod, happening, slot);
+	// console.log('budget.processHappening()', happening);
+	Object.entries(happening.brief.slots || {}).forEach(([slotID, slot]) => {
+		if (slot.repeats === 'weekly' || slot.repeats === 'monthly') {
+			processSlot(team, byPeriod, happening, slotID, slot);
+		}
 	});
 }
 
@@ -44,6 +41,7 @@ function processSlot(
 	team: ITeamContext,
 	byPeriod: LiabilitiesByPeriod,
 	happening: IIdAndBrief<ICalendarHappeningBrief>,
+	slotID: string,
 	slot: IHappeningSlot,
 ): void {
 	let liabilities: IPeriodLiabilities = byPeriod[slot.repeats] || {

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
 	AfterViewInit,
 	ChangeDetectionStrategy,
+	ChangeDetectorRef,
 	Component,
 	EventEmitter,
 	Inject,
@@ -29,6 +30,8 @@ import {
 	IHappeningContext,
 	IHappeningDto,
 	IHappeningSlot,
+	IHappeningSlotWithID,
+	mergeValuesWithIDs,
 	WeekdayCode2,
 } from '@sneat/mod-schedulus-core';
 import { TeamComponentBaseParams } from '@sneat/team-components';
@@ -78,9 +81,13 @@ export class HappeningFormComponent
 
 	protected readonly isCreating = signal(false);
 
-	public get slots(): readonly IHappeningSlot[] | undefined {
-		return this.happening?.brief?.slots;
-	}
+	// public get slots(): readonly IHappeningSlot[] | undefined {
+	// 	return this.happening?.brief?.slots;
+	// }
+
+	protected readonly slots = signal<IHappeningSlotWithID[] | undefined>(
+		undefined,
+	);
 
 	public happeningTitle = new FormControl<string>('', Validators.required);
 	protected happeningType = new FormControl<HappeningType>(
@@ -103,6 +110,7 @@ export class HappeningFormComponent
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		routingState: RoutingState,
+		private readonly changeDetectorRef: ChangeDetectorRef,
 		private readonly happeningService: HappeningService,
 		private readonly params: TeamComponentBaseParams,
 	) {
@@ -120,6 +128,7 @@ export class HappeningFormComponent
 				this.happeningTitle.setValue(this.happening?.brief?.title);
 				// this.slots = this?.happening?.brief?.slots || [];
 			}
+			this.slots.set(mergeValuesWithIDs(this.happening?.brief?.slots));
 		}
 	}
 
@@ -162,8 +171,9 @@ export class HappeningFormComponent
 		this.happeningChange.emit(this.happening);
 	}
 
-	protected onTitleEnter(): void {
-		//
+	protected onTitleEnter(event: Event): void {
+		console.log('onTitleEnter()', event);
+		this.changeDetectorRef.markForCheck();
 	}
 
 	ionViewDidEnter(): void {
@@ -210,7 +220,7 @@ export class HappeningFormComponent
 		if (!this.happeningForm.valid) {
 			return false;
 		}
-		return !!this.slots?.length;
+		return !!this.slots()?.length;
 	}
 
 	private makeHappeningDto(): IHappeningDto {
@@ -290,10 +300,12 @@ export class HappeningFormComponent
 				case 'single':
 					happening = {
 						...happening,
-						slots: happening.slots?.map((slot) => ({
-							...slot,
-							repeats: 'once',
-						})),
+						slots: Object.fromEntries(
+							Object.entries(happening.slots || {}).map(([id, data]) => [
+								id,
+								{ ...data, repeats: 'once' },
+							]),
+						),
 					};
 					break;
 			}

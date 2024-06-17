@@ -33,14 +33,15 @@
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
-	<sneat-happening-slot
-		[slot]="slot"
-		[happening]="happening"
-		*ngFor="
-			let slot of happening?.dbo?.slots || happening?.brief?.slots || [];
-			trackBy: index
-		"
-	/>
+	<sneat-happening-slots [happening]="happening" />
+	<!--	<sneat-happening-slot-->
+	<!--		[slot]="slot"-->
+	<!--		[happening]="happening"-->
+	<!--		*ngFor="-->
+	<!--			let slot of happening?.dbo?.slots || happening?.brief?.slots || [];-->
+	<!--			trackBy: index-->
+	<!--		"-->
+	<!--	/>-->
 	<ion-item>
 		<ion-label color="medium">
 			@if (!hasRelatedContacts()) {

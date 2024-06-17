@@ -30,7 +30,7 @@ export class DaySlotItemComponent {
 
 	get isCanceled(): boolean {
 		return (
-			!!this.slot?.adjustment?.canceled ||
+			!!this.slot?.adjustment?.cancellation ||
 			this.slot?.happening?.brief?.status === 'canceled'
 		);
 	}

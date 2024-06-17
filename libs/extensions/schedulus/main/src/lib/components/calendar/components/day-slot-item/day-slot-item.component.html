@@ -20,7 +20,9 @@
 		"
 		slot="start"
 	/>
-	<sneat-timing-badge [timing]="slot?.adjustment?.slot || slot?.timing" />
+
+	<sneat-timing-badge [timing]="slot?.adjustment?.timing || slot?.timing" />
+
 	<ion-label class="ion-text-wrap">
 		<span
 			style="font-size: 1em; margin-bottom: 0.4em; font-weight: bold"

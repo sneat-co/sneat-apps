@@ -6,11 +6,11 @@
 		(ionChange)="onHappeningTypeChanged($event)"
 	>
 		<ion-segment-button value="recurring" [disabled]="!!happening?.id"
-			>Recurring</ion-segment-button
-		>
+			>Recurring
+		</ion-segment-button>
 		<ion-segment-button value="single" [disabled]="!!happening?.id"
-			>One-timer</ion-segment-button
-		>
+			>One-timer
+		</ion-segment-button>
 	</ion-segment>
 
 	<ion-card>
@@ -25,15 +25,15 @@
 					label="Title"
 					labelPlacement="floating"
 					[formControl]="happeningTitle"
-					(keyup.enter)="onTitleEnter()"
+					(keyup.enter)="onTitleEnter($event)"
 					placeholder="Title"
 					type="text"
 				/>
 			</ion-item>
 			<ion-item *ngIf="!happeningTitle.value">
 				<ion-label color="medium">
-					Enter above the name of the event.</ion-label
-				>
+					Enter above the name of the event.
+				</ion-label>
 			</ion-item>
 		</ion-list>
 	</ion-card>
@@ -42,7 +42,7 @@
 		<ion-card>
 			<ion-item-group>
 				<sneat-happening-slot-form
-					*ngIf="!happening?.brief?.slots?.length"
+					*ngIf="!slots()?.length"
 					mode="in-form"
 					[wd]="wd"
 					[date]="date"
@@ -52,7 +52,7 @@
 				/>
 				<sneat-happening-slots
 					#happeningSlotsComponent
-					*ngIf="happening?.id || happening?.brief?.slots?.length"
+					*ngIf="happening?.id || slots()?.length"
 					[happening]="happening"
 					[wd]="wd"
 				/>
@@ -97,7 +97,9 @@
 									}
 								</li>
 								<li
-									*ngIf="happeningType.value === 'recurring' && !slots?.length"
+									*ngIf="
+										happeningType.value === 'recurring' && !slots()?.length
+									"
 								>
 									<p>
 										At least 1 slot should be specified for a recurring

@@ -4,17 +4,17 @@
 		<ion-button
 			title="Add slot"
 			(click)="showAddSlot($event)"
-			[color]="slots?.length ? 'primary' : 'danger'"
+			[color]="slots()?.length ? 'primary' : 'danger'"
 		>
 			<ion-icon name="add-outline" slot="start" />
 			<ion-label>Add slot</ion-label>
 		</ion-button>
 	</ion-buttons>
 </ion-item-divider>
-<ion-item *ngIf="slots && !slots?.length">
+<ion-item *ngIf="slots() && !slots()?.length">
 	<ion-label><i>No slots have been added yet.</i></ion-label>
 </ion-item>
-@for (slot of slots; track slot.id) {
+@for (slot of slots(); track slot.id) {
 	<ion-item
 		button="button"
 		class="with-buttons"
@@ -100,7 +100,7 @@
 				<ion-icon name="create-outline" />
 			</ion-button>
 			<ion-button
-				*ngIf="!happening?.id || (happening?.brief?.slots?.length || 0) > 1"
+				*ngIf="!happening?.id || (slots()?.length || 0) > 1"
 				(click)="removeSlot(slot)"
 				color="medium"
 			>

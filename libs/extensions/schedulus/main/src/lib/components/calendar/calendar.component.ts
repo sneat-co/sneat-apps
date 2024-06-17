@@ -372,22 +372,25 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 	protected hasRepeats(
 		repeats: readonly string[],
-		slots?: readonly IHappeningSlot[],
+		slots?: Readonly<Record<string, IHappeningSlot>>,
 	): boolean {
 		return (
-			!repeats.length || !!slots?.some((slot) => repeats.includes(slot.repeats))
+			!repeats.length ||
+			(!!slots &&
+				Object.values(slots).some((slot) => repeats.includes(slot.repeats)))
 		);
 	}
 
 	private hasWeekday(
-		slots: readonly IHappeningSlot[] | undefined,
+		slots: Readonly<Record<string, IHappeningSlot>> | undefined,
 		weekdays: readonly WeekdayCode2[],
 	): boolean {
 		return (
 			!weekdays.length ||
-			!!slots?.some((slot) =>
-				slot.weekdays?.some((wd) => weekdays.includes(wd)),
-			)
+			(!!slots &&
+				Object.values(slots).some((slot) =>
+					slot.weekdays?.some((wd) => weekdays.includes(wd)),
+				))
 		);
 	}
 
