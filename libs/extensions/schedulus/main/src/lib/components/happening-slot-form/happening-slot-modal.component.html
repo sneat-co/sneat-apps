@@ -2,7 +2,6 @@
 	<ion-toolbar color="primary">
 		<ion-title>
 			{{ happening?.brief?.title || "Happening Slot Modal" }}
-			SlotID: {{ slot.id }}
 		</ion-title>
 		<ion-buttons slot="end">
 			<ion-button (click)="close($event)" title="Close">
@@ -17,6 +16,7 @@
 		mode="modal"
 		[happening]="happening"
 		[slot]="slot"
+		(happeningChange)="onHappeningChanged($event)"
 	/>
 
 	<!--	<ion-item-group>-->

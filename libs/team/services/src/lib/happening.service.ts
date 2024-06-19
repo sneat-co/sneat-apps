@@ -199,6 +199,19 @@ export class HappeningService {
 	): Observable<void> =>
 		this.sneatApiService.post('happenings/add_participant', request);
 
+	public readonly addSlot = (
+		teamID: string,
+		happeningID: string,
+		slot: IHappeningSlotWithID,
+	): Observable<void> => {
+		const request: IHappeningSlotRequest = {
+			teamID,
+			happeningID,
+			slot,
+		};
+		return this.sneatApiService.post('happenings/add_slot', request);
+	};
+
 	public readonly updateSlot = (
 		teamID: string,
 		happeningID: string,

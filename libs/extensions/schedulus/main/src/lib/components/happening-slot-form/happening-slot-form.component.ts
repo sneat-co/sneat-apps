@@ -130,6 +130,8 @@ export class HappeningSlotFormComponent
 
 	protected numberOfDaysInMonth = 28;
 
+	protected readonly isUpdating = signal(false);
+
 	protected readonly monthlyModes: readonly ISelectItem[] = [
 		{ id: 'monthly-day', title: 'Specific day' },
 		{ id: 'monthly-week-1', title: 'First week' },
@@ -231,7 +233,7 @@ export class HappeningSlotFormComponent
 		}
 	}
 
-	private addWeeklySlot(timing?: ITiming): IHappeningSlotWithID | undefined {
+	private addWeeklySlot(timing?: ITiming): IHappeningSlot | undefined {
 		// this.weekdaysForm.markAsTouched({ onlySelf: true });
 		this.slotForm.markAsTouched();
 		console.log(
@@ -326,7 +328,7 @@ export class HappeningSlotFormComponent
 		return slot;
 	}
 
-	private initiateSlot(): IHappeningSlotWithID {
+	private initiateSlot(): IHappeningSlot {
 		let happens = this.happens();
 		if (!happens) {
 			throw new Error('!happens');
@@ -337,7 +339,6 @@ export class HappeningSlotFormComponent
 		return {
 			...this.timing,
 			repeats: happens as RepeatPeriod,
-			id: '',
 		};
 	}
 
@@ -395,10 +396,9 @@ export class HappeningSlotFormComponent
 		this.monthlyDate.set(day);
 	}
 
-	protected addDaySlot(): IHappeningSlotWithID | undefined {
+	protected addDaySlot(): IHappeningSlot | undefined {
 		const day = this.monthlyDate();
-		let slot: IHappeningSlotWithID = {
-			id: '',
+		let slot: IHappeningSlot = {
 			repeats: 'monthly',
 		};
 
@@ -432,15 +432,14 @@ export class HappeningSlotFormComponent
 		this.happeningChange.emit(this.happening);
 	}
 
-	private addYearlySlot(): IHappeningSlotWithID {
+	private addYearlySlot(): IHappeningSlot {
 		return {
-			id: '',
 			repeats: 'yearly',
 			// day: ['may-21'],
 		};
 	}
 
-	protected addMonthlySlot(timing?: ITiming): IHappeningSlotWithID | undefined {
+	private addMonthlySlot(timing?: ITiming): IHappeningSlot | undefined {
 		console.log('addMonthlySlot()', timing);
 		if (this.monthlyMode() === 'monthly-day') {
 			return this.addDaySlot();
@@ -448,10 +447,12 @@ export class HappeningSlotFormComponent
 		return undefined;
 	}
 
-	protected readonly isUpdating = signal(false);
-
 	protected saveChanges(): void {
 		console.log('saveChanges()');
+		const id = this.slot?.id;
+		if (!id) {
+			return;
+		}
 		const slot = this.getSlot();
 		const teamID = this.happening?.team?.id;
 		const happeningID = this.happening?.id;
@@ -459,29 +460,31 @@ export class HappeningSlotFormComponent
 			return;
 		}
 		this.isUpdating.set(true);
-		this.happeningService.updateSlot(teamID, happeningID, slot).subscribe({
-			next: () => {
-				this.modalCtrl
-					.dismiss()
-					.catch(this.errorLogger.logErrorHandler('failed to dismiss modal'));
-			},
-			error: (err) => {
-				this.errorLogger.logError(err, 'failed to update happening slot');
-				this.isUpdating.set(false);
-			},
-		});
+		this.happeningService
+			.updateSlot(teamID, happeningID, { ...slot, id })
+			.subscribe({
+				next: () => {
+					this.modalCtrl
+						.dismiss()
+						.catch(this.errorLogger.logErrorHandler('failed to dismiss modal'));
+				},
+				error: (err) => {
+					this.errorLogger.logError(err, 'failed to update happening slot');
+					this.isUpdating.set(false);
+				},
+			});
 	}
 
 	protected addSlot(timing?: ITiming): void {
 		console.log('addSlot()', timing);
 		const slot = this.getSlot(timing);
-		if (slot) {
-			this.addSlotToHappening(newRandomId({ len: 3 }), slot);
+		if (!slot) {
+			return;
 		}
-		// this.touchAllFormFields(this.slotForm);
+		this.addSlotToHappening(newRandomId({ len: 4 }), slot);
 	}
 
-	private getSlot(timing?: ITiming): IHappeningSlotWithID | undefined {
+	private getSlot(timing?: ITiming): IHappeningSlot | undefined {
 		const happens = this.happens();
 		switch (happens) {
 			case 'daily':
@@ -539,7 +542,7 @@ export class HappeningSlotFormComponent
 		this.eventTimesChanged.emit(this.timing);
 	}
 
-	public onTimingChanged(timing: ITiming): void {
+	protected onTimingChanged(timing: ITiming): void {
 		console.log('onTimingChanged()', timing);
 		this.timing = timing;
 	}

@@ -30,7 +30,7 @@ import {
 } from './happening-slot-form.component';
 
 @Component({
-	selector: 'sneat-single-slot-form',
+	selector: 'sneat-slot-modal',
 	templateUrl: './happening-slot-modal.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	standalone: true,
@@ -51,15 +51,12 @@ export class HappeningSlotModalComponent
 	private readonly destroyed = new Subject<void>();
 
 	@Input({ required: true }) team?: ITeamContext;
-	@Input() happening?: IHappeningContext;
+	@Input({ required: true }) happening?: IHappeningContext;
 	@Input() slot: IHappeningSlotWithID = emptyHappeningSlot;
 	@Input() adjustment?: IHappeningAdjustment;
 
 	@Input() dateID?: string; // For re-scheduling recurring event for a specific day
 
-	@Input() isModal = false;
-
-	@Output() readonly validChanged = new EventEmitter<boolean>();
 	@Output() readonly happeningSlotChange =
 		new EventEmitter<IHappeningSlotWithID>();
 
@@ -85,6 +82,12 @@ export class HappeningSlotModalComponent
 		// 	return;
 		// }
 		this.slot = { ...this.slot, ...timing };
+		this.emitHappeningSlotChange();
+	}
+
+	protected onHappeningChanged(happening: IHappeningContext): void {
+		console.log('onHappeningChanged', happening);
+		this.happening = happening;
 		this.emitHappeningSlotChange();
 	}
 
