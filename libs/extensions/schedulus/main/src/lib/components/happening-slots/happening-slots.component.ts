@@ -18,6 +18,11 @@ import {
 	IHappeningSlotWithID,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import {
+	HappeningService,
+	IDeleteSlotRequest,
+	ISlotRefRequest,
+} from '@sneat/team-services';
 import { HappeningSlotFormComponent } from '../happening-slot-form/happening-slot-form.component';
 import {
 	HappeningSlotModalService,
@@ -62,14 +67,27 @@ export class HappeningSlotsComponent implements OnChanges {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger, // private readonly modalController: ModalController,
+		private readonly happeningService: HappeningService,
 		private readonly happeningSlotModalService: HappeningSlotModalService,
 	) {}
 
-	protected removeSlot(slot: IHappeningSlotWithID): void {
+	protected removeSlot(event: Event, slot: IHappeningSlotWithID): void {
+		event.preventDefault();
+		event.stopPropagation();
 		if (!this.happening?.brief) {
 			throw new Error('!this.happening?.brief');
 		}
-		// this.happening =
+		if (this.happening.id) {
+			this.deleteSlot(slot);
+		} else {
+			this.removeSlotFromHappening(slot);
+		}
+	}
+
+	private removeSlotFromHappening(slot: IHappeningSlotWithID): void {
+		if (!this.happening?.brief) {
+			throw new Error('!this.happening');
+		}
 		this.onHappeningChanged({
 			...this.happening,
 			brief: {
@@ -81,8 +99,41 @@ export class HappeningSlotsComponent implements OnChanges {
 				),
 			},
 		});
-		// this.slotRemoved.emit(this.happening.brief?.slots || []);
 	}
+
+	private deleteSlot(slot: IHappeningSlotWithID): void {
+		if (!this.happening?.brief) {
+			throw new Error('!this.happening?.brief');
+		}
+		const happeningID = this.happening.id;
+		if (!happeningID) {
+			throw new Error('!happeningID');
+		}
+		const teamID = this.happening?.team.id;
+		if (!teamID) {
+			throw new Error('!teamID');
+		}
+		const request: IDeleteSlotRequest = {
+			teamID,
+			happeningID,
+			slotID: slot.id,
+		};
+
+		this.deletingSlotIDs.set([...this.deletingSlotIDs(), slot.id]);
+
+		this.happeningService.deleteSlot(request).subscribe({
+			next: () => this.removeSlotFromHappening(slot),
+			error: this.errorLogger.logErrorHandler('failed to delete slot'),
+			complete: () =>
+				setTimeout(() => {
+					this.deletingSlotIDs.set(
+						this.deletingSlotIDs().filter((id) => id !== slot.id),
+					);
+				}, 1000),
+		});
+	}
+
+	protected readonly deletingSlotIDs = signal<readonly string[]>([]);
 
 	protected selectSlot(event: Event, slot: IHappeningSlot): void {
 		this.slotSelected.emit(slot);
@@ -96,7 +147,7 @@ export class HappeningSlotsComponent implements OnChanges {
 	}
 
 	protected onHappeningChanged(happening: IHappeningContext): void {
-		console.log('HappeningSlotsComponent.onSlotAdded()');
+		console.log('HappeningSlotsComponent.onHappeningChanged()');
 		this.happening = happening;
 	}
 

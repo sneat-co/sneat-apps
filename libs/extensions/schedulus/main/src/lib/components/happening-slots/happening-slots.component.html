@@ -92,6 +92,7 @@
 		</ion-label>
 		<ion-buttons slot="end">
 			<ion-button
+				*ngIf="!deletingSlotIDs().includes(slot.id)"
 				title="Edit"
 				color="medium"
 				(click)="showEditSlot($event, slot)"
@@ -99,11 +100,21 @@
 				<ion-icon name="create-outline" />
 			</ion-button>
 			<ion-button
+				[disabled]="deletingSlotIDs().includes(slot.id)"
 				*ngIf="!happening?.id || (slots()?.length || 0) > 1"
-				(click)="removeSlot(slot)"
+				(click)="removeSlot($event, slot)"
 				color="medium"
 			>
-				<ion-icon name="close" />
+				@if (deletingSlotIDs().includes(slot.id)) {
+					<ion-spinner
+						slot="end"
+						name="lines-small"
+						*ngIf="deletingSlotIDs().includes(slot.id)"
+					></ion-spinner>
+					<ion-label style="text-transform: none"> Deleting... </ion-label>
+				} @else {
+					<ion-icon name="close" />
+				}
 			</ion-button>
 		</ion-buttons>
 	</ion-item>

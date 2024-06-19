@@ -9,7 +9,6 @@ import {
 	HappeningStatus,
 	IHappeningBrief,
 	IHappeningDto,
-	IHappeningSlot,
 	validateHappeningDto,
 	WeekdayCode2,
 	IHappeningContext,
@@ -59,8 +58,12 @@ export interface IHappeningSlotDateRequest extends IHappeningSlotRequest {
 }
 
 export interface ISlotsRefRequest extends IHappeningRequest {
-	readonly date?: string;
 	readonly slotIDs?: readonly string[];
+	readonly date?: string;
+}
+
+export interface ISlotRefRequest extends IHappeningRequest {
+	readonly slotID: string;
 }
 
 export interface ISlotRequest extends IHappeningRequest {
@@ -70,7 +73,9 @@ export interface ISlotRequest extends IHappeningRequest {
 	readonly reason?: string;
 }
 
-export type IDeleteSlotRequest = ISlotRequest;
+export interface IDeleteSlotRequest extends ISlotRefRequest {
+	readonly reason?: string;
+}
 
 export type ICancelHappeningRequest = ISlotRequest;
 
@@ -174,16 +179,10 @@ export class HappeningService {
 		);
 	}
 
-	public deleteSlots(request: ISlotRequest): Observable<void> {
-		console.log('deleteSlots', request);
-		// const qp = new HttpParams();
-		// qp.set('team', request.teamID)
-		// qp.set('happening', request.happeningID)
-		// if (request.slotIDs?.length === 1) {
-		// 	qp.set('happening', request.slotIDs[0])
-		// }
+	public deleteSlot(request: IDeleteSlotRequest): Observable<void> {
+		console.log('deleteSlot', request);
 		return this.sneatApiService.delete(
-			'happenings/delete_slots',
+			'happenings/delete_slot',
 			undefined,
 			request,
 		);

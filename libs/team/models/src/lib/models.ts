@@ -5,35 +5,35 @@ export interface ITeamRequest {
 }
 
 export interface ITeamMemberRequest extends ITeamRequest {
-	memberID: string;
+	readonly memberID: string;
 }
 
 export interface IAcceptInviteResponse {
-	id: string;
+	readonly id: string;
 }
 
 export interface IInviteTeam {
-	id: string;
-	type: TeamType;
-	title: string;
+	readonly id: string;
+	readonly type: TeamType;
+	readonly title: string;
 }
 
 export interface IRejectPersonalInviteRequest extends ITeamRequest {
-	inviteID: string;
-	pin: string;
+	readonly inviteID: string;
+	readonly pin: string;
 }
 
 export type TeamMemberStatus = 'active' | 'archived';
 
 export interface ITaskRequest extends ITeamMemberRequest {
-	type: string;
-	task: string;
+	readonly type: string;
+	readonly task: string;
 }
 
 export interface IReorderTaskRequest extends ITaskRequest {
-	len: number;
-	from: number;
-	to: number;
-	after?: string;
-	before?: string;
+	readonly len: number;
+	readonly from: number;
+	readonly to: number;
+	readonly after?: string;
+	readonly before?: string;
 }

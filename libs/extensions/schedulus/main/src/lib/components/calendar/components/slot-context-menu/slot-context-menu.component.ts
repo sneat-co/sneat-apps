@@ -22,6 +22,7 @@ import {
 	ICancelHappeningRequest,
 	IDeleteSlotRequest,
 	IHappeningContactRequest,
+	ISlotRefRequest,
 	ISlotRequest,
 } from '@sneat/team-services';
 import { NEVER, Observable } from 'rxjs';
@@ -148,9 +149,9 @@ export class SlotContextMenuComponent {
 		if (this.slot?.repeats === 'weekly' && !slot.wd) {
 			throw new Error('this.slot?.repeats === "weekly" && !slot.wd');
 		}
-		const request = this.createDeleteSlotRequest(event, 'slot');
+		const request = this.createDeleteSlotRequest(event);
 		this.happeningState = 'deleting';
-		this.happeningService.deleteSlots(request).subscribe({
+		this.happeningService.deleteSlot(request).subscribe({
 			next: () => {
 				this.happeningState = 'deleted';
 				this.dismissPopover();
@@ -200,7 +201,19 @@ export class SlotContextMenuComponent {
 		return { team: this.team, slot: this.slot, happening: this.slot.happening };
 	}
 
-	createSlotRequest(event: Event, mode: 'whole' | 'slot'): ISlotRequest {
+	private createSlotRefRequest(event: Event): ISlotRefRequest {
+		const { slot, team, happening } = this.stopEvent(event);
+		return {
+			teamID: team.id,
+			happeningID: happening.id,
+			slotID: slot.slotID,
+		};
+	}
+
+	private createSlotRequest(
+		event: Event,
+		mode: 'whole' | 'slot',
+	): ISlotRequest {
 		const { slot, team, happening } = this.stopEvent(event);
 		// const slotsCount = happening.brief?.slots?.length || happening.dto?.slots?.length || 0;
 		const request: ISlotRequest = excludeUndefined({
@@ -216,11 +229,8 @@ export class SlotContextMenuComponent {
 		return request;
 	}
 
-	createDeleteSlotRequest(
-		event: Event,
-		mode: 'whole' | 'slot',
-	): IDeleteSlotRequest {
-		return this.createSlotRequest(event, mode);
+	private createDeleteSlotRequest(event: Event): IDeleteSlotRequest {
+		return this.createSlotRefRequest(event);
 	}
 
 	createCancellationRequest(
