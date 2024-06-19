@@ -99,8 +99,8 @@
 
 	@if (showWeekdays()) {
 		<ion-item-divider *ngIf="!hasWeekdaySelected()"
-			>Choose day of the week</ion-item-divider
-		>
+			>Choose day of the week
+		</ion-item-divider>
 		<form>
 			<ion-grid class="ion-grid-layout">
 				<ion-row>
@@ -296,7 +296,13 @@
 				<ion-label>Update slot</ion-label>
 			</ion-button>
 		} @else {
-			<ion-button slot="end" color="primary" (click)="addSlot()" size="medium">
+			<ion-button
+				slot="end"
+				color="primary"
+				[disabled]="isUpdating()"
+				(click)="addSlot()"
+				size="medium"
+			>
 				<ion-icon name="add-outline" slot="start" />
 				<ion-label>Add slot</ion-label>
 			</ion-button>

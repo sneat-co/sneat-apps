@@ -40,6 +40,7 @@ import {
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { newRandomId } from '@sneat/random';
 import { HappeningService } from '@sneat/team-services';
+import { Observable } from 'rxjs';
 import { StartEndDatetimeFormComponent } from '../start-end-datetime-form/start-end-datetime-form.component';
 import { WeekdaysFormBase } from '../weekdays/weekdays-form-base';
 
@@ -416,10 +417,16 @@ export class HappeningSlotFormComponent
 		return slot;
 	}
 
-	private addSlotToHappening(slotID: string, slot: IHappeningSlot): void {
+	private addSlotToHappening(timing?: ITiming): void {
 		if (!this.happening?.brief) {
 			throw new Error('!this.happening?.brief');
 		}
+		const slot = this.getSlot(timing);
+		if (!slot) {
+			return;
+		}
+		const slotID = this.generateSlotID();
+
 		this.happening = {
 			...this.happening,
 			brief: {
@@ -449,39 +456,56 @@ export class HappeningSlotFormComponent
 
 	protected saveChanges(): void {
 		console.log('saveChanges()');
-		const id = this.slot?.id;
-		if (!id) {
-			return;
-		}
 		const slot = this.getSlot();
 		const teamID = this.happening?.team?.id;
 		const happeningID = this.happening?.id;
 		if (!teamID || !happeningID || !slot) {
 			return;
 		}
+		let id = this.slot?.id;
+		const isNewSlot = !id;
+		const putSlot: (
+			teamID: string,
+			happeningID: string,
+			slot: IHappeningSlotWithID,
+		) => Observable<void> = isNewSlot
+			? this.happeningService.addSlot
+			: this.happeningService.updateSlot;
+
+		if (!id) {
+			id = this.generateSlotID();
+		}
 		this.isUpdating.set(true);
-		this.happeningService
-			.updateSlot(teamID, happeningID, { ...slot, id })
-			.subscribe({
-				next: () => {
-					this.modalCtrl
-						.dismiss()
-						.catch(this.errorLogger.logErrorHandler('failed to dismiss modal'));
-				},
-				error: (err) => {
-					this.errorLogger.logError(err, 'failed to update happening slot');
-					this.isUpdating.set(false);
-				},
-			});
+		putSlot(teamID, happeningID, { ...slot, id }).subscribe({
+			next: () => {
+				this.modalCtrl
+					.dismiss()
+					.catch(this.errorLogger.logErrorHandler('failed to dismiss modal'));
+			},
+			error: (err) => {
+				this.errorLogger.logError(err, 'failed to update happening slot');
+				this.isUpdating.set(false);
+			},
+		});
 	}
 
 	protected addSlot(timing?: ITiming): void {
 		console.log('addSlot()', timing);
-		const slot = this.getSlot(timing);
-		if (!slot) {
-			return;
+		if (this.happening?.id) {
+			this.saveChanges();
+		} else {
+			this.addSlotToHappening();
 		}
-		this.addSlotToHappening(newRandomId({ len: 4 }), slot);
+	}
+
+	private generateSlotID(): string {
+		for (let i = 0; i < 10; i++) {
+			const slotID = newRandomId({ len: 4 });
+			if (!this.happening?.brief?.slots?.[slotID]) {
+				return slotID;
+			}
+		}
+		throw new Error('failed to generate unique slot ID');
 	}
 
 	private getSlot(timing?: ITiming): IHappeningSlot | undefined {
