@@ -351,7 +351,7 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 			return !hide;
 		});
 		console.log(
-			`ScheduleComponent.filterRecurrings(')`,
+			`ScheduleComponent.filterRecurrings()`,
 			filter,
 			this.allRecurrings,
 			' => ',
