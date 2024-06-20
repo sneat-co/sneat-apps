@@ -3,6 +3,7 @@ import {
 	IAssetDboBase,
 	IAssetExtra,
 } from '@sneat/mod-assetus-core';
+import { CurrencyCode } from '@sneat/mod-schedulus-core';
 import { ITeamRequest } from '@sneat/team-models';
 
 export interface ICreateAssetRequest<
@@ -20,4 +21,14 @@ export interface IAssetRequest extends ITeamRequest {
 
 export interface IUpdateAssetRequest extends IAssetRequest {
 	regNumber?: string;
+}
+
+export interface IAddVehicleRecordRequest extends ITeamRequest {
+	readonly assetID: string;
+	readonly fuelVolume?: number;
+	readonly fuelVolumeUnit?: 'l' | 'g';
+	readonly fuelCost?: number;
+	readonly currency?: CurrencyCode;
+	readonly mileage?: number;
+	readonly mileageUnit?: 'km' | 'mile';
 }

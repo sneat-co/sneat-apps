@@ -75,6 +75,12 @@ export enum FuelTypes {
 	electricity = 'electricity',
 }
 
+export type FuelVolumeUnit = 'l' | 'g';
+export const FuelVolumeUnitTypes: FuelVolumeUnit[] = ['l', 'g'];
+
+export type MileageUnit = 'km' | 'mile';
+export const MileageUnitTypes: MileageUnit[] = ['km', 'mile'];
+
 export type AssetPossession =
 	| typeof AssetPossessionUndisclosed
 	| typeof AssetPossessionOwning

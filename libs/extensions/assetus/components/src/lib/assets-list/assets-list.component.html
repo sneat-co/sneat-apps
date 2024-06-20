@@ -52,9 +52,14 @@
 				>{{ asset.brief.extra?.["regNumber"] }}
 			</ion-badge>
 			<ion-buttons slot="end">
-				<!--				<ion-button (click)="add2Asset($event)">-->
-				<!--					<ion-icon name="add"></ion-icon>-->
-				<!--				</ion-button>-->
+				<ion-button
+					(click)="addNewMilesAndFuel($event, asset)"
+					*ngIf="asset.brief.category === 'vehicle'"
+				>
+					<ion-icon name="add" slot="start"></ion-icon>
+					<ion-label>Record miles</ion-label>
+					<!-- <ion-label>Add miles & fuel</ion-label> -->
+				</ion-button>
 				<ion-button
 					(click)="delete($event, asset)"
 					[disabled]="deletingIDs.includes(asset.id)"
