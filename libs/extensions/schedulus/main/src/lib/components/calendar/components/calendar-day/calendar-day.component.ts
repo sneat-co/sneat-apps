@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { dateToIso } from '@sneat/core';
 import {
-	IHappeningSlotUiItem,
+	ISlotUIContext,
 	jsDayToWeekday,
 	NewHappeningParams,
 	ScheduleNavService,
@@ -42,11 +42,11 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 	// @Input() showEvents = true;
 	@Input() weekday?: Weekday;
 	@Output() readonly slotClicked = new EventEmitter<{
-		slot: IHappeningSlotUiItem;
+		slot: ISlotUIContext;
 		event: Event;
 	}>();
-	public allSlots?: IHappeningSlotUiItem[];
-	public slots?: IHappeningSlotUiItem[];
+	public allSlots?: ISlotUIContext[];
+	public slots?: ISlotUIContext[];
 	public slotsHiddenByFilter?: number;
 
 	constructor(
@@ -61,8 +61,6 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 			},
 		});
 	}
-
-	protected readonly slotID = (_: number, o: IHappeningSlotUiItem) => o.slotID;
 
 	resetFilter(event: Event): void {
 		event.stopPropagation();
@@ -125,7 +123,7 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 		}
 	}
 
-	private readonly processSlots = (slots?: IHappeningSlotUiItem[]) => {
+	private readonly processSlots = (slots?: ISlotUIContext[]) => {
 		console.log(this.logPrefix() + `.processSlots(), slots:`, slots);
 		this.allSlots = slots;
 		this.applyFilter();

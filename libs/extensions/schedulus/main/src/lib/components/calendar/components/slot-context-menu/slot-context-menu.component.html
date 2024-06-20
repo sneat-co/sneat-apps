@@ -1,4 +1,9 @@
-<sneat-day-slot-item [team]="team" [slot]="slot" color="light" mode="brief" />
+<sneat-day-slot-item
+	[team]="team"
+	[slotContext]="slotContext"
+	color="light"
+	mode="brief"
+/>
 <ion-item tappable (click)="edit($event)" [disabled]="disabled">
 	<ion-icon slot="start" name="calendar-outline" />
 	<ion-label>Change date or time</ion-label>
@@ -33,7 +38,7 @@
 >
 	<ion-icon name="close-circle-outline" slot="start" color="warning" />
 	<ion-label *ngIf="happeningState !== 'cancelling-single'"
-		>Cancel 1 on {{ dateID }} at {{ slot?.timing?.start?.time }}
+		>Cancel 1 on {{ dateID }} at {{ slotContext?.timing?.start?.time }}
 	</ion-label>
 	<ion-label *ngIf="happeningState === 'cancelling-single'"
 		>Marking as canceled...
@@ -49,7 +54,7 @@
 >
 	<ion-icon name="close-circle-outline" slot="start" color="warning" />
 	<ion-label *ngIf="happeningState !== 'cancelling-series'"
-		>Cancel series at {{ slot?.timing?.start?.time }}
+		>Cancel series at {{ slotContext?.timing?.start?.time }}
 	</ion-label>
 	<ion-label *ngIf="happeningState === 'cancelling-series'"
 		>Marking as canceled...
@@ -82,7 +87,7 @@
 
 <ion-item tappable (click)="delete($event)" [disabled]="disabled">
 	<ion-icon name="trash-outline" slot="start" color="danger" />
-	@switch (slot?.happening?.brief?.type) {
+	@switch (slotContext?.happening?.brief?.type) {
 		@case ("recurring") {
 			<ion-label color="danger" *ngIf="happeningState !== 'deleting'">
 				<b>Delete recurring slot</b>

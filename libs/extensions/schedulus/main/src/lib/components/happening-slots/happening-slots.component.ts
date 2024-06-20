@@ -135,7 +135,7 @@ export class HappeningSlotsComponent implements OnChanges {
 
 	protected readonly deletingSlotIDs = signal<readonly string[]>([]);
 
-	protected selectSlot(event: Event, slot: IHappeningSlot): void {
+	protected selectSlot(event: Event, slot: IHappeningSlotWithID): void {
 		this.slotSelected.emit(slot);
 		this.showEditSlot(event, slot);
 	}
@@ -153,7 +153,7 @@ export class HappeningSlotsComponent implements OnChanges {
 
 	protected editingSlot?: IHappeningSlot;
 
-	protected showEditSlot(event: Event, slot: IHappeningSlot): void {
+	protected showEditSlot(event: Event, slot: IHappeningSlotWithID): void {
 		event.stopPropagation();
 		event.preventDefault();
 		if (!this.happening) {

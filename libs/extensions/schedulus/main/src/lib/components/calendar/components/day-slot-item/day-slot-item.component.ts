@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PopoverController, PopoverOptions } from '@ionic/angular';
 import { IContactusTeamDtoAndID } from '@sneat/contactus-core';
-import { IHappeningSlotUiItem } from '@sneat/extensions/schedulus/shared';
+import { ISlotUIContext } from '@sneat/extensions/schedulus/shared';
 import { ITeamContext } from '@sneat/team-models';
 import { SlotContextMenuComponent } from '../slot-context-menu/slot-context-menu.component';
 import { HappeningUIState } from '@sneat/mod-schedulus-core';
@@ -11,7 +11,7 @@ import { HappeningUIState } from '@sneat/mod-schedulus-core';
 	templateUrl: './day-slot-item.component.html',
 })
 export class DaySlotItemComponent {
-	@Input() public slot?: IHappeningSlotUiItem;
+	@Input() public slotContext?: ISlotUIContext;
 
 	@Input() dateID?: string;
 
@@ -22,7 +22,7 @@ export class DaySlotItemComponent {
 	@Input() contactusTeam?: IContactusTeamDtoAndID;
 
 	@Output() readonly slotClicked = new EventEmitter<{
-		slot: IHappeningSlotUiItem;
+		slot: ISlotUIContext;
 		event: Event;
 	}>();
 
@@ -30,8 +30,8 @@ export class DaySlotItemComponent {
 
 	get isCanceled(): boolean {
 		return (
-			!!this.slot?.adjustment?.cancellation ||
-			this.slot?.happening?.brief?.status === 'canceled'
+			!!this.slotContext?.adjustment?.cancellation ||
+			this.slotContext?.happening?.brief?.status === 'canceled'
 		);
 	}
 
@@ -39,10 +39,10 @@ export class DaySlotItemComponent {
 
 	onSlotClicked(event: Event): void {
 		console.log('DaySlotItemComponent.onSlotClicked()');
-		if (!this.slot) {
+		if (!this.slotContext) {
 			return;
 		}
-		this.slotClicked.emit({ slot: this.slot, event });
+		this.slotClicked.emit({ slot: this.slotContext, event });
 	}
 
 	async showContextMenu(
@@ -67,7 +67,7 @@ export class DaySlotItemComponent {
 			component: SlotContextMenuComponent,
 			componentProps: {
 				team: this.team,
-				slot: this.slot,
+				slotContext: this.slotContext,
 				dateID: this.dateID,
 				// state: stateOutput,
 			},

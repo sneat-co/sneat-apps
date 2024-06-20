@@ -7,7 +7,7 @@ import {
 	Output,
 } from '@angular/core';
 import { virtualSliderAnimations } from '@sneat/components';
-import { IHappeningSlotUiItem } from '@sneat/extensions/schedulus/shared';
+import { ISlotUIContext } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team-models';
 import { TeamDaysProvider } from '../../../../services/team-days-provider';
@@ -27,7 +27,7 @@ export class CalendarWeekCardComponent
 	@Input() team: ITeamContext = { id: '' };
 	@Input() teamDaysProvider?: TeamDaysProvider;
 	@Output() readonly slotClicked = new EventEmitter<{
-		slot: IHappeningSlotUiItem;
+		slot: ISlotUIContext;
 		event: Event;
 	}>();
 
@@ -73,7 +73,7 @@ export class CalendarWeekCardComponent
 		);
 	}
 
-	onSlotClicked(args: { slot: IHappeningSlotUiItem; event: Event }): void {
+	onSlotClicked(args: { slot: ISlotUIContext; event: Event }): void {
 		console.log('ScheduleWeekCardComponent.onSlotClicked()', args);
 		this.slotClicked.emit(args);
 	}

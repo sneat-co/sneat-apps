@@ -7,7 +7,7 @@ import {
 	OnDestroy,
 	SimpleChanges,
 } from '@angular/core';
-import { IHappeningSlotUiItem } from '@sneat/extensions/schedulus/shared';
+import { ISlotUIContext } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
 import { ITeamContext } from '@sneat/team-models';
@@ -36,7 +36,7 @@ export class SinglesTabComponent
 
 	@Input() team: ITeamContext = { id: '' };
 	@Input() onSlotClicked?: (args: {
-		slot: IHappeningSlotUiItem;
+		slot: ISlotUIContext;
 		event: Event;
 	}) => void;
 	@Input() onDateSelected?: (date: Date) => void;

@@ -20,7 +20,7 @@ import {
 	IHappeningWithUiState,
 	ICalendariumTeamDto,
 } from '@sneat/mod-schedulus-core';
-import { IHappeningSlotUiItem } from '@sneat/extensions/schedulus/shared';
+import { ISlotUIContext } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team-components';
 import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
@@ -213,8 +213,8 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 	// 		.catch(this.errorLogger.logErrorHandler('failed to navigate to new happening page'));
 	// };
 
-	readonly onSlotClicked = (args: {
-		slot: IHappeningSlotUiItem;
+	protected readonly onSlotClicked = (args: {
+		slot: ISlotUIContext;
 		event: Event;
 	}): void => {
 		console.log('ScheduleComponent.onSlotClicked()', args);
@@ -235,17 +235,10 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 			);
 	};
 
-	public readonly onDateSelected = (date: Date): void => {
+	protected readonly onDateSelected = (date: Date): void => {
 		this.tab = 'day';
 		this.setDay('onDateSelected', date);
 	};
-
-	protected readonly id = (
-		_: number,
-		o: {
-			id: string;
-		},
-	) => o.id;
 
 	readonly index = (i: number): number => i;
 

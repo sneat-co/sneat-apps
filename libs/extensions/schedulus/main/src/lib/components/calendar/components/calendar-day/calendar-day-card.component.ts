@@ -13,7 +13,7 @@ import { ITeamContext } from '@sneat/team-models';
 import { TeamDaysProvider } from '../../../../services/team-days-provider';
 import { ScheduleNavService } from '@sneat/extensions/schedulus/shared';
 import {
-	IHappeningSlotUiItem,
+	ISlotUIContext,
 	NewHappeningParams,
 } from '@sneat/extensions/schedulus/shared';
 import { getToday, CalendarStateService } from '../../calendar-state.service';
@@ -50,7 +50,7 @@ export class CalendarDayCardComponent
 	}
 
 	@Input() onSlotClicked?: (args: {
-		slot: IHappeningSlotUiItem;
+		slot: ISlotUIContext;
 		event: Event;
 	}) => void = () => {
 		throw new Error('onSlotClicked not set');

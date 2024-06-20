@@ -19,18 +19,18 @@ import {
 import { tap } from 'rxjs/operators';
 import {
 	getWd2,
-	IHappeningSlotUiItem,
+	ISlotUIContext,
 	RecurringSlots,
 	sortSlotItems,
 } from './view-models';
 
 export class TeamDay {
 	private readonly destroyed = new Subject<void>();
-	private readonly _slots = new BehaviorSubject<
-		IHappeningSlotUiItem[] | undefined
-	>(undefined);
+	private readonly _slots = new BehaviorSubject<ISlotUIContext[] | undefined>(
+		undefined,
+	);
 	private recurringSlots?: RecurringSlots;
-	private singles?: IHappeningSlotUiItem[];
+	private singles?: ISlotUIContext[];
 	// private singles?: ISlotItem[];
 
 	private teamID?: string;
@@ -50,7 +50,7 @@ export class TeamDay {
 
 	private scheduleDayDto?: ICalendarDayDto | null;
 
-	public get slots(): IHappeningSlotUiItem[] | undefined {
+	public get slots(): ISlotUIContext[] | undefined {
 		return this._slots.value;
 	}
 
@@ -181,8 +181,8 @@ export class TeamDay {
 					end: slot.end,
 					durationMinutes: slot.durationMinutes,
 				};
-				const slotItem: IHappeningSlotUiItem = {
-					slotID: slotIDs[0],
+				const slotItem: ISlotUIContext = {
+					slot: { ...slot, id: slotIDs[0] },
 					title: happening.brief?.title || happening?.dbo?.title || 'NO TITLE',
 					timing,
 					repeats: 'once',
@@ -219,7 +219,7 @@ export class TeamDay {
 	};
 
 	private joinRecurringsWithSinglesAndEmit(): void {
-		const slots: IHappeningSlotUiItem[] = [];
+		const slots: ISlotUIContext[] = [];
 
 		const weekdaySlots = this.recurringSlots?.byWeekday[this.wd]?.map(
 			(wdSlot) => {
@@ -232,7 +232,7 @@ export class TeamDay {
 				if (this.scheduleDayDto) {
 					const adjustment =
 						this.scheduleDayDto?.happeningAdjustments?.[wdSlot.happening.id]
-							?.slots?.[wdSlot.slotID];
+							?.slots?.[wdSlot.slot.id];
 					if (adjustment) {
 						return { ...wdSlot, adjustment };
 					}

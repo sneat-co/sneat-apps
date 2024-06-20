@@ -1,9 +1,9 @@
 import { Injectable, NgModule } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import {
-	IHappeningSlot,
 	IHappeningContext,
 	ISlotAdjustment,
+	IHappeningSlotWithID,
 } from '@sneat/mod-schedulus-core';
 import { HappeningSlotModalComponent } from './happening-slot-modal.component';
 
@@ -18,9 +18,9 @@ export class HappeningSlotModalService {
 			dateID: string;
 			adjustment?: ISlotAdjustment;
 		},
-		slot?: IHappeningSlot,
+		slot?: IHappeningSlotWithID,
 	): Promise<void> {
-		console.log('editSingleHappeningSlot', happening, recurring, slot);
+		console.log('editSingleHappeningSlot()', happening, recurring, slot);
 		event.stopPropagation();
 		event.preventDefault();
 		const team = happening.team;
