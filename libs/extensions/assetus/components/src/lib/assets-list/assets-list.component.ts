@@ -11,6 +11,8 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team-models';
 import { TeamNavService } from '@sneat/team-services';
 import { AssetService } from '../services';
+import { MileAgeDialogComponent } from '../mileage-dialog/mileage-dialog.component';
+import { ModalController } from '@ionic/angular';
 
 @Component({
 	selector: 'sneat-assets-list',
@@ -18,6 +20,7 @@ import { AssetService } from '../services';
 })
 export class AssetsListComponent implements OnChanges {
 	protected assets?: IIdAndBrief<IAssetBrief>[];
+	protected mileAgeAsset?: IIdAndBrief<IAssetBrief>;
 
 	@Input() allAssets?: IIdAndBrief<IAssetBrief>[];
 	@Input({ required: true }) team?: ITeamContext;
@@ -40,6 +43,7 @@ export class AssetsListComponent implements OnChanges {
 		private readonly errorLogger: IErrorLogger,
 		private readonly assetService: AssetService,
 		private readonly teamNavService: TeamNavService,
+		private readonly modalCtrl: ModalController,
 	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -137,5 +141,30 @@ export class AssetsListComponent implements OnChanges {
 				complete: deleteCompleted,
 			});
 		}, 1);
+	}
+
+	protected async addNewMilesAndFuel(
+		event: Event,
+		asset: IIdAndBrief<IAssetBrief>,
+	) {
+		event.stopPropagation();
+		event.preventDefault();
+
+		const modal = await this.modalCtrl.create({
+			component: MileAgeDialogComponent,
+			componentProps: { asset },
+		});
+		await modal.present();
+
+		// this.mileAgeAsset = asset;
+
+		// this.assetService.addNewMilesAndFuel(asset.id).subscribe({
+		// 	next: () => {
+		// 		this.goAsset(asset);
+		// 	},
+		// 	error: this.errorLogger.logErrorHandler(
+		// 		'failed to add new miles and fuel to asset with ID=' + asset.id,
+		// 	),
+		// });
 	}
 }
