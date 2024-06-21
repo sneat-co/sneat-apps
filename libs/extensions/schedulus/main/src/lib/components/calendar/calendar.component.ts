@@ -114,8 +114,8 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 		if (changes['team']) {
 			this.onTeamContextChanged();
 			const teamChange = changes['team'];
-			const currentTeam = teamChange.currentValue as ITeamContext;
 			const prevTeam = teamChange.previousValue as ITeamContext;
+			const currentTeam = teamChange.currentValue as ITeamContext;
 			if (currentTeam?.id !== prevTeam?.id) {
 				this.onTeamIdChanged();
 			}
@@ -256,6 +256,8 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 		console.log('ScheduleComponent.onTeamIdChanged()', this.team?.id);
 		this.schedulusTeamSubscription?.unsubscribe();
 		if (this.team?.id) {
+			this.populateRecurrings();
+			this.setDay('onTeamDtoChanged', this.date);
 			this.schedulusTeamSubscription = this.calendariumTeamService
 				.watchTeamModuleRecord(this.team.id)
 				.subscribe({
@@ -289,9 +291,7 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 	private onTeamContextChanged(): void {
 		if (this.team) {
 			this.teamDaysProvider.setTeam(this.team);
-			this.populateRecurrings();
 		}
-		this.setDay('onTeamDtoChanged', this.date);
 	}
 
 	// noinspection JSMethodCanBqw2se3333eStatic
@@ -388,7 +388,9 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 	}
 
 	private setDay(source: string, d: Date): void {
-		console.log(`ScheduleComponent.setDay(source=${source}), d=`, d);
+		console.log(
+			`ScheduleComponent.setDay(source=${source}), date=${dateToIso(d)}`,
+		);
 		if (!d) {
 			return;
 		}

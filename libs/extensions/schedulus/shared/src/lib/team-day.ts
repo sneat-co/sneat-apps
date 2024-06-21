@@ -33,18 +33,19 @@ export class TeamDay {
 	private singles?: ISlotUIContext[];
 	// private singles?: ISlotItem[];
 
-	private teamID?: string;
+	private teamID?: string; // TODO? Should be public readonly?
 	public readonly date: Date;
 	public readonly dateID: string;
-	public isoID: string; // TODO: is it same as dateID?
 	public readonly wd: WeekdayCode2;
 	public readonly wdLongTitle: string;
-	readonly loadingEvents?: boolean;
-	readonly eventsLoaded?: boolean;
+
+	public readonly loadingEvents?: boolean;
+	// readonly eventsLoaded?: boolean;
+
 	public readonly slots$ = this._slots.asObservable().pipe(
 		shareReplay(1),
 		takeUntil(this.destroyed),
-		tap((slots) => console.log(`TeamDay[${this.isoID}].slots$ =>`, slots)),
+		tap((slots) => console.log(`TeamDay[${this.dateID}].slots$ =>`, slots)),
 		map((slots) => slots?.sort(sortSlotItems)),
 	);
 
@@ -75,8 +76,7 @@ export class TeamDay {
 			next: this.processTeamID,
 		});
 		this.wd = getWd2(date);
-		this.isoID = dateToIso(date);
-		if (this.isoID === '1970-01-01') {
+		if (this.dateID === '1970-01-01') {
 			throw new Error('an attempt to set an empty date 1970-01-01');
 		}
 		this.wdLongTitle = wdCodeToWeekdayLongName(this.wd);
@@ -89,7 +89,7 @@ export class TeamDay {
 	}
 
 	private readonly processTeamID = (teamID: string | undefined) => {
-		console.log(`TeamDay[${this.isoID}].processTeamID(teamID=${teamID})`);
+		console.log(`TeamDay[${this.dateID}].processTeamID(teamID=${teamID})`);
 		this.teamID = teamID;
 		this.singles = undefined;
 		if (!this.teamID) {
@@ -139,7 +139,7 @@ export class TeamDay {
 			const teamID = this.teamID;
 			const date = this.dateID;
 			console.log(
-				`TeamDay[${this.isoID}].subscribeForSingles(), teamID=${teamID}, date=${date}`,
+				`TeamDay[${this.dateID}].subscribeForSingles(), teamID=${teamID}, date=${date}`,
 			);
 			this.happeningService
 				.watchSinglesOnSpecificDay({ id: this.teamID }, this.dateID)
@@ -206,14 +206,12 @@ export class TeamDay {
 	}
 
 	private readonly processRecurrings = (slots: RecurringSlots): void => {
-		console.log(
-			`TeamDay[${this.isoID},date=${this.date},wd=${
-				this.wd
-			}].processRecurrings(), ${
-				Object.keys(slots.byWeekday).length
-			} weekdays with slots:`,
-			slots,
-		);
+		// console.log(
+		// 	`TeamDay[${this.dateID},wd=${this.wd}].processRecurrings(), ${
+		// 		Object.keys(slots.byWeekday).length
+		// 	} weekdays with slots:`,
+		// 	slots,
+		// );
 		this.recurringSlots = slots;
 		this.joinRecurringsWithSinglesAndEmit();
 	};

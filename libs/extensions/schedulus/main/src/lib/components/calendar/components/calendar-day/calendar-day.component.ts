@@ -38,13 +38,16 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 	private filter = emptyScheduleFilter;
 	// @Input() filter?: ICalendarFilter;
 	// @Input() showRegulars = true;
-	@Input() team: ITeamContext = { id: '' };
 	// @Input() showEvents = true;
-	@Input() weekday?: Weekday;
+
+	@Input({ required: true }) team: ITeamContext = { id: '' };
+	@Input({ required: true }) weekday?: Weekday;
+
 	@Output() readonly slotClicked = new EventEmitter<{
 		slot: ISlotUIContext;
 		event: Event;
 	}>();
+
 	public allSlots?: ISlotUIContext[];
 	public slots?: ISlotUIContext[];
 	public slotsHiddenByFilter?: number;
@@ -73,8 +76,14 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		console.log(this.logPrefix() + '.ngOnChanges()', changes);
-		if (changes['weekday']) {
+		const weekdayChange = changes['weekday'];
+		const weekdayCurrent = weekdayChange?.currentValue as Weekday;
+		if (weekdayChange?.firstChange && !weekdayCurrent) {
+			return;
+		}
+		const dateID = weekdayCurrent?.day?.dateID;
+		console.log(this.logPrefix(dateID) + '.ngOnChanges()', changes);
+		if (weekdayChange) {
 			this.subscribeForSlots();
 		}
 	}
@@ -129,8 +138,8 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 		this.applyFilter();
 	};
 
-	private readonly logPrefix = () =>
-		`ScheduleDayComponent[wd=${this.weekday?.id}, dateID=${this.weekday?.day?.dateID}]`;
+	private readonly logPrefix = (dateID?: string) =>
+		`ScheduleDayComponent[dateID=${this.weekday?.day?.dateID || dateID}]`;
 
 	goNewHappening(params: NewHappeningParams): void {
 		if (!this.team) {

@@ -28,7 +28,9 @@ export class CalendarDayService {
 	}
 
 	public watchTeamDay(team: ITeamContext, dateID: string) {
-		console.log('ScheduleDayService.watchTeamDay()', team.id, dateID);
+		console.log(
+			`ScheduleDayService.watchTeamDay(team={id=${team.id}, dateID=${dateID})`,
+		);
 		return this.teamItemService
 			.watchTeamItemByIdWithTeamRef(team, dateID)
 			.pipe(
