@@ -81,8 +81,8 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 		if (weekdayChange?.firstChange && !weekdayCurrent) {
 			return;
 		}
-		const dateID = weekdayCurrent?.day?.dateID;
-		console.log(this.logPrefix(dateID) + '.ngOnChanges()', changes);
+		// const dateID = weekdayCurrent?.day?.dateID;
+		// console.log(this.logPrefix(dateID) + '.ngOnChanges()', changes);
 		if (weekdayChange) {
 			this.subscribeForSlots();
 		}
