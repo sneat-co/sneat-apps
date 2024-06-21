@@ -65,7 +65,7 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 		});
 	}
 
-	resetFilter(event: Event): void {
+	protected resetFilter(event: Event): void {
 		event.stopPropagation();
 		this.filterService.resetScheduleFilter();
 	}
@@ -87,8 +87,6 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 			this.subscribeForSlots();
 		}
 	}
-
-	readonly index = (i: number): number => i;
 
 	private applyFilter(): void {
 		if (this.allSlots?.length) {
@@ -141,7 +139,7 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 	private readonly logPrefix = (dateID?: string) =>
 		`ScheduleDayComponent[dateID=${this.weekday?.day?.dateID || dateID}]`;
 
-	goNewHappening(params: NewHappeningParams): void {
+	protected goNewHappening(params: NewHappeningParams): void {
 		if (!this.team) {
 			return;
 		}
