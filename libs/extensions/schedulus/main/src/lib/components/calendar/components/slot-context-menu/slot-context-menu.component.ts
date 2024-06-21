@@ -59,7 +59,7 @@ export class SlotContextMenuComponent {
 	public get isCancelled(): boolean {
 		return (
 			this.slotContext?.happening.brief?.status === 'canceled' ||
-			!!this.slotContext?.adjustment?.cancellation
+			!!this.slotContext?.adjustment?.canceled
 		);
 	}
 
