@@ -116,7 +116,7 @@ export class SlotContextMenuComponent {
 		this.notImplemented();
 	}
 
-	edit(event: Event): void {
+	edit(event: Event, editMode: 'series' | 'single'): void {
 		console.log(`SlotContextMenuComponent.edit()`);
 		const happening = this.slotContext?.happening;
 		if (!happening) {
@@ -129,6 +129,7 @@ export class SlotContextMenuComponent {
 			? {
 					dateID: this.dateID,
 					adjustment: this.slotContext?.adjustment,
+					editMode,
 				}
 			: undefined;
 		this.happeningSlotModalService

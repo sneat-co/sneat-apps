@@ -16,6 +16,7 @@ export class HappeningSlotModalService {
 		happening: IHappeningContext,
 		recurring?: {
 			dateID: string;
+			editMode: 'series' | 'single';
 			adjustment?: ISlotAdjustment;
 		},
 		slot?: IHappeningSlotWithID,

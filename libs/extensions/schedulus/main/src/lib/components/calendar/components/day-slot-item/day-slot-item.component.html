@@ -83,6 +83,13 @@
 		</p>
 	</ion-label>
 	<ion-buttons *ngIf="mode === 'full'">
-		<ion-button (click)="showContextMenu($event)">...</ion-button>
+		<ion-button color="medium" (click)="showRsvp($event)">
+			<ion-icon name="checkmark-circle-outline" slot="start" />
+			<ion-label>RSVP</ion-label>
+		</ion-button>
+		<ion-button (click)="showContextMenu($event)" color="medium">
+			<ion-icon name="create-outline" slot="start" />
+			<ion-label>Edit</ion-label>
+		</ion-button>
 	</ion-buttons>
 </ion-item>

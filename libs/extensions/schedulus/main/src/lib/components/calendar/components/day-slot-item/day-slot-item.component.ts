@@ -28,7 +28,7 @@ export class DaySlotItemComponent {
 
 	slotState?: HappeningUIState;
 
-	get isCanceled(): boolean {
+	protected get isCanceled(): boolean {
 		return (
 			!!this.slotContext?.adjustment?.canceled ||
 			this.slotContext?.happening?.brief?.status === 'canceled'
@@ -37,7 +37,7 @@ export class DaySlotItemComponent {
 
 	constructor(private readonly popoverController: PopoverController) {}
 
-	onSlotClicked(event: Event): void {
+	protected onSlotClicked(event: Event): void {
 		console.log('DaySlotItemComponent.onSlotClicked()');
 		if (!this.slotContext) {
 			return;
@@ -45,7 +45,14 @@ export class DaySlotItemComponent {
 		this.slotClicked.emit({ slot: this.slotContext, event });
 	}
 
-	async showContextMenu(
+	protected showRsvp(event: Event): void {
+		console.log('DaySlotItemComponent.showRsvp()');
+		event.stopPropagation();
+		event.preventDefault();
+		alert('Sorry, RSVP is not implemented yet');
+	}
+
+	protected async showContextMenu(
 		event:
 			| MouseEvent
 			| TouchEvent
