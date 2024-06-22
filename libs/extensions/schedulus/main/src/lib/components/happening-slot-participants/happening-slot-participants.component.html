@@ -1,5 +1,9 @@
 @for (contact of contacts; track contact.id) {
-	<ion-badge color="light" class="ion-margin-start">
-		<ion-label>{{ contact.brief.names | personNames }}</ion-label>
+	<ion-badge color="light" class="ion-margin-end">
+		<ion-label color="medium">{{
+			isUniqueFirstName(contact)
+				? contact.brief.names?.firstName
+				: (contact.brief.names | personNames)
+		}}</ion-label>
 	</ion-badge>
 }

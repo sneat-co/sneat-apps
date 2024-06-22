@@ -49,7 +49,7 @@ export class DaySlotItemComponent {
 		console.log('DaySlotItemComponent.showRsvp()');
 		event.stopPropagation();
 		event.preventDefault();
-		alert("Sorry, RSVP is not here yet but it's coming soon!");
+		alert("🚧 Sorry, the RSVP is not here yet.\n\n🚀 But it's coming soon! ");
 	}
 
 	protected async showContextMenu(

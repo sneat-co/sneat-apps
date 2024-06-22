@@ -52,6 +52,16 @@ export class HappeningSlotParticipantsComponent
 			});
 	}
 
+	protected isUniqueFirstName(contact: IIdAndBrief<IContactBrief>): boolean {
+		const firstName = contact.brief?.names?.firstName;
+		if (!firstName) {
+			return false;
+		}
+		return !!this.contacts?.some(
+			(c) => c.brief?.names?.firstName === firstName,
+		);
+	}
+
 	public ngOnChanges(changes: SimpleChanges): void {
 		// console.log(
 		// 	'HappeningSlotParticipantsComponent.ngOnChanges()',

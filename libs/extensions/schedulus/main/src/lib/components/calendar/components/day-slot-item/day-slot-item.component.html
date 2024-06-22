@@ -46,8 +46,6 @@
 		<!--			"-->
 		<!--		/>-->
 
-		<sneat-happening-slot-participants [happeningSlot]="slotContext" />
-
 		<p
 			*ngIf="
 				mode === 'full' &&
@@ -80,6 +78,9 @@
 					🎚️ {{ level[0].toUpperCase() + level.substring(1) }}
 				</ion-badge>
 			}
+		</p>
+		<p>
+			<sneat-happening-slot-participants [happeningSlot]="slotContext" />
 		</p>
 	</ion-label>
 	<ion-buttons *ngIf="mode === 'full'">
