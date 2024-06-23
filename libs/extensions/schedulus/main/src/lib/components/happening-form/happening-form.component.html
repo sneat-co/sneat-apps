@@ -13,6 +13,31 @@
 		</ion-segment-button>
 	</ion-segment>
 
+	<ion-card>
+		<ion-list
+			class="ion-no-padding"
+			[lines]="happeningTitle.value ? 'none' : undefined"
+		>
+			<ion-item>
+				<ion-input
+					style="font-weight: bold"
+					#titleInput
+					label="Title"
+					labelPlacement="floating"
+					[formControl]="happeningTitle"
+					(keyup.enter)="onTitleEnter($event)"
+					placeholder="Title"
+					type="text"
+				/>
+			</ion-item>
+			<ion-item *ngIf="!happeningTitle.value">
+				<ion-label color="medium">
+					Enter above the name of the event.
+				</ion-label>
+			</ion-item>
+		</ion-list>
+	</ion-card>
+
 	@if (happeningTitle.value) {
 		<ion-card>
 			<ion-item-group>
@@ -121,7 +146,7 @@
 	}
 </form>
 
-<ion-card>
+<ion-card *ngIf="happening?.id">
 	<ion-card-header>
 		<!--		<ion-card-title>Danger zone</ion-card-title>-->
 		<ion-card-subtitle>Actions in red are irrevocable</ion-card-subtitle>
