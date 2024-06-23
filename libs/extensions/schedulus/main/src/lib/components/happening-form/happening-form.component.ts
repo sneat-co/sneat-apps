@@ -36,7 +36,11 @@ import {
 } from '@sneat/mod-schedulus-core';
 import { TeamComponentBaseParams } from '@sneat/team-components';
 import { ITeamContext } from '@sneat/team-models';
-import { HappeningService, HappeningServiceModule } from '@sneat/team-services';
+import {
+	HappeningService,
+	HappeningServiceModule,
+	ICancelHappeningRequest,
+} from '@sneat/team-services';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
 import { HappeningParticipantsComponent } from '../happening-participants/happening-participants.component';
@@ -80,6 +84,8 @@ export class HappeningFormComponent
 	happeningSlotsComponent?: HappeningSlotsComponent;
 
 	protected readonly isCreating = signal(false);
+	protected readonly isCancelling = signal(false);
+	protected readonly isDeleting = signal(false);
 
 	// public get slots(): readonly IHappeningSlot[] | undefined {
 	// 	return this.happening?.brief?.slots;
@@ -346,5 +352,35 @@ export class HappeningFormComponent
 			this.isCreating.set(false);
 			this.errorLogger.logError(e, 'failed to create new happening');
 		}
+	}
+
+	protected cancel(): void {
+		const request: ICancelHappeningRequest = {
+			teamID: this.team?.id || '',
+			happeningID: this.happening?.id || '',
+		};
+		this.isCancelling.set(true);
+		this.happeningService.cancelHappening(request).subscribe({
+			next: () => this.isCancelling.set(false),
+			error: (err) => {
+				this.errorLogger.logError(err, 'failed to cancel happening');
+				this.isCancelling.set(false);
+			},
+			// complete: () => this.isCancelling.set(false), -- TODO(help-wanted): Why is not working?
+		});
+	}
+
+	protected delete(): void {
+		if (!this.happening) {
+			return;
+		}
+		this.isDeleting.set(true);
+		this.happeningService.deleteHappening(this.happening).subscribe({
+			next: () => this.isDeleting.set(false),
+			error: (err) => {
+				this.errorLogger.logError(err, 'failed to delete happening');
+				this.isDeleting.set(false);
+			},
+		});
 	}
 }
