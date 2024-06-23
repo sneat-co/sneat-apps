@@ -121,15 +121,23 @@ export class HappeningSlotsComponent implements OnChanges {
 
 		this.deletingSlotIDs.set([...this.deletingSlotIDs(), slot.id]);
 
-		this.happeningService.deleteSlot(request).subscribe({
-			next: () => this.removeSlotFromHappening(slot),
-			error: this.errorLogger.logErrorHandler('failed to delete slot'),
-			complete: () =>
-				setTimeout(() => {
+		const removeFromDeletingSlotIDs = (delay: number) =>
+			setTimeout(
+				() =>
 					this.deletingSlotIDs.set(
 						this.deletingSlotIDs().filter((id) => id !== slot.id),
-					);
-				}, 1000),
+					),
+				delay,
+			);
+		this.happeningService.deleteSlot(request).subscribe({
+			next: () => {
+				this.removeSlotFromHappening(slot);
+				removeFromDeletingSlotIDs(0);
+			},
+			error: (err) => {
+				this.errorLogger.logError(err, 'failed to delete slot');
+				removeFromDeletingSlotIDs(300);
+			},
 		});
 	}
 
