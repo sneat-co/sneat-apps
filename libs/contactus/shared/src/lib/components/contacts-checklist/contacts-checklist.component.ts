@@ -12,6 +12,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
+import { personName } from '@sneat/components';
 import { ContactusTeamService } from '@sneat/contactus-services';
 import { IIdAndBrief } from '@sneat/core';
 import { IContactBrief } from '@sneat/contactus-core';
@@ -152,4 +153,6 @@ export class ContactsChecklistComponent implements OnChanges {
 				setTimeout(clearInProgress, 500);
 			});
 	}
+
+	protected readonly personName = personName;
 }

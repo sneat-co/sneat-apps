@@ -9,10 +9,7 @@
 				[disabled]="isDisabled(contact.id)"
 				(ionChange)="onCheckboxChange($event, contact)"
 			>
-				{{
-					contact.brief.names?.fullName ||
-						contact.brief.names?.firstName + " " + contact.brief.names?.lastName
-				}}
+				{{ personName(contact.brief.names) }}
 				<!--TODO: use pipe-->
 			</ion-checkbox>
 			<ion-spinner
