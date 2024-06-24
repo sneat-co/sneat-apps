@@ -106,10 +106,10 @@ export class ContactsChecklistComponent implements OnChanges {
 		);
 	}
 
-	protected isDisabled(contact: IIdAndBrief<IContactBrief>): boolean {
+	protected isDisabled(contactID: string): boolean {
 		return (
-			this.checkedInProgress.includes(contact.id) ||
-			this.uncheckedInProgress.includes(contact.id)
+			this.checkedInProgress.includes(contactID) ||
+			this.uncheckedInProgress.includes(contactID)
 		);
 	}
 

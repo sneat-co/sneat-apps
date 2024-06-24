@@ -6,7 +6,7 @@
 				justify="start"
 				[value]="contact.id"
 				[checked]="isChecked(contact)"
-				[disabled]="isDisabled(contact)"
+				[disabled]="isDisabled(contact.id)"
 				(ionChange)="onCheckboxChange($event, contact)"
 			>
 				{{
@@ -15,6 +15,12 @@
 				}}
 				<!--TODO: use pipe-->
 			</ion-checkbox>
+			<ion-spinner
+				*ngIf="isDisabled(contact.id)"
+				name="lines-small"
+				slot="end"
+				color="medium"
+			></ion-spinner>
 		</ion-item>
 	} @empty {
 		<ion-item>
