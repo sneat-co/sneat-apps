@@ -1,7 +1,0 @@
-{
-	"name": "emptyionicapp",
-	"integrations": {
-		"capacitor": {}
-	},
-	"type": "angular"
-}
