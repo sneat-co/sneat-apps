@@ -1,10 +1,33 @@
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+	Component,
+	EventEmitter,
+	Inject,
+	Input,
+	OnChanges,
+	Output,
+	signal,
+	SimpleChanges,
+} from '@angular/core';
+import { IonicModule } from '@ionic/angular';
+import { SneatPipesModule } from '@sneat/components';
 import {
 	IHappeningSlot,
 	WeekdayCode2,
 	IHappeningContext,
+	IHappeningSlotWithID,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import {
+	HappeningService,
+	IDeleteSlotRequest,
+	ISlotRefRequest,
+} from '@sneat/team-services';
+import { HappeningSlotFormComponent } from '../happening-slot-form/happening-slot-form.component';
+import {
+	HappeningSlotModalService,
+	HappeningSlotModalServiceModule,
+} from '../happening-slot-form/happening-slot-modal.service';
 
 export interface AddSlotParams {
 	wd?: WeekdayCode2;
@@ -13,79 +36,174 @@ export interface AddSlotParams {
 @Component({
 	selector: 'sneat-happening-slots',
 	templateUrl: './happening-slots.component.html',
+	standalone: true,
+	imports: [
+		CommonModule,
+		IonicModule,
+		SneatPipesModule,
+		HappeningSlotFormComponent,
+		HappeningSlotModalServiceModule,
+	],
 })
-export class HappeningSlotsComponent {
+export class HappeningSlotsComponent implements OnChanges {
 	@Input() happening?: IHappeningContext;
 
 	@Input() wd?: WeekdayCode2;
 
-	@Output() addSlotDismissed = new EventEmitter<void>();
-	@Output() slotAdded = new EventEmitter<IHappeningSlot>();
-	@Output() slotRemoved = new EventEmitter<readonly IHappeningSlot[]>();
-	@Output() slotSelected = new EventEmitter<IHappeningSlot>();
+	@Output() readonly addSlotDismissed = new EventEmitter<void>();
+	@Output() readonly slotAdded = new EventEmitter<IHappeningSlot>();
+	// @Output() readonly slotRemoved = new EventEmitter<
+	// 	readonly IHappeningSlotWithID[]
+	// >();
+	@Output() readonly slotSelected = new EventEmitter<IHappeningSlot>();
 
-	get slots(): readonly IHappeningSlot[] | undefined {
-		return this.happening?.brief?.slots;
-	}
+	protected readonly slots = signal<IHappeningSlotWithID[] | undefined>(
+		undefined,
+	);
 
-	protected isShowingAddSlot = false;
-
-	public addSlotParams?: AddSlotParams;
+	// protected isShowingSlotFormModal = false;
+	//
+	// protected addSlotParams?: AddSlotParams;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger, // private readonly modalController: ModalController,
+		private readonly happeningService: HappeningService,
+		private readonly happeningSlotModalService: HappeningSlotModalService,
 	) {}
 
-	removeSlot(slot: IHappeningSlot): void {
+	protected removeSlot(event: Event, slot: IHappeningSlotWithID): void {
+		event.preventDefault();
+		event.stopPropagation();
 		if (!this.happening?.brief) {
 			throw new Error('!this.happening?.brief');
 		}
-		// this.happening =
+		if (this.happening.id) {
+			this.deleteSlot(slot);
+		} else {
+			this.removeSlotFromHappening(slot);
+		}
+	}
+
+	private removeSlotFromHappening(slot: IHappeningSlotWithID): void {
+		if (!this.happening?.brief) {
+			throw new Error('!this.happening');
+		}
 		this.onHappeningChanged({
 			...this.happening,
 			brief: {
 				...this.happening.brief,
-				slots: this.happening.brief.slots?.filter((v) => v !== slot) || [],
+				slots: Object.fromEntries(
+					Object.entries(this.happening.brief.slots || {}).filter(
+						([id]) => id !== slot.id,
+					),
+				),
 			},
 		});
-		this.slotRemoved.emit(this.happening.brief?.slots || []);
 	}
 
-	selectSlot(slot: IHappeningSlot): void {
+	private deleteSlot(slot: IHappeningSlotWithID): void {
+		if (!this.happening?.brief) {
+			throw new Error('!this.happening?.brief');
+		}
+		const happeningID = this.happening.id;
+		if (!happeningID) {
+			throw new Error('!happeningID');
+		}
+		const teamID = this.happening?.team.id;
+		if (!teamID) {
+			throw new Error('!teamID');
+		}
+		const request: IDeleteSlotRequest = {
+			teamID,
+			happeningID,
+			slotID: slot.id,
+		};
+
+		this.deletingSlotIDs.set([...this.deletingSlotIDs(), slot.id]);
+
+		const removeFromDeletingSlotIDs = (delay: number) =>
+			setTimeout(
+				() =>
+					this.deletingSlotIDs.set(
+						this.deletingSlotIDs().filter((id) => id !== slot.id),
+					),
+				delay,
+			);
+		this.happeningService.deleteSlot(request).subscribe({
+			next: () => {
+				this.removeSlotFromHappening(slot);
+				removeFromDeletingSlotIDs(0);
+			},
+			error: (err) => {
+				this.errorLogger.logError(err, 'failed to delete slot');
+				removeFromDeletingSlotIDs(300);
+			},
+		});
+	}
+
+	protected readonly deletingSlotIDs = signal<readonly string[]>([]);
+
+	protected selectSlot(event: Event, slot: IHappeningSlotWithID): void {
 		this.slotSelected.emit(slot);
+		this.showEditSlot(event, slot);
 	}
 
-	onSlotAdded(slot: IHappeningSlot): void {
+	protected onSlotAdded(slot: IHappeningSlot): void {
 		console.log('HappeningSlotsComponent.onSlotAdded()');
-		this.isShowingAddSlot = false;
+		// this.isShowingSlotFormModal = false;
 		this.slotAdded.emit(slot);
 	}
 
-	onHappeningChanged(happening: IHappeningContext): void {
-		console.log('HappeningSlotsComponent.onSlotAdded()');
+	protected onHappeningChanged(happening: IHappeningContext): void {
+		console.log('HappeningSlotsComponent.onHappeningChanged()');
 		this.happening = happening;
 	}
 
-	showAddSlot(params?: AddSlotParams): void {
-		console.log('RecurringSlotsComponent.showAddSlot(), params:', params);
-		// this.modalController.create({
-		// 	component: RecurringSlotFormComponent,
-		// 	componentProps: {
-		//
-		// 	}
-		// })
-		// 	.then(modal => {
-		// 		modal.present()
-		// 			.catch(this.errorLogger.logErrorHandler('failed to present modal with RecurringSlotsComponent'))
-		// 	})
-		// 	.catch(this.errorLogger.logErrorHandler('failed to create modal for RecurringSlotsComponent'));
-		this.addSlotParams = params;
-		this.isShowingAddSlot = true;
+	protected editingSlot?: IHappeningSlot;
+
+	protected showEditSlot(event: Event, slot: IHappeningSlotWithID): void {
+		event.stopPropagation();
+		event.preventDefault();
+		if (!this.happening) {
+			return;
+		}
+		this.happeningSlotModalService
+			.editSingleHappeningSlot(event, this.happening, undefined, slot)
+			.catch(this.errorLogger.logErrorHandler('failed to open edit modal'));
+
+		// this.addSlotParams = undefined;
+		// this.editingSlot = slot;
+		// this.isShowingSlotFormModal = true;
 	}
 
-	onAddSlotModalDismissed(event: Event): void {
-		console.log('onAddSlotModalDismissed(), event:', event);
-		this.isShowingAddSlot = false;
-		this.addSlotDismissed.next();
+	protected showAddSlot(event: Event, params?: AddSlotParams): void {
+		console.log('RecurringSlotsComponent.showAddSlot(), params:', params);
+		if (!this.happening) {
+			return;
+		}
+		this.happeningSlotModalService
+			.editSingleHappeningSlot(event, this.happening)
+			.catch(this.errorLogger.logErrorHandler('failed to open edit modal'));
+
+		// this.editingSlot = undefined;
+		// this.addSlotParams = params;
+		// this.isShowingSlotFormModal = true;
 	}
+
+	public ngOnChanges(changes: SimpleChanges): void {
+		if (changes['happening']) {
+			this.slots.set(
+				Object.entries(this.happening?.brief?.slots || {}).map(
+					([id, slot]) => ({ ...slot, id }),
+				),
+			);
+		}
+	}
+
+	// onSlotFormModalDismissed(event: Event): void {
+	// 	console.log('onAddSlotModalDismissed(), event:', event);
+	// 	this.editingSlot = undefined;
+	// 	this.isShowingSlotFormModal = false;
+	// 	this.addSlotDismissed.next();
+	// }
 }

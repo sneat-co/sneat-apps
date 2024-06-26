@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
+import { HappeningSlotModalService } from '../components/happening-slot-form/happening-slot-modal.service';
 import { CalendariumTeamService } from './calendarium-team.service';
-import { CalendarModalsService } from './calendar-modals.service';
 
 @NgModule({
-	providers: [CalendariumTeamService, CalendarModalsService],
+	providers: [CalendariumTeamService, HappeningSlotModalService],
 })
 export class CalendariumServicesModule {}

@@ -1,0 +1,50 @@
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-title>
+			{{ happening?.brief?.title || "Happening Slot Modal" }}
+		</ion-title>
+		<ion-buttons slot="end">
+			<ion-button (click)="close($event)" title="Close">
+				<ion-icon name="close" />
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<sneat-happening-slot-form
+		mode="modal"
+		[happening]="happening"
+		[slot]="slot"
+		(happeningChange)="onHappeningChanged($event)"
+	/>
+
+	<!--	<ion-item-group>-->
+	<!--		<ion-item-divider color="light">When</ion-item-divider>-->
+	<!--		<sneat-start-end-datetime-form-->
+	<!--			mode="single"-->
+	<!--			[timing]="adjustment?.slot || happeningSlot"-->
+	<!--			[date]="this.dateID"-->
+	<!--			(timingChange)="onTimingChanged($event)"-->
+	<!--		/>-->
+
+	<!--		<ion-item-divider color="light">Where</ion-item-divider>-->
+	<!--		<ion-item>-->
+	<!--			<ion-label position="floating">Address</ion-label>-->
+	<!--			<ion-textarea />-->
+	<!--		</ion-item>-->
+	<!--		<div class="ion-padding">-->
+	<!--			<ion-button color="primary" size="large" (click)="save($event)">-->
+	<!--				Save changes-->
+	<!--			</ion-button>-->
+	<!--			<ion-button-->
+	<!--				color="danger"-->
+	<!--				fill="clear"-->
+	<!--				class="ion-margin-horizontal"-->
+	<!--				(click)="close($event)"-->
+	<!--			>-->
+	<!--				Cancel-->
+	<!--			</ion-button>-->
+	<!--		</div>-->
+	<!--	</ion-item-group>-->
+</ion-content>

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
 	Component,
 	computed,
@@ -11,9 +12,18 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { AlertController, ModalController } from '@ionic/angular';
-import { ISelectItem } from '@sneat/components';
+import {
+	FormControl,
+	FormsModule,
+	ReactiveFormsModule,
+	UntypedFormGroup,
+} from '@angular/forms';
+import { IonicModule, ModalController } from '@ionic/angular';
+import {
+	ISelectItem,
+	SelectFromListModule,
+	SneatPipesModule,
+} from '@sneat/components';
 import {
 	emptyTiming,
 	HappeningType,
@@ -24,9 +34,13 @@ import {
 	WeekdayCode2,
 	IHappeningContext,
 	Month,
+	RepeatPeriod,
+	IHappeningSlotWithID,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { newRandomId } from '@sneat/random';
+import { HappeningService } from '@sneat/team-services';
+import { Observable } from 'rxjs';
 import { StartEndDatetimeFormComponent } from '../start-end-datetime-form/start-end-datetime-form.component';
 import { WeekdaysFormBase } from '../weekdays/weekdays-form-base';
 
@@ -38,9 +52,31 @@ type Happens =
 	| 'yearly'
 	| 'fortnightly';
 
+export type HappeningSlotFormMode = 'modal' | 'in-form';
+
+export interface IHappeningSlotFormComponentInputs {
+	mode?: HappeningSlotFormMode;
+	happening?: IHappeningContext;
+	slotID?: string;
+	slot?: IHappeningSlot;
+	wd?: WeekdayCode2;
+	date?: string;
+	isToDo?: boolean;
+}
+
 @Component({
 	selector: 'sneat-happening-slot-form',
 	templateUrl: './happening-slot-form.component.html',
+	standalone: true,
+	imports: [
+		CommonModule,
+		IonicModule,
+		FormsModule,
+		ReactiveFormsModule,
+		SneatPipesModule,
+		SelectFromListModule,
+		StartEndDatetimeFormComponent,
+	],
 })
 /*
  INTENTIONALLY not decoupling weekdays form (WeekdaysFormBase) into a separate component
@@ -49,10 +85,11 @@ type Happens =
  */
 export class HappeningSlotFormComponent
 	extends WeekdaysFormBase
-	implements OnChanges, OnDestroy
+	implements OnChanges, OnDestroy, IHappeningSlotFormComponentInputs
 {
-	@Input({ required: true }) mode?: 'modal' | 'in-form';
-	@Input() happening?: IHappeningContext;
+	@Input({ required: true }) mode?: HappeningSlotFormMode;
+	@Input({ required: true }) happening?: IHappeningContext;
+	@Input() slot?: IHappeningSlotWithID;
 	@Input() wd?: WeekdayCode2;
 	@Input() date?: string;
 	@Input() isToDo = false;
@@ -66,7 +103,7 @@ export class HappeningSlotFormComponent
 
 	protected timing: ITiming = emptyTiming;
 
-	protected error?: string;
+	protected readonly error = signal('');
 
 	protected tab: 'when' | 'where' = 'when';
 
@@ -76,11 +113,6 @@ export class HappeningSlotFormComponent
 
 	// minDate = '2000';
 	// maxDate = '' + (new Date().getFullYear() + 5);
-
-	protected readonly repeats = new FormControl<Happens | undefined>(
-		undefined,
-		Validators.required,
-	);
 
 	protected readonly repeatsOptions: readonly ISelectItem[] = [
 		{ id: 'daily', title: 'Daily' },
@@ -99,6 +131,8 @@ export class HappeningSlotFormComponent
 
 	protected numberOfDaysInMonth = 28;
 
+	protected readonly isUpdating = signal(false);
+
 	protected readonly monthlyModes: readonly ISelectItem[] = [
 		{ id: 'monthly-day', title: 'Specific day' },
 		{ id: 'monthly-week-1', title: 'First week' },
@@ -113,32 +147,45 @@ export class HappeningSlotFormComponent
 		locationAddress: new FormControl<string>(''),
 	});
 
-	// dateForm = new FormGroup({
-	// 	date: new FormControl(undefined, Validators.required),
-	// });
-	protected readonly timeForm = new UntypedFormGroup({
-		repeats: this.repeats,
-	});
-
-	protected readonly happens = signal<Exclude<Happens, 'once'> | undefined>(
-		undefined,
-	);
+	protected readonly happens = signal<Exclude<Happens, 'once'> | ''>('');
 
 	protected readonly showWeekdays = computed(
 		() =>
+			this.happens() === 'daily' ||
 			this.happens() === 'weekly' ||
 			(this.happens() === 'monthly' &&
 				this.monthlyMode()?.startsWith('monthly-week')),
 	);
 
-	protected readonly showAddSlotButton = computed(
-		() => this.happens() === 'weekly' && this.hasWeekdaySelected(),
-	);
+	protected readonly showTimeForm = computed(() => {
+		const happens = this.happens();
+		const monthlyMode = this.monthlyMode();
+		const monthlyDate = this.monthlyDate();
+		const hasWeekdaySelected = this.hasWeekdaySelected();
+		return (
+			happens === 'daily' ||
+			(happens === 'weekly' && hasWeekdaySelected) ||
+			(happens === 'monthly' &&
+				((monthlyMode === 'monthly-day' && !!monthlyDate) ||
+					(monthlyMode.includes('week') && hasWeekdaySelected)))
+		);
+	});
+
+	protected readonly showAddSlotButton = computed(() => {
+		const happens = this.happens();
+		const monthlyMode = this.monthlyMode();
+		const monthlyDate = this.monthlyDate();
+		return (
+			happens === 'daily' ||
+			(happens === 'weekly' && this.hasWeekdaySelected()) ||
+			(happens === 'monthly' && monthlyMode === 'monthly-day' && !!monthlyDate)
+		);
+	});
 
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
-		private readonly alertCtrl: AlertController,
 		protected readonly modalCtrl: ModalController,
+		private readonly happeningService: HappeningService,
 	) {
 		super('RecurringSlotFormComponent', errorLogger, true);
 		// const now = new Date();
@@ -163,16 +210,31 @@ export class HappeningSlotFormComponent
 	// 		.catch(this.errorLogger.logErrorHandler('failed to dismiss modal'));
 	// }
 
-	protected onRepeatsChanged(value: string | undefined): void {
-		this.repeats.setValue(value as Happens);
-		this.happens.set(
-			!this.repeats.value || this.repeats.value == 'once'
+	protected onRepeatsChanged(value: string): void {
+		const happens =
+			!value || value === 'once'
 				? 'weekly'
-				: this.repeats.value,
-		);
+				: (value as Exclude<Happens, 'once'>);
+		this.happens.set(happens);
+		if (happens === 'daily') {
+			Object.values(this.weekdayById).forEach((c) => c.set(true));
+		}
 	}
 
-	private addWeeklySlot(timing?: ITiming): void {
+	override onWeekdayChanged(wd: WeekdayCode2, checked: boolean): void {
+		super.onWeekdayChanged(wd, checked);
+		if (!checked && this.happens() === 'daily') {
+			this.happens.set('weekly');
+		} else if (
+			checked &&
+			this.happens() === 'weekly' &&
+			this.allWeekdaysSelected()
+		) {
+			this.happens.set('daily');
+		}
+	}
+
+	private addWeeklySlot(timing?: ITiming): IHappeningSlot | undefined {
 		// this.weekdaysForm.markAsTouched({ onlySelf: true });
 		this.slotForm.markAsTouched();
 		console.log(
@@ -182,11 +244,11 @@ export class HappeningSlotFormComponent
 			this.slotForm.controls['locationTitle']?.errors,
 		);
 		if (this.happeningType === 'recurring' && !this.hasWeekdaySelected()) {
-			this.error = 'At least 1 weekday should be selected';
+			this.error.set('At least 1 weekday should be selected');
 		}
 		if (!this.startEndDatetimeForm?.isValid) {
 			console.log('startEndDatetimeForm is not valid');
-			return;
+			return undefined;
 		}
 		// if (!this.weekdaysForm.valid) {
 		// 	this.showWeekday = false;
@@ -240,7 +302,7 @@ export class HappeningSlotFormComponent
 		// 	return;
 		// }
 		if (!this.slotForm.valid) {
-			return;
+			return undefined;
 		}
 		const formValue = this.slotForm.value;
 		if (!this.timing) {
@@ -264,18 +326,20 @@ export class HappeningSlotFormComponent
 			}
 			slot = { ...slot, location: l };
 		}
-		this.addSlotToHappening(slot);
+		return slot;
 	}
 
 	private initiateSlot(): IHappeningSlot {
-		const repeats = this.happens();
-		if (!repeats) {
-			throw new Error('!repeats');
+		let happens = this.happens();
+		if (!happens) {
+			throw new Error('!happens');
+		}
+		if (happens === 'daily') {
+			happens = 'weekly';
 		}
 		return {
 			...this.timing,
-			id: newRandomId({ len: 3 }),
-			repeats,
+			repeats: happens as RepeatPeriod,
 		};
 	}
 
@@ -333,10 +397,9 @@ export class HappeningSlotFormComponent
 		this.monthlyDate.set(day);
 	}
 
-	protected addDaySlot(): void {
+	protected addDaySlot(): IHappeningSlot | undefined {
 		const day = this.monthlyDate();
 		let slot: IHappeningSlot = {
-			id: newRandomId({ len: 3 }),
 			repeats: 'monthly',
 		};
 
@@ -351,18 +414,24 @@ export class HappeningSlotFormComponent
 				slot = { ...slot, day, month: this.yearlyMonth };
 				break;
 		}
-		this.addSlotToHappening(slot);
+		return slot;
 	}
 
-	private addSlotToHappening(slot: IHappeningSlot): void {
+	private addSlotToHappening(timing?: ITiming): void {
 		if (!this.happening?.brief) {
 			throw new Error('!this.happening?.brief');
 		}
+		const slot = this.getSlot(timing);
+		if (!slot) {
+			return;
+		}
+		const slotID = this.generateSlotID();
+
 		this.happening = {
 			...this.happening,
 			brief: {
 				...this.happening.brief,
-				slots: [...(this.happening.brief.slots || []), slot],
+				slots: { ...this.happening.brief.slots, [slotID]: slot },
 			},
 		};
 		console.log('happening:', this.happening);
@@ -370,38 +439,88 @@ export class HappeningSlotFormComponent
 		this.happeningChange.emit(this.happening);
 	}
 
-	private addYearlySlot(): void {
-		const slot: IHappeningSlot = {
-			id: 'y1',
+	private addYearlySlot(): IHappeningSlot {
+		return {
 			repeats: 'yearly',
 			// day: ['may-21'],
 		};
-		this.addSlotToHappening(slot);
 	}
 
-	protected addMonthlySlot(timing?: ITiming): void {
+	private addMonthlySlot(timing?: ITiming): IHappeningSlot | undefined {
 		console.log('addMonthlySlot()', timing);
 		if (this.monthlyMode() === 'monthly-day') {
-			this.addDaySlot();
-			// } else {
-			// this.weekdaysForm.markAsTouched();
+			return this.addDaySlot();
 		}
+		return undefined;
+	}
+
+	protected saveChanges(): void {
+		console.log('saveChanges()');
+		const slot = this.getSlot();
+		const teamID = this.happening?.team?.id;
+		const happeningID = this.happening?.id;
+		if (!teamID || !happeningID || !slot) {
+			return;
+		}
+		let id = this.slot?.id;
+		const isNewSlot = !id;
+		const putSlot: (
+			teamID: string,
+			happeningID: string,
+			slot: IHappeningSlotWithID,
+		) => Observable<void> = isNewSlot
+			? this.happeningService.addSlot
+			: this.happeningService.updateSlot;
+
+		if (!id) {
+			id = this.generateSlotID();
+		}
+		this.isUpdating.set(true);
+		putSlot(teamID, happeningID, { ...slot, id }).subscribe({
+			next: () => {
+				this.modalCtrl
+					.dismiss()
+					.catch(this.errorLogger.logErrorHandler('failed to dismiss modal'));
+			},
+			error: (err) => {
+				this.errorLogger.logError(err, 'failed to update happening slot');
+				this.isUpdating.set(false);
+			},
+		});
 	}
 
 	protected addSlot(timing?: ITiming): void {
 		console.log('addSlot()', timing);
-		switch (this.happens()) {
-			case 'weekly':
-				this.addWeeklySlot(timing);
-				break;
-			case 'monthly':
-				this.addMonthlySlot(timing);
-				break;
-			case 'yearly':
-				this.addYearlySlot();
-				break;
+		if (this.happening?.id) {
+			this.saveChanges();
+		} else {
+			this.addSlotToHappening();
 		}
-		// this.touchAllFormFields(this.slotForm);
+	}
+
+	private generateSlotID(): string {
+		for (let i = 0; i < 10; i++) {
+			const slotID = newRandomId({ len: 4 });
+			if (!this.happening?.brief?.slots?.[slotID]) {
+				return slotID;
+			}
+		}
+		throw new Error('failed to generate unique slot ID');
+	}
+
+	private getSlot(timing?: ITiming): IHappeningSlot | undefined {
+		const happens = this.happens();
+		switch (happens) {
+			case 'daily':
+			case 'weekly':
+				return this.addWeeklySlot(timing);
+			case 'monthly':
+				return this.addMonthlySlot(timing);
+			case 'yearly':
+				return this.addYearlySlot();
+			default:
+				throw new Error(`unknown happens: ${happens}`);
+		}
 	}
 
 	// onTimeStartsChanged(event: Event): void {
@@ -447,7 +566,7 @@ export class HappeningSlotFormComponent
 		this.eventTimesChanged.emit(this.timing);
 	}
 
-	public onTimingChanged(timing: ITiming): void {
+	protected onTimingChanged(timing: ITiming): void {
 		console.log('onTimingChanged()', timing);
 		this.timing = timing;
 	}
@@ -457,6 +576,18 @@ export class HappeningSlotFormComponent
 			const wd = this.wd;
 			if (wd) {
 				this.weekdayById[wd].set(true);
+			}
+		}
+		if (changes['slot']) {
+			const slot = this.slot;
+			if (slot) {
+				if (slot.repeats !== 'once' && slot.repeats !== 'UNKNOWN') {
+					this.happens.set(slot?.repeats);
+				}
+				slot.weekdays?.forEach((wd) => {
+					this.weekdayById[wd].set(true);
+				});
+				this.timing = slot;
 			}
 		}
 	}

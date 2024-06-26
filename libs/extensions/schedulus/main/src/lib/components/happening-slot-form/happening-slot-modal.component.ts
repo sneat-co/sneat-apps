@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
 	AfterViewInit,
 	ChangeDetectionStrategy,
@@ -10,40 +11,54 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { IonicModule, ModalController } from '@ionic/angular';
 import {
 	emptyHappeningSlot,
 	IHappeningAdjustment,
-	IHappeningSlot,
 	ITiming,
 	IHappeningContext,
+	IHappeningSlotWithID,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team-models';
 import { HappeningService } from '@sneat/team-services';
 import { Subject, takeUntil } from 'rxjs';
+import { StartEndDatetimeFormComponent } from '../start-end-datetime-form/start-end-datetime-form.component';
+import {
+	HappeningSlotFormComponent,
+	IHappeningSlotFormComponentInputs,
+} from './happening-slot-form.component';
 
 @Component({
-	selector: 'sneat-single-slot-form',
-	templateUrl: './single-slot-form.component.html',
+	selector: 'sneat-slot-modal',
+	templateUrl: './happening-slot-modal.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	standalone: true,
+	imports: [
+		CommonModule,
+		IonicModule,
+		StartEndDatetimeFormComponent,
+		HappeningSlotFormComponent,
+	],
 })
-export class SingleSlotFormComponent
-	implements AfterViewInit, OnChanges, OnDestroy
+export class HappeningSlotModalComponent
+	implements
+		AfterViewInit,
+		OnChanges,
+		OnDestroy,
+		IHappeningSlotFormComponentInputs
 {
 	private readonly destroyed = new Subject<void>();
 
 	@Input({ required: true }) team?: ITeamContext;
-	@Input() happening?: IHappeningContext;
-	@Input() happeningSlot: IHappeningSlot = emptyHappeningSlot;
+	@Input({ required: true }) happening?: IHappeningContext;
+	@Input() slot: IHappeningSlotWithID = emptyHappeningSlot;
 	@Input() adjustment?: IHappeningAdjustment;
 
 	@Input() dateID?: string; // For re-scheduling recurring event for a specific day
 
-	@Input() isModal = false;
-
-	@Output() readonly validChanged = new EventEmitter<boolean>();
-	@Output() readonly happeningSlotChange = new EventEmitter<IHappeningSlot>();
+	@Output() readonly happeningSlotChange =
+		new EventEmitter<IHappeningSlotWithID>();
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -66,12 +81,18 @@ export class SingleSlotFormComponent
 		// 	this.errorLogger.logError('timing has no durationMinutes');
 		// 	return;
 		// }
-		this.happeningSlot = { ...this.happeningSlot, ...timing };
+		this.slot = { ...this.slot, ...timing };
+		this.emitHappeningSlotChange();
+	}
+
+	protected onHappeningChanged(happening: IHappeningContext): void {
+		console.log('onHappeningChanged', happening);
+		this.happening = happening;
 		this.emitHappeningSlotChange();
 	}
 
 	private emitHappeningSlotChange(): void {
-		this.happeningSlotChange.emit(this.happeningSlot);
+		this.happeningSlotChange.emit(this.slot);
 	}
 
 	async close(event: Event): Promise<void> {
@@ -95,7 +116,7 @@ export class SingleSlotFormComponent
 		}
 		if (this.happening?.brief?.type === 'single' || !this.dateID) {
 			this.happeningService
-				.updateSlot(this.team.id, this.happening.id, this.happeningSlot)
+				.updateSlot(this.team.id, this.happening.id, this.slot)
 				.pipe(takeUntil(this.destroyed))
 				.subscribe({
 					next: () =>
@@ -108,12 +129,7 @@ export class SingleSlotFormComponent
 				});
 		} else if (this.happening?.brief?.type === 'recurring' && this.dateID) {
 			this.happeningService
-				.adjustSlot(
-					this.team.id,
-					this.happening.id,
-					this.happeningSlot,
-					this.dateID,
-				)
+				.adjustSlot(this.team.id, this.happening.id, this.slot, this.dateID)
 				.pipe(takeUntil(this.destroyed))
 				.subscribe({
 					next: () =>
@@ -128,7 +144,7 @@ export class SingleSlotFormComponent
 	}
 
 	ngAfterViewInit(): void {
-		console.log('ngAfterViewInit', this.happeningSlot);
+		console.log('ngAfterViewInit', this.slot);
 		this.processHappening();
 	}
 

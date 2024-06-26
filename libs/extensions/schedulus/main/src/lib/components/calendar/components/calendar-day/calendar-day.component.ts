@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { dateToIso } from '@sneat/core';
 import {
-	IHappeningSlotUiItem,
+	ISlotUIContext,
 	jsDayToWeekday,
 	NewHappeningParams,
 	ScheduleNavService,
@@ -38,15 +38,18 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 	private filter = emptyScheduleFilter;
 	// @Input() filter?: ICalendarFilter;
 	// @Input() showRegulars = true;
-	@Input() team: ITeamContext = { id: '' };
 	// @Input() showEvents = true;
-	@Input() weekday?: Weekday;
+
+	@Input({ required: true }) team: ITeamContext = { id: '' };
+	@Input({ required: true }) weekday?: Weekday;
+
 	@Output() readonly slotClicked = new EventEmitter<{
-		slot: IHappeningSlotUiItem;
+		slot: ISlotUIContext;
 		event: Event;
 	}>();
-	public allSlots?: IHappeningSlotUiItem[];
-	public slots?: IHappeningSlotUiItem[];
+
+	public allSlots?: ISlotUIContext[];
+	public slots?: ISlotUIContext[];
 	public slotsHiddenByFilter?: number;
 
 	constructor(
@@ -62,9 +65,7 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 		});
 	}
 
-	protected readonly slotID = (_: number, o: IHappeningSlotUiItem) => o.slotID;
-
-	resetFilter(event: Event): void {
+	protected resetFilter(event: Event): void {
 		event.stopPropagation();
 		this.filterService.resetScheduleFilter();
 	}
@@ -75,13 +76,17 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		console.log(this.logPrefix() + '.ngOnChanges()', changes);
-		if (changes['weekday']) {
+		const weekdayChange = changes['weekday'];
+		const weekdayCurrent = weekdayChange?.currentValue as Weekday;
+		if (weekdayChange?.firstChange && !weekdayCurrent) {
+			return;
+		}
+		// const dateID = weekdayCurrent?.day?.dateID;
+		// console.log(this.logPrefix(dateID) + '.ngOnChanges()', changes);
+		if (weekdayChange) {
 			this.subscribeForSlots();
 		}
 	}
-
-	readonly index = (i: number): number => i;
 
 	private applyFilter(): void {
 		if (this.allSlots?.length) {
@@ -125,16 +130,16 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 		}
 	}
 
-	private readonly processSlots = (slots?: IHappeningSlotUiItem[]) => {
+	private readonly processSlots = (slots?: ISlotUIContext[]) => {
 		console.log(this.logPrefix() + `.processSlots(), slots:`, slots);
 		this.allSlots = slots;
 		this.applyFilter();
 	};
 
-	private readonly logPrefix = () =>
-		`ScheduleDayComponent[wd=${this.weekday?.id}, dateID=${this.weekday?.day?.dateID}]`;
+	private readonly logPrefix = (dateID?: string) =>
+		`ScheduleDayComponent[dateID=${this.weekday?.day?.dateID || dateID}]`;
 
-	goNewHappening(params: NewHappeningParams): void {
+	protected goNewHappening(params: NewHappeningParams): void {
 		if (!this.team) {
 			return;
 		}

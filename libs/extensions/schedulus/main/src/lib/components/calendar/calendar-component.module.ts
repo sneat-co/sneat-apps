@@ -15,10 +15,14 @@ import {
 	HappeningServiceModule,
 	CalendarDayServiceModule,
 } from '@sneat/team-services';
-import { ScheduleModalsServiceModule } from '../../services';
 import { ContactsFilterComponent } from '../contacts-filter/contacts-filter.component';
+import {
+	HappeningSlotModalService,
+	HappeningSlotModalServiceModule,
+} from '../happening-slot-form/happening-slot-modal.service';
 import { HappeningSlotParticipantsComponent } from '../happening-slot-participants/happening-slot-participants.component';
 import { HappeningSlotComponent } from '../happening-slot/happening-slot.component';
+import { HappeningSlotsComponent } from '../happening-slots/happening-slots.component';
 import { DaySlotItemComponent } from './components/day-slot-item/day-slot-item.component';
 import { SingleHappeningsListComponent } from './components/singles-tab/single-happenings-list.component';
 import { RecurringCardComponent } from './components/recurrings-tab/recurring-card.component';
@@ -57,10 +61,11 @@ import { TimingBadgeComponent } from './components/timing-badge/timing-badge.com
 		MembersAsBadgesComponent,
 		ScheduleNavServiceModule,
 		MembersSelectorModule,
-		ScheduleModalsServiceModule,
+		HappeningSlotModalServiceModule,
 		HappeningSlotComponent,
 		ContactsFilterComponent,
 		HappeningSlotParticipantsComponent,
+		HappeningSlotsComponent,
 	],
 	exports: [CalendarComponent],
 	declarations: [

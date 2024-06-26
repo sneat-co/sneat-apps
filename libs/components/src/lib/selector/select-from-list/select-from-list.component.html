@@ -80,7 +80,7 @@
 		[(ngModel)]="value"
 		(ionChange)="onRadioChanged($event)"
 	>
-		<ion-list>
+		<ion-list class="ion-no-padding" lines="full">
 			<ion-item *ngIf="listLabel === 'divider'" [color]="listLabelColor">
 				<ion-label>{{ label }}</ion-label>
 			</ion-item>

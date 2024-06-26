@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { HappeningType } from '@sneat/mod-schedulus-core';
 import {
-	IHappeningSlotUiItem,
+	ISlotUIContext,
 	NewHappeningParams,
 	ScheduleNavService,
 	TeamDay,
@@ -32,7 +32,7 @@ export class CalendarWeekdayComponent implements OnDestroy {
 	@Input() weekday?: Weekday;
 	@Output() dateSelected = new EventEmitter<Date>();
 	@Output() slotClicked = new EventEmitter<{
-		slot: IHappeningSlotUiItem;
+		slot: ISlotUIContext;
 		event: Event;
 	}>();
 
@@ -58,12 +58,12 @@ export class CalendarWeekdayComponent implements OnDestroy {
 
 	// protected readonly id = (_: number, o: { id: string }) => o.id;
 
-	onSlotClicked(args: { slot: IHappeningSlotUiItem; event: Event }): void {
+	onSlotClicked(args: { slot: ISlotUIContext; event: Event }): void {
 		console.log('ScheduleWeekdayComponent.onSlotClicked', args);
 		this.slotClicked.emit(args);
 	}
 
-	showSlot(slot: IHappeningSlotUiItem): boolean {
+	showSlot(slot: ISlotUIContext): boolean {
 		return isSlotVisible(
 			this.team?.id,
 			slot,

@@ -29,23 +29,23 @@
 
 <ng-container *ngIf="happeningType === 'recurring'">
 	<sneat-select-from-list
-		*ngIf="!repeats.value"
+		*ngIf="!happens()"
 		label="Repeats"
 		listLabelColor="light"
-		[value]="repeats.value || ''"
+		[value]="happens()"
 		[items]="repeatsOptions"
 		(valueChange)="onRepeatsChanged($event)"
 		labelPlacement="end"
 		listLabel="divider"
 		justify="start"
 	/>
-	<ion-grid *ngIf="repeats.value" class="ion-grid-layout">
+	<ion-grid *ngIf="happens()" class="ion-grid-layout">
 		<ion-row>
 			<ion-col>
 				<ion-item color="light" lines="full">
 					<ion-select
 						label="Repeats"
-						[formControl]="repeats"
+						[value]="happens()"
 						interface="popover"
 						(ionChange)="onRepeatsChanged($event.detail.value)"
 					>
@@ -82,7 +82,7 @@
 		</ion-row>
 	</ion-grid>
 
-	@if (repeats.value === "monthly") {
+	@if (happens() === "monthly") {
 		<!--		<ion-item-divider>-->
 		<!--			<ion-label>On</ion-label>-->
 		<!--		</ion-item-divider>-->
@@ -98,11 +98,13 @@
 	}
 
 	@if (showWeekdays()) {
-		<ion-item-divider>Choose day of the week</ion-item-divider>
+		<ion-item-divider *ngIf="!hasWeekdaySelected()"
+			>Choose day of the week
+		</ion-item-divider>
 		<form>
-			<ion-grid class="grid-layout">
+			<ion-grid class="ion-grid-layout">
 				<ion-row>
-					<ion-col size="6">
+					<ion-col size="4">
 						<ion-item lines="none">
 							<ion-checkbox
 								slot="start"
@@ -133,6 +135,8 @@
 								>Wednesday
 							</ion-checkbox>
 						</ion-item>
+					</ion-col>
+					<ion-col size="4">
 						<ion-item lines="none">
 							<ion-checkbox
 								slot="start"
@@ -143,8 +147,6 @@
 								>Thursday
 							</ion-checkbox>
 						</ion-item>
-					</ion-col>
-					<ion-col size="6">
 						<ion-item lines="none">
 							<ion-checkbox
 								slot="start"
@@ -155,6 +157,8 @@
 								>Friday
 							</ion-checkbox>
 						</ion-item>
+					</ion-col>
+					<ion-col size="4">
 						<ion-item lines="none">
 							<ion-checkbox
 								slot="start"
@@ -239,25 +243,20 @@
 	}
 </ng-container>
 
-@if (
-	(happens() === "weekly" && hasWeekdaySelected()) ||
-	(happens() && happens() !== "weekly")
-) {
-	<ion-item-divider color="light" *ngIf="mode !== 'modal'"
-		>When</ion-item-divider
-	>
-	<form [formGroup]="timeForm">
-		<!--		<ion-item-divider color="light">When</ion-item-divider>-->
-		<sneat-start-end-datetime-form
-			#startEndDatetimeForm
-			[date]="date"
-			[mode]="happeningType"
-			[timing]="timing"
-			addSlotLabel="Add slot"
-			(timingChange)="onTimingChanged($event)"
-			(addClick)="addSlot($event)"
-		/>
-	</form>
+@if (showTimeForm()) {
+	<!--	<ion-item-divider color="light">-->
+	<!--		<ion-label>When</ion-label>-->
+	<!--	</ion-item-divider>-->
+	<!--		<ion-item-divider color="light">When</ion-item-divider>-->
+	<sneat-start-end-datetime-form
+		#startEndDatetimeForm
+		[date]="date"
+		[mode]="happeningType"
+		[timing]="timing"
+		addSlotLabel="Add slot"
+		(timingChange)="onTimingChanged($event)"
+		(addClick)="addSlot($event)"
+	/>
 }
 
 <!--			<ion-item-divider color="light">Where</ion-item-divider>-->
@@ -279,15 +278,34 @@
 
 <!--happeningType: {{happeningType}}, happens: {{happens}};-->
 
-<ion-list lines="none">
-	<ion-item *ngIf="error">
-		<ion-label color="danger">{{ error }}</ion-label>
+<ion-list lines="none" *ngIf="error() || showAddSlotButton()">
+	<ion-item *ngIf="error()">
+		<ion-label color="danger">{{ error() }}</ion-label>
 	</ion-item>
 
 	<ion-item *ngIf="showAddSlotButton()">
-		<ion-button slot="end" color="primary" (click)="addSlot()" size="medium">
-			<ion-icon name="add" slot="start"></ion-icon>
-			<ion-label>Add slot</ion-label>
-		</ion-button>
+		@if (slot) {
+			<ion-button
+				slot="end"
+				color="primary"
+				[disabled]="isUpdating()"
+				(click)="saveChanges()"
+				size="medium"
+			>
+				<ion-icon name="save-outline" slot="start" />
+				<ion-label>Update slot</ion-label>
+			</ion-button>
+		} @else {
+			<ion-button
+				slot="end"
+				color="primary"
+				[disabled]="isUpdating()"
+				(click)="addSlot()"
+				size="medium"
+			>
+				<ion-icon name="add-outline" slot="start" />
+				<ion-label>Add slot</ion-label>
+			</ion-button>
+		}
 	</ion-item>
 </ion-list>

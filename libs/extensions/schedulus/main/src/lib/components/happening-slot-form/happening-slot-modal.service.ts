@@ -1,41 +1,39 @@
 import { Injectable, NgModule } from '@angular/core';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import {
-	emptyHappeningSlot,
-	IHappeningAdjustment,
-	IHappeningSlot,
 	IHappeningContext,
+	ISlotAdjustment,
+	IHappeningSlotWithID,
 } from '@sneat/mod-schedulus-core';
-import { SingleSlotFormComponent } from '../components/single-slot-form/single-slot-form.component';
+import { HappeningSlotModalComponent } from './happening-slot-modal.component';
 
 @Injectable()
-export class CalendarModalsService {
+export class HappeningSlotModalService {
 	constructor(private readonly modalController: ModalController) {}
 
 	async editSingleHappeningSlot(
 		event: Event,
 		happening: IHappeningContext,
 		recurring?: {
-			happeningSlot?: IHappeningSlot;
 			dateID: string;
-			adjustment?: IHappeningAdjustment;
+			editMode: 'series' | 'single';
+			adjustment?: ISlotAdjustment;
 		},
+		slot?: IHappeningSlotWithID,
 	): Promise<void> {
+		console.log('editSingleHappeningSlot()', happening, recurring, slot);
 		event.stopPropagation();
 		event.preventDefault();
 		const team = happening.team;
 		if (!team) {
 			return Promise.reject('no team context');
 		}
-		const slots = happening?.brief?.slots;
-		const happeningSlot =
-			recurring?.happeningSlot || (slots && slots[0]) || emptyHappeningSlot;
 		const modal = await this.modalController.create({
-			component: SingleSlotFormComponent,
+			component: HappeningSlotModalComponent,
 			componentProps: {
 				team,
 				happening,
-				happeningSlot,
+				slot,
 				adjustment: recurring?.adjustment,
 				dateID: recurring?.dateID,
 				isModal: true,
@@ -46,7 +44,6 @@ export class CalendarModalsService {
 }
 
 @NgModule({
-	imports: [IonicModule],
-	providers: [CalendarModalsService],
+	providers: [HappeningSlotModalService],
 })
-export class ScheduleModalsServiceModule {}
+export class HappeningSlotModalServiceModule {}

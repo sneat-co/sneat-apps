@@ -14,7 +14,7 @@ import { IContactBrief } from '@sneat/contactus-core';
 import { ContactusTeamService } from '@sneat/contactus-services';
 import { IIdAndBrief, IIdAndOptionalBrief } from '@sneat/core';
 import { getRelatedItems, IRelatedItem } from '@sneat/dto';
-import { IHappeningSlotUiItem } from '@sneat/extensions/schedulus/shared';
+import { ISlotUIContext } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SneatBaseComponent } from '@sneat/ui';
 import { distinctUntilChanged, Subject, takeUntil } from 'rxjs';
@@ -31,7 +31,7 @@ export class HappeningSlotParticipantsComponent
 	implements OnChanges
 {
 	// @Input({ required: true }) public contactus?: IIdAndOptionalDto;
-	@Input({ required: true }) public happeningSlot?: IHappeningSlotUiItem;
+	@Input({ required: true }) public happeningSlot?: ISlotUIContext;
 
 	protected relatedItems?: readonly IRelatedItem[];
 	protected contacts?: readonly IIdAndBrief<IContactBrief>[];
@@ -52,6 +52,16 @@ export class HappeningSlotParticipantsComponent
 			});
 	}
 
+	protected isUniqueFirstName(contact: IIdAndBrief<IContactBrief>): boolean {
+		const firstName = contact.brief?.names?.firstName;
+		if (!firstName) {
+			return false;
+		}
+		return !!this.contacts?.some(
+			(c) => c.brief?.names?.firstName === firstName,
+		);
+	}
+
 	public ngOnChanges(changes: SimpleChanges): void {
 		// console.log(
 		// 	'HappeningSlotParticipantsComponent.ngOnChanges()',
@@ -60,8 +70,8 @@ export class HappeningSlotParticipantsComponent
 		// );
 		const { happeningSlot } = changes;
 		if (happeningSlot) {
-			const previous = happeningSlot.previousValue as IHappeningSlotUiItem;
-			const current = happeningSlot.currentValue as IHappeningSlotUiItem;
+			const previous = happeningSlot.previousValue as ISlotUIContext;
+			const current = happeningSlot.currentValue as ISlotUIContext;
 			if (current?.happening?.team?.id !== previous?.happening?.team?.id) {
 				this.teamID$.next(current?.happening?.team?.id);
 			}

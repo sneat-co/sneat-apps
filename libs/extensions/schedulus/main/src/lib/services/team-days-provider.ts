@@ -12,7 +12,7 @@ import {
 	ISchedulusTeamContext,
 } from '@sneat/mod-schedulus-core';
 import {
-	IHappeningSlotUiItem,
+	ISlotUIContext,
 	RecurringSlots,
 	TeamDay,
 	wd2,
@@ -42,7 +42,7 @@ import {
 import { tap } from 'rxjs/operators';
 
 type RecurringsByWeekday = {
-	[wd in WeekdayCode2]: IHappeningSlotUiItem[];
+	[wd in WeekdayCode2]: ISlotUIContext[];
 };
 
 const emptyRecurringsByWeekday = () =>
@@ -94,13 +94,14 @@ const emptyRecurringsByWeekday = () =>
 // 	// public abstract loadTodayAndFutureEvents(): Observable<DtoSingleActivity[]>;
 // }
 
-const slotItemsFromRecurringSlot = (
+const slotUIContextsFromRecurringSlot = (
 	r: IHappeningContext,
+	slotID: string,
 	rs: IHappeningSlot,
-): IHappeningSlotUiItem[] => {
+): ISlotUIContext[] => {
 	const si = {
 		// date: rs.start.date,
-		slotID: rs.id,
+		slot: { ...rs, id: slotID },
 		happening: r,
 		title: r.brief?.title || r.id,
 		levels: r.brief?.levels,
@@ -125,16 +126,13 @@ const groupRecurringSlotsByWeekday = (
 		return slots;
 	}
 	zipMapBriefsWithIDs(schedulusTeam.dbo.recurringHappenings).forEach((rh) => {
-		rh.brief.slots?.forEach((rs) => {
+		Object.entries(rh.brief.slots || {})?.forEach(([slotID, rs]) => {
 			const happening: IHappeningContext = {
 				id: rh.id,
 				brief: rh.brief,
 				team: schedulusTeam.team,
 			};
-			const slotItems: IHappeningSlotUiItem[] = slotItemsFromRecurringSlot(
-				happening,
-				rs,
-			);
+			const slotItems = slotUIContextsFromRecurringSlot(happening, slotID, rs);
 			slotItems.forEach((si) => {
 				if (si.wd) {
 					let weekday = slots.byWeekday[si.wd];
@@ -164,7 +162,7 @@ export class TeamDaysProvider {
 		IHappeningBrief,
 		IHappeningDto
 	>;
-	private readonly singlesByDate: Record<string, IHappeningSlotUiItem[]> = {};
+	private readonly singlesByDate: Record<string, ISlotUIContext[]> = {};
 	private readonly recurringByWd: RecurringsByWeekday =
 		emptyRecurringsByWeekday();
 
@@ -413,13 +411,13 @@ export class TeamDaysProvider {
 			throw new Error(`!brief.title`);
 		}
 		if (brief.slots) {
-			brief.slots.forEach((slot) => {
+			Object.entries(brief.slots).forEach(([slotID, slot]) => {
 				slot.weekdays?.forEach((wd) => {
 					if (slot.repeats === 'weekly' && !wd) {
 						throw new Error(`slot.repeats === 'weekly' && !wd=${wd}`);
 					}
-					const slotItem: IHappeningSlotUiItem = {
-						slotID: slot.id,
+					const slotItem: ISlotUIContext = {
+						slot: { ...slot, id: slotID },
 						wd: wd,
 						happening: recurring,
 						title: brief.title,
@@ -495,7 +493,7 @@ export class TeamDaysProvider {
 
 	private loadEvents(
 		...dates: Date[]
-	): Observable<{ dateKey: string; events: IHappeningSlotUiItem[] }> {
+	): Observable<{ dateKey: string; events: ISlotUIContext[] }> {
 		console.log('loadEvents()', dates);
 		return EMPTY;
 		// const dateISOs = dates.map(localDateToIso);

@@ -8,6 +8,8 @@ import {
 	SlotLocation,
 	WeekdayCode2,
 	IHappeningContext,
+	ISlotAdjustment,
+	IHappeningSlotWithID,
 } from '@sneat/mod-schedulus-core';
 
 export interface ISchedulePageParams {
@@ -21,18 +23,16 @@ export interface NewHappeningParams {
 	readonly date?: string;
 }
 
-export const sortSlotItems = (
-	a: IHappeningSlotUiItem,
-	b: IHappeningSlotUiItem,
-): number =>
+export const sortSlotItems = (a: ISlotUIContext, b: ISlotUIContext): number =>
 	a.timing.start?.time === b.timing.start?.time
 		? a.title.localeCompare(b.title)
 		: a.timing.start?.time?.localeCompare(b.timing.start?.time || '') || 0;
 
-export interface IHappeningSlotUiItem {
+export interface ISlotUIContext {
 	// readonly id: string; Not sure how to make an ID yet
-	readonly slotID: string;
-	readonly adjustment?: IHappeningAdjustment;
+	// readonly slotID: string;
+	readonly slot: IHappeningSlotWithID;
+	readonly adjustment?: ISlotAdjustment;
 	readonly wd?: WeekdayCode2;
 	// readonly date: string;
 	readonly error?: unknown;
@@ -45,7 +45,7 @@ export interface IHappeningSlotUiItem {
 	readonly levels?: Level[];
 }
 
-export type SlotsByWeekday = Record<string, IHappeningSlotUiItem[]>;
+export type SlotsByWeekday = Record<string, ISlotUIContext[]>;
 
 export interface RecurringSlots {
 	readonly byWeekday: SlotsByWeekday;

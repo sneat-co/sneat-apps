@@ -1,5 +1,6 @@
 import { IWithRelatedOnly, IWithTeamIDs } from '@sneat/dto';
 import { ActivityType, RepeatPeriod, WeekdayCode2 } from './happening-types';
+import { IWithStringID } from './todo_move_funcs';
 
 export interface ISlotParticipant {
 	readonly roles?: string[];
@@ -51,7 +52,7 @@ export interface IHappeningBase extends IWithRelatedOnly {
 	readonly title: string;
 	readonly levels?: Level[];
 	// readonly contactIDs?: readonly string[]; // obsolete
-	readonly slots?: readonly IHappeningSlot[];
+	readonly slots?: Readonly<Record<string, IHappeningSlot>>;
 	readonly prices?: readonly IHappeningPrice[];
 	// readonly participants?: Record<string, Readonly<IHappeningParticipant>>;
 }
@@ -91,49 +92,53 @@ export function validateHappeningDto(dto: IHappeningDto): void {
 	if (!dto.type) {
 		throw new Error('happening has no type');
 	}
-	if (!dto.slots?.length) {
+	if (!Object.keys(dto.slots || {})?.length) {
 		throw new Error('!dto.slots?.length');
 	}
 	switch (dto.type) {
 		case 'single':
-			dto.slots?.forEach(validateSingleHappeningSlot);
+			Object.entries(dto.slots || {}).forEach(([slotID, slot]) =>
+				validateSingleHappeningSlot(slotID, slot),
+			);
 			break;
 		case 'recurring':
-			dto.slots?.forEach(validateRecurringHappeningSlot);
+			Object.entries(dto.slots || {}).forEach(([slotID, slot]) =>
+				validateRecurringHappeningSlot(slotID, slot),
+			);
 			break;
 	}
 }
 
 export function validateRecurringHappeningSlot(
+	slotID: string,
 	slot: IHappeningSlot,
-	index: number,
 ): void {
 	if (slot.repeats === 'once' || slot.repeats === 'UNKNOWN') {
 		throw new Error(
-			`slots[${index}]: slot.repeats is not valid for recurring happening: ${slot.repeats}`,
+			`slots[${slotID}]: slot.repeats is not valid for recurring happening: ${slot.repeats}`,
 		);
 	}
-	validateHappeningSlot(slot, index);
+	validateHappeningSlot(slotID, slot);
 }
 
 export function validateSingleHappeningSlot(
+	slotID: string,
 	slot: IHappeningSlot,
-	index: number,
 ): void {
 	if (slot.repeats != 'once') {
 		throw new Error(
-			`slots[${index}]: slot repeats is not 'once': ${slot.repeats}`,
+			`slots[${slotID}]: slot repeats is not 'once': ${slot.repeats}`,
 		);
 	}
-	validateHappeningSlot(slot, index);
+	validateHappeningSlot(slotID, slot);
 }
 
-function validateHappeningSlot(slot: IHappeningSlot, index: number): void {
+function validateHappeningSlot(slotID: string, slot: IHappeningSlot): void {
 	if (
 		!slot.start?.time &&
 		!(slot.repeats.startsWith('monthly') || slot.repeats.startsWith('yearly'))
 	) {
-		throw new Error(`slots[${index}]: slot has no start time: ${slot}`);
+		throw new Error(`slots[${slotID}]: slot has no start time: ${slot}`);
 	}
 }
 
@@ -196,14 +201,14 @@ export type Month =
 
 export interface IHappeningSlotTiming extends ITiming {
 	readonly repeats: RepeatPeriod;
-	readonly weekdays?: WeekdayCode2[];
+	readonly weekdays?: readonly WeekdayCode2[];
 	readonly day?: number;
 	readonly month?: Month;
-	readonly weeks?: number[];
-	readonly fortnightly?: {
-		odd: IFortnightly;
-		even: IFortnightly;
-	};
+	readonly weeks?: readonly number[];
+	readonly fortnightly?: Readonly<{
+		readonly odd: IFortnightly;
+		readonly even: IFortnightly;
+	}>;
 }
 
 export type Level = 'beginners' | 'intermediate' | 'advanced';
@@ -216,16 +221,17 @@ export interface IHappeningTask {
 }
 
 export interface IHappeningSlot extends IHappeningSlotTiming {
-	readonly id: string;
 	readonly location?: SlotLocation;
 	readonly groupIds?: string[]; // TODO: What is this?
 }
+
+export type IHappeningSlotWithID = IWithStringID<IHappeningSlot>;
 
 export const emptyTiming: ITiming = {
 	// durationMinutes: 0,
 };
 
-export const emptyHappeningSlot: IHappeningSlot = {
+export const emptyHappeningSlot: IHappeningSlotWithID = {
 	id: '',
 	repeats: 'UNKNOWN',
 	...emptyTiming,

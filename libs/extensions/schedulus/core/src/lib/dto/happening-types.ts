@@ -1,4 +1,5 @@
 export type WeekdayCode2 = 'mo' | 'tu' | 'we' | 'th' | 'fr' | 'sa' | 'su';
+
 export type MonthlyMode =
 	| 'monthly-day'
 	| 'monthly-week-1'
@@ -6,12 +7,12 @@ export type MonthlyMode =
 	| 'monthly-week-3'
 	| 'monthly-week-4'
 	| 'monthly-week-last';
+
 export type RepeatPeriod =
 	| 'UNKNOWN'
 	| 'once'
-	| 'daily'
+	// | 'daily'
 	| 'weekly'
-	| MonthlyMode
 	| 'fortnightly'
 	| 'monthly'
 	| 'yearly';

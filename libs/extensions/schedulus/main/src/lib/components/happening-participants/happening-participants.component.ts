@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+	ChangeDetectionStrategy,
 	Component,
 	EventEmitter,
 	Input,
@@ -37,11 +38,18 @@ import {
 		ContactsChecklistComponent,
 		FormsModule,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HappeningParticipantsComponent implements OnChanges {
 	@Input({ required: true }) team?: ITeamContext; // TODO: Can we get rid of this?
 	@Input({ required: true }) contactusTeam?: IContactusTeamDtoAndID;
 	@Input({ required: true }) happening?: IHappeningContext;
+
+	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
+
+	public checkedContactIDs: readonly string[] = [];
+	public contacts: number[] = [];
+	public tab: 'members' | 'others' = 'members';
 
 	constructor(private readonly happeningService: HappeningService) {}
 
@@ -68,31 +76,25 @@ export class HappeningParticipantsComponent implements OnChanges {
 			: 'Team members';
 	}
 
-	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
-
-	public isToDo = false;
-	public checkedContactIDs: readonly string[] = [];
-	public contacts: number[] = [];
-	public tab: 'members' | 'others' = 'members';
-
-	public get members(): readonly IContactContext[] | undefined {
-		const contactusTeam = this.contactusTeam,
-			team = this.team;
-
-		if (!team || !contactusTeam) {
-			return;
-		}
-		return zipMapBriefsWithIDs(contactusTeam?.dbo?.contacts).map((m) =>
-			contactContextFromBrief(m, team),
-		);
-	}
+	// protected get members(): readonly IContactContext[] | undefined {
+	// 	const contactusTeam = this.contactusTeam,
+	// 		team = this.team;
+	//
+	// 	if (!team || !contactusTeam) {
+	// 		return;
+	// 	}
+	// 	return zipMapBriefsWithIDs(contactusTeam?.dbo?.contacts).map((m) =>
+	// 		contactContextFromBrief(m, team),
+	// 	);
+	// }
 
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 
-	public isMemberCheckChanged(args: ICheckChangedArgs): void {
+	protected isMemberCheckChanged(args: ICheckChangedArgs): void {
 		console.log('isMemberCheckChanged()', args);
-		this.populateParticipants();
+		// this.populateParticipants();
 		if (!this.happening?.id || !this.team?.id) {
+			args.resolve();
 			return;
 		}
 		const request: IHappeningContactRequest = {
@@ -103,8 +105,17 @@ export class HappeningParticipantsComponent implements OnChanges {
 		const apiCall = args.checked
 			? this.happeningService.addParticipant
 			: this.happeningService.removeParticipant;
-		apiCall.bind(this.happeningService)(request).subscribe({
-			next: args.resolve,
+		apiCall(request).subscribe({
+			next: () => {
+				if (args.checked && !this.checkedContactIDs.includes(args.id)) {
+					this.checkedContactIDs = [...this.checkedContactIDs, args.id];
+				} else if (!args.checked && this.checkedContactIDs.includes(args.id)) {
+					this.checkedContactIDs = this.checkedContactIDs.filter(
+						(id) => id !== args.id,
+					);
+				}
+				args.resolve();
+			},
 			error: args.reject,
 		});
 	}

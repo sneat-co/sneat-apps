@@ -20,7 +20,7 @@ import {
 	IHappeningWithUiState,
 	ICalendariumTeamDto,
 } from '@sneat/mod-schedulus-core';
-import { IHappeningSlotUiItem } from '@sneat/extensions/schedulus/shared';
+import { ISlotUIContext } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team-components';
 import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
@@ -114,8 +114,8 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 		if (changes['team']) {
 			this.onTeamContextChanged();
 			const teamChange = changes['team'];
-			const currentTeam = teamChange.currentValue as ITeamContext;
 			const prevTeam = teamChange.previousValue as ITeamContext;
+			const currentTeam = teamChange.currentValue as ITeamContext;
 			if (currentTeam?.id !== prevTeam?.id) {
 				this.onTeamIdChanged();
 			}
@@ -213,8 +213,8 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 	// 		.catch(this.errorLogger.logErrorHandler('failed to navigate to new happening page'));
 	// };
 
-	readonly onSlotClicked = (args: {
-		slot: IHappeningSlotUiItem;
+	protected readonly onSlotClicked = (args: {
+		slot: ISlotUIContext;
 		event: Event;
 	}): void => {
 		console.log('ScheduleComponent.onSlotClicked()', args);
@@ -235,17 +235,10 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 			);
 	};
 
-	public readonly onDateSelected = (date: Date): void => {
+	protected readonly onDateSelected = (date: Date): void => {
 		this.tab = 'day';
 		this.setDay('onDateSelected', date);
 	};
-
-	protected readonly id = (
-		_: number,
-		o: {
-			id: string;
-		},
-	) => o.id;
 
 	readonly index = (i: number): number => i;
 
@@ -263,6 +256,8 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 		console.log('ScheduleComponent.onTeamIdChanged()', this.team?.id);
 		this.schedulusTeamSubscription?.unsubscribe();
 		if (this.team?.id) {
+			this.populateRecurrings();
+			this.setDay('onTeamDtoChanged', this.date);
 			this.schedulusTeamSubscription = this.calendariumTeamService
 				.watchTeamModuleRecord(this.team.id)
 				.subscribe({
@@ -296,9 +291,7 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 	private onTeamContextChanged(): void {
 		if (this.team) {
 			this.teamDaysProvider.setTeam(this.team);
-			this.populateRecurrings();
 		}
-		this.setDay('onTeamDtoChanged', this.date);
 	}
 
 	// noinspection JSMethodCanBqw2se3333eStatic
@@ -358,7 +351,7 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 			return !hide;
 		});
 		console.log(
-			`ScheduleComponent.filterRecurrings(')`,
+			`ScheduleComponent.filterRecurrings()`,
 			filter,
 			this.allRecurrings,
 			' => ',
@@ -372,27 +365,32 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 	protected hasRepeats(
 		repeats: readonly string[],
-		slots?: readonly IHappeningSlot[],
+		slots?: Readonly<Record<string, IHappeningSlot>>,
 	): boolean {
 		return (
-			!repeats.length || !!slots?.some((slot) => repeats.includes(slot.repeats))
+			!repeats.length ||
+			(!!slots &&
+				Object.values(slots).some((slot) => repeats.includes(slot.repeats)))
 		);
 	}
 
 	private hasWeekday(
-		slots: readonly IHappeningSlot[] | undefined,
+		slots: Readonly<Record<string, IHappeningSlot>> | undefined,
 		weekdays: readonly WeekdayCode2[],
 	): boolean {
 		return (
 			!weekdays.length ||
-			!!slots?.some((slot) =>
-				slot.weekdays?.some((wd) => weekdays.includes(wd)),
-			)
+			(!!slots &&
+				Object.values(slots).some((slot) =>
+					slot.weekdays?.some((wd) => weekdays.includes(wd)),
+				))
 		);
 	}
 
 	private setDay(source: string, d: Date): void {
-		console.log(`ScheduleComponent.setDay(source=${source}), d=`, d);
+		console.log(
+			`ScheduleComponent.setDay(source=${source}), date=${dateToIso(d)}`,
+		);
 		if (!d) {
 			return;
 		}

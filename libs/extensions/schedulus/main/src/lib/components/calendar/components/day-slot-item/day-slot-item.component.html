@@ -14,19 +14,24 @@
 	<ion-icon
 		class="sneat-tiny-end-margin"
 		[name]="
-			slot?.happening?.brief?.type === 'recurring'
+			slotContext?.happening?.brief?.type === 'recurring'
 				? 'calendar-outline'
 				: 'today-outline'
 		"
 		slot="start"
 	/>
-	<sneat-timing-badge [timing]="slot?.adjustment?.slot || slot?.timing" />
+
+	<sneat-timing-badge
+		[isCanceled]="isCanceled"
+		[timing]="slotContext?.adjustment?.timing || slotContext?.timing"
+	/>
+
 	<ion-label class="ion-text-wrap">
 		<span
 			style="font-size: 1em; margin-bottom: 0.4em; font-weight: bold"
 			[class.canceled]="isCanceled"
 		>
-			{{ slot?.title }}
+			{{ slotContext?.title }}
 		</span>
 		<ion-text color="medium" *ngIf="isCanceled"
 			>&nbsp;&mdash; canceled
@@ -41,16 +46,20 @@
 		<!--			"-->
 		<!--		/>-->
 
-		<sneat-happening-slot-participants [happeningSlot]="slot" />
-
 		<p
 			*ngIf="
-				mode === 'full' && (slot?.location?.title || slot?.location?.address)
+				mode === 'full' &&
+				(slotContext?.location?.title || slotContext?.location?.address)
 			"
 		>
-			{{ slot?.location?.title || slot?.location?.address }}
+			{{ slotContext?.location?.title || slotContext?.location?.address }}
 		</p>
-		<p *ngIf="mode === 'full' && (slot?.participants || slot?.levels?.length)">
+		<p
+			*ngIf="
+				mode === 'full' &&
+				(slotContext?.participants || slotContext?.levels?.length)
+			"
+		>
 			<!--			<ng-container *ngIf="let participantKeys = oKeys(slot?.participants)">-->
 			<!--				<ion-badge-->
 			<!--					color="light"-->
@@ -60,18 +69,28 @@
 			<!--					👩‍🏫 {{ participant }}-->
 			<!--				</ion-badge>-->
 			<!--			</ng-container>-->
-			@if (slot?.levels?.length) {
+			@if (slotContext?.levels?.length) {
 				<ion-badge
 					color="light"
 					style="margin-right: 0.5em"
-					*ngFor="let level of slot?.levels || []"
+					*ngFor="let level of slotContext?.levels || []"
 				>
 					🎚️ {{ level[0].toUpperCase() + level.substring(1) }}
 				</ion-badge>
 			}
 		</p>
+		<p>
+			<sneat-happening-slot-participants [happeningSlot]="slotContext" />
+		</p>
 	</ion-label>
 	<ion-buttons *ngIf="mode === 'full'">
-		<ion-button (click)="showContextMenu($event)">...</ion-button>
+		<ion-button color="medium" (click)="showRsvp($event)">
+			<ion-icon name="checkmark-circle-outline" slot="start" />
+			<ion-label>RSVP</ion-label>
+		</ion-button>
+		<ion-button (click)="showContextMenu($event)" color="medium">
+			<ion-icon name="create-outline" slot="start" />
+			<ion-label>Edit</ion-label>
+		</ion-button>
 	</ion-buttons>
 </ion-item>

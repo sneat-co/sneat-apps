@@ -1,14 +1,18 @@
 import { CommonModule } from '@angular/common';
 import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
 	Component,
 	EventEmitter,
 	Inject,
 	Input,
 	OnChanges,
 	Output,
+	signal,
 	SimpleChanges,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
+import { personName } from '@sneat/components';
 import { ContactusTeamService } from '@sneat/contactus-services';
 import { IIdAndBrief } from '@sneat/core';
 import { IContactBrief } from '@sneat/contactus-core';
@@ -29,6 +33,7 @@ export interface ICheckChangedArgs {
 	templateUrl: './contacts-checklist.component.html',
 	standalone: true,
 	imports: [CommonModule, IonicModule],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactsChecklistComponent implements OnChanges {
 	@Input({ required: true }) team?: ITeamContext;
@@ -39,7 +44,9 @@ export class ContactsChecklistComponent implements OnChanges {
 	@Output() readonly checkedChange = new EventEmitter<ICheckChangedArgs>();
 
 	private contactusTeamSubscription?: Subscription;
-	protected contacts?: IIdAndBrief<IContactBrief>[];
+	protected readonly contacts = signal<
+		IIdAndBrief<IContactBrief>[] | undefined
+	>(undefined);
 
 	protected readonly contactID = (
 		_: number,
@@ -48,6 +55,7 @@ export class ContactsChecklistComponent implements OnChanges {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		private readonly changeDetectorRef: ChangeDetectorRef,
 		private readonly contactusTeamService: ContactusTeamService,
 	) {}
 
@@ -65,9 +73,11 @@ export class ContactsChecklistComponent implements OnChanges {
 						contacts,
 					);
 					const roles = this.roles;
-					this.contacts = contacts
-						.filter((c) => roles?.some((r) => c.brief?.roles?.includes(r)))
-						.map((c) => ({ id: c.id, brief: c.brief as IContactBrief }));
+					this.contacts.set(
+						contacts
+							.filter((c) => roles?.some((r) => c.brief?.roles?.includes(r)))
+							.map((c) => ({ id: c.id, brief: c.brief as IContactBrief })),
+					);
 				},
 			});
 	}
@@ -97,10 +107,10 @@ export class ContactsChecklistComponent implements OnChanges {
 		);
 	}
 
-	protected isDisabled(contact: IIdAndBrief<IContactBrief>): boolean {
+	protected isDisabled(contactID: string): boolean {
 		return (
-			this.checkedInProgress.includes(contact.id) ||
-			this.uncheckedInProgress.includes(contact.id)
+			this.checkedInProgress.includes(contactID) ||
+			this.uncheckedInProgress.includes(contactID)
 		);
 	}
 
@@ -121,6 +131,7 @@ export class ContactsChecklistComponent implements OnChanges {
 			this.uncheckedInProgress = [...this.uncheckedInProgress, id];
 		}
 		const clearInProgress = () => {
+			console.log('clearInProgress()', id, checked);
 			if (checked) {
 				this.checkedInProgress = this.checkedInProgress.filter((v) => v !== id);
 			} else {
@@ -128,14 +139,20 @@ export class ContactsChecklistComponent implements OnChanges {
 					(v) => v !== id,
 				);
 			}
+			this.changeDetectorRef.markForCheck();
 		};
 		new Promise<void>((resolve, reject) => {
 			this.checkedChange.emit({ event: ce, id, checked, resolve, reject });
 		})
 			.then(clearInProgress)
 			.catch((err) => {
-				clearInProgress();
 				this.errorLogger.logError(err);
+
+				// Restore checkbox state with a delay
+				// to allow users to see that check change was registered and processed
+				setTimeout(clearInProgress, 500);
 			});
 	}
+
+	protected readonly personName = personName;
 }

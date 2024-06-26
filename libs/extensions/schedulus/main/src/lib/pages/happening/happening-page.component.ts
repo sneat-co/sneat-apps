@@ -4,14 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ContactusServicesModule } from '@sneat/contactus-services';
-import { TeamComponentBaseParams } from '@sneat/team-components';
 import { HappeningServiceModule } from '@sneat/team-services';
 import {
 	HappeningComponentBaseParams,
 	HappeningComponentBaseParamsModule,
 } from '../../components/happening-component-base-params';
 import { HappeningFormComponent } from '../../components/happening-form/happening-form.component';
-import { HappeningSlotComponentsModule } from '../../components/happening-slot-components.module';
 import { HappeningBasePage } from './happening-base-page';
 
 @Component({
@@ -22,7 +20,6 @@ import { HappeningBasePage } from './happening-base-page';
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		HappeningSlotComponentsModule,
 		HappeningServiceModule,
 		HappeningFormComponent,
 		ContactusServicesModule,

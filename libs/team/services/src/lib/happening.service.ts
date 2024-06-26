@@ -9,11 +9,11 @@ import {
 	HappeningStatus,
 	IHappeningBrief,
 	IHappeningDto,
-	IHappeningSlot,
 	validateHappeningDto,
 	WeekdayCode2,
 	IHappeningContext,
 	IHappeningPrice,
+	IHappeningSlotWithID,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext, ITeamRequest } from '@sneat/team-models';
@@ -42,7 +42,7 @@ export interface IHappeningContactRequest extends ITeamRequest {
 }
 
 export interface IHappeningSlotRequest extends IHappeningRequest {
-	readonly slot: IHappeningSlot;
+	readonly slot: IHappeningSlotWithID;
 }
 
 export interface IHappeningPricesRequest extends IHappeningRequest {
@@ -58,8 +58,12 @@ export interface IHappeningSlotDateRequest extends IHappeningSlotRequest {
 }
 
 export interface ISlotsRefRequest extends IHappeningRequest {
-	readonly date?: string;
 	readonly slotIDs?: readonly string[];
+	readonly date?: string;
+}
+
+export interface ISlotRefRequest extends IHappeningRequest {
+	readonly slotID: string;
 }
 
 export interface ISlotRequest extends IHappeningRequest {
@@ -69,7 +73,9 @@ export interface ISlotRequest extends IHappeningRequest {
 	readonly reason?: string;
 }
 
-export type IDeleteSlotRequest = ISlotRequest;
+export interface IDeleteSlotRequest extends ISlotRefRequest {
+	readonly reason?: string;
+}
 
 export type ICancelHappeningRequest = ISlotRequest;
 
@@ -129,7 +135,10 @@ export class HappeningService {
 		}
 		if (
 			request.happening.type === 'single' &&
-			request.happening.slots?.some((slot) => slot.repeats !== 'once')
+			request.happening.slots &&
+			Object.values(request.happening.slots).some(
+				(slot) => slot.repeats !== 'once',
+			)
 		) {
 			return throwError(
 				() => 'Single occurrence happening cannot have recurring slots',
@@ -170,43 +179,50 @@ export class HappeningService {
 		);
 	}
 
-	public deleteSlots(request: ISlotRequest): Observable<void> {
-		console.log('deleteSlots', request);
-		// const qp = new HttpParams();
-		// qp.set('team', request.teamID)
-		// qp.set('happening', request.happeningID)
-		// if (request.slotIDs?.length === 1) {
-		// 	qp.set('happening', request.slotIDs[0])
-		// }
+	public deleteSlot(request: IDeleteSlotRequest): Observable<void> {
+		console.log('deleteSlot', request);
 		return this.sneatApiService.delete(
-			'happenings/delete_slots',
+			'happenings/delete_slot',
 			undefined,
 			request,
 		);
 	}
 
-	public removeParticipant(
+	public readonly removeParticipant = (
 		request: IHappeningContactRequest,
-	): Observable<void> {
-		return this.sneatApiService.post('happenings/remove_participant', request);
-	}
+	): Observable<void> =>
+		this.sneatApiService.post('happenings/remove_participant', request);
 
-	public addParticipant(request: IHappeningContactRequest): Observable<void> {
-		return this.sneatApiService.post('happenings/add_participant', request);
-	}
+	public readonly addParticipant = (
+		request: IHappeningContactRequest,
+	): Observable<void> =>
+		this.sneatApiService.post('happenings/add_participant', request);
 
-	public updateSlot(
+	public readonly addSlot = (
 		teamID: string,
 		happeningID: string,
-		slot: IHappeningSlot,
-	): Observable<void> {
+		slot: IHappeningSlotWithID,
+	): Observable<void> => {
+		const request: IHappeningSlotRequest = {
+			teamID,
+			happeningID,
+			slot,
+		};
+		return this.sneatApiService.post('happenings/add_slot', request);
+	};
+
+	public readonly updateSlot = (
+		teamID: string,
+		happeningID: string,
+		slot: IHappeningSlotWithID,
+	): Observable<void> => {
 		const request: IHappeningSlotRequest = {
 			teamID,
 			happeningID,
 			slot,
 		};
 		return this.sneatApiService.post('happenings/update_slot', request);
-	}
+	};
 
 	public deleteHappeningPrices(
 		request: IDeleteHappeningPricesRequest,
@@ -223,12 +239,12 @@ export class HappeningService {
 	public adjustSlot(
 		teamID: string,
 		happeningID: string,
-		slot: IHappeningSlot,
+		slot: IHappeningSlotWithID,
 		date: string,
 	): Observable<void> {
 		slot = {
-			repeats: 'once',
 			id: slot.id,
+			repeats: 'once',
 			start: { time: slot.start?.time || '', date },
 			end: slot.end,
 			durationMinutes: slot.durationMinutes,

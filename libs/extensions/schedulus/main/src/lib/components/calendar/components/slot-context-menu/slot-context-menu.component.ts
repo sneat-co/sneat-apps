@@ -1,4 +1,12 @@
-import { Component, Inject, Input } from '@angular/core';
+import {
+	Component,
+	Inject,
+	Input,
+	OnChanges,
+	OnInit,
+	signal,
+	SimpleChanges,
+} from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { IContactBrief, IContactusTeamDtoAndID } from '@sneat/contactus-core';
 import { excludeUndefined, IIdAndBrief } from '@sneat/core';
@@ -8,8 +16,9 @@ import {
 	IHappeningContext,
 	HappeningStatus,
 	IHappeningSlot,
+	IHappeningSlotWithID,
 } from '@sneat/mod-schedulus-core';
-import { IHappeningSlotUiItem } from '@sneat/extensions/schedulus/shared';
+import { ISlotUIContext } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	ISelectMembersOptions,
@@ -22,10 +31,11 @@ import {
 	ICancelHappeningRequest,
 	IDeleteSlotRequest,
 	IHappeningContactRequest,
+	ISlotRefRequest,
 	ISlotRequest,
 } from '@sneat/team-services';
 import { NEVER, Observable } from 'rxjs';
-import { CalendarModalsService } from '../../../../services/calendar-modals.service';
+import { HappeningSlotModalService } from '../../../happening-slot-form/happening-slot-modal.service';
 
 const notImplemented = 'Sorry, not implemented yet';
 
@@ -38,17 +48,18 @@ export class SlotContextMenuComponent {
 	@Input() contactusTeam?: IContactusTeamDtoAndID;
 
 	@Input() dateID?: string;
-	@Input() public slot?: IHappeningSlotUiItem;
-	happeningState?: HappeningUIState;
+	@Input() public slotContext?: ISlotUIContext;
 
-	public get happening(): IHappeningContext | undefined {
-		return this.slot?.happening;
-	}
+	protected readonly happening = signal<IHappeningContext | undefined>(
+		undefined,
+	);
+
+	protected happeningState?: HappeningUIState;
 
 	public get isCancelled(): boolean {
 		return (
-			this.happening?.brief?.status === 'canceled' ||
-			!!this.slot?.adjustment?.canceled
+			this.slotContext?.happening.brief?.status === 'canceled' ||
+			!!this.slotContext?.adjustment?.canceled
 		);
 	}
 
@@ -61,7 +72,7 @@ export class SlotContextMenuComponent {
 		private readonly popoverController: PopoverController,
 		private readonly happeningService: HappeningService,
 		private readonly membersSelectorService: MembersSelectorService,
-		private readonly scheduleModalsService: CalendarModalsService,
+		private readonly happeningSlotModalService: HappeningSlotModalService,
 	) {}
 
 	assign(event: Event, to: 'member' | 'contact'): void {
@@ -69,16 +80,17 @@ export class SlotContextMenuComponent {
 		event.stopPropagation();
 		event.preventDefault();
 		const team = this.team;
-		if (!team) {
+		if (!team || !this.slotContext) {
 			return;
 		}
 		const members =
 			zipMapBriefsWithIDs(this.contactusTeam?.dbo?.contacts)?.map((mb) =>
 				contactContextFromBrief(mb, team),
 			) || [];
+		const happening = this.slotContext.happening;
 		const selectedMembers = members.filter((m) =>
 			hasRelatedItemID(
-				this.happening?.dbo?.related || this.happening?.brief?.related,
+				happening?.dbo?.related || happening?.brief?.related,
 				'contactus',
 				'contacts',
 				this.team?.id || '',
@@ -100,37 +112,32 @@ export class SlotContextMenuComponent {
 	}
 
 	move(): void {
-		console.log(`SlotContextMenuComponent.edit()`);
+		console.log(`SlotContextMenuComponent.move()`);
 		this.notImplemented();
 	}
 
-	edit(event: Event): void {
+	edit(event: Event, editMode: 'series' | 'single'): void {
 		console.log(`SlotContextMenuComponent.edit()`);
-		const happening = this.happening;
+		const happening = this.slotContext?.happening;
 		if (!happening) {
 			return;
 		}
 		if (!this.team) {
 			return;
 		}
-		const slotID = this.slot?.slotID;
-		const slots = happening?.dbo?.slots || happening?.brief?.slots;
-		const happeningSlot: IHappeningSlot | undefined = slots?.find(
-			(slot) => slot.id === slotID,
-		);
-		const recurring =
-			happeningSlot && this.dateID
-				? {
-						happeningSlot,
-						dateID: this.dateID,
-						adjustment: this.slot?.adjustment,
-					}
-				: undefined;
-		this.scheduleModalsService
+		const recurring = this.dateID
+			? {
+					dateID: this.dateID,
+					adjustment: this.slotContext?.adjustment,
+					editMode,
+				}
+			: undefined;
+		this.happeningSlotModalService
 			.editSingleHappeningSlot(
 				event,
 				{ ...happening, team: this.team },
 				recurring,
+				this.slotContext?.slot,
 			)
 			.catch(
 				this.errorLogger.logErrorHandler(
@@ -142,16 +149,16 @@ export class SlotContextMenuComponent {
 
 	delete(event: Event): void {
 		console.log(`SlotContextMenuComponent.delete()`);
-		const slot = this.slot;
+		const slot = this.slotContext;
 		if (!slot) {
 			return;
 		}
-		if (this.slot?.repeats === 'weekly' && !slot.wd) {
+		if (this.slotContext?.repeats === 'weekly' && !slot.wd) {
 			throw new Error('this.slot?.repeats === "weekly" && !slot.wd');
 		}
-		const request = this.createDeleteSlotRequest(event, 'slot');
+		const request = this.createDeleteSlotRequest(event);
 		this.happeningState = 'deleting';
-		this.happeningService.deleteSlots(request).subscribe({
+		this.happeningService.deleteSlot(request).subscribe({
 			next: () => {
 				this.happeningState = 'deleted';
 				this.dismissPopover();
@@ -183,32 +190,45 @@ export class SlotContextMenuComponent {
 	}
 
 	private stopEvent(event: Event): {
-		slot: IHappeningSlotUiItem;
+		slotContext: ISlotUIContext;
 		happening: IHappeningContext;
 		team: ITeamContext;
 	} {
 		if (!this.team) {
 			throw new Error('!this.team');
 		}
-		if (!this.happening) {
-			throw new Error('!this.happening');
-		}
-		if (!this.slot) {
+		if (!this.slotContext) {
 			throw new Error('!this.slot');
 		}
 		event.stopPropagation();
 		event.preventDefault();
-		return { team: this.team, slot: this.slot, happening: this.slot.happening };
+		return {
+			team: this.team,
+			slotContext: this.slotContext,
+			happening: this.slotContext.happening,
+		};
 	}
 
-	createSlotRequest(event: Event, mode: 'whole' | 'slot'): ISlotRequest {
-		const { slot, team, happening } = this.stopEvent(event);
+	private createSlotRefRequest(event: Event): ISlotRefRequest {
+		const { slotContext, team, happening } = this.stopEvent(event);
+		return {
+			teamID: team.id,
+			happeningID: happening.id,
+			slotID: slotContext.slot.id,
+		};
+	}
+
+	private createSlotRequest(
+		event: Event,
+		mode: 'whole' | 'slot',
+	): ISlotRequest {
+		const { slotContext, team, happening } = this.stopEvent(event);
 		// const slotsCount = happening.brief?.slots?.length || happening.dto?.slots?.length || 0;
 		const request: ISlotRequest = excludeUndefined({
 			teamID: team.id,
 			happeningID: happening.id,
-			slotID: mode === 'slot' ? slot.slotID : undefined,
-			weekday: mode === 'slot' ? slot.wd : undefined,
+			slotID: mode === 'slot' ? slotContext.slot.id : undefined,
+			weekday: mode === 'slot' ? slotContext.wd : undefined,
 			date:
 				mode === 'slot' && happening.brief?.type === 'recurring'
 					? this.dateID
@@ -217,11 +237,8 @@ export class SlotContextMenuComponent {
 		return request;
 	}
 
-	createDeleteSlotRequest(
-		event: Event,
-		mode: 'whole' | 'slot',
-	): IDeleteSlotRequest {
-		return this.createSlotRequest(event, mode);
+	private createDeleteSlotRequest(event: Event): IDeleteSlotRequest {
+		return this.createSlotRefRequest(event);
 	}
 
 	createCancellationRequest(
@@ -232,10 +249,10 @@ export class SlotContextMenuComponent {
 	}
 
 	private setHappeningStatus(status: HappeningStatus): void {
-		if (!this.slot) {
+		if (!this.slotContext) {
 			return;
 		}
-		let happening = this.slot.happening;
+		let happening = this.slotContext.happening;
 		if (happening.brief) {
 			happening = {
 				...happening,
@@ -248,8 +265,8 @@ export class SlotContextMenuComponent {
 				dbo: { ...happening.dbo, status },
 			};
 		}
-		this.slot = {
-			...this.slot,
+		this.slotContext = {
+			...this.slotContext,
 			happening,
 		};
 	}
@@ -257,11 +274,13 @@ export class SlotContextMenuComponent {
 	revokeCancellation(event: Event): void {
 		console.log(`SlotContextMenuComponent.revokeCancellation()`);
 		this.happeningState = 'revoking-cancellation';
-		if (!this.happening) {
+		if (!this.slotContext) {
 			return;
 		}
 		const mode: 'whole' | 'slot' =
-			this.happening.brief?.status === 'canceled' ? 'whole' : 'slot';
+			this.slotContext.happening.brief?.status === 'canceled'
+				? 'whole'
+				: 'slot';
 		const request = this.createCancellationRequest(event, mode);
 		this.happeningService.revokeHappeningCancellation(request).subscribe({
 			next: () => {
@@ -322,7 +341,7 @@ export class SlotContextMenuComponent {
 		if (!slots) {
 			return n;
 		}
-		slots.forEach((slot) => {
+		Object.values(slots).forEach((slot) => {
 			slot.weekdays?.forEach(() => n++);
 		});
 		return n;
@@ -332,15 +351,19 @@ export class SlotContextMenuComponent {
 		member: IIdAndBrief<IContactBrief>,
 	): Observable<void> => {
 		console.log('SlotContextMenuComponent.onMemberAdded()', member);
-		if (!this.happening) {
+		if (!this.slotContext) {
 			return NEVER;
 		}
 		if (!this.team) {
 			return NEVER;
 		}
+		const happeningID = this.slotContext.happening.id;
+		if (!happeningID) {
+			return NEVER;
+		}
 		const request: IHappeningContactRequest = {
 			teamID: this.team.id,
-			happeningID: this.happening.id,
+			happeningID,
 			contact: { id: member.id },
 		};
 		return this.happeningService.addParticipant(request);
@@ -357,15 +380,12 @@ export class SlotContextMenuComponent {
 		member: IIdAndBrief<IContactBrief>,
 	): Observable<void> => {
 		console.log('SlotContextMenuComponent.onMemberRemoved()', member);
-		if (!this.happening) {
-			return NEVER;
-		}
-		if (!this.team) {
+		if (!this.slotContext || !this.team) {
 			return NEVER;
 		}
 		const request: IHappeningContactRequest = {
 			teamID: this.team.id,
-			happeningID: this.happening.id,
+			happeningID: this.slotContext.happening.id,
 			contact: { id: member.id },
 		};
 		return this.happeningService.removeParticipant(request);

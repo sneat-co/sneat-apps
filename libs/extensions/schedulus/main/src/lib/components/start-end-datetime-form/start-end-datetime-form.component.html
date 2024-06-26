@@ -1,6 +1,7 @@
 @switch (mode) {
 	@case ("recurring") {
-		<ion-grid class="ion-grid-layout">
+		<!-- TODO(help-wanted): use CSS class, preferably from Ionic -->
+		<ion-grid class="ion-grid-layout" style="border-top: 1px solid lightgray">
 			<ion-row>
 				<ion-col size="12" size-md="4">
 					<ion-item class="sneat-no-end-padding" lines="none">
@@ -79,14 +80,25 @@
 				</ion-col>
 			</ion-row>
 		</ion-grid>
-		<ion-item-divider color="light" lines="full">
-			<ion-label>Dates</ion-label>
-		</ion-item-divider>
 
-		<sneat-start-end-dates-range-form
-			[timing]="timing"
-			(timingChange)="onTimingChanged($event)"
-		/>
+		<!-- TODO(help-wanted): use CSS class, preferably from Ionic -->
+		<ion-accordion-group
+			style="
+				border-top: 1px solid lightgray;
+				border-bottom: 1px solid lightgray;
+			"
+		>
+			<ion-accordion value="dates">
+				<ion-item slot="header" color="light">
+					<ion-label color="medium">Dates (start & end)</ion-label>
+				</ion-item>
+				<sneat-start-end-dates-range-form
+					slot="content"
+					[timing]="timing"
+					(timingChange)="onTimingChanged($event)"
+				/>
+			</ion-accordion>
+		</ion-accordion-group>
 	}
 	@case ("single") {
 		<ion-grid class="ion-grid-layout">

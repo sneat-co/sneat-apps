@@ -1,12 +1,15 @@
 import { CommonModule } from '@angular/common';
 import {
 	AfterViewInit,
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
 	Component,
 	EventEmitter,
 	Inject,
 	Input,
 	OnChanges,
 	Output,
+	signal,
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
@@ -21,21 +24,27 @@ import { IonicModule, IonInput } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import { IContactusTeamDtoAndID } from '@sneat/contactus-core';
 import { RoutingState } from '@sneat/core';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	HappeningType,
+	IHappeningContext,
 	IHappeningDto,
 	IHappeningSlot,
+	IHappeningSlotWithID,
+	mergeValuesWithIDs,
 	WeekdayCode2,
-	IHappeningContext,
 } from '@sneat/mod-schedulus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team-components';
 import { ITeamContext } from '@sneat/team-models';
-import { HappeningService, HappeningServiceModule } from '@sneat/team-services';
+import {
+	HappeningService,
+	HappeningServiceModule,
+	ICancelHappeningRequest,
+} from '@sneat/team-services';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
 import { HappeningParticipantsComponent } from '../happening-participants/happening-participants.component';
-import { HappeningSlotComponentsModule } from '../happening-slot-components.module';
+import { HappeningSlotFormComponent } from '../happening-slot-form/happening-slot-form.component';
 import { HappeningSlotsComponent } from '../happening-slots/happening-slots.component';
 import { HappeningPricesComponent } from './happening-prices/happening-prices.component';
 
@@ -43,16 +52,18 @@ import { HappeningPricesComponent } from './happening-prices/happening-prices.co
 	selector: 'sneat-happening-form',
 	templateUrl: 'happening-form.component.html',
 	standalone: true,
+	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
 		CommonModule,
 		IonicModule,
 		FormsModule,
 		ReactiveFormsModule,
-		HappeningSlotComponentsModule,
 		SneatPipesModule,
 		HappeningServiceModule,
 		HappeningParticipantsComponent,
 		HappeningPricesComponent,
+		HappeningSlotFormComponent,
+		HappeningSlotsComponent,
 	],
 })
 export class HappeningFormComponent
@@ -72,11 +83,17 @@ export class HappeningFormComponent
 	@ViewChild('happeningSlotsComponent', { static: false })
 	happeningSlotsComponent?: HappeningSlotsComponent;
 
-	isCreating = false;
+	protected readonly isCreating = signal(false);
+	protected readonly isCancelling = signal(false);
+	protected readonly isDeleting = signal(false);
 
-	public get slots(): readonly IHappeningSlot[] | undefined {
-		return this.happening?.brief?.slots;
-	}
+	// public get slots(): readonly IHappeningSlot[] | undefined {
+	// 	return this.happening?.brief?.slots;
+	// }
+
+	protected readonly slots = signal<IHappeningSlotWithID[] | undefined>(
+		undefined,
+	);
 
 	public happeningTitle = new FormControl<string>('', Validators.required);
 	protected happeningType = new FormControl<HappeningType>(
@@ -99,6 +116,7 @@ export class HappeningFormComponent
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		routingState: RoutingState,
+		private readonly changeDetectorRef: ChangeDetectorRef,
 		private readonly happeningService: HappeningService,
 		private readonly params: TeamComponentBaseParams,
 	) {
@@ -116,6 +134,7 @@ export class HappeningFormComponent
 				this.happeningTitle.setValue(this.happening?.brief?.title);
 				// this.slots = this?.happening?.brief?.slots || [];
 			}
+			this.slots.set(mergeValuesWithIDs(this.happening?.brief?.slots));
 		}
 	}
 
@@ -158,8 +177,9 @@ export class HappeningFormComponent
 		this.happeningChange.emit(this.happening);
 	}
 
-	protected onTitleEnter(): void {
-		//
+	protected onTitleEnter(event: Event): void {
+		console.log('onTitleEnter()', event);
+		this.changeDetectorRef.markForCheck();
 	}
 
 	ionViewDidEnter(): void {
@@ -206,7 +226,7 @@ export class HappeningFormComponent
 		if (!this.happeningForm.valid) {
 			return false;
 		}
-		return !!this.slots?.length;
+		return !!this.slots()?.length;
 	}
 
 	private makeHappeningDto(): IHappeningDto {
@@ -278,7 +298,7 @@ export class HappeningFormComponent
 				return;
 			}
 
-			this.isCreating = true;
+			this.isCreating.set(true);
 
 			let happening = this.makeHappeningDto();
 
@@ -286,10 +306,12 @@ export class HappeningFormComponent
 				case 'single':
 					happening = {
 						...happening,
-						slots: happening.slots?.map((slot) => ({
-							...slot,
-							repeats: 'once',
-						})),
+						slots: Object.fromEntries(
+							Object.entries(happening.slots || {}).map(([id, data]) => [
+								id,
+								{ ...data, repeats: 'once' },
+							]),
+						),
 					};
 					break;
 			}
@@ -319,16 +341,46 @@ export class HappeningFormComponent
 						}
 					},
 					error: (err: unknown) => {
-						this.isCreating = false;
+						this.isCreating.set(false);
 						this.logError(err, 'failed to create new happening');
 					},
 					complete: () => {
-						this.isCreating = false;
+						this.isCreating.set(false);
 					},
 				});
 		} catch (e) {
-			this.isCreating = false;
+			this.isCreating.set(false);
 			this.errorLogger.logError(e, 'failed to create new happening');
 		}
+	}
+
+	protected cancel(): void {
+		const request: ICancelHappeningRequest = {
+			teamID: this.team?.id || '',
+			happeningID: this.happening?.id || '',
+		};
+		this.isCancelling.set(true);
+		this.happeningService.cancelHappening(request).subscribe({
+			next: () => this.isCancelling.set(false),
+			error: (err) => {
+				this.errorLogger.logError(err, 'failed to cancel happening');
+				this.isCancelling.set(false);
+			},
+			// complete: () => this.isCancelling.set(false), -- TODO(help-wanted): Why is not working?
+		});
+	}
+
+	protected delete(): void {
+		if (!this.happening) {
+			return;
+		}
+		this.isDeleting.set(true);
+		this.happeningService.deleteHappening(this.happening).subscribe({
+			next: () => this.isDeleting.set(false),
+			error: (err) => {
+				this.errorLogger.logError(err, 'failed to delete happening');
+				this.isDeleting.set(false);
+			},
+		});
 	}
 }

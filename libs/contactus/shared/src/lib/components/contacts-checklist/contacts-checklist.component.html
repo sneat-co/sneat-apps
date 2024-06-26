@@ -1,32 +1,31 @@
 <ion-list>
-	@for (contact of contacts; track contact.id) {
+	@for (contact of contacts(); track contact.id) {
 		<ion-item>
 			<ion-checkbox
 				labelPlacement="end"
 				justify="start"
 				[value]="contact.id"
 				[checked]="isChecked(contact)"
-				[disabled]="isDisabled(contact)"
+				[disabled]="isDisabled(contact.id)"
 				(ionChange)="onCheckboxChange($event, contact)"
 			>
-				{{
-					contact.brief.names?.fullName ||
-						contact.brief.names?.firstName + " " + contact.brief.names?.lastName
-				}}
+				{{ personName(contact.brief.names) }}
 				<!--TODO: use pipe-->
 			</ion-checkbox>
+			<ion-spinner
+				*ngIf="isDisabled(contact.id)"
+				name="lines-small"
+				slot="end"
+				color="medium"
+			></ion-spinner>
 		</ion-item>
 	} @empty {
-		<ion-item *ngIf="contacts">
-			<ion-label>
-				{{ noContactsMessage || "No contacts" }}
-			</ion-label>
+		<ion-item>
+			@if (contacts()) {
+				<ion-label>{{ noContactsMessage || "No contacts" }}</ion-label>
+			} @else {
+				<ion-label>Loading...</ion-label>
+			}
 		</ion-item>
 	}
 </ion-list>
-
-<!--checkedContactIDs: {{checkedContactIDs}}-->
-<!--<br>-->
-<!--checkedInProgress: {{checkedInProgress}}-->
-<!--<br>-->
-<!--uncheckedInProgress: {{uncheckedInProgress}}-->
