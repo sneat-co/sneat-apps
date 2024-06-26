@@ -1,0 +1,76 @@
+<ion-toolbar>
+	<ion-title
+		>Add miles & fuel &#64;
+		@switch (asset?.brief?.extraType) {
+			@case ("vehicle") {
+				@if (asset?.brief?.extra?.["make"] && asset?.brief?.extra?.["model"]) {
+					{{ asset?.brief?.extra?.["make"] }}/{{
+						asset?.brief?.extra?.["model"]
+					}}
+				}
+				@if (
+					asset?.brief?.title &&
+					asset?.brief?.extra?.["make"] &&
+					asset?.brief?.extra?.["model"]
+				) {
+					&mdash;
+				}
+			}
+			@case ("dwelling") {
+				{{ asset?.brief?.extra?.["address"] || asset?.brief?.title }}
+			}
+		}
+		@if (asset?.brief?.title) {
+			{{ asset?.brief?.title }}
+		}
+	</ion-title>
+</ion-toolbar>
+<ion-content>
+	<ion-list>
+		<ion-item>
+			<ion-input [formControl]="fuelVolume" label="Fuel Volume"></ion-input>
+			<ion-select
+				[formControl]="fuelVolumeUnit"
+				placeholder="Select Volume Unit"
+			>
+				@for (fuelVolumeUnit of fuelVolumeUnitTypes; track fuelVolumeUnit) {
+					<ion-select-option [value]="fuelVolumeUnit">{{
+						fuelVolumeUnit
+					}}</ion-select-option>
+				}
+			</ion-select>
+		</ion-item>
+		<ion-item>
+			<ion-input [formControl]="fuelCost" label="Fuel Cost"></ion-input>
+			<ion-select [formControl]="currency" placeholder="Select Currency">
+				@for (currency of currencyList; track currency) {
+					<ion-select-option [value]="currency">{{
+						currency
+					}}</ion-select-option>
+				}
+			</ion-select>
+		</ion-item>
+		<ion-item>
+			<ion-input [formControl]="mileage" label="Mileage"></ion-input>
+			<ion-select [formControl]="mileageUnit" placeholder="Select Mileage Unit">
+				@for (mileageUnit of mileageUnitTypes; track mileageUnit) {
+					<ion-select-option [value]="mileageUnit">{{
+						mileageUnit
+					}}</ion-select-option>
+				}
+			</ion-select>
+		</ion-item>
+	</ion-list>
+</ion-content>
+<ion-toolbar>
+	<ion-buttons slot="start">
+		<ion-button (click)="cancel()" fill="solid" color="danger">
+			Cancel
+		</ion-button>
+	</ion-buttons>
+	<ion-buttons slot="end">
+		<ion-button (click)="submit()" fill="solid" color="success">
+			Save
+		</ion-button>
+	</ion-buttons>
+</ion-toolbar>

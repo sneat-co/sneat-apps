@@ -14,3 +14,4 @@ export * from './extensions-assetus-components.module';
 export * from './assets-list/assets-list-component.module';
 export * from './vehicle-card/vehicle-card.component';
 export * from './module.asset.real-estate';
+export * from './mileage-dialog/mileage-dialog.component';

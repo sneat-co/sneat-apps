@@ -14,7 +14,11 @@ import {
 import { ITeamContext } from '@sneat/team-models';
 import { ModuleTeamItemService } from '@sneat/team-services';
 import { Observable } from 'rxjs';
-import { ICreateAssetRequest, IUpdateAssetRequest } from './asset-service.dto';
+import {
+	IAddVehicleRecordRequest,
+	ICreateAssetRequest,
+	IUpdateAssetRequest,
+} from './asset-service.dto';
 
 @Injectable()
 export class AssetService extends ModuleTeamItemService<
@@ -53,6 +57,22 @@ export class AssetService extends ModuleTeamItemService<
 			team,
 			request,
 		);
+	}
+
+	public addVehicleRecord(request: IAddVehicleRecordRequest): Observable<void> {
+		return this.sneatApiService.post('assets/add_vehicle_record', request);
+	}
+
+	public updateVehicleRecord(
+		request: IAddVehicleRecordRequest,
+	): Observable<void> {
+		return this.sneatApiService.post('assets/update_vehicle_record', request);
+	}
+
+	public deleteVehicleRecord(
+		request: IAddVehicleRecordRequest,
+	): Observable<void> {
+		return this.sneatApiService.post('assets/delete_vehicle_record', request);
 	}
 
 	public readonly watchAssetByID = this.watchTeamItemByIdWithTeamRef;
