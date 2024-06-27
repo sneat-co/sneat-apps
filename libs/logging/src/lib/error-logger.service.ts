@@ -34,12 +34,14 @@ export class ErrorLoggerService implements IErrorLogger {
 				return;
 			}
 		}
-		const feedback = options?.feedback === undefined || options.feedback;
 		if (options?.report === undefined || options.report) {
-			if (window.location.hostname !== 'localhost' && feedback) {
+			if (window.location.hostname !== 'localhost') {
 				try {
-					const eventId = captureException(e);
-					console.log('Captured error by Sentry with eventId:', eventId);
+					const eventId = message
+						? captureException(message, { originalException: e })
+						: captureException(e);
+
+					// console.log('Captured error by Sentry with eventId:', eventId);
 					if (options?.feedback === undefined || options.feedback) {
 						showReportDialog({ eventId });
 					}

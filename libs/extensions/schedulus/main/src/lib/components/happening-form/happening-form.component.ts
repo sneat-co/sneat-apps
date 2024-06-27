@@ -342,7 +342,7 @@ export class HappeningFormComponent
 					},
 					error: (err: unknown) => {
 						this.isCreating.set(false);
-						this.logError(err, 'failed to create new happening');
+						this.logError(err, 'API request failed to create new happening');
 					},
 					complete: () => {
 						this.isCreating.set(false);
