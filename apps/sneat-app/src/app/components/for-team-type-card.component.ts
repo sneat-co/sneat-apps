@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
@@ -8,9 +9,12 @@ import {
 	OnDestroy,
 	SimpleChanges,
 } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
 import { SneatUserService } from '@sneat/auth-core';
 import { TeamType } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { TeamsListComponent } from '@sneat/team-components';
 import {
 	ITeamContext,
 	teamContextFromBrief,
@@ -23,6 +27,8 @@ import { Subscription, takeUntil } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-for-team-card',
 	templateUrl: 'for-team-type-card.component.html',
+	standalone: true,
+	imports: [CommonModule, IonicModule, RouterModule, TeamsListComponent],
 })
 export class ForTeamTypeCardComponent
 	extends SneatBaseComponent

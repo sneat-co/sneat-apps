@@ -15,7 +15,7 @@ import {
 } from '@sneat/team-models';
 import { TeamNavService, TeamService } from '@sneat/team-services';
 import { first } from 'rxjs';
-import { TeamsListModule } from '../teams-list';
+import { TeamsListComponent } from '../teams-list';
 
 @Component({
 	selector: 'sneat-teams-menu',
@@ -26,7 +26,7 @@ import { TeamsListModule } from '../teams-list';
 		IonicModule,
 		FormsModule,
 		RouterModule,
-		TeamsListModule,
+		TeamsListComponent,
 	],
 	providers: [UserRequiredFieldsService],
 })

@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import { MenuController, NavController } from '@ionic/angular';
+import { RouterModule } from '@angular/router';
+import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITeamContext } from '@sneat/team-models';
 import { TeamNavService, TeamService } from '@sneat/team-services';
@@ -8,6 +10,8 @@ import { SneatUserService } from '@sneat/auth-core';
 @Component({
 	selector: 'sneat-teams-list',
 	templateUrl: 'teams-list.component.html',
+	standalone: true,
+	imports: [CommonModule, IonicModule, RouterModule],
 })
 export class TeamsListComponent {
 	@Input() pathPrefix = '/space';

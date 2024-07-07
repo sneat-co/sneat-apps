@@ -21,10 +21,10 @@ const routes: Routes = [
 	{
 		path: '',
 		pathMatch: 'full',
-		loadChildren: () =>
-			import(
-				'./pages/sneat-app-home-page/sneat-app-home-page.component.module'
-			).then((m) => m.SneatAppHomePageComponentModule),
+		loadComponent: () =>
+			import('./pages/sneat-app-home-page/sneat-app-home-page.component').then(
+				(m) => m.SneatAppHomePageComponent,
+			),
 	},
 	{
 		path: 'telegram-menu',
