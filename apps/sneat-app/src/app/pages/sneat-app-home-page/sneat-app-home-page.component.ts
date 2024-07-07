@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, signal } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AuthStatus, SneatAuthStateService } from '@sneat/auth-core';
 import { UserCountryComponent } from '@sneat/components';
@@ -21,6 +22,7 @@ import { ForWorkComponent } from './for-work.component';
 	imports: [
 		CommonModule,
 		IonicModule,
+		RouterModule,
 		TeamsListComponent,
 		UserCountryComponent,
 		ForTeamTypeCardComponent,
@@ -35,15 +37,19 @@ export class SneatAppHomePageComponent extends SneatBaseComponent {
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		authStateService: SneatAuthStateService,
-		// navService: NavService,
+		private router: Router,
 	) {
 		super('SneatAppHomePageComponent', errorLogger);
 		authStateService.authState.pipe(takeUntil(this.destroyed$)).subscribe({
 			next: (authState) => {
 				this.authStatus.set(authState.status);
-				// if (authState.status === 'notAuthenticated') {
-				// 	navService.navigateToLogin();
-				// }
+				if (authState.status === 'notAuthenticated') {
+					router
+						.navigate(['login'])
+						.catch(
+							errorLogger.logErrorHandler('Failed to navigate to login page'),
+						);
+				}
 			},
 		});
 	}

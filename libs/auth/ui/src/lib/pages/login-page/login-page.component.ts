@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 import { Component, Inject, Optional } from '@angular/core';
 import { Auth as AngularFireAuth } from '@angular/fire/auth';
 import { ActivatedRoute } from '@angular/router';
@@ -86,6 +85,12 @@ export class LoginPageComponent {
 		this.signingWith = undefined;
 		if (!userCredential.user) {
 			return;
+		}
+		if (userCredential.user.email) {
+			const prevEmail = localStorage.getItem('emailForSignIn') || '';
+			if (!prevEmail) {
+				localStorage.setItem('emailForSignIn', userCredential.user.email);
+			}
 		}
 		const authState: ISneatAuthState = {
 			status: AuthStatuses.authenticated,
