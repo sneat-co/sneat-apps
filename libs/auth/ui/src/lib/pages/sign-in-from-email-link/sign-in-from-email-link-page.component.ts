@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Inject,
+	signal,
+} from '@angular/core';
 import { IonicModule, NavController } from '@ionic/angular';
 import { SneatAuthStateService } from '@sneat/auth-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -9,27 +14,28 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	templateUrl: 'sign-in-from-email-link-page.component.html',
 	standalone: true,
 	imports: [CommonModule, IonicModule],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignInFromEmailLinkPageComponent {
-	email: string;
-	emailFromStorage = false;
-	isSigning = false;
+	protected readonly email = signal('');
+	protected readonly emailFromStorage = signal(false);
+	protected readonly isSigning = signal(false);
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly authStateService: SneatAuthStateService,
 		private readonly navController: NavController,
 	) {
-		this.email = localStorage.getItem('emailForSignIn') || '';
-		this.emailFromStorage = !!this.email;
-		if (this.email) {
+		this.email.set(localStorage.getItem('emailForSignIn') || '');
+		this.emailFromStorage.set(!!this.email);
+		if (this.email()) {
 			this.signIn();
 		}
 	}
 
 	public signIn(): void {
-		this.isSigning = true;
-		this.authStateService.signInWithEmailLink(this.email).subscribe({
+		this.isSigning.set(true);
+		this.authStateService.signInWithEmailLink(this.email()).subscribe({
 			next: () => {
 				this.navController
 					.navigateRoot('/')
@@ -40,8 +46,8 @@ export class SignInFromEmailLinkPageComponent {
 					);
 			},
 			error: (err) => {
-				this.isSigning = false;
-				this.emailFromStorage = false;
+				this.isSigning.set(false);
+				this.emailFromStorage.set(false);
 				this.errorLogger.logError(err, 'Failed to sign in with email link');
 			},
 		});
