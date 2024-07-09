@@ -4,15 +4,17 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
 	{
 		path: 'login',
-		loadChildren: () =>
-			import('./login-page').then((m) => m.LoginPageComponentModule),
+		loadComponent: () =>
+			import('./login-page/login-page.component').then(
+				(m) => m.LoginPageComponent,
+			),
 	},
 	{
 		path: 'sign-in-from-email-link',
-		loadChildren: () =>
+		loadComponent: () =>
 			import(
-				'./sign-in-from-email-link/sign-in-from-email-link-page.module'
-			).then((m) => m.SignInFromEmailLinkPageModule),
+				'./sign-in-from-email-link/sign-in-from-email-link-page.component'
+			).then((m) => m.SignInFromEmailLinkPageComponent),
 	},
 ];
 

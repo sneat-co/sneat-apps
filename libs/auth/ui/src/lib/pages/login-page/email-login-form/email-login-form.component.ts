@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -12,7 +13,8 @@ import {
 	sendPasswordResetEmail,
 	sendSignInLinkToEmail,
 } from '@angular/fire/auth';
-import { IonInput, ToastController } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
+import { IonicModule, IonInput, ToastController } from '@ionic/angular';
 import { SneatApiService } from '@sneat/api';
 import { IInitUserRecordRequest, UserRecordService } from '@sneat/auth-core';
 import { createSetFocusToInput } from '@sneat/components';
@@ -37,6 +39,8 @@ import {
 @Component({
 	selector: 'sneat-email-login-form',
 	templateUrl: 'email-login-form.component.html',
+	standalone: true,
+	imports: [CommonModule, IonicModule, FormsModule],
 })
 export class EmailLoginFormComponent {
 	public sign: 'in' | 'up' = 'up'; // TODO: document here what 'in' & 'up' means

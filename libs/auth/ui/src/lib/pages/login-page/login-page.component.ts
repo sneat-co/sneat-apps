@@ -1,7 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, Optional } from '@angular/core';
 import { Auth as AngularFireAuth } from '@angular/fire/auth';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 import {
 	AuthProviderName,
 	AuthStatuses,
@@ -19,14 +21,26 @@ import {
 } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { Subject, takeUntil } from 'rxjs';
-import { EmailFormSigningWith } from './email-login-form/email-login-form.component';
+import {
+	EmailFormSigningWith,
+	EmailLoginFormComponent,
+} from './email-login-form/email-login-form.component';
 import { UserCredential } from 'firebase/auth';
+import { LoginWithTelegramComponent } from './login-with-telegram.component';
 
 type Action = 'join' | 'refuse'; // TODO: inject provider for action descriptions/messages.
 
 @Component({
 	selector: 'sneat-login',
 	templateUrl: './login-page.component.html',
+	standalone: true,
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		LoginWithTelegramComponent,
+		EmailLoginFormComponent,
+	],
 })
 export class LoginPageComponent {
 	public signingWith?:

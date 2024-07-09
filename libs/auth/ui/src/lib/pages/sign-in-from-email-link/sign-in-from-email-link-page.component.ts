@@ -1,11 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 import { SneatAuthStateService } from '@sneat/auth-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({
 	selector: 'sneat-sign-in-from-email-link-page',
 	templateUrl: 'sign-in-from-email-link-page.component.html',
+	standalone: true,
+	imports: [CommonModule, IonicModule],
 })
 export class SignInFromEmailLinkPageComponent {
 	email: string;
