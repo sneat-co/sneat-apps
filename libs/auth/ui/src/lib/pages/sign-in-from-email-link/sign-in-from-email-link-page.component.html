@@ -16,7 +16,7 @@
 				[required]="true"
 				[readonly]="isSigning()"
 				[value]="email()"
-				[disabled]="emailFromStorage || isSigning()"
+				[disabled]="emailFromStorage() || isSigning()"
 			/>
 		</ion-item>
 
