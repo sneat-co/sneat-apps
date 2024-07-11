@@ -1,4 +1,4 @@
-import { IWithTeamIDs } from '@sneat/dto';
+import { IWithSpaceIDs } from '@sneat/dto';
 import { IListItemBrief } from './list';
 export interface IMovie extends IListItemBrief {
 	original_title?: string;
@@ -35,6 +35,6 @@ export interface Actor {
 	profile_path?: string;
 }
 
-export interface IMovieDto extends IWithTeamIDs, IMovie {
+export interface IMovieDbo extends IWithSpaceIDs, IMovie {
 	listIds: string[];
 }

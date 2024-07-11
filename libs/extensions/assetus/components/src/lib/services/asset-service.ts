@@ -11,7 +11,7 @@ import {
 	AssetExtraType,
 	IAssetExtra,
 } from '@sneat/mod-assetus-core';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { ModuleTeamItemService } from '@sneat/team-services';
 import { Observable } from 'rxjs';
 import {
@@ -29,9 +29,9 @@ export class AssetService extends ModuleTeamItemService<
 		super('assetus', 'assets', afs, sneatApiService);
 	}
 
-	public deleteAsset(teamID: string, assetID: string): Observable<void> {
+	public deleteAsset(spaceID: string, assetID: string): Observable<void> {
 		const request = new HttpParams({
-			fromObject: { id: assetID, team: teamID },
+			fromObject: { id: assetID, space: spaceID },
 		});
 		return this.sneatApiService.delete<void>('assets/delete_asset', request);
 	}
@@ -44,12 +44,12 @@ export class AssetService extends ModuleTeamItemService<
 		ExtraType extends AssetExtraType,
 		Extra extends IAssetExtra,
 	>(
-		team: ITeamContext,
+		team: ISpaceContext,
 		request: ICreateAssetRequest<ExtraType, Extra>,
 	): Observable<IAssetContext<ExtraType, Extra>> {
 		console.log(`AssetService.createAsset()`, request);
 		request = { ...request, asset: { ...request.asset, isRequest: true } };
-		return this.createTeamItem<
+		return this.createSpaceItem<
 			IAssetBrief<ExtraType, Extra>,
 			IAssetDbo<ExtraType, Extra>
 		>(
@@ -78,7 +78,7 @@ export class AssetService extends ModuleTeamItemService<
 	public readonly watchAssetByID = this.watchTeamItemByIdWithTeamRef;
 
 	watchTeamAssets<ExtraType extends AssetExtraType, Extra extends IAssetExtra>(
-		team: ITeamContext,
+		team: ISpaceContext,
 		category?: AssetCategory,
 	): Observable<IAssetContext<ExtraType, Extra>[]> {
 		// console.log('watchAssetsByTeamID()', team.id);
@@ -91,7 +91,7 @@ export class AssetService extends ModuleTeamItemService<
 					},
 				]
 			: undefined;
-		return this.watchModuleTeamItemsWithTeamRef<IAssetDbo<ExtraType, Extra>>(
+		return this.watchModuleSpaceItemsWithTeamRef<IAssetDbo<ExtraType, Extra>>(
 			team,
 			{
 				filter,

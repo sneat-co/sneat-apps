@@ -90,7 +90,7 @@ export class SegmentContainerComponent implements OnChanges {
 		this.deleting = true;
 		const request: IDeleteSegmentsRequest =
 			excludeUndefined<IDeleteSegmentsRequest>({
-				teamID: this.order.team.id,
+				spaceID: this.order.space.id,
 				orderID: this.order.id,
 				containerIDs: [containerID],
 				fromShippingPointID: this.segment?.from.shippingPointID,

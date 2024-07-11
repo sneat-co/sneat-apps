@@ -67,12 +67,12 @@ export class ContactPageComponent extends ContactBasePage {
 		if (!this.contact?.id) {
 			return;
 		}
-		const team = this.team;
-		if (!team) {
+		const space = this.team;
+		if (!space) {
 			return;
 		}
 		this.contactsService
-			.watchChildContacts(team, this.contact?.id)
+			.watchChildContacts(space, this.contact?.id)
 			.pipe(this.takeUntilNeeded())
 			.subscribe({
 				next: (children) => {
@@ -84,16 +84,20 @@ export class ContactPageComponent extends ContactBasePage {
 
 	protected saveAddress(save: ISaveEvent<IAddress>): void {
 		console.log('ContactPageComponent.saveAddress()', save);
-		const teamID = this.team?.id,
+		const spaceID = this.team?.id,
 			contactID = this.contact?.id,
 			address = save.object;
 
-		if (!teamID || !contactID || !address) {
+		if (!spaceID || !contactID || !address) {
 			save.error('Can not save address without team and contact context');
 			return;
 		}
 
-		const request: IUpdateContactRequest = { teamID, contactID, address };
+		const request: IUpdateContactRequest = {
+			spaceID,
+			contactID,
+			address,
+		};
 		this.contactService.updateContact(request).subscribe({
 			next: () => save.success(),
 			error: save.error,
@@ -115,7 +119,7 @@ export class ContactPageComponent extends ContactBasePage {
 			return;
 		}
 		const request: IContactRequest = {
-			teamID: this.team.id,
+			spaceID: this.team.id,
 			contactID: contact.id,
 		};
 

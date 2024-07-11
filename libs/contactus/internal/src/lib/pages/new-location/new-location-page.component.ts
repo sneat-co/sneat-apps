@@ -20,7 +20,7 @@ export class NewLocationPageComponent extends ContactBasePage {
 	newLocation: IContactContext = {
 		id: '',
 		dbo: { type: 'location' },
-		team: this.team,
+		space: this.team,
 	};
 
 	constructor(
@@ -32,8 +32,8 @@ export class NewLocationPageComponent extends ContactBasePage {
 		this.defaultBackPage = 'contacts';
 	}
 
-	protected override onTeamDtoChanged() {
-		super.onTeamDtoChanged();
+	protected override onSpaceDboChanged() {
+		super.onSpaceDboChanged();
 		// if (this.team?.dto?.countryID && !this.newLocationDto.countryID) {
 		// 	this.newLocationDto = { ...this.newLocationDto, countryID: this.team.dto.countryID };
 		// }
@@ -45,11 +45,11 @@ export class NewLocationPageComponent extends ContactBasePage {
 
 	onContactCreated(contact: IContactContext): void {
 		this.newLocation = contact;
-		const team = this.team;
-		if (!team) {
+		const space = this.team;
+		if (!space) {
 			throw new Error('Team is not defined');
 		}
-		const url = this.teamPageUrl(`contact/${this.contact?.id}`);
+		const url = this.spacePageUrl(`contact/${this.contact?.id}`);
 		if (url) {
 			this.navController
 				.navigateBack(url)

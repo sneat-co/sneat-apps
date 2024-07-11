@@ -9,9 +9,9 @@ import {
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { listItemAnimations } from '@sneat/core';
-import { IMovie, IMovieDto } from '../dto';
+import { IMovie, IMovieDbo } from '../dto';
 import { IListContext } from '../contexts';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { ListusComponentBaseParams } from '../listus-component-base-params';
 import { ITmdbService } from '../watchlist';
 
@@ -28,11 +28,11 @@ export class MovieCardComponent implements OnChanges {
 	public movie?: IMovie;
 	@Input()
 	public showWatchedMovies = false;
-	@Input() public team?: ITeamContext;
+	@Input() public team?: ISpaceContext;
 	@Input() public list?: IListContext;
 	@Output() addToWatchlist = new EventEmitter<IMovie>();
 	@Output() goMovie = new EventEmitter<IMovie>();
-	@Output() movieChanged = new EventEmitter<IMovieDto>();
+	@Output() movieChanged = new EventEmitter<IMovieDbo>();
 	@Output() public readonly listChanged = new EventEmitter<IListContext>();
 
 	constructor(

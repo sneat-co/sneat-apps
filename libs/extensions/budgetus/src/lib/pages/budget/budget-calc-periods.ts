@@ -4,7 +4,7 @@ import {
 	IHappeningPrice,
 	IHappeningSlot,
 } from '@sneat/mod-schedulus-core';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import {
 	IHappeningLiability,
 	LiabilitiesByPeriod,
@@ -13,7 +13,7 @@ import {
 
 export function getLiabilitiesByPeriod(
 	recurringHappenings: Record<string, ICalendarHappeningBrief>,
-	team: ITeamContext,
+	team: ISpaceContext,
 ): LiabilitiesByPeriod {
 	const byPeriod: LiabilitiesByPeriod = {};
 
@@ -25,7 +25,7 @@ export function getLiabilitiesByPeriod(
 }
 
 function processHappening(
-	team: ITeamContext,
+	team: ISpaceContext,
 	byPeriod: LiabilitiesByPeriod,
 	happening: IIdAndBrief<ICalendarHappeningBrief>,
 ): void {
@@ -38,7 +38,7 @@ function processHappening(
 }
 
 function processSlot(
-	team: ITeamContext,
+	space: ISpaceContext,
 	byPeriod: LiabilitiesByPeriod,
 	happening: IIdAndBrief<ICalendarHappeningBrief>,
 	slotID: string,
@@ -55,7 +55,7 @@ function processSlot(
 		hLiabilityIndex >= 0
 			? liabilities.happenings[hLiabilityIndex]
 			: {
-					happening: { ...happening, team },
+					happening: { ...happening, space },
 					valuesByCurrency: {},
 				};
 
@@ -107,7 +107,7 @@ function processPrice(
 				];
 			happeningContacts?.forEach((relatedContact) => {
 				const contactKey = relatedContact.keys.find(
-					(k) => k.teamID === happeningLiability.happening.team.id,
+					(k) => k.spaceID === happeningLiability.happening.space.id,
 				);
 				if (!contactKey) {
 					return;
@@ -118,8 +118,8 @@ function processPrice(
 				if (!contactLiability) {
 					contactLiability = {
 						contact: {
-							id: contactKey.teamID,
-							team: happeningLiability.happening.team,
+							id: contactKey.spaceID,
+							space: happeningLiability.happening.space,
 						},
 						valuesByCurrency: {},
 					};

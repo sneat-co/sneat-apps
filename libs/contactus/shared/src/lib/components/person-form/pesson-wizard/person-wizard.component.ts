@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SneatUserService } from '@sneat/auth-core';
 import { IPersonNames, isNameEmpty } from '@sneat/auth-models';
-import { excludeUndefined, formNexInAnimation, TeamType } from '@sneat/core';
+import { excludeUndefined, formNexInAnimation, SpaceType } from '@sneat/core';
 import { IFormField } from '@sneat/core';
 import {
 	AgeGroupID,
@@ -30,9 +30,9 @@ import {
 	IRelatedItem,
 	IRelatedItemsByModule,
 	IRelationshipRoles,
-	ITeamModuleDocRef,
+	ISpaceModuleDocRef,
 } from '@sneat/dto';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { AgeGroupFormComponent } from '../age-group';
 import { EmailsFormComponent } from '../emails-form';
 import { GenderFormComponent } from '../gender-form';
@@ -60,7 +60,7 @@ type WizardStepID = keyof personWizardState;
 
 interface WizardStepCondition {
 	readonly contactTypes: MemberContactType[];
-	readonly teamTypes?: TeamType[];
+	readonly teamTypes?: SpaceType[];
 }
 
 interface WizardStepFilter {
@@ -97,7 +97,7 @@ export type IPersonFormWizardFields = {
 	],
 })
 export class PersonWizardComponent implements OnChanges {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) team?: ISpaceContext;
 
 	@Input() requires: IPersonRequirements = {};
 	@Input() disabled = false;
@@ -131,7 +131,7 @@ export class PersonWizardComponent implements OnChanges {
 	@ViewChild(NamesFormComponent) namesFormComponent?: NamesFormComponent;
 	@ViewChild(GenderFormComponent) genderFormComponent?: GenderFormComponent;
 
-	protected relatedToUser?: ITeamModuleDocRef;
+	protected relatedToUser?: ISpaceModuleDocRef;
 
 	constructor(readonly userService: SneatUserService) {
 		userService.userChanged.subscribe(() => this.setRelatedToUser());
@@ -141,7 +141,7 @@ export class PersonWizardComponent implements OnChanges {
 		const itemID = this.userService.currentUserID;
 		this.relatedToUser = itemID
 			? {
-					teamID: this.team?.id || '',
+					spaceID: this.team?.id || '',
 					moduleID: 'contactus',
 					collection: 'contacts',
 					itemID,
@@ -318,11 +318,11 @@ export class PersonWizardComponent implements OnChanges {
 
 
  */
-		const teamID = this.team?.id || '';
+		const spaceID = this.team?.id || '';
 		const userID = this.relatedToUser?.itemID || '';
 
 		const userRelatedItem: IRelatedItem = {
-			keys: [{ teamID, itemID: userID }],
+			keys: [{ spaceID: spaceID, itemID: userID }],
 			rolesOfItem,
 		};
 

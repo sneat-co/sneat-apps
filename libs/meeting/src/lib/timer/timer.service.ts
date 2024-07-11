@@ -32,7 +32,7 @@ export interface IMeetingTimerService {
 
 export class Timer {
 	private tick = new ReplaySubject<ITimerState>(1);
-	// eslint-disable-next-line @typescript-eslint/member-ordering
+	 
 	public readonly onTick = this.tick.asObservable();
 
 	private state?: ITimerState;
@@ -47,7 +47,7 @@ export class Timer {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly timerService: IMeetingTimerService,
 		private readonly released: () => void,
-		public readonly teamId: string,
+		public readonly spaceID: string,
 		public readonly meetingId: string,
 	) {}
 
@@ -199,7 +199,7 @@ export class Timer {
 			if (member) {
 				toggleTimerMethod = () =>
 					this.timerService.toggleMemberTimer({
-						teamID: this.teamId,
+						spaceID: this.spaceID,
 						meeting: this.meetingId,
 						operation,
 						member,
@@ -207,7 +207,7 @@ export class Timer {
 			} else {
 				toggleTimerMethod = () =>
 					this.timerService.toggleMeetingTimer({
-						teamID: this.teamId,
+						spaceID: this.spaceID,
 						meeting: this.meetingId,
 						operation,
 					});
@@ -360,37 +360,37 @@ export class TimerFactory {
 
 	public getTimer(
 		timerService: IMeetingTimerService,
-		teamId: string,
-		meetingId: string,
+		spaceID: string,
+		meetingID: string,
 	): Timer {
-		if (!teamId) {
-			throw new Error('teamId is required');
+		if (!spaceID) {
+			throw new Error('spaceID is required');
 		}
-		if (!meetingId) {
+		if (!meetingID) {
 			throw new Error('meetingId is required');
 		}
 		const { meetingType } = timerService;
 		if (!meetingType) {
 			throw new Error('timerService.meetingType is required');
 		}
-		const k = `${teamId}/${meetingType}/${meetingId}`;
+		const k = `${spaceID}/${meetingType}/${meetingID}`;
 		return (
 			this.timers[k] ??
-			(this.timers[k] = this.newTimer(k, timerService, teamId, meetingId))
+			(this.timers[k] = this.newTimer(k, timerService, spaceID, meetingID))
 		);
 	}
 
 	private newTimer = (
 		k: string,
 		timerService: IMeetingTimerService,
-		teamId: string,
+		spaceID: string,
 		meetingId: string,
 	) =>
 		new Timer(
 			this.errorLogger,
 			timerService,
 			this.onTimerReleased(k),
-			teamId,
+			spaceID,
 			meetingId,
 		);
 

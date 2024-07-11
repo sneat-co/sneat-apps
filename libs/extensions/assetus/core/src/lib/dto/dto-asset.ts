@@ -16,7 +16,7 @@ import {
 	ITitled,
 	ITitledRecord,
 	ITotalsHolder,
-	IWithTeamIDs,
+	IWithSpaceIDs,
 	IWithModified,
 	CountryId,
 } from '@sneat/dto';
@@ -53,7 +53,7 @@ export interface IAssetBrief<
 	possession: AssetPossession;
 }
 
-export interface IAssetusTeamDto extends ITitled {
+export interface IAssetusSpaceDbo extends ITitled {
 	assets?: Record<string, IAssetBrief>;
 }
 
@@ -69,7 +69,10 @@ export interface IAssetExtra {
 	[key: string]: unknown;
 }
 
-export type IAssetusTeamContext = INavContext<IAssetusTeamDto, IAssetusTeamDto>;
+export type IAssetusSpaceContext = INavContext<
+	IAssetusSpaceDbo,
+	IAssetusSpaceDbo
+>;
 
 export interface IAssetDboBase<
 	ExtraType extends AssetExtraType = string,
@@ -78,7 +81,7 @@ export interface IAssetDboBase<
 		IDemoRecord,
 		ITotalsHolder,
 		IWithModified {
-	teamID?: string;
+	spaceID?: string;
 	parentAssetID?: string;
 	desc?: string;
 	memberIDs?: string[];
@@ -166,7 +169,7 @@ export interface IAssetDtoGroupCounts {
 }
 
 export interface IAssetDtoGroup
-	extends IWithTeamIDs,
+	extends IWithSpaceIDs,
 		ITitledRecord,
 		ITotalsHolder {
 	id: string;

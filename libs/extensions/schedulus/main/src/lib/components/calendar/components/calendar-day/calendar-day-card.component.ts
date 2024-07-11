@@ -9,7 +9,7 @@ import {
 import { virtualSliderAnimations } from '@sneat/components';
 import { HappeningType } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { TeamDaysProvider } from '../../../../services/team-days-provider';
 import { ScheduleNavService } from '@sneat/extensions/schedulus/shared';
 import {
@@ -32,7 +32,7 @@ export class CalendarDayCardComponent
 	extends CalendarDayBaseComponent
 	implements AfterViewInit
 {
-	@Input() team: ITeamContext = { id: '' };
+	@Input() team: ISpaceContext = { id: '' };
 	@Input() teamDaysProvider?: TeamDaysProvider;
 	@Output() goNew = new EventEmitter<NewHappeningParams>();
 

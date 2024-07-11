@@ -9,7 +9,7 @@ import {
 import { FormControl } from '@angular/forms';
 import { IContactContext } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import {
 	debounceTime,
 	distinctUntilChanged,
@@ -46,7 +46,7 @@ function debounce<T>(field: string, o: Subject<T>): Observable<T> {
 	templateUrl: './container-endpoint.component.html',
 })
 export class ContainerEndpointComponent implements OnChanges {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) team?: ISpaceContext;
 	@Input() order?: ILogistOrderContext;
 	@Input() containerPoint?: IContainerPoint;
 	@Input() shippingPointID?: string;
@@ -185,7 +185,7 @@ export class ContainerEndpointComponent implements OnChanges {
 						title: byCounterparty.title,
 						countryID: byCounterparty.countryID,
 					},
-					team: this.team,
+					space: this.team,
 				};
 			}
 		}
@@ -196,7 +196,7 @@ export class ContainerEndpointComponent implements OnChanges {
 			shippingPointID = this.shippingPointID,
 			containerID = this.containerPoint?.containerID,
 			orderID = this.order?.id,
-			teamID = this.order?.team?.id;
+			teamID = this.order?.space?.id;
 
 		if (
 			!endpointSide ||
@@ -211,7 +211,7 @@ export class ContainerEndpointComponent implements OnChanges {
 			);
 		}
 		return {
-			teamID,
+			spaceID: teamID,
 			orderID,
 			shippingPointID,
 			containerID,

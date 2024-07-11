@@ -2,7 +2,7 @@ import { Component, Inject, Input, ViewChild } from '@angular/core';
 import { IonInput, ModalController } from '@ionic/angular';
 import { createSetFocusToInput, ISelectItem } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import {
 	ContainerType,
 	IAddContainersRequest,
@@ -18,7 +18,7 @@ import { TasksByID } from '../shipping-points-selector';
 })
 export class NewContainerComponent {
 	@Input() order?: ILogistOrderContext;
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) team?: ISpaceContext;
 
 	@ViewChild('containerNumberInput', { static: false })
 	containerNumberInput?: IonInput;
@@ -98,7 +98,7 @@ export class NewContainerComponent {
 			this.isSubmitting = true;
 			const request: IAddContainersRequest = {
 				orderID: this.order.id,
-				teamID: this.team.id,
+				spaceID: this.team.id,
 				containers: [
 					{
 						type: this.containerType as ContainerType,

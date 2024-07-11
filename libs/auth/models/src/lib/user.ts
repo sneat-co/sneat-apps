@@ -1,4 +1,4 @@
-import { EnumAsUnionOfKeys, TeamType } from '@sneat/core';
+import { EnumAsUnionOfKeys, SpaceType } from '@sneat/core';
 import { IAvatar } from './avatar';
 import { IPersonNames } from './person-names';
 
@@ -10,8 +10,8 @@ export interface IUserRecord {
 	readonly email?: string;
 	readonly emailIsVerified?: boolean;
 	readonly avatar?: IAvatar;
-	readonly teamIDs?: readonly string[];
-	readonly teams?: Record<string, IUserTeamBrief>;
+	readonly spaceIDs?: readonly string[];
+	readonly spaces?: Record<string, IUserSpaceBrief>;
 	readonly names?: IPersonNames;
 }
 
@@ -25,9 +25,9 @@ export enum TeamMemberTypeEnum {
 
 export type TeamMemberType = EnumAsUnionOfKeys<typeof TeamMemberTypeEnum>;
 
-export interface IUserTeamBrief {
+export interface IUserSpaceBrief {
 	readonly title: string;
-	readonly type: TeamType;
+	readonly type: SpaceType;
 	readonly roles: string[];
 	readonly userContactID: string;
 }

@@ -18,7 +18,7 @@ import {
 	sortSlotItems,
 	WeekdayNumber,
 } from '@sneat/extensions/schedulus/shared';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import {
 	emptyScheduleFilter,
@@ -40,7 +40,7 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 	// @Input() showRegulars = true;
 	// @Input() showEvents = true;
 
-	@Input({ required: true }) team: ITeamContext = { id: '' };
+	@Input({ required: true }) team: ISpaceContext = { id: '' };
 	@Input({ required: true }) weekday?: Weekday;
 
 	@Output() readonly slotClicked = new EventEmitter<{

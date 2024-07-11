@@ -10,7 +10,7 @@ import {
 	InviteChannel,
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { InviteService } from '@sneat/team-services';
 import { Observable, throwError } from 'rxjs';
 
@@ -26,7 +26,7 @@ export class EncodeSmsText implements PipeTransform {
 	templateUrl: 'invite-modal.component.html',
 })
 export class InviteModalComponent {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) team?: ISpaceContext;
 	@Input() member?: IIdAndBrief<IContactBrief>;
 
 	tab: InviteChannel = 'email';
@@ -192,7 +192,7 @@ export class InviteModalComponent {
 			return throwError(() => 'can not create invite without member context');
 		}
 		const request: ICreatePersonalInviteRequest = {
-			teamID: this.team.id,
+			spaceID: this.team.id,
 			to: {
 				...to,
 				memberID: this.member.id,
@@ -247,7 +247,7 @@ export class InviteModalComponent {
 			return;
 		}
 		const request: ICreatePersonalInviteRequest = {
-			teamID: this.team.id,
+			spaceID: this.team.id,
 			to: {
 				channel: 'link',
 				memberID: this.member.id,

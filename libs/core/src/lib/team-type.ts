@@ -1,4 +1,4 @@
-export type TeamType =
+export type SpaceType =
 	| 'family'
 	| 'personal'
 	| 'company'

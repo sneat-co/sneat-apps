@@ -7,7 +7,7 @@ import {
 	OnInit,
 } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { ITeamMemberInfo } from '@sneat/contactus-core';
+import { ISpaceMemberInfo } from '@sneat/contactus-core';
 import { AnalyticsService, IAnalyticsService } from '@sneat/core';
 import { IRecord } from '@sneat/data';
 import { secondsToStr } from '@sneat/datetime';
@@ -20,7 +20,7 @@ import {
 	TimerFactory,
 } from '@sneat/meeting';
 import { ScrumService } from '../services/scrum.service';
-import { IScrumDto, IStatus, TaskType } from '@sneat/scrumspace/scrummodels';
+import { IScrumDbo, IStatus, TaskType } from '@sneat/scrumspace/scrummodels';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
@@ -46,7 +46,7 @@ export class ScrumPageComponent
 
 	public scrumID?: string;
 
-	public scrum: IScrumDto = {
+	public scrum: IScrumDbo = {
 		type: 'staff',
 		userIDs: [],
 		statuses: [],
@@ -54,7 +54,7 @@ export class ScrumPageComponent
 
 	public timerState?: ITimerState;
 
-	public spectators?: ITeamMemberInfo[];
+	public spectators?: ISpaceMemberInfo[];
 
 	public isToday?: boolean;
 	public scrumDate?: Date;
@@ -73,7 +73,7 @@ export class ScrumPageComponent
 	public personalMetrics?: IMetric[];
 	public timer?: Timer;
 	public expandedMemberId?: string | null;
-	private scrumsById: Record<string, IScrumDto> = {};
+	private scrumsById: Record<string, IScrumDbo> = {};
 	private subscriptions: Subscription[] = []; // TODO: replace with subs from BAsePage?
 
 	constructor(
@@ -102,7 +102,7 @@ export class ScrumPageComponent
 	}
 
 	public override get defaultBackUrl(): string {
-		return this.team?.id ? `team?id=${this.team.id}` : 'teams';
+		return this.team?.id ? `team?id=${this.team.id}` : 'spaces';
 	}
 
 	private static getDateFromId(scrumId: string): Date {
@@ -118,10 +118,10 @@ export class ScrumPageComponent
 
 			this.tab = (tab?.[1] || this.tab) as ScrumPageTab;
 
-			const scrum = history.state.scrum as IRecord<IScrumDto>;
-			if (scrum?.dto) {
+			const scrum = history.state.scrum as IRecord<IScrumDbo>;
+			if (scrum?.dbo) {
 				this.setScrumId(scrum.id);
-				this.scrumLoaded(scrum.id, scrum.dto, 'history.state.scrum');
+				this.scrumLoaded(scrum.id, scrum.dbo, 'history.state.scrum');
 			} else {
 				if (this.route) {
 					this.setCurrentScrumIdFromUrl(this.route.snapshot.queryParamMap);
@@ -263,7 +263,7 @@ export class ScrumPageComponent
 		}
 	}
 
-	protected override onTeamDtoChanged(): void {
+	protected override onSpaceDboChanged(): void {
 		const teamDto = this.team?.dbo;
 		if (!teamDto) {
 			return;
@@ -337,7 +337,7 @@ export class ScrumPageComponent
 	// 	}
 	// }
 
-	private scrumLoaded(id: string, scrum: IScrumDto, from: string): void {
+	private scrumLoaded(id: string, scrum: IScrumDbo, from: string): void {
 		console.log(
 			`${from}: scrumLoaded(${id}: currentScrumId=${this.scrumID}`,
 			scrum,
@@ -387,7 +387,7 @@ export class ScrumPageComponent
 				break;
 			default:
 				console.log(
-					// eslint-disable-next-line max-len
+					 
 					`loaded scrum(${id}) not related to current(${this.scrumID}) or previous(${this.prevScrumID}) or next(${this.nextScrumID}):`,
 					scrum,
 				);
@@ -426,9 +426,9 @@ export class ScrumPageComponent
 	}
 
 	private merge(
-		scrum: IScrumDto,
-		prevScrum?: IScrumDto,
-		members?: ITeamMemberInfo[],
+		scrum: IScrumDbo,
+		prevScrum?: IScrumDbo,
+		members?: ISpaceMemberInfo[],
 	): void {
 		console.log(
 			'ScrumPage.merge(),\n\tscrum:',

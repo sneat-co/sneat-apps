@@ -7,7 +7,7 @@ import {
 	ISneatExtension,
 } from '@sneat/core';
 import { IContactBrief } from '@sneat/contactus-core';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-contact-modules-menu',
@@ -16,7 +16,7 @@ import { ITeamContext } from '@sneat/team-models';
 	imports: [CommonModule, IonicModule],
 })
 export class ContactModulesMenuComponent {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) team?: ISpaceContext;
 	@Input({ required: true }) public contact?: IIdAndBrief<IContactBrief>;
 
 	public readonly extensions = defaultFamilyMemberExtensions;

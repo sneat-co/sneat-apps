@@ -1,4 +1,4 @@
-import { IWithRelatedOnly, IWithTeamIDs } from '@sneat/dto';
+import { IWithRelatedOnly, IWithSpaceIDs } from '@sneat/dto';
 import { ActivityType, RepeatPeriod, WeekdayCode2 } from './happening-types';
 import { IWithStringID } from './todo_move_funcs';
 
@@ -63,13 +63,13 @@ export interface IWithDates {
 	readonly dates?: string[];
 }
 
-export interface IWithTeamDates extends IWithTeamIDs, IWithDates {
-	readonly teamDates?: string[]; // ISO date strings prefixed with teamID e.g. [`abc123:2019-12-01`, `abc123:2019-12-02`]
+export interface IWithSpaceDates extends IWithSpaceIDs, IWithDates {
+	readonly spaceDates?: string[]; // ISO date strings prefixed with teamID e.g. [`abc123:2019-12-01`, `abc123:2019-12-02`]
 }
 
-export interface IHappeningDto extends IHappeningBrief, IWithTeamDates {}
+export interface IHappeningDbo extends IHappeningBrief, IWithSpaceDates {}
 
-export function validateHappeningDto(dto: IHappeningDto): void {
+export function validateHappeningDto(dto: IHappeningDbo): void {
 	if (!dto.title) {
 		throw new Error('happening has no title');
 	}
@@ -237,13 +237,13 @@ export const emptyHappeningSlot: IHappeningSlotWithID = {
 	...emptyTiming,
 };
 
-export interface ISingleHappeningDto extends IHappeningDto {
+export interface ISingleHappeningDbo extends IHappeningDbo {
 	readonly dtStarts?: number; // UTC
 	readonly dtEnds?: number; // UTC
 	readonly weekdays?: WeekdayCode2[];
 }
 
-export interface DtoSingleTask extends ISingleHappeningDto {
+export interface DtoSingleTask extends ISingleHappeningDbo {
 	readonly isCompleted: boolean;
 	readonly completion?: number; // In percents, max value is 100.
 }

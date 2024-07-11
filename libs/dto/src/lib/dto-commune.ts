@@ -43,8 +43,8 @@ export interface TeamCounts {
 
 export function incrementNumberOf<
 	NumberOf,
-	Dto extends { numberOf?: NumberOf },
->(dto: Dto, init: () => NumberOf, counter: keyof NumberOf, v = 1): Dto {
+	Dbo extends { numberOf?: NumberOf },
+>(dto: Dbo, init: () => NumberOf, counter: keyof NumberOf, v = 1): Dbo {
 	const current: number = ((dto.numberOf && dto.numberOf[counter]) ||
 		0) as unknown as number;
 	return {
@@ -74,7 +74,7 @@ export function newTeamCounts(numberOf?: TeamCounts): TeamCounts {
 	};
 }
 
-export interface ICommuneDto extends IDemoRecord, ITitledRecord, ITotalsHolder {
+export interface ICommuneDbo extends IDemoRecord, ITitledRecord, ITotalsHolder {
 	readonly countryId?: CountryId;
 	readonly type: CommuneType;
 	readonly desc?: string;

@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { ILogistOrderContext, IOrderCounterparty } from '../../dto';
 
 @Component({
@@ -7,7 +7,7 @@ import { ILogistOrderContext, IOrderCounterparty } from '../../dto';
 	templateUrl: './order-truckers.component.html',
 })
 export class OrderTruckersComponent implements OnChanges {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) team?: ISpaceContext;
 	@Input() order?: ILogistOrderContext;
 
 	public truckers?: readonly IOrderCounterparty[];

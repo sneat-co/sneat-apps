@@ -10,7 +10,7 @@ import {
 	IHappeningWithUiState,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { HappeningService, TeamNavService } from '@sneat/team-services';
 import { takeUntil } from 'rxjs';
 
@@ -21,7 +21,7 @@ import { takeUntil } from 'rxjs';
 export class RecurringCardComponent implements OnDestroy {
 	private readonly destroyed = new EventEmitter<void>();
 	@Input() recurring?: IHappeningWithUiState;
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) team?: ISpaceContext;
 
 	constructor(
 		private readonly happeningService: HappeningService,
@@ -47,7 +47,7 @@ export class RecurringCardComponent implements OnDestroy {
 			return;
 		}
 		this.teamNavService
-			.navigateForwardToTeamPage(this.team, `happening/${happening?.id}`, {
+			.navigateForwardToSpacePage(this.team, `happening/${happening?.id}`, {
 				state: { happening },
 			})
 			.catch(
@@ -72,7 +72,7 @@ export class RecurringCardComponent implements OnDestroy {
 		}
 		const happening: IHappeningContext = {
 			id: happeningWithUiState.id,
-			team: { id: this.team?.id },
+			space: { id: this.team?.id },
 			brief: happeningWithUiState.brief,
 			dbo: happeningWithUiState.dbo,
 		};

@@ -23,11 +23,11 @@ import {
 	IRelatedItemsByModule,
 	IRelationshipRole,
 	IRelationshipRoles,
-	ITeamModuleDocRef,
+	ISpaceModuleDocRef,
 	ITitledRecord,
 	IWithCreatedShort,
 } from '@sneat/dto';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { TeamRelatedFormComponent } from '../team-related-form.component';
 
 const getRelOptions = (r: FamilyMemberRelation[]): ITitledRecord[] => [
@@ -51,10 +51,10 @@ export class RelationshipFormComponent
 	extends TeamRelatedFormComponent
 	implements OnChanges
 {
-	@Input({ required: true }) public team?: ITeamContext;
+	@Input({ required: true }) public team?: ISpaceContext;
 	@Input({ required: true }) public ageGroup?: AgeGroupID;
 
-	@Input({ required: true }) public relatedTo?: ITeamModuleDocRef;
+	@Input({ required: true }) public relatedTo?: ISpaceModuleDocRef;
 
 	@Input({ required: true }) public relatedItems?: IRelatedItemsByModule;
 
@@ -95,7 +95,7 @@ export class RelationshipFormComponent
 			this.relatedItems,
 		);
 		if (this.relatedTo && this.relatedItems) {
-			if (!this.relatedTo.teamID) {
+			if (!this.relatedTo.spaceID) {
 				console.error(
 					'onRelatedChanged(): relatedTo.teamID is not set',
 					this.relatedTo,
@@ -105,7 +105,7 @@ export class RelationshipFormComponent
 				this.relatedItems,
 				this.relatedTo.moduleID,
 				this.relatedTo.collection,
-				this.relatedTo.teamID,
+				this.relatedTo.spaceID,
 				this.relatedTo.itemID,
 			);
 			if (relatedItem) {

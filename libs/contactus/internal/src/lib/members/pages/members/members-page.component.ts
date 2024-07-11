@@ -22,7 +22,7 @@ import {
 	MemberGroupTypeKids,
 	MemberGroupTypeOther,
 	MemberGroupTypePets,
-	IContactusTeamDto,
+	IContactusSpaceDbo,
 	IMemberGroupContext,
 } from '@sneat/contactus-core';
 import { isTeamSupportsMemberGroups } from '@sneat/dto';
@@ -124,7 +124,7 @@ export class MembersPageComponent
 		);
 	}
 
-	override onTeamModuleDtoChanged(dto: IContactusTeamDto | null): void {
+	override onTeamModuleDtoChanged(dto: IContactusSpaceDbo | null): void {
 		super.onTeamModuleDtoChanged(dto);
 		this.processContactusTeamDto(dto);
 	}
@@ -169,8 +169,8 @@ export class MembersPageComponent
 		}
 	}
 
-	override onTeamDtoChanged(): void {
-		super.onTeamDtoChanged();
+	override onSpaceDboChanged(): void {
+		super.onSpaceDboChanged();
 		if (!this.team) {
 			throw new Error('!this.commune');
 		}
@@ -189,8 +189,8 @@ export class MembersPageComponent
 		console.log(`MembersPageComponent.loadData(source=${source})`);
 
 		// this.unsubscribe();
-		const team = this.team;
-		if (!team) {
+		const space = this.team;
+		if (!space) {
 			throw new Error('!this.team');
 		}
 		// this.noGroupMembers = this.team?.brief && isTeamSupportsMemberGroups(this.team.brief.type) ? [] : undefined;
@@ -229,7 +229,7 @@ export class MembersPageComponent
 		// 		});
 		// }
 
-		if (team.type && isTeamSupportsMemberGroups(team.type)) {
+		if (space.type && isTeamSupportsMemberGroups(space.type)) {
 			throw new Error('not implemented yet due to refactoring');
 			// this.contactService.watchContactsByRole(team)
 			// 	.subscribe(memberGroups => {
@@ -241,13 +241,13 @@ export class MembersPageComponent
 	}
 
 	private readonly processContactusTeamDto = (
-		dto?: IContactusTeamDto | null,
+		dto?: IContactusSpaceDbo | null,
 	): void => {
 		console.log('MembersPageComponent.processContactusTeamDto()', dto);
-		const team = this.team;
+		const space = this.team;
 		this.members = zipMapBriefsWithIDs(dto?.contacts).map((m) => ({
 			...m,
-			team,
+			team: space,
 		}));
 		this.processMembers();
 	};

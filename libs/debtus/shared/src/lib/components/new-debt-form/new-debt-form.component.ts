@@ -9,7 +9,7 @@ import {
 import { IonicModule } from '@ionic/angular';
 import { IContactContext } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import {
 	CurrencyCode,
 	DebtusService,
@@ -30,7 +30,7 @@ import {
 	providers: [DebtusService],
 })
 export class NewDebtFormComponent {
-	@Input({ required: true }) public team?: ITeamContext;
+	@Input({ required: true }) public team?: ISpaceContext;
 	@Input({ required: true }) public contact?: IContactContext;
 
 	constructor(
@@ -53,8 +53,8 @@ export class NewDebtFormComponent {
 
 	protected submit() {
 		console.log('NewDebtFormComponent.submit', this.newDebtForm.value);
-		const teamID = this.team?.id;
-		if (!teamID) {
+		const spaceID = this.team?.id;
+		if (!spaceID) {
 			throw new Error('teamID is not set');
 		}
 		const contactID = this.contact?.id;
@@ -68,7 +68,7 @@ export class NewDebtFormComponent {
 			throw new Error('currency is not set');
 		}
 		const request: ICreateDebtRecordRequest = {
-			teamID,
+			spaceID,
 			contactID,
 			amount: this.amount.value,
 			currency: this.currency.value,

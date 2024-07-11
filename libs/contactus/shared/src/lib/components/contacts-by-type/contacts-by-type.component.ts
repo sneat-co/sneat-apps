@@ -13,7 +13,7 @@ import {
 	ContactNavService,
 	defaultFamilyContactGroups,
 } from '@sneat/contactus-services';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 
 @Component({
 	standalone: true,
@@ -28,7 +28,7 @@ export class ContactsByTypeComponent implements OnChanges {
 
 	//
 	@Input() filter = '';
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) team?: ISpaceContext;
 	@Input() contacts?: IIdAndBrief<IContactBrief>[];
 	@Input() goContact: (contact?: IIdAndBrief<IContactBrief>) => void = () =>
 		void 0;

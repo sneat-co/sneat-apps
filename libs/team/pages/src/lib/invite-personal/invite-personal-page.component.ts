@@ -43,7 +43,7 @@ export class InvitePersonalPageComponent implements OnInit {
 	public members?: IIdAndBrief<IContactBrief>[];
 
 	private inviteId = '';
-	private teamId = '';
+	private spaceID = '';
 
 	constructor(
 		private readonly afAuth: AngularFireAuth,
@@ -62,13 +62,13 @@ export class InvitePersonalPageComponent implements OnInit {
 	public ngOnInit() {
 		this.route.queryParamMap.subscribe((qp) => {
 			const inviteId = qp.get('id') || '';
-			const teamId = qp.get('team') || '';
+			const spaceID = qp.get('space') || '';
 			this.inviteId = inviteId;
-			this.teamId = teamId;
+			this.spaceID = spaceID;
 			if (!inviteId) {
 				this.errorLogger.logError('inviteId is not set');
 			}
-			if (!teamId) {
+			if (!spaceID) {
 				this.errorLogger.logError('teamId is not set');
 			}
 			this.sneatApiService
@@ -78,7 +78,7 @@ export class InvitePersonalPageComponent implements OnInit {
 				}>(
 					'invites/personal',
 					new HttpParams({
-						fromObject: { invite: inviteId, team: teamId },
+						fromObject: { invite: inviteId, team: spaceID },
 					}),
 				)
 				.subscribe({
@@ -107,7 +107,7 @@ export class InvitePersonalPageComponent implements OnInit {
 
 		const acceptInvite = (token?: string) => {
 			const request: IAcceptPersonalInviteRequest = {
-				teamID: this.teamId,
+				spaceID: this.spaceID,
 				inviteID: this.inviteId,
 				pin: this.pin,
 				// email: this.email,
@@ -120,7 +120,7 @@ export class InvitePersonalPageComponent implements OnInit {
 				next: (/*memberInfo*/) => {
 					console.log('Joined team');
 					this.navController
-						.navigateRoot('team', { queryParams: { id: this.teamId } })
+						.navigateRoot('team', { queryParams: { id: this.spaceID } })
 						.catch((err) => {
 							this.errorLogger.logError(
 								err,
@@ -168,14 +168,14 @@ export class InvitePersonalPageComponent implements OnInit {
 		this.rejecting = true;
 		this.working = true;
 		const request: IRejectPersonalInviteRequest = {
-			teamID: this.teamId,
+			spaceID: this.spaceID,
 			inviteID: this.inviteId,
 			pin: this.pin,
 		};
 		this.inviteService.rejectPersonalInvite(request).subscribe(
 			() => {
 				console.log('Refused to join team');
-				this.navController.navigateRoot('teams').catch((err) => {
+				this.navController.navigateRoot('spaces').catch((err) => {
 					this.errorLogger.logError(
 						err,
 						'Failed to navigate to teams page after successfully refused joining a team',

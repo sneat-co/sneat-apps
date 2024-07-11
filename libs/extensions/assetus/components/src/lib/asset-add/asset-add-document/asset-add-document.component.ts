@@ -10,7 +10,7 @@ import {
 	IAssetDocumentExtra,
 } from '@sneat/mod-assetus-core';
 import { TeamComponentBaseParams } from '@sneat/team-components';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { format, parseISO } from 'date-fns';
 import { AssetService } from '../../services';
 import { ICreateAssetRequest } from '../../services';
@@ -25,7 +25,7 @@ export class AssetAddDocumentComponent
 	extends AddAssetBaseComponent
 	implements OnChanges
 {
-	@Input() public override team?: ITeamContext;
+	@Input() public override team?: ISpaceContext;
 	@Input() public documentAsset?: IAssetDocumentContext;
 
 	documentType?: AssetVehicleType;
@@ -53,13 +53,13 @@ export class AssetAddDocumentComponent
 		if (changes['team'] && this.team) {
 			const a: IAssetContext<'document'> = this.documentAsset ?? {
 				id: '',
-				team: this.team ?? { id: '' },
+				space: this.team ?? { id: '' },
 				dbo: {
 					status: 'draft',
 					category: 'vehicle',
 					extraType: 'document',
 					extra: {},
-					teamID: this.team?.id,
+					spaceID: this.team?.id,
 					type: this.documentType,
 					title: '',
 					possession: undefined as unknown as AssetPossession,
@@ -69,7 +69,7 @@ export class AssetAddDocumentComponent
 					updatedBy: '-',
 				},
 			};
-			this.documentAsset = { ...a, team: this.team };
+			this.documentAsset = { ...a, space: this.team };
 		}
 	}
 
@@ -127,7 +127,7 @@ export class AssetAddDocumentComponent
 				status: 'active',
 				category: 'vehicle',
 			},
-			teamID: this.team?.id,
+			spaceID: this.team?.id,
 		};
 		if (this.yearOfBuild) {
 			request = {

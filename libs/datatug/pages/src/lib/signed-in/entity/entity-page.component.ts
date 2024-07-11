@@ -67,8 +67,8 @@ export class EntityPageComponent implements OnDestroy {
 					next: (entity) => {
 						console.log('entity', entity);
 						this.projEntity = entity;
-						this.entity = entity.dto; // TODO: workaround cast
-						const sourcesLen = entity.dto?.options?.sources?.length;
+						this.entity = entity.dbo; // TODO: workaround cast
+						const sourcesLen = entity.dbo?.options?.sources?.length;
 						if (!sourcesLen) {
 							this.sourceIndex = undefined;
 						} else if (
@@ -78,8 +78,8 @@ export class EntityPageComponent implements OnDestroy {
 						) {
 							this.sourceIndex = 0;
 							const source =
-								entity.dto.options?.sources &&
-								entity.dto.options?.sources[this.sourceIndex];
+								entity.dbo.options?.sources &&
+								entity.dbo.options?.sources[this.sourceIndex];
 							if (!source) {
 								return;
 							}

@@ -148,7 +148,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 		this.retrospectiveService
 			.deleteRetroItem({
 				type,
-				teamID: this.teamId,
+				spaceID: this.teamId,
 				meeting: RetrospectiveStage.upcoming,
 				item: item.ID,
 			})
@@ -181,7 +181,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 				return;
 			}
 			const request: IAddRetroItemRequest = {
-				teamID: this.teamId,
+				spaceID: this.teamId,
 				meeting: RetrospectiveStage.upcoming,
 				type,
 				title,
@@ -202,7 +202,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 			if (!retroList.items) {
 				retroList.items = items;
 			}
-			// eslint-disable-next-line @typescript-eslint/naming-convention
+			 
 			items.push({ ID: '', title });
 			this.titleControl.setValue('');
 			this.retrospectiveService.addRetroItem(request).subscribe(
@@ -236,22 +236,22 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 
 	private processUserRecord(user: IRecord<IUserRecord>): void {
 		try {
-			const teamInfo = user?.dto?.teams?.[this.teamId];
+			const spaceInfo = user?.dbo?.spaces?.[this.teamId];
 			console.log(
 				`user.data.teams[${this.teamId}].retroItems:`,
 				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 				// @ts-ignore
-				teamInfo?.retroItems,
+				spaceInfo?.retroItems,
 			);
-			if (!teamInfo) {
+			if (!spaceInfo) {
 				return; // TODO: Log error & redirect to /teams
 			}
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
-			if (teamInfo.retroItems) {
+			if (spaceInfo.retroItems) {
 				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 				// @ts-ignore
-				Object.entries(teamInfo.retroItems).forEach(([itemType, items]) => {
+				Object.entries(spaceInfo.retroItems).forEach(([itemType, items]) => {
 					const retroList = this.retroLists.find((rl) => rl.id === itemType);
 					if (retroList) {
 						// eslint-disable-next-line @typescript-eslint/ban-ts-comment

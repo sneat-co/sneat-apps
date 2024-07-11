@@ -18,11 +18,7 @@ import {
 	IHappeningSlotWithID,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import {
-	HappeningService,
-	IDeleteSlotRequest,
-	ISlotRefRequest,
-} from '@sneat/team-services';
+import { HappeningService, IDeleteSlotRequest } from '@sneat/team-services';
 import { HappeningSlotFormComponent } from '../happening-slot-form/happening-slot-form.component';
 import {
 	HappeningSlotModalService,
@@ -109,12 +105,12 @@ export class HappeningSlotsComponent implements OnChanges {
 		if (!happeningID) {
 			throw new Error('!happeningID');
 		}
-		const teamID = this.happening?.team.id;
-		if (!teamID) {
+		const spaceID = this.happening?.space.id;
+		if (!spaceID) {
 			throw new Error('!teamID');
 		}
 		const request: IDeleteSlotRequest = {
-			teamID,
+			spaceID: spaceID,
 			happeningID,
 			slotID: slot.id,
 		};

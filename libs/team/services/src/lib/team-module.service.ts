@@ -23,12 +23,12 @@ export abstract class TeamModuleService<Dto> extends ModuleTeamItemService<
 		super(moduleID, 'modules', afs, undefined as unknown as SneatApiService);
 	}
 
-	watchTeamModuleRecord(teamID: string): Observable<IIdAndOptionalDbo<Dto>> {
-		const logPrefix = `watchTeamModuleEntry(teamID=${teamID}, moduleID=${this.moduleID})`;
+	watchSpaceModuleRecord(spaceID: string): Observable<IIdAndOptionalDbo<Dto>> {
+		const logPrefix = `watchTeamModuleEntry(teamID=${spaceID}, moduleID=${this.moduleID})`;
 		console.log(logPrefix);
 		const collectionRef = collection(
 			this.teamsCollection,
-			teamID,
+			spaceID,
 			'modules',
 		) as CollectionReference<Dto>;
 		return this.sfs
@@ -39,10 +39,10 @@ export abstract class TeamModuleService<Dto> extends ModuleTeamItemService<
 	}
 
 	watchBriefs<ItemBrief>(
-		teamID: string,
+		spaceID: string,
 		getBriefs: (dto?: Dto) => Readonly<Record<string, ItemBrief>>,
 	): Observable<IIdAndBrief<ItemBrief>[]> {
-		const o = this.watchTeamModuleRecord(teamID);
+		const o = this.watchSpaceModuleRecord(spaceID);
 		return o.pipe(
 			map((teamModule) => {
 				const briefs = getBriefs(teamModule?.dbo || undefined);

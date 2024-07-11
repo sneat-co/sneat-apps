@@ -3,11 +3,11 @@ import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team-components';
-import { ILogistTeamContext } from '../dto';
+import { ILogistSpaceContext } from '../dto';
 import { LogistTeamService } from '../services';
 
 export class LogistTeamBaseComponent extends TeamBaseComponent {
-	protected logistTeam?: ILogistTeamContext;
+	protected logistTeam?: ILogistSpaceContext;
 
 	constructor(
 		className: string,
@@ -20,10 +20,10 @@ export class LogistTeamBaseComponent extends TeamBaseComponent {
 
 	protected override onTeamIdChanged() {
 		super.onTeamIdChanged();
-		const team = this.team;
-		if (team?.id) {
+		const space = this.team;
+		if (space?.id) {
 			this.logistTeamService
-				.watchLogistTeamByID(team.id)
+				.watchLogistTeamByID(space.id)
 				.pipe(this.takeUntilNeeded())
 				.subscribe({
 					next: (logistTeam) => {
@@ -34,7 +34,7 @@ export class LogistTeamBaseComponent extends TeamBaseComponent {
 						this.errorLogger.logError(err, 'failed to load logist team', {
 							show: !('' + err).includes('Missing or insufficient permissions'), // TODO: fix & handle properly
 						});
-						this.logistTeam = { id: team.id };
+						this.logistTeam = { id: space.id };
 					},
 				});
 		}

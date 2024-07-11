@@ -1,4 +1,4 @@
-import { ITitledRecord, IWithTeamIDs, Period } from '@sneat/dto';
+import { ITitledRecord, IWithSpaceIDs, Period } from '@sneat/dto';
 
 export type LiabilityType =
 	| 'salary'
@@ -35,7 +35,7 @@ export type ServiceCategory = 'service' | 'tax';
 
 export type LiabilityDirection = 'expense' | 'income';
 
-export interface DtoLiability extends IWithTeamIDs, ITitledRecord {
+export interface DtoLiability extends IWithSpaceIDs, ITitledRecord {
 	// memberId?: string;
 	// contactId?: string;
 	// assetId?: string;

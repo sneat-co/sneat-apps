@@ -112,8 +112,8 @@ export class EmailLoginFormComponent {
 			return;
 		}
 		this.teamTitle = this.teamTitle.trim();
-		const teamTitle = this.teamTitle;
-		if (this.appInfo.requiredTeamType && !teamTitle) {
+		const spaceTitle = this.teamTitle;
+		if (this.appInfo.requiredTeamType && !spaceTitle) {
 			alert('Company title is a required field');
 			this.setFocusToTeamTitle();
 			return;
@@ -143,7 +143,7 @@ export class EmailLoginFormComponent {
 						team: this.appInfo.requiredTeamType
 							? {
 									type: this.appInfo.requiredTeamType,
-									title: teamTitle,
+									title: spaceTitle,
 								}
 							: undefined,
 					};

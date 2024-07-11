@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { excludeEmpty } from '@sneat/core';
 import { IContactContext, ContactRole } from '@sneat/contactus-core';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { IOrdersFilter, OrderDirection } from '../../../dto';
 
 @Component({
@@ -9,7 +9,7 @@ import { IOrdersFilter, OrderDirection } from '../../../dto';
 	templateUrl: 'orders-filter.component.html',
 })
 export class OrdersFilterComponent {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) team?: ISpaceContext;
 
 	@Output() readonly filterChange = new EventEmitter<IOrdersFilter>();
 

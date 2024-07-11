@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { IMeetingMember } from '@sneat/meeting';
 import { IRecord } from '@sneat/data';
-import { ITeamDto, MemberRoleEnum } from '@sneat/team-models';
+import { ISpaceDbo, MemberRoleEnum } from '@sneat/team-models';
 import { IRetrospective } from '@sneat/scrumspace/scrummodels';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
@@ -42,9 +42,9 @@ export class RetroMembersComponent implements OnChanges {
 		console.log('ngOnChanges', this.team, this.retrospective);
 		try {
 			if (changes.retrospective) {
-				const retrospective = this.retrospective?.dto;
+				const retrospective = this.retrospective?.dbo;
 				if (retrospective) {
-					const members = this.retrospective?.dto?.members;
+					const members = this.retrospective?.dbo?.members;
 					if (members) {
 						this.participants = members.filter((m) =>
 							m.roles?.includes(MemberRoleEnum.contributor),
@@ -57,12 +57,12 @@ export class RetroMembersComponent implements OnChanges {
 			}
 			if (changes.team) {
 				// Check for this.retrospective?.data?.userIDs is not great
-				if (this.team?.dto && !this.retrospective?.dto?.userIDs) {
-					const { dto } = this.team;
-					this.participants = dto.members?.filter((m) =>
+				if (this.team?.dbo && !this.retrospective?.dbo?.userIDs) {
+					const { dbo } = this.team;
+					this.participants = dbo.members?.filter((m) =>
 						m.roles?.includes(MemberRoleEnum.contributor),
 					);
-					this.spectators = dto.members?.filter((m) =>
+					this.spectators = dbo.members?.filter((m) =>
 						m.roles?.includes(MemberRoleEnum.spectator),
 					);
 				}

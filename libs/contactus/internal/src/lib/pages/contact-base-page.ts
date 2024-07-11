@@ -47,11 +47,11 @@ export abstract class ContactBasePage extends TeamItemPageBaseComponent<
 		if (!this.item?.id) {
 			return throwError(() => new Error('no contact context'));
 		}
-		const team = this.team;
-		if (!team) {
+		const space = this.team;
+		if (!space) {
 			return throwError(() => new Error('no team context'));
 		}
-		return this.contactService.watchContactById(team, this.item?.id);
+		return this.contactService.watchContactById(space, this.item?.id);
 		// .pipe(this.takeUntilNeeded(), takeUntil(this.teamIDChanged$))
 	}
 

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { TeamDaysProvider } from '../../../../services/team-days-provider';
 import { ISlotUIContext } from '@sneat/extensions/schedulus/shared';
 
@@ -8,7 +8,7 @@ import { ISlotUIContext } from '@sneat/extensions/schedulus/shared';
 	templateUrl: 'calendar-week-tab.component.html',
 })
 export class CalendarWeekTabComponent {
-	@Input() team: ITeamContext = { id: '' };
+	@Input() team: ISpaceContext = { id: '' };
 	@Input() teamDaysProvider?: TeamDaysProvider;
 	@Output() readonly slotClicked = new EventEmitter<{
 		slot: ISlotUIContext;

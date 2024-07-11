@@ -16,7 +16,7 @@ export interface IHappeningAdjustment {
 }
 
 export interface ICalendarDayBrief {
-	readonly teamID: string;
+	readonly spaceID: string;
 	readonly date: string;
 	readonly happeningIDs?: string[];
 	readonly happeningAdjustments: Readonly<Record<string, IHappeningAdjustment>>;

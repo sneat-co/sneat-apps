@@ -1,9 +1,9 @@
-import { IInviteTeam } from '@sneat/team-models';
+import { IInviteSpace } from '@sneat/team-models';
 import { IMemberBrief } from '../dto';
 import { IInviteFromContact, IInviteToContact } from './requests';
 
-export interface IJoinTeamInfoResponse {
-	team: IInviteTeam;
+export interface IJoinSpaceInfoResponse {
+	space: IInviteSpace;
 	invite: {
 		id: string;
 		pin: string;

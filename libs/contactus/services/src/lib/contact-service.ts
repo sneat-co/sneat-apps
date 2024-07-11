@@ -12,9 +12,9 @@ import {
 	ICreateContactRequest,
 } from '@sneat/contactus-core';
 import {
-	ITeamContext,
-	ITeamItemWithBriefAndDto,
-	ITeamItemWithOptionalBriefAndOptionalDto,
+	ISpaceContext,
+	ISpaceItemWithBriefAndDbo,
+	ISpaceItemWithOptionalBriefAndOptionalDbo,
 } from '@sneat/team-models';
 import { ModuleTeamItemService } from '@sneat/team-services';
 import { ContactusTeamService } from './contactus-team.service';
@@ -26,6 +26,12 @@ import {
 	IUpdateContactRequest,
 	validateContactRequest,
 } from './dto';
+
+export interface IChangeMemberRoleRequest {
+	readonly spaceID: string;
+	readonly contactID: string;
+	readonly role: MemberRole;
+}
 
 @Injectable()
 export class ContactService extends ModuleTeamItemService<
@@ -43,11 +49,11 @@ export class ContactService extends ModuleTeamItemService<
 	}
 
 	public createContact(
-		team: ITeamContext,
+		team: ISpaceContext,
 		request: ICreateContactRequest,
 		endpoint = 'contactus/create_contact',
-	): Observable<ITeamItemWithBriefAndDto<IContactBrief, IContactDto>> {
-		return this.createTeamItem(endpoint, team, request);
+	): Observable<ISpaceItemWithBriefAndDbo<IContactBrief, IContactDto>> {
+		return this.createSpaceItem(endpoint, team, request);
 	}
 
 	public deleteContact(request: IContactRequest): Observable<void> {
@@ -59,23 +65,16 @@ export class ContactService extends ModuleTeamItemService<
 	}
 
 	public setContactsStatus(
-		status: 'archived' | 'active',
-		teamID: string,
-		contactIDs: readonly string[],
+		request: ISetContactsStatusRequest,
 	): Observable<void> {
-		if (!contactIDs?.length) {
+		if (!request.contactIDs?.length) {
 			return throwError(() => 'at least 1 contact is required');
 		}
-		const request: ISetContactsStatusRequest = {
-			teamID,
-			status,
-			contactIDs,
-		};
 		return this.sneatApiService.post('contactus/set_contacts_status', request);
 	}
 
 	watchContactsWithRole(
-		team: ITeamContext,
+		team: ISpaceContext,
 		role: string,
 		status: 'active' | 'archived' = 'active',
 		filter?: readonly IFilter[],
@@ -88,7 +87,7 @@ export class ContactService extends ModuleTeamItemService<
 	}
 
 	watchTeamContacts(
-		team: ITeamContext,
+		team: ISpaceContext,
 		status: 'active' | 'archived' = 'active',
 		filter?: readonly IFilter[],
 	): Observable<IIdAndBriefAndOptionalDto<IContactBrief, IContactDto>[]> {
@@ -105,20 +104,20 @@ export class ContactService extends ModuleTeamItemService<
 			},
 			...(filter || []),
 		];
-		return this.watchModuleTeamItemsWithTeamRef<IContactDto>(team, { filter });
+		return this.watchModuleSpaceItemsWithTeamRef<IContactDto>(team, { filter });
 	}
 
 	watchContactById(
-		team: ITeamContext,
+		space: ISpaceContext,
 		contactID: string,
 	): Observable<
-		ITeamItemWithOptionalBriefAndOptionalDto<IContactBrief, IContactDto>
+		ISpaceItemWithOptionalBriefAndOptionalDbo<IContactBrief, IContactDto>
 	> {
-		return this.watchTeamItemByIdWithTeamRef(team, contactID);
+		return this.watchTeamItemByIdWithTeamRef(space, contactID);
 	}
 
 	watchContactsByRole(
-		team: ITeamContext,
+		team: ISpaceContext,
 		filter?: IContactsFilter,
 	): Observable<IContactContext[]> {
 		console.log('watchContactsByRole, filter:', filter);
@@ -135,11 +134,11 @@ export class ContactService extends ModuleTeamItemService<
 				value: filter.role,
 			});
 		}
-		return this.watchModuleTeamItemsWithTeamRef(team, { filter: f });
+		return this.watchModuleSpaceItemsWithTeamRef(team, { filter: f });
 	}
 
 	watchChildContacts(
-		team: ITeamContext,
+		team: ISpaceContext,
 		id: string,
 		filter: IContactsFilter = { status: 'active' },
 	): Observable<IContactContext[]> {
@@ -157,20 +156,14 @@ export class ContactService extends ModuleTeamItemService<
 				value: filter.role,
 			});
 		}
-		return this.watchModuleTeamItemsWithTeamRef(team, { filter: f });
+		return this.watchModuleSpaceItemsWithTeamRef(team, { filter: f });
 	}
 
 	public changeContactRole(
-		teamID: string,
-		contactID: string,
-		role: MemberRole,
+		request: IChangeMemberRoleRequest,
 	): Observable<void> {
 		return this.sneatApiService
-			.post(`contactus/change_member_role`, {
-				teamID,
-				contactID,
-				role,
-			})
+			.post(`contactus/change_member_role`, request)
 			.pipe(
 				map(() => {
 					return;
@@ -180,9 +173,9 @@ export class ContactService extends ModuleTeamItemService<
 
 	public removeTeamMember(
 		request: IContactRequestWithOptionalMessage,
-	): Observable<ITeamContext> {
+	): Observable<ISpaceContext> {
 		console.log(
-			`removeTeamMember(teamID=${request.teamID}, contactID=${request.contactID})`,
+			`removeTeamMember(teamID=${request.spaceID}, contactID=${request.contactID})`,
 		);
 		try {
 			validateContactRequest(request);

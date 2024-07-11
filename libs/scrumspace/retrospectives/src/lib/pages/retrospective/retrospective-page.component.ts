@@ -49,7 +49,7 @@ export class RetrospectivePageComponent
 	}
 
 	public showPersonalFeedback(): boolean {
-		const stage = this.retrospective?.dto?.stage;
+		const stage = this.retrospective?.dbo?.stage;
 		return (
 			stage === RetrospectiveStage.upcoming ||
 			stage === RetrospectiveStage.feedback
@@ -104,7 +104,7 @@ export class RetrospectivePageComponent
 							case RetrospectiveStage.upcoming:
 								this.retrospective = {
 									id,
-									dto: {
+									dbo: {
 										stage: RetrospectiveStage.upcoming,
 										userIDs: undefined,
 									},
@@ -141,13 +141,13 @@ export class RetrospectivePageComponent
 					if (id === RetrospectiveStage.upcoming) {
 						return;
 					}
-					const teamId = this.team.id;
+					const spaceID = this.team.id;
 					this.retroSub = this.retrospectiveService
-						.watchRetro(teamId, id)
-						.pipe(takeUntil(this.destroyed$.asObservable())) // TODO(StackOverflow): Do we need .asObservable() here?
+						.watchRetro(spaceID, id)
+						.pipe(takeUntil(this.destroyed$)) // TODO(StackOverflow): Do we need .asObservable() here?
 						.subscribe({
 							next: (retrospective) =>
-								this.setRetro(teamId, { id, dto: retrospective }),
+								this.setRetro(spaceID, { id, dbo: retrospective }),
 							error: (e) => this.logError(e, 'Failed to watch retrospective'),
 						});
 				} catch (e) {

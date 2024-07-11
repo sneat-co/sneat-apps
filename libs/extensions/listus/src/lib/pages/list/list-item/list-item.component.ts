@@ -4,7 +4,7 @@ import { IonicModule, IonItemSliding } from '@ionic/angular';
 import { listItemAnimations } from '@sneat/core';
 import { IListItemBrief } from '../../../dto';
 import { IListContext } from '../../../contexts';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { ListusComponentBaseParams } from '../../../listus-component-base-params';
 import {
 	IListItemIDsRequest,
@@ -37,7 +37,7 @@ export class ListItemComponent {
 
 	@Input()
 	public listItemWithUiState?: IListItemWithUiState;
-	@Input() public team?: ITeamContext; // TODO: remove?
+	@Input() public team?: ISpaceContext; // TODO: remove?
 	@Input() list?: IListContext;
 	@Output()
 	public readonly itemClicked = new EventEmitter<IListItemBrief>();
@@ -115,7 +115,7 @@ export class ListItemComponent {
 				return;
 			}
 			const request: ISetListItemsIsComplete = {
-				teamID: this.team.id,
+				spaceID: this.team.id,
 				listID: this.list.id,
 				// listType: this.list.brief.type,
 				itemIDs: [item.brief.id],
@@ -159,7 +159,7 @@ export class ListItemComponent {
 			return;
 		}
 		const request: IListItemIDsRequest = {
-			teamID: this.team?.id,
+			spaceID: this.team?.id,
 			listID: this.list?.id,
 			// listType: this.list?.brief?.type,
 			itemIDs: [item.id],

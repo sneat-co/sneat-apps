@@ -231,7 +231,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		if (item.subListId) {
 			const path = item.subListType === 'recipes' ? 'recipe' : 'list';
 			this.teamNav
-				.navigateForwardToTeamPage(this.team, path, {
+				.navigateForwardToSpacePage(this.team, path, {
 					state: { list: this.list, listItem: item },
 				})
 				.catch(this.errorLogger.logError);
@@ -256,7 +256,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 				return;
 			}
 			const request: IReorderListItemsRequest = {
-				teamID: this.team.id,
+				spaceID: this.team.id,
 				listID: this.list.id,
 				// listType: this.list.brief?.type,
 				itemIDs: [movingItem.brief.id],
@@ -404,7 +404,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			return;
 		}
 		const request: IDeleteListItemsRequest = {
-			teamID: this.team.id,
+			spaceID: this.team.id,
 			listID: this.list.id,
 			// listType: this.list.brief.type,
 			itemIDs: deletingItems.map((li) => li.brief.id),
@@ -426,7 +426,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			return;
 		}
 		const request: ISetListItemsIsComplete = {
-			teamID: this.team.id,
+			spaceID: this.team.id,
 			listID: this.list.id,
 			// listType: this.list.brief.type,
 			isDone: false,

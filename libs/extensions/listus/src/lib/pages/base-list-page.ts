@@ -1,6 +1,6 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { emptyTimestamp } from '@sneat/dto';
-import { IListBrief, IListDto, IMovie, ListType } from '../dto';
+import { IListBrief, IListDbo, IMovie, ListType } from '../dto';
 import { IListContext } from '../contexts';
 import { TeamItemPageBaseComponent } from '@sneat/team-components';
 import { Observable } from 'rxjs';
@@ -9,7 +9,7 @@ import { ListusComponentBaseParams } from '../listus-component-base-params';
 
 export abstract class BaseListPage extends TeamItemPageBaseComponent<
 	IListBrief,
-	IListDto
+	IListDbo
 > {
 	protected list?: IListContext;
 	protected listGroupTitle?: string;
@@ -78,7 +78,7 @@ export abstract class BaseListPage extends TeamItemPageBaseComponent<
 		}
 		const url = `space/${this.team.id}`;
 		this.teamParams.teamNavService
-			.navigateForwardToTeamPage(this.team, url, {
+			.navigateForwardToSpacePage(this.team, url, {
 				state: {
 					list: this.list,
 					listItem: movie,
@@ -105,7 +105,7 @@ export abstract class BaseListPage extends TeamItemPageBaseComponent<
 							type: this.listType,
 							title,
 						},
-						team: this.team,
+						space: this.team,
 					});
 				}
 

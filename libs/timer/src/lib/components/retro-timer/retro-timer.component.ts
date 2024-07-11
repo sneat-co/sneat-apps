@@ -6,7 +6,7 @@ import {
 	OnDestroy,
 	SimpleChanges,
 } from '@angular/core';
-import { ITeamDto } from '@sneat/dto';
+import { ISpaceDbo } from '@sneat/dto';
 import { ITimerState, Timer, TimerFactory } from '@sneat/meeting';
 import {
 	IRetrospectiveRequest,
@@ -26,7 +26,7 @@ import { secondsToStr } from '@sneat/datetime';
 	templateUrl: './retro-timer.component.html',
 })
 export class RetroTimerComponent implements OnDestroy, OnChanges {
-	@Input() public team?: IRecord<ITeamDto>;
+	@Input() public team?: IRecord<ISpaceDbo>;
 	@Input() retrospective?: IRecord<IRetrospective>;
 
 	public timer?: Timer;
@@ -61,7 +61,7 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 		if (changes['team'] || changes['retrospective']) {
 			if (this.team?.id && this.retrospective?.id) {
 				if (
-					this.timer?.teamId !== this.team.id ||
+					this.timer?.spaceID !== this.team.id ||
 					this.timer.meetingId !== this.retrospective.id
 				) {
 					if (this.timer) {
@@ -72,8 +72,8 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 					}
 				}
 			}
-			if (changes['retrospective'] && this.retrospective?.dto?.timer) {
-				this.timer?.updateTimerState(this.retrospective.dto.timer);
+			if (changes['retrospective'] && this.retrospective?.dbo?.timer) {
+				this.timer?.updateTimerState(this.retrospective.dbo.timer);
 			}
 		}
 	}
@@ -99,8 +99,8 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 					error: (err) =>
 						this.errorLogger.logError(err, 'Failed to start retrospective'),
 				});
-			if (this.retrospective?.dto) {
-				this.retrospective.dto.stage = RetrospectiveStage.feedback;
+			if (this.retrospective?.dbo) {
+				this.retrospective.dbo.stage = RetrospectiveStage.feedback;
 			}
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to start retrospective');
@@ -114,7 +114,7 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 			if (!this.timer) {
 				this.createTimer();
 			}
-			this.timer?.updateTimerState(retrospective.dto?.timer);
+			this.timer?.updateTimerState(retrospective.dbo?.timer);
 		} catch (e) {
 			this.errorLogger.logError(
 				e,
@@ -203,6 +203,6 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 		if (!this.retrospective) {
 			throw new Error('!this.retrospective');
 		}
-		return { teamID: this.team.id, meeting: this.retrospective.id };
+		return { spaceID: this.team.id, meeting: this.retrospective.id };
 	}
 }

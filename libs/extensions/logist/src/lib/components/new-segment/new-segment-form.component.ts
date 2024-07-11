@@ -36,7 +36,7 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 	byContact?: IContactContext;
 	fromContact?: IContactContext = {
 		id: '',
-		team: { id: '' },
+		space: { id: '' },
 		brief: { type: 'company', title: '', roles: ['port'] },
 	};
 	toContact?: IContactContext;
@@ -125,7 +125,7 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 			const toPort = toPorts[0];
 			this.toContact = {
 				id: toPort.contactID,
-				team: this.order.team,
+				space: this.order.space,
 				brief: {
 					type: 'company',
 					countryID: toPort.countryID,
@@ -143,7 +143,7 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 			alert('order is required');
 			return;
 		}
-		if (!this.order.team) {
+		if (!this.order.space) {
 			alert('team is required');
 			return;
 		}
@@ -179,7 +179,7 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 
 		const request: IAddSegmentsRequest = excludeEmpty({
 			orderID: this.order.id,
-			teamID: this.order.team?.id,
+			spaceID: this.order.space?.id,
 			containers: this.selectedContainers.map((c) => ({
 				id: c.id,
 				tasks: c.tasks || [],

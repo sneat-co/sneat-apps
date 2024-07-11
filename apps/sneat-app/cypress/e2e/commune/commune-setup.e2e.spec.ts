@@ -20,7 +20,7 @@
 // 	});
 //
 // 	it('should create a new team', () => {
-// 		cy.intercept('POST', 'v0/teams/create_team', (req) => {
+// 		cy.intercept('POST', 'v0/teams/create_space', (req) => {
 // 			req.body.title = 'something-title';
 // 			req.continue();
 // 		}).as('createNewTeam');

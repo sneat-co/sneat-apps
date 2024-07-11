@@ -1,9 +1,9 @@
 <ion-header>
 	<ion-toolbar color="light">
-		<ion-title *ngIf="inviteInfo?.team?.type !== 'family'"
+		<ion-title *ngIf="inviteInfo?.space?.type !== 'family'"
 			>Join team &#64; Sneat.app
 		</ion-title>
-		<ion-title *ngIf="inviteInfo?.team?.type === 'family'"
+		<ion-title *ngIf="inviteInfo?.space?.type === 'family'"
 			>Join family &#64; Sneat.app
 		</ion-title>
 	</ion-toolbar>
@@ -14,7 +14,7 @@
 		<ion-card-content *ngIf="userOwnInvite; else notUserOwnInvite">
 			<p>
 				You've invited <b>{{ inviteInfo.invite.to.title }}</b> to join
-				<b>{{ inviteInfo.team.title || inviteInfo.team.type }}</b>
+				<b>{{ inviteInfo.space.title || inviteInfo.space.type }}</b>
 			</p>
 		</ion-card-content>
 		<ng-template #notUserOwnInvite>
@@ -23,19 +23,19 @@
 					Hello <b>{{ inviteInfo.invite.to.title }}</b
 					>,
 				</p>
-				<p *ngIf="inviteInfo.team.title; else noTeamTitle">
+				<p *ngIf="inviteInfo.space.title; else noTeamTitle">
 					You've been invited by <b>{{ inviteInfo.invite.from.title }}</b> to
-					join team {{ inviteInfo.team.title }}
+					join team {{ inviteInfo.space.title }}
 				</p>
 				<ng-template #noTeamTitle>
 					You've been invited by <b>{{ inviteInfo.invite.from.title }}</b> to
-					join {{ inviteInfo.team.type }} space &#64;
+					join {{ inviteInfo.space.type }} space &#64;
 					<a href="https://sneat.app" target="_blank">Sneat.app</a>
 				</ng-template>
 			</ion-card-content>
 		</ng-template>
 	</ion-card>
-	<p *ngIf="!inviteInfo?.team">
+	<p *ngIf="!inviteInfo?.space">
 		<ion-spinner name="lines-small" color="medium" />
 		Loading...
 	</p>
@@ -104,10 +104,10 @@
 			>
 				<ion-icon name="enter-outline" slot="end" />
 				@if (status === "joining") {
-					Joining {{ inviteInfo?.team?.type || "team" }}...
+					Joining {{ inviteInfo?.space?.type || "team" }}...
 					<ion-spinner name="lines-small" />
 				} @else {
-					Join {{ inviteInfo?.team?.type || "team" }}
+					Join {{ inviteInfo?.space?.type || "team" }}
 				}
 			</ion-button>
 			<ion-button
@@ -118,7 +118,7 @@
 				>or
 			</ion-button>
 			<ion-button
-				*ngIf="inviteInfo?.team"
+				*ngIf="inviteInfo?.space"
 				[disabled]="status !== 'reviewing' || userOwnInvite"
 				fill="clear"
 				color="secondary"
@@ -130,7 +130,7 @@
 			</ion-button>
 			<p class="ion-padding-top" *ngIf="authStatus === 'notAuthenticated'">
 				You would need to sign-in to join the
-				{{ inviteInfo?.team?.type || "team" }}.
+				{{ inviteInfo?.space?.type || "team" }}.
 			</p>
 
 			<p class="ion-padding-top" *ngIf="userOwnInvite">

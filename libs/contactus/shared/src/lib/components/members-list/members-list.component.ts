@@ -29,8 +29,8 @@ import {
 	InviteModalModule,
 } from '@sneat/team-components';
 import { ContactService } from '@sneat/contactus-services';
-import { IContactusTeamDtoAndID } from '@sneat/contactus-core';
-import { ITeamContext } from '@sneat/team-models';
+import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
+import { ISpaceContext } from '@sneat/team-models';
 import { TeamNavService } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { ContactRoleBadgesComponent } from '../contact-role-badges/contact-role-badges.component';
@@ -56,7 +56,7 @@ import { InlistAgeGroupComponent } from '../inlist-options/inlist-age-group.comp
 // TODO: Is it deprecated and should we migrated to Contacts list?
 export class MembersListComponent implements OnChanges {
 	private selfRemove?: boolean;
-	@Input() public team?: ITeamContext;
+	@Input() public team?: ISpaceContext;
 	@Input() public members?: readonly IIdAndBrief<IContactBrief>[];
 	@Input() public role?: string;
 	@Output() selfRemoved = new EventEmitter<void>();
@@ -70,7 +70,7 @@ export class MembersListComponent implements OnChanges {
 	// Holds filtered entries, use `allMembers` to pass input
 	public membersToDisplay?: readonly IIdAndBrief<IContactBrief>[];
 
-	protected contactusTeam?: IContactusTeamDtoAndID;
+	protected contactusTeam?: IContactusSpaceDboAndID;
 
 	constructor(
 		private readonly navService: TeamNavService,
@@ -86,10 +86,10 @@ export class MembersListComponent implements OnChanges {
 	}
 
 	protected isAgeOptionsVisible(member: IIdAndBrief<IContactBrief>): boolean {
-		const teamDto = this.team?.dbo;
+		const spaceDbo = this.team?.dbo;
 		// console.log('MembersListComponent.isAgeOptionsVisible()', member, teamDto);
 		return (
-			teamDto?.type === 'family' &&
+			spaceDbo?.type === 'family' &&
 			member.brief?.type === 'person' &&
 			(!member.brief?.ageGroup || member.brief?.ageGroup === 'unknown')
 		);
@@ -120,8 +120,10 @@ export class MembersListComponent implements OnChanges {
 		if (!member?.id) {
 			throw new Error('!member?.id');
 		}
-		const memberWithTeamRef = { ...member, team: this.team };
-		this.navService.navigateToMember(this.navController, memberWithTeamRef);
+		this.navService.navigateToMember(this.navController, {
+			...member,
+			space: this.team,
+		});
 		return false;
 	}
 
@@ -150,10 +152,10 @@ export class MembersListComponent implements OnChanges {
 		console.log('MembersListComponent.goSchedule()');
 		event.stopPropagation();
 		event.preventDefault();
-		const team = this.team;
-		if (team) {
+		const space = this.team;
+		if (space) {
 			this.scheduleNavService
-				.goSchedule(team, { member: contact.id })
+				.goSchedule(space, { member: contact.id })
 				.catch(
 					this.errorLogger.logErrorHandler(
 						"failed to navigate to member's schedule page",
@@ -169,12 +171,12 @@ export class MembersListComponent implements OnChanges {
 			return;
 		}
 		this.selfRemove = member.brief?.userID === this.userService.currentUserID;
-		const teamID = this.team.id;
+		const spaceID = this.team.id;
 		this.contactService
-			.removeTeamMember({ teamID, contactID: member.id })
+			.removeTeamMember({ spaceID: spaceID, contactID: member.id })
 			.subscribe({
 				next: (team) => {
-					if (teamID !== this.team?.id) {
+					if (spaceID !== this.team?.id) {
 						return;
 					}
 					this.team = team;

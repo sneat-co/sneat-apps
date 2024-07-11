@@ -13,7 +13,7 @@ import { IIdAndOptionalBriefAndOptionalDbo } from '@sneat/core';
 import { QuerySnapshot, QueryOrderByConstraint } from 'firebase/firestore';
 import { WhereFilterOp } from '@firebase/firestore-types';
 import { INavContext } from '@sneat/core';
-import { from, map, Observable, Subject, tap } from 'rxjs';
+import { from, map, Observable, Subject } from 'rxjs';
 
 export interface IFilter {
 	readonly field: string;
@@ -27,12 +27,12 @@ export interface IQueryArgs {
 	readonly orderBy?: readonly QueryOrderByConstraint[];
 }
 
-export class SneatFirestoreService<Brief, Dto extends Brief> {
+export class SneatFirestoreService<Brief, Dbo extends Brief> {
 	constructor(
 		// private readonly afs: AngularFirestore,
-		private readonly dto2brief: (id: string, dto: Dto) => Brief = (
+		private readonly dto2brief: (id: string, dto: Dbo) => Brief = (
 			id: string,
-			dto: Dto,
+			dto: Dbo,
 		) => ({
 			...(dto as unknown as Brief),
 			id,
@@ -43,26 +43,26 @@ export class SneatFirestoreService<Brief, Dto extends Brief> {
 		}
 	}
 
-	watchByID<Dto2 extends Dto>(
-		collection: CollectionReference<Dto2>,
+	watchByID<Dbo2 extends Dbo>(
+		collection: CollectionReference<Dbo2>,
 		id: string,
-	): Observable<IIdAndOptionalBriefAndOptionalDbo<Brief, Dto2>> {
+	): Observable<IIdAndOptionalBriefAndOptionalDbo<Brief, Dbo2>> {
 		return this.watchByDocRef(doc(collection, id));
 	}
 
-	watchByDocRef<Dto2 extends Dto>(
-		docRef: DocumentReference<Dto2>,
-	): Observable<IIdAndOptionalBriefAndOptionalDbo<Brief, Dto2>> {
+	watchByDocRef<Dbo2 extends Dbo>(
+		docRef: DocumentReference<Dbo2>,
+	): Observable<IIdAndOptionalBriefAndOptionalDbo<Brief, Dbo2>> {
 		console.log(`SneatFirestoreService.watchByDocRef(${docRef.path})`, docRef);
-		const subj = new Subject<DocumentSnapshot<Dto2>>();
-		// const snapshots = docSnapshots<Dto2>(docRef);
+		const subj = new Subject<DocumentSnapshot<Dbo2>>();
+		// const snapshots = docSnapshots<Dbo2>(docRef);
 		onSnapshot(
 			docRef,
 			(snapshot) => subj.next(snapshot),
 			(err) => subj.error(err),
 			() => subj.complete(),
 		);
-		// const snapshots = from(getDoc<Dto2>(docRef));
+		// const snapshots = from(getDoc<Dbo2>(docRef));
 		return subj.asObservable().pipe(
 			// tap((snapshot) =>
 			// 	console.log(
@@ -71,26 +71,26 @@ export class SneatFirestoreService<Brief, Dto extends Brief> {
 			// 	),
 			// ),
 			map((changes) =>
-				docSnapshotToDto<Brief, Dto2>(docRef.id, this.dto2brief, changes),
+				docSnapshotToDto<Brief, Dbo2>(docRef.id, this.dto2brief, changes),
 			),
 		);
 	}
 
-	getByDocRef<Dto2 extends Dto>(
-		docRef: DocumentReference<Dto2>,
-	): Observable<INavContext<Brief, Dto2>> {
+	getByDocRef<Dbo2 extends Dbo>(
+		docRef: DocumentReference<Dbo2>,
+	): Observable<INavContext<Brief, Dbo2>> {
 		console.log(`SneatFirestoreService.watchByDocRef(${docRef.path})`);
 		return from(getDoc(docRef)).pipe(
 			map((changes) =>
-				docSnapshotToDto<Brief, Dto2>(docRef.id, this.dto2brief, changes),
+				docSnapshotToDto<Brief, Dbo2>(docRef.id, this.dto2brief, changes),
 			),
 		);
 	}
 
-	watchSnapshotsByFilter<Dto2 extends Dto>(
-		collectionRef: CollectionReference<Dto2>,
+	watchSnapshotsByFilter<Dbo2 extends Dbo>(
+		collectionRef: CollectionReference<Dbo2>,
 		queryArgs?: IQueryArgs,
-	): Observable<QuerySnapshot<Dto2>> {
+	): Observable<QuerySnapshot<Dbo2>> {
 		const operator = (f: IFilter) =>
 			f.field.endsWith('IDs') ? 'array-contains' : f.operator;
 		const q = query(
@@ -102,15 +102,15 @@ export class SneatFirestoreService<Brief, Dto extends Brief> {
 			...(queryArgs?.limit ? [limit(queryArgs.limit)] : []),
 		);
 		console.log('watchSnapshotsByFilter()', collectionRef.path, queryArgs, q);
-		const subj = new Subject<QuerySnapshot<Dto2>>();
+		const subj = new Subject<QuerySnapshot<Dbo2>>();
 		onSnapshot(q, subj);
 		return subj;
 	}
 
-	watchByFilter<Dto2 extends Dto>(
-		collectionRef: CollectionReference<Dto2>,
+	watchByFilter<Dbo2 extends Dbo>(
+		collectionRef: CollectionReference<Dbo2>,
 		queryArgs?: IQueryArgs,
-	): Observable<INavContext<Brief, Dto2>[]> {
+	): Observable<INavContext<Brief, Dbo2>[]> {
 		return this.watchSnapshotsByFilter(collectionRef, queryArgs).pipe(
 			map((querySnapshot) => {
 				console.log(
@@ -123,36 +123,36 @@ export class SneatFirestoreService<Brief, Dto extends Brief> {
 		);
 	}
 
-	docSnapshotsToContext<Dto2 extends Dto>(
-		docSnapshots: DocumentSnapshot<Dto2>[],
-	): INavContext<Brief, Dto2>[] {
+	docSnapshotsToContext<Dbo2 extends Dbo>(
+		docSnapshots: DocumentSnapshot<Dbo2>[],
+	): INavContext<Brief, Dbo2>[] {
 		return docSnapshots.map((doc) => {
 			return this.docSnapshotToContext(doc);
 		});
 	}
 
-	docSnapshotToContext<Dto2 extends Dto>(
-		doc: DocumentSnapshot<Dto2>,
-	): INavContext<Brief, Dto2> {
+	docSnapshotToContext<Dbo2 extends Dbo>(
+		doc: DocumentSnapshot<Dbo2>,
+	): INavContext<Brief, Dbo2> {
 		const { id } = doc;
-		const dto: Dto2 | undefined = doc.data();
+		const dto: Dbo2 | undefined = doc.data();
 		const brief = dto && this.dto2brief(id, dto);
 		return {
 			id,
 			dto,
 			brief,
-		} as unknown as INavContext<Brief, Dto2>; // TODO: try to remove this cast
+		} as unknown as INavContext<Brief, Dbo2>; // TODO: try to remove this cast
 	}
 }
 
-export function docSnapshotToDto<Brief, Dto extends Brief>(
+export function docSnapshotToDto<Brief, Dbo extends Brief>(
 	id: string,
-	dto2brief: (id: string, dto: Dto) => Brief,
-	docSnapshot: DocumentSnapshot<Dto>,
-): INavContext<Brief, Dto> {
+	dto2brief: (id: string, dto: Dbo) => Brief,
+	docSnapshot: DocumentSnapshot<Dbo>,
+): INavContext<Brief, Dbo> {
 	if (!docSnapshot.exists) {
 		return { id, brief: null, dbo: null };
 	}
-	const dto: Dto | undefined = docSnapshot.data();
+	const dto: Dbo | undefined = docSnapshot.data();
 	return { id, dbo: dto, brief: dto ? dto2brief(id, dto) : undefined };
 }

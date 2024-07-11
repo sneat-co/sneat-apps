@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 export type CurrencyCode = 'EUR' | 'USD';
 
 export interface ICreateDebtRecordRequest {
-	teamID: string;
+	spaceID: string;
 	contactID: string;
 	currency: CurrencyCode;
 	amount: number;

@@ -16,7 +16,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AddMetricPageComponent {
 	public team: ITeam;
-	public teamId: string;
+	public teamId?: string | null;
 
 	public title = '';
 	public type: 'bool' | 'int' | 'options' = 'bool';
@@ -36,17 +36,19 @@ export class AddMetricPageComponent {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {
 		this.min = 0;
-		const team = window?.history?.state?.team as IRecord<ITeam>;
-		if (team) {
-			this.teamId = team.id;
-			this.team = team.data;
+		const space = window?.history?.state?.space as IRecord<ITeam>;
+		if (space) {
+			this.teamId = space.id;
+			this.team = space.data;
 		} else {
-			this.teamId = route.snapshot.queryParamMap.get('team');
-			this.teamService.getTeam(this.teamId).subscribe({
-				next: (teamData) => {
-					this.team = teamData;
-				},
-			});
+			this.teamId = route.snapshot.queryParamMap.get('team') || undefined;
+			if (this.teamId) {
+				this.teamService.getTeam(this.teamId).subscribe({
+					next: (teamData) => {
+						this.team = teamData;
+					},
+				});
+			}
 		}
 	}
 

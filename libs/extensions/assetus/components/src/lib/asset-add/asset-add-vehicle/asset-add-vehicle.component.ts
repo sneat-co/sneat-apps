@@ -52,7 +52,7 @@ export class AssetAddVehicleComponent
 		if (changes['team'] && this.team) {
 			const a: IAssetVehicleContext = this.vehicleAsset ?? {
 				id: '',
-				team: this.team ?? { id: '' },
+				space: this.team ?? { id: '' },
 				dbo: {
 					status: 'draft',
 					category: 'vehicle',
@@ -63,7 +63,7 @@ export class AssetAddVehicleComponent
 						engineFuel: FuelTypes.unknown,
 						engineType: EngineTypes.unknown,
 					},
-					teamID: this.team?.id,
+					spaceID: this.team?.id,
 					type: this.vehicleType,
 					possession: 'owning',
 					createdAt: new Date().toISOString() as unknown as timestamp,
@@ -72,7 +72,7 @@ export class AssetAddVehicleComponent
 					updatedBy: '-',
 				},
 			};
-			this.vehicleAsset = { ...a, team: this.team };
+			this.vehicleAsset = { ...a, space: this.team };
 		}
 	}
 
@@ -136,7 +136,7 @@ export class AssetAddVehicleComponent
 				status: 'active',
 				category: 'vehicle',
 			},
-			teamID: this.team?.id,
+			spaceID: this.team?.id,
 		};
 		if (this.yearOfBuild) {
 			request = {

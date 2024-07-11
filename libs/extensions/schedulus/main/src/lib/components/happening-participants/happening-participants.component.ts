@@ -18,9 +18,8 @@ import {
 } from '@sneat/contactus-shared';
 import { addRelatedItem, getRelatedItemIDs } from '@sneat/dto';
 import { IHappeningContext, IHappeningBase } from '@sneat/mod-schedulus-core';
-import { contactContextFromBrief } from '@sneat/contactus-services';
-import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
-import { IContactContext, IContactusTeamDtoAndID } from '@sneat/contactus-core';
+import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
+import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import {
 	HappeningService,
 	IHappeningContactRequest,
@@ -41,8 +40,8 @@ import {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HappeningParticipantsComponent implements OnChanges {
-	@Input({ required: true }) team?: ITeamContext; // TODO: Can we get rid of this?
-	@Input({ required: true }) contactusTeam?: IContactusTeamDtoAndID;
+	@Input({ required: true }) team?: ISpaceContext; // TODO: Can we get rid of this?
+	@Input({ required: true }) contactusTeam?: IContactusSpaceDboAndID;
 	@Input({ required: true }) happening?: IHappeningContext;
 
 	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
@@ -98,7 +97,7 @@ export class HappeningParticipantsComponent implements OnChanges {
 			return;
 		}
 		const request: IHappeningContactRequest = {
-			teamID: this.team.id,
+			spaceID: this.team.id,
 			happeningID: this.happening?.id,
 			contact: { id: args.id },
 		};

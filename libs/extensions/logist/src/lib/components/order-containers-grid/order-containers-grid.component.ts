@@ -51,13 +51,13 @@ export class OrderContainersGridComponent implements OnChanges {
 				const data = row.getData() as IOrderContainerWithIndex;
 				console.log('Delete row', data);
 				const orderID = this.order?.id,
-					teamID = this.order?.team?.id;
+					teamID = this.order?.space?.id;
 				if (!orderID || !teamID) {
 					return;
 				}
 				const request: IContainerRequest = {
 					orderID,
-					teamID,
+					spaceID: teamID,
 					containerID: data.id,
 				};
 				this.orderService.deleteContainer(request).subscribe({

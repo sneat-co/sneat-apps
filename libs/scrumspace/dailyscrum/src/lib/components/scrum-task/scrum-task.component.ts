@@ -2,7 +2,7 @@ import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { IonInput, ModalController } from '@ionic/angular';
 import { SneatUserService } from '@sneat/auth-core';
 import { IRecord } from '@sneat/data';
-import { IUserDto } from '@sneat/dto';
+import { IUserDbo } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ScrumService } from '../../services/scrum.service';
 import { ITask, TaskType } from '@sneat/scrumspace/scrummodels';
@@ -22,7 +22,7 @@ export class ScrumTaskComponent implements OnInit {
 
 	public tab: 'comments' | 'thumbups' = 'comments';
 
-	public user: IRecord<IUserDto>;
+	public user: IRecord<IUserDbo>;
 
 	constructor(
 		@Inject(ErrorLogger) private errorLogger: IErrorLogger,
@@ -83,7 +83,7 @@ export class ScrumTaskComponent implements OnInit {
 		//     throw new Error('!this.task');
 		//   }
 		// const request: IAddCommentRequest = {
-		// 	teamID: this.teamID || '',
+		// 	spaceID: this.spaceID || '',
 		// 	meetingID: getMeetingIdFromDate(this.date),
 		// 	type: this.type,
 		// 	task: this.task.id,

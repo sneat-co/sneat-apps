@@ -26,8 +26,8 @@
 			</ion-label>
 		</ion-item>
 
-		@if (team?.dto?.metrics?.length) {
-			<ion-item *ngFor="let metric of team?.dto?.metrics || []">
+		@if (team?.dbo?.metrics?.length) {
+			<ion-item *ngFor="let metric of team?.dbo?.metrics || []">
 				<ion-spinner
 					slot="start"
 					name="lines-small"
@@ -74,7 +74,7 @@
 			</ion-item>
 		}
 	</ion-list>
-	<ion-card-content *ngIf="team?.dto && !team?.dto?.metrics?.length">
+	<ion-card-content *ngIf="team?.dbo && !team?.dbo?.metrics?.length">
 		<p>No metrics for your team yet.</p>
 	</ion-card-content>
 </ion-card>

@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { IIdAndBrief, IIdAndBriefAndOptionalDto } from '@sneat/core';
 import { IContactBrief, IContactDto } from '@sneat/contactus-core';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { ContactsListModule } from '../contacts-list';
 
 @Component({
@@ -14,7 +14,7 @@ import { ContactsListModule } from '../contacts-list';
 	imports: [CommonModule, IonicModule, ContactsListModule, RouterLink],
 })
 export class ContactLocationsComponent implements OnChanges {
-	@Input({ required: true }) public team?: ITeamContext;
+	@Input({ required: true }) public team?: ISpaceContext;
 	@Input({ required: true }) public contact?: IIdAndBriefAndOptionalDto<
 		IContactBrief,
 		IContactDto
@@ -24,13 +24,13 @@ export class ContactLocationsComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['contact']) {
-			const team = this.team;
-			if (!team) {
+			const space = this.team;
+			if (!space) {
 				return;
 			}
 			this.contactLocations = this.getContactLocations().map((c) => ({
 				...c,
-				team,
+				team: space,
 			}));
 		}
 	}

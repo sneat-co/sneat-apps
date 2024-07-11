@@ -1,19 +1,15 @@
 import { Directive, Inject, Input } from '@angular/core';
 import { IonItemSliding, ToastController } from '@ionic/angular';
 import { eq } from '@sneat/core';
-import {
-	IAssetContext,
-	IAssetDocumentContext,
-	IAssetDocumentExtra,
-} from '@sneat/mod-assetus-core';
+import { IAssetDocumentContext } from '@sneat/mod-assetus-core';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { ignoreElements } from 'rxjs/operators';
 
 @Directive()
 export abstract class DocumentsBaseComponent {
-	@Input() team?: ITeamContext;
+	@Input() team?: ISpaceContext;
 	@Input() allDocuments?: IAssetDocumentContext[];
 
 	public static readonly metadata = {

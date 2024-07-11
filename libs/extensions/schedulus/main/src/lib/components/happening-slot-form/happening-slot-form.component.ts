@@ -457,15 +457,15 @@ export class HappeningSlotFormComponent
 	protected saveChanges(): void {
 		console.log('saveChanges()');
 		const slot = this.getSlot();
-		const teamID = this.happening?.team?.id;
+		const spaceID = this.happening?.space?.id;
 		const happeningID = this.happening?.id;
-		if (!teamID || !happeningID || !slot) {
+		if (!spaceID || !happeningID || !slot) {
 			return;
 		}
 		let id = this.slot?.id;
 		const isNewSlot = !id;
 		const putSlot: (
-			teamID: string,
+			spaceID: string,
 			happeningID: string,
 			slot: IHappeningSlotWithID,
 		) => Observable<void> = isNewSlot
@@ -476,7 +476,7 @@ export class HappeningSlotFormComponent
 			id = this.generateSlotID();
 		}
 		this.isUpdating.set(true);
-		putSlot(teamID, happeningID, { ...slot, id }).subscribe({
+		putSlot(spaceID, happeningID, { ...slot, id }).subscribe({
 			next: () => {
 				this.modalCtrl
 					.dismiss()

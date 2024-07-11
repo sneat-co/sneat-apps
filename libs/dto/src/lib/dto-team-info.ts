@@ -1,8 +1,8 @@
-import { TeamType } from '@sneat/core';
+import { SpaceType } from '@sneat/core';
 import { IUserCommuneInfo } from '.';
 
-export interface IShortTeamInfo {
-	type: TeamType;
+export interface IShortSpaceInfo {
+	type: SpaceType;
 	id?: string;
 	// shortId?: CommuneShortId;
 	title?: string;
@@ -10,6 +10,6 @@ export interface IShortTeamInfo {
 
 export function createShortCommuneInfoFromUserCommuneInfo(
 	v: IUserCommuneInfo,
-): IShortTeamInfo {
+): IShortSpaceInfo {
 	return { id: v.id, title: v.title, /*shortId: v.shortId,*/ type: v.type };
 }

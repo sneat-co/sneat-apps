@@ -130,7 +130,7 @@ export class HappeningPriceFormComponent {
 			},
 		};
 
-		if (this.happening?.id && this.happening?.team?.id) {
+		if (this.happening?.id && this.happening?.space?.id) {
 			this.submitPrice(price);
 		} else {
 			this.addPriceToNewHappening(price);
@@ -171,18 +171,18 @@ export class HappeningPriceFormComponent {
 
 	private submitPrice(price: IHappeningPrice): void {
 		const happeningID = this.happening?.id || '';
-		const teamID = this.happening?.team?.id || '';
+		const spaceID = this.happening?.space?.id || '';
 		if (!happeningID) {
 			this.errorLogger.logError('!happeningID');
 			return;
 		}
-		if (!teamID) {
+		if (!spaceID) {
 			this.errorLogger.logError('!teamID');
 			return;
 		}
 
 		const request: IHappeningPricesRequest = {
-			teamID,
+			spaceID: spaceID,
 			happeningID,
 			prices: [price],
 		};

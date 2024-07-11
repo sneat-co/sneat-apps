@@ -1,9 +1,8 @@
 import { IFormField } from '@sneat/core';
-import { ITeamRequest } from '@sneat/team-models';
 import { IContact2Asset } from './contact2item';
 import { IContactBase } from './contact-base';
 import {
-	ITeamModuleDocRef,
+	ISpaceModuleDocRef,
 	IWithRelatedAndRelatedIDs,
 	TeamMemberType,
 } from '@sneat/dto';
@@ -44,7 +43,7 @@ export interface IRelatedRolesRequest {
 	readonly rolesToItem?: string[];
 }
 
-export interface IRelatedToRequest extends ITeamModuleDocRef {
+export interface IRelatedToRequest extends ISpaceModuleDocRef {
 	readonly add?: IRelatedRolesRequest;
 	readonly remove?: IRelatedRolesRequest;
 }

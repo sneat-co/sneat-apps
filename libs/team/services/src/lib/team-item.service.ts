@@ -6,25 +6,25 @@ import {
 } from '@angular/fire/firestore';
 import { QuerySnapshot } from '@firebase/firestore-types';
 import { IQueryArgs, SneatApiService, SneatFirestoreService } from '@sneat/api';
-import { IIdAndBriefAndDto } from '@sneat/core';
-import { ITeamDto } from '@sneat/dto';
+import { IIdAndBriefAndDbo } from '@sneat/core';
+import { ISpaceDbo } from '@sneat/dto';
 import {
-	ITeamContext,
-	ITeamItemNavContext,
-	ITeamItemWithBriefAndDto,
-	ITeamRef,
-	ITeamRequest,
+	ISpaceContext,
+	ISpaceItemNavContext,
+	ISpaceItemWithBriefAndDbo,
+	ISpaceRef,
+	SpaceRequest,
 } from '@sneat/team-models';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-type ICreateTeamItemResponse<
+type ICreateSpaceItemResponse<
 	Brief,
-	Dto extends Brief,
-> = ITeamItemWithBriefAndDto<Brief, Dto>;
+	Dbo extends Brief,
+> = ISpaceItemWithBriefAndDbo<Brief, Dbo>;
 
-abstract class TeamItemBaseService<Brief, Dto extends Brief> {
-	protected readonly sfs: SneatFirestoreService<Brief, Dto>;
+abstract class TeamItemBaseService<Brief, Dbo extends Brief> {
+	protected readonly sfs: SneatFirestoreService<Brief, Dbo>;
 
 	protected constructor(
 		public readonly collectionName: string,
@@ -37,23 +37,23 @@ abstract class TeamItemBaseService<Brief, Dto extends Brief> {
 		console.log(
 			`TeamItemBaseService.constructor() collectionName=${this.collectionName}`,
 		);
-		this.sfs = new SneatFirestoreService<Brief, Dto>();
+		this.sfs = new SneatFirestoreService<Brief, Dbo>();
 	}
 
-	protected abstract collectionRef<Dto2 extends Dto>(
-		teamID: string,
-	): CollectionReference<Dto2>;
+	protected abstract collectionRef<Dbo2 extends Dbo>(
+		spaceID: string,
+	): CollectionReference<Dbo2>;
 
-	public watchTeamItemByIdWithTeamRef<Dto2 extends Dto>(
-		team: ITeamRef,
+	public watchTeamItemByIdWithTeamRef<Dbo2 extends Dbo>(
+		space: ISpaceRef,
 		itemID: string,
-	): Observable<ITeamItemNavContext<Brief, Dto2>> {
+	): Observable<ISpaceItemNavContext<Brief, Dbo2>> {
 		console.log(
-			`TeamItemBaseService.watchTeamItemByIdWithTeamRef(team=${team.id}, itemID=${itemID}), collectionName=${this.collectionName}`,
+			`TeamItemBaseService.watchTeamItemByIdWithTeamRef(team=${space.id}, itemID=${itemID}), collectionName=${this.collectionName}`,
 		);
-		const collectionRef = this.collectionRef<Dto2>(team.id);
+		const collectionRef = this.collectionRef<Dbo2>(space.id);
 		return this.sfs.watchByID(collectionRef, itemID).pipe(
-			map((o) => ({ team, ...o })),
+			map((o) => ({ space, ...o })),
 			// tap((o) =>
 			//   console.log(
 			//     'watchTeamItemByID()',
@@ -67,26 +67,26 @@ abstract class TeamItemBaseService<Brief, Dto extends Brief> {
 		);
 	}
 
-	protected queryItems<Dto2 extends Dto>(
-		collectionRef: CollectionReference<Dto2>,
+	protected queryItems<Dbo2 extends Dbo>(
+		collectionRef: CollectionReference<Dbo2>,
 		queryArgs?: IQueryArgs,
-	): Observable<IIdAndBriefAndDto<Brief, Dto2>[]> {
-		const $querySnapshot = this.sfs.watchSnapshotsByFilter<Dto2>(
+	): Observable<IIdAndBriefAndDbo<Brief, Dbo2>[]> {
+		const $querySnapshot = this.sfs.watchSnapshotsByFilter<Dbo2>(
 			collectionRef,
 			queryArgs,
 		);
 		return $querySnapshot.pipe(
 			map((querySnapshot) => {
-				return this.mapQueryItem<Dto2>(
-					querySnapshot as unknown as QuerySnapshot<Dto2>,
+				return this.mapQueryItem<Dbo2>(
+					querySnapshot as unknown as QuerySnapshot<Dbo2>,
 				);
 			}),
 		);
 	}
 
-	protected mapQueryItem<Dto2 extends Dto>(
-		querySnapshot: QuerySnapshot<Dto2>,
-	): IIdAndBriefAndDto<Brief, Dto2>[] {
+	protected mapQueryItem<Dbo2 extends Dbo>(
+		querySnapshot: QuerySnapshot<Dbo2>,
+	): IIdAndBriefAndDbo<Brief, Dbo2>[] {
 		return querySnapshot.docs.map((docSnapshot) => {
 			const dto = docSnapshot.data();
 			const { id } = docSnapshot;
@@ -97,19 +97,19 @@ abstract class TeamItemBaseService<Brief, Dto extends Brief> {
 
 	public deleteTeamItem<Response>(
 		endpoint: string,
-		request: ITeamRequest,
+		request: SpaceRequest,
 	): Observable<Response> {
 		return this.sneatApiService.delete<Response>(endpoint, undefined, request);
 	}
 
-	public createTeamItem<Brief, Dto extends Brief>(
+	public createSpaceItem<Brief, Dbo extends Brief>(
 		endpoint: string,
-		team: ITeamContext,
-		request: ITeamRequest,
-	): Observable<ITeamItemWithBriefAndDto<Brief, Dto>> {
+		space: ISpaceContext,
+		request: SpaceRequest,
+	): Observable<ISpaceItemWithBriefAndDbo<Brief, Dbo>> {
 		console.log(`TeamItemBaseService.createTeamItem()`, request);
 		return this.sneatApiService
-			.post<ICreateTeamItemResponse<Brief, Dto>>(endpoint, request)
+			.post<ICreateSpaceItemResponse<Brief, Dbo>>(endpoint, request)
 			.pipe(
 				map((response) => {
 					if (!response) {
@@ -118,8 +118,8 @@ abstract class TeamItemBaseService<Brief, Dto extends Brief> {
 					if (!response.id) {
 						throw new Error('create team item response have no ID');
 					}
-					const item: ITeamItemWithBriefAndDto<Brief, Dto> = {
-						team,
+					const item: ISpaceItemWithBriefAndDbo<Brief, Dbo> = {
+						space,
 						id: response.id,
 						dbo: response.dbo,
 						brief: { id: response.id, ...response.dbo } as unknown as Brief,
@@ -133,8 +133,8 @@ abstract class TeamItemBaseService<Brief, Dto extends Brief> {
 // At the moment reserved to `happenings` only
 export class GlobalTeamItemService<
 	Brief,
-	Dto extends Brief,
-> extends TeamItemBaseService<Brief, Dto> {
+	Dbo extends Brief,
+> extends TeamItemBaseService<Brief, Dbo> {
 	constructor(
 		collectionName: string,
 		afs: AngularFirestore,
@@ -144,54 +144,54 @@ export class GlobalTeamItemService<
 	}
 
 	protected override collectionRef<
-		Dto2 extends Dto,
-	>(): CollectionReference<Dto2> {
+		Dbo2 extends Dbo,
+	>(): CollectionReference<Dbo2> {
 		return collection(
 			this.afs,
 			this.collectionName,
-		) as CollectionReference<Dto2>;
+		) as CollectionReference<Dbo2>;
 	}
 
-	public watchGlobalItems<Dto2 extends Dto>(
+	public watchGlobalItems<Dbo2 extends Dbo>(
 		queryArgs: IQueryArgs,
-	): Observable<IIdAndBriefAndDto<Brief, Dto2>[]> {
+	): Observable<IIdAndBriefAndDbo<Brief, Dbo2>[]> {
 		console.log('watchGlobalItems()', this.collectionName);
-		const collectionRef = this.collectionRef<Dto2>();
-		return this.queryItems<Dto2>(collectionRef, queryArgs);
+		const collectionRef = this.collectionRef<Dbo2>();
+		return this.queryItems<Dbo2>(collectionRef, queryArgs);
 	}
 
-	public watchGlobalTeamItemsWithTeamRef<Dto2 extends Dto>(
-		team: ITeamRef,
+	public watchGlobalTeamItemsWithTeamRef<Dbo2 extends Dbo>(
+		space: ISpaceRef,
 		queryArgs: IQueryArgs,
-	): Observable<ITeamItemWithBriefAndDto<Brief, Dto2>[]> {
-		return this.watchGlobalTeamItems<Dto2>(team.id, queryArgs).pipe(
-			map((items) => items.map((item) => ({ ...item, team }))),
+	): Observable<ISpaceItemWithBriefAndDbo<Brief, Dbo2>[]> {
+		return this.watchGlobalSpaceItems<Dbo2>(space.id, queryArgs).pipe(
+			map((items) => items.map((item) => ({ ...item, space }))),
 		);
 	}
 
-	public watchGlobalTeamItems<Dto2 extends Dto>(
-		teamID: string,
+	public watchGlobalSpaceItems<Dbo2 extends Dbo>(
+		spaceID: string,
 		queryArgs: IQueryArgs,
-	): Observable<IIdAndBriefAndDto<Brief, Dto2>[]> {
-		console.log('watchModuleTeamItems()', teamID, this.collectionName);
+	): Observable<IIdAndBriefAndDbo<Brief, Dbo2>[]> {
+		console.log('watchGlobalSpaceItems()', spaceID, this.collectionName);
 		queryArgs = {
 			...queryArgs,
 			filter: [
 				...(queryArgs?.filter || []),
-				{ field: 'teamIDs', operator: '==', value: teamID },
+				{ field: 'teamIDs', operator: '==', value: spaceID },
 			],
 		};
-		const collectionRef = this.collectionRef<Dto2>();
-		return this.queryItems<Dto2>(collectionRef, queryArgs);
+		const collectionRef = this.collectionRef<Dbo2>();
+		return this.queryItems<Dbo2>(collectionRef, queryArgs);
 	}
 }
 
 // intentionally not abstract
 export class ModuleTeamItemService<
 	Brief,
-	Dto extends Brief,
-> extends TeamItemBaseService<Brief, Dto> {
-	protected readonly teamsCollection: CollectionReference<ITeamDto>;
+	Dbo extends Brief,
+> extends TeamItemBaseService<Brief, Dbo> {
+	protected readonly teamsCollection: CollectionReference<ISpaceDbo>;
 
 	constructor(
 		public readonly moduleID: string,
@@ -205,90 +205,90 @@ export class ModuleTeamItemService<
 		}
 		this.teamsCollection = collection(
 			this.afs,
-			'teams',
-		) as CollectionReference<ITeamDto>;
+			'spaces',
+		) as CollectionReference<ISpaceDbo>;
 	}
 
-	protected readonly dto2brief = (id: string, dto: Dto) => ({ id, ...dto });
+	protected readonly dto2brief = (id: string, dto: Dbo) => ({ id, ...dto });
 
-	// protected teamCollection(teamID: string): AngularFirestoreCollection<ITeamDto> {
+	// protected teamCollection(spaceID: string): AngularFirestoreCollection<ITeamDto> {
 	// 	return this.afs.collection('teams');
 	// }
 
-	protected override collectionRef<Dto2 extends Dto>(
-		teamID: string,
-	): CollectionReference<Dto2> {
-		if (!teamID) {
+	protected override collectionRef<Dbo2 extends Dbo>(
+		spaceID: string,
+	): CollectionReference<Dbo2> {
+		if (!spaceID) {
 			throw new Error('teamID is required');
 		}
 		return collection(
 			this.teamsCollection,
-			teamID,
+			spaceID,
 			'modules',
 			this.moduleID,
 			this.collectionName,
-		) as CollectionReference<Dto2>;
+		) as CollectionReference<Dbo2>;
 	}
 
-	private readonly teamRef = (id: string) => doc(this.teamsCollection, id);
+	private readonly spaceRef = (id: string) => doc(this.teamsCollection, id);
 
-	public watchModuleTeamItem<Dto2 extends Dto>(
-		team: ITeamRef,
+	public watchModuleSpaceItem<Dbo2 extends Dbo>(
+		team: ISpaceRef,
 		itemID: string,
-	): Observable<IIdAndBriefAndDto<Brief, Dto2>[]> {
+	): Observable<IIdAndBriefAndDbo<Brief, Dbo2>[]> {
 		console.log(team, itemID);
 		throw new Error('Method not implemented.');
 	}
 
-	public watchModuleTeamItemsWithTeamRef<Dto2 extends Dto>(
-		team: ITeamRef,
+	public watchModuleSpaceItemsWithTeamRef<Dbo2 extends Dbo>(
+		space: ISpaceRef,
 		queryArgs?: IQueryArgs,
-	): Observable<ITeamItemWithBriefAndDto<Brief, Dto2>[]> {
-		return this.watchModuleTeamItems<Dto2>(team.id, queryArgs).pipe(
-			map((items) => items.map((item) => ({ ...item, team }))),
+	): Observable<ISpaceItemWithBriefAndDbo<Brief, Dbo2>[]> {
+		return this.watchModuleSpaceItems<Dbo2>(space.id, queryArgs).pipe(
+			map((items) => items.map((item) => ({ ...item, space }))),
 		);
 	}
 
-	public watchModuleTeamItems<Dto2 extends Dto>(
-		teamID: string,
+	public watchModuleSpaceItems<Dbo2 extends Dbo>(
+		spaceID: string,
 		queryArgs?: IQueryArgs,
-	): Observable<IIdAndBriefAndDto<Brief, Dto2>[]> {
-		console.log('watchModuleTeamItems()', teamID, this.collectionName);
+	): Observable<IIdAndBriefAndDbo<Brief, Dbo2>[]> {
+		console.log('watchModuleSpaceItems()', spaceID, this.collectionName);
 		// filter = [
 		// 	...(filter || []),
 		// 	// { field: 'teamIDs', operator: '==', value: teamID },
 		// ];
-		const collectionRef = this.collectionRef<Dto2>(teamID);
-		return this.queryItems<Dto2>(collectionRef, queryArgs);
+		const collectionRef = this.collectionRef<Dbo2>(spaceID);
+		return this.queryItems<Dbo2>(collectionRef, queryArgs);
 	}
 
 	// private readonly mapItemTeamItemContext = <
 	//   Brief2 extends Brief,
-	//   Dto2 extends Dto,
+	//   Dbo2 extends Dto,
 	// >(
 	//   team: ITeamContext,
-	//   item: IIdAndBrief<Brief2, Dto2>,
+	//   item: IIdAndBrief<Brief2, Dbo2>,
 	// ) => {
 	//   return querySnapshot.docs.map((docSnapshot) => {
 	//     const dto = docSnapshot.data();
 	//     const { id } = docSnapshot;
 	//     const brief: Brief2 = { id, ...dto } as unknown as Brief2;
-	//     const c: ITeamItemContext<Brief2, Dto2> = { id, team, dto, brief };
+	//     const c: ITeamItemContext<Brief2, Dbo2> = { id, team, dto, brief };
 	//     return c;
 	//   });
 	// };
 
-	// public watchTeamItems<Brief2 extends Brief, Dto2 extends Dto>(
-	//   teamID: string,
+	// public watchTeamItems<Brief2 extends Brief, Dbo2 extends Dto>(
+	//   spaceID: string,
 	//   filter?: readonly IFilter[],
-	// ): Observable<IIdAndBriefAndDto<Brief2, Dto2>[]> {
-	//   console.log('watchTeamItems()', teamID, this.collectionName);
+	// ): Observable<IIdAndBriefAndDto<Brief2, Dbo2>[]> {
+	//   console.log('watchTeamItems()', spaceID, this.collectionName);
 	//   const collectionRef = collection(
-	//     this.teamRef(teamID),
+	//     this.teamRef(spaceID),
 	//     this.collectionName,
 	//   );
-	//   const querySnapshots = this.sfs.watchSnapshotsByFilter<Dto2>(
-	//     collectionRef as CollectionReference<Dto2>,
+	//   const querySnapshots = this.sfs.watchSnapshotsByFilter<Dbo2>(
+	//     collectionRef as CollectionReference<Dbo2>,
 	//     filter || [],
 	//   );
 	//   return querySnapshots.pipe(
@@ -296,16 +296,16 @@ export class ModuleTeamItemService<
 	//   );
 	// }
 
-	// public watchTeamItemsWithTeamContext<Brief2 extends Brief, Dto2 extends Dto>(
+	// public watchTeamItemsWithTeamContext<Brief2 extends Brief, Dbo2 extends Dto>(
 	//   team: ITeamRef,
 	//   filter?: readonly IFilter[],
-	// ): Observable<ITeamItemContext<Brief2, Dto2>[]> {
+	// ): Observable<ITeamItemContext<Brief2, Dbo2>[]> {
 	//   const querySnapshots = this.watchTeamItems(team.id, filter);
 	//   return querySnapshots.pipe(
 	//     map((querySnapshot) =>
 	//       this.mapItemTeamItemContext(
 	//         team,
-	//         querySnapshot as unknown as QuerySnapshot<Dto2>,
+	//         querySnapshot as unknown as QuerySnapshot<Dbo2>,
 	//       ),
 	//     ),
 	//   );

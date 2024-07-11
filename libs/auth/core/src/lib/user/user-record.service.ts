@@ -2,17 +2,17 @@ import { Injectable } from '@angular/core';
 import { SneatApiService } from '@sneat/api';
 import { IPersonNames } from '@sneat/auth-models';
 import { AgeGroupID, Gender } from '@sneat/contactus-core';
-import { excludeUndefined, TeamType } from '@sneat/core';
-import { IUserDto } from '@sneat/dto';
+import { excludeUndefined, SpaceType } from '@sneat/core';
+import { IUserDbo } from '@sneat/dto';
 import { Observable, share } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class UserRecordService {
 	constructor(private readonly sneatApiService: SneatApiService) {}
 
-	private initUserRecord$?: Observable<IUserDto>;
+	private initUserRecord$?: Observable<IUserDbo>;
 
-	public initUserRecord(request: IInitUserRecordRequest): Observable<IUserDto> {
+	public initUserRecord(request: IInitUserRecordRequest): Observable<IUserDbo> {
 		if (!request.ianaTimezone) {
 			request = {
 				...request,
@@ -22,7 +22,7 @@ export class UserRecordService {
 		console.log(`initUserRecord()`, request);
 		request = excludeUndefined(request);
 		this.initUserRecord$ = this.sneatApiService
-			.post<IUserDto>('users/init_user_record', request)
+			.post<IUserDbo>('users/init_user_record', request)
 			.pipe(share());
 		return this.initUserRecord$;
 	}
@@ -36,5 +36,5 @@ export interface IInitUserRecordRequest {
 	readonly email?: string;
 	readonly emailIsVerified?: boolean;
 	readonly ianaTimezone?: string;
-	readonly team?: { type: TeamType; title: string };
+	readonly team?: { type: SpaceType; title: string };
 }

@@ -1,10 +1,10 @@
-import { TeamType } from '@sneat/core';
+import { SpaceType } from '@sneat/core';
 
-export interface ITeamRequest {
-	readonly teamID: string;
+export interface SpaceRequest {
+	readonly spaceID: string;
 }
 
-export interface ITeamMemberRequest extends ITeamRequest {
+export interface ISpaceMemberRequest extends SpaceRequest {
 	readonly memberID: string;
 }
 
@@ -12,20 +12,20 @@ export interface IAcceptInviteResponse {
 	readonly id: string;
 }
 
-export interface IInviteTeam {
+export interface IInviteSpace {
 	readonly id: string;
-	readonly type: TeamType;
+	readonly type: SpaceType;
 	readonly title: string;
 }
 
-export interface IRejectPersonalInviteRequest extends ITeamRequest {
+export interface IRejectPersonalInviteRequest extends SpaceRequest {
 	readonly inviteID: string;
 	readonly pin: string;
 }
 
 export type TeamMemberStatus = 'active' | 'archived';
 
-export interface ITaskRequest extends ITeamMemberRequest {
+export interface ITaskRequest extends ISpaceMemberRequest {
 	readonly type: string;
 	readonly task: string;
 }

@@ -1,5 +1,5 @@
 import { IListGroup } from './list-group';
 
-export interface IListusTeamDto {
+export interface IListusSpaceDbo {
 	listGroups?: IListGroup[];
 }

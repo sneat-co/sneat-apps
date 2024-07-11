@@ -29,8 +29,8 @@ export abstract class MemberBasePage extends ContactBasePage {
 		return this.memberContext;
 	}
 
-	override onTeamDtoChanged(): void {
-		super.onTeamDtoChanged();
+	override onSpaceDboChanged(): void {
+		super.onSpaceDboChanged();
 		console.log(
 			'MemberBasePage.onTeamDtoChanged()',
 			this.team?.dbo,

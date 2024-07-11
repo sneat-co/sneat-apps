@@ -1,8 +1,8 @@
 import { IContactBrief } from '.';
 import { IIdAndOptionalDbo } from '@sneat/core';
 
-export interface IContactusTeamDto {
+export interface IContactusSpaceDbo {
 	contacts: Readonly<Record<string, IContactBrief>>;
 }
 
-export type IContactusTeamDtoAndID = IIdAndOptionalDbo<IContactusTeamDto>;
+export type IContactusSpaceDboAndID = IIdAndOptionalDbo<IContactusSpaceDbo>;

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { IMemberBrief } from '@sneat/contactus-core';
-import { ITeamDto } from '@sneat/dto';
+import { ISpaceDbo } from '@sneat/dto';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import {
 	Firestore as AngularFirestore,
@@ -20,7 +20,7 @@ import {
 	IAddCommentRequest,
 	IAddTaskRequest,
 	IReorderTaskRequest,
-	IScrumDto,
+	IScrumDbo,
 	IStatus,
 	ITask,
 	IThumbUpRequest,
@@ -72,7 +72,7 @@ export class ScrumService extends BaseMeetingService {
 	public getScrums(
 		teamId: string,
 		limit = 10,
-	): Observable<IRecord<IScrumDto>[]> {
+	): Observable<IRecord<IScrumDbo>[]> {
 		console.log('getScrums()', teamId, limit, this.userService.currentUserID);
 		throw new Error('Not implemented');
 		// const scrums = this.scrumsCollection(teamId);
@@ -97,7 +97,7 @@ export class ScrumService extends BaseMeetingService {
 		// );
 	}
 
-	public watchScrum(teamId: string, scrumId: string): Observable<IScrumDto> {
+	public watchScrum(teamId: string, scrumId: string): Observable<IScrumDbo> {
 		console.log(`watchScrum(${teamId}, ${scrumId})`);
 		throw new Error('Not implemented');
 		// const scrumDoc = this.getScrumDoc(teamId, scrumId);
@@ -143,7 +143,7 @@ export class ScrumService extends BaseMeetingService {
 		if (!request.message) {
 			return throwError(() => 'message required');
 		}
-		if (!request.teamID) {
+		if (!request.spaceID) {
 			return throwError(() => 'team required');
 		}
 		if (!request.memberID) {
@@ -207,7 +207,7 @@ export class ScrumService extends BaseMeetingService {
 	}
 
 	public addTask(
-		team: IRecord<ITeamDto>,
+		team: IRecord<ISpaceDbo>,
 		scrumId: string,
 		member: IIdAndBrief<IMemberBrief>,
 		type: TaskType,
@@ -220,7 +220,7 @@ export class ScrumService extends BaseMeetingService {
 		};
 		const request: IAddTaskRequest = {
 			type,
-			teamID: team.id,
+			spaceID: team.id,
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
 			meeting: scrumId,
@@ -243,18 +243,18 @@ export class ScrumService extends BaseMeetingService {
 		return this.getScrumDoc(teamId, scrumId);
 	}
 
-	private scrumsCollection(teamId: string): CollectionReference<IScrumDto> {
-		const teamsCollection = collection(this.afs, 'teams');
-		const teamDoc = doc(teamsCollection, teamId);
-		return collection(teamDoc, 'scrums') as CollectionReference<IScrumDto>;
+	private scrumsCollection(spaceID: string): CollectionReference<IScrumDbo> {
+		const spacesCollection = collection(this.afs, 'spaces');
+		const spaceDoc = doc(spacesCollection, spaceID);
+		return collection(spaceDoc, 'scrums') as CollectionReference<IScrumDbo>;
 	}
 
 	private getScrumDoc(
-		teamId: string,
-		scrumId: string,
-	): DocumentReference<IScrumDto> {
-		const scrumsCollection = this.scrumsCollection(teamId);
-		return doc(scrumsCollection, scrumId);
+		spaceID: string,
+		scrumID: string,
+	): DocumentReference<IScrumDbo> {
+		const scrumsCollection = this.scrumsCollection(spaceID);
+		return doc(scrumsCollection, scrumID);
 	}
 
 	private updateStatus(
@@ -263,9 +263,9 @@ export class ScrumService extends BaseMeetingService {
 		member: IIdAndBrief<IMemberBrief>,
 		// TODO: Invalid eslint-disable-next-line no-shadow - lambda definition should not cause shadowing.
 		// https://github.com/sneat-team/sneat-team-pwa/issues/381
-		// eslint-disable-next-line no-shadow
-		worker: (scrum: IScrumDto, status: IStatus) => IScrumDto,
-	): Observable<IScrumDto> {
+		 
+		worker: (scrum: IScrumDbo, status: IStatus) => IScrumDbo,
+	): Observable<IScrumDbo> {
 		console.log('updateStatus', teamId, scrumId, member, worker);
 		throw new Error('not implemented yet');
 		// let scrum: IScrumDto;

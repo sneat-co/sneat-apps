@@ -10,7 +10,7 @@ import {
 import { ISlotUIContext } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { HappeningService } from '@sneat/team-services';
 import { SneatBaseComponent } from '@sneat/ui';
 import { Observable, Subscription, takeUntil } from 'rxjs';
@@ -34,7 +34,7 @@ export class SinglesTabComponent
 
 	public tab: 'upcoming' | 'past' | 'recent' = 'upcoming';
 
-	@Input() team: ITeamContext = { id: '' };
+	@Input() team: ISpaceContext = { id: '' };
 	@Input() onSlotClicked?: (args: {
 		slot: ISlotUIContext;
 		event: Event;

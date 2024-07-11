@@ -2,14 +2,14 @@ import { Component, Inject, Input } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { IAssetContext, AssetCategory } from '@sneat/mod-assetus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-asset-list-item',
 	template: ``,
 })
 export class AssetListItemComponent {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) team?: ISpaceContext;
 	@Input() assetType?: AssetCategory;
 	@Input() asset?: IAssetContext;
 

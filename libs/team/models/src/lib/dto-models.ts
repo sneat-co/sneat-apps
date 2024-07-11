@@ -1,13 +1,13 @@
-import { TeamType } from '@sneat/core';
+import { SpaceType } from '@sneat/core';
 import { IRecord } from '@sneat/data';
-import { ITeamDto } from '@sneat/dto';
+import { ISpaceDbo } from '@sneat/dto';
 
-export interface ICreateTeamRequest {
-	type: TeamType;
+export interface ICreateSpaceRequest {
+	type: SpaceType;
 	// memberType: MemberType;
 	title?: string;
 }
 
-export interface ICreateTeamResponse {
-	team: IRecord<ITeamDto>;
+export interface ICreateSpaceResponse {
+	space: IRecord<ISpaceDbo>;
 }

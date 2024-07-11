@@ -1,6 +1,6 @@
 // import { MemberRelationship } from './dto-member';
 import { ITitledRecord } from './dto-models';
-import { ICommuneDto } from './dto-commune';
+import { ICommuneDbo } from './dto-commune';
 import { CommuneType, CountryId } from './types';
 
 export interface IUserCommuneInfo {
@@ -17,7 +17,7 @@ export interface IUserCommuneInfo {
 }
 
 export function createUserCommuneInfoFromCommuneDto(
-	communeDto: ICommuneDto,
+	communeDto: ICommuneDbo,
 	shortId?: string,
 ): IUserCommuneInfo {
 	return {
@@ -28,7 +28,7 @@ export function createUserCommuneInfoFromCommuneDto(
 	};
 }
 
-export interface IUserDto extends ITitledRecord {
+export interface IUserDbo extends ITitledRecord {
 	countryIds?: CountryId[];
 	created: {
 		hostOrApp: string;
@@ -46,9 +46,9 @@ export interface IUserDto extends ITitledRecord {
 }
 
 export function addCommuneToUserDto(
-	userDto: IUserDto,
+	userDto: IUserDbo,
 	communeInfo: IUserCommuneInfo,
-): IUserDto {
+): IUserDbo {
 	const communes = userDto.communes || [];
 	if (
 		communeInfo.id &&

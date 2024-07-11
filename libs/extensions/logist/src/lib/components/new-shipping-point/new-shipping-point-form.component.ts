@@ -49,7 +49,7 @@ export class NewShippingPointFormComponent {
 		if (!order?.id) {
 			this.errorLogger.logError('No order context');
 		}
-		if (!order?.team) {
+		if (!order?.space) {
 			this.errorLogger.logError('No team context');
 			return;
 		}
@@ -75,13 +75,13 @@ export class NewShippingPointFormComponent {
 		}
 		const request: IAddOrderShippingPointRequest = excludeUndefined({
 			tasks: this.selectedContainers?.length ? undefined : tasks,
-			teamID: order.team.id,
+			spaceID: order.space.id,
 			orderID: order.id,
 			locationContactID: contact.id,
 			containers,
 		});
 		this.creating = true;
-		this.orderService.addShippingPoint(order.team, request).subscribe({
+		this.orderService.addShippingPoint(order.space, request).subscribe({
 			next: (order) => {
 				console.log('Shipping point added');
 				this.orderCreated.emit(order);

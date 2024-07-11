@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IScrumDto } from '@sneat/scrumspace/scrummodels';
+import { IScrumDbo } from '@sneat/scrumspace/scrummodels';
 
 @Component({
 	selector: 'sneat-timer-meeting-button',
@@ -7,6 +7,6 @@ import { IScrumDto } from '@sneat/scrumspace/scrummodels';
 })
 export class TimerMeetingButtonComponent {
 	@Input() public scrumId?: string;
-	@Input() public scrum?: IScrumDto;
+	@Input() public scrum?: IScrumDbo;
 	@Input() public teamId?: string;
 }

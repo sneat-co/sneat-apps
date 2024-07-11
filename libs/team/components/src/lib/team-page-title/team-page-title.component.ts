@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-team-page-title',
@@ -8,7 +8,7 @@ import { ITeamContext } from '@sneat/team-models';
 export class TeamPageTitleComponent {
 	@Input() icon?: string;
 	@Input() generalTitle?: string;
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) team?: ISpaceContext;
 	@Input() titlesByTeamType?: Record<string, string>;
 
 	public get typeTitle(): string {

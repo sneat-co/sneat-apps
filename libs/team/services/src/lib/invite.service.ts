@@ -9,7 +9,7 @@ import {
 	IAcceptPersonalInviteRequest,
 	ICreatePersonalInviteRequest,
 	ICreatePersonalInviteResponse,
-	IJoinTeamInfoResponse,
+	IJoinSpaceInfoResponse,
 } from '@sneat/contactus-core';
 import { excludeEmpty } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -46,7 +46,7 @@ export class InviteService {
 	): Observable<ICreatePersonalInviteResponse> {
 		// TODO: Should we pass `request.message`? If not should be excluded from request
 		return this.sneatApiService.get<ICreatePersonalInviteResponse>(
-			`invites/invite_link_for_member?team=${request.teamID}&member=${request.to.memberID}`,
+			`invites/invite_link_for_member?team=${request.spaceID}&member=${request.to.memberID}`,
 		);
 	}
 
@@ -57,10 +57,10 @@ export class InviteService {
 	}
 
 	public acceptInviteByAuthenticatedUser(
-		inviteInfo: IJoinTeamInfoResponse,
+		inviteInfo: IJoinSpaceInfoResponse,
 	): Observable<IAcceptInviteResponse> {
 		const request: IAcceptPersonalInviteRequest = {
-			teamID: inviteInfo.team.id,
+			spaceID: inviteInfo.space.id,
 			inviteID: inviteInfo.invite.id,
 			pin: inviteInfo.invite.pin,
 			member: inviteInfo.member,
@@ -71,7 +71,7 @@ export class InviteService {
 	}
 
 	public acceptInviteByUnauthenticatedUser(
-		inviteInfo: IJoinTeamInfoResponse,
+		inviteInfo: IJoinSpaceInfoResponse,
 	): Observable<IAcceptInviteResponse> {
 		if (
 			inviteInfo.invite.to.channel === 'email' &&
@@ -85,7 +85,7 @@ export class InviteService {
 	}
 
 	private acceptEmailInviteByUnauthenticatedUser(
-		inviteInfo: IJoinTeamInfoResponse,
+		inviteInfo: IJoinSpaceInfoResponse,
 	): Observable<IAcceptInviteResponse> {
 		const email = inviteInfo.invite.to.address;
 		if (!email) {

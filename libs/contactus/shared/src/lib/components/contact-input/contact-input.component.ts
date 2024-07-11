@@ -17,7 +17,7 @@ import {
 	IContactContext,
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import {
 	ContactSelectorService,
 	IContactSelectorOptions,
@@ -28,7 +28,7 @@ import {
 	templateUrl: './contact-input.component.html',
 })
 export class ContactInputComponent implements OnChanges {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) team?: ISpaceContext;
 	@Input() disabled?: boolean;
 	@Input() canChangeContact = true;
 	@Input() canReset = false;

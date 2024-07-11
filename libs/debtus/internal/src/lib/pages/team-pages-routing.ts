@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 
-export const teamPagesRoutes: Route[] = [
+export const spacePagesRoutes: Route[] = [
 	{
 		path: 'debts',
 		loadComponent: () =>

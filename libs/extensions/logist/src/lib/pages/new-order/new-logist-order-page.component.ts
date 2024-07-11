@@ -27,7 +27,7 @@ import { LogistOrderService, LogistTeamService } from '../../services';
 export class NewLogistOrderPageComponent extends TeamBaseComponent {
 	public order: ILogistOrderContext = {
 		id: '',
-		team: this.team || { id: '', type: 'company' },
+		space: this.team || { id: '', type: 'company' },
 		dbo: {
 			status: 'draft',
 			direction: 'export',
@@ -92,12 +92,12 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 	}
 
 	private loadTeamContact(contactID: string): void {
-		const team = this.team;
-		if (!team) {
-			throw new Error('No team context');
+		const space = this.team;
+		if (!space) {
+			throw new Error('No space context');
 		}
 		this.contactService
-			.watchContactById(team, contactID)
+			.watchContactById(space, contactID)
 			.pipe(first())
 			.subscribe({
 				next: this.processTeamContact,
@@ -187,7 +187,7 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 			return;
 		}
 		const request: ICreateLogistOrderRequest = excludeUndefined({
-			teamID: this.team.id,
+			spaceID: this.team.id,
 			order: {
 				...this.order.dbo,
 				direction: this.direction,

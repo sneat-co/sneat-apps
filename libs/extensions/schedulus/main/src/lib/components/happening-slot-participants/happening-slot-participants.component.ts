@@ -35,7 +35,7 @@ export class HappeningSlotParticipantsComponent
 
 	protected relatedItems?: readonly IRelatedItem[];
 	protected contacts?: readonly IIdAndBrief<IContactBrief>[];
-	protected teamContacts?: IIdAndBrief<IContactBrief>[];
+	protected spaceContacts?: IIdAndBrief<IContactBrief>[];
 
 	private readonly teamID$ = new Subject<string>();
 
@@ -48,7 +48,7 @@ export class HappeningSlotParticipantsComponent
 		this.teamID$
 			.pipe(takeUntil(this.destroyed$), distinctUntilChanged())
 			.subscribe((teamID) => {
-				this.onTeamIDChanged(teamID);
+				this.onSpaceIDChanged(teamID);
 			});
 	}
 
@@ -72,8 +72,8 @@ export class HappeningSlotParticipantsComponent
 		if (happeningSlot) {
 			const previous = happeningSlot.previousValue as ISlotUIContext;
 			const current = happeningSlot.currentValue as ISlotUIContext;
-			if (current?.happening?.team?.id !== previous?.happening?.team?.id) {
-				this.teamID$.next(current?.happening?.team?.id);
+			if (current?.happening?.space?.id !== previous?.happening?.space?.id) {
+				this.teamID$.next(current?.happening?.space?.id);
 			}
 		}
 		if (changes['happeningSlot']) {
@@ -82,16 +82,16 @@ export class HappeningSlotParticipantsComponent
 				'contacts',
 				this.happeningSlot?.happening?.brief?.related,
 			);
-			if (this.teamContacts) {
+			if (this.spaceContacts) {
 				this.populateContacts();
 			}
 		}
 	}
 
-	private onTeamIDChanged(teamID: string): void {
+	private onSpaceIDChanged(spaceID: string): void {
 		// console.log('HappeningSlotParticipantsComponent.onTeamIDChanged()', teamID);
 		this.contactusService
-			.watchContactBriefs(teamID)
+			.watchContactBriefs(spaceID)
 			.pipe(takeUntil(this.teamID$), takeUntil(this.destroyed$))
 			.subscribe({
 				next: (contacts) => {
@@ -100,15 +100,15 @@ export class HappeningSlotParticipantsComponent
 					// 	this.happeningSlot?.slotID,
 					// 	contacts,
 					// );
-					this.teamContacts = contacts;
+					this.spaceContacts = contacts;
 					this.populateContacts();
 				},
 			});
 	}
 
 	private populateContacts(): void {
-		const teamID = this.happeningSlot?.happening?.team?.id;
-		if (!teamID) {
+		const spaceID = this.happeningSlot?.happening?.space?.id;
+		if (!spaceID) {
 			return;
 		}
 		// console.log(
@@ -118,10 +118,10 @@ export class HappeningSlotParticipantsComponent
 		// 	this.happeningSlot?.wd,
 		// );
 		const contacts = (this.relatedItems || []).map((relatedItem) => {
-			const key = relatedItem.keys.find((k) => k.teamID == teamID);
+			const key = relatedItem.keys.find((k) => k.spaceID == spaceID);
 			const id = key?.itemID;
 			const contact: IIdAndOptionalBrief<IContactBrief> =
-				this.teamContacts?.find((tc) => tc.id === id) || {
+				this.spaceContacts?.find((tc) => tc.id === id) || {
 					id: relatedItem.keys[0].itemID,
 					brief: undefined,
 				};

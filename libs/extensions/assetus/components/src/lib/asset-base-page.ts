@@ -1,8 +1,8 @@
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import {
 	IAssetBrief,
 	IAssetDboBase,
-	IAssetusTeamContext,
+	IAssetusSpaceContext,
 	IAssetContext,
 	IAssetVehicleContext,
 } from '@sneat/mod-assetus-core';
@@ -14,7 +14,7 @@ export abstract class AssetBasePage extends TeamItemPageBaseComponent<
 	IAssetBrief,
 	IAssetDboBase
 > {
-	protected assetusTeam?: IAssetusTeamContext;
+	protected assetusTeam?: IAssetusSpaceContext;
 
 	protected asset?: IAssetContext;
 
@@ -44,11 +44,11 @@ export abstract class AssetBasePage extends TeamItemPageBaseComponent<
 		if (!this.asset?.id) {
 			return throwError(() => new Error('no asset context'));
 		}
-		const team = this.team;
-		if (!team) {
+		const space = this.team;
+		if (!space) {
 			return NEVER;
 		}
-		return this.assetService.watchAssetByID(team, this.asset.id);
+		return this.assetService.watchAssetByID(space, this.asset.id);
 	}
 
 	protected override setItemContext(item?: IAssetContext) {

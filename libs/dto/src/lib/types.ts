@@ -1,4 +1,4 @@
-import { TeamType } from '@sneat/core';
+import { SpaceType } from '@sneat/core';
 
 export { TeamMemberType } from '@sneat/auth-models';
 
@@ -6,7 +6,7 @@ export type Restriction = 'adults_only' | 'personal' | string;
 
 export type SneatRecordStatus = 'active' | 'archived' | 'deleted';
 
-export type CommuneType = TeamType;
+export type CommuneType = SpaceType;
 
 export type CountryId =
 	| 'IE'

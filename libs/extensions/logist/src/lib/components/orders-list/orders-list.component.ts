@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { ILogistOrderContext } from '../../dto/order-dto';
 
 @Component({
@@ -7,6 +7,6 @@ import { ILogistOrderContext } from '../../dto/order-dto';
 	templateUrl: './orders-list.component.html',
 })
 export class OrdersListComponent {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) team?: ISpaceContext;
 	@Input() orders?: ILogistOrderContext[];
 }

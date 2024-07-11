@@ -3,12 +3,11 @@ import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { IIdAndDto } from '@sneat/core';
 import {
-	ContactRoleParentOfFriend,
 	IContactGroupBrief,
-	IContactGroupDto,
+	IContactGroupDbo,
 	IContactRoleBriefWithID,
 } from '@sneat/contactus-core';
-import { ITeamContext, ITeamRef } from '@sneat/team-models';
+import { ISpaceContext, ISpaceRef } from '@sneat/team-models';
 import { ModuleTeamItemService } from '@sneat/team-services';
 import { Observable, of } from 'rxjs';
 
@@ -73,7 +72,7 @@ const contactTypeFamilyMember: IContactRoleBriefWithID = {
 		emoji: '👨‍🔧',
 	};
 
-export const defaultFamilyContactGroupDTOs: readonly IIdAndDto<IContactGroupDto>[] =
+export const defaultFamilyContactGroupDTOs: readonly IIdAndDto<IContactGroupDbo>[] =
 	[
 		{
 			id: 'family',
@@ -134,14 +133,14 @@ export const defaultFamilyContactGroupDTOs: readonly IIdAndDto<IContactGroupDto>
 		},
 	];
 
-export const defaultFamilyContactGroups: readonly IIdAndDto<IContactGroupDto>[] =
+export const defaultFamilyContactGroups: readonly IIdAndDto<IContactGroupDbo>[] =
 	defaultFamilyContactGroupDTOs.map((cg) => ({ ...cg, brief: cg.dbo }));
 
 @Injectable()
 export class ContactGroupService {
 	private readonly teamItemService: ModuleTeamItemService<
 		IContactGroupBrief,
-		IContactGroupDto
+		IContactGroupDbo
 	>;
 
 	constructor(afs: AngularFirestore, sneatApiService: SneatApiService) {
@@ -153,14 +152,14 @@ export class ContactGroupService {
 		);
 	}
 
-	getContactGroups(): Observable<readonly IIdAndDto<IContactGroupDto>[]> {
+	getContactGroups(): Observable<readonly IIdAndDto<IContactGroupDbo>[]> {
 		return of(defaultFamilyContactGroupDTOs);
 	}
 
 	getContactGroupByID(
 		id: string,
-		team: ITeamContext,
-	): Observable<IIdAndDto<IContactGroupDto>> {
+		team: ISpaceContext,
+	): Observable<IIdAndDto<IContactGroupDbo>> {
 		const cg = defaultFamilyContactGroups.find((cg) => cg.id === id);
 		if (!cg) {
 			return of({ id, team, dbo: { title: id } });
@@ -169,11 +168,11 @@ export class ContactGroupService {
 	}
 
 	watchMemberGroupsByTeam(
-		team: ITeamRef,
+		team: ISpaceRef,
 		status: 'active' | 'archived' = 'active',
-	): Observable<IIdAndDto<IContactGroupDto>[]> {
+	): Observable<IIdAndDto<IContactGroupDbo>[]> {
 		// console.log('watchMemberGroupsByTeamID()', teamID);
-		return this.teamItemService.watchModuleTeamItemsWithTeamRef(team, {
+		return this.teamItemService.watchModuleSpaceItemsWithTeamRef(team, {
 			filter: [{ field: 'status', operator: '==', value: status }],
 		});
 	}

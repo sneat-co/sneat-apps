@@ -9,7 +9,7 @@ import {
 import { NavController } from '@ionic/angular';
 import { IGridColumn } from '@sneat/grid';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import {
 	ILogistOrderContext,
 	IOrderCounterpartyRef,
@@ -30,7 +30,7 @@ interface OrderRow {
 	templateUrl: './orders-grid.component.html',
 })
 export class OrdersGridComponent implements OnChanges {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) team?: ISpaceContext;
 	@Input() orders?: ILogistOrderContext[];
 
 	rows?: OrderRow[];
@@ -136,15 +136,15 @@ export class OrdersGridComponent implements OnChanges {
 			return;
 		}
 		const data = (row as { getData: () => { id: string } }).getData();
-		const team = this.team;
-		if (!team) {
-			alert('No team context provided!');
+		const space = this.team;
+		if (!space) {
+			alert('No space context provided!');
 			return;
 		}
 		this.zone
 			.run(() =>
 				this.navController
-					.navigateForward(['space', team.type, team.id, 'order', data.id])
+					.navigateForward(['space', space.type, space.id, 'order', data.id])
 					.catch(
 						this.errorLogger.logErrorHandler(
 							'Failed to navigate to order details page',

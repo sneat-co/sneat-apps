@@ -8,7 +8,7 @@ import {
 import { IIdAndBrief } from '@sneat/core';
 import { AssetCategory, IAssetBrief } from '@sneat/mod-assetus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { TeamNavService } from '@sneat/team-services';
 import { AssetService } from '../services';
 import { MileAgeDialogComponent } from '../mileage-dialog/mileage-dialog.component';
@@ -23,7 +23,7 @@ export class AssetsListComponent implements OnChanges {
 	protected mileAgeAsset?: IIdAndBrief<IAssetBrief>;
 
 	@Input() allAssets?: IIdAndBrief<IAssetBrief>[];
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) team?: ISpaceContext;
 	@Input() assetType?: AssetCategory;
 	@Input() filter = '';
 
@@ -102,7 +102,7 @@ export class AssetsListComponent implements OnChanges {
 			return;
 		}
 		this.teamNavService
-			.navigateForwardToTeamPage(this.team, `asset/${asset.id}`, {
+			.navigateForwardToSpacePage(this.team, `asset/${asset.id}`, {
 				state: { asset },
 			})
 			.catch(

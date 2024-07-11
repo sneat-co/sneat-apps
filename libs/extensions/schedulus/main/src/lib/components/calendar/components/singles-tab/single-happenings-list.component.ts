@@ -1,7 +1,7 @@
 import { Component, Inject, Input, OnChanges } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
 import { CalendarFilterService } from '../../../calendar-filter.service';
@@ -18,7 +18,7 @@ export class SingleHappeningsListComponent
 	extends SneatBaseComponent
 	implements OnChanges
 {
-	@Input({ required: true }) team: ITeamContext = { id: '' };
+	@Input({ required: true }) team: ISpaceContext = { id: '' };
 	@Input({ required: true }) public happenings?: IHappeningContext[];
 
 	private filter?: ICalendarFilter;

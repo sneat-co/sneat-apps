@@ -42,14 +42,14 @@ export class AddRetroItemComponent implements OnDestroy {
 			return;
 		}
 		const title = this.titleControl.value as string;
-		const teamID = this.teamId || '',
+		const spaceID = this.teamId || '',
 			meetingID = this.meetingId || '';
-		if (teamID || meetingID) {
+		if (spaceID || meetingID) {
 			alert('no team or meeting id');
 			return;
 		}
 		const request: IAddRetroItemRequest = {
-			teamID,
+			spaceID: spaceID,
 			meeting: meetingID,
 			type: 'this.retroItemType',
 			title,

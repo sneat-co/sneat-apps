@@ -1,7 +1,7 @@
 import { ContactType, IAddress } from '@sneat/contactus-core';
 import { IContactRequest } from '@sneat/contactus-services';
 import { IWithModified } from '@sneat/dto';
-import { ITeamItemNavContext, ITeamRequest } from '@sneat/team-models';
+import { ISpaceItemNavContext, SpaceRequest } from '@sneat/team-models';
 import { CounterpartyRole } from './logist-team-dto';
 import { OrderDirection } from './orders-filter';
 
@@ -164,7 +164,7 @@ export function getSegmentsByContainerID(
 }
 
 export function getSegmentCounterparty(
-	orderDto?: ILogistOrderDto | null,
+	orderDto?: ILogistOrderDbo | null,
 	segment?: IContainerSegment,
 ): IOrderCounterparty | undefined {
 	const contactID = segment?.byContactID;
@@ -173,7 +173,7 @@ export function getSegmentCounterparty(
 		: undefined;
 }
 
-export interface ILogistOrderDto extends IFreightOrderBrief, IWithModified {
+export interface ILogistOrderDbo extends IFreightOrderBrief, IWithModified {
 	readonly contacts?: readonly IOrderContact[];
 	readonly counterparties?: readonly IOrderCounterparty[];
 	readonly route?: IOrderRoute;
@@ -196,23 +196,23 @@ export interface ILogistOrderDto extends IFreightOrderBrief, IWithModified {
 	readonly issued?: IDocIssued;
 }
 
-export type ILogistOrderBrief = IFreightOrderBrief
+export type ILogistOrderBrief = IFreightOrderBrief;
 
-export type ILogistOrderContext = ITeamItemNavContext<
+export type ILogistOrderContext = ISpaceItemNavContext<
 	ILogistOrderBrief,
-	ILogistOrderDto
+	ILogistOrderDbo
 >;
 
-export interface ICreateLogistOrderRequest extends ITeamRequest {
+export interface ICreateLogistOrderRequest extends SpaceRequest {
 	readonly numberOfContainers?: Record<string, number>;
-	readonly order: ILogistOrderDto;
+	readonly order: ILogistOrderDbo;
 }
 
 export interface ICreateFreightOrderResponse {
 	readonly order: { id: string };
 }
 
-export interface ILogistOrderRequest extends ITeamRequest {
+export interface ILogistOrderRequest extends SpaceRequest {
 	readonly orderID: string;
 }
 

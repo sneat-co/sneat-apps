@@ -20,7 +20,7 @@ import {
 	IHappeningSlotWithID,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { HappeningService } from '@sneat/team-services';
 import { Subject, takeUntil } from 'rxjs';
 import { StartEndDatetimeFormComponent } from '../start-end-datetime-form/start-end-datetime-form.component';
@@ -50,7 +50,7 @@ export class HappeningSlotModalComponent
 {
 	private readonly destroyed = new Subject<void>();
 
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input({ required: true }) happening?: IHappeningContext;
 	@Input() slot: IHappeningSlotWithID = emptyHappeningSlot;
 	@Input() adjustment?: IHappeningAdjustment;
@@ -103,7 +103,7 @@ export class HappeningSlotModalComponent
 	async save(event: Event): Promise<void> {
 		console.log('save()', event);
 		event.stopPropagation();
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError('team context is not set');
 			return;
 		}
@@ -116,7 +116,7 @@ export class HappeningSlotModalComponent
 		}
 		if (this.happening?.brief?.type === 'single' || !this.dateID) {
 			this.happeningService
-				.updateSlot(this.team.id, this.happening.id, this.slot)
+				.updateSlot(this.space.id, this.happening.id, this.slot)
 				.pipe(takeUntil(this.destroyed))
 				.subscribe({
 					next: () =>
@@ -129,7 +129,7 @@ export class HappeningSlotModalComponent
 				});
 		} else if (this.happening?.brief?.type === 'recurring' && this.dateID) {
 			this.happeningService
-				.adjustSlot(this.team.id, this.happening.id, this.slot, this.dateID)
+				.adjustSlot(this.space.id, this.happening.id, this.slot, this.dateID)
 				.pipe(takeUntil(this.destroyed))
 				.subscribe({
 					next: () =>

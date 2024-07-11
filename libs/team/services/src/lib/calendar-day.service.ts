@@ -3,7 +3,7 @@ import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { ICalendarDayBrief, ICalendarDayDbo } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { tap } from 'rxjs';
 import { ModuleTeamItemService } from './team-item.service';
 
@@ -27,7 +27,7 @@ export class CalendarDayService {
 		);
 	}
 
-	public watchTeamDay(team: ITeamContext, dateID: string) {
+	public watchTeamDay(team: ISpaceContext, dateID: string) {
 		console.log(
 			`ScheduleDayService.watchTeamDay(team={id=${team.id}, dateID=${dateID})`,
 		);

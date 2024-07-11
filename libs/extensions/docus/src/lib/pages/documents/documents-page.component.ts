@@ -90,7 +90,7 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 			return;
 		}
 		this.teamParams.teamNavService
-			.navigateForwardToTeamPage(this.team, `document/${doc.id}`, {
+			.navigateForwardToSpacePage(this.team, `document/${doc.id}`, {
 				state: { doc },
 			})
 			.catch(this.errorLogger.logError);
@@ -104,10 +104,10 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 			queryParams['member'] = member.id;
 		}
 		// const state = member ? { member } : undefined;
-		const team = this.team;
-		if (team) {
+		const space = this.team;
+		if (space) {
 			this.teamNav
-				.navigateForwardToTeamPage(team, 'new-document', {
+				.navigateForwardToSpacePage(space, 'new-document', {
 					state: { docType: type },
 				})
 				.catch(

@@ -24,14 +24,14 @@ export class HappeningSlotModalService {
 		console.log('editSingleHappeningSlot()', happening, recurring, slot);
 		event.stopPropagation();
 		event.preventDefault();
-		const team = happening.team;
-		if (!team) {
-			return Promise.reject('no team context');
+		const space = happening.space;
+		if (!space) {
+			return Promise.reject('no space context');
 		}
 		const modal = await this.modalController.create({
 			component: HappeningSlotModalComponent,
 			componentProps: {
-				team,
+				space,
 				happening,
 				slot,
 				adjustment: recurring?.adjustment,

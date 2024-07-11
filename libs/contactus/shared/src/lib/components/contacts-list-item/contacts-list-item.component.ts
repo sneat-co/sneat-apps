@@ -4,7 +4,7 @@ import { ContactRole, IContactBrief, IContactDto } from '@sneat/contactus-core';
 import { IRelatedItem, IRelationshipRoles } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { TeamNavService } from '@sneat/team-services';
 
 @Component({
@@ -13,7 +13,7 @@ import { TeamNavService } from '@sneat/team-services';
 	styleUrls: ['./contacts-list-item.component.scss'],
 })
 export class ContactsListItemComponent {
-	@Input() team?: ITeamContext;
+	@Input() team?: ISpaceContext;
 	@Input() excludeRole?: ContactRole;
 	@Input() contact?: IIdAndBriefAndOptionalDto<IContactBrief, IContactDto>;
 	@Input() showAddress = false;
@@ -49,7 +49,7 @@ export class ContactsListItemComponent {
 			return;
 		}
 		this.teamNavService
-			.navigateForwardToTeamPage(this.team, `contact/${contact.id}`, {
+			.navigateForwardToSpacePage(this.team, `contact/${contact.id}`, {
 				state: { contact },
 			})
 			.catch(
@@ -77,7 +77,11 @@ export class ContactsListItemComponent {
 		}
 		if (this.contact?.id) {
 			this.contactService
-				.setContactsStatus('archived', this.team.id, [this.contact.id])
+				.setContactsStatus({
+					status: 'archived',
+					spaceID: this.team.id,
+					contactIDs: [this.contact.id],
+				})
 				.subscribe({
 					next: () => {
 						console.log('ContactListItemComponent.removeContact() => done');

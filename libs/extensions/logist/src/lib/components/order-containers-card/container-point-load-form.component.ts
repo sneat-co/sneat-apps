@@ -100,7 +100,7 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 			shippingPointID = this.shippingPoint?.id,
 			containerID = this.containerPoint?.containerID,
 			orderID = this.order?.id,
-			teamID = this.order?.team?.id;
+			teamID = this.order?.space?.id;
 
 		if (
 			!task ||
@@ -134,7 +134,7 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 			};
 		}
 		const request: ISetContainerPointTaskRequest = {
-			teamID,
+			spaceID: teamID,
 			orderID,
 			shippingPointID,
 			containerID,
@@ -201,7 +201,7 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 			shippingPointID = this.shippingPoint?.id,
 			containerID = this.containerPoint?.containerID,
 			orderID = this.order?.id,
-			teamID = this.order?.team?.id;
+			teamID = this.order?.space?.id;
 
 		if (
 			!task ||
@@ -215,7 +215,7 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 		}
 		this.freightLoad = { ...this.freightLoad, [name]: number };
 		const request: ISetContainerPointFreightFieldsRequest = {
-			teamID,
+			spaceID: teamID,
 			orderID,
 			shippingPointID,
 			containerID,

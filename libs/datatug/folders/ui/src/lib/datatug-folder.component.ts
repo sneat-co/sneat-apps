@@ -34,9 +34,9 @@ import { DatatugBoardService } from '@sneat/datatug-board-core';
 	templateUrl: 'datatug-folder.component.html',
 })
 export class DatatugFolderComponent implements OnChanges, OnDestroy {
-	// eslint-disable-next-line @typescript-eslint/naming-convention
+	 
 	readonly Environment: ProjectItemType = ProjectItem.environment as const;
-	// eslint-disable-next-line @typescript-eslint/naming-convention
+	 
 	readonly Board: ProjectItemType = ProjectItem.Board;
 	readonly Query: ProjectItemType = ProjectItem.query;
 
@@ -131,7 +131,7 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
 					// 		summary: {...this.project.summary, environments: []},
 					// 	}
 					// }
-					const projItemBrief = { id: value.id, title: value.dto?.title };
+					const projItemBrief = { id: value.id, title: value.dbo?.title };
 					// this.project.environments.push(projItemBrief)
 					this.goProjItemPage(projItemType, projItemBrief);
 				} catch (err) {

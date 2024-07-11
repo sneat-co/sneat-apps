@@ -3,12 +3,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { contactusRoutes } from '@sneat/contactus-internal';
-import { teamPagesRoutes } from '@sneat/debtus-internal';
+import { spacePagesRoutes } from '@sneat/debtus-internal';
 import { AssetusRoutingModule } from '@sneat/extensions/assetus/pages';
 import { budgetusRoutes } from '@sneat/extensions/budgetus';
 import { docusRoutes } from '@sneat/extensions/docus';
 import { listusRoutes } from '@sneat/extensions/listus';
-// eslint-disable-next-line @nx/enforce-module-boundaries
+ 
 import { calendariumRoutes } from '@sneat/extensions/schedulus/main';
 import {
 	TeamComponentBaseParams,
@@ -31,7 +31,7 @@ const routes: Routes = [
 			),
 	},
 	...contactusRoutes,
-	...teamPagesRoutes,
+	...spacePagesRoutes,
 	// {
 	// 	path: '',
 	// 	loadChildren: () =>

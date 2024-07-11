@@ -43,7 +43,7 @@ export class AssetAddDwellingComponent
 		if (changes['team'] && this.team) {
 			this.dwellingAsset = this.dwellingAsset ?? {
 				id: '',
-				team: this.team ?? { id: '' },
+				space: this.team ?? { id: '' },
 				dbo: {
 					status: 'draft',
 					category: 'dwelling',
@@ -51,7 +51,7 @@ export class AssetAddDwellingComponent
 					extra: {
 						rent_price: { value: 0, currency: 'USD' },
 					},
-					teamID: this.team?.id,
+					spaceID: this.team?.id,
 					type: this.dwellingType,
 					title: 'My dwelling',
 					possession: 'owning',
@@ -107,7 +107,7 @@ export class AssetAddDwellingComponent
 				status: 'active',
 				category: 'dwelling',
 			},
-			teamID: this.team?.id,
+			spaceID: this.team?.id,
 		};
 
 		this.createAssetAndGoToAssetPage(request, this.team);

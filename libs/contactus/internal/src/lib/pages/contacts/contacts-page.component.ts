@@ -178,7 +178,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 			return;
 		}
 		this.teamParams.teamNavService
-			.navigateForwardToTeamPage(this.team, `contact/${contact.id}`, {
+			.navigateForwardToSpacePage(this.team, `contact/${contact.id}`, {
 				state: { contact },
 			})
 			.catch(
@@ -193,12 +193,12 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 		let navResult: Promise<boolean>;
 
 		if (this.team.type === 'family') {
-			navResult = this.teamParams.teamNavService.navigateForwardToTeamPage(
+			navResult = this.teamParams.teamNavService.navigateForwardToSpacePage(
 				this.team,
 				'new-contact',
 			);
 		} else {
-			navResult = this.teamParams.teamNavService.navigateForwardToTeamPage(
+			navResult = this.teamParams.teamNavService.navigateForwardToSpacePage(
 				this.team,
 				'new-company',
 				{ queryParams: this.role ? { role: this.role } : undefined },
@@ -218,7 +218,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 			return false;
 		}
 		this.teamParams.teamNavService
-			.navigateForwardToTeamPage(this.team, `member/${id}`, {
+			.navigateForwardToSpacePage(this.team, `member/${id}`, {
 				state: {
 					member: { id },
 				},
@@ -236,7 +236,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 			return;
 		}
 		this.teamParams.teamNavService
-			.navigateForwardToTeamPage(this.team, `group/${group.id}`, {
+			.navigateForwardToSpacePage(this.team, `group/${group.id}`, {
 				state: {
 					group: group,
 				},

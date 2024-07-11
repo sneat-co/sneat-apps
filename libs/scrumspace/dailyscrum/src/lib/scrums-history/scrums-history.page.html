@@ -23,11 +23,11 @@
 		<ion-icon name="checkmark-done-outline" slot="start" />
 		<ion-label> {{scrum.id}} </ion-label>
 		<ion-button
-			*ngIf="scrum.dto.risksCount"
+			*ngIf="scrum.dbo.risksCount"
 			slot="end"
 			color="danger"
 			title="Risks"
-			>{{scrum.dto.risksCount}}</ion-button
+			>{{scrum.dbo.risksCount}}</ion-button
 		>
 	</ion-item>
 </ion-content>

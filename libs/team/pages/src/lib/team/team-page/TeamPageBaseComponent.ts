@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IIdAndBrief, TopMenuService } from '@sneat/core';
-import { IContactusTeamDtoAndID, IContactBrief } from '@sneat/contactus-core';
+import { IContactusSpaceDboAndID, IContactBrief } from '@sneat/contactus-core';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
@@ -24,7 +24,7 @@ export abstract class TeamPageBaseComponent
 		super(className, route, params);
 	}
 
-	protected onContactusTeamChanged(contactusTeam: IContactusTeamDtoAndID) {
+	protected onContactusTeamChanged(contactusTeam: IContactusSpaceDboAndID) {
 		console.log('TeamPage.onContactusTeamChanged()', contactusTeam);
 		// super.onContactusTeamChanged(contactusTeam);
 		this.members = zipMapBriefsWithIDs(contactusTeam?.dbo?.contacts)

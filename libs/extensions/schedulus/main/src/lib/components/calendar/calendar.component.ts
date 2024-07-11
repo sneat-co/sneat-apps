@@ -18,12 +18,12 @@ import {
 	WeekdayCode2,
 	IHappeningContext,
 	IHappeningWithUiState,
-	ICalendariumTeamDto,
+	ICalendariumSpaceDbo,
 } from '@sneat/mod-schedulus-core';
 import { ISlotUIContext } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamComponentBaseParams } from '@sneat/team-components';
-import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
+import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { HappeningService, CalendarDayService } from '@sneat/team-services';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { TeamDaysProvider } from '../../services/team-days-provider';
@@ -53,7 +53,7 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 	public readonly teamDaysProvider: TeamDaysProvider;
 	@ViewChild('scheduleFilterComponent')
 	scheduleFilterComponent?: CalendarFilterComponent;
-	@Input() team: ITeamContext = { id: '' };
+	@Input() team: ISpaceContext = { id: '' };
 	@Input() member?: IMemberContext;
 	@Input() public tab: CalendarTab = 'day';
 	@Input() public dateID = '';
@@ -66,7 +66,7 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 	// private date: Date;
 	recurrings?: readonly IHappeningWithUiState[];
 
-	private schedulusTeamDto?: ICalendariumTeamDto | null;
+	private schedulusTeamDto?: ICalendariumSpaceDbo | null;
 
 	private schedulusTeamSubscription?: Subscription;
 
@@ -114,8 +114,8 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 		if (changes['team']) {
 			this.onTeamContextChanged();
 			const teamChange = changes['team'];
-			const prevTeam = teamChange.previousValue as ITeamContext;
-			const currentTeam = teamChange.currentValue as ITeamContext;
+			const prevTeam = teamChange.previousValue as ISpaceContext;
+			const currentTeam = teamChange.currentValue as ISpaceContext;
 			if (currentTeam?.id !== prevTeam?.id) {
 				this.onTeamIdChanged();
 			}
@@ -225,7 +225,7 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 		console.log('');
 		const page = `happening/${happening.id}`;
 		this.params.teamNavService
-			.navigateForwardToTeamPage(this.team, page, {
+			.navigateForwardToSpacePage(this.team, page, {
 				state: { happening },
 			})
 			.catch(
@@ -259,7 +259,7 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 			this.populateRecurrings();
 			this.setDay('onTeamDtoChanged', this.date);
 			this.schedulusTeamSubscription = this.calendariumTeamService
-				.watchTeamModuleRecord(this.team.id)
+				.watchSpaceModuleRecord(this.team.id)
 				.subscribe({
 					next: (schedulusTeam) => {
 						console.log(
@@ -267,8 +267,10 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 							schedulusTeam,
 						);
 						this.schedulusTeamDto = schedulusTeam?.dbo;
-						const schedulusTeamContext = { team: this.team, ...schedulusTeam };
-						this.teamDaysProvider.setSchedulusTeam(schedulusTeamContext);
+						this.teamDaysProvider.setSchedulusTeam({
+							space: this.team,
+							...schedulusTeam,
+						});
 						this.populateRecurrings();
 					},
 				});
@@ -308,7 +310,7 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 					id,
 					brief: rh.brief,
 					state: prev?.state || {},
-					team: this.team || { id: '' },
+					space: this.team || { id: '' },
 				};
 				return result;
 			}) || [];

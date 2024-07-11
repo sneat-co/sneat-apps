@@ -95,7 +95,7 @@ export class EntityEditPageComponent implements OnDestroy {
 					console.log('Entity created:', value);
 					this.datatugNavService.goEntity(project, {
 						id: value.id,
-						title: value.dto?.title,
+						title: value.dbo?.title,
 					});
 				},
 			});

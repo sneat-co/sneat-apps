@@ -3,7 +3,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { IUserTeamBrief } from '@sneat/auth-models';
+import { IUserSpaceBrief } from '@sneat/auth-models';
 import { SneatPipesModule } from '@sneat/components';
 import { IUpdateContactRequest } from '@sneat/contactus-services';
 import { IIdAndBrief, IIdAndBriefAndOptionalDto } from '@sneat/core';
@@ -18,9 +18,9 @@ import {
 	getRelatedItemByKey,
 	IRelatedItem,
 	IRelationshipRoles,
-	ITeamModuleDocRef,
+	ISpaceModuleDocRef,
 } from '@sneat/dto';
-import { ITeamRef } from '@sneat/team-models';
+import { ISpaceRef } from '@sneat/team-models';
 import { MemberPages } from '../../constants';
 import { ContactComponentBaseParams } from '../../contact-component-base-params';
 import { ContactContactsComponent } from '../contact-contacts';
@@ -61,12 +61,12 @@ import { RelatedContactComponent } from './related-contact.component';
 	],
 })
 export class ContactDetailsComponent implements OnChanges {
-	@Input({ required: true }) public team?: ITeamRef;
+	@Input({ required: true }) public team?: ISpaceRef;
 	@Input({ required: true }) public contact?: IContactContext;
 
 	protected relatedContactsOfCurrentTeam?: readonly IIdAndBrief<IRelatedItem>[];
 
-	private userTeamBriefs?: Record<string, IUserTeamBrief>;
+	private userTeamBriefs?: Record<string, IUserSpaceBrief>;
 	private userContactID?: string;
 
 	protected get contactWithBriefAndOptionalDto():
@@ -84,18 +84,18 @@ export class ContactDetailsComponent implements OnChanges {
 	protected tab: 'communicationChannels' | 'roles' | 'peers' | 'locations' =
 		'peers';
 
-	protected relatedToContactOfCurrentUser?: ITeamModuleDocRef;
+	protected relatedToContactOfCurrentUser?: ISpaceModuleDocRef;
 
 	constructor(private readonly params: ContactComponentBaseParams) {
 		params.userService.userState.subscribe({
 			next: (userState) => {
-				this.userTeamBriefs = userState?.record?.teams;
+				this.userTeamBriefs = userState?.record?.spaces;
 				this.setUserContactID();
 			},
 		});
 		params.userService.userState.subscribe({
 			next: (state) => {
-				this.userTeamBriefs = state?.record?.teams;
+				this.userTeamBriefs = state?.record?.spaces;
 				this.setUserContactID();
 			},
 		});
@@ -104,7 +104,7 @@ export class ContactDetailsComponent implements OnChanges {
 	private setRelatedToCurrentUser(): void {
 		this.relatedToContactOfCurrentUser = this.userContactID
 			? {
-					teamID: this.team?.id || '',
+					spaceID: this.team?.id || '',
 					moduleID: 'contactus',
 					collection: 'contacts',
 					itemID: this.userContactID,
@@ -122,8 +122,8 @@ export class ContactDetailsComponent implements OnChanges {
 				'ContactDetailsComponent.ngOnChanges(): contact changed:',
 				changes['contact'],
 			);
-			const teamID = this.team?.id;
-			if (teamID && this.contact?.dbo?.related) {
+			const spaceID = this.team?.id;
+			if (spaceID && this.contact?.dbo?.related) {
 				const contactus = this.contact.dbo.related['contactus'];
 				if (!contactus) {
 					return;
@@ -154,12 +154,12 @@ export class ContactDetailsComponent implements OnChanges {
 		}
 	}
 
-	private setRelatedAs(teamID: string, userContactID: string): void {
+	private setRelatedAs(spaceID: string, userContactID: string): void {
 		const relatedContact = getRelatedItemByKey(
 			this.contact?.dbo?.related,
 			'contactus',
 			'contacts',
-			teamID,
+			spaceID,
 			userContactID,
 		);
 		this.rolesOfItem = relatedContact?.rolesOfItem;
@@ -200,13 +200,13 @@ export class ContactDetailsComponent implements OnChanges {
 	}
 
 	protected goMember(id: string): void {
-		const team = this.team;
-		if (!team) {
+		const space = this.team;
+		if (!space) {
 			throw new Error('Can not navigate to member without team context');
 		}
 		this.params.teamNavService.navigateToMember(this.params.navController, {
 			id,
-			team,
+			space,
 		});
 	}
 
@@ -240,7 +240,7 @@ export class ContactDetailsComponent implements OnChanges {
 		const request: IUpdateContactRequest = {
 			...this.newUpdateContactRequest(),
 			relatedTo: {
-				teamID: this.team?.id || '',
+				spaceID: this.team?.id || '',
 				moduleID: 'contactus',
 				collection: 'contacts',
 				itemID: userContactID,
@@ -261,13 +261,13 @@ export class ContactDetailsComponent implements OnChanges {
 
 	private newUpdateContactRequest(): IUpdateContactRequest {
 		const contactID = this.contact?.id;
-		const teamID = this.team?.id;
-		if (!contactID || !teamID) {
+		const spaceID = this.team?.id;
+		if (!contactID || !spaceID) {
 			throw new Error(
-				'ContactDetailsComponent.newUpdateContactRequest() - contactID or teamID is not set',
+				'ContactDetailsComponent.newUpdateContactRequest() - contactID or spaceID is not set',
 			);
 		}
-		return { teamID, contactID };
+		return { spaceID, contactID };
 	}
 
 	changeGender(event: Event): void {

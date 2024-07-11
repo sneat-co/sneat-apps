@@ -15,7 +15,7 @@ import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team-components';
-import { createShortTeamInfoFromDto } from '@sneat/team-models';
+import { createShortSpaceInfoFromDbo } from '@sneat/team-models';
 import { Subscription } from 'rxjs';
 import { ListusComponentBaseParams } from '../../listus-component-base-params';
 import {
@@ -165,7 +165,7 @@ export class ListsPageComponent extends TeamBaseComponent {
 		}
 		const path = `list/${list.type}/${list.id}`;
 		this.teamParams.teamNavService
-			.navigateForwardToTeamPage(this.team, path, {
+			.navigateForwardToSpacePage(this.team, path, {
 				state: {
 					listInfo: list,
 					listGroupTitle: listGroup && listGroup.title,
@@ -263,9 +263,9 @@ export class ListsPageComponent extends TeamBaseComponent {
 	// 	}
 	// }
 
-	protected override onTeamDtoChanged(): void {
+	protected override onSpaceDboChanged(): void {
 		try {
-			super.onTeamDtoChanged();
+			super.onSpaceDboChanged();
 			if (this.team) {
 				if (this.reordered) {
 					this.reordered = false;
@@ -395,7 +395,7 @@ export class ListsPageComponent extends TeamBaseComponent {
 				if (!passedList.team && this.team.type === 'personal') {
 					passedList = {
 						...passedList,
-						team: createShortTeamInfoFromDto(this.team),
+						team: createShortSpaceInfoFromDbo(this.team),
 					};
 				}
 				const matchedList = ((listGroup && listGroup.lists) || []).find(
@@ -475,7 +475,7 @@ export class ListsPageComponent extends TeamBaseComponent {
 						matchedList.id = passedList.id;
 					}
 					if (!matchedList.team) {
-						matchedList.team = createShortTeamInfoFromDto(this.team);
+						matchedList.team = createShortSpaceInfoFromDbo(this.team);
 					}
 				}
 			});

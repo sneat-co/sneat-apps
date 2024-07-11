@@ -30,7 +30,7 @@ export interface IIdAndBriefAndOptionalDto<Brief, Dbo extends Brief> {
 	readonly dbo?: Dbo | null;
 }
 
-export interface IIdAndBriefAndDto<Brief, Dbo extends Brief> {
+export interface IIdAndBriefAndDbo<Brief, Dbo extends Brief> {
 	readonly id: string;
 	readonly brief: Brief;
 	readonly dbo: Dbo;

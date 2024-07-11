@@ -1,6 +1,6 @@
-import { TeamType } from '@sneat/core';
+import { SpaceType } from '@sneat/core';
 import { DtoTotal, DtoTotals, Period } from '@sneat/dto';
-import { ITeamContext } from '../team-context';
+import { ISpaceContext } from '../team-context';
 
 export class Total {
 	constructor(public readonly dto?: DtoTotal) {
@@ -199,11 +199,11 @@ export class Totals {
 	}
 }
 
-export class Commune implements ITeamContext {
+export class Commune implements ISpaceContext {
 	public readonly totals: Totals;
 
 	constructor(
-		public readonly team: ITeamContext,
+		public readonly team: ISpaceContext,
 		public readonly shortId?: string,
 	) {
 		this.totals = new Totals(team.dbo?.totals);
@@ -213,7 +213,7 @@ export class Commune implements ITeamContext {
 		return this.team.id;
 	}
 
-	public get type(): TeamType | undefined {
+	public get type(): SpaceType | undefined {
 		return this.team.dbo?.type;
 	}
 

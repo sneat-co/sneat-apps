@@ -13,7 +13,7 @@ import {
 	IContactSelectorOptions,
 } from '@sneat/contactus-shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import {
 	CounterpartyRole,
 	ILogistOrderContext,
@@ -26,7 +26,7 @@ import {
 })
 export class OrderAgentsComponent implements OnChanges {
 	@Input() public readonly = false;
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) team?: ISpaceContext;
 	@Input() order?: ILogistOrderContext;
 
 	@Output() added = new EventEmitter<IOrderCounterparty[]>();
@@ -84,7 +84,7 @@ export class OrderAgentsComponent implements OnChanges {
 	`,
 })
 export class AgentRoleMenuComponent {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) team?: ISpaceContext;
 	@Input() order?: ILogistOrderContext;
 	@Input() selected?: (counterparty: IOrderCounterparty) => void;
 

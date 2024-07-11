@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
-import { IContactBrief, IContactusTeamDto } from '@sneat/contactus-core';
+import { IContactBrief, IContactusSpaceDbo } from '@sneat/contactus-core';
 import {
 	ContactusTeamContextService,
 	ContactusTeamService,
@@ -61,7 +61,7 @@ export class ContactsFilterComponent
 	}
 
 	private onContactusTeamChanged(
-		contactusTeam: IIdAndOptionalDbo<IContactusTeamDto>,
+		contactusTeam: IIdAndOptionalDbo<IContactusSpaceDbo>,
 	): void {
 		const contactBriefs = zipMapBriefsWithIDs(
 			contactusTeam?.dbo?.contacts,

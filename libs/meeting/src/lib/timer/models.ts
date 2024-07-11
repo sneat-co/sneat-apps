@@ -2,13 +2,13 @@ import { IByUser } from '@sneat/dto';
 import { IMeetingRequest } from '../models';
 import { Timestamp } from '@firebase/firestore-types';
 
-// eslint-disable-next-line no-shadow
+ 
 export enum TimerOperationEnum {
-	// eslint-disable-next-line @typescript-eslint/naming-convention
+	 
 	start = 'start',
-	// eslint-disable-next-line @typescript-eslint/naming-convention
+	 
 	stop = 'stop',
-	// eslint-disable-next-line @typescript-eslint/naming-convention
+	 
 	pause = 'pause',
 }
 
@@ -17,13 +17,13 @@ export type TimerOperation =
 	| TimerOperationEnum.stop
 	| TimerOperationEnum.pause;
 
-// eslint-disable-next-line no-shadow
+ 
 export enum TimerStatusEnum {
-	// eslint-disable-next-line @typescript-eslint/naming-convention
+	 
 	active = 'active',
-	// eslint-disable-next-line @typescript-eslint/naming-convention
+	 
 	stopped = 'stopped',
-	// eslint-disable-next-line @typescript-eslint/naming-convention
+	 
 	paused = 'paused',
 }
 
@@ -44,7 +44,7 @@ export interface ITimerState {
 }
 
 export interface IMeetingTimerRequest extends IMeetingRequest {
-	teamID: string; // TODO: remove temporary workaround, should come from: IMeetingRequest < ITeamRequest
+	spaceID: string; // TODO: remove temporary workaround, should come from: IMeetingRequest < ITeamRequest
 	operation: TimerOperation;
 }
 

@@ -81,7 +81,7 @@ export class TruckerSegmentComponent implements OnChanges {
 		}
 		const request: IDeleteSegmentsRequest = {
 			orderID: this.order.id,
-			teamID: this.order.team.id,
+			spaceID: this.order.space.id,
 			fromShippingPointID: this.orderSegment.from.shippingPointID,
 			toShippingPointID: this.orderSegment.to.shippingPointID,
 			byContactID: this.orderSegment.byContactID,

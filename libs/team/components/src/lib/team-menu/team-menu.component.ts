@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { ISneatUserState } from '@sneat/auth-core';
-import { IUserTeamBrief } from '@sneat/auth-models';
+import { IUserSpaceBrief } from '@sneat/auth-models';
 import { AuthMenuItemComponent } from '@sneat/components';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { IIdAndBrief } from '@sneat/core';
@@ -31,7 +31,7 @@ import { IonicModule } from '@ionic/angular';
 	providers: [TeamComponentBaseParams],
 })
 export class TeamMenuComponent extends TeamBaseComponent {
-	public teams?: readonly IIdAndBrief<IUserTeamBrief>[];
+	public teams?: readonly IIdAndBrief<IUserSpaceBrief>[];
 
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 
@@ -52,7 +52,7 @@ export class TeamMenuComponent extends TeamBaseComponent {
 			this.errorLogger.logError('no team context');
 			return false;
 		}
-		this.teamParams.teamNavService.navigateToTeam(this.team).then((v) => {
+		this.teamParams.teamNavService.navigateToSpace(this.team).then((v) => {
 			if (v) {
 				this.closeMenu();
 			}
@@ -72,8 +72,8 @@ export class TeamMenuComponent extends TeamBaseComponent {
 		this.menuCtrl.close().catch(this.errorLogger.logError);
 	}
 
-	override onTeamDtoChanged(): void {
-		super.onTeamDtoChanged();
+	override onSpaceDboChanged(): void {
+		super.onSpaceDboChanged();
 		// console.log('TeamMenuComponent.onTeamDtoChanged()', this.team?.dto);
 	}
 
@@ -99,16 +99,16 @@ export class TeamMenuComponent extends TeamBaseComponent {
 	}
 
 	onTeamSelected(event: Event): void {
-		const teamID = (event as CustomEvent).detail.value as string;
+		const spaceID = (event as CustomEvent).detail.value as string;
 
 		// console.log('TeamMenuComponent.onTeamSelected', teamID);
-		if (teamID === this.team?.id) {
+		if (spaceID === this.team?.id) {
 			return;
 		}
-		const team = this.teams?.find((t) => t.id === teamID);
-		if (team) {
+		const space = this.teams?.find((t) => t.id === spaceID);
+		if (space) {
 			this.teamNav
-				.navigateToTeam(team)
+				.navigateToSpace(space)
 				.catch(
 					this.errorLogger.logErrorHandler(
 						'Failed to navigate to teams page on current team changed from team menu dropdown',
@@ -122,7 +122,7 @@ export class TeamMenuComponent extends TeamBaseComponent {
 	private trackUserState = (userState: ISneatUserState): void => {
 		// console.log('TeamMenuComponent.trackUserState =>', userState);
 		if (userState?.record) {
-			this.teams = zipMapBriefsWithIDs(userState.record.teams) || [];
+			this.teams = zipMapBriefsWithIDs(userState.record.spaces) || [];
 		} else {
 			this.teams = undefined;
 		}

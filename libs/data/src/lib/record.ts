@@ -8,12 +8,14 @@ export interface MightHaveId {
 export function mapToRecord<T extends MightHaveId>(
 	state: RecordState = 'unchanged',
 ): OperatorFunction<T, IRecord<T>> {
-	return map((dto: T): IRecord<T> => ({ id: dto.id as string, dto, state }));
+	return map(
+		(dto: T): IRecord<T> => ({ id: dto.id as string, dbo: dto, state }),
+	);
 }
 
 export interface IRecord<T> {
 	readonly id: string;
-	readonly dto?: T;
+	readonly dbo?: T;
 	readonly state?: RecordState; // undefined == 'unchanged';
 }
 

@@ -1,14 +1,14 @@
 import {
 	DtoGroupTerms,
 	IContactGroupBrief,
-	IContactGroupDto,
+	IContactGroupDbo,
 	IContactGroupDtoCounts,
 } from '../dto';
 import { IMemberGroupContext } from '.';
 
 export class MemberGroup {
 	public readonly id: string;
-	public readonly dto?: IContactGroupDto | null;
+	public readonly dto?: IContactGroupDbo | null;
 	public readonly brief?: IContactGroupBrief | null;
 
 	constructor(memberGroup: IMemberGroupContext) {

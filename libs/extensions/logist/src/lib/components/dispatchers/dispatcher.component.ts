@@ -83,8 +83,8 @@ export class DispatcherComponent implements OnChanges {
 		console.log('addDispatchPoint(), event:', event);
 		event.stopPropagation();
 		event.preventDefault();
-		const team = this.order?.team;
-		if (!team) {
+		const space = this.order?.space;
+		if (!space) {
 			this.errorLogger.logError(
 				'ContactInputComponent.openContactSelector(): team is required',
 				undefined,
@@ -98,13 +98,13 @@ export class DispatcherComponent implements OnChanges {
 		}
 		const selectorOptions: IContactSelectorOptions = {
 			componentProps: {
-				team,
+				team: space,
 				contactRole: 'dispatch_point',
 				contactType: 'location',
 				parentRole: 'dispatcher',
 				parentContact: {
 					id: dispatcher.contactID,
-					team,
+					space,
 					brief: {
 						type: 'company',
 						title: dispatcher.title,
@@ -113,7 +113,7 @@ export class DispatcherComponent implements OnChanges {
 				},
 				excludeContacts: this.orderDispatchers?.map((c) => ({
 					id: c.contactID,
-					team,
+					space,
 				})),
 			},
 		};
@@ -132,7 +132,7 @@ export class DispatcherComponent implements OnChanges {
 					alert('Contact is not loaded');
 					return;
 				}
-				const team = this.order.team;
+				const space = this.order.space;
 				// const counterparty: IOrderCounterparty = {
 				// 	contactID: contact.id,
 				// 	title: contact.brief.title || contact.id,
@@ -141,15 +141,15 @@ export class DispatcherComponent implements OnChanges {
 				// 	countryID: contact.brief.address?.countryID || '--',
 				// };
 				const request: IAddOrderShippingPointRequest = {
-					teamID: team.id,
+					spaceID: space.id,
 					orderID: this.order.id,
 					tasks: ['load'],
 					locationContactID: contact.id,
 				};
-				this.ordersService.addShippingPoint(team, request).subscribe({
+				this.ordersService.addShippingPoint(space, request).subscribe({
 					next: (order) => {
 						console.log('added shipping point added to order');
-						this.order = { ...order, team: this.order?.team || team };
+						this.order = { ...order, space: this.order?.space || space };
 						this.orderChange.emit(this.order);
 					},
 					error: (e) => {
@@ -174,7 +174,7 @@ export class DispatcherComponent implements OnChanges {
 			return;
 		}
 		const request: ISetOrderCounterpartiesRequest = {
-			teamID: this.order.team.id,
+			spaceID: this.order.space.id,
 			orderID: this.order.id,
 			counterparties: [
 				excludeUndefined({
@@ -206,7 +206,7 @@ export class DispatcherComponent implements OnChanges {
 			return;
 		}
 		const request: IDeleteCounterpartyRequest = {
-			teamID: this.order?.team?.id,
+			spaceID: this.order?.space?.id,
 			orderID: this.order.id,
 			contactID: this.counterparty?.contactID,
 			role: 'dispatcher',

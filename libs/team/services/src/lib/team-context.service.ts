@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { ParamMap } from '@angular/router';
 import { distinctUntilChanged, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ITeamContext } from '@sneat/team-models';
-import { TeamType } from '@sneat/core';
+import { ISpaceContext } from '@sneat/team-models';
+import { SpaceType } from '@sneat/core';
 
 @Injectable({
 	providedIn: 'root',
@@ -25,17 +25,17 @@ export class TeamContextService {
 
 export function trackTeamIdAndTypeFromRouteParameter(
 	paramMap$: Observable<ParamMap>,
-): Observable<ITeamContext | undefined> {
+): Observable<ISpaceContext | undefined> {
 	return paramMap$.pipe(
 		map((params) => {
 			const id = params.get('teamID'),
-				type = params.get('teamType') as TeamType;
+				type = params.get('teamType') as SpaceType;
 			console.log('trackTeamIdAndTypeFromRouteParameter', params, id, type);
-			const teamContext: ITeamContext | undefined = id
+			const spaceContext: ISpaceContext | undefined = id
 				? { id: id, type: type || undefined }
 				: undefined;
 			// console.log('trackTeamIdAndTypeFromRouteParameter() => teamContext:', teamContext)
-			return teamContext;
+			return spaceContext;
 		}),
 		distinctUntilChanged(
 			(previous, current) =>

@@ -17,8 +17,8 @@ export class OrderNavService {
 		params?: Record<string, unknown>,
 		state?: Record<string, unknown>,
 	): Promise<boolean> {
-		const { id, team } = order;
-		let u = `/space/${team.type}/${team.id}/order/${id}`;
+		const { id, space } = order;
+		let u = `/space/${space.type}/${space.id}/order/${id}`;
 		if (url?.path) {
 			u += '/' + url.path;
 		}

@@ -3,7 +3,7 @@ import { ISlotUIContext } from '@sneat/extensions/schedulus/shared';
 import { ICalendarFilter } from './calendar/components/calendar-filter/calendar-filter';
 
 export function hasContact(
-	teamID: string,
+	spaceID: string,
 	contactIDs: readonly string[],
 	related?: IRelatedItemsByModule,
 ): boolean {
@@ -14,7 +14,7 @@ export function hasContact(
 		related,
 		'contactus',
 		'contacts',
-		teamID,
+		spaceID,
 	);
 	console.log(
 		'hasContact() related=',
@@ -35,13 +35,13 @@ export function hasContact(
 // }
 
 export function isSlotVisible(
-	teamID: string,
+	spaceID: string,
 	slot: ISlotUIContext,
 	filter: ICalendarFilter,
 ): boolean {
 	if (
 		!hasContact(
-			teamID,
+			spaceID,
 			filter.contactIDs,
 			slot.happening?.dbo?.related || slot.happening?.brief?.related,
 		)

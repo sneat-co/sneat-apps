@@ -22,14 +22,14 @@ import {
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-location-form',
 	templateUrl: './location-form.component.html',
 })
 export class LocationFormComponent implements OnChanges {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) team?: ISpaceContext;
 	@Input() contactRole?: ContactRole;
 	@Input() countryID = '';
 	@Input() contact?: IContactContext;
@@ -92,7 +92,7 @@ export class LocationFormComponent implements OnChanges {
 				id: '',
 				// team: this.team,
 				dbo: brief,
-				team: this.team,
+				space: this.team,
 			};
 		}
 		const title = this.title.value || '';
@@ -127,7 +127,7 @@ export class LocationFormComponent implements OnChanges {
 					id: this.contact?.id || '',
 					// team: this.team,
 					dbo: { type: this.contactType },
-					team: this.team,
+					space: this.team,
 				};
 				this.emitContactChange();
 			}
@@ -183,7 +183,7 @@ export class LocationFormComponent implements OnChanges {
 		}
 		const request: ICreateContactRequest = {
 			status: 'active',
-			teamID: this.team.id,
+			spaceID: this.team.id,
 			type: 'location',
 			parentContactID: this.parentContact?.id,
 			location: {

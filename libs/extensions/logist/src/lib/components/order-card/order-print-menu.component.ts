@@ -1,7 +1,7 @@
 import { Component, Inject, Input } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { ILogistOrderContext } from '../../dto';
 
 @Component({
@@ -9,7 +9,7 @@ import { ILogistOrderContext } from '../../dto';
 	templateUrl: './order-print-menu.component.html',
 })
 export class OrderPrintMenuComponent {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) team?: ISpaceContext;
 	@Input() order?: ILogistOrderContext;
 
 	constructor(

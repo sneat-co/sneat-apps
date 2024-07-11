@@ -10,7 +10,7 @@ import {
 import { ContactComponentBaseParams } from '@sneat/contactus-shared';
 import {
 	emptyMemberPerson,
-	IContactusTeamDtoAndID,
+	IContactusSpaceDboAndID,
 	IMemberPerson,
 } from '@sneat/contactus-core';
 import {
@@ -89,7 +89,7 @@ export class NewMemberPageComponent extends TeamPageBaseComponent {
 			});
 	}
 
-	protected contactusTeam?: IContactusTeamDtoAndID;
+	protected contactusTeam?: IContactusSpaceDboAndID;
 
 	private readonly trackFirstTeamTypeChanged = (): void => {
 		console.log('NewMemberPageComponent.trackFirstTeamTypeChanged()');

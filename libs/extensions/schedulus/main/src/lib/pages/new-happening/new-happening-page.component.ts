@@ -83,12 +83,12 @@ export class NewHappeningPageComponent extends CalendarBasePage {
 
 	private createHappeningContext(type: HappeningType): void {
 		console.log('createHappeningContext()', type);
-		const team = this.team;
-		if (!team) {
-			throw new Error('!team');
+		const space = this.team;
+		if (!space) {
+			throw new Error('!space');
 		}
 		this.happening = newEmptyHappeningContext(
-			team,
+			space,
 			type,
 			'appointment',
 			'active',

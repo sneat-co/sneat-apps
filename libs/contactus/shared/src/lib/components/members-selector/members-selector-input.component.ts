@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { IIdAndBrief } from '@sneat/core';
-import { IContactBrief, IContactusTeamDtoAndID } from '@sneat/contactus-core';
+import { IContactBrief, IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { contactContextFromBrief } from '@sneat/contactus-services';
-import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
+import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { ISelectMembersOptions } from './members-selector.options';
 import { MembersSelectorService } from './members-selector.service';
 
@@ -12,9 +12,9 @@ import { MembersSelectorService } from './members-selector.service';
 	templateUrl: 'members-selector-input.component.html',
 })
 export class MembersSelectorInputComponent {
-	protected contactusTeam?: IContactusTeamDtoAndID;
+	protected contactusTeam?: IContactusSpaceDboAndID;
 
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) team?: ISpaceContext;
 	@Input() members?: readonly IIdAndBrief<IContactBrief>[];
 
 	@Input() max?: number;
@@ -40,15 +40,15 @@ export class MembersSelectorInputComponent {
 	selectMembers(event: Event): void {
 		event.stopPropagation();
 		event.preventDefault();
-		const team = this.team;
+		const space = this.team;
 		const contactusTeam = this.contactusTeam;
-		if (!contactusTeam || !team) {
+		if (!contactusTeam || !space) {
 			return;
 		}
 		const options: ISelectMembersOptions = {
 			selectedMembers: this.selectedMembers,
 			members: zipMapBriefsWithIDs(contactusTeam.dbo?.contacts)?.map((m) =>
-				contactContextFromBrief(m, team),
+				contactContextFromBrief(m, space),
 			),
 			max: this.max,
 		};

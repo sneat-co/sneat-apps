@@ -16,7 +16,6 @@ import {
 	shareReplay,
 	Subject,
 	Subscription,
-	take,
 	takeUntil,
 } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -38,7 +37,7 @@ export class TeamDay {
 	private singles?: ISlotUIContext[];
 	// private singles?: ISlotItem[];
 
-	private teamID?: string;
+	private spaceID?: string;
 	public readonly date: Date;
 	public readonly dateID: string;
 	public readonly wd: WeekdayCode2;
@@ -83,7 +82,7 @@ export class TeamDay {
 		console.log('TeamDay.constructor()', this.dateID, this.date);
 		this.teamID$ = teamID$.pipe(distinctUntilChanged());
 		this.teamID$.pipe(takeUntil(this.destroyed$)).subscribe({
-			next: this.processTeamID,
+			next: this.processSpaceID,
 		});
 		this.wd = getWd2(date);
 		this.wdLongTitle = wdCodeToWeekdayLongName(this.wd);
@@ -95,14 +94,14 @@ export class TeamDay {
 		this.destroyed.complete();
 	}
 
-	private readonly processTeamID = (teamID: string | undefined) => {
-		if (teamID === this.teamID) {
+	private readonly processSpaceID = (spaceID: string | undefined) => {
+		if (spaceID === this.spaceID) {
 			return;
 		}
-		console.log(`TeamDay[${this.dateID}].processTeamID(teamID=${teamID})`);
-		this.teamID = teamID;
+		console.log(`TeamDay[${this.dateID}].processTeamID(teamID=${spaceID})`);
+		this.spaceID = spaceID;
 		this.singles = undefined;
-		if (!this.teamID) {
+		if (!this.spaceID) {
 			this.recurringSlots = undefined;
 		}
 		this.subscriptions.forEach((s) => s.unsubscribe());
@@ -112,12 +111,12 @@ export class TeamDay {
 	};
 
 	private readonly subscribeForCalendarDay = (): void => {
-		if (!this.teamID) {
+		if (!this.spaceID) {
 			return;
 		}
 		this.subscriptions.push(
 			this.calendarDayService
-				.watchTeamDay({ id: this.teamID }, this.dateID)
+				.watchTeamDay({ id: this.spaceID }, this.dateID)
 				.pipe(takeUntil(this.destroyed$))
 				.subscribe({
 					next: (calendarDay) => {
@@ -136,7 +135,7 @@ export class TeamDay {
 	};
 
 	private readonly subscribeForSingles = (): void => {
-		if (!this.teamID) {
+		if (!this.spaceID) {
 			console.error('Tried to subscribe for single happenings without teamID');
 			return;
 		}
@@ -145,19 +144,19 @@ export class TeamDay {
 			return;
 		}
 		try {
-			const teamID = this.teamID;
+			const spaceID = this.spaceID;
 			const date = this.dateID;
 			console.log(
-				`TeamDay[${this.dateID}].subscribeForSingles(), teamID=${teamID}, date=${date}`,
+				`TeamDay[${this.dateID}].subscribeForSingles(), spaceID=${spaceID}, date=${date}`,
 			);
 			this.subscriptions.push(
 				this.happeningService
-					.watchSinglesOnSpecificDay({ id: this.teamID }, this.dateID)
+					.watchSinglesOnSpecificDay({ id: spaceID }, this.dateID)
 					.pipe(takeUntil(this.destroyed$))
 					.subscribe({
 						next: this.processSingles,
 						error: this.errorLogger.logErrorHandler(
-							`Failed to get single happenings for a given day: teamID=${teamID}, date=${date}`,
+							`Failed to get single happenings for a given day: spaceID=${spaceID}, date=${date}`,
 						),
 					}),
 			);

@@ -90,7 +90,7 @@ export class EntityService {
 							}
 							return {
 								id,
-								dto: entity,
+								dbo: entity,
 								state: records?.find((v) => v.id === entity.id)?.state,
 							};
 						}),
@@ -117,7 +117,7 @@ export class EntityService {
 					if (!id) {
 						throw new Error('entity has no ID');
 					}
-					entities$.next([...entities$.getValue(), { id, dto: entity }]);
+					entities$.next([...entities$.getValue(), { id, dbo: entity }]);
 				}),
 			);
 	};

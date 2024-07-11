@@ -4,7 +4,7 @@ import { ISelectItem } from '@sneat/components';
 import {
 	IContactBrief,
 	IContactContext,
-	IContactusTeamDtoAndID,
+	IContactusSpaceDboAndID,
 } from '@sneat/contactus-core';
 import { IIdAndBrief } from '@sneat/core';
 import {
@@ -25,7 +25,7 @@ import {
 	ContactService,
 	contactContextFromBrief,
 } from '@sneat/contactus-services';
-import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
+import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { TeamNavService } from '@sneat/team-services';
 import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 
@@ -38,8 +38,8 @@ export class NewDocumentPageComponent
 	extends AddAssetBaseComponent
 	implements OnChanges
 {
-	@Input() public override team?: ITeamContext;
-	@Input() public override contactusTeam?: IContactusTeamDtoAndID;
+	@Input() public override team?: ISpaceContext;
+	@Input() public override contactusTeam?: IContactusSpaceDboAndID;
 
 	belongsTo: 'member' | 'commune' = 'commune';
 
@@ -100,11 +100,11 @@ export class NewDocumentPageComponent
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['contactusTeam']) {
-			const team = this.team;
-			if (team) {
+			const space = this.team;
+			if (space) {
 				const contactusTeam = this.contactusTeam;
 				this.members = zipMapBriefsWithIDs(contactusTeam?.dbo?.contacts).map(
-					(contact) => contactContextFromBrief(contact, team),
+					(contact) => contactContextFromBrief(contact, space),
 				);
 			}
 		}
@@ -136,12 +136,12 @@ export class NewDocumentPageComponent
 
 	private watchContact = (contactID: string): void => {
 		this.memberChanged.next();
-		const team = this.team;
-		if (!team) {
+		const space = this.team;
+		if (!space) {
 			return;
 		}
-		this.contact = { id: contactID, team };
-		this.contactService.watchContactById(team, contactID).subscribe({
+		this.contact = { id: contactID, space };
+		this.contactService.watchContactById(space, contactID).subscribe({
 			next: (member) => {
 				this.contact = member;
 			},
@@ -170,7 +170,7 @@ export class NewDocumentPageComponent
 			},
 		};
 		const request: ICreateAssetRequest<'document', IAssetDocumentExtra> = {
-			teamID: this.team.id,
+			spaceID: this.team.id,
 			memberID: this?.contact?.id,
 			asset: dto,
 		};
@@ -186,12 +186,12 @@ export class NewDocumentPageComponent
 	}
 
 	private onDocCreated = (doc: IAssetDocumentContext): void => {
-		const team = this.team;
-		if (!team) {
+		const space = this.team;
+		if (!space) {
 			return;
 		}
 		this.teamNavService
-			.navigateForwardToTeamPage(team, 'document/' + doc.id)
+			.navigateForwardToSpacePage(space, 'document/' + doc.id)
 			.catch(
 				this.errorLogger.logErrorHandler('Failed to navigate to document page'),
 			);

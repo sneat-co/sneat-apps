@@ -9,13 +9,13 @@
 			>
 		</ion-buttons>
 	</ion-item-divider>
-	<ion-item tappable (click)="navigateToCurrentRetro()" [disabled]="!team?.dto">
+	<ion-item tappable (click)="navigateToCurrentRetro()" [disabled]="!team?.dbo">
 		<!--		<ion-label color="primary">{{-->
 		<!--			team?.dto?.active?.retrospective-->
 		<!--				? 'Active retrospective'-->
 		<!--				: 'Upcoming retrospective'-->
 		<!--		}}</ion-label>-->
-		<ion-buttons slot="end" *ngIf="team?.dto?.upcomingRetro">
+		<ion-buttons slot="end" *ngIf="team?.dbo?.upcomingRetro">
 			<ion-button color="success">{{ retroCount("good") }}</ion-button>
 			<ion-button color="danger">{{ retroCount("bad") }}</ion-button>
 			<ion-button color="primary">{{ retroCount("idea") }}</ion-button>

@@ -5,7 +5,7 @@ import {
 	IContactContext,
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import {
 	ContactSelectorService,
 	IContactSelectorOptions,
@@ -18,7 +18,7 @@ import {
 export class SubcontactInputComponent {
 	@Input() canReset = false;
 	@Input() readonly = false;
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) team?: ISpaceContext;
 	@Input() label?: string;
 	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';
 	@Input() role?: ContactRole;

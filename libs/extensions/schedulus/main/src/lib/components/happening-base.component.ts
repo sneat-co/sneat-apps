@@ -11,7 +11,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { IContactBrief, IContactusTeamDtoAndID } from '@sneat/contactus-core';
+import { IContactBrief, IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { IIdAndBrief, isoStringsToDate } from '@sneat/core';
 import { getRelatedItemIDs } from '@sneat/dto';
 import { IHappeningContext, WeekdayCode2 } from '@sneat/mod-schedulus-core';
@@ -19,7 +19,7 @@ import { MembersSelectorService } from '@sneat/contactus-shared';
 import { getWd2 } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { contactContextFromBrief } from '@sneat/contactus-services';
-import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
+import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { IHappeningContactRequest, TeamNavService } from '@sneat/team-services';
 import { NEVER, Observable, takeUntil } from 'rxjs';
 import { HappeningService } from '@sneat/team-services';
@@ -60,8 +60,8 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 
 	protected readonly destroyed = new EventEmitter<void>();
 
-	@Input() team: ITeamContext = { id: '' };
-	@Input() contactusTeam?: IContactusTeamDtoAndID;
+	@Input() team: ISpaceContext = { id: '' };
+	@Input() contactusTeam?: IContactusSpaceDboAndID;
 	@Input() happening?: IHappeningContext;
 
 	@Output() readonly deleted = new EventEmitter<string>();
@@ -123,9 +123,13 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 		}
 		console.log('goHappening()', this.happening, this.team);
 		this.teamNavService
-			.navigateForwardToTeamPage(this.team, `happening/${this.happening?.id}`, {
-				state: { happening: this.happening },
-			})
+			.navigateForwardToSpacePage(
+				this.team,
+				`happening/${this.happening?.id}`,
+				{
+					state: { happening: this.happening },
+				},
+			)
 			.catch(
 				this.errorLogger.logErrorHandler(
 					'failed to navigate to happening page',
@@ -157,11 +161,11 @@ This operation can NOT be undone.`)
 		}
 		this.deleting = true;
 
-		const happening: IHappeningContext = this.happening.team
+		const happening: IHappeningContext = this.happening.space
 			? this.happening
 			: {
 					...this.happening,
-					team: this.team || { id: '' },
+					space: this.team || { id: '' },
 				};
 
 		this.happeningService
@@ -178,17 +182,17 @@ This operation can NOT be undone.`)
 
 	protected selectMembers(event: Event): void {
 		event.stopPropagation();
-		const team = this.team;
-		if (!team) {
+		const space = this.team;
+		if (!space) {
 			return;
 		}
-		const teamID = team?.id;
-		if (!teamID) {
+		const spaceID = space?.id;
+		if (!spaceID) {
 			return;
 		}
 		const teamMembers: IIdAndBrief<IContactBrief>[] | undefined =
 			zipMapBriefsWithIDs(this.contactusTeam?.dbo?.contacts)?.map((m) =>
-				contactContextFromBrief(m, team),
+				contactContextFromBrief(m, space),
 			);
 
 		this.membersSelectorService
@@ -221,7 +225,7 @@ This operation can NOT be undone.`)
 			return NEVER;
 		}
 		const request: IHappeningContactRequest = {
-			teamID: this.team.id,
+			spaceID: this.team.id,
 			happeningID: this.happening.id,
 			contact: { id: member.id },
 		};
@@ -245,7 +249,7 @@ This operation can NOT be undone.`)
 			return NEVER;
 		}
 		const request: IHappeningContactRequest = {
-			teamID: this.team.id,
+			spaceID: this.team.id,
 			happeningID: this.happening.id,
 			contact: { id: member.id },
 		};

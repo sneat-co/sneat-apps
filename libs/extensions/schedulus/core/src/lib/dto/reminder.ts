@@ -1,6 +1,6 @@
 import { ITitledRecord } from '@sneat/dto';
 
-export interface IReminderDto extends ITitledRecord {
+export interface IReminderDbo extends ITitledRecord {
 	dueOn: string;
 	dueTimes?: number;
 	assetId?: string;

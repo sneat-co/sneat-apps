@@ -17,7 +17,7 @@ import {
 	IContactSelectorOptions,
 } from '@sneat/contactus-shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import {
 	CounterpartyRole,
 	IAddOrderShippingPointRequest,
@@ -37,7 +37,7 @@ interface ICounterparty extends IOrderCounterparty {
 	templateUrl: './order-counterparties.component.html',
 })
 export class OrderCounterpartiesComponent implements OnChanges {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) team?: ISpaceContext;
 	@Input() order?: ILogistOrderContext;
 	@Output() readonly orderChange = new EventEmitter<ILogistOrderContext>();
 	@Input() readonly = false;
@@ -79,7 +79,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
 							parent: counterparties.find(
 								(cc) => cc.contactID === c.parent?.contactID,
 							),
-					  }
+						}
 					: c,
 			);
 	}
@@ -88,8 +88,8 @@ export class OrderCounterpartiesComponent implements OnChanges {
 		console.log('addCounterparty(), event:', event);
 		event.stopPropagation();
 		event.preventDefault();
-		const team = this.team;
-		if (!team) {
+		const space = this.team;
+		if (!space) {
 			this.errorLogger.logError(
 				'ContactInputComponent.openContactSelector(): team is required',
 				undefined,
@@ -98,13 +98,13 @@ export class OrderCounterpartiesComponent implements OnChanges {
 		}
 		const selectorOptions: IContactSelectorOptions = {
 			componentProps: {
-				team,
+				team: space,
 				contactRole: this.contactRole as ContactRole,
 				parentRole: this.parentRole as ContactRole,
 				contactType: this.contactType,
 				excludeContacts: this.counterparties?.map((c) => ({
 					id: c.contactID,
-					team,
+					space,
 				})),
 			},
 		};
@@ -142,12 +142,12 @@ export class OrderCounterpartiesComponent implements OnChanges {
 					},
 				};
 				const request: IAddOrderShippingPointRequest = {
-					teamID: team.id,
+					spaceID: space.id,
 					orderID: this.order.id,
 					tasks: ['load'],
 					locationContactID: contact.id,
 				};
-				this.ordersService.addShippingPoint(team, request).subscribe({
+				this.ordersService.addShippingPoint(space, request).subscribe({
 					next: () => {
 						console.log('added shipping point added to order');
 					},
@@ -178,7 +178,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
 			throw new Error('team is required');
 		}
 		const request: IDeleteCounterpartyRequest = {
-			teamID: this.team.id,
+			spaceID: this.team.id,
 			orderID: this.order.id,
 			role: counterparty.role,
 			contactID: counterparty.contactID,

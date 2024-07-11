@@ -1,40 +1,40 @@
 import {
 	IIdAndBrief,
-	IIdAndBriefAndDto,
+	IIdAndBriefAndDbo,
 	IIdAndOptionalBriefAndOptionalDbo,
 	IIdAndOptionalDbo,
 } from '@sneat/core';
-import { ITeamRef } from './team-context';
+import { ISpaceRef } from './team-context';
 
-export interface ITeamItemWithOptionalBriefAndOptionalDto<
+export interface ISpaceItemWithOptionalBriefAndOptionalDbo<
 	Brief,
-	Dto extends Brief,
-> extends IIdAndOptionalBriefAndOptionalDbo<Brief, Dto> {
-	readonly team: ITeamRef;
+	Dbo extends Brief,
+> extends IIdAndOptionalBriefAndOptionalDbo<Brief, Dbo> {
+	readonly space: ISpaceRef;
 }
 
-export interface ITeamItemWithOptionalDto<Dto> extends IIdAndOptionalDbo<Dto> {
-	readonly team: ITeamRef;
+export interface ISpaceItemWithOptionalDbo<Dbo> extends IIdAndOptionalDbo<Dbo> {
+	readonly space: ISpaceRef;
 }
 
-export type ITeamItemNavContext<
+export type ISpaceItemNavContext<
 	Brief,
-	Dto extends Brief,
-> = ITeamItemWithOptionalBriefAndOptionalDto<Brief, Dto>;
+	Dbo extends Brief,
+> = ISpaceItemWithOptionalBriefAndOptionalDbo<Brief, Dbo>;
 
-export interface ITeamItemWithBriefAndDto<Brief, Dto extends Brief>
-	extends IIdAndBriefAndDto<Brief, Dto> {
-	readonly team: ITeamRef;
+export interface ISpaceItemWithBriefAndDbo<Brief, Dbo extends Brief>
+	extends IIdAndBriefAndDbo<Brief, Dbo> {
+	readonly space: ISpaceRef;
 }
 
-export interface ITeamItemBriefWithTeamRef<Brief> extends IIdAndBrief<Brief> {
-	readonly team: ITeamRef;
+export interface ISpaceItemBriefWithSpaceRef<Brief> extends IIdAndBrief<Brief> {
+	readonly space: ISpaceRef;
 }
 
-export function teamItemBriefWithTeamRefFromBrief<Brief>(
-	team: ITeamRef,
+export function spaceItemBriefWithTeamRefFromBrief<Brief>(
+	space: ISpaceRef,
 	id: string,
 	brief: Brief,
-): ITeamItemBriefWithTeamRef<Brief> {
-	return { id, brief, team };
+): ISpaceItemBriefWithSpaceRef<Brief> {
+	return { id, brief, space };
 }

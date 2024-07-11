@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController } from '@ionic/angular';
 import { IIdAndOptionalDbo } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IContactusTeamDto } from '@sneat/contactus-core';
+import { IContactusSpaceDbo } from '@sneat/contactus-core';
 import { TeamNavService } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { Subscription } from 'rxjs';
@@ -16,9 +16,9 @@ export const stringHash = (s: string): number => {
 	}
 	for (let i = 0; i < s.length; i++) {
 		const char = s.charCodeAt(i);
-		// eslint-disable-next-line no-bitwise
+		 
 		hash = (hash << 5) - hash + char;
-		// eslint-disable-next-line no-bitwise
+		 
 		hash = hash & hash; // Convert to 32bit integer
 	}
 	return hash;
@@ -32,7 +32,7 @@ export const stringHash = (s: string): number => {
 	imports: [CommonModule, IonicModule, FormsModule],
 })
 export class InviteLinksComponent implements OnChanges, OnDestroy {
-	@Input() public contactusTeam?: IIdAndOptionalDbo<IContactusTeamDto>;
+	@Input() public contactusTeam?: IIdAndOptionalDbo<IContactusSpaceDbo>;
 
 	public inviteUrlsFor?: {
 		contributors: string;
@@ -70,14 +70,14 @@ export class InviteLinksComponent implements OnChanges, OnDestroy {
 			event.preventDefault();
 			event.stopPropagation();
 		}
-		const team = this.contactusTeam;
-		if (!team?.id) {
+		const space = this.contactusTeam;
+		if (!space?.id) {
 			this.errorLogger.logError(
-				'Not able to navigate to team member is teamId is now known',
+				'Not able to navigate to space member is spaceId is now known',
 			);
 			return;
 		}
-		this.navService.navigateToAddMember(this.navController, team);
+		this.navService.navigateToAddMember(this.navController, space);
 	}
 
 	copy(s: string): void {
@@ -99,10 +99,10 @@ export class InviteLinksComponent implements OnChanges, OnDestroy {
 			this.inviteUrlsFor = undefined;
 			return;
 		}
-		const teamId = this.contactusTeam?.id;
+		const spaceID = this.contactusTeam?.id;
 		const getPin = (role: 'contributor' | 'spectator'): number =>
-			Math.abs(stringHash(`${teamId}-${role}-${uid}`));
-		const url = `${document.baseURI}join-team?id=${teamId}#pin=`;
+			Math.abs(stringHash(`${spaceID}-${role}-${uid}`));
+		const url = `${document.baseURI}join-space?id=${spaceID}#pin=`;
 		this.inviteUrlsFor = {
 			contributors: url + getPin('contributor'),
 			spectators: url + getPin('spectator'),

@@ -11,8 +11,8 @@ describe('Team Setup', () => {
 		cy.visit('/');
 	});
 
-	it('should create a new team', () => {
-		cy.intercept('POST', 'v0/teams/create_team', (req) => {
+	it('should create a new space', () => {
+		cy.intercept('POST', 'v0/teams/create_space', (req) => {
 			req.body.title = 'something-title';
 			req.continue();
 		}).as('createNewTeam');

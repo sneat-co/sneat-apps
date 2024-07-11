@@ -17,7 +17,7 @@ import {
 import { ISelectItem, SelectFromListModule } from '@sneat/components';
 import { AgeGroupID, Gender } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
 
@@ -34,7 +34,7 @@ import { takeUntil } from 'rxjs';
 	],
 })
 export class UserRequiredFieldsModalComponent extends SneatBaseComponent {
-	@Input({ required: true }) team: ITeamContext = { id: '' };
+	@Input({ required: true }) team: ISpaceContext = { id: '' };
 
 	protected readonly genders: ISelectItem[] = [
 		{ id: 'male', emoji: '♂️', title: 'Male' },

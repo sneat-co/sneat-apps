@@ -50,12 +50,12 @@ export class LogistOrdersPageComponent extends TeamBaseComponent {
 		try {
 			this.ordersSubscription?.unsubscribe();
 			this.orders = undefined;
-			const teamId = this.team?.id;
-			if (!teamId) {
-				throw new Error('Team ID is not defined');
+			const spaceID = this.team?.id;
+			if (!spaceID) {
+				throw new Error('Space ID is not defined');
 			}
 			this.ordersSubscription = this.ordersService
-				.watchFreightOrders(teamId, excludeEmpty(this.filter))
+				.watchFreightOrders(spaceID, excludeEmpty(this.filter))
 				.pipe(takeUntil(this.destroyed$))
 				.subscribe({
 					next: (orders) => {

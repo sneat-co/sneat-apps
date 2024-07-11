@@ -1,15 +1,14 @@
-import { TeamType } from '@sneat/core';
-import { TeamCounts } from './dto-commune';
+import { SpaceType } from '@sneat/core';
 import { ITotalsHolder } from './dto-models';
-import { ITeamMetric } from './dto-team-metric';
+import { ISpaceMetric } from './dto-team-metric';
 
 // export interface ITeamMeetings {
 // 	scrum?: IMemberBrief;
 // 	retrospective?: IMeetingInfo;
 // }
 
-export interface ITeamDto extends ITotalsHolder {
-	readonly type: TeamType;
+export interface ISpaceDbo extends ITotalsHolder {
+	readonly type: SpaceType;
 	readonly countryID: string;
 	readonly title: string;
 	readonly userIDs: string[];
@@ -19,7 +18,7 @@ export interface ITeamDto extends ITotalsHolder {
 	// readonly numberOf?: TeamCounts;
 	// readonly recurringHappenings?: { [id: string]: IHappeningBrief }; // TODO: Move to ISchedulusTeamDto
 
-	metrics: ITeamMetric[];
+	metrics: ISpaceMetric[];
 	// active?: ITeamMeetings;
 	// last?: ITeamMeetings;
 	upcomingRetro?: {

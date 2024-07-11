@@ -5,7 +5,7 @@ import {
 	orderBy,
 } from '@angular/fire/firestore';
 import { IFilter, SneatApiService, SneatFirestoreService } from '@sneat/api';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { map, Observable, throwError } from 'rxjs';
 import {
 	IAddContainerPointsRequest,
@@ -20,7 +20,7 @@ import {
 	IDeleteSegmentsRequest,
 	IFreightOrderBrief,
 	ILogistOrderContext,
-	ILogistOrderDto,
+	ILogistOrderDbo,
 	IOrderCounterparty,
 	IOrderShippingPointRequest,
 	ISetContainerEndpointFieldsRequest,
@@ -35,17 +35,23 @@ import {
 import { IOrdersFilter } from '../dto/orders-filter';
 import { logistTeamModuleSubCollection } from './logist-team.service';
 
-function briefFromDto(id: string, dto: ILogistOrderDto): IFreightOrderBrief {
+export interface ISetOrderStatusRequest {
+	spaceID: string;
+	orderID: string;
+	status: string;
+}
+
+function briefFromDto(id: string, dto: ILogistOrderDbo): IFreightOrderBrief {
 	return dto;
 }
 
 function contextFromDto(
-	team: ITeamContext,
+	space: ISpaceContext,
 	id: string,
-	dto: ILogistOrderDto,
+	dto: ILogistOrderDbo,
 ): ILogistOrderContext {
 	return {
-		team,
+		space,
 		id,
 		brief: briefFromDto(id, dto),
 		dbo: dto,
@@ -56,7 +62,7 @@ function contextFromDto(
 export class LogistOrderService {
 	private readonly sfs: SneatFirestoreService<
 		IFreightOrderBrief,
-		ILogistOrderDto
+		ILogistOrderDbo
 	>;
 
 	constructor(
@@ -64,7 +70,7 @@ export class LogistOrderService {
 		// teamItemService: TeamItemBaseService,
 		private readonly afs: AngularFirestore,
 	) {
-		this.sfs = new SneatFirestoreService<IFreightOrderBrief, ILogistOrderDto>(
+		this.sfs = new SneatFirestoreService<IFreightOrderBrief, ILogistOrderDbo>(
 			briefFromDto,
 		);
 	}
@@ -75,29 +81,29 @@ export class LogistOrderService {
 		return this.sneatApiService.post('logistus/create_order', request);
 	}
 
-	private ordersCollection<Dto>(teamID: string): CollectionReference<Dto> {
-		return logistTeamModuleSubCollection<Dto>(this.afs, teamID, 'orders');
+	private ordersCollection<Dbo>(spaceID: string): CollectionReference<Dbo> {
+		return logistTeamModuleSubCollection<Dbo>(this.afs, spaceID, 'orders');
 	}
 
 	public watchOrderByID(
-		teamID: string,
+		spaceID: string,
 		orderID: string,
 	): Observable<ILogistOrderContext> {
-		const ordersCollection = this.ordersCollection<ILogistOrderDto>(teamID);
+		const ordersCollection = this.ordersCollection<ILogistOrderDbo>(spaceID);
 		return this.sfs
 			.watchByID(ordersCollection, orderID)
-			.pipe(map((context) => ({ ...context, team: { id: teamID } })));
+			.pipe(map((context) => ({ ...context, space: { id: spaceID } })));
 	}
 
 	public watchFreightOrders(
-		teamID: string,
+		spaceID: string,
 		filter: IOrdersFilter,
 	): Observable<ILogistOrderContext[]> {
-		console.log('watchFreightOrders()', teamID, filter);
+		console.log('watchFreightOrders()', spaceID, filter);
 		if (!filter) {
 			return throwError(() => 'filter is required parameter');
 		}
-		const ordersCollection = this.ordersCollection<ILogistOrderDto>(teamID);
+		const ordersCollection = this.ordersCollection<ILogistOrderDbo>(spaceID);
 
 		const qFilter: IFilter[] = [
 			{ field: 'status', operator: '==', value: filter?.status || 'active' },
@@ -147,17 +153,13 @@ export class LogistOrderService {
 			})
 			.pipe(
 				map((orders) =>
-					orders.map((order) => ({ ...order, team: { id: teamID } })),
+					orders.map((order) => ({ ...order, space: { id: spaceID } })),
 				),
 			);
 	}
 
-	setOrderStatus(request: {
-		teamID: string;
-		orderID: string;
-		status: string;
-	}): Observable<void> {
-		if (!request.teamID) {
+	setOrderStatus(request: ISetOrderStatusRequest): Observable<void> {
+		if (!request.spaceID) {
 			return throwError(() => 'teamID is required parameter');
 		}
 		if (!request.orderID) {
@@ -189,7 +191,7 @@ export class LogistOrderService {
 	}
 
 	addShippingPoint(
-		team: ITeamContext,
+		team: ISpaceContext,
 		request: IAddOrderShippingPointRequest,
 	): Observable<ILogistOrderContext> {
 		if (!request) {
@@ -199,10 +201,9 @@ export class LogistOrderService {
 			return throwError(() => 'orderID is required parameter');
 		}
 		return this.sneatApiService
-			.post<{ order: ILogistOrderDto }>(
-				'logistus/order/add_shipping_point',
-				request,
-			)
+			.post<{
+				order: ILogistOrderDbo;
+			}>('logistus/order/add_shipping_point', request)
 			.pipe(
 				map((response) =>
 					contextFromDto(team, request.orderID, response.order),

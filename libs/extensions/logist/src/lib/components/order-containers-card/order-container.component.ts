@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import {
 	IContainerPoint,
 	IContainerRequest,
@@ -34,7 +34,7 @@ import { ShippingPointsSelectorService } from '../shipping-points-selector/shipp
 export class OrderContainerComponent implements OnChanges {
 	@Input() container?: IOrderContainer;
 	@Input() order?: ILogistOrderContext;
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) team?: ISpaceContext;
 	@Input() i?: number;
 
 	protected tab: 'points' | 'route' | 'notes' = 'points';
@@ -78,7 +78,7 @@ export class OrderContainerComponent implements OnChanges {
 			this.containerSegments = containerID
 				? this.order?.dbo?.segments?.filter(
 						(s) => s.containerID === containerID,
-				  )
+					)
 				: undefined;
 			console.log(
 				'containerID',
@@ -89,7 +89,7 @@ export class OrderContainerComponent implements OnChanges {
 			this.containerPoints = containerID
 				? this.order?.dbo?.containerPoints?.filter(
 						(cp) => cp.containerID === containerID,
-				  )
+					)
 				: undefined;
 			if (containerID) {
 				if (!this.containerPoints) {
@@ -162,14 +162,14 @@ export class OrderContainerComponent implements OnChanges {
 		event.preventDefault();
 		this.saving = true;
 		this.containerFormGroup.markAsPending();
-		const teamID = this.team?.id,
+		const spaceID = this.team?.id,
 			orderID = this.order?.id,
 			containerID = this.container?.id;
-		if (!teamID || !orderID || !containerID) {
+		if (!spaceID || !orderID || !containerID) {
 			return;
 		}
 		const request: ISetContainerFieldsRequest = {
-			teamID,
+			spaceID: spaceID,
 			orderID,
 			containerID,
 			setStrings: {},
@@ -220,7 +220,7 @@ export class OrderContainerComponent implements OnChanges {
 			return;
 		}
 		const request: IContainerRequest = {
-			teamID: this.team.id,
+			spaceID: this.team.id,
 			orderID: this.order.id,
 			containerID: this.container.id,
 		};

@@ -1,1 +1,1 @@
-export { teamPagesRoutes } from './team-pages-routing';
+export { spacePagesRoutes } from './team-pages-routing';

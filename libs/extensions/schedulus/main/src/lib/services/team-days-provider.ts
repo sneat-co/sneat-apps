@@ -4,12 +4,12 @@ import { dateToIso, INavContext } from '@sneat/core';
 import { hasRelatedItemID } from '@sneat/dto';
 import {
 	IHappeningBrief,
-	IHappeningDto,
+	IHappeningDbo,
 	IHappeningSlot,
 	WeekdayCode2,
 	IHappeningContext,
-	ICalendariumTeamDto,
-	ISchedulusTeamContext,
+	ICalendariumSpaceDbo,
+	ISchedulusSpaceContext,
 } from '@sneat/mod-schedulus-core';
 import {
 	ISlotUIContext,
@@ -19,9 +19,9 @@ import {
 } from '@sneat/extensions/schedulus/shared';
 import { IErrorLogger } from '@sneat/logging';
 import {
-	ITeamContext,
-	ITeamItemNavContext,
-	ITeamItemWithOptionalDto,
+	ISpaceContext,
+	ISpaceItemNavContext,
+	ISpaceItemWithOptionalDbo,
 	zipMapBriefsWithIDs,
 } from '@sneat/team-models';
 import {
@@ -115,7 +115,7 @@ const slotUIContextsFromRecurringSlot = (
 };
 
 const groupRecurringSlotsByWeekday = (
-	schedulusTeam?: ISchedulusTeamContext,
+	schedulusTeam?: ISchedulusSpaceContext,
 ): RecurringSlots => {
 	const logPrefix = `teamRecurringSlotsByWeekday(team?.id=${schedulusTeam?.id})`;
 	const slots: RecurringSlots = {
@@ -130,7 +130,7 @@ const groupRecurringSlotsByWeekday = (
 			const happening: IHappeningContext = {
 				id: rh.id,
 				brief: rh.brief,
-				team: schedulusTeam.team,
+				space: schedulusTeam.space,
 			};
 			const slotItems = slotUIContextsFromRecurringSlot(happening, slotID, rs);
 			slotItems.forEach((si) => {
@@ -160,18 +160,18 @@ export class TeamDaysProvider {
 
 	private readonly recurringsTeamItemService: ModuleTeamItemService<
 		IHappeningBrief,
-		IHappeningDto
+		IHappeningDbo
 	>;
 	private readonly singlesByDate: Record<string, ISlotUIContext[]> = {};
 	private readonly recurringByWd: RecurringsByWeekday =
 		emptyRecurringsByWeekday();
 
-	private readonly team$ = new BehaviorSubject<ITeamContext | undefined>(
+	private readonly team$ = new BehaviorSubject<ISpaceContext | undefined>(
 		undefined,
 	);
 
 	private readonly schedulusTeam$ = new BehaviorSubject<
-		ISchedulusTeamContext | undefined
+		ISchedulusSpaceContext | undefined
 	>(undefined);
 
 	private readonly teamID$ = this.team$.asObservable().pipe(
@@ -194,9 +194,9 @@ export class TeamDaysProvider {
 	// private teamId?: string;
 	private memberId?: string;
 
-	private _team?: ITeamContext;
+	private _team?: ISpaceContext;
 
-	public get team(): ITeamContext | undefined {
+	public get team(): ISpaceContext | undefined {
 		return this._team;
 	}
 
@@ -242,7 +242,7 @@ export class TeamDaysProvider {
 		return day;
 	}
 
-	public setTeam(team: ITeamContext): void {
+	public setTeam(team: ISpaceContext): void {
 		console.log('TeamDaysProvider.setTeam()', team);
 		this._team = team;
 		this.team$.next(team);
@@ -251,7 +251,7 @@ export class TeamDaysProvider {
 	}
 
 	public setSchedulusTeam(
-		schedulusTeam: ITeamItemWithOptionalDto<ICalendariumTeamDto>,
+		schedulusTeam: ISpaceItemWithOptionalDbo<ICalendariumSpaceDbo>,
 	): void {
 		console.log('TeamDaysProvider.setSchedulusTeam()', schedulusTeam);
 		// if (schedulusTeam.id !== this._team?.id) {
@@ -359,17 +359,17 @@ export class TeamDaysProvider {
 			this.processRecurring({
 				id: rh.id,
 				brief: rh.brief,
-				team: this._team || { id: '' },
+				space: this._team || { id: '' },
 			});
 		});
 	}
 
 	private watchRecurringsByTeamID(
-		team: ITeamContext,
-	): Observable<INavContext<IHappeningBrief, IHappeningDto>[]> {
+		team: ISpaceContext,
+	): Observable<INavContext<IHappeningBrief, IHappeningDbo>[]> {
 		console.log('TeamDaysProvider.loadRegulars()');
 		const $recurrings = this.recurringsTeamItemService
-			.watchModuleTeamItemsWithTeamRef(team)
+			.watchModuleSpaceItemsWithTeamRef(team)
 			// const $regulars = this.regularService.watchByCommuneId(this.communeId)
 			.pipe(
 				tap((recurrings) => {
@@ -381,7 +381,7 @@ export class TeamDaysProvider {
 	}
 
 	private processRecurring(
-		recurring: ITeamItemNavContext<IHappeningBrief, IHappeningDto>,
+		recurring: ISpaceItemNavContext<IHappeningBrief, IHappeningDbo>,
 	): void {
 		if (!this.team?.id) {
 			return;

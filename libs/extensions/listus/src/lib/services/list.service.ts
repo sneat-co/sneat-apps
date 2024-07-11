@@ -7,9 +7,9 @@ import {
 	doc,
 } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
-import { IListBrief, IListDto, ListType } from '../dto';
+import { IListBrief, IListDbo, ListType } from '../dto';
 import { IListContext } from '../contexts';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { ModuleTeamItemService } from '@sneat/team-services';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -24,7 +24,7 @@ import {
 } from './interfaces';
 
 @Injectable()
-export class ListService extends ModuleTeamItemService<IListBrief, IListDto> {
+export class ListService extends ModuleTeamItemService<IListBrief, IListDbo> {
 	constructor(
 		afs: AngularFirestore,
 		sneatApiService: SneatApiService,
@@ -51,7 +51,7 @@ export class ListService extends ModuleTeamItemService<IListBrief, IListDto> {
 			);
 	}
 
-	public deleteList(team: ITeamContext, listId: string): Observable<void> {
+	public deleteList(team: ISpaceContext, listId: string): Observable<void> {
 		if (team.type === 'family' && listId === 'groceries') {
 			return throwError(
 				() => 'groceries list is not removable for family team',
@@ -78,7 +78,7 @@ export class ListService extends ModuleTeamItemService<IListBrief, IListDto> {
 			return throwError(() => 'list is of unknown type: ' + params.list.type);
 		}
 		const request: ICreateListItemsRequest = {
-			teamID: params.team.id,
+			spaceID: params.team.id,
 			listID: params.list.id,
 			// listType: params.list.type,
 			items: params.items,
@@ -98,7 +98,7 @@ export class ListService extends ModuleTeamItemService<IListBrief, IListDto> {
 			`listus/list_items_delete?`,
 			new HttpParams({
 				fromObject: {
-					teamID: request.teamID,
+					spaceID: request.spaceID,
 					// listType: request.listType,
 					listID: request.listID,
 				},
@@ -108,7 +108,7 @@ export class ListService extends ModuleTeamItemService<IListBrief, IListDto> {
 	}
 
 	public getListById(
-		team: ITeamContext,
+		team: ISpaceContext,
 		listType: ListType,
 		listID: string,
 	): Observable<IListContext> {
@@ -122,30 +122,30 @@ export class ListService extends ModuleTeamItemService<IListBrief, IListDto> {
 	}
 
 	private readonly onListSnapshot = (
-		team: ITeamContext,
+		space: ISpaceContext,
 		id: string,
 		type: ListType,
-		dbo?: IListDto | null,
+		dbo?: IListDbo | null,
 	): IListContext => ({
 		id,
 		type,
 		dbo,
 		brief: dbo,
-		team,
+		space,
 	});
 
 	private listDocRef(
-		teamID: string,
+		spaceID: string,
 		listID: string,
-	): DocumentReference<IListDto> {
+	): DocumentReference<IListDbo> {
 		const listsCollection = collection(
 			this.afs,
-			'teams',
-			teamID,
+			'spaces',
+			spaceID,
 			'modules',
 			'listus',
 			'lists',
 		);
-		return doc(listsCollection, listID) as DocumentReference<IListDto>;
+		return doc(listsCollection, listID) as DocumentReference<IListDbo>;
 	}
 }
