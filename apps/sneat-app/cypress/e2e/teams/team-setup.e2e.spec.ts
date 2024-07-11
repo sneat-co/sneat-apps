@@ -12,16 +12,16 @@ describe('Team Setup', () => {
 	});
 
 	it('should create a new space', () => {
-		cy.intercept('POST', 'v0/teams/create_space', (req) => {
+		cy.intercept('POST', 'v0/spaces/create_space', (req) => {
 			req.body.title = 'something-title';
 			req.continue();
-		}).as('createNewTeam');
+		}).as('createNewSpace');
 
 		runSignUpTest();
 		assertNewTeamButtonIsVisible();
 
 		clickNewTeamButton();
-		cy.wait('@createNewTeam');
+		cy.wait('@createNewSpace');
 
 		assertSpacesDropdownIsVisible();
 	});
