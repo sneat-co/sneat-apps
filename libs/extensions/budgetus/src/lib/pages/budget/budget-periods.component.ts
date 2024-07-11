@@ -13,7 +13,7 @@ import {
 	ICalendarHappeningBrief,
 	RepeatPeriod,
 } from '@sneat/mod-schedulus-core';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { getLiabilitiesByPeriod } from './budget-calc-periods';
 import { LiabilitiesByPeriod, LiabilitiesMode } from './budget-component-types';
 import { BudgetPeriodComponent } from './budget-period.component';
@@ -25,7 +25,7 @@ import { BudgetPeriodComponent } from './budget-period.component';
 	imports: [CommonModule, IonicModule, BudgetPeriodComponent],
 })
 export class BudgetPeriodsComponent implements OnChanges {
-	@Input({ required: true }) team: ITeamContext = { id: '' };
+	@Input({ required: true }) space: ISpaceContext = { id: '' };
 	@Input({ required: true }) recurringHappenings?: Record<
 		string,
 		ICalendarHappeningBrief
@@ -67,7 +67,7 @@ export class BudgetPeriodsComponent implements OnChanges {
 			return;
 		}
 
-		const result = getLiabilitiesByPeriod(recurringHappenings, this.team);
+		const result = getLiabilitiesByPeriod(recurringHappenings, this.space);
 		this.liabilitiesByPeriod.set(result);
 	}
 }

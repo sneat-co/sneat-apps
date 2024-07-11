@@ -4,10 +4,10 @@
 			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<sneat-team-page-title
-			[team]="team"
+			[space]="space"
 			generalTitle="New asset"
 			icon="🏡"
-			[titlesByTeamType]="{
+			[titlesBySpaceType]="{
 				personal: 'New personal asset',
 				family: 'New family asset'
 			}"
@@ -35,8 +35,8 @@
 	</ion-card>
 
 	<ng-container [ngSwitch]="category?.id">
-		<sneat-asset-add-vehicle *ngSwitchCase="'vehicle'" [team]="team" />
-		<sneat-asset-add-dwelling *ngSwitchCase="'dwelling'" [team]="team" />
-		<sneat-asset-add-document *ngSwitchCase="'document'" [team]="team" />
+		<sneat-asset-add-vehicle *ngSwitchCase="'vehicle'" [space]="space" />
+		<sneat-asset-add-dwelling *ngSwitchCase="'dwelling'" [space]="space" />
+		<sneat-asset-add-document *ngSwitchCase="'document'" [space]="space" />
 	</ng-container>
 </ion-content>

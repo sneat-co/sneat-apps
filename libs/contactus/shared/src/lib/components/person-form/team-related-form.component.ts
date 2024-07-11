@@ -4,7 +4,7 @@ import {
 	SimpleChange,
 	SimpleChanges,
 } from '@angular/core';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 
 @Component({ template: '' })
 export abstract class TeamRelatedFormComponent implements OnChanges {
@@ -18,14 +18,14 @@ export abstract class TeamRelatedFormComponent implements OnChanges {
 	}
 
 	protected onTeamChanged(teamChange: SimpleChange): void {
-		const previous = teamChange.previousValue as ITeamContext | undefined;
-		const current = teamChange.currentValue as ITeamContext | undefined;
+		const previous = teamChange.previousValue as ISpaceContext | undefined;
+		const current = teamChange.currentValue as ISpaceContext | undefined;
 		if (previous?.type !== current?.type) {
 			this.onTeamTypeChanged(current);
 		}
 	}
 
-	protected onTeamTypeChanged(team?: ITeamContext): void {
+	protected onTeamTypeChanged(team?: ISpaceContext): void {
 		console.log('TeamRelatedFormComponent.onTeamTypeChanged()', team);
 	}
 }

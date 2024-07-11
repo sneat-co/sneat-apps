@@ -110,11 +110,11 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 		if (this.contactsSubscription) {
 			this.contactsSubscription.unsubscribe();
 		}
-		if (!this.team) {
+		if (!this.space) {
 			return;
 		}
 
-		this.contactusTeamService.watchContactBriefs(this.team.id).subscribe({
+		this.contactusTeamService.watchContactBriefs(this.space.id).subscribe({
 			next: (contacts) => {
 				this.setTeamContacts(contacts || []);
 				this.applyFilter(this.filter, this.role);
@@ -173,12 +173,12 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 			this.errorLogger.logError('no contact');
 			return;
 		}
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError('no team');
 			return;
 		}
 		this.teamParams.teamNavService
-			.navigateForwardToTeamPage(this.team, `contact/${contact.id}`, {
+			.navigateForwardToTeamPage(this.space, `contact/${contact.id}`, {
 				state: { contact },
 			})
 			.catch(
@@ -187,19 +187,19 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 	};
 
 	protected readonly goNewContact = (): void => {
-		if (!this.team) {
+		if (!this.space) {
 			return;
 		}
 		let navResult: Promise<boolean>;
 
-		if (this.team.type === 'family') {
+		if (this.space.type === 'family') {
 			navResult = this.teamParams.teamNavService.navigateForwardToTeamPage(
-				this.team,
+				this.space,
 				'new-contact',
 			);
 		} else {
 			navResult = this.teamParams.teamNavService.navigateForwardToTeamPage(
-				this.team,
+				this.space,
 				'new-company',
 				{ queryParams: this.role ? { role: this.role } : undefined },
 			);
@@ -214,11 +214,11 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 
 	protected goMember(id: string, event: Event): boolean {
 		event.stopPropagation();
-		if (!this.team) {
+		if (!this.space) {
 			return false;
 		}
 		this.teamParams.teamNavService
-			.navigateForwardToTeamPage(this.team, `member/${id}`, {
+			.navigateForwardToTeamPage(this.space, `member/${id}`, {
 				state: {
 					member: { id },
 				},
@@ -232,11 +232,11 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 	}
 
 	protected goGroup(group: IMemberGroupContext): void {
-		if (!this.team) {
+		if (!this.space) {
 			return;
 		}
 		this.teamParams.teamNavService
-			.navigateForwardToTeamPage(this.team, `group/${group.id}`, {
+			.navigateForwardToTeamPage(this.space, `group/${group.id}`, {
 				state: {
 					group: group,
 				},

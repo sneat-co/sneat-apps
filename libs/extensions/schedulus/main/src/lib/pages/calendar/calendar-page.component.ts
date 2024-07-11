@@ -108,10 +108,10 @@ export class CalendarPageComponent extends TeamBaseComponent {
 	}
 
 	goNew(type: HappeningType): void {
-		if (!this.team) {
+		if (!this.space) {
 			return;
 		}
 		const params: NewHappeningParams = { type: type };
-		this.scheduleNavService.goNewHappening(this.team, params);
+		this.scheduleNavService.goNewHappening(this.space, params);
 	}
 }

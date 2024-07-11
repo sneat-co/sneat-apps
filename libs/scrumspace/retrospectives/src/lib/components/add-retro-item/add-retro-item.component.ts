@@ -49,7 +49,7 @@ export class AddRetroItemComponent implements OnDestroy {
 			return;
 		}
 		const request: IAddRetroItemRequest = {
-			teamID,
+			spaceID: teamID,
 			meeting: meetingID,
 			type: 'this.retroItemType',
 			title,

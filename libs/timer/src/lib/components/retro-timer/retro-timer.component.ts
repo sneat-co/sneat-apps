@@ -6,7 +6,7 @@ import {
 	OnDestroy,
 	SimpleChanges,
 } from '@angular/core';
-import { ITeamDto } from '@sneat/dto';
+import { ISpaceDbo } from '@sneat/dto';
 import { ITimerState, Timer, TimerFactory } from '@sneat/meeting';
 import {
 	IRetrospectiveRequest,
@@ -26,7 +26,7 @@ import { secondsToStr } from '@sneat/datetime';
 	templateUrl: './retro-timer.component.html',
 })
 export class RetroTimerComponent implements OnDestroy, OnChanges {
-	@Input() public team?: IRecord<ITeamDto>;
+	@Input() public team?: IRecord<ISpaceDbo>;
 	@Input() retrospective?: IRecord<IRetrospective>;
 
 	public timer?: Timer;
@@ -203,6 +203,6 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 		if (!this.retrospective) {
 			throw new Error('!this.retrospective');
 		}
-		return { teamID: this.team.id, meeting: this.retrospective.id };
+		return { spaceID: this.team.id, meeting: this.retrospective.id };
 	}
 }

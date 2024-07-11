@@ -13,7 +13,7 @@ import {
 	IContactSelectorOptions,
 } from '@sneat/contactus-shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import {
 	CounterpartyRole,
 	ILogistOrderContext,
@@ -26,7 +26,7 @@ import {
 })
 export class OrderAgentsComponent implements OnChanges {
 	@Input() public readonly = false;
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() order?: ILogistOrderContext;
 
 	@Output() added = new EventEmitter<IOrderCounterparty[]>();
@@ -52,7 +52,7 @@ export class OrderAgentsComponent implements OnChanges {
 				event: event,
 				component: AgentRoleMenuComponent,
 				componentProps: {
-					team: this.team,
+					team: this.space,
 					order: this.order,
 					selected: (counterparty: IOrderCounterparty) => {
 						this.added.emit([counterparty]);
@@ -84,7 +84,7 @@ export class OrderAgentsComponent implements OnChanges {
 	`,
 })
 export class AgentRoleMenuComponent {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() order?: ILogistOrderContext;
 	@Input() selected?: (counterparty: IOrderCounterparty) => void;
 
@@ -95,7 +95,7 @@ export class AgentRoleMenuComponent {
 	) {}
 
 	protected openContactSelector(event: Event, role: CounterpartyRole): void {
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError(
 				'OrderAgentsComponent.openContactSelector(): team is required',
 				undefined,
@@ -104,7 +104,7 @@ export class AgentRoleMenuComponent {
 		}
 		const selectorOptions: IContactSelectorOptions = {
 			componentProps: {
-				team: this.team,
+				team: this.space,
 				contactType: 'company',
 				contactRole: role,
 			},

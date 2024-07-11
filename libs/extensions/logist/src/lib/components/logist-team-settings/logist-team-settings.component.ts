@@ -18,17 +18,17 @@ import { ContactService } from '@sneat/contactus-services';
 import { excludeUndefined } from '@sneat/core';
 import { IAddress } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { Subject, takeUntil } from 'rxjs';
-import { ILogistTeamContext, ISetLogistTeamSettingsRequest } from '../../dto';
+import { ILogistSpaceContext, ISetLogistSpaceSettingsRequest } from '../../dto';
 import { LogistTeamService } from '../../services';
 
-interface ILogistTeamSettingsFormControls extends IAddressFormControls {
+interface ILogistSpaceSettingsFormControls extends IAddressFormControls {
 	vatNumber: FormControl<string | null>;
 	orderNumberPrefix: FormControl<string | null>;
 }
 
-type LogistTeamSettingsForm = FormGroup<ILogistTeamSettingsFormControls>;
+type LogistTeamSettingsForm = FormGroup<ILogistSpaceSettingsFormControls>;
 
 @Component({
 	selector: 'sneat-logist-team-settings',
@@ -37,8 +37,8 @@ type LogistTeamSettingsForm = FormGroup<ILogistTeamSettingsFormControls>;
 export class LogistTeamSettingsComponent
 	implements OnChanges, OnDestroy, AfterViewInit
 {
-	@Input({ required: true }) team?: ITeamContext;
-	@Input() logistTeam?: ILogistTeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
+	@Input() logistTeam?: ILogistSpaceContext;
 
 	@ViewChild(AddressFormComponent) addressFormComponent?: AddressFormComponent;
 
@@ -72,7 +72,7 @@ export class LogistTeamSettingsComponent
 		const c = this.addressFormComponent;
 		if (c) {
 			Object.entries(c.form.controls).forEach(([key /*, control*/]) => {
-				const k = key as keyof ILogistTeamSettingsFormControls;
+				const k = key as keyof ILogistSpaceSettingsFormControls;
 				this.form.addControl(k, c.form.controls.countryID);
 			});
 		}
@@ -106,7 +106,7 @@ export class LogistTeamSettingsComponent
 			alert('Please make sure address form data are correct.');
 			return;
 		}
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError('No team context provided.');
 			return;
 		}
@@ -114,9 +114,9 @@ export class LogistTeamSettingsComponent
 		if (!address) {
 			return;
 		}
-		const request: ISetLogistTeamSettingsRequest = excludeUndefined({
+		const request: ISetLogistSpaceSettingsRequest = excludeUndefined({
 			roles: this.roles,
-			teamID: this.team.id,
+			spaceID: this.space.id,
 			address,
 			vatNumber: this.vatNumber.value?.trim() || undefined,
 			orderNumberPrefix: this.orderNumberPrefix.value || undefined,
@@ -148,7 +148,7 @@ export class LogistTeamSettingsComponent
 				}
 				return;
 			}
-			const team = this.team;
+			const team = this.space;
 			if (!team) {
 				return;
 			}

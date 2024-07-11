@@ -8,9 +8,9 @@ import {
 import { NavController } from '@ionic/angular';
 import { IRecord } from '@sneat/data';
 import { NavService } from '@sneat/datatug-core';
-import { IMemberBrief, ITeamDto } from '@sneat/dto';
+import { IMemberBrief, ISpaceDbo } from '@sneat/dto';
 import { Timer } from '@sneat/meeting';
-import { IScrumDto, IStatus, ITask } from '@sneat/scrumspace/scrummodels';
+import { IScrumDbo, IStatus, ITask } from '@sneat/scrumspace/scrummodels';
 import { Md5 } from 'ts-md5/dist/md5';
 import { TaskType } from '@sneat/scrumspace/scrummodels';
 
@@ -20,10 +20,10 @@ import { TaskType } from '@sneat/scrumspace/scrummodels';
 	styleUrls: ['./scrum-card.component.scss'],
 })
 export class ScrumCardComponent {
-	@Input() team?: IRecord<ITeamDto>;
+	@Input() team?: IRecord<ISpaceDbo>;
 	@Input() currentMemberId?: string;
 	@Input() public scrumId?: string;
-	@Input() public scrum?: IScrumDto;
+	@Input() public scrum?: IScrumDbo;
 	@Input() public status?: IStatus;
 	// @Input() public taskType: TaskType;
 	@Input() public isExpanded = false;

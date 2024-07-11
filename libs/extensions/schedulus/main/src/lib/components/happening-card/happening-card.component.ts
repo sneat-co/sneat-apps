@@ -41,7 +41,7 @@ export class HappeningCardComponent extends HappeningComponent {
 			return;
 		}
 		const request: IHappeningContactRequest = {
-			teamID: this.team.id,
+			spaceID: this.team.id,
 			happeningID: this.happening.id,
 			contact: { id: member.id },
 		};

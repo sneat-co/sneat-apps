@@ -38,8 +38,8 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 	): void => {
 		console.log(`${this.className}.setHappening(from=${from})`, happening);
 		this.happening = happening;
-		if (!this.team?.id && this.happening.team) {
-			this.teamContext = this.happening.team;
+		if (!this.space?.id && this.happening.space) {
+			this.teamContext = this.happening.space;
 		}
 	};
 
@@ -51,16 +51,16 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 		if (this.happening?.id === id) {
 			return;
 		}
-		const team = this.team;
+		const team = this.space;
 		if (!team) {
 			throw new Error('Team is not defined');
 		}
-		this.setHappening({ id, team }, 'url');
+		this.setHappening({ id, space: team }, 'url');
 		this.watchHappeningChanges(id);
 	};
 
 	private watchHappeningChanges(id: string): void {
-		const team = this.team;
+		const team = this.space;
 		if (!team?.id) {
 			// console.warn('watchHappeningChanges: team is not defined');
 			return;

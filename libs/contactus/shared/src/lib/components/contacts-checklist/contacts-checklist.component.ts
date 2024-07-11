@@ -17,7 +17,7 @@ import { ContactusTeamService } from '@sneat/contactus-services';
 import { IIdAndBrief } from '@sneat/core';
 import { IContactBrief } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { Subscription } from 'rxjs';
 
 export interface ICheckChangedArgs {
@@ -36,7 +36,7 @@ export interface ICheckChangedArgs {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactsChecklistComponent implements OnChanges {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() roles: string[] = ['member'];
 	@Input({ required: true }) checkedContactIDs: readonly string[] = [];
 	@Input() noContactsMessage = 'No members found';
@@ -59,7 +59,7 @@ export class ContactsChecklistComponent implements OnChanges {
 		private readonly contactusTeamService: ContactusTeamService,
 	) {}
 
-	private subscribeForContactBriefs(team: ITeamContext): void {
+	private subscribeForContactBriefs(team: ISpaceContext): void {
 		console.log(
 			`ContactsChecklistComponent.subscribeForContactBriefs(team=${team?.id})`,
 		);
@@ -86,12 +86,12 @@ export class ContactsChecklistComponent implements OnChanges {
 		console.log('ContactsChecklistComponent.ngOnChanges()', changes);
 		if (changes['team']) {
 			const teamChanges = changes['team'];
-			const previousTeam = teamChanges.previousValue as ITeamContext;
+			const previousTeam = teamChanges.previousValue as ISpaceContext;
 
-			if (previousTeam?.id !== this.team?.id) {
+			if (previousTeam?.id !== this.space?.id) {
 				this.contactusTeamSubscription?.unsubscribe();
-				if (this.team?.id) {
-					this.subscribeForContactBriefs(this.team);
+				if (this.space?.id) {
+					this.subscribeForContactBriefs(this.space);
 				}
 			}
 		}

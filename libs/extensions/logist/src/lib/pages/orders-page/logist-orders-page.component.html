@@ -15,7 +15,7 @@
 
 <ion-content>
 	<sneat-orders-filter
-		[team]="team"
+		[space]="space"
 		(filterChange)="onFilterChanged($event)"
 		(viewModeChange)="viewMode = $event"
 	>
@@ -24,12 +24,12 @@
 
 	<sneat-logist-orders-grid
 		*ngIf="viewMode === 'grid'"
-		[team]="team"
+		[space]="space"
 		[orders]="orders"
 	/>
 	<sneat-logist-orders-list
 		*ngIf="viewMode === 'list'"
-		[team]="team"
+		[space]="space"
 		[orders]="orders"
 	/>
 

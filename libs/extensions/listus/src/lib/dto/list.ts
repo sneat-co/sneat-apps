@@ -1,9 +1,9 @@
 import { IRecord } from '@sneat/data';
 import {
-	IShortTeamInfo,
+	IShortSpaceInfo,
 	IWithCreated,
 	IWithRestrictions,
-	IWithTeamIDs,
+	IWithSpaceIDs,
 	SneatRecordStatus,
 } from '@sneat/dto';
 
@@ -55,18 +55,18 @@ export interface IListCommon {
 	isDone?: boolean;
 }
 
-export interface IListBase extends IListCommon, IWithTeamIDs {
+export interface IListBase extends IListCommon, IWithSpaceIDs {
 	type: ListType;
 	shortId?: string;
 	status?: ListStatus;
 }
 
-export interface IListDto extends IListBase, IWithRestrictions, IWithCreated {
+export interface IListDbo extends IListBase, IWithRestrictions, IWithCreated {
 	dtClosed?: number;
 	note?: string; // Is used for example for recipe text
 	numberOf?: ListCounts;
 	items?: IListItemBrief[];
-	commune?: IShortTeamInfo; // Used just for in-memory columns?
+	commune?: IShortSpaceInfo; // Used just for in-memory columns?
 }
 
 export class ListItemInfoModel {
@@ -98,7 +98,7 @@ export class ListItemModel {
 	}
 }
 
-export interface IListItemDto extends IListBase, IListItemCommon {
+export interface IListItemDbo extends IListBase, IListItemCommon {
 	listId?: string;
 	score?: number;
 	subListItems?: IListItemBrief[];
@@ -126,7 +126,7 @@ export interface IListInfo extends IWithRestrictions {
 	shortId?: string;
 	title?: string;
 	hidden?: boolean;
-	team?: IShortTeamInfo;
+	team?: IShortSpaceInfo;
 	emoji?: string;
 	img?: string;
 	note?: string;
@@ -139,7 +139,7 @@ export interface IListBrief extends IListBase, IWithCreated {
 
 export function isListInfoMatchesListDto(
 	i: IListInfo,
-	l: IRecord<IListDto>,
+	l: IRecord<IListDbo>,
 ): boolean {
 	return (
 		(!!i.id && i.id === l.id) ||
@@ -148,7 +148,7 @@ export function isListInfoMatchesListDto(
 }
 
 export function createListInfoFromDto(
-	dto: IListDto,
+	dto: IListDbo,
 	shortId?: string,
 ): IListInfo {
 	if (!dto.title) {

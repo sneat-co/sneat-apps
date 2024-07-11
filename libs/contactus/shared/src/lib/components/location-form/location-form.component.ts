@@ -22,14 +22,14 @@ import {
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-location-form',
 	templateUrl: './location-form.component.html',
 })
 export class LocationFormComponent implements OnChanges {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() contactRole?: ContactRole;
 	@Input() countryID = '';
 	@Input() contact?: IContactContext;
@@ -82,7 +82,7 @@ export class LocationFormComponent implements OnChanges {
 
 	onTitleChanged(): void {
 		console.log('onTitleChanged()', this.title.value);
-		if (!this.team) {
+		if (!this.space) {
 			return;
 		}
 		if (!this.contact) {
@@ -92,7 +92,7 @@ export class LocationFormComponent implements OnChanges {
 				id: '',
 				// team: this.team,
 				dbo: brief,
-				team: this.team,
+				space: this.space,
 			};
 		}
 		const title = this.title.value || '';
@@ -109,7 +109,7 @@ export class LocationFormComponent implements OnChanges {
 	}
 
 	private readonly onContactCreated = (contact: IContactContext): void => {
-		if (!this.team) {
+		if (!this.space) {
 			return;
 		}
 		// contact = { ...contact, parentContact: this.parentContact };
@@ -122,12 +122,12 @@ export class LocationFormComponent implements OnChanges {
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log('LocationFormComponent.ngOnChanges()', changes);
 		if (changes['contactType']) {
-			if (!this.contact?.dbo && this.contactType && this.team) {
+			if (!this.contact?.dbo && this.contactType && this.space) {
 				this.contact = {
 					id: this.contact?.id || '',
 					// team: this.team,
 					dbo: { type: this.contactType },
-					team: this.team,
+					space: this.space,
 				};
 				this.emitContactChange();
 			}
@@ -152,7 +152,7 @@ export class LocationFormComponent implements OnChanges {
 			alert('contact brief is not defined');
 			return;
 		}
-		if (!this.team) {
+		if (!this.space) {
 			return;
 		}
 		// if (!this.parentContact) {
@@ -183,7 +183,7 @@ export class LocationFormComponent implements OnChanges {
 		}
 		const request: ICreateContactRequest = {
 			status: 'active',
-			teamID: this.team.id,
+			spaceID: this.space.id,
 			type: 'location',
 			parentContactID: this.parentContact?.id,
 			location: {
@@ -192,7 +192,7 @@ export class LocationFormComponent implements OnChanges {
 			},
 		};
 		this.isCreating = true;
-		this.contactService.createContact(this.team, request).subscribe({
+		this.contactService.createContact(this.space, request).subscribe({
 			next: this.onContactCreated,
 			error: (err: unknown) => {
 				this.errorLogger.logError(err, 'Failed to create new contact');

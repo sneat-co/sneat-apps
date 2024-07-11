@@ -9,8 +9,8 @@ import {
 } from '@angular/core';
 import { dateToIso } from '@sneat/core';
 import { WeekdayCode2 } from '@sneat/mod-schedulus-core';
-import { ITeamContext } from '@sneat/team-models';
-import { TeamDaysProvider } from '../../../../services/team-days-provider';
+import { ISpaceContext } from '@sneat/team-models';
+import { SpaceDaysProvider } from '../../../../services/space-days-provider';
 import {
 	ISlotUIContext,
 	NewHappeningParams,
@@ -24,10 +24,10 @@ import { Weekday } from '../../weekday';
 	templateUrl: './calendar-week.component.html',
 })
 export class CalendarWeekComponent implements OnChanges {
-	@Input() team: ITeamContext = { id: '' };
+	@Input() team: ISpaceContext = { id: '' };
 	@Input() week?: Week;
 	@Input() filter?: ICalendarFilter;
-	@Input() teamDaysProvider?: TeamDaysProvider;
+	@Input() teamDaysProvider?: SpaceDaysProvider;
 
 	@Output() goNew = new EventEmitter<NewHappeningParams>();
 	@Output() dateSelected = new EventEmitter<Date>();

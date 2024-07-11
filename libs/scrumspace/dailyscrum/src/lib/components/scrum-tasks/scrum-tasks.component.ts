@@ -11,7 +11,7 @@ import {
 import { IonInput, ModalController } from '@ionic/angular';
 import { listAddRemoveAnimation } from '@sneat/core';
 import { IRecord } from '@sneat/data';
-import { IMemberBrief, ITeamDto } from '@sneat/dto';
+import { IMemberBrief, ISpaceDbo } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITaskWithUiStatus, ScrumService } from '../../services/scrum.service';
 import {
@@ -30,7 +30,7 @@ import { ScrumTaskComponent } from '../scrum-task/scrum-task.component';
 	animations: listAddRemoveAnimation,
 })
 export class ScrumTasksComponent implements OnDestroy, OnChanges {
-	@Input() team?: IRecord<ITeamDto>;
+	@Input() team?: IRecord<ISpaceDbo>;
 	@Input() public scrumId?: string;
 
 	@Input() member?: IMemberBrief;
@@ -202,7 +202,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 			task.thumbUps.push(this.currentMemberId);
 		}
 		const request: IThumbUpRequest = {
-			teamID: this.team.id,
+			spaceID: this.team.id,
 			memberID: this.member.id,
 			type: this.taskType,
 			// meetingID: this.scrumId,
@@ -296,7 +296,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 			throw new Error('!this.team');
 		}
 		const request: IReorderTaskRequest = {
-			teamID: this.team.id,
+			spaceID: this.team.id,
 			// meetingID: this.scrumId,
 			type: this.taskType,
 			memberID: this.member.id,

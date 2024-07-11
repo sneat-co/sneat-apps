@@ -1,5 +1,5 @@
-import { ITeamItemNavContext } from '@sneat/team-models';
-import { IListBrief, IListDto, ListType } from '../dto';
+import { ISpaceItemNavContext } from '@sneat/team-models';
+import { IListBrief, IListDbo, ListType } from '../dto';
 
 export interface IListKey {
 	id: string;
@@ -7,6 +7,6 @@ export interface IListKey {
 }
 
 export interface IListContext
-	extends ITeamItemNavContext<IListBrief, IListDto> {
+	extends ISpaceItemNavContext<IListBrief, IListDbo> {
 	type: ListType;
 }

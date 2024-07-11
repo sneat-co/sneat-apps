@@ -1,22 +1,22 @@
 import {
 	IContactGroupBrief,
-	IContactGroupDto,
+	IContactGroupDbo,
 	IMemberBrief,
-	IMemberDto,
+	IMemberDbo,
 } from '../dto';
 import {
-	ITeamItemNavContext,
-	ITeamItemWithBriefAndDto,
+	ISpaceItemNavContext,
+	ISpaceItemWithBriefAndDbo,
 	Totals,
 } from '@sneat/team-models';
 import { IPerson, IPersonBrief } from '../dto';
 
-export type IMemberContext = ITeamItemNavContext<IMemberBrief, IMemberDto>;
-export type IPersonContext = ITeamItemWithBriefAndDto<IPersonBrief, IPerson>;
+export type IMemberContext = ISpaceItemNavContext<IMemberBrief, IMemberDbo>;
+export type IPersonContext = ISpaceItemWithBriefAndDbo<IPersonBrief, IPerson>;
 
-export type IMemberGroupContext = ITeamItemNavContext<
+export type IMemberGroupContext = ISpaceItemNavContext<
 	IContactGroupBrief,
-	IContactGroupDto
+	IContactGroupDbo
 >;
 
 export class Member {

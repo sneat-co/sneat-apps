@@ -457,7 +457,7 @@ export class HappeningSlotFormComponent
 	protected saveChanges(): void {
 		console.log('saveChanges()');
 		const slot = this.getSlot();
-		const teamID = this.happening?.team?.id;
+		const teamID = this.happening?.space?.id;
 		const happeningID = this.happening?.id;
 		if (!teamID || !happeningID || !slot) {
 			return;

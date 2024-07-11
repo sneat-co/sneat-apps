@@ -5,10 +5,10 @@
 			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<sneat-team-page-title
-			[team]="team"
+			[space]="space"
 			generalTitle="Assets"
 			icon="🏡"
-			[titlesByTeamType]="{
+			[titlesBySpaceType]="{
 				personal: 'Personal assets',
 				family: 'Family assets'
 			}"
@@ -16,7 +16,7 @@
 		<ion-buttons slot="end">
 			<ion-button
 				color="primary"
-				[disabled]="!team"
+				[disabled]="!space"
 				(click)="goNew()"
 				title="Add asset"
 			>
@@ -66,7 +66,7 @@
 			</ion-item-divider>
 			<sneat-assets-list
 				[assetType]="assetType.id"
-				[team]="team"
+				[space]="space"
 				[allAssets]="assets"
 			/>
 		</ion-item-group>

@@ -9,9 +9,11 @@ import {
 	MemberContactType,
 } from '../dto';
 import { IMemberContext } from '../contexts';
-import { ITeamRequest, TeamMemberStatus } from '@sneat/team-models';
+import { ISpaceRequest, TeamMemberStatus } from '@sneat/team-models';
 
-export interface ICreateTeamMemberRequest extends ITeamRequest, IRelatedPerson {
+export interface ICreateSpaceMemberRequest
+	extends ISpaceRequest,
+		IRelatedPerson {
 	type: MemberContactType;
 	status: TeamMemberStatus;
 	countryID: string;
@@ -20,7 +22,7 @@ export interface ICreateTeamMemberRequest extends ITeamRequest, IRelatedPerson {
 	message?: string;
 }
 
-export interface ICreateContactBaseRequest extends ITeamRequest {
+export interface ICreateContactBaseRequest extends ISpaceRequest {
 	status: 'active' | 'draft';
 	type: ContactType;
 	// countryID: string;
@@ -104,11 +106,11 @@ export interface IPersonalInvite extends IInvite {
 	to: IInviteToContact;
 }
 
-export interface IAddTeamMemberResponse {
+export interface IAddSpaceMemberResponse {
 	member: IMemberContext;
 }
 
-export interface IAcceptPersonalInviteRequest extends ITeamRequest {
+export interface IAcceptPersonalInviteRequest extends ISpaceRequest {
 	inviteID: string;
 	pin: string; // Do not make number as we can lose leading 0's
 	member?: IMemberBrief;
@@ -116,7 +118,7 @@ export interface IAcceptPersonalInviteRequest extends ITeamRequest {
 	// email?: string;
 }
 
-export interface ICreatePersonalInviteRequest extends ITeamRequest {
+export interface ICreatePersonalInviteRequest extends ISpaceRequest {
 	to: IInviteToContact;
 	message: string;
 }

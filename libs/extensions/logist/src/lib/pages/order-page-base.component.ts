@@ -26,11 +26,11 @@ export class OrderPageBaseComponent extends TeamBaseComponent {
 			.subscribe((params) => {
 				this.order = {
 					id: params.get('orderID') || '',
-					team: { id: params.get('teamID') || '' },
+					space: { id: params.get('teamID') || '' },
 				};
-				if (this.team?.id && this.order?.id) {
+				if (this.space?.id && this.order?.id) {
 					this.orderService
-						.watchOrderByID(this.team.id, this.order.id)
+						.watchOrderByID(this.space.id, this.order.id)
 						.subscribe({
 							next: (order) => {
 								this.setOrder(order);

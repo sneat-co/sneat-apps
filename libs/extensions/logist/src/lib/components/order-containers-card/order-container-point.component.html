@@ -73,7 +73,7 @@
 <ng-container *ngIf="!showNotes">
 	<sneat-container-endpoint
 		endpointSide="arrival"
-		[team]="team"
+		[space]="space"
 		[order]="order"
 		[shippingPointID]="shippingPoint?.id"
 		[dateTimeTab]="dateTimeTab"
@@ -81,7 +81,7 @@
 	/>
 	<sneat-container-endpoint
 		endpointSide="departure"
-		[team]="team"
+		[space]="space"
 		[order]="order"
 		[shippingPointID]="shippingPoint?.id"
 		[dateTimeTab]="dateTimeTab"

@@ -148,7 +148,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 		this.retrospectiveService
 			.deleteRetroItem({
 				type,
-				teamID: this.teamId,
+				spaceID: this.teamId,
 				meeting: RetrospectiveStage.upcoming,
 				item: item.ID,
 			})
@@ -181,7 +181,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 				return;
 			}
 			const request: IAddRetroItemRequest = {
-				teamID: this.teamId,
+				spaceID: this.teamId,
 				meeting: RetrospectiveStage.upcoming,
 				type,
 				title,

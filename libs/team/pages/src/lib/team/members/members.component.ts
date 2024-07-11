@@ -12,8 +12,8 @@ import {
 	MemberRole,
 	MemberRoleContributor,
 	MemberRoleSpectator,
-	IContactusTeamDto,
-	IContactusTeamDtoAndID,
+	IContactusSpaceDbo,
+	IContactusSpaceDboAndID,
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { zipMapBriefsWithIDs } from '@sneat/team-models';
@@ -26,7 +26,7 @@ import { TeamNavService, TeamService } from '@sneat/team-services';
 	imports: [CommonModule, FormsModule, IonicModule],
 }) // TODO: use or delete unused MembersComponent
 export class MembersComponent implements OnChanges {
-	@Input({ required: true }) public contactusTeam?: IContactusTeamDtoAndID;
+	@Input({ required: true }) public contactusTeam?: IContactusSpaceDboAndID;
 
 	public membersRoleTab: MemberRole | '*' = MemberRoleContributor;
 	public contributorsCount?: number;
@@ -64,7 +64,7 @@ export class MembersComponent implements OnChanges {
 		// this.unsubscribe('onSelfRemoved');
 	}
 
-	private setMembersCount(team?: IContactusTeamDto | null): void {
+	private setMembersCount(team?: IContactusSpaceDbo | null): void {
 		if (team) {
 			const count = (role: MemberRole): number =>
 				zipMapBriefsWithIDs(team.contacts)?.filter((m) =>

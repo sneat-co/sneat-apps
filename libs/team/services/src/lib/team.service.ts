@@ -11,29 +11,29 @@ import {
 	AuthStatuses,
 	SneatAuthStateService,
 } from '@sneat/auth-core';
-import { IUserTeamBrief } from '@sneat/auth-models';
-import { IJoinTeamInfoResponse } from '@sneat/contactus-core';
+import { IUserSpaceBrief } from '@sneat/auth-models';
+import { IJoinSpaceInfoResponse } from '@sneat/contactus-core';
 import { IIdAndBrief } from '@sneat/core';
 import { IRecord } from '@sneat/data';
-import { ITeamBrief, ITeamDto, ITeamMetric } from '@sneat/dto';
+import { ISpaceBrief, ISpaceDbo, ISpaceMetric } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
-	ICreateTeamRequest,
-	ICreateTeamResponse,
-	ITeamContext,
-	ITeamRef,
+	ICreateSpaceRequest,
+	ICreateSpaceResponse,
+	ISpaceContext,
+	ISpaceRef,
 	zipMapBriefsWithIDs,
 } from '@sneat/team-models';
 import { ISneatUserState, SneatUserService } from '@sneat/auth-core';
 import { BehaviorSubject, Observable, Subscription, throwError } from 'rxjs';
 import { filter, first, map, tap } from 'rxjs/operators';
 
-const teamBriefFromUserTeamInfo = (v: IUserTeamBrief): ITeamBrief => ({
+const teamBriefFromUserTeamInfo = (v: IUserSpaceBrief): ISpaceBrief => ({
 	...v,
 	type: v.type,
 });
 
-// export class CachedDataService<Brief, Dto extends Brief> {
+// export class CachedDataService<Brief, Dbo extends Brief> {
 // 	constructor(
 // 		private readonly db: AngularFirestore,
 // 	) {
@@ -46,12 +46,12 @@ const teamBriefFromUserTeamInfo = (v: IUserTeamBrief): ITeamBrief => ({
 export class TeamService {
 	private userID?: string;
 
-	private currentUserTeams?: Record<string, IUserTeamBrief>;
+	private currentUserTeams?: Record<string, IUserSpaceBrief>;
 
-	private teams$: Record<string, BehaviorSubject<ITeamContext>> = {};
+	private teams$: Record<string, BehaviorSubject<ISpaceContext>> = {};
 	private subscriptions: Subscription[] = [];
 
-	private readonly sfs: SneatFirestoreService<ITeamBrief, ITeamDto>;
+	private readonly sfs: SneatFirestoreService<ISpaceBrief, ISpaceDbo>;
 
 	constructor(
 		readonly sneatAuthStateService: SneatAuthStateService,
@@ -61,7 +61,7 @@ export class TeamService {
 		private readonly sneatApiService: SneatApiService,
 	) {
 		// console.log('TeamService.constructor()');
-		this.sfs = new SneatFirestoreService<ITeamBrief, ITeamDto>((id, dto) => ({
+		this.sfs = new SneatFirestoreService<ISpaceBrief, ISpaceDbo>((id, dto) => ({
 			id,
 			...dto,
 		}));
@@ -108,18 +108,18 @@ export class TeamService {
 	};
 
 	public createTeam(
-		request: ICreateTeamRequest,
-	): Observable<IRecord<ITeamDto>> {
+		request: ICreateSpaceRequest,
+	): Observable<IRecord<ISpaceDbo>> {
 		return this.sneatApiService
-			.post<ICreateTeamResponse>('teams/create_team', request)
-			.pipe(map((response) => response.team));
+			.post<ICreateSpaceResponse>('teams/create_team', request)
+			.pipe(map((response) => response.space));
 	}
 
 	// public getTeam(ref: ITeamRef): Observable<ITeamContext> {
 	// 	return this.watchTeam(ref).pipe(first());
 	// }
 
-	public watchTeam(ref: ITeamRef): Observable<ITeamContext> {
+	public watchTeam(ref: ISpaceRef): Observable<ISpaceContext> {
 		console.log(`TeamService.watchTeam(ref=${JSON.stringify(ref)})`);
 		if (!ref) {
 			throw new Error('team ref is a required parameter');
@@ -129,7 +129,7 @@ export class TeamService {
 		if (subj) {
 			return subj.asObservable();
 		}
-		let teamContext: ITeamContext = ref;
+		let teamContext: ISpaceContext = ref;
 		if (this.currentUserTeams) {
 			const userTeamInfo = this.currentUserTeams[id];
 			if (userTeamInfo) {
@@ -140,7 +140,7 @@ export class TeamService {
 				};
 			}
 		}
-		subj = new BehaviorSubject<ITeamContext>(teamContext);
+		subj = new BehaviorSubject<ISpaceContext>(teamContext);
 		this.teams$[id] = subj;
 		if (this.userService.currentUserID) {
 			this.subscribeForTeamChanges(subj);
@@ -157,7 +157,7 @@ export class TeamService {
 		return subj.asObservable();
 	}
 
-	public onTeamUpdated(team: ITeamContext): void {
+	public onTeamUpdated(team: ISpaceContext): void {
 		console.log(
 			'TeamService.onTeamUpdated',
 			team ? { id: team.id, dto: { ...team.dbo } } : team,
@@ -167,7 +167,7 @@ export class TeamService {
 			const prevTeam = team$.value;
 			team = { ...prevTeam, ...team };
 		} else {
-			this.teams$[team.id] = team$ = new BehaviorSubject<ITeamContext>(team);
+			this.teams$[team.id] = team$ = new BehaviorSubject<ISpaceContext>(team);
 		}
 		team$.next(team);
 	}
@@ -175,9 +175,9 @@ export class TeamService {
 	public getTeamJoinInfo(
 		inviteID: string,
 		pin: string,
-	): Observable<IJoinTeamInfoResponse> {
+	): Observable<IJoinSpaceInfoResponse> {
 		return this.sneatApiService
-			.postAsAnonymous<IJoinTeamInfoResponse>('team/join_info', {
+			.postAsAnonymous<IJoinSpaceInfoResponse>('team/join_info', {
 				inviteID,
 				pin,
 			})
@@ -202,7 +202,7 @@ export class TeamService {
 	}
 
 	// TODO: move to separate module
-	public addMetric(team: string, metric: ITeamMetric): Observable<void> {
+	public addMetric(team: string, metric: ISpaceMetric): Observable<void> {
 		if (!team) {
 			return throwError(() => 'team parameter is required');
 		}
@@ -213,7 +213,7 @@ export class TeamService {
 	}
 
 	private readonly subscribeForUserTeamChanges = (
-		userTeamInfo: IIdAndBrief<IUserTeamBrief>,
+		userTeamInfo: IIdAndBrief<IUserSpaceBrief>,
 	): void => {
 		console.log('subscribeForFirestoreTeamChanges', userTeamInfo);
 		let subj = this.teams$[userTeamInfo.id];
@@ -230,26 +230,26 @@ export class TeamService {
 			return;
 		}
 
-		const team: ITeamContext = {
+		const team: ISpaceContext = {
 			id: userTeamInfo.id,
 			type: userTeamInfo.brief.type,
 			brief: teamBriefFromUserTeamInfo(userTeamInfo.brief),
 		};
-		this.teams$[userTeamInfo.id] = subj = new BehaviorSubject<ITeamContext>(
+		this.teams$[userTeamInfo.id] = subj = new BehaviorSubject<ISpaceContext>(
 			team,
 		);
 		this.subscribeForTeamChanges(subj);
 	};
 
-	private subscribeForTeamChanges(subj: BehaviorSubject<ITeamContext>): void {
+	private subscribeForTeamChanges(subj: BehaviorSubject<ISpaceContext>): void {
 		const t = subj.value;
 		console.log(`TeamService.subscribeForTeamChanges(${t.id})`);
 		const { id } = t;
 		const teamsCollection = collection(
 			this.afs,
-			'teams',
-		) as CollectionReference<ITeamDto>;
-		const o: Observable<ITeamContext> = this.sfs
+			'spaces',
+		) as CollectionReference<ISpaceDbo>;
+		const o: Observable<ISpaceContext> = this.sfs
 			.watchByID(teamsCollection, id)
 			.pipe(
 				map((team) => {

@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import {
 	ContainerPointStringField,
 	IContainerPoint,
@@ -23,7 +23,7 @@ import { LogistOrderService } from '../../services';
 	templateUrl: './order-container-point.component.html',
 })
 export class OrderContainerPointComponent implements OnChanges {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() order?: ILogistOrderContext;
 	// @Input() shippingPoint?: IOrderShippingPoint;
 	@Input() containerPoint?: IContainerPoint;
@@ -79,7 +79,7 @@ export class OrderContainerPointComponent implements OnChanges {
 	): void {
 		event?.preventDefault();
 		event?.stopPropagation();
-		const teamID = this.team?.id,
+		const teamID = this.space?.id,
 			orderID = this.order?.id,
 			containerID = this.containerPoint?.containerID,
 			shippingPointID = this.containerPoint?.shippingPointID;
@@ -87,7 +87,7 @@ export class OrderContainerPointComponent implements OnChanges {
 			return;
 		}
 		const request: ISetContainerPointFieldsRequest = {
-			teamID,
+			spaceID: teamID,
 			orderID,
 			containerID,
 			shippingPointID,
@@ -116,7 +116,7 @@ export class OrderContainerPointComponent implements OnChanges {
 			this.shippingPoint = this.containerPoint?.shippingPointID
 				? this.order?.dbo?.shippingPoints?.find(
 						(sp) => sp.id === this.containerPoint?.shippingPointID,
-				  )
+					)
 				: undefined;
 			if (this.containerPoint) {
 				if (!this.notes.dirty) {
@@ -131,7 +131,7 @@ export class OrderContainerPointComponent implements OnChanges {
 
 	delete(event: Event): void {
 		console.log('ContainerPointComponent.delete()', event);
-		const teamID = this.team?.id;
+		const teamID = this.space?.id;
 		if (!teamID) {
 			throw new Error(
 				'ContainerPointComponent.delete(): teamID is not defined',
@@ -158,7 +158,7 @@ export class OrderContainerPointComponent implements OnChanges {
 		this.deleting = true;
 		this.orderService
 			.deleteContainerPoints({
-				teamID,
+				spaceID: teamID,
 				orderID,
 				containerID,
 				shippingPointIDs: [shippingPointID],

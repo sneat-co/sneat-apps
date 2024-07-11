@@ -44,7 +44,7 @@ export class ShippingPointsSelectorDialogComponent {
 		}
 
 		const request: IAddContainerPointsRequest = {
-			teamID: order.team.id,
+			spaceID: order.space.id,
 			orderID: order.id,
 			containerPoints: Object.entries(tasksByID)
 				.filter(([, selected]) => selected?.tasks.length)

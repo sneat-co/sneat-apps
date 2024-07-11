@@ -6,8 +6,8 @@ export type DeleteOperationState = 'deleting' | 'deleted' | undefined;
 
 export type INavContext<
 	Brief,
-	Dto extends Brief,
-> = IIdAndOptionalBriefAndOptionalDbo<Brief, Dto>;
+	Dbo extends Brief,
+> = IIdAndOptionalBriefAndOptionalDbo<Brief, Dbo>;
 
 // export interface INavContext<Brief, Dto> {
 // 	readonly id: string;

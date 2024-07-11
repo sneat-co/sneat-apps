@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, Input } from '@angular/core';
 import { IonicModule, NavController } from '@ionic/angular';
-import { IBoolMetricVal, ITeamDto, ITeamMetric } from '@sneat/dto';
+import { IBoolMetricVal, ISpaceDbo, ISpaceMetric } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRecord } from '@sneat/data';
 import { TeamNavService, TeamService } from '@sneat/team-services';
@@ -13,7 +13,7 @@ import { TeamNavService, TeamService } from '@sneat/team-services';
 	imports: [CommonModule, IonicModule],
 })
 export class MetricsComponent {
-	@Input() public team?: IRecord<ITeamDto>;
+	@Input() public team?: IRecord<ISpaceDbo>;
 
 	public deletingMetrics: string[] = [];
 
@@ -54,11 +54,11 @@ export class MetricsComponent {
 		});
 	}
 
-	public isDeletingMetric(metric: ITeamMetric): boolean {
+	public isDeletingMetric(metric: ISpaceMetric): boolean {
 		return !!metric.id && this.deletingMetrics.includes(metric.id);
 	}
 
-	public deleteMetric(metric: ITeamMetric): void {
+	public deleteMetric(metric: ISpaceMetric): void {
 		if (!metric.id) {
 			throw 'metric has no id';
 		}

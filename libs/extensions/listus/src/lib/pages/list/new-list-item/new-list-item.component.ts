@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, IonInput, ToastController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { RandomIdService } from '@sneat/random';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { IListContext } from '../../../contexts';
 import {
 	detectEmoji,
@@ -33,7 +33,7 @@ export class NewListItemComponent {
 
 	@Input() isDone = false;
 	@Input() disabled = false;
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input({ required: true }) list?: IListContext;
 
 	@ViewChild('newItemInput', { static: false }) newItemInput?: IonInput;
@@ -99,11 +99,16 @@ export class NewListItemComponent {
 	}
 
 	protected createListItem(listItemBrief: ICreateListItemRequest): void {
-		console.log('ListPage.createListItem', listItemBrief, this.list, this.team);
+		console.log(
+			'ListPage.createListItem',
+			listItemBrief,
+			this.list,
+			this.space,
+		);
 		if (!listItemBrief) {
 			throw new Error('movie is a required parameter');
 		}
-		if (!this.team) {
+		if (!this.space) {
 			throw new Error('no team context');
 		}
 		this.isAdding = true;
@@ -114,7 +119,7 @@ export class NewListItemComponent {
 		this.adding.emit({ brief: listItemBrief, state: { isAdding: true } });
 		this.listService
 			.createListItems({
-				team: this.team,
+				team: this.space,
 				list: this.list,
 				items: [listItemBrief],
 			})

@@ -49,10 +49,10 @@ export class AssetAddVehicleComponent
 	public nextServiceDue = ''; // ISO date string 'YYYY-MM-DD'
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['team'] && this.team) {
+		if (changes['team'] && this.space) {
 			const a: IAssetVehicleContext = this.vehicleAsset ?? {
 				id: '',
-				team: this.team ?? { id: '' },
+				space: this.space ?? { id: '' },
 				dbo: {
 					status: 'draft',
 					category: 'vehicle',
@@ -63,7 +63,7 @@ export class AssetAddVehicleComponent
 						engineFuel: FuelTypes.unknown,
 						engineType: EngineTypes.unknown,
 					},
-					teamID: this.team?.id,
+					teamID: this.space?.id,
 					type: this.vehicleType,
 					possession: 'owning',
 					createdAt: new Date().toISOString() as unknown as timestamp,
@@ -72,7 +72,7 @@ export class AssetAddVehicleComponent
 					updatedBy: '-',
 				},
 			};
-			this.vehicleAsset = { ...a, team: this.team };
+			this.vehicleAsset = { ...a, space: this.space };
 		}
 	}
 
@@ -119,7 +119,7 @@ export class AssetAddVehicleComponent
 
 	submitVehicleForm(): void {
 		console.log('submitVehicleForm', this.vehicleAsset);
-		if (!this.team) {
+		if (!this.space) {
 			throw 'no team context';
 		}
 		if (!this.vehicleType) {
@@ -136,7 +136,7 @@ export class AssetAddVehicleComponent
 				status: 'active',
 				category: 'vehicle',
 			},
-			teamID: this.team?.id,
+			spaceID: this.space?.id,
 		};
 		if (this.yearOfBuild) {
 			request = {
@@ -178,6 +178,6 @@ export class AssetAddVehicleComponent
 		// 	}
 		// }
 
-		this.createAssetAndGoToAssetPage(request, this.team);
+		this.createAssetAndGoToAssetPage(request, this.space);
 	}
 }

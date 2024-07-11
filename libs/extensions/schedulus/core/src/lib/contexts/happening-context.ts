@@ -1,17 +1,17 @@
 import { DeleteOperationState } from '@sneat/core';
 import { UiState } from '@sneat/dto';
-import { ITeamContext, ITeamItemNavContext } from '@sneat/team-models';
+import { ISpaceContext, ISpaceItemNavContext } from '@sneat/team-models';
 import {
 	HappeningKind,
 	HappeningStatus,
 	HappeningType,
 	IHappeningBrief,
-	IHappeningDto,
+	IHappeningDbo,
 } from '../';
 
-export type IHappeningContext = ITeamItemNavContext<
+export type IHappeningContext = ISpaceItemNavContext<
 	IHappeningBrief,
-	IHappeningDto
+	IHappeningDbo
 >;
 
 export interface IHappeningWithUiState extends IHappeningContext {
@@ -19,7 +19,7 @@ export interface IHappeningWithUiState extends IHappeningContext {
 }
 
 export function newEmptyHappeningContext(
-	team: ITeamContext,
+	space: ISpaceContext,
 	type: HappeningType,
 	kind: HappeningKind,
 	status: HappeningStatus,
@@ -30,7 +30,7 @@ export function newEmptyHappeningContext(
 		status,
 		title: '',
 	};
-	return { id: '', team, brief, dbo: { ...brief } };
+	return { id: '', space, brief, dbo: { ...brief } };
 }
 
 export type CancelOperationState =

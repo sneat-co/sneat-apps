@@ -29,8 +29,8 @@ import {
 	InviteModalModule,
 } from '@sneat/team-components';
 import { ContactService } from '@sneat/contactus-services';
-import { IContactusTeamDtoAndID } from '@sneat/contactus-core';
-import { ITeamContext } from '@sneat/team-models';
+import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
+import { ISpaceContext } from '@sneat/team-models';
 import { TeamNavService } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { ContactRoleBadgesComponent } from '../contact-role-badges/contact-role-badges.component';
@@ -56,7 +56,7 @@ import { InlistAgeGroupComponent } from '../inlist-options/inlist-age-group.comp
 // TODO: Is it deprecated and should we migrated to Contacts list?
 export class MembersListComponent implements OnChanges {
 	private selfRemove?: boolean;
-	@Input() public team?: ITeamContext;
+	@Input() public team?: ISpaceContext;
 	@Input() public members?: readonly IIdAndBrief<IContactBrief>[];
 	@Input() public role?: string;
 	@Output() selfRemoved = new EventEmitter<void>();
@@ -70,7 +70,7 @@ export class MembersListComponent implements OnChanges {
 	// Holds filtered entries, use `allMembers` to pass input
 	public membersToDisplay?: readonly IIdAndBrief<IContactBrief>[];
 
-	protected contactusTeam?: IContactusTeamDtoAndID;
+	protected contactusTeam?: IContactusSpaceDboAndID;
 
 	constructor(
 		private readonly navService: TeamNavService,
@@ -120,7 +120,7 @@ export class MembersListComponent implements OnChanges {
 		if (!member?.id) {
 			throw new Error('!member?.id');
 		}
-		const memberWithTeamRef = { ...member, team: this.team };
+		const memberWithTeamRef = { ...member, space: this.team };
 		this.navService.navigateToMember(this.navController, memberWithTeamRef);
 		return false;
 	}
@@ -171,7 +171,7 @@ export class MembersListComponent implements OnChanges {
 		this.selfRemove = member.brief?.userID === this.userService.currentUserID;
 		const teamID = this.team.id;
 		this.contactService
-			.removeTeamMember({ teamID, contactID: member.id })
+			.removeTeamMember({ spaceID: teamID, contactID: member.id })
 			.subscribe({
 				next: (team) => {
 					if (teamID !== this.team?.id) {

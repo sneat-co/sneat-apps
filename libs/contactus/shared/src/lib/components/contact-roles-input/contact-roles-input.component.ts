@@ -13,14 +13,14 @@ import {
 	ContactService,
 	IUpdateContactRequest,
 } from '@sneat/contactus-services';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-contact-roles-input',
 	templateUrl: './contact-roles-input.component.html',
 })
 export class ContactRolesInputComponent implements OnChanges {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() contact?: IIdAndBrief<IContactBrief>;
 	// @Output() readonly rolesChange = new EventEmitter<ContactRole[]>();
 
@@ -51,14 +51,14 @@ export class ContactRolesInputComponent implements OnChanges {
 
 	onRoleChanged(event: Event, role: IContactRole): void {
 		console.log('onRoleChanged', role, event);
-		if (!this.team || !this.contact) {
+		if (!this.space || !this.contact) {
 			alert('team or contact is not set');
 			return;
 		}
 		const checked = (event.target as HTMLInputElement).checked;
 		const request: IUpdateContactRequest = {
 			contactID: this.contact.id,
-			teamID: this.team?.id,
+			spaceID: this.space?.id,
 			roles: {
 				add: checked ? [role.id] : undefined,
 				remove: checked ? undefined : [role.id],

@@ -10,7 +10,7 @@ import {
 	IHappeningWithUiState,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { HappeningService, TeamNavService } from '@sneat/team-services';
 import { takeUntil } from 'rxjs';
 
@@ -21,7 +21,7 @@ import { takeUntil } from 'rxjs';
 export class RecurringCardComponent implements OnDestroy {
 	private readonly destroyed = new EventEmitter<void>();
 	@Input() recurring?: IHappeningWithUiState;
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 
 	constructor(
 		private readonly happeningService: HappeningService,
@@ -40,14 +40,14 @@ export class RecurringCardComponent implements OnDestroy {
 	}
 
 	goHappening(happening?: IHappeningWithUiState): void {
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logErrorHandler(
 				'not able to navigate to happening without team context',
 			);
 			return;
 		}
 		this.teamNavService
-			.navigateForwardToTeamPage(this.team, `happening/${happening?.id}`, {
+			.navigateForwardToTeamPage(this.space, `happening/${happening?.id}`, {
 				state: { happening },
 			})
 			.catch(
@@ -67,12 +67,12 @@ export class RecurringCardComponent implements OnDestroy {
 		if (!happeningWithUiState) {
 			return;
 		}
-		if (!this.team?.id) {
+		if (!this.space?.id) {
 			return;
 		}
 		const happening: IHappeningContext = {
 			id: happeningWithUiState.id,
-			team: { id: this.team?.id },
+			space: { id: this.space?.id },
 			brief: happeningWithUiState.brief,
 			dbo: happeningWithUiState.dbo,
 		};

@@ -9,7 +9,7 @@ import {
 import { NavController } from '@ionic/angular';
 import { IGridColumn } from '@sneat/grid';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import {
 	ILogistOrderContext,
 	IOrderCounterpartyRef,
@@ -30,7 +30,7 @@ interface OrderRow {
 	templateUrl: './orders-grid.component.html',
 })
 export class OrdersGridComponent implements OnChanges {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() orders?: ILogistOrderContext[];
 
 	rows?: OrderRow[];
@@ -131,12 +131,12 @@ export class OrdersGridComponent implements OnChanges {
 
 	protected readonly rowClick = (event: Event, row: unknown) => {
 		console.log('OrdersGridComponent.rowClick():', event, row);
-		if (!this.team) {
+		if (!this.space) {
 			alert('No team context provided!');
 			return;
 		}
 		const data = (row as { getData: () => { id: string } }).getData();
-		const team = this.team;
+		const team = this.space;
 		if (!team) {
 			alert('No team context provided!');
 			return;

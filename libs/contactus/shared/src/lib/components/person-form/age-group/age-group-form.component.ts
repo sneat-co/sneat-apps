@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { formNexInAnimation, TeamType } from '@sneat/core';
+import { formNexInAnimation, SpaceType } from '@sneat/core';
 import { AgeGroupID } from '@sneat/contactus-core';
 
 @Component({
@@ -13,7 +13,7 @@ import { AgeGroupID } from '@sneat/contactus-core';
 	imports: [CommonModule, IonicModule, FormsModule],
 })
 export class AgeGroupFormComponent {
-	@Input({ required: true }) teamType?: TeamType;
+	@Input({ required: true }) spaceType?: SpaceType;
 	@Input({ required: true }) ageGroup?: AgeGroupID;
 	@Output() readonly ageGroupChange = new EventEmitter<
 		AgeGroupID | undefined

@@ -9,8 +9,8 @@ import {
 import { virtualSliderAnimations } from '@sneat/components';
 import { ISlotUIContext } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
-import { TeamDaysProvider } from '../../../../services/team-days-provider';
+import { ISpaceContext } from '@sneat/team-models';
+import { SpaceDaysProvider } from '../../../../services/space-days-provider';
 import { getToday, CalendarStateService } from '../../calendar-state.service';
 import { SwipeableBaseComponent } from '../../../swipeable-base.component';
 import { SwipeableWeek, swipeableWeek } from '../../../swipeable-ui';
@@ -24,8 +24,8 @@ export class CalendarWeekCardComponent
 	extends SwipeableBaseComponent
 	implements AfterViewInit
 {
-	@Input() team: ITeamContext = { id: '' };
-	@Input() teamDaysProvider?: TeamDaysProvider;
+	@Input() team: ISpaceContext = { id: '' };
+	@Input() teamDaysProvider?: SpaceDaysProvider;
 	@Output() readonly slotClicked = new EventEmitter<{
 		slot: ISlotUIContext;
 		event: Event;

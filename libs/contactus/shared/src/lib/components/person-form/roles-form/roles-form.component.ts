@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { formNexInAnimation } from '@sneat/core';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { TeamRelatedFormComponent } from '../team-related-form.component';
 
 interface Role {
@@ -23,12 +23,12 @@ interface Role {
 export class RolesFormComponent extends TeamRelatedFormComponent {
 	@Input() isActive = false;
 	@Input() disabled = false;
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	roles?: Role[];
 
 	@Output() readonly rolesChange = new EventEmitter<string[]>();
 
-	override onTeamTypeChanged(team?: ITeamContext): void {
+	override onTeamTypeChanged(team?: ISpaceContext): void {
 		switch (team?.type) {
 			case 'educator':
 				if (location.pathname.includes('staff')) {

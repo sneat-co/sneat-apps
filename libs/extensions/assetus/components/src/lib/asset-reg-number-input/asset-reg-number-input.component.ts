@@ -13,8 +13,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule, IonInput } from '@ionic/angular';
 import { AssetService, IUpdateAssetRequest } from '../services';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
-import { IAssetContext } from '@sneat/mod-assetus-core';
+import { ISpaceContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-asset-reg-number',
@@ -23,7 +22,7 @@ import { IAssetContext } from '@sneat/mod-assetus-core';
 	imports: [CommonModule, IonicModule, ReactiveFormsModule],
 })
 export class AssetRegNumberInputComponent implements OnChanges {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input({ required: true }) assetID?: string;
 	@Input({ required: true }) countyID?: string;
 	@Input({ required: true }) regNumber?: string = '';
@@ -80,14 +79,14 @@ export class AssetRegNumberInputComponent implements OnChanges {
 	}
 
 	protected submit(): void {
-		const team = this.team;
+		const team = this.space;
 
 		if (!team?.id || !this.assetID) {
 			return;
 		}
 
 		const request: IUpdateAssetRequest = {
-			teamID: team.id,
+			spaceID: team.id,
 			assetID: this.assetID,
 			assetCategory: 'vehicle',
 			regNumber: this.regNumberControl.value || '',

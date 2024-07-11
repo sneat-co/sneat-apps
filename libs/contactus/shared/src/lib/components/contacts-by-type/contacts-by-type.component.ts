@@ -13,7 +13,7 @@ import {
 	ContactNavService,
 	defaultFamilyContactGroups,
 } from '@sneat/contactus-services';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 
 @Component({
 	standalone: true,
@@ -28,7 +28,7 @@ export class ContactsByTypeComponent implements OnChanges {
 
 	//
 	@Input() filter = '';
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() contacts?: IIdAndBrief<IContactBrief>[];
 	@Input() goContact: (contact?: IIdAndBrief<IContactBrief>) => void = () =>
 		void 0;
@@ -77,8 +77,8 @@ export class ContactsByTypeComponent implements OnChanges {
 		this.contactGroups = [];
 		const filter = this.filter;
 		const contacts = this.contacts || [];
-		console.log('setContactGroups()', this.team, filter, contacts);
-		const noContactRoles = this.team?.dbo?.noContactRoles;
+		console.log('setContactGroups()', this.space, filter, contacts);
+		const noContactRoles = this.space?.dbo?.noContactRoles;
 		let otherContacts = (this.otherContacts = !filter
 			? contacts
 			: contacts &&
@@ -129,9 +129,9 @@ export class ContactsByTypeComponent implements OnChanges {
 
 	public addContact(event: Event, group: string, role?: ContactRole): void {
 		event.stopPropagation();
-		if (!this.team) {
+		if (!this.space) {
 			return;
 		}
-		this.contactNavService.goNewContactPage(this.team, { group, role });
+		this.contactNavService.goNewContactPage(this.space, { group, role });
 	}
 }

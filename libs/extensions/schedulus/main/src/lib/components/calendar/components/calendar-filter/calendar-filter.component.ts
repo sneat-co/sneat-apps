@@ -5,7 +5,7 @@ import { IIdAndBrief } from '@sneat/core';
 import { IContactBrief } from '@sneat/contactus-core';
 import { WeekdayCode2 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import {
 	emptyScheduleFilter,
 	CalendarFilterService,
@@ -23,7 +23,7 @@ export class CalendarFilterComponent extends WeekdaysFormBase {
 	public accordionValue?: string;
 	private resetting = false;
 
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() showWeekdays = false;
 	@Input() showRepeats = false;
 	readonly text = new FormControl<string>('');

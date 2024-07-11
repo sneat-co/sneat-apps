@@ -12,7 +12,7 @@ import { IContactBrief } from '@sneat/contactus-core';
 import { ContactusTeamService } from '@sneat/contactus-services';
 import { IIdAndBrief } from '@sneat/core';
 import { IRelatedItem } from '@sneat/dto';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -22,7 +22,7 @@ import { Subject, takeUntil } from 'rxjs';
 	imports: [JsonPipe, IonicModule, SneatPipesModule],
 })
 export class RelatedContactComponent implements OnChanges, OnDestroy {
-	@Input({ required: true }) public team?: ITeamContext;
+	@Input({ required: true }) public team?: ISpaceContext;
 	@Input({ required: true }) public relatedItem?: IIdAndBrief<IRelatedItem>;
 
 	private readonly destroyed = new Subject<void>();
@@ -35,9 +35,9 @@ export class RelatedContactComponent implements OnChanges, OnDestroy {
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team']) {
 			const prevTeam = changes['team'].previousValue as
-				| ITeamContext
+				| ISpaceContext
 				| undefined;
-			const newTeam = changes['team'].currentValue as ITeamContext | undefined;
+			const newTeam = changes['team'].currentValue as ISpaceContext | undefined;
 			if (newTeam && prevTeam?.id !== newTeam?.id) {
 				console.log('Team changed');
 				this.contactusTeamService

@@ -79,7 +79,7 @@ export class MovieInfoPageComponent
 	// }
 
 	private createListItemCommandParams(): IListItemsCommandParams {
-		if (!this.team) {
+		if (!this.space) {
 			throw new Error('!this.team');
 		}
 		if (!this.list?.dbo) {
@@ -89,7 +89,7 @@ export class MovieInfoPageComponent
 			throw new Error('!this.movie');
 		}
 		return {
-			team: this.team,
+			team: this.space,
 			list: this.list,
 			items: [this.movie],
 		};

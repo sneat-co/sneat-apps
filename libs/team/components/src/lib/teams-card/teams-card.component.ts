@@ -1,11 +1,11 @@
 import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { IonInput, ToastController } from '@ionic/angular';
 import { AnalyticsService, IAnalyticsService } from '@sneat/core';
-import { IUserTeamBrief } from '@sneat/auth-models';
+import { IUserSpaceBrief } from '@sneat/auth-models';
 import { IIdAndBrief } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
-import { ICreateTeamRequest, ITeamContext } from '@sneat/team-models';
+import { ICreateSpaceRequest, ISpaceContext } from '@sneat/team-models';
 import { TeamNavService, TeamService } from '@sneat/team-services';
 import { ISneatUserState, SneatUserService } from '@sneat/auth-core';
 import { Subject, Subscription } from 'rxjs';
@@ -18,7 +18,7 @@ import { takeUntil } from 'rxjs/operators';
 export class TeamsCardComponent implements OnInit, OnDestroy {
 	@ViewChild(IonInput, { static: false }) addTeamInput?: IonInput; // TODO: IonInput;
 
-	public teams?: IIdAndBrief<IUserTeamBrief>[];
+	public teams?: IIdAndBrief<IUserSpaceBrief>[];
 	public loadingState: 'Authenticating' | 'Loading' = 'Authenticating';
 	public teamName = '';
 	public adding = false;
@@ -50,7 +50,7 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 		this.watchUserRecord();
 	}
 
-	public goTeam(team: ITeamContext) {
+	public goTeam(team: ISpaceContext) {
 		this.navService
 			.navigateToTeam(team, 'forward')
 			.catch(this.errorLogger.logError);
@@ -103,7 +103,7 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 				);
 			return;
 		}
-		const request: ICreateTeamRequest = {
+		const request: ICreateSpaceRequest = {
 			type: 'team',
 			// memberType: TeamMemberType.creator,
 			title,
@@ -113,7 +113,7 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 			next: (team) => {
 				this.analyticsService.logEvent('teamCreated', { team: team.id });
 				console.log('teamId:', team.id);
-				const userTeamBrief2: IUserTeamBrief = {
+				const userTeamBrief2: IUserSpaceBrief = {
 					userContactID: 'TODO: populate userContactID',
 					title: team?.dto?.title || team.id,
 					roles: ['creator'],
@@ -152,7 +152,7 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 		}, 100);
 	}
 
-	public leaveTeam(team: IIdAndBrief<IUserTeamBrief>, event?: Event): void {
+	public leaveTeam(team: IIdAndBrief<IUserSpaceBrief>, event?: Event): void {
 		if (event) {
 			event.stopPropagation();
 			event.preventDefault();
@@ -166,7 +166,7 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 			return;
 		}
 		this.contactService
-			.removeTeamMember({ teamID: team.id, contactID: userID })
+			.removeTeamMember({ spaceID: team.id, contactID: userID })
 			.subscribe({
 				next: (response: unknown) => console.log('left team:', response),
 				error: (err: unknown) =>

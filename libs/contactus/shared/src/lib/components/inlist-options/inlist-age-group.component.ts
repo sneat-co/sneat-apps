@@ -5,7 +5,7 @@ import {
 	IUpdateContactRequest,
 } from '@sneat/contactus-services';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { IdEvent, InlistOptionsComponent } from './inlist-options.component';
 
 @Component({
@@ -21,7 +21,7 @@ export class InlistAgeGroupComponent {
 		private readonly contactService: ContactService,
 	) {}
 
-	@Input({ required: true }) public team?: ITeamContext;
+	@Input({ required: true }) public team?: ISpaceContext;
 	@Input({ required: true }) public contactID = '';
 
 	protected readonly ageOptions: { id: string; title: string }[] = [
@@ -42,7 +42,7 @@ export class InlistAgeGroupComponent {
 			return;
 		}
 		const request: IUpdateContactRequest = {
-			teamID,
+			spaceID: teamID,
 			contactID: this.contactID,
 			ageGroup: idEvent.id as AgeGroupID,
 		};

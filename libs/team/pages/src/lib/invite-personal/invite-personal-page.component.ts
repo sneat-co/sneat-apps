@@ -107,7 +107,7 @@ export class InvitePersonalPageComponent implements OnInit {
 
 		const acceptInvite = (token?: string) => {
 			const request: IAcceptPersonalInviteRequest = {
-				teamID: this.teamId,
+				spaceID: this.teamId,
 				inviteID: this.inviteId,
 				pin: this.pin,
 				// email: this.email,
@@ -168,14 +168,14 @@ export class InvitePersonalPageComponent implements OnInit {
 		this.rejecting = true;
 		this.working = true;
 		const request: IRejectPersonalInviteRequest = {
-			teamID: this.teamId,
+			spaceID: this.teamId,
 			inviteID: this.inviteId,
 			pin: this.pin,
 		};
 		this.inviteService.rejectPersonalInvite(request).subscribe(
 			() => {
 				console.log('Refused to join team');
-				this.navController.navigateRoot('teams').catch((err) => {
+				this.navController.navigateRoot('spaces').catch((err) => {
 					this.errorLogger.logError(
 						err,
 						'Failed to navigate to teams page after successfully refused joining a team',

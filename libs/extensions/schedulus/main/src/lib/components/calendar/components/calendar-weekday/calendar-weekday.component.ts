@@ -10,9 +10,9 @@ import {
 	ISlotUIContext,
 	NewHappeningParams,
 	ScheduleNavService,
-	TeamDay,
+	SpaceDay,
 } from '@sneat/extensions/schedulus/shared';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { takeUntil } from 'rxjs';
 import {
 	emptyScheduleFilter,
@@ -28,7 +28,7 @@ import { Weekday } from '../../weekday';
 export class CalendarWeekdayComponent implements OnDestroy {
 	private readonly destroyed = new EventEmitter<void>();
 	private filter = emptyScheduleFilter;
-	@Input() team: ITeamContext = { id: '' };
+	@Input() team: ISpaceContext = { id: '' };
 	@Input() weekday?: Weekday;
 	@Output() dateSelected = new EventEmitter<Date>();
 	@Output() slotClicked = new EventEmitter<{
@@ -36,7 +36,7 @@ export class CalendarWeekdayComponent implements OnDestroy {
 		event: Event;
 	}>();
 
-	public get day(): TeamDay | undefined {
+	public get day(): SpaceDay | undefined {
 		return this.weekday?.day;
 	}
 

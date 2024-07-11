@@ -18,7 +18,7 @@ import {
 	sortSlotItems,
 	WeekdayNumber,
 } from '@sneat/extensions/schedulus/shared';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import {
 	emptyScheduleFilter,
@@ -40,7 +40,7 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 	// @Input() showRegulars = true;
 	// @Input() showEvents = true;
 
-	@Input({ required: true }) team: ITeamContext = { id: '' };
+	@Input({ required: true }) space: ISpaceContext = { id: '' };
 	@Input({ required: true }) weekday?: Weekday;
 
 	@Output() readonly slotClicked = new EventEmitter<{
@@ -91,7 +91,7 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 	private applyFilter(): void {
 		if (this.allSlots?.length) {
 			this.slots = this.allSlots
-				.filter((slot) => isSlotVisible(this.team?.id, slot, this.filter))
+				.filter((slot) => isSlotVisible(this.space?.id, slot, this.filter))
 				.sort(sortSlotItems);
 			this.slotsHiddenByFilter = this.allSlots.length - this.slots.length;
 			console.log(
@@ -140,7 +140,7 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 		`ScheduleDayComponent[dateID=${this.weekday?.day?.dateID || dateID}]`;
 
 	protected goNewHappening(params: NewHappeningParams): void {
-		if (!this.team) {
+		if (!this.space) {
 			return;
 		}
 		const date = this.weekday?.day?.date;
@@ -153,6 +153,6 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 			date: dateToIso(date),
 		};
 		console.log('ScheduleDayComponent.goNewHappening()', date, params);
-		this.scheduleNavService.goNewHappening(this.team, params);
+		this.scheduleNavService.goNewHappening(this.space, params);
 	}
 }

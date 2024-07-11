@@ -7,17 +7,17 @@ import { TeamModuleService } from '@sneat/team-services';
 
 export abstract class TeamModuleBaseComponent<
 	Brief,
-	Dto extends Brief,
+	Dbo extends Brief,
 > extends TeamBaseComponent {
 	protected readonly teamModuleDto$ = new BehaviorSubject<
-		Dto | null | undefined
+		Dbo | null | undefined
 	>(undefined);
 
 	constructor(
 		className: string,
 		route: ActivatedRoute,
 		teamParams: TeamComponentBaseParams,
-		protected teamModuleService: TeamModuleService<Dto>,
+		protected teamModuleService: TeamModuleService<Dbo>,
 	) {
 		super(className, route, teamParams);
 	}
@@ -25,7 +25,7 @@ export abstract class TeamModuleBaseComponent<
 	protected override onTeamIdChanged() {
 		super.onTeamIdChanged();
 		this.teamModuleService
-			.watchTeamModuleRecord(this.team.id)
+			.watchTeamModuleRecord(this.space.id)
 			.pipe(takeUntil(this.teamIDChanged$))
 			.subscribe({
 				next: (o) => {
@@ -38,7 +38,7 @@ export abstract class TeamModuleBaseComponent<
 				},
 			});
 	}
-	protected onTeamModuleDtoChanged(dto: Dto | null) {
+	protected onTeamModuleDtoChanged(dto: Dbo | null) {
 		console.log(`${this.className}.onTeamModuleDtoChanged()`, dto);
 	}
 }

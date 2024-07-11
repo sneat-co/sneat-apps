@@ -10,7 +10,7 @@ import {
 import { ToastController } from '@ionic/angular';
 import { LogistOrderContactRole, ContactType } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { CounterpartyRole } from '../../dto';
 import {
 	ILogistOrderContext,
@@ -27,7 +27,7 @@ export class OrderCounterpartyComponent implements OnChanges {
 	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';
 	@Input() readonly = false;
 	@Input() useColumns = true;
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() refNumLabel = 'Ref #';
 
 	@Input() label?: string = undefined;
@@ -108,7 +108,7 @@ export class OrderCounterpartyComponent implements OnChanges {
 										...this.order.dbo.counterparties.slice(0, i),
 										this.counterparty,
 										...this.order.dbo.counterparties.slice(i + 1),
-								  ]
+									]
 								: [...(this.order.dbo.counterparties || []), this.counterparty],
 					},
 				};
@@ -123,7 +123,7 @@ export class OrderCounterpartyComponent implements OnChanges {
 		if (!this.isRefNumberChanged) {
 			return;
 		}
-		if (!this.team) {
+		if (!this.space) {
 			console.error('saveRefNumber(): !this.team');
 			return;
 		}
@@ -142,7 +142,7 @@ export class OrderCounterpartyComponent implements OnChanges {
 			return;
 		}
 		const request: ISetOrderCounterpartiesRequest = {
-			teamID: this.team?.id,
+			spaceID: this.space?.id,
 			orderID: this.order?.id,
 			counterparties: [
 				{

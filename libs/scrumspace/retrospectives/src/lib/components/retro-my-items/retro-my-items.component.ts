@@ -40,7 +40,7 @@ export class RetroMyItemsComponent {
 			return;
 		}
 		const request: IRetroItemRequest = {
-			teamID: this.teamId,
+			spaceID: this.teamId,
 			meeting: this.retroId,
 			item: item.ID,
 			type: item.type,
@@ -68,7 +68,7 @@ export class RetroMyItemsComponent {
 			}
 			const title = this.titleControl.value as string;
 			const request: IAddRetroItemRequest = {
-				teamID: this.teamId,
+				spaceID: this.teamId,
 				meeting: this.retroId,
 				type: this.question,
 				title,

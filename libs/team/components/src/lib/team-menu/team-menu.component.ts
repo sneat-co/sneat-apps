@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { ISneatUserState } from '@sneat/auth-core';
-import { IUserTeamBrief } from '@sneat/auth-models';
+import { IUserSpaceBrief } from '@sneat/auth-models';
 import { AuthMenuItemComponent } from '@sneat/components';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { IIdAndBrief } from '@sneat/core';
@@ -31,7 +31,7 @@ import { IonicModule } from '@ionic/angular';
 	providers: [TeamComponentBaseParams],
 })
 export class TeamMenuComponent extends TeamBaseComponent {
-	public teams?: readonly IIdAndBrief<IUserTeamBrief>[];
+	public teams?: readonly IIdAndBrief<IUserSpaceBrief>[];
 
 	protected readonly id = (_: number, o: { id: string }) => o.id;
 
@@ -48,11 +48,11 @@ export class TeamMenuComponent extends TeamBaseComponent {
 	}
 
 	public goOverview(): boolean {
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError('no team context');
 			return false;
 		}
-		this.teamParams.teamNavService.navigateToTeam(this.team).then((v) => {
+		this.teamParams.teamNavService.navigateToTeam(this.space).then((v) => {
 			if (v) {
 				this.closeMenu();
 			}
@@ -83,10 +83,10 @@ export class TeamMenuComponent extends TeamBaseComponent {
 	}
 
 	isCurrentPage(page: string): boolean {
-		if (!this.team) {
+		if (!this.space) {
 			return false;
 		}
-		const { id } = this.team;
+		const { id } = this.space;
 		const idp = '/' + id;
 		const { pathname } = location;
 		if (page === 'overview') {
@@ -102,7 +102,7 @@ export class TeamMenuComponent extends TeamBaseComponent {
 		const teamID = (event as CustomEvent).detail.value as string;
 
 		// console.log('TeamMenuComponent.onTeamSelected', teamID);
-		if (teamID === this.team?.id) {
+		if (teamID === this.space?.id) {
 			return;
 		}
 		const team = this.teams?.find((t) => t.id === teamID);

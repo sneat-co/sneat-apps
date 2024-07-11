@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatCardListComponent } from '@sneat/components';
-import { IContactusTeamDto } from '@sneat/contactus-core';
+import { IContactusSpaceDbo } from '@sneat/contactus-core';
 import {
 	ContactusServicesModule,
 	ContactusTeamContextService,
@@ -39,7 +39,7 @@ import { TeamPageBaseComponent } from './TeamPageBaseComponent';
 	],
 })
 export class TeamPageComponent extends TeamPageBaseComponent {
-	protected contactusTeam?: IIdAndOptionalDbo<IContactusTeamDto>;
+	protected contactusTeam?: IIdAndOptionalDbo<IContactusSpaceDbo>;
 
 	constructor(
 		route: ActivatedRoute,
@@ -69,7 +69,7 @@ export class TeamPageComponent extends TeamPageBaseComponent {
 		event.stopPropagation();
 		event.preventDefault();
 		this.teamParams.teamNavService
-			.navigateForwardToTeamPage(this.team, 'members', {
+			.navigateForwardToTeamPage(this.space, 'members', {
 				state: {
 					contactusTeam: this.contactusTeam,
 				},

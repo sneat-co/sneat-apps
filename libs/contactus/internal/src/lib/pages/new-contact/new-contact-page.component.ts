@@ -14,7 +14,7 @@ import {
 	emptyContactBase,
 	Gender,
 	IContact2Asset,
-	IContactGroupDto,
+	IContactGroupDbo,
 	IContactRoleBrief,
 	IPersonRequirements,
 	IRelatedPerson,
@@ -88,7 +88,7 @@ export class NewContactPageComponent
 
 	public asset?: IAssetContext;
 
-	contactGroup?: IIdAndOptionalDbo<IContactGroupDto>;
+	contactGroup?: IIdAndOptionalDbo<IContactGroupDbo>;
 	contactRole?: IIdAndBrief<IContactRoleBrief>;
 
 	assetRelation?: ContactToAssetRelation;
@@ -136,7 +136,7 @@ export class NewContactPageComponent
 		const contactGroupID = params.get('group');
 		if (contactGroupID && !this.contactGroup) {
 			this.contactGroupService
-				.getContactGroupByID(contactGroupID, this.team)
+				.getContactGroupByID(contactGroupID, this.space)
 				.pipe(first(), takeUntil(this.destroyed$))
 				.subscribe({
 					next: (contactGroup) => {
@@ -159,16 +159,16 @@ export class NewContactPageComponent
 				});
 		}
 
-		const team = this.team;
-		if (!team) {
+		const space = this.space;
+		if (!space) {
 			throw new Error('Team is not defined');
 		}
 
 		const assetId = params.get('asset');
 		if (assetId && this.asset?.id !== assetId) {
-			this.asset = { id: assetId, team };
+			this.asset = { id: assetId, space };
 			this.assetService
-				.watchAssetByID(team, assetId)
+				.watchAssetByID(space, assetId)
 				.pipe(this.takeUntilNeeded())
 				.subscribe({
 					next: (asset) => {
@@ -179,9 +179,9 @@ export class NewContactPageComponent
 		}
 		const memberId = params.get('member');
 		if (memberId && this.contact?.id !== memberId) {
-			this.contact = { id: memberId, team };
+			this.contact = { id: memberId, space: space };
 			this.contactService
-				.watchContactById(team, memberId)
+				.watchContactById(space, memberId)
 				.pipe(this.takeUntilNeeded())
 				.subscribe((member) => {
 					this.contact = member;
@@ -190,7 +190,7 @@ export class NewContactPageComponent
 	};
 
 	public onContactGroupChanged(
-		contactGroup?: IIdAndDto<IContactGroupDto>,
+		contactGroup?: IIdAndDto<IContactGroupDbo>,
 	): void {
 		console.log('onContactGroupChanged()', contactGroup);
 		this.contactGroup = contactGroup;
@@ -213,7 +213,7 @@ export class NewContactPageComponent
 	}
 
 	submit(): void {
-		const team = this.team;
+		const team = this.space;
 		if (!team) {
 			throw new Error('Team is not defined');
 		}
@@ -221,7 +221,7 @@ export class NewContactPageComponent
 		let request: ICreateContactRequest = {
 			status: 'active',
 			type: 'person',
-			teamID: team.id,
+			spaceID: team.id,
 			person: {
 				...this.relatedPerson,
 				status: 'active',

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 // import { CommuneItemBaseService } from '../../../services/commune-item-base-service';
 // import { MovieKind } from '../dto';
-import { IMovieDto } from '../dto';
+import { IMovieDbo } from '../dto';
 import { Observable } from 'rxjs';
 // import { IRxReadwriteTransaction } from 'rxstore';
 // import { ISneatStoreProvider } from '../../../models/db-schemas-by-app/sneat-app-schema';
@@ -18,9 +18,9 @@ export class MovieService implements IMovieService {
 	}
 
 	addCommuneItem(
-		dto: IMovieDto,
+		dto: IMovieDbo,
 		// tx?: IRxReadwriteTransaction<ListusAppSchema>,
-	): Observable<IMovieDto> {
+	): Observable<IMovieDbo> {
 		console.log('MovieService.addCommuneItem()', dto);
 		throw new Error('Not implemented');
 	}

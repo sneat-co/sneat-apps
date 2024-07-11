@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, Input } from '@angular/core';
 import { IonicModule, NavController } from '@ionic/angular';
-import { ITeamDto } from '@sneat/dto';
+import { ISpaceDbo } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRecord } from '@sneat/data';
 import { SneatUserService } from '@sneat/auth-core';
@@ -15,7 +15,7 @@ import { RetroItemType } from '@sneat/scrumspace/scrummodels';
 	imports: [CommonModule, IonicModule],
 })
 export class RetrospectivesComponent {
-	@Input() public team?: IRecord<ITeamDto>;
+	@Input() public team?: IRecord<ISpaceDbo>;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -52,7 +52,7 @@ export class RetrospectivesComponent {
 			(userID
 				? this.team?.dto?.upcomingRetro?.itemsByUserAndType?.[userID]?.[
 						itemType
-				  ]
+					]
 				: 0) || 0
 		);
 	}

@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { excludeUndefined } from '@sneat/core';
 import { ContactRole } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { TeamNavService } from '@sneat/team-services';
 
 export interface INewContactPageParams {
@@ -19,7 +19,7 @@ export class ContactNavService {
 		private readonly teamNavService: TeamNavService,
 	) {}
 
-	goNewContactPage(team: ITeamContext, params?: INewContactPageParams): void {
+	goNewContactPage(team: ISpaceContext, params?: INewContactPageParams): void {
 		this.teamNavService
 			.navigateForwardToTeamPage(team, 'new-contact', {
 				queryParams: excludeUndefined(params),

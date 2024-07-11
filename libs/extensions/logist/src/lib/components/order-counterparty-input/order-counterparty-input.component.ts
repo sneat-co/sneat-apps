@@ -14,7 +14,7 @@ import {
 } from '@sneat/contactus-core';
 import { LogistOrderService } from '../../services';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import {
 	CounterpartyRole,
 	IDeleteCounterpartyRequest,
@@ -33,7 +33,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 	@Input() canReset = false;
 	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';
 	@Input() readonly = false;
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 
 	@Input() counterpartyRole?: CounterpartyRole;
 
@@ -80,14 +80,14 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 		if (!this.order) {
 			return;
 		}
-		const team = this.team;
-		if (!team) {
+		const space = this.space;
+		if (!space) {
 			throw new Error('Team is not set');
 		}
 		const contactFromCounterparty = (
 			counterparty: IOrderCounterparty,
 		): IContactContext => ({
-			team,
+			space,
 			id: counterparty.contactID,
 			brief: {
 				type: 'company',
@@ -124,7 +124,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 		if (this.selectOnly) {
 			return;
 		}
-		if (!this.team) {
+		if (!this.space) {
 			console.error('onContactChanged(): !this.team');
 			return;
 		}
@@ -150,7 +150,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 			console.error('Not implemented counterparty removal');
 			const request: IDeleteCounterpartyRequest = {
 				orderID: order.id,
-				teamID: this.team.id,
+				spaceID: this.space.id,
 				contactID: this.contact.id,
 				role: this.counterpartyRole,
 			};
@@ -244,7 +244,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 			return;
 		}
 		let request: ISetOrderCounterpartiesRequest = {
-			teamID: this.team.id,
+			spaceID: this.space.id,
 			orderID: this.order.id,
 			counterparties: [
 				{

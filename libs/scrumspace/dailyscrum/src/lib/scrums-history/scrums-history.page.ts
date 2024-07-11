@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Auth as AngularFireAuth } from '@angular/fire/auth';
 import { IRecord } from '@sneat/data';
 import { NavService } from '@sneat/datatug-core';
-import { ITeamDto } from '@sneat/dto';
-import { IScrumDto } from '@sneat/scrumspace/scrummodels';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceDbo } from '@sneat/dto';
+import { IScrumDbo } from '@sneat/scrumspace/scrummodels';
+import { ISpaceContext } from '@sneat/team-models';
 import { TeamService } from '@sneat/team-services';
 import { ScrumService } from '../services/scrum.service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -16,8 +16,8 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	styleUrls: ['./scrums-history.page.scss'],
 })
 export class ScrumsHistoryPageComponent {
-	public team?: ITeamContext;
-	public scrums?: IRecord<IScrumDto>[];
+	public team?: ISpaceContext;
+	public scrums?: IRecord<IScrumDbo>[];
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -27,7 +27,7 @@ export class ScrumsHistoryPageComponent {
 		private readonly afAuth: AngularFireAuth,
 		private readonly navService: NavService,
 	) {
-		const team = history.state?.team as IRecord<ITeamDto>;
+		const team = history.state?.team as IRecord<ISpaceDbo>;
 		console.log('team', team);
 		if (team?.id) {
 			this.team = team;
@@ -63,7 +63,7 @@ export class ScrumsHistoryPageComponent {
 		}
 	}
 
-	goScrum(scrum: IRecord<IScrumDto>): void {
+	goScrum(scrum: IRecord<IScrumDbo>): void {
 		console.log('goScrum', scrum);
 		// this.navService.navigateToScrum(scrum.id, this.team, scrum);
 		throw new Error('not implemented');

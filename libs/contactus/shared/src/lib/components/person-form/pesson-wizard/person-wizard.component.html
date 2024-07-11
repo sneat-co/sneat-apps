@@ -7,7 +7,7 @@
 
 <sneat-age-group-form
 	*ngIf="show.ageGroup"
-	[teamType]="team?.type"
+	[spaceType]="space?.type"
 	[hidePetOption]="hidePetOption"
 	[disabled]="disabled"
 	[ageGroup]="newPerson.ageGroup"
@@ -31,7 +31,7 @@
 	*ngIf="!requires.relatedAs?.hide && show.relatedAs"
 	[isActive]="wizardStep === 'relatedAs'"
 	[disabled]="disabled"
-	[team]="team"
+	[team]="space"
 	[relatedTo]="relatedToUser"
 	[relatedItems]="newPerson.related"
 	[ageGroup]="newPerson.ageGroup"
@@ -54,7 +54,7 @@
 	*ngIf="!requires.roles?.hide && show.roles"
 	[isActive]="wizardStep === 'roles'"
 	[disabled]="disabled"
-	[team]="team"
+	[space]="space"
 />
 
 @if (show.communicationChannels) {

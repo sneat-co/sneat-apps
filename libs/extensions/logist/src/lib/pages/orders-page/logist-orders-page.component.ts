@@ -35,7 +35,7 @@ export class LogistOrdersPageComponent extends TeamBaseComponent {
 
 	protected override onTeamIdChanged() {
 		super.onTeamIdChanged();
-		if (this.team?.id) {
+		if (this.space?.id) {
 			this.subscribeForOrders();
 		}
 	}
@@ -50,7 +50,7 @@ export class LogistOrdersPageComponent extends TeamBaseComponent {
 		try {
 			this.ordersSubscription?.unsubscribe();
 			this.orders = undefined;
-			const teamId = this.team?.id;
+			const teamId = this.space?.id;
 			if (!teamId) {
 				throw new Error('Team ID is not defined');
 			}

@@ -67,7 +67,7 @@ export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 
 		this.buyerCounterparty = counterparties?.find((c) => c.role === 'buyer');
 		this.selfCounterparty = counterparties?.find(
-			(c) => c.contactID === this.team?.id,
+			(c) => c.contactID === this.space?.id,
 		);
 		this.ship = counterparties?.find((c) => c.role === 'ship');
 		this.shippingLine = counterparties?.find((c) => c.role === 'shipping_line');

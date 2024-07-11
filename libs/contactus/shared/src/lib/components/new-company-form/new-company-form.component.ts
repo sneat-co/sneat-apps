@@ -21,7 +21,7 @@ import {
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-new-company-form',
@@ -29,7 +29,7 @@ import { ITeamContext } from '@sneat/team-models';
 })
 export class NewCompanyFormComponent implements OnChanges {
 	@Input() contactRoles?: ISelectItem[];
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() contactRole?: ContactRole = undefined;
 	@Input() hideRole = false;
 	@Input() parentContact?: IContactContext;
@@ -57,10 +57,10 @@ export class NewCompanyFormComponent implements OnChanges {
 	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['team'] && this.team) {
+		if (changes['team'] && this.space) {
 			if (!this.contact) {
 				const brief: IContactBrief = { type: 'company' };
-				this.contact = { id: '', dbo: brief, team: this.team };
+				this.contact = { id: '', dbo: brief, space: this.space };
 				// } else {
 				// 	this.contact = { ...this.contact, team: this.team };
 			}
@@ -90,7 +90,7 @@ export class NewCompanyFormComponent implements OnChanges {
 
 	create(): void {
 		console.log('create()', this.contactRole, this.contact);
-		if (!this.team) {
+		if (!this.space) {
 			alert('Contact team is a required field');
 			return;
 		}
@@ -113,10 +113,10 @@ export class NewCompanyFormComponent implements OnChanges {
 					roles: [this.contactRole],
 				}),
 				roles: [this.contactRole],
-				teamID: this.team.id,
+				spaceID: this.space.id,
 			});
 			this.isCreating = true;
-			this.contactService.createContact(this.team, request).subscribe({
+			this.contactService.createContact(this.space, request).subscribe({
 				next: (contact) => {
 					console.log('created contact:', contact);
 					this.contactCreated.emit(contact);

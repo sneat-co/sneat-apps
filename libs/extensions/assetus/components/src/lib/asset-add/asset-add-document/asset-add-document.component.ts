@@ -10,7 +10,7 @@ import {
 	IAssetDocumentExtra,
 } from '@sneat/mod-assetus-core';
 import { TeamComponentBaseParams } from '@sneat/team-components';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { format, parseISO } from 'date-fns';
 import { AssetService } from '../../services';
 import { ICreateAssetRequest } from '../../services';
@@ -25,7 +25,7 @@ export class AssetAddDocumentComponent
 	extends AddAssetBaseComponent
 	implements OnChanges
 {
-	@Input() public override team?: ITeamContext;
+	@Input() public override space?: ISpaceContext;
 	@Input() public documentAsset?: IAssetDocumentContext;
 
 	documentType?: AssetVehicleType;
@@ -50,16 +50,16 @@ export class AssetAddDocumentComponent
 	public nextServiceDue = ''; // ISO date string 'YYYY-MM-DD'
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['team'] && this.team) {
+		if (changes['team'] && this.space) {
 			const a: IAssetContext<'document'> = this.documentAsset ?? {
 				id: '',
-				team: this.team ?? { id: '' },
+				space: this.space ?? { id: '' },
 				dbo: {
 					status: 'draft',
 					category: 'vehicle',
 					extraType: 'document',
 					extra: {},
-					teamID: this.team?.id,
+					teamID: this.space?.id,
 					type: this.documentType,
 					title: '',
 					possession: undefined as unknown as AssetPossession,
@@ -69,7 +69,7 @@ export class AssetAddDocumentComponent
 					updatedBy: '-',
 				},
 			};
-			this.documentAsset = { ...a, team: this.team };
+			this.documentAsset = { ...a, space: this.space };
 		}
 	}
 
@@ -110,7 +110,7 @@ export class AssetAddDocumentComponent
 
 	submitDocumentForm(): void {
 		console.log('submitDocumentForm', this.documentAsset);
-		if (!this.team) {
+		if (!this.space) {
 			throw 'no team context';
 		}
 		if (!this.documentType) {
@@ -127,7 +127,7 @@ export class AssetAddDocumentComponent
 				status: 'active',
 				category: 'vehicle',
 			},
-			teamID: this.team?.id,
+			spaceID: this.space?.id,
 		};
 		if (this.yearOfBuild) {
 			request = {
@@ -169,6 +169,6 @@ export class AssetAddDocumentComponent
 		// 	}
 		// }
 
-		this.createAssetAndGoToAssetPage(request, this.team);
+		this.createAssetAndGoToAssetPage(request, this.space);
 	}
 }

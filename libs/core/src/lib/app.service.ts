@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { TeamType } from './team-type';
+import { SpaceType } from './space-type';
 
 export type SneatApp =
 	| 'sneat'
@@ -26,7 +26,7 @@ export type SneatApp =
 export interface IAppInfo {
 	readonly appId: SneatApp;
 	readonly appTitle: string;
-	readonly requiredTeamType?: TeamType;
+	readonly requiredTeamType?: SpaceType;
 }
 
 export const APP_INFO = new InjectionToken<IAppInfo>('app');

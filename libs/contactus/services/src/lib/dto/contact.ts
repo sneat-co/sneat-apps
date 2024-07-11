@@ -1,14 +1,13 @@
 import { AgeGroupID, IRelatedToRequest } from '@sneat/contactus-core';
 import { IAddress } from '@sneat/contactus-core';
-import { ITeamRequest } from '@sneat/team-models';
-import { throwError } from 'rxjs';
+import { ISpaceRequest } from '@sneat/team-models';
 
-export interface IContactRequest extends ITeamRequest {
+export interface IContactRequest extends ISpaceRequest {
 	readonly contactID: string;
 }
 
 export function validateContactRequest(request: IContactRequest): void {
-	if (!request.teamID) {
+	if (!request.spaceID) {
 		throw new Error('teamID parameters is required');
 	}
 	if (!request.contactID) {
@@ -32,7 +31,7 @@ export interface ISetContactRolesRequest {
 	readonly remove?: readonly string[];
 }
 
-export interface ISetContactsStatusRequest extends ITeamRequest {
+export interface ISetContactsStatusRequest extends ISpaceRequest {
 	status: 'archived' | 'active';
 	contactIDs: readonly string[];
 }

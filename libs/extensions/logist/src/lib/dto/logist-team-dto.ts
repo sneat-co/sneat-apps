@@ -1,6 +1,6 @@
 import { INavContext } from '@sneat/core';
 import { IAddress } from '@sneat/contactus-core';
-import { ITeamRequest } from '@sneat/team-models';
+import { ISpaceRequest } from '@sneat/team-models';
 
 export type CounterpartyRole =
 	| 'buyer'
@@ -42,16 +42,19 @@ export const LogistTeamRoles: Record<LogistTeamRole, string> = {
 	warehouse_operator: 'Warehouse operator',
 };
 
-export interface ILogistTeamBrief {
+export interface ILogistSpaceBrief {
 	readonly contactID: string;
 	readonly orderNumberPrefix?: string;
 }
 
-export type ILogistTeamDto = ILogistTeamBrief;
+export type ILogistSpaceDbo = ILogistSpaceBrief;
 
-export type ILogistTeamContext = INavContext<ILogistTeamBrief, ILogistTeamDto>;
+export type ILogistSpaceContext = INavContext<
+	ILogistSpaceBrief,
+	ILogistSpaceDbo
+>;
 
-export interface ISetLogistTeamSettingsRequest extends ITeamRequest {
+export interface ISetLogistSpaceSettingsRequest extends ISpaceRequest {
 	roles: readonly string[];
 	address: IAddress;
 	vatNumber?: string;

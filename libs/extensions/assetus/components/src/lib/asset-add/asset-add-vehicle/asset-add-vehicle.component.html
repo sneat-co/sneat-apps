@@ -13,7 +13,7 @@
 
 <sneat-vehicle-card
 	*ngIf="vehicleType"
-	[team]="team"
+	[space]="space"
 	[(vehicleAsset)]="vehicleAsset"
 	(vehicleAssetChange)="onAssetChanged($event)"
 />
@@ -26,7 +26,7 @@
 	size="large"
 	class="ion-margin"
 	expand="full"
-	[disabled]="!team || isSubmitting"
+	[disabled]="!space || isSubmitting"
 	(click)="submitVehicleForm()"
 >
 	<ng-container *ngIf="!isSubmitting">Add vehicle</ng-container>

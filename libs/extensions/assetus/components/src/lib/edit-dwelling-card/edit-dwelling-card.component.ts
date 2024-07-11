@@ -14,7 +14,7 @@ import {
 	SelectFromListModule,
 } from '@sneat/components';
 import { IAssetContext, IAssetDwellingContext } from '@sneat/mod-assetus-core';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { AssetPossessionCardComponent } from '../asset-possesion-card/asset-possession-card.component';
 
 @Component({
@@ -32,7 +32,7 @@ import { AssetPossessionCardComponent } from '../asset-possesion-card/asset-poss
 	],
 })
 export class AddDwellingCardComponent implements OnChanges {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 
 	@Input({ required: true }) dwellingAsset?: IAssetDwellingContext;
 	@Output() readonly dwellingAssetChange = new EventEmitter<IAssetContext>();
@@ -47,13 +47,13 @@ export class AddDwellingCardComponent implements OnChanges {
 	ngOnChanges(changes: SimpleChanges): void {
 		if (
 			changes['team'] &&
-			this.team?.dbo?.countryID &&
+			this.space?.dbo?.countryID &&
 			this.dwellingAsset?.dbo &&
 			!this.dwellingAsset.dbo.countryID
 		) {
 			this.dwellingAsset = {
 				...this.dwellingAsset,
-				dbo: { ...this.dwellingAsset.dbo, countryID: this.team.dbo.countryID },
+				dbo: { ...this.dwellingAsset.dbo, countryID: this.space.dbo.countryID },
 			};
 			this.dwellingAssetChange.emit(this.dwellingAsset);
 		}

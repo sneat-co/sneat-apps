@@ -77,12 +77,12 @@ export class TeamMemberPageComponent
 			!confirm(
 				`Are you sure you want to remove ${
 					this.member?.brief?.title || this.member?.id
-				} from ${this.team?.brief?.title}?`,
+				} from ${this.space?.brief?.title}?`,
 			)
 		) {
 			return;
 		}
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError(
 				'Can not remove team member without team context',
 			);
@@ -95,7 +95,7 @@ export class TeamMemberPageComponent
 			return;
 		}
 		this.contactService
-			.removeTeamMember({ teamID: this.team.id, contactID: this.member?.id })
+			.removeTeamMember({ spaceID: this.space.id, contactID: this.member?.id })
 			.subscribe({
 				next: () => {
 					this.navController

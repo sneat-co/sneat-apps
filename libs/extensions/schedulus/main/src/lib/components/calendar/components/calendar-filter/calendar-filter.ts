@@ -34,7 +34,7 @@ export function isMatchingScheduleFilter(
 					h.dbo?.related || h.brief?.related,
 					'contactus',
 					'contacts',
-					h.team.id,
+					h.space.id,
 				).length,
 		)
 	);

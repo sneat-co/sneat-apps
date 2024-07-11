@@ -26,7 +26,7 @@ import {
 	MileageUnitTypes,
 } from '@sneat/mod-assetus-core';
 import { AssetService, IAddVehicleRecordRequest } from '../services';
-import { ITeamBrief } from '@sneat/dto';
+import { ISpaceBrief } from '@sneat/dto';
 
 @Component({
 	selector: 'sneat-mileage-dialog',
@@ -34,7 +34,7 @@ import { ITeamBrief } from '@sneat/dto';
 	styleUrls: ['./mileage-dialog.component.scss'],
 })
 export class MileAgeDialogComponent {
-	@Input() team?: IIdAndBrief<ITeamBrief>;
+	@Input() team?: IIdAndBrief<ISpaceBrief>;
 	@Input() asset?: IIdAndBrief<IAssetBrief>;
 
 	protected currencyList: CurrencyCode[] = CurrencyList;
@@ -121,7 +121,7 @@ export class MileAgeDialogComponent {
 		}
 
 		const request: IAddVehicleRecordRequest = {
-			teamID: this.team.id,
+			spaceID: this.team.id,
 			assetID: this.asset.id,
 			fuelVolume: this.fuelVolume.value || undefined,
 			fuelVolumeUnit: this.fuelVolumeUnit.value || undefined,

@@ -6,7 +6,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import {
 	getOrderSegments,
 	IDeleteCounterpartyRequest,
@@ -26,7 +26,7 @@ import { NewSegmentService } from '../new-segment/new-segment.service';
 	templateUrl: './order-trucker.component.html',
 })
 export class OrderTruckerComponent implements OnChanges {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() order?: ILogistOrderContext;
 	@Input() trucker?: IOrderCounterparty;
 
@@ -72,7 +72,7 @@ export class OrderTruckerComponent implements OnChanges {
 			return;
 		}
 		const request: IDeleteCounterpartyRequest = {
-			teamID: this.order?.team?.id,
+			spaceID: this.order?.space?.id,
 			orderID: this.order.id,
 			contactID: this.trucker?.contactID,
 			role: 'trucker',

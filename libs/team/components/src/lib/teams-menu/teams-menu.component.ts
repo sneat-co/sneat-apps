@@ -5,12 +5,12 @@ import { RouterModule } from '@angular/router';
 import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { ISneatUserState, SneatUserService } from '@sneat/auth-core';
 import { UserRequiredFieldsService } from '@sneat/auth-ui';
-import { TeamType } from '@sneat/core';
+import { SpaceType } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
-	ICreateTeamRequest,
-	ITeamContext,
-	teamContextFromBrief,
+	ICreateSpaceRequest,
+	ISpaceContext,
+	spaceContextFromBrief,
 	zipMapBriefsWithIDs,
 } from '@sneat/team-models';
 import { TeamNavService, TeamService } from '@sneat/team-services';
@@ -32,12 +32,12 @@ import { TeamsListComponent } from '../teams-list';
 })
 export class TeamsMenuComponent {
 	@Input() spacesLabel = 'Spaces';
-	@Input() teamType?: TeamType;
+	@Input() teamType?: SpaceType;
 	@Input() pathPrefix = '/space';
 
-	teams?: ITeamContext[];
-	familyTeams?: ITeamContext[];
-	familyTeam?: ITeamContext;
+	teams?: ISpaceContext[];
+	familyTeams?: ISpaceContext[];
+	familyTeam?: ISpaceContext;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -57,7 +57,7 @@ export class TeamsMenuComponent {
 		event.stopPropagation();
 		event.preventDefault();
 
-		const request: ICreateTeamRequest = {
+		const request: ICreateSpaceRequest = {
 			type: 'family',
 			// roles: [TeamMemberType.creator],
 		};
@@ -86,7 +86,7 @@ export class TeamsMenuComponent {
 		return false;
 	}
 
-	private createTeam(request: ICreateTeamRequest): void {
+	private createTeam(request: ICreateSpaceRequest): void {
 		this.teamService.createTeam(request).subscribe({
 			next: (value) => {
 				console.log('Team created:', value);
@@ -120,7 +120,7 @@ export class TeamsMenuComponent {
 		this.teams = user?.record?.teams
 			? zipMapBriefsWithIDs(user?.record?.teams)
 					.filter((t) => !this.teamType || t.brief.type === this.teamType)
-					.map((t) => teamContextFromBrief(t.id, t.brief))
+					.map((t) => spaceContextFromBrief(t.id, t.brief))
 			: [];
 
 		this.familyTeams = this.teams?.filter((t) => t.type === 'family') || [];

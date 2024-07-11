@@ -4,10 +4,10 @@ import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
 import { IMemberBrief } from '@sneat/contactus-core';
 import { AnalyticsService, IAnalyticsService, IIdAndBrief } from '@sneat/core';
-import { IUserTeamBrief } from '@sneat/auth-models';
+import { IUserSpaceBrief } from '@sneat/auth-models';
 // import {IRetrospective} from '@sneat/scrumspace/retrospectives';
 import { IRecord } from '@sneat/data';
-import { ITeamDto } from '@sneat/dto';
+import { ISpaceDbo } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 // import {IScrum} from '@sneat/scrumspace/scrummodels';
 
@@ -29,7 +29,7 @@ export class NavService {
 		console.log('navigateToTeams()');
 		this.analyticsService.logEvent('navigateToTeams');
 		this.navController
-			.navigateRoot('teams', { animationDirection })
+			.navigateRoot('spaces', { animationDirection })
 			.catch((err) =>
 				this.errorLogger.logError(err, 'Failed to navigate to teams page'),
 			);
@@ -82,7 +82,7 @@ export class NavService {
 
 	public navigateToMember(
 		navController: NavController,
-		team: IRecord<ITeamDto>,
+		team: IRecord<ISpaceDbo>,
 		memberInfo: IIdAndBrief<IMemberBrief>,
 	): void {
 		console.log(
@@ -105,8 +105,8 @@ export class NavService {
 
 	public navigateToTeam(
 		id: string,
-		teamInfo?: IUserTeamBrief,
-		team?: ITeamDto,
+		teamInfo?: IUserSpaceBrief,
+		team?: ISpaceDbo,
 		animationDirection?: 'forward' | 'back',
 	): void {
 		this.analyticsService.logEvent('navigateToTeam', { team: id });
@@ -166,7 +166,7 @@ export class NavService {
 
 	private navToTeamPage = (
 		navController: NavController,
-		team: IRecord<ITeamDto>,
+		team: IRecord<ISpaceDbo>,
 		url: string,
 		eventName: string,
 		params?: Record<string, unknown>,

@@ -2,17 +2,17 @@ import { Inject, Injectable, NgZone } from '@angular/core';
 import { Params } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
-import { IContactContext, IContactusTeamDto } from '@sneat/contactus-core';
+import { IContactContext, IContactusSpaceDbo } from '@sneat/contactus-core';
 import {
 	AnalyticsService,
 	IAnalyticsService,
 	IIdAndOptionalDbo,
 } from '@sneat/core';
 import { IRecord } from '@sneat/data';
-import { ITeamDto } from '@sneat/dto';
+import { ISpaceDbo } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IRetrospective, IScrumDto } from '@sneat/scrumspace/scrummodels';
-import { ITeamContext, ITeamRef } from '@sneat/team-models';
+import { IRetrospective, IScrumDbo } from '@sneat/scrumspace/scrummodels';
+import { ISpaceContext, ISpaceRef } from '@sneat/team-models';
 
 export type ScrumPageTab = 'team' | 'my' | 'risks' | 'qna';
 
@@ -32,7 +32,7 @@ export class TeamNavService {
 		console.log('navigateToTeams()');
 		this.analyticsService.logEvent('navigateToTeams');
 		this.navController
-			.navigateRoot('teams', { animationDirection })
+			.navigateRoot('spaces', { animationDirection })
 			.catch((err) =>
 				this.errorLogger.logError(err, 'Failed to navigate to teams page'),
 			);
@@ -64,8 +64,8 @@ export class TeamNavService {
 
 	public navigateToScrum(
 		date: 'today' | 'yesterday' | string,
-		team: IRecord<ITeamDto>,
-		scrum?: IRecord<IScrumDto>,
+		team: IRecord<ISpaceDbo>,
+		scrum?: IRecord<IScrumDbo>,
 		tab?: ScrumPageTab,
 	): void {
 		console.log(
@@ -98,11 +98,11 @@ export class TeamNavService {
 		memberContext: IContactContext,
 	): void {
 		console.log(
-			`navigateToMember(team.id=${memberContext?.team?.id}, memberInfo.id=${memberContext?.id})`,
+			`navigateToMember(team.id=${memberContext?.space?.id}, memberInfo.id=${memberContext?.id})`,
 		);
-		const id = `${memberContext?.team?.id}:${memberContext?.id}`;
-		const { team } = memberContext;
-		if (!team) {
+		const id = `${memberContext?.space?.id}:${memberContext?.id}`;
+		const { space } = memberContext;
+		if (!space) {
 			this.errorLogger.logError(
 				'not able to navigate to member without team context',
 			);
@@ -110,18 +110,18 @@ export class TeamNavService {
 		}
 		this.navForward(
 			navController,
-			`space/${team.type}/${memberContext.team?.id}/member/${memberContext.id}`,
+			`space/${space.type}/${memberContext.space?.id}/member/${memberContext.id}`,
 			{
 				state: {
 					contact: memberContext,
 				},
 			},
-			{ name: '', params: { id, team: team.id, member: memberContext.id } },
+			{ name: '', params: { id, team: space.id, member: memberContext.id } },
 		);
 	}
 
 	public navigateToTeam(
-		team: ITeamContext,
+		team: ISpaceContext,
 		animationDirection?: 'forward' | 'back',
 	): Promise<boolean> {
 		this.analyticsService.logEvent('navigateToTeam', { team: team.id });
@@ -145,13 +145,13 @@ export class TeamNavService {
 
 	public navigateToScrums = (
 		navController: NavController,
-		team: IRecord<ITeamDto>,
+		team: IRecord<ISpaceDbo>,
 	): void =>
 		this.navToTeamPage(navController, team, 'scrums', 'navigateToScrums');
 
 	public navigateToAddMetric = (
 		navController: NavController,
-		team: IRecord<ITeamDto>,
+		team: IRecord<ISpaceDbo>,
 	): void =>
 		this.navToTeamPage(
 			navController,
@@ -162,7 +162,7 @@ export class TeamNavService {
 
 	public navigateToAddMember = (
 		navController: NavController,
-		team: IIdAndOptionalDbo<IContactusTeamDto>,
+		team: IIdAndOptionalDbo<IContactusSpaceDbo>,
 	): void =>
 		this.navToTeamPage(
 			navController,
@@ -173,7 +173,7 @@ export class TeamNavService {
 
 	public navigateToRetrospective = (
 		navController: NavController,
-		team: IRecord<ITeamDto>,
+		team: IRecord<ISpaceDbo>,
 		id: string | 'upcoming',
 	): void =>
 		this.navToTeamPage(
@@ -186,7 +186,7 @@ export class TeamNavService {
 
 	public navigateToRetroTree(
 		date: 'today' | 'yesterday' | string,
-		team?: IRecord<ITeamDto>,
+		team?: IRecord<ISpaceDbo>,
 		retrospective?: IRecord<IRetrospective>,
 	): void {
 		console.log(
@@ -214,7 +214,7 @@ export class TeamNavService {
 	}
 
 	public navigateBackToTeamPage(
-		team: ITeamContext,
+		team: ISpaceContext,
 		page: string,
 		navOptions: NavigationOptions = {},
 	): Promise<boolean> {
@@ -223,7 +223,7 @@ export class TeamNavService {
 	}
 
 	public navigateForwardToTeamPage(
-		team: ITeamContext,
+		team: ISpaceContext,
 		page: string,
 		navOptions: NavigationOptions = {},
 	): Promise<boolean> {
@@ -232,7 +232,7 @@ export class TeamNavService {
 	}
 
 	private navigateToTeamPage(
-		team: ITeamContext,
+		team: ISpaceContext,
 		page: string,
 		navOptions: NavigationOptions,
 	): Promise<boolean> {
@@ -266,7 +266,7 @@ export class TeamNavService {
 
 	private navToTeamPage = (
 		navController: NavController,
-		team: ITeamRef,
+		team: ISpaceRef,
 		url: string,
 		eventName: string,
 		params?: Record<string, unknown>,

@@ -4,7 +4,7 @@
 		<ion-select
 			label="Space"
 			*ngIf="teams"
-			[value]="team.id"
+			[value]="space.id"
 			interface="popover"
 			(ionChange)="onTeamSelected($event)"
 			style="font-weight: bold"
@@ -20,7 +20,7 @@
 	<ion-item
 		tappable
 		[routerLink]="teamPageUrl('overview')"
-		[disabled]="!team.id"
+		[disabled]="!space.id"
 		[class.currentPage]="isCurrentPage('overview')"
 		(click)="goOverview()"
 	>
@@ -30,7 +30,7 @@
 	<ion-item
 		[routerLink]="teamPageUrl('assets')"
 		routerDirection="root"
-		[disabled]="!team.id"
+		[disabled]="!space.id"
 		[class.currentPage]="isCurrentPage('assets')"
 		(click)="goTeamPage($event, 'assets')"
 	>
@@ -40,7 +40,7 @@
 	<ion-item
 		[routerLink]="teamPageUrl('budget')"
 		routerDirection="root"
-		[disabled]="!team.id"
+		[disabled]="!space.id"
 		[class.currentPage]="isCurrentPage('budget')"
 		(click)="goTeamPage($event, 'budget')"
 	>
@@ -50,7 +50,7 @@
 	<ion-item
 		[routerLink]="teamPageUrl('calendar')"
 		routerDirection="root"
-		[disabled]="!team.id"
+		[disabled]="!space.id"
 		[class.currentPage]="isCurrentPage('calendar')"
 		(click)="closeMenu()"
 	>
@@ -64,7 +64,7 @@
 	<ion-item
 		[routerLink]="teamPageUrl('contacts')"
 		routerDirection="root"
-		[disabled]="!team.id"
+		[disabled]="!space.id"
 		[class.currentPage]="isCurrentPage('contacts')"
 		(click)="goTeamPage($event, 'contacts')"
 	>
@@ -74,7 +74,7 @@
 	<ion-item
 		[routerLink]="teamPageUrl('debts')"
 		routerDirection="root"
-		[disabled]="!team.id"
+		[disabled]="!space.id"
 		[class.currentPage]="isCurrentPage('debts')"
 		(click)="goTeamPage($event, 'debts')"
 	>
@@ -84,7 +84,7 @@
 	<ion-item
 		[routerLink]="teamPageUrl('documents')"
 		routerDirection="root"
-		[disabled]="!team.id"
+		[disabled]="!space.id"
 		[class.currentPage]="isCurrentPage('documents')"
 		(click)="goTeamPage($event, 'documents')"
 	>
@@ -94,7 +94,7 @@
 	<ion-item
 		[routerLink]="teamPageUrl('lists')"
 		routerDirection="root"
-		[disabled]="!team.id"
+		[disabled]="!space.id"
 		[class.currentPage]="isCurrentPage('lists')"
 		(click)="goTeamPage($event, 'lists')"
 	>
@@ -114,7 +114,7 @@
 	<ion-item
 		[routerLink]="teamPageUrl('members')"
 		routerDirection="root"
-		[disabled]="!team.id"
+		[disabled]="!space.id"
 		[class.currentPage]="isCurrentPage('members')"
 		(click)="closeMenu()"
 	>

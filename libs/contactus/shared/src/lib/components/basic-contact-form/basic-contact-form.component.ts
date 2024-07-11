@@ -7,7 +7,7 @@ import {
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-basic-contact-form',
@@ -15,7 +15,7 @@ import { ITeamContext } from '@sneat/team-models';
 })
 export class BasicContactFormComponent {
 	@Input() parentContact?: IContactContext;
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() contactType?: ContactType;
 
 	// @Input() contactRole?: ContactRole; // use contactRoles to support multiple roles
@@ -36,7 +36,7 @@ export class BasicContactFormComponent {
 
 	createContact(event: Event): void {
 		event.stopPropagation();
-		if (!this.team) {
+		if (!this.space) {
 			console.error('team is required');
 			return;
 		}
@@ -45,7 +45,7 @@ export class BasicContactFormComponent {
 			return;
 		}
 		const request: ICreateContactBasicRequest = {
-			teamID: this.team.id,
+			spaceID: this.space.id,
 			type: this.contactType,
 			// type: this.contactType,
 			roles: this.contactRoles,
@@ -57,7 +57,7 @@ export class BasicContactFormComponent {
 		};
 		this.isSubmitting = true;
 
-		this.contactService.createContact(this.team, request).subscribe({
+		this.contactService.createContact(this.space, request).subscribe({
 			next: (contact) => {
 				this.isCreated = true;
 				this.contactCreated.emit(contact);

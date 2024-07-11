@@ -156,7 +156,7 @@ export class ContainerPointComponent implements OnChanges {
 		}
 
 		const request: IUpdateContainerPointRequest = {
-			teamID: this.order.team.id,
+			spaceID: this.order.space.id,
 			orderID: this.order.id,
 			shippingPointID: this.shippingPoint.id,
 			containerID: this.container?.id,

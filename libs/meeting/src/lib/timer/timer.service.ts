@@ -199,7 +199,7 @@ export class Timer {
 			if (member) {
 				toggleTimerMethod = () =>
 					this.timerService.toggleMemberTimer({
-						teamID: this.teamId,
+						spaceID: this.teamId,
 						meeting: this.meetingId,
 						operation,
 						member,
@@ -207,7 +207,7 @@ export class Timer {
 			} else {
 				toggleTimerMethod = () =>
 					this.timerService.toggleMeetingTimer({
-						teamID: this.teamId,
+						spaceID: this.teamId,
 						meeting: this.meetingId,
 						operation,
 					});

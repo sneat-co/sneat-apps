@@ -46,7 +46,7 @@
 	size="large"
 	class="ion-margin"
 	expand="full"
-	[disabled]="!team || isSubmitting"
+	[disabled]="!space || isSubmitting"
 	(click)="submitDocumentForm()"
 >
 	<ng-container *ngIf="!isSubmitting">Add vehicle</ng-container>

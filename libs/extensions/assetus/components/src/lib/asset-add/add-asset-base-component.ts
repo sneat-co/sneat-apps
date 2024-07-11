@@ -1,23 +1,23 @@
 import { Component, Inject, InjectionToken, Input } from '@angular/core';
 import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { IContactusTeamDtoAndID } from '@sneat/contactus-core';
+import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { AssetExtraType, IAssetExtra } from '@sneat/mod-assetus-core';
 import { TeamComponentBaseParams } from '@sneat/team-components';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { AssetService } from '../services';
 import { ICreateAssetRequest } from '../services';
 
 @Component({ template: '' })
 export abstract class AddAssetBaseComponent extends SneatBaseComponent {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 
 	public static readonly metadata = {
 		inputs: ['team'],
 	};
 
-	public contactusTeam?: IContactusTeamDtoAndID;
+	public contactusTeam?: IContactusSpaceDboAndID;
 	public country?: string;
 
 	public isSubmitting = false;
@@ -38,12 +38,12 @@ export abstract class AddAssetBaseComponent extends SneatBaseComponent {
 	protected createAssetAndGoToAssetPage<
 		ExtraType extends AssetExtraType,
 		Extra extends IAssetExtra,
-	>(request: ICreateAssetRequest<ExtraType, Extra>, team: ITeamContext): void {
-		if (!this.team) {
+	>(request: ICreateAssetRequest<ExtraType, Extra>, team: ISpaceContext): void {
+		if (!this.space) {
 			throw new Error('no team context');
 		}
 		this.assetService
-			.createAsset<ExtraType, Extra>(this.team, request)
+			.createAsset<ExtraType, Extra>(this.space, request)
 			.subscribe({
 				next: (asset) => {
 					this.teamParams.teamNavService

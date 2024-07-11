@@ -16,7 +16,7 @@ export interface IBoolMetric {
 	false: IBoolMetricVal;
 }
 
-export interface ITeamMetric {
+export interface ISpaceMetric {
 	id?: string;
 	title: string;
 	colorTrue?: MetricColor;

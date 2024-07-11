@@ -8,7 +8,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { ILogistOrderContext, IOrderContainer } from '../../dto';
 
 @Component({
@@ -17,7 +17,7 @@ import { ILogistOrderContext, IOrderContainer } from '../../dto';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrderContainersComponent implements OnChanges {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 
 	@Input() order?: ILogistOrderContext;
 	@Output() orderChange = new EventEmitter<ILogistOrderContext>();

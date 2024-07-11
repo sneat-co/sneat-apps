@@ -6,7 +6,7 @@ import {
 
 export class CalendarBasePage extends TeamBaseComponent {
 	public override get defaultBackUrl(): string {
-		const t = this.team;
+		const t = this.space;
 		return t ? `/space/${t.type}/${t.id}/calendar` : '';
 	}
 

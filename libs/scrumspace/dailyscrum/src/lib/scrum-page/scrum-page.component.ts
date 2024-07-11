@@ -7,7 +7,7 @@ import {
 	OnInit,
 } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { ITeamMemberInfo } from '@sneat/contactus-core';
+import { ISpaceMemberInfo } from '@sneat/contactus-core';
 import { AnalyticsService, IAnalyticsService } from '@sneat/core';
 import { IRecord } from '@sneat/data';
 import { secondsToStr } from '@sneat/datetime';
@@ -20,7 +20,7 @@ import {
 	TimerFactory,
 } from '@sneat/meeting';
 import { ScrumService } from '../services/scrum.service';
-import { IScrumDto, IStatus, TaskType } from '@sneat/scrumspace/scrummodels';
+import { IScrumDbo, IStatus, TaskType } from '@sneat/scrumspace/scrummodels';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
@@ -46,7 +46,7 @@ export class ScrumPageComponent
 
 	public scrumID?: string;
 
-	public scrum: IScrumDto = {
+	public scrum: IScrumDbo = {
 		type: 'staff',
 		userIDs: [],
 		statuses: [],
@@ -54,7 +54,7 @@ export class ScrumPageComponent
 
 	public timerState?: ITimerState;
 
-	public spectators?: ITeamMemberInfo[];
+	public spectators?: ISpaceMemberInfo[];
 
 	public isToday?: boolean;
 	public scrumDate?: Date;
@@ -73,7 +73,7 @@ export class ScrumPageComponent
 	public personalMetrics?: IMetric[];
 	public timer?: Timer;
 	public expandedMemberId?: string | null;
-	private scrumsById: Record<string, IScrumDto> = {};
+	private scrumsById: Record<string, IScrumDbo> = {};
 	private subscriptions: Subscription[] = []; // TODO: replace with subs from BAsePage?
 
 	constructor(
@@ -102,7 +102,7 @@ export class ScrumPageComponent
 	}
 
 	public override get defaultBackUrl(): string {
-		return this.team?.id ? `team?id=${this.team.id}` : 'teams';
+		return this.space?.id ? `space?id=${this.space.id}` : 'spaces';
 	}
 
 	private static getDateFromId(scrumId: string): Date {
@@ -118,7 +118,7 @@ export class ScrumPageComponent
 
 			this.tab = (tab?.[1] || this.tab) as ScrumPageTab;
 
-			const scrum = history.state.scrum as IRecord<IScrumDto>;
+			const scrum = history.state.scrum as IRecord<IScrumDbo>;
 			if (scrum?.dto) {
 				this.setScrumId(scrum.id);
 				this.scrumLoaded(scrum.id, scrum.dto, 'history.state.scrum');
@@ -163,7 +163,7 @@ export class ScrumPageComponent
 
 	public changeDate(to: 'prev' | 'next' | 'today' | string): void {
 		console.log(`changeDate(to=${to}, currentScrumDate=${this.scrumDate})`);
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError('can not change date without team context');
 			return;
 		}
@@ -172,7 +172,7 @@ export class ScrumPageComponent
 			this.isToday = true;
 			this.scrumDate = getToday();
 			this.scrumID = getMeetingIdFromDate(this.scrumDate);
-			this.subscribeScrum(this.team.id, this.scrumID, 'changeDate');
+			this.subscribeScrum(this.space.id, this.scrumID, 'changeDate');
 		}
 		switch (to) {
 			case 'today': {
@@ -196,7 +196,7 @@ export class ScrumPageComponent
 			case 'next': {
 				if (!this.scrum?.scrumIds?.next) {
 					this.errorLogger.logError(
-						`Attempted to go NEXT non-existing scrum (teamId=${this.team?.id}, scrumId=${this.scrumID})`,
+						`Attempted to go NEXT non-existing scrum (teamId=${this.space?.id}, scrumId=${this.scrumID})`,
 					);
 					return;
 				}
@@ -205,7 +205,7 @@ export class ScrumPageComponent
 				break;
 			}
 		}
-		if (this.team?.dbo) {
+		if (this.space?.dbo) {
 			// this.merge(this.scrum, undefined, this.team.dto?.members);
 			throw new Error('not implmented');
 		}
@@ -251,12 +251,12 @@ export class ScrumPageComponent
 
 	protected override onTeamIdChanged(): void {
 		super.onTeamIdChanged();
-		if (!this.team?.id) {
+		if (!this.space?.id) {
 			return;
 		}
 		if (this.scrumDate && this.scrumID) {
 			this.subscribeScrum(
-				this.team.id,
+				this.space.id,
 				this.scrumID,
 				`subscribeTeam(this.scrumId=${this.scrumID})`,
 			);
@@ -264,12 +264,12 @@ export class ScrumPageComponent
 	}
 
 	protected override onTeamDtoChanged(): void {
-		const teamDto = this.team?.dbo;
+		const teamDto = this.space?.dbo;
 		if (!teamDto) {
 			return;
 		}
 		if (this.scrumID && !this.timer) {
-			this.setTimer(this.team.id, this.scrumID);
+			this.setTimer(this.space.id, this.scrumID);
 		}
 		throw new Error('not implemented yet');
 		// const lastScrumId = teamDto.last?.scrum?.id;
@@ -337,7 +337,7 @@ export class ScrumPageComponent
 	// 	}
 	// }
 
-	private scrumLoaded(id: string, scrum: IScrumDto, from: string): void {
+	private scrumLoaded(id: string, scrum: IScrumDbo, from: string): void {
 		console.log(
 			`${from}: scrumLoaded(${id}: currentScrumId=${this.scrumID}`,
 			scrum,
@@ -359,7 +359,7 @@ export class ScrumPageComponent
 				// 	this.setTotalElapsed();
 				// }
 				console.log('this.scrum', this.scrum);
-				if (this.team?.dbo) {
+				if (this.space?.dbo) {
 					throw new Error('not implemented yet');
 					// this.merge(this.scrum, undefined, this.team.dto.members);
 				}
@@ -379,7 +379,7 @@ export class ScrumPageComponent
 				break;
 			case this.prevScrumID:
 				// this.prevScrum = scrum || {...this.prevScrum, statuses: []};
-				if (this.team?.dbo) {
+				if (this.space?.dbo) {
 					throw new Error('not implemented yet');
 					// this.merge(this.scrum, undefined, this.team.dto.members);
 				}
@@ -426,9 +426,9 @@ export class ScrumPageComponent
 	}
 
 	private merge(
-		scrum: IScrumDto,
-		prevScrum?: IScrumDto,
-		members?: ITeamMemberInfo[],
+		scrum: IScrumDbo,
+		prevScrum?: IScrumDbo,
+		members?: ISpaceMemberInfo[],
 	): void {
 		console.log(
 			'ScrumPage.merge(),\n\tscrum:',

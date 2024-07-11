@@ -8,13 +8,13 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { IonicModule, NavController } from '@ionic/angular';
-import { ITeamDto } from '@sneat/dto';
+import { ISpaceDbo } from '@sneat/dto';
 import { ScrumService } from '@sneat/scrumspace/dailyscrum';
 import { Subject } from 'rxjs';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { getMeetingIdFromDate, getToday } from '@sneat/meeting';
 import { IRecord } from '@sneat/data';
-import { IScrumDto } from '@sneat/scrumspace/scrummodels';
+import { IScrumDbo } from '@sneat/scrumspace/scrummodels';
 import { TeamNavService } from '@sneat/team-services';
 
 @Component({
@@ -24,10 +24,10 @@ import { TeamNavService } from '@sneat/team-services';
 	imports: [CommonModule, IonicModule],
 })
 export class ScrumsComponent implements OnChanges, OnDestroy {
-	@Input() public team?: IRecord<ITeamDto>;
+	@Input() public team?: IRecord<ISpaceDbo>;
 
 	public prevScrumId?: string;
-	public todayScrum?: IScrumDto;
+	public todayScrum?: IScrumDbo;
 
 	protected readonly destroyed = new Subject<boolean>();
 

@@ -22,20 +22,20 @@ import {
 } from '@angular/forms';
 import { IonicModule, IonInput } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
-import { IContactusTeamDtoAndID } from '@sneat/contactus-core';
+import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { RoutingState } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	HappeningType,
 	IHappeningContext,
-	IHappeningDto,
+	IHappeningDbo,
 	IHappeningSlot,
 	IHappeningSlotWithID,
 	mergeValuesWithIDs,
 	WeekdayCode2,
 } from '@sneat/mod-schedulus-core';
 import { TeamComponentBaseParams } from '@sneat/team-components';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import {
 	HappeningService,
 	HappeningServiceModule,
@@ -74,10 +74,10 @@ export class HappeningFormComponent
 	@Input() public wd?: WeekdayCode2;
 	@Input() public date?: string;
 
-	@Input({ required: true }) public team?: ITeamContext;
+	@Input({ required: true }) public team?: ISpaceContext;
 	@Input({ required: true }) public happening?: IHappeningContext;
 	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
-	@Input() public contactusTeam?: IContactusTeamDtoAndID;
+	@Input() public contactusTeam?: IContactusSpaceDboAndID;
 
 	@ViewChild('titleInput', { static: true }) titleInput?: IonInput;
 	@ViewChild('happeningSlotsComponent', { static: false })
@@ -229,7 +229,7 @@ export class HappeningFormComponent
 		return !!this.slots()?.length;
 	}
 
-	private makeHappeningDto(): IHappeningDto {
+	private makeHappeningDbo(): IHappeningDbo {
 		if (!this.team) {
 			throw new Error('!this.team');
 		}
@@ -240,12 +240,6 @@ export class HappeningFormComponent
 			throw new Error('!this.happening.brief');
 		}
 		const activityFormValue = this.happeningForm.value;
-		const dto: IHappeningDto = {
-			...this.happening.dbo,
-			...this.happening.brief,
-			teamIDs: [this.team.id], // TODO: should be already in this.happening.brief
-			title: activityFormValue.title, // TODO: should be already in this.happening.brief
-		};
 		// switch (dto.type) {
 		// 	case 'recurring':
 		// 		// dto.slots = this.slots.map(slot => ({ ...slot, repeats: 'weekly', id: slot.id || newRandomId({ len: 5 }) }));
@@ -264,7 +258,12 @@ export class HappeningFormComponent
 		// 		throw new Error('unknown happening type: ' + dto.type);
 		// }
 
-		return dto;
+		return {
+			...this.happening.dbo,
+			...this.happening.brief,
+			spaceIDs: [this.team.id], // TODO: should be already in this.happening.brief
+			title: activityFormValue.title, // TODO: should be already in this.happening.brief
+		};
 	}
 
 	protected submit(): void {
@@ -300,7 +299,7 @@ export class HappeningFormComponent
 
 			this.isCreating.set(true);
 
-			let happening = this.makeHappeningDto();
+			let happening = this.makeHappeningDbo();
 
 			switch (happening.type) {
 				case 'single':
@@ -317,7 +316,7 @@ export class HappeningFormComponent
 			}
 
 			this.happeningService
-				.createHappening({ teamID: team.id, happening })
+				.createHappening({ spaceID: team.id, happening })
 				.pipe(takeUntil(this.destroyed$))
 				.subscribe({
 					next: () => {
@@ -356,7 +355,7 @@ export class HappeningFormComponent
 
 	protected cancel(): void {
 		const request: ICancelHappeningRequest = {
-			teamID: this.team?.id || '',
+			spaceID: this.team?.id || '',
 			happeningID: this.happening?.id || '',
 		};
 		this.isCancelling.set(true);

@@ -22,7 +22,7 @@ import {
 	MemberGroupTypeKids,
 	MemberGroupTypeOther,
 	MemberGroupTypePets,
-	IContactusTeamDto,
+	IContactusSpaceDbo,
 	IMemberGroupContext,
 } from '@sneat/contactus-core';
 import { isTeamSupportsMemberGroups } from '@sneat/dto';
@@ -124,7 +124,7 @@ export class MembersPageComponent
 		);
 	}
 
-	override onTeamModuleDtoChanged(dto: IContactusTeamDto | null): void {
+	override onTeamModuleDtoChanged(dto: IContactusSpaceDbo | null): void {
 		super.onTeamModuleDtoChanged(dto);
 		this.processContactusTeamDto(dto);
 	}
@@ -171,7 +171,7 @@ export class MembersPageComponent
 
 	override onTeamDtoChanged(): void {
 		super.onTeamDtoChanged();
-		if (!this.team) {
+		if (!this.space) {
 			throw new Error('!this.commune');
 		}
 		console.log(`MembersPageComponent.onTeamDtoChanged()`);
@@ -189,7 +189,7 @@ export class MembersPageComponent
 		console.log(`MembersPageComponent.loadData(source=${source})`);
 
 		// this.unsubscribe();
-		const team = this.team;
+		const team = this.space;
 		if (!team) {
 			throw new Error('!this.team');
 		}
@@ -241,10 +241,10 @@ export class MembersPageComponent
 	}
 
 	private readonly processContactusTeamDto = (
-		dto?: IContactusTeamDto | null,
+		dto?: IContactusSpaceDbo | null,
 	): void => {
 		console.log('MembersPageComponent.processContactusTeamDto()', dto);
-		const team = this.team;
+		const team = this.space;
 		this.members = zipMapBriefsWithIDs(dto?.contacts).map((m) => ({
 			...m,
 			team,
@@ -283,7 +283,7 @@ export class MembersPageComponent
 					addedToGroup = true;
 					pets.push(m);
 				}
-				if (!this.team) {
+				if (!this.space) {
 					throw new Error('!this.team');
 				}
 				if (m.brief?.groupIDs?.length) {

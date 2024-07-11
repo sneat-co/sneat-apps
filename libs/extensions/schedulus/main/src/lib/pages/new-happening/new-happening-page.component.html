@@ -4,13 +4,13 @@
 			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		@if (isToDo) {
-			<ion-title *ngIf="team; else titleNoCommune">
-				New task &#64; {{ team.brief?.title }}
+			<ion-title *ngIf="space; else titleNoCommune">
+				New task &#64; {{ space.brief?.title }}
 			</ion-title>
 			<ng-template #titleNoCommune>New task</ng-template>
 		} @else {
-			<ion-title *ngIf="team; else titleNoCommune">
-				New happening &#64; {{ team.brief?.title }}
+			<ion-title *ngIf="space; else titleNoCommune">
+				New happening &#64; {{ space.brief?.title }}
 			</ion-title>
 			<ng-template #titleNoCommune>New activity</ng-template>
 		}
@@ -20,7 +20,7 @@
 <ion-content class="cardy">
 	<sneat-happening-form
 		#happeningPageFormComponent
-		[team]="team"
+		[team]="space"
 		[happening]="happening"
 		(happeningChange)="onHappeningChanged($event)"
 		[wd]="wd"

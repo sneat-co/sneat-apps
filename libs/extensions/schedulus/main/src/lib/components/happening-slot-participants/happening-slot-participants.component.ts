@@ -72,8 +72,8 @@ export class HappeningSlotParticipantsComponent
 		if (happeningSlot) {
 			const previous = happeningSlot.previousValue as ISlotUIContext;
 			const current = happeningSlot.currentValue as ISlotUIContext;
-			if (current?.happening?.team?.id !== previous?.happening?.team?.id) {
-				this.teamID$.next(current?.happening?.team?.id);
+			if (current?.happening?.space?.id !== previous?.happening?.space?.id) {
+				this.teamID$.next(current?.happening?.space?.id);
 			}
 		}
 		if (changes['happeningSlot']) {
@@ -107,7 +107,7 @@ export class HappeningSlotParticipantsComponent
 	}
 
 	private populateContacts(): void {
-		const teamID = this.happeningSlot?.happening?.team?.id;
+		const teamID = this.happeningSlot?.happening?.space?.id;
 		if (!teamID) {
 			return;
 		}
@@ -118,7 +118,7 @@ export class HappeningSlotParticipantsComponent
 		// 	this.happeningSlot?.wd,
 		// );
 		const contacts = (this.relatedItems || []).map((relatedItem) => {
-			const key = relatedItem.keys.find((k) => k.teamID == teamID);
+			const key = relatedItem.keys.find((k) => k.spaceID == teamID);
 			const id = key?.itemID;
 			const contact: IIdAndOptionalBrief<IContactBrief> =
 				this.teamContacts?.find((tc) => tc.id === id) || {

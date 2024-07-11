@@ -46,8 +46,8 @@ export interface DtoTotals {
 //     id: string;
 // }
 
-export interface IWithTeamIDs {
-	teamIDs?: string[];
+export interface IWithSpaceIDs {
+	spaceIDs?: string[];
 }
 
 export interface IWithTag {
@@ -89,7 +89,7 @@ export function zeroIfEmptyTotals(totals: DtoTotals): DtoTotals {
 					month: t.month || 0,
 					quarter: t.quarter || 0,
 					year: t.year || 0,
-			  }
+				}
 			: newTotal();
 	totals.incomes = f(totals.incomes);
 	totals.expenses = f(totals.expenses);

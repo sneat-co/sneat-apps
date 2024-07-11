@@ -113,7 +113,7 @@ export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewIn
 		// throw new Error("not implemented yey");
 		this.navController
 			.navigateForward('./' + page, {
-				state: { team: this.team },
+				state: { team: this.space },
 			})
 			.catch(
 				this.errorLogger.logErrorHandler('failed to navigate to page: ' + page),
@@ -122,9 +122,9 @@ export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewIn
 	}
 
 	private watchTeamAssets(): void {
-		if (this.team?.id) {
+		if (this.space?.id) {
 			this.assetusTeamService
-				.watchAssetBriefs(this.team)
+				.watchAssetBriefs(this.space)
 				.pipe(takeUntil(this.destroyed$))
 				.subscribe({
 					next: (assets: IIdAndBrief<IAssetBrief>[]) => {

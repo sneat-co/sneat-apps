@@ -10,7 +10,7 @@ import {
 	CalendariumTeamService,
 } from '@sneat/extensions/schedulus/main';
 import { AssetGroup } from '@sneat/mod-assetus-core';
-import { ICalendariumTeamDto, RepeatPeriod } from '@sneat/mod-schedulus-core';
+import { ICalendariumSpaceDbo, RepeatPeriod } from '@sneat/mod-schedulus-core';
 import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
@@ -65,14 +65,14 @@ export class BudgetPageComponent extends TeamBaseComponent {
 		});
 	}
 
-	protected calendariumTeamDto?: ICalendariumTeamDto;
+	protected calendariumTeamDto?: ICalendariumSpaceDbo;
 
 	override onTeamIdChanged(): void {
-		if (!this.team.id) {
+		if (!this.space.id) {
 			return;
 		}
 		this.calendariumTeamService
-			.watchTeamModuleRecord(this.team?.id)
+			.watchTeamModuleRecord(this.space?.id)
 			.pipe(takeUntil(this.teamIDChanged$))
 			.subscribe({
 				next: (teamCalendarium) => {
@@ -121,14 +121,14 @@ export class BudgetPageComponent extends TeamBaseComponent {
 	}
 
 	public goAssetGroup(assetGroup: AssetGroup): void {
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError(
 				'can not navigate to asset group without team context',
 			);
 			return;
 		}
 		this.teamParams.teamNavService
-			.navigateForwardToTeamPage(this.team, 'assets-group/' + assetGroup.id, {
+			.navigateForwardToTeamPage(this.space, 'assets-group/' + assetGroup.id, {
 				state: { assetGroup: assetGroup.context },
 			})
 			.catch(
@@ -156,12 +156,12 @@ export class BudgetPageComponent extends TeamBaseComponent {
 	// }
 
 	public goNew(): void {
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError('no team context');
 			return;
 		}
 		this.teamParams.teamNavService
-			.navigateForwardToTeamPage(this.team, 'new-liability')
+			.navigateForwardToTeamPage(this.space, 'new-liability')
 			.catch(
 				this.errorLogger.logErrorHandler(
 					'Failed to navigate to new liability page',

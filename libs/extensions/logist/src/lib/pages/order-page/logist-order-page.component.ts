@@ -83,7 +83,7 @@ export class LogistOrderPageComponent
 		const popover = await this.popoverController.create({
 			component: OrderPrintMenuComponent,
 			componentProps: {
-				team: this.team,
+				team: this.space,
 				order: this.order,
 			},
 		});
@@ -110,7 +110,7 @@ export class LogistOrderPageComponent
 			component: NewContainerComponent,
 			componentProps: {
 				order: this.order,
-				team: this.team,
+				team: this.space,
 			},
 		});
 		await modal.present();

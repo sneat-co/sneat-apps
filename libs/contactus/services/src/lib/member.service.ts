@@ -8,23 +8,22 @@ import {
 	IContactBrief,
 	IMemberBrief,
 	IAcceptPersonalInviteRequest,
-	IAddTeamMemberResponse,
-	ICreateTeamMemberRequest,
+	IAddSpaceMemberResponse,
+	ICreateSpaceMemberRequest,
 } from '@sneat/contactus-core';
-import { TeamService } from '@sneat/team-services';
 import { ContactService } from './contact-service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext, ITeamItemBriefWithTeamRef } from '@sneat/team-models';
+import { ISpaceContext, ISpaceItemBriefWithSpaceRef } from '@sneat/team-models';
 import { Observable } from 'rxjs';
 import { ContactusTeamService } from './contactus-team.service';
 
 // export const memberBriefFromDto = (id: string, dto: IMemberDto): IMemberBrief => ({ id, ...dto });
 export const contactContextFromBrief = (
 	contact: IIdAndBrief<IContactBrief>,
-	team: ITeamContext,
-): ITeamItemBriefWithTeamRef<IContactBrief> => ({
+	space: ISpaceContext,
+): ISpaceItemBriefWithSpaceRef<IContactBrief> => ({
 	...contact,
-	team,
+	space,
 });
 
 @Injectable()
@@ -51,13 +50,13 @@ export class MemberService extends ContactService {
 	}
 
 	public createMember(
-		request: ICreateTeamMemberRequest,
-	): Observable<IAddTeamMemberResponse> {
+		request: ICreateSpaceMemberRequest,
+	): Observable<IAddSpaceMemberResponse> {
 		console.log(`MemberService.addMember()`, request);
 		if (request.names) {
 			request = { ...request, names: trimNames(request.names) };
 		}
-		return this.sneatApiService.post<IAddTeamMemberResponse>(
+		return this.sneatApiService.post<IAddSpaceMemberResponse>(
 			'contactus/create_member',
 			request,
 		);

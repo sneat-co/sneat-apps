@@ -24,7 +24,7 @@ export class HappeningSlotModalService {
 		console.log('editSingleHappeningSlot()', happening, recurring, slot);
 		event.stopPropagation();
 		event.preventDefault();
-		const team = happening.team;
+		const team = happening.space;
 		if (!team) {
 			return Promise.reject('no team context');
 		}

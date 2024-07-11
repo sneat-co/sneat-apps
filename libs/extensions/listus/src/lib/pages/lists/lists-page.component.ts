@@ -160,16 +160,16 @@ export class ListsPageComponent extends TeamBaseComponent {
 		const listGroup = this.listGroups?.find((lg) =>
 			(lg.lists || []).some((l) => eq(l.id, list.id)),
 		);
-		if (!this.team) {
+		if (!this.space) {
 			throw new Error('!this.team');
 		}
 		const path = `list/${list.type}/${list.id}`;
 		this.teamParams.teamNavService
-			.navigateForwardToTeamPage(this.team, path, {
+			.navigateForwardToTeamPage(this.space, path, {
 				state: {
 					listInfo: list,
 					listGroupTitle: listGroup && listGroup.title,
-					team: this.team,
+					team: this.space,
 				},
 			})
 			.catch(this.errorLogger.logErrorHandler('Failed to navigate to list'));
@@ -203,10 +203,10 @@ export class ListsPageComponent extends TeamBaseComponent {
 		if (!list.id) {
 			throw new Error('!list.id');
 		}
-		if (!this.team) {
+		if (!this.space) {
 			throw new Error('!this.team');
 		}
-		this.params.listService.deleteList(this.team, list.id).subscribe({
+		this.params.listService.deleteList(this.space, list.id).subscribe({
 			next: () => {
 				listGroup.lists =
 					listGroup.lists?.filter((l) => !eq(l.id, list.id)) || [];
@@ -266,7 +266,7 @@ export class ListsPageComponent extends TeamBaseComponent {
 	protected override onTeamDtoChanged(): void {
 		try {
 			super.onTeamDtoChanged();
-			if (this.team) {
+			if (this.space) {
 				if (this.reordered) {
 					this.reordered = false;
 				} else {
@@ -346,7 +346,7 @@ export class ListsPageComponent extends TeamBaseComponent {
 				this.listGroups.map((lg) => ({ ...lg, lists: [...(lg.lists || [])] })),
 		);
 		if (!listGroups) {
-			if (this.team?.type === 'family') {
+			if (this.space?.type === 'family') {
 				listGroups = [
 					{
 						id: 'to-buy',
@@ -392,10 +392,10 @@ export class ListsPageComponent extends TeamBaseComponent {
 				if (!passedList.type) {
 					throw new Error(`!passedList[${i}]`);
 				}
-				if (!passedList.team && this.team.type === 'personal') {
+				if (!passedList.team && this.space.type === 'personal') {
 					passedList = {
 						...passedList,
-						team: createShortTeamInfoFromDto(this.team),
+						team: createShortTeamInfoFromDto(this.space),
 					};
 				}
 				const matchedList = ((listGroup && listGroup.lists) || []).find(
@@ -475,7 +475,7 @@ export class ListsPageComponent extends TeamBaseComponent {
 						matchedList.id = passedList.id;
 					}
 					if (!matchedList.team) {
-						matchedList.team = createShortTeamInfoFromDto(this.team);
+						matchedList.team = createShortTeamInfoFromDto(this.space);
 					}
 				}
 			});

@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITimerState, Timer } from '@sneat/meeting';
-import { IScrumDto, TimerStatusEnum } from '@sneat/scrumspace/scrummodels';
+import { IScrumDbo, TimerStatusEnum } from '@sneat/scrumspace/scrummodels';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -19,7 +19,7 @@ import { Subscription } from 'rxjs';
 })
 export class TimerMemberButtonComponent implements OnDestroy, OnChanges {
 	@Input() public scrumId?: string;
-	@Input() public scrum?: IScrumDto;
+	@Input() public scrum?: IScrumDbo;
 	@Input() public memberId?: string;
 	@Input() public teamId?: string;
 	@Output() public toggled = new EventEmitter<boolean>();

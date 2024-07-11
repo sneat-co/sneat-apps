@@ -8,7 +8,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { IContactBrief, IContactusTeamDtoAndID } from '@sneat/contactus-core';
+import { IContactBrief, IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { excludeUndefined, IIdAndBrief } from '@sneat/core';
 import { hasRelatedItemID } from '@sneat/dto';
 import {
@@ -25,7 +25,7 @@ import {
 	MembersSelectorService,
 } from '@sneat/contactus-shared';
 import { contactContextFromBrief } from '@sneat/contactus-services';
-import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
+import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import {
 	HappeningService,
 	ICancelHappeningRequest,
@@ -44,8 +44,8 @@ const notImplemented = 'Sorry, not implemented yet';
 	templateUrl: 'slot-context-menu.component.html',
 })
 export class SlotContextMenuComponent {
-	@Input() team: ITeamContext = { id: '' };
-	@Input() contactusTeam?: IContactusTeamDtoAndID;
+	@Input() team: ISpaceContext = { id: '' };
+	@Input() contactusTeam?: IContactusSpaceDboAndID;
 
 	@Input() dateID?: string;
 	@Input() public slotContext?: ISlotUIContext;
@@ -135,7 +135,7 @@ export class SlotContextMenuComponent {
 		this.happeningSlotModalService
 			.editSingleHappeningSlot(
 				event,
-				{ ...happening, team: this.team },
+				{ ...happening, space: this.team },
 				recurring,
 				this.slotContext?.slot,
 			)
@@ -192,7 +192,7 @@ export class SlotContextMenuComponent {
 	private stopEvent(event: Event): {
 		slotContext: ISlotUIContext;
 		happening: IHappeningContext;
-		team: ITeamContext;
+		team: ISpaceContext;
 	} {
 		if (!this.team) {
 			throw new Error('!this.team');
@@ -212,7 +212,7 @@ export class SlotContextMenuComponent {
 	private createSlotRefRequest(event: Event): ISlotRefRequest {
 		const { slotContext, team, happening } = this.stopEvent(event);
 		return {
-			teamID: team.id,
+			spaceID: team.id,
 			happeningID: happening.id,
 			slotID: slotContext.slot.id,
 		};
@@ -225,7 +225,7 @@ export class SlotContextMenuComponent {
 		const { slotContext, team, happening } = this.stopEvent(event);
 		// const slotsCount = happening.brief?.slots?.length || happening.dto?.slots?.length || 0;
 		const request: ISlotRequest = excludeUndefined({
-			teamID: team.id,
+			spaceID: team.id,
 			happeningID: happening.id,
 			slotID: mode === 'slot' ? slotContext.slot.id : undefined,
 			weekday: mode === 'slot' ? slotContext.wd : undefined,
@@ -362,7 +362,7 @@ export class SlotContextMenuComponent {
 			return NEVER;
 		}
 		const request: IHappeningContactRequest = {
-			teamID: this.team.id,
+			spaceID: this.team.id,
 			happeningID,
 			contact: { id: member.id },
 		};
@@ -384,7 +384,7 @@ export class SlotContextMenuComponent {
 			return NEVER;
 		}
 		const request: IHappeningContactRequest = {
-			teamID: this.team.id,
+			spaceID: this.team.id,
 			happeningID: this.slotContext.happening.id,
 			contact: { id: member.id },
 		};

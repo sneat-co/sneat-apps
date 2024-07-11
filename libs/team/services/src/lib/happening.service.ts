@@ -8,7 +8,7 @@ import { dateToIso } from '@sneat/core';
 import {
 	HappeningStatus,
 	IHappeningBrief,
-	IHappeningDto,
+	IHappeningDbo,
 	validateHappeningDto,
 	WeekdayCode2,
 	IHappeningContext,
@@ -16,29 +16,29 @@ import {
 	IHappeningSlotWithID,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext, ITeamRequest } from '@sneat/team-models';
+import { ISpaceContext, ISpaceRequest } from '@sneat/team-models';
 import { QueryOrderByConstraint } from 'firebase/firestore';
 import { map, Observable, tap, throwError } from 'rxjs';
-import { ModuleTeamItemService } from './team-item.service';
+import { ModuleSpaceItemService } from './team-item.service';
 
 export interface ICreateHappeningRequest {
-	readonly teamID: string;
-	readonly happening: IHappeningDto;
+	readonly spaceID: string;
+	readonly happening: IHappeningDbo;
 }
 
-export interface IHappeningRequest extends ITeamRequest {
+export interface IHappeningRequest extends ISpaceRequest {
 	readonly happeningID: string;
 	readonly happeningType?: string;
 }
 
-export interface ITeamModuleDocShortRef {
+export interface ISpaceModuleDocShortRef {
 	readonly id: string;
-	readonly teamID?: string;
+	readonly spaceID?: string;
 }
 
-export interface IHappeningContactRequest extends ITeamRequest {
+export interface IHappeningContactRequest extends ISpaceRequest {
 	readonly happeningID: string;
-	readonly contact: ITeamModuleDocShortRef;
+	readonly contact: ISpaceModuleDocShortRef;
 }
 
 export interface IHappeningSlotRequest extends IHappeningRequest {
@@ -81,7 +81,7 @@ export type ICancelHappeningRequest = ISlotRequest;
 
 function processHappeningContext(
 	h: IHappeningContext,
-	team: ITeamContext,
+	space: ISpaceContext,
 ): IHappeningContext {
 	if (h.dbo) {
 		try {
@@ -90,17 +90,17 @@ function processHappeningContext(
 			console.warn(`Received invalid happening DTO (id=${h.id}: ${e}`);
 		}
 	}
-	if (!h.team && team) {
-		h = { ...h, team };
+	if (!h.space && space) {
+		h = { ...h, space };
 	}
 	return h;
 }
 
 @Injectable()
 export class HappeningService {
-	private readonly teamItemService: ModuleTeamItemService<
+	private readonly spaceItemService: ModuleSpaceItemService<
 		IHappeningBrief,
-		IHappeningDto
+		IHappeningDbo
 	>;
 
 	static statusFilter(statuses: HappeningStatus[]): IFilter {
@@ -114,9 +114,9 @@ export class HappeningService {
 		afs: AngularFirestore,
 		private readonly sneatApiService: SneatApiService,
 	) {
-		this.teamItemService = new ModuleTeamItemService<
+		this.spaceItemService = new ModuleSpaceItemService<
 			IHappeningBrief,
-			IHappeningDto
+			IHappeningDbo
 		>('calendarium', 'happenings', afs, sneatApiService);
 	}
 
@@ -168,7 +168,7 @@ export class HappeningService {
 	public deleteHappening(happening: IHappeningContext): Observable<void> {
 		console.log('deleteHappening', happening);
 		const request: IHappeningRequest = {
-			teamID: happening.team?.id || '',
+			spaceID: happening.space?.id || '',
 			happeningID: happening.id,
 			happeningType: happening.brief?.type || happening.dbo?.type,
 		};
@@ -204,7 +204,7 @@ export class HappeningService {
 		slot: IHappeningSlotWithID,
 	): Observable<void> => {
 		const request: IHappeningSlotRequest = {
-			teamID,
+			spaceID: teamID,
 			happeningID,
 			slot,
 		};
@@ -217,7 +217,7 @@ export class HappeningService {
 		slot: IHappeningSlotWithID,
 	): Observable<void> => {
 		const request: IHappeningSlotRequest = {
-			teamID,
+			spaceID: teamID,
 			happeningID,
 			slot,
 		};
@@ -250,7 +250,7 @@ export class HappeningService {
 			durationMinutes: slot.durationMinutes,
 		};
 		const request: IHappeningSlotDateRequest = {
-			teamID,
+			spaceID: teamID,
 			happeningID,
 			slot,
 			date,
@@ -263,18 +263,18 @@ export class HappeningService {
 	// }
 
 	public watchHappeningByID(
-		team: ITeamContext,
+		team: ISpaceContext,
 		id: string,
 	): Observable<IHappeningContext> {
 		console.log(`watchHappeningByID(team.id=${team.id}, id=${id})`);
-		return this.teamItemService.watchTeamItemByIdWithTeamRef(team, id).pipe(
+		return this.spaceItemService.watchTeamItemByIdWithTeamRef(team, id).pipe(
 			tap((happening) => console.log('watchHappeningByID() =>', happening)),
 			map((h) => processHappeningContext(h, team)),
 		);
 	}
 
 	public watchUpcomingSingles(
-		team: ITeamContext,
+		team: ISpaceContext,
 		statuses: HappeningStatus[] = ['active'],
 	): Observable<IHappeningContext[]> {
 		return this.watchSingles(team, statuses, {
@@ -284,7 +284,7 @@ export class HappeningService {
 	}
 
 	public watchPastSingles(
-		team: ITeamContext,
+		team: ISpaceContext,
 		statuses: HappeningStatus[] = ['active'],
 	): Observable<IHappeningContext[]> {
 		return this.watchSingles(
@@ -300,7 +300,7 @@ export class HappeningService {
 	}
 
 	public watchRecentlyCreatedSingles(
-		team: ITeamContext,
+		team: ISpaceContext,
 		statuses: HappeningStatus[] = ['active'],
 	): Observable<IHappeningContext[]> {
 		return this.watchSingles(
@@ -313,7 +313,7 @@ export class HappeningService {
 	}
 
 	private watchSingles(
-		team: ITeamContext,
+		team: ISpaceContext,
 		statuses: HappeningStatus[],
 		dateCondition?:
 			| {
@@ -338,7 +338,7 @@ export class HappeningService {
 		if (dateCondition) {
 			filter.push({ ...dateCondition, value: date });
 		}
-		return this.teamItemService
+		return this.spaceItemService
 			.watchModuleTeamItemsWithTeamRef(team, {
 				filter,
 				orderBy: orderByConstraint ? [orderByConstraint] : undefined,
@@ -353,20 +353,20 @@ export class HappeningService {
 	}
 
 	public watchSinglesOnSpecificDay(
-		team: ITeamContext,
+		space: ISpaceContext,
 		date: string,
 		status: HappeningStatus = 'active',
 	): Observable<IHappeningContext[]> {
-		if (!team.id) {
+		if (!space.id) {
 			return throwError(() => 'missing required field "teamID"');
 		}
 		if (!date) {
 			return throwError(() => 'missing required field "date"');
 		}
-		console.log('watchSinglesOnSpecificDay()', team.id, date, status);
+		console.log('watchSinglesOnSpecificDay()', space.id, date, status);
 		// const teamDate = team.id + ':' + date;
-		return this.teamItemService
-			.watchModuleTeamItemsWithTeamRef(team, {
+		return this.spaceItemService
+			.watchModuleTeamItemsWithTeamRef(space, {
 				filter: [
 					HappeningService.statusFilter([status]),
 					{ field: 'dates', operator: 'array-contains', value: date },
@@ -376,14 +376,14 @@ export class HappeningService {
 				tap((happenings) => {
 					console.log(
 						'watchSinglesOnSpecificDay() =>',
-						team.id,
+						space.id,
 						date,
 						status,
 						happenings,
 					);
 				}),
 				map((happenings) =>
-					happenings.map((h) => processHappeningContext(h, team)),
+					happenings.map((h) => processHappeningContext(h, space)),
 				),
 			);
 	}

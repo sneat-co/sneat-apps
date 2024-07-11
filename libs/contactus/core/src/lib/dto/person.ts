@@ -1,6 +1,6 @@
 import { isNameEmpty } from '@sneat/auth-models';
 import { excludeUndefined } from '@sneat/core';
-import { IWithRelatedOnly, IWithTeamIDs } from '@sneat/dto';
+import { IWithRelatedOnly, IWithSpaceIDs } from '@sneat/dto';
 import {
 	IEmail,
 	IPhone,
@@ -20,7 +20,7 @@ export interface IPerson extends IContactBase {
 	readonly website?: string;
 }
 
-export interface ITeamMemberInfo extends IPerson {
+export interface ISpaceMemberInfo extends IPerson {
 	readonly id?: string;
 	readonly userID?: string;
 	readonly title?: string;
@@ -87,6 +87,6 @@ export function isRelatedPersonReady(
 	return !isRelatedPersonNotReady(p, requires);
 }
 
-export interface IPersonRecord extends IWithTeamIDs, IPerson {
+export interface IPersonRecord extends IWithSpaceIDs, IPerson {
 	/*, IPersonSize*/
 }

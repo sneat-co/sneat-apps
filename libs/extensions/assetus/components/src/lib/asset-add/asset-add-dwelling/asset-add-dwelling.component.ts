@@ -40,10 +40,10 @@ export class AssetAddDwellingComponent
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['team'] && this.team) {
+		if (changes['team'] && this.space) {
 			this.dwellingAsset = this.dwellingAsset ?? {
 				id: '',
-				team: this.team ?? { id: '' },
+				space: this.space ?? { id: '' },
 				dbo: {
 					status: 'draft',
 					category: 'dwelling',
@@ -51,7 +51,7 @@ export class AssetAddDwellingComponent
 					extra: {
 						rent_price: { value: 0, currency: 'USD' },
 					},
-					teamID: this.team?.id,
+					teamID: this.space?.id,
 					type: this.dwellingType,
 					title: 'My dwelling',
 					possession: 'owning',
@@ -82,7 +82,7 @@ export class AssetAddDwellingComponent
 
 	protected submitDwellingForm(): void {
 		console.log('submitDwellingForm', this.dwellingAsset);
-		if (!this.team) {
+		if (!this.space) {
 			throw new Error('no team context');
 		}
 		if (!this.dwellingAsset) {
@@ -107,9 +107,9 @@ export class AssetAddDwellingComponent
 				status: 'active',
 				category: 'dwelling',
 			},
-			teamID: this.team?.id,
+			spaceID: this.space?.id,
 		};
 
-		this.createAssetAndGoToAssetPage(request, this.team);
+		this.createAssetAndGoToAssetPage(request, this.space);
 	}
 }

@@ -79,7 +79,7 @@
 			<ion-card>
 				<ion-list>
 					<sneat-contact-modules-menu
-						[team]="team"
+						[space]="team"
 						[contact]="contactWithBriefAndOptionalDto"
 					/>
 				</ion-list>
@@ -132,6 +132,6 @@
 
 <sneat-contact-roles-input
 	*ngIf="tab === 'roles'"
-	[team]="team"
+	[space]="team"
 	[contact]="contactWithBriefAndOptionalDto"
 />

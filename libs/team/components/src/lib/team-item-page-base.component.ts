@@ -1,6 +1,6 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { INavContext, TeamItem } from '@sneat/core';
-import { ModuleTeamItemService } from '@sneat/team-services';
+import { ModuleSpaceItemService } from '@sneat/team-services';
 import {
 	distinctUntilChanged,
 	map,
@@ -18,9 +18,9 @@ import { TeamComponentBaseParams } from './team-component-base-params';
 
 export abstract class TeamItemPageBaseComponent<
 	Brief,
-	Dto extends Brief,
+	Dbo extends Brief,
 > extends TeamPageBaseComponent {
-	protected item?: INavContext<Brief, Dto>;
+	protected item?: INavContext<Brief, Dbo>;
 
 	protected constructor(
 		className: string,
@@ -28,17 +28,17 @@ export abstract class TeamItemPageBaseComponent<
 		teamParams: TeamComponentBaseParams,
 		defaultBackPage: string,
 		private readonly itemName: TeamItem,
-		protected readonly teamItemService: ModuleTeamItemService<Brief, Dto>,
+		protected readonly teamItemService: ModuleSpaceItemService<Brief, Dbo>,
 	) {
 		super(className, route, teamParams);
 		this.defaultBackPage = defaultBackPage;
-		const item = window.history.state[itemName] as INavContext<Brief, Dto>;
+		const item = window.history.state[itemName] as INavContext<Brief, Dbo>;
 		if (item) {
 			this.setItemContext(item);
 		}
 	}
 
-	protected setItemContext(item?: INavContext<Brief, Dto>): void {
+	protected setItemContext(item?: INavContext<Brief, Dbo>): void {
 		console.log('TeamItemBaseComponent.setItemContext()', item, {
 			...this.item,
 		});
@@ -58,13 +58,16 @@ export abstract class TeamItemPageBaseComponent<
 	private itemSubscription?: Subscription;
 
 	// Caller of this method will track changing of team & item IDs in route and close observable
-	protected watchItemChanges(): Observable<INavContext<Brief, Dto>> {
+	protected watchItemChanges(): Observable<INavContext<Brief, Dbo>> {
 		console.log('TeamItemBaseComponent.watchItemChanges()', this.itemName);
 		const itemID = this.item?.id;
 		if (!itemID) {
 			throw throwError(() => 'no item ID');
 		}
-		return this.teamItemService.watchTeamItemByIdWithTeamRef(this.team, itemID);
+		return this.teamItemService.watchTeamItemByIdWithTeamRef(
+			this.space,
+			itemID,
+		);
 	}
 
 	protected override trackRouteParamMap(paramMap$: Observable<ParamMap>): void {

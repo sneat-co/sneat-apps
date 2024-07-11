@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { teamPageUrl } from '@sneat/team-components';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-logist-team-menu-items',
@@ -10,7 +10,7 @@ import { ITeamContext } from '@sneat/team-models';
 export class LogistTeamMenuItemsComponent {
 	@ViewChild(RouterOutlet) outlet?: RouterOutlet;
 
-	@Input() public team?: ITeamContext;
+	@Input() public team?: ISpaceContext;
 
 	contactGroups: { type: string; title: string; icon: string }[] = [
 		{ type: 'agent', title: 'Agents', icon: 'body-outline' },

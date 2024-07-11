@@ -11,7 +11,7 @@ export interface IContactGroupDtoCounts {
 	members?: number;
 }
 
-export interface IContactGroupDto extends IContactGroupBrief {
+export interface IContactGroupDbo extends IContactGroupBrief {
 	// teamID: string; This is part of a key
 	readonly desc?: string;
 	readonly timetable?: string;

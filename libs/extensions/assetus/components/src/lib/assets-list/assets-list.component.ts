@@ -8,7 +8,7 @@ import {
 import { IIdAndBrief } from '@sneat/core';
 import { AssetCategory, IAssetBrief } from '@sneat/mod-assetus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { TeamNavService } from '@sneat/team-services';
 import { AssetService } from '../services';
 import { MileAgeDialogComponent } from '../mileage-dialog/mileage-dialog.component';
@@ -23,7 +23,7 @@ export class AssetsListComponent implements OnChanges {
 	protected mileAgeAsset?: IIdAndBrief<IAssetBrief>;
 
 	@Input() allAssets?: IIdAndBrief<IAssetBrief>[];
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() assetType?: AssetCategory;
 	@Input() filter = '';
 
@@ -71,7 +71,7 @@ export class AssetsListComponent implements OnChanges {
 			'AssetsListComponent.ngOnChanges =>',
 			changes,
 			this.assetType,
-			this.team,
+			this.space,
 			'allAssets:',
 			this.allAssets,
 			'filtered assets:',
@@ -95,14 +95,14 @@ export class AssetsListComponent implements OnChanges {
 		// 		path = 'asset';
 		// 		break;
 		// }
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError(
 				'can not navigate to asset page without team context',
 			);
 			return;
 		}
 		this.teamNavService
-			.navigateForwardToTeamPage(this.team, `asset/${asset.id}`, {
+			.navigateForwardToTeamPage(this.space, `asset/${asset.id}`, {
 				state: { asset },
 			})
 			.catch(
@@ -131,7 +131,7 @@ export class AssetsListComponent implements OnChanges {
 				deleteCompleted();
 				return;
 			}
-			this.assetService.deleteAsset(this.team?.id || '', asset.id).subscribe({
+			this.assetService.deleteAsset(this.space?.id || '', asset.id).subscribe({
 				next: () => {
 					this.assets = this.assets?.filter((a) => a.id !== id);
 				},

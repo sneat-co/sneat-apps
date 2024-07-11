@@ -19,8 +19,11 @@ import {
 import { addRelatedItem, getRelatedItemIDs } from '@sneat/dto';
 import { IHappeningContext, IHappeningBase } from '@sneat/mod-schedulus-core';
 import { contactContextFromBrief } from '@sneat/contactus-services';
-import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
-import { IContactContext, IContactusTeamDtoAndID } from '@sneat/contactus-core';
+import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
+import {
+	IContactContext,
+	IContactusSpaceDboAndID,
+} from '@sneat/contactus-core';
 import {
 	HappeningService,
 	IHappeningContactRequest,
@@ -41,8 +44,8 @@ import {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HappeningParticipantsComponent implements OnChanges {
-	@Input({ required: true }) team?: ITeamContext; // TODO: Can we get rid of this?
-	@Input({ required: true }) contactusTeam?: IContactusTeamDtoAndID;
+	@Input({ required: true }) space?: ISpaceContext; // TODO: Can we get rid of this?
+	@Input({ required: true }) contactusTeam?: IContactusSpaceDboAndID;
 	@Input({ required: true }) happening?: IHappeningContext;
 
 	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
@@ -64,14 +67,14 @@ export class HappeningParticipantsComponent implements OnChanges {
 				this.happening?.dbo?.related || this.happening?.brief?.related,
 				'contactus',
 				'contacts',
-				this.team?.id,
+				this.space?.id,
 			);
 			console.log('checkedContactIDs', this.checkedContactIDs, this.happening);
 		}
 	}
 
 	public get membersTabLabel(): string {
-		return this.team?.brief?.type === 'family'
+		return this.space?.brief?.type === 'family'
 			? 'Family members'
 			: 'Team members';
 	}
@@ -93,12 +96,12 @@ export class HappeningParticipantsComponent implements OnChanges {
 	protected isMemberCheckChanged(args: ICheckChangedArgs): void {
 		console.log('isMemberCheckChanged()', args);
 		// this.populateParticipants();
-		if (!this.happening?.id || !this.team?.id) {
+		if (!this.happening?.id || !this.space?.id) {
 			args.resolve();
 			return;
 		}
 		const request: IHappeningContactRequest = {
-			teamID: this.team.id,
+			spaceID: this.space.id,
 			happeningID: this.happening?.id,
 			contact: { id: args.id },
 		};
@@ -141,7 +144,7 @@ export class HappeningParticipantsComponent implements OnChanges {
 					happeningBase.related,
 					'contactus',
 					'contacts',
-					this.team?.id || '',
+					this.space?.id || '',
 					contactID,
 				),
 			};

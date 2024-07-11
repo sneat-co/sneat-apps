@@ -1,18 +1,11 @@
 import { ActivatedRoute } from '@angular/router';
 import { TeamMemberType } from '@sneat/auth-models';
 import { ContactusModuleBaseComponent } from '@sneat/contactus-shared';
-import { IIdAndBriefAndOptionalDto, TeamType } from '@sneat/core';
+import { IIdAndBriefAndOptionalDto, SpaceType } from '@sneat/core';
 import { isTeamSupportsMemberGroups } from '@sneat/dto';
-import {
-	TeamComponentBaseParams,
-	TeamModuleBaseComponent,
-} from '@sneat/team-components';
+import { TeamComponentBaseParams } from '@sneat/team-components';
 import { ContactusTeamService, MemberService } from '@sneat/contactus-services';
-import {
-	IContactusTeamDto,
-	IContactBrief,
-	IContactDto,
-} from '@sneat/contactus-core';
+import { IContactBrief, IContactDto } from '@sneat/contactus-core';
 
 export abstract class MembersBasePage extends ContactusModuleBaseComponent {
 	public members?: readonly IIdAndBriefAndOptionalDto<
@@ -74,12 +67,12 @@ export abstract class MembersBasePage extends ContactusModuleBaseComponent {
 
 	public get supportsMemberGroups(): boolean {
 		return (
-			!!this.team?.brief && isTeamSupportsMemberGroups(this.team.brief.type)
+			!!this.space?.brief && isTeamSupportsMemberGroups(this.space.brief.type)
 		);
 	}
 
-	public get teamType(): TeamType | undefined {
-		return this.team?.brief?.type;
+	public get teamType(): SpaceType | undefined {
+		return this.space?.brief?.type;
 	}
 
 	// protected setPageCommuneIds(source: string, communeIds: ICommuneIds, communeDto?: ICommuneDto): void {

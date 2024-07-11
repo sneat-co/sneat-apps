@@ -7,7 +7,7 @@
 			<ion-button
 				*ngIf="!saving && !deleting && !containerFormGroup.dirty"
 				(click)="print($event)"
-				routerLink="/space/{{ team?.type }}/{{ team?.id }}/order/{{
+				routerLink="/space/{{ space?.type }}/{{ space?.id }}/order/{{
 					order?.id
 				}}/print/container-doc"
 				fragment="print"
@@ -129,7 +129,7 @@
 		</ion-item-divider>
 		<sneat-order-container-point
 			*ngFor="let containerPoint of containerPoints; trackBy: containerPointKey"
-			[team]="this.team"
+			[space]="this.space"
 			[order]="order"
 			[containerPoint]="containerPoint"
 		/>

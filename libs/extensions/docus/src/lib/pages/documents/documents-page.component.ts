@@ -66,9 +66,9 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 
 	loadDocuments() {
 		console.log('DocumentsPage.loadDocuments()');
-		if (this.team?.id) {
+		if (this.space?.id) {
 			this.assetService
-				.watchTeamAssets<'document', IAssetDocumentExtra>(this.team)
+				.watchTeamAssets<'document', IAssetDocumentExtra>(this.space)
 				.pipe(this.takeUntilNeeded())
 				.subscribe({
 					next: (documents) => {
@@ -83,14 +83,14 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 	}
 
 	public goDoc(doc: IAssetDocumentContext) {
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError(
 				'not able to navigate to document without team context',
 			);
 			return;
 		}
 		this.teamParams.teamNavService
-			.navigateForwardToTeamPage(this.team, `document/${doc.id}`, {
+			.navigateForwardToTeamPage(this.space, `document/${doc.id}`, {
 				state: { doc },
 			})
 			.catch(this.errorLogger.logError);
@@ -104,7 +104,7 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 			queryParams['member'] = member.id;
 		}
 		// const state = member ? { member } : undefined;
-		const team = this.team;
+		const team = this.space;
 		if (team) {
 			this.teamNav
 				.navigateForwardToTeamPage(team, 'new-document', {

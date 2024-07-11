@@ -1,6 +1,6 @@
 import { Inject, Injectable, NgModule } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { TeamNavService } from '@sneat/team-services';
 import { ISchedulePageParams, NewHappeningParams } from './view-models';
 
@@ -12,7 +12,7 @@ export class ScheduleNavService {
 	) {}
 
 	goSchedule(
-		team: ITeamContext,
+		team: ISpaceContext,
 		queryParams?: ISchedulePageParams,
 	): Promise<boolean> {
 		return this.teamNavService.navigateForwardToTeamPage(team, 'schedule', {
@@ -20,7 +20,7 @@ export class ScheduleNavService {
 		});
 	}
 
-	goNewHappening(team: ITeamContext, params: NewHappeningParams): void {
+	goNewHappening(team: ISpaceContext, params: NewHappeningParams): void {
 		console.log('ScheduleNavService.goNewHappening()', params);
 		this.teamNavService
 			.navigateForwardToTeamPage(team, 'new-happening', {

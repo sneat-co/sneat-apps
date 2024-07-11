@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { dateToIso, isoStringsToDate } from '@sneat/core';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { Subject, takeUntil } from 'rxjs';
-import { TeamDaysProvider } from '../../../../services/team-days-provider';
+import { SpaceDaysProvider } from '../../../../services/space-days-provider';
 import { ISlotUIContext } from '@sneat/extensions/schedulus/shared';
 import { addDays, CalendarStateService } from '../../calendar-state.service';
 
@@ -21,8 +21,8 @@ export class CalendarDayTabComponent implements OnDestroy {
 		return this.date && dateToIso(this.date);
 	}
 
-	@Input() team: ITeamContext = { id: '' };
-	@Input() teamDaysProvider?: TeamDaysProvider;
+	@Input() team: ISpaceContext = { id: '' };
+	@Input() teamDaysProvider?: SpaceDaysProvider;
 
 	@Input() onSlotClicked?: (args: {
 		slot: ISlotUIContext;

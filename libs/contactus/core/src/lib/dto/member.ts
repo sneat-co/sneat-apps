@@ -3,7 +3,7 @@ import { EnumAsUnionOfKeys, excludeUndefined } from '@sneat/core';
 import { IContactGroupBrief } from './contact-group';
 import { ITitledRecordInfo, ITotalsHolder, IVerification } from '@sneat/dto';
 import { IContactBrief } from './contact';
-import { IPersonRecord, ITeamMemberInfo } from './person';
+import { IPersonRecord, ISpaceMemberInfo } from './person';
 
 export type MembersVisibility = 'private' | 'protected' | 'public';
 
@@ -67,7 +67,7 @@ export interface IMemberBase
 
 export type IMemberBrief = IContactBrief;
 
-export interface IMemberDto extends IMemberBase {
+export interface IMemberDbo extends IMemberBase {
 	position?: string;
 	groups?: IContactGroupBrief[];
 }
@@ -90,10 +90,10 @@ export interface IWithContactGroups {
 // }
 
 export function memberDtoFromMemberInfo(
-	memberInfo: ITeamMemberInfo,
+	memberInfo: ISpaceMemberInfo,
 	teamId: string,
 	title: string,
-): IMemberDto {
+): IMemberDbo {
 	const memberType: TeamMemberType = 'member';
 	return excludeUndefined({
 		...memberInfo,

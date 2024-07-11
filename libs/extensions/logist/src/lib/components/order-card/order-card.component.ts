@@ -2,7 +2,7 @@ import { Component, Inject, Input } from '@angular/core';
 import { PopoverController, ToastController } from '@ionic/angular';
 import { LogistOrderContactRole } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { ILogistOrderContext } from '../../dto';
 import { LogistOrderService } from '../../services';
 import { OrderPrintMenuComponent } from './order-print-menu.component';
@@ -13,7 +13,7 @@ import { OrderPrintMenuComponent } from './order-print-menu.component';
 })
 export class OrderCardComponent {
 	@Input() public readonly = false;
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() order?: ILogistOrderContext;
 	@Input() hideDispatchers = false;
 	@Input() showHeader = true;
@@ -60,7 +60,7 @@ export class OrderCardComponent {
 		const popover = await this.popoverController.create({
 			component: OrderPrintMenuComponent,
 			componentProps: {
-				team: this.team,
+				team: this.space,
 				order: this.order,
 			},
 		});
@@ -76,7 +76,7 @@ export class OrderCardComponent {
 		if (!status) {
 			return;
 		}
-		const team = this.team;
+		const team = this.space;
 		if (!team) {
 			throw new Error('No team context');
 		}

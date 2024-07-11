@@ -7,12 +7,12 @@ import { SneatApiService } from '@sneat/api';
 import { IIdAndBrief, IIdAndOptionalDbo } from '@sneat/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ModuleTeamItemService } from './team-item.service';
+import { ModuleSpaceItemService } from './team-item.service';
 
 // import firebase from "firebase/compat";
 // import Item = firebase.analytics.Item;
 
-export abstract class TeamModuleService<Dto> extends ModuleTeamItemService<
+export abstract class TeamModuleService<Dto> extends ModuleSpaceItemService<
 	Dto,
 	Dto
 > {

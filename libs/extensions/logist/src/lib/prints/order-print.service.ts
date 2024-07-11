@@ -18,8 +18,8 @@ export class OrderPrintService {
 		orderDocContext: IOrderPrintedDocContext,
 	): void {
 		console.log('openOrderPrintedDocument()', docID, orderDocContext);
-		const { id, team } = orderDocContext;
-		let url = `/space/${team.type}/${team.id}/order/${id}/print/${docID}?`;
+		const { id, space } = orderDocContext;
+		let url = `/space/${space.type}/${space.id}/order/${id}/print/${docID}?`;
 		Object.entries(orderDocContext.params as object).forEach(([k, v]) => {
 			url += `${k}=${encodeURIComponent('' + v)}`;
 		});

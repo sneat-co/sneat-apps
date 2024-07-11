@@ -7,7 +7,7 @@
 
 <sneat-happening-card
 	*ngFor="let happening of happenings || []; trackBy: happeningID"
-	[team]="team"
+	[team]="space"
 	[happening]="happening"
 	(deleted)="onHappeningRemoved($event)"
 />

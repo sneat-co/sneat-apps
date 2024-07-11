@@ -128,7 +128,7 @@ export class ContainerSegmentComponent implements OnChanges {
 		}
 		this.deleting = true;
 		const request: IDeleteSegmentsRequest = {
-			teamID: this.order.team.id,
+			spaceID: this.order.space.id,
 			orderID: this.order.id,
 			containerIDs: [containerID],
 		};
@@ -184,7 +184,7 @@ export class ContainerSegmentComponent implements OnChanges {
 			return;
 		}
 		const request: IUpdateContainerPointRequest = excludeUndefined({
-			teamID: this.order.team.id,
+			spaceID: this.order.space.id,
 			orderID: this.order.id,
 			containerID: this.fromPoint.containerID,
 			shippingPointID: this.fromPoint.shippingPointID,

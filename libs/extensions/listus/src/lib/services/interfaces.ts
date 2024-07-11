@@ -1,13 +1,13 @@
-import { ICommuneDto } from '@sneat/dto';
+import { ICommuneDbo } from '@sneat/dto';
 import {
 	IListBrief,
-	IListDto,
+	IListDbo,
 	IListItemBase,
 	IListItemBrief,
-	IListItemDto,
+	IListItemDbo,
 } from '../dto';
 import { IListContext } from '../contexts';
-import { ITeamContext, ITeamRequest } from '@sneat/team-models';
+import { ISpaceContext, ISpaceRequest } from '@sneat/team-models';
 
 export interface GetOrCreateCommuneItemIds {
 	id?: string;
@@ -38,18 +38,18 @@ export interface IListItemResult {
 	message?: string;
 	changed?: boolean;
 	success: boolean;
-	listDto: IListDto;
-	communeDto?: ICommuneDto;
-	listItemDto?: IListItemDto;
+	listDto: IListDbo;
+	communeDto?: ICommuneDbo;
+	listItemDto?: IListItemDbo;
 }
 
 export interface IListItemsCommandParams {
-	team: ITeamContext;
+	team: ISpaceContext;
 	list: IListContext;
 	items: IListItemBrief[];
 }
 
-export type ReorderListItemsWorker = (listDto: IListDto) => void;
+export type ReorderListItemsWorker = (listDto: IListDbo) => void;
 
 // export abstract class IListusService extends RxStoreService<ListusAppSchema> {
 // 	abstract addListItem(params: IListItemCommandParams): Observable<IListItemResult>;
@@ -81,9 +81,9 @@ export type ReorderListItemsWorker = (listDto: IListDto) => void;
 // 	return { shortCommuneId: id.substr(0, i) as CommuneType, shortListId: id.substr(i + 1) as ListType };
 // }
 
-export interface ICreateListRequest extends ITeamRequest, IListBrief {}
+export interface ICreateListRequest extends ISpaceRequest, IListBrief {}
 
-export interface IListRequest extends ITeamRequest {
+export interface IListRequest extends ISpaceRequest {
 	readonly listID: string;
 	// readonly listType: ListType;
 }

@@ -2,8 +2,8 @@
 	<ion-toolbar>
 		<ion-title
 			>Scrum
-			<ng-container *ngIf="team?.data"
-				>&#64; {{ team.data.title }}</ng-container
+			<ng-container *ngIf="space?.data"
+				>&#64; {{ space.data.title }}</ng-container
 			>
 		</ion-title>
 		<ion-buttons slot="start">
@@ -143,7 +143,7 @@
 			<app-scrum-tasks
 				*ngFor="let taskType of taskTypes"
 				[currentMemberId]="userMemberId"
-				[team]="team"
+				[team]="space"
 				[scrumId]="scrumID"
 				[member]="memberStatus?.member"
 				[taskType]="taskType"
@@ -158,7 +158,7 @@
 				<sneat-metrics [metrics]="personalMetrics" />
 			</ion-card>
 
-			<sneat-my-retro-items [teamId]="team?.id" tabAutoSelect="true" />
+			<sneat-my-retro-items [teamId]="space?.id" tabAutoSelect="true" />
 		</ng-container>
 
 		<ng-container *ngSwitchCase="'team'">
@@ -194,7 +194,7 @@
 				</ion-card>
 			</ng-container>
 
-			<ng-container *ngIf="team?.id && displayStatuses">
+			<ng-container *ngIf="space?.id && displayStatuses">
 				<ion-card
 					*ngFor="let status of displayStatuses; trackBy: trackByMember"
 				>
@@ -202,7 +202,7 @@
 						viewMode="team"
 						(expandChanged)="onScrumExpandChanged(status.member.id, $event)"
 						[isExpanded]="status.member.id === expandedMemberId"
-						[team]="team"
+						[team]="space"
 						[scrumId]="scrumID"
 						[scrum]="scrum"
 						[status]="status"
@@ -293,7 +293,7 @@
 						expand="full"
 						color="primary"
 						fill="solid"
-						(click)="navService.navigateToAddMember(navController, team)"
+						(click)="navService.navigateToAddMember(navController, space)"
 					>
 						<ion-icon name="add" slot="start" />
 						<ion-label>Add member(s)</ion-label>
@@ -313,7 +313,7 @@
 				</p>
 			</ion-text>
 
-			<ng-container *ngIf="team?.id && displayStatuses">
+			<ng-container *ngIf="space?.id && displayStatuses">
 				<ng-container
 					*ngFor="let status of displayStatuses; trackBy: trackByMember"
 				>
@@ -325,7 +325,7 @@
 						</ion-item-divider>
 						<app-scrum-tasks
 							[currentMemberId]="userMemberId"
-							[team]="team"
+							[team]="space"
 							[scrumId]="scrumID"
 							[member]="status.member"
 							taskType="risk"
@@ -344,7 +344,7 @@
 					All question will be send to the whole team 1 hour before stand-up.
 				</p>
 			</ion-text>
-			<ng-container *ngIf="team?.id && displayStatuses">
+			<ng-container *ngIf="space?.id && displayStatuses">
 				<ng-container
 					*ngFor="let status of displayStatuses; trackBy: trackByMember"
 				>
@@ -356,7 +356,7 @@
 						</ion-item-divider>
 						<app-scrum-tasks
 							[currentMemberId]="userMemberId"
-							[team]="team"
+							[team]="space"
 							[scrumId]="scrumID"
 							[member]="status.member"
 							taskType="qna"

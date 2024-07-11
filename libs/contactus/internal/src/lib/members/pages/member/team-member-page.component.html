@@ -3,7 +3,7 @@
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="teamPageUrl('members')" />
 		</ion-buttons>
-		<ng-container [ngSwitch]="team.type">
+		<ng-container [ngSwitch]="space.type">
 			<ion-title *ngSwitchCase="'family'">
 				@if (contact) {
 					Family member: {{ contact | personTitle }}
@@ -37,5 +37,5 @@
 </ion-header>
 
 <ion-content class="cardy">
-	<sneat-contact-details [team]="team" [contact]="contact" />
+	<sneat-contact-details [team]="space" [contact]="contact" />
 </ion-content>

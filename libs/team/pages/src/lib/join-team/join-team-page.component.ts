@@ -16,10 +16,13 @@ import {
 import {
 	emptyContactBase,
 	IRelatedPerson,
-	IJoinTeamInfoResponse,
+	IJoinSpaceInfoResponse,
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IRejectPersonalInviteRequest, ITeamContext } from '@sneat/team-models';
+import {
+	IRejectPersonalInviteRequest,
+	ISpaceContext,
+} from '@sneat/team-models';
 import {
 	InviteService,
 	TeamNavService,
@@ -40,10 +43,10 @@ export const getPinFromUrl: () => string = () => {
 	imports: [CommonModule, FormsModule, IonicModule, PersonWizardComponent],
 })
 export class JoinTeamPageComponent extends SneatBaseComponent {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 
 	private readonly id?: string;
-	public inviteInfo?: IJoinTeamInfoResponse;
+	public inviteInfo?: IJoinSpaceInfoResponse;
 	public newPerson: IRelatedPerson = emptyContactBase;
 	public pin?: string;
 	public userID?: string;
@@ -158,7 +161,7 @@ export class JoinTeamPageComponent extends SneatBaseComponent {
 		if (!this.id) {
 			return;
 		}
-		const teamID = this.inviteInfo?.team.id;
+		const teamID = this.inviteInfo?.space.id;
 		if (!teamID) {
 			const m = 'Not able to join a team without ID';
 			this.errorLogger.logError(m, undefined, { show: true });
@@ -182,18 +185,18 @@ export class JoinTeamPageComponent extends SneatBaseComponent {
 		} else {
 			this.navService.navigateToLogin({
 				queryParams: { to: 'join-team' },
-				returnTo: `/join/${this.inviteInfo?.team?.type}?id=${this.id}#pin=${this.pin}&action=join`,
+				returnTo: `/join/${this.inviteInfo?.space?.type}?id=${this.id}#pin=${this.pin}&action=join`,
 			});
 		}
 	}
 
 	public refuse(): void {
-		if (!this.id || !this.pin || !this.inviteInfo?.team) {
+		if (!this.id || !this.pin || !this.inviteInfo?.space) {
 			return;
 		}
 		this.status = 'refusing';
 		const request: IRejectPersonalInviteRequest = {
-			teamID: this.inviteInfo.team.id,
+			spaceID: this.inviteInfo.space.id,
 			inviteID: this.id,
 			pin: this.pin,
 		};
@@ -209,7 +212,7 @@ export class JoinTeamPageComponent extends SneatBaseComponent {
 	}
 
 	private joinTeam(): void {
-		const team = this.inviteInfo?.team;
+		const team = this.inviteInfo?.space;
 		if (!team) {
 			this.errorLogger.logError('no team context');
 			return;
@@ -227,7 +230,7 @@ export class JoinTeamPageComponent extends SneatBaseComponent {
 		if (!this.inviteInfo) {
 			return;
 		}
-		const inviteInfo: IJoinTeamInfoResponse = {
+		const inviteInfo: IJoinSpaceInfoResponse = {
 			...this.inviteInfo,
 			member: {
 				...this.inviteInfo.member,
@@ -248,7 +251,10 @@ export class JoinTeamPageComponent extends SneatBaseComponent {
 					.subscribe({
 						next: (dto) => {
 							console.log('joined team', dto);
-							const team: ITeamContext = { id: teamID, brief: inviteInfo.team };
+							const team: ISpaceContext = {
+								id: teamID,
+								brief: inviteInfo.space,
+							};
 							// this.team = newTeam;
 							this.navService
 								.navigateToTeam(team, undefined)
@@ -266,7 +272,10 @@ export class JoinTeamPageComponent extends SneatBaseComponent {
 					.subscribe({
 						next: (dto) => {
 							console.log('joined team', dto);
-							const team: ITeamContext = { id: teamID, brief: inviteInfo.team };
+							const team: ISpaceContext = {
+								id: teamID,
+								brief: inviteInfo.space,
+							};
 							// this.team = newTeam;
 							this.navService
 								.navigateToTeam(team, undefined)

@@ -1,10 +1,11 @@
-import { IContactusTeamDtoAndID } from '@sneat/contactus-core';
+import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { ContactusTeamService } from './contactus-team.service';
 import { IErrorLogger } from '@sneat/logging';
 import { Observable, Subject, takeUntil } from 'rxjs';
 
 export class ContactusTeamContextService {
-	private readonly contactusTeamContext = new Subject<IContactusTeamDtoAndID>();
+	private readonly contactusTeamContext =
+		new Subject<IContactusSpaceDboAndID>();
 
 	public readonly contactusTeamContext$ =
 		this.contactusTeamContext.asObservable();
@@ -42,7 +43,7 @@ export class ContactusTeamContextService {
 	};
 
 	private readonly onContactusTeamChanged = (
-		contactusTeam: IContactusTeamDtoAndID,
+		contactusTeam: IContactusSpaceDboAndID,
 	): void => {
 		this.contactusTeamContext.next(contactusTeam);
 	};

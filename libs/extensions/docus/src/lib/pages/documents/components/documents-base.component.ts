@@ -8,12 +8,12 @@ import {
 } from '@sneat/mod-assetus-core';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { ignoreElements } from 'rxjs/operators';
 
 @Directive()
 export abstract class DocumentsBaseComponent {
-	@Input() team?: ITeamContext;
+	@Input() team?: ISpaceContext;
 	@Input() allDocuments?: IAssetDocumentContext[];
 
 	public static readonly metadata = {

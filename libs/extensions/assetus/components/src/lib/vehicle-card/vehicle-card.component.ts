@@ -17,7 +17,7 @@ import {
 	IAssetVehicleContext,
 	IAssetVehicleExtra,
 } from '@sneat/mod-assetus-core';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { AssetPossessionCardComponent } from '../asset-possesion-card/asset-possession-card.component';
 import { AssetRegNumberInputComponent } from '../asset-reg-number-input/asset-reg-number-input.component';
 import { MakeModelCardComponent } from '../make-model-card/make-model-card.component';
@@ -43,7 +43,7 @@ import { VehicleEngineComponent } from '../vehicle-engine/vehicle-engine.compone
 	],
 })
 export class VehicleCardComponent implements OnChanges {
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 
 	@Input({ required: true }) vehicleAsset?: IAssetVehicleContext;
 	@Output() readonly vehicleAssetChange = new EventEmitter<IAssetContext>();

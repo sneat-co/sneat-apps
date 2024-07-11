@@ -47,7 +47,7 @@ export abstract class ContactBasePage extends TeamItemPageBaseComponent<
 		if (!this.item?.id) {
 			return throwError(() => new Error('no contact context'));
 		}
-		const team = this.team;
+		const team = this.space;
 		if (!team) {
 			return throwError(() => new Error('no team context'));
 		}
@@ -76,9 +76,9 @@ export abstract class ContactBasePage extends TeamItemPageBaseComponent<
 	}
 
 	private watchTeamContactusEntry(): void {
-		if (this.team?.id) {
+		if (this.space?.id) {
 			this.contactusTeamService
-				.watchContactBriefs(this.team.id)
+				.watchContactBriefs(this.space.id)
 				.pipe(this.takeUntilNeeded(), takeUntil(this.teamIDChanged$))
 				.subscribe({
 					next: (contacts) => {

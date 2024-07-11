@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TeamType } from '@sneat/core';
+import { SpaceType } from '@sneat/core';
 
 @Pipe({ name: 'teamEmoji' })
 export class TeamEmojiPipe implements PipeTransform {
-	transform(communeType: TeamType): string | undefined {
+	transform(communeType: SpaceType): string | undefined {
 		switch (communeType) {
 			case 'family':
 				return '👨‍👩‍👧‍👦';

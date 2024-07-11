@@ -4,7 +4,7 @@ import { ISelectItem } from '@sneat/components';
 import {
 	IContactBrief,
 	IContactContext,
-	IContactusTeamDtoAndID,
+	IContactusSpaceDboAndID,
 } from '@sneat/contactus-core';
 import { IIdAndBrief } from '@sneat/core';
 import {
@@ -25,7 +25,7 @@ import {
 	ContactService,
 	contactContextFromBrief,
 } from '@sneat/contactus-services';
-import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
+import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { TeamNavService } from '@sneat/team-services';
 import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 
@@ -38,8 +38,8 @@ export class NewDocumentPageComponent
 	extends AddAssetBaseComponent
 	implements OnChanges
 {
-	@Input() public override team?: ITeamContext;
-	@Input() public override contactusTeam?: IContactusTeamDtoAndID;
+	@Input() public override space?: ISpaceContext;
+	@Input() public override contactusTeam?: IContactusSpaceDboAndID;
 
 	belongsTo: 'member' | 'commune' = 'commune';
 
@@ -100,7 +100,7 @@ export class NewDocumentPageComponent
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['contactusTeam']) {
-			const team = this.team;
+			const team = this.space;
 			if (team) {
 				const contactusTeam = this.contactusTeam;
 				this.members = zipMapBriefsWithIDs(contactusTeam?.dbo?.contacts).map(
@@ -136,12 +136,12 @@ export class NewDocumentPageComponent
 
 	private watchContact = (contactID: string): void => {
 		this.memberChanged.next();
-		const team = this.team;
-		if (!team) {
+		const space = this.space;
+		if (!space) {
 			return;
 		}
-		this.contact = { id: contactID, team };
-		this.contactService.watchContactById(team, contactID).subscribe({
+		this.contact = { id: contactID, space };
+		this.contactService.watchContactById(space, contactID).subscribe({
 			next: (member) => {
 				this.contact = member;
 			},
@@ -150,7 +150,7 @@ export class NewDocumentPageComponent
 	};
 
 	public submit(): void {
-		if (!this.team) {
+		if (!this.space) {
 			return;
 		}
 		const dto: IAssetDboBase<'document', IAssetDocumentExtra> = {
@@ -170,13 +170,13 @@ export class NewDocumentPageComponent
 			},
 		};
 		const request: ICreateAssetRequest<'document', IAssetDocumentExtra> = {
-			teamID: this.team.id,
+			spaceID: this.space.id,
 			memberID: this?.contact?.id,
 			asset: dto,
 		};
 
 		this.assetService
-			.createAsset<'document', IAssetDocumentExtra>(this.team, request)
+			.createAsset<'document', IAssetDocumentExtra>(this.space, request)
 			.subscribe({
 				next: this.onDocCreated,
 				error: (err: unknown) => {
@@ -186,7 +186,7 @@ export class NewDocumentPageComponent
 	}
 
 	private onDocCreated = (doc: IAssetDocumentContext): void => {
-		const team = this.team;
+		const team = this.space;
 		if (!team) {
 			return;
 		}

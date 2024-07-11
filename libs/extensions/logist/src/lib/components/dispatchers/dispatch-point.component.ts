@@ -97,7 +97,7 @@ export class DispatchPointComponent implements OnChanges {
 			.then((containers) => {
 				console.log('assignContainers() => selected container: ', containers);
 				const order = this.order;
-				if (!order?.team?.id) {
+				if (!order?.space?.id) {
 					return;
 				}
 				const shippingPointID = this.shippingPoint?.id;
@@ -108,7 +108,7 @@ export class DispatchPointComponent implements OnChanges {
 					return;
 				}
 				const request: IAddContainerPointsRequest = {
-					teamID: order.team.id,
+					spaceID: order.space.id,
 					orderID: order.id,
 					containerPoints: containers?.map((c) => ({
 						containerID: c.id,
@@ -133,7 +133,7 @@ export class DispatchPointComponent implements OnChanges {
 			return;
 		}
 		const request: IUpdateShippingPointRequest = {
-			teamID: order.team.id,
+			spaceID: order.space.id,
 			orderID: order.id,
 			shippingPointID: shippingPoint.id,
 			setStrings: { notes: this.notes.value?.trim() || '' },
@@ -151,7 +151,7 @@ export class DispatchPointComponent implements OnChanges {
 		}
 		if (this.shippingPoint) {
 			const request: IOrderShippingPointRequest = {
-				teamID: this.order.team.id,
+				spaceID: this.order.space.id,
 				orderID: this.order.id,
 				shippingPointID: this.shippingPoint.id,
 			};

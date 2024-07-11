@@ -12,12 +12,12 @@ import {
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatUserService } from '@sneat/auth-core';
-import { TeamType } from '@sneat/core';
+import { SpaceType } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { TeamsListComponent } from '@sneat/team-components';
 import {
-	ITeamContext,
-	teamContextFromBrief,
+	ISpaceContext,
+	spaceContextFromBrief,
 	zipMapBriefsWithIDs,
 } from '@sneat/team-models';
 import { SneatBaseComponent } from '@sneat/ui';
@@ -39,9 +39,9 @@ export class ForTeamTypeCardComponent
 	@Input() buttonColor?: string;
 	@Input() newTeamButtonText?: string;
 	@Input() singleTeamButtonText?: string;
-	@Input() teamTypes?: TeamType[];
+	@Input() teamTypes?: SpaceType[];
 
-	teams?: ITeamContext[];
+	teams?: ISpaceContext[];
 
 	private subscription?: Subscription;
 
@@ -69,7 +69,7 @@ export class ForTeamTypeCardComponent
 				next: (user) => {
 					this.teams = zipMapBriefsWithIDs(user.record?.teams)
 						?.filter((t) => this.teamTypes?.some((tt) => tt === t.brief.type))
-						.map((t) => teamContextFromBrief(t.id, t.brief));
+						.map((t) => spaceContextFromBrief(t.id, t.brief));
 					console.log(
 						'ForTeamTypeCardComponent =>',
 						this.teamTypes,

@@ -11,7 +11,7 @@
 		<sneat-country-selector
 			[countryID]="dwellingAsset?.brief?.countryID"
 			[readonly]="!!dwellingAsset?.brief?.countryID"
-			[defaultCountryID]="team?.dbo?.countryID"
+			[defaultCountryID]="space?.dbo?.countryID"
 			label="Country of registration"
 			(countryIDChange)="onCountryChanged($event)"
 		/>

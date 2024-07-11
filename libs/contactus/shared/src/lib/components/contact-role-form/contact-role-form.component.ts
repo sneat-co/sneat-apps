@@ -14,7 +14,7 @@ import {
 } from '@sneat/contactus-services';
 import { IIdAndBrief, IIdAndDto } from '@sneat/core';
 import {
-	IContactGroupDto,
+	IContactGroupDbo,
 	IContactRoleBriefWithID,
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -29,7 +29,7 @@ export class ContactRoleFormComponent
 	extends SneatBaseComponent
 	implements OnChanges
 {
-	public contactGroup?: IIdAndDto<IContactGroupDto> | null;
+	public contactGroup?: IIdAndDto<IContactGroupDbo> | null;
 
 	@Input() public contactGroupID? = defaultFamilyContactGroups[0].id;
 
@@ -38,7 +38,7 @@ export class ContactRoleFormComponent
 	>();
 
 	@Output() readonly contactGroupChange = new EventEmitter<
-		IIdAndDto<IContactGroupDto> | undefined
+		IIdAndDto<IContactGroupDbo> | undefined
 	>();
 
 	@Input() public contactRoleID?: string;
@@ -51,7 +51,7 @@ export class ContactRoleFormComponent
 		IIdAndBrief<IContactRoleBriefWithID> | undefined
 	>();
 
-	protected groups?: readonly IIdAndDto<IContactGroupDto>[];
+	protected groups?: readonly IIdAndDto<IContactGroupDbo>[];
 
 	protected get groupItems(): readonly ISelectItem[] {
 		return (
@@ -65,7 +65,7 @@ export class ContactRoleFormComponent
 
 	protected readonly roleBriefID = (_: number, o: IContactRoleBriefWithID) =>
 		o.id;
-	protected readonly groupID = (_: number, o: IIdAndDto<IContactGroupDto>) =>
+	protected readonly groupID = (_: number, o: IIdAndDto<IContactGroupDbo>) =>
 		o.id;
 
 	constructor(

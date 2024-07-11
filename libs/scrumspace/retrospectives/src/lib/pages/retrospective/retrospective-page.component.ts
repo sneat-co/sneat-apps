@@ -65,7 +65,7 @@ export class RetrospectivePageComponent
 
 	protected onRetrospectiveIdChanged(): void {
 		if (
-			this.team?.id &&
+			this.space?.id &&
 			this.retrospective.id &&
 			this.retrospective.id !== RetrospectiveStage.upcoming
 		) {
@@ -141,7 +141,7 @@ export class RetrospectivePageComponent
 					if (id === RetrospectiveStage.upcoming) {
 						return;
 					}
-					const teamId = this.team.id;
+					const teamId = this.space.id;
 					this.retroSub = this.retrospectiveService
 						.watchRetro(teamId, id)
 						.pipe(takeUntil(this.destroyed$.asObservable())) // TODO(StackOverflow): Do we need .asObservable() here?
@@ -164,7 +164,7 @@ export class RetrospectivePageComponent
 		try {
 			if (
 				this.retrospective?.id === retrospective.id &&
-				this.team?.id === teamId
+				this.space?.id === teamId
 			) {
 				this.retrospective = retrospective;
 			}

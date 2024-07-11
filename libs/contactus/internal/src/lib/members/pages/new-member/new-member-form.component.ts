@@ -23,15 +23,15 @@ import { personName } from '@sneat/components';
 import { RoutingState } from '@sneat/core';
 import {
 	emptyMemberPerson,
-	IContactusTeamDtoAndID,
-	ICreateTeamMemberRequest,
+	IContactusSpaceDboAndID,
+	ICreateSpaceMemberRequest,
 	IMemberPerson,
 	IPersonRequirements,
 	IRelatedPerson,
 	// isRelatedPersonNotReady,
 	isRelatedPersonReady,
 } from '@sneat/contactus-core';
-import { ITeamContext, zipMapBriefsWithIDs } from '@sneat/team-models';
+import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { MemberComponentBaseParams } from '../../member-component-base-params';
 
 @Component({
@@ -59,9 +59,9 @@ export class NewMemberFormComponent implements OnChanges {
 
 	protected canSubmit = false;
 
-	@Input({ required: true }) team?: ITeamContext;
+	@Input({ required: true }) space?: ISpaceContext;
 
-	protected contactusTeam?: IContactusTeamDtoAndID;
+	protected contactusTeam?: IContactusSpaceDboAndID;
 
 	@Input() member: IMemberPerson = emptyMemberPerson;
 	@Output() readonly memberChange = new EventEmitter<IMemberPerson>();
@@ -108,15 +108,15 @@ export class NewMemberFormComponent implements OnChanges {
 			// TODO: Should we move it inside person form wizard?
 			...this.personRequirements,
 			ageGroup:
-				this.team?.type === 'family' && this.member.type !== 'animal'
+				this.space?.type === 'family' && this.member.type !== 'animal'
 					? { required: true }
 					: { hide: true },
 			roles:
-				this.team?.type === 'family' && this.member.type !== 'animal'
+				this.space?.type === 'family' && this.member.type !== 'animal'
 					? { hide: true }
 					: { required: true },
 			relatedAs:
-				this.team?.type === 'family' && this.member.type !== 'animal'
+				this.space?.type === 'family' && this.member.type !== 'animal'
 					? { required: true }
 					: { hide: true },
 		};
@@ -135,7 +135,7 @@ export class NewMemberFormComponent implements OnChanges {
 		if (!this.personFormComponent) {
 			throw '!this.personFormComponent';
 		}
-		const team = this.team;
+		const team = this.space;
 		if (!team) {
 			this.params.errorLogger.logError(
 				'not able to add new member without team context',
@@ -157,12 +157,12 @@ export class NewMemberFormComponent implements OnChanges {
 			return;
 		}
 
-		const request: ICreateTeamMemberRequest = {
+		const request: ICreateSpaceMemberRequest = {
 			...this.member,
 			status: 'active',
 			countryID: team.dbo?.countryID || '--',
 			roles: ['contributor'],
-			teamID: team.id,
+			spaceID: team.id,
 		};
 
 		this.isSubmitting = true;

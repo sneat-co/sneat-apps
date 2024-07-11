@@ -2,10 +2,10 @@ import { Injectable, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
-import { ILogger, TeamType } from '@sneat/core';
-import { equalTeamBriefs, ITeamBrief, ITeamDto } from '@sneat/dto';
+import { ILogger, SpaceType } from '@sneat/core';
+import { equalTeamBriefs, ISpaceBrief, ISpaceDbo } from '@sneat/dto';
 import { ILogErrorOptions } from '@sneat/logging';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import {
 	TeamService,
 	trackTeamIdAndTypeFromRouteParameter,
@@ -34,15 +34,15 @@ export abstract class TeamBaseComponent
 	implements OnInit
 {
 	protected readonly teamIDChanged = new Subject<string | undefined>();
-	protected readonly teamTypeChanged = new Subject<TeamType | undefined>();
+	protected readonly teamTypeChanged = new Subject<SpaceType | undefined>();
 
 	protected readonly teamBriefChanged = new Subject<
-		ITeamBrief | undefined | null
+		ISpaceBrief | undefined | null
 	>();
 	protected readonly teamDtoChanged = new Subject<
-		ITeamDto | undefined | null
+		ISpaceDbo | undefined | null
 	>();
-	protected teamContext?: ITeamContext; // TODO: check - is it duplication of team?
+	protected teamContext?: ISpaceContext; // TODO: check - is it duplication of team?
 
 	protected readonly navController: NavController;
 	// protected readonly activeCommuneService: IActiveCommuneService;
@@ -70,7 +70,7 @@ export abstract class TeamBaseComponent
 		tap((id) => console.log(this.className + '=> teamIDChanged$: ' + id)),
 	);
 
-	public readonly teamTypeChanged$: Observable<TeamType | undefined> =
+	public readonly teamTypeChanged$: Observable<SpaceType | undefined> =
 		this.teamTypeChanged.pipe(
 			takeUntil(this.destroyed$),
 			distinctUntilChanged(),
@@ -87,9 +87,9 @@ export abstract class TeamBaseComponent
 		.asObservable()
 		.pipe(takeUntil(this.destroyed$), distinctUntilChanged());
 
-	public get team(): ITeamContext {
+	public get space(): ISpaceContext {
 		// TODO: Document why we do not allow undefined
-		return this.teamContext || ({ id: '' } as ITeamContext);
+		return this.teamContext || ({ id: '' } as ISpaceContext);
 	}
 
 	public get preloader() {
@@ -152,9 +152,9 @@ export abstract class TeamBaseComponent
 	protected onUserIdChanged(): void {
 		if (!this.currentUserId) {
 			this.subs.unsubscribe();
-			if (this.team && this.team.dbo) {
+			if (this.space && this.space.dbo) {
 				this.setNewTeamContext({
-					...this.team,
+					...this.space,
 					brief: undefined,
 					dbo: undefined,
 				});
@@ -166,11 +166,11 @@ export abstract class TeamBaseComponent
 		page: string,
 		navOptions?: NavigationOptions,
 	) {
-		if (!this.team) {
+		if (!this.space) {
 			return Promise.reject('no team context');
 		}
 		return this.teamParams.teamNavService.navigateForwardToTeamPage(
-			this.team,
+			this.space,
 			page,
 			navOptions,
 		);
@@ -180,7 +180,7 @@ export abstract class TeamBaseComponent
 		this.console.log(
 			`${this.className}: TeamBaseComponent.onTeamIdChanged()`,
 			this.className,
-			this.team?.id,
+			this.space?.id,
 		);
 	}
 
@@ -188,7 +188,7 @@ export abstract class TeamBaseComponent
 		this.console.log(
 			`${this.className}.onTeamDtoChanged()`,
 			this.className,
-			this.team?.dbo,
+			this.space?.dbo,
 		);
 	}
 
@@ -219,7 +219,7 @@ export abstract class TeamBaseComponent
 			});
 	}
 
-	private readonly onTeamIdChangedInUrl = (team?: ITeamContext): void => {
+	private readonly onTeamIdChangedInUrl = (team?: ISpaceContext): void => {
 		// console.log(`${this.className}.onTeamIdChangedInUrl()`, this.teamContext?.id, ' => ', team);
 		const prevTeam = this.teamContext;
 		if (
@@ -234,7 +234,7 @@ export abstract class TeamBaseComponent
 		this.setNewTeamContext(team);
 	};
 
-	private subscribeForTeamChanges(team: ITeamContext): void {
+	private subscribeForTeamChanges(team: ISpaceContext): void {
 		this.console.log(`${this.className}.subscribeForTeamChanges()`, team);
 		this.teamService
 			.watchTeam(team)
@@ -246,7 +246,7 @@ export abstract class TeamBaseComponent
 	}
 
 	private getTeamContextFromRouteState(): void {
-		const team = history.state?.team as ITeamContext;
+		const team = history.state?.team as ISpaceContext;
 		this.console.log(`${this.className}.getTeamContextFromRouteState()`, team);
 		if (!team?.id) {
 			return;
@@ -283,7 +283,7 @@ export abstract class TeamBaseComponent
 	// 	}
 	// }
 
-	private setNewTeamContext(teamContext?: ITeamContext): void {
+	private setNewTeamContext(teamContext?: ISpaceContext): void {
 		this.console.log(
 			`${this.className}.setNewTeamContext(id=${teamContext?.id}), previous id=${this.teamContext?.id}`,
 			teamContext,
@@ -386,7 +386,7 @@ export abstract class TeamBaseComponent
 		// 	}
 	}
 
-	private readonly onTeamContextChanged = (team: ITeamContext): void => {
+	private readonly onTeamContextChanged = (team: ISpaceContext): void => {
 		const dtoChanged = team.dbo !== this.teamContext?.dbo;
 		this.console.log(
 			`${this.className}.onTeamContextChanged() => dtoChanged=${dtoChanged}, team:`,
@@ -426,7 +426,7 @@ export abstract class TeamBaseComponent
 }
 
 export const teamPageUrl = (
-	team?: ITeamContext,
+	team?: ISpaceContext,
 	page?: string,
 ): string | undefined => {
 	return team?.id

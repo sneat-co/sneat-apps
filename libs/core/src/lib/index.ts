@@ -13,7 +13,7 @@ export * from './utils';
 export * from './eq';
 export * from './sneat-extensions';
 export * from './form-field';
-export * from './team-type';
+export * from './space-type';
 export * from './location-href';
 export * from './anaylytics';
 export * from './interfaces';

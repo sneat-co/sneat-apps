@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { IHappeningWithUiState } from '@sneat/mod-schedulus-core';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { CalendarFilterService } from '../../../calendar-filter.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { CalendarFilterService } from '../../../calendar-filter.service';
 export class RecurringsTabComponent {
 	@Input() recurrings?: readonly IHappeningWithUiState[];
 	@Input() allRecurrings?: readonly IHappeningWithUiState[];
-	@Input() team: ITeamContext = { id: '' };
+	@Input() team: ISpaceContext = { id: '' };
 	public readonly resetFilter: (event: Event) => void;
 
 	public get numberOfHidden(): number {

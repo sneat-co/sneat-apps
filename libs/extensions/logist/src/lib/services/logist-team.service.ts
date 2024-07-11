@@ -9,35 +9,38 @@ import {
 import { SneatApiService, SneatFirestoreService } from '@sneat/api';
 import { Observable } from 'rxjs';
 import {
-	ILogistTeamBrief,
-	ILogistTeamContext,
-	ILogistTeamDto,
-	ISetLogistTeamSettingsRequest,
+	ILogistSpaceBrief,
+	ILogistSpaceContext,
+	ILogistSpaceDbo,
+	ISetLogistSpaceSettingsRequest,
 } from '../dto/logist-team-dto';
 
-function briefFromDto(id: string, dto: ILogistTeamDto): ILogistTeamBrief {
+function briefFromDto(id: string, dto: ILogistSpaceDbo): ILogistSpaceBrief {
 	return dto;
 }
 
 @Injectable()
 export class LogistTeamService {
-	private readonly sfs: SneatFirestoreService<ILogistTeamBrief, ILogistTeamDto>;
+	private readonly sfs: SneatFirestoreService<
+		ILogistSpaceBrief,
+		ILogistSpaceDbo
+	>;
 
 	constructor(
 		private readonly sneatApiService: SneatApiService,
 		private readonly afs: AngularFirestore,
 	) {
-		this.sfs = new SneatFirestoreService<ILogistTeamBrief, ILogistTeamDto>(
+		this.sfs = new SneatFirestoreService<ILogistSpaceBrief, ILogistSpaceDbo>(
 			briefFromDto,
 		);
 	}
 
-	public watchLogistTeamByID(teamID: string): Observable<ILogistTeamContext> {
+	public watchLogistTeamByID(teamID: string): Observable<ILogistSpaceContext> {
 		return this.sfs.watchByDocRef(logistTeamDocRef(this.afs, teamID));
 	}
 
 	setLogistTeamSettings(
-		request: ISetLogistTeamSettingsRequest,
+		request: ISetLogistSpaceSettingsRequest,
 	): Observable<void> {
 		return this.sneatApiService.post(
 			'logistus/set_logist_team_settings?ts=' + new Date().toISOString(),
@@ -49,12 +52,12 @@ export class LogistTeamService {
 function logistTeamDocRef(
 	afs: AngularFirestore,
 	teamID: string,
-): DocumentReference<ILogistTeamDto> {
-	const teamsCollection = collection(afs, 'teams');
+): DocumentReference<ILogistSpaceDbo> {
+	const teamsCollection = collection(afs, 'spaces');
 	const teamRef = doc(teamsCollection, teamID);
 	const modulesCollection = collection(teamRef, 'modules');
 	return doc(
-		modulesCollection as CollectionReference<ILogistTeamDto>,
+		modulesCollection as CollectionReference<ILogistSpaceDbo>,
 		'logistus',
 	);
 }

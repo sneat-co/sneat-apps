@@ -10,7 +10,7 @@ import {
 import { ContactComponentBaseParams } from '@sneat/contactus-shared';
 import {
 	emptyMemberPerson,
-	IContactusTeamDtoAndID,
+	IContactusSpaceDboAndID,
 	IMemberPerson,
 } from '@sneat/contactus-core';
 import {
@@ -43,7 +43,7 @@ export class NewMemberPageComponent extends TeamPageBaseComponent {
 	member: IMemberPerson = emptyMemberPerson;
 
 	public override get defaultBackUrl(): string {
-		const t = this.team;
+		const t = this.space;
 		const url = t ? `/space/${t.type}/${t.id}/members` : '';
 		return url && this.defaultBackPage ? url + '/' + this.defaultBackPage : url;
 	}
@@ -89,7 +89,7 @@ export class NewMemberPageComponent extends TeamPageBaseComponent {
 			});
 	}
 
-	protected contactusTeam?: IContactusTeamDtoAndID;
+	protected contactusTeam?: IContactusSpaceDboAndID;
 
 	private readonly trackFirstTeamTypeChanged = (): void => {
 		console.log('NewMemberPageComponent.trackFirstTeamTypeChanged()');

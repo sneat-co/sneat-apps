@@ -3,7 +3,7 @@ import { IIdAndBrief } from '@sneat/core';
 import {
 	AssetCategory,
 	IAssetBrief,
-	IAssetusTeamContext,
+	IAssetusSpaceContext,
 } from '@sneat/mod-assetus-core';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import {
@@ -14,7 +14,7 @@ import {
 export abstract class AssetsBasePage extends TeamBaseComponent {
 	public assets?: IIdAndBrief<IAssetBrief>[];
 
-	protected assetusTeam?: IAssetusTeamContext;
+	protected assetusTeam?: IAssetusSpaceContext;
 
 	protected constructor(
 		className: string,
@@ -26,7 +26,7 @@ export abstract class AssetsBasePage extends TeamBaseComponent {
 	}
 
 	public goNew(assetType?: AssetCategory): void {
-		const team = this.team;
+		const team = this.space;
 		if (!team) {
 			this.errorLogger.logError('no team context');
 			return;
@@ -41,7 +41,7 @@ export abstract class AssetsBasePage extends TeamBaseComponent {
 	}
 
 	override onTeamDtoChanged(): void {
-		const team = this.team;
+		const team = this.space;
 		if (!team) {
 			this.assets = undefined;
 			return;

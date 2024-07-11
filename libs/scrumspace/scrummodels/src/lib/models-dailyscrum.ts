@@ -2,13 +2,13 @@ import { IAvatar } from '@sneat/auth-models';
 import { Modified } from '@sneat/data';
 import { IMemberBrief, MemberRole, IBy } from '@sneat/contactus-core';
 import { IMeeting } from '@sneat/meeting';
-import { ITeamItemNavContext } from '@sneat/team-models';
+import { ISpaceItemNavContext } from '@sneat/team-models';
 
 export type TaskType = 'done' | 'risk' | 'todo' | 'plan' | 'qna' | 'kudos';
 
 export type IScrumBrief = IMemberBrief; // TODO: Why?
 
-export interface IScrumDto extends IScrumBrief, IMeeting {
+export interface IScrumDbo extends IScrumBrief, IMeeting {
 	// Key as: YYYY-MM-DD
 	scrumIds?: {
 		prev?: string; // 'YYYY-MM-DD'
@@ -19,7 +19,7 @@ export interface IScrumDto extends IScrumBrief, IMeeting {
 	statuses: IStatus[];
 }
 
-export type IScrumContext = ITeamItemNavContext<IScrumBrief, IScrumDto>;
+export type IScrumContext = ISpaceItemNavContext<IScrumBrief, IScrumDbo>;
 
 export interface IStatus {
 	member: IScrumStatusMember;

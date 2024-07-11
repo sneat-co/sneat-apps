@@ -27,7 +27,7 @@ import {
 	ContactService,
 	ContactusTeamService,
 } from '@sneat/contactus-services';
-import { ITeamContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { map, Subject, Subscription } from 'rxjs';
 import { BasicContactFormModule } from '../basic-contact-form';
 import { LocationFormModule } from '../location-form';
@@ -38,7 +38,7 @@ import {
 } from './contact-selector.service';
 
 export interface IContactSelectorProps {
-	readonly team: ITeamContext;
+	readonly team: ISpaceContext;
 	readonly contactRole?: ContactRole;
 	readonly contactType?: ContactType;
 	readonly parentType?: ContactType;
@@ -76,7 +76,7 @@ export class ContactSelectorComponent
 
 	@Input() parentIcon = 'business-outline';
 	@Input() contactIcon = 'business-outline';
-	@Input() team: ITeamContext = { id: '' };
+	@Input() team: ISpaceContext = { id: '' };
 	@Input() contactRole?: ContactRole;
 	@Input() parentType?: ContactType;
 	@Input() parentRole?: ContactRole;
@@ -160,10 +160,10 @@ export class ContactSelectorComponent
 	}
 
 	private watchContactBriefs(): void {
-		const team = this.team;
+		const space = this.team;
 		this.contactBriefsSub = this.contactusTeamService
 			.watchContactBriefs(this.team.id)
-			.pipe(map((contacts) => contacts.map((c) => ({ ...c, team }))))
+			.pipe(map((contacts) => contacts.map((c) => ({ ...c, space }))))
 			.subscribe((contacts) => {
 				this.allContacts = contacts;
 				this.setContacts();

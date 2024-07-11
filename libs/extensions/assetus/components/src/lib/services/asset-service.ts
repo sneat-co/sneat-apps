@@ -11,8 +11,8 @@ import {
 	AssetExtraType,
 	IAssetExtra,
 } from '@sneat/mod-assetus-core';
-import { ITeamContext } from '@sneat/team-models';
-import { ModuleTeamItemService } from '@sneat/team-services';
+import { ISpaceContext } from '@sneat/team-models';
+import { ModuleSpaceItemService } from '@sneat/team-services';
 import { Observable } from 'rxjs';
 import {
 	IAddVehicleRecordRequest,
@@ -21,7 +21,7 @@ import {
 } from './asset-service.dto';
 
 @Injectable()
-export class AssetService extends ModuleTeamItemService<
+export class AssetService extends ModuleSpaceItemService<
 	IAssetBrief<string>,
 	IAssetDboBase<string>
 > {
@@ -44,12 +44,12 @@ export class AssetService extends ModuleTeamItemService<
 		ExtraType extends AssetExtraType,
 		Extra extends IAssetExtra,
 	>(
-		team: ITeamContext,
+		team: ISpaceContext,
 		request: ICreateAssetRequest<ExtraType, Extra>,
 	): Observable<IAssetContext<ExtraType, Extra>> {
 		console.log(`AssetService.createAsset()`, request);
 		request = { ...request, asset: { ...request.asset, isRequest: true } };
-		return this.createTeamItem<
+		return this.createSpaceItem<
 			IAssetBrief<ExtraType, Extra>,
 			IAssetDbo<ExtraType, Extra>
 		>(
@@ -78,7 +78,7 @@ export class AssetService extends ModuleTeamItemService<
 	public readonly watchAssetByID = this.watchTeamItemByIdWithTeamRef;
 
 	watchTeamAssets<ExtraType extends AssetExtraType, Extra extends IAssetExtra>(
-		team: ITeamContext,
+		team: ISpaceContext,
 		category?: AssetCategory,
 	): Observable<IAssetContext<ExtraType, Extra>[]> {
 		// console.log('watchAssetsByTeamID()', team.id);

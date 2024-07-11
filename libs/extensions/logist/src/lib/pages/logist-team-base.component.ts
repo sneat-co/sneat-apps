@@ -3,11 +3,11 @@ import {
 	TeamBaseComponent,
 	TeamComponentBaseParams,
 } from '@sneat/team-components';
-import { ILogistTeamContext } from '../dto';
+import { ILogistSpaceContext } from '../dto';
 import { LogistTeamService } from '../services';
 
 export class LogistTeamBaseComponent extends TeamBaseComponent {
-	protected logistTeam?: ILogistTeamContext;
+	protected logistTeam?: ILogistSpaceContext;
 
 	constructor(
 		className: string,
@@ -20,7 +20,7 @@ export class LogistTeamBaseComponent extends TeamBaseComponent {
 
 	protected override onTeamIdChanged() {
 		super.onTeamIdChanged();
-		const team = this.team;
+		const team = this.space;
 		if (team?.id) {
 			this.logistTeamService
 				.watchLogistTeamByID(team.id)
