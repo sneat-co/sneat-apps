@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'team-components',
 	preset: '../../../jest.preset.js',

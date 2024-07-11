@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Directive, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
@@ -28,11 +28,8 @@ import { TeamComponentBaseParams } from './team-component-base-params';
 // 	standalone: true,
 // 	template: '',
 // }) // we need this decorator so we can implement Angular interfaces
-@Injectable()
-export abstract class TeamBaseComponent
-	extends SneatBaseComponent
-	implements OnInit
-{
+@Directive() /* abstract */
+export class TeamBaseComponent extends SneatBaseComponent implements OnInit {
 	protected readonly teamIDChanged = new Subject<string | undefined>();
 	protected readonly teamTypeChanged = new Subject<SpaceType | undefined>();
 
