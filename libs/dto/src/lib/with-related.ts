@@ -1,8 +1,8 @@
 import { IWithCreatedShort } from './dto-with-modified';
 
-export interface ISpaceModuleDocRef {
-	readonly spaceID: string;
-	readonly moduleID: string;
+export interface ISpaceModuleItemRef {
+	readonly space: string;
+	readonly module: string;
 	readonly collection: string;
 	readonly itemID: string;
 }

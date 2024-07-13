@@ -18,7 +18,7 @@ import {
 	getRelatedItemByKey,
 	IRelatedItem,
 	IRelationshipRoles,
-	ISpaceModuleDocRef,
+	ISpaceModuleItemRef,
 } from '@sneat/dto';
 import { ISpaceRef } from '@sneat/team-models';
 import { MemberPages } from '../../constants';
@@ -84,7 +84,7 @@ export class ContactDetailsComponent implements OnChanges {
 	protected tab: 'communicationChannels' | 'roles' | 'peers' | 'locations' =
 		'peers';
 
-	protected relatedToContactOfCurrentUser?: ISpaceModuleDocRef;
+	protected relatedToContactOfCurrentUser?: ISpaceModuleItemRef;
 
 	constructor(private readonly params: ContactComponentBaseParams) {
 		params.userService.userState.subscribe({
@@ -104,8 +104,8 @@ export class ContactDetailsComponent implements OnChanges {
 	private setRelatedToCurrentUser(): void {
 		this.relatedToContactOfCurrentUser = this.userContactID
 			? {
-					spaceID: this.team?.id || '',
-					moduleID: 'contactus',
+					space: this.team?.id || '',
+					module: 'contactus',
 					collection: 'contacts',
 					itemID: this.userContactID,
 				}
@@ -117,25 +117,25 @@ export class ContactDetailsComponent implements OnChanges {
 			this.setUserContactID();
 			this.setRelatedToCurrentUser();
 		}
-		if (changes['contact']) {
-			console.log(
-				'ContactDetailsComponent.ngOnChanges(): contact changed:',
-				changes['contact'],
-			);
-			const spaceID = this.team?.id;
-			if (spaceID && this.contact?.dbo?.related) {
-				const contactus = this.contact.dbo.related['contactus'];
-				if (!contactus) {
-					return;
-				}
-				const contacts = contactus['contacts'];
-				if (!contacts) {
-					return;
-				}
-				throw new Error('Not implemented yet');
-				// this.relatedContactsOfCurrentTeam = zipMapBriefsWithIDs(contacts);
-			}
-		}
+		// if (changes['contact']) {
+		// 	console.log(
+		// 		'ContactDetailsComponent.ngOnChanges(): contact changed:',
+		// 		changes['contact'],
+		// 	);
+		// 	const spaceID = this.team?.id;
+		// 	if (spaceID && this.contact?.dbo?.related) {
+		// 		const contactus = this.contact.dbo.related['contactus'];
+		// 		if (!contactus) {
+		// 			return;
+		// 		}
+		// 		const contacts = contactus['contacts'];
+		// 		if (!contacts) {
+		// 			return;
+		// 		}
+		// 		// throw new Error('Not implemented yet');
+		// 		// this.relatedContactsOfCurrentTeam = zipMapBriefsWithIDs(contacts);
+		// 	}
+		// }
 	}
 
 	private setUserContactID(): void {
@@ -239,15 +239,19 @@ export class ContactDetailsComponent implements OnChanges {
 
 		const request: IUpdateContactRequest = {
 			...this.newUpdateContactRequest(),
-			relatedTo: {
-				spaceID: this.team?.id || '',
-				moduleID: 'contactus',
-				collection: 'contacts',
-				itemID: userContactID,
-				add: {
-					rolesOfItem: relationshipIDs,
+			related: [
+				{
+					itemRef: {
+						space: this.team?.id || '',
+						module: 'contactus',
+						collection: 'contacts',
+						itemID: userContactID,
+					},
+					add: {
+						rolesOfItem: relationshipIDs,
+					},
 				},
-			},
+			],
 		};
 		this.params.contactService.updateContact(request).subscribe({
 			next: () => {

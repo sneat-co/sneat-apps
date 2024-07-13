@@ -2,7 +2,7 @@ import { IFormField } from '@sneat/core';
 import { IContact2Asset } from './contact2item';
 import { IContactBase } from './contact-base';
 import {
-	ISpaceModuleDocRef,
+	ISpaceModuleItemRef,
 	IWithRelatedAndRelatedIDs,
 	TeamMemberType,
 } from '@sneat/dto';
@@ -43,7 +43,8 @@ export interface IRelatedRolesRequest {
 	readonly rolesToItem?: string[];
 }
 
-export interface IRelatedToRequest extends ISpaceModuleDocRef {
+export interface IRelatedToRequest {
+	readonly itemRef: ISpaceModuleItemRef;
 	readonly add?: IRelatedRolesRequest;
 	readonly remove?: IRelatedRolesRequest;
 }

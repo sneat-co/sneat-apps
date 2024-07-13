@@ -23,7 +23,7 @@ import {
 	IRelatedItemsByModule,
 	IRelationshipRole,
 	IRelationshipRoles,
-	ISpaceModuleDocRef,
+	ISpaceModuleItemRef,
 	ITitledRecord,
 	IWithCreatedShort,
 } from '@sneat/dto';
@@ -54,7 +54,7 @@ export class RelationshipFormComponent
 	@Input({ required: true }) public team?: ISpaceContext;
 	@Input({ required: true }) public ageGroup?: AgeGroupID;
 
-	@Input({ required: true }) public relatedTo?: ISpaceModuleDocRef;
+	@Input({ required: true }) public relatedTo?: ISpaceModuleItemRef;
 
 	@Input({ required: true }) public relatedItems?: IRelatedItemsByModule;
 
@@ -95,7 +95,7 @@ export class RelationshipFormComponent
 			this.relatedItems,
 		);
 		if (this.relatedTo && this.relatedItems) {
-			if (!this.relatedTo.spaceID) {
+			if (!this.relatedTo.space) {
 				console.error(
 					'onRelatedChanged(): relatedTo.teamID is not set',
 					this.relatedTo,
@@ -103,9 +103,9 @@ export class RelationshipFormComponent
 			}
 			const relatedItem = getRelatedItemByKey(
 				this.relatedItems,
-				this.relatedTo.moduleID,
+				this.relatedTo.module,
 				this.relatedTo.collection,
-				this.relatedTo.spaceID,
+				this.relatedTo.space,
 				this.relatedTo.itemID,
 			);
 			if (relatedItem) {

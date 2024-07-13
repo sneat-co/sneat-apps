@@ -23,7 +23,7 @@ export interface IUpdateContactRequest extends IContactRequest {
 	readonly address?: IAddress;
 	readonly ageGroup?: AgeGroupID;
 	readonly roles?: ISetContactRolesRequest;
-	readonly relatedTo?: IRelatedToRequest;
+	readonly related?: IRelatedToRequest[];
 }
 
 export interface ISetContactRolesRequest {

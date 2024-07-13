@@ -62,7 +62,8 @@ export abstract class ContactBasePage extends TeamItemPageBaseComponent<
 	}
 
 	protected override briefs(): Record<string, IContactBrief> | undefined {
-		throw new Error('Method not implemented.'); // return this.contactusTeam?.dto?.contacts;
+		return undefined;
+		// throw new Error('Method not implemented.'); // return this.contactusTeam?.dto?.contacts;
 	}
 
 	protected onContactIdChanged(contactID: string): void {

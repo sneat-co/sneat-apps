@@ -119,7 +119,7 @@ export abstract class TeamItemPageBaseComponent<
 		const item = this.item;
 		if (item?.id !== itemID || !this.itemSubscription) {
 			this.setItemContext({ ...item, id: itemID });
-			this.setBriefFromTeam(itemID);
+			this.setBriefFromSpace(itemID);
 			this.itemSubscription?.unsubscribe();
 			this.itemSubscription = this.watchItemChanges()
 				.pipe(
@@ -155,8 +155,8 @@ export abstract class TeamItemPageBaseComponent<
 		}
 	}
 
-	private setBriefFromTeam(id: string): void {
-		if (this.item?.brief) {
+	private setBriefFromSpace(id: string): void {
+		if (this.item && !this.item.brief) {
 			const briefs = this.briefs();
 			if (briefs) {
 				const brief = briefs[id];

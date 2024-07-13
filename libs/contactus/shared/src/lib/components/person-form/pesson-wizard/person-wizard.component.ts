@@ -30,7 +30,7 @@ import {
 	IRelatedItem,
 	IRelatedItemsByModule,
 	IRelationshipRoles,
-	ISpaceModuleDocRef,
+	ISpaceModuleItemRef,
 } from '@sneat/dto';
 import { ISpaceContext } from '@sneat/team-models';
 import { AgeGroupFormComponent } from '../age-group';
@@ -131,7 +131,7 @@ export class PersonWizardComponent implements OnChanges {
 	@ViewChild(NamesFormComponent) namesFormComponent?: NamesFormComponent;
 	@ViewChild(GenderFormComponent) genderFormComponent?: GenderFormComponent;
 
-	protected relatedToUser?: ISpaceModuleDocRef;
+	protected relatedToUser?: ISpaceModuleItemRef;
 
 	constructor(readonly userService: SneatUserService) {
 		userService.userChanged.subscribe(() => this.setRelatedToUser());
@@ -141,8 +141,8 @@ export class PersonWizardComponent implements OnChanges {
 		const itemID = this.userService.currentUserID;
 		this.relatedToUser = itemID
 			? {
-					spaceID: this.team?.id || '',
-					moduleID: 'contactus',
+					space: this.team?.id || '',
+					module: 'contactus',
 					collection: 'contacts',
 					itemID,
 				}
