@@ -24,7 +24,9 @@
 						"output": "./svg"
 					}
 				],
-				"styles": ["apps/logist-app/src/styles.scss"],
+				"styles": [
+					"apps/logist-app/src/styles.scss"
+				],
 				"scripts": []
 			},
 			"configurations": {
