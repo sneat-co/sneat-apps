@@ -93,7 +93,7 @@
     "@typescript-eslint/utils": "^8.0.0-alpha.28",
     "autoprefixer": "10.4.19",
     "cross-env": "^7.0.3",
-    "cypress": "13.13.0",
+    "cypress": "13.13.1",
     "eslint": "9.7.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-cypress": "3.3.0",
