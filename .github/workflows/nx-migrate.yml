@@ -28,6 +28,11 @@ jobs:
 #                    echo "IS_OUTDATED=$IS_OUTDATED"
 #                    echo "is_changed=$IS_OUTDATED" >> $GITHUB_OUTPUT
 
+            -   name: Remove migrations.json if exists
+                # we delete if migrations.json exists - might be accidentally checked-in by a developer or by previous run
+                run: |
+                    [ -f path/to/your/file ] && git rm -f migrations.json && git add migrations.json || echo "File migrations.json does not exist."
+
             -   name: Run `nx migrate latest`
                 run: pnpm run nx migrate latest
 
@@ -48,39 +53,24 @@ jobs:
 
             -   name: Check if has migrations
                 id: nx-workspace-has-migrations
-                # we check if migrations.json exists - might be accidentally checked-in by a developer
-                # if: steps.package-json-changed.outputs.is_changed == 'true'
                 run: |
                     HAS_MIGRATIONS=$(test -f migrations.json && echo true || echo false)
-                    echo $HAS_MIGRATIONS
+                    echo "has_migrations=$HAS_MIGRATIONS"
                     echo "has_migrations=$HAS_MIGRATIONS" >> $GITHUB_OUTPUT
 
             -   name: Run @nx/workspace migrations
                 if: steps.nx-workspace-has-migrations.outputs.has_migrations == 'true'
                 run: pnpm run nx migrate --run-migrations
 
-            #      - name: Test
-            #        id: test
-            #        if: steps.package-json-changed.outputs.is_changed == 'true'
-            #        continue-on-error: true
-            #        uses: ./.github/actions/test
-            #        with:
-            #          codecov_token: ${{ secrets.CODECOV_TOKEN }}
-
             -   name: Commit changes
                 if: steps.package-json-changed.outputs.is_changed == 'true'
                 run: |
                     LAST_VERSION=$(npm view @nx/workspace version)
+                    echo "LAST_VERSION=$LAST_VERSION"
                     git config user.name NX-migrate-action
-                    git config user.email alex@sneat.co
+                    git config user.email alex@trakhimenok.com
                     git add .
                     [[ $(git status --porcelain) ]] && git commit -m "fix(deps): 📦 update nrwl workspace to ${LAST_VERSION}" || echo "nothing to commit"
-
-            -   name: Remove migrations.json & commit
-                if: steps.nx-workspace-has-migrations.outputs.has_migrations == 'true'
-                run: |
-                    git rm -f migrations.json
-                    git commit -m "build: 📦 remove migrations.json"
 
             -   name: Push changes
                 if: steps.package-json-changed.outputs.is_changed == 'true' #  && steps.test.outcome == 'success'
