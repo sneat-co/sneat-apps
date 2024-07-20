@@ -4,7 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { ScrumTasksComponent } from './scrum-tasks.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { UserService } from '../../../services/user-service';
-import { TeamService } from '@sneat/team-services';
+import { SpaceService } from '@sneat/team-services';
 
 describe('ScrumTasksComponent', () => {
 	let component: ScrumTasksComponent;
@@ -14,7 +14,7 @@ describe('ScrumTasksComponent', () => {
 		await TestBed.configureTestingModule({
 			declarations: [ScrumTasksComponent],
 			imports: [IonicModule.forRoot(), HttpClientTestingModule],
-			providers: [TeamService, UserService],
+			providers: [SpaceService, UserService],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(ScrumTasksComponent);

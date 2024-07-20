@@ -9,7 +9,7 @@ import {
 	IAssetDocumentContext,
 	IAssetDocumentExtra,
 } from '@sneat/mod-assetus-core';
-import { TeamComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { ISpaceContext } from '@sneat/team-models';
 import { format, parseISO } from 'date-fns';
 import { AssetService } from '../../services';
@@ -19,7 +19,7 @@ import { AddAssetBaseComponent } from '../add-asset-base-component';
 @Component({
 	selector: 'sneat-asset-add-document',
 	templateUrl: './asset-add-document.component.html',
-	providers: [TeamComponentBaseParams],
+	providers: [SpaceComponentBaseParams],
 })
 export class AssetAddDocumentComponent
 	extends AddAssetBaseComponent
@@ -28,26 +28,26 @@ export class AssetAddDocumentComponent
 	@Input() public override team?: ISpaceContext;
 	@Input() public documentAsset?: IAssetDocumentContext;
 
-	documentType?: AssetVehicleType;
-	documentTypes: ISelectItem[] = [
+	protected documentType?: AssetVehicleType;
+	protected readonly documentTypes: ISelectItem[] = [
 		{ id: 'car', title: 'Car', iconName: 'car-outline' },
 		{ id: 'motorbike', title: 'Motorbike', iconName: 'bicycle-outline' },
 		// { id: 'bicycle', title: 'Bicycle', iconName: 'bicycle-outline' }, this is a sport asset
 		{ id: 'boat', title: 'Boat', iconName: 'boat-outline' },
 	];
 
-	public countryIso2 = 'IE';
-	public regNumber = '';
-	public vin = '';
-	public yearOfBuild = '';
+	protected countryIso2 = 'IE';
+	protected regNumber = '';
+	protected vin = '';
+	protected yearOfBuild = '';
 	// public make = '';
 	// public model = '';
-	public engine = '';
-	public engines?: string[];
+	protected engine = '';
+	protected engines?: string[];
 
-	public nctExpires = ''; // ISO date string 'YYYY-MM-DD'
-	public taxExpires = ''; // ISO date string 'YYYY-MM-DD'
-	public nextServiceDue = ''; // ISO date string 'YYYY-MM-DD'
+	protected nctExpires = ''; // ISO date string 'YYYY-MM-DD'
+	protected taxExpires = ''; // ISO date string 'YYYY-MM-DD'
+	protected nextServiceDue = ''; // ISO date string 'YYYY-MM-DD'
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team'] && this.team) {
@@ -75,7 +75,7 @@ export class AssetAddDocumentComponent
 
 	constructor(
 		route: ActivatedRoute,
-		teamParams: TeamComponentBaseParams,
+		teamParams: SpaceComponentBaseParams,
 		assetService: AssetService,
 	) {
 		// super('AssetAddVehicleComponent', route, teamParams, assetService);
@@ -86,7 +86,7 @@ export class AssetAddDocumentComponent
 		console.log('onAssetChanged', asset, this.documentAsset);
 	}
 
-	onVehicleTypeChanged(): void {
+	protected onVehicleTypeChanged(): void {
 		if (this.documentAsset?.dbo) {
 			this.documentAsset = {
 				...this.documentAsset,
@@ -100,15 +100,13 @@ export class AssetAddDocumentComponent
 		}
 	}
 
-	protected readonly id = (_: number, o: { id: string }) => o.id;
-
-	formatDate(value?: string | string[] | null): string {
+	protected formatDate(value?: string | string[] | null): string {
 		return value && !Array.isArray(value)
 			? format(parseISO(value), 'dd MMMM yyyy')
 			: '';
 	}
 
-	submitDocumentForm(): void {
+	protected submitDocumentForm(): void {
 		console.log('submitDocumentForm', this.documentAsset);
 		if (!this.team) {
 			throw 'no team context';

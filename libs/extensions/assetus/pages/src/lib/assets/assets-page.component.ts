@@ -13,7 +13,7 @@ import {
 	AssetusTeamService,
 } from '@sneat/extensions/assetus/components';
 import {
-	TeamComponentBaseParams,
+	SpaceComponentBaseParams,
 	TeamCoreComponentsModule,
 } from '@sneat/team-components';
 import { IAssetContext } from '@sneat/mod-assetus-core';
@@ -23,7 +23,7 @@ import { AssetsBasePage } from '../assets-base.page';
 @Component({
 	selector: 'sneat-assets-page',
 	templateUrl: './assets-page.component.html',
-	providers: [TeamComponentBaseParams],
+	providers: [SpaceComponentBaseParams],
 	standalone: true,
 	imports: [
 		CommonModule,
@@ -55,7 +55,7 @@ export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewIn
 
 	constructor(
 		route: ActivatedRoute,
-		params: TeamComponentBaseParams,
+		params: SpaceComponentBaseParams,
 		private readonly assetusTeamService: AssetusTeamService,
 		assetService: AssetService,
 		private readonly alertCtrl: AlertController,
@@ -134,7 +134,19 @@ export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewIn
 						);
 						this.assets = assets;
 					},
-					error: this.errorLogger.logErrorHandler('failed to get team assets'),
+					error: (err) => {
+						const errStr: string = err.toString();
+						console.log(
+							'AssetsPageComponent.onTeamIdChanged() => error:',
+							errStr,
+						);
+						if (err.code === 'permission-denied') {
+							this.noPermissions = true;
+							this.assets = [];
+							return;
+						}
+						this.errorLogger.logError(err, 'failed to get team assets');
+					},
 				});
 		}
 	}

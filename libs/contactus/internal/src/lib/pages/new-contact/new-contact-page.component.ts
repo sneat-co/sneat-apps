@@ -27,8 +27,8 @@ import {
 	AssetusServicesModule,
 } from '@sneat/extensions/assetus/components';
 import {
-	TeamBaseComponent,
-	TeamComponentBaseParams,
+	SpaceBaseComponent,
+	SpaceComponentBaseParams,
 } from '@sneat/team-components';
 import { IAssetContext } from '@sneat/mod-assetus-core';
 import { first, takeUntil } from 'rxjs';
@@ -42,7 +42,7 @@ import {
 @Component({
 	selector: 'sneat-new-contact-page',
 	templateUrl: './new-contact-page.component.html',
-	providers: [TeamComponentBaseParams],
+	providers: [SpaceComponentBaseParams],
 	standalone: true,
 	imports: [
 		CommonModule,
@@ -55,23 +55,23 @@ import {
 	],
 })
 export class NewContactPageComponent
-	extends TeamBaseComponent
+	extends SpaceBaseComponent
 	implements OnInit
 {
 	@ViewChild('nameInput', { static: true }) nameInput?: IonInput;
 
-	public readonly personRequires: IPersonRequirements = {
+	protected readonly personRequires: IPersonRequirements = {
 		ageGroup: { hide: true },
 		relatedAs: { hide: true },
 		roles: { hide: true },
 	};
 
-	public relation?: ContactToContactRelation;
-	public name = '';
-	public gender?: Gender;
-	public email = '';
-	public phone = '';
-	public creating = false;
+	protected relation?: ContactToContactRelation;
+	protected name = '';
+	protected gender?: Gender;
+	protected email = '';
+	protected phone = '';
+	protected creating = false;
 	// public readonly relations: { id: string; title: string }[] = [
 	// 	{ id: 'mother', title: 'Mother' },
 	// 	{ id: 'father', title: 'Father' },
@@ -82,18 +82,18 @@ export class NewContactPageComponent
 	// 	{ id: 'gp', title: 'GP - Family Doctor' },
 	// ];
 
-	relatedPerson: IRelatedPerson = emptyContactBase;
+	protected relatedPerson: IRelatedPerson = emptyContactBase;
 
 	public contact?: IContactContext;
 
 	public asset?: IAssetContext;
 
-	contactGroup?: IIdAndOptionalDbo<IContactGroupDbo>;
-	contactRole?: IIdAndBrief<IContactRoleBrief>;
+	protected contactGroup?: IIdAndOptionalDbo<IContactGroupDbo>;
+	protected contactRole?: IIdAndBrief<IContactRoleBrief>;
 
-	assetRelation?: ContactToAssetRelation;
+	protected assetRelation?: ContactToAssetRelation;
 
-	get title(): string {
+	protected get title(): string {
 		return this.contactRole?.brief
 			? `${
 					this.contactRole.brief.emoji
@@ -101,11 +101,10 @@ export class NewContactPageComponent
 			: 'New contact';
 	}
 
-	public personFormIsReadyToSubmit = false;
-	protected readonly id = (_: number, o: { id: string }) => o.id;
+	protected personFormIsReadyToSubmit = false;
 
 	constructor(
-		params: TeamComponentBaseParams,
+		params: SpaceComponentBaseParams,
 		route: ActivatedRoute,
 		private readonly assetService: AssetService,
 		private readonly contactGroupService: ContactGroupService,

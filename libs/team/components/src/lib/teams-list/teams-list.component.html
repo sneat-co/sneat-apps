@@ -1,10 +1,11 @@
-<ion-item
-	*ngFor="let team of teams; trackBy: id"
-	routerLink="{{ pathPrefix }}/{{ team.type }}/{{ team.id }}"
-	(click)="goTeam($event, team)"
->
-	<ion-icon [name]="iconName" slot="start" />
-	<ion-label class="ion-text-wrap">
-		{{ team.brief?.title || team.brief?.type || team.id }}
-	</ion-label>
-</ion-item>
+@for (space of spaces; track space.id) {
+	<ion-item
+		routerLink="{{ pathPrefix }}/{{ space.type }}/{{ space.id }}"
+		(click)="goTeam($event, space)"
+	>
+		<ion-icon [name]="iconName" slot="start" />
+		<ion-label class="ion-text-wrap">
+			{{ space.brief?.title || space.brief?.type || space.id }}
+		</ion-label>
+	</ion-item>
+}

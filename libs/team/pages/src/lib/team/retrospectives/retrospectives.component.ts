@@ -5,7 +5,7 @@ import { ISpaceDbo } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRecord } from '@sneat/data';
 import { SneatUserService } from '@sneat/auth-core';
-import { TeamNavService, TeamService } from '@sneat/team-services';
+import { TeamNavService, SpaceService } from '@sneat/team-services';
 import { RetroItemType } from '@sneat/scrumspace/scrummodels';
 
 @Component({
@@ -19,7 +19,7 @@ export class RetrospectivesComponent {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly teamService: TeamService,
+		private readonly teamService: SpaceService,
 		private readonly userService: SneatUserService, // TODO: replace with user context service
 		private readonly navController: NavController,
 		public readonly navService: TeamNavService,

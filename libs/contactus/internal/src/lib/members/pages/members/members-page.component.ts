@@ -27,7 +27,7 @@ import {
 } from '@sneat/contactus-core';
 import { isTeamSupportsMemberGroups } from '@sneat/dto';
 import {
-	TeamComponentBaseParams,
+	SpaceComponentBaseParams,
 	TeamCoreComponentsModule,
 } from '@sneat/team-components';
 import { zipMapBriefsWithIDs } from '@sneat/team-models';
@@ -45,7 +45,7 @@ interface MembersGroup {
 @Component({
 	selector: 'sneat-members-page',
 	templateUrl: 'members-page.component.html',
-	providers: [TeamComponentBaseParams, ContactComponentBaseParams],
+	providers: [SpaceComponentBaseParams, ContactComponentBaseParams],
 	standalone: true,
 	imports: [
 		IonicModule,
@@ -110,7 +110,7 @@ export class MembersPageComponent
 	constructor(
 		route: ActivatedRoute,
 		// private readonly memberGroupService: MemberGroupService,
-		params: TeamComponentBaseParams,
+		params: SpaceComponentBaseParams,
 		memberService: MemberService,
 		contactusTeamService: ContactusTeamService,
 		private readonly memberGroupService: MemberGroupService,

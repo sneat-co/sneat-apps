@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TeamContextService } from './team-context.service';
+import { SpaceContextService } from './space-context.service';
 
 describe('TeamContextService', () => {
-	let service: TeamContextService;
+	let service: SpaceContextService;
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({});
-		service = TestBed.inject(TeamContextService);
+		service = TestBed.inject(SpaceContextService);
 	});
 
 	it('should be created', () => {

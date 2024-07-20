@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { TeamService } from './team.service';
+import { SpaceService } from './space.service';
 
 @NgModule({
-	providers: [TeamService],
+	providers: [SpaceService],
 })
 export class TeamServiceModule {}

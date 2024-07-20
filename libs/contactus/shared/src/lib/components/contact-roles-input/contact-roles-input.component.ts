@@ -27,8 +27,6 @@ export class ContactRolesInputComponent implements OnChanges {
 	protected roles?: IContactRole[];
 	protected processingRoleIDs: ContactRole[] = [];
 
-	protected readonly id = (_: number, role: IContactRole) => role.id;
-
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly contactService: ContactService,

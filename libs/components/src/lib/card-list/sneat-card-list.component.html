@@ -25,10 +25,12 @@
 		</ion-buttons>
 	</ion-item>
 	@if (tabs) {
-		<ion-segment [(ngModel)]="tab" (ionChange)="tabChanged.emit(tab)">
-			<ion-segment-button *ngFor="let tab of tabs" [value]="tab.id">
-				<ion-label>{{ tab.title }}</ion-label>
-			</ion-segment-button>
+		<ion-segment [(ngModel)]="tab" (ionChange)="tabChanged.emit(tab || '')">
+			@for (tab of tabs; track tab.id) {
+				<ion-segment-button [value]="tab.id">
+					<ion-label>{{ tab.title }}</ion-label>
+				</ion-segment-button>
+			}
 		</ion-segment>
 		<ion-buttons>
 			<ion-button

@@ -8,6 +8,4 @@ import { IContactBrief } from '@sneat/contactus-core';
 })
 export class ContactsListComponent {
 	@Input() contacts?: IIdAndBrief<IContactBrief>[] = [];
-
-	protected readonly id = (_: number, o: IIdAndBrief<IContactBrief>) => o.id;
 }

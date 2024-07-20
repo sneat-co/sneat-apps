@@ -26,8 +26,6 @@ export class OrderContainersComponent implements OnChanges {
 
 	containers?: readonly IOrderContainer[];
 
-	protected readonly id = (_: number, o: { id: string }) => o.id;
-
 	constructor(private readonly modalController: ModalController) {}
 
 	ngOnChanges(changes: SimpleChanges): void {

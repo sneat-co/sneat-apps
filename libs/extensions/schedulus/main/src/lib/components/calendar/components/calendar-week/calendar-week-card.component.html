@@ -52,17 +52,17 @@
 			<sneat-calendar-week
 				class="virtual-slide"
 				[@virtualSlide]="oddSlide?.animationState || 'show'"
-				[team]="team"
+				[space]="space"
 				[week]="oddWeek"
-				[teamDaysProvider]="teamDaysProvider"
+				[spaceDaysProvider]="spaceDaysProvider"
 				(slotClicked)="onSlotClicked($event)"
 			/>
 			<sneat-calendar-week
 				class="virtual-slide"
 				[@virtualSlide]="evenSlide?.animationState || 'hide'"
-				[team]="team"
+				[space]="space"
 				[week]="evenWeek"
-				[teamDaysProvider]="teamDaysProvider"
+				[spaceDaysProvider]="spaceDaysProvider"
 				(slotClicked)="onSlotClicked($event)"
 			/>
 		</div>

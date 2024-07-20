@@ -1,5 +1,5 @@
 import { Injectable, NgModule } from '@angular/core';
-import { TeamComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/team-components';
 import {
 	ContactService,
 	ContactusTeamService,
@@ -13,13 +13,13 @@ export class ContactComponentBaseParams {
 	public readonly teamNavService = this.teamParams.teamNavService;
 
 	constructor(
-		public readonly teamParams: TeamComponentBaseParams,
+		public readonly teamParams: SpaceComponentBaseParams,
 		public readonly contactService: ContactService,
 		public readonly contactusTeamService: ContactusTeamService,
 	) {}
 }
 
 @NgModule({
-	providers: [ContactComponentBaseParams, TeamComponentBaseParams],
+	providers: [ContactComponentBaseParams, SpaceComponentBaseParams],
 })
 export class ContactComponentBaseParamsModule {}

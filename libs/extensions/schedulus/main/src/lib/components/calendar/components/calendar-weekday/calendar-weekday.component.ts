@@ -28,7 +28,7 @@ import { Weekday } from '../../weekday';
 export class CalendarWeekdayComponent implements OnDestroy {
 	private readonly destroyed = new EventEmitter<void>();
 	private filter = emptyScheduleFilter;
-	@Input() team: ISpaceContext = { id: '' };
+	@Input({ required: true }) space: ISpaceContext = { id: '' };
 	@Input() weekday?: Weekday;
 	@Output() dateSelected = new EventEmitter<Date>();
 	@Output() slotClicked = new EventEmitter<{
@@ -36,7 +36,7 @@ export class CalendarWeekdayComponent implements OnDestroy {
 		event: Event;
 	}>();
 
-	public get day(): TeamDay | undefined {
+	protected get day(): TeamDay | undefined {
 		return this.weekday?.day;
 	}
 
@@ -56,31 +56,29 @@ export class CalendarWeekdayComponent implements OnDestroy {
 		this.destroyed.complete();
 	}
 
-	// protected readonly id = (_: number, o: { id: string }) => o.id;
-
-	onSlotClicked(args: { slot: ISlotUIContext; event: Event }): void {
+	protected onSlotClicked(args: { slot: ISlotUIContext; event: Event }): void {
 		console.log('ScheduleWeekdayComponent.onSlotClicked', args);
 		this.slotClicked.emit(args);
 	}
 
-	showSlot(slot: ISlotUIContext): boolean {
+	protected showSlot(slot: ISlotUIContext): boolean {
 		return isSlotVisible(
-			this.team?.id,
+			this.space?.id,
 			slot,
 			this.filter || emptyScheduleFilter,
 		);
 	}
 
-	onDateSelected(): void {
+	protected onDateSelected(): void {
 		// console.log('onDateSelected', event);
 		if (this.weekday?.day?.date) {
 			this.dateSelected.next(this.weekday?.day?.date);
 		}
 	}
 
-	goNewHappening(type: HappeningType): void {
+	protected goNewHappening(type: HappeningType): void {
 		console.log('ScheduleWeekdayComponent.goNewHappening()', type);
-		if (!this.team) {
+		if (!this.space) {
 			return;
 		}
 		const params: NewHappeningParams = {
@@ -88,6 +86,6 @@ export class CalendarWeekdayComponent implements OnDestroy {
 			wd: this.weekday?.id,
 			date: this.weekday?.day?.dateID,
 		};
-		this.scheduleNavService.goNewHappening(this.team, params);
+		this.scheduleNavService.goNewHappening(this.space, params);
 	}
 }

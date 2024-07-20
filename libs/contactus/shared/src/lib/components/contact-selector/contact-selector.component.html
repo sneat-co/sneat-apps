@@ -38,7 +38,7 @@
 
 			<sneat-new-company-form
 				*ngIf="parentTab === 'new'"
-				[team]="team"
+				[team]="space"
 				[contactRoles]="contactRoles"
 				[contactRole]="parentRole"
 				[hideRole]="true"
@@ -93,7 +93,7 @@
 				*ngIf="contactType === 'location'; else notLocation"
 				contactType="location"
 				[contactRole]="contactRole"
-				[team]="team"
+				[team]="space"
 				[parentContact]="selectedParent"
 				(contactCreated)="onLocationCreated($event)"
 			/>
@@ -101,7 +101,7 @@
 				<ng-container [ngSwitch]="contactType">
 					<sneat-new-company-form
 						*ngSwitchCase="'company'"
-						[team]="team"
+						[team]="space"
 						[contactRoles]="contactRoles"
 						[contactRole]="contactRole"
 						[hideRole]="true"
@@ -115,7 +115,7 @@
 							<ion-label>{{ contactRole || "" | titlecase }}</ion-label>
 						</ion-item-divider>
 						<sneat-basic-contact-form
-							[team]="team"
+							[team]="space"
 							[contactType]="contactType"
 							[contactRoles]="contactRole ? [contactRole] : undefined"
 							[parentContact]="selectedParent"

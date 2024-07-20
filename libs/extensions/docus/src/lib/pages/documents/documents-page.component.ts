@@ -11,8 +11,8 @@ import {
 	AssetusServicesModule,
 } from '@sneat/extensions/assetus/components';
 import {
-	TeamBaseComponent,
-	TeamComponentBaseParams,
+	SpaceBaseComponent,
+	SpaceComponentBaseParams,
 	TeamCoreComponentsModule,
 } from '@sneat/team-components';
 import {
@@ -27,7 +27,7 @@ import { DocumentsListComponent } from './components/documents-list/documents-li
 	selector: 'sneat-documents-page',
 	templateUrl: './documents-page.component.html',
 	standalone: true,
-	providers: [TeamComponentBaseParams],
+	providers: [SpaceComponentBaseParams],
 	imports: [
 		CommonModule,
 		IonicModule,
@@ -40,7 +40,7 @@ import { DocumentsListComponent } from './components/documents-list/documents-li
 		AssetusServicesModule,
 	],
 })
-export class DocumentsPageComponent extends TeamBaseComponent {
+export class DocumentsPageComponent extends SpaceBaseComponent {
 	public segment: 'type' | 'owner' | 'list' = 'type';
 
 	public documents: IAssetDocumentContext[];
@@ -49,7 +49,7 @@ export class DocumentsPageComponent extends TeamBaseComponent {
 
 	constructor(
 		route: ActivatedRoute,
-		params: TeamComponentBaseParams,
+		params: SpaceComponentBaseParams,
 		private assetService: AssetService,
 	) {
 		super('DocumentsPageComponent', route, params);

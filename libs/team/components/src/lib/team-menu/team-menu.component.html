@@ -3,18 +3,15 @@
 		<!--		<ion-icon name="home-outline" slot="start" color="primary" tappable routerLink="/space/{{team.type}}/{{team.id}}" routerDirection="root"></ion-icon>-->
 		<ion-select
 			label="Space"
-			*ngIf="teams"
+			*ngIf="spaces"
 			[value]="team.id"
 			interface="popover"
 			(ionChange)="onTeamSelected($event)"
 			style="font-weight: bold"
 		>
-			<ion-select-option
-				*ngFor="let team of teams; trackBy: id"
-				[value]="team.id"
-			>
-				{{ team.brief.title || team.id }}
-			</ion-select-option>
+			@for (space of spaces; track space.id) {
+				<ion-select-option [value]="space.id">{{ space.brief.title || space.id }}</ion-select-option>
+			}
 		</ion-select>
 	</ion-item>
 	<ion-item

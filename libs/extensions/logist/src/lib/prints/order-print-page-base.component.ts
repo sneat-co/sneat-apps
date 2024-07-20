@@ -1,6 +1,6 @@
 import { Directive } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TeamComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { CounterpartyRole, IOrderCounterparty } from '../dto';
 import { LogistOrderService } from '../services';
 
@@ -11,7 +11,7 @@ export class OrderPrintPageBaseComponent extends OrderPageBaseComponent {
 	constructor(
 		className: string,
 		route: ActivatedRoute,
-		teamParams: TeamComponentBaseParams,
+		teamParams: SpaceComponentBaseParams,
 		orderService: LogistOrderService,
 	) {
 		super(className, route, teamParams, orderService);

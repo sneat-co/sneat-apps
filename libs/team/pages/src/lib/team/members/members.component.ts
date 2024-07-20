@@ -17,7 +17,7 @@ import {
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { zipMapBriefsWithIDs } from '@sneat/team-models';
-import { TeamNavService, TeamService } from '@sneat/team-services';
+import { TeamNavService, SpaceService } from '@sneat/team-services';
 
 @Component({
 	selector: 'sneat-team-members',
@@ -34,7 +34,7 @@ export class MembersComponent implements OnChanges {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly teamService: TeamService,
+		private readonly teamService: SpaceService,
 		private readonly navController: NavController,
 		public readonly navService: TeamNavService,
 	) {}

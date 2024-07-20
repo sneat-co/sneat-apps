@@ -3,7 +3,7 @@ import { TeamMemberType } from '@sneat/auth-models';
 import { ContactusModuleBaseComponent } from '@sneat/contactus-shared';
 import { IIdAndBriefAndOptionalDto, SpaceType } from '@sneat/core';
 import { isTeamSupportsMemberGroups } from '@sneat/dto';
-import { TeamComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { ContactusTeamService, MemberService } from '@sneat/contactus-services';
 import { IContactBrief, IContactDto } from '@sneat/contactus-core';
 
@@ -24,7 +24,7 @@ export abstract class MembersBasePage extends ContactusModuleBaseComponent {
 	protected constructor(
 		className: string,
 		route: ActivatedRoute,
-		params: TeamComponentBaseParams,
+		params: SpaceComponentBaseParams,
 		contactusTeamService: ContactusTeamService,
 		protected membersService: MemberService,
 	) {

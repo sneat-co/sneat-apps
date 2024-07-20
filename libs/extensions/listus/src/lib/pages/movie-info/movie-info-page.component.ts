@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import {
-	TeamComponentBaseParams,
+	SpaceComponentBaseParams,
 	TeamPageBaseComponent,
 } from '@sneat/team-components';
 import { IListItemBrief, IMovie } from '../../dto';
@@ -23,7 +23,7 @@ import { BaseListItemPage } from '../base-list-item-page';
 @Component({
 	selector: 'sneat-movie-info',
 	templateUrl: './movie-info-page.component.html',
-	providers: [TeamComponentBaseParams],
+	providers: [SpaceComponentBaseParams],
 })
 export class MovieInfoPageComponent
 	extends BaseListItemPage

@@ -7,19 +7,19 @@ import {
 } from '@sneat/mod-assetus-core';
 import { AssetService } from '@sneat/extensions/assetus/components';
 import {
-	TeamBaseComponent,
-	TeamComponentBaseParams,
+	SpaceBaseComponent,
+	SpaceComponentBaseParams,
 } from '@sneat/team-components';
 
-export abstract class AssetsBasePage extends TeamBaseComponent {
-	public assets?: IIdAndBrief<IAssetBrief>[];
+export abstract class AssetsBasePage extends SpaceBaseComponent {
+	protected assets?: IIdAndBrief<IAssetBrief>[];
 
 	protected assetusTeam?: IAssetusSpaceContext;
 
 	protected constructor(
 		className: string,
 		route: ActivatedRoute,
-		params: TeamComponentBaseParams,
+		params: SpaceComponentBaseParams,
 		protected readonly assetService: AssetService,
 	) {
 		super(className, route, params);

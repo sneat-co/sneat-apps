@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TeamComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/team-components';
 import {
 	IContainerSegment,
 	IFreightLoad,
@@ -37,7 +37,7 @@ export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 
 	constructor(
 		route: ActivatedRoute,
-		teamParams: TeamComponentBaseParams,
+		teamParams: SpaceComponentBaseParams,
 		orderService: LogistOrderService,
 	) {
 		super('OrderTruckerSummaryComponent', route, teamParams, orderService);

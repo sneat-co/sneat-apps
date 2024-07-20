@@ -20,7 +20,7 @@ import {
 	AssetService,
 	ICreateAssetRequest,
 } from '@sneat/extensions/assetus/components';
-import { TeamComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/team-components';
 import {
 	ContactService,
 	contactContextFromBrief,
@@ -32,7 +32,7 @@ import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 @Component({
 	selector: 'sneat-new-document',
 	templateUrl: './new-document-page.component.html',
-	providers: [TeamComponentBaseParams],
+	providers: [SpaceComponentBaseParams],
 })
 export class NewDocumentPageComponent
 	extends AddAssetBaseComponent
@@ -62,7 +62,7 @@ export class NewDocumentPageComponent
 
 	constructor(
 		route: ActivatedRoute,
-		params: TeamComponentBaseParams,
+		params: SpaceComponentBaseParams,
 		assetService: AssetService,
 		private readonly contactService: ContactService,
 		private readonly teamNavService: TeamNavService,

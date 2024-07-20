@@ -10,15 +10,15 @@ import {
 	AssetusServicesModule,
 } from '@sneat/extensions/assetus/components';
 import {
-	TeamBaseComponent,
-	TeamComponentBaseParams,
+	SpaceBaseComponent,
+	SpaceComponentBaseParams,
 	TeamCoreComponentsModule,
 } from '@sneat/team-components';
 
 @Component({
 	selector: 'sneat-new-asset-page',
 	templateUrl: './new-asset-page.component.html',
-	providers: [TeamComponentBaseParams],
+	providers: [SpaceComponentBaseParams],
 	standalone: true,
 	imports: [
 		CommonModule,
@@ -30,10 +30,10 @@ import {
 		AssetusServicesModule,
 	],
 })
-export class NewAssetPageComponent extends TeamBaseComponent {
-	name?: string;
+export class NewAssetPageComponent extends SpaceBaseComponent {
+	protected name?: string;
 
-	public category?: IAssetCategory;
+	protected category?: IAssetCategory;
 
 	public categories: IAssetCategory[] = [
 		{ id: 'vehicle', title: 'Vehicle', order: 1 },
@@ -44,7 +44,7 @@ export class NewAssetPageComponent extends TeamBaseComponent {
 		// assetCategoryService: IAssetCategoryService,
 		// assetService: IAssetService,
 		route: ActivatedRoute,
-		params: TeamComponentBaseParams,
+		params: SpaceComponentBaseParams,
 	) {
 		super('AssetNewPageComponent', route, params);
 		const assetType = window.history.state['assetType'];
@@ -53,8 +53,6 @@ export class NewAssetPageComponent extends TeamBaseComponent {
 		}
 		// this.categories = assetCategoryService.allAssetCategories();
 	}
-
-	protected readonly id = (_: number, o: { id: string }) => o.id;
 
 	public selectCategory(category: IAssetCategory): void {
 		this.category = category;

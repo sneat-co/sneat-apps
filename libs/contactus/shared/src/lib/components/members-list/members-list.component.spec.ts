@@ -5,7 +5,7 @@ import { SneatUserService } from '@sneat/auth-core';
 import { MembersListComponent } from './members-list.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TeamService } from '@sneat/team-services';
+import { SpaceService } from '@sneat/team-services';
 
 describe('MembersListComponent', () => {
 	let component: MembersListComponent;
@@ -19,7 +19,7 @@ describe('MembersListComponent', () => {
 				RouterTestingModule,
 				HttpClientTestingModule,
 			],
-			providers: [SneatUserService, TeamService],
+			providers: [SneatUserService, SpaceService],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(MembersListComponent);

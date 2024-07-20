@@ -1,21 +1,21 @@
 import { Directive, Inject, InjectionToken } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
-	TeamBaseComponent,
-	TeamComponentBaseParams,
+	SpaceBaseComponent,
+	SpaceComponentBaseParams,
 } from '@sneat/team-components';
 import { ILogistOrderContext } from '../dto';
 import { LogistOrderService } from '../services';
 
 @Directive() // we need this decorator so we can implement Angular interfaces
-export class OrderPageBaseComponent extends TeamBaseComponent {
+export class OrderPageBaseComponent extends SpaceBaseComponent {
 	protected order?: ILogistOrderContext;
 	numberOfDispatchers?: number;
 
 	constructor(
 		@Inject(new InjectionToken('className')) className: string,
 		route: ActivatedRoute,
-		teamParams: TeamComponentBaseParams,
+		teamParams: SpaceComponentBaseParams,
 		private readonly orderService: LogistOrderService,
 	) {
 		super(className, route, teamParams);

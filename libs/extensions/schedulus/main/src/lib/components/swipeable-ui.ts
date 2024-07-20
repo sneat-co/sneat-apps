@@ -8,7 +8,7 @@ import { dateToIso, getWeekdayDate } from '@sneat/core';
 // noinspection ES6PreferShortImport
 import { Weekday } from '../components/calendar/weekday';
 import { Observable } from 'rxjs';
-import { TeamDaysProvider } from '../services/team-days-provider';
+import { SpaceDaysProvider } from '../services/space-days-provider';
 import { getWd2 } from '@sneat/extensions/schedulus/shared';
 import { Week } from './schedule-core';
 import { IDateChanged } from './calendar/calendar-state.service';
@@ -35,7 +35,7 @@ function initialAnimationState(parity: Parity): VirtualSlideAnimationsStates {
 export function swipeableDay(
 	parity: Parity,
 	date: Date,
-	teamDaysProvider: TeamDaysProvider,
+	teamDaysProvider: SpaceDaysProvider,
 	destroyed: Observable<void>,
 ): SwipeableDay {
 	const weekday = createWeekday(date, teamDaysProvider);
@@ -71,7 +71,7 @@ export function swipeableDay(
 
 function createWeekday(
 	date: Date,
-	teamDaysProvider: TeamDaysProvider,
+	teamDaysProvider: SpaceDaysProvider,
 ): Weekday {
 	const id = getWd2(date);
 	return {
@@ -84,7 +84,7 @@ function createWeekday(
 export interface SwipeableDay extends Swipeable {
 	// private readonly dayChanged = new Subject<void>();
 	weekday: Weekday;
-	teamDaysProvider: TeamDaysProvider;
+	teamDaysProvider: SpaceDaysProvider;
 	// public animationState: VirtualSlideAnimationsStates;
 
 	// constructor(
@@ -156,7 +156,7 @@ export interface SwipeableWeek extends Swipeable, Week {
 export function swipeableWeek(
 	parity: Parity,
 	date: Date,
-	teamDaysProvider: TeamDaysProvider,
+	teamDaysProvider: SpaceDaysProvider,
 	destroyed: Observable<void>,
 ): SwipeableWeek {
 	const activeDateID = dateToIso(date);

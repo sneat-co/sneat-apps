@@ -10,7 +10,7 @@ import {
 import { dateToIso } from '@sneat/core';
 import { WeekdayCode2 } from '@sneat/mod-schedulus-core';
 import { ISpaceContext } from '@sneat/team-models';
-import { TeamDaysProvider } from '../../../../services/team-days-provider';
+import { SpaceDaysProvider } from '../../../../services/space-days-provider';
 import {
 	ISlotUIContext,
 	NewHappeningParams,
@@ -24,21 +24,19 @@ import { Weekday } from '../../weekday';
 	templateUrl: './calendar-week.component.html',
 })
 export class CalendarWeekComponent implements OnChanges {
-	@Input() team: ISpaceContext = { id: '' };
-	@Input() week?: Week;
+	@Input({ required: true }) space: ISpaceContext = { id: '' };
+	@Input({ required: true }) week?: Week;
+	@Input({ required: true }) spaceDaysProvider?: SpaceDaysProvider;
 	@Input() filter?: ICalendarFilter;
-	@Input() teamDaysProvider?: TeamDaysProvider;
 
-	@Output() goNew = new EventEmitter<NewHappeningParams>();
-	@Output() dateSelected = new EventEmitter<Date>();
-	@Output() slotClicked = new EventEmitter<{
+	@Output() readonly goNew = new EventEmitter<NewHappeningParams>();
+	@Output() readonly dateSelected = new EventEmitter<Date>();
+	@Output() readonly slotClicked = new EventEmitter<{
 		slot: ISlotUIContext;
 		event: Event;
 	}>();
 
-	weekdays: Weekday[] = createWeekdays();
-
-	readonly id = (i: number, item: Weekday): WeekdayCode2 => item.id;
+	protected weekdays: Weekday[] = createWeekdays();
 
 	ngOnChanges(changes: SimpleChanges): void {
 		this.onWeekInputChanged(changes['week']);
@@ -69,8 +67,8 @@ export class CalendarWeekComponent implements OnChanges {
 		) {
 			return;
 		}
-		const { teamDaysProvider } = this;
-		if (!teamDaysProvider) {
+		const { spaceDaysProvider } = this;
+		if (!spaceDaysProvider) {
 			return;
 		}
 		const startDate = currentWeek.startDate.getDate();
@@ -81,7 +79,7 @@ export class CalendarWeekComponent implements OnChanges {
 			// console.log('ScheduleWeekComponent.onWeekInputChanged() => i=', i, '; startDate:', currentWeek.startDate, '; date:', date);
 			this.weekdays[i] = {
 				...this.weekdays[i],
-				day: teamDaysProvider.getTeamDay(date),
+				day: spaceDaysProvider.getTeamDay(date),
 			};
 		}
 	}

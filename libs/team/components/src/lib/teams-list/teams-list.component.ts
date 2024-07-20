@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
-import { TeamNavService, TeamService } from '@sneat/team-services';
+import { TeamNavService, SpaceService } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 
 @Component({
@@ -14,17 +14,18 @@ import { SneatUserService } from '@sneat/auth-core';
 	imports: [CommonModule, IonicModule, RouterModule],
 })
 export class TeamsListComponent {
+	// Inputs
+	@Input({ required: true }) spaces?: ISpaceContext[];
 	@Input() pathPrefix = '/space';
 	@Input() iconName = 'people-outline';
-	@Input() teams?: ISpaceContext[];
-	@Output() readonly beforeNavigateToTeam = new EventEmitter<ISpaceContext>();
 
-	protected readonly id = (_: number, o: { id: string }) => o.id;
+	// Outputs
+	@Output() readonly beforeNavigateToTeam = new EventEmitter<ISpaceContext>();
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		readonly userService: SneatUserService,
-		private readonly teamService: TeamService,
+		private readonly teamService: SpaceService,
 		private readonly teamNavService: TeamNavService,
 		private readonly navController: NavController,
 		private readonly menuController: MenuController,

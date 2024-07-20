@@ -9,7 +9,7 @@ import {
 } from '@sneat/extensions/assetus/components';
 import { IAssetContext, IAssetDtoGroup } from '@sneat/mod-assetus-core';
 import {
-	TeamComponentBaseParams,
+	SpaceComponentBaseParams,
 	TeamPageBaseComponent,
 } from '@sneat/team-components';
 import { Observable } from 'rxjs';
@@ -31,7 +31,7 @@ class AssetFactory {
 @Component({
 	selector: 'sneat-asset-group',
 	templateUrl: './asset-group-page.component.html',
-	providers: [TeamComponentBaseParams],
+	providers: [SpaceComponentBaseParams],
 	standalone: true,
 	imports: [
 		CommonModule,
@@ -49,7 +49,7 @@ export class AssetGroupPageComponent
 	public assets?: IAssetContext[];
 
 	constructor(
-		params: TeamComponentBaseParams,
+		params: SpaceComponentBaseParams,
 		route: ActivatedRoute,
 		private readonly assetGroupsService: IAssetGroupService,
 		private readonly assetService: IAssetService,

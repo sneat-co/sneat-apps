@@ -60,7 +60,7 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 
 	protected readonly destroyed = new EventEmitter<void>();
 
-	@Input() team: ISpaceContext = { id: '' };
+	@Input({ required: true }) space: ISpaceContext = { id: '' };
 	@Input() contactusTeam?: IContactusSpaceDboAndID;
 	@Input() happening?: IHappeningContext;
 
@@ -79,9 +79,6 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 	}
 
 	public deleting = false;
-
-	protected readonly id = (_: number, o: { id: string }) => o.id;
-	protected readonly index = (i: number): number => i;
 
 	get errorLogger() {
 		return this.happeningBaseComponentParams.errorLogger;
@@ -115,16 +112,16 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 
 	goHappening(event: Event): void {
 		event.stopPropagation();
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logErrorHandler(
 				'not able to navigate to happening without team context',
 			);
 			return;
 		}
-		console.log('goHappening()', this.happening, this.team);
+		console.log('goHappening()', this.happening, this.space);
 		this.teamNavService
 			.navigateForwardToSpacePage(
-				this.team,
+				this.space,
 				`happening/${this.happening?.id}`,
 				{
 					state: { happening: this.happening },
@@ -165,7 +162,7 @@ This operation can NOT be undone.`)
 			? this.happening
 			: {
 					...this.happening,
-					space: this.team || { id: '' },
+					space: this.space || { id: '' },
 				};
 
 		this.happeningService
@@ -182,7 +179,7 @@ This operation can NOT be undone.`)
 
 	protected selectMembers(event: Event): void {
 		event.stopPropagation();
-		const space = this.team;
+		const space = this.space;
 		if (!space) {
 			return;
 		}
@@ -203,7 +200,7 @@ This operation can NOT be undone.`)
 							this.happening?.brief?.related,
 							'contactus',
 							'contacts',
-							this.team.id,
+							this.space.id,
 						).includes(m.id),
 					) || [],
 				members: teamMembers,
@@ -221,11 +218,11 @@ This operation can NOT be undone.`)
 		if (!this.happening) {
 			return NEVER;
 		}
-		if (!this.team) {
+		if (!this.space) {
 			return NEVER;
 		}
 		const request: IHappeningContactRequest = {
-			spaceID: this.team.id,
+			spaceID: this.space.id,
 			happeningID: this.happening.id,
 			contact: { id: member.id },
 		};
@@ -245,11 +242,11 @@ This operation can NOT be undone.`)
 		if (!this.happening) {
 			return NEVER;
 		}
-		if (!this.team) {
+		if (!this.space) {
 			return NEVER;
 		}
 		const request: IHappeningContactRequest = {
-			spaceID: this.team.id,
+			spaceID: this.space.id,
 			happeningID: this.happening.id,
 			contact: { id: member.id },
 		};

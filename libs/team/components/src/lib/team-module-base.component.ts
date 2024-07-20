@@ -1,14 +1,14 @@
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { TeamComponentBaseParams } from './team-component-base-params';
-import { TeamBaseComponent } from './team-base.component';
+import { SpaceComponentBaseParams } from './space-component-base-params.service';
+import { SpaceBaseComponent } from './space-base-component.directive';
 import { TeamModuleService } from '@sneat/team-services';
 
 export abstract class TeamModuleBaseComponent<
 	Brief,
 	Dbo extends Brief,
-> extends TeamBaseComponent {
+> extends SpaceBaseComponent {
 	protected readonly teamModuleDto$ = new BehaviorSubject<
 		Dbo | null | undefined
 	>(undefined);
@@ -16,7 +16,7 @@ export abstract class TeamModuleBaseComponent<
 	constructor(
 		className: string,
 		route: ActivatedRoute,
-		teamParams: TeamComponentBaseParams,
+		teamParams: SpaceComponentBaseParams,
 		protected teamModuleService: TeamModuleService<Dbo>,
 	) {
 		super(className, route, teamParams);

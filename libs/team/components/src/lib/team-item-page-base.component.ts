@@ -12,7 +12,7 @@ import {
 } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TeamPageBaseComponent } from './team-page-base-component';
-import { TeamComponentBaseParams } from './team-component-base-params';
+import { SpaceComponentBaseParams } from './space-component-base-params.service';
 
 // type watchByIdFunc<Brief, Dto> = (params: ParamMap, itemId: string, teamId?: string) => Observable<INavContext<Brief, Dto>>;
 
@@ -25,7 +25,7 @@ export abstract class TeamItemPageBaseComponent<
 	protected constructor(
 		className: string,
 		route: ActivatedRoute,
-		teamParams: TeamComponentBaseParams,
+		teamParams: SpaceComponentBaseParams,
 		defaultBackPage: string,
 		private readonly itemName: TeamItem,
 		protected readonly teamItemService: ModuleTeamItemService<Brief, Dbo>,

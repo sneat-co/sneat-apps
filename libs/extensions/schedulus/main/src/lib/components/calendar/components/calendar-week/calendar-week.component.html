@@ -1,11 +1,14 @@
-<ion-item-group
-	*ngFor="let weekday of weekdays; trackBy: id"
-	style="margin-top: -1px"
->
-	<sneat-calendar-weekday
-		[team]="team"
-		[weekday]="weekday"
-		(slotClicked)="onSlotClicked($event)"
-		(dateSelected)="onDateSelected($event)"
-	/>
-</ion-item-group>
+@for(weekday of weekdays; track weekday.id) {
+	<ion-item-group
+		style="margin-top: -1px"
+	>
+		<sneat-calendar-weekday
+			[space]="space"
+			[weekday]="weekday"
+			(slotClicked)="onSlotClicked($event)"
+			(dateSelected)="onDateSelected($event)"
+		/>
+	</ion-item-group>
+}
+
+

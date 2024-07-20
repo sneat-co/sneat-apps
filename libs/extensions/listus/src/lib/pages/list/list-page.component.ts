@@ -12,7 +12,7 @@ import { IonicModule } from '@ionic/angular';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { SharedWithModule } from '@sneat/contactus-shared';
 import { ListusCoreServicesModule } from '../../services';
-import { TeamComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { IListInfo, IListItemBrief } from '../../dto';
 import { IListContext } from '../../contexts';
 import { takeUntil } from 'rxjs';
@@ -57,7 +57,7 @@ type ListPagePerforming =
 	],
 	styleUrls: ['./list-page.component.scss'],
 	providers: [
-		TeamComponentBaseParams,
+		SpaceComponentBaseParams,
 		ListusComponentBaseParams,
 		ListDialogsService,
 	],

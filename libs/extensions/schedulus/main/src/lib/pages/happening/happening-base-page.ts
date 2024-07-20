@@ -39,7 +39,7 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 		console.log(`${this.className}.setHappening(from=${from})`, happening);
 		this.happening = happening;
 		if (!this.team?.id && this.happening.space) {
-			this.teamContext = this.happening.space;
+			this.spaceContext = this.happening.space;
 		}
 	};
 

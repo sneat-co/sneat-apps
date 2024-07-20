@@ -11,7 +11,7 @@ import {
 	IHappeningContext,
 	newEmptyHappeningContext,
 } from '@sneat/mod-schedulus-core';
-import { TeamComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { first, takeUntil } from 'rxjs';
 import { HappeningFormComponent } from '../../components/happening-form/happening-form.component';
 import { CalendarBasePage } from '../calendar-base-page';
@@ -29,7 +29,7 @@ import { CalendarBasePage } from '../calendar-base-page';
 		HappeningFormComponent,
 		ContactusServicesModule,
 	],
-	providers: [TeamComponentBaseParams],
+	providers: [SpaceComponentBaseParams],
 })
 export class NewHappeningPageComponent extends CalendarBasePage {
 	@ViewChild('happeningPageFormComponent')
@@ -43,7 +43,7 @@ export class NewHappeningPageComponent extends CalendarBasePage {
 
 	protected happening?: IHappeningContext;
 
-	constructor(route: ActivatedRoute, params: TeamComponentBaseParams) {
+	constructor(route: ActivatedRoute, params: SpaceComponentBaseParams) {
 		super('NewHappeningPageComponent', route, params);
 		this.isToDo = location.pathname.includes('/new-task');
 		this.date = (history.state.date as string) || '';

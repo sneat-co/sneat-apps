@@ -6,7 +6,7 @@ import { ContactusServicesModule } from '@sneat/contactus-services';
 import { ContactsByTypeComponent } from '@sneat/contactus-shared';
 import { NewDebtFormComponent } from '@sneat/debtus-shared';
 import {
-	TeamComponentBaseParams,
+	SpaceComponentBaseParams,
 	TeamCoreComponentsModule,
 	TeamPageBaseComponent,
 } from '@sneat/team-components';
@@ -23,10 +23,10 @@ import {
 		NewDebtFormComponent,
 		ContactusServicesModule,
 	],
-	providers: [TeamComponentBaseParams],
+	providers: [SpaceComponentBaseParams],
 })
 export class DebtusHomePageComponent extends TeamPageBaseComponent {
-	constructor(router: ActivatedRoute, teamParams: TeamComponentBaseParams) {
+	constructor(router: ActivatedRoute, teamParams: SpaceComponentBaseParams) {
 		super('DebtusHomePageComponent', router, teamParams);
 	}
 }

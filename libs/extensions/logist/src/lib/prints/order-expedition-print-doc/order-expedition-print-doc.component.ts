@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TeamComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { LogistOrderService } from '../../services';
 import { OrderPrintPageBaseComponent } from '../order-print-page-base.component';
 
@@ -11,7 +11,7 @@ import { OrderPrintPageBaseComponent } from '../order-print-page-base.component'
 export class OrderExpeditionPrintDocComponent extends OrderPrintPageBaseComponent {
 	constructor(
 		route: ActivatedRoute,
-		teamParams: TeamComponentBaseParams,
+		teamParams: SpaceComponentBaseParams,
 		orderService: LogistOrderService,
 	) {
 		super('OrderShippingDocComponent', route, teamParams, orderService);

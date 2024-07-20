@@ -87,8 +87,6 @@ export class HappeningParticipantsComponent implements OnChanges {
 	// 	);
 	// }
 
-	protected readonly id = (_: number, o: { id: string }) => o.id;
-
 	protected isMemberCheckChanged(args: ICheckChangedArgs): void {
 		console.log('isMemberCheckChanged()', args);
 		// this.populateParticipants();

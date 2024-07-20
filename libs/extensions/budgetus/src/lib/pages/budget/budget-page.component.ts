@@ -12,8 +12,8 @@ import {
 import { AssetGroup } from '@sneat/mod-assetus-core';
 import { ICalendariumSpaceDbo, RepeatPeriod } from '@sneat/mod-schedulus-core';
 import {
-	TeamBaseComponent,
-	TeamComponentBaseParams,
+	SpaceBaseComponent,
+	SpaceComponentBaseParams,
 } from '@sneat/team-components';
 import { Totals } from '@sneat/team-models';
 import { takeUntil } from 'rxjs';
@@ -32,9 +32,9 @@ import { BudgetPeriodsComponent } from './budget-periods.component';
 		BudgetPeriodsComponent,
 		CalendariumServicesModule,
 	],
-	providers: [TeamComponentBaseParams],
+	providers: [SpaceComponentBaseParams],
 })
-export class BudgetPageComponent extends TeamBaseComponent {
+export class BudgetPageComponent extends SpaceBaseComponent {
 	public total?: number;
 	public liabilitiesMode: LiabilitiesMode = 'expenses';
 	public activePeriod: RepeatPeriod = 'weekly';
@@ -51,7 +51,7 @@ export class BudgetPageComponent extends TeamBaseComponent {
 
 	constructor(
 		route: ActivatedRoute,
-		params: TeamComponentBaseParams,
+		params: SpaceComponentBaseParams,
 		private readonly calendariumTeamService: CalendariumTeamService,
 		// private readonly assetGroupsService: IAssetGroupService,
 		// private readonly memberService: IMemberService,

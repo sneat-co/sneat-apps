@@ -1,15 +1,13 @@
 import { Component, Input } from '@angular/core';
-import {
-	IRecord,
-	IRetrospective,
-	ITeam,
-} from '../../../../../models/interfaces';
+import { IRecord } from '@sneat/data';
+import { IRetrospective } from '@sneat/scrumspace/scrummodels';
+import { ISpaceContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-retro-review-stage',
 	templateUrl: './retro-review-stage.component.html',
 })
 export class RetroReviewStageComponent {
-	@Input() team: IRecord<ITeam>;
-	@Input() retrospective: IRecord<IRetrospective>;
+	@Input({ required: true }) space: ISpaceContext = { id: '' };
+	@Input({ required: true }) retrospective?: IRecord<IRetrospective>;
 }

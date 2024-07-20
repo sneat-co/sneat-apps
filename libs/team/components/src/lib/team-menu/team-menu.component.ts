@@ -8,8 +8,8 @@ import { ContactusServicesModule } from '@sneat/contactus-services';
 import { IIdAndBrief } from '@sneat/core';
 import { zipMapBriefsWithIDs } from '@sneat/team-models';
 import { takeUntil } from 'rxjs/operators';
-import { TeamBaseComponent } from '../team-base.component';
-import { TeamComponentBaseParams } from '../team-component-base-params';
+import { SpaceBaseComponent } from '../space-base-component.directive';
+import { SpaceComponentBaseParams } from '../space-component-base-params.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -28,16 +28,14 @@ import { IonicModule } from '@ionic/angular';
 		AuthMenuItemComponent,
 		ContactusServicesModule,
 	],
-	providers: [TeamComponentBaseParams],
+	providers: [SpaceComponentBaseParams],
 })
-export class TeamMenuComponent extends TeamBaseComponent {
-	public teams?: readonly IIdAndBrief<IUserSpaceBrief>[];
-
-	protected readonly id = (_: number, o: { id: string }) => o.id;
+export class TeamMenuComponent extends SpaceBaseComponent {
+	public spaces?: readonly IIdAndBrief<IUserSpaceBrief>[];
 
 	constructor(
 		route: ActivatedRoute,
-		params: TeamComponentBaseParams,
+		params: SpaceComponentBaseParams,
 		private readonly menuCtrl: MenuController,
 	) {
 		super('TeamMenuComponent', route, params);
@@ -105,7 +103,7 @@ export class TeamMenuComponent extends TeamBaseComponent {
 		if (spaceID === this.team?.id) {
 			return;
 		}
-		const space = this.teams?.find((t) => t.id === spaceID);
+		const space = this.spaces?.find((t) => t.id === spaceID);
 		if (space) {
 			this.teamNav
 				.navigateToSpace(space)
@@ -122,9 +120,9 @@ export class TeamMenuComponent extends TeamBaseComponent {
 	private trackUserState = (userState: ISneatUserState): void => {
 		// console.log('TeamMenuComponent.trackUserState =>', userState);
 		if (userState?.record) {
-			this.teams = zipMapBriefsWithIDs(userState.record.spaces) || [];
+			this.spaces = zipMapBriefsWithIDs(userState.record.spaces) || [];
 		} else {
-			this.teams = undefined;
+			this.spaces = undefined;
 		}
 	};
 }

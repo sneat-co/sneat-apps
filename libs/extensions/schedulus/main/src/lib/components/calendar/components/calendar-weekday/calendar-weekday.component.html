@@ -29,7 +29,7 @@
 	<ng-container *ngFor="let slot of day?.slots || []">
 		<sneat-day-slot-item
 			*ngIf="showSlot(slot)"
-			[team]="team"
+			[space]="space"
 			[dateID]="day?.dateID"
 			[slotContext]="slot"
 			(slotClicked)="onSlotClicked($event)"

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IAddress } from '@sneat/contactus-core';
-import { TeamComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/team-components';
 import {
 	IContainerPoint,
 	ILogistOrderContext,
@@ -36,7 +36,7 @@ export class ContainerPrintDocComponent extends OrderPrintPageBaseComponent {
 
 	constructor(
 		route: ActivatedRoute,
-		teamParams: TeamComponentBaseParams,
+		teamParams: SpaceComponentBaseParams,
 		orderService: LogistOrderService,
 	) {
 		super('OrderShippingDocComponent', route, teamParams, orderService);
@@ -88,12 +88,12 @@ export class ContainerPrintDocComponent extends OrderPrintPageBaseComponent {
 					const counterparty = shippingPoint
 						? this.order?.dbo?.counterparties?.find(
 								(p) => p.contactID === shippingPoint.counterparty.contactID,
-						  )
+							)
 						: undefined;
 					const location = shippingPoint
 						? this.order?.dbo?.counterparties?.find(
 								(p) => p.contactID === shippingPoint.location.contactID,
-						  )
+							)
 						: undefined;
 					const point: IPoint = {
 						containerPoint,

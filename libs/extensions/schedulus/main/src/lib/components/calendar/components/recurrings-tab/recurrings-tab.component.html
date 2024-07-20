@@ -34,11 +34,12 @@
 	</ion-item>
 
 	<ng-template #list>
-		<sneat-happening-card
-			*ngFor="let recurring of recurrings || []; trackBy: id"
-			[happening]="recurring"
-			[team]="team"
-		/>
+		@for (recurring of recurrings || []; track recurring.id) {
+			<sneat-happening-card
+				[happening]="recurring"
+				[space]="space"
+			/>
+		}
 	</ng-template>
 } @else {
 	<ion-card>

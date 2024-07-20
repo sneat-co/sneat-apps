@@ -6,8 +6,8 @@ import { IContactContext } from '@sneat/contactus-core';
 import { first, takeUntil } from 'rxjs';
 import { ISelectItem } from '@sneat/components';
 import {
-	TeamBaseComponent,
-	TeamComponentBaseParams,
+	SpaceBaseComponent,
+	SpaceComponentBaseParams,
 } from '@sneat/team-components';
 import {
 	CounterpartyRole,
@@ -24,7 +24,7 @@ import { LogistOrderService, LogistTeamService } from '../../services';
 	selector: 'sneat-new-logist-order-page',
 	templateUrl: 'new-logist-order-page.component.html',
 })
-export class NewLogistOrderPageComponent extends TeamBaseComponent {
+export class NewLogistOrderPageComponent extends SpaceBaseComponent {
 	public order: ILogistOrderContext = {
 		id: '',
 		space: this.team || { id: '', type: 'company' },
@@ -56,7 +56,7 @@ export class NewLogistOrderPageComponent extends TeamBaseComponent {
 
 	constructor(
 		route: ActivatedRoute,
-		teamParams: TeamComponentBaseParams,
+		teamParams: SpaceComponentBaseParams,
 		private readonly freightOrdersService: LogistOrderService,
 		private readonly logistTeamService: LogistTeamService,
 		private readonly contactService: ContactService,

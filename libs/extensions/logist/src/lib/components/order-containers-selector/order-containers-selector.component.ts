@@ -15,19 +15,17 @@ import { IContainer } from './condainer-interface';
 	templateUrl: './order-containers-selector.component.html',
 })
 export class OrderContainersSelectorComponent implements OnChanges, OnInit {
-	@Input() order?: ILogistOrderContext;
+	@Input({ required: true }) order?: ILogistOrderContext;
 	@Input() container?: IContainer;
 	@Input() disabled?: boolean;
 
-	containers?: IContainer[];
+	protected containers?: IContainer[];
 
 	@Input() selectedContainerIDs: string[] = [];
 	@Output() readonly selectedContainerIDsChange = new EventEmitter<string[]>();
 	@Output() selectedContainersChange = new EventEmitter<IContainer[]>();
 
-	protected readonly id = (_: number, o: { id: string }) => o.id;
-
-	hasUncheckedContainers(): boolean {
+	protected hasUncheckedContainers(): boolean {
 		return !!this.containers?.some((c) => !c.checked);
 	}
 

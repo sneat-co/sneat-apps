@@ -18,7 +18,7 @@ export class DaySlotItemComponent {
 	@Input() mode: 'full' | 'brief' = 'full';
 	@Input() color?: 'light';
 
-	@Input() team: ISpaceContext = { id: '' };
+	@Input({ required: true }) space: ISpaceContext = { id: '' };
 	@Input() contactusTeam?: IContactusSpaceDboAndID;
 
 	@Output() readonly slotClicked = new EventEmitter<{
@@ -73,7 +73,7 @@ export class DaySlotItemComponent {
 		const popoverOptions: PopoverOptions = {
 			component: SlotContextMenuComponent,
 			componentProps: {
-				team: this.team,
+				space: this.space,
 				slotContext: this.slotContext,
 				dateID: this.dateID,
 				// state: stateOutput,

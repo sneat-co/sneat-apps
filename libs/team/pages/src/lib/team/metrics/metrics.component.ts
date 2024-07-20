@@ -4,7 +4,7 @@ import { IonicModule, NavController } from '@ionic/angular';
 import { IBoolMetricVal, ISpaceDbo, ISpaceMetric } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRecord } from '@sneat/data';
-import { TeamNavService, TeamService } from '@sneat/team-services';
+import { TeamNavService, SpaceService } from '@sneat/team-services';
 
 @Component({
 	selector: 'sneat-team-metrics',
@@ -21,7 +21,7 @@ export class MetricsComponent {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly teamService: TeamService,
+		private readonly teamService: SpaceService,
 		private readonly navController: NavController,
 		public readonly navService: TeamNavService,
 	) {}

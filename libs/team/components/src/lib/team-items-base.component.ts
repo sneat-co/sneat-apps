@@ -1,12 +1,12 @@
 import { ActivatedRoute } from '@angular/router';
-import { TeamBaseComponent } from './team-base.component';
-import { TeamComponentBaseParams } from './team-component-base-params';
+import { SpaceBaseComponent } from './space-base-component.directive';
+import { SpaceComponentBaseParams } from './space-component-base-params.service';
 
-export abstract class TeamItemsBaseComponent extends TeamBaseComponent {
+export abstract class TeamItemsBaseComponent extends SpaceBaseComponent {
 	protected constructor(
 		className: string,
 		route: ActivatedRoute,
-		teamParams: TeamComponentBaseParams,
+		teamParams: SpaceComponentBaseParams,
 		private parentPagePath: string,
 	) {
 		super(className, route, teamParams);

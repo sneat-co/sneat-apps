@@ -34,7 +34,7 @@ import {
 	mergeValuesWithIDs,
 	WeekdayCode2,
 } from '@sneat/mod-schedulus-core';
-import { TeamComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { ISpaceContext } from '@sneat/team-models';
 import {
 	HappeningService,
@@ -118,7 +118,7 @@ export class HappeningFormComponent
 		routingState: RoutingState,
 		private readonly changeDetectorRef: ChangeDetectorRef,
 		private readonly happeningService: HappeningService,
-		private readonly params: TeamComponentBaseParams,
+		private readonly params: SpaceComponentBaseParams,
 	) {
 		super('', errorLogger);
 		this.hasNavHistory = routingState.hasHistory();

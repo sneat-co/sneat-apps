@@ -18,7 +18,7 @@ import {
 } from '@sneat/contactus-services';
 import { ContactusModuleBaseComponent } from '@sneat/contactus-shared';
 import { IIdAndBrief, IIdAndOptionalDbo } from '@sneat/core';
-import { TeamComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { zipMapBriefsWithIDs } from '@sneat/team-models';
 
 @Component({
@@ -43,7 +43,7 @@ export class ContactsFilterComponent
 
 	constructor(
 		route: ActivatedRoute,
-		teamParams: TeamComponentBaseParams,
+		teamParams: SpaceComponentBaseParams,
 		protected contactusTeamService: ContactusTeamService,
 	) {
 		super('ContactsFilterComponent', route, teamParams, contactusTeamService);

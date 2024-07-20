@@ -39,31 +39,29 @@ export class SneatCardListComponent {
 	@Input() getRouterLink: (item: IProjItemBrief) => string = () =>
 		undefined as unknown as string;
 
-	@Output() cardTitleClick = new EventEmitter<void>();
-	@Output() itemClick = new EventEmitter<IProjItemBrief>();
-	@Output() tabChanged = new EventEmitter<string>();
+	@Output() readonly cardTitleClick = new EventEmitter<void>();
+	@Output() readonly itemClick = new EventEmitter<IProjItemBrief>();
+	@Output() readonly tabChanged = new EventEmitter<string>();
 
 	@ViewChild(IonInput, { static: false }) addInput?: IonInput;
 
 	filter = '';
 
-	public mode: 'list' | 'add' = 'list';
-	public name = '';
-	public isAdding?: boolean;
-
-	protected readonly id = (_: number, o: { id: string }) => o.id;
+	protected mode: 'list' | 'add' = 'list';
+	protected name = '';
+	protected isAdding?: boolean;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {}
 
-	click(event: Event, item: IProjItemBrief): void {
+	protected click(event: Event, item: IProjItemBrief): void {
 		event.preventDefault();
 		event.stopPropagation();
 		this.itemClick.emit(item);
 	}
 
-	public showAddForm(event: Event): void {
+	protected showAddForm(event: Event): void {
 		event.preventDefault();
 		event.stopPropagation();
 		this.mode = 'add';
@@ -79,7 +77,7 @@ export class SneatCardListComponent {
 		}, 200);
 	}
 
-	tryCreate(): void {
+	protected tryCreate(): void {
 		this.isAdding = true;
 		if (this.create) {
 			this.create(this.name.trim()).subscribe({

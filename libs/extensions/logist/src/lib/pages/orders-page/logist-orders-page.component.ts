@@ -2,8 +2,8 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { excludeEmpty } from '@sneat/core';
 import {
-	TeamBaseComponent,
-	TeamComponentBaseParams,
+	SpaceBaseComponent,
+	SpaceComponentBaseParams,
 } from '@sneat/team-components';
 import { Subscription, takeUntil } from 'rxjs';
 import { ILogistOrderContext, IOrdersFilter } from '../../dto';
@@ -16,7 +16,7 @@ const defaultFilter: IOrdersFilter = { status: 'active' };
 	templateUrl: 'logist-orders-page.component.html',
 	// changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LogistOrdersPageComponent extends TeamBaseComponent {
+export class LogistOrdersPageComponent extends SpaceBaseComponent {
 	orders?: ILogistOrderContext[];
 
 	private ordersSubscription?: Subscription;
@@ -26,7 +26,7 @@ export class LogistOrdersPageComponent extends TeamBaseComponent {
 
 	constructor(
 		route: ActivatedRoute,
-		teamParams: TeamComponentBaseParams,
+		teamParams: SpaceComponentBaseParams,
 		private readonly ordersService: LogistOrderService,
 		private readonly changeDetectorRef: ChangeDetectorRef,
 	) {

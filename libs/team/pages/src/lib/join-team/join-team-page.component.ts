@@ -26,7 +26,7 @@ import {
 import {
 	InviteService,
 	TeamNavService,
-	TeamService,
+	SpaceService,
 } from '@sneat/team-services';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs/operators';
@@ -74,7 +74,7 @@ export class JoinTeamPageComponent extends SneatBaseComponent {
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		protected readonly route: ActivatedRoute,
 		private readonly navService: TeamNavService,
-		private readonly teamService: TeamService,
+		private readonly teamService: SpaceService,
 		private readonly inviteService: InviteService,
 		private readonly authStateService: SneatAuthStateService,
 	) {

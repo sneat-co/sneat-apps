@@ -12,7 +12,7 @@ import {
 	ModuleAssetRealEstate,
 	VehicleCardComponent,
 } from '@sneat/extensions/assetus/components';
-import { TeamComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/team-components';
 
 interface LiabilityServiceBrief {
 	type: LiabilityServiceType;
@@ -22,7 +22,7 @@ interface LiabilityServiceBrief {
 @Component({
 	selector: 'sneat-asset-page',
 	templateUrl: './asset-page.component.html',
-	providers: [TeamComponentBaseParams, AssetComponentBaseParams],
+	providers: [SpaceComponentBaseParams, AssetComponentBaseParams],
 	standalone: true,
 	imports: [
 		CommonModule,

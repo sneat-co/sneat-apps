@@ -43,12 +43,12 @@ const teamBriefFromUserTeamInfo = (v: IUserSpaceBrief): ISpaceBrief => ({
 // }
 
 @Injectable()
-export class TeamService {
+export class SpaceService {
 	private userID?: string;
 
 	private currentUserTeams?: Record<string, IUserSpaceBrief>;
 
-	private teams$: Record<string, BehaviorSubject<ISpaceContext>> = {};
+	private spaces$: Record<string, BehaviorSubject<ISpaceContext>> = {};
 	private subscriptions: Subscription[] = [];
 
 	private readonly sfs: SneatFirestoreService<ISpaceBrief, ISpaceDbo>;
@@ -119,13 +119,13 @@ export class TeamService {
 	// 	return this.watchTeam(ref).pipe(first());
 	// }
 
-	public watchTeam(ref: ISpaceRef): Observable<ISpaceContext> {
+	public watchSpace(ref: ISpaceRef): Observable<ISpaceContext> {
 		console.log(`TeamService.watchTeam(ref=${JSON.stringify(ref)})`);
 		if (!ref) {
 			throw new Error('team ref is a required parameter');
 		}
 		const { id } = ref;
-		let subj = this.teams$[id];
+		let subj = this.spaces$[id];
 		if (subj) {
 			return subj.asObservable();
 		}
@@ -141,7 +141,7 @@ export class TeamService {
 			}
 		}
 		subj = new BehaviorSubject<ISpaceContext>(teamContext);
-		this.teams$[id] = subj;
+		this.spaces$[id] = subj;
 		if (this.userService.currentUserID) {
 			this.subscribeForTeamChanges(subj);
 		} else {
@@ -162,12 +162,12 @@ export class TeamService {
 			'TeamService.onTeamUpdated',
 			team ? { id: team.id, dto: { ...team.dbo } } : team,
 		);
-		let team$ = this.teams$[team.id];
+		let team$ = this.spaces$[team.id];
 		if (team$) {
 			const prevTeam = team$.value;
 			team = { ...prevTeam, ...team };
 		} else {
-			this.teams$[team.id] = team$ = new BehaviorSubject<ISpaceContext>(team);
+			this.spaces$[team.id] = team$ = new BehaviorSubject<ISpaceContext>(team);
 		}
 		team$.next(team);
 	}
@@ -216,7 +216,7 @@ export class TeamService {
 		userTeamInfo: IIdAndBrief<IUserSpaceBrief>,
 	): void => {
 		console.log('subscribeForFirestoreTeamChanges', userTeamInfo);
-		let subj = this.teams$[userTeamInfo.id];
+		let subj = this.spaces$[userTeamInfo.id];
 		if (subj) {
 			let team = subj.value;
 			if (!team.type) {
@@ -235,7 +235,7 @@ export class TeamService {
 			type: userTeamInfo.brief.type,
 			brief: teamBriefFromUserTeamInfo(userTeamInfo.brief),
 		};
-		this.teams$[userTeamInfo.id] = subj = new BehaviorSubject<ISpaceContext>(
+		this.spaces$[userTeamInfo.id] = subj = new BehaviorSubject<ISpaceContext>(
 			space,
 		);
 		this.subscribeForTeamChanges(subj);
@@ -253,7 +253,7 @@ export class TeamService {
 			.watchByID(spacesCollection, id)
 			.pipe(
 				map((team) => {
-					const prevTeam = this.teams$[id].value;
+					const prevTeam = this.spaces$[id].value;
 					console.log('prevTeam', prevTeam);
 					// if (prevTeam.assets) {
 					// 	team = { ...team, assets: prevTeam.assets};
@@ -273,9 +273,7 @@ export class TeamService {
 		this.subscriptions.push(
 			o.subscribe({
 				next: (v) => subj.next(v), // Do not use as "next: subj.next" because it will be called with wrong "this" context
-				error: this.errorLogger.logErrorHandler(
-					`Failed to watch team with ID="${id}"`,
-				),
+				error: (err) => subj.error(err),
 			}),
 		);
 	}
@@ -285,8 +283,8 @@ export class TeamService {
 		try {
 			this.subscriptions.forEach((s) => s.unsubscribe());
 			this.subscriptions = [];
-			this.teams$ = {};
-			console.log('unsubscribed => teams$:', this.teams$);
+			this.spaces$ = {};
+			console.log('unsubscribed => teams$:', this.spaces$);
 		} catch (e) {
 			this.errorLogger.logError(e, 'TeamService failed to unsubscribe');
 		}

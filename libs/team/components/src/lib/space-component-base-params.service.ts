@@ -8,11 +8,11 @@ import {
 	NgModulePreloaderService,
 } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { TeamNavService, TeamService } from '@sneat/team-services';
+import { TeamNavService, SpaceService } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 
 @Injectable()
-export class TeamComponentBaseParams {
+export class SpaceComponentBaseParams {
 	// TODO: verify it should be declared in providers attribute for each page or can be just on app level?
 	constructor(
 		@Inject(ErrorLogger) public readonly errorLogger: IErrorLogger,
@@ -21,7 +21,7 @@ export class TeamComponentBaseParams {
 		// public readonly changeDetectorRef: ChangeDetectorRef,
 		public readonly navController: NavController,
 		public readonly userService: SneatUserService,
-		public readonly teamService: TeamService,
+		public readonly teamService: SpaceService,
 		public readonly teamNavService: TeamNavService,
 		// public readonly contactusTeamService: ContactusTeamService,
 		public readonly preloader: NgModulePreloaderService,

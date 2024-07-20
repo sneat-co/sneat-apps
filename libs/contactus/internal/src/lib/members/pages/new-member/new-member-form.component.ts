@@ -227,8 +227,6 @@ export class NewMemberFormComponent implements OnChanges {
 		// 	);
 	}
 
-	protected readonly id = (_: number, o: { id: string }) => o.id;
-
 	onRelatedPersonChanged(relatedPerson: IRelatedPerson): void {
 		console.log(
 			'NewMemberFormComponent.onRelatedPersonChanged()',

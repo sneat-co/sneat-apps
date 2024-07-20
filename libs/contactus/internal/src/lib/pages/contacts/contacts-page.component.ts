@@ -20,7 +20,7 @@ import {
 	IMemberGroupContext,
 } from '@sneat/contactus-core';
 import {
-	TeamComponentBaseParams,
+	SpaceComponentBaseParams,
 	TeamCoreComponentsModule,
 	TeamItemsBaseComponent,
 } from '@sneat/team-components';
@@ -33,7 +33,7 @@ import { Subscription } from 'rxjs';
 @Component({
 	selector: 'sneat-contacts-page',
 	templateUrl: './contacts-page.component.html',
-	providers: [TeamComponentBaseParams],
+	providers: [SpaceComponentBaseParams],
 	animations: [listItemAnimations],
 	standalone: true,
 	imports: [
@@ -75,7 +75,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 
 	constructor(
 		route: ActivatedRoute,
-		params: TeamComponentBaseParams,
+		params: SpaceComponentBaseParams,
 		// private readonly contactService: ContactService,
 		private readonly contactusTeamService: ContactusTeamService,
 	) {

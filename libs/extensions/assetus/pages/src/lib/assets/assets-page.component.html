@@ -28,6 +28,14 @@
 	</ion-toolbar>
 </ion-header>
 <ion-content class="cardy">
+	<ion-card *ngIf="noPermissions">
+		<ion-card-header color="danger">No permissions</ion-card-header>
+		<ion-list lines="none">
+			<ion-item>
+				Looks like you have no permissions to view assets in this space.
+			</ion-item>
+		</ion-list>
+	</ion-card>
 	<!--<div class="segment">-->
 	<!--<ion-segment [(ngModel)]="segment">-->
 	<!--<ion-segment-button value="all">List</ion-segment-button>-->
@@ -48,34 +56,38 @@
 	<!--        </ion-item>-->
 	<!--    </ion-list>-->
 
-	<ion-card *ngFor="let assetType of assetTypes">
-		<ion-item-group>
-			<ion-item-divider color="light" class="sneat-tiny-end-padding">
-				<ion-icon [name]="assetType.iconName" slot="start" color="medium" />
-				<ion-label>{{ assetType.title }}</ion-label>
-				<ion-buttons slot="end">
-					<ion-button
-						color="primary"
-						title="Add vehicle"
-						(click)="goNew(assetType.id)"
-					>
-						<ion-icon name="add" />
-						<ion-label>Add</ion-label>
-					</ion-button>
-				</ion-buttons>
-			</ion-item-divider>
-			<sneat-assets-list
-				[assetType]="assetType.id"
-				[team]="team"
-				[allAssets]="assets"
-			/>
-		</ion-item-group>
-	</ion-card>
-	<ion-card>
-		<ion-card-content>
-			<ion-button expand="full" routerLink="../new-asset"
-				>Add new asset</ion-button
-			>
-		</ion-card-content>
-	</ion-card>
+	@if (!noPermissions) {
+		<ion-card *ngFor="let assetType of assetTypes">
+			<ion-item-group>
+				<ion-item-divider color="light" class="sneat-tiny-end-padding">
+					<ion-icon [name]="assetType.iconName" slot="start" color="medium" />
+					<ion-label>{{ assetType.title }}</ion-label>
+					<ion-buttons slot="end">
+						<ion-button
+							color="primary"
+							title="Add vehicle"
+							(click)="goNew(assetType.id)"
+						>
+							<ion-icon name="add" />
+							<ion-label>Add</ion-label>
+						</ion-button>
+					</ion-buttons>
+				</ion-item-divider>
+				<sneat-assets-list
+					[assetType]="assetType.id"
+					[team]="team"
+					[allAssets]="assets"
+				/>
+			</ion-item-group>
+		</ion-card>
+		<ion-card>
+			<ion-card-content>
+				<ion-button expand="full" routerLink="../new-asset"
+				>Add new asset
+				</ion-button
+				>
+			</ion-card-content>
+		</ion-card>
+
+	}
 </ion-content>

@@ -5,13 +5,13 @@ import { NavController } from '@ionic/angular';
 import { filter, first, mergeMap, takeUntil } from 'rxjs/operators';
 import { RetrospectiveService } from '../../retrospective.service';
 import { Subscription } from 'rxjs';
-import { TeamBaseComponent } from '@sneat/team-components';
+import { SpaceBaseComponent } from '@sneat/team-components';
 import { IRecord } from '@sneat/data';
 import {
 	IRetrospective,
 	RetrospectiveStage,
 } from '@sneat/scrumspace/scrummodels';
-import { TeamService } from '@sneat/team-services';
+import { SpaceService } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { getMeetingIdFromDate } from '@sneat/meeting';
@@ -21,7 +21,7 @@ import { getMeetingIdFromDate } from '@sneat/meeting';
 	templateUrl: './retrospective-page.component.html',
 })
 export class RetrospectivePageComponent
-	extends TeamBaseComponent
+	extends SpaceBaseComponent
 	implements OnDestroy
 {
 	public title = 'Retrospective';
@@ -31,7 +31,7 @@ export class RetrospectivePageComponent
 	constructor(
 		readonly changeDetectorRef: ChangeDetectorRef,
 		@Inject(ErrorLogger) readonly errorLogger: IErrorLogger,
-		readonly teamService: TeamService,
+		readonly spaceService: SpaceService,
 		readonly route: ActivatedRoute,
 		readonly userService: SneatUserService,
 		readonly navController: NavController,
@@ -42,7 +42,7 @@ export class RetrospectivePageComponent
 			route,
 			errorLogger,
 			navController,
-			teamService,
+			spaceService,
 			userService,
 		);
 		this.trackMeetingIdFromUrl();

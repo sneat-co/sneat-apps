@@ -9,9 +9,9 @@ import { CalendarFilterService } from '../../../calendar-filter.service';
 	templateUrl: 'recurrings-tab.component.html',
 })
 export class RecurringsTabComponent {
-	@Input() recurrings?: readonly IHappeningWithUiState[];
-	@Input() allRecurrings?: readonly IHappeningWithUiState[];
-	@Input() team: ISpaceContext = { id: '' };
+	@Input({ required: true }) recurrings?: readonly IHappeningWithUiState[];
+	@Input({ required: true }) allRecurrings?: readonly IHappeningWithUiState[];
+	@Input({ required: true }) space: ISpaceContext = { id: '' };
 	public readonly resetFilter: (event: Event) => void;
 
 	public get numberOfHidden(): number {
@@ -21,6 +21,4 @@ export class RecurringsTabComponent {
 	constructor(filterService: CalendarFilterService) {
 		this.resetFilter = filterService.resetFilterHandler;
 	}
-
-	protected readonly id = (_: number, o: IHappeningWithUiState) => o.id;
 }

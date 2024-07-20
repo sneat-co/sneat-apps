@@ -6,7 +6,7 @@ import { IIdAndBrief } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
 import { ICreateSpaceRequest, ISpaceContext } from '@sneat/team-models';
-import { TeamNavService, TeamService } from '@sneat/team-services';
+import { TeamNavService, SpaceService } from '@sneat/team-services';
 import { ISneatUserState, SneatUserService } from '@sneat/auth-core';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -18,7 +18,7 @@ import { takeUntil } from 'rxjs/operators';
 export class TeamsCardComponent implements OnInit, OnDestroy {
 	@ViewChild(IonInput, { static: false }) addTeamInput?: IonInput; // TODO: IonInput;
 
-	public teams?: IIdAndBrief<IUserSpaceBrief>[];
+	public spaces?: IIdAndBrief<IUserSpaceBrief>[];
 	public loadingState: 'Authenticating' | 'Loading' = 'Authenticating';
 	public teamName = '';
 	public adding = false;
@@ -26,13 +26,11 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 	private readonly destroyed = new Subject<void>();
 	private subscriptions: Subscription[] = [];
 
-	protected readonly id = (_: number, o: { id: string }) => o.id;
-
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly navService: TeamNavService,
 		private readonly userService: SneatUserService,
-		private readonly teamService: TeamService,
+		private readonly teamService: SpaceService,
 		private readonly contactService: ContactService,
 		@Inject(AnalyticsService)
 		private readonly analyticsService: IAnalyticsService,
@@ -81,7 +79,7 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 				);
 			return;
 		}
-		if (this.teams?.find((t) => t.brief.title === title)) {
+		if (this.spaces?.find((t) => t.brief.title === title)) {
 			this.toastController
 				.create({
 					message: 'You already have a team with the same name',
@@ -119,8 +117,8 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 					// memberType: request.memberType,
 					type: space?.dbo?.type || 'unknown',
 				};
-				if (userTeamBrief2 && !this.teams?.find((t) => t.id === space.id)) {
-					this.teams?.push({ id: space.id, brief: userTeamBrief2 });
+				if (userTeamBrief2 && !this.spaces?.find((t) => t.id === space.id)) {
+					this.spaces?.push({ id: space.id, brief: userTeamBrief2 });
 				}
 				this.adding = false;
 				this.teamName = '';
@@ -186,7 +184,7 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 					}
 				}
 				const uid = userState.user?.uid;
-				this.teams = undefined;
+				this.spaces = undefined;
 				if (!uid) {
 					this.unsubscribe('user signed out');
 					return;
@@ -213,16 +211,16 @@ export class TeamsCardComponent implements OnInit, OnDestroy {
 		console.log('TeamsCardComponent => user:', userState);
 		const user = userState.record;
 		if (user) {
-			this.teams = Object.entries(user?.spaces ? user.spaces : {}).map(
+			this.spaces = Object.entries(user?.spaces ? user.spaces : {}).map(
 				([id, team]) => ({ id, brief: team }),
 			);
-			this.teams.sort((a, b) => (a.brief.title > b.brief.title ? 1 : -1));
-			this.showAdd = !this.teams?.length;
+			this.spaces.sort((a, b) => (a.brief.title > b.brief.title ? 1 : -1));
+			this.showAdd = !this.spaces?.length;
 			if (this.showAdd) {
 				this.startAddingTeam();
 			}
 		} else {
-			this.teams = undefined;
+			this.spaces = undefined;
 		}
 	};
 }

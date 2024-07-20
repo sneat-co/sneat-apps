@@ -12,8 +12,8 @@ import { ContactusServicesModule } from '@sneat/contactus-services';
 import { APP_INFO, eq, IAppInfo } from '@sneat/core';
 import { IListGroup, IListInfo, ListType } from '../../dto';
 import {
-	TeamBaseComponent,
-	TeamComponentBaseParams,
+	SpaceBaseComponent,
+	SpaceComponentBaseParams,
 } from '@sneat/team-components';
 import { createShortSpaceInfoFromDbo } from '@sneat/team-models';
 import { Subscription } from 'rxjs';
@@ -37,9 +37,9 @@ import { NewListDialogModule } from './new-list-dialog.module';
 		NewListDialogModule,
 		ContactusServicesModule,
 	],
-	providers: [TeamComponentBaseParams, ListusComponentBaseParams],
+	providers: [SpaceComponentBaseParams, ListusComponentBaseParams],
 })
-export class ListsPageComponent extends TeamBaseComponent {
+export class ListsPageComponent extends SpaceBaseComponent {
 	@ViewChild('newListTitle', { static: false }) newListTitle?: IonInput;
 	addingToGroup: ListType | undefined;
 	listGroups?: IListGroup[];

@@ -34,8 +34,8 @@ const notImplemented = 'Sorry, not implemented yet';
 	templateUrl: 'slot-context-menu.component.html',
 })
 export class SlotContextMenuComponent {
-	@Input() team: ISpaceContext = { id: '' };
-	@Input() contactusTeam?: IContactusSpaceDboAndID;
+	@Input({ required: true }) space: ISpaceContext = { id: '' };
+	@Input({ required: true }) contactusSpace?: IContactusSpaceDboAndID;
 
 	@Input() dateID?: string;
 	@Input() public slotContext?: ISlotUIContext;
@@ -69,12 +69,12 @@ export class SlotContextMenuComponent {
 		console.log(`SlotContextMenuComponent.assign(${to})`);
 		event.stopPropagation();
 		event.preventDefault();
-		const space = this.team;
+		const space = this.space;
 		if (!space || !this.slotContext) {
 			return;
 		}
 		const members =
-			zipMapBriefsWithIDs(this.contactusTeam?.dbo?.contacts)?.map((mb) =>
+			zipMapBriefsWithIDs(this.contactusSpace?.dbo?.contacts)?.map((mb) =>
 				contactContextFromBrief(mb, space),
 			) || [];
 		const happening = this.slotContext.happening;
@@ -83,7 +83,7 @@ export class SlotContextMenuComponent {
 				happening?.dbo?.related || happening?.brief?.related,
 				'contactus',
 				'contacts',
-				this.team?.id || '',
+				this.space?.id || '',
 				m.id,
 			),
 		);
@@ -112,7 +112,7 @@ export class SlotContextMenuComponent {
 		if (!happening) {
 			return;
 		}
-		if (!this.team) {
+		if (!this.space) {
 			return;
 		}
 		const recurring = this.dateID
@@ -125,7 +125,7 @@ export class SlotContextMenuComponent {
 		this.happeningSlotModalService
 			.editSingleHappeningSlot(
 				event,
-				{ ...happening, space: this.team },
+				{ ...happening, space: this.space },
 				recurring,
 				this.slotContext?.slot,
 			)
@@ -184,7 +184,7 @@ export class SlotContextMenuComponent {
 		happening: IHappeningContext;
 		team: ISpaceContext;
 	} {
-		if (!this.team) {
+		if (!this.space) {
 			throw new Error('!this.team');
 		}
 		if (!this.slotContext) {
@@ -193,7 +193,7 @@ export class SlotContextMenuComponent {
 		event.stopPropagation();
 		event.preventDefault();
 		return {
-			team: this.team,
+			team: this.space,
 			slotContext: this.slotContext,
 			happening: this.slotContext.happening,
 		};
@@ -344,7 +344,7 @@ export class SlotContextMenuComponent {
 		if (!this.slotContext) {
 			return NEVER;
 		}
-		if (!this.team) {
+		if (!this.space) {
 			return NEVER;
 		}
 		const happeningID = this.slotContext.happening.id;
@@ -352,7 +352,7 @@ export class SlotContextMenuComponent {
 			return NEVER;
 		}
 		const request: IHappeningContactRequest = {
-			spaceID: this.team.id,
+			spaceID: this.space.id,
 			happeningID,
 			contact: { id: member.id },
 		};
@@ -370,11 +370,11 @@ export class SlotContextMenuComponent {
 		member: IIdAndBrief<IContactBrief>,
 	): Observable<void> => {
 		console.log('SlotContextMenuComponent.onMemberRemoved()', member);
-		if (!this.slotContext || !this.team) {
+		if (!this.slotContext || !this.space) {
 			return NEVER;
 		}
 		const request: IHappeningContactRequest = {
-			spaceID: this.team.id,
+			spaceID: this.space.id,
 			happeningID: this.slotContext.happening.id,
 			contact: { id: member.id },
 		};

@@ -34,7 +34,7 @@ export class SinglesTabComponent
 
 	public tab: 'upcoming' | 'past' | 'recent' = 'upcoming';
 
-	@Input() team: ISpaceContext = { id: '' };
+	@Input({ required: true }) space: ISpaceContext = { id: '' };
 	@Input() onSlotClicked?: (args: {
 		slot: ISlotUIContext;
 		event: Event;
@@ -53,7 +53,7 @@ export class SinglesTabComponent
 		console.log('SinglesTabComponent.ngOnChanges()', changes);
 		const teamChange = changes['team'];
 		if (teamChange) {
-			if (this.team?.id !== teamChange.previousValue?.id) {
+			if (this.space?.id !== teamChange.previousValue?.id) {
 				switch (this.tab) {
 					case 'upcoming':
 						this.watchUpcomingSingles();
@@ -89,7 +89,7 @@ export class SinglesTabComponent
 
 	private watchUpcomingSingles(): void {
 		this.upcomingSinglesSubscription = this.watchSingles(
-			this.happeningService.watchUpcomingSingles(this.team),
+			this.happeningService.watchUpcomingSingles(this.space),
 			this.upcomingSinglesSubscription,
 			(singles) => (this.upcomingSingles = singles),
 		);
@@ -97,7 +97,7 @@ export class SinglesTabComponent
 
 	private watchPastSingles(): void {
 		this.pastSinglesSubscription = this.watchSingles(
-			this.happeningService.watchPastSingles(this.team),
+			this.happeningService.watchPastSingles(this.space),
 			this.pastSinglesSubscription,
 			(singles) => (this.pastSingles = singles),
 		);
@@ -105,7 +105,7 @@ export class SinglesTabComponent
 
 	private watchRecentSingles(): void {
 		this.recentSinglesSubscription = this.watchSingles(
-			this.happeningService.watchRecentlyCreatedSingles(this.team),
+			this.happeningService.watchRecentlyCreatedSingles(this.space),
 			this.recentSinglesSubscription,
 			(singles) => (this.recentSingles = singles),
 		);
@@ -117,7 +117,7 @@ export class SinglesTabComponent
 		processSingles: (singles: IHappeningContext[]) => void,
 	): Subscription | undefined {
 		sub?.unsubscribe();
-		if (!this.team) {
+		if (!this.space) {
 			return undefined;
 		}
 

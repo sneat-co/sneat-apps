@@ -40,12 +40,12 @@
 	</ion-item>
 	<sneat-teams-list
 		*ngIf="!teamType || teamType === 'family'"
-		[teams]="familyTeams"
+		[spaces]="familyTeams"
 		iconName="people-circle-outline"
 		(beforeNavigateToTeam)="closeMenu()"
 	/>
 	<sneat-teams-list
-		[teams]="teams"
+		[spaces]="teams"
 		[pathPrefix]="pathPrefix"
 		(beforeNavigateToTeam)="closeMenu()"
 	/>

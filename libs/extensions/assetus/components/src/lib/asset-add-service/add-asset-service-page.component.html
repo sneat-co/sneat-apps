@@ -12,13 +12,14 @@
 		<ion-item-divider>
 			<ion-label>Please select provider</ion-label>
 		</ion-item-divider>
-		<ion-item
-			tappable
-			*ngFor="let serviceProvider of serviceProviders; trackBy: id"
-			(click)="selectProvider(serviceProvider)"
-		>
-			<ion-label>{{ serviceProvider.title }}</ion-label>
-		</ion-item>
+		@for (serviceProvider of serviceProviders; track: serviceProvider.id) {
+			<ion-item
+				tappable
+				(click)="selectProvider(serviceProvider)"
+			>
+				<ion-label>{{ serviceProvider.title }}</ion-label>
+			</ion-item>
+		}
 		<ion-item tappable>
 			<ion-label color="medium">
 				<ion-icon name="add" />

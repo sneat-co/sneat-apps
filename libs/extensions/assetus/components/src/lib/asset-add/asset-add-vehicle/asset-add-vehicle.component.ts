@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';
 import { timestamp } from '@sneat/dto';
-import { TeamComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/team-components';
 import {
 	AssetVehicleType,
 	EngineTypes,
@@ -19,7 +19,7 @@ import { AddAssetBaseComponent } from '../add-asset-base-component';
 @Component({
 	selector: 'sneat-asset-add-vehicle',
 	templateUrl: './asset-add-vehicle.component.html',
-	providers: [TeamComponentBaseParams],
+	providers: [SpaceComponentBaseParams],
 })
 export class AssetAddVehicleComponent
 	extends AddAssetBaseComponent
@@ -35,18 +35,18 @@ export class AssetAddVehicleComponent
 		{ id: 'boat', title: 'Boat', iconName: 'boat-outline' },
 	];
 
-	public countryIso2 = 'IE';
-	public regNumber = '';
-	public vin = '';
-	public yearOfBuild = '';
-	// public make = '';
-	// public model = '';
-	public engine = '';
-	public engines?: string[];
+	protected countryIso2 = 'IE';
+	protected regNumber = '';
+	protected vin = '';
+	protected yearOfBuild = '';
+	// protected make = '';
+	// protected model = '';
+	protected engine = '';
+	protected engines?: string[];
 
-	public nctExpires = ''; // ISO date string 'YYYY-MM-DD'
-	public taxExpires = ''; // ISO date string 'YYYY-MM-DD'
-	public nextServiceDue = ''; // ISO date string 'YYYY-MM-DD'
+	protected nctExpires = ''; // ISO date string 'YYYY-MM-DD'
+	protected taxExpires = ''; // ISO date string 'YYYY-MM-DD'
+	protected nextServiceDue = ''; // ISO date string 'YYYY-MM-DD'
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team'] && this.team) {
@@ -78,7 +78,7 @@ export class AssetAddVehicleComponent
 
 	constructor(
 		route: ActivatedRoute,
-		teamParams: TeamComponentBaseParams,
+		teamParams: SpaceComponentBaseParams,
 		assetService: AssetService,
 	) {
 		// super('AssetAddVehicleComponent', route, teamParams, assetService);
@@ -109,15 +109,13 @@ export class AssetAddVehicleComponent
 		}
 	}
 
-	protected readonly id = (_: number, o: { id: string }) => o.id;
-
 	formatDate(value?: string | string[] | null): string {
 		return value && !Array.isArray(value)
 			? format(parseISO(value), 'dd MMMM yyyy')
 			: '';
 	}
 
-	submitVehicleForm(): void {
+	protected submitVehicleForm(): void {
 		console.log('submitVehicleForm', this.vehicleAsset);
 		if (!this.team) {
 			throw 'no team context';

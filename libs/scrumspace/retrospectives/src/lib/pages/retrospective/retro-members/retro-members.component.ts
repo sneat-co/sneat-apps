@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { IMeetingMember } from '@sneat/meeting';
 import { IRecord } from '@sneat/data';
-import { ISpaceDbo, MemberRoleEnum } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { IRetrospective } from '@sneat/scrumspace/scrummodels';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
@@ -17,6 +17,7 @@ interface IRetroCount {
 }
 
 interface IMeetingMemberWithCounts extends IMeetingMember {
+	id: string;
 	counts?: Record<string, IRetroCount>;
 }
 
@@ -25,21 +26,19 @@ interface IMeetingMemberWithCounts extends IMeetingMember {
 	templateUrl: './retro-members.component.html',
 })
 export class RetroMembersComponent implements OnChanges {
-	@Input() team: IRecord<ITeamDto>;
-	@Input() retrospective: IRecord<IRetrospective>;
+	@Input({ required: true }) space?: ISpaceContext;
+	@Input({ required: true }) retrospective?: IRecord<IRetrospective>;
 
 	public membersTab: 'participants' | 'spectators' | 'absent' = 'participants';
 
-	public participants: IMeetingMemberWithCounts[];
-	public spectators: IMeetingMemberWithCounts[];
-	public absents: IMeetingMember[];
+	public participants?: IMeetingMemberWithCounts[];
+	public spectators?: IMeetingMemberWithCounts[];
+	public absents?: IMeetingMember[];
 
 	constructor(@Inject(ErrorLogger) private errorLogger: IErrorLogger) {}
 
-	protected readonly id = (_: number, o: { id: string }) => o.id;
-
 	public ngOnChanges(changes: SimpleChanges): void {
-		console.log('ngOnChanges', this.team, this.retrospective);
+		console.log('ngOnChanges', this.space, this.retrospective);
 		try {
 			if (changes.retrospective) {
 				const retrospective = this.retrospective?.dbo;
@@ -57,8 +56,8 @@ export class RetroMembersComponent implements OnChanges {
 			}
 			if (changes.team) {
 				// Check for this.retrospective?.data?.userIDs is not great
-				if (this.team?.dbo && !this.retrospective?.dbo?.userIDs) {
-					const { dbo } = this.team;
+				if (this.space?.dbo && !this.retrospective?.dbo?.userIDs) {
+					const { dbo } = this.space;
 					this.participants = dbo.members?.filter((m) =>
 						m.roles?.includes(MemberRoleEnum.contributor),
 					);

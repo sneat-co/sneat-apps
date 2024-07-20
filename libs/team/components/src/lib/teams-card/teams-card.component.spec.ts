@@ -5,7 +5,7 @@ import { TeamsCardComponent } from './teams-card.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserService } from '../../../services/user-service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TeamService } from '@sneat/team-services';
+import { SpaceService } from '@sneat/team-services';
 
 describe('TeamsCardComponent', () => {
 	let component: TeamsCardComponent;
@@ -19,7 +19,7 @@ describe('TeamsCardComponent', () => {
 				RouterTestingModule,
 				HttpClientTestingModule,
 			],
-			providers: [TeamService, UserService],
+			providers: [SpaceService, UserService],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(TeamsCardComponent);

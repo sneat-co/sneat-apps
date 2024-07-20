@@ -6,7 +6,7 @@ import { NavService } from '@sneat/datatug-core';
 import { ISpaceDbo } from '@sneat/dto';
 import { IScrumDbo } from '@sneat/scrumspace/scrummodels';
 import { ISpaceContext } from '@sneat/team-models';
-import { TeamService } from '@sneat/team-services';
+import { SpaceService } from '@sneat/team-services';
 import { ScrumService } from '../services/scrum.service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
@@ -22,7 +22,7 @@ export class ScrumsHistoryPageComponent {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly route: ActivatedRoute,
-		private readonly teamService: TeamService,
+		private readonly teamService: SpaceService,
 		private readonly scrumService: ScrumService,
 		private readonly afAuth: AngularFireAuth,
 		private readonly navService: NavService,
@@ -35,7 +35,7 @@ export class ScrumsHistoryPageComponent {
 			const id = route.snapshot.queryParamMap.get('team');
 			if (id) {
 				this.team = { id };
-				this.teamService.watchTeam(this.team).subscribe((team) => {
+				this.teamService.watchSpace(this.team).subscribe((team) => {
 					this.team = team;
 				});
 			}

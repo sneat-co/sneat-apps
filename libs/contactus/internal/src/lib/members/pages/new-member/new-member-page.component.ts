@@ -15,7 +15,7 @@ import {
 } from '@sneat/contactus-core';
 import {
 	TeamPageBaseComponent,
-	TeamComponentBaseParams,
+	SpaceComponentBaseParams,
 	InviteLinksComponent,
 } from '@sneat/team-components';
 import { filter, first, takeUntil } from 'rxjs';
@@ -24,7 +24,7 @@ import { NewMemberFormComponent } from './new-member-form.component';
 @Component({
 	selector: 'sneat-new-member-page',
 	templateUrl: './new-member-page.component.html',
-	providers: [TeamComponentBaseParams, ContactComponentBaseParams],
+	providers: [SpaceComponentBaseParams, ContactComponentBaseParams],
 	standalone: true,
 	imports: [
 		CommonModule,

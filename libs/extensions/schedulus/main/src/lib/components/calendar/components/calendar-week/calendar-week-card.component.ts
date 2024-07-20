@@ -10,7 +10,7 @@ import { virtualSliderAnimations } from '@sneat/components';
 import { ISlotUIContext } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
-import { TeamDaysProvider } from '../../../../services/team-days-provider';
+import { SpaceDaysProvider } from '../../../../services/space-days-provider';
 import { getToday, CalendarStateService } from '../../calendar-state.service';
 import { SwipeableBaseComponent } from '../../../swipeable-base.component';
 import { SwipeableWeek, swipeableWeek } from '../../../swipeable-ui';
@@ -24,8 +24,8 @@ export class CalendarWeekCardComponent
 	extends SwipeableBaseComponent
 	implements AfterViewInit
 {
-	@Input() team: ISpaceContext = { id: '' };
-	@Input() teamDaysProvider?: TeamDaysProvider;
+	@Input({ required: true }) space: ISpaceContext = { id: '' };
+	@Input({ required: true }) spaceDaysProvider?: SpaceDaysProvider;
 	@Output() readonly slotClicked = new EventEmitter<{
 		slot: ISlotUIContext;
 		event: Event;
@@ -47,13 +47,13 @@ export class CalendarWeekCardComponent
 	}
 
 	ngAfterViewInit(): void {
-		if (this.teamDaysProvider) {
+		if (this.spaceDaysProvider) {
 			this.createSlides();
 		}
 	}
 
 	private createSlides(): void {
-		if (!this.teamDaysProvider) {
+		if (!this.spaceDaysProvider) {
 			return;
 		}
 		const current = getToday();
@@ -62,13 +62,13 @@ export class CalendarWeekCardComponent
 		this.oddSlide = swipeableWeek(
 			'odd',
 			current,
-			this.teamDaysProvider,
+			this.spaceDaysProvider,
 			this.destroyed$,
 		);
 		this.evenSlide = swipeableWeek(
 			'even',
 			next,
-			this.teamDaysProvider,
+			this.spaceDaysProvider,
 			this.destroyed$,
 		);
 	}

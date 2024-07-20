@@ -4,8 +4,8 @@ import { CONTACT_ROLES_BY_TYPE, IContactRole } from '@sneat/app';
 import { ISelectItem } from '@sneat/components';
 import { ContactRole } from '@sneat/contactus-core';
 import {
-	TeamBaseComponent,
-	TeamComponentBaseParams,
+	SpaceBaseComponent,
+	SpaceComponentBaseParams,
 } from '@sneat/team-components';
 import { IContactContext } from '@sneat/contactus-core';
 import { first, takeUntil } from 'rxjs';
@@ -15,7 +15,7 @@ import { first, takeUntil } from 'rxjs';
 	templateUrl: 'new-logist-company-page.component.html',
 })
 export class NewLogistCompanyPageComponent
-	extends TeamBaseComponent
+	extends SpaceBaseComponent
 	implements OnDestroy
 {
 	readonly contactTypes: ISelectItem[] = [
@@ -30,7 +30,7 @@ export class NewLogistCompanyPageComponent
 
 	constructor(
 		route: ActivatedRoute,
-		teamParams: TeamComponentBaseParams,
+		teamParams: SpaceComponentBaseParams,
 		@Inject(CONTACT_ROLES_BY_TYPE)
 		public readonly contactRolesByType: Record<string, IContactRole[]>,
 	) {

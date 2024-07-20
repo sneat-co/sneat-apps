@@ -8,10 +8,10 @@ import { AssetusRoutingModule } from '@sneat/extensions/assetus/pages';
 import { budgetusRoutes } from '@sneat/extensions/budgetus';
 import { docusRoutes } from '@sneat/extensions/docus';
 import { listusRoutes } from '@sneat/extensions/listus';
- 
+
 import { calendariumRoutes } from '@sneat/extensions/schedulus/main';
 import {
-	TeamComponentBaseParams,
+	SpaceComponentBaseParams,
 	TeamMenuComponent,
 } from '@sneat/team-components';
 
@@ -26,8 +26,8 @@ const routes: Routes = [
 		path: '',
 		// pathMatch: 'full',
 		loadComponent: () =>
-			import('./team-page/team-page.component').then(
-				(m) => m.TeamPageComponent,
+			import('./team-page/space-page.component').then(
+				(m) => m.SpacePageComponent,
 			),
 	},
 	...contactusRoutes,
@@ -65,6 +65,6 @@ const routes: Routes = [
 	],
 	exports: [RouterModule],
 	declarations: [],
-	providers: [TeamComponentBaseParams],
+	providers: [SpaceComponentBaseParams],
 })
 export class TeamSpaceRoutingModule {}

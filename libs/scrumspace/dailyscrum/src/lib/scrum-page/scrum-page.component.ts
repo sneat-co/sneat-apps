@@ -22,8 +22,8 @@ import {
 import { ScrumService } from '../services/scrum.service';
 import { IScrumDbo, IStatus, TaskType } from '@sneat/scrumspace/scrummodels';
 import {
-	TeamBaseComponent,
-	TeamComponentBaseParams,
+	SpaceBaseComponent,
+	SpaceComponentBaseParams,
 } from '@sneat/team-components';
 import { ScrumPageTab } from '@sneat/team-services';
 import { Subscription } from 'rxjs';
@@ -34,10 +34,10 @@ import { IMetric } from '../interfaces';
 	selector: 'sneat-scrum-page',
 	templateUrl: './scrum-page.component.html',
 	styleUrls: ['./scrum-page.component.scss'],
-	providers: [TeamComponentBaseParams],
+	providers: [SpaceComponentBaseParams],
 })
 export class ScrumPageComponent
-	extends TeamBaseComponent
+	extends SpaceBaseComponent
 	implements OnInit, OnDestroy
 {
 	public tab: ScrumPageTab = 'my';
@@ -79,7 +79,7 @@ export class ScrumPageComponent
 	constructor(
 		readonly changeDetectorRef: ChangeDetectorRef,
 		route: ActivatedRoute,
-		params: TeamComponentBaseParams,
+		params: SpaceComponentBaseParams,
 		private readonly scrumService: ScrumService,
 		@Inject(AnalyticsService)
 		private readonly analyticsService: IAnalyticsService,
@@ -387,7 +387,6 @@ export class ScrumPageComponent
 				break;
 			default:
 				console.log(
-					 
 					`loaded scrum(${id}) not related to current(${this.scrumID}) or previous(${this.prevScrumID}) or next(${this.nextScrumID}):`,
 					scrum,
 				);

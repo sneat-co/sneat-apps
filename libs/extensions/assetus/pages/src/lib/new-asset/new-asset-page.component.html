@@ -21,16 +21,17 @@
 			<ion-label>Select asset kind</ion-label>
 		</ion-item>
 		<ion-list *ngIf="!category">
-			<ion-item
-				[lines]="last ? 'none' : 'full'"
-				button
-				*ngFor="let c of categories || []; trackBy: id; let last = last"
-				(click)="selectCategory(c)"
-			>
-				<ion-radio slot="start" labelPlacement="end">
-					{{ c.title }}
-				</ion-radio>
-			</ion-item>
+			@for (c of categories; track c.id; let last = $last) {
+				<ion-item
+					[lines]="last ? 'none' : 'full'"
+					button
+					(click)="selectCategory(c)"
+				>
+					<ion-radio slot="start" labelPlacement="end">
+						{{ c.title }}
+					</ion-radio>
+				</ion-item>
+			}
 		</ion-list>
 	</ion-card>
 

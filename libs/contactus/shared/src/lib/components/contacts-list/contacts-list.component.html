@@ -1,5 +1,7 @@
 <ion-list>
-	<ion-item-sliding *ngFor="let contact of contacts || []; trackBy: id">
-		<sneat-contacts-list-item [contact]="contact" />
-	</ion-item-sliding>
+	@for (contact of contacts; track contact.id) {
+		<ion-item-sliding>
+			<sneat-contacts-list-item [contact]="contact" />
+		</ion-item-sliding>
+	}
 </ion-list>

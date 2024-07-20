@@ -70,8 +70,6 @@ export class SelectFromListComponent
 
 	protected filter = '';
 
-	protected readonly id = (_: number, o: ISelectItem) => o.id;
-
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {}

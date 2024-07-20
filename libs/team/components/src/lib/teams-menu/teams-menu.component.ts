@@ -13,7 +13,7 @@ import {
 	spaceContextFromBrief,
 	zipMapBriefsWithIDs,
 } from '@sneat/team-models';
-import { TeamNavService, TeamService } from '@sneat/team-services';
+import { TeamNavService, SpaceService } from '@sneat/team-services';
 import { first } from 'rxjs';
 import { TeamsListComponent } from '../teams-list';
 
@@ -42,7 +42,7 @@ export class TeamsMenuComponent {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		readonly userService: SneatUserService,
-		private readonly teamService: TeamService,
+		private readonly teamService: SpaceService,
 		private readonly teamNavService: TeamNavService,
 		private readonly navController: NavController,
 		private readonly menuController: MenuController,

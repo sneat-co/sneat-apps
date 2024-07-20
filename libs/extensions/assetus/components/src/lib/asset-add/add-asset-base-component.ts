@@ -3,7 +3,7 @@ import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { AssetExtraType, IAssetExtra } from '@sneat/mod-assetus-core';
-import { TeamComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { ISpaceContext } from '@sneat/team-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { AssetService } from '../services';
@@ -29,7 +29,7 @@ export abstract class AddAssetBaseComponent extends SneatBaseComponent {
 	protected constructor(
 		@Inject(new InjectionToken('className')) className: string,
 		protected readonly route: ActivatedRoute,
-		protected teamParams: TeamComponentBaseParams,
+		protected teamParams: SpaceComponentBaseParams,
 		protected readonly assetService: AssetService,
 	) {
 		super(className, teamParams.errorLogger);

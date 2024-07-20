@@ -10,38 +10,41 @@
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
-	<ion-list *ngIf="!teams">
+	<ion-list *ngIf="!spaces">
 		<ion-item>
 			<ion-spinner name="" slot="start" color="medium" />
 			<ion-buttons slot="start">
 				<ion-button disabled="disabled" style="text-transform: none"
-					>{{ loadingState }}...</ion-button
+				>{{ loadingState }}...
+				</ion-button
 				>
 			</ion-buttons>
 			<ion-skeleton-text animated />
 		</ion-item>
 	</ion-list>
-	<ion-list *ngIf="teams">
-		<ion-item-sliding *ngFor="let team of teams; trackBy: id">
-			<ion-item tappable detail (click)="goTeam(team)">
-				<ion-label>{{ team.brief.title }}</ion-label>
-				<ion-buttons slot="end">
-					<ion-button color="medium" (click)="leaveTeam(team, $event)">
-						<ion-icon name="close" />
-					</ion-button>
-				</ion-buttons>
-			</ion-item>
-			<ion-item-options side="start">
-				<ion-item-option color="danger" (click)="leaveTeam(team)"
+	<ion-list *ngIf="spaces">
+		@for (space of spaces; track space.id) {
+			<ion-item-sliding>
+				<ion-item tappable detail (click)="goTeam(space)">
+					<ion-label>{{ space.brief.title }}</ion-label>
+					<ion-buttons slot="end">
+						<ion-button color="medium" (click)="leaveTeam(space, $event)">
+							<ion-icon name="close" />
+						</ion-button>
+					</ion-buttons>
+				</ion-item>
+				<ion-item-options side="start">
+					<ion-item-option color="danger" (click)="leaveTeam(space)"
 					>Leave team
-				</ion-item-option>
-			</ion-item-options>
-			<ion-item-options side="end">
-				<ion-item-option color="danger" (click)="leaveTeam(team)"
+					</ion-item-option>
+				</ion-item-options>
+				<ion-item-options side="end">
+					<ion-item-option color="danger" (click)="leaveTeam(space)"
 					>Leave team
-				</ion-item-option>
-			</ion-item-options>
-		</ion-item-sliding>
+					</ion-item-option>
+				</ion-item-options>
+			</ion-item-sliding>
+		}
 	</ion-list>
 	<ion-item *ngIf="showAdd" [disabled]="adding">
 		<ion-input
@@ -58,7 +61,7 @@
 			<ion-button
 				(click)="showAdd = false"
 				color="medium"
-				*ngIf="!!teams?.length"
+				*ngIf="!!spaces?.length"
 				title="Cancel"
 			>
 				<ion-spinner *ngIf="adding" />

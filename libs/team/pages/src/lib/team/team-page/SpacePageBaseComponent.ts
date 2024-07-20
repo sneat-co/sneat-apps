@@ -3,13 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { IIdAndBrief, TopMenuService } from '@sneat/core';
 import { IContactusSpaceDboAndID, IContactBrief } from '@sneat/contactus-core';
 import {
-	TeamBaseComponent,
-	TeamComponentBaseParams,
+	SpaceBaseComponent,
+	SpaceComponentBaseParams,
 } from '@sneat/team-components';
 import { zipMapBriefsWithIDs } from '@sneat/team-models';
 
-export abstract class TeamPageBaseComponent
-	extends TeamBaseComponent
+export abstract class SpacePageBaseComponent
+	extends SpaceBaseComponent
 	implements OnDestroy
 {
 	protected members?: readonly IIdAndBrief<IContactBrief>[]; // TODO: Should be in dedicated component
@@ -17,7 +17,7 @@ export abstract class TeamPageBaseComponent
 	protected constructor(
 		className: string,
 		route: ActivatedRoute,
-		params: TeamComponentBaseParams,
+		params: SpaceComponentBaseParams,
 		protected readonly topMenuService: TopMenuService,
 		protected readonly cd: ChangeDetectorRef, // readonly navService: TeamNavService,
 	) {

@@ -150,7 +150,7 @@ const groupRecurringSlotsByWeekday = (
 };
 
 // @Injectable()
-export class TeamDaysProvider {
+export class SpaceDaysProvider {
 	/*extends ISlotsProvider*/
 	// At the moment tracks schedule of a single team
 	// but probably will track multiple teams at once.

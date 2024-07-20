@@ -4,12 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { IRecord } from '@sneat/data';
 import { DtoServiceProvider } from '@sneat/dto';
-import { TeamComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/team-components';
 
 @Component({
 	selector: 'sneat-select-service-provider',
 	templateUrl: './select-service-provider-page.component.html',
-	providers: [TeamComponentBaseParams],
+	providers: [SpaceComponentBaseParams],
 	standalone: true,
 	imports: [CommonModule, FormsModule, IonicModule],
 })
@@ -22,7 +22,7 @@ export class SelectServiceProviderPageComponent extends AssetBasePage {
 	constructor(
 		// assetService: IAssetService,
 		// private serviceProviderService: IServiceProviderService,
-		params: TeamComponentBaseParams,
+		params: SpaceComponentBaseParams,
 	) {
 		super(CommuneTopPage.asset, params, assetService);
 	}

@@ -6,16 +6,16 @@
 
 <sneat-single-happenings-list
 	*ngIf="tab === 'upcoming'"
-	[team]="team"
+	[team]="space"
 	[happenings]="upcomingSingles"
 />
 <sneat-single-happenings-list
 	*ngIf="tab === 'past'"
-	[team]="team"
+	[team]="space"
 	[happenings]="pastSingles"
 />
 <sneat-single-happenings-list
 	*ngIf="tab === 'recent'"
-	[team]="team"
+	[team]="space"
 	[happenings]="recentSingles"
 />

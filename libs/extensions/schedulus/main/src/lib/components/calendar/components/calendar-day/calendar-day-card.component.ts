@@ -10,7 +10,7 @@ import { virtualSliderAnimations } from '@sneat/components';
 import { HappeningType } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
-import { TeamDaysProvider } from '../../../../services/team-days-provider';
+import { SpaceDaysProvider } from '../../../../services/space-days-provider';
 import { ScheduleNavService } from '@sneat/extensions/schedulus/shared';
 import {
 	ISlotUIContext,
@@ -32,8 +32,8 @@ export class CalendarDayCardComponent
 	extends CalendarDayBaseComponent
 	implements AfterViewInit
 {
-	@Input() team: ISpaceContext = { id: '' };
-	@Input() teamDaysProvider?: TeamDaysProvider;
+	@Input({ required: true }) space: ISpaceContext = { id: '' };
+	@Input({ required: true }) spaceDaysProvider?: SpaceDaysProvider;
 	@Output() goNew = new EventEmitter<NewHappeningParams>();
 
 	@Input() set activeDayPlus(value: number) {
@@ -66,11 +66,11 @@ export class CalendarDayCardComponent
 
 	protected newHappeningUrl(type: HappeningType): string {
 		// TODO: Should use some shared func to get URL
-		return `space/${this.team?.type}/${this.team?.id}/new-happening?type=${type}&wd=${this.activeDay?.weekday?.id}&date=${this.activeDay?.activeDateID}`;
+		return `space/${this.space?.type}/${this.space?.id}/new-happening?type=${type}&wd=${this.activeDay?.weekday?.id}&date=${this.activeDay?.activeDateID}`;
 	}
 
 	protected goNewHappening(type: HappeningType): boolean {
-		if (!this.team) {
+		if (!this.space) {
 			return false;
 		}
 		const params: NewHappeningParams = {
@@ -78,12 +78,12 @@ export class CalendarDayCardComponent
 			wd: this.activeDay?.weekday?.id,
 			date: this.activeDay?.activeDateID,
 		};
-		this.scheduleNavService.goNewHappening(this.team, params);
+		this.scheduleNavService.goNewHappening(this.space, params);
 		return false;
 	}
 
 	private createSlides(): void {
-		if (!this.teamDaysProvider) {
+		if (!this.spaceDaysProvider) {
 			throw new Error('!this.teamDaysProvider');
 		}
 		const current = getToday();
@@ -96,13 +96,13 @@ export class CalendarDayCardComponent
 		this.oddSlide = swipeableDay(
 			'odd',
 			current,
-			this.teamDaysProvider,
+			this.spaceDaysProvider,
 			this.destroyed$,
 		);
 		this.evenSlide = swipeableDay(
 			'even',
 			next,
-			this.teamDaysProvider,
+			this.spaceDaysProvider,
 			this.destroyed$,
 		);
 		this.onDateChanged({ date: current, shiftDirection: '' });

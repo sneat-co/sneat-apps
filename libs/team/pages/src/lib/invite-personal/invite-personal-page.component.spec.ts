@@ -5,7 +5,7 @@ import { InvitePersonalPageComponent } from './invite-personal-page.component';
 import { UserService } from '../../services/user-service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TeamService } from '@sneat/team-services';
+import { SpaceService } from '@sneat/team-services';
 
 describe('InvitePersonalPage', () => {
 	let component: InvitePersonalPageComponent;
@@ -19,7 +19,7 @@ describe('InvitePersonalPage', () => {
 				HttpClientTestingModule,
 				RouterTestingModule,
 			],
-			providers: [UserService, TeamService],
+			providers: [UserService, SpaceService],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(InvitePersonalPageComponent);

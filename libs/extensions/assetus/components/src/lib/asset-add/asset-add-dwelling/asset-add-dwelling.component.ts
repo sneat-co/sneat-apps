@@ -8,7 +8,7 @@ import {
 	IAssetDwellingContext,
 	IAssetDwellingExtra,
 } from '@sneat/mod-assetus-core';
-import { TeamComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { ICreateAssetRequest } from '../../services';
 import { AssetService } from '../../services/asset-service';
 import { AddAssetBaseComponent } from '../add-asset-base-component';
@@ -16,7 +16,7 @@ import { AddAssetBaseComponent } from '../add-asset-base-component';
 @Component({
 	selector: 'sneat-asset-add-dwelling',
 	templateUrl: './asset-add-dwelling.component.html',
-	providers: [TeamComponentBaseParams],
+	providers: [SpaceComponentBaseParams],
 })
 export class AssetAddDwellingComponent
 	extends AddAssetBaseComponent
@@ -33,7 +33,7 @@ export class AssetAddDwellingComponent
 
 	constructor(
 		route: ActivatedRoute,
-		teamParams: TeamComponentBaseParams,
+		teamParams: SpaceComponentBaseParams,
 		assetService: AssetService,
 	) {
 		super('AssetAddDwellingComponent', route, teamParams, assetService);

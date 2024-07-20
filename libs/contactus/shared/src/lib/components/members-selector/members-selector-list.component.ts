@@ -9,7 +9,7 @@ import { first, Observable } from 'rxjs';
 	templateUrl: 'members-selector-list.component.html',
 })
 export class MembersSelectorListComponent {
-	// Intentionally removed @Input() team: ITeamContext = { id: '' };
+	// Intentionally removed @Input({ required: true }) space: ISpaceContext = { id: '' };
 	@Input() public members?: readonly IIdAndBrief<IContactBrief>[];
 	@Input() selectedMembers?: readonly IIdAndBrief<IContactBrief>[];
 	@Output() readonly selectedMembersChange = new EventEmitter<

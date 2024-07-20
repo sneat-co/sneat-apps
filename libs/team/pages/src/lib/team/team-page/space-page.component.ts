@@ -14,16 +14,16 @@ import { MembersListComponent } from '@sneat/contactus-shared';
 import { IIdAndOptionalDbo, TopMenuService } from '@sneat/core';
 import {
 	InviteLinksComponent,
-	TeamComponentBaseParams,
+	SpaceComponentBaseParams,
 } from '@sneat/team-components';
 import { TeamServiceModule } from '@sneat/team-services';
 import { MembersComponent } from '../members/members.component';
-import { TeamPageBaseComponent } from './TeamPageBaseComponent';
+import { SpacePageBaseComponent } from './SpacePageBaseComponent';
 
 @Component({
 	selector: 'sneat-team-page',
-	templateUrl: './team-page.component.html',
-	providers: [TeamComponentBaseParams],
+	templateUrl: './space-page.component.html',
+	providers: [SpaceComponentBaseParams],
 	standalone: true,
 	imports: [
 		CommonModule,
@@ -38,12 +38,12 @@ import { TeamPageBaseComponent } from './TeamPageBaseComponent';
 		TeamServiceModule,
 	],
 })
-export class TeamPageComponent extends TeamPageBaseComponent {
+export class SpacePageComponent extends SpacePageBaseComponent {
 	protected contactusTeam?: IIdAndOptionalDbo<IContactusSpaceDbo>;
 
 	constructor(
 		route: ActivatedRoute,
-		params: TeamComponentBaseParams,
+		params: SpaceComponentBaseParams,
 		topMenuService: TopMenuService,
 		cd: ChangeDetectorRef, // readonly navService: TeamNavService,
 		contactusTeamService: ContactusTeamService,

@@ -8,7 +8,7 @@ import { SpaceType } from '@sneat/core';
 @Injectable({
 	providedIn: 'root',
 })
-export class TeamContextService {
+export class SpaceContextService {
 	// public trackUrl(
 	// 	route: ActivatedRoute,
 	// 	paramName: string,

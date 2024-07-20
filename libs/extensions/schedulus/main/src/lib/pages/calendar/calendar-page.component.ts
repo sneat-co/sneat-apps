@@ -18,8 +18,8 @@ import { ICalendarFilter } from '../../components/calendar/components/calendar-f
 import { CalendarComponentModule } from '../../components/calendar/calendar-component.module';
 import { CalendarTab } from '../../components/calendar/calendar-component-types';
 import {
-	TeamBaseComponent,
-	TeamComponentBaseParams,
+	SpaceBaseComponent,
+	SpaceComponentBaseParams,
 	TeamCoreComponentsModule,
 } from '@sneat/team-components';
 import { IMemberContext } from '@sneat/contactus-core';
@@ -29,7 +29,7 @@ import { CalendariumServicesModule } from '../../services';
 	selector: 'sneat-schedule-page',
 	templateUrl: './calendar-page.component.html',
 	styleUrls: ['./calendar-page.component.scss'],
-	providers: [TeamComponentBaseParams],
+	providers: [SpaceComponentBaseParams],
 	animations: virtualSliderAnimations,
 	standalone: true,
 	imports: [
@@ -41,14 +41,14 @@ import { CalendariumServicesModule } from '../../services';
 		CalendariumServicesModule,
 	],
 })
-export class CalendarPageComponent extends TeamBaseComponent {
+export class CalendarPageComponent extends SpaceBaseComponent {
 	public tab: CalendarTab = 'day';
 	public date = '';
 	member?: IMemberContext;
 
 	constructor(
 		route: ActivatedRoute,
-		params: TeamComponentBaseParams,
+		params: SpaceComponentBaseParams,
 		private filterService: CalendarFilterService,
 		private readonly scheduleNavService: ScheduleNavService,
 	) {

@@ -76,7 +76,7 @@ export class ContactSelectorComponent
 
 	@Input() parentIcon = 'business-outline';
 	@Input() contactIcon = 'business-outline';
-	@Input() team: ISpaceContext = { id: '' };
+	@Input() space: ISpaceContext = { id: '' };
 	@Input() contactRole?: ContactRole;
 	@Input() parentType?: ContactType;
 	@Input() parentRole?: ContactRole;
@@ -153,16 +153,16 @@ export class ContactSelectorComponent
 			`ContactSelectorComponent.subscribeForData(calledFrom=${calledFrom})`,
 		);
 		this.contactBriefsSub?.unsubscribe();
-		if (!this.team) {
+		if (!this.space) {
 			return;
 		}
 		this.watchContactBriefs();
 	}
 
 	private watchContactBriefs(): void {
-		const space = this.team;
+		const space = this.space;
 		this.contactBriefsSub = this.contactusTeamService
-			.watchContactBriefs(this.team.id)
+			.watchContactBriefs(this.space.id)
 			.pipe(map((contacts) => contacts.map((c) => ({ ...c, space }))))
 			.subscribe((contacts) => {
 				this.allContacts = contacts;
@@ -271,7 +271,7 @@ export class ContactSelectorComponent
 	}
 
 	protected onParentContactCreated(contact: IContactContext): void {
-		const parentContact = { ...contact, brief: contact.dbo, team: this.team };
+		const parentContact = { ...contact, brief: contact.dbo, team: this.space };
 		this.parentItems?.push(this.getParentItem(parentContact));
 		this.onParentContactChanged(parentContact);
 	}
