@@ -19,7 +19,7 @@
 
 <sneat-calendar-filter
 	#scheduleFilterComponent
-	[team]="space"
+	[space]="space"
 	[showWeekdays]="tab === 'recurrings'"
 	[showRepeats]="tab === 'recurrings'"
 />
@@ -27,14 +27,14 @@
 <sneat-day-tab
 	[style.display]="tab === 'day' ? 'block' : 'none'"
 	[space]="space"
-	[spaceDaysProvider]="teamDaysProvider"
+	[spaceDaysProvider]="spaceDaysProvider"
 	[onSlotClicked]="onSlotClicked"
 />
 
 <sneat-week-tab
 	[style.display]="tab === 'week' ? 'block' : 'none'"
 	[space]="space"
-	[spaceDaysProvider]="teamDaysProvider"
+	[spaceDaysProvider]="spaceDaysProvider"
 	(slotClicked)="onSlotClicked($event)"
 />
 

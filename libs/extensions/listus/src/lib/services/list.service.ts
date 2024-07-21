@@ -10,7 +10,7 @@ import { SneatApiService } from '@sneat/api';
 import { IListBrief, IListDbo, ListType } from '../dto';
 import { IListContext } from '../contexts';
 import { ISpaceContext } from '@sneat/team-models';
-import { ModuleTeamItemService } from '@sneat/team-services';
+import { ModuleSpaceItemService } from '@sneat/team-services';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
@@ -24,7 +24,7 @@ import {
 } from './interfaces';
 
 @Injectable()
-export class ListService extends ModuleTeamItemService<IListBrief, IListDbo> {
+export class ListService extends ModuleSpaceItemService<IListBrief, IListDbo> {
 	constructor(
 		afs: AngularFirestore,
 		sneatApiService: SneatApiService,
@@ -78,7 +78,7 @@ export class ListService extends ModuleTeamItemService<IListBrief, IListDbo> {
 			return throwError(() => 'list is of unknown type: ' + params.list.type);
 		}
 		const request: ICreateListItemsRequest = {
-			spaceID: params.team.id,
+			spaceID: params.space.id,
 			listID: params.list.id,
 			// listType: params.list.type,
 			items: params.items,

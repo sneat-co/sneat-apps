@@ -69,7 +69,7 @@
 					contact?.brief?.roles?.includes('member') &&
 					contact?.brief?.userID !== currentUserID
 				"
-				[team]="team"
+				[space]="space"
 				[relatedTo]="relatedToContactOfCurrentUser"
 				[relatedItems]="contact?.dbo?.related || contact?.brief?.related"
 				[ageGroup]="contact?.brief?.ageGroup"
@@ -80,7 +80,7 @@
 			<ion-card>
 				<ion-list>
 					<sneat-contact-modules-menu
-						[team]="team"
+						[space]="space"
 						[contact]="contactWithBriefAndOptionalDto"
 					/>
 				</ion-list>
@@ -118,21 +118,21 @@
 		<ion-label color="medium">No related contacts</ion-label>
 	</ion-item>
 	@for (
-		relatedContact of relatedContactsOfCurrentTeam;
+		relatedContact of relatedContactsOfCurrentSpace;
 		track relatedContact.id
 	) {
-		<sneat-relate-contact [team]="team" [relatedItem]="relatedContact" />
+		<sneat-relate-contact [space]="space" [relatedItem]="relatedContact" />
 	}
 </ion-card>
 
 <sneat-contact-locations
 	*ngIf="tab === 'locations'"
-	[team]="team"
+	[space]="space"
 	[contact]="contactWithBriefAndOptionalDto"
 />
 
 <sneat-contact-roles-input
 	*ngIf="tab === 'roles'"
-	[team]="team"
+	[space]="space"
 	[contact]="contactWithBriefAndOptionalDto"
 />

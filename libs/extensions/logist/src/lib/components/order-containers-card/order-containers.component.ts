@@ -17,7 +17,7 @@ import { ILogistOrderContext, IOrderContainer } from '../../dto';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrderContainersComponent implements OnChanges {
-	@Input({ required: true }) team?: ISpaceContext;
+	@Input({ required: true }) space?: ISpaceContext;
 
 	@Input() order?: ILogistOrderContext;
 	@Output() orderChange = new EventEmitter<ILogistOrderContext>();

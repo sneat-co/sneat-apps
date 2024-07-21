@@ -1,10 +1,13 @@
 import { ActivatedRoute } from '@angular/router';
-import { TeamMemberType } from '@sneat/auth-models';
+import { SpaceMemberType } from '@sneat/auth-models';
 import { ContactusModuleBaseComponent } from '@sneat/contactus-shared';
 import { IIdAndBriefAndOptionalDto, SpaceType } from '@sneat/core';
-import { isTeamSupportsMemberGroups } from '@sneat/dto';
+import { isSpaceSupportsMemberGroups } from '@sneat/dto';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
-import { ContactusTeamService, MemberService } from '@sneat/contactus-services';
+import {
+	ContactusSpaceService,
+	MemberService,
+} from '@sneat/contactus-services';
 import { IContactBrief, IContactDto } from '@sneat/contactus-core';
 
 export abstract class MembersBasePage extends ContactusModuleBaseComponent {
@@ -15,7 +18,7 @@ export abstract class MembersBasePage extends ContactusModuleBaseComponent {
 
 	// protected currentUserDto: IDtoUser;
 
-	abstract get memberType(): TeamMemberType;
+	abstract get memberType(): SpaceMemberType;
 
 	// protected setCurrentUser(dto: IDtoUser) {
 	//     this.currentUserDto = dto;
@@ -25,7 +28,7 @@ export abstract class MembersBasePage extends ContactusModuleBaseComponent {
 		className: string,
 		route: ActivatedRoute,
 		params: SpaceComponentBaseParams,
-		contactusTeamService: ContactusTeamService,
+		contactusTeamService: ContactusSpaceService,
 		protected membersService: MemberService,
 	) {
 		super(className, route, params, contactusTeamService);
@@ -34,7 +37,7 @@ export abstract class MembersBasePage extends ContactusModuleBaseComponent {
 
 	goNewMember = () => {
 		// TODO: use it?
-		this.navigateForwardToTeamPage('new-member').catch(
+		this.navigateForwardToSpacePage('new-member').catch(
 			this.logErrorHandler('failed to navigate to new member page'),
 		);
 	};
@@ -67,12 +70,12 @@ export abstract class MembersBasePage extends ContactusModuleBaseComponent {
 
 	public get supportsMemberGroups(): boolean {
 		return (
-			!!this.team?.brief && isTeamSupportsMemberGroups(this.team.brief.type)
+			!!this.space?.brief && isSpaceSupportsMemberGroups(this.space.brief.type)
 		);
 	}
 
-	public get teamType(): SpaceType | undefined {
-		return this.team?.brief?.type;
+	public get spaceType(): SpaceType | undefined {
+		return this.space?.brief?.type;
 	}
 
 	// protected setPageCommuneIds(source: string, communeIds: ICommuneIds, communeDto?: ICommuneDto): void {

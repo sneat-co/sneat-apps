@@ -17,16 +17,16 @@ import {
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { zipMapBriefsWithIDs } from '@sneat/team-models';
-import { TeamNavService, SpaceService } from '@sneat/team-services';
+import { SpaceNavService, SpaceService } from '@sneat/team-services';
 
 @Component({
-	selector: 'sneat-team-members',
+	selector: 'sneat-members',
 	templateUrl: './members.component.html',
 	standalone: true,
 	imports: [CommonModule, FormsModule, IonicModule],
 }) // TODO: use or delete unused MembersComponent
 export class MembersComponent implements OnChanges {
-	@Input({ required: true }) public contactusTeam?: IContactusSpaceDboAndID;
+	@Input({ required: true }) public contactusSpace?: IContactusSpaceDboAndID;
 
 	public membersRoleTab: MemberRole | '*' = MemberRoleContributor;
 	public contributorsCount?: number;
@@ -34,9 +34,9 @@ export class MembersComponent implements OnChanges {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly teamService: SpaceService,
+		private readonly spaceService: SpaceService,
 		private readonly navController: NavController,
-		public readonly navService: TeamNavService,
+		public readonly navService: SpaceNavService,
 	) {}
 
 	public goAddMember(event?: Event): void {
@@ -44,16 +44,19 @@ export class MembersComponent implements OnChanges {
 			event.preventDefault();
 			event.stopPropagation();
 		}
-		if (!this.contactusTeam) {
+		if (!this.contactusSpace) {
 			throw 'no team';
 		}
-		this.navService.navigateToAddMember(this.navController, this.contactusTeam);
+		this.navService.navigateToAddMember(
+			this.navController,
+			this.contactusSpace,
+		);
 	}
 
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['contactusTeam']) {
 			try {
-				this.setMembersCount(this.contactusTeam?.dbo);
+				this.setMembersCount(this.contactusSpace?.dbo);
 			} catch (e) {
 				this.errorLogger.logError(e, 'Failed to process team changes');
 			}

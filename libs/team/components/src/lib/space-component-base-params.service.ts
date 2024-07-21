@@ -8,7 +8,7 @@ import {
 	NgModulePreloaderService,
 } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { TeamNavService, SpaceService } from '@sneat/team-services';
+import { SpaceNavService, SpaceService } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 
 @Injectable()
@@ -21,8 +21,8 @@ export class SpaceComponentBaseParams {
 		// public readonly changeDetectorRef: ChangeDetectorRef,
 		public readonly navController: NavController,
 		public readonly userService: SneatUserService,
-		public readonly teamService: SpaceService,
-		public readonly teamNavService: TeamNavService,
+		public readonly spaceService: SpaceService,
+		public readonly spaceNavService: SpaceNavService,
 		// public readonly contactusTeamService: ContactusTeamService,
 		public readonly preloader: NgModulePreloaderService,
 	) {}

@@ -4,7 +4,7 @@
 			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<ion-title>
-			@if (team.brief || team.type) {
+			@if (space.brief || space.type) {
 				@if (member.type === "animal") {
 					New pet
 				} @else {
@@ -20,7 +20,7 @@
 						}
 					}
 				}
-				&#64; {{ team.brief?.title || team.type }}
+				&#64; {{ space.brief?.title || space.type }}
 			} @else {
 				New member
 			}
@@ -29,22 +29,22 @@
 </ion-header>
 
 <ion-content class="cardy">
-	<ion-segment [(ngModel)]="tab" *ngIf="team.id && team.type !== 'family'">
+	<ion-segment [(ngModel)]="tab" *ngIf="space.id && space.type !== 'family'">
 		<ion-segment-button value="mass">
-			Mass invite [{{ team.id }} - {{ team.type }}]
+			Mass invite [{{ space.id }} - {{ space.type }}]
 		</ion-segment-button>
 		<ion-segment-button value="personal">Personal invite</ion-segment-button>
 	</ion-segment>
 
 	<sneat-new-member-form
 		*ngIf="tab === 'personal'"
-		[team]="team"
+		[space]="space"
 		[(member)]="member"
 	/>
 
 	<ion-card *ngIf="tab === 'mass'">
 		<ion-card-content>
-			<sneat-invite-links [contactusTeam]="contactusTeam" />
+			<sneat-invite-links [contactusSpace]="contactusSpace" />
 
 			<p>
 				<b>Or</b> you can send

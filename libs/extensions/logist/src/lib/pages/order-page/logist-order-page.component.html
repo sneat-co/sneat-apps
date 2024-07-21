@@ -24,7 +24,7 @@
 </ion-header>
 <ion-content>
 	<sneat-logist-order-card
-		[team]="team"
+		[space]="space"
 		[order]="order"
 		[hideDispatchers]="true"
 		[showHeader]="false"
@@ -110,19 +110,19 @@
 	<ng-container [ngSwitch]="tab">
 		<sneat-order-containers-card
 			*ngSwitchCase="'containers'"
-			[team]="team"
+			[space]="space"
 			[order]="order"
 		/>
 
 		<sneat-order-segments
 			*ngSwitchCase="'segments'"
-			[team]="team"
+			[space]="space"
 			[order]="order"
 		/>
 
 		<sneat-order-truckers
 			*ngSwitchCase="'truckers'"
-			[team]="team"
+			[space]="space"
 			[order]="order"
 		/>
 

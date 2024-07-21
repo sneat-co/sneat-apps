@@ -27,7 +27,7 @@ export class OrderCounterpartyComponent implements OnChanges {
 	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';
 	@Input() readonly = false;
 	@Input() useColumns = true;
-	@Input({ required: true }) team?: ISpaceContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() refNumLabel = 'Ref #';
 
 	@Input() label?: string = undefined;
@@ -123,7 +123,7 @@ export class OrderCounterpartyComponent implements OnChanges {
 		if (!this.isRefNumberChanged) {
 			return;
 		}
-		if (!this.team) {
+		if (!this.space) {
 			console.error('saveRefNumber(): !this.team');
 			return;
 		}
@@ -142,7 +142,7 @@ export class OrderCounterpartyComponent implements OnChanges {
 			return;
 		}
 		const request: ISetOrderCounterpartiesRequest = {
-			spaceID: this.team?.id,
+			spaceID: this.space?.id,
 			orderID: this.order?.id,
 			counterparties: [
 				{

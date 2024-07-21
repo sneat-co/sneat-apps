@@ -7,7 +7,7 @@ import { Member } from '@sneat/contactus-core';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import {
 	CalendariumServicesModule,
-	CalendariumTeamService,
+	CalendariumSpaceService,
 } from '@sneat/extensions/schedulus/main';
 import { AssetGroup } from '@sneat/mod-assetus-core';
 import { ICalendariumSpaceDbo, RepeatPeriod } from '@sneat/mod-schedulus-core';
@@ -52,7 +52,7 @@ export class BudgetPageComponent extends SpaceBaseComponent {
 	constructor(
 		route: ActivatedRoute,
 		params: SpaceComponentBaseParams,
-		private readonly calendariumTeamService: CalendariumTeamService,
+		private readonly calendariumSpaceService: CalendariumSpaceService,
 		// private readonly assetGroupsService: IAssetGroupService,
 		// private readonly memberService: IMemberService,
 	) {
@@ -65,18 +65,18 @@ export class BudgetPageComponent extends SpaceBaseComponent {
 		});
 	}
 
-	protected calendariumTeamDto?: ICalendariumSpaceDbo;
+	protected calendariumSpaceDbo?: ICalendariumSpaceDbo;
 
-	override onTeamIdChanged(): void {
-		if (!this.team.id) {
+	override onSpaceIdChanged(): void {
+		if (!this.space.id) {
 			return;
 		}
-		this.calendariumTeamService
-			.watchSpaceModuleRecord(this.team?.id)
-			.pipe(takeUntil(this.teamIDChanged$))
+		this.calendariumSpaceService
+			.watchSpaceModuleRecord(this.space?.id)
+			.pipe(takeUntil(this.spaceIDChanged$))
 			.subscribe({
 				next: (teamCalendarium) => {
-					this.calendariumTeamDto = teamCalendarium.dbo || undefined;
+					this.calendariumSpaceDbo = teamCalendarium.dbo || undefined;
 				},
 			});
 	}
@@ -121,14 +121,14 @@ export class BudgetPageComponent extends SpaceBaseComponent {
 	}
 
 	public goAssetGroup(assetGroup: AssetGroup): void {
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError(
 				'can not navigate to asset group without team context',
 			);
 			return;
 		}
-		this.teamParams.teamNavService
-			.navigateForwardToSpacePage(this.team, 'assets-group/' + assetGroup.id, {
+		this.spaceParams.spaceNavService
+			.navigateForwardToSpacePage(this.space, 'assets-group/' + assetGroup.id, {
 				state: { assetGroup: assetGroup.context },
 			})
 			.catch(
@@ -156,12 +156,12 @@ export class BudgetPageComponent extends SpaceBaseComponent {
 	// }
 
 	public goNew(): void {
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError('no team context');
 			return;
 		}
-		this.teamParams.teamNavService
-			.navigateForwardToSpacePage(this.team, 'new-liability')
+		this.spaceParams.spaceNavService
+			.navigateForwardToSpacePage(this.space, 'new-liability')
 			.catch(
 				this.errorLogger.logErrorHandler(
 					'Failed to navigate to new liability page',

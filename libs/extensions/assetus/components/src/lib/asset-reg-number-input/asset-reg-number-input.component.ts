@@ -22,7 +22,7 @@ import { ISpaceContext } from '@sneat/team-models';
 	imports: [CommonModule, IonicModule, ReactiveFormsModule],
 })
 export class AssetRegNumberInputComponent implements OnChanges {
-	@Input({ required: true }) team?: ISpaceContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input({ required: true }) assetID?: string;
 	@Input({ required: true }) countyID?: string;
 	@Input({ required: true }) regNumber?: string = '';
@@ -79,7 +79,7 @@ export class AssetRegNumberInputComponent implements OnChanges {
 	}
 
 	protected submit(): void {
-		const space = this.team;
+		const space = this.space;
 
 		if (!space?.id || !this.assetID) {
 			return;

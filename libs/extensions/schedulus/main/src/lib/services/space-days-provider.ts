@@ -14,7 +14,7 @@ import {
 import {
 	ISlotUIContext,
 	RecurringSlots,
-	TeamDay,
+	SpaceDay,
 	wd2,
 } from '@sneat/extensions/schedulus/shared';
 import { IErrorLogger } from '@sneat/logging';
@@ -27,7 +27,7 @@ import {
 import {
 	HappeningService,
 	CalendarDayService,
-	ModuleTeamItemService,
+	ModuleSpaceItemService,
 } from '@sneat/team-services';
 import {
 	BehaviorSubject,
@@ -158,7 +158,7 @@ export class SpaceDaysProvider {
 	private readonly destroyed = new Subject<void>();
 	private recurringsSubscription?: Subscription;
 
-	private readonly recurringsTeamItemService: ModuleTeamItemService<
+	private readonly recurringsSpaceItemService: ModuleSpaceItemService<
 		IHappeningBrief,
 		IHappeningDbo
 	>;
@@ -166,23 +166,23 @@ export class SpaceDaysProvider {
 	private readonly recurringByWd: RecurringsByWeekday =
 		emptyRecurringsByWeekday();
 
-	private readonly team$ = new BehaviorSubject<ISpaceContext | undefined>(
+	private readonly space$ = new BehaviorSubject<ISpaceContext | undefined>(
 		undefined,
 	);
 
-	private readonly schedulusTeam$ = new BehaviorSubject<
+	private readonly schedulusSpace$ = new BehaviorSubject<
 		ISchedulusSpaceContext | undefined
 	>(undefined);
 
-	private readonly teamID$ = this.team$.asObservable().pipe(
+	private readonly spaceID$ = this.space$.asObservable().pipe(
 		map((team) => team?.id),
 		distinctUntilChanged(),
 	);
 
-	private readonly days: Record<string, TeamDay> = {};
+	private readonly days: Record<string, SpaceDay> = {};
 
 	private readonly recurrings$: Observable<RecurringSlots> =
-		this.schedulusTeam$.pipe(
+		this.schedulusSpace$.pipe(
 			// TODO: Instead of providing all slots we can provide observables of slots for a specific day
 			// That would minimize number of handlers to be called on watching components
 			// Tough it's a micro optimization that does not seems to worth the effort now.
@@ -194,10 +194,10 @@ export class SpaceDaysProvider {
 	// private teamId?: string;
 	private memberId?: string;
 
-	private _team?: ISpaceContext;
+	private _space?: ISpaceContext;
 
-	public get team(): ISpaceContext | undefined {
-		return this._team;
+	public get space(): ISpaceContext | undefined {
+		return this._space;
 	}
 
 	constructor(
@@ -211,7 +211,7 @@ export class SpaceDaysProvider {
 	) {
 		console.log('TeamDaysProvider.constructor()');
 		// super();
-		this.recurringsTeamItemService = new ModuleTeamItemService(
+		this.recurringsSpaceItemService = new ModuleSpaceItemService(
 			'calendarium',
 			'recurring_happenings', // TODO: Is this obsolete? Should we use 'happenings' instead?
 			afs,
@@ -226,12 +226,12 @@ export class SpaceDaysProvider {
 		});
 	}
 
-	public getTeamDay(date: Date): TeamDay {
+	public getSpaceDay(date: Date): SpaceDay {
 		const id = dateToIso(date);
 		let day = this.days[id];
 		if (!day) {
-			this.days[id] = day = new TeamDay(
-				this.teamID$,
+			this.days[id] = day = new SpaceDay(
+				this.spaceID$,
 				date,
 				this.recurrings$,
 				this.errorLogger,
@@ -242,24 +242,24 @@ export class SpaceDaysProvider {
 		return day;
 	}
 
-	public setTeam(team: ISpaceContext): void {
-		console.log('TeamDaysProvider.setTeam()', team);
-		this._team = team;
-		this.team$.next(team);
+	public setSpace(space: ISpaceContext): void {
+		console.log('TeamDaysProvider.setSpace()', space);
+		this._space = space;
+		this.space$.next(space);
 		// this.processRecurringBriefs();
 		// return this.loadRecurring();
 	}
 
-	public setSchedulusTeam(
-		schedulusTeam: ISpaceItemWithOptionalDbo<ICalendariumSpaceDbo>,
+	public setSchedulusSpace(
+		schedulusSpace: ISpaceItemWithOptionalDbo<ICalendariumSpaceDbo>,
 	): void {
-		console.log('TeamDaysProvider.setSchedulusTeam()', schedulusTeam);
+		console.log('TeamDaysProvider.setSchedulusSpace()', schedulusSpace);
 		// if (schedulusTeam.id !== this._team?.id) {
 		//   throw new Error(
 		//     `schedulusTeam.id=${schedulusTeam.id} !== this._team?.id=${this._team?.id}`,
 		//   );
 		// }
-		this.schedulusTeam$.next(schedulusTeam);
+		this.schedulusSpace$.next(schedulusSpace);
 		this.processRecurringBriefs();
 	}
 
@@ -267,7 +267,7 @@ export class SpaceDaysProvider {
 		this.memberId = memberId;
 	}
 
-	public preloadEvents(...dates: Date[]): Observable<TeamDay> {
+	public preloadEvents(...dates: Date[]): Observable<SpaceDay> {
 		console.warn('not implemented: Preload events for:', dates);
 		return EMPTY;
 		// const dateKeys = dates.filter(d => !!d)
@@ -280,7 +280,7 @@ export class SpaceDaysProvider {
 		// 	.pipe(ignoreElements());
 	}
 
-	public getDays(...weekdays: TeamDay[]): Observable<TeamDay> {
+	public getDays(...weekdays: SpaceDay[]): Observable<SpaceDay> {
 		console.log('TeamDaysProvider.getDays()', weekdays);
 		return EMPTY;
 		// if (!weekdays?.length) {
@@ -348,28 +348,28 @@ export class SpaceDaysProvider {
 	private processRecurringBriefs(): void {
 		console.log(
 			'TeamDaysProvider.processRecurringBriefs()',
-			this.schedulusTeam$.value,
+			this.schedulusSpace$.value,
 		);
-		if (!this.schedulusTeam$.value?.dbo?.recurringHappenings) {
+		if (!this.schedulusSpace$.value?.dbo?.recurringHappenings) {
 			return;
 		}
 		zipMapBriefsWithIDs(
-			this.schedulusTeam$.value?.dbo?.recurringHappenings,
+			this.schedulusSpace$.value?.dbo?.recurringHappenings,
 		).forEach((rh) => {
 			this.processRecurring({
 				id: rh.id,
 				brief: rh.brief,
-				space: this._team || { id: '' },
+				space: this._space || { id: '' },
 			});
 		});
 	}
 
-	private watchRecurringsByTeamID(
+	private watchRecurringsBySpaceID(
 		team: ISpaceContext,
 	): Observable<INavContext<IHappeningBrief, IHappeningDbo>[]> {
 		console.log('TeamDaysProvider.loadRegulars()');
-		const $recurrings = this.recurringsTeamItemService
-			.watchModuleSpaceItemsWithTeamRef(team)
+		const $recurrings = this.recurringsSpaceItemService
+			.watchModuleSpaceItemsWithSpaceRef(team)
 			// const $regulars = this.regularService.watchByCommuneId(this.communeId)
 			.pipe(
 				tap((recurrings) => {
@@ -383,7 +383,7 @@ export class SpaceDaysProvider {
 	private processRecurring(
 		recurring: ISpaceItemNavContext<IHappeningBrief, IHappeningDbo>,
 	): void {
-		if (!this.team?.id) {
+		if (!this.space?.id) {
 			return;
 		}
 		if (
@@ -392,7 +392,7 @@ export class SpaceDaysProvider {
 				recurring.dbo?.related || recurring?.brief?.related,
 				'contactus',
 				'contacts',
-				this.team.id,
+				this.space.id,
 				this.memberId,
 			)
 		) {
@@ -470,7 +470,7 @@ export class SpaceDaysProvider {
 	// 		);
 	// }
 
-	private addRecurringsToSlotsGroup(weekday: TeamDay): void {
+	private addRecurringsToSlotsGroup(weekday: SpaceDay): void {
 		const recurrings = this.recurringByWd[weekday.wd];
 		if (!recurrings) {
 			return;

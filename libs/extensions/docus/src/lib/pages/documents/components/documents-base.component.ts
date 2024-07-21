@@ -9,7 +9,7 @@ import { ignoreElements } from 'rxjs/operators';
 
 @Directive()
 export abstract class DocumentsBaseComponent {
-	@Input() team?: ISpaceContext;
+	@Input() space?: ISpaceContext;
 	@Input() allDocuments?: IAssetDocumentContext[];
 
 	public static readonly metadata = {
@@ -27,7 +27,7 @@ export abstract class DocumentsBaseComponent {
 		slidingItem: IonItemSliding,
 	): void {
 		this.asset
-			.deleteAsset(this.team?.id || '', asset.id)
+			.deleteAsset(this.space?.id || '', asset.id)
 			.pipe(ignoreElements())
 			.subscribe({
 				complete: async () => {

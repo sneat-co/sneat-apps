@@ -9,6 +9,7 @@ import { IUserSpaceBrief } from '@sneat/auth-models';
 import { IRecord } from '@sneat/data';
 import { ISpaceDbo } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ISpaceContext } from '@sneat/team-models';
 // import {IScrum} from '@sneat/scrumspace/scrummodels';
 
 export type ScrumPageTab = 'team' | 'my' | 'risks' | 'qna';
@@ -25,7 +26,7 @@ export class NavService {
 		private readonly analyticsService: IAnalyticsService,
 	) {}
 
-	public navigateToTeams(animationDirection?: 'forward' | 'back'): void {
+	public navigateToSpaces(animationDirection?: 'forward' | 'back'): void {
 		console.log('navigateToTeams()');
 		this.analyticsService.logEvent('navigateToTeams');
 		this.navController
@@ -82,40 +83,40 @@ export class NavService {
 
 	public navigateToMember(
 		navController: NavController,
-		team: IRecord<ISpaceDbo>,
+		space: ISpaceContext,
 		memberInfo: IIdAndBrief<IMemberBrief>,
 	): void {
 		console.log(
-			`navigateToMember(team.id=${team.id}, memberInfo.id=${memberInfo.id})`,
+			`navigateToMember(team.id=${space.id}, memberInfo.id=${memberInfo.id})`,
 		);
-		const id = `${team.id}:${memberInfo.id}`;
+		const id = `${space.id}:${memberInfo.id}`;
 		this.navForward(
 			navController,
 			'member',
 			{
 				queryParams: { id },
 				state: {
-					team,
+					space,
 					memberInfo,
 				},
 			},
-			{ name: '', params: { id, team: team.id, member: memberInfo.id } },
+			{ name: '', params: { id, space: space.id, member: memberInfo.id } },
 		);
 	}
 
-	public navigateToTeam(
+	public navigateToSpace(
 		id: string,
-		teamInfo?: IUserSpaceBrief,
-		team?: ISpaceDbo,
+		spaceInfo?: IUserSpaceBrief,
+		space?: ISpaceDbo,
 		animationDirection?: 'forward' | 'back',
 	): void {
-		this.analyticsService.logEvent('navigateToTeam', { team: id });
+		this.analyticsService.logEvent('navigateToTeam', { space: id });
 		this.navController
 			.navigateRoot('team', {
 				queryParams: { id },
 				state: {
-					teamInfo,
-					team,
+					spaceInfo,
+					space,
 				},
 				animationDirection,
 			})
@@ -125,16 +126,16 @@ export class NavService {
 	}
 
 	// public navigateToScrums = (navController: NavController, team: IRecord<ITeam>): void =>
-	// 	this.navToTeamPage(navController, team, 'scrums', 'navigateToScrums');
+	// 	this.navToSpacePage(navController, team, 'scrums', 'navigateToScrums');
 	//
 	// public navigateToAddMetric = (navController: NavController, team: IRecord<ITeam>): void =>
-	// 	this.navToTeamPage(navController, team, 'add-metric', 'navigateToAddMetric');
+	// 	this.navToSpacePage(navController, team, 'add-metric', 'navigateToAddMetric');
 	//
 	// public navigateToAddMember = (navController: NavController, team: IRecord<ITeam>): void =>
-	// 	this.navToTeamPage(navController, team, 'add-member', 'navigateToAddMember');
+	// 	this.navToSpacePage(navController, team, 'add-member', 'navigateToAddMember');
 	//
 	// public navigateToRetrospective = (navController: NavController, team: IRecord<ITeam>, id: string | 'upcoming'): void =>
-	// 	this.navToTeamPage(navController, team, 'retrospective', 'navigateToRetrospective', {id});
+	// 	this.navToSpacePage(navController, team, 'retrospective', 'navigateToRetrospective', {id});
 	//
 	// public navigateToRetroTree(date: 'today' | 'yesterday' | string, team: IRecord<ITeam>, retrospective?: IRecord<IRetrospective>): void {
 	// 	console.log(`navigateToRetroReview(date=${date}, team=${team?.id}), scrum:`, retrospective?.data);
@@ -164,18 +165,18 @@ export class NavService {
 			);
 	}
 
-	private navToTeamPage = (
+	private navToSpacePage = (
 		navController: NavController,
-		team: IRecord<ISpaceDbo>,
+		space: ISpaceContext,
 		url: string,
 		eventName: string,
 		params?: Record<string, unknown>,
 	): void => {
-		params = { ...(params || {}), team: team.id };
+		params = { ...(params || {}), space: space.id };
 		this.navForward(
 			navController,
 			url,
-			{ queryParams: params, state: { team } },
+			{ queryParams: params, state: { space } },
 			{ name: eventName, params },
 		);
 	};

@@ -98,7 +98,7 @@ export class DispatcherComponent implements OnChanges {
 		}
 		const selectorOptions: IContactSelectorOptions = {
 			componentProps: {
-				team: space,
+				space: space,
 				contactRole: 'dispatch_point',
 				contactType: 'location',
 				parentRole: 'dispatcher',

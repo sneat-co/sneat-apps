@@ -12,8 +12,8 @@ import { CommunesUiModule } from '@sneat/communes-ui'; // TODO: fix this!
 import { AppVersionComponent, AuthMenuItemComponent } from '@sneat/components';
 import { APP_INFO, coreProviders, IAppInfo } from '@sneat/core';
 import { RANDOM_ID_OPTIONS } from '@sneat/random';
-import { TeamsMenuComponent } from '@sneat/team-components';
-import { TeamServiceModule } from '@sneat/team-services';
+import { SpacesMenuComponent } from '@sneat/team-components';
+import { SpaceServiceModule } from '@sneat/team-services';
 import { environment } from '../environments/environment';
 import { SneatAppMenuComponent } from './sneat-app-menu-component/sneat-app-menu.component';
 import { SneatAppRoutingModule } from './sneat-app-routing.module';
@@ -47,8 +47,8 @@ const appInfo: IAppInfo = {
 		// SneatAuthServicesModule,
 		AuthMenuItemComponent,
 		CommunesUiModule,
-		TeamServiceModule,
-		TeamsMenuComponent,
+		SpaceServiceModule,
+		SpacesMenuComponent,
 		SneatAppRoutingModule,
 	],
 	providers: [

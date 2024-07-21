@@ -16,8 +16,8 @@ import {
 	ISpaceItemWithBriefAndDbo,
 	ISpaceItemWithOptionalBriefAndOptionalDbo,
 } from '@sneat/team-models';
-import { ModuleTeamItemService } from '@sneat/team-services';
-import { ContactusTeamService } from './contactus-team.service';
+import { ModuleSpaceItemService } from '@sneat/team-services';
+import { ContactusSpaceService } from './contactus-space.service';
 import { map, Observable, throwError } from 'rxjs';
 import {
 	IContactRequest,
@@ -34,14 +34,14 @@ export interface IChangeMemberRoleRequest {
 }
 
 @Injectable()
-export class ContactService extends ModuleTeamItemService<
+export class ContactService extends ModuleSpaceItemService<
 	IContactBrief,
 	IContactDto
 > {
 	constructor(
 		afs: AngularFirestore,
 		sneatApiService: SneatApiService,
-		protected contactusTeamService: ContactusTeamService,
+		protected contactusSpaceService: ContactusSpaceService,
 		private readonly userService: SneatUserService,
 	) {
 		super('contactus', 'contacts', afs, sneatApiService);
@@ -57,7 +57,7 @@ export class ContactService extends ModuleTeamItemService<
 	}
 
 	public deleteContact(request: IContactRequest): Observable<void> {
-		return this.deleteTeamItem('contactus/delete_contact', request);
+		return this.deleteSpaceItem('contactus/delete_contact', request);
 	}
 
 	public updateContact(request: IUpdateContactRequest): Observable<void> {
@@ -83,10 +83,10 @@ export class ContactService extends ModuleTeamItemService<
 			...(filter || []),
 			{ field: 'roles', operator: '==', value: role },
 		];
-		return this.watchTeamContacts(team, status, filter);
+		return this.watchSpaceContacts(team, status, filter);
 	}
 
-	watchTeamContacts(
+	public watchSpaceContacts(
 		team: ISpaceContext,
 		status: 'active' | 'archived' = 'active',
 		filter?: readonly IFilter[],
@@ -104,7 +104,9 @@ export class ContactService extends ModuleTeamItemService<
 			},
 			...(filter || []),
 		];
-		return this.watchModuleSpaceItemsWithTeamRef<IContactDto>(team, { filter });
+		return this.watchModuleSpaceItemsWithSpaceRef<IContactDto>(team, {
+			filter,
+		});
 	}
 
 	watchContactById(
@@ -113,7 +115,7 @@ export class ContactService extends ModuleTeamItemService<
 	): Observable<
 		ISpaceItemWithOptionalBriefAndOptionalDbo<IContactBrief, IContactDto>
 	> {
-		return this.watchTeamItemByIdWithTeamRef(space, contactID);
+		return this.watchSpaceItemByIdWithSpaceRef(space, contactID);
 	}
 
 	watchContactsByRole(
@@ -134,7 +136,7 @@ export class ContactService extends ModuleTeamItemService<
 				value: filter.role,
 			});
 		}
-		return this.watchModuleSpaceItemsWithTeamRef(team, { filter: f });
+		return this.watchModuleSpaceItemsWithSpaceRef(team, { filter: f });
 	}
 
 	watchChildContacts(
@@ -156,7 +158,7 @@ export class ContactService extends ModuleTeamItemService<
 				value: filter.role,
 			});
 		}
-		return this.watchModuleSpaceItemsWithTeamRef(team, { filter: f });
+		return this.watchModuleSpaceItemsWithSpaceRef(team, { filter: f });
 	}
 
 	public changeContactRole(
@@ -171,7 +173,7 @@ export class ContactService extends ModuleTeamItemService<
 			);
 	}
 
-	public removeTeamMember(
+	public removeSpaceMember(
 		request: IContactRequestWithOptionalMessage,
 	): Observable<ISpaceContext> {
 		console.log(

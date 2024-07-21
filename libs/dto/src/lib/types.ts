@@ -1,6 +1,6 @@
 import { SpaceType } from '@sneat/core';
 
-export { TeamMemberType } from '@sneat/auth-models';
+export { SpaceMemberType } from '@sneat/auth-models';
 
 export type Restriction = 'adults_only' | 'personal' | string;
 

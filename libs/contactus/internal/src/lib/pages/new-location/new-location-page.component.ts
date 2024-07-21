@@ -20,7 +20,7 @@ export class NewLocationPageComponent extends ContactBasePage {
 	newLocation: IContactContext = {
 		id: '',
 		dbo: { type: 'location' },
-		space: this.team,
+		space: this.space,
 	};
 
 	constructor(
@@ -45,7 +45,7 @@ export class NewLocationPageComponent extends ContactBasePage {
 
 	onContactCreated(contact: IContactContext): void {
 		this.newLocation = contact;
-		const space = this.team;
+		const space = this.space;
 		if (!space) {
 			throw new Error('Team is not defined');
 		}

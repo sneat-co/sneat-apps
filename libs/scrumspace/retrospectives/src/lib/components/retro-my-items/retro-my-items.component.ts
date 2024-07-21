@@ -17,7 +17,7 @@ export class RetroMyItemsComponent {
 	@ViewChild(IonInput, { static: true }) titleInput?: IonInput; // TODO: strong typing : IonInput;
 
 	@Input() public question?: RetroItemType;
-	@Input() public teamId?: string;
+	@Input() public spaceID?: string;
 	@Input() public retroId?: string;
 
 	public titleControl = new FormControl<string>('', [Validators.required]);
@@ -36,11 +36,11 @@ export class RetroMyItemsComponent {
 	public trackById = (i: number, item: IRetroItem) => item.ID;
 
 	public delete(item: IRetroItem): void {
-		if (!this.teamId || !this.retroId || !item.type) {
+		if (!this.spaceID || !this.retroId || !item.type) {
 			return;
 		}
 		const request: IRetroItemRequest = {
-			spaceID: this.teamId,
+			spaceID: this.spaceID,
 			meeting: this.retroId,
 			item: item.ID,
 			type: item.type,
@@ -53,7 +53,7 @@ export class RetroMyItemsComponent {
 	}
 
 	public add(): void {
-		if (!this.teamId || !this.question || !this.retroId) {
+		if (!this.spaceID || !this.question || !this.retroId) {
 			this.errorLogger.logError(
 				'addFailed',
 				'RetroMyItemsComponent is not properly initialized',
@@ -68,7 +68,7 @@ export class RetroMyItemsComponent {
 			}
 			const title = this.titleControl.value as string;
 			const request: IAddRetroItemRequest = {
-				spaceID: this.teamId,
+				spaceID: this.spaceID,
 				meeting: this.retroId,
 				type: this.question,
 				title,
@@ -76,7 +76,7 @@ export class RetroMyItemsComponent {
 			if (!this.items) {
 				this.items = [];
 			}
-			 
+
 			this.items.push({ ID: '', title });
 			this.titleControl.setValue('');
 			this.retrospectiveService.addRetroItem(request).subscribe(

@@ -13,7 +13,7 @@ import {
 import {
 	SpaceBaseComponent,
 	SpaceComponentBaseParams,
-	TeamCoreComponentsModule,
+	SpaceCoreComponentsModule,
 } from '@sneat/team-components';
 import {
 	IAssetContext,
@@ -35,7 +35,7 @@ import { DocumentsListComponent } from './components/documents-list/documents-li
 		FilterItemComponent,
 		DocumentsByTypeComponent,
 		FormsModule,
-		TeamCoreComponentsModule,
+		SpaceCoreComponentsModule,
 		ContactusServicesModule,
 		AssetusServicesModule,
 	],
@@ -59,16 +59,16 @@ export class DocumentsPageComponent extends SpaceBaseComponent {
 		>[];
 	}
 
-	protected override onTeamIdChanged() {
-		super.onTeamIdChanged();
+	protected override onSpaceIdChanged() {
+		super.onSpaceIdChanged();
 		this.loadDocuments();
 	}
 
 	loadDocuments() {
 		console.log('DocumentsPage.loadDocuments()');
-		if (this.team?.id) {
+		if (this.space?.id) {
 			this.assetService
-				.watchTeamAssets<'document', IAssetDocumentExtra>(this.team)
+				.watchSpaceAssets<'document', IAssetDocumentExtra>(this.space)
 				.pipe(this.takeUntilNeeded())
 				.subscribe({
 					next: (documents) => {
@@ -83,14 +83,14 @@ export class DocumentsPageComponent extends SpaceBaseComponent {
 	}
 
 	public goDoc(doc: IAssetDocumentContext) {
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError(
 				'not able to navigate to document without team context',
 			);
 			return;
 		}
-		this.teamParams.teamNavService
-			.navigateForwardToSpacePage(this.team, `document/${doc.id}`, {
+		this.spaceParams.spaceNavService
+			.navigateForwardToSpacePage(this.space, `document/${doc.id}`, {
 				state: { doc },
 			})
 			.catch(this.errorLogger.logError);
@@ -104,9 +104,9 @@ export class DocumentsPageComponent extends SpaceBaseComponent {
 			queryParams['member'] = member.id;
 		}
 		// const state = member ? { member } : undefined;
-		const space = this.team;
+		const space = this.space;
 		if (space) {
-			this.teamNav
+			this.spaceNav
 				.navigateForwardToSpacePage(space, 'new-document', {
 					state: { docType: type },
 				})

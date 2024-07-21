@@ -28,7 +28,7 @@ export class MovieCardComponent implements OnChanges {
 	public movie?: IMovie;
 	@Input()
 	public showWatchedMovies = false;
-	@Input() public team?: ISpaceContext;
+	@Input() public space?: ISpaceContext;
 	@Input() public list?: IListContext;
 	@Output() addToWatchlist = new EventEmitter<IMovie>();
 	@Output() goMovie = new EventEmitter<IMovie>();
@@ -41,7 +41,7 @@ export class MovieCardComponent implements OnChanges {
 	) {}
 
 	get userId(): string | undefined {
-		return this.param.teamParams.userService.currentUserID;
+		return this.param.spaceParams.userService.currentUserID;
 	}
 
 	public get isWatched(): boolean {

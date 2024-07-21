@@ -13,7 +13,7 @@ import { OrderPrintMenuComponent } from './order-print-menu.component';
 })
 export class OrderCardComponent {
 	@Input() public readonly = false;
-	@Input({ required: true }) team?: ISpaceContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() order?: ILogistOrderContext;
 	@Input() hideDispatchers = false;
 	@Input() showHeader = true;
@@ -60,7 +60,7 @@ export class OrderCardComponent {
 		const popover = await this.popoverController.create({
 			component: OrderPrintMenuComponent,
 			componentProps: {
-				team: this.team,
+				space: this.space,
 				order: this.order,
 			},
 		});
@@ -76,7 +76,7 @@ export class OrderCardComponent {
 		if (!status) {
 			return;
 		}
-		const space = this.team;
+		const space = this.space;
 		if (!space) {
 			throw new Error('No space context');
 		}

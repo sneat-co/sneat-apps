@@ -3,13 +3,13 @@
 		<ion-buttons slot="end">
 			<ion-menu-button />
 		</ion-buttons>
-		<ion-title *ngIf="team.dbo || team.type">
-			{{ team.dbo?.title || team.type === "family" ? "Family" : team.id }}
+		<ion-title *ngIf="space.dbo || space.type">
+			{{ space.dbo?.title || space.type === "family" ? "Family" : space.id }}
 			<ion-text color="medium" *ngIf="topMenuService.isTopMenuHidden | async"
 				>&#64; sneat.app</ion-text
 			>
 		</ion-title>
-		<ion-title *ngIf="!team"> Space: loading...</ion-title>
+		<ion-title *ngIf="!space"> Space: loading...</ion-title>
 		<!--		<ion-buttons slot="end">-->
 		<!--			<ion-button>-->
 		<!--				<ion-icon name="settings" slot="start" />-->
@@ -96,7 +96,7 @@
 			</ion-col>
 		</ion-row>
 		<ion-row>
-			<ion-col *ngIf="team.type === 'family' || team.type === 'team'">
+			<ion-col *ngIf="space.type === 'family' || space.type === 'team'">
 				<ion-card>
 					<ion-item
 						routerLink="./members"
@@ -122,7 +122,7 @@
 						</ion-buttons>
 					</ion-item>
 
-					<sneat-members-list [team]="team" [members]="members" />
+					<sneat-members-list [space]="space" [members]="members" />
 				</ion-card>
 			</ion-col>
 			<!--			<ion-col>-->

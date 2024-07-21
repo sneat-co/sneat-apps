@@ -34,7 +34,7 @@ import { ShippingPointsSelectorService } from '../shipping-points-selector/shipp
 export class OrderContainerComponent implements OnChanges {
 	@Input() container?: IOrderContainer;
 	@Input() order?: ILogistOrderContext;
-	@Input({ required: true }) team?: ISpaceContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() i?: number;
 
 	protected tab: 'points' | 'route' | 'notes' = 'points';
@@ -162,7 +162,7 @@ export class OrderContainerComponent implements OnChanges {
 		event.preventDefault();
 		this.saving = true;
 		this.containerFormGroup.markAsPending();
-		const spaceID = this.team?.id,
+		const spaceID = this.space?.id,
 			orderID = this.order?.id,
 			containerID = this.container?.id;
 		if (!spaceID || !orderID || !containerID) {
@@ -213,14 +213,14 @@ export class OrderContainerComponent implements OnChanges {
 			);
 			return;
 		}
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError(
 				'ContainerFormComponent.delete(): team is undefined',
 			);
 			return;
 		}
 		const request: IContainerRequest = {
-			spaceID: this.team.id,
+			spaceID: this.space.id,
 			orderID: this.order.id,
 			containerID: this.container.id,
 		};

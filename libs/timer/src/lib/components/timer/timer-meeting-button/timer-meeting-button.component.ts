@@ -6,7 +6,7 @@ import { IScrumDbo } from '@sneat/scrumspace/scrummodels';
 	templateUrl: './timer-meeting-button.component.html',
 })
 export class TimerMeetingButtonComponent {
-	@Input() public scrumId?: string;
+	@Input() public scrumID?: string;
 	@Input() public scrum?: IScrumDbo;
-	@Input() public teamId?: string;
+	@Input() public spaceID?: string;
 }

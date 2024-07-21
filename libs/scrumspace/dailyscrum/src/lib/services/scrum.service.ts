@@ -161,14 +161,14 @@ export class ScrumService extends BaseMeetingService {
 	}
 
 	public setTaskCompletion(
-		teamId: string,
+		spaceID: string,
 		scrumId: string,
 		member: IIdAndBrief<IMemberBrief>,
 		taskId: string,
 		isCompleted: boolean,
 	): Observable<IStatus> {
 		let memberStatus: IStatus;
-		return this.updateStatus(teamId, scrumId, member, (scrum, status) => {
+		return this.updateStatus(spaceID, scrumId, member, (scrum, status) => {
 			const move = (src: 'done' | 'todo', dst: 'done' | 'todo'): void => {
 				memberStatus = status;
 				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -194,7 +194,10 @@ export class ScrumService extends BaseMeetingService {
 			return scrum;
 		}).pipe(
 			tap(() => {
-				const eventParams: Record<string, string> = { teamId, id: taskId };
+				const eventParams: Record<string, string> = {
+					spaceID,
+					id: taskId,
+				};
 				if (member.id) {
 					eventParams['memberId'] = member.id;
 				} else if (member.brief.userID) {
@@ -263,7 +266,7 @@ export class ScrumService extends BaseMeetingService {
 		member: IIdAndBrief<IMemberBrief>,
 		// TODO: Invalid eslint-disable-next-line no-shadow - lambda definition should not cause shadowing.
 		// https://github.com/sneat-team/sneat-team-pwa/issues/381
-		 
+
 		worker: (scrum: IScrumDbo, status: IStatus) => IScrumDbo,
 	): Observable<IScrumDbo> {
 		console.log('updateStatus', teamId, scrumId, member, worker);

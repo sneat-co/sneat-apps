@@ -2,20 +2,20 @@ import { Injectable, NgModule } from '@angular/core';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
 import {
 	ContactService,
-	ContactusTeamService,
+	ContactusSpaceService,
 } from '@sneat/contactus-services';
 
 @Injectable()
 export class ContactComponentBaseParams {
-	public readonly errorLogger = this.teamParams.errorLogger;
-	public readonly navController = this.teamParams.navController;
-	public readonly userService = this.teamParams.userService;
-	public readonly teamNavService = this.teamParams.teamNavService;
+	public readonly errorLogger = this.spaceParams.errorLogger;
+	public readonly navController = this.spaceParams.navController;
+	public readonly userService = this.spaceParams.userService;
+	public readonly spaceNavService = this.spaceParams.spaceNavService;
 
 	constructor(
-		public readonly teamParams: SpaceComponentBaseParams,
+		public readonly spaceParams: SpaceComponentBaseParams,
 		public readonly contactService: ContactService,
-		public readonly contactusTeamService: ContactusTeamService,
+		public readonly contactusSpaceService: ContactusSpaceService,
 	) {}
 }
 

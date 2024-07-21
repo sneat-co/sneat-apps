@@ -36,5 +36,5 @@ export interface IInitUserRecordRequest {
 	readonly email?: string;
 	readonly emailIsVerified?: boolean;
 	readonly ianaTimezone?: string;
-	readonly team?: { type: SpaceType; title: string };
+	readonly space?: { type: SpaceType; title: string };
 }

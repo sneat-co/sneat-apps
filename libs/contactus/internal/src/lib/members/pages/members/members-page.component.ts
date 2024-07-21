@@ -3,10 +3,10 @@ import { AfterViewInit, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { TeamMemberType, TeamMemberTypeEnum } from '@sneat/auth-models';
+import { SpaceMemberType, SpaceMemberTypeEnum } from '@sneat/auth-models';
 import {
 	ContactusServicesModule,
-	ContactusTeamService,
+	ContactusSpaceService,
 	MemberGroupService,
 	MemberService,
 } from '@sneat/contactus-services';
@@ -25,10 +25,10 @@ import {
 	IContactusSpaceDbo,
 	IMemberGroupContext,
 } from '@sneat/contactus-core';
-import { isTeamSupportsMemberGroups } from '@sneat/dto';
+import { isSpaceSupportsMemberGroups } from '@sneat/dto';
 import {
 	SpaceComponentBaseParams,
-	TeamCoreComponentsModule,
+	SpaceCoreComponentsModule,
 } from '@sneat/team-components';
 import { zipMapBriefsWithIDs } from '@sneat/team-models';
 import { MembersBasePage } from '../../members-base-page';
@@ -51,7 +51,7 @@ interface MembersGroup {
 		IonicModule,
 		CommonModule,
 		FormsModule,
-		TeamCoreComponentsModule,
+		SpaceCoreComponentsModule,
 		MembersListComponent,
 		ContactusServicesModule,
 	],
@@ -105,14 +105,14 @@ export class MembersPageComponent
 		this.other,
 	];
 
-	readonly memberType: TeamMemberType = 'member';
+	readonly memberType: SpaceMemberType = 'member';
 
 	constructor(
 		route: ActivatedRoute,
 		// private readonly memberGroupService: MemberGroupService,
 		params: SpaceComponentBaseParams,
 		memberService: MemberService,
-		contactusTeamService: ContactusTeamService,
+		contactusTeamService: ContactusSpaceService,
 		private readonly memberGroupService: MemberGroupService,
 	) {
 		super(
@@ -124,9 +124,9 @@ export class MembersPageComponent
 		);
 	}
 
-	override onTeamModuleDtoChanged(dto: IContactusSpaceDbo | null): void {
-		super.onTeamModuleDtoChanged(dto);
-		this.processContactusTeamDto(dto);
+	override onSpaceModuleDtoChanged(dto: IContactusSpaceDbo | null): void {
+		super.onSpaceModuleDtoChanged(dto);
+		this.processContactusSpaceDbo(dto);
 	}
 
 	ngAfterViewInit(): void {
@@ -134,7 +134,7 @@ export class MembersPageComponent
 	}
 
 	goGroup(memberGroup: IMemberGroupContext): void {
-		this.navigateForwardToTeamPage(`group/${memberGroup.id}`, {
+		this.navigateForwardToSpacePage(`group/${memberGroup.id}`, {
 			state: { memberGroup },
 		}).catch(this.logErrorHandler('failed to navigate to members group page'));
 	}
@@ -143,7 +143,7 @@ export class MembersPageComponent
 		const queryParams: Params | undefined = group
 			? { group: group.id }
 			: undefined;
-		this.navigateForwardToTeamPage('new-member', {
+		this.navigateForwardToSpacePage('new-member', {
 			queryParams,
 			state: { group },
 		}).catch(
@@ -159,7 +159,7 @@ export class MembersPageComponent
 				this.goNewMemberPage();
 				break;
 			case 'groups':
-				this.navigateForwardToTeamPage('new-group').catch(
+				this.navigateForwardToSpacePage('new-group').catch(
 					this.logErrorHandler('failed to navigate to new group page'),
 				);
 				break;
@@ -171,7 +171,7 @@ export class MembersPageComponent
 
 	override onSpaceDboChanged(): void {
 		super.onSpaceDboChanged();
-		if (!this.team) {
+		if (!this.space) {
 			throw new Error('!this.commune');
 		}
 		console.log(`MembersPageComponent.onTeamDtoChanged()`);
@@ -189,7 +189,7 @@ export class MembersPageComponent
 		console.log(`MembersPageComponent.loadData(source=${source})`);
 
 		// this.unsubscribe();
-		const space = this.team;
+		const space = this.space;
 		if (!space) {
 			throw new Error('!this.team');
 		}
@@ -198,7 +198,7 @@ export class MembersPageComponent
 		// const contactusTeam = this.teamModuleDto;
 		//
 		// if (contactusTeam?.dto?.contacts) {
-		// 	this.processContactusTeamDto(contactusTeam.dto);
+		// 	this.processContactusSpaceDbo(contactusTeam.dto);
 		// } else {
 		// 	this.contactService
 		// 		.watchContactsWithRole(team, 'team_member') // TODO: use constant
@@ -229,7 +229,7 @@ export class MembersPageComponent
 		// 		});
 		// }
 
-		if (space.type && isTeamSupportsMemberGroups(space.type)) {
+		if (space.type && isSpaceSupportsMemberGroups(space.type)) {
 			throw new Error('not implemented yet due to refactoring');
 			// this.contactService.watchContactsByRole(team)
 			// 	.subscribe(memberGroups => {
@@ -240,14 +240,14 @@ export class MembersPageComponent
 		}
 	}
 
-	private readonly processContactusTeamDto = (
+	private readonly processContactusSpaceDbo = (
 		dto?: IContactusSpaceDbo | null,
 	): void => {
-		console.log('MembersPageComponent.processContactusTeamDto()', dto);
-		const space = this.team;
+		console.log('MembersPageComponent.processContactusSpaceDbo()', dto);
+		const space = this.space;
 		this.members = zipMapBriefsWithIDs(dto?.contacts).map((m) => ({
 			...m,
-			team: space,
+			space,
 		}));
 		this.processMembers();
 	};
@@ -279,11 +279,11 @@ export class MembersPageComponent
 						addedToGroup = true;
 						break;
 				}
-				if (m.dbo?.type === TeamMemberTypeEnum.pet) {
+				if (m.dbo?.type === SpaceMemberTypeEnum.pet) {
 					addedToGroup = true;
 					pets.push(m);
 				}
-				if (!this.team) {
+				if (!this.space) {
 					throw new Error('!this.team');
 				}
 				if (m.brief?.groupIDs?.length) {

@@ -18,7 +18,7 @@
 		</ion-item-divider>
 		@for (slot of slots; track slot.slot.id) {
 			<sneat-day-slot-item
-				[space]="team"
+				[space]="space"
 				[dateID]="weekday.day?.dateID"
 				[slotContext]="slot"
 				(slotClicked)="slotClicked.emit($event)"

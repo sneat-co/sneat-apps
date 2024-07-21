@@ -21,7 +21,7 @@ export class InlistAgeGroupComponent {
 		private readonly contactService: ContactService,
 	) {}
 
-	@Input({ required: true }) public team?: ISpaceContext;
+	@Input({ required: true }) public space?: ISpaceContext;
 	@Input({ required: true }) public contactID = '';
 
 	protected readonly ageOptions: { id: string; title: string }[] = [
@@ -37,7 +37,7 @@ export class InlistAgeGroupComponent {
 		);
 		idEvent.uiEvent.preventDefault();
 		idEvent.uiEvent.stopPropagation();
-		const spaceID = this.team?.id;
+		const spaceID = this.space?.id;
 		if (!spaceID) {
 			return;
 		}

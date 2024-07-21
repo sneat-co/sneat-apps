@@ -1,7 +1,7 @@
 import { IContactusSpaceDbo } from '@sneat/contactus-core';
-import { TeamModuleBaseComponent } from '@sneat/team-components';
+import { SpaceModuleBaseComponent } from '@sneat/team-components';
 
-export abstract class ContactusModuleBaseComponent extends TeamModuleBaseComponent<
+export abstract class ContactusModuleBaseComponent extends SpaceModuleBaseComponent<
 	IContactusSpaceDbo,
 	IContactusSpaceDbo
 > {}

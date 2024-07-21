@@ -13,7 +13,7 @@ import { AgeGroupID } from '@sneat/contactus-core';
 	imports: [CommonModule, IonicModule, FormsModule],
 })
 export class AgeGroupFormComponent {
-	@Input({ required: true }) teamType?: SpaceType;
+	@Input({ required: true }) spaceType?: SpaceType;
 	@Input({ required: true }) ageGroup?: AgeGroupID;
 	@Output() readonly ageGroupChange = new EventEmitter<
 		AgeGroupID | undefined

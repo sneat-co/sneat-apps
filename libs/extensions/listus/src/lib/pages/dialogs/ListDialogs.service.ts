@@ -19,7 +19,7 @@ export class ListDialogsService {
 				emoji: '🛒',
 				shortId: 'groceries',
 				title: 'Groceries',
-				team: { type: 'family', title: 'Family' },
+				space: { type: 'family', title: 'Family' },
 			};
 		}
 

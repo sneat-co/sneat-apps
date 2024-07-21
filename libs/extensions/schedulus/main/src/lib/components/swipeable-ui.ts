@@ -35,15 +35,15 @@ function initialAnimationState(parity: Parity): VirtualSlideAnimationsStates {
 export function swipeableDay(
 	parity: Parity,
 	date: Date,
-	teamDaysProvider: SpaceDaysProvider,
+	spaceDaysProvider: SpaceDaysProvider,
 	destroyed: Observable<void>,
 ): SwipeableDay {
-	const weekday = createWeekday(date, teamDaysProvider);
+	const weekday = createWeekday(date, spaceDaysProvider);
 	const animationState = initialAnimationState(parity);
 	const activeDateID = dateToIso(date);
 	let result: SwipeableDay = {
 		parity,
-		teamDaysProvider,
+		spaceDaysProvider,
 		weekday,
 		destroyed,
 		animationState,
@@ -61,7 +61,7 @@ export function swipeableDay(
 			...result,
 			animationState,
 			activeDateID: dateToIso(date),
-			weekday: createWeekday(date, teamDaysProvider),
+			weekday: createWeekday(date, spaceDaysProvider),
 		};
 		return v;
 	};
@@ -77,14 +77,14 @@ function createWeekday(
 	return {
 		id,
 		longTitle: wdCodeToWeekdayLongName(id),
-		day: teamDaysProvider.getTeamDay(date),
+		day: teamDaysProvider.getSpaceDay(date),
 	};
 }
 
 export interface SwipeableDay extends Swipeable {
 	// private readonly dayChanged = new Subject<void>();
 	weekday: Weekday;
-	teamDaysProvider: SpaceDaysProvider;
+	spaceDaysProvider: SpaceDaysProvider;
 	// public animationState: VirtualSlideAnimationsStates;
 
 	// constructor(

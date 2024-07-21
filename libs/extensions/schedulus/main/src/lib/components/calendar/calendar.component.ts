@@ -27,7 +27,7 @@ import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { HappeningService, CalendarDayService } from '@sneat/team-services';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { SpaceDaysProvider } from '../../services/space-days-provider';
-import { CalendariumTeamService } from '../../services/calendarium-team.service';
+import { CalendariumSpaceService } from '../../services/calendarium-space.service';
 import { isToday } from '../schedule-core';
 import {
 	emptyScheduleFilter,
@@ -50,7 +50,7 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 	private filter = emptyScheduleFilter;
 	private date = new Date();
 	// prevWeekdays: SlotsGroup[];
-	public readonly teamDaysProvider: SpaceDaysProvider;
+	public readonly spaceDaysProvider: SpaceDaysProvider;
 	@ViewChild('scheduleFilterComponent')
 	scheduleFilterComponent?: CalendarFilterComponent;
 	@Input() space: ISpaceContext = { id: '' };
@@ -66,9 +66,9 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 	// private date: Date;
 	recurrings?: readonly IHappeningWithUiState[];
 
-	private schedulusTeamDto?: ICalendariumSpaceDbo | null;
+	private schedulusSpaceDbo?: ICalendariumSpaceDbo | null;
 
-	private schedulusTeamSubscription?: Subscription;
+	private schedulusSpaceSubscription?: Subscription;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -78,9 +78,9 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 		happeningService: HappeningService,
 		calendarDayService: CalendarDayService,
 		sneatApiService: SneatApiService,
-		private readonly calendariumTeamService: CalendariumTeamService,
+		private readonly calendariumSpaceService: CalendariumSpaceService,
 	) {
-		this.teamDaysProvider = new SpaceDaysProvider(
+		this.spaceDaysProvider = new SpaceDaysProvider(
 			this.errorLogger,
 			happeningService,
 			calendarDayService,
@@ -112,12 +112,12 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team']) {
-			this.onTeamContextChanged();
+			this.onSpaceContextChanged();
 			const teamChange = changes['team'];
 			const prevTeam = teamChange.previousValue as ISpaceContext;
 			const currentTeam = teamChange.currentValue as ISpaceContext;
 			if (currentTeam?.id !== prevTeam?.id) {
-				this.onTeamIdChanged();
+				this.onSpaceIdChanged();
 			}
 		}
 	}
@@ -125,7 +125,7 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 	ngOnDestroy(): void {
 		this.destroyed.next();
 		this.destroyed.complete();
-		this.teamDaysProvider.destroy();
+		this.spaceDaysProvider.destroy();
 	}
 
 	ngAfterViewInit(): void {
@@ -224,7 +224,7 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 		const happening: IHappeningContext = args.slot.happening;
 		console.log('');
 		const page = `happening/${happening.id}`;
-		this.params.teamNavService
+		this.params.spaceNavService
 			.navigateForwardToSpacePage(this.space, page, {
 				state: { happening },
 			})
@@ -252,13 +252,13 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 		return isToday(this.date);
 	}
 
-	protected onTeamIdChanged(): void {
-		console.log('ScheduleComponent.onTeamIdChanged()', this.space?.id);
-		this.schedulusTeamSubscription?.unsubscribe();
+	protected onSpaceIdChanged(): void {
+		console.log('ScheduleComponent.onSpaceIdChanged()', this.space?.id);
+		this.schedulusSpaceSubscription?.unsubscribe();
 		if (this.space?.id) {
 			this.populateRecurrings();
 			this.setDay('onTeamDtoChanged', this.date);
-			this.schedulusTeamSubscription = this.calendariumTeamService
+			this.schedulusSpaceSubscription = this.calendariumSpaceService
 				.watchSpaceModuleRecord(this.space.id)
 				.subscribe({
 					next: (schedulusTeam) => {
@@ -266,8 +266,8 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 							'ScheduleComponent.onTeamIdChanged() => schedulusTeam:',
 							schedulusTeam,
 						);
-						this.schedulusTeamDto = schedulusTeam?.dbo;
-						this.teamDaysProvider.setSchedulusTeam({
+						this.schedulusSpaceDbo = schedulusTeam?.dbo;
+						this.spaceDaysProvider.setSchedulusSpace({
 							space: this.space,
 							...schedulusTeam,
 						});
@@ -290,9 +290,9 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 		}
 	}
 
-	private onTeamContextChanged(): void {
+	private onSpaceContextChanged(): void {
 		if (this.space) {
-			this.teamDaysProvider.setTeam(this.space);
+			this.spaceDaysProvider.setSpace(this.space);
 		}
 	}
 
@@ -302,7 +302,7 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 		const prevAll = this.allRecurrings;
 		this.allRecurrings =
 			zipMapBriefsWithIDs(
-				this.schedulusTeamDto?.recurringHappenings || {},
+				this.schedulusSpaceDbo?.recurringHappenings || {},
 			)?.map((rh) => {
 				const { id } = rh;
 				const prev = prevAll?.find((p) => p.id === id);

@@ -182,7 +182,7 @@ export class SlotContextMenuComponent {
 	private stopEvent(event: Event): {
 		slotContext: ISlotUIContext;
 		happening: IHappeningContext;
-		team: ISpaceContext;
+		space: ISpaceContext;
 	} {
 		if (!this.space) {
 			throw new Error('!this.team');
@@ -193,16 +193,16 @@ export class SlotContextMenuComponent {
 		event.stopPropagation();
 		event.preventDefault();
 		return {
-			team: this.space,
+			space: this.space,
 			slotContext: this.slotContext,
 			happening: this.slotContext.happening,
 		};
 	}
 
 	private createSlotRefRequest(event: Event): ISlotRefRequest {
-		const { slotContext, team, happening } = this.stopEvent(event);
+		const { slotContext, space, happening } = this.stopEvent(event);
 		return {
-			spaceID: team.id,
+			spaceID: space.id,
 			happeningID: happening.id,
 			slotID: slotContext.slot.id,
 		};
@@ -212,10 +212,10 @@ export class SlotContextMenuComponent {
 		event: Event,
 		mode: 'whole' | 'slot',
 	): ISlotRequest {
-		const { slotContext, team, happening } = this.stopEvent(event);
+		const { slotContext, space, happening } = this.stopEvent(event);
 		// const slotsCount = happening.brief?.slots?.length || happening.dto?.slots?.length || 0;
 		const request: ISlotRequest = excludeUndefined({
-			spaceID: team.id,
+			spaceID: space.id,
 			happeningID: happening.id,
 			slotID: mode === 'slot' ? slotContext.slot.id : undefined,
 			weekday: mode === 'slot' ? slotContext.wd : undefined,

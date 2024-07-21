@@ -13,7 +13,7 @@
 
 <sneat-edit-dwelling-card
 	*ngIf="dwellingType"
-	[team]="team"
+	[space]="space"
 	[(dwellingAsset)]="dwellingAsset"
 	(dwellingAssetChange)="onAssetChanged($event)"
 />
@@ -24,7 +24,7 @@
 	size="large"
 	class="ion-margin"
 	expand="full"
-	[disabled]="!team || isSubmitting"
+	[disabled]="!space || isSubmitting"
 	(click)="submitDwellingForm()"
 >
 	<ng-container *ngIf="!isSubmitting">Add dwelling</ng-container>

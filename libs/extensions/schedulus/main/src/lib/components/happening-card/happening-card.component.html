@@ -48,7 +48,7 @@
 				<sneat-members-as-badges
 					[members]="
 						getRelatedContactIDs()
-							| selectedMembers: contactusTeam?.dbo?.contacts
+							| selectedMembers: contactusSpace?.dbo?.contacts
 					"
 					(deleteMember)="removeMember($event)"
 				/>

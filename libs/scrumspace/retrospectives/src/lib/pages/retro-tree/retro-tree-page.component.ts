@@ -135,12 +135,12 @@ export class RetroTreePageComponent extends SpaceBaseComponent {
 			if (this.meetingId === 'today') {
 				this.meetingId = getMeetingIdFromDate(new Date());
 			}
-			if (!this.team) {
+			if (!this.space) {
 				return;
 			}
 			// TODO: Make this call after team decided
 			this.retrospectiveService
-				.watchRetro(this.team.id, this.meetingId)
+				.watchRetro(this.space.id, this.meetingId)
 				.pipe(takeUntil(this.destroyed$.asObservable())) // TODO(StackOverflow): Do we need .asObservable() here?
 				.subscribe({
 					next: (retrospective) => {

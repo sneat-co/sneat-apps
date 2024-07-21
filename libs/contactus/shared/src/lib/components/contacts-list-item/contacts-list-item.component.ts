@@ -5,7 +5,7 @@ import { IRelatedItem, IRelationshipRoles } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
 import { ISpaceContext } from '@sneat/team-models';
-import { TeamNavService } from '@sneat/team-services';
+import { SpaceNavService } from '@sneat/team-services';
 
 @Component({
 	selector: 'sneat-contacts-list-item',
@@ -13,7 +13,7 @@ import { TeamNavService } from '@sneat/team-services';
 	styleUrls: ['./contacts-list-item.component.scss'],
 })
 export class ContactsListItemComponent {
-	@Input() team?: ISpaceContext;
+	@Input() space?: ISpaceContext;
 	@Input() excludeRole?: ContactRole;
 	@Input() contact?: IIdAndBriefAndOptionalDto<IContactBrief, IContactDto>;
 	@Input() showAddress = false;
@@ -35,7 +35,7 @@ export class ContactsListItemComponent {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly teamNavService: TeamNavService,
+		private readonly spaceNavService: SpaceNavService,
 		private readonly contactService: ContactService,
 	) {}
 
@@ -44,12 +44,12 @@ export class ContactsListItemComponent {
 			this.errorLogger.logError('no contact');
 			return;
 		}
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError('no team');
 			return;
 		}
-		this.teamNavService
-			.navigateForwardToSpacePage(this.team, `contact/${contact.id}`, {
+		this.spaceNavService
+			.navigateForwardToSpacePage(this.space, `contact/${contact.id}`, {
 				state: { contact },
 			})
 			.catch(
@@ -72,14 +72,14 @@ export class ContactsListItemComponent {
 
 	archiveContact(): void {
 		console.log('ContactListItemComponent.removeContact()');
-		if (!this.team) {
+		if (!this.space) {
 			return;
 		}
 		if (this.contact?.id) {
 			this.contactService
 				.setContactsStatus({
 					status: 'archived',
-					spaceID: this.team.id,
+					spaceID: this.space.id,
 					contactIDs: [this.contact.id],
 				})
 				.subscribe({

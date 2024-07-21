@@ -34,7 +34,7 @@ import { takeUntil } from 'rxjs';
 	],
 })
 export class UserRequiredFieldsModalComponent extends SneatBaseComponent {
-	@Input({ required: true }) team: ISpaceContext = { id: '' };
+	@Input({ required: true }) space: ISpaceContext = { id: '' };
 
 	protected readonly genders: ISelectItem[] = [
 		{ id: 'male', emoji: '♂️', title: 'Male' },

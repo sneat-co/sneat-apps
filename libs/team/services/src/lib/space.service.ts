@@ -28,7 +28,7 @@ import { ISneatUserState, SneatUserService } from '@sneat/auth-core';
 import { BehaviorSubject, Observable, Subscription, throwError } from 'rxjs';
 import { filter, first, map, tap } from 'rxjs/operators';
 
-const teamBriefFromUserTeamInfo = (v: IUserSpaceBrief): ISpaceBrief => ({
+const spaceBriefFromUserSpaceInfo = (v: IUserSpaceBrief): ISpaceBrief => ({
 	...v,
 	type: v.type,
 });
@@ -46,7 +46,7 @@ const teamBriefFromUserTeamInfo = (v: IUserSpaceBrief): ISpaceBrief => ({
 export class SpaceService {
 	private userID?: string;
 
-	private currentUserTeams?: Record<string, IUserSpaceBrief>;
+	private currentUserSpaces?: Record<string, IUserSpaceBrief>;
 
 	private spaces$: Record<string, BehaviorSubject<ISpaceContext>> = {};
 	private subscriptions: Subscription[] = [];
@@ -74,15 +74,15 @@ export class SpaceService {
 
 		// We are intentionally not un-subscribing from user record updates. TODO: why?
 		this.userService.userState.subscribe({
-			next: this.processUserRecordInTeamService,
+			next: this.processUserRecordInSpaceService,
 			error: this.errorLogger.logErrorHandler('failed to load user record'),
 		});
 	}
 
-	private readonly processUserRecordInTeamService = (
+	private readonly processUserRecordInSpaceService = (
 		userState: ISneatUserState,
 	) => {
-		console.log('TeamService.processUserRecordInTeamService()', userState);
+		console.log('TeamService.processUserRecordInSpaceService()', userState);
 		const user = userState?.record;
 		if (!user) {
 			// this.userID = undefined;
@@ -102,9 +102,9 @@ export class SpaceService {
 			}
 			this.userID = userState.user?.uid;
 		}
-		this.currentUserTeams = user?.spaces;
+		this.currentUserSpaces = user?.spaces;
 
-		zipMapBriefsWithIDs(user.spaces).forEach(this.subscribeForUserTeamChanges);
+		zipMapBriefsWithIDs(user.spaces).forEach(this.subscribeForUserSpaceChanges);
 	};
 
 	public createSpace(
@@ -130,20 +130,20 @@ export class SpaceService {
 			return subj.asObservable();
 		}
 		let teamContext: ISpaceContext = ref;
-		if (this.currentUserTeams) {
-			const userTeamInfo = this.currentUserTeams[id];
+		if (this.currentUserSpaces) {
+			const userTeamInfo = this.currentUserSpaces[id];
 			if (userTeamInfo) {
 				teamContext = {
 					id,
 					type: userTeamInfo.type,
-					brief: teamBriefFromUserTeamInfo(userTeamInfo),
+					brief: spaceBriefFromUserSpaceInfo(userTeamInfo),
 				};
 			}
 		}
 		subj = new BehaviorSubject<ISpaceContext>(teamContext);
 		this.spaces$[id] = subj;
 		if (this.userService.currentUserID) {
-			this.subscribeForTeamChanges(subj);
+			this.subscribeForSpaceChanges(subj);
 		} else {
 			this.userService.userState
 				.pipe(
@@ -151,15 +151,15 @@ export class SpaceService {
 					first(),
 				)
 				.subscribe({
-					next: () => this.subscribeForTeamChanges(subj),
+					next: () => this.subscribeForSpaceChanges(subj),
 				});
 		}
 		return subj.asObservable();
 	}
 
-	public onTeamUpdated(team: ISpaceContext): void {
+	public onSpaceUpdated(team: ISpaceContext): void {
 		console.log(
-			'TeamService.onTeamUpdated',
+			'TeamService.onSpaceUpdated',
 			team ? { id: team.id, dto: { ...team.dbo } } : team,
 		);
 		let team$ = this.spaces$[team.id];
@@ -172,12 +172,12 @@ export class SpaceService {
 		team$.next(team);
 	}
 
-	public getTeamJoinInfo(
+	public getSpaceJoinInfo(
 		inviteID: string,
 		pin: string,
 	): Observable<IJoinSpaceInfoResponse> {
 		return this.sneatApiService
-			.postAsAnonymous<IJoinSpaceInfoResponse>('team/join_info', {
+			.postAsAnonymous<IJoinSpaceInfoResponse>('space/join_info', {
 				inviteID,
 				pin,
 			})
@@ -194,25 +194,25 @@ export class SpaceService {
 	}
 
 	// TODO: move to separate module
-	public deleteMetrics(team: string, metrics: string[]): Observable<void> {
-		return this.sneatApiService.post('team/remove_metrics', {
-			team,
+	public deleteMetrics(space: string, metrics: string[]): Observable<void> {
+		return this.sneatApiService.post('space/remove_metrics', {
+			space,
 			metrics,
 		});
 	}
 
 	// TODO: move to separate module
-	public addMetric(team: string, metric: ISpaceMetric): Observable<void> {
-		if (!team) {
-			return throwError(() => 'team parameter is required');
+	public addMetric(space: string, metric: ISpaceMetric): Observable<void> {
+		if (!space) {
+			return throwError(() => 'space parameter is required');
 		}
-		const params = new HttpParams({ fromObject: { id: team } });
-		return this.sneatApiService.post('team/add_metric?' + params.toString(), {
+		const params = new HttpParams({ fromObject: { id: space } });
+		return this.sneatApiService.post('space/add_metric?' + params.toString(), {
 			metric,
 		});
 	}
 
-	private readonly subscribeForUserTeamChanges = (
+	private readonly subscribeForUserSpaceChanges = (
 		userTeamInfo: IIdAndBrief<IUserSpaceBrief>,
 	): void => {
 		console.log('subscribeForFirestoreTeamChanges', userTeamInfo);
@@ -223,7 +223,7 @@ export class SpaceService {
 				team = {
 					...team,
 					type: userTeamInfo.brief?.type,
-					brief: teamBriefFromUserTeamInfo(userTeamInfo.brief),
+					brief: spaceBriefFromUserSpaceInfo(userTeamInfo.brief),
 				};
 				subj.next(team);
 			}
@@ -233,15 +233,15 @@ export class SpaceService {
 		const space: ISpaceContext = {
 			id: userTeamInfo.id,
 			type: userTeamInfo.brief.type,
-			brief: teamBriefFromUserTeamInfo(userTeamInfo.brief),
+			brief: spaceBriefFromUserSpaceInfo(userTeamInfo.brief),
 		};
 		this.spaces$[userTeamInfo.id] = subj = new BehaviorSubject<ISpaceContext>(
 			space,
 		);
-		this.subscribeForTeamChanges(subj);
+		this.subscribeForSpaceChanges(subj);
 	};
 
-	private subscribeForTeamChanges(subj: BehaviorSubject<ISpaceContext>): void {
+	private subscribeForSpaceChanges(subj: BehaviorSubject<ISpaceContext>): void {
 		const t = subj.value;
 		console.log(`TeamService.subscribeForTeamChanges(${t.id})`);
 		const { id } = t;
@@ -263,7 +263,7 @@ export class SpaceService {
 				}),
 				tap((team) => {
 					console.log(
-						'TeamService.subscribeForTeamChanges() => New team from Firestore:',
+						'TeamService.subscribeForSpaceChanges() => New team from Firestore:',
 						team,
 					);
 					// subj.next(team);

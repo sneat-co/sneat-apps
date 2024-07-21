@@ -225,13 +225,13 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 
 	protected goListItem(item: IListItemBrief): void {
 		console.log(`goListItem(${item.id}), subListId=${item.subListId}`, item);
-		if (!this.team) {
+		if (!this.space) {
 			return;
 		}
 		if (item.subListId) {
 			const path = item.subListType === 'recipes' ? 'recipe' : 'list';
-			this.teamNav
-				.navigateForwardToSpacePage(this.team, path, {
+			this.spaceNav
+				.navigateForwardToSpacePage(this.space, path, {
 					state: { list: this.list, listItem: item },
 				})
 				.catch(this.errorLogger.logError);
@@ -252,11 +252,11 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			movingItem.state.isReordering = true;
 			event.detail.complete(this.allListItems);
 			this.applyFilter();
-			if (!this.team || !this.list?.brief) {
+			if (!this.space || !this.list?.brief) {
 				return;
 			}
 			const request: IReorderListItemsRequest = {
-				spaceID: this.team.id,
+				spaceID: this.space.id,
 				listID: this.list.id,
 				// listType: this.list.brief?.type,
 				itemIDs: [movingItem.brief.id],
@@ -391,7 +391,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 	}
 
 	private deleteItems(items?: IListItemWithUiState[]): void {
-		if (!this.team || !this.list?.brief || !items) {
+		if (!this.space || !this.list?.brief || !items) {
 			return;
 		}
 		const deletingItems: IListItemWithUiState[] = [];
@@ -404,7 +404,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			return;
 		}
 		const request: IDeleteListItemsRequest = {
-			spaceID: this.team.id,
+			spaceID: this.space.id,
 			listID: this.list.id,
 			// listType: this.list.brief.type,
 			itemIDs: deletingItems.map((li) => li.brief.id),
@@ -422,11 +422,11 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 
 	protected reactivateCompleted(): void {
 		console.log('reactivateCompleted()');
-		if (!this.list?.brief || !this.team || !this.allListItems) {
+		if (!this.list?.brief || !this.space || !this.allListItems) {
 			return;
 		}
 		const request: ISetListItemsIsComplete = {
-			spaceID: this.team.id,
+			spaceID: this.space.id,
 			listID: this.list.id,
 			// listType: this.list.brief.type,
 			isDone: false,
@@ -458,7 +458,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 	}
 
 	protected goGroceries(): void {
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError('no team context');
 			return;
 		}

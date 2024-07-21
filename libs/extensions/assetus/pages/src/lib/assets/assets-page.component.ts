@@ -10,11 +10,11 @@ import {
 	AssetService,
 	AssetsListComponentModule,
 	AssetusServicesModule,
-	AssetusTeamService,
+	AssetusSpaceService,
 } from '@sneat/extensions/assetus/components';
 import {
 	SpaceComponentBaseParams,
-	TeamCoreComponentsModule,
+	SpaceCoreComponentsModule,
 } from '@sneat/team-components';
 import { IAssetContext } from '@sneat/mod-assetus-core';
 import { takeUntil } from 'rxjs';
@@ -31,7 +31,7 @@ import { AssetsBasePage } from '../assets-base.page';
 		IonicModule,
 		RouterModule,
 		AssetsListComponentModule,
-		TeamCoreComponentsModule,
+		SpaceCoreComponentsModule,
 		ContactusServicesModule,
 		AssetusServicesModule,
 	],
@@ -56,13 +56,13 @@ export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewIn
 	constructor(
 		route: ActivatedRoute,
 		params: SpaceComponentBaseParams,
-		private readonly assetusTeamService: AssetusTeamService,
+		private readonly assetusSpaceService: AssetusSpaceService,
 		assetService: AssetService,
 		private readonly alertCtrl: AlertController,
 	) {
 		super('AssetsPageComponent', route, params, assetService);
-		this.teamIDChanged$.subscribe({
-			next: () => this.watchTeamAssets(),
+		this.spaceIDChanged$.subscribe({
+			next: () => this.watchSpaceAssets(),
 		});
 	}
 
@@ -113,7 +113,7 @@ export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewIn
 		// throw new Error("not implemented yey");
 		this.navController
 			.navigateForward('./' + page, {
-				state: { team: this.team },
+				state: { space: this.space },
 			})
 			.catch(
 				this.errorLogger.logErrorHandler('failed to navigate to page: ' + page),
@@ -121,10 +121,10 @@ export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewIn
 		// this.navigateForward(page);
 	}
 
-	private watchTeamAssets(): void {
-		if (this.team?.id) {
-			this.assetusTeamService
-				.watchAssetBriefs(this.team)
+	private watchSpaceAssets(): void {
+		if (this.space?.id) {
+			this.assetusSpaceService
+				.watchAssetBriefs(this.space)
 				.pipe(takeUntil(this.destroyed$))
 				.subscribe({
 					next: (assets: IIdAndBrief<IAssetBrief>[]) => {

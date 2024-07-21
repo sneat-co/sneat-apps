@@ -11,7 +11,7 @@
 	<sneat-logist-order-counterparty
 		*ngFor="let counterparty of counterparties"
 		[label]="counterparty.role | titlecase"
-		[team]="team"
+		[space]="space"
 		[order]="order"
 		[readonly]="readonly"
 		[canChangeContact]="false"

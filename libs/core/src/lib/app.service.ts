@@ -26,7 +26,7 @@ export type SneatApp =
 export interface IAppInfo {
 	readonly appId: SneatApp;
 	readonly appTitle: string;
-	readonly requiredTeamType?: SpaceType;
+	readonly requiredSpaceType?: SpaceType;
 }
 
 export const APP_INFO = new InjectionToken<IAppInfo>('app');

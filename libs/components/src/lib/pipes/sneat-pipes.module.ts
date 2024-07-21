@@ -11,11 +11,11 @@ import { ContactTitlePipe } from './member-title.pipe';
 import { PersonNamesPipe, PersonTitle } from './person-title.pipe';
 import { SelectedMembersPipe } from './selected-members.pipe';
 import { ShortMonthNamePipe } from './short-month-name.pipe';
-import { TeamEmojiPipe } from './team-emoji.pipe';
+import { SpaceEmojiPipe } from './team-emoji.pipe';
 import { WdToWeekdayPipe } from './wd-to-weekday.pipe';
 
 const pipes: Type<PipeTransform>[] = [
-	TeamEmojiPipe,
+	SpaceEmojiPipe,
 	WdToWeekdayPipe,
 	LongMonthNamePipe,
 	ShortMonthNamePipe,

@@ -33,7 +33,7 @@ export abstract class MemberBasePage extends ContactBasePage {
 		super.onSpaceDboChanged();
 		console.log(
 			'MemberBasePage.onTeamDtoChanged()',
-			this.team?.dbo,
+			this.space?.dbo,
 			this.memberContext,
 		);
 	}

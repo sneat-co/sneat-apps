@@ -126,7 +126,7 @@ export interface IListInfo extends IWithRestrictions {
 	shortId?: string;
 	title?: string;
 	hidden?: boolean;
-	team?: IShortSpaceInfo;
+	space?: IShortSpaceInfo;
 	emoji?: string;
 	img?: string;
 	note?: string;
@@ -171,7 +171,7 @@ export function createListInfoFromDto(
 		listInfo.restrictions = dto.restrictions;
 	}
 	if (dto.commune) {
-		listInfo.team = dto.commune;
+		listInfo.space = dto.commune;
 	}
 	return listInfo;
 }

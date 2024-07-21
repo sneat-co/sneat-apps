@@ -79,7 +79,7 @@ export class CalendarWeekComponent implements OnChanges {
 			// console.log('ScheduleWeekComponent.onWeekInputChanged() => i=', i, '; startDate:', currentWeek.startDate, '; date:', date);
 			this.weekdays[i] = {
 				...this.weekdays[i],
-				day: spaceDaysProvider.getTeamDay(date),
+				day: spaceDaysProvider.getSpaceDay(date),
 			};
 		}
 	}

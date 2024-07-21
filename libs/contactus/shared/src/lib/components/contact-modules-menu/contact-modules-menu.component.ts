@@ -16,7 +16,7 @@ import { ISpaceContext } from '@sneat/team-models';
 	imports: [CommonModule, IonicModule],
 })
 export class ContactModulesMenuComponent {
-	@Input({ required: true }) team?: ISpaceContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input({ required: true }) public contact?: IIdAndBrief<IContactBrief>;
 
 	public readonly extensions = defaultFamilyMemberExtensions;

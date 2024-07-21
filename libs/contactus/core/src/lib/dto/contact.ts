@@ -4,7 +4,7 @@ import { IContactBase } from './contact-base';
 import {
 	ISpaceModuleItemRef,
 	IWithRelatedAndRelatedIDs,
-	TeamMemberType,
+	SpaceMemberType,
 } from '@sneat/dto';
 import { IMemberPerson, IPersonRecord } from './person';
 
@@ -25,7 +25,7 @@ export const ContactTypePerson = 'person',
 	ContactTypeVehicle = 'vehicle';
 
 export type ContactType =
-	| TeamMemberType
+	| SpaceMemberType
 	| typeof ContactTypePerson
 	| typeof ContactTypeCompany
 	| typeof ContactTypeLocation

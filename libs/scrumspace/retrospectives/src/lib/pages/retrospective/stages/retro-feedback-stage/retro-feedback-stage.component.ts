@@ -8,7 +8,7 @@ import { ISpaceContext } from '@sneat/team-models';
 	templateUrl: './retro-feedback-stage.component.html',
 })
 export class RetroFeedbackStageComponent {
-	@Input({ required: true }) team: ISpaceContext = { id: '' };
+	@Input({ required: true }) space: ISpaceContext = { id: '' };
 	@Input({ required: true }) retrospective?: IRecord<IRetrospective>;
 
 	public iAmReady?: boolean;

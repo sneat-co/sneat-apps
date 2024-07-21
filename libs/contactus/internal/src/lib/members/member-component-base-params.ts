@@ -9,9 +9,9 @@ export class MemberComponentBaseParams extends ContactComponentBaseParams {
 		public readonly memberService: MemberService,
 	) {
 		super(
-			contactParams.teamParams,
+			contactParams.spaceParams,
 			contactParams.contactService,
-			contactParams.contactusTeamService,
+			contactParams.contactusSpaceService,
 		);
 	}
 }

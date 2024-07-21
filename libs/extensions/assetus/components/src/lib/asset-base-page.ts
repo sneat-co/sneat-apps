@@ -6,15 +6,15 @@ import {
 	IAssetContext,
 	IAssetVehicleContext,
 } from '@sneat/mod-assetus-core';
-import { TeamItemPageBaseComponent } from '@sneat/team-components';
+import { SpaceItemPageBaseComponent } from '@sneat/team-components';
 import { NEVER, Observable, throwError } from 'rxjs';
 import { AssetComponentBaseParams } from './asset-component-base-params';
 
-export abstract class AssetBasePage extends TeamItemPageBaseComponent<
+export abstract class AssetBasePage extends SpaceItemPageBaseComponent<
 	IAssetBrief,
 	IAssetDboBase
 > {
-	protected assetusTeam?: IAssetusSpaceContext;
+	protected assetusSpace?: IAssetusSpaceContext;
 
 	protected asset?: IAssetContext;
 
@@ -33,7 +33,7 @@ export abstract class AssetBasePage extends TeamItemPageBaseComponent<
 		super(
 			className,
 			route,
-			params.teamParams,
+			params.spaceParams,
 			parentPagePath,
 			'asset',
 			params.assetService,
@@ -44,7 +44,7 @@ export abstract class AssetBasePage extends TeamItemPageBaseComponent<
 		if (!this.asset?.id) {
 			return throwError(() => new Error('no asset context'));
 		}
-		const space = this.team;
+		const space = this.space;
 		if (!space) {
 			return NEVER;
 		}
@@ -58,6 +58,6 @@ export abstract class AssetBasePage extends TeamItemPageBaseComponent<
 	}
 
 	protected override briefs(): Record<string, IAssetBrief> | undefined {
-		return this.assetusTeam?.dbo?.assets;
+		return this.assetusSpace?.dbo?.assets;
 	}
 }

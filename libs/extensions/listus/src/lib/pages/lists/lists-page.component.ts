@@ -57,7 +57,7 @@ export class ListsPageComponent extends SpaceBaseComponent {
 		// private preloaderService: NgModulePreloaderService,
 		private readonly listusAppStateService: IListusAppStateService,
 	) {
-		super('ListsPageComponent', route, params.teamParams);
+		super('ListsPageComponent', route, params.spaceParams);
 		// this.preloaderService.markAsPreloaded('lists');
 		this.listusAppStateService.changed.subscribe((appState) => {
 			this.collapsedGroups = appState.collapsedGroups;
@@ -155,21 +155,21 @@ export class ListsPageComponent extends SpaceBaseComponent {
 	public goList(list: IListInfo): void {
 		console.log(
 			`ListsPage.goList(id=${list.id}, shortId=${list.shortId}, title=${list.title}) => communeInfo:`,
-			list.team,
+			list.space,
 		);
 		const listGroup = this.listGroups?.find((lg) =>
 			(lg.lists || []).some((l) => eq(l.id, list.id)),
 		);
-		if (!this.team) {
+		if (!this.space) {
 			throw new Error('!this.team');
 		}
 		const path = `list/${list.type}/${list.id}`;
-		this.teamParams.teamNavService
-			.navigateForwardToSpacePage(this.team, path, {
+		this.spaceParams.spaceNavService
+			.navigateForwardToSpacePage(this.space, path, {
 				state: {
 					listInfo: list,
 					listGroupTitle: listGroup && listGroup.title,
-					team: this.team,
+					space: this.space,
 				},
 			})
 			.catch(this.errorLogger.logErrorHandler('Failed to navigate to list'));
@@ -203,10 +203,10 @@ export class ListsPageComponent extends SpaceBaseComponent {
 		if (!list.id) {
 			throw new Error('!list.id');
 		}
-		if (!this.team) {
+		if (!this.space) {
 			throw new Error('!this.team');
 		}
-		this.params.listService.deleteList(this.team, list.id).subscribe({
+		this.params.listService.deleteList(this.space, list.id).subscribe({
 			next: () => {
 				listGroup.lists =
 					listGroup.lists?.filter((l) => !eq(l.id, list.id)) || [];
@@ -248,9 +248,9 @@ export class ListsPageComponent extends SpaceBaseComponent {
 		return (
 			(item.id && `id:${item.id}`) ||
 			(item.shortId &&
-				item.team &&
-				item.team.id &&
-				`${item.team.id}:${item.type}:${item.shortId}`) ||
+				item.space &&
+				item.space.id &&
+				`${item.space.id}:${item.type}:${item.shortId}`) ||
 			(item.shortId && `${item.type}:${item.shortId}`) ||
 			index
 		);
@@ -266,7 +266,7 @@ export class ListsPageComponent extends SpaceBaseComponent {
 	protected override onSpaceDboChanged(): void {
 		try {
 			super.onSpaceDboChanged();
-			if (this.team) {
+			if (this.space) {
 				if (this.reordered) {
 					this.reordered = false;
 				} else {
@@ -282,7 +282,7 @@ export class ListsPageComponent extends SpaceBaseComponent {
 					// 		return listGroup;
 					// 	});
 					// }
-					this.updateListsFromTeam(undefined);
+					this.updateListsFromSpace(undefined);
 				}
 			} else {
 				this.listGroups = [];
@@ -335,7 +335,7 @@ export class ListsPageComponent extends SpaceBaseComponent {
 	// }
 
 	// and personal lists (private to the current user).
-	private updateListsFromTeam(listGroups?: IListGroup[]): void {
+	private updateListsFromSpace(listGroups?: IListGroup[]): void {
 		console.log(
 			`ListsPageComponent.updateListsFromTeam()`,
 			listGroups,
@@ -346,7 +346,7 @@ export class ListsPageComponent extends SpaceBaseComponent {
 				this.listGroups.map((lg) => ({ ...lg, lists: [...(lg.lists || [])] })),
 		);
 		if (!listGroups) {
-			if (this.team?.type === 'family') {
+			if (this.space?.type === 'family') {
 				listGroups = [
 					{
 						id: 'to-buy',
@@ -392,10 +392,10 @@ export class ListsPageComponent extends SpaceBaseComponent {
 				if (!passedList.type) {
 					throw new Error(`!passedList[${i}]`);
 				}
-				if (!passedList.team && this.team.type === 'personal') {
+				if (!passedList.space && this.space.type === 'personal') {
 					passedList = {
 						...passedList,
-						team: createShortSpaceInfoFromDbo(this.team),
+						space: createShortSpaceInfoFromDbo(this.space),
 					};
 				}
 				const matchedList = ((listGroup && listGroup.lists) || []).find(
@@ -412,17 +412,17 @@ export class ListsPageComponent extends SpaceBaseComponent {
 							!!currentList.shortId &&
 							currentList.shortId === passedList.shortId;
 						const matchedCommuneTypes =
-							!!currentList.team &&
-							!!passedList.team &&
-							currentList.team.type === passedList.team.type;
+							!!currentList.space &&
+							!!passedList.space &&
+							currentList.space.type === passedList.space.type;
 						const matchedCommuneIds =
-							!!currentList.team &&
-							!!passedList.team &&
-							currentList.team.id === passedList.team.type;
+							!!currentList.space &&
+							!!passedList.space &&
+							currentList.space.id === passedList.space.type;
 						const matchedCommuneShortIds =
-							!!currentList.team &&
-							!!passedList.team &&
-							eq(currentList.team?.id, passedList.team.id);
+							!!currentList.space &&
+							!!passedList.space &&
+							eq(currentList.space?.id, passedList.space.id);
 						const matched =
 							matchedIds ||
 							(matchedShortId &&
@@ -474,8 +474,8 @@ export class ListsPageComponent extends SpaceBaseComponent {
 						// Before that most of the lists are live within CommuneDto
 						matchedList.id = passedList.id;
 					}
-					if (!matchedList.team) {
-						matchedList.team = createShortSpaceInfoFromDbo(this.team);
+					if (!matchedList.space) {
+						matchedList.space = createShortSpaceInfoFromDbo(this.space);
 					}
 				}
 			});

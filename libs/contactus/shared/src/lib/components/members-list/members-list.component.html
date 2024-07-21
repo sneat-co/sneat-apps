@@ -1,4 +1,4 @@
-<ion-item *ngIf="!team?.dbo">
+<ion-item *ngIf="!space?.dbo">
 	<ion-avatar slot="start" style="opacity: 0.3">
 		<ion-img title="avatar" src="//www.gravatar.com/avatar/gravatar" />
 	</ion-avatar>
@@ -13,8 +13,8 @@
 	@for (member of membersToDisplay; track member.id) {
 		<ion-item-sliding [@addRemove]="'added'">
 			<ion-item
-				routerLink="/space/{{ team?.type || 'UNKNOWN_TYPE' }}/{{
-					team?.id
+				routerLink="/space/{{ space?.type || 'UNKNOWN_TYPE' }}/{{
+					space?.id
 				}}/member/{{ member.id }}"
 				(click)="goMember(member)"
 				class="sneat-tiny-end-padding"
@@ -54,7 +54,7 @@
 				<sneat-inlist-age-group
 					*ngIf="isAgeOptionsVisible(member)"
 					[contactID]="member.id"
-					[team]="team"
+					[space]="space"
 				/>
 				<ion-buttons slot="end">
 					<ion-button

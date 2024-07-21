@@ -6,7 +6,7 @@
 	<ion-spinner
 		name="lines-small"
 		*ngIf="
-			(timerState?.isToggling && timerState?.activeMemberId === memberId) ||
+			(timerState?.isToggling && timerState?.activeMemberId === memberID) ||
 			!timerState
 		"
 	/>
@@ -15,7 +15,7 @@
 			timerState &&
 			(!timerState.status ||
 				timerState.status === 'stopped' ||
-				timerState.activeMemberId !== memberId)
+				timerState.activeMemberId !== memberID)
 		"
 	>
 		<ion-icon
@@ -30,7 +30,7 @@
 		*ngIf="
 			!timerState?.isToggling &&
 			timerState?.status === 'active' &&
-			timerState?.activeMemberId === memberId
+			timerState?.activeMemberId === memberID
 		"
 	/>
 	<ion-label

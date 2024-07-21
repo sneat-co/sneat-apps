@@ -16,13 +16,13 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	styleUrls: ['./scrums-history.page.scss'],
 })
 export class ScrumsHistoryPageComponent {
-	public team?: ISpaceContext;
+	public space?: ISpaceContext;
 	public scrums?: IRecord<IScrumDbo>[];
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly route: ActivatedRoute,
-		private readonly teamService: SpaceService,
+		private readonly spaceService: SpaceService,
 		private readonly scrumService: ScrumService,
 		private readonly afAuth: AngularFireAuth,
 		private readonly navService: NavService,
@@ -30,17 +30,17 @@ export class ScrumsHistoryPageComponent {
 		const space = history.state?.team as IRecord<ISpaceDbo>;
 		console.log('space', space);
 		if (space?.id) {
-			this.team = space;
+			this.space = space;
 		} else {
 			const id = route.snapshot.queryParamMap.get('team');
 			if (id) {
-				this.team = { id };
-				this.teamService.watchSpace(this.team).subscribe((team) => {
-					this.team = team;
+				this.space = { id };
+				this.spaceService.watchSpace(this.space).subscribe((team) => {
+					this.space = team;
 				});
 			}
 		}
-		if (this.team?.id) {
+		if (this.space?.id) {
 			throw new Error('not implemented');
 			// this.afAuth.idToken.subscribe((token) => {
 			// 	if (token) {

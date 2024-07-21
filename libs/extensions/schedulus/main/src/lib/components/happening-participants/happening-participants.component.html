@@ -11,7 +11,7 @@
 	</ion-segment>
 	<sneat-contacts-checklist
 		*ngIf="tab === 'members'"
-		[team]="team"
+		[space]="space"
 		[checkedContactIDs]="checkedContactIDs"
 		noContactsMessage="No members"
 		(checkedChange)="isMemberCheckChanged($event)"

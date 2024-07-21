@@ -14,7 +14,7 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 		protected readonly params: HappeningComponentBaseParams, // 	HappeningModuleSchema,
 	) {
 		// 	typeof SingleHappeningKind | typeof RegularHappeningKind>,
-		super(className, route, params.teamParams);
+		super(className, route, params.spaceParams);
 		try {
 			const happening = window.history.state
 				.happening as unknown as IHappeningContext;
@@ -38,7 +38,7 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 	): void => {
 		console.log(`${this.className}.setHappening(from=${from})`, happening);
 		this.happening = happening;
-		if (!this.team?.id && this.happening.space) {
+		if (!this.space?.id && this.happening.space) {
 			this.spaceContext = this.happening.space;
 		}
 	};
@@ -51,7 +51,7 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 		if (this.happening?.id === id) {
 			return;
 		}
-		const space = this.team;
+		const space = this.space;
 		if (!space) {
 			throw new Error('Team is not defined');
 		}
@@ -60,7 +60,7 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 	};
 
 	private watchHappeningChanges(id: string): void {
-		const space = this.team;
+		const space = this.space;
 		if (!space?.id) {
 			// console.warn('watchHappeningChanges: team is not defined');
 			return;

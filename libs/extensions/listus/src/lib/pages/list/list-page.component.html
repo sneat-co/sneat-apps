@@ -130,7 +130,7 @@
 							[listMode]="doneFilter === 'all' ? listMode : 'swipe'"
 							[listItemWithUiState]="item"
 							[listItems]="listItems"
-							[team]="team"
+							[space]="space"
 							[list]="list"
 							(itemClicked)="goListItem($event)"
 							(listChanged)="setList($event)"
@@ -148,7 +148,7 @@
 			"
 		>
 			<sneat-new-list-item
-				[team]="team"
+				[space]="space"
 				[list]="list"
 				[isDone]="doneFilter === 'completed'"
 				[disabled]="isPersisting"

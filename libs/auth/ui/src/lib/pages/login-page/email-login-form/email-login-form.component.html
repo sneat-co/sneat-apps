@@ -84,13 +84,13 @@
 		<ion-item *ngIf="wrongPassword && sign === 'in'">
 			<ion-label color="danger">Wrong password</ion-label>
 		</ion-item>
-		<ion-item *ngIf="sign === 'up' && appInfo.requiredTeamType === 'company'">
+		<ion-item *ngIf="sign === 'up' && appInfo.requiredSpaceType === 'company'">
 			<ion-label position="stacked">Company name</ion-label>
 			<ion-input
 				#teamTitleInput
 				placeholder="required"
 				required
-				[(ngModel)]="teamTitle"
+				[(ngModel)]="spaceTitle"
 			/>
 		</ion-item>
 	</ion-card-content>

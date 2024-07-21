@@ -25,7 +25,7 @@ export class AssetAddDocumentComponent
 	extends AddAssetBaseComponent
 	implements OnChanges
 {
-	@Input() public override team?: ISpaceContext;
+	@Input() public override space?: ISpaceContext;
 	@Input() public documentAsset?: IAssetDocumentContext;
 
 	protected documentType?: AssetVehicleType;
@@ -50,16 +50,16 @@ export class AssetAddDocumentComponent
 	protected nextServiceDue = ''; // ISO date string 'YYYY-MM-DD'
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['team'] && this.team) {
+		if (changes['team'] && this.space) {
 			const a: IAssetContext<'document'> = this.documentAsset ?? {
 				id: '',
-				space: this.team ?? { id: '' },
+				space: this.space ?? { id: '' },
 				dbo: {
 					status: 'draft',
 					category: 'vehicle',
 					extraType: 'document',
 					extra: {},
-					spaceID: this.team?.id,
+					spaceID: this.space?.id,
 					type: this.documentType,
 					title: '',
 					possession: undefined as unknown as AssetPossession,
@@ -69,7 +69,7 @@ export class AssetAddDocumentComponent
 					updatedBy: '-',
 				},
 			};
-			this.documentAsset = { ...a, space: this.team };
+			this.documentAsset = { ...a, space: this.space };
 		}
 	}
 
@@ -108,7 +108,7 @@ export class AssetAddDocumentComponent
 
 	protected submitDocumentForm(): void {
 		console.log('submitDocumentForm', this.documentAsset);
-		if (!this.team) {
+		if (!this.space) {
 			throw 'no team context';
 		}
 		if (!this.documentType) {
@@ -125,7 +125,7 @@ export class AssetAddDocumentComponent
 				status: 'active',
 				category: 'vehicle',
 			},
-			spaceID: this.team?.id,
+			spaceID: this.space?.id,
 		};
 		if (this.yearOfBuild) {
 			request = {
@@ -167,6 +167,6 @@ export class AssetAddDocumentComponent
 		// 	}
 		// }
 
-		this.createAssetAndGoToAssetPage(request, this.team);
+		this.createAssetAndGoToAssetPage(request, this.space);
 	}
 }

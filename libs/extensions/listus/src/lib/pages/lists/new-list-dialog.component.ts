@@ -40,7 +40,7 @@ export class NewListDialogComponent implements AfterViewInit {
 			return;
 		}
 		const listInfo: IListInfo = {
-			team: {
+			space: {
 				type: this.visibility,
 				title:
 					this.visibility.substr(0, 1).toUpperCase() +

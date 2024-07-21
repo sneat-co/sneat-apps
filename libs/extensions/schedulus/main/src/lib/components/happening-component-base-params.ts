@@ -5,7 +5,7 @@ import { HappeningService } from '@sneat/team-services';
 @Injectable()
 export class HappeningComponentBaseParams {
 	constructor(
-		public readonly teamParams: SpaceComponentBaseParams,
+		public readonly spaceParams: SpaceComponentBaseParams,
 		public readonly happeningService: HappeningService,
 	) {}
 }

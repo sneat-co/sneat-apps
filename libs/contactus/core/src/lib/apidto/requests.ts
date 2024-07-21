@@ -9,13 +9,13 @@ import {
 	MemberContactType,
 } from '../dto';
 import { IMemberContext } from '../contexts';
-import { SpaceRequest, TeamMemberStatus } from '@sneat/team-models';
+import { SpaceRequest, SpaceMemberStatus } from '@sneat/team-models';
 
 export interface ICreateSpaceMemberRequest
 	extends SpaceRequest,
 		IRelatedPerson {
 	type: MemberContactType;
-	status: TeamMemberStatus;
+	status: SpaceMemberStatus;
 	countryID: string;
 	roles: string[];
 	// memberType: MemberType;
@@ -100,7 +100,7 @@ export interface IInviteToContact {
 }
 
 export interface IPersonalInvite extends IInvite {
-	team: { id: string; title: string };
+	space: { id: string; title: string };
 	memberID: string;
 	from: IInviteFromContact;
 	to: IInviteToContact;

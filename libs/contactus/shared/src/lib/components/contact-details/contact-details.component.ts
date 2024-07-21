@@ -61,12 +61,12 @@ import { RelatedContactComponent } from './related-contact.component';
 	],
 })
 export class ContactDetailsComponent implements OnChanges {
-	@Input({ required: true }) public team?: ISpaceRef;
+	@Input({ required: true }) public space?: ISpaceRef;
 	@Input({ required: true }) public contact?: IContactContext;
 
-	protected relatedContactsOfCurrentTeam?: readonly IIdAndBrief<IRelatedItem>[];
+	protected relatedContactsOfCurrentSpace?: readonly IIdAndBrief<IRelatedItem>[];
 
-	private userTeamBriefs?: Record<string, IUserSpaceBrief>;
+	private userSpaceBriefs?: Record<string, IUserSpaceBrief>;
 	private userContactID?: string;
 
 	protected get contactWithBriefAndOptionalDto():
@@ -89,13 +89,13 @@ export class ContactDetailsComponent implements OnChanges {
 	constructor(private readonly params: ContactComponentBaseParams) {
 		params.userService.userState.subscribe({
 			next: (userState) => {
-				this.userTeamBriefs = userState?.record?.spaces;
+				this.userSpaceBriefs = userState?.record?.spaces;
 				this.setUserContactID();
 			},
 		});
 		params.userService.userState.subscribe({
 			next: (state) => {
-				this.userTeamBriefs = state?.record?.spaces;
+				this.userSpaceBriefs = state?.record?.spaces;
 				this.setUserContactID();
 			},
 		});
@@ -104,7 +104,7 @@ export class ContactDetailsComponent implements OnChanges {
 	private setRelatedToCurrentUser(): void {
 		this.relatedToContactOfCurrentUser = this.userContactID
 			? {
-					space: this.team?.id || '',
+					space: this.space?.id || '',
 					module: 'contactus',
 					collection: 'contacts',
 					itemID: this.userContactID,
@@ -140,7 +140,7 @@ export class ContactDetailsComponent implements OnChanges {
 
 	private setUserContactID(): void {
 		const userContactID =
-			this.userTeamBriefs?.[this.team?.id || '']?.userContactID;
+			this.userSpaceBriefs?.[this.space?.id || '']?.userContactID;
 		if (userContactID != this.userContactID) {
 			this.userContactID = userContactID;
 			this.onUserContactIDChanged();
@@ -149,8 +149,8 @@ export class ContactDetailsComponent implements OnChanges {
 
 	private onUserContactIDChanged(): void {
 		this.setRelatedToCurrentUser();
-		if (this.userContactID && this.team?.id) {
-			this.setRelatedAs(this.team.id, this.userContactID);
+		if (this.userContactID && this.space?.id) {
+			this.setRelatedAs(this.space.id, this.userContactID);
 		}
 	}
 
@@ -200,11 +200,11 @@ export class ContactDetailsComponent implements OnChanges {
 	}
 
 	protected goMember(id: string): void {
-		const space = this.team;
+		const space = this.space;
 		if (!space) {
 			throw new Error('Can not navigate to member without team context');
 		}
-		this.params.teamNavService.navigateToMember(this.params.navController, {
+		this.params.spaceNavService.navigateToMember(this.params.navController, {
 			id,
 			space,
 		});
@@ -222,7 +222,7 @@ export class ContactDetailsComponent implements OnChanges {
 		this.params.navController
 			.navigateForward([page], {
 				queryParams: { id: this.contact.id },
-				state: { contact: this.contact, team: this.team },
+				state: { contact: this.contact, space: this.space },
 			})
 			.catch(this.params.errorLogger.logError);
 	}
@@ -242,7 +242,7 @@ export class ContactDetailsComponent implements OnChanges {
 			related: [
 				{
 					itemRef: {
-						space: this.team?.id || '',
+						space: this.space?.id || '',
 						module: 'contactus',
 						collection: 'contacts',
 						itemID: userContactID,
@@ -265,7 +265,7 @@ export class ContactDetailsComponent implements OnChanges {
 
 	private newUpdateContactRequest(): IUpdateContactRequest {
 		const contactID = this.contact?.id;
-		const spaceID = this.team?.id;
+		const spaceID = this.space?.id;
 		if (!contactID || !spaceID) {
 			throw new Error(
 				'ContactDetailsComponent.newUpdateContactRequest() - contactID or spaceID is not set',

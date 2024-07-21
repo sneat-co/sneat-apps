@@ -29,7 +29,7 @@ export abstract class BaseListItemPage extends BaseListPage {
 				this.onQueryParamsChanged(queryParams);
 			});
 		} catch (e) {
-			params.teamParams.errorLogger.logError(
+			params.spaceParams.errorLogger.logError(
 				e,
 				'failed in BaseListItemPage.constructor()',
 			);

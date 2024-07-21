@@ -69,7 +69,7 @@ export class ScrumPageComponent
 	public memberStatus?: IStatus;
 	public userMemberId?: string;
 	public readonly taskTypes: TaskType[] = ['done', 'todo', 'risk', 'qna'];
-	public teamMetrics?: IMetric[];
+	public spaceMetrics?: IMetric[];
 	public personalMetrics?: IMetric[];
 	public timer?: Timer;
 	public expandedMemberId?: string | null;
@@ -102,7 +102,7 @@ export class ScrumPageComponent
 	}
 
 	public override get defaultBackUrl(): string {
-		return this.team?.id ? `team?id=${this.team.id}` : 'spaces';
+		return this.space?.id ? `team?id=${this.space.id}` : 'spaces';
 	}
 
 	private static getDateFromId(scrumId: string): Date {
@@ -163,7 +163,7 @@ export class ScrumPageComponent
 
 	public changeDate(to: 'prev' | 'next' | 'today' | string): void {
 		console.log(`changeDate(to=${to}, currentScrumDate=${this.scrumDate})`);
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError('can not change date without team context');
 			return;
 		}
@@ -172,7 +172,7 @@ export class ScrumPageComponent
 			this.isToday = true;
 			this.scrumDate = getToday();
 			this.scrumID = getMeetingIdFromDate(this.scrumDate);
-			this.subscribeScrum(this.team.id, this.scrumID, 'changeDate');
+			this.subscribeScrum(this.space.id, this.scrumID, 'changeDate');
 		}
 		switch (to) {
 			case 'today': {
@@ -196,7 +196,7 @@ export class ScrumPageComponent
 			case 'next': {
 				if (!this.scrum?.scrumIds?.next) {
 					this.errorLogger.logError(
-						`Attempted to go NEXT non-existing scrum (teamId=${this.team?.id}, scrumId=${this.scrumID})`,
+						`Attempted to go NEXT non-existing scrum (teamId=${this.space?.id}, scrumId=${this.scrumID})`,
 					);
 					return;
 				}
@@ -205,7 +205,7 @@ export class ScrumPageComponent
 				break;
 			}
 		}
-		if (this.team?.dbo) {
+		if (this.space?.dbo) {
 			// this.merge(this.scrum, undefined, this.team.dto?.members);
 			throw new Error('not implmented');
 		}
@@ -249,14 +249,14 @@ export class ScrumPageComponent
 		}
 	}
 
-	protected override onTeamIdChanged(): void {
-		super.onTeamIdChanged();
-		if (!this.team?.id) {
+	protected override onSpaceIdChanged(): void {
+		super.onSpaceIdChanged();
+		if (!this.space?.id) {
 			return;
 		}
 		if (this.scrumDate && this.scrumID) {
 			this.subscribeScrum(
-				this.team.id,
+				this.space.id,
 				this.scrumID,
 				`subscribeTeam(this.scrumId=${this.scrumID})`,
 			);
@@ -264,12 +264,12 @@ export class ScrumPageComponent
 	}
 
 	protected override onSpaceDboChanged(): void {
-		const teamDto = this.team?.dbo;
+		const teamDto = this.space?.dbo;
 		if (!teamDto) {
 			return;
 		}
 		if (this.scrumID && !this.timer) {
-			this.setTimer(this.team.id, this.scrumID);
+			this.setTimer(this.space.id, this.scrumID);
 		}
 		throw new Error('not implemented yet');
 		// const lastScrumId = teamDto.last?.scrum?.id;
@@ -359,7 +359,7 @@ export class ScrumPageComponent
 				// 	this.setTotalElapsed();
 				// }
 				console.log('this.scrum', this.scrum);
-				if (this.team?.dbo) {
+				if (this.space?.dbo) {
 					throw new Error('not implemented yet');
 					// this.merge(this.scrum, undefined, this.team.dto.members);
 				}
@@ -379,7 +379,7 @@ export class ScrumPageComponent
 				break;
 			case this.prevScrumID:
 				// this.prevScrum = scrum || {...this.prevScrum, statuses: []};
-				if (this.team?.dbo) {
+				if (this.space?.dbo) {
 					throw new Error('not implemented yet');
 					// this.merge(this.scrum, undefined, this.team.dto.members);
 				}

@@ -9,7 +9,7 @@ import { ISpaceContext } from '@sneat/team-models';
 	template: ``,
 })
 export class AssetListItemComponent {
-	@Input({ required: true }) team?: ISpaceContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() assetType?: AssetCategory;
 	@Input() asset?: IAssetContext;
 

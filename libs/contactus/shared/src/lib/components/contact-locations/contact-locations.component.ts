@@ -14,7 +14,7 @@ import { ContactsListModule } from '../contacts-list';
 	imports: [CommonModule, IonicModule, ContactsListModule, RouterLink],
 })
 export class ContactLocationsComponent implements OnChanges {
-	@Input({ required: true }) public team?: ISpaceContext;
+	@Input({ required: true }) public space?: ISpaceContext;
 	@Input({ required: true }) public contact?: IIdAndBriefAndOptionalDto<
 		IContactBrief,
 		IContactDto
@@ -24,13 +24,13 @@ export class ContactLocationsComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['contact']) {
-			const space = this.team;
+			const space = this.space;
 			if (!space) {
 				return;
 			}
 			this.contactLocations = this.getContactLocations().map((c) => ({
 				...c,
-				team: space,
+				space,
 			}));
 		}
 	}

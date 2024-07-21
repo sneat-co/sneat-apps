@@ -7,8 +7,8 @@ import { SneatCardListComponent } from '@sneat/components';
 import { IContactusSpaceDbo } from '@sneat/contactus-core';
 import {
 	ContactusServicesModule,
-	ContactusTeamContextService,
-	ContactusTeamService,
+	ContactusSpaceContextService,
+	ContactusSpaceService,
 } from '@sneat/contactus-services';
 import { MembersListComponent } from '@sneat/contactus-shared';
 import { IIdAndOptionalDbo, TopMenuService } from '@sneat/core';
@@ -16,12 +16,12 @@ import {
 	InviteLinksComponent,
 	SpaceComponentBaseParams,
 } from '@sneat/team-components';
-import { TeamServiceModule } from '@sneat/team-services';
+import { SpaceServiceModule } from '@sneat/team-services';
 import { MembersComponent } from '../members/members.component';
 import { SpacePageBaseComponent } from './SpacePageBaseComponent';
 
 @Component({
-	selector: 'sneat-team-page',
+	selector: 'sneat-space-page',
 	templateUrl: './space-page.component.html',
 	providers: [SpaceComponentBaseParams],
 	standalone: true,
@@ -35,32 +35,32 @@ import { SpacePageBaseComponent } from './SpacePageBaseComponent';
 		MembersListComponent,
 		ContactusServicesModule,
 		MembersComponent,
-		TeamServiceModule,
+		SpaceServiceModule,
 	],
 })
 export class SpacePageComponent extends SpacePageBaseComponent {
-	protected contactusTeam?: IIdAndOptionalDbo<IContactusSpaceDbo>;
+	protected contactusSpace?: IIdAndOptionalDbo<IContactusSpaceDbo>;
 
 	constructor(
 		route: ActivatedRoute,
 		params: SpaceComponentBaseParams,
 		topMenuService: TopMenuService,
 		cd: ChangeDetectorRef, // readonly navService: TeamNavService,
-		contactusTeamService: ContactusTeamService,
+		contactusTeamService: ContactusSpaceService,
 	) {
 		super('TeamPageComponent', route, params, topMenuService, cd);
-		const contactusTeamContextService = new ContactusTeamContextService(
+		const contactusTeamContextService = new ContactusSpaceContextService(
 			params.errorLogger,
 			this.destroyed$,
-			this.teamIDChanged$,
+			this.spaceIDChanged$,
 			contactusTeamService,
 		);
-		contactusTeamContextService.contactusTeamContext$
+		contactusTeamContextService.contactusSpaceContext$
 			.pipe(this.takeUntilNeeded())
 			.subscribe({
 				next: (contactusTeam) => {
-					this.contactusTeam = contactusTeam;
-					this.onContactusTeamChanged(contactusTeam);
+					this.contactusSpace = contactusTeam;
+					this.onContactusSpaceChanged(contactusTeam);
 				},
 			});
 	}
@@ -68,10 +68,10 @@ export class SpacePageComponent extends SpacePageBaseComponent {
 	protected goMembers(event: Event): void {
 		event.stopPropagation();
 		event.preventDefault();
-		this.teamParams.teamNavService
-			.navigateForwardToSpacePage(this.team, 'members', {
+		this.spaceParams.spaceNavService
+			.navigateForwardToSpacePage(this.space, 'members', {
 				state: {
-					contactusTeam: this.contactusTeam,
+					contactusSpace: this.contactusSpace,
 				},
 			})
 			.catch(console.error);

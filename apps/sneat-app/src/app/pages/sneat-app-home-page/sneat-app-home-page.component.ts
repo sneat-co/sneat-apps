@@ -5,10 +5,10 @@ import { IonicModule } from '@ionic/angular';
 import { AuthStatus, SneatAuthStateService } from '@sneat/auth-core';
 import { UserCountryComponent } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { TeamsListComponent } from '@sneat/team-components';
+import { SpacesListComponent } from '@sneat/team-components';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
-import { ForTeamTypeCardComponent } from '../../components/for-team-type-card.component';
+import { ForSpaceTypeCardComponent } from '../../components/for-space-type-card.component';
 import { ForEducatorsComponent } from './for-educators.component';
 import { ForFamiliesComponent } from './for-families.component';
 import { ForWorkComponent } from './for-work.component';
@@ -23,9 +23,9 @@ import { ForWorkComponent } from './for-work.component';
 		CommonModule,
 		IonicModule,
 		RouterModule,
-		TeamsListComponent,
+		SpacesListComponent,
 		UserCountryComponent,
-		ForTeamTypeCardComponent,
+		ForSpaceTypeCardComponent,
 		ForFamiliesComponent,
 		ForEducatorsComponent,
 		ForWorkComponent,

@@ -50,7 +50,7 @@
 			<ion-buttons slot="end">
 				<app-timer-member-button
 					[timer]="timer"
-					[teamId]="team?.id"
+					[teamId]="space?.id"
 					[scrumId]="scrumId"
 					[scrum]="scrum"
 					[memberId]="status.member?.id"
@@ -73,7 +73,7 @@
 	<app-scrum-tasks
 		*ngIf="viewMode === 'single' && isExpanded"
 		[currentMemberId]="currentMemberId"
-		[team]="team"
+		[team]="space"
 		[scrumId]="scrumId"
 		[member]="status?.member"
 		[taskType]="taskType"
@@ -86,7 +86,7 @@
 			<app-scrum-tasks
 				[cardMode]="'by-person'"
 				*ngIf="taskType !== 'kudos' || count('kudos')"
-				[team]="team"
+				[team]="space"
 				[currentMemberId]="currentMemberId"
 				[scrumId]="scrumId"
 				[member]="status.member"

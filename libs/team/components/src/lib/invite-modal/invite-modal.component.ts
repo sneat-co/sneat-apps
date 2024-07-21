@@ -26,7 +26,7 @@ export class EncodeSmsText implements PipeTransform {
 	templateUrl: 'invite-modal.component.html',
 })
 export class InviteModalComponent {
-	@Input({ required: true }) team?: ISpaceContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() member?: IIdAndBrief<IContactBrief>;
 
 	tab: InviteChannel = 'email';
@@ -95,7 +95,7 @@ export class InviteModalComponent {
 				const body = encodeURIComponent(m);
 				const url =
 					protocol +
-					`:${address}?subject=You+are+invited+to+join+${this.team?.type}&body=${body}`;
+					`:${address}?subject=You+are+invited+to+join+${this.space?.type}&body=${body}`;
 				this.creatingInvite = false;
 				switch (protocol) {
 					case 'sms':
@@ -134,7 +134,7 @@ export class InviteModalComponent {
 	}
 
 	sendInvite(): void {
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError('can not send invite without team context');
 			return;
 		}
@@ -185,14 +185,14 @@ export class InviteModalComponent {
 		address?: string;
 		send?: boolean;
 	}): Observable<ICreatePersonalInviteResponse> {
-		if (!this.team) {
+		if (!this.space) {
 			return throwError(() => 'can not create invite without team context');
 		}
 		if (!this.member) {
 			return throwError(() => 'can not create invite without member context');
 		}
 		const request: ICreatePersonalInviteRequest = {
-			spaceID: this.team.id,
+			spaceID: this.space.id,
 			to: {
 				...to,
 				memberID: this.member.id,
@@ -240,14 +240,14 @@ export class InviteModalComponent {
 	}
 
 	private generateLink(): void {
-		if (!this.team) {
+		if (!this.space) {
 			return;
 		}
 		if (!this.member) {
 			return;
 		}
 		const request: ICreatePersonalInviteRequest = {
-			spaceID: this.team.id,
+			spaceID: this.space.id,
 			to: {
 				channel: 'link',
 				memberID: this.member.id,
@@ -264,7 +264,7 @@ export class InviteModalComponent {
 				const protocol = location.host.startsWith('localhost:')
 					? 'http'
 					: 'https';
-				this.link = `${protocol}://${host}/join/${this.team?.brief?.type}?id=${id}#pin=${pin}`;
+				this.link = `${protocol}://${host}/join/${this.space?.brief?.type}?id=${id}#pin=${pin}`;
 			},
 			error: this.errorLogger.logErrorHandler(
 				'failed to generate an invite link',

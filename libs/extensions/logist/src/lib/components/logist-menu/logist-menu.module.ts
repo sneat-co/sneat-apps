@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AppVersionComponent, AuthMenuItemComponent } from '@sneat/components';
-import { TeamsMenuComponent } from '@sneat/team-components';
+import { SpacesMenuComponent } from '@sneat/team-components';
 import { LogistMenuComponent } from './logist-menu.component';
 
 @NgModule({
@@ -12,7 +12,7 @@ import { LogistMenuComponent } from './logist-menu.component';
 		IonicModule,
 		RouterModule,
 		AuthMenuItemComponent,
-		TeamsMenuComponent,
+		SpacesMenuComponent,
 		AppVersionComponent,
 	],
 	declarations: [LogistMenuComponent],

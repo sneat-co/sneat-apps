@@ -4,7 +4,7 @@
 			<b>Members</b
 			><span *ngIf="spectatorsCount || contributorsCount"
 				>:
-				<span id="team_members_count">{{
+				<span id="space_members_count">{{
 					(spectatorsCount || 0) + (contributorsCount || 0)
 				}}</span></span
 			>
@@ -16,7 +16,7 @@
 			</ion-button>
 		</ion-buttons>
 	</ion-item-divider>
-	<ion-segment [(ngModel)]="membersRoleTab" [disabled]="!contactusTeam?.dbo">
+	<ion-segment [(ngModel)]="membersRoleTab" [disabled]="!contactusSpace?.dbo">
 		<ion-segment-button value="*">
 			<ion-label>
 				All

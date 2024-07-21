@@ -1,6 +1,6 @@
 import { IIdAndOptionalBriefAndOptionalDbo } from '../';
 
-export type TeamItem = 'happening' | 'contact' | 'document' | 'asset' | 'list';
+export type SpaceItem = 'happening' | 'contact' | 'document' | 'asset' | 'list';
 
 export type DeleteOperationState = 'deleting' | 'deleted' | undefined;
 

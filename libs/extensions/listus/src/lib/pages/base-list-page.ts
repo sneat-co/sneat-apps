@@ -2,12 +2,12 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { emptyTimestamp } from '@sneat/dto';
 import { IListBrief, IListDbo, IMovie, ListType } from '../dto';
 import { IListContext } from '../contexts';
-import { TeamItemPageBaseComponent } from '@sneat/team-components';
+import { SpaceItemPageBaseComponent } from '@sneat/team-components';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ListusComponentBaseParams } from '../listus-component-base-params';
 
-export abstract class BaseListPage extends TeamItemPageBaseComponent<
+export abstract class BaseListPage extends SpaceItemPageBaseComponent<
 	IListBrief,
 	IListDbo
 > {
@@ -25,7 +25,7 @@ export abstract class BaseListPage extends TeamItemPageBaseComponent<
 		super(
 			className,
 			route,
-			params.teamParams,
+			params.spaceParams,
 			'lists',
 			'list',
 			params.listService,
@@ -72,13 +72,13 @@ export abstract class BaseListPage extends TeamItemPageBaseComponent<
 		if (!this.list) {
 			this.errorLogger.logError('not able to navigate without list context');
 		}
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError('not able to navigate without team context');
 			return;
 		}
-		const url = `space/${this.team.id}`;
-		this.teamParams.teamNavService
-			.navigateForwardToSpacePage(this.team, url, {
+		const url = `space/${this.space.id}`;
+		this.spaceParams.spaceNavService
+			.navigateForwardToSpacePage(this.space, url, {
 				state: {
 					list: this.list,
 					listItem: movie,
@@ -105,7 +105,7 @@ export abstract class BaseListPage extends TeamItemPageBaseComponent<
 							type: this.listType,
 							title,
 						},
-						space: this.team,
+						space: this.space,
 					});
 				}
 

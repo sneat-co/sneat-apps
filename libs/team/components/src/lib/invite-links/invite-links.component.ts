@@ -5,7 +5,7 @@ import { IonicModule, NavController } from '@ionic/angular';
 import { IIdAndOptionalDbo } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactusSpaceDbo } from '@sneat/contactus-core';
-import { TeamNavService } from '@sneat/team-services';
+import { SpaceNavService } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { Subscription } from 'rxjs';
 
@@ -16,9 +16,9 @@ export const stringHash = (s: string): number => {
 	}
 	for (let i = 0; i < s.length; i++) {
 		const char = s.charCodeAt(i);
-		 
+
 		hash = (hash << 5) - hash + char;
-		 
+
 		hash = hash & hash; // Convert to 32bit integer
 	}
 	return hash;
@@ -32,7 +32,7 @@ export const stringHash = (s: string): number => {
 	imports: [CommonModule, IonicModule, FormsModule],
 })
 export class InviteLinksComponent implements OnChanges, OnDestroy {
-	@Input() public contactusTeam?: IIdAndOptionalDbo<IContactusSpaceDbo>;
+	@Input() public contactusSpace?: IIdAndOptionalDbo<IContactusSpaceDbo>;
 
 	public inviteUrlsFor?: {
 		contributors: string;
@@ -44,7 +44,7 @@ export class InviteLinksComponent implements OnChanges, OnDestroy {
 
 	constructor(
 		readonly userService: SneatUserService,
-		private readonly navService: TeamNavService,
+		private readonly navService: SpaceNavService,
 		private readonly navController: NavController,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {
@@ -70,7 +70,7 @@ export class InviteLinksComponent implements OnChanges, OnDestroy {
 			event.preventDefault();
 			event.stopPropagation();
 		}
-		const space = this.contactusTeam;
+		const space = this.contactusSpace;
 		if (!space?.id) {
 			this.errorLogger.logError(
 				'Not able to navigate to space member is spaceId is now known',
@@ -99,7 +99,7 @@ export class InviteLinksComponent implements OnChanges, OnDestroy {
 			this.inviteUrlsFor = undefined;
 			return;
 		}
-		const spaceID = this.contactusTeam?.id;
+		const spaceID = this.contactusSpace?.id;
 		const getPin = (role: 'contributor' | 'spectator'): number =>
 			Math.abs(stringHash(`${spaceID}-${role}-${uid}`));
 		const url = `${document.baseURI}join-space?id=${spaceID}#pin=`;

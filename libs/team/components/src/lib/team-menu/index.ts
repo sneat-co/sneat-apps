@@ -1,1 +1,1 @@
-export * from './team-menu.component';
+export * from './space-menu.component';

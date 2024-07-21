@@ -7,7 +7,7 @@ import {
 	ContactRoleFormModule,
 	PersonWizardComponent,
 } from '@sneat/contactus-shared';
-import { IIdAndBrief, IIdAndDto, IIdAndOptionalDbo } from '@sneat/core';
+import { IIdAndBrief, IIdAndDbo, IIdAndOptionalDbo } from '@sneat/core';
 import {
 	ContactToAssetRelation,
 	ContactToContactRelation,
@@ -135,7 +135,7 @@ export class NewContactPageComponent
 		const contactGroupID = params.get('group');
 		if (contactGroupID && !this.contactGroup) {
 			this.contactGroupService
-				.getContactGroupByID(contactGroupID, this.team)
+				.getContactGroupByID(contactGroupID, this.space)
 				.pipe(first(), takeUntil(this.destroyed$))
 				.subscribe({
 					next: (contactGroup) => {
@@ -158,7 +158,7 @@ export class NewContactPageComponent
 				});
 		}
 
-		const space = this.team;
+		const space = this.space;
 		if (!space) {
 			throw new Error('Team is not defined');
 		}
@@ -189,7 +189,7 @@ export class NewContactPageComponent
 	};
 
 	public onContactGroupChanged(
-		contactGroup?: IIdAndDto<IContactGroupDbo>,
+		contactGroup?: IIdAndDbo<IContactGroupDbo>,
 	): void {
 		console.log('onContactGroupChanged()', contactGroup);
 		this.contactGroup = contactGroup;
@@ -212,7 +212,7 @@ export class NewContactPageComponent
 	}
 
 	submit(): void {
-		const space = this.team;
+		const space = this.space;
 		if (!space) {
 			throw new Error('Team is not defined');
 		}
@@ -267,7 +267,7 @@ export class NewContactPageComponent
 		}
 		this.contactService.createContact(space, request).subscribe({
 			next: (contact) => {
-				this.navigateForwardToTeamPage(`contact/${contact.id}`, {
+				this.navigateForwardToSpacePage(`contact/${contact.id}`, {
 					replaceUrl: true,
 					state: { contact },
 				}).catch(this.logErrorHandler('failed to navigate to contact page'));

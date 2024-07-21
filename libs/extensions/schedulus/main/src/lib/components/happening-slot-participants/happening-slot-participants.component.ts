@@ -11,7 +11,7 @@ import {
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import { IContactBrief } from '@sneat/contactus-core';
-import { ContactusTeamService } from '@sneat/contactus-services';
+import { ContactusSpaceService } from '@sneat/contactus-services';
 import { IIdAndBrief, IIdAndOptionalBrief } from '@sneat/core';
 import { getRelatedItems, IRelatedItem } from '@sneat/dto';
 import { ISlotUIContext } from '@sneat/extensions/schedulus/shared';
@@ -37,15 +37,15 @@ export class HappeningSlotParticipantsComponent
 	protected contacts?: readonly IIdAndBrief<IContactBrief>[];
 	protected spaceContacts?: IIdAndBrief<IContactBrief>[];
 
-	private readonly teamID$ = new Subject<string>();
+	private readonly spaceID$ = new Subject<string>();
 
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		private readonly changedDetectorRef: ChangeDetectorRef,
-		private readonly contactusService: ContactusTeamService,
+		private readonly contactusService: ContactusSpaceService,
 	) {
 		super('HappeningSlotParticipantsComponent', errorLogger);
-		this.teamID$
+		this.spaceID$
 			.pipe(takeUntil(this.destroyed$), distinctUntilChanged())
 			.subscribe((teamID) => {
 				this.onSpaceIDChanged(teamID);
@@ -73,7 +73,7 @@ export class HappeningSlotParticipantsComponent
 			const previous = happeningSlot.previousValue as ISlotUIContext;
 			const current = happeningSlot.currentValue as ISlotUIContext;
 			if (current?.happening?.space?.id !== previous?.happening?.space?.id) {
-				this.teamID$.next(current?.happening?.space?.id);
+				this.spaceID$.next(current?.happening?.space?.id);
 			}
 		}
 		if (changes['happeningSlot']) {
@@ -92,7 +92,7 @@ export class HappeningSlotParticipantsComponent
 		// console.log('HappeningSlotParticipantsComponent.onTeamIDChanged()', teamID);
 		this.contactusService
 			.watchContactBriefs(spaceID)
-			.pipe(takeUntil(this.teamID$), takeUntil(this.destroyed$))
+			.pipe(takeUntil(this.spaceID$), takeUntil(this.destroyed$))
 			.subscribe({
 				next: (contacts) => {
 					// console.log(

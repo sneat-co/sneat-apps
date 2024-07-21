@@ -6,8 +6,8 @@
 		/>
 		<ion-title>
 			Retrospective
-			<ng-container *ngIf="team"
-				>&#64; {{ team?.data?.title || team?.id }}</ng-container
+			<ng-container *ngIf="space"
+				>&#64; {{ space?.data?.title || space?.id }}</ng-container
 			>
 			: {{ meetingId }}
 		</ion-title>
@@ -26,7 +26,7 @@
 			</angular-dnd-tree>
 			<ion-card *ngIf="isAllowedToAddItems()">
 				<sneat-add-retro-item
-					[teamId]="team?.id"
+					[spaceID]="space?.id"
 					[meetingId]="meetingId"
 					[retroItemType]="category.ID"
 				/>

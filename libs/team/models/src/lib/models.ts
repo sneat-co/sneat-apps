@@ -23,7 +23,7 @@ export interface IRejectPersonalInviteRequest extends SpaceRequest {
 	readonly pin: string;
 }
 
-export type TeamMemberStatus = 'active' | 'archived';
+export type SpaceMemberStatus = 'active' | 'archived';
 
 export interface ITaskRequest extends ISpaceMemberRequest {
 	readonly type: string;

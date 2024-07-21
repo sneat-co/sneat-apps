@@ -1,6 +1,6 @@
 import { SpaceType } from '@sneat/core';
 import { DtoTotal, DtoTotals, Period } from '@sneat/dto';
-import { ISpaceContext } from '../team-context';
+import { ISpaceContext } from '../space-context';
 
 export class Total {
 	constructor(public readonly dto?: DtoTotal) {
@@ -203,22 +203,22 @@ export class Commune implements ISpaceContext {
 	public readonly totals: Totals;
 
 	constructor(
-		public readonly team: ISpaceContext,
+		public readonly space: ISpaceContext,
 		public readonly shortId?: string,
 	) {
-		this.totals = new Totals(team.dbo?.totals);
+		this.totals = new Totals(space.dbo?.totals);
 	}
 
 	public get id(): string {
-		return this.team.id;
+		return this.space.id;
 	}
 
 	public get type(): SpaceType | undefined {
-		return this.team.dbo?.type;
+		return this.space.dbo?.type;
 	}
 
 	public get title(): string | undefined {
-		return this.team.dbo?.title;
+		return this.space.dbo?.title;
 	}
 
 	// public get isSupportingMemberGroups(): boolean {

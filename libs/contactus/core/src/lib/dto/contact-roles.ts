@@ -42,7 +42,7 @@ export type ContactRoleLogistSubContact =
 	| typeof ContactRoleShip
 	| typeof ContactRoleLocation;
 export type ContactRoleLogistParentContact = 'shipper' | 'dispatcher';
-import { MemberRole, RoleTeamMember } from './member';
+import { MemberRole, RoleSpaceMember } from './member';
 
 export type LogistOrderContactRole =
 	| ContactRoleLogistParentContact
@@ -67,7 +67,7 @@ export type LogistOrderContactRole =
 	| 'warehouse';
 export type ContactRole =
 	| MemberRole
-	| typeof RoleTeamMember
+	| typeof RoleSpaceMember
 	| ContactRoleFamilyRelated
 	| ContactRoleWorkRelated
 	| ContactRoleKidRelated

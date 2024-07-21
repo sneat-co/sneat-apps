@@ -1,4 +1,4 @@
-import { IAvatar, TeamMemberType } from '@sneat/auth-models';
+import { IAvatar, SpaceMemberType } from '@sneat/auth-models';
 import { EnumAsUnionOfKeys, excludeUndefined } from '@sneat/core';
 import { IContactGroupBrief } from './contact-group';
 import { ITitledRecordInfo, ITotalsHolder, IVerification } from '@sneat/dto';
@@ -7,7 +7,7 @@ import { IPersonRecord, ISpaceMemberInfo } from './person';
 
 export type MembersVisibility = 'private' | 'protected' | 'public';
 
-export const RoleTeamMember = 'member';
+export const RoleSpaceMember = 'member';
 export const MemberRoleContributor = 'contributor';
 export const MemberRoleSpectator = 'spectator';
 export const MemberRoleParish = 'pastor';
@@ -58,7 +58,7 @@ export interface IMemberBase
 	extends IPersonRecord,
 		IVerification,
 		ITotalsHolder {
-	readonly type: TeamMemberType;
+	readonly type: SpaceMemberType;
 	readonly title?: string;
 	readonly userID?: string; // User ID
 	readonly roles?: readonly MemberRole[];
@@ -94,7 +94,7 @@ export function memberDtoFromMemberInfo(
 	spaceID: string,
 	title: string,
 ): IMemberDbo {
-	const memberType: TeamMemberType = 'member';
+	const memberType: SpaceMemberType = 'member';
 	return excludeUndefined({
 		...memberInfo,
 		spaceID,

@@ -8,7 +8,7 @@ export const memberRoutes: Route[] = [
 		path: '',
 		pathMatch: 'full',
 		loadComponent: () =>
-			import('./member').then((m) => m.TeamMemberPageComponent),
+			import('./member').then((m) => m.SpaceMemberPageComponent),
 	},
 ];
 

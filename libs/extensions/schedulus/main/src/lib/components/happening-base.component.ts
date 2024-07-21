@@ -20,7 +20,10 @@ import { getWd2 } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { contactContextFromBrief } from '@sneat/contactus-services';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
-import { IHappeningContactRequest, TeamNavService } from '@sneat/team-services';
+import {
+	IHappeningContactRequest,
+	SpaceNavService,
+} from '@sneat/team-services';
 import { NEVER, Observable, takeUntil } from 'rxjs';
 import { HappeningService } from '@sneat/team-services';
 
@@ -29,7 +32,7 @@ export class HappeningBaseComponentParams {
 	constructor(
 		@Inject(ErrorLogger) public readonly errorLogger: IErrorLogger,
 		public readonly happeningService: HappeningService,
-		public readonly teamNavService: TeamNavService,
+		public readonly spaceNavService: SpaceNavService,
 		public readonly membersSelectorService: MembersSelectorService,
 		public readonly modalController: ModalController,
 		// public readonly happeningSlotModalService: HappeningSlotModalService,
@@ -61,7 +64,7 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 	protected readonly destroyed = new EventEmitter<void>();
 
 	@Input({ required: true }) space: ISpaceContext = { id: '' };
-	@Input() contactusTeam?: IContactusSpaceDboAndID;
+	@Input() contactusSpace?: IContactusSpaceDboAndID;
 	@Input() happening?: IHappeningContext;
 
 	@Output() readonly deleted = new EventEmitter<string>();
@@ -92,8 +95,8 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 		return this.happeningBaseComponentParams.membersSelectorService;
 	}
 
-	get teamNavService() {
-		return this.happeningBaseComponentParams.teamNavService;
+	get spaceNavService() {
+		return this.happeningBaseComponentParams.spaceNavService;
 	}
 
 	protected constructor(
@@ -119,7 +122,7 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 			return;
 		}
 		console.log('goHappening()', this.happening, this.space);
-		this.teamNavService
+		this.spaceNavService
 			.navigateForwardToSpacePage(
 				this.space,
 				`happening/${this.happening?.id}`,
@@ -188,7 +191,7 @@ This operation can NOT be undone.`)
 			return;
 		}
 		const teamMembers: IIdAndBrief<IContactBrief>[] | undefined =
-			zipMapBriefsWithIDs(this.contactusTeam?.dbo?.contacts)?.map((m) =>
+			zipMapBriefsWithIDs(this.contactusSpace?.dbo?.contacts)?.map((m) =>
 				contactContextFromBrief(m, space),
 			);
 

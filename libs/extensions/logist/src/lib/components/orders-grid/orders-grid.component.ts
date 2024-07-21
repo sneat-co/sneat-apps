@@ -30,7 +30,7 @@ interface OrderRow {
 	templateUrl: './orders-grid.component.html',
 })
 export class OrdersGridComponent implements OnChanges {
-	@Input({ required: true }) team?: ISpaceContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() orders?: ILogistOrderContext[];
 
 	rows?: OrderRow[];
@@ -131,12 +131,12 @@ export class OrdersGridComponent implements OnChanges {
 
 	protected readonly rowClick = (event: Event, row: unknown) => {
 		console.log('OrdersGridComponent.rowClick():', event, row);
-		if (!this.team) {
+		if (!this.space) {
 			alert('No team context provided!');
 			return;
 		}
 		const data = (row as { getData: () => { id: string } }).getData();
-		const space = this.team;
+		const space = this.space;
 		if (!space) {
 			alert('No space context provided!');
 			return;

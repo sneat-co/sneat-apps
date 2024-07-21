@@ -3,11 +3,11 @@
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
-		<sneat-team-page-title
-			[team]="role ? undefined : team"
+		<sneat-space-page-title
+			[space]="role ? undefined : space"
 			[generalTitle]="pageTitle"
 			[icon]="titleIcon"
-			[titlesByTeamType]="{
+			[titlesBySpaceType]="{
 				personal: 'Personal contacts',
 				family: 'Family contacts'
 			}"
@@ -30,7 +30,7 @@
 
 <ion-content class="cardy">
 	<ion-segment
-		*ngIf="team?.type === 'company'"
+		*ngIf="space?.type === 'company'"
 		[(ngModel)]="role"
 		(ionChange)="onRoleChanged($event)"
 	>
@@ -54,7 +54,7 @@
 		<sneat-filter-item (changed)="applyFilter($event, role)" />
 
 		<div class="segment" *ngIf="!role">
-			<ion-segment [(ngModel)]="segment" *ngIf="team?.type === 'family'">
+			<ion-segment [(ngModel)]="segment" *ngIf="space?.type === 'family'">
 				<ion-segment-button value="groups">
 					<ion-label>By type</ion-label>
 				</ion-segment-button>
@@ -65,7 +65,7 @@
 			</ion-segment>
 		</div>
 
-		<ion-list *ngIf="segment === 'list' || team?.type !== 'family'">
+		<ion-list *ngIf="segment === 'list' || space?.type !== 'family'">
 			@for (contact of contacts; track contact.id) {
 				<ion-item-sliding @listItem>
 					<sneat-contacts-list-item
@@ -83,10 +83,10 @@
 		</ion-list>
 
 		<ion-list *ngIf="segment === 'groups'">
-			@if (team.type === "family") {
+			@if (space.type === "family") {
 				<sneat-contacts-family
 					[contacts]="allContacts"
-					[team]="team"
+					[space]="space"
 					[filter]="filter"
 					[goContact]="goContact"
 					[goMember]="goMember"

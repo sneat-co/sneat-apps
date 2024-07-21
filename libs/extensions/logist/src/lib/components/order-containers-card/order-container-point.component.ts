@@ -23,7 +23,7 @@ import { LogistOrderService } from '../../services';
 	templateUrl: './order-container-point.component.html',
 })
 export class OrderContainerPointComponent implements OnChanges {
-	@Input({ required: true }) team?: ISpaceContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() order?: ILogistOrderContext;
 	// @Input() shippingPoint?: IOrderShippingPoint;
 	@Input() containerPoint?: IContainerPoint;
@@ -79,7 +79,7 @@ export class OrderContainerPointComponent implements OnChanges {
 	): void {
 		event?.preventDefault();
 		event?.stopPropagation();
-		const spaceID = this.team?.id,
+		const spaceID = this.space?.id,
 			orderID = this.order?.id,
 			containerID = this.containerPoint?.containerID,
 			shippingPointID = this.containerPoint?.shippingPointID;
@@ -131,7 +131,7 @@ export class OrderContainerPointComponent implements OnChanges {
 
 	delete(event: Event): void {
 		console.log('ContainerPointComponent.delete()', event);
-		const spaceID = this.team?.id;
+		const spaceID = this.space?.id;
 		if (!spaceID) {
 			throw new Error(
 				'ContainerPointComponent.delete(): teamID is not defined',

@@ -23,7 +23,7 @@ export class CalendarFilterComponent extends WeekdaysFormBase {
 	public accordionValue?: string;
 	private resetting = false;
 
-	@Input({ required: true }) team?: ISpaceContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() showWeekdays = false;
 	@Input() showRepeats = false;
 	readonly text = new FormControl<string>('');

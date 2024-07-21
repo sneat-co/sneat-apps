@@ -15,29 +15,29 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { getMeetingIdFromDate, getToday } from '@sneat/meeting';
 import { IRecord } from '@sneat/data';
 import { IScrumDbo } from '@sneat/scrumspace/scrummodels';
-import { TeamNavService } from '@sneat/team-services';
+import { SpaceNavService } from '@sneat/team-services';
 
 @Component({
-	selector: 'sneat-team-scrums',
+	selector: 'sneat-scrums',
 	templateUrl: './scrums.component.html',
 	standalone: true,
 	imports: [CommonModule, IonicModule],
 })
 export class ScrumsComponent implements OnChanges, OnDestroy {
-	@Input() public team?: IRecord<ISpaceDbo>;
+	@Input() public space?: IRecord<ISpaceDbo>;
 
 	public prevScrumId?: string;
 	public todayScrum?: IScrumDbo;
 
 	protected readonly destroyed = new Subject<boolean>();
 
-	private teamId?: string;
+	private spaceID?: string;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly scrumService: ScrumService,
 		private readonly navController: NavController,
-		public readonly navService: TeamNavService,
+		public readonly navService: SpaceNavService,
 	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -99,8 +99,8 @@ export class ScrumsComponent implements OnChanges, OnDestroy {
 					id: getMeetingIdFromDate(getToday()),
 					data: this.todayScrum,
 				};
-			if (this.team && scrum) {
-				this.navService.navigateToScrum(date, this.team, scrum, tab);
+			if (this.space && scrum) {
+				this.navService.navigateToScrum(date, this.space, scrum, tab);
 			}
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to navigate to scrum');
@@ -112,8 +112,8 @@ export class ScrumsComponent implements OnChanges, OnDestroy {
 			event.preventDefault();
 			event.stopPropagation();
 		}
-		if (this.team) {
-			this.navService.navigateToScrums(this.navController, this.team);
+		if (this.space) {
+			this.navService.navigateToScrums(this.navController, this.space);
 		}
 	}
 

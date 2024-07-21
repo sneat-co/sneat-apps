@@ -2,7 +2,7 @@ import { IEnvironmentConfig, IFirebaseConfig } from '../lib/environment-config';
 
 const useEmulators = false;
 
-export function isSneatTeam(): boolean {
+export function isSneatHost(): boolean {
 	const { hostname } = location;
 	return (
 		hostname === 'sneat.team' ||
@@ -34,7 +34,7 @@ export const prodEnvironmentConfig: IEnvironmentConfig = {
 	production: true,
 	useEmulators,
 	agents: {},
-	firebaseConfig: isSneatTeam()
+	firebaseConfig: isSneatHost()
 		? firebaseConfigForSneatTeam
 		: firebaseConfigForSneatApp,
 };

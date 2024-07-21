@@ -12,7 +12,7 @@ import {
 	IAssetExtra,
 } from '@sneat/mod-assetus-core';
 import { ISpaceContext } from '@sneat/team-models';
-import { ModuleTeamItemService } from '@sneat/team-services';
+import { ModuleSpaceItemService } from '@sneat/team-services';
 import { Observable } from 'rxjs';
 import {
 	IAddVehicleRecordRequest,
@@ -21,7 +21,7 @@ import {
 } from './asset-service.dto';
 
 @Injectable()
-export class AssetService extends ModuleTeamItemService<
+export class AssetService extends ModuleSpaceItemService<
 	IAssetBrief<string>,
 	IAssetDboBase<string>
 > {
@@ -75,9 +75,12 @@ export class AssetService extends ModuleTeamItemService<
 		return this.sneatApiService.post('assets/delete_vehicle_record', request);
 	}
 
-	public readonly watchAssetByID = this.watchTeamItemByIdWithTeamRef;
+	public readonly watchAssetByID = this.watchSpaceItemByIdWithSpaceRef;
 
-	watchTeamAssets<ExtraType extends AssetExtraType, Extra extends IAssetExtra>(
+	public watchSpaceAssets<
+		ExtraType extends AssetExtraType,
+		Extra extends IAssetExtra,
+	>(
 		team: ISpaceContext,
 		category?: AssetCategory,
 	): Observable<IAssetContext<ExtraType, Extra>[]> {
@@ -91,7 +94,7 @@ export class AssetService extends ModuleTeamItemService<
 					},
 				]
 			: undefined;
-		return this.watchModuleSpaceItemsWithTeamRef<IAssetDbo<ExtraType, Extra>>(
+		return this.watchModuleSpaceItemsWithSpaceRef<IAssetDbo<ExtraType, Extra>>(
 			team,
 			{
 				filter,

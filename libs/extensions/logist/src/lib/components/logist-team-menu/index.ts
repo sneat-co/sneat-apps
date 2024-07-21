@@ -1,1 +1,1 @@
-export * from './logist-team-menu.component';
+export * from './logist-space-menu.component';

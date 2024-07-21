@@ -5,23 +5,23 @@
 		</ion-buttons>
 		<ion-title>
 			{{ title }}
-			<ng-container *ngIf="team">
-				&#64; {{ team.data?.title || team.id }}
+			<ng-container *ngIf="space">
+				&#64; {{ space.data?.title || space.id }}
 			</ng-container>
 		</ion-title>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<app-retro-timer [team]="team" [retrospective]="retrospective" />
+	<app-retro-timer [team]="space" [retrospective]="retrospective" />
 
 	<sneat-retro-feedback-stage
-		[team]="team"
+		[space]="space"
 		[retrospective]="retrospective"
 		*ngIf="showPersonalFeedback()"
 	/>
 	<sneat-retro-review-stage
-		[space]="team"
+		[space]="space"
 		[retrospective]="retrospective"
 		*ngIf="retrospective?.dbo?.stage === 'review'"
 	/>

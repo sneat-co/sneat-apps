@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { formNexInAnimation } from '@sneat/core';
 import { ISpaceContext } from '@sneat/team-models';
-import { TeamRelatedFormComponent } from '../team-related-form.component';
+import { SpaceRelatedFormComponent } from '../space-related-form.component';
 
 interface Role {
 	checked?: boolean;
@@ -20,10 +20,10 @@ interface Role {
 	standalone: true,
 	imports: [CommonModule, IonicModule, FormsModule],
 })
-export class RolesFormComponent extends TeamRelatedFormComponent {
+export class RolesFormComponent extends SpaceRelatedFormComponent {
 	@Input() isActive = false;
 	@Input() disabled = false;
-	@Input({ required: true }) team?: ISpaceContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	roles?: Role[];
 
 	@Output() readonly rolesChange = new EventEmitter<string[]>();

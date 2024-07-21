@@ -18,7 +18,7 @@ import {
 export class SubcontactInputComponent {
 	@Input() canReset = false;
 	@Input() readonly = false;
-	@Input({ required: true }) team?: ISpaceContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() label?: string;
 	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';
 	@Input() role?: ContactRole;
@@ -42,7 +42,7 @@ export class SubcontactInputComponent {
 	) {}
 
 	get contactLink(): string {
-		return `/company/${this.team?.type}/${this.team?.id}/contact/${this.contact?.id}`;
+		return `/company/${this.space?.type}/${this.space?.id}/contact/${this.contact?.id}`;
 	}
 
 	reset(event: Event): void {
@@ -56,7 +56,7 @@ export class SubcontactInputComponent {
 		event.stopPropagation();
 		event.preventDefault();
 		console.log('ContactInputComponent.openContactSelector()');
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError(
 				'ContactInputComponent.openContactSelector(): team is required',
 				undefined,
@@ -65,7 +65,7 @@ export class SubcontactInputComponent {
 		}
 		const selectorOptions: IContactSelectorOptions = {
 			componentProps: {
-				team: this.team,
+				space: this.space,
 				contactRole: this.role,
 			},
 		};

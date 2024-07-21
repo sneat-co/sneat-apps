@@ -30,7 +30,7 @@ import {
 	providers: [DebtusService],
 })
 export class NewDebtFormComponent {
-	@Input({ required: true }) public team?: ISpaceContext;
+	@Input({ required: true }) public space?: ISpaceContext;
 	@Input({ required: true }) public contact?: IContactContext;
 
 	constructor(
@@ -53,7 +53,7 @@ export class NewDebtFormComponent {
 
 	protected submit() {
 		console.log('NewDebtFormComponent.submit', this.newDebtForm.value);
-		const spaceID = this.team?.id;
+		const spaceID = this.space?.id;
 		if (!spaceID) {
 			throw new Error('teamID is not set');
 		}

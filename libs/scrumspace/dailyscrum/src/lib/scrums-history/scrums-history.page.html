@@ -1,11 +1,11 @@
 <ion-header>
 	<ion-toolbar>
-		<ion-buttons slot="start" *ngIf="team">
-			<ion-back-button [defaultHref]="'/team?id='+team.id" />
+		<ion-buttons slot="start" *ngIf="space">
+			<ion-back-button [defaultHref]="'/team?id='+space.id" />
 		</ion-buttons>
 		<ion-title
 			>Scrums
-			<ng-container *ngIf="team?.dbo">&#64; {{team.dbo.title}}</ng-container>
+			<ng-container *ngIf="space?.dbo">&#64; {{space.dbo.title}}</ng-container>
 		</ion-title>
 	</ion-toolbar>
 </ion-header>

@@ -43,7 +43,7 @@ import { VehicleEngineComponent } from '../vehicle-engine/vehicle-engine.compone
 	],
 })
 export class VehicleCardComponent implements OnChanges {
-	@Input({ required: true }) team?: ISpaceContext;
+	@Input({ required: true }) space?: ISpaceContext;
 
 	@Input({ required: true }) vehicleAsset?: IAssetVehicleContext;
 	@Output() readonly vehicleAssetChange = new EventEmitter<IAssetContext>();

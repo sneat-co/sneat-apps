@@ -20,7 +20,7 @@ import { CalendarTab } from '../../components/calendar/calendar-component-types'
 import {
 	SpaceBaseComponent,
 	SpaceComponentBaseParams,
-	TeamCoreComponentsModule,
+	SpaceCoreComponentsModule,
 } from '@sneat/team-components';
 import { IMemberContext } from '@sneat/contactus-core';
 import { CalendariumServicesModule } from '../../services';
@@ -35,7 +35,7 @@ import { CalendariumServicesModule } from '../../services';
 	imports: [
 		CommonModule,
 		IonicModule,
-		TeamCoreComponentsModule,
+		SpaceCoreComponentsModule,
 		CalendarComponentModule,
 		ContactusServicesModule,
 		CalendariumServicesModule,
@@ -108,10 +108,10 @@ export class CalendarPageComponent extends SpaceBaseComponent {
 	}
 
 	goNew(type: HappeningType): void {
-		if (!this.team) {
+		if (!this.space) {
 			return;
 		}
 		const params: NewHappeningParams = { type: type };
-		this.scheduleNavService.goNewHappening(this.team, params);
+		this.scheduleNavService.goNewHappening(this.space, params);
 	}
 }

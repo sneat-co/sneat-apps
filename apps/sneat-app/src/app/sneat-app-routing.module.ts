@@ -42,14 +42,14 @@ const routes: Routes = [
 			),
 	},
 	{
-		path: 'space/:teamType/:teamID',
+		path: 'space/:spaceType/:spaceID',
 		loadChildren: () =>
-			import('@sneat/team-pages').then((m) => m.TeamSpaceRoutingModule),
+			import('@sneat/team-pages').then((m) => m.SpaceRoutingModule),
 	},
 	{
 		path: 'join/:teamType',
 		loadComponent: () =>
-			import('@sneat/team-pages').then((m) => m.JoinTeamPageComponent),
+			import('@sneat/team-pages').then((m) => m.JoinSpacePageComponent),
 	},
 	// {
 	// 	path: 'invite-to/:teamType',

@@ -18,7 +18,7 @@ import {
 	ICreateLogistOrderRequest,
 	ILogistOrderContext,
 } from '../../dto/order-dto';
-import { LogistOrderService, LogistTeamService } from '../../services';
+import { LogistOrderService, LogistSpaceService } from '../../services';
 
 @Component({
 	selector: 'sneat-new-logist-order-page',
@@ -27,7 +27,7 @@ import { LogistOrderService, LogistTeamService } from '../../services';
 export class NewLogistOrderPageComponent extends SpaceBaseComponent {
 	public order: ILogistOrderContext = {
 		id: '',
-		space: this.team || { id: '', type: 'company' },
+		space: this.space || { id: '', type: 'company' },
 		dbo: {
 			status: 'draft',
 			direction: 'export',
@@ -58,7 +58,7 @@ export class NewLogistOrderPageComponent extends SpaceBaseComponent {
 		route: ActivatedRoute,
 		teamParams: SpaceComponentBaseParams,
 		private readonly freightOrdersService: LogistOrderService,
-		private readonly logistTeamService: LogistTeamService,
+		private readonly logistSpaceService: LogistSpaceService,
 		private readonly contactService: ContactService,
 	) {
 		super('NewLogistOrderPageComponent', route, teamParams);
@@ -71,18 +71,18 @@ export class NewLogistOrderPageComponent extends SpaceBaseComponent {
 		);
 	}
 
-	protected override onTeamIdChanged() {
-		super.onTeamIdChanged();
-		if (!this.team?.id) {
+	protected override onSpaceIdChanged() {
+		super.onSpaceIdChanged();
+		if (!this.space?.id) {
 			return;
 		}
-		this.logistTeamService
-			.watchLogistTeamByID(this.team.id)
-			.pipe(this.takeUntilNeeded(), takeUntil(this.teamIDChanged$))
+		this.logistSpaceService
+			.watchLogistSpaceByID(this.space.id)
+			.pipe(this.takeUntilNeeded(), takeUntil(this.spaceIDChanged$))
 			.subscribe({
 				next: (logistTeam) => {
 					if (logistTeam.dbo?.contactID) {
-						this.loadTeamContact(logistTeam.dbo.contactID);
+						this.loadSpaceContact(logistTeam.dbo.contactID);
 					}
 				},
 				error: this.errorLogger.logErrorHandler(
@@ -91,8 +91,8 @@ export class NewLogistOrderPageComponent extends SpaceBaseComponent {
 			});
 	}
 
-	private loadTeamContact(contactID: string): void {
-		const space = this.team;
+	private loadSpaceContact(contactID: string): void {
+		const space = this.space;
 		if (!space) {
 			throw new Error('No space context');
 		}
@@ -100,14 +100,14 @@ export class NewLogistOrderPageComponent extends SpaceBaseComponent {
 			.watchContactById(space, contactID)
 			.pipe(first())
 			.subscribe({
-				next: this.processTeamContact,
+				next: this.processSpaceContact,
 				error: this.errorLogger.logErrorHandler(
 					'failed to load logist team default contact',
 				),
 			});
 	}
 
-	private readonly processTeamContact = (contact: IContactContext): void => {
+	private readonly processSpaceContact = (contact: IContactContext): void => {
 		console.log('contact:', contact);
 		const contactDto = contact.dbo;
 		if (!contactDto) {
@@ -153,7 +153,7 @@ export class NewLogistOrderPageComponent extends SpaceBaseComponent {
 	}
 
 	createOrder(): void {
-		if (!this.team?.id) {
+		if (!this.space?.id) {
 			throw new Error('no team context');
 		}
 		if (!this.order?.dbo) {
@@ -187,7 +187,7 @@ export class NewLogistOrderPageComponent extends SpaceBaseComponent {
 			return;
 		}
 		const request: ICreateLogistOrderRequest = excludeUndefined({
-			spaceID: this.team.id,
+			spaceID: this.space.id,
 			order: {
 				...this.order.dbo,
 				direction: this.direction,

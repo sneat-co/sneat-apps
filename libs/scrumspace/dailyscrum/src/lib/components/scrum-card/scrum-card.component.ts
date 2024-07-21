@@ -20,7 +20,7 @@ import { TaskType } from '@sneat/scrumspace/scrummodels';
 	styleUrls: ['./scrum-card.component.scss'],
 })
 export class ScrumCardComponent {
-	@Input() team?: IRecord<ISpaceDbo>;
+	@Input() space?: IRecord<ISpaceDbo>;
 	@Input() currentMemberId?: string;
 	@Input() public scrumId?: string;
 	@Input() public scrum?: IScrumDbo;
@@ -60,13 +60,13 @@ export class ScrumCardComponent {
 	}
 
 	public goMember(member?: IMemberBrief) {
-		if (!this.team) {
+		if (!this.space) {
 			throw new Error('!this.team');
 		}
 		if (!member) {
 			throw new Error('!this.member');
 		}
-		this.navService.navigateToMember(this.navController, this.team, member);
+		this.navService.navigateToMember(this.navController, this.space, member);
 	}
 
 	public get gravatar(): string {

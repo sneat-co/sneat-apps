@@ -33,7 +33,7 @@ import {
 	IUpdateShippingPointRequest,
 } from '../dto';
 import { IOrdersFilter } from '../dto/orders-filter';
-import { logistTeamModuleSubCollection } from './logist-team.service';
+import { logistSpaceModuleSubCollection } from './logist-space.service';
 
 export interface ISetOrderStatusRequest {
 	spaceID: string;
@@ -82,7 +82,7 @@ export class LogistOrderService {
 	}
 
 	private ordersCollection<Dbo>(spaceID: string): CollectionReference<Dbo> {
-		return logistTeamModuleSubCollection<Dbo>(this.afs, spaceID, 'orders');
+		return logistSpaceModuleSubCollection<Dbo>(this.afs, spaceID, 'orders');
 	}
 
 	public watchOrderByID(

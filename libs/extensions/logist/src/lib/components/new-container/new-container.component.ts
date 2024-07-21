@@ -18,7 +18,7 @@ import { TasksByID } from '../shipping-points-selector';
 })
 export class NewContainerComponent {
 	@Input() order?: ILogistOrderContext;
-	@Input({ required: true }) team?: ISpaceContext;
+	@Input({ required: true }) space?: ISpaceContext;
 
 	@ViewChild('containerNumberInput', { static: false })
 	containerNumberInput?: IonInput;
@@ -64,7 +64,7 @@ export class NewContainerComponent {
 		if (!this.order) {
 			return;
 		}
-		if (!this.team?.id) {
+		if (!this.space?.id) {
 			this.errorLogger.logError('No team id provided');
 			return;
 		}
@@ -98,7 +98,7 @@ export class NewContainerComponent {
 			this.isSubmitting = true;
 			const request: IAddContainersRequest = {
 				orderID: this.order.id,
-				spaceID: this.team.id,
+				spaceID: this.space.id,
 				containers: [
 					{
 						type: this.containerType as ContainerType,

@@ -18,10 +18,10 @@ import { Subscription } from 'rxjs';
 	templateUrl: './timer-member-button.component.html',
 })
 export class TimerMemberButtonComponent implements OnDestroy, OnChanges {
-	@Input() public scrumId?: string;
+	@Input() public scrumID?: string;
 	@Input() public scrum?: IScrumDbo;
-	@Input() public memberId?: string;
-	@Input() public teamId?: string;
+	@Input() public memberID?: string;
+	@Input() public spaceID?: string;
 	@Output() public toggled = new EventEmitter<boolean>();
 	@Input() public timer?: Timer;
 
@@ -36,7 +36,7 @@ export class TimerMemberButtonComponent implements OnDestroy, OnChanges {
 
 	public get isDisabled(): boolean {
 		return !!(
-			!(this.teamId && this.memberId && this.scrumId && this.timerState) ||
+			!(this.spaceID && this.memberID && this.scrumID && this.timerState) ||
 			this.timerState?.isToggling
 		);
 	}
@@ -76,9 +76,9 @@ export class TimerMemberButtonComponent implements OnDestroy, OnChanges {
 		const { status, activeMemberId } = this.timerState;
 		this.toggled.emit(
 			status !== TimerStatusEnum.active ||
-				(status === TimerStatusEnum.active && activeMemberId !== this.memberId),
+				(status === TimerStatusEnum.active && activeMemberId !== this.memberID),
 		);
-		this.timer?.toggleTimer(this.memberId).subscribe({
+		this.timer?.toggleTimer(this.memberID).subscribe({
 			error: (err) =>
 				this.errorLogger.logError(err, 'Failed toggle timer for a member`'),
 		});

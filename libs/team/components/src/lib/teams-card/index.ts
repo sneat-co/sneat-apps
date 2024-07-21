@@ -1,2 +1,2 @@
-export * from './teams-card.component';
-export * from './teams-card.module';
+export * from './spaces-card.component';
+export * from './spaces-card.module';

@@ -59,9 +59,9 @@ export class NewMemberFormComponent implements OnChanges {
 
 	protected canSubmit = false;
 
-	@Input({ required: true }) team?: ISpaceContext;
+	@Input({ required: true }) space?: ISpaceContext;
 
-	protected contactusTeam?: IContactusSpaceDboAndID;
+	protected contactusSpace?: IContactusSpaceDboAndID;
 
 	@Input() member: IMemberPerson = emptyMemberPerson;
 	@Output() readonly memberChange = new EventEmitter<IMemberPerson>();
@@ -108,15 +108,15 @@ export class NewMemberFormComponent implements OnChanges {
 			// TODO: Should we move it inside person form wizard?
 			...this.personRequirements,
 			ageGroup:
-				this.team?.type === 'family' && this.member.type !== 'animal'
+				this.space?.type === 'family' && this.member.type !== 'animal'
 					? { required: true }
 					: { hide: true },
 			roles:
-				this.team?.type === 'family' && this.member.type !== 'animal'
+				this.space?.type === 'family' && this.member.type !== 'animal'
 					? { hide: true }
 					: { required: true },
 			relatedAs:
-				this.team?.type === 'family' && this.member.type !== 'animal'
+				this.space?.type === 'family' && this.member.type !== 'animal'
 					? { required: true }
 					: { hide: true },
 		};
@@ -135,7 +135,7 @@ export class NewMemberFormComponent implements OnChanges {
 		if (!this.personFormComponent) {
 			throw '!this.personFormComponent';
 		}
-		const space = this.team;
+		const space = this.space;
 		if (!space) {
 			this.params.errorLogger.logError(
 				'not able to add new member without team context',
@@ -150,7 +150,7 @@ export class NewMemberFormComponent implements OnChanges {
 		}
 		const displayName = personName(this.member.names);
 		const duplicateMember = zipMapBriefsWithIDs(
-			this.contactusTeam?.dbo?.contacts,
+			this.contactusSpace?.dbo?.contacts,
 		)?.find((m) => personName(m.brief.names) === displayName);
 		if (duplicateMember) {
 			alert('There is already a member with same name: ' + displayName);
@@ -179,7 +179,7 @@ export class NewMemberFormComponent implements OnChanges {
 							),
 						);
 				} else {
-					this.params.teamNavService
+					this.params.spaceNavService
 						.navigateBackToSpacePage(space, 'members')
 						.catch(
 							this.params.errorLogger.logErrorHandler(

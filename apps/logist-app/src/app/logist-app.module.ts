@@ -12,7 +12,7 @@ import { AuthMenuItemComponent } from '@sneat/components';
 import { APP_INFO, coreProviders, IAppInfo } from '@sneat/core';
 import { initSentry } from '@sneat/logging';
 import { RANDOM_ID_OPTIONS } from '@sneat/random';
-import { TeamsMenuComponent } from '@sneat/team-components';
+import { SpacesMenuComponent } from '@sneat/team-components';
 import { environment } from '../environments/environment';
 import { LogistAppRoutingModule } from './logist-app-routing.module';
 
@@ -25,7 +25,7 @@ initSentry();
 const appInfo: IAppInfo = {
 	appId: 'logist',
 	appTitle: 'Logistus.app',
-	requiredTeamType: 'company',
+	requiredSpaceType: 'company',
 };
 
 console.log('logist-app.module: environment:', environment);
@@ -102,7 +102,7 @@ const contactRolesByType: ContactRolesByType = {
 		// SneatAuthServicesModule,
 		AuthMenuItemComponent,
 		CommunesUiModule,
-		TeamsMenuComponent,
+		SpacesMenuComponent,
 		LogistAppRoutingModule,
 	],
 	providers: [

@@ -25,7 +25,7 @@ import { BudgetPeriodComponent } from './budget-period.component';
 	imports: [CommonModule, IonicModule, BudgetPeriodComponent],
 })
 export class BudgetPeriodsComponent implements OnChanges {
-	@Input({ required: true }) team: ISpaceContext = { id: '' };
+	@Input({ required: true }) space: ISpaceContext = { id: '' };
 	@Input({ required: true }) recurringHappenings?: Record<
 		string,
 		ICalendarHappeningBrief
@@ -67,7 +67,7 @@ export class BudgetPeriodsComponent implements OnChanges {
 			return;
 		}
 
-		const result = getLiabilitiesByPeriod(recurringHappenings, this.team);
+		const result = getLiabilitiesByPeriod(recurringHappenings, this.space);
 		this.liabilitiesByPeriod.set(result);
 	}
 }

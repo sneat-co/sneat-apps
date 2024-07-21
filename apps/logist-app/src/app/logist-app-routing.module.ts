@@ -29,7 +29,9 @@ const routes: Routes = [
 	{
 		path: 'space/:teamType/:teamID',
 		loadChildren: () =>
-			import('@sneat/extensions/logist').then((m) => m.LogistTeamRoutingModule),
+			import('@sneat/extensions/logist').then(
+				(m) => m.LogistSpaceRoutingModule,
+			),
 	},
 ];
 

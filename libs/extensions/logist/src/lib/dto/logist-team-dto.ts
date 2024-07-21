@@ -21,7 +21,7 @@ export type CounterpartyRole =
 	| 'port_to'
 	| 'port_to_location';
 
-export type LogistTeamRole =
+export type LogistSpaceRole =
 	| 'custom_agent'
 	| 'dispatch_agent'
 	| 'receive_agent'
@@ -31,7 +31,7 @@ export type LogistTeamRole =
 	| 'sender'
 	| 'warehouse_operator';
 
-export const LogistTeamRoles: Record<LogistTeamRole, string> = {
+export const LogistSpaceRoles: Record<LogistSpaceRole, string> = {
 	custom_agent: 'Custom agent',
 	dispatch_agent: 'Dispatch freight agent',
 	receive_agent: 'Receive freight agent',

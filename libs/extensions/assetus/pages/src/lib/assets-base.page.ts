@@ -14,7 +14,7 @@ import {
 export abstract class AssetsBasePage extends SpaceBaseComponent {
 	protected assets?: IIdAndBrief<IAssetBrief>[];
 
-	protected assetusTeam?: IAssetusSpaceContext;
+	protected assetusSpace?: IAssetusSpaceContext;
 
 	protected constructor(
 		className: string,
@@ -26,12 +26,12 @@ export abstract class AssetsBasePage extends SpaceBaseComponent {
 	}
 
 	public goNew(assetType?: AssetCategory): void {
-		const space = this.team;
+		const space = this.space;
 		if (!space) {
 			this.errorLogger.logError('no team context');
 			return;
 		}
-		this.teamParams.teamNavService
+		this.spaceParams.spaceNavService
 			.navigateForwardToSpacePage(space, 'new-asset', { state: { assetType } })
 			.catch(
 				this.errorLogger.logErrorHandler(
@@ -42,12 +42,12 @@ export abstract class AssetsBasePage extends SpaceBaseComponent {
 
 	override onSpaceDboChanged(): void {
 		super.onSpaceDboChanged();
-		const space = this.team;
+		const space = this.space;
 		if (!space) {
 			this.assets = undefined;
 			return;
 		}
-		if (!this.assets && this.assetusTeam?.dbo) {
+		if (!this.assets && this.assetusSpace?.dbo) {
 			throw new Error('not implemented');
 			// this.assets = this.assetusTeam?.dto?.assets;
 		}

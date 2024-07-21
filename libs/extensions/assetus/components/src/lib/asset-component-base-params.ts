@@ -5,7 +5,7 @@ import { SpaceComponentBaseParams } from '@sneat/team-components';
 @Injectable()
 export class AssetComponentBaseParams {
 	constructor(
-		public readonly teamParams: SpaceComponentBaseParams,
+		public readonly spaceParams: SpaceComponentBaseParams,
 		public readonly assetService: AssetService,
 	) {}
 }

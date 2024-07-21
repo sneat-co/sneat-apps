@@ -24,12 +24,12 @@ export abstract class SpacePageBaseComponent
 		super(className, route, params);
 	}
 
-	protected onContactusTeamChanged(contactusTeam: IContactusSpaceDboAndID) {
-		console.log('TeamPage.onContactusTeamChanged()', contactusTeam);
+	protected onContactusSpaceChanged(contactusTeam: IContactusSpaceDboAndID) {
+		console.log('TeamPage.onContactusSpaceChanged()', contactusTeam);
 		// super.onContactusTeamChanged(contactusTeam);
 		this.members = zipMapBriefsWithIDs(contactusTeam?.dbo?.contacts)
 			.filter((c) => c.brief?.roles?.includes('member'))
-			.map((c) => ({ ...c, team: this.team }));
+			.map((c) => ({ ...c, space: this.space }));
 		console.log(
 			'TeamPage.onContactusTeamChanged() => this.members',
 			this.members,

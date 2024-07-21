@@ -39,7 +39,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 	@Input() isEditable = true;
 	@Input() noExpandCollapse: boolean;
 	@Input() tabAutoSelect;
-	@Input() teamId: string;
+	@Input() spaceID: string;
 	@Input() title = 'My feedback for next retrospective';
 
 	public typeControl = new FormControl('', [Validators.required]);
@@ -148,7 +148,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 		this.retrospectiveService
 			.deleteRetroItem({
 				type,
-				spaceID: this.teamId,
+				spaceID: this.spaceID,
 				meeting: RetrospectiveStage.upcoming,
 				item: item.ID,
 			})
@@ -181,7 +181,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 				return;
 			}
 			const request: IAddRetroItemRequest = {
-				spaceID: this.teamId,
+				spaceID: this.spaceID,
 				meeting: RetrospectiveStage.upcoming,
 				type,
 				title,
@@ -202,7 +202,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 			if (!retroList.items) {
 				retroList.items = items;
 			}
-			 
+
 			items.push({ ID: '', title });
 			this.titleControl.setValue('');
 			this.retrospectiveService.addRetroItem(request).subscribe(
@@ -236,9 +236,9 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 
 	private processUserRecord(user: IRecord<IUserRecord>): void {
 		try {
-			const spaceInfo = user?.dbo?.spaces?.[this.teamId];
+			const spaceInfo = user?.dbo?.spaces?.[this.spaceID];
 			console.log(
-				`user.data.teams[${this.teamId}].retroItems:`,
+				`user.data.teams[${this.spaceID}].retroItems:`,
 				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 				// @ts-ignore
 				spaceInfo?.retroItems,

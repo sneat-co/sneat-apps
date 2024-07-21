@@ -1,1 +1,1 @@
-export { TeamMemberPageComponent } from './team-member-page.component';
+export { SpaceMemberPageComponent } from './space-member-page.component';

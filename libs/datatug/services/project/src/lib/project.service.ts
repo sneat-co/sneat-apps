@@ -204,7 +204,7 @@ export class ProjectService {
 export interface ICreateProjectData {
 	title: string;
 	userIDs: string[];
-	teamId?: string;
+	spaceID?: string;
 }
 
 export interface ICreateProjectItemRequest {

@@ -21,12 +21,12 @@ import {
 } from '@sneat/contactus-core';
 import {
 	SpaceComponentBaseParams,
-	TeamCoreComponentsModule,
-	TeamItemsBaseComponent,
+	SpaceCoreComponentsModule,
+	SpaceItemsBaseComponent,
 } from '@sneat/team-components';
 import {
 	ContactusServicesModule,
-	ContactusTeamService,
+	ContactusSpaceService,
 } from '@sneat/contactus-services';
 import { Subscription } from 'rxjs';
 
@@ -40,7 +40,7 @@ import { Subscription } from 'rxjs';
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		TeamCoreComponentsModule,
+		SpaceCoreComponentsModule,
 		FilterItemComponent,
 		SneatPipesModule,
 		ContactsListModule,
@@ -48,7 +48,7 @@ import { Subscription } from 'rxjs';
 		ContactusServicesModule,
 	],
 })
-export class ContactsPageComponent extends TeamItemsBaseComponent {
+export class ContactsPageComponent extends SpaceItemsBaseComponent {
 	public allContacts?: IIdAndBrief<IContactBrief>[];
 	public contactsByRole?: Record<string, IIdAndBrief<IContactBrief>[]>;
 	public contacts?: IIdAndBrief<IContactBrief>[];
@@ -77,7 +77,7 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 		route: ActivatedRoute,
 		params: SpaceComponentBaseParams,
 		// private readonly contactService: ContactService,
-		private readonly contactusTeamService: ContactusTeamService,
+		private readonly contactusSpaceService: ContactusSpaceService,
 	) {
 		super('ContactsPageComponent', route, params, '');
 		const role = location.pathname.match(/(applicant|landlord|tenant)/);
@@ -104,19 +104,19 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 		// })
 	}
 
-	protected override onTeamIdChanged() {
-		super.onTeamIdChanged();
+	protected override onSpaceIdChanged() {
+		super.onSpaceIdChanged();
 		this.contactsSubscription?.unsubscribe();
 		if (this.contactsSubscription) {
 			this.contactsSubscription.unsubscribe();
 		}
-		if (!this.team) {
+		if (!this.space) {
 			return;
 		}
 
-		this.contactusTeamService.watchContactBriefs(this.team.id).subscribe({
+		this.contactusSpaceService.watchContactBriefs(this.space.id).subscribe({
 			next: (contacts) => {
-				this.setTeamContacts(contacts || []);
+				this.setSpaceContacts(contacts || []);
 				this.applyFilter(this.filter, this.role);
 			},
 		});
@@ -173,12 +173,12 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 			this.errorLogger.logError('no contact');
 			return;
 		}
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError('no team');
 			return;
 		}
-		this.teamParams.teamNavService
-			.navigateForwardToSpacePage(this.team, `contact/${contact.id}`, {
+		this.spaceParams.spaceNavService
+			.navigateForwardToSpacePage(this.space, `contact/${contact.id}`, {
 				state: { contact },
 			})
 			.catch(
@@ -187,19 +187,19 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 	};
 
 	protected readonly goNewContact = (): void => {
-		if (!this.team) {
+		if (!this.space) {
 			return;
 		}
 		let navResult: Promise<boolean>;
 
-		if (this.team.type === 'family') {
-			navResult = this.teamParams.teamNavService.navigateForwardToSpacePage(
-				this.team,
+		if (this.space.type === 'family') {
+			navResult = this.spaceParams.spaceNavService.navigateForwardToSpacePage(
+				this.space,
 				'new-contact',
 			);
 		} else {
-			navResult = this.teamParams.teamNavService.navigateForwardToSpacePage(
-				this.team,
+			navResult = this.spaceParams.spaceNavService.navigateForwardToSpacePage(
+				this.space,
 				'new-company',
 				{ queryParams: this.role ? { role: this.role } : undefined },
 			);
@@ -214,11 +214,11 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 
 	protected goMember(id: string, event: Event): boolean {
 		event.stopPropagation();
-		if (!this.team) {
+		if (!this.space) {
 			return false;
 		}
-		this.teamParams.teamNavService
-			.navigateForwardToSpacePage(this.team, `member/${id}`, {
+		this.spaceParams.spaceNavService
+			.navigateForwardToSpacePage(this.space, `member/${id}`, {
 				state: {
 					member: { id },
 				},
@@ -232,11 +232,11 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 	}
 
 	protected goGroup(group: IMemberGroupContext): void {
-		if (!this.team) {
+		if (!this.space) {
 			return;
 		}
-		this.teamParams.teamNavService
-			.navigateForwardToSpacePage(this.team, `group/${group.id}`, {
+		this.spaceParams.spaceNavService
+			.navigateForwardToSpacePage(this.space, `group/${group.id}`, {
 				state: {
 					group: group,
 				},
@@ -248,10 +248,10 @@ export class ContactsPageComponent extends TeamItemsBaseComponent {
 			);
 	}
 
-	private readonly setTeamContacts = (
+	private readonly setSpaceContacts = (
 		contacts: IIdAndBrief<IContactBrief>[],
 	): void => {
-		console.log('ContactsPageComponent.setTeamContacts()', contacts);
+		console.log('ContactsPageComponent.setSpaceContacts()', contacts);
 		this.allContacts = contacts;
 		const contactsByRole: Record<string, IIdAndBrief<IContactBrief>[]> = {
 			'': [],

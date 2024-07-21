@@ -46,7 +46,7 @@ function debounce<T>(field: string, o: Subject<T>): Observable<T> {
 	templateUrl: './container-endpoint.component.html',
 })
 export class ContainerEndpointComponent implements OnChanges {
-	@Input({ required: true }) team?: ISpaceContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() order?: ILogistOrderContext;
 	@Input() containerPoint?: IContainerPoint;
 	@Input() shippingPointID?: string;
@@ -177,7 +177,7 @@ export class ContainerEndpointComponent implements OnChanges {
 			const byCounterparty = this.order?.dbo?.counterparties?.find(
 				(c) => c.contactID === this.endpoint?.byContactID,
 			);
-			if (this.team) {
+			if (this.space) {
 				this.byContact = byCounterparty && {
 					id: byCounterparty?.contactID,
 					brief: {
@@ -185,7 +185,7 @@ export class ContainerEndpointComponent implements OnChanges {
 						title: byCounterparty.title,
 						countryID: byCounterparty.countryID,
 					},
-					space: this.team,
+					space: this.space,
 				};
 			}
 		}

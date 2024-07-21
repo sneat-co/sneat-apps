@@ -37,7 +37,7 @@ export class ListItemComponent {
 
 	@Input()
 	public listItemWithUiState?: IListItemWithUiState;
-	@Input() public team?: ISpaceContext; // TODO: remove?
+	@Input() public space?: ISpaceContext; // TODO: remove?
 	@Input() list?: IListContext;
 	@Output()
 	public readonly itemClicked = new EventEmitter<IListItemBrief>();
@@ -59,7 +59,7 @@ export class ListItemComponent {
 	}
 
 	private get errorLogger() {
-		return this.params.teamParams.errorLogger;
+		return this.params.spaceParams.errorLogger;
 	}
 
 	protected isSpinning(): boolean {
@@ -111,11 +111,11 @@ export class ListItemComponent {
 			item.state.isChangingIsDone = true;
 			this.isSettingIsDone = true;
 			item.brief.isDone = isDone;
-			if (!this.team || !this.list || !this.list.brief) {
+			if (!this.space || !this.list || !this.list.brief) {
 				return;
 			}
 			const request: ISetListItemsIsComplete = {
-				spaceID: this.team.id,
+				spaceID: this.space.id,
 				listID: this.list.id,
 				// listType: this.list.brief.type,
 				itemIDs: [item.brief.id],
@@ -152,14 +152,14 @@ export class ListItemComponent {
 		if (!this.list?.id) {
 			return;
 		}
-		if (!this.team?.id) {
+		if (!this.space?.id) {
 			return;
 		}
 		if (!this.list?.brief?.type) {
 			return;
 		}
 		const request: IListItemIDsRequest = {
-			spaceID: this.team?.id,
+			spaceID: this.space?.id,
 			listID: this.list?.id,
 			// listType: this.list?.brief?.type,
 			itemIDs: [item.id],

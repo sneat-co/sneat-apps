@@ -15,7 +15,7 @@ import { ContactService } from './contact-service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext, ISpaceItemBriefWithSpaceRef } from '@sneat/team-models';
 import { Observable } from 'rxjs';
-import { ContactusTeamService } from './contactus-team.service';
+import { ContactusSpaceService } from './contactus-space.service';
 
 // export const memberBriefFromDto = (id: string, dto: IMemberDto): IMemberBrief => ({ id, ...dto });
 export const contactContextFromBrief = (
@@ -31,7 +31,7 @@ export class MemberService extends ContactService {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		afs: AngularFirestore,
-		contactusTeamService: ContactusTeamService,
+		contactusTeamService: ContactusSpaceService,
 		sneatApiService: SneatApiService,
 		userService: SneatUserService,
 	) {

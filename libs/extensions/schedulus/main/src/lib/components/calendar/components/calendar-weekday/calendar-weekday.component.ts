@@ -10,7 +10,7 @@ import {
 	ISlotUIContext,
 	NewHappeningParams,
 	ScheduleNavService,
-	TeamDay,
+	SpaceDay,
 } from '@sneat/extensions/schedulus/shared';
 import { ISpaceContext } from '@sneat/team-models';
 import { takeUntil } from 'rxjs';
@@ -36,7 +36,7 @@ export class CalendarWeekdayComponent implements OnDestroy {
 		event: Event;
 	}>();
 
-	protected get day(): TeamDay | undefined {
+	protected get day(): SpaceDay | undefined {
 		return this.weekday?.day;
 	}
 

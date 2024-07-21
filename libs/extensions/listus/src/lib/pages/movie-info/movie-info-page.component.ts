@@ -3,7 +3,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import {
 	SpaceComponentBaseParams,
-	TeamPageBaseComponent,
+	SpacePageBaseComponent,
 } from '@sneat/team-components';
 import { IListItemBrief, IMovie } from '../../dto';
 import { ListusComponentBaseParams } from '../../listus-component-base-params';
@@ -27,7 +27,7 @@ import { BaseListItemPage } from '../base-list-item-page';
 })
 export class MovieInfoPageComponent
 	extends BaseListItemPage
-	implements TeamPageBaseComponent
+	implements SpacePageBaseComponent
 {
 	movie: IMovie | undefined;
 
@@ -79,7 +79,7 @@ export class MovieInfoPageComponent
 	// }
 
 	private createListItemCommandParams(): IListItemsCommandParams {
-		if (!this.team) {
+		if (!this.space) {
 			throw new Error('!this.team');
 		}
 		if (!this.list?.dbo) {
@@ -89,7 +89,7 @@ export class MovieInfoPageComponent
 			throw new Error('!this.movie');
 		}
 		return {
-			team: this.team,
+			space: this.space,
 			list: this.list,
 			items: [this.movie],
 		};

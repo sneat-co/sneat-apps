@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IonicModule, IonInput } from '@ionic/angular';
 import {
 	ContactusServicesModule,
-	ContactusTeamContextService,
+	ContactusSpaceContextService,
 } from '@sneat/contactus-services';
 import { ContactComponentBaseParams } from '@sneat/contactus-shared';
 import {
@@ -14,7 +14,7 @@ import {
 	IMemberPerson,
 } from '@sneat/contactus-core';
 import {
-	TeamPageBaseComponent,
+	SpacePageBaseComponent,
 	SpaceComponentBaseParams,
 	InviteLinksComponent,
 } from '@sneat/team-components';
@@ -35,7 +35,7 @@ import { NewMemberFormComponent } from './new-member-form.component';
 		InviteLinksComponent,
 	],
 })
-export class NewMemberPageComponent extends TeamPageBaseComponent {
+export class NewMemberPageComponent extends SpacePageBaseComponent {
 	@ViewChild('nameInput', { static: false }) nameInput?: IonInput;
 
 	public tab: 'personal' | 'mass' = 'mass';
@@ -43,20 +43,20 @@ export class NewMemberPageComponent extends TeamPageBaseComponent {
 	member: IMemberPerson = emptyMemberPerson;
 
 	public override get defaultBackUrl(): string {
-		const t = this.team;
+		const t = this.space;
 		const url = t ? `/space/${t.type}/${t.id}/members` : '';
 		return url && this.defaultBackPage ? url + '/' + this.defaultBackPage : url;
 	}
 
 	constructor(route: ActivatedRoute, params: ContactComponentBaseParams) {
-		super('NewMemberPageComponent', route, params.teamParams);
-		const contactusTeamContextService = new ContactusTeamContextService(
+		super('NewMemberPageComponent', route, params.spaceParams);
+		const contactusTeamContextService = new ContactusSpaceContextService(
 			params.errorLogger,
 			this.destroyed$,
-			this.teamIDChanged$,
-			params.contactusTeamService,
+			this.spaceIDChanged$,
+			params.contactusSpaceService,
 		);
-		this.trackFirstTeamTypeChanged();
+		this.trackFirstSpaceTypeChanged();
 		route.queryParams.subscribe((params) => {
 			const group = params['group'];
 			console.log('group', group);
@@ -80,21 +80,21 @@ export class NewMemberPageComponent extends TeamPageBaseComponent {
 			}
 		});
 
-		contactusTeamContextService.contactusTeamContext$
+		contactusTeamContextService.contactusSpaceContext$
 			.pipe(this.takeUntilNeeded())
 			.subscribe({
 				next: (contactusTeam) => {
-					this.contactusTeam = contactusTeam;
+					this.contactusSpace = contactusTeam;
 				},
 			});
 	}
 
-	protected contactusTeam?: IContactusSpaceDboAndID;
+	protected contactusSpace?: IContactusSpaceDboAndID;
 
-	private readonly trackFirstTeamTypeChanged = (): void => {
-		console.log('NewMemberPageComponent.trackFirstTeamTypeChanged()');
+	private readonly trackFirstSpaceTypeChanged = (): void => {
+		console.log('NewMemberPageComponent.trackFirstSpaceTypeChanged()');
 		try {
-			this.teamTypeChanged$
+			this.spaceTypeChanged$
 				.pipe(
 					takeUntil(this.destroyed$),
 					filter((v) => !!v),

@@ -60,7 +60,7 @@ type WizardStepID = keyof personWizardState;
 
 interface WizardStepCondition {
 	readonly contactTypes: MemberContactType[];
-	readonly teamTypes?: SpaceType[];
+	readonly spaceTypes?: SpaceType[];
 }
 
 interface WizardStepFilter {
@@ -97,7 +97,7 @@ export type IPersonFormWizardFields = {
 	],
 })
 export class PersonWizardComponent implements OnChanges {
-	@Input({ required: true }) team?: ISpaceContext;
+	@Input({ required: true }) space?: ISpaceContext;
 
 	@Input() requires: IPersonRequirements = {};
 	@Input() disabled = false;
@@ -141,7 +141,7 @@ export class PersonWizardComponent implements OnChanges {
 		const itemID = this.userService.currentUserID;
 		this.relatedToUser = itemID
 			? {
-					space: this.team?.id || '',
+					space: this.space?.id || '',
 					module: 'contactus',
 					collection: 'contacts',
 					itemID,
@@ -159,7 +159,7 @@ export class PersonWizardComponent implements OnChanges {
 		{ id: 'name' },
 		{
 			id: 'roles',
-			filter: { hideFor: { contactTypes: ['animal'], teamTypes: ['family'] } },
+			filter: { hideFor: { contactTypes: ['animal'], spaceTypes: ['family'] } },
 		},
 		{
 			id: 'communicationChannels',
@@ -318,7 +318,7 @@ export class PersonWizardComponent implements OnChanges {
 
 
  */
-		const spaceID = this.team?.id || '';
+		const spaceID = this.space?.id || '';
 		const userID = this.relatedToUser?.itemID || '';
 
 		const userRelatedItem: IRelatedItem = {
@@ -410,13 +410,13 @@ export class PersonWizardComponent implements OnChanges {
 				return true;
 			}
 		}
-		if (this.team?.type) {
-			if (step.filter.hideFor?.teamTypes?.includes(this.team.type)) {
+		if (this.space?.type) {
+			if (step.filter.hideFor?.spaceTypes?.includes(this.space.type)) {
 				return true;
 			}
 			if (
-				step.filter.showFor?.teamTypes?.length &&
-				!step.filter.showFor.teamTypes.includes(this.team.type)
+				step.filter.showFor?.spaceTypes?.length &&
+				!step.filter.showFor.spaceTypes.includes(this.space.type)
 			) {
 				return true;
 			}
@@ -480,7 +480,7 @@ export class PersonWizardComponent implements OnChanges {
 				return !!p.gender;
 			case 'relatedAs':
 				return (
-					getRelatedItemIDs(p.related, 'contactus', 'contacts', this.team?.id)
+					getRelatedItemIDs(p.related, 'contactus', 'contacts', this.space?.id)
 						.length > 0
 				);
 			case 'roles':

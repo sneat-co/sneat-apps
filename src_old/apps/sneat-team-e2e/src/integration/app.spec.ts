@@ -1,6 +1,6 @@
 import { getGreeting } from '../support/app.po';
 
-describe('sneat-team', () => {
+describe('sneat-space', () => {
 	beforeEach(() => cy.visit('/'));
 
 	it('should display welcome message', () => {

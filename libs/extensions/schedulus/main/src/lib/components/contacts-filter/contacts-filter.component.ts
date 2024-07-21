@@ -13,8 +13,8 @@ import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import { IContactBrief, IContactusSpaceDbo } from '@sneat/contactus-core';
 import {
-	ContactusTeamContextService,
-	ContactusTeamService,
+	ContactusSpaceContextService,
+	ContactusSpaceService,
 } from '@sneat/contactus-services';
 import { ContactusModuleBaseComponent } from '@sneat/contactus-shared';
 import { IIdAndBrief, IIdAndOptionalDbo } from '@sneat/core';
@@ -44,30 +44,30 @@ export class ContactsFilterComponent
 	constructor(
 		route: ActivatedRoute,
 		teamParams: SpaceComponentBaseParams,
-		protected contactusTeamService: ContactusTeamService,
+		protected contactusSpaceService: ContactusSpaceService,
 	) {
-		super('ContactsFilterComponent', route, teamParams, contactusTeamService);
-		const contactusTeamContextService = new ContactusTeamContextService(
+		super('ContactsFilterComponent', route, teamParams, contactusSpaceService);
+		const contactusTeamContextService = new ContactusSpaceContextService(
 			teamParams.errorLogger,
 			this.destroyed$,
-			this.teamIDChanged$,
-			contactusTeamService,
+			this.spaceIDChanged$,
+			contactusSpaceService,
 		);
-		contactusTeamContextService.contactusTeamContext$
+		contactusTeamContextService.contactusSpaceContext$
 			.pipe(this.takeUntilNeeded())
 			.subscribe({
-				next: this.onContactusTeamChanged,
+				next: this.onContactusSpaceChanged,
 			});
 	}
 
-	private onContactusTeamChanged(
+	private onContactusSpaceChanged(
 		contactusTeam: IIdAndOptionalDbo<IContactusSpaceDbo>,
 	): void {
 		const contactBriefs = zipMapBriefsWithIDs(
 			contactusTeam?.dbo?.contacts,
 		)?.map((m) => ({
 			...m,
-			team: this.team || { id: '' },
+			space: this.space || { id: '' },
 		}));
 		this.members = contactBriefs.filter((c) =>
 			c.brief.roles?.includes('member'),

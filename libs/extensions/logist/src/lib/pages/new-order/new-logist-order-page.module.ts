@@ -8,7 +8,7 @@ import { NewSegmentModule } from '../../components/new-segment/new-segment.modul
 import { OrderRouteCardModule } from '../../components/order-route-card/order-route-card.module';
 import { OrderContainersModule } from '../../components/order-containers-card';
 import { OrderFormModule } from '../../components/order-form.module';
-import { LogistTeamServiceModule } from '../../services';
+import { LogistSpaceServiceModule } from '../../services';
 import { LogistOrderServiceModule } from '../../services/logist-order.service';
 import { NewLogistOrderPageComponent } from './new-logist-order-page.component';
 import { NewOrderContainersFormComponent } from './new-order-containers-form.component';
@@ -27,7 +27,7 @@ import { NewOrderContainersFormComponent } from './new-order-containers-form.com
 		OrderRouteCardModule,
 		OrderContainersModule,
 		OrderFormModule,
-		LogistTeamServiceModule,
+		LogistSpaceServiceModule,
 		FormsModule,
 		NewSegmentModule,
 		SelectFromListModule,

@@ -19,7 +19,7 @@ export class DaySlotItemComponent {
 	@Input() color?: 'light';
 
 	@Input({ required: true }) space: ISpaceContext = { id: '' };
-	@Input() contactusTeam?: IContactusSpaceDboAndID;
+	@Input() contactusSpace?: IContactusSpaceDboAndID;
 
 	@Output() readonly slotClicked = new EventEmitter<{
 		slot: ISlotUIContext;

@@ -3,12 +3,12 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
 import { ILogger, SpaceType } from '@sneat/core';
-import { equalTeamBriefs, ISpaceBrief, ISpaceDbo } from '@sneat/dto';
+import { equalSpaceBriefs, ISpaceBrief, ISpaceDbo } from '@sneat/dto';
 import { ILogErrorOptions } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
 import {
 	SpaceService,
-	trackTeamIdAndTypeFromRouteParameter,
+	trackSpaceIdAndTypeFromRouteParameter,
 } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { SneatBaseComponent } from '@sneat/ui';
@@ -30,15 +30,15 @@ import { SpaceComponentBaseParams } from './space-component-base-params.service'
 // }) // we need this decorator so we can implement Angular interfaces
 @Directive() /* abstract */
 export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
-	protected readonly teamIDChanged = new Subject<string | undefined>();
-	protected readonly teamTypeChanged = new Subject<SpaceType | undefined>();
+	protected readonly spaceIDChanged = new Subject<string | undefined>();
+	protected readonly spaceTypeChanged = new Subject<SpaceType | undefined>();
 
 	protected noPermissions = false;
 
-	protected readonly teamBriefChanged = new Subject<
+	protected readonly spaceBriefChanged = new Subject<
 		ISpaceBrief | undefined | null
 	>();
-	protected readonly teamDtoChanged = new Subject<
+	protected readonly spaceDboChanged = new Subject<
 		ISpaceDbo | undefined | null
 	>();
 	protected spaceContext?: ISpaceContext; // TODO: check - is it duplication of team?
@@ -63,14 +63,14 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 		options?: ILogErrorOptions,
 	) => (error: unknown) => void;
 
-	public readonly teamIDChanged$ = this.teamIDChanged.asObservable().pipe(
+	public readonly spaceIDChanged$ = this.spaceIDChanged.asObservable().pipe(
 		takeUntil(this.destroyed$),
 		distinctUntilChanged(),
 		tap((id) => console.log(this.className + '=> teamIDChanged$: ' + id)),
 	);
 
-	public readonly teamTypeChanged$: Observable<SpaceType | undefined> =
-		this.teamTypeChanged.pipe(
+	public readonly spaceTypeChanged$: Observable<SpaceType | undefined> =
+		this.spaceTypeChanged.pipe(
 			takeUntil(this.destroyed$),
 			distinctUntilChanged(),
 			// tap(v => console.log('teamTypeChanged$ before replay =>', v)),
@@ -78,25 +78,25 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 			// tap(v => console.log('teamTypeChanged$ after replay =>', v)),
 		);
 
-	public readonly teamBriefChanged$ = this.teamBriefChanged
+	public readonly spaceBriefChanged$ = this.spaceBriefChanged
 		.asObservable()
-		.pipe(takeUntil(this.destroyed$), distinctUntilChanged(equalTeamBriefs));
+		.pipe(takeUntil(this.destroyed$), distinctUntilChanged(equalSpaceBriefs));
 
-	public readonly teamDtoChanged$ = this.teamDtoChanged
+	public readonly spaceDboChanged$ = this.spaceDboChanged
 		.asObservable()
 		.pipe(takeUntil(this.destroyed$), distinctUntilChanged());
 
-	public get team(): ISpaceContext {
+	public get space(): ISpaceContext {
 		// TODO: Document why we do not allow undefined
 		return this.spaceContext || ({ id: '' } as ISpaceContext);
 	}
 
 	public get preloader() {
-		return this.teamParams.preloader;
+		return this.spaceParams.preloader;
 	}
 
-	public get teamNav() {
-		return this.teamParams.teamNavService;
+	public get spaceNav() {
+		return this.spaceParams.spaceNavService;
 	}
 
 	public get currentUserId() {
@@ -113,19 +113,19 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 		// we need this fake token so we can implement Angular interfaces
 		className: string,
 		protected readonly route: ActivatedRoute,
-		protected readonly teamParams: SpaceComponentBaseParams,
+		protected readonly spaceParams: SpaceComponentBaseParams,
 	) {
-		super(className, teamParams.errorLogger);
+		super(className, spaceParams.errorLogger);
 		// console.log(`${className} extends TeamBasePageDirective.constructor()`);
-		this.logError = teamParams.errorLogger.logError;
-		this.logErrorHandler = teamParams.errorLogger.logErrorHandler;
+		this.logError = spaceParams.errorLogger.logError;
+		this.logErrorHandler = spaceParams.errorLogger.logErrorHandler;
 		try {
 			this.route = route;
 
-			this.navController = teamParams.navController;
-			this.spaceService = teamParams.teamService;
-			this.userService = teamParams.userService;
-			this.logger = teamParams.loggerFactory.getLogger(this.className);
+			this.navController = spaceParams.navController;
+			this.spaceService = spaceParams.spaceService;
+			this.userService = spaceParams.userService;
+			this.logger = spaceParams.loggerFactory.getLogger(this.className);
 			this.getSpaceContextFromRouteState();
 			this.cleanupOnUserLogout();
 		} catch (e) {
@@ -150,9 +150,9 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 	protected onUserIdChanged(): void {
 		if (!this.currentUserId) {
 			this.subs.unsubscribe();
-			if (this.team && this.team.dbo) {
+			if (this.space && this.space.dbo) {
 				this.setNewSpaceContext({
-					...this.team,
+					...this.space,
 					brief: undefined,
 					dbo: undefined,
 				});
@@ -160,25 +160,25 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 		}
 	}
 
-	protected navigateForwardToTeamPage(
+	protected navigateForwardToSpacePage(
 		page: string,
 		navOptions?: NavigationOptions,
 	) {
-		if (!this.team) {
+		if (!this.space) {
 			return Promise.reject('no team context');
 		}
-		return this.teamParams.teamNavService.navigateForwardToSpacePage(
-			this.team,
+		return this.spaceParams.spaceNavService.navigateForwardToSpacePage(
+			this.space,
 			page,
 			navOptions,
 		);
 	}
 
-	protected onTeamIdChanged(): void {
+	protected onSpaceIdChanged(): void {
 		this.console.log(
 			`${this.className}: TeamBaseComponent.onTeamIdChanged()`,
 			this.className,
-			this.team?.id,
+			this.space?.id,
 		);
 	}
 
@@ -186,7 +186,7 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 		this.console.log(
 			`${this.className}.onSpaceDboChanged()`,
 			this.className,
-			this.team?.dbo,
+			this.space?.dbo,
 		);
 	}
 
@@ -198,27 +198,27 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 	protected onRouteParamsChanged(params: ParamMap): void {}
 
 	protected trackRouteParamMap(paramMap$: Observable<ParamMap>): void {
-		this.trackTeamIdFromRouteParams(paramMap$);
+		this.trackSpaceIdFromRouteParams(paramMap$);
 		paramMap$.subscribe({
 			next: (paramMap) => this.onRouteParamsChanged(paramMap),
 		});
 	}
 
-	private trackTeamIdFromRouteParams(paramMap$: Observable<ParamMap>): void {
-		trackTeamIdAndTypeFromRouteParameter(paramMap$)
+	private trackSpaceIdFromRouteParams(paramMap$: Observable<ParamMap>): void {
+		trackSpaceIdAndTypeFromRouteParameter(paramMap$)
 			// .pipe(
-			// // tap(v => console.log('trackTeamIdFromRouteParams 1', v)),
+			// // tap(v => console.log('trackSpaceIdFromRouteParams 1', v)),
 			// // distinctUntilChanged((previous, current) => previous?.id === current?.id),
-			// // tap(v => console.log('trackTeamIdFromRouteParams 3', v)),
+			// // tap(v => console.log('trackSpaceIdFromRouteParams 3', v)),
 			// )
 			.subscribe({
-				next: this.onTeamIdChangedInUrl,
+				next: this.onSpaceIdChangedInUrl,
 				error: this.logErrorHandler,
 			});
 	}
 
-	private readonly onTeamIdChangedInUrl = (team?: ISpaceContext): void => {
-		// console.log(`${this.className}.onTeamIdChangedInUrl()`, this.teamContext?.id, ' => ', team);
+	private readonly onSpaceIdChangedInUrl = (team?: ISpaceContext): void => {
+		// console.log(`${this.className}.onSpaceIdChangedInUrl()`, this.teamContext?.id, ' => ', team);
 		const prevTeam = this.spaceContext;
 		if (
 			team === prevTeam ||
@@ -236,9 +236,9 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 		this.console.log(`${this.className}.subscribeForSpaceChanges()`, space);
 		this.spaceService
 			.watchSpace(space)
-			.pipe(takeUntil(this.teamIDChanged$), this.takeUntilNeeded())
+			.pipe(takeUntil(this.spaceIDChanged$), this.takeUntilNeeded())
 			.subscribe({
-				next: this.onTeamContextChanged,
+				next: this.onSpaceContextChanged,
 				error: (err) => {
 					if (err.code === 'permission-denied') {
 						console.log(
@@ -307,7 +307,7 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 		}
 		const idChanged = this.spaceContext?.id != spaceContext?.id;
 		const spaceTypeChanged = this.spaceContext?.type != spaceContext?.type;
-		const briefChanged = equalTeamBriefs(
+		const briefChanged = equalSpaceBriefs(
 			this.spaceContext?.brief,
 			spaceContext?.brief,
 		);
@@ -317,8 +317,8 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 		);
 		this.spaceContext = spaceContext;
 		if (idChanged) {
-			this.teamIDChanged.next(spaceContext?.id);
-			this.onTeamIdChanged();
+			this.spaceIDChanged.next(spaceContext?.id);
+			this.onSpaceIdChanged();
 			if (spaceContext) {
 				setTimeout(() => this.subscribeForSpaceChanges(spaceContext), 1);
 				// setTimeout(() => this.subscribeForContactusTeamChanges(teamContext), 1);
@@ -326,13 +326,13 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 			}
 			if (spaceTypeChanged && spaceContext?.type) {
 				// console.log('emitting teamTypeChanged$', teamContext.type);
-				this.teamTypeChanged.next(spaceContext.type);
+				this.spaceTypeChanged.next(spaceContext.type);
 			}
 			if (briefChanged) {
-				this.teamBriefChanged.next(spaceContext?.brief);
+				this.spaceBriefChanged.next(spaceContext?.brief);
 			}
 			if (dboChanged) {
-				this.teamDtoChanged.next(spaceContext?.dbo);
+				this.spaceDboChanged.next(spaceContext?.dbo);
 			}
 			if (!spaceContext) {
 				this.unsubscribe('no team context');
@@ -393,7 +393,7 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 		// 	}
 	}
 
-	private readonly onTeamContextChanged = (team: ISpaceContext): void => {
+	private readonly onSpaceContextChanged = (team: ISpaceContext): void => {
 		const dtoChanged = team.dbo !== this.spaceContext?.dbo;
 		this.console.log(
 			`${this.className}.onTeamContextChanged() => dtoChanged=${dtoChanged}, team:`,

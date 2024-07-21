@@ -3,13 +3,13 @@
 		<sneat-country-selector
 			[countryID]="vehicleAsset?.brief?.countryID"
 			[readonly]="!!vehicleAsset?.brief?.countryID"
-			[defaultCountryID]="team?.dbo?.countryID"
+			[defaultCountryID]="space?.dbo?.countryID"
 			label="Country of registration"
 			(countryIDChange)="countryChanged($event)"
 		/>
 		<sneat-asset-reg-number
 			*ngIf="vehicleAsset?.dbo?.countryID"
-			[team]="team"
+			[space]="space"
 			[assetID]="vehicleAsset?.id"
 			[regNumber]="vehicleAsset?.dbo?.extra?.regNumber"
 			[countyID]="vehicleAsset?.dbo?.countryID"

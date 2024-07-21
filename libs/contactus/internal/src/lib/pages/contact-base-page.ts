@@ -1,7 +1,7 @@
 import { ActivatedRoute } from '@angular/router';
 import {
 	ContactService,
-	ContactusTeamService,
+	ContactusSpaceService,
 } from '@sneat/contactus-services';
 import { ContactComponentBaseParams } from '@sneat/contactus-shared';
 import {
@@ -9,10 +9,10 @@ import {
 	IContactDto,
 	IContactContext,
 } from '@sneat/contactus-core';
-import { TeamItemPageBaseComponent } from '@sneat/team-components';
+import { SpaceItemPageBaseComponent } from '@sneat/team-components';
 import { Observable, takeUntil, throwError } from 'rxjs';
 
-export abstract class ContactBasePage extends TeamItemPageBaseComponent<
+export abstract class ContactBasePage extends SpaceItemPageBaseComponent<
 	IContactBrief,
 	IContactDto
 > {
@@ -20,7 +20,7 @@ export abstract class ContactBasePage extends TeamItemPageBaseComponent<
 		return this.item as IContactContext;
 	}
 
-	protected readonly contactusTeamService: ContactusTeamService;
+	protected readonly contactusSpaceService: ContactusSpaceService;
 	protected readonly contactService: ContactService;
 
 	protected constructor(
@@ -32,12 +32,12 @@ export abstract class ContactBasePage extends TeamItemPageBaseComponent<
 		super(
 			className,
 			route,
-			params.teamParams,
+			params.spaceParams,
 			'contacts',
 			'contact',
 			params.contactService,
 		);
-		this.contactusTeamService = params.contactusTeamService;
+		this.contactusSpaceService = params.contactusSpaceService;
 		this.contactService = params.contactService;
 		this.defaultBackPage = 'contacts';
 		// this.trackContactId();
@@ -47,7 +47,7 @@ export abstract class ContactBasePage extends TeamItemPageBaseComponent<
 		if (!this.item?.id) {
 			return throwError(() => new Error('no contact context'));
 		}
-		const space = this.team;
+		const space = this.space;
 		if (!space) {
 			return throwError(() => new Error('no team context'));
 		}
@@ -71,20 +71,20 @@ export abstract class ContactBasePage extends TeamItemPageBaseComponent<
 		// this.watchContact();
 	}
 
-	override onTeamIdChanged(): void {
-		super.onTeamIdChanged();
-		this.watchTeamContactusEntry();
+	override onSpaceIdChanged(): void {
+		super.onSpaceIdChanged();
+		this.watchSpaceContactusEntry();
 	}
 
-	private watchTeamContactusEntry(): void {
-		if (this.team?.id) {
-			this.contactusTeamService
-				.watchContactBriefs(this.team.id)
-				.pipe(this.takeUntilNeeded(), takeUntil(this.teamIDChanged$))
+	private watchSpaceContactusEntry(): void {
+		if (this.space?.id) {
+			this.contactusSpaceService
+				.watchContactBriefs(this.space.id)
+				.pipe(this.takeUntilNeeded(), takeUntil(this.spaceIDChanged$))
 				.subscribe({
 					next: (contacts) => {
 						console.log(
-							'watchTeamContactusEntry() => contacts:',
+							'watchSpaceContactusEntry() => contacts:',
 							contacts,
 							'this.contact:',
 							this.contact,

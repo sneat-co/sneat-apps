@@ -12,9 +12,9 @@ import { MembersSelectorService } from './members-selector.service';
 	templateUrl: 'members-selector-input.component.html',
 })
 export class MembersSelectorInputComponent {
-	protected contactusTeam?: IContactusSpaceDboAndID;
+	protected contactusSpace?: IContactusSpaceDboAndID;
 
-	@Input({ required: true }) team?: ISpaceContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() members?: readonly IIdAndBrief<IContactBrief>[];
 
 	@Input() max?: number;
@@ -40,8 +40,8 @@ export class MembersSelectorInputComponent {
 	selectMembers(event: Event): void {
 		event.stopPropagation();
 		event.preventDefault();
-		const space = this.team;
-		const contactusTeam = this.contactusTeam;
+		const space = this.space;
+		const contactusTeam = this.contactusSpace;
 		if (!contactusTeam || !space) {
 			return;
 		}

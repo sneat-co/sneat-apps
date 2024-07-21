@@ -28,7 +28,7 @@ import {
 	IWithCreatedShort,
 } from '@sneat/dto';
 import { ISpaceContext } from '@sneat/team-models';
-import { TeamRelatedFormComponent } from '../team-related-form.component';
+import { SpaceRelatedFormComponent } from '../space-related-form.component';
 
 const getRelOptions = (r: FamilyMemberRelation[]): ITitledRecord[] => [
 	...r.map((id) => ({ id, title: relationshipTitle(id) })),
@@ -48,10 +48,10 @@ interface IRelationshipWithID extends IRelationshipRole {
 	imports: [CommonModule, IonicModule, FormsModule, ReactiveFormsModule],
 })
 export class RelationshipFormComponent
-	extends TeamRelatedFormComponent
+	extends SpaceRelatedFormComponent
 	implements OnChanges
 {
-	@Input({ required: true }) public team?: ISpaceContext;
+	@Input({ required: true }) public space?: ISpaceContext;
 	@Input({ required: true }) public ageGroup?: AgeGroupID;
 
 	@Input({ required: true }) public relatedTo?: ISpaceModuleItemRef;
@@ -132,7 +132,7 @@ export class RelationshipFormComponent
 	// }
 
 	private setRelationships(): void {
-		switch (this.team?.type) {
+		switch (this.space?.type) {
 			case 'family': {
 				this.relationshipOptions = getRelOptions(
 					this.ageGroup === 'child'
@@ -160,7 +160,7 @@ export class RelationshipFormComponent
 		}
 		console.log(
 			'RelationshipFormComponent.setRelationships()',
-			this.team,
+			this.space,
 			this.relationshipOptions,
 		);
 	}

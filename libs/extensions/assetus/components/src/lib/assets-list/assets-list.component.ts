@@ -9,7 +9,7 @@ import { IIdAndBrief } from '@sneat/core';
 import { AssetCategory, IAssetBrief } from '@sneat/mod-assetus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
-import { TeamNavService } from '@sneat/team-services';
+import { SpaceNavService } from '@sneat/team-services';
 import { AssetService } from '../services';
 import { MileAgeDialogComponent } from '../mileage-dialog/mileage-dialog.component';
 import { ModalController } from '@ionic/angular';
@@ -23,7 +23,7 @@ export class AssetsListComponent implements OnChanges {
 	protected mileAgeAsset?: IIdAndBrief<IAssetBrief>;
 
 	@Input() allAssets?: IIdAndBrief<IAssetBrief>[];
-	@Input({ required: true }) team?: ISpaceContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() assetType?: AssetCategory;
 	@Input() filter = '';
 
@@ -36,13 +36,13 @@ export class AssetsListComponent implements OnChanges {
 		return 0;
 	};
 
-	public deletingIDs: string[] = [];
+	protected deletingIDs: string[] = [];
 
 	constructor(
 		@Inject(ErrorLogger)
 		private readonly errorLogger: IErrorLogger,
 		private readonly assetService: AssetService,
-		private readonly teamNavService: TeamNavService,
+		private readonly spaceNavService: SpaceNavService,
 		private readonly modalCtrl: ModalController,
 	) {}
 
@@ -71,7 +71,7 @@ export class AssetsListComponent implements OnChanges {
 			'AssetsListComponent.ngOnChanges =>',
 			changes,
 			this.assetType,
-			this.team,
+			this.space,
 			'allAssets:',
 			this.allAssets,
 			'filtered assets:',
@@ -95,14 +95,14 @@ export class AssetsListComponent implements OnChanges {
 		// 		path = 'asset';
 		// 		break;
 		// }
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError(
 				'can not navigate to asset page without team context',
 			);
 			return;
 		}
-		this.teamNavService
-			.navigateForwardToSpacePage(this.team, `asset/${asset.id}`, {
+		this.spaceNavService
+			.navigateForwardToSpacePage(this.space, `asset/${asset.id}`, {
 				state: { asset },
 			})
 			.catch(
@@ -131,7 +131,7 @@ export class AssetsListComponent implements OnChanges {
 				deleteCompleted();
 				return;
 			}
-			this.assetService.deleteAsset(this.team?.id || '', asset.id).subscribe({
+			this.assetService.deleteAsset(this.space?.id || '', asset.id).subscribe({
 				next: () => {
 					this.assets = this.assets?.filter((a) => a.id !== id);
 				},

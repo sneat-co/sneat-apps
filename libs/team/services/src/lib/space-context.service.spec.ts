@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { SpaceContextService } from './space-context.service';
 
-describe('TeamContextService', () => {
+describe('SpaceContextService', () => {
 	let service: SpaceContextService;
 
 	beforeEach(() => {

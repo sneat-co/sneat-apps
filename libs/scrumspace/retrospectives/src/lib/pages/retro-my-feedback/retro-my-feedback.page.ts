@@ -13,7 +13,7 @@ export interface IRetroQuestion {
 	styleUrls: ['./retro-my-feedback.page.scss'],
 })
 export class RetroMyFeedbackPageComponent {
-	teamId: string;
+	spaceID: string;
 	retroId: string;
 
 	questions: IRetroQuestion[] = [
@@ -26,7 +26,7 @@ export class RetroMyFeedbackPageComponent {
 		route: ActivatedRoute,
 		// private navService: NavService,
 	) {
-		this.teamId = route.snapshot.queryParamMap.get('team');
+		this.spaceID = route.snapshot.queryParamMap.get('team');
 		this.retroId = getMeetingIdFromDate(new Date());
 	}
 

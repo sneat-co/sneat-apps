@@ -5,11 +5,11 @@ import { ICalendarDayBrief, ICalendarDayDbo } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
 import { tap } from 'rxjs';
-import { ModuleTeamItemService } from './team-item.service';
+import { ModuleSpaceItemService } from './space-item.service';
 
 @Injectable()
 export class CalendarDayService {
-	private readonly teamItemService: ModuleTeamItemService<
+	private readonly spaceItemService: ModuleSpaceItemService<
 		ICalendarDayBrief,
 		ICalendarDayDbo
 	>;
@@ -19,7 +19,7 @@ export class CalendarDayService {
 		public readonly afs: AngularFirestore,
 		sneatApiService: SneatApiService,
 	) {
-		this.teamItemService = new ModuleTeamItemService(
+		this.spaceItemService = new ModuleSpaceItemService(
 			'calendarium',
 			'days',
 			afs,
@@ -27,12 +27,12 @@ export class CalendarDayService {
 		);
 	}
 
-	public watchTeamDay(team: ISpaceContext, dateID: string) {
+	public watchSpaceDay(team: ISpaceContext, dateID: string) {
 		console.log(
 			`ScheduleDayService.watchTeamDay(team={id=${team.id}, dateID=${dateID})`,
 		);
-		return this.teamItemService
-			.watchTeamItemByIdWithTeamRef(team, dateID)
+		return this.spaceItemService
+			.watchSpaceItemByIdWithSpaceRef(team, dateID)
 			.pipe(
 				tap((scheduleDay) =>
 					console.log(

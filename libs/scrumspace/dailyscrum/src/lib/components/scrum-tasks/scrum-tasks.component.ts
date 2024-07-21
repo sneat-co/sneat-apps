@@ -30,7 +30,7 @@ import { ScrumTaskComponent } from '../scrum-task/scrum-task.component';
 	animations: listAddRemoveAnimation,
 })
 export class ScrumTasksComponent implements OnDestroy, OnChanges {
-	@Input() team?: IRecord<ISpaceDbo>;
+	@Input() space?: IRecord<ISpaceDbo>;
 	@Input() public scrumId?: string;
 
 	@Input() member?: IMemberBrief;
@@ -130,12 +130,12 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 		if (!this.member) {
 			throw new Error('!this.member');
 		}
-		if (!this.team) {
+		if (!this.space) {
 			throw new Error('!this.team');
 		}
 		this.scrumService
 			.addTask(
-				this.team,
+				this.space,
 				this.scrumId || 'EMPTY_SCRUM_ID',
 				this.member,
 				this.taskType as TaskType,
@@ -186,7 +186,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 		if (!this.currentMemberId) {
 			throw new Error('!currentMemberId');
 		}
-		if (!this.team) {
+		if (!this.space) {
 			throw new Error('!team');
 		}
 		if (!this.taskType) {
@@ -202,7 +202,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 			task.thumbUps.push(this.currentMemberId);
 		}
 		const request: IThumbUpRequest = {
-			spaceID: this.team.id,
+			spaceID: this.space.id,
 			memberID: this.member.id,
 			type: this.taskType,
 			// meetingID: this.scrumId,
@@ -233,12 +233,12 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 		if (!this.member) {
 			throw new Error('!this.member');
 		}
-		if (!this.team) {
+		if (!this.space) {
 			throw new Error('!this.team');
 		}
 		this.scrumService
 			.deleteTask(
-				this.team.id,
+				this.space.id,
 				this.scrumId,
 				this.member,
 				this.taskType as TaskType,
@@ -292,11 +292,11 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 		if (!taskID) {
 			throw new Error(`!this.visibleTasks[${event.detail.from}]`);
 		}
-		if (!this.team) {
+		if (!this.space) {
 			throw new Error('!this.team');
 		}
 		const request: IReorderTaskRequest = {
-			spaceID: this.team.id,
+			spaceID: this.space.id,
 			// meetingID: this.scrumId,
 			type: this.taskType,
 			memberID: this.member.id,
@@ -334,7 +334,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 
 	async showTaskPopover(event: Event, task: ITask) {
 		console.log('showTaskPopover()', task);
-		if (!this.team) {
+		if (!this.space) {
 			throw new Error('!this.team');
 		}
 		try {
@@ -343,7 +343,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 				componentProps: {
 					event,
 					task,
-					teamId: this.team.id,
+					spaceID: this.space.id,
 					date: this.scrumId,
 					memberId: this.member?.id,
 					type: this.taskType,

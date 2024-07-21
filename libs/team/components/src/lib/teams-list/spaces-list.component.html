@@ -1,0 +1,11 @@
+@for (space of spaces; track space.id) {
+	<ion-item
+		routerLink="{{ pathPrefix }}/{{ space.type }}/{{ space.id }}"
+		(click)="goSpace($event, space)"
+	>
+		<ion-icon [name]="iconName" slot="start" />
+		<ion-label class="ion-text-wrap">
+			{{ space.brief?.title || space.brief?.type || space.id }}
+		</ion-label>
+	</ion-item>
+}

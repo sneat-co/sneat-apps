@@ -26,7 +26,7 @@ import { secondsToStr } from '@sneat/datetime';
 	templateUrl: './retro-timer.component.html',
 })
 export class RetroTimerComponent implements OnDestroy, OnChanges {
-	@Input() public team?: IRecord<ISpaceDbo>;
+	@Input() public space?: IRecord<ISpaceDbo>;
 	@Input() retrospective?: IRecord<IRetrospective>;
 
 	public timer?: Timer;
@@ -59,9 +59,9 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log('RetroTimerComponent.ngOnChanges', changes);
 		if (changes['team'] || changes['retrospective']) {
-			if (this.team?.id && this.retrospective?.id) {
+			if (this.space?.id && this.retrospective?.id) {
 				if (
-					this.timer?.spaceID !== this.team.id ||
+					this.timer?.spaceID !== this.space.id ||
 					this.timer.meetingId !== this.retrospective.id
 				) {
 					if (this.timer) {
@@ -158,7 +158,7 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 	}
 
 	private createTimer(): void {
-		if (!this.team) {
+		if (!this.space) {
 			throw new Error('!this.team');
 		}
 		if (!this.retrospective) {
@@ -166,7 +166,7 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 		}
 		this.timer = this.timerFactory.getTimer(
 			this.retrospectiveService,
-			this.team.id,
+			this.space.id,
 			this.retrospective.id,
 		);
 		this.timerSubscription = this.timer.onTick.subscribe(this.onTimerTicked);
@@ -174,7 +174,7 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 
 	private onTimerTicked = (timer: ITimerState): void => {
 		console.log('onTimerTicked', timer);
-		if (!this.team) {
+		if (!this.space) {
 			throw new Error('!this.team');
 		}
 		if (!this.retrospective) {
@@ -197,12 +197,12 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 	};
 
 	private createRetroRequest(): IRetrospectiveRequest {
-		if (!this.team) {
+		if (!this.space) {
 			throw new Error('!this.team');
 		}
 		if (!this.retrospective) {
 			throw new Error('!this.retrospective');
 		}
-		return { spaceID: this.team.id, meeting: this.retrospective.id };
+		return { spaceID: this.space.id, meeting: this.retrospective.id };
 	}
 }

@@ -12,7 +12,7 @@ import { ITask, TaskType } from '@sneat/scrumspace/scrummodels';
 	templateUrl: './scrum-task.component.html',
 })
 export class ScrumTaskComponent implements OnInit {
-	@Input() teamID?: string;
+	@Input() spaceID?: string;
 	@Input() date?: Date;
 	@Input() memberID?: string;
 	@Input() type?: TaskType;

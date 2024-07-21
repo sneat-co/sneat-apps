@@ -5,7 +5,7 @@ import { ListService } from './services/list.service';
 @Injectable()
 export class ListusComponentBaseParams {
 	constructor(
-		public readonly teamParams: SpaceComponentBaseParams,
+		public readonly spaceParams: SpaceComponentBaseParams,
 		public readonly listService: ListService,
 	) {}
 }

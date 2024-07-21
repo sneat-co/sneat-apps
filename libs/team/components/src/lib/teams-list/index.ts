@@ -1,1 +1,1 @@
-export * from './teams-list.component';
+export * from './spaces-list.component';

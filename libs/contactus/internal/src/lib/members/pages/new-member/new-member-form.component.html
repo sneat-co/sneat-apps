@@ -1,6 +1,6 @@
 <form [formGroup]="addMemberForm" (ngSubmit)="submit()">
 	<sneat-person-form-wizard
-		[team]="team"
+		[space]="space"
 		[disabled]="isSubmitting"
 		[newPerson]="member"
 		[requires]="personRequirements"
@@ -22,7 +22,7 @@
 			size="large"
 			(click)="submit()"
 			[disabled]="
-				!team || addMemberForm.disabled || !addMemberForm.valid || isSubmitting
+				!space || addMemberForm.disabled || !addMemberForm.valid || isSubmitting
 			"
 		>
 			<ion-spinner

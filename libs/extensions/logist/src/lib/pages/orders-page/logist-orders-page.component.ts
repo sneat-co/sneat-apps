@@ -33,9 +33,9 @@ export class LogistOrdersPageComponent extends SpaceBaseComponent {
 		super('OrdersPageComponent', route, teamParams);
 	}
 
-	protected override onTeamIdChanged() {
-		super.onTeamIdChanged();
-		if (this.team?.id) {
+	protected override onSpaceIdChanged() {
+		super.onSpaceIdChanged();
+		if (this.space?.id) {
 			this.subscribeForOrders();
 		}
 	}
@@ -50,7 +50,7 @@ export class LogistOrdersPageComponent extends SpaceBaseComponent {
 		try {
 			this.ordersSubscription?.unsubscribe();
 			this.orders = undefined;
-			const spaceID = this.team?.id;
+			const spaceID = this.space?.id;
 			if (!spaceID) {
 				throw new Error('Space ID is not defined');
 			}

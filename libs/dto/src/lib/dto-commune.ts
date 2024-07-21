@@ -1,7 +1,7 @@
 import { IDemoRecord, ITitledRecord, ITotalsHolder } from './dto-models';
 import { CommuneType, CountryId } from './types';
 
-export const enum TeamCounter {
+export const enum SpaceCounter {
 	activities = 'activities',
 	assets = 'assets',
 	assetGroups = 'assetGroups',
@@ -23,21 +23,21 @@ export const enum TeamCounter {
 // 	[P in EnumAsUnionOfKeys<typeof TeamCounter>]: number;
 // };
 
-export interface TeamCounts {
-	[TeamCounter.activities]?: number;
-	[TeamCounter.assets]?: number;
-	[TeamCounter.assetGroups]?: number;
-	[TeamCounter.contacts]?: number;
-	[TeamCounter.documents]?: number;
-	[TeamCounter.regularTasks]?: number;
-	[TeamCounter.liabilities]?: number;
-	[TeamCounter.pupils]?: number;
-	[TeamCounter.staff]?: number;
-	[TeamCounter.members]?: number;
-	[TeamCounter.memberGroups]?: number;
-	[TeamCounter.overdues]?: number;
-	[TeamCounter.todos]?: number;
-	[TeamCounter.upcomings]?: number;
+export interface SpaceCounts {
+	[SpaceCounter.activities]?: number;
+	[SpaceCounter.assets]?: number;
+	[SpaceCounter.assetGroups]?: number;
+	[SpaceCounter.contacts]?: number;
+	[SpaceCounter.documents]?: number;
+	[SpaceCounter.regularTasks]?: number;
+	[SpaceCounter.liabilities]?: number;
+	[SpaceCounter.pupils]?: number;
+	[SpaceCounter.staff]?: number;
+	[SpaceCounter.members]?: number;
+	[SpaceCounter.memberGroups]?: number;
+	[SpaceCounter.overdues]?: number;
+	[SpaceCounter.todos]?: number;
+	[SpaceCounter.upcomings]?: number;
 	// [CommuneCounter.membersByRole]?: { [role: string]: number }; this does not make sense here
 }
 
@@ -56,7 +56,7 @@ export function incrementNumberOf<
 	};
 }
 
-export function newTeamCounts(numberOf?: TeamCounts): TeamCounts {
+export function newSpaceCounts(numberOf?: SpaceCounts): SpaceCounts {
 	numberOf = numberOf || {};
 	return {
 		activities: numberOf.activities || 0,
@@ -80,7 +80,7 @@ export interface ICommuneDbo extends IDemoRecord, ITitledRecord, ITotalsHolder {
 	readonly desc?: string;
 	readonly userID: string;
 	readonly order?: number;
-	readonly numberOf?: TeamCounts;
+	readonly numberOf?: SpaceCounts;
 	readonly membersCountByRole?: Record<string, number>;
 	readonly noContactRoles?: string[];
 	// readonly groups?: ICommuneDtoMemberGroupInfo[];

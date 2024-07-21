@@ -10,7 +10,7 @@ import {
 import { IAssetContext, IAssetDtoGroup } from '@sneat/mod-assetus-core';
 import {
 	SpaceComponentBaseParams,
-	TeamPageBaseComponent,
+	SpacePageBaseComponent,
 } from '@sneat/team-components';
 import { Observable } from 'rxjs';
 
@@ -41,7 +41,7 @@ class AssetFactory {
 	],
 })
 export class AssetGroupPageComponent
-	extends TeamPageBaseComponent
+	extends SpacePageBaseComponent
 	implements OnInit
 {
 	public period: Period = 'month';

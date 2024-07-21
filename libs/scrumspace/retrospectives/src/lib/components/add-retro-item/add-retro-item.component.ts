@@ -15,7 +15,7 @@ import { Subject } from 'rxjs';
 })
 export class AddRetroItemComponent implements OnDestroy {
 	// @Input() retroItemType: RetroItemType;
-	@Input() teamId?: string;
+	@Input() spaceID?: string;
 	@Input() meetingId?: string;
 	public titleControl = new FormControl('', [Validators.required]);
 	public isAdding = false;
@@ -42,7 +42,7 @@ export class AddRetroItemComponent implements OnDestroy {
 			return;
 		}
 		const title = this.titleControl.value as string;
-		const spaceID = this.teamId || '',
+		const spaceID = this.spaceID || '',
 			meetingID = this.meetingId || '';
 		if (spaceID || meetingID) {
 			alert('no team or meeting id');

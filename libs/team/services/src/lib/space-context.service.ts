@@ -23,7 +23,7 @@ export class SpaceContextService {
 	// }
 }
 
-export function trackTeamIdAndTypeFromRouteParameter(
+export function trackSpaceIdAndTypeFromRouteParameter(
 	paramMap$: Observable<ParamMap>,
 ): Observable<ISpaceContext | undefined> {
 	return paramMap$.pipe(

@@ -31,7 +31,7 @@ import {
 import { ContactService } from '@sneat/contactus-services';
 import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { ISpaceContext } from '@sneat/team-models';
-import { TeamNavService } from '@sneat/team-services';
+import { SpaceNavService } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { ContactRoleBadgesComponent } from '../contact-role-badges/contact-role-badges.component';
 import { InlistAgeGroupComponent } from '../inlist-options/inlist-age-group.component';
@@ -56,7 +56,7 @@ import { InlistAgeGroupComponent } from '../inlist-options/inlist-age-group.comp
 // TODO: Is it deprecated and should we migrated to Contacts list?
 export class MembersListComponent implements OnChanges {
 	private selfRemove?: boolean;
-	@Input() public team?: ISpaceContext;
+	@Input() public space?: ISpaceContext;
 	@Input() public members?: readonly IIdAndBrief<IContactBrief>[];
 	@Input() public role?: string;
 	@Output() selfRemoved = new EventEmitter<void>();
@@ -70,10 +70,10 @@ export class MembersListComponent implements OnChanges {
 	// Holds filtered entries, use `allMembers` to pass input
 	public membersToDisplay?: readonly IIdAndBrief<IContactBrief>[];
 
-	protected contactusTeam?: IContactusSpaceDboAndID;
+	protected contactusSpace?: IContactusSpaceDboAndID;
 
 	constructor(
-		private readonly navService: TeamNavService,
+		private readonly navService: SpaceNavService,
 		private readonly navController: NavController,
 		private readonly userService: SneatUserService,
 		private readonly contactService: ContactService,
@@ -86,7 +86,7 @@ export class MembersListComponent implements OnChanges {
 	}
 
 	protected isAgeOptionsVisible(member: IIdAndBrief<IContactBrief>): boolean {
-		const spaceDbo = this.team?.dbo;
+		const spaceDbo = this.space?.dbo;
 		// console.log('MembersListComponent.isAgeOptionsVisible()', member, teamDto);
 		return (
 			spaceDbo?.type === 'family' &&
@@ -111,7 +111,7 @@ export class MembersListComponent implements OnChanges {
 
 	public goMember(member?: IIdAndBrief<IContactBrief>): boolean {
 		console.log('TeamPage.goMember()', member);
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError(
 				'Can not navigate to team member without team context',
 			);
@@ -122,7 +122,7 @@ export class MembersListComponent implements OnChanges {
 		}
 		this.navService.navigateToMember(this.navController, {
 			...member,
-			space: this.team,
+			space: this.space,
 		});
 		return false;
 	}
@@ -152,7 +152,7 @@ export class MembersListComponent implements OnChanges {
 		console.log('MembersListComponent.goSchedule()');
 		event.stopPropagation();
 		event.preventDefault();
-		const space = this.team;
+		const space = this.space;
 		if (space) {
 			this.scheduleNavService
 				.goSchedule(space, { member: contact.id })
@@ -167,19 +167,19 @@ export class MembersListComponent implements OnChanges {
 	public removeMember(event: Event, member: IIdAndBrief<IContactBrief>) {
 		// event.preventDefault();
 		event.stopPropagation();
-		if (!this.team) {
+		if (!this.space) {
 			return;
 		}
 		this.selfRemove = member.brief?.userID === this.userService.currentUserID;
-		const spaceID = this.team.id;
+		const spaceID = this.space.id;
 		this.contactService
-			.removeTeamMember({ spaceID: spaceID, contactID: member.id })
+			.removeSpaceMember({ spaceID: spaceID, contactID: member.id })
 			.subscribe({
 				next: (team) => {
-					if (spaceID !== this.team?.id) {
+					if (spaceID !== this.space?.id) {
 						return;
 					}
-					this.team = team;
+					this.space = team;
 					console.log('updated team:', team);
 					if (this.selfRemove) {
 						this.selfRemoved.emit();
@@ -190,7 +190,7 @@ export class MembersListComponent implements OnChanges {
 							team?.dbo?.userIDs?.indexOf(this.userService.currentUserID)) ||
 						-1 < 0
 					) {
-						this.navService.navigateToTeams('back');
+						this.navService.navigateToSpaces('back');
 					}
 				},
 				error: (err: unknown) => {
@@ -224,7 +224,7 @@ export class MembersListComponent implements OnChanges {
 			// swipeToClose: true,
 			presentingElement: this.routerOutlet.nativeEl,
 			componentProps: {
-				team: this.team,
+				space: this.space,
 				member,
 			},
 		});

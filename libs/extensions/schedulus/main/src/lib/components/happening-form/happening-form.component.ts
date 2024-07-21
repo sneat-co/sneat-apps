@@ -74,10 +74,10 @@ export class HappeningFormComponent
 	@Input() public wd?: WeekdayCode2;
 	@Input() public date?: string;
 
-	@Input({ required: true }) public team?: ISpaceContext;
+	@Input({ required: true }) public space?: ISpaceContext;
 	@Input({ required: true }) public happening?: IHappeningContext;
 	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
-	@Input() public contactusTeam?: IContactusSpaceDboAndID;
+	@Input() public contactusSpace?: IContactusSpaceDboAndID;
 
 	@ViewChild('titleInput', { static: true }) titleInput?: IonInput;
 	@ViewChild('happeningSlotsComponent', { static: false })
@@ -230,7 +230,7 @@ export class HappeningFormComponent
 	}
 
 	private makeHappeningDto(): IHappeningDbo {
-		if (!this.team) {
+		if (!this.space) {
 			throw new Error('!this.team');
 		}
 		if (!this.happening) {
@@ -243,7 +243,7 @@ export class HappeningFormComponent
 		const dto: IHappeningDbo = {
 			...this.happening.dbo,
 			...this.happening.brief,
-			spaceIDs: [this.team.id], // TODO: should be already in this.happening.brief
+			spaceIDs: [this.space.id], // TODO: should be already in this.happening.brief
 			title: activityFormValue.title, // TODO: should be already in this.happening.brief
 		};
 		// switch (dto.type) {
@@ -278,7 +278,7 @@ export class HappeningFormComponent
 
 	private createHappening(): void {
 		console.log('NewHappeningPageComponent.createHappening()');
-		if (!this.team) {
+		if (!this.space) {
 			return;
 		}
 		try {
@@ -291,7 +291,7 @@ export class HappeningFormComponent
 			// 	// }
 			// 	return;
 			// }
-			const space = this.team;
+			const space = this.space;
 
 			if (!space) {
 				this.logError(new Error('!space context'));
@@ -331,7 +331,7 @@ export class HappeningFormComponent
 									),
 								);
 						} else {
-							this.params.teamNavService
+							this.params.spaceNavService
 								.navigateBackToSpacePage(space, 'calendar')
 								.catch(
 									this.logErrorHandler(
@@ -356,7 +356,7 @@ export class HappeningFormComponent
 
 	protected cancel(): void {
 		const request: ICancelHappeningRequest = {
-			spaceID: this.team?.id || '',
+			spaceID: this.space?.id || '',
 			happeningID: this.happening?.id || '',
 		};
 		this.isCancelling.set(true);

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { AssetService, AssetusTeamService } from '.';
+import { AssetService, AssetusSpaceService } from '.';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-	providers: [AssetService, AssetusTeamService, ReactiveFormsModule],
+	providers: [AssetService, AssetusSpaceService, ReactiveFormsModule],
 })
 export class AssetusServicesModule {}

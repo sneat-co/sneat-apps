@@ -44,7 +44,7 @@ export interface IListItemResult {
 }
 
 export interface IListItemsCommandParams {
-	team: ISpaceContext;
+	space: ISpaceContext;
 	list: IListContext;
 	items: IListItemBrief[];
 }

@@ -5,12 +5,12 @@
 		</ion-buttons>
 		<ion-title>
 			⚖️ Budget
-			<ng-container *ngIf="team.brief?.title"
-				>&#64; {{ team.brief?.title }}
+			<ng-container *ngIf="space.brief?.title"
+				>&#64; {{ space.brief?.title }}
 			</ng-container>
 		</ion-title>
 		<ion-buttons slot="end">
-			<ion-button [disabled]="!team" (click)="goNew()" title="Add liability">
+			<ion-button [disabled]="!space" (click)="goNew()" title="Add liability">
 				<ion-icon name="add" />
 			</ion-button>
 		</ion-buttons>
@@ -208,8 +208,8 @@
 
 		<sneat-budget-periods
 			*ngIf="liabilitiesMode === 'expenses' || liabilitiesMode === 'incomes'"
-			[team]="team"
-			[recurringHappenings]="calendariumTeamDto?.recurringHappenings"
+			[space]="space"
+			[recurringHappenings]="calendariumSpaceDbo?.recurringHappenings"
 			[(activePeriod)]="activePeriod"
 			[liabilitiesMode]="liabilitiesMode"
 		/>

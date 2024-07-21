@@ -4,7 +4,7 @@ import {
 	runSignInTest,
 	runSignUpTest,
 } from '../common/auth.spec';
-import { assertNewTeamButtonIsVisible } from '../common/teams.spec';
+import { assertNewSpaceButtonIsVisible } from '../common/spaces.spec';
 
 describe('Email Auth', () => {
 	beforeEach(() => {
@@ -29,12 +29,12 @@ describe('Email Auth', () => {
 
 		it('should sign user in', () => {
 			runSignInTest();
-			assertNewTeamButtonIsVisible();
+			assertNewSpaceButtonIsVisible();
 		});
 
 		it('should user sign out', () => {
 			runSignInTest();
-			assertNewTeamButtonIsVisible();
+			assertNewSpaceButtonIsVisible();
 
 			cy.get('ion-button[title="Sign-out"]').click();
 		});

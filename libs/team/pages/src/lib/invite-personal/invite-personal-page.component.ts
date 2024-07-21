@@ -78,7 +78,7 @@ export class InvitePersonalPageComponent implements OnInit {
 				}>(
 					'invites/personal',
 					new HttpParams({
-						fromObject: { invite: inviteId, team: spaceID },
+						fromObject: { invite: inviteId, space: spaceID },
 					}),
 				)
 				.subscribe({

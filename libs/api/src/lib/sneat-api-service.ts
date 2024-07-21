@@ -11,7 +11,6 @@ export const SneatApiAuthTokenProvider = new InjectionToken(
 	'SneatApiAuthTokenProvider',
 );
 export const SneatApiBaseUrl = new InjectionToken('SneatApiBaseUrl');
-export const DefaultSneatTeamApiBaseUrl = 'https://api.sneat.team/v0/';
 export const DefaultSneatAppApiBaseUrl = 'https://api.sneat.ws/v0/';
 
 @Injectable({ providedIn: 'root' }) // Should it be in root? Probably it is OK.

@@ -5,7 +5,7 @@ import {
 	ITeamMetric,
 	MetricColor,
 } from '../../models/interfaces';
-import { TeamService } from '../../services/team.service';
+import { SpaceService } from '../../services/space.service';
 import { NavController, ToastController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat-team/ui-core';
 import { ActivatedRoute } from '@angular/router';
@@ -15,8 +15,8 @@ import { ActivatedRoute } from '@angular/router';
 	templateUrl: './add-metric-page.component.html',
 })
 export class AddMetricPageComponent {
-	public team: ITeam;
-	public teamId?: string | null;
+	public space: ITeam;
+	public spaceID?: string | null;
 
 	public title = '';
 	public type: 'bool' | 'int' | 'options' = 'bool';
@@ -31,21 +31,21 @@ export class AddMetricPageComponent {
 	constructor(
 		readonly route: ActivatedRoute,
 		private readonly navController: NavController,
-		private readonly teamService: TeamService,
+		private readonly spaceService: SpaceService,
 		private readonly toastController: ToastController,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {
 		this.min = 0;
 		const space = window?.history?.state?.space as IRecord<ITeam>;
 		if (space) {
-			this.teamId = space.id;
-			this.team = space.data;
+			this.spaceID = space.id;
+			this.space = space.data;
 		} else {
-			this.teamId = route.snapshot.queryParamMap.get('team') || undefined;
-			if (this.teamId) {
-				this.teamService.getTeam(this.teamId).subscribe({
+			this.spaceID = route.snapshot.queryParamMap.get('team') || undefined;
+			if (this.spaceID) {
+				this.spaceService.getTeam(this.spaceID).subscribe({
 					next: (teamData) => {
-						this.team = teamData;
+						this.space = teamData;
 					},
 				});
 			}
@@ -84,7 +84,7 @@ export class AddMetricPageComponent {
 				}
 				break;
 		}
-		this.teamService.addMetric(this.teamId, metric).subscribe({
+		this.spaceService.addMetric(this.spaceID, metric).subscribe({
 			next: () => {
 				this.navController.back();
 			},

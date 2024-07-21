@@ -21,7 +21,7 @@ import { ISpaceBrief } from '@sneat/dto';
 	styleUrls: ['./mileage-dialog.component.scss'],
 })
 export class MileAgeDialogComponent {
-	@Input() team?: IIdAndBrief<ISpaceBrief>;
+	@Input() space?: IIdAndBrief<ISpaceBrief>;
 	@Input() asset?: IIdAndBrief<IAssetBrief>;
 
 	protected currencyList: CurrencyCode[] = CurrencyList;
@@ -78,7 +78,7 @@ export class MileAgeDialogComponent {
 		if (!this.asset?.id) {
 			throw new Error('assetId is not set');
 		}
-		if (!this.team?.id) {
+		if (!this.space?.id) {
 			throw new Error('teamId is not set');
 		}
 
@@ -108,7 +108,7 @@ export class MileAgeDialogComponent {
 		}
 
 		const request: IAddVehicleRecordRequest = {
-			spaceID: this.team.id,
+			spaceID: this.space.id,
 			assetID: this.asset.id,
 			fuelVolume: this.fuelVolume.value || undefined,
 			fuelVolumeUnit: this.fuelVolumeUnit.value || undefined,

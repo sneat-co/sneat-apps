@@ -13,7 +13,7 @@ export interface IIdAndOptionalDbo<Dbo> {
 	readonly dbo?: Dbo | null;
 }
 
-export interface IIdAndDto<Dbo> {
+export interface IIdAndDbo<Dbo> {
 	readonly id: string;
 	readonly dbo: Dbo;
 }

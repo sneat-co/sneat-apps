@@ -1,5 +1,5 @@
 <sneat-my-retro-items
-	[teamId]="team?.id"
+	[spaceID]="space?.id"
 	tabAutoSelect="true"
 	[noExpandCollapse]="true"
 	[isEditable]="!iAmReady"
@@ -10,4 +10,4 @@
 	<ion-label>I've done with my feedback &amp; ready for review</ion-label>
 </ion-item>
 
-<app-retro-members [team]="team" [retrospective]="retrospective" />
+<app-retro-members [team]="space" [retrospective]="retrospective" />

@@ -12,7 +12,7 @@ import {
 import {
 	SpaceBaseComponent,
 	SpaceComponentBaseParams,
-	TeamCoreComponentsModule,
+	SpaceCoreComponentsModule,
 } from '@sneat/team-components';
 
 @Component({
@@ -25,7 +25,7 @@ import {
 		FormsModule,
 		IonicModule,
 		AddAssetComponentsModule,
-		TeamCoreComponentsModule,
+		SpaceCoreComponentsModule,
 		ContactusServicesModule,
 		AssetusServicesModule,
 	],

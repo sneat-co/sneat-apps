@@ -9,7 +9,7 @@ import {
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import { IContactBrief } from '@sneat/contactus-core';
-import { ContactusTeamService } from '@sneat/contactus-services';
+import { ContactusSpaceService } from '@sneat/contactus-services';
 import { IIdAndBrief } from '@sneat/core';
 import { IRelatedItem } from '@sneat/dto';
 import { ISpaceContext } from '@sneat/team-models';
@@ -22,15 +22,15 @@ import { Subject, takeUntil } from 'rxjs';
 	imports: [JsonPipe, IonicModule, SneatPipesModule],
 })
 export class RelatedContactComponent implements OnChanges, OnDestroy {
-	@Input({ required: true }) public team?: ISpaceContext;
+	@Input({ required: true }) public space?: ISpaceContext;
 	@Input({ required: true }) public relatedItem?: IIdAndBrief<IRelatedItem>;
 
 	private readonly destroyed = new Subject<void>();
 
-	protected teamContacts?: IIdAndBrief<IContactBrief>[];
+	protected spaceContacts?: IIdAndBrief<IContactBrief>[];
 	protected contactBrief?: IContactBrief;
 
-	constructor(private readonly contactusTeamService: ContactusTeamService) {}
+	constructor(private readonly contactusSpaceService: ContactusSpaceService) {}
 
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['team']) {
@@ -40,11 +40,11 @@ export class RelatedContactComponent implements OnChanges, OnDestroy {
 			const newTeam = changes['team'].currentValue as ISpaceContext | undefined;
 			if (newTeam && prevTeam?.id !== newTeam?.id) {
 				console.log('Team changed');
-				this.contactusTeamService
+				this.contactusSpaceService
 					.watchContactBriefs(newTeam.id)
 					.pipe(takeUntil(this.destroyed))
 					.subscribe((briefs) => {
-						this.teamContacts = briefs;
+						this.spaceContacts = briefs;
 						this.setContactBrief();
 					});
 			}
@@ -63,7 +63,7 @@ export class RelatedContactComponent implements OnChanges, OnDestroy {
 	private setContactBrief(): void {
 		const relatedItemID = this.relatedItem?.id;
 		if (relatedItemID) {
-			this.contactBrief = this.teamContacts?.find(
+			this.contactBrief = this.spaceContacts?.find(
 				(c) => c.id === relatedItemID,
 			)?.brief;
 		}

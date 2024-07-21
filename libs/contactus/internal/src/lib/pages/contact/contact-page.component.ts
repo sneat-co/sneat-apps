@@ -67,7 +67,7 @@ export class ContactPageComponent extends ContactBasePage {
 		if (!this.contact?.id) {
 			return;
 		}
-		const space = this.team;
+		const space = this.space;
 		if (!space) {
 			return;
 		}
@@ -84,7 +84,7 @@ export class ContactPageComponent extends ContactBasePage {
 
 	protected saveAddress(save: ISaveEvent<IAddress>): void {
 		console.log('ContactPageComponent.saveAddress()', save);
-		const spaceID = this.team?.id,
+		const spaceID = this.space?.id,
 			contactID = this.contact?.id,
 			address = save.object;
 
@@ -119,13 +119,13 @@ export class ContactPageComponent extends ContactBasePage {
 			return;
 		}
 		const request: IContactRequest = {
-			spaceID: this.team.id,
+			spaceID: this.space.id,
 			contactID: contact.id,
 		};
 
 		this.contactsService.deleteContact(request).subscribe({
 			next: () => {
-				this.sneatNavService.goBack(`/space/${this.team?.id}/contacts`);
+				this.sneatNavService.goBack(`/space/${this.space?.id}/contacts`);
 			},
 			error: this.errorLogger.logErrorHandler('failed to delete contact'),
 		});

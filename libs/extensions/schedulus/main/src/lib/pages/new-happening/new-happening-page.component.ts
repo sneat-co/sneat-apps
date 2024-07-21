@@ -50,7 +50,7 @@ export class NewHappeningPageComponent extends CalendarBasePage {
 		console.log('date', this.date);
 
 		const type = window.history.state.type as HappeningType;
-		if (type && this.team && !this.happening) {
+		if (type && this.space && !this.happening) {
 			this.createHappeningContext(type);
 		}
 		route.queryParamMap.pipe(takeUntil(this.destroyed$), first()).subscribe({
@@ -64,7 +64,7 @@ export class NewHappeningPageComponent extends CalendarBasePage {
 					console.warn('unknown happening type passed in URL: type=' + type);
 					return;
 				}
-				if (this.team && !this.happening) {
+				if (this.space && !this.happening) {
 					this.createHappeningContext(type);
 				}
 				if (!this.wd) {
@@ -83,7 +83,7 @@ export class NewHappeningPageComponent extends CalendarBasePage {
 
 	private createHappeningContext(type: HappeningType): void {
 		console.log('createHappeningContext()', type);
-		const space = this.team;
+		const space = this.space;
 		if (!space) {
 			throw new Error('!space');
 		}

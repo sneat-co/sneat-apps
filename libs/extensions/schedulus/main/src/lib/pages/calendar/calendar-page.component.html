@@ -8,11 +8,11 @@
 			📅 {{ member.brief?.title }}
 		</ion-title>
 		<ng-template #communeHeaderTitle>
-			<sneat-team-page-title
-				[team]="team"
+			<sneat-space-page-title
+				[space]="space"
 				generalTitle="Schedule"
 				icon="📅"
-				[titlesByTeamType]="{
+				[titlesBySpaceType]="{
 					family: 'Family calendar',
 					personal: 'Personal calendar'
 				}"
@@ -22,7 +22,7 @@
 			<ion-button
 				class="sneat-hide-if-width-less-638"
 				color="primary"
-				[disabled]="!team.id"
+				[disabled]="!space.id"
 				(click)="goNew('recurring')"
 				style="text-transform: none"
 			>
@@ -34,7 +34,7 @@
 			<ion-button
 				class="sneat-hide-if-width-less-638"
 				color="primary"
-				[disabled]="!team.id"
+				[disabled]="!space.id"
 				(click)="goNew('single')"
 				style="text-transform: none"
 			>
@@ -48,7 +48,7 @@
 
 <ion-content class="cardy">
 	<sneat-calendar
-		[space]="team"
+		[space]="space"
 		[tab]="tab"
 		(tabChanged)="onTabChanged($event)"
 		(dateChanged)="onDateChanged($event)"

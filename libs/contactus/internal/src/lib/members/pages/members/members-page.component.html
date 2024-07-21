@@ -3,11 +3,11 @@
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
-		<sneat-team-page-title
-			[team]="team"
+		<sneat-space-page-title
+			[space]="space"
 			generalTitle="Members"
 			icon="👪"
-			[titlesByTeamType]="{
+			[titlesBySpaceType]="{
 				family: 'Family members',
 			}"
 		/>
@@ -24,8 +24,8 @@
 				<ion-label>All</ion-label>
 			</ion-segment-button>
 			<ion-segment-button value="groups">
-				<ion-label *ngIf="team.brief?.type !== 'cohabit'">By group</ion-label>
-				<ion-label *ngIf="team.brief?.type === 'cohabit'">By room</ion-label>
+				<ion-label *ngIf="space.brief?.type !== 'cohabit'">By group</ion-label>
+				<ion-label *ngIf="space.brief?.type === 'cohabit'">By room</ion-label>
 			</ion-segment-button>
 		</ion-segment>
 	</div>
@@ -45,7 +45,7 @@
 	<!--		></sneat-members-list>-->
 	<!--	</ion-list>-->
 
-	@if (segment === "all" && teamType === "family") {
+	@if (segment === "all" && spaceType === "family") {
 		@for (group of predefinedMemberGroups; track group.id) {
 			<ion-card *ngIf="group.addLabel || group.members?.length">
 				<ion-item-divider color="light">
@@ -66,7 +66,7 @@
 					<ion-label color="medium">Loading...</ion-label>
 				</ion-item>
 				<sneat-members-list
-					[team]="team"
+					[space]="space"
 					[members]="group.members"
 					[contactsByMember]="contactsByMember"
 					[hideRoles]="[group.role, 'member']"
@@ -76,7 +76,7 @@
 	}
 
 	@if (segment === "groups") {
-		@if (teamType === "cohabit") {
+		@if (spaceType === "cohabit") {
 			@if (memberGroups) {
 				@for (group of memberGroups; track group.id) {
 					<ion-item-group>
@@ -135,22 +135,22 @@
 
 <ion-footer>
 	<ion-toolbar color="light">
-		<ion-label *ngIf="team.dbo && segment === 'all'">
+		<ion-label *ngIf="space.dbo && segment === 'all'">
 			<b>Total</b>:
 			<!--			{{ team.dto.numberOf?.members ?? 0 }}-->
 			<!--			{{ team.dto.numberOf?.members === 1 ? "member" : "members" }}-->
 		</ion-label>
-		<ion-label *ngIf="team.dbo && segment === 'groups'">
+		<ion-label *ngIf="space.dbo && segment === 'groups'">
 			<b>Total</b>:
 			<!--			{{ team.dto.numberOf?.memberGroups || 0 }}-->
 			<!--			{{ team.dto.numberOf?.memberGroups === 1 ? "group" : "groups" }}-->
 		</ion-label>
-		<ion-label *ngIf="!team.dbo">Loading...</ion-label>
+		<ion-label *ngIf="!space.dbo">Loading...</ion-label>
 		<ion-buttons slot="end">
 			<ion-button
 				size="small"
 				color="primary"
-				[disabled]="!team.brief"
+				[disabled]="!space.brief"
 				(click)="goNew()"
 				[title]="segment === 'groups' ? 'Add new group' : 'Add new member'"
 			>

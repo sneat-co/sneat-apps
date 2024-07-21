@@ -15,7 +15,7 @@ export interface IUserRecord {
 	readonly names?: IPersonNames;
 }
 
-export enum TeamMemberTypeEnum {
+export enum SpaceMemberTypeEnum {
 	creator = 'creator',
 	member = 'member',
 	pet = 'pet',
@@ -23,7 +23,7 @@ export enum TeamMemberTypeEnum {
 	staff = 'staff',
 }
 
-export type TeamMemberType = EnumAsUnionOfKeys<typeof TeamMemberTypeEnum>;
+export type SpaceMemberType = EnumAsUnionOfKeys<typeof SpaceMemberTypeEnum>;
 
 export interface IUserSpaceBrief {
 	readonly title: string;

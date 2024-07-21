@@ -26,7 +26,7 @@ import {
 	contactContextFromBrief,
 } from '@sneat/contactus-services';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
-import { TeamNavService } from '@sneat/team-services';
+import { SpaceNavService } from '@sneat/team-services';
 import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -38,8 +38,8 @@ export class NewDocumentPageComponent
 	extends AddAssetBaseComponent
 	implements OnChanges
 {
-	@Input() public override team?: ISpaceContext;
-	@Input() public override contactusTeam?: IContactusSpaceDboAndID;
+	@Input() public override space?: ISpaceContext;
+	@Input() public override contactusSpace?: IContactusSpaceDboAndID;
 
 	belongsTo: 'member' | 'commune' = 'commune';
 
@@ -65,7 +65,7 @@ export class NewDocumentPageComponent
 		params: SpaceComponentBaseParams,
 		assetService: AssetService,
 		private readonly contactService: ContactService,
-		private readonly teamNavService: TeamNavService,
+		private readonly spaceNavService: SpaceNavService,
 	) {
 		super('NewDocumentPageComponent', route, params, assetService);
 		this.trackUrl();
@@ -100,9 +100,9 @@ export class NewDocumentPageComponent
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['contactusTeam']) {
-			const space = this.team;
+			const space = this.space;
 			if (space) {
-				const contactusTeam = this.contactusTeam;
+				const contactusTeam = this.contactusSpace;
 				this.members = zipMapBriefsWithIDs(contactusTeam?.dbo?.contacts).map(
 					(contact) => contactContextFromBrief(contact, space),
 				);
@@ -136,7 +136,7 @@ export class NewDocumentPageComponent
 
 	private watchContact = (contactID: string): void => {
 		this.memberChanged.next();
-		const space = this.team;
+		const space = this.space;
 		if (!space) {
 			return;
 		}
@@ -150,7 +150,7 @@ export class NewDocumentPageComponent
 	};
 
 	public submit(): void {
-		if (!this.team) {
+		if (!this.space) {
 			return;
 		}
 		const dto: IAssetDboBase<'document', IAssetDocumentExtra> = {
@@ -170,13 +170,13 @@ export class NewDocumentPageComponent
 			},
 		};
 		const request: ICreateAssetRequest<'document', IAssetDocumentExtra> = {
-			spaceID: this.team.id,
+			spaceID: this.space.id,
 			memberID: this?.contact?.id,
 			asset: dto,
 		};
 
 		this.assetService
-			.createAsset<'document', IAssetDocumentExtra>(this.team, request)
+			.createAsset<'document', IAssetDocumentExtra>(this.space, request)
 			.subscribe({
 				next: this.onDocCreated,
 				error: (err: unknown) => {
@@ -186,11 +186,11 @@ export class NewDocumentPageComponent
 	}
 
 	private onDocCreated = (doc: IAssetDocumentContext): void => {
-		const space = this.team;
+		const space = this.space;
 		if (!space) {
 			return;
 		}
-		this.teamNavService
+		this.spaceNavService
 			.navigateForwardToSpacePage(space, 'document/' + doc.id)
 			.catch(
 				this.errorLogger.logErrorHandler('Failed to navigate to document page'),

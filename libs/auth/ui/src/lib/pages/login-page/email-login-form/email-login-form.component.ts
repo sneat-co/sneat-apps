@@ -43,15 +43,15 @@ import {
 	imports: [CommonModule, IonicModule, FormsModule],
 })
 export class EmailLoginFormComponent {
-	public sign: 'in' | 'up' = 'up'; // TODO: document here what 'in' & 'up' means
-	public email = '';
-	public password = '';
-	public firstName = '';
-	public lastName = '';
-	public teamTitle = '';
-	public wrongPassword = false;
+	protected sign: 'in' | 'up' = 'up'; // TODO: document here what 'in' & 'up' means
+	protected email = '';
+	protected password = '';
+	protected firstName = '';
+	protected lastName = '';
+	protected spaceTitle = '';
+	protected wrongPassword = false;
 
-	signingWith?: EmailFormSigningWith;
+	protected signingWith?: EmailFormSigningWith;
 
 	@Output() readonly signingWithChange = new EventEmitter<
 		EmailFormSigningWith | undefined
@@ -59,7 +59,7 @@ export class EmailLoginFormComponent {
 	@Output() readonly loggedIn = new EventEmitter<UserCredential>();
 
 	@ViewChild('emailInput', { static: true }) emailInput?: IonInput;
-	@ViewChild('teamTitleInput', { static: false }) teamTitleInput?: IonInput;
+	@ViewChild('teamTitleInput', { static: false }) spaceTitleInput?: IonInput;
 
 	public readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
 
@@ -89,6 +89,7 @@ export class EmailLoginFormComponent {
 	public getFirebaseAuth(): Auth {
 		return this.afAuth as unknown as Auth; // TODO: pending https://github.com/angular/angularfire/pull/3402
 	}
+
 	public async signUp(): Promise<void> {
 		if (!this.firstName) {
 			// this.toaster.showToast('Full name is required');
@@ -111,11 +112,11 @@ export class EmailLoginFormComponent {
 			alert('Last name is a required field');
 			return;
 		}
-		this.teamTitle = this.teamTitle.trim();
-		const spaceTitle = this.teamTitle;
-		if (this.appInfo.requiredTeamType && !spaceTitle) {
+		this.spaceTitle = this.spaceTitle.trim();
+		const spaceTitle = this.spaceTitle;
+		if (this.appInfo.requiredSpaceType && !spaceTitle) {
 			alert('Company title is a required field');
-			this.setFocusToTeamTitle();
+			this.setFocusToSpaceTitle();
 			return;
 		}
 		localStorage.setItem('emailForSignIn', email);
@@ -140,9 +141,9 @@ export class EmailLoginFormComponent {
 						email,
 						ianaTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 						names: { firstName, lastName },
-						team: this.appInfo.requiredTeamType
+						space: this.appInfo.requiredSpaceType
 							? {
-									type: this.appInfo.requiredTeamType,
+									type: this.appInfo.requiredSpaceType,
 									title: spaceTitle,
 								}
 							: undefined,
@@ -323,7 +324,7 @@ export class EmailLoginFormComponent {
 		this.setFocusToInput(this.emailInput);
 	}
 
-	private setFocusToTeamTitle(): void {
-		this.setFocusToInput(this.teamTitleInput);
+	private setFocusToSpaceTitle(): void {
+		this.setFocusToInput(this.spaceTitleInput);
 	}
 }

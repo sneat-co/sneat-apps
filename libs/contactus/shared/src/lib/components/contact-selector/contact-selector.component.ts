@@ -25,7 +25,7 @@ import {
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	ContactService,
-	ContactusTeamService,
+	ContactusSpaceService,
 } from '@sneat/contactus-services';
 import { ISpaceContext } from '@sneat/team-models';
 import { map, Subject, Subscription } from 'rxjs';
@@ -38,7 +38,7 @@ import {
 } from './contact-selector.service';
 
 export interface IContactSelectorProps {
-	readonly team: ISpaceContext;
+	readonly space: ISpaceContext;
 	readonly contactRole?: ContactRole;
 	readonly contactType?: ContactType;
 	readonly parentType?: ContactType;
@@ -126,7 +126,7 @@ export class ContactSelectorComponent
 		@Inject(CONTACT_ROLES_BY_TYPE)
 		private readonly contactRolesByType: ContactRolesByType,
 		private readonly contactService: ContactService,
-		private readonly contactusTeamService: ContactusTeamService,
+		private readonly contactusSpaceService: ContactusSpaceService,
 	) {
 		super(errorLogger, modalController);
 	}
@@ -161,7 +161,7 @@ export class ContactSelectorComponent
 
 	private watchContactBriefs(): void {
 		const space = this.space;
-		this.contactBriefsSub = this.contactusTeamService
+		this.contactBriefsSub = this.contactusSpaceService
 			.watchContactBriefs(this.space.id)
 			.pipe(map((contacts) => contacts.map((c) => ({ ...c, space }))))
 			.subscribe((contacts) => {
@@ -271,7 +271,7 @@ export class ContactSelectorComponent
 	}
 
 	protected onParentContactCreated(contact: IContactContext): void {
-		const parentContact = { ...contact, brief: contact.dbo, team: this.space };
+		const parentContact = { ...contact, brief: contact.dbo, space: this.space };
 		this.parentItems?.push(this.getParentItem(parentContact));
 		this.onParentContactChanged(parentContact);
 	}

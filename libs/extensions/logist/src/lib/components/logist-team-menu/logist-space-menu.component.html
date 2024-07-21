@@ -1,0 +1,9 @@
+<ion-list>
+	<ion-item [routerLink]="spacePageUrl('')">
+		<ion-label style="font-weight: bold">{{
+			space.brief?.title || "Company"
+		}}</ion-label>
+	</ion-item>
+	<sneat-logist-space-menu-items [space]="space" />
+	<sneat-auth-menu-item />
+</ion-list>

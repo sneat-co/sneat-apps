@@ -11,13 +11,13 @@ import { ICreateAssetRequest } from '../services';
 
 @Component({ template: '' })
 export abstract class AddAssetBaseComponent extends SneatBaseComponent {
-	@Input({ required: true }) team?: ISpaceContext;
+	@Input({ required: true }) space?: ISpaceContext;
 
 	public static readonly metadata = {
 		inputs: ['team'],
 	};
 
-	public contactusTeam?: IContactusSpaceDboAndID;
+	public contactusSpace?: IContactusSpaceDboAndID;
 	public country?: string;
 
 	public isSubmitting = false;
@@ -29,37 +29,40 @@ export abstract class AddAssetBaseComponent extends SneatBaseComponent {
 	protected constructor(
 		@Inject(new InjectionToken('className')) className: string,
 		protected readonly route: ActivatedRoute,
-		protected teamParams: SpaceComponentBaseParams,
+		protected spaceParams: SpaceComponentBaseParams,
 		protected readonly assetService: AssetService,
 	) {
-		super(className, teamParams.errorLogger);
+		super(className, spaceParams.errorLogger);
 	}
 
 	protected createAssetAndGoToAssetPage<
 		ExtraType extends AssetExtraType,
 		Extra extends IAssetExtra,
-	>(request: ICreateAssetRequest<ExtraType, Extra>, team: ISpaceContext): void {
-		if (!this.team) {
+	>(
+		request: ICreateAssetRequest<ExtraType, Extra>,
+		space: ISpaceContext,
+	): void {
+		if (!this.space) {
 			throw new Error('no team context');
 		}
 		this.assetService
-			.createAsset<ExtraType, Extra>(this.team, request)
+			.createAsset<ExtraType, Extra>(this.space, request)
 			.subscribe({
 				next: (asset) => {
-					this.teamParams.teamNavService
-						.navigateForwardToSpacePage(team, 'asset/' + asset.id, {
+					this.spaceParams.spaceNavService
+						.navigateForwardToSpacePage(space, 'asset/' + asset.id, {
 							replaceUrl: true,
-							state: { asset, team },
+							state: { asset, space },
 						})
 						.catch(
-							this.teamParams.errorLogger.logErrorHandler(
+							this.spaceParams.errorLogger.logErrorHandler(
 								`failed to navigate to team page`,
 							),
 						);
 				},
 				error: (err) => {
 					this.isSubmitting = false;
-					this.teamParams.errorLogger.logError(
+					this.spaceParams.errorLogger.logError(
 						err,
 						'Failed to create a new asset',
 					);

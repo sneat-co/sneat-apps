@@ -28,7 +28,7 @@ import {
 	templateUrl: './contact-input.component.html',
 })
 export class ContactInputComponent implements OnChanges {
-	@Input({ required: true }) team?: ISpaceContext;
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() disabled?: boolean;
 	@Input() canChangeContact = true;
 	@Input() canReset = false;
@@ -113,7 +113,7 @@ export class ContactInputComponent implements OnChanges {
 	}
 
 	get contactLink(): string {
-		return `/company/${this.team?.type}/${this.team?.id}/contact/${this.contact?.id}`;
+		return `/company/${this.space?.type}/${this.space?.id}/contact/${this.contact?.id}`;
 	}
 
 	reset(event: Event): void {
@@ -130,7 +130,7 @@ export class ContactInputComponent implements OnChanges {
 		if (!this.canChangeContact || this.readonly) {
 			return;
 		}
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError(
 				'ContactInputComponent.openContactSelector(): team is required',
 				undefined,
@@ -139,7 +139,7 @@ export class ContactInputComponent implements OnChanges {
 		}
 		const selectorOptions: IContactSelectorOptions = {
 			componentProps: {
-				team: this.team,
+				space: this.space,
 				parentType: this.parentType,
 				parentRole: this.parentRole,
 				contactRole: this.contactRole,

@@ -5,29 +5,29 @@ import { ISpaceDbo } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRecord } from '@sneat/data';
 import { SneatUserService } from '@sneat/auth-core';
-import { TeamNavService, SpaceService } from '@sneat/team-services';
+import { SpaceNavService } from '@sneat/team-services';
 import { RetroItemType } from '@sneat/scrumspace/scrummodels';
 
 @Component({
-	selector: 'sneat-team-retrospectives',
+	selector: 'sneat-retrospectives',
 	templateUrl: './retrospectives.component.html',
 	standalone: true,
 	imports: [CommonModule, IonicModule],
 })
 export class RetrospectivesComponent {
-	@Input() public team?: IRecord<ISpaceDbo>;
+	@Input() public space?: IRecord<ISpaceDbo>;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly teamService: SpaceService,
+		// private readonly spaceService: SpaceService,
 		private readonly userService: SneatUserService, // TODO: replace with user context service
 		private readonly navController: NavController,
-		public readonly navService: TeamNavService,
+		public readonly navService: SpaceNavService,
 	) {}
 
 	navigateToCurrentRetro(): void {
 		console.log('navigateToCurrentRetro()');
-		if (!this.team) {
+		if (!this.space) {
 			this.errorLogger.logError(
 				'Can not navigate to retro without having team context',
 			);
@@ -50,7 +50,7 @@ export class RetrospectivesComponent {
 		const userID = this.userService.currentUserID;
 		return (
 			(userID
-				? this.team?.dbo?.upcomingRetro?.itemsByUserAndType?.[userID]?.[
+				? this.space?.dbo?.upcomingRetro?.itemsByUserAndType?.[userID]?.[
 						itemType
 					]
 				: 0) || 0
