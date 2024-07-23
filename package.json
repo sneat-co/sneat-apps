@@ -11,7 +11,7 @@
 		"build": "nx build",
 		"build:ci": "nx build",
 		"test": "nx test",
-		"prepare": "husky install",
+		"prepare": "husky",
 		"firebase-emulators:dev": "cross-env firebase emulators:start --only auth,firestore --config ../sneat-go-backend/firebase/firebase.json",
 		"firebase-emulators:ci": "cross-env firebase emulators:start --only auth,firestore --config ../../_actions/sneat-co/sneat-go-backend/main/firebase/firebase-ci.json",
 		"cy:serve:ci": "cross-env nx serve sneat-app --configuration=e2e-ci --port=4205",
