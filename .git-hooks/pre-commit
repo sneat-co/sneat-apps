@@ -1,7 +1,4 @@
 #!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-exit 10
 
 local_branch="$(git rev-parse --abbrev-ref HEAD)"
 valid_prefixes="feature|fix|perf|chore|refactor|renovate"
