@@ -5,6 +5,7 @@ valid_prefixes="feature|fix|perf|chore|refactor|renovate"
 valid_branch_regex="^main|($valid_prefixes)\/[@a-zA-Z0-9._-]+$"
 
 # shellcheck disable=SC2039
+# shellcheck disable=SC3010
 if [[ ! $local_branch =~ $valid_branch_regex ]]
 then
     RED='\033[0;31m'
