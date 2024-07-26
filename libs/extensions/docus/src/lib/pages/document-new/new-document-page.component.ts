@@ -1,11 +1,20 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ISelectItem } from '@sneat/components';
+import { IonicModule } from '@ionic/angular';
+import {
+	CountrySelectorComponent,
+	ISelectItem,
+	SelectFromListModule,
+	SneatPipesModule,
+} from '@sneat/components';
 import {
 	IContactBrief,
 	IContactContext,
 	IContactusSpaceDboAndID,
 } from '@sneat/contactus-core';
+import { MembersSelectorModule } from '@sneat/contactus-shared';
 import { IIdAndBrief } from '@sneat/core';
 import {
 	IDocTypeStandardFields,
@@ -33,6 +42,16 @@ import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 	selector: 'sneat-new-document',
 	templateUrl: './new-document-page.component.html',
 	providers: [SpaceComponentBaseParams],
+	standalone: true,
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		CountrySelectorComponent,
+		SneatPipesModule,
+		SelectFromListModule,
+		MembersSelectorModule,
+	],
 })
 export class NewDocumentPageComponent
 	extends AddAssetBaseComponent
