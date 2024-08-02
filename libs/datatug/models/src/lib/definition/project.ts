@@ -52,12 +52,8 @@ export interface IProjItemsFolder {
 	items?: IProjItemBrief[];
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IProjBoard extends IProjItemBrief {
-	//
-}
+export type IProjBoard = IProjItemBrief;
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IProjDbModelBrief extends IProjItemBrief {
 	numberOf?: IProjDbModelNumbers;
 }
@@ -68,11 +64,9 @@ export interface IProjDbModelNumbers {
 	views?: number;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IProjEntity extends IProjItemBrief {}
+export type IProjEntity = IProjItemBrief;
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IProjEnv extends IProjItemBrief {}
+export type IProjEnv = IProjItemBrief;
 
 export interface IProjectApp {
 	id: string;

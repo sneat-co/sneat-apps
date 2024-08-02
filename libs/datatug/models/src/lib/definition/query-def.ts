@@ -9,8 +9,8 @@ export enum QueryType {
 	SQL = 'SQL',
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IQueryItem extends IProjItemBrief {}
+ 
+export type IQueryItem = IProjItemBrief;
 
 export interface IQueryFolder extends IQueryItem {
 	folders?: IQueryFolder[];
