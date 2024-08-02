@@ -1,7 +1,10 @@
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const baseConfig = require('../../../../eslint.config.js');
+
 const {
 	sneatLibConfig,
 	compatConfig,
+	// eslint-disable-next-line @typescript-eslint/no-require-imports
 } = require('../../../../eslint.lib.config.js');
 
 module.exports = [
