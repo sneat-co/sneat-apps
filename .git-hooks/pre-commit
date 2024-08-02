@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo "Running pre-commit hook from .git-hooks/pre-commit..."
+
 local_branch="$(git rev-parse --abbrev-ref HEAD)"
 valid_prefixes="feature|fix|perf|chore|refactor|renovate"
 valid_branch_regex="^main|($valid_prefixes)\/[@a-zA-Z0-9._-]+$"
