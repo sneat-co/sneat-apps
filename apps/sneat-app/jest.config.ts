@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'sneat-app',
 	preset: '../../jest.preset.js',
