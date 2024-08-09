@@ -21,6 +21,8 @@
 		"cy:test:prod": "cross-env nx e2e sneat-app --configuration=production --browser chrome --baseUrl=http://localhost:4205",
 		"cy:open:dev": "cross-env nx e2e sneat-app --configuration=development --watch --browser chrome",
 		"cy:open:prod": "cross-env nx e2e sneat-app --configuration=production --watch --browser chrome",
+		"pw:pretest": "tsc --incremental -p tests/tsconfig.json",
+		"pw:test": "playwright test tests -c tests-out",
 		"serve:help": "serve --help"
 	},
 	"private": true,
@@ -82,6 +84,7 @@
 		"@nx/jest": "19.5.7",
 		"@nx/js": "19.5.7",
 		"@nx/workspace": "19.5.7",
+		"@playwright/test": "^1.46.0",
 		"@schematics/angular": "18.1.4",
 		"@swc-node/register": "1.10.9",
 		"@swc/core": "1.7.6",

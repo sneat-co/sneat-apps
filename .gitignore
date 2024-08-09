@@ -48,3 +48,7 @@ migrations.json
 
 **/*.log
 **/cypress/downloads
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
