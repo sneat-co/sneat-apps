@@ -2,7 +2,7 @@
 	"name": "sneat",
 	"version": "0.0.0",
 	"license": "MIT",
-	"packageManager": "pnpm@9.7.0",
+	"packageManager": "pnpm@9.7.1",
 	"scripts": {
 		"nx": "nx",
 		"ng": "nx",
@@ -107,7 +107,7 @@
 		"jest-preset-angular": "14.2.2",
 		"jsonc-eslint-parser": "2.4.0",
 		"lint-staged": "15.2.9",
-		"ng-packagr": "18.1.0",
+		"ng-packagr": "18.2.0",
 		"nx": "19.5.7",
 		"postcss": "8.4.41",
 		"postcss-import": "16.1.0",
