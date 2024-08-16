@@ -148,6 +148,7 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 	// }
 
 	protected onUserIdChanged(): void {
+		console.log();
 		if (!this.currentUserId) {
 			this.subs.unsubscribe();
 			if (this.space && this.space.dbo) {
@@ -165,7 +166,7 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 		navOptions?: NavigationOptions,
 	) {
 		if (!this.space) {
-			return Promise.reject('no team context');
+			return Promise.reject('no space context');
 		}
 		return this.spaceParams.spaceNavService.navigateForwardToSpacePage(
 			this.space,
@@ -176,7 +177,7 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 
 	protected onSpaceIdChanged(): void {
 		this.console.log(
-			`${this.className}: TeamBaseComponent.onTeamIdChanged()`,
+			`${this.className}: SpaceBaseComponent.onSpaceIdChanged()`,
 			this.className,
 			this.space?.id,
 		);
@@ -207,9 +208,11 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 	private trackSpaceIdFromRouteParams(paramMap$: Observable<ParamMap>): void {
 		trackSpaceIdAndTypeFromRouteParameter(paramMap$)
 			// .pipe(
-			// // tap(v => console.log('trackSpaceIdFromRouteParams 1', v)),
-			// // distinctUntilChanged((previous, current) => previous?.id === current?.id),
-			// // tap(v => console.log('trackSpaceIdFromRouteParams 3', v)),
+			// 	tap((v) => console.log('trackSpaceIdFromRouteParams 1', v)),
+			// 	distinctUntilChanged(
+			// 		(previous, current) => previous?.id === current?.id,
+			// 	),
+			// 	tap((v) => console.log('trackSpaceIdFromRouteParams 3', v)),
 			// )
 			.subscribe({
 				next: this.onSpaceIdChangedInUrl,
@@ -217,19 +220,24 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 			});
 	}
 
-	private readonly onSpaceIdChangedInUrl = (team?: ISpaceContext): void => {
-		// console.log(`${this.className}.onSpaceIdChangedInUrl()`, this.teamContext?.id, ' => ', team);
-		const prevTeam = this.spaceContext;
+	private readonly onSpaceIdChangedInUrl = (space?: ISpaceContext): void => {
+		console.log(
+			`${this.className}.onSpaceIdChangedInUrl()`,
+			this.spaceContext?.id,
+			' => ',
+			space,
+		);
+		const prevSpace = this.spaceContext;
 		if (
-			team === prevTeam ||
-			(team?.id === prevTeam?.id && team?.type === prevTeam?.type)
+			space === prevSpace ||
+			(space?.id === prevSpace?.id && space?.type === prevSpace?.type)
 		) {
 			return;
 		}
-		if (team && prevTeam?.id === team?.id) {
-			team = { ...prevTeam, ...team };
+		if (space && prevSpace?.id === space?.id) {
+			space = { ...prevSpace, ...space };
 		}
-		this.setNewSpaceContext(team);
+		this.setNewSpaceContext(space);
 	};
 
 	private subscribeForSpaceChanges(space: ISpaceContext): void {
@@ -292,7 +300,7 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 
 	private setNewSpaceContext(spaceContext?: ISpaceContext): void {
 		this.console.log(
-			`${this.className}.setNewTeamContext(id=${spaceContext?.id}), previous id=${this.spaceContext?.id}`,
+			`${this.className}.setNewSpaceContext(id=${spaceContext?.id}), previous id=${this.spaceContext?.id}`,
 			spaceContext,
 		);
 		if (!spaceContext?.type && this.spaceContext?.type) {

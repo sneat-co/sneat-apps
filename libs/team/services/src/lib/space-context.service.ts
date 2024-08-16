@@ -28,9 +28,9 @@ export function trackSpaceIdAndTypeFromRouteParameter(
 ): Observable<ISpaceContext | undefined> {
 	return paramMap$.pipe(
 		map((params) => {
-			const id = params.get('teamID'),
-				type = params.get('teamType') as SpaceType;
-			console.log('trackTeamIdAndTypeFromRouteParameter', params, id, type);
+			const id = params.get('spaceID'),
+				type = params.get('spaceType') as SpaceType;
+			// console.log('trackSpaceIdAndTypeFromRouteParameter', params, id, type);
 			const spaceContext: ISpaceContext | undefined = id
 				? { id: id, type: type || undefined }
 				: undefined;

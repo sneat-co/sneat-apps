@@ -1,0 +1,93 @@
+<ion-card>
+	<ion-item color="light" lines="full">
+		<ion-label color="medium"
+			><h2 style="font-weight: bold">Authentication</h2></ion-label
+		>
+	</ion-item>
+	<!--	<ion-accordion-group [value]="integrations">-->
+	<!--		<ion-accordion value="messaging-apps">-->
+	<!--			<ion-item slot="header" color="light">-->
+	<!--				<ion-label>First Accordion</ion-label>-->
+	<!--			</ion-item>-->
+	<!--			<div class="ion-padding" slot="content">First Content</div>-->
+	<!--		</ion-accordion>-->
+	<!--		<ion-accordion value="quick-logins">-->
+	<!--			<ion-item slot="header" color="light">-->
+	<!--				<ion-label>Second Accordion</ion-label>-->
+	<!--			</ion-item>-->
+	<!--			<div class="ion-padding" slot="content">Second Content</div>-->
+	<!--		</ion-accordion>-->
+	<!--	</ion-accordion-group>-->
+	<ion-item>
+		<ion-segment [(ngModel)]="integrations" style="margin-bottom: 0.5em">
+			<ion-segment-button value="messaging-apps"
+				>Messaging Apps</ion-segment-button
+			>
+			<ion-segment-button value="quick-logins">Quick logins</ion-segment-button>
+		</ion-segment>
+	</ion-item>
+	@switch (integrations) {
+		@case ("quick-logins") {
+			<ion-item>
+				<ion-label color="medium">
+					<h3>Google</h3>
+					<p>Not implemented yet</p>
+				</ion-label>
+			</ion-item>
+			<ion-item>
+				<ion-label color="medium">
+					<h3>Microsoft</h3>
+					<p>Not implemented yet</p>
+				</ion-label>
+			</ion-item>
+		}
+		@case ("messaging-apps") {
+			<ion-item>
+				<ion-icon slot="start" name="paper-plane"></ion-icon>
+				<ion-label>
+					<h3 style="font-weight: bold">Telegram</h3>
+					<p>Not connected yet.</p>
+				</ion-label>
+				<ion-buttons slot="end">
+					<sneat-login-with-telegram telegramLogin="AlextDevBot" />
+					<!--			<ion-button color="danger" title="I have no Telegram">-->
+					<!--				<ion-icon name="close-circle-outline" slot="start"></ion-icon>-->
+					<!--			</ion-button>-->
+				</ion-buttons>
+			</ion-item>
+			<ion-item>
+				<ion-icon slot="start" name="logo-whatsapp"></ion-icon>
+				<ion-label color="medium">
+					<h3 style="font-weight: bold">WhatsApp</h3>
+					<p>Not implemented yet - coming soon!</p>
+				</ion-label>
+				<!--		<ion-buttons slot="end">-->
+				<!--			<ion-button color="danger">-->
+				<!--				<ion-icon name="close-circle-outline" slot="start"></ion-icon>-->
+				<!--				<ion-label>I have no WhatsApp</ion-label>-->
+				<!--			</ion-button>-->
+				<!--		</ion-buttons>-->
+			</ion-item>
+			<ion-item>
+				<ion-icon slot="start" name="logo-whatsapp"></ion-icon>
+				<!-- TODO: place Viber logo here -->
+				<ion-label color="medium">
+					<h3 style="font-weight: bold">Viber</h3>
+					<p>Not implemented yet - coming soon!</p>
+				</ion-label>
+			</ion-item>
+			<ion-card-content>
+				<p>
+					You'll get much more out of Sneat.app if you integrate it with
+					messaging apps you use. Benefits:
+				</p>
+				<ul>
+					<li>Easily add contacts</li>
+					<li>Get reminders</li>
+					<li>Add todo/to_buy from your messenger</li>
+					<li>etc.</li>
+				</ul>
+			</ion-card-content>
+		}
+	}
+</ion-card>

@@ -1,7 +1,7 @@
 <ion-card>
 	<ion-item>
 		<ion-label>
-			<ion-card-title color="medium">Teams</ion-card-title>
+			<ion-card-title color="medium">Spaces</ion-card-title>
 		</ion-label>
 		<ion-buttons slot="end" (click)="startAddingSpace()">
 			<ion-button color="primary" *ngIf="!showAdd">
@@ -15,9 +15,8 @@
 			<ion-spinner name="" slot="start" color="medium" />
 			<ion-buttons slot="start">
 				<ion-button disabled="disabled" style="text-transform: none"
-				>{{ loadingState }}...
-				</ion-button
-				>
+					>{{ loadingState }}...
+				</ion-button>
 			</ion-buttons>
 			<ion-skeleton-text animated />
 		</ion-item>
@@ -35,12 +34,12 @@
 				</ion-item>
 				<ion-item-options side="start">
 					<ion-item-option color="danger" (click)="leaveSpace(space)"
-					>Leave team
+						>Leave team
 					</ion-item-option>
 				</ion-item-options>
 				<ion-item-options side="end">
 					<ion-item-option color="danger" (click)="leaveSpace(space)"
-					>Leave team
+						>Leave team
 					</ion-item-option>
 				</ion-item-options>
 			</ion-item-sliding>

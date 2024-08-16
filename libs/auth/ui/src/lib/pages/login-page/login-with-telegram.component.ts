@@ -46,7 +46,7 @@ let authWithTelegramService: SneatAuthWithTelegramService;
 				<script
 					async
 					src="https://telegram.org/js/telegram-widget.js?22"
-					data-telegram-login="SneatBot"
+					data-telegram-login="AlextDevBot"
 					data-size="large"
 					data-onauth="onTelegramAuth(user)"
 					data-request-access="write"
