@@ -21,8 +21,10 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
 		<script>
+			const onTelegramScripLoaded = [];
+
 			function getQueryParam(name) {
-				const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+				const regex = new RegExp("[#?&]" + name + "(=([^&#]*)|&|#|$)"),
 					results = regex.exec(window.location.href);
 				if (!results) return null;
 				if (!results[2]) return "";
@@ -34,22 +36,28 @@
 				console.log("Telegram parameter: ", tgParam);
 			}
 			if (tgParam === "menu") {
+				// alert(window.location.href);
 				const head = document.getElementsByTagName("head")[0];
+
 				const script = document.createElement("script");
 				script.type = "text/javascript";
 				script.src = "https://telegram.org/js/telegram-web-app.js"; // replace with your script file path
 				script.async = true;
 				script.onload = function () {
-					// noinspection JSUnresolvedReference
-					console.log(
-						"Telegram script loaded.",
-						window.Telegram.WebApp.initDataUnsafe,
-					);
-					// noinspection JSUnresolvedReference
-					window.Telegram.WebApp.ready();
-					// noinspection JSUnresolvedReference
-					alert(window.Telegram.WebApp.initData);
-					// alert('Hello '  + window.Telegram.WebApp.initDataUnsafe.user.first_name);
+					try {
+						window.Telegram.WebApp.ready();
+						onTelegramScripLoaded.forEach(function (callback, index) {
+							try {
+								callback();
+							} catch (e) {
+								alert(
+									`Error in onTelegramScripLoaded[${index}] callback: ${e}`,
+								);
+							}
+						});
+					} catch (e) {
+						alert("Error in onTelegramScripLoaded: " + e);
+					}
 				};
 				head.appendChild(script);
 			}
