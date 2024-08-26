@@ -20,11 +20,11 @@ export function getAngularFireProviders(firebaseConfig: IFirebaseConfig) {
 			const { emulator } = firebaseConfig;
 			if (firebaseConfig.useEmulators && emulator) {
 				console.log(
-					`using firebase firestore emulator on ${emulator.host}:${emulator.firestorePort}`,
+					`using firebase firestore emulator on ${emulator.firestoreHost}:${emulator.firestorePort}`,
 				);
 				connectFirestoreEmulator(
 					firestore,
-					emulator.host,
+					emulator.firestoreHost || 'localhost',
 					emulator.firestorePort,
 				);
 			}
@@ -39,7 +39,7 @@ export function getAngularFireProviders(firebaseConfig: IFirebaseConfig) {
 				// noinspection HttpUrlsUsage
 				connectAuthEmulator(
 					auth,
-					`${emulator.authPort === 443 ? 'https' : 'http'}://${emulator.host}:${emulator.authPort}`,
+					`${emulator.authPort === 443 ? 'https' : 'http'}://${emulator.authHost || 'localhost'}:${emulator.authPort}`,
 				);
 			}
 			return auth;

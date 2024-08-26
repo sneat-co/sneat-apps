@@ -25,7 +25,7 @@ import { initializeApp } from 'firebase/app';
 const FIREBASE_CONFIG: IFirebaseConfig = {
 	useEmulators: true,
 	emulator: {
-		host: '127.0.0.1',
+		firestoreHost: '127.0.0.1',
 		authPort: 9099,
 		firestorePort: 8080,
 	},
@@ -44,7 +44,7 @@ if (!emulatorConfig) {
 	throw new Error('Firebase config has no emulator configuration');
 }
 // noinspection HttpUrlsUsage
-const AUTH_ENDPOINT = `http://${emulatorConfig.host}:${emulatorConfig.authPort}`;
+const AUTH_ENDPOINT = `http://${emulatorConfig.firestoreHost}:${emulatorConfig.authPort}`;
 const TEST_USER_EMAIL = 'test@gmail.com';
 const TEST_USER_PASS = 'password';
 
