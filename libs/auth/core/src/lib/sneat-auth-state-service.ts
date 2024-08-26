@@ -14,6 +14,7 @@ import {
 	UserInfo,
 	signInWithEmailLink,
 	signInWithPopup,
+	signInWithCustomToken,
 } from '@angular/fire/auth';
 
 import {
@@ -24,7 +25,7 @@ import {
 } from 'firebase/auth';
 
 // TODO: fix & remove this eslint hint @nrwl/nx/enforce-module-boundaries
-// eslint-disable-next-line @nx/enforce-module-boundaries
+ 
 import { newRandomId } from '@sneat/random';
 
 export enum AuthStatuses {
@@ -136,6 +137,10 @@ export class SneatAuthStateService {
 
 	public signOut(): Promise<void> {
 		return this.fbAuth.signOut();
+	}
+
+	public signInWithToken(token: string): Promise<UserCredential> {
+		return signInWithCustomToken(this.fbAuth, token);
 	}
 
 	public signInWithEmailLink(email: string): Observable<UserCredential> {

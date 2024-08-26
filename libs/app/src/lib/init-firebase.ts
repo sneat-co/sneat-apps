@@ -39,7 +39,7 @@ export function getAngularFireProviders(firebaseConfig: IFirebaseConfig) {
 				// noinspection HttpUrlsUsage
 				connectAuthEmulator(
 					auth,
-					`http://${emulator.host}:${emulator.authPort}`,
+					`${emulator.authPort === 443 ? 'https' : 'http'}://${emulator.host}:${emulator.authPort}`,
 				);
 			}
 			return auth;

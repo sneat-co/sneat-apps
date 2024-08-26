@@ -57,7 +57,7 @@ const appInfo: IAppInfo = {
 		{
 			provide: SneatApiBaseUrl,
 			useValue: environment.useEmulators
-				? 'http://localhost:4300/v0/'
+				? 'https://alext.ngrok.dev/v0/' //'http://localhost:4300/v0/'
 				: DefaultSneatAppApiBaseUrl,
 		},
 		{

@@ -21,50 +21,42 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
 		<script>
-			const onTelegramScripLoaded = [];
+			<!-- TODO: decouple and reuse in all apps -->
+			(function () {
+				function getQueryParam(name) {
+					const regex = new RegExp("[#?&]" + name + "(=([^&#]*)|&|#|$)"),
+						results = regex.exec(window.location.href);
+					if (!results) return null;
+					if (!results[2]) return "";
+					return decodeURIComponent(results[2].replace(/\+/g, " "));
+				}
 
-			function getQueryParam(name) {
-				const regex = new RegExp("[#?&]" + name + "(=([^&#]*)|&|#|$)"),
-					results = regex.exec(window.location.href);
-				if (!results) return null;
-				if (!results[2]) return "";
-				return decodeURIComponent(results[2].replace(/\+/g, " "));
-			}
-
-			let tgParam = getQueryParam("telegram");
-			if (tgParam) {
-				console.log("Telegram parameter: ", tgParam);
-			}
-			if (tgParam === "menu") {
-				// alert(window.location.href);
-				const head = document.getElementsByTagName("head")[0];
-
-				const script = document.createElement("script");
-				script.type = "text/javascript";
-				script.src = "https://telegram.org/js/telegram-web-app.js"; // replace with your script file path
-				script.async = true;
-				script.onload = function () {
-					try {
-						window.Telegram.WebApp.ready();
-						onTelegramScripLoaded.forEach(function (callback, index) {
-							try {
-								callback();
-							} catch (e) {
-								alert(
-									`Error in onTelegramScripLoaded[${index}] callback: ${e}`,
-								);
-							}
-						});
-					} catch (e) {
-						alert("Error in onTelegramScripLoaded: " + e);
+				try {
+					let tgParam = getQueryParam("telegram");
+					if (tgParam) {
+						console.log("Telegram parameter: ", tgParam);
 					}
-				};
-				head.appendChild(script);
-			}
+					if (tgParam === "webapp") {
+						window.onTelegramScripLoaded = []; //[() => alert('Telegram script loaded')];
+
+						const head = document.getElementsByTagName("head")[0];
+						const script = document.createElement("script");
+						script.type = "text/javascript";
+						script.async = false; // If we make it TRUE then window.onTelegramScripLoaded is NULL!
+						script.src = "https://telegram.org/js/telegram-web-app.js";
+						head.appendChild(script);
+					}
+				} catch (e) {
+					alert("Error in telegram script: " + e);
+				}
+			})();
 		</script>
 	</head>
 
 	<body>
 		<sneat-app-root></sneat-app-root>
+		<script>
+			(function () {})();
+		</script>
 	</body>
 </html>

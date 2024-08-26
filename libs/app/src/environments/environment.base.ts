@@ -13,8 +13,8 @@ const useEmulators = true;
 const firebaseConfig: IFirebaseConfig = {
 	useEmulators,
 	emulator: {
-		host: '127.0.0.1',
-		authPort: 9099,
+		host: 'local-fb-auth.sneat.ws', //'127.0.0.1',
+		authPort: 443,
 		firestorePort: 8080,
 	},
 	apiKey: 'AIzaSyAYGGhSQQ8gUcyPUcUOFW7tTSYduRD3cuw',

@@ -92,7 +92,9 @@ export class SneatApiService implements ISneatApiService, OnDestroy {
 	}
 
 	public postAsAnonymous<T>(endpoint: string, body: unknown): Observable<T> {
-		return this.httpClient.post<T>(this.baseUrl + endpoint, body, {
+		const url = this.baseUrl + endpoint;
+		// alert('postAsAnonymous(), url=' + url);
+		return this.httpClient.post<T>(url, body, {
 			headers: this.headers(),
 		});
 	}
