@@ -10,13 +10,17 @@ import { IEnvironmentConfig, IFirebaseConfig } from '../lib/environment-config';
 
 const useEmulators = true;
 
+const useSSL = window.location.hostname.endsWith('ngrok.dev');
+
+const nonSecureEmulatorHost = '127.0.0.1';
+
 const firebaseConfig: IFirebaseConfig = {
 	useEmulators,
 	emulator: {
-		authPort: 443,
-		authHost: 'local-fb-auth.sneat.ws',
-		firestorePort: 8080,
-		firestoreHost: 'local-fb-auth.sneat.ws', //'127.0.0.1',
+		authPort: useSSL ? 443 : 9099,
+		authHost: useSSL ? 'local-fb-auth.sneat.ws' : nonSecureEmulatorHost,
+		firestorePort: useSSL ? 443 : 8080,
+		firestoreHost: useSSL ? 'local-fb-auth.sneat.ws' : nonSecureEmulatorHost,
 	},
 	apiKey: 'AIzaSyAYGGhSQQ8gUcyPUcUOFW7tTSYduRD3cuw',
 	authDomain: 'sneat.app',
