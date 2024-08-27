@@ -21,8 +21,8 @@ describe('Space Setup', () => {
 		assertNewSpaceButtonIsVisible();
 
 		clickNewSpaceButton();
-		cy.wait('@createNewSpace');
-
-		assertSpacesDropdownIsVisible();
+		cy.wait('@createNewSpace').then(() => {
+			assertSpacesDropdownIsVisible();
+		});
 	});
 });
