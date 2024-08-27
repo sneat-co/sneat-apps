@@ -1,7 +1,7 @@
 import { runSignUpTest } from '../common/auth.spec';
 import {
 	assertNewSpaceButtonIsVisible,
-	assertSpacesDropdownIsVisible,
+	// assertSpacesDropdownIsVisible,
 	clickNewSpaceButton,
 } from '../common/spaces.spec';
 
