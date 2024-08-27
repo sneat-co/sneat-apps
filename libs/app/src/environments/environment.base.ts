@@ -12,7 +12,7 @@ const useEmulators = true;
 
 const useSSL = window.location.hostname.endsWith('ngrok.dev');
 
-const nonSecureEmulatorHost = '127.0.0.1';
+const nonSecureEmulatorHost = 'localhost'; // '127.0.0.1';
 
 const firebaseConfig: IFirebaseConfig = {
 	useEmulators,
@@ -20,7 +20,7 @@ const firebaseConfig: IFirebaseConfig = {
 		authPort: useSSL ? 443 : 9099,
 		authHost: useSSL ? 'local-fb-auth.sneat.ws' : nonSecureEmulatorHost,
 		firestorePort: useSSL ? 443 : 8080,
-		firestoreHost: useSSL ? 'local-fb-auth.sneat.ws' : nonSecureEmulatorHost,
+		firestoreHost: useSSL ? 'local-firestore.sneat.ws' : nonSecureEmulatorHost,
 	},
 	apiKey: 'AIzaSyAYGGhSQQ8gUcyPUcUOFW7tTSYduRD3cuw',
 	authDomain: 'sneat.app',
