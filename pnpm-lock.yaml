@@ -85,7 +85,7 @@ importers:
         version: 6.2.3
       '@types/telegram-web-app':
         specifier: ^7.8.0
-        version: 7.8.0
+        version: 7.8.1
       codemirror:
         specifier: ^6.0.1
         version: 6.0.1(@lezer/common@1.2.1)
@@ -3073,8 +3073,8 @@ packages:
   '@types/tabulator-tables@6.2.3':
     resolution: {integrity: sha512-ZeRF/WvtwFXml/4aT7kzfkHEiwbjHZdlIsjrgqcfdmpkl9GQ9XBHY6u9BblUaHX4NUiOlBeHrQKjvai6/bQH0g==}
 
-  '@types/telegram-web-app@7.8.0':
-    resolution: {integrity: sha512-9Fw012DJr136Aq61ZacqQLgFqrGdtwROWLINvgrslJZsZKNvArHzI4m83U5epjoIhe+Y97RWVh4PeYmZmP/UGA==}
+  '@types/telegram-web-app@7.8.1':
+    resolution: {integrity: sha512-AkOkwrUJd1XAeVuHDvT93kCJjpLkqetK2M4q8r8dp2LHC91fORh1lCx+RMHW8+zDyQxQ39b2X90ZGPLdhFZ3LQ==}
 
   '@types/tern@0.23.9':
     resolution: {integrity: sha512-ypzHFE/wBzh+BlH6rrBgS5I/Z7RD21pGhZ2rltb/+ZrVM1awdZwjx7hE5XfuYgHWk9uvV5HLZN3SloevCAp3Bw==}
@@ -11912,7 +11912,7 @@ snapshots:
 
   '@types/tabulator-tables@6.2.3': {}
 
-  '@types/telegram-web-app@7.8.0': {}
+  '@types/telegram-web-app@7.8.1': {}
 
   '@types/tern@0.23.9':
     dependencies:
