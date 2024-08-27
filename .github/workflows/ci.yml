@@ -70,10 +70,8 @@ jobs:
             -   name: Cache firebase emulators
                 uses: actions/cache@v4
                 with:
-                    path: ${{ github.workspace }}/emulator-cache
-                    key: ${{ runner.os }}-firebase-emulators-${{ hashFiles('emulator-cache/**') }}
-                    restore-keys: |
-                        ${{ runner.os }}-firebase-emulators-
+                    path: /home/runner/.cache/firebase/emulators
+                    key: ${{ hashFiles('/home/runner/.cache/firebase/emulators/**') }}
                 continue-on-error: true
 
             -   name: Install Firebase Tools
