@@ -12,7 +12,7 @@ const useEmulators = true;
 
 const useSSL = window.location.hostname.endsWith('ngrok.dev');
 
-const nonSecureEmulatorHost = 'localhost'; // '127.0.0.1';
+const nonSecureEmulatorHost = '127.0.0.1'; // 'localhost';
 
 const firebaseConfig: IFirebaseConfig = {
 	useEmulators,
