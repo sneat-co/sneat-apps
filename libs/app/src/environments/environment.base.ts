@@ -10,7 +10,9 @@ import { IEnvironmentConfig, IFirebaseConfig } from '../lib/environment-config';
 
 const useEmulators = true;
 
-const useSSL = window.location.hostname.endsWith('ngrok.dev');
+const useSSL =
+	window.location.hostname.endsWith('ngrok.dev') ||
+	window.location.hostname == 'local-app.sneat.ws';
 
 const nonSecureEmulatorHost = '127.0.0.1'; // 'localhost';
 

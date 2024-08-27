@@ -24,7 +24,7 @@ export class TelegramMiniAppHomePageComponent implements AfterViewInit {
 		this.sneatApiService
 			.postAsAnonymous<{
 				token: string;
-			}>('auth/signing-from-telegram-miniapp', telegramWebApp.initData)
+			}>('auth/login-from-telegram-miniapp', telegramWebApp.initData)
 			.subscribe({
 				next: (response) => {
 					// alert('Token: ' + response.token);

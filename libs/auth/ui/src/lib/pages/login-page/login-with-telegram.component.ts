@@ -9,6 +9,8 @@ import {
 import { Input } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { SneatApiService } from '@sneat/api';
+import { SneatAuthStateService } from '@sneat/auth-core';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 interface ITelegramAuthData {
 	id: number;
@@ -22,13 +24,31 @@ interface ITelegramAuthData {
 
 @Injectable()
 export class SneatAuthWithTelegramService {
-	constructor(private readonly apiService: SneatApiService) {}
+	constructor(
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		private readonly apiService: SneatApiService,
+		private readonly authService: SneatAuthStateService,
+	) {}
 
 	public loginWithTelegram(tgAuthData: ITelegramAuthData): void {
 		this.apiService
-			.postAsAnonymous('auth/login-with-telegram', tgAuthData)
+			.postAsAnonymous<{
+				token: string;
+			}>('auth/login-from-telegram-widget', tgAuthData)
 			.subscribe({
-				next: () => console.log('signInWithTelegram() success'),
+				next: (response) => {
+					console.log('loginWithTelegram() response:', response);
+					this.authService
+						.signInWithToken(response.token)
+						.then(() => {
+							console.log('loginWithTelegram() signed in');
+						})
+						.catch(
+							this.errorLogger.logErrorHandler(
+								'Failed to sign-in with custom token',
+							),
+						);
+				},
 				error: (err) => console.error('signInWithTelegram() error:', err),
 			});
 	}
@@ -97,15 +117,6 @@ window.onTelegramAuth = (tgAuthData: ITelegramAuthData) => {
 	// After a successful authorization, the widget returns data
 	// by calling the callback function data-onauth with the JSON-object containing
 	// id, first_name, last_name, username, photo_url, auth_date and hash fields.
-	console.log(
-		'window.onTelegramAuth(): Logged in as ' +
-			tgAuthData.first_name +
-			' ' +
-			tgAuthData.last_name +
-			' (' +
-			tgAuthData.id +
-			(tgAuthData.username ? ', @' + tgAuthData.username : '') +
-			')',
-	);
+	console.log('window.onTelegramAuth(): Logged in', tgAuthData);
 	authWithTelegramService.loginWithTelegram(tgAuthData);
 };

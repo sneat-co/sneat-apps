@@ -27,6 +27,11 @@ export function getAngularFireProviders(firebaseConfig: IFirebaseConfig) {
 					emulator.firestoreHost || 'localhost',
 					emulator.firestorePort,
 				);
+				if (emulator.firestorePort === 443) {
+					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+					// @ts-expect-error
+					firestore['_settings']['ssl'] = true;
+				}
 			}
 			return firestore;
 		}),
