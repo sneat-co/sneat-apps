@@ -2,9 +2,9 @@ import { InjectionToken } from '@angular/core';
 
 export interface IFirebaseEmulatorConfig {
 	authPort: number;
-	authHost?: '127.0.0.1' | 'localhost' | 'local-fb-auth.sneat.ws';
+	authHost?: string;
 	firestorePort: number;
-	firestoreHost?: '127.0.0.1' | 'localhost' | 'local-firestore.sneat.ws';
+	firestoreHost?: string;
 }
 
 export interface IFirebaseConfig {
@@ -24,6 +24,7 @@ export interface IFirebaseConfig {
 export interface IEnvironmentConfig {
 	production: boolean;
 	useEmulators: boolean;
+	useNgrok?: boolean;
 	agents: Record<string, string>;
 	firebaseConfig: IFirebaseConfig;
 	firebaseBaseUrl?: string;

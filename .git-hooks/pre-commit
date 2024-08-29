@@ -1,4 +1,6 @@
 #!/bin/sh
+# To setup git hooks run:
+#   > git config core.hooksPath .git-hooks || echo 'Not in a git repo'
 
 echo "Running pre-commit hook from .git-hooks/pre-commit..."
 

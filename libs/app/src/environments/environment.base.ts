@@ -10,9 +10,8 @@ import { IEnvironmentConfig, IFirebaseConfig } from '../lib/environment-config';
 
 const useEmulators = true;
 
-const useSSL =
-	window.location.hostname.endsWith('ngrok.dev') ||
-	window.location.hostname == 'local-app.sneat.ws';
+const useNgrok = window.location.hostname.includes('.ngrok.');
+const useSSL = useNgrok || window.location.hostname == 'local-app.sneat.ws';
 
 const nonSecureEmulatorHost = '127.0.0.1'; // 'localhost';
 
@@ -20,9 +19,17 @@ const firebaseConfig: IFirebaseConfig = {
 	useEmulators,
 	emulator: {
 		authPort: useSSL ? 443 : 9099,
-		authHost: useSSL ? 'local-fb-auth.sneat.ws' : nonSecureEmulatorHost,
+		authHost: useNgrok
+			? window.location.hostname
+			: useSSL
+				? 'local-fb-auth.sneat.ws'
+				: nonSecureEmulatorHost,
 		firestorePort: useSSL ? 443 : 8080,
-		firestoreHost: useSSL ? 'local-firestore.sneat.ws' : nonSecureEmulatorHost,
+		firestoreHost: useNgrok
+			? window.location.hostname
+			: useSSL
+				? 'local-firestore.sneat.ws'
+				: nonSecureEmulatorHost,
 	},
 	apiKey: 'AIzaSyAYGGhSQQ8gUcyPUcUOFW7tTSYduRD3cuw',
 	authDomain: 'sneat.app',
@@ -36,6 +43,7 @@ const firebaseConfig: IFirebaseConfig = {
 export const baseEnvironmentConfig: IEnvironmentConfig = {
 	production: false,
 	useEmulators,
+	useNgrok,
 	agents: {},
 	firebaseConfig,
 };

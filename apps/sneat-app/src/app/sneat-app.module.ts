@@ -56,9 +56,11 @@ const appInfo: IAppInfo = {
 		...coreProviders,
 		{
 			provide: SneatApiBaseUrl,
-			useValue: environment.useEmulators
-				? 'https://local-api.sneat.ws/v0/' //'http://localhost:4300/v0/'
-				: DefaultSneatAppApiBaseUrl,
+			useValue: environment.useNgrok
+				? `//${location.host}/v0/`
+				: environment.useEmulators
+					? 'https://local-api.sneat.ws/v0/' // 'http://localhost:4300/v0/'
+					: DefaultSneatAppApiBaseUrl,
 		},
 		{
 			provide: RANDOM_ID_OPTIONS,
