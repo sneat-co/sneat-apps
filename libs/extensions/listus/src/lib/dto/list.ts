@@ -38,10 +38,10 @@ export interface ListCounts {
 }
 
 export type ListType =
-	| 'to-buy'
-	| 'to-watch'
-	| 'to-cook'
-	| 'to-do'
+	| 'buy'
+	| 'watch'
+	| 'cook'
+	| 'do'
 	| 'other'
 	| 'recipes'
 	| 'rsvp';

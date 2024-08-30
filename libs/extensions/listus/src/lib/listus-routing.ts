@@ -57,14 +57,14 @@ export const listusRoutes: Route[] = [
 	// 		.then(m => m.ListPageModule),
 	// },
 	// {
-	// 	path: 'to-buy',
+	// 	path: 'buy',
 	// 	// canActivate: [AuthGuard],
 	// 	loadChildren: () => import('./pages/list/list.module')
 	// 		.then(m => m.ListPageModule),
 	// 	// ...guardRoute,
 	// },
 	// {
-	// 	path: 'to-do',
+	// 	path: 'do',
 	// 	// canActivate: [AuthGuard],
 	// 	loadChildren: () => import('./pages/list/list.module')
 	// 		.then(m => m.ListPageModule),

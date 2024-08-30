@@ -349,13 +349,13 @@ export class ListsPageComponent extends SpaceBaseComponent {
 			if (this.space?.type === 'family') {
 				listGroups = [
 					{
-						id: 'to-buy',
-						type: 'to-buy',
+						id: 'buy',
+						type: 'buy',
 						title: 'To buy',
 						lists: [
 							{
 								id: 'groceries',
-								type: 'to-buy',
+								type: 'buy',
 								emoji: '🛒',
 								title: 'Groceries',
 							},

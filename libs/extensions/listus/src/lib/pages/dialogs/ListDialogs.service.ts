@@ -15,7 +15,7 @@ export class ListDialogsService {
 		if (!to) {
 			to = {
 				// TODO: get rid of hardcoded?
-				type: 'to-buy',
+				type: 'buy',
 				emoji: '🛒',
 				shortId: 'groceries',
 				title: 'Groceries',

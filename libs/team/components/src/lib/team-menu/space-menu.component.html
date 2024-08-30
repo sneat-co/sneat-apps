@@ -10,7 +10,9 @@
 			style="font-weight: bold"
 		>
 			@for (space of spaces; track space.id) {
-				<ion-select-option [value]="space.id">{{ space.brief.title || space.id }}</ion-select-option>
+				<ion-select-option [value]="space.id">{{
+					space.brief.title || space.id
+				}}</ion-select-option>
 			}
 		</ion-select>
 	</ion-item>
@@ -100,8 +102,8 @@
 		<ion-buttons slot="end">
 			<ion-button
 				routerDirection="root"
-				[routerLink]="spacePageUrl('list/to-buy/groceries')"
-				(click)="goSpacePage($event, 'list/to-buy/groceries')"
+				[routerLink]="spacePageUrl('list/buy/groceries')"
+				(click)="goSpacePage($event, 'list/buy/groceries')"
 			>
 				<ion-label>🛒</ion-label>
 			</ion-button>

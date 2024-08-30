@@ -67,8 +67,8 @@ export type CommunePages =
 	| 'select-provider'
 	| 'task'
 	| 'term'
-	| 'to-buy'
-	| 'to-do'
-	| 'to-watch'
+	| 'buy'
+	| 'do'
+	| 'watch'
 	| 'vehicle'
 	| 'movie-info';

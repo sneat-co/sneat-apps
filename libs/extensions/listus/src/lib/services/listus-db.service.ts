@@ -559,9 +559,9 @@
 // 							result = this.listService
 // 								.mustGetById(listId, tx)
 // 								.pipe(map((listDto) => ({ commune, toList: listDto })));
-// 						} else if (shortListId === 'to-buy') {
+// 						} else if (shortListId === 'buy') {
 // 							const listDto: IListDto = {
-// 								type: 'to-buy',
+// 								type: 'buy',
 // 								title: 'Groceries',
 // 								commune: {
 // 									id: commune.id,
@@ -572,7 +572,7 @@
 // 							result = of({ commune, toList: listDto });
 // 						} else {
 // 							result = throwError(
-// 								'Not implemented copy of items for shortListId other then "to-buy"',
+// 								'Not implemented copy of items for shortListId other then "buy"',
 // 							);
 // 						}
 // 					} else {
@@ -607,9 +607,9 @@
 // 							if (!commune.listGroups) {
 // 								commune.listGroups = [];
 // 							}
-// 							const lgType = 'to-buy'; // TODO: get rid of hardcoded
+// 							const lgType = 'buy'; // TODO: get rid of hardcoded
 // 							let lg: IListGroup | undefined = commune.listGroups.find(
-// 								(lg2) => lg2.type === 'to-buy',
+// 								(lg2) => lg2.type === 'buy',
 // 							);
 // 							if (!lg) {
 // 								lg = { type: lgType, lists: [], title: undefined };

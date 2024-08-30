@@ -159,7 +159,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 	// 	if (pathname.includes('/recipes')) {
 	// 		this.segment = 'cards';
 	// 		this.listType = 'recipe';
-	// 	} else if (pathname.includes('/to-watch')) {
+	// 	} else if (pathname.includes('/watch')) {
 	// 		this.segment = 'cards';
 	// 		this.listType = 'watch';
 	// 	}
@@ -311,11 +311,11 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			throw new Error('!this.listItems');
 		}
 		switch (this.list?.brief?.type) {
-			case 'to-buy':
+			case 'buy':
 				break;
-			case 'to-cook':
+			case 'cook':
 				break;
-			case 'to-do':
+			case 'do':
 				break;
 			case 'other':
 				break;
@@ -323,7 +323,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 				break;
 			case 'rsvp':
 				break;
-			case 'to-watch':
+			case 'watch':
 				this.errorLogger.logError('Not implemented yet');
 				// this.teamNav.navigateForwardToTeamPage(
 				// 	'list/add-to-watch',

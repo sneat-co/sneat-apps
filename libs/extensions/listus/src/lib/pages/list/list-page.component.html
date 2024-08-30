@@ -8,17 +8,17 @@
 				><span style="margin-right: 0.3em">{{ list?.brief?.emoji }}</span>
 			</ng-container>
 			<ng-container [ngSwitch]="list?.brief?.type">
-				<ng-container *ngSwitchCase="'to-buy'">
+				<ng-container *ngSwitchCase="'buy'">
 					<ng-container *ngIf="!list?.brief?.emoji">🛒</ng-container>
 					{{ list?.brief?.title }} to buy
 				</ng-container>
-				<ng-container *ngSwitchCase="'to-cook'"
+				<ng-container *ngSwitchCase="'cook'"
 					>{{ list?.brief?.title }} to cook
 				</ng-container>
 				<ng-container *ngSwitchCase="'recipes'"
 					>{{ list?.brief?.title }}
 				</ng-container>
-				<ng-container *ngSwitchCase="'to-watch'"
+				<ng-container *ngSwitchCase="'watch'"
 					>To watch: {{ list?.brief?.title }}
 				</ng-container>
 				<ng-container *ngSwitchDefault>
@@ -142,9 +142,7 @@
 
 		<ng-container
 			*ngIf="
-				segment !== 'settings' &&
-				listType !== 'to-watch' &&
-				listType !== 'recipes'
+				segment !== 'settings' && listType !== 'watch' && listType !== 'recipes'
 			"
 		>
 			<sneat-new-list-item
@@ -159,7 +157,7 @@
 
 	<ng-container [ngSwitch]="segment">
 		<div *ngSwitchCase="'discover'">
-			<div class="ion-padding" *ngIf="listType === 'to-watch'">
+			<div class="ion-padding" *ngIf="listType === 'watch'">
 				<h1>Discover good movies</h1>
 				<p>
 					We give you recommendations based on what you added previously to this
@@ -316,8 +314,7 @@
 </ion-content>
 <ion-footer
 	*ngIf="
-		(segment === 'list' || segment === 'cards') &&
-		list?.brief?.type === 'to-watch'
+		(segment === 'list' || segment === 'cards') && list?.brief?.type === 'watch'
 	"
 >
 	<ion-toolbar>
