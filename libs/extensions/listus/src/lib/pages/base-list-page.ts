@@ -1,10 +1,10 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { emptyTimestamp } from '@sneat/dto';
-import { IListBrief, IListDbo, IMovie, ListType } from '../dto';
-import { IListContext } from '../contexts';
 import { SpaceItemPageBaseComponent } from '@sneat/team-components';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { IListContext } from '../contexts';
+import { IListBrief, IListDbo, IMovie, ListType } from '../dto';
 import { ListusComponentBaseParams } from '../listus-component-base-params';
 
 export abstract class BaseListPage extends SpaceItemPageBaseComponent<
@@ -46,12 +46,7 @@ export abstract class BaseListPage extends SpaceItemPageBaseComponent<
 	protected override briefs():
 		| Readonly<Record<string, IListBrief>>
 		| undefined {
-		throw new Error('not implemented due to refactoring');
-		// const briefs: IListBrief[] = [];
-		// this.team?.dto?.listGroups?.forEach(lg => {
-		// 	lg.lists?.forEach(l => briefs.push({id: l.id}));
-		// });
-		// return briefs;
+		return {}; // TODO: implement
 	}
 
 	protected get listService() {

@@ -146,7 +146,7 @@ export class SpacesCardComponent implements OnInit, OnDestroy {
 						'Failed to set focus to "addTeamInput"',
 					),
 				);
-		}, 100);
+		}, 200);
 	}
 
 	public leaveSpace(team: IIdAndBrief<IUserSpaceBrief>, event?: Event): void {

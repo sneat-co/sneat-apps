@@ -11,8 +11,8 @@ import { RouterModule } from '@angular/router';
 			},
 			{
 				path: 'profile',
-				loadChildren: () =>
-					import('@sneat/user').then((m) => m.UserMyProfilePageRoutingModule),
+				loadComponent: () =>
+					import('@sneat/user').then((m) => m.UserMyProfilePageComponent),
 			},
 			{
 				path: 'spaces',

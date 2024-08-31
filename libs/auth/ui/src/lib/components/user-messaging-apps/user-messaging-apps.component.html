@@ -44,11 +44,19 @@
 		@case ("messaging-apps") {
 			<ion-item>
 				<ion-icon slot="start" name="paper-plane"></ion-icon>
-				<ion-label>
+				<ion-label *ngIf="!userRecord">
+					<h3>Telegram</h3>
+					<p>Checking....</p>
+				</ion-label>
+				<ion-label *ngIf="userRecord && hasAccount('telegram')">
 					<h3 style="font-weight: bold">Telegram</h3>
+					<p>Connected!</p>
+				</ion-label>
+				<ion-label *ngIf="userRecord && !hasAccount('telegram')">
+					<h3>Telegram</h3>
 					<p>Not connected yet.</p>
 				</ion-label>
-				<ion-buttons slot="end">
+				<ion-buttons slot="end" *ngIf="userRecord && !hasAccount('telegram')">
 					<sneat-login-with-telegram telegramLogin="AlextDevBot" />
 					<!--			<ion-button color="danger" title="I have no Telegram">-->
 					<!--				<ion-icon name="close-circle-outline" slot="start"></ion-icon>-->

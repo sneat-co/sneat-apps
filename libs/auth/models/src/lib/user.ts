@@ -5,6 +5,7 @@ import { IPersonNames } from './person-names';
 // Does not contain an ID as it's a key.
 // Use IRecord<IUserRecord> to keep record paired with ID
 export interface IUserRecord {
+	readonly accounts?: string[];
 	readonly title: string;
 	readonly countryID?: string;
 	readonly email?: string;
