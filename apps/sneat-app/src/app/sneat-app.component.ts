@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TelegramAuthService } from '@sneat/auth-core';
 import { TopMenuService } from '@sneat/core';
 
 @Component({
@@ -7,6 +8,9 @@ import { TopMenuService } from '@sneat/core';
 })
 export class SneatAppComponent {
 	constructor(
+		readonly telegramAuthService: TelegramAuthService, // used in constructor
 		protected readonly topMenuService: TopMenuService, // used in template
-	) {}
+	) {
+		telegramAuthService.authenticateIfTelegramWebApp();
+	}
 }

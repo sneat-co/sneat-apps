@@ -3,9 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>Sneat.app</title>
-
 		<base href="/" />
-
 		<meta name="color-scheme" content="light dark" />
 		<meta
 			name="viewport"
@@ -13,66 +11,39 @@
 		/>
 		<meta name="format-detection" content="telephone=no" />
 		<meta name="msapplication-tap-highlight" content="no" />
-
 		<link rel="icon" type="image/png" href="assets/icon/favicon.png" />
-
 		<!-- add to homescreen for ios -->
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-
 		<script>
-			<!-- TODO: decouple and reuse in all apps -->
 			(function () {
-				alert(window.location.href);
-				function getUrlParam(name) {
-					const regex = new RegExp("[#?&]" + name + "(=([^&#]*))"),
-						results = regex.exec(window.location.href);
-					alert(
-						"getUrlParam:" +
-							name +
-							"\n" +
-							JSON.stringify(results) +
-							"\n\n" +
-							window.location.href,
-					);
-					if (!results) return null;
-					if (!results[2]) return "";
-					return decodeURIComponent(results[2].replace(/\+/g, " "));
-				}
-
+				// TODO: decouple and reuse in all apps
 				try {
-					let tgParam = getUrlParam("telegram");
-					if (!tgParam) {
-						tgParam = getUrlParam("tgWebAppData");
+					function getUrlParam(name) {
+						const re = new RegExp("[#?&]" + name + "(=([^&#]*))");
+						const results = re.exec(location.href);
+						return (
+							results &&
+							results.length > 2 &&
+							decodeURIComponent(results[2].replace(/\+/g, " "))
+						);
 					}
-					if (tgParam) {
-						alert("Telegram parameter: ", tgParam);
-					}
-					if (tgParam === "webapp") {
-						window.onTelegramScripLoaded = []; //[() => alert('Telegram script loaded')];
-
+					const tgWebAppData = getUrlParam("tgWebAppData");
+					if (!!tgWebAppData) {
 						const head = document.getElementsByTagName("head")[0];
-						const script = document.createElement("script");
-						script.type = "text/javascript";
-						script.async = false; // If we make it TRUE then window.onTelegramScripLoaded is NULL!
-						script.src = "https://telegram.org/js/telegram-web-app.js";
-						// script.onload = () => {
-						// 	Telegram.WebApp.ready();
-						// 	alert("Telegram script loaded on host=" + location.host);
-						// };
-						head.appendChild(script);
+						const s = document.createElement("script");
+						s.async = false; // If we make it TRUE then window.onTelegramScripLoaded is NULL!
+						s.type = "text/javascript";
+						s.src = "https://telegram.org/js/telegram-web-app.js";
+						head.appendChild(s);
 					}
 				} catch (e) {
-					alert("Error in telegram script: " + e);
+					alert("Failed to initialize Telegram web app: " + e);
 				}
 			})();
 		</script>
 	</head>
-
 	<body>
 		<sneat-app-root></sneat-app-root>
-		<script>
-			(function () {})();
-		</script>
 	</body>
 </html>
