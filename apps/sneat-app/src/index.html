@@ -23,18 +23,30 @@
 		<script>
 			<!-- TODO: decouple and reuse in all apps -->
 			(function () {
-				function getQueryParam(name) {
-					const regex = new RegExp("[#?&]" + name + "(=([^&#]*)|&|#|$)"),
+				alert(window.location.href);
+				function getUrlParam(name) {
+					const regex = new RegExp("[#?&]" + name + "(=([^&#]*))"),
 						results = regex.exec(window.location.href);
+					alert(
+						"getUrlParam:" +
+							name +
+							"\n" +
+							JSON.stringify(results) +
+							"\n\n" +
+							window.location.href,
+					);
 					if (!results) return null;
 					if (!results[2]) return "";
 					return decodeURIComponent(results[2].replace(/\+/g, " "));
 				}
 
 				try {
-					let tgParam = getQueryParam("telegram");
+					let tgParam = getUrlParam("telegram");
+					if (!tgParam) {
+						tgParam = getUrlParam("tgWebAppData");
+					}
 					if (tgParam) {
-						console.log("Telegram parameter: ", tgParam);
+						alert("Telegram parameter: ", tgParam);
 					}
 					if (tgParam === "webapp") {
 						window.onTelegramScripLoaded = []; //[() => alert('Telegram script loaded')];
