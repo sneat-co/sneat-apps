@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IonicModule, IonItemSliding } from '@ionic/angular';
+import { IonicModule, IonItemSliding, ToastController } from '@ionic/angular';
+import { ToastOptions } from '@ionic/core/dist/types/components/toast/toast-interface';
 import { listItemAnimations } from '@sneat/core';
 import { IListItemBrief } from '../../../dto';
 import { IListContext } from '../../../contexts';
@@ -35,12 +36,17 @@ export class ListItemComponent {
 	@Input()
 	public listMode: 'reorder' | 'swipe' = 'reorder';
 
-	@Input()
+	@Input({ required: true })
 	public listItemWithUiState?: IListItemWithUiState;
 	@Input() public space?: ISpaceContext; // TODO: remove?
 	@Input() list?: IListContext;
 	@Output()
 	public readonly itemClicked = new EventEmitter<IListItemBrief>();
+	@Output()
+	public readonly itemChanged = new EventEmitter<{
+		old: IListItemWithUiState;
+		new: IListItemWithUiState;
+	}>();
 	@Output()
 	public readonly listChanged = new EventEmitter<IListContext>();
 	public isSettingIsDone = false;
@@ -48,6 +54,7 @@ export class ListItemComponent {
 	constructor(
 		private readonly params: ListusComponentBaseParams,
 		private readonly listDialogs: ListDialogsService,
+		private readonly toastCtrl: ToastController,
 	) {}
 
 	public get listItem(): IListItemBrief | undefined {
@@ -72,9 +79,12 @@ export class ListItemComponent {
 		);
 	}
 
-	goListItem(item: IListItemBrief): void {
-		console.log(`goListItem(${item.id}), subListId=${item.subListId}`, item);
-		this.itemClicked.emit(item);
+	protected goListItem(): void {
+		const listItem = this.listItem;
+		console.log(
+			`goListItem(${listItem?.id}), subListId=${listItem?.subListId}`,
+		);
+		this.itemClicked.emit(listItem);
 	}
 
 	protected isDone(item?: IListItemWithUiState): boolean {
@@ -107,21 +117,63 @@ export class ListItemComponent {
 		if (isDone === undefined) {
 			isDone = !this.isDone(item);
 		}
+		const newItem: IListItemWithUiState = {
+			brief: { ...item.brief, isDone },
+			state: { ...item.state, isChangingIsDone: true },
+		};
 		const performSetIsDone = (): void => {
-			item.state.isChangingIsDone = true;
+			this.itemChanged.emit({
+				old: item,
+				new: newItem,
+			});
+
 			this.isSettingIsDone = true;
-			item.brief.isDone = isDone;
 			if (!this.space || !this.list || !this.list.brief) {
 				return;
 			}
 			const request: ISetListItemsIsComplete = {
 				spaceID: this.space.id,
 				listID: this.list.id,
-				// listType: this.list.brief.type,
 				itemIDs: [item.brief.id],
-				isDone: !!isDone,
+				isDone: isDone,
 			};
 			this.listService.setListItemsIsCompleted(request).subscribe({
+				next: () => {
+					this.itemChanged.emit({
+						old: newItem,
+						new: {
+							brief: newItem.brief,
+							state: { ...newItem.state, isChangingIsDone: false },
+						},
+					});
+					const toastOptions: ToastOptions = {
+						message: isDone
+							? `${item.brief.title} marked as completed`
+							: `${item.brief.title} marked as active`,
+						duration: 1000,
+						color: 'light',
+						buttons: [{ icon: 'close', role: 'cancel' }],
+						keyboardClose: true,
+					};
+					this.toastCtrl
+						.create(toastOptions)
+						.then((toast) =>
+							toast
+								.present()
+								.catch(
+									this.errorLogger.logErrorHandler(
+										'Failed to present a toast message about list item isCompleted set to ' +
+											isDone,
+									),
+								),
+						)
+						.catch(
+							this.errorLogger.logErrorHandler(
+								'Failed to present a toast message about list item isCompleted set to ' +
+									isDone,
+							),
+						);
+				},
 				error: this.errorLogger.logErrorHandler(
 					'failed to mark list item as completed',
 				),

@@ -27,7 +27,7 @@ export interface IListItemBrief extends IListItemBase {
 	id: string;
 	readonly created?: string; // UTC datetime
 	readonly emoji?: string;
-	isDone?: boolean; // TODO: make readonly
+	readonly isDone?: boolean; // TODO: make readonly
 	readonly img?: string;
 }
 

@@ -23,7 +23,6 @@ import {
 	IReorderListItemsRequest,
 	ISetListItemsIsComplete,
 } from '../../services';
-import { ListService } from '../../services';
 import { IListusAppStateService } from '../../services';
 import { BaseListPage } from '../base-list-page';
 import { CopyListItemsPageModule } from '../dialogs/copy-list-items/copy-list-items.module';
@@ -68,7 +67,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 	protected isReordering = false;
 
 	protected listMode: 'reorder' | 'swipe' = 'swipe';
-	protected doneFilter: 'all' | 'active' | 'completed' = 'all';
+	protected doneFilter?: 'all' | 'active' | 'completed' = undefined;
 	protected segment: ListPageSegment = 'list';
 	protected allListItems?: IListItemWithUiState[];
 	protected listItems?: IListItemWithUiState[];
@@ -77,15 +76,15 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 	protected addingItems: IListItemWithUiState[] = [];
 	protected performing?: ListPagePerforming;
 
-	protected completedListItems?: IListItemWithUiState[];
-	protected activeListItems?: IListItemWithUiState[];
+	// protected completedListItems?: IListItemWithUiState[];
+	// protected activeListItems?: IListItemWithUiState[];
 
 	constructor(
 		route: ActivatedRoute,
 		params: ListusComponentBaseParams,
 		private readonly zone: NgZone,
 		// private readonly listusService: IListusService,
-		listService: ListService,
+		// listService: ListService,
 		// private readonly listItemService: IListItemService,
 		private readonly listDialogs: ListDialogsService,
 		// private readonly shelfService: ShelfService,
@@ -221,6 +220,21 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		// 				);
 		// 		}
 		// 	});
+	}
+
+	protected itemChanged(changedItem: {
+		old: IListItemWithUiState;
+		new: IListItemWithUiState;
+	}): void {
+		if (this.allListItems) {
+			const itemIndex = this.allListItems?.findIndex(
+				(item) => item === changedItem.old,
+			);
+			if (itemIndex >= 0) {
+				this.allListItems[itemIndex] = changedItem.new;
+				this.applyFilter();
+			}
+		}
 	}
 
 	protected goListItem(item: IListItemBrief): void {
@@ -471,6 +485,16 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 
 	private applyFilter(): void {
 		const doneFilter = this.doneFilter;
+		if (!doneFilter) {
+			if (
+				!this.allListItems?.length ||
+				this.allListItems?.some((li) => !li.brief.isDone)
+			) {
+				this.doneFilter = 'active';
+			} else {
+				this.doneFilter = 'all';
+			}
+		}
 		this.listItems =
 			this.allListItems?.filter(
 				(li) =>

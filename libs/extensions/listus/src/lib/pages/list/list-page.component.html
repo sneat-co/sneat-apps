@@ -4,28 +4,25 @@
 			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<ion-title *ngIf="list?.brief; else noTitle">
-			<ng-container *ngIf="list?.brief?.emoji"
-				><span style="margin-right: 0.3em">{{ list?.brief?.emoji }}</span>
-			</ng-container>
-			<ng-container [ngSwitch]="list?.brief?.type">
-				<ng-container *ngSwitchCase="'buy'">
-					<ng-container *ngIf="!list?.brief?.emoji">🛒</ng-container>
+			@switch (list?.brief?.type) {
+				@case ("buy") {
+					{{ list?.brief?.emoji || "🛒" }}
 					{{ list?.brief?.title }} to buy
-				</ng-container>
-				<ng-container *ngSwitchCase="'cook'"
-					>{{ list?.brief?.title }} to cook
-				</ng-container>
-				<ng-container *ngSwitchCase="'recipes'"
-					>{{ list?.brief?.title }}
-				</ng-container>
-				<ng-container *ngSwitchCase="'watch'"
-					>To watch: {{ list?.brief?.title }}
-				</ng-container>
-				<ng-container *ngSwitchDefault>
+				}
+				@case ("cook") {
+					{{ list?.brief?.emoji || "🧑‍🍳" }}
+					{{ list?.brief?.title }} to cook
+				}
+				@case ("watch") {
+					{{ list?.brief?.emoji || "📽️" }}
+					{{ list?.brief?.title }} to watch
+				}
+				@default {
+					{{ list?.brief?.emoji || "📋" }}
 					<span *ngIf="listGroupTitle">{{ listGroupTitle }}: </span>
 					{{ list?.brief?.title }}
-				</ng-container>
-			</ng-container>
+				}
+			}
 		</ion-title>
 		<ng-template #noTitle>
 			<ion-title>List</ion-title>
@@ -38,13 +35,13 @@
 	</ion-toolbar>
 </ion-header>
 <ion-content class="cardy">
-	<img
-		alt="List image"
-		*ngIf="list?.brief?.img"
-		[ngSrc]="list?.brief?.img || ''"
-		width="100"
-		height="100"
-	/>
+	<!--	<img-->
+	<!--		alt="List image"-->
+	<!--		*ngIf="list?.brief?.img"-->
+	<!--		[ngSrc]="list?.brief?.img || ''"-->
+	<!--		width="100"-->
+	<!--		height="100"-->
+	<!--	/>-->
 
 	<!--	<div class="ion-padding-top ion-padding-horizontal">-->
 	<!--	</div>-->
@@ -126,13 +123,14 @@
 					<ion-reorder>
 						<sneat-list-item
 							[showDoneCheckbox]="doneFilter !== 'all'"
-							[doneFilter]="doneFilter"
+							[doneFilter]="doneFilter || 'all'"
 							[listMode]="doneFilter === 'all' ? listMode : 'swipe'"
 							[listItemWithUiState]="item"
 							[listItems]="listItems"
 							[space]="space"
 							[list]="list"
 							(itemClicked)="goListItem($event)"
+							(itemChanged)="itemChanged($event)"
 							(listChanged)="setList($event)"
 						/>
 					</ion-reorder>
@@ -191,9 +189,16 @@
 		<div class="ion-padding" style="text-align: center">
 			<ion-text class="ion-padding" color="medium">
 				<ng-container *ngIf="listMode === 'swipe'">
-					<span class="hint-sentence"> Swipe left to remove item.</span>
-					<span class="hint-sentence">Swipe right to mark as completed.</span>
-					<span class="hint-sentence" *ngIf="(allListItems?.length || 0) > 1">
+					<div class="hint-sentence">
+						Swipe from right to left to remove item.
+					</div>
+					<div class="hint-sentence">
+						Swipe from left to right to mark as completed.
+					</div>
+					<div
+						class="hint-sentence"
+						*ngIf="doneFilter === 'all' && (allListItems?.length || 0) > 1"
+					>
 						Switch to
 						<a
 							href="#edit-mode:reorder"
@@ -201,7 +206,7 @@
 							>reorder mode</a
 						>
 						to sort.
-					</span>
+					</div>
 				</ng-container>
 				<ng-container *ngIf="listMode === 'reorder'">
 					<span class="hint-sentence">Drag & drop to reorder.</span>
