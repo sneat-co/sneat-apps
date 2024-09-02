@@ -16,34 +16,36 @@ export class TelegramAuthService {
 	public authenticateIfTelegramWebApp() {
 		const telegramWebApp = (
 			window as unknown as {
-				Telegram: {
-					WebApp: {
+				Telegram?: {
+					WebApp?: {
 						initData: unknown;
 						ready: () => void;
 					};
 				};
 			}
-		).Telegram.WebApp;
-		this.sneatApiService
-			.postAsAnonymous<{
-				token: string;
-			}>('auth/login-from-telegram-miniapp', telegramWebApp.initData)
-			.subscribe({
-				next: (response) => {
-					this.authStateService
-						.signInWithToken(response.token)
-						.then(() => {
-							telegramWebApp.ready();
-						})
-						.catch(
-							this.errorLogger.logErrorHandler(
-								'Failed to sign-in to Firebase auth with a token issued for telegram web-app credentials',
-							),
-						);
-				},
-				error: this.errorLogger.logErrorHandler(
-					'Failed to get Firebase auth token issued using telegram web-app credentials',
-				),
-			});
+		).Telegram?.WebApp;
+		if (telegramWebApp?.initData) {
+			this.sneatApiService
+				.postAsAnonymous<{
+					token: string;
+				}>('auth/login-from-telegram-miniapp', telegramWebApp?.initData)
+				.subscribe({
+					next: (response) => {
+						this.authStateService
+							.signInWithToken(response.token)
+							.then(() => {
+								telegramWebApp.ready();
+							})
+							.catch(
+								this.errorLogger.logErrorHandler(
+									'Failed to sign-in to Firebase auth with a token issued for telegram web-app credentials',
+								),
+							);
+					},
+					error: this.errorLogger.logErrorHandler(
+						'Failed to get Firebase auth token issued using telegram web-app credentials',
+					),
+				});
+		}
 	}
 }

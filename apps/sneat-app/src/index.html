@@ -35,6 +35,10 @@
 						s.async = false; // If we make it TRUE then window.onTelegramScripLoaded is NULL!
 						s.type = "text/javascript";
 						s.src = "https://telegram.org/js/telegram-web-app.js";
+						// s.onload = function () {
+						// 	Telegram.WebApp.ready();
+						// 	alert(location.hash);
+						// };
 						head.appendChild(s);
 					}
 				} catch (e) {
