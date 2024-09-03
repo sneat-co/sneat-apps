@@ -10,6 +10,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { SneatUserService } from '@sneat/auth-core';
 import { SneatPipesModule } from '@sneat/components';
 import { IContactBrief, IContactusSpaceDbo } from '@sneat/contactus-core';
 import {
@@ -44,7 +45,8 @@ export class ContactsFilterComponent
 	constructor(
 		route: ActivatedRoute,
 		teamParams: SpaceComponentBaseParams,
-		protected contactusSpaceService: ContactusSpaceService,
+		userService: SneatUserService,
+		contactusSpaceService: ContactusSpaceService,
 	) {
 		super('ContactsFilterComponent', route, teamParams, contactusSpaceService);
 		const contactusTeamContextService = new ContactusSpaceContextService(
@@ -52,6 +54,7 @@ export class ContactsFilterComponent
 			this.destroyed$,
 			this.spaceIDChanged$,
 			contactusSpaceService,
+			userService,
 		);
 		contactusTeamContextService.contactusSpaceContext$
 			.pipe(this.takeUntilNeeded())
@@ -61,7 +64,7 @@ export class ContactsFilterComponent
 	}
 
 	private onContactusSpaceChanged(
-		contactusTeam: IIdAndOptionalDbo<IContactusSpaceDbo>,
+		contactusTeam?: IIdAndOptionalDbo<IContactusSpaceDbo>,
 	): void {
 		const contactBriefs = zipMapBriefsWithIDs(
 			contactusTeam?.dbo?.contacts,

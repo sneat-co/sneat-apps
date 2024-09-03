@@ -55,6 +55,7 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
 			this.destroyed$,
 			this.spaceIDChanged$,
 			params.contactusSpaceService,
+			this.userService,
 		);
 		this.trackFirstSpaceTypeChanged();
 		route.queryParams.subscribe((params) => {

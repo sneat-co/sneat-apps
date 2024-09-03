@@ -1,12 +1,11 @@
 import { ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IIdAndBrief, TopMenuService } from '@sneat/core';
-import { IContactusSpaceDboAndID, IContactBrief } from '@sneat/contactus-core';
+import { IContactBrief } from '@sneat/contactus-core';
 import {
 	SpaceBaseComponent,
 	SpaceComponentBaseParams,
 } from '@sneat/team-components';
-import { zipMapBriefsWithIDs } from '@sneat/team-models';
 
 export abstract class SpacePageBaseComponent
 	extends SpaceBaseComponent
@@ -22,18 +21,5 @@ export abstract class SpacePageBaseComponent
 		protected readonly cd: ChangeDetectorRef, // readonly navService: TeamNavService,
 	) {
 		super(className, route, params);
-	}
-
-	protected onContactusSpaceChanged(contactusTeam: IContactusSpaceDboAndID) {
-		console.log('TeamPage.onContactusSpaceChanged()', contactusTeam);
-		// super.onContactusTeamChanged(contactusTeam);
-		this.members = zipMapBriefsWithIDs(contactusTeam?.dbo?.contacts)
-			.filter((c) => c.brief?.roles?.includes('member'))
-			.map((c) => ({ ...c, space: this.space }));
-		console.log(
-			'TeamPage.onContactusTeamChanged() => this.members',
-			this.members,
-		);
-		this.cd.markForCheck();
 	}
 }

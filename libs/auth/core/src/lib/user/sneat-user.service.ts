@@ -136,6 +136,7 @@ export class SneatUserService {
 			this.onUserSignedIn(authState);
 		} else {
 			this.userState$.next(authState);
+			this.userChanged$.next(undefined);
 			this.onUserSignedOut();
 		}
 	};
