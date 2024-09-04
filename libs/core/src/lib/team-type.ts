@@ -1,6 +1,6 @@
 export type SpaceType =
 	| 'family'
-	| 'personal'
+	| 'private'
 	| 'company'
 	| 'team'
 	| 'parish'

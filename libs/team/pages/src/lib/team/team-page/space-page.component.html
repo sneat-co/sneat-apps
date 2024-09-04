@@ -4,7 +4,16 @@
 			<ion-menu-button />
 		</ion-buttons>
 		<ion-title *ngIf="space.dbo || space.type">
-			{{ space.dbo?.title || space.type === "family" ? "Family" : space.id }}
+			<ion-icon
+				[name]="
+					space.type === 'family'
+						? 'people-outline'
+						: space.type === 'private'
+							? 'person-circle-outline'
+							: 'people-outline'
+				"
+			/>
+			{{ space.brief?.title || (space.type | titlecase) || space.id }}
 			<ion-text color="medium" *ngIf="topMenuService.isTopMenuHidden | async"
 				>&#64; sneat.app</ion-text
 			>

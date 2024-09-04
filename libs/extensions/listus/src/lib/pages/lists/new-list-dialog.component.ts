@@ -17,7 +17,7 @@ export class NewListDialogComponent implements AfterViewInit {
 	@ViewChild('listNameInput', { static: false }) listNameInput?: IonInput;
 
 	public listName = '';
-	public visibility: 'personal' | 'family' = 'personal';
+	public visibility: 'private' | 'family' = 'private';
 
 	@Input() title?: string;
 	@Input() listType?: ListType;

@@ -1,6 +1,6 @@
 <ion-list>
 	<ion-item>
-		<!--		<ion-icon name="home-outline" slot="start" color="primary" tappable routerLink="/space/{{team.type}}/{{team.id}}" routerDirection="root"></ion-icon>-->
+		<!--		<ion-icon [name]="space.type === 'family' ? 'people-outline' : space.type === 'private' ? 'person-circle-outline' : 'people-outline' " slot="end" />-->
 		<ion-select
 			label="Space"
 			*ngIf="spaces"
@@ -10,9 +10,9 @@
 			style="font-weight: bold"
 		>
 			@for (space of spaces; track space.id) {
-				<ion-select-option [value]="space.id">{{
-					space.brief.title || space.id
-				}}</ion-select-option>
+				<ion-select-option [value]="space.id"
+					>{{ space.brief.title || (space.brief.type | titlecase) || space.id }}
+				</ion-select-option>
 			}
 		</ion-select>
 	</ion-item>

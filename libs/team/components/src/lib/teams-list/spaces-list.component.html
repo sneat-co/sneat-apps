@@ -3,9 +3,18 @@
 		routerLink="{{ pathPrefix }}/{{ space.type }}/{{ space.id }}"
 		(click)="goSpace($event, space)"
 	>
-		<ion-icon [name]="iconName" slot="start" />
+		<ion-icon
+			[name]="
+				space.type === 'family'
+					? 'people-outline'
+					: space.type === 'private'
+						? 'person-circle-outline'
+						: 'people-outline'
+			"
+			slot="start"
+		/>
 		<ion-label class="ion-text-wrap">
-			{{ space.brief?.title || space.brief?.type || space.id }}
+			{{ space.brief?.title || (space.type | titlecase) || space.id }}
 		</ion-label>
 	</ion-item>
 }

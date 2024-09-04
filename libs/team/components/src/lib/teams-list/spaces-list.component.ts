@@ -17,7 +17,6 @@ export class SpacesListComponent {
 	// Inputs
 	@Input({ required: true }) spaces?: ISpaceContext[];
 	@Input() pathPrefix = '/space';
-	@Input() iconName = 'people-outline';
 
 	// Outputs
 	@Output() readonly beforeNavigateToSpace = new EventEmitter<ISpaceContext>();

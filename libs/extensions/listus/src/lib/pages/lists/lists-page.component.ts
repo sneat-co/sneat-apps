@@ -392,7 +392,7 @@ export class ListsPageComponent extends SpaceBaseComponent {
 				if (!passedList.type) {
 					throw new Error(`!passedList[${i}]`);
 				}
-				if (!passedList.space && this.space.type === 'personal') {
+				if (!passedList.space && this.space.type === 'private') {
 					passedList = {
 						...passedList,
 						space: createShortSpaceInfoFromDbo(this.space),
