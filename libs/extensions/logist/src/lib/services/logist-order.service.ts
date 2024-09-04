@@ -191,7 +191,7 @@ export class LogistOrderService {
 	}
 
 	addShippingPoint(
-		team: ISpaceContext,
+		space: ISpaceContext,
 		request: IAddOrderShippingPointRequest,
 	): Observable<ILogistOrderContext> {
 		if (!request) {
@@ -206,7 +206,7 @@ export class LogistOrderService {
 			}>('logistus/order/add_shipping_point', request)
 			.pipe(
 				map((response) =>
-					contextFromDto(team, request.orderID, response.order),
+					contextFromDto(space, request.orderID, response.order),
 				),
 			);
 	}

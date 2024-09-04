@@ -12,18 +12,18 @@ export class ScheduleNavService {
 	) {}
 
 	goSchedule(
-		team: ISpaceContext,
+		space: ISpaceContext,
 		queryParams?: ISchedulePageParams,
 	): Promise<boolean> {
-		return this.spaceNavService.navigateForwardToSpacePage(team, 'schedule', {
+		return this.spaceNavService.navigateForwardToSpacePage(space, 'schedule', {
 			queryParams,
 		});
 	}
 
-	goNewHappening(team: ISpaceContext, params: NewHappeningParams): void {
+	goNewHappening(space: ISpaceContext, params: NewHappeningParams): void {
 		console.log('ScheduleNavService.goNewHappening()', params);
 		this.spaceNavService
-			.navigateForwardToSpacePage(team, 'new-happening', {
+			.navigateForwardToSpacePage(space, 'new-happening', {
 				queryParams: params,
 			})
 			.catch(

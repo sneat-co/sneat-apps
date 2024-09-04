@@ -263,32 +263,32 @@ export class HappeningService {
 	// }
 
 	public watchHappeningByID(
-		team: ISpaceContext,
+		space: ISpaceContext,
 		id: string,
 	): Observable<IHappeningContext> {
-		console.log(`watchHappeningByID(team.id=${team.id}, id=${id})`);
-		return this.spaceItemService.watchSpaceItemByIdWithSpaceRef(team, id).pipe(
+		console.log(`watchHappeningByID(team.id=${space.id}, id=${id})`);
+		return this.spaceItemService.watchSpaceItemByIdWithSpaceRef(space, id).pipe(
 			tap((happening) => console.log('watchHappeningByID() =>', happening)),
-			map((h) => processHappeningContext(h, team)),
+			map((h) => processHappeningContext(h, space)),
 		);
 	}
 
 	public watchUpcomingSingles(
-		team: ISpaceContext,
+		space: ISpaceContext,
 		statuses: HappeningStatus[] = ['active'],
 	): Observable<IHappeningContext[]> {
-		return this.watchSingles(team, statuses, {
+		return this.watchSingles(space, statuses, {
 			field: 'dateMax',
 			operator: '>=',
 		});
 	}
 
 	public watchPastSingles(
-		team: ISpaceContext,
+		space: ISpaceContext,
 		statuses: HappeningStatus[] = ['active'],
 	): Observable<IHappeningContext[]> {
 		return this.watchSingles(
-			team,
+			space,
 			statuses,
 			{
 				field: 'dateMax',
@@ -300,11 +300,11 @@ export class HappeningService {
 	}
 
 	public watchRecentlyCreatedSingles(
-		team: ISpaceContext,
+		space: ISpaceContext,
 		statuses: HappeningStatus[] = ['active'],
 	): Observable<IHappeningContext[]> {
 		return this.watchSingles(
-			team,
+			space,
 			statuses,
 			undefined,
 			orderBy('createdAt', 'desc'),
@@ -353,20 +353,20 @@ export class HappeningService {
 	}
 
 	public watchSinglesOnSpecificDay(
-		team: ISpaceContext,
+		space: ISpaceContext,
 		date: string,
 		status: HappeningStatus = 'active',
 	): Observable<IHappeningContext[]> {
-		if (!team.id) {
+		if (!space.id) {
 			return throwError(() => 'missing required field "teamID"');
 		}
 		if (!date) {
 			return throwError(() => 'missing required field "date"');
 		}
-		console.log('watchSinglesOnSpecificDay()', team.id, date, status);
+		console.log('watchSinglesOnSpecificDay()', space.id, date, status);
 		// const teamDate = team.id + ':' + date;
 		return this.spaceItemService
-			.watchModuleSpaceItemsWithSpaceRef(team, {
+			.watchModuleSpaceItemsWithSpaceRef(space, {
 				filter: [
 					HappeningService.statusFilter([status]),
 					{ field: 'dates', operator: 'array-contains', value: date },
@@ -376,14 +376,14 @@ export class HappeningService {
 				tap((happenings) => {
 					console.log(
 						'watchSinglesOnSpecificDay() =>',
-						team.id,
+						space.id,
 						date,
 						status,
 						happenings,
 					);
 				}),
 				map((happenings) =>
-					happenings.map((h) => processHappeningContext(h, team)),
+					happenings.map((h) => processHappeningContext(h, space)),
 				),
 			);
 	}

@@ -48,9 +48,9 @@ export class SpacesCardComponent implements OnInit, OnDestroy {
 		this.watchUserRecord();
 	}
 
-	public goSpace(team: ISpaceContext) {
+	public goSpace(space: ISpaceContext) {
 		this.navService
-			.navigateToSpace(team, 'forward')
+			.navigateToSpace(space, 'forward')
 			.catch(this.errorLogger.logError);
 	}
 
@@ -149,12 +149,12 @@ export class SpacesCardComponent implements OnInit, OnDestroy {
 		}, 200);
 	}
 
-	public leaveSpace(team: IIdAndBrief<IUserSpaceBrief>, event?: Event): void {
+	public leaveSpace(space: IIdAndBrief<IUserSpaceBrief>, event?: Event): void {
 		if (event) {
 			event.stopPropagation();
 			event.preventDefault();
 		}
-		if (!confirm(`Are you sure you want to leave team ${team.brief.title}?`)) {
+		if (!confirm(`Are you sure you want to leave team ${space.brief.title}?`)) {
 			return;
 		}
 		const userID = this.userService.currentUserID;
@@ -163,13 +163,13 @@ export class SpacesCardComponent implements OnInit, OnDestroy {
 			return;
 		}
 		this.contactService
-			.removeSpaceMember({ spaceID: team.id, contactID: userID })
+			.removeSpaceMember({ spaceID: space.id, contactID: userID })
 			.subscribe({
-				next: (response: unknown) => console.log('left team:', response),
+				next: (response: unknown) => console.log('left space:', response),
 				error: (err: unknown) =>
 					this.errorLogger.logError(
 						err,
-						`Failed to leave a team: ${team.brief.title}`,
+						`Failed to leave a space: ${space.brief.title}`,
 					),
 			});
 	}

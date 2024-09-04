@@ -365,11 +365,11 @@ export class SpaceDaysProvider {
 	}
 
 	private watchRecurringsBySpaceID(
-		team: ISpaceContext,
+		space: ISpaceContext,
 	): Observable<INavContext<IHappeningBrief, IHappeningDbo>[]> {
 		console.log('TeamDaysProvider.loadRegulars()');
 		const $recurrings = this.recurringsSpaceItemService
-			.watchModuleSpaceItemsWithSpaceRef(team)
+			.watchModuleSpaceItemsWithSpaceRef(space)
 			// const $regulars = this.regularService.watchByCommuneId(this.communeId)
 			.pipe(
 				tap((recurrings) => {

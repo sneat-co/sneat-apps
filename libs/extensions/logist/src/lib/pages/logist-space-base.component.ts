@@ -26,9 +26,9 @@ export class LogistSpaceBaseComponent extends SpaceBaseComponent {
 				.watchLogistSpaceByID(space.id)
 				.pipe(this.takeUntilNeeded())
 				.subscribe({
-					next: (logistTeam) => {
-						console.log('logistTeam:', logistTeam);
-						this.logistSpace = logistTeam;
+					next: (logistSpace) => {
+						console.log('logistSpace:', logistSpace);
+						this.logistSpace = logistSpace;
 					},
 					error: (err) => {
 						this.errorLogger.logError(err, 'failed to load logist team', {

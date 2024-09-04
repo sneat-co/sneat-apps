@@ -13,26 +13,26 @@ import {
 
 export function getLiabilitiesByPeriod(
 	recurringHappenings: Record<string, ICalendarHappeningBrief>,
-	team: ISpaceContext,
+	space: ISpaceContext,
 ): LiabilitiesByPeriod {
 	const byPeriod: LiabilitiesByPeriod = {};
 
 	Object.entries(recurringHappenings).forEach((entry) => {
 		const [id, brief] = entry;
-		processHappening(team, byPeriod, { id, brief });
+		processHappening(space, byPeriod, { id, brief });
 	});
 	return byPeriod;
 }
 
 function processHappening(
-	team: ISpaceContext,
+	space: ISpaceContext,
 	byPeriod: LiabilitiesByPeriod,
 	happening: IIdAndBrief<ICalendarHappeningBrief>,
 ): void {
 	// console.log('budget.processHappening()', happening);
 	Object.entries(happening.brief.slots || {}).forEach(([slotID, slot]) => {
 		if (slot.repeats === 'weekly' || slot.repeats === 'monthly') {
-			processSlot(team, byPeriod, happening, slotID, slot);
+			processSlot(space, byPeriod, happening, slotID, slot);
 		}
 	});
 }

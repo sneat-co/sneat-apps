@@ -10,6 +10,6 @@ export class AssetusSpaceService extends SpaceModuleService<IAssetusSpaceDbo> {
 		super('assetus', afs);
 	}
 
-	readonly watchAssetBriefs = (team: ISpaceContext) =>
-		this.watchBriefs<IAssetBrief>(team.id, (dto) => dto?.assets || {});
+	readonly watchAssetBriefs = (space: ISpaceContext) =>
+		this.watchBriefs<IAssetBrief>(space.id, (dto) => dto?.assets || {});
 }

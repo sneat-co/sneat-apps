@@ -49,11 +49,11 @@ export class ContactService extends ModuleSpaceItemService<
 	}
 
 	public createContact(
-		team: ISpaceContext,
+		space: ISpaceContext,
 		request: ICreateContactRequest,
 		endpoint = 'contactus/create_contact',
 	): Observable<ISpaceItemWithBriefAndDbo<IContactBrief, IContactDto>> {
-		return this.createSpaceItem(endpoint, team, request);
+		return this.createSpaceItem(endpoint, space, request);
 	}
 
 	public deleteContact(request: IContactRequest): Observable<void> {
@@ -74,7 +74,7 @@ export class ContactService extends ModuleSpaceItemService<
 	}
 
 	watchContactsWithRole(
-		team: ISpaceContext,
+		space: ISpaceContext,
 		role: string,
 		status: 'active' | 'archived' = 'active',
 		filter?: readonly IFilter[],
@@ -83,11 +83,11 @@ export class ContactService extends ModuleSpaceItemService<
 			...(filter || []),
 			{ field: 'roles', operator: '==', value: role },
 		];
-		return this.watchSpaceContacts(team, status, filter);
+		return this.watchSpaceContacts(space, status, filter);
 	}
 
 	public watchSpaceContacts(
-		team: ISpaceContext,
+		space: ISpaceContext,
 		status: 'active' | 'archived' = 'active',
 		filter?: readonly IFilter[],
 	): Observable<IIdAndBriefAndOptionalDto<IContactBrief, IContactDto>[]> {
@@ -104,7 +104,7 @@ export class ContactService extends ModuleSpaceItemService<
 			},
 			...(filter || []),
 		];
-		return this.watchModuleSpaceItemsWithSpaceRef<IContactDto>(team, {
+		return this.watchModuleSpaceItemsWithSpaceRef<IContactDto>(space, {
 			filter,
 		});
 	}
@@ -119,7 +119,7 @@ export class ContactService extends ModuleSpaceItemService<
 	}
 
 	watchContactsByRole(
-		team: ISpaceContext,
+		space: ISpaceContext,
 		filter?: IContactsFilter,
 	): Observable<IContactContext[]> {
 		console.log('watchContactsByRole, filter:', filter);
@@ -136,11 +136,11 @@ export class ContactService extends ModuleSpaceItemService<
 				value: filter.role,
 			});
 		}
-		return this.watchModuleSpaceItemsWithSpaceRef(team, { filter: f });
+		return this.watchModuleSpaceItemsWithSpaceRef(space, { filter: f });
 	}
 
 	watchChildContacts(
-		team: ISpaceContext,
+		space: ISpaceContext,
 		id: string,
 		filter: IContactsFilter = { status: 'active' },
 	): Observable<IContactContext[]> {
@@ -158,7 +158,7 @@ export class ContactService extends ModuleSpaceItemService<
 				value: filter.role,
 			});
 		}
-		return this.watchModuleSpaceItemsWithSpaceRef(team, { filter: f });
+		return this.watchModuleSpaceItemsWithSpaceRef(space, { filter: f });
 	}
 
 	public changeContactRole(

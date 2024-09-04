@@ -397,22 +397,22 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 		// 	}
 	}
 
-	private readonly onSpaceContextChanged = (team: ISpaceContext): void => {
-		const dtoChanged = team.dbo !== this.spaceContext?.dbo;
+	private readonly onSpaceContextChanged = (space: ISpaceContext): void => {
+		const dtoChanged = space.dbo !== this.spaceContext?.dbo;
 		this.console.log(
-			`${this.className}.onTeamContextChanged() => dtoChanged=${dtoChanged}, team:`,
-			team,
+			`${this.className}.onTeamContextChanged() => dtoChanged=${dtoChanged}, space:`,
+			space,
 		);
-		if (!team.brief && team.dbo) {
-			team = { ...team, brief: team.dbo };
+		if (!space.brief && space.dbo) {
+			space = { ...space, brief: space.dbo };
 		}
-		if (!team.type) {
-			if (team.brief?.type) {
-				team = { ...team, type: team.brief.type };
+		if (!space.type) {
+			if (space.brief?.type) {
+				space = { ...space, type: space.brief.type };
 			}
 		}
-		this.setNewSpaceContext(team);
-		this.spaceContext = team;
+		this.setNewSpaceContext(space);
+		this.spaceContext = space;
 		if (dtoChanged) {
 			this.onSpaceDboChanged();
 		}

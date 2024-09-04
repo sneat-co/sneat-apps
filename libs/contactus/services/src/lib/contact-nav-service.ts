@@ -19,9 +19,9 @@ export class ContactNavService {
 		private readonly spaceNavService: SpaceNavService,
 	) {}
 
-	goNewContactPage(team: ISpaceContext, params?: INewContactPageParams): void {
+	goNewContactPage(space: ISpaceContext, params?: INewContactPageParams): void {
 		this.spaceNavService
-			.navigateForwardToSpacePage(team, 'new-contact', {
+			.navigateForwardToSpacePage(space, 'new-contact', {
 				queryParams: excludeUndefined(params),
 			})
 			.catch(

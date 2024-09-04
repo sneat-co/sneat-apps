@@ -51,14 +51,14 @@ export class ListService extends ModuleSpaceItemService<IListBrief, IListDbo> {
 			);
 	}
 
-	public deleteList(team: ISpaceContext, listId: string): Observable<void> {
-		if (team.type === 'family' && listId === 'groceries') {
+	public deleteList(space: ISpaceContext, listId: string): Observable<void> {
+		if (space.type === 'family' && listId === 'groceries') {
 			return throwError(
 				() => 'groceries list is not removable for family team',
 			);
 		}
 		return this.sneatApiService.delete(
-			`lists/delete_list?team=${team.id}&id=${listId}`,
+			`lists/delete_list?space=${space.id}&id=${listId}`,
 		);
 	}
 
@@ -108,15 +108,15 @@ export class ListService extends ModuleSpaceItemService<IListBrief, IListDbo> {
 	}
 
 	public getListById(
-		team: ISpaceContext,
+		space: ISpaceContext,
 		listType: ListType,
 		listID: string,
 	): Observable<IListContext> {
 		const id = this.getFullListID(listType, listID);
-		const listDocRef = this.listDocRef(team.id, id);
+		const listDocRef = this.listDocRef(space.id, id);
 		return this.sfs.getByDocRef(listDocRef).pipe(
 			map((listContext) => {
-				return this.onListSnapshot(team, listID, listType, listContext.dbo);
+				return this.onListSnapshot(space, listID, listType, listContext.dbo);
 			}),
 		);
 	}

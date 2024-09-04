@@ -1,4 +1,4 @@
-import { Inject, Injectable, NgZone } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Params } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
@@ -21,7 +21,6 @@ export type ScrumPageTab = 'team' | 'my' | 'risks' | 'qna';
 })
 export class SpaceNavService {
 	constructor(
-		private readonly zone: NgZone,
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly navController: NavController,
 		@Inject(AnalyticsService)

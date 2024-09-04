@@ -175,19 +175,19 @@ export class MembersListComponent implements OnChanges {
 		this.contactService
 			.removeSpaceMember({ spaceID: spaceID, contactID: member.id })
 			.subscribe({
-				next: (team) => {
+				next: (space) => {
 					if (spaceID !== this.space?.id) {
 						return;
 					}
-					this.space = team;
-					console.log('updated team:', team);
+					this.space = space;
+					console.log('updated space:', space);
 					if (this.selfRemove) {
 						this.selfRemoved.emit();
 					}
 					if (
-						!team ||
+						!space ||
 						(this.userService.currentUserID &&
-							team?.dbo?.userIDs?.indexOf(this.userService.currentUserID)) ||
+							space?.dbo?.userIDs?.indexOf(this.userService.currentUserID)) ||
 						-1 < 0
 					) {
 						this.navService.navigateToSpaces('back');

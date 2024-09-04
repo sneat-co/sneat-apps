@@ -30,11 +30,11 @@ export class SpacesListComponent {
 		private readonly menuController: MenuController,
 	) {}
 
-	protected goSpace(event: Event, team: ISpaceContext): boolean {
+	protected goSpace(event: Event, space: ISpaceContext): boolean {
 		event.stopPropagation();
-		this.beforeNavigateToSpace.emit(team);
+		this.beforeNavigateToSpace.emit(space);
 		this.spaceNavService
-			.navigateToSpace(team)
+			.navigateToSpace(space)
 			.catch(
 				this.errorLogger.logErrorHandler(
 					'Failed to navigate to teams overview page from teams menu',

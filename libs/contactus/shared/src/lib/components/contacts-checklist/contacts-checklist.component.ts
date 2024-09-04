@@ -59,12 +59,12 @@ export class ContactsChecklistComponent implements OnChanges {
 		private readonly contactusSpaceService: ContactusSpaceService,
 	) {}
 
-	private subscribeForContactBriefs(team: ISpaceContext): void {
+	private subscribeForContactBriefs(space: ISpaceContext): void {
 		console.log(
-			`ContactsChecklistComponent.subscribeForContactBriefs(team=${team?.id})`,
+			`ContactsChecklistComponent.subscribeForContactBriefs(team=${space?.id})`,
 		);
 		this.contactusSpaceSubscription = this.contactusSpaceService
-			.watchContactBriefs(team.id)
+			.watchContactBriefs(space.id)
 			// .pipe(takeUntilDestroyed())
 			.subscribe({
 				next: (contacts) => {

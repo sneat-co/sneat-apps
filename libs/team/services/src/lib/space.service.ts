@@ -157,19 +157,21 @@ export class SpaceService {
 		return subj.asObservable();
 	}
 
-	public onSpaceUpdated(team: ISpaceContext): void {
+	public onSpaceUpdated(space: ISpaceContext): void {
 		console.log(
-			'TeamService.onSpaceUpdated',
-			team ? { id: team.id, dto: { ...team.dbo } } : team,
+			'SpaceService.onSpaceUpdated',
+			space ? { id: space.id, dto: { ...space.dbo } } : space,
 		);
-		let team$ = this.spaces$[team.id];
+		let team$ = this.spaces$[space.id];
 		if (team$) {
 			const prevTeam = team$.value;
-			team = { ...prevTeam, ...team };
+			space = { ...prevTeam, ...space };
 		} else {
-			this.spaces$[team.id] = team$ = new BehaviorSubject<ISpaceContext>(team);
+			this.spaces$[space.id] = team$ = new BehaviorSubject<ISpaceContext>(
+				space,
+			);
 		}
-		team$.next(team);
+		team$.next(space);
 	}
 
 	public getSpaceJoinInfo(

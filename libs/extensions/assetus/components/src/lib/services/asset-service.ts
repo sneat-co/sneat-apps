@@ -44,7 +44,7 @@ export class AssetService extends ModuleSpaceItemService<
 		ExtraType extends AssetExtraType,
 		Extra extends IAssetExtra,
 	>(
-		team: ISpaceContext,
+		space: ISpaceContext,
 		request: ICreateAssetRequest<ExtraType, Extra>,
 	): Observable<IAssetContext<ExtraType, Extra>> {
 		console.log(`AssetService.createAsset()`, request);
@@ -54,7 +54,7 @@ export class AssetService extends ModuleSpaceItemService<
 			IAssetDbo<ExtraType, Extra>
 		>(
 			'assets/create_asset?assetCategory=' + request.asset.category,
-			team,
+			space,
 			request,
 		);
 	}
@@ -81,7 +81,7 @@ export class AssetService extends ModuleSpaceItemService<
 		ExtraType extends AssetExtraType,
 		Extra extends IAssetExtra,
 	>(
-		team: ISpaceContext,
+		space: ISpaceContext,
 		category?: AssetCategory,
 	): Observable<IAssetContext<ExtraType, Extra>[]> {
 		// console.log('watchAssetsByTeamID()', team.id);
@@ -95,7 +95,7 @@ export class AssetService extends ModuleSpaceItemService<
 				]
 			: undefined;
 		return this.watchModuleSpaceItemsWithSpaceRef<IAssetDbo<ExtraType, Extra>>(
-			team,
+			space,
 			{
 				filter,
 			},
