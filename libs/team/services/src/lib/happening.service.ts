@@ -358,7 +358,7 @@ export class HappeningService {
 		status: HappeningStatus = 'active',
 	): Observable<IHappeningContext[]> {
 		if (!space.id) {
-			return throwError(() => 'missing required field "teamID"');
+			return throwError(() => 'missing required field "spaceID"');
 		}
 		if (!date) {
 			return throwError(() => 'missing required field "date"');
