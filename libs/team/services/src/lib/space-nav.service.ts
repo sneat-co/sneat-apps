@@ -62,31 +62,6 @@ export class SpaceNavService {
 			);
 	}
 
-	public navigateToScrum(
-		date: 'today' | 'yesterday' | string,
-		space: IRecord<ISpaceDbo>,
-		scrum?: IRecord<IScrumDbo>,
-		tab?: ScrumPageTab,
-	): void {
-		console.log(
-			`navigateToScrum(date=${date}, space=${space?.id}, tab=${tab}), scrum:`,
-			scrum?.dbo,
-		);
-		this.analyticsService.logEvent('navigateToScrum', {
-			date,
-			space: space.id,
-		});
-		this.navController
-			.navigateForward('scrum', {
-				queryParams: { date, space: space.id },
-				state: { space, scrum },
-				fragment: tab && `tab=` + tab,
-			})
-			.catch((err) =>
-				this.errorLogger.logError(err, 'Failed to navigate to scrum page'),
-			);
-	}
-
 	public navigateToUserProfile(): void {
 		this.analyticsService.logEvent('navigateToUserProfile');
 		this.navController
@@ -127,8 +102,9 @@ export class SpaceNavService {
 		space: ISpaceContext,
 		animationDirection?: 'forward' | 'back',
 	): Promise<boolean> {
-		this.analyticsService.logEvent('navigateToTeam', { space: space.id });
-		const url = `space/${space?.type}/${space.id}`;
+		console.log('navigateToSpace()', space);
+		this.analyticsService.logEvent('navigateToSpace', { spaceID: space.id });
+		const url = `space/${space.type || space.brief?.type}/${space.id}`;
 		return new Promise<boolean>((resolve, reject) => {
 			this.navController
 				.navigateRoot(url, {
@@ -146,6 +122,33 @@ export class SpaceNavService {
 		});
 	}
 
+	// TODO: Should not be part of generic service
+	public navigateToScrum(
+		date: 'today' | 'yesterday' | string,
+		space: IRecord<ISpaceDbo>,
+		scrum?: IRecord<IScrumDbo>,
+		tab?: ScrumPageTab,
+	): void {
+		console.log(
+			`navigateToScrum(date=${date}, space=${space?.id}, tab=${tab}), scrum:`,
+			scrum?.dbo,
+		);
+		this.analyticsService.logEvent('navigateToScrum', {
+			date,
+			space: space.id,
+		});
+		this.navController
+			.navigateForward('scrum', {
+				queryParams: { date, space: space.id },
+				state: { space, scrum },
+				fragment: tab && `tab=` + tab,
+			})
+			.catch((err) =>
+				this.errorLogger.logError(err, 'Failed to navigate to scrum page'),
+			);
+	}
+
+	// TODO: Should not be part of generic service
 	public navigateToScrums = (
 		navController: NavController,
 		team: IRecord<ISpaceDbo>,
@@ -174,6 +177,7 @@ export class SpaceNavService {
 			'navigateToAddMember',
 		);
 
+	// TODO: Should not be part of generic service
 	public navigateToRetrospective = (
 		navController: NavController,
 		team: IRecord<ISpaceDbo>,
