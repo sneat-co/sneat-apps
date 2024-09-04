@@ -191,10 +191,6 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 		);
 	}
 
-	protected takeUntilNeeded<T>(): MonoTypeOperatorFunction<T> {
-		return takeUntil(this.destroyed$);
-	}
-
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function
 	protected onRouteParamsChanged(params: ParamMap): void {}
 

@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, Optional } from '@angular/core';
-import { Auth as AngularFireAuth } from '@angular/fire/auth';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular';
@@ -20,6 +19,7 @@ import {
 	IAppInfo,
 } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { SneatBaseComponent } from '@sneat/ui';
 import { Subject, takeUntil } from 'rxjs';
 import {
 	EmailFormSigningWith,
@@ -42,7 +42,7 @@ type Action = 'join' | 'refuse'; // TODO: inject provider for action description
 		EmailLoginFormComponent,
 	],
 })
-export class LoginPageComponent {
+export class LoginPageComponent extends SneatBaseComponent {
 	public signingWith?:
 		| AuthProviderName
 		| 'email'
@@ -55,20 +55,21 @@ export class LoginPageComponent {
 	public appTitle = 'Sneat.app';
 
 	constructor(
-		@Inject(APP_INFO) private appInfo: IAppInfo,
+		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		@Inject(AnalyticsService)
 		private readonly analyticsService: IAnalyticsService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		@Inject(LoginEventsHandler)
-		@Optional()
-		private readonly loginEventsHandler: ILoginEventsHandler,
 		private readonly route: ActivatedRoute,
-		private readonly afAuth: AngularFireAuth,
 		private readonly navController: NavController,
 		private readonly userService: SneatUserService,
 		private readonly authStateService: SneatAuthStateService,
-		// private readonly toastController: ToastController,
+
+		@Inject(APP_INFO) private appInfo: IAppInfo, // TODO: Unused - remove or implement
+
+		@Optional() // TODO: Unused - remove or implement
+		@Inject(LoginEventsHandler)
+		private readonly loginEventsHandler: ILoginEventsHandler,
 	) {
+		super('LoginPageComponent', errorLogger);
 		console.log('LoginPageComponent.constructor()');
 		this.appTitle = appInfo.appTitle;
 		if (location.hash.startsWith('#/')) {
@@ -77,6 +78,29 @@ export class LoginPageComponent {
 		this.to = this.route.snapshot.queryParams['to']; // should we subscribe? I believe no.
 		const action = location.hash.match(/[#&]action=(\w+)/);
 		this.action = action?.[1] as Action;
+
+		const userRecordLoaded = new Subject<void>();
+		this.userService.userState
+			.pipe(takeUntil(userRecordLoaded), this.takeUntilNeeded())
+			.subscribe({
+				next: (userState) => {
+					if (userState.record) {
+						userRecordLoaded.next();
+					} else {
+						return;
+					}
+					console.log('this.redirectTo:', this.redirectTo);
+					const redirectTo = this.redirectTo || '/'; // TODO: default one should be app specific.
+					this.navController
+						.navigateRoot(redirectTo)
+						.catch(
+							this.errorLogger.logErrorHandler(
+								'Failed to navigate back to ' + redirectTo,
+							),
+						);
+				},
+				error: this.errorHandler('Failed to get user state after login'),
+			});
 	}
 
 	onEmailFormStatusChanged(signingWith?: EmailFormSigningWith): void {
@@ -111,46 +135,6 @@ export class LoginPageComponent {
 			user: userCredential.user,
 		};
 		this.userService.onUserSignedIn(authState);
-		// const { to } = this.route.snapshot.queryParams;
-		// if (this.to) {
-		// 	const queryParams = to ? { ...this.route.snapshot.queryParams } : undefined;
-		// 	if (queryParams) {
-		// 		delete queryParams['to'];
-		// 	}
-		// 	this.navController.navigateRoot(this.to, {
-		// 		queryParams,
-		// 		fragment: location.hash.substring(1),
-		// 	}).catch(this.errorLogger.logErrorHandler('Failed to navigate to: ' + to));
-		// } else {
-		// 	this.loginEventsHandler?.onLoggedIn();
-		// }
-		const userRecordLoaded = new Subject<void>();
-		this.userService.userState.pipe(takeUntil(userRecordLoaded)).subscribe({
-			next: (userState) => {
-				if (userState.record) {
-					userRecordLoaded.next();
-				} else {
-					return;
-				}
-				console.log('this.redirectTo:', this.redirectTo);
-				const redirectTo = this.redirectTo || '/'; // TODO: default one should be app specific.
-				this.navController
-					.navigateRoot(redirectTo)
-					.catch(
-						this.errorLogger.logErrorHandler(
-							'Failed to navigate back to ' + redirectTo,
-						),
-					);
-			},
-			error: this.errorHandler('Failed to get user state after login'),
-		});
-		// this.userService.
-		// this.authStateService.authState.subscribe({
-		// 	next: authState => {
-		// 	if (authState.user.)
-		// 	},
-		// 	error: this.errorHandler('Failed to get auth state after logged in'),
-		// })
 	}
 
 	private errorHandler(
