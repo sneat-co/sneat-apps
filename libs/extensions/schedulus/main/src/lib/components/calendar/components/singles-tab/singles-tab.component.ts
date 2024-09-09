@@ -51,9 +51,9 @@ export class SinglesTabComponent
 
 	public ngOnChanges(changes: SimpleChanges): void {
 		console.log('SinglesTabComponent.ngOnChanges()', changes);
-		const teamChange = changes['team'];
-		if (teamChange) {
-			if (this.space?.id !== teamChange.previousValue?.id) {
+		const spaceChange = changes['space'];
+		if (spaceChange) {
+			if (this.space?.id !== spaceChange.previousValue?.id) {
 				switch (this.tab) {
 					case 'upcoming':
 						this.watchUpcomingSingles();

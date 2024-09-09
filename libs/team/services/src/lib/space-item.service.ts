@@ -49,7 +49,7 @@ abstract class SpaceItemBaseService<Brief, Dbo extends Brief> {
 		itemID: string,
 	): Observable<ISpaceItemNavContext<Brief, Dbo2>> {
 		console.log(
-			`TeamItemBaseService.watchTeamItemByIdWithTeamRef(team=${space.id}, itemID=${itemID}), collectionName=${this.collectionName}`,
+			`TeamItemBaseService.watchTeamItemByIdWithTeamRef(space=${space.id}, itemID=${itemID}), collectionName=${this.collectionName}`,
 		);
 		const collectionRef = this.collectionRef<Dbo2>(space.id);
 		return this.sfs.watchByID(collectionRef, itemID).pipe(
@@ -266,23 +266,23 @@ export class ModuleSpaceItemService<
 	//   Brief2 extends Brief,
 	//   Dbo2 extends Dto,
 	// >(
-	//   team: ITeamContext,
+	//   space: ISpaceContext,
 	//   item: IIdAndBrief<Brief2, Dbo2>,
 	// ) => {
 	//   return querySnapshot.docs.map((docSnapshot) => {
 	//     const dto = docSnapshot.data();
 	//     const { id } = docSnapshot;
 	//     const brief: Brief2 = { id, ...dto } as unknown as Brief2;
-	//     const c: ITeamItemContext<Brief2, Dbo2> = { id, team, dto, brief };
+	//     const c: ISpaceItemContext<Brief2, Dbo2> = { id, team, dto, brief };
 	//     return c;
 	//   });
 	// };
 
-	// public watchTeamItems<Brief2 extends Brief, Dbo2 extends Dto>(
+	// public watchSpaceItems<Brief2 extends Brief, Dbo2 extends Dto>(
 	//   spaceID: string,
 	//   filter?: readonly IFilter[],
 	// ): Observable<IIdAndBriefAndDto<Brief2, Dbo2>[]> {
-	//   console.log('watchTeamItems()', spaceID, this.collectionName);
+	//   console.log('watchSpaceItems()', spaceID, this.collectionName);
 	//   const collectionRef = collection(
 	//     this.teamRef(spaceID),
 	//     this.collectionName,
@@ -296,14 +296,14 @@ export class ModuleSpaceItemService<
 	//   );
 	// }
 
-	// public watchTeamItemsWithTeamContext<Brief2 extends Brief, Dbo2 extends Dto>(
-	//   team: ITeamRef,
+	// public watchTeamItemsWithSpaceContext<Brief2 extends Brief, Dbo2 extends Dto>(
+	//   space: ISpaceRef,
 	//   filter?: readonly IFilter[],
-	// ): Observable<ITeamItemContext<Brief2, Dbo2>[]> {
-	//   const querySnapshots = this.watchTeamItems(team.id, filter);
+	// ): Observable<ISpaceItemContext<Brief2, Dbo2>[]> {
+	//   const querySnapshots = this.watchTeamItems(space.id, filter);
 	//   return querySnapshots.pipe(
 	//     map((querySnapshot) =>
-	//       this.mapItemTeamItemContext(
+	//       this.mapItemSpaceItemContext(
 	//         team,
 	//         querySnapshot as unknown as QuerySnapshot<Dbo2>,
 	//       ),

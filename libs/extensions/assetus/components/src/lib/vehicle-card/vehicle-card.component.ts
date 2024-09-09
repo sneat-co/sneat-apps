@@ -78,7 +78,7 @@ export class VehicleCardComponent implements OnChanges {
 	regNumberInputComponent?: AssetRegNumberInputComponent;
 
 	ngOnChanges(changes: SimpleChanges): void {
-		// if (changes['team'] && this.team?.dto?.countryID && this.vehicleAsset?.dto && !this.vehicleAsset.dto.countryID) {
+		// if (changes['space'] && this.team?.dto?.countryID && this.vehicleAsset?.dto && !this.vehicleAsset.dto.countryID) {
 		// 	this.vehicleAsset = { ...this.vehicleAsset, dto: { ...this.vehicleAsset.dto, countryID: this.team.dto.countryID } };
 		// 	this.vehicleAssetChange.emit(this.vehicleAsset);
 		// }

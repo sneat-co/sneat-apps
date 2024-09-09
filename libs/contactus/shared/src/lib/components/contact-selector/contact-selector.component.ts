@@ -138,7 +138,7 @@ export class ContactSelectorComponent
 
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log('ContactSelectorComponent.ngOnChanges()', changes);
-		if (changes['team']) {
+		if (changes['space']) {
 			this.subscribeForData('ngOnChanges');
 		}
 	}

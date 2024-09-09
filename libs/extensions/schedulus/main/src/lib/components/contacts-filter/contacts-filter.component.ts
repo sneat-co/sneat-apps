@@ -32,8 +32,6 @@ export class ContactsFilterComponent
 	extends ContactusModuleBaseComponent
 	implements OnChanges
 {
-	// @Input({ required: true }) team?: ITeamContext;
-
 	@Output() readonly contactIDsChange = new EventEmitter<readonly string[]>();
 
 	@Input({ required: true }) contactIDs: readonly string[] = [];
@@ -44,19 +42,19 @@ export class ContactsFilterComponent
 
 	constructor(
 		route: ActivatedRoute,
-		teamParams: SpaceComponentBaseParams,
+		spaceParams: SpaceComponentBaseParams,
 		userService: SneatUserService,
 		contactusSpaceService: ContactusSpaceService,
 	) {
-		super('ContactsFilterComponent', route, teamParams, contactusSpaceService);
-		const contactusTeamContextService = new ContactusSpaceContextService(
-			teamParams.errorLogger,
+		super('ContactsFilterComponent', route, spaceParams, contactusSpaceService);
+		const contactusSpaceContextService = new ContactusSpaceContextService(
+			spaceParams.errorLogger,
 			this.destroyed$,
 			this.spaceIDChanged$,
 			contactusSpaceService,
 			userService,
 		);
-		contactusTeamContextService.contactusSpaceContext$
+		contactusSpaceContextService.contactusSpaceContext$
 			.pipe(this.takeUntilNeeded())
 			.subscribe({
 				next: this.onContactusSpaceChanged,

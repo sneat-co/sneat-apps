@@ -258,8 +258,8 @@ export class HappeningService {
 		return this.sneatApiService.post('happenings/adjust_slot', request);
 	}
 
-	// watchByTeam(team: ITeamContext): Observable<IHappeningContext[]> {
-	// 	return this.sfs.watchByTeamID(team.id);
+	// watchByTeam(space: ISpaceContext): Observable<IHappeningContext[]> {
+	// 	return this.sfs.watchBySpaceID(team.id);
 	// }
 
 	public watchHappeningByID(

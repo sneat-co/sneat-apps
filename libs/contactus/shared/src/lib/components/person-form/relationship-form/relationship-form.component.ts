@@ -78,7 +78,7 @@ export class RelationshipFormComponent
 
 	override ngOnChanges(changes: SimpleChanges): void {
 		console.log('RelationshipFormComponent.ngOnChanges()', changes);
-		if (changes['ageGroup'] || changes['team']) {
+		if (changes['ageGroup'] || changes['space']) {
 			this.setRelationships();
 		}
 		if (changes['relatedTo'] || changes['relatedItems']) {

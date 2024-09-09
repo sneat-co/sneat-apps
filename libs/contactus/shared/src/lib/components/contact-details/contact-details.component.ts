@@ -113,7 +113,7 @@ export class ContactDetailsComponent implements OnChanges {
 	}
 
 	public ngOnChanges(changes: SimpleChanges): void {
-		if (changes['team']) {
+		if (changes['space']) {
 			this.setUserContactID();
 			this.setRelatedToCurrentUser();
 		}

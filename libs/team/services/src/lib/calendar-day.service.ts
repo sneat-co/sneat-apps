@@ -29,7 +29,7 @@ export class CalendarDayService {
 
 	public watchSpaceDay(space: ISpaceContext, dateID: string) {
 		console.log(
-			`ScheduleDayService.watchTeamDay(team={id=${space.id}, dateID=${dateID})`,
+			`ScheduleDayService.watchTeamDay(space={id=${space.id}, dateID=${dateID})`,
 		);
 		return this.spaceItemService
 			.watchSpaceItemByIdWithSpaceRef(space, dateID)

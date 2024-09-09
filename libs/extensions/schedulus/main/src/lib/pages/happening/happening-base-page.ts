@@ -6,7 +6,7 @@ import { CalendarBasePage } from '../calendar-base-page';
 
 export abstract class HappeningBasePage extends CalendarBasePage {
 	private readonly happeningID$ = new Subject<string>();
-	public happening?: IHappeningContext;
+	protected happening?: IHappeningContext;
 
 	protected constructor(
 		className: string,

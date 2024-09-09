@@ -33,15 +33,14 @@ export class RelatedContactComponent implements OnChanges, OnDestroy {
 	constructor(private readonly contactusSpaceService: ContactusSpaceService) {}
 
 	public ngOnChanges(changes: SimpleChanges): void {
-		if (changes['team']) {
-			const prevTeam = changes['team'].previousValue as
-				| ISpaceContext
-				| undefined;
-			const newTeam = changes['team'].currentValue as ISpaceContext | undefined;
-			if (newTeam && prevTeam?.id !== newTeam?.id) {
-				console.log('Team changed');
+		if (changes['space']) {
+			const spaceChanges = changes['space'];
+			const prevSpace = spaceChanges.previousValue as ISpaceContext | undefined;
+			const newSpace = spaceChanges.currentValue as ISpaceContext | undefined;
+			if (newSpace && prevSpace?.id !== newSpace?.id) {
+				console.log('Space changed');
 				this.contactusSpaceService
-					.watchContactBriefs(newTeam.id)
+					.watchContactBriefs(newSpace.id)
 					.pipe(takeUntil(this.destroyed))
 					.subscribe((briefs) => {
 						this.spaceContacts = briefs;

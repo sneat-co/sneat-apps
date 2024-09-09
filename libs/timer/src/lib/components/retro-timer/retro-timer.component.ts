@@ -58,7 +58,7 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log('RetroTimerComponent.ngOnChanges', changes);
-		if (changes['team'] || changes['retrospective']) {
+		if (changes['space'] || changes['retrospective']) {
 			if (this.space?.id && this.retrospective?.id) {
 				if (
 					this.timer?.spaceID !== this.space.id ||

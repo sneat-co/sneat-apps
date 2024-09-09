@@ -41,7 +41,13 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 	protected readonly spaceDboChanged = new Subject<
 		ISpaceDbo | undefined | null
 	>();
+
 	protected spaceContext?: ISpaceContext; // TODO: check - is it duplication of team?
+
+	private readonly spaceChanged = new Subject<ISpaceContext>();
+	protected readonly spaceChanged$ = this.spaceChanged
+		.asObservable()
+		.pipe(this.takeUntilNeeded());
 
 	protected readonly navController: NavController;
 	// protected readonly activeCommuneService: IActiveCommuneService;
@@ -258,7 +264,10 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 
 	private getSpaceContextFromRouteState(): void {
 		const space = history.state?.team as ISpaceContext;
-		this.console.log(`${this.className}.getTeamContextFromRouteState()`, space);
+		this.console.log(
+			`${this.className}.getSpaceContextFromRouteState()`,
+			space,
+		);
 		if (!space?.id) {
 			return;
 		}
@@ -286,11 +295,11 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 		}
 	}
 
-	// private updateExistingTeamContext(teamContext: ITeamContext): void {
-	// 	const dtoChanged = this.teamContext?.dto != teamContext.dto;
-	// 	this.teamContext = teamContext;
+	// private updateExistingSpaceContext(spaceContext: ISpaceContext): void {
+	// 	const dtoChanged = this.spaceContext?.dto != spaceContext.dto;
+	// 	this.spaceContext = spaceContext;
 	// 	if (dtoChanged) {
-	// 		this.onTeamDtoChanged();
+	// 		this.onSpaceDtoChanged();
 	// 	}
 	// }
 
@@ -300,11 +309,11 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 			spaceContext,
 		);
 		if (!spaceContext?.type && this.spaceContext?.type) {
-			throw new Error('!teamContext?.type && this.teamContext?.type');
+			throw new Error('!spaceContext?.type && this.spaceContext?.type');
 		}
 		if (this.spaceContext == spaceContext) {
 			console.warn(
-				'Duplicate call to TeamPageComponent.setNewTeamContext() with same teamContext:',
+				'Duplicate call to TeamPageComponent.setNewSpaceContext() with same spaceContext:',
 				spaceContext,
 			);
 			return;
@@ -317,7 +326,7 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 		);
 		const dboChanged = this.spaceContext?.dbo != spaceContext?.dbo;
 		this.console.log(
-			`${this.className} extends TeamPageComponent.setNewTeamContext(id=${spaceContext?.id}) => idChanged=${idChanged}, teamTypeChanged=${spaceTypeChanged}, briefChanged=${briefChanged}, dtoChanged=${dboChanged}`,
+			`${this.className} extends TeamPageComponent.setNewSpaceContext(id=${spaceContext?.id}) => idChanged=${idChanged}, spaceTypeChanged=${spaceTypeChanged}, briefChanged=${briefChanged}, dtoChanged=${dboChanged}`,
 		);
 		this.spaceContext = spaceContext;
 		if (idChanged) {
@@ -325,11 +334,11 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 			this.onSpaceIdChanged();
 			if (spaceContext) {
 				setTimeout(() => this.subscribeForSpaceChanges(spaceContext), 1);
-				// setTimeout(() => this.subscribeForContactusTeamChanges(teamContext), 1);
+				// setTimeout(() => this.subscribeForContactusSpaceChanges(spaceContext), 1);
 				// }
 			}
 			if (spaceTypeChanged && spaceContext?.type) {
-				// console.log('emitting teamTypeChanged$', teamContext.type);
+				// console.log('emitting spaceTypeChanged$', spaceContext.type);
 				this.spaceTypeChanged.next(spaceContext.type);
 			}
 			if (briefChanged) {
@@ -345,7 +354,7 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 			const { id } = spaceContext;
 			if (!id) {
 				this.logError(
-					'setNewTeamContext() is called with team context without ID',
+					'setNewSpaceContext() is called with team context without ID',
 				);
 				return;
 			}
@@ -359,48 +368,51 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 			// 				);
 			// 			}),
 			// 			tap(newTeam => {
-			// 				if (newTeam && teamContext.type && teamContext.type != newTeam.type) {
-			// 					throw new Error(`loaded team=${id} with type=${newTeam.type} while expected to have type=${teamContext.type}`);
+			// 				if (newTeam && spaceContext.type && spaceContext.type != newTeam.type) {
+			// 					throw new Error(`loaded space=${id} with type=${newSpace.type} while expected to have type=${spaceContext.type}`);
 			// 				}
 			// 			}),
 			// 		)
 			// 		.subscribe({
-			// 			next: this.onTeamLoaded,
-			// 			error: this.logErrorHandler(`failed to load team by id=${id}`),
+			// 			next: this.onSpaceLoaded,
+			// 			error: this.logErrorHandler(`failed to load space by id=${id}`),
 			// 		}),
 			// );
+			if (this.spaceContext) {
+				this.spaceChanged.next(this.spaceContext);
+			}
 		}
 
-		// private setTeamContext = (teamContext?: ITeamContext | null): void => {
-		// 	console.log('setTeamContext()', teamContext);
+		// private setSpaceContext = (spaceContext?: ISpaceContext | null): void => {
+		// 	console.log('setSpaceContext()', spaceContext);
 		// 	try {
-		// 		if (teamContext?.id) {
-		// 			if (this.teamContext?.id !== teamContext.id) {
-		// 				this.setNewTeamContext(teamContext);
+		// 		if (spaceContext?.id) {
+		// 			if (this.spaceContext?.id !== spaceContext.id) {
+		// 				this.setNewSpaceContext(spaceContext);
 		// 			} else {
-		// 				this.updateExistingTeamContext(teamContext);
+		// 				this.updateExistingSpaceContext(spaceContext);
 		// 			}
-		// 		} else if (this.teamContext) {
-		// 			const hadData = !!this.teamContext.dto;
-		// 			const hadId = !!this.teamContext.id;
-		// 			this.teamContext = undefined;
+		// 		} else if (this.spaceContext) {
+		// 			const hadData = !!this.spaceContext.dto;
+		// 			const hadId = !!this.spaceContext.id;
+		// 			this.spaceContext = undefined;
 		// 			if (hadId) {
-		// 				this.onTeamIdChanged();
+		// 				this.onSpaceIdChanged();
 		// 			}
 		// 			if (hadData) {
-		// 				this.onTeamDtoChanged();
+		// 				this.onSpaceDtoChanged();
 		// 			}
 		// 		}
 		//
 		// 	} catch (e) {
-		// 		this.logError(e, 'Failed to set team id');
+		// 		this.logError(e, 'Failed to set space id');
 		// 	}
 	}
 
 	private readonly onSpaceContextChanged = (space: ISpaceContext): void => {
 		const dtoChanged = space.dbo !== this.spaceContext?.dbo;
 		this.console.log(
-			`${this.className}.onTeamContextChanged() => dtoChanged=${dtoChanged}, space:`,
+			`${this.className}.onSpaceContextChanged() => dtoChanged=${dtoChanged}, space:`,
 			space,
 		);
 		if (!space.brief && space.dbo) {
@@ -417,11 +429,11 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 			this.onSpaceDboChanged();
 		}
 		// this.console.log(`${this.className} => loaded team record:`, newTeam);
-		// if (newTeam.id === this.teamContext?.id) {
-		// 	this.setNewTeamContext({ ...this.teamContext, ...newTeam });
-		// 	// this.teamContext = ;
+		// if (newSpace.id === this.spaceContext?.id) {
+		// 	this.setNewSpaceContext({ ...this.spaceContext, ...newSpace });
+		// 	// this.spaceContext = ;
 		// } else { // Whe should never end up here as should unsubscribe on leaving page or ID change
-		// 	this.errorLogger.logError(`got team record after team context changed: received id=${newTeam.id}, current id=${this.teamContext?.id}`);
+		// 	this.errorLogger.logError(`got team record after space context changed: received id=${newSpace.id}, current id=${this.spaceContext?.id}`);
 		// }
 	};
 

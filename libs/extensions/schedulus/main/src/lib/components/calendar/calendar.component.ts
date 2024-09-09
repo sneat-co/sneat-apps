@@ -111,11 +111,11 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['team']) {
+		if (changes['space']) {
 			this.onSpaceContextChanged();
-			const teamChange = changes['team'];
-			const prevTeam = teamChange.previousValue as ISpaceContext;
-			const currentTeam = teamChange.currentValue as ISpaceContext;
+			const spaceChange = changes['space'];
+			const prevTeam = spaceChange.previousValue as ISpaceContext;
+			const currentTeam = spaceChange.currentValue as ISpaceContext;
 			if (currentTeam?.id !== prevTeam?.id) {
 				this.onSpaceIdChanged();
 			}

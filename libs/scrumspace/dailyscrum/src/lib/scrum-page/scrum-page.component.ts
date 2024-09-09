@@ -112,7 +112,7 @@ export class ScrumPageComponent
 		return new Date(+year, +month - 1, +day);
 	}
 
-	public ngOnInit() {
+	public override ngOnInit() {
 		try {
 			const tab = window?.location?.hash?.match(/[#&]tab=(\w+)/);
 
@@ -394,7 +394,7 @@ export class ScrumPageComponent
 	}
 
 	private subscribeScrum(teamId: string, scrumId: string, from: string) {
-		console.log(`${from}: subscribeScrum(team=${teamId}, scrumId=${scrumId})`);
+		console.log(`${from}: subscribeScrum(space=${teamId}, scrumId=${scrumId})`);
 		if (this.scrumsById[scrumId]) {
 			return;
 		}

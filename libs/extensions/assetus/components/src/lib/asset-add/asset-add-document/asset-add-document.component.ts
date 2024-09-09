@@ -50,7 +50,8 @@ export class AssetAddDocumentComponent
 	protected nextServiceDue = ''; // ISO date string 'YYYY-MM-DD'
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['team'] && this.space) {
+		const spaceChanges = changes['space'];
+		if (spaceChanges && this.space) {
 			const a: IAssetContext<'document'> = this.documentAsset ?? {
 				id: '',
 				space: this.space ?? { id: '' },

@@ -54,6 +54,10 @@ export class LoginPageComponent extends SneatBaseComponent {
 
 	public appTitle = 'Sneat.app';
 
+	protected readonly telegramBotID = location.hostname.startsWith('local')
+		? 'AlextDevBot'
+		: 'SneatBot';
+
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		@Inject(AnalyticsService)

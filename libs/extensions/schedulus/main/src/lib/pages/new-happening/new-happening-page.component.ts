@@ -79,6 +79,13 @@ export class NewHappeningPageComponent extends CalendarBasePage {
 			},
 			error: this.logErrorHandler('failed to get query params'),
 		});
+		this.spaceChanged$.subscribe({
+			next: () => {
+				if (this.happening) {
+					this.happening = { ...this.happening, space: this.space };
+				}
+			},
+		});
 	}
 
 	private createHappeningContext(type: HappeningType): void {

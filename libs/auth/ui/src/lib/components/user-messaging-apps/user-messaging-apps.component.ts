@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { SneatApiService } from '@sneat/api';
 import { SneatUserService } from '@sneat/auth-core';
 import { IUserRecord } from '@sneat/auth-models';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { LoginWithTelegramComponent } from '../../pages/login-page/login-with-telegram.component';
 
 @Component({
@@ -17,7 +19,11 @@ export class UserMessagingAppsComponent {
 
 	protected userRecord?: IUserRecord;
 
-	constructor(private readonly sneatUserService: SneatUserService) {
+	constructor(
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		private readonly sneatUserService: SneatUserService,
+		private readonly sneatApiService: SneatApiService,
+	) {
 		this.sneatUserService.userState.subscribe({
 			next: (user) => {
 				this.userRecord = user.record || undefined;
@@ -33,5 +39,26 @@ export class UserMessagingAppsComponent {
 			}
 		}
 		return false;
+	}
+
+	protected getAccountID(provider: 'telegram'): string {
+		const prefix = provider + '::';
+		const a = this.userRecord?.accounts?.find((a) => a.startsWith(prefix));
+		return a?.replace(prefix, '') || '';
+	}
+
+	protected disconnecting?: 'telegram' | 'viber' | 'whatsapp';
+
+	protected disconnect(provider: 'telegram'): void {
+		this.disconnecting = provider;
+		this.sneatApiService
+			.delete('auth/disconnect?provider=' + provider)
+			.subscribe({
+				next: () => {
+					this.disconnecting = undefined;
+					alert('Disconnected!');
+				},
+				error: this.errorLogger.logErrorHandler('Failed to disconnect'),
+			});
 	}
 }

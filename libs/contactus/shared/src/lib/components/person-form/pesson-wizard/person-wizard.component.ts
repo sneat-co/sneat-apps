@@ -170,7 +170,7 @@ export class PersonWizardComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log('PersonFormComponent.ngOnChanges()', changes);
-		if (changes['team']) {
+		if (changes['space']) {
 			this.setRelatedToUser();
 		}
 		if (changes['relatedPerson']) {

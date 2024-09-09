@@ -49,7 +49,7 @@ export class AssetAddVehicleComponent
 	protected nextServiceDue = ''; // ISO date string 'YYYY-MM-DD'
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['team'] && this.space) {
+		if (changes['space'] && this.space) {
 			const a: IAssetVehicleContext = this.vehicleAsset ?? {
 				id: '',
 				space: this.space ?? { id: '' },

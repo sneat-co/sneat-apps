@@ -48,7 +48,7 @@ import { SpacePageBaseComponent } from './SpacePageBaseComponent';
 export class SpacePageComponent extends SpacePageBaseComponent {
 	protected contactusSpace?: IIdAndOptionalDbo<IContactusSpaceDbo>;
 
-	private readonly contactusTeamContextService: ContactusSpaceContextService;
+	private readonly contactusSpaceContextService: ContactusSpaceContextService;
 
 	constructor(
 		route: ActivatedRoute,
@@ -58,7 +58,7 @@ export class SpacePageComponent extends SpacePageBaseComponent {
 		contactusTeamService: ContactusSpaceService,
 	) {
 		super('SpacePageComponent', route, params, topMenuService, cd);
-		this.contactusTeamContextService = new ContactusSpaceContextService(
+		this.contactusSpaceContextService = new ContactusSpaceContextService(
 			params.errorLogger,
 			this.destroyed$,
 			this.spaceIDChanged$,
@@ -81,7 +81,7 @@ export class SpacePageComponent extends SpacePageBaseComponent {
 	private subscribeForContactusSpaceChanges(): void {
 		this.contactusSpaceSub?.unsubscribe();
 		this.contactusSpaceSub =
-			this.contactusTeamContextService.contactusSpaceContext$
+			this.contactusSpaceContextService.contactusSpaceContext$
 				.pipe(this.takeUntilNeeded(), takeUntil(this.userService.userChanged))
 				.subscribe({
 					next: (contactusTeam) => {

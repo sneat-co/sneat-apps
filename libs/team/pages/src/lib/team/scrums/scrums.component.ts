@@ -41,7 +41,7 @@ export class ScrumsComponent implements OnChanges, OnDestroy {
 	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['team']) {
+		if (changes['space']) {
 			try {
 				throw new Error('not implemented due to refactoring');
 				// if (this.team && this.teamId !== this.team.id) {

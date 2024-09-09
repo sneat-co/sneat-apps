@@ -115,32 +115,35 @@ export class SpaceService {
 			.pipe(map((response) => response.space));
 	}
 
-	// public getTeam(ref: ITeamRef): Observable<ITeamContext> {
-	// 	return this.watchTeam(ref).pipe(first());
+	// public getSpace(ref: ISpaceRef): Observable<ISpaceContext> {
+	// 	return this.watchSpace(ref).pipe(first());
 	// }
 
 	public watchSpace(ref: ISpaceRef): Observable<ISpaceContext> {
-		console.log(`TeamService.watchTeam(ref=${JSON.stringify(ref)})`);
+		console.log(`SpaceService.watchSpace(ref=${JSON.stringify(ref)})`);
 		if (!ref) {
 			throw new Error('team ref is a required parameter');
 		}
 		const { id } = ref;
+		if (id === 'contacts') {
+			throw new Error('watchSpace({i}d===contacts})');
+		}
 		let subj = this.spaces$[id];
 		if (subj) {
 			return subj.asObservable();
 		}
-		let teamContext: ISpaceContext = ref;
+		let spaceContext: ISpaceContext = ref;
 		if (this.currentUserSpaces) {
 			const userTeamInfo = this.currentUserSpaces[id];
 			if (userTeamInfo) {
-				teamContext = {
+				spaceContext = {
 					id,
 					type: userTeamInfo.type,
 					brief: spaceBriefFromUserSpaceInfo(userTeamInfo),
 				};
 			}
 		}
-		subj = new BehaviorSubject<ISpaceContext>(teamContext);
+		subj = new BehaviorSubject<ISpaceContext>(spaceContext);
 		this.spaces$[id] = subj;
 		if (this.userService.currentUserID) {
 			this.subscribeForSpaceChanges(subj);
@@ -245,8 +248,12 @@ export class SpaceService {
 
 	private subscribeForSpaceChanges(subj: BehaviorSubject<ISpaceContext>): void {
 		const t = subj.value;
-		console.log(`TeamService.subscribeForTeamChanges(${t.id})`);
+		console.log(`TeamService.subscribeForSpaceChanges(${t.id})`);
 		const { id } = t;
+		if (id === 'contacts') {
+			console.log('subscribeForSpaceChanges() => contacts');
+			throw new Error('subscribeForSpaceChanges(id===contacts)');
+		}
 		const spacesCollection = collection(
 			this.afs,
 			'spaces',
@@ -263,10 +270,10 @@ export class SpaceService {
 					// }
 					return team;
 				}),
-				tap((team) => {
+				tap((space) => {
 					console.log(
-						'TeamService.subscribeForSpaceChanges() => New team from Firestore:',
-						team,
+						'SpaceService.subscribeForSpaceChanges() => New space from Firestore:',
+						space,
 					);
 					// subj.next(team);
 				}),

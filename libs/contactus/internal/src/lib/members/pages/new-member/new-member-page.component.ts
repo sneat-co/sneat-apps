@@ -50,7 +50,7 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
 
 	constructor(route: ActivatedRoute, params: ContactComponentBaseParams) {
 		super('NewMemberPageComponent', route, params.spaceParams);
-		const contactusTeamContextService = new ContactusSpaceContextService(
+		const contactusSpaceContextService = new ContactusSpaceContextService(
 			params.errorLogger,
 			this.destroyed$,
 			this.spaceIDChanged$,
@@ -81,7 +81,7 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
 			}
 		});
 
-		contactusTeamContextService.contactusSpaceContext$
+		contactusSpaceContextService.contactusSpaceContext$
 			.pipe(this.takeUntilNeeded())
 			.subscribe({
 				next: (contactusTeam) => {

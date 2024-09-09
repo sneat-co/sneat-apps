@@ -45,8 +45,9 @@ export class AddDwellingCardComponent implements OnChanges {
 	protected areaSqM?: number;
 
 	ngOnChanges(changes: SimpleChanges): void {
+		const spaceChanges = changes['space'];
 		if (
-			changes['team'] &&
+			spaceChanges &&
 			this.space?.dbo?.countryID &&
 			this.dwellingAsset?.dbo &&
 			!this.dwellingAsset.dbo.countryID

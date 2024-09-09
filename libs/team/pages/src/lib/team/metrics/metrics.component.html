@@ -19,7 +19,9 @@
 					We've created few demo metrics but you can
 					<a href="#" (click)="deleteDemoMetrics($event)">delete them</a>
 					and/or
-					<a href="add-metric?team={{ space?.id }}" (click)="goAddMetric($event)"
+					<a
+						href="add-metric?space={{ space?.id }}"
+						(click)="goAddMetric($event)"
 						>add your own</a
 					>.
 				</p>

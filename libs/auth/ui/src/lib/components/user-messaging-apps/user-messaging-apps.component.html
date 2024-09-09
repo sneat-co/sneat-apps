@@ -21,8 +21,8 @@
 	<ion-item>
 		<ion-segment [(ngModel)]="integrations" style="margin-bottom: 0.5em">
 			<ion-segment-button value="messaging-apps"
-				>Messaging Apps</ion-segment-button
-			>
+				>Messaging Apps
+			</ion-segment-button>
 			<ion-segment-button value="quick-logins">Quick logins</ion-segment-button>
 		</ion-segment>
 	</ion-item>
@@ -44,24 +44,36 @@
 		@case ("messaging-apps") {
 			<ion-item>
 				<ion-icon slot="start" name="paper-plane"></ion-icon>
-				<ion-label *ngIf="!userRecord">
-					<h3>Telegram</h3>
-					<p>Checking....</p>
-				</ion-label>
-				<ion-label *ngIf="userRecord && hasAccount('telegram')">
-					<h3 style="font-weight: bold">Telegram</h3>
-					<p>Connected!</p>
-				</ion-label>
-				<ion-label *ngIf="userRecord && !hasAccount('telegram')">
-					<h3>Telegram</h3>
-					<p>Not connected yet.</p>
-				</ion-label>
-				<ion-buttons slot="end" *ngIf="userRecord && !hasAccount('telegram')">
-					<sneat-login-with-telegram botID="AlextDevBot" />
-					<!--			<ion-button color="danger" title="I have no Telegram">-->
-					<!--				<ion-icon name="close-circle-outline" slot="start"></ion-icon>-->
-					<!--			</ion-button>-->
-				</ion-buttons>
+				@if (!userRecord) {
+					<ion-label>
+						<h3>Telegram</h3>
+						<p>Checking....</p>
+					</ion-label>
+				} @else if (hasAccount("telegram")) {
+					<ion-label>
+						<h3 style="font-weight: bold">Telegram</h3>
+						<p>Connected! (UID={{ getAccountID("telegram") }})</p>
+					</ion-label>
+					<ion-buttons slot="end">
+						<ion-button
+							[disabled]="disconnecting"
+							color="warning"
+							fill="solid"
+							(click)="disconnect('telegram')"
+						>
+							<ion-icon name="close" slot="start"></ion-icon>
+							<ion-label>Disconnect</ion-label>
+						</ion-button>
+					</ion-buttons>
+				} @else {
+					<ion-label>
+						<h3>Telegram</h3>
+						<p>Not connected yet.</p>
+					</ion-label>
+					<ion-buttons slot="end">
+						<sneat-login-with-telegram />
+					</ion-buttons>
+				}
 			</ion-item>
 			<ion-item>
 				<ion-icon slot="start" name="logo-whatsapp"></ion-icon>

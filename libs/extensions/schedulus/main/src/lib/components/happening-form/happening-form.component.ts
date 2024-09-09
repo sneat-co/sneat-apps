@@ -15,6 +15,7 @@ import {
 } from '@angular/core';
 import {
 	FormControl,
+	FormGroup,
 	FormsModule,
 	ReactiveFormsModule,
 	UntypedFormGroup,
@@ -74,10 +75,15 @@ export class HappeningFormComponent
 	@Input() public wd?: WeekdayCode2;
 	@Input() public date?: string;
 
-	@Input({ required: true }) public space?: ISpaceContext;
+	// @Input({ required: true }) public space?: ISpaceContext;
+
 	@Input({ required: true }) public happening?: IHappeningContext;
+
+	public get space(): ISpaceContext | undefined {
+		return this.happening?.space;
+	}
+
 	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
-	@Input() public contactusSpace?: IContactusSpaceDboAndID;
 
 	@ViewChild('titleInput', { static: true }) titleInput?: IonInput;
 	@ViewChild('happeningSlotsComponent', { static: false })
@@ -101,7 +107,7 @@ export class HappeningFormComponent
 		Validators.required,
 	);
 
-	public happeningForm = new UntypedFormGroup({
+	public happeningForm = new FormGroup({
 		title: this.happeningTitle,
 	});
 
@@ -244,7 +250,7 @@ export class HappeningFormComponent
 			...this.happening.dbo,
 			...this.happening.brief,
 			spaceIDs: [this.space.id], // TODO: should be already in this.happening.brief
-			title: activityFormValue.title, // TODO: should be already in this.happening.brief
+			title: activityFormValue.title || '', // TODO: should be already in this.happening.brief
 		};
 		// switch (dto.type) {
 		// 	case 'recurring':

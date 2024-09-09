@@ -57,7 +57,7 @@ export class NewCompanyFormComponent implements OnChanges {
 	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['team'] && this.space) {
+		if (changes['space'] && this.space) {
 			if (!this.contact) {
 				const brief: IContactBrief = { type: 'company' };
 				this.contact = { id: '', dbo: brief, space: this.space };

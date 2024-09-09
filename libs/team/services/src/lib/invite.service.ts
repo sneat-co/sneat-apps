@@ -46,7 +46,7 @@ export class InviteService {
 	): Observable<ICreatePersonalInviteResponse> {
 		// TODO: Should we pass `request.message`? If not should be excluded from request
 		return this.sneatApiService.get<ICreatePersonalInviteResponse>(
-			`invites/invite_link_for_member?team=${request.spaceID}&member=${request.to.memberID}`,
+			`invites/invite_link_for_member?space=${request.spaceID}&member=${request.to.memberID}`,
 		);
 	}
 

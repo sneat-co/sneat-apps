@@ -11,19 +11,22 @@ import {
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
+import { ContactusSpaceService } from '@sneat/contactus-services';
 import {
 	ContactsChecklistComponent,
 	ICheckChangedArgs,
 	MembersListComponent,
 } from '@sneat/contactus-shared';
+import { IIdAndBrief } from '@sneat/core';
 import { addRelatedItem, getRelatedItemIDs } from '@sneat/dto';
 import { IHappeningContext, IHappeningBase } from '@sneat/mod-schedulus-core';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
-import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
+import { IContactBrief, IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import {
 	HappeningService,
 	IHappeningContactRequest,
 } from '@sneat/team-services';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'sneat-happening-participants',
@@ -40,17 +43,42 @@ import {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HappeningParticipantsComponent implements OnChanges {
-	@Input({ required: true }) space?: ISpaceContext; // TODO: Can we get rid of this?
-	@Input({ required: true }) contactusSpace?: IContactusSpaceDboAndID;
+	// @Input({ required: true }) space?: ISpaceContext;
 	@Input({ required: true }) happening?: IHappeningContext;
+
+	protected get space(): ISpaceContext | undefined {
+		return this.happening?.space;
+	}
 
 	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
 
 	public checkedContactIDs: readonly string[] = [];
 	public contacts: number[] = [];
 	public tab: 'members' | 'others' = 'members';
+	// protected members?: readonly IIdAndBrief<IContactBrief>[];
 
-	constructor(private readonly happeningService: HappeningService) {}
+	constructor(
+		private readonly happeningService: HappeningService,
+		private readonly contactusSpaceService: ContactusSpaceService,
+	) {}
+
+	// private contactusSpaceSubscription?: Subscription;
+	// private onSpaceIdChanged(): void {
+	// 	this.contactusSpaceSubscription?.unsubscribe();
+	// 	const spaceID = this.space?.id;
+	// 	if (!spaceID) {
+	// 		return;
+	// 	}
+	// 	this.contactusSpaceSubscription = this.contactusSpaceService
+	// 		.watchContactBriefs(spaceID)
+	// 		.subscribe({
+	// 			next: (contactBriefs) => {
+	// 				this.members = contactBriefs;
+	// 			},
+	// 			error: (error) =>
+	// 				console.error('Failed to load contactus space', error),
+	// 		});
+	// }
 
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log(

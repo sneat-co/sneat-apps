@@ -98,7 +98,7 @@ export class NewMemberFormComponent implements OnChanges {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['team']) {
+		if (changes['space']) {
 			this.setPersonRequirements();
 		}
 	}

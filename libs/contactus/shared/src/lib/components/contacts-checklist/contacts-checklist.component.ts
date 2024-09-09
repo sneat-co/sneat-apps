@@ -18,6 +18,7 @@ import { IIdAndBrief } from '@sneat/core';
 import { IContactBrief } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
+import { SneatBaseComponent } from '@sneat/ui';
 import { Subscription } from 'rxjs';
 
 export interface ICheckChangedArgs {
@@ -35,7 +36,10 @@ export interface ICheckChangedArgs {
 	imports: [CommonModule, IonicModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ContactsChecklistComponent implements OnChanges {
+export class ContactsChecklistComponent
+	extends SneatBaseComponent
+	implements OnChanges
+{
 	@Input({ required: true }) space?: ISpaceContext;
 	@Input() roles: string[] = ['member'];
 	@Input({ required: true }) checkedContactIDs: readonly string[] = [];
@@ -54,18 +58,20 @@ export class ContactsChecklistComponent implements OnChanges {
 	) => contact.id;
 
 	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		private readonly changeDetectorRef: ChangeDetectorRef,
 		private readonly contactusSpaceService: ContactusSpaceService,
-	) {}
+	) {
+		super('ContactsChecklistComponent', errorLogger);
+	}
 
 	private subscribeForContactBriefs(space: ISpaceContext): void {
 		console.log(
-			`ContactsChecklistComponent.subscribeForContactBriefs(team=${space?.id})`,
+			`ContactsChecklistComponent.subscribeForContactBriefs(space=${space?.id})`,
 		);
 		this.contactusSpaceSubscription = this.contactusSpaceService
 			.watchContactBriefs(space.id)
-			// .pipe(takeUntilDestroyed())
+			.pipe(this.takeUntilNeeded())
 			.subscribe({
 				next: (contacts) => {
 					console.log(
@@ -84,11 +90,11 @@ export class ContactsChecklistComponent implements OnChanges {
 
 	public ngOnChanges(changes: SimpleChanges): void {
 		console.log('ContactsChecklistComponent.ngOnChanges()', changes);
-		if (changes['team']) {
-			const spaceChanges = changes['team'];
-			const previousTeam = spaceChanges.previousValue as ISpaceContext;
+		if (changes['space']) {
+			const spaceChanges = changes['space'];
+			const previousSpace = spaceChanges.previousValue as ISpaceContext;
 
-			if (previousTeam?.id !== this.space?.id) {
+			if (previousSpace?.id !== this.space?.id) {
 				this.contactusSpaceSubscription?.unsubscribe();
 				if (this.space?.id) {
 					this.subscribeForContactBriefs(this.space);

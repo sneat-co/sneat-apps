@@ -40,7 +40,7 @@ export class AssetAddDwellingComponent
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['team'] && this.space) {
+		if (changes['space'] && this.space) {
 			this.dwellingAsset = this.dwellingAsset ?? {
 				id: '',
 				space: this.space ?? { id: '' },

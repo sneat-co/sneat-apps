@@ -12,12 +12,12 @@ export class SpaceContextService {
 	// public trackUrl(
 	// 	route: ActivatedRoute,
 	// 	paramName: string,
-	// ): Observable<ITeamContext | undefined> {
+	// ): Observable<ISpaceContext | undefined> {
 	// 	return route.paramMap.pipe(
 	// 		map(params => {
 	// 			const id = params.get('teamID') || undefined;
-	// 			const teamContext: ITeamContext | undefined = id ? { id } : undefined;
-	// 			return teamContext;
+	// 			const spaceContext: ISpaceContext | undefined = id ? { id } : undefined;
+	// 			return spaceContext;
 	// 		}),
 	// 	);
 	// }
@@ -34,7 +34,7 @@ export function trackSpaceIdAndTypeFromRouteParameter(
 			const spaceContext: ISpaceContext | undefined = id
 				? { id: id, type: type || undefined }
 				: undefined;
-			// console.log('trackTeamIdAndTypeFromRouteParameter() => teamContext:', teamContext)
+			// console.log('trackSpaceIdAndTypeFromRouteParameter() => spaceContext:', spaceContext)
 			return spaceContext;
 		}),
 		distinctUntilChanged(

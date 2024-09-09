@@ -60,7 +60,7 @@ export class NavService {
 	}
 
 	// public navigateToScrum(date: 'today' | 'yesterday' | string, team: IRecord<ITeam>, scrum?: IRecord<IScrum>, tab?: ScrumPageTab): void {
-	// 	console.log(`navigateToScrum(date=${date}, team=${team?.id}, tab=${tab}), scrum:`, scrum?.data);
+	// 	console.log(`navigateToScrum(date=${date}, space=${space?.id}, tab=${tab}), scrum:`, scrum?.data);
 	// 	this.analyticsService.logEvent('navigateToScrum', {date, team: team.id});
 	// 	this.navController
 	// 		.navigateForward('scrum', {
@@ -138,7 +138,7 @@ export class NavService {
 	// 	this.navToSpacePage(navController, team, 'retrospective', 'navigateToRetrospective', {id});
 	//
 	// public navigateToRetroTree(date: 'today' | 'yesterday' | string, team: IRecord<ITeam>, retrospective?: IRecord<IRetrospective>): void {
-	// 	console.log(`navigateToRetroReview(date=${date}, team=${team?.id}), scrum:`, retrospective?.data);
+	// 	console.log(`navigateToRetroReview(date=${date}, space=${space?.id}), scrum:`, retrospective?.data);
 	// 	this.analyticsService.logEvent('navigateToRetroReview', {date, team: team.id});
 	// 	this.navController
 	// 		.navigateForward('retro-tree', {
