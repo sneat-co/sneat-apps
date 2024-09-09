@@ -55,6 +55,7 @@ export class HappeningParticipantsComponent implements OnChanges {
 	public checkedContactIDs: readonly string[] = [];
 	public contacts: number[] = [];
 	public tab: 'members' | 'others' = 'members';
+
 	// protected members?: readonly IIdAndBrief<IContactBrief>[];
 
 	constructor(
@@ -104,14 +105,14 @@ export class HappeningParticipantsComponent implements OnChanges {
 	}
 
 	// protected get members(): readonly IContactContext[] | undefined {
-	// 	const contactusTeam = this.contactusTeam,
-	// 		team = this.team;
+	// 	const contactusSpace = this.contactusSpace,
+	// 		space = this.space;
 	//
-	// 	if (!team || !contactusTeam) {
+	// 	if (!space || !contactusSpace) {
 	// 		return;
 	// 	}
-	// 	return zipMapBriefsWithIDs(contactusTeam?.dbo?.contacts).map((m) =>
-	// 		contactContextFromBrief(m, team),
+	// 	return zipMapBriefsWithIDs(contactusSpace?.dbo?.contacts).map((m) =>
+	// 		contactContextFromBrief(m, space),
 	// 	);
 	// }
 

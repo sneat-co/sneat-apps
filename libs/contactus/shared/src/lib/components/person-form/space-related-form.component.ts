@@ -26,6 +26,6 @@ export abstract class SpaceRelatedFormComponent implements OnChanges {
 	}
 
 	protected onSpaceTypeChanged(team?: ISpaceContext): void {
-		console.log('TeamRelatedFormComponent.onSpaceTypeChanged()', team);
+		console.log('SpaceRelatedFormComponent.onSpaceTypeChanged()', team);
 	}
 }

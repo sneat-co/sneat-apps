@@ -46,17 +46,27 @@ export class SneatUserService {
 	private readonly userState$ = new BehaviorSubject<ISneatUserState>(
 		initialSneatAuthState,
 	);
+
 	public readonly userState = this.userState$.asObservable();
 
-	private unsubscribeFromUserDoc?: Unsubscribe;
+	private _unsubscribeFromUserDoc?: Unsubscribe;
+
+	private unsubscribeFromUserDoc(from: string) {
+		if (this._unsubscribeFromUserDoc) {
+			console.log(
+				'SneatUserService.unsubscribeFromUserDoc() called from ' + from,
+			);
+			this._unsubscribeFromUserDoc();
+			this._unsubscribeFromUserDoc = undefined;
+		}
+	}
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly httpClient: HttpClient,
-		private readonly afs: AngularFirestore,
-		private readonly sneatAuthStateService: SneatAuthStateService,
 		private readonly sneatApiService: SneatApiService,
 		private readonly userRecordService: UserRecordService, // private readonly sneatTeamApiService: SneatTeamApiService
+		afs: AngularFirestore,
+		sneatAuthStateService: SneatAuthStateService,
 	) {
 		console.log('SneatUserService.constructor()');
 		this.userCollection = collection(
@@ -93,9 +103,7 @@ export class SneatUserService {
 		if (this.uid === authUser?.uid) {
 			return;
 		}
-		if (this.unsubscribeFromUserDoc) {
-			this.unsubscribeFromUserDoc();
-		}
+		this.unsubscribeFromUserDoc('onUserSignedIn()');
 		if (!authUser) {
 			if (this.userState$.value?.record !== null) {
 				this.userState$.next({ ...this.userState$.value });
@@ -108,26 +116,43 @@ export class SneatUserService {
 			...authState,
 		});
 		this.userChanged$.next(uid);
-		const userDocRef = this.userDocRef(uid);
-		console.log('SneatUserService: Loading user record...');
-		// updateDoc(userDocRef, { test1: 'test1' })
-		// 	.then(() => console.log('updateDoc() => success'))
-		// 	.catch((err) => console.error(err));
-		// getDoc(userDocRef).then((userDocSnapshot) => {
-		// 	console.log(
-		// 		`getDoc(uid: ${
-		// 			userDocRef.path
-		// 		}) => exists: ${userDocSnapshot.exists()}`,
-		// 	);
-		// });
-		this.unsubscribeFromUserDoc = onSnapshot(userDocRef, {
-			next: (userDocSnapshot) => {
-				this.userDocChanged(userDocSnapshot, authState);
-			},
-			error: this.errorLogger.logErrorHandler(
-				'SneatUserService failed to get user record',
-			),
-		});
+		this.watchUserRecord(uid, authState);
+	}
+
+	private watchUserRecord(uid: string, authState: ISneatAuthState): void {
+		console.log(
+			`SneatUserService.watchUserRecord(uid=${uid}): Loading user record...`,
+		);
+		this.unsubscribeFromUserDoc('whatUserRecord()');
+
+		// TODO: Remove - setTimeout() not needed but trying to troubleshoot user record issue
+		setTimeout(() => {
+			try {
+				const userDocRef = this.userDocRef(uid);
+				this._unsubscribeFromUserDoc = onSnapshot(userDocRef, {
+					next: (userDocSnapshot) => {
+						console.log(
+							`SneatUserService.watchUserRecord(uid=${uid}) => userDocSnapshot:`,
+							userDocSnapshot,
+						);
+						this.onAuthStateChanged(authState);
+						this.userDocChanged(userDocSnapshot, authState);
+					},
+					error: (err) => {
+						console.error(
+							`SneatUserService.watchUserRecord(uid=${uid}) => failed:`,
+							err,
+						);
+					},
+				});
+			} catch (err) {
+				console.error(
+					`SneatUserService.watchUserRecord(uid=${uid}) => Failed to setup watcher for user record::`,
+					err,
+				);
+				return;
+			}
+		}, 100);
 	}
 
 	private onAuthStateChanged = (authState: ISneatAuthState): void => {
@@ -146,7 +171,7 @@ export class SneatUserService {
 		authState: ISneatAuthState,
 	): void {
 		console.log(
-			'SneatUserService => userDocSnapshot.exists:',
+			'SneatUserService.userDocChanged() => userDocSnapshot.exists:',
 			userDocSnapshot.exists(),
 			'authState:',
 			authState,
@@ -195,10 +220,7 @@ export class SneatUserService {
 
 	private onUserSignedOut(): void {
 		this.uid = undefined;
-		if (this.unsubscribeFromUserDoc) {
-			this.unsubscribeFromUserDoc();
-			this.unsubscribeFromUserDoc = undefined;
-		}
+		this.unsubscribeFromUserDoc('onUserSignedOut()');
 	}
 
 	// private createUserRecord(userDocRef: DocumentReference, authUser: ISneatAuthUser): void {

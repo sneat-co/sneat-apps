@@ -160,7 +160,7 @@ export class NewContactPageComponent
 
 		const space = this.space;
 		if (!space) {
-			throw new Error('Team is not defined');
+			throw new Error('Space is not defined');
 		}
 
 		const assetId = params.get('asset');
@@ -214,7 +214,7 @@ export class NewContactPageComponent
 	submit(): void {
 		const space = this.space;
 		if (!space) {
-			throw new Error('Team is not defined');
+			throw new Error('Space is not defined');
 		}
 		this.creating = true;
 		let request: ICreateContactRequest = {

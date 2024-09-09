@@ -41,7 +41,7 @@ export class AddMetricPageComponent {
 			this.spaceID = space.id;
 			this.space = space.data;
 		} else {
-			this.spaceID = route.snapshot.queryParamMap.get('team') || undefined;
+			this.spaceID = route.snapshot.queryParamMap.get('space') || undefined;
 			if (this.spaceID) {
 				this.spaceService.getTeam(this.spaceID).subscribe({
 					next: (teamData) => {

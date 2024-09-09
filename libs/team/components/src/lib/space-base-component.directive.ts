@@ -78,9 +78,9 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 		this.spaceTypeChanged.pipe(
 			takeUntil(this.destroyed$),
 			distinctUntilChanged(),
-			// tap(v => console.log('teamTypeChanged$ before replay =>', v)),
+			// tap(v => console.log('spaceTypeChanged$ before replay =>', v)),
 			shareReplay(1),
-			// tap(v => console.log('teamTypeChanged$ after replay =>', v)),
+			// tap(v => console.log('spaceTypeChanged$ after replay =>', v)),
 		);
 
 	public readonly spaceBriefChanged$ = this.spaceBriefChanged

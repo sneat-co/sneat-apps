@@ -73,7 +73,7 @@ export type ReorderListItemsWorker = (listDto: IListDbo) => void;
 
 // export const TMDB_PROVIDER = new InjectionToken<ITmdbService>('tmdbService');
 
-// export function shortCommuneAndListIds(id: string): { shortCommuneId?: TeamType; shortListId?: ListType } {
+// export function shortCommuneAndListIds(id: string): { shortCommuneId?: SpaceType; shortListId?: ListType } {
 // 	const i = id.indexOf('-');
 // 	if (i < 0) {
 // 		return {};

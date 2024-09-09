@@ -59,7 +59,7 @@ export class EmailLoginFormComponent {
 	@Output() readonly loggedIn = new EventEmitter<UserCredential>();
 
 	@ViewChild('emailInput', { static: true }) emailInput?: IonInput;
-	@ViewChild('teamTitleInput', { static: false }) spaceTitleInput?: IonInput;
+	@ViewChild('spaceTitleInput', { static: false }) spaceTitleInput?: IonInput;
 
 	public readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
 

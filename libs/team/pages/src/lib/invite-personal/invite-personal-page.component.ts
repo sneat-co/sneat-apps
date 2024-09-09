@@ -69,7 +69,7 @@ export class InvitePersonalPageComponent implements OnInit {
 				this.errorLogger.logError('inviteId is not set');
 			}
 			if (!spaceID) {
-				this.errorLogger.logError('teamId is not set');
+				this.errorLogger.logError('spaceId is not set');
 			}
 			this.sneatApiService
 				.getAsAnonymous<{
@@ -120,7 +120,7 @@ export class InvitePersonalPageComponent implements OnInit {
 				next: (/*memberInfo*/) => {
 					console.log('Joined team');
 					this.navController
-						.navigateRoot('team', { queryParams: { id: this.spaceID } })
+						.navigateRoot('space', { queryParams: { id: this.spaceID } })
 						.catch((err) => {
 							this.errorLogger.logError(
 								err,

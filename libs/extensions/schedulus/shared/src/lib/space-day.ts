@@ -79,7 +79,7 @@ export class SpaceDay {
 		if (this.dateID === '1970-01-01') {
 			throw new Error('an attempt to set an empty date 1970-01-01');
 		}
-		console.log('TeamDay.constructor()', this.dateID, this.date);
+		console.log('SpaceDay.constructor()', this.dateID, this.date);
 		this.spaceID$ = teamID$.pipe(distinctUntilChanged());
 		this.spaceID$.pipe(takeUntil(this.destroyed$)).subscribe({
 			next: this.processSpaceID,

@@ -178,7 +178,7 @@ export class GlobalSpaceItemService<
 			...queryArgs,
 			filter: [
 				...(queryArgs?.filter || []),
-				{ field: 'teamIDs', operator: '==', value: spaceID },
+				{ field: 'spaceIDs', operator: '==', value: spaceID },
 			],
 		};
 		const collectionRef = this.collectionRef<Dbo2>();
@@ -212,14 +212,14 @@ export class ModuleSpaceItemService<
 	protected readonly dto2brief = (id: string, dto: Dbo) => ({ id, ...dto });
 
 	// protected teamCollection(spaceID: string): AngularFirestoreCollection<ITeamDto> {
-	// 	return this.afs.collection('teams');
+	// 	return this.afs.collection('spaces');
 	// }
 
 	protected override collectionRef<Dbo2 extends Dbo>(
 		spaceID: string,
 	): CollectionReference<Dbo2> {
 		if (!spaceID) {
-			throw new Error('teamID is required');
+			throw new Error('spaceID is required');
 		}
 		return collection(
 			this.spacesCollection,
@@ -256,7 +256,7 @@ export class ModuleSpaceItemService<
 		console.log('watchModuleSpaceItems()', spaceID, this.collectionName);
 		// filter = [
 		// 	...(filter || []),
-		// 	// { field: 'teamIDs', operator: '==', value: teamID },
+		// 	// { field: 'spaceIDs', operator: '==', value: teamID },
 		// ];
 		const collectionRef = this.collectionRef<Dbo2>(spaceID);
 		return this.queryItems<Dbo2>(collectionRef, queryArgs);

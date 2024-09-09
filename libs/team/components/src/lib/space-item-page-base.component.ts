@@ -39,7 +39,7 @@ export abstract class SpaceItemPageBaseComponent<
 	}
 
 	protected setItemContext(item?: INavContext<Brief, Dbo>): void {
-		console.log('TeamItemBaseComponent.setItemContext()', item, {
+		console.log('SpaceItemBaseComponent.setItemContext()', item, {
 			...this.item,
 		});
 		if (item && this.item?.id === item?.id) {
@@ -59,7 +59,7 @@ export abstract class SpaceItemPageBaseComponent<
 
 	// Caller of this method will track changing of team & item IDs in route and close observable
 	protected watchItemChanges(): Observable<INavContext<Brief, Dbo>> {
-		console.log('TeamItemBaseComponent.watchItemChanges()', this.itemName);
+		console.log('SpaceItemBaseComponent.watchItemChanges()', this.itemName);
 		const itemID = this.item?.id;
 		if (!itemID) {
 			throw throwError(() => 'no item ID');
@@ -76,7 +76,10 @@ export abstract class SpaceItemPageBaseComponent<
 	}
 
 	protected trackRouteParamItemID(paramMap$: Observable<ParamMap>): void {
-		console.log('TeamItemBaseComponent.trackRouteParamItemID()', this.itemName);
+		console.log(
+			'SpaceItemBaseComponent.trackRouteParamItemID()',
+			this.itemName,
+		);
 		if (!this.itemName) {
 			return;
 		}
@@ -114,7 +117,7 @@ export abstract class SpaceItemPageBaseComponent<
 	}
 
 	private onItemIDChanged(itemID: string, itemID$: Observable<string>): void {
-		console.log('TeamItemBaseComponent.onItemIDChanged()', itemID);
+		console.log('SpaceItemBaseComponent.onItemIDChanged()', itemID);
 		if (!itemID) {
 			this.setItemContext(undefined);
 			return;

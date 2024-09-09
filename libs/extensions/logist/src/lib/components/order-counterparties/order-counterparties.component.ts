@@ -172,10 +172,10 @@ export class OrderCounterpartiesComponent implements OnChanges {
 
 	remove(counterparty: ICounterparty): void {
 		if (!this.space?.id) {
-			throw new Error('team is required');
+			throw new Error('space is required');
 		}
 		if (!this.order?.id) {
-			throw new Error('team is required');
+			throw new Error('space is required');
 		}
 		const request: IDeleteCounterpartyRequest = {
 			spaceID: this.space.id,

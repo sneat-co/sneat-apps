@@ -38,7 +38,7 @@ export class SpacesCardComponent implements OnInit, OnDestroy {
 	) {}
 
 	public ngOnDestroy(): void {
-		console.log('TeamsCardComponent.ngOnDestroy()');
+		console.log('SpacesCardComponent.ngOnDestroy()');
 		this.destroyed.next();
 		this.destroyed.complete();
 		this.unsubscribe('ngOnDestroy');
@@ -61,7 +61,7 @@ export class SpacesCardComponent implements OnInit, OnDestroy {
 			this.toastController
 				.create({
 					position: 'middle',
-					message: 'Team name is required',
+					message: 'Space name is required',
 					color: 'tertiary',
 					duration: 5000,
 					keyboardClose: true,
@@ -177,7 +177,7 @@ export class SpacesCardComponent implements OnInit, OnDestroy {
 	private watchUserRecord(): void {
 		this.userService.userState.pipe(takeUntil(this.destroyed)).subscribe({
 			next: (userState) => {
-				console.log('TeamsCardComponent => user state changed:', userState);
+				console.log('SpacesCardComponent => user state changed:', userState);
 				if (userState.status === 'authenticating') {
 					if (this.loadingState === 'Authenticating') {
 						this.loadingState = 'Loading';
@@ -208,7 +208,7 @@ export class SpacesCardComponent implements OnInit, OnDestroy {
 	}
 
 	private setUser = (userState: ISneatUserState): void => {
-		console.log('TeamsCardComponent => user:', userState);
+		console.log('SpacesCardComponent => user:', userState);
 		const user = userState.record;
 		if (user) {
 			this.spaces = Object.entries(user?.spaces ? user.spaces : {}).map(

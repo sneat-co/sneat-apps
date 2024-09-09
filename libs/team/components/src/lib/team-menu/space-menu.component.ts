@@ -31,16 +31,16 @@ import { IonicModule } from '@ionic/angular';
 	providers: [SpaceComponentBaseParams],
 })
 export class SpaceMenuComponent extends SpaceBaseComponent {
-	public spaces?: readonly IIdAndBrief<IUserSpaceBrief>[];
+	protected spaces?: readonly IIdAndBrief<IUserSpaceBrief>[];
 
 	constructor(
 		route: ActivatedRoute,
 		params: SpaceComponentBaseParams,
 		private readonly menuCtrl: MenuController,
 	) {
-		super('TeamMenuComponent', route, params);
+		super('SpaceMenuComponent', route, params);
 		params.userService.userState.pipe(takeUntil(this.destroyed$)).subscribe({
-			next: this.trackUserState,
+			next: this.onUserStateChanged,
 			error: this.errorLogger.logErrorHandler('failed to get user stage'),
 		});
 	}
@@ -72,7 +72,7 @@ export class SpaceMenuComponent extends SpaceBaseComponent {
 
 	override onSpaceDboChanged(): void {
 		super.onSpaceDboChanged();
-		// console.log('TeamMenuComponent.onTeamDtoChanged()', this.team?.dto);
+		// console.log('SpaceMenuComponent.onTeamDtoChanged()', this.team?.dto);
 	}
 
 	protected spaceLabelClicked(event: Event): void {
@@ -99,7 +99,7 @@ export class SpaceMenuComponent extends SpaceBaseComponent {
 	protected onSpaceSelected(event: Event): void {
 		const spaceID = (event as CustomEvent).detail.value as string;
 
-		// console.log('TeamMenuComponent.onTeamSelected', teamID);
+		// console.log('SpaceMenuComponent.onTeamSelected', teamID);
 		if (spaceID === this.space?.id) {
 			return;
 		}
@@ -118,8 +118,8 @@ export class SpaceMenuComponent extends SpaceBaseComponent {
 		return;
 	}
 
-	private trackUserState = (userState: ISneatUserState): void => {
-		// console.log('TeamMenuComponent.trackUserState =>', userState);
+	private readonly onUserStateChanged = (userState: ISneatUserState): void => {
+		console.log('SpaceMenuComponent.onUserStateChanged():', userState);
 		if (userState?.record) {
 			this.spaces = zipMapBriefsWithIDs(userState.record.spaces) || [];
 		} else {

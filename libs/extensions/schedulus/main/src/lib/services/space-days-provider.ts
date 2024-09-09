@@ -187,7 +187,7 @@ export class SpaceDaysProvider {
 			// That would minimize number of handlers to be called on watching components
 			// Tough it's a micro optimization that does not seems to worth the effort now.
 			map((schedulusTeam) => groupRecurringSlotsByWeekday(schedulusTeam)),
-			tap((slots) => console.log('TeamDaysProvider.recurrings$ =>', slots)),
+			tap((slots) => console.log('SpaceDaysProvider.recurrings$ =>', slots)),
 			shareReplay(1),
 		);
 
@@ -209,7 +209,7 @@ export class SpaceDaysProvider {
 		// private readonly regularService: IRegularHappeningService,
 		// private readonly singleService: ISingleHappeningService,
 	) {
-		console.log('TeamDaysProvider.constructor()');
+		console.log('SpaceDaysProvider.constructor()');
 		// super();
 		this.recurringsSpaceItemService = new ModuleSpaceItemService(
 			'calendarium',
@@ -243,7 +243,7 @@ export class SpaceDaysProvider {
 	}
 
 	public setSpace(space: ISpaceContext): void {
-		console.log('TeamDaysProvider.setSpace()', space);
+		console.log('SpaceDaysProvider.setSpace()', space);
 		this._space = space;
 		this.space$.next(space);
 		// this.processRecurringBriefs();
@@ -253,7 +253,7 @@ export class SpaceDaysProvider {
 	public setSchedulusSpace(
 		schedulusSpace: ISpaceItemWithOptionalDbo<ICalendariumSpaceDbo>,
 	): void {
-		console.log('TeamDaysProvider.setSchedulusSpace()', schedulusSpace);
+		console.log('SpaceDaysProvider.setSchedulusSpace()', schedulusSpace);
 		// if (schedulusTeam.id !== this._team?.id) {
 		//   throw new Error(
 		//     `schedulusTeam.id=${schedulusTeam.id} !== this._team?.id=${this._team?.id}`,
@@ -281,7 +281,7 @@ export class SpaceDaysProvider {
 	}
 
 	public getDays(...weekdays: SpaceDay[]): Observable<SpaceDay> {
-		console.log('TeamDaysProvider.getDays()', weekdays);
+		console.log('SpaceDaysProvider.getDays()', weekdays);
 		return EMPTY;
 		// if (!weekdays?.length) {
 		// 	return EMPTY;
@@ -342,12 +342,12 @@ export class SpaceDaysProvider {
 	}
 
 	public loadForWeek(d: Date): void {
-		console.log('TeamDaysProvider.loadForWeek()', d);
+		console.log('SpaceDaysProvider.loadForWeek()', d);
 	}
 
 	private processRecurringBriefs(): void {
 		console.log(
-			'TeamDaysProvider.processRecurringBriefs()',
+			'SpaceDaysProvider.processRecurringBriefs()',
 			this.schedulusSpace$.value,
 		);
 		if (!this.schedulusSpace$.value?.dbo?.recurringHappenings) {
@@ -367,7 +367,7 @@ export class SpaceDaysProvider {
 	private watchRecurringsBySpaceID(
 		space: ISpaceContext,
 	): Observable<INavContext<IHappeningBrief, IHappeningDbo>[]> {
-		console.log('TeamDaysProvider.loadRegulars()');
+		console.log('SpaceDaysProvider.loadRegulars()');
 		const $recurrings = this.recurringsSpaceItemService
 			.watchModuleSpaceItemsWithSpaceRef(space)
 			// const $regulars = this.regularService.watchByCommuneId(this.communeId)
@@ -398,7 +398,7 @@ export class SpaceDaysProvider {
 		) {
 			return;
 		}
-		console.log('TeamDaysProvider.processRecurring()', recurring);
+		console.log('SpaceDaysProvider.processRecurring()', recurring);
 		const { recurringByWd } = this;
 		Object.keys(recurringByWd).forEach((wd) => {
 			recurringByWd[wd as WeekdayCode2] = [];

@@ -47,7 +47,7 @@ export class NewLocationPageComponent extends ContactBasePage {
 		this.newLocation = contact;
 		const space = this.space;
 		if (!space) {
-			throw new Error('Team is not defined');
+			throw new Error('Space is not defined');
 		}
 		const url = this.spacePageUrl(`contact/${this.contact?.id}`);
 		if (url) {

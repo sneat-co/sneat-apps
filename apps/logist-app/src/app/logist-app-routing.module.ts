@@ -27,7 +27,7 @@ const routes: Routes = [
 		component: LogistMenuComponent,
 	},
 	{
-		path: 'space/:teamType/:teamID',
+		path: 'space/:spaceType/:spaceID',
 		loadChildren: () =>
 			import('@sneat/extensions/logist').then(
 				(m) => m.LogistSpaceRoutingModule,

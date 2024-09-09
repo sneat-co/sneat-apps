@@ -201,7 +201,7 @@ export class MembersPageComponent
 		// 	this.processContactusSpaceDbo(contactusTeam.dto);
 		// } else {
 		// 	this.contactService
-		// 		.watchContactsWithRole(team, 'team_member') // TODO: use constant
+		// 		.watchContactsWithRole(space, 'space_member') // TODO: use constant
 		// 		.pipe(takeUntil(this.teamIDChanged$))
 		// 		.subscribe({
 		// 			next: (members) => {

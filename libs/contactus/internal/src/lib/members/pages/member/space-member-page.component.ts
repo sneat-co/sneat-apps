@@ -35,7 +35,7 @@ export class SpaceMemberPageComponent
 	public relatedAs?: MemberRelationship;
 
 	constructor(route: ActivatedRoute, params: MemberComponentBaseParams) {
-		super('TeamMemberPageComponent', route, params);
+		super('SpaceMemberPageComponent', route, params);
 	}
 
 	ngAfterViewInit(): void {

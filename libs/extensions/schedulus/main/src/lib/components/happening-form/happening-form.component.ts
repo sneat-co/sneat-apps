@@ -346,7 +346,7 @@ export class HappeningFormComponent
 								.navigateBackToSpacePage(space, 'calendar')
 								.catch(
 									this.logErrorHandler(
-										'failed to team schedule after creating a happening',
+										'failed to navigate to space calendar after creating a happening',
 									),
 								);
 						}

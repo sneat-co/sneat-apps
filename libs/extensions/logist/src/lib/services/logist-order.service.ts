@@ -160,7 +160,7 @@ export class LogistOrderService {
 
 	setOrderStatus(request: ISetOrderStatusRequest): Observable<void> {
 		if (!request.spaceID) {
-			return throwError(() => 'teamID is required parameter');
+			return throwError(() => 'spaceID is required parameter');
 		}
 		if (!request.orderID) {
 			return throwError(() => 'orderID is required parameter');

@@ -50,7 +50,7 @@ export class ContactRolesInputComponent implements OnChanges {
 	onRoleChanged(event: Event, role: IContactRole): void {
 		console.log('onRoleChanged', role, event);
 		if (!this.space || !this.contact) {
-			alert('team or contact is not set');
+			alert('space or contact is not set');
 			return;
 		}
 		const checked = (event.target as HTMLInputElement).checked;

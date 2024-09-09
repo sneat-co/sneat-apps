@@ -13,7 +13,7 @@ export abstract class DocumentsBaseComponent {
 	@Input() allDocuments?: IAssetDocumentContext[];
 
 	public static readonly metadata = {
-		inputs: ['team', 'allDocuments'],
+		inputs: ['space', 'allDocuments'],
 	};
 
 	protected constructor(

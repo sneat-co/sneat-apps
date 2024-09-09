@@ -23,7 +23,7 @@ export function zipMapDTOsWithIDs<DTO>(
 export interface ISpaceContext
 	extends ISpaceRef,
 		INavContext<ISpaceBrief, ISpaceDbo> {
-	// readonly type?: TeamType;
+	// readonly type?: SpaceType;
 	// readonly assets?: IAssetContext[]; // TODO: this should not be here
 	// readonly contacts?: IContactContext[]; // TODO: this should not be here
 }

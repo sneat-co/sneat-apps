@@ -15,7 +15,7 @@ export class SpaceContextService {
 	// ): Observable<ISpaceContext | undefined> {
 	// 	return route.paramMap.pipe(
 	// 		map(params => {
-	// 			const id = params.get('teamID') || undefined;
+	// 			const id = params.get('spaceID') || undefined;
 	// 			const spaceContext: ISpaceContext | undefined = id ? { id } : undefined;
 	// 			return spaceContext;
 	// 		}),

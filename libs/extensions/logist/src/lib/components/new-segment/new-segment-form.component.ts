@@ -144,7 +144,7 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 			return;
 		}
 		if (!this.order.space) {
-			alert('team is required');
+			alert('space is required');
 			return;
 		}
 		if (

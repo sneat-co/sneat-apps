@@ -39,7 +39,7 @@ export class RecurringCardComponent implements OnDestroy {
 	goHappening(happening?: IHappeningWithUiState): void {
 		if (!this.space) {
 			this.errorLogger.logErrorHandler(
-				'not able to navigate to happening without team context',
+				'not able to navigate to happening without a space context',
 			);
 			return;
 		}

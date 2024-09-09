@@ -1,20 +1,40 @@
 <ion-list>
 	<ion-item>
 		<!--		<ion-icon [name]="space.type === 'family' ? 'people-outline' : space.type === 'private' ? 'person-circle-outline' : 'people-outline' " slot="end" />-->
-		<ion-select
-			label="Space"
-			*ngIf="spaces"
-			[value]="space.id"
-			interface="popover"
-			(ionChange)="onSpaceSelected($event)"
-			style="font-weight: bold"
-		>
-			@for (space of spaces; track space.id) {
-				<ion-select-option [value]="space.id"
-					>{{ space.brief.title || (space.brief.type | titlecase) || space.id }}
-				</ion-select-option>
-			}
-		</ion-select>
+		@if (spaces) {
+			<ion-select
+				label="Space"
+				[value]="space.id"
+				interface="popover"
+				(ionChange)="onSpaceSelected($event)"
+				style="font-weight: bold"
+			>
+				@for (userSpace of spaces; track userSpace.id) {
+					<ion-select-option [value]="userSpace.id"
+						>{{
+							userSpace.brief.title ||
+								(userSpace.brief.type | titlecase) ||
+								space.id
+						}}
+					</ion-select-option>
+				}
+			</ion-select>
+		} @else {
+			<ion-spinner name="lines" slot="start"></ion-spinner>
+			<ion-select
+				label="Space"
+				[value]="space.id"
+				interface="popover"
+				style="font-weight: bold"
+				disabled="true"
+			>
+				@if (space) {
+					<ion-select-option [value]="space.id">{{
+						space.brief?.title || (space.type | titlecase) || space.id
+					}}</ion-select-option>
+				}
+			</ion-select>
+		}
 	</ion-item>
 	<ion-item
 		tappable

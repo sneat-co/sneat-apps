@@ -14,7 +14,7 @@ export abstract class AddAssetBaseComponent extends SneatBaseComponent {
 	@Input({ required: true }) space?: ISpaceContext;
 
 	public static readonly metadata = {
-		inputs: ['team'],
+		inputs: ['space'],
 	};
 
 	public contactusSpace?: IContactusSpaceDboAndID;

@@ -119,7 +119,7 @@ export class ScrumService extends BaseMeetingService {
 	): Observable<void> {
 		console.log('deleteTask', team, scrumId, member, type, id);
 		const params = new HttpParams()
-			.append('team', team)
+			.append('space', s)
 			.append('date', scrumId)
 			.append('member', member.id)
 			.append('type', type)
@@ -144,7 +144,7 @@ export class ScrumService extends BaseMeetingService {
 			return throwError(() => 'message required');
 		}
 		if (!request.spaceID) {
-			return throwError(() => 'team required');
+			return throwError(() => 'space required');
 		}
 		if (!request.memberID) {
 			return throwError(() => 'member required');

@@ -89,7 +89,7 @@ export class SpacesMenuComponent {
 	private createSpace(request: ICreateSpaceRequest): void {
 		this.spaceService.createSpace(request).subscribe({
 			next: (value) => {
-				console.log('Team created:', value);
+				console.log('Space created:', value);
 				this.navController
 					.navigateForward('/space/family/' + value.id)
 					.catch(

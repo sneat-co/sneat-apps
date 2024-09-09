@@ -47,13 +47,13 @@ const routes: Routes = [
 			import('@sneat/team-pages').then((m) => m.SpaceRoutingModule),
 	},
 	{
-		path: 'join/:teamType',
+		path: 'join/:spaceType',
 		loadComponent: () =>
 			import('@sneat/team-pages').then((m) => m.JoinSpacePageComponent),
 	},
 	// {
-	// 	path: 'invite-to/:teamType',
-	// 	loadChildren: () => import('@sneat/team-pages').then(m => m.)
+	// 	path: 'invite-to/:spaceType',
+	// 	loadChildren: () => import('@sneat/space-pages').then(m => m.)
 	// },
 	{
 		path: 'communes', // TODO: Obsolete route naming and probably the whole route

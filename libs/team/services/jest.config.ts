@@ -1,6 +1,6 @@
-/* eslint-disable */
+ 
 export default {
-	displayName: 'team-services',
+	displayName: 'space-services',
 	preset: '../../../jest.preset.js',
 	setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
 	globals: {},

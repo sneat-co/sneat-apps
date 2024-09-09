@@ -22,7 +22,7 @@ export class ContactsListItemComponent {
 		'creator',
 		'contributor',
 		'owner',
-		'team_member',
+		'space_member',
 	];
 
 	protected get relatedContacts(): readonly IIdAndBrief<IRelatedItem>[] {

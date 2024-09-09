@@ -102,7 +102,7 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 		}
 		const space = this.space;
 		if (!space) {
-			throw new Error('Team is not defined');
+			console.error('Space is not defined');
 		}
 		this.setHappening({ id, space }, 'url');
 		this.watchHappeningChanges(id);
@@ -111,7 +111,7 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 	private watchHappeningChanges(id: string): void {
 		const space = this.space;
 		if (!space?.id) {
-			// console.warn('watchHappeningChanges: team is not defined');
+			console.warn('watchHappeningChanges: space is not defined');
 			return;
 		}
 		try {

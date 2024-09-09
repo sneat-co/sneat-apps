@@ -50,11 +50,11 @@ export class ForSpaceTypeCardComponent
 		private readonly userService: SneatUserService,
 		private readonly changeDetectorRef: ChangeDetectorRef,
 	) {
-		super('ForTeamTypeCardComponent', errorLogger);
+		super('ForSpaceTypeCardComponent', errorLogger);
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['teamTypes']) {
+		if (changes['spaceTypes']) {
 			if (this.subscription) {
 				this.subscription.unsubscribe();
 			}
@@ -71,7 +71,7 @@ export class ForSpaceTypeCardComponent
 						?.filter((t) => this.spaceTypes?.some((tt) => tt === t.brief.type))
 						.map((t) => spaceContextFromBrief(t.id, t.brief));
 					console.log(
-						'ForTeamTypeCardComponent =>',
+						'ForSpaceTypeCardComponent.watchUserRecord() =>',
 						this.spaceTypes,
 						user.record?.spaces,
 						this.spaces,

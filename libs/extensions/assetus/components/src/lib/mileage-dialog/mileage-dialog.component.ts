@@ -79,7 +79,7 @@ export class MileAgeDialogComponent {
 			throw new Error('assetId is not set');
 		}
 		if (!this.space?.id) {
-			throw new Error('teamId is not set');
+			throw new Error('spaceId is not set');
 		}
 
 		if (

@@ -124,7 +124,7 @@ export class ContactService extends ModuleSpaceItemService<
 	): Observable<IContactContext[]> {
 		console.log('watchContactsByRole, filter:', filter);
 		const f: IFilter[] = [
-			// { field: 'teamID', value: team.id, operator: '==' },
+			// { field: 'spaceID', value: team.id, operator: '==' },
 		];
 		if (filter?.status) {
 			f.push({ field: 'status', value: filter.status, operator: '==' });

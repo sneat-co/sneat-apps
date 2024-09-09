@@ -102,19 +102,19 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
 					first(),
 				)
 				.subscribe({
-					next: (teamType) => {
+					next: (spaceType) => {
 						console.log(
-							'NewMemberPageComponent: teamTypeChanged$ =>',
-							teamType,
+							'NewMemberPageComponent: spaceTypeChanged$ =>',
+							spaceType,
 						);
-						if (teamType === 'family' && this.tab === 'mass') {
+						if (spaceType === 'family' && this.tab === 'mass') {
 							this.tab = 'personal';
 						}
 					},
-					error: this.logErrorHandler('failed to process team type changes'),
+					error: this.logErrorHandler('failed to process space type changes'),
 				});
 		} catch (e) {
-			this.logError(e, 'failed to subscribe for first team type change');
+			this.logError(e, 'failed to subscribe for first space type change');
 		}
 	};
 }

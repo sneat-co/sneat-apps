@@ -57,7 +57,7 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 	static providers = [HappeningBaseComponentParams];
 
 	static metadata = {
-		inputs: ['team', 'happening'],
+		inputs: ['space', 'happening'],
 		outputs: ['deleted'],
 	};
 
@@ -109,15 +109,11 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 		this.destroyed.complete();
 	}
 
-	public notImplemented(): void {
-		alert('Sorry, not implemented yet.');
-	}
-
-	goHappening(event: Event): void {
+	protected goHappening(event: Event): void {
 		event.stopPropagation();
 		if (!this.space) {
 			this.errorLogger.logErrorHandler(
-				'not able to navigate to happening without team context',
+				'not able to navigate to happening without space context',
 			);
 			return;
 		}

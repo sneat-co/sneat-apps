@@ -55,7 +55,7 @@ export class NewDebtFormComponent {
 		console.log('NewDebtFormComponent.submit', this.newDebtForm.value);
 		const spaceID = this.space?.id;
 		if (!spaceID) {
-			throw new Error('teamID is not set');
+			throw new Error('spaceID is not set');
 		}
 		const contactID = this.contact?.id;
 		if (!contactID) {

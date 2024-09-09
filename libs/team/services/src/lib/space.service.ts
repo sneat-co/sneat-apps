@@ -60,7 +60,7 @@ export class SpaceService {
 		private readonly userService: SneatUserService,
 		private readonly sneatApiService: SneatApiService,
 	) {
-		// console.log('TeamService.constructor()');
+		// console.log('SpaceService.constructor()');
 		this.sfs = new SneatFirestoreService<ISpaceBrief, ISpaceDbo>((id, dto) => ({
 			id,
 			...dto,
@@ -82,7 +82,7 @@ export class SpaceService {
 	private readonly processUserRecordInSpaceService = (
 		userState: ISneatUserState,
 	) => {
-		console.log('TeamService.processUserRecordInSpaceService()', userState);
+		console.log('SpaceService.processUserRecordInSpaceService()', userState);
 		const user = userState?.record;
 		if (!user) {
 			// this.userID = undefined;
@@ -122,7 +122,7 @@ export class SpaceService {
 	public watchSpace(ref: ISpaceRef): Observable<ISpaceContext> {
 		console.log(`SpaceService.watchSpace(ref=${JSON.stringify(ref)})`);
 		if (!ref) {
-			throw new Error('team ref is a required parameter');
+			throw new Error('space ref is a required parameter');
 		}
 		const { id } = ref;
 		if (id === 'contacts') {
@@ -295,7 +295,7 @@ export class SpaceService {
 			this.spaces$ = {};
 			console.log('unsubscribed => teams$:', this.spaces$);
 		} catch (e) {
-			this.errorLogger.logError(e, 'TeamService failed to unsubscribe');
+			this.errorLogger.logError(e, 'SpaceService failed to unsubscribe');
 		}
 	}
 }

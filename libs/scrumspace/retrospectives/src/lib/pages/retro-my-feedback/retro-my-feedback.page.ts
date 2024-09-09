@@ -26,7 +26,7 @@ export class RetroMyFeedbackPageComponent {
 		route: ActivatedRoute,
 		// private navService: NavService,
 	) {
-		this.spaceID = route.snapshot.queryParamMap.get('team');
+		this.spaceID = route.snapshot.queryParamMap.get('space');
 		this.retroId = getMeetingIdFromDate(new Date());
 	}
 

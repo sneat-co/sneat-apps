@@ -112,7 +112,7 @@ export class NavService {
 	): void {
 		this.analyticsService.logEvent('navigateToTeam', { space: id });
 		this.navController
-			.navigateRoot('team', {
+			.navigateRoot('space', {
 				queryParams: { id },
 				state: {
 					spaceInfo,

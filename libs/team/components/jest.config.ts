@@ -1,5 +1,5 @@
 export default {
-	displayName: 'team-components',
+	displayName: 'space-components',
 	preset: '../../../jest.preset.js',
 	setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
 	globals: {},

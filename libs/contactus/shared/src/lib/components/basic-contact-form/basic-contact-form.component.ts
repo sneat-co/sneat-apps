@@ -37,7 +37,7 @@ export class BasicContactFormComponent {
 	createContact(event: Event): void {
 		event.stopPropagation();
 		if (!this.space) {
-			console.error('team is required');
+			console.error('space is required');
 			return;
 		}
 		if (!this.contactType) {

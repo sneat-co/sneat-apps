@@ -114,9 +114,9 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 		if (changes['space']) {
 			this.onSpaceContextChanged();
 			const spaceChange = changes['space'];
-			const prevTeam = spaceChange.previousValue as ISpaceContext;
-			const currentTeam = spaceChange.currentValue as ISpaceContext;
-			if (currentTeam?.id !== prevTeam?.id) {
+			const prevSpace = spaceChange.previousValue as ISpaceContext;
+			const currentSpace = spaceChange.currentValue as ISpaceContext;
+			if (currentSpace?.id !== prevSpace?.id) {
 				this.onSpaceIdChanged();
 			}
 		}

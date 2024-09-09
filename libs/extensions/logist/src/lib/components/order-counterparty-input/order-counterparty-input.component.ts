@@ -82,7 +82,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 		}
 		const space = this.space;
 		if (!space) {
-			throw new Error('Team is not set');
+			throw new Error('Space is not set');
 		}
 		const contactFromCounterparty = (
 			counterparty: IOrderCounterparty,

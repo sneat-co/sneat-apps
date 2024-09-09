@@ -126,7 +126,7 @@ export class RelationshipFormComponent
 	}
 
 	//
-	// override onTeamTypeChanged(): void {
+	// override onSpaceTypeChanged(): void {
 	//
 	//
 	// }

@@ -104,7 +104,7 @@ export class HappeningSlotModalComponent
 		console.log('save()', event);
 		event.stopPropagation();
 		if (!this.space) {
-			this.errorLogger.logError('team context is not set');
+			this.errorLogger.logError('space context is not set');
 			return;
 		}
 		if (!this.happening) {

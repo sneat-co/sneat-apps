@@ -8,7 +8,7 @@ export interface IContactRequest extends SpaceRequest {
 
 export function validateContactRequest(request: IContactRequest): void {
 	if (!request.spaceID) {
-		throw new Error('teamID parameters is required');
+		throw new Error('spaceID parameters is required');
 	}
 	if (!request.contactID) {
 		throw new Error('contactID is required parameter');
