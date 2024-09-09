@@ -65,7 +65,7 @@ export class InviteLinksComponent implements OnChanges, OnDestroy {
 	}
 
 	goNewMember(event?: Event): void {
-		console.log('TeamPage.goNewMember()');
+		console.log('InviteLinksComponent.goNewMember()');
 		if (event) {
 			event.preventDefault();
 			event.stopPropagation();

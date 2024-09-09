@@ -59,7 +59,7 @@ export class SpaceMenuComponent extends SpaceBaseComponent {
 	}
 
 	protected goSpacePage(event: Event, p: string): boolean {
-		console.log('TeamMenuComponent.goTeamPage()', p, event);
+		console.log('SpaceMenuComponent.goSpacePage()', p, event);
 		event.stopPropagation();
 		event.preventDefault();
 		this.closeMenu();

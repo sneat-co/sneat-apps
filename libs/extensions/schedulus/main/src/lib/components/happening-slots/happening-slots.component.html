@@ -1,3 +1,5 @@
+!happening-slots.component.html!
+
 <ion-item-divider color="light">
 	<ion-label>When</ion-label>
 	<ion-buttons slot="end">
@@ -70,12 +72,11 @@
 				) {
 					Weekends
 				} @else {
-					<ion-badge
-						*ngFor="let wd of slot.weekdays || []"
-						color="light"
-						style="margin-right: 4px"
-						>{{ wd | wdToWeekday }}
-					</ion-badge>
+					@for (wd of slot.weekdays; track wd) {
+						<ion-badge color="light" style="margin-right: 4px"
+							>{{ wd | wdToWeekday }}
+						</ion-badge>
+					}
 				}
 			</p>
 			<p>

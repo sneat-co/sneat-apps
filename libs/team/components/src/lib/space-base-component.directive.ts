@@ -14,7 +14,6 @@ import { SneatUserService } from '@sneat/auth-core';
 import { SneatBaseComponent } from '@sneat/ui';
 import {
 	distinctUntilChanged,
-	MonoTypeOperatorFunction,
 	Observable,
 	shareReplay,
 	Subject,
@@ -137,7 +136,7 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 		} catch (e) {
 			this.errorLogger.logError(
 				e,
-				`Failed in ${this.className}:TeamBaseComponent.constructor()`,
+				`Failed in ${this.className}:SpaceBaseComponent.constructor()`,
 			);
 			throw e;
 		}
@@ -313,10 +312,10 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 		}
 		if (this.spaceContext == spaceContext) {
 			console.warn(
-				'Duplicate call to TeamPageComponent.setNewSpaceContext() with same spaceContext:',
+				'Duplicate call to SpaceBaseComponent.setNewSpaceContext() with same spaceContext:',
 				spaceContext,
 			);
-			return;
+			// return;
 		}
 		const idChanged = this.spaceContext?.id != spaceContext?.id;
 		const spaceTypeChanged = this.spaceContext?.type != spaceContext?.type;
@@ -326,7 +325,7 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 		);
 		const dboChanged = this.spaceContext?.dbo != spaceContext?.dbo;
 		this.console.log(
-			`${this.className} extends TeamPageComponent.setNewSpaceContext(id=${spaceContext?.id}) => idChanged=${idChanged}, spaceTypeChanged=${spaceTypeChanged}, briefChanged=${briefChanged}, dtoChanged=${dboChanged}`,
+			`${this.className} extends SpaceBaseComponent.setNewSpaceContext(id=${spaceContext?.id}) => idChanged=${idChanged}, spaceTypeChanged=${spaceTypeChanged}, briefChanged=${briefChanged}, dtoChanged=${dboChanged}`,
 		);
 		this.spaceContext = spaceContext;
 		if (idChanged) {

@@ -245,7 +245,7 @@ export class SpaceNavService {
 		const url = `space/${space?.type}/${space?.id}/${page}`;
 		const state = navOptions.state || {};
 		navOptions = { ...navOptions, state: { space, ...state } };
-		console.log('navigateToTeamPage()', url, navOptions);
+		console.log('navigateToSpacePage()', url, navOptions);
 		return this.navController.navigateForward(url, navOptions);
 	}
 

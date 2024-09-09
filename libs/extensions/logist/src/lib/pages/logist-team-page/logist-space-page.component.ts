@@ -14,6 +14,6 @@ export class LogistSpacePageComponent extends LogistSpaceBaseComponent {
 		teamParams: SpaceComponentBaseParams,
 		logistTeamService: LogistSpaceService,
 	) {
-		super('LogistTeamPageComponent', route, teamParams, logistTeamService);
+		super('LogistSpacePageComponent', route, teamParams, logistTeamService);
 	}
 }

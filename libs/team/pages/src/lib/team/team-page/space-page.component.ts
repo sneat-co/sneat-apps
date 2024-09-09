@@ -3,7 +3,6 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { SneatAuthStateService } from '@sneat/auth-core';
 import { SneatCardListComponent } from '@sneat/components';
 import {
 	IContactusSpaceDbo,
@@ -92,13 +91,13 @@ export class SpacePageComponent extends SpacePageBaseComponent {
 	}
 
 	protected onContactusSpaceChanged(contactusTeam?: IContactusSpaceDboAndID) {
-		console.log('TeamPage.onContactusSpaceChanged()', contactusTeam);
+		console.log('SpacePageComponent.onContactusSpaceChanged()', contactusTeam);
 		// super.onContactusTeamChanged(contactusTeam);
 		this.members = zipMapBriefsWithIDs(contactusTeam?.dbo?.contacts)
 			.filter((c) => c.brief?.roles?.includes('member'))
 			.map((c) => ({ ...c, space: this.space }));
 		console.log(
-			'TeamPage.onContactusTeamChanged() => this.members',
+			'SpacePageComponent.onContactusSpaceChanged() => this.members',
 			this.members,
 		);
 		this.cd.markForCheck();

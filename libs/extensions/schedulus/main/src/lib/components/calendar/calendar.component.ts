@@ -207,7 +207,7 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 	// 		return;
 	// 	}
 	// 	this.params.teamNavService
-	// 		.navigateForwardToTeamPage(this.team, 'new-happening', {
+	// 		.navigateForwardToSpacePage(this.space, 'new-happening', {
 	// 			queryParams: params,
 	// 		})
 	// 		.catch(this.errorLogger.logErrorHandler('failed to navigate to new happening page'));

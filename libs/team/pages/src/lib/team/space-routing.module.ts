@@ -50,7 +50,7 @@ const routes: Routes = [
 	// 		{
 	// 			path: '',
 	// 			pathMatch: 'full',
-	// 			loadChildren: () => import('./team-page/team-page.module').then(m => m.TeamPageModule),
+	// 			loadChildren: () => import('./team-page/team-page.module').then(m => m.SpacePageModule),
 	// 		},
 	// 	],
 	// },

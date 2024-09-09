@@ -78,7 +78,7 @@ export class JoinSpacePageComponent extends SneatBaseComponent {
 		private readonly inviteService: InviteService,
 		private readonly authStateService: SneatAuthStateService,
 	) {
-		super('JoinTeamPageComponent', errorLogger);
+		super('JoinSpacePageComponent', errorLogger);
 		this.getActionFromLocationHash();
 		this.id = this.route.snapshot.queryParamMap.get('id') || undefined;
 		try {

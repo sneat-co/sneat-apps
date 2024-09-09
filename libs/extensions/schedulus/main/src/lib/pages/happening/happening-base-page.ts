@@ -1,12 +1,21 @@
 import { ActivatedRoute } from '@angular/router';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
-import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
+import {
+	distinctUntilChanged,
+	map,
+	Subject,
+	Subscription,
+	takeUntil,
+} from 'rxjs';
 import { HappeningComponentBaseParams } from '../../components/happening-component-base-params';
 import { CalendarBasePage } from '../calendar-base-page';
 
 export abstract class HappeningBasePage extends CalendarBasePage {
 	private readonly happeningID$ = new Subject<string>();
 	protected happening?: IHappeningContext;
+
+	// private calendariumSpaceDbo?: ICalendariumSpaceDbo | null;
+	private calendariumSpaceSub?: Subscription;
 
 	protected constructor(
 		className: string,
@@ -30,6 +39,43 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 				e,
 			);
 		}
+		this.spaceChanged$.subscribe({
+			next: (space) => {
+				if (space && this.happening) {
+					this.setHappening(
+						{ ...this.happening, space: space },
+						'spaceChanged$',
+					);
+				} else if (!space) {
+					this.happening = undefined;
+				}
+			},
+		});
+	}
+
+	override onSpaceIdChanged(): void {
+		super.onSpaceIdChanged();
+		this.calendariumSpaceSub?.unsubscribe();
+		this.calendariumSpaceSub = this.params.calendariumSpaceService
+			.watchSpaceModuleRecord(this.space.id)
+			.subscribe({
+				next: (calendariumSpace) => {
+					const happening = this.happening;
+					if (
+						happening?.id &&
+						!happening?.dbo // If we loaded happening record we use it as a brief and ignore the brief from calendariumSpace
+					) {
+						const brief =
+							calendariumSpace.dbo?.recurringHappenings?.[happening?.id];
+						if (brief) {
+							this.setHappening(
+								{ ...happening, brief },
+								'calendariumSpaceDbo changed',
+							);
+						}
+					}
+				},
+			});
 	}
 
 	protected readonly setHappening = (
@@ -37,6 +83,9 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 		from: string,
 	): void => {
 		console.log(`${this.className}.setHappening(from=${from})`, happening);
+		if (!happening.dbo && this.happening?.brief) {
+			this.happening = { ...happening, brief: this.happening.brief };
+		}
 		this.happening = happening;
 		if (!this.space?.id && this.happening.space) {
 			this.spaceContext = this.happening.space;
@@ -72,11 +121,16 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 				.subscribe({
 					next: (happening) => {
 						// This can be called twice - first for `snapshot.type=added`, then `snapshot.type=modified`
-						// console.log('onHappeningIDChanged => watchHappeningByID => happening:', happening);
-						this.setHappening(
+						console.log(
+							'onHappeningIDChanged => watchHappeningByID => happening:',
 							happening,
-							'watchHappeningChanges() => watchHappeningByID',
 						);
+						if (happening.id === this.happening?.id) {
+							this.setHappening(
+								happening,
+								'watchHappeningChanges() => watchHappeningByID',
+							);
+						}
 					},
 					error: this.logErrorHandler('failed to get happening by ID'),
 				});

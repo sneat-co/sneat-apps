@@ -85,7 +85,7 @@ export class ScrumsComponent implements OnChanges, OnDestroy {
 		event?: Event,
 	): void {
 		try {
-			console.log(`TeamPage.goScrum(${date}, tab=${tab})`);
+			console.log(`ScrumsComponent.goScrum(${date}, tab=${tab})`);
 			if (!date) {
 				this.errorLogger.logError('date is empty or undefined', date);
 				return;

@@ -67,7 +67,7 @@ export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewIn
 	}
 
 	// ngAfterViewInit(): void {
-	// 	this.setTeamPageContext(this.teamPageContext);
+	// 	this.setSpacePageContext(this.spacePageContext);
 	// }
 
 	public add2Asset(event: Event): void {

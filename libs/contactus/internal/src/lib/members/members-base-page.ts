@@ -43,14 +43,14 @@ export abstract class MembersBasePage extends ContactusModuleBaseComponent {
 	};
 
 	// goMember = (member: IMemberContext, page?: MemberPages) => {
-	// 	this.navigateForwardToTeamPage(
+	// 	this.navigateForwardToSpacePage(
 	// 		(page || 'member') + '/' + member.id,
 	// 	).catch(this.logErrorHandler('failed to navigate to team member page'));
 	// };
 	//
 	// goContact = (id: string, event: Event) => {
 	// 	event.stopPropagation();
-	// 	this.navigateForwardToTeamPage(`contact/${id}`)
+	// 	this.navigateForwardToSpacePage(`contact/${id}`)
 	// 		.catch(this.logErrorHandler('failed to navigate to contact page'));
 	// };
 

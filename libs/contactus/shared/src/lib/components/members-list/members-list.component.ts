@@ -110,10 +110,10 @@ export class MembersListComponent implements OnChanges {
 	}
 
 	public goMember(member?: IIdAndBrief<IContactBrief>): boolean {
-		console.log('TeamPage.goMember()', member);
+		console.log('MembersListComponent.goMember()', member);
 		if (!this.space) {
 			this.errorLogger.logError(
-				'Can not navigate to team member without team context',
+				'Can not navigate to space member without space context',
 			);
 			return false;
 		}

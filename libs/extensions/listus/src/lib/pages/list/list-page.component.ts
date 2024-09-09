@@ -339,7 +339,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 				break;
 			case 'watch':
 				this.errorLogger.logError('Not implemented yet');
-				// this.teamNav.navigateForwardToTeamPage(
+				// this.teamNav.navigateForwardToSpacePage(
 				// 	'list/add-to-watch',
 				// 	{
 				// 		list: this.listId,
@@ -477,7 +477,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			return;
 		}
 		this.errorLogger.logError('not implemented yet');
-		// this.teamNav.navigateForwardToTeamPage(this.team,
+		// this.spaceNav.navigateForwardToSpacePage(this.team,
 		// 	`list/${this.list?.id}`, {
 		// 		state: { list: this.list },
 		// 	});

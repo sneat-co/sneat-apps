@@ -18,12 +18,10 @@ import {
 	FormGroup,
 	FormsModule,
 	ReactiveFormsModule,
-	UntypedFormGroup,
 	Validators,
 } from '@angular/forms';
 import { IonicModule, IonInput } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
-import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { RoutingState } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
@@ -102,6 +100,7 @@ export class HappeningFormComponent
 	);
 
 	public happeningTitle = new FormControl<string>('', Validators.required);
+
 	protected happeningType = new FormControl<HappeningType>(
 		'recurring',
 		Validators.required,
@@ -138,9 +137,15 @@ export class HappeningFormComponent
 			}
 			if (this.happening?.brief?.title && this.happeningTitle.untouched) {
 				this.happeningTitle.setValue(this.happening?.brief?.title);
+				this.changeDetectorRef.markForCheck();
 				// this.slots = this?.happening?.brief?.slots || [];
 			}
-			this.slots.set(mergeValuesWithIDs(this.happening?.brief?.slots));
+			if (this.happening?.brief) {
+				this.slots.set(mergeValuesWithIDs(this.happening?.brief?.slots));
+			} else {
+				this.slots.set(undefined);
+			}
+			this.changeDetectorRef.markForCheck();
 		}
 	}
 
