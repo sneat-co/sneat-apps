@@ -248,7 +248,7 @@ export class SpaceService {
 
 	private subscribeForSpaceChanges(subj: BehaviorSubject<ISpaceContext>): void {
 		const t = subj.value;
-		console.log(`TeamService.subscribeForSpaceChanges(${t.id})`);
+		console.log(`SpaceService.subscribeForSpaceChanges(${t.id})`);
 		const { id } = t;
 		if (id === 'contacts') {
 			console.log('subscribeForSpaceChanges() => contacts');
@@ -288,7 +288,7 @@ export class SpaceService {
 	}
 
 	private unsubscribe(on: string): void {
-		console.log(`TeamService.unsubscribe(on=${on})`);
+		console.log(`SpaceService.unsubscribe(on=${on})`);
 		try {
 			this.subscriptions.forEach((s) => s.unsubscribe());
 			this.subscriptions = [];

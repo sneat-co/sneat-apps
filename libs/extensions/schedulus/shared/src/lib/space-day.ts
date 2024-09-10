@@ -49,7 +49,7 @@ export class SpaceDay {
 	public readonly slots$ = this._slots.asObservable().pipe(
 		shareReplay(1),
 		takeUntil(this.destroyed$),
-		tap((slots) => console.log(`TeamDay[${this.dateID}].slots$ =>`, slots)),
+		tap((slots) => console.log(`SpaceDay[${this.dateID}].slots$ =>`, slots)),
 		map((slots) => slots?.sort(sortSlotItems)),
 	);
 
@@ -64,7 +64,7 @@ export class SpaceDay {
 	private subscriptions: Subscription[] = [];
 
 	constructor(
-		teamID$: Observable<string | undefined>, // do not declare it as member as we apply distinctUntilChanged() to it
+		spaceID$: Observable<string | undefined>, // do not declare it as member as we apply distinctUntilChanged() to it
 		date: Date, // intentionally not marking as public here to have public fields in 1 place
 		recurrings$: Observable<RecurringSlots>,
 		private readonly errorLogger: IErrorLogger,
@@ -80,12 +80,16 @@ export class SpaceDay {
 			throw new Error('an attempt to set an empty date 1970-01-01');
 		}
 		console.log('SpaceDay.constructor()', this.dateID, this.date);
-		this.spaceID$ = teamID$.pipe(distinctUntilChanged());
-		this.spaceID$.pipe(takeUntil(this.destroyed$)).subscribe({
-			next: this.processSpaceID,
-		});
+		this.spaceID$ = spaceID$.pipe(
+			takeUntil(this.destroyed$),
+			distinctUntilChanged(),
+		);
 		this.wd = getWd2(date);
 		this.wdLongTitle = wdCodeToWeekdayLongName(this.wd);
+		this.spaceID$.subscribe({
+			next: this.processSpaceID,
+			error: (err) => console.error('SpaceDay.spaceID$.subscribe.error', err),
+		});
 		this.subscribeForRecurrings(recurrings$);
 	}
 
@@ -98,7 +102,7 @@ export class SpaceDay {
 		if (spaceID === this.spaceID) {
 			return;
 		}
-		console.log(`TeamDay[${this.dateID}].processTeamID(teamID=${spaceID})`);
+		console.log(`SpaceDay[${this.dateID}].processSpaceID(spaceID=${spaceID})`);
 		this.spaceID = spaceID;
 		this.singles = undefined;
 		if (!this.spaceID) {
@@ -147,7 +151,7 @@ export class SpaceDay {
 			const spaceID = this.spaceID;
 			const date = this.dateID;
 			console.log(
-				`TeamDay[${this.dateID}].subscribeForSingles(), spaceID=${spaceID}, date=${date}`,
+				`SpaceDay[${this.dateID}].subscribeForSingles(), spaceID=${spaceID}, date=${date}`,
 			);
 			this.subscriptions.push(
 				this.happeningService
@@ -197,7 +201,7 @@ export class SpaceDay {
 				};
 				this.singles?.push(slotItem);
 			});
-			// console.log(`TeamDay[${this.isoID}].processSingles()`, changes, this.singles);
+			// console.log('SpaceDay[${this.isoID}].processSingles()`, changes, this.singles);
 			this.joinRecurringsWithSinglesAndEmit();
 		} catch (e) {
 			this.errorLogger.logError(e, 'failed to process single happenings');
@@ -216,7 +220,7 @@ export class SpaceDay {
 
 	private readonly processRecurrings = (slots: RecurringSlots): void => {
 		// console.log(
-		// 	`TeamDay[${this.dateID},wd=${this.wd}].processRecurrings(), ${
+		// 	'SpaceDay[${this.dateID},wd=${this.wd}].processRecurrings(), ${
 		// 		Object.keys(slots.byWeekday).length
 		// 	} weekdays with slots:`,
 		// 	slots,
@@ -257,7 +261,7 @@ export class SpaceDay {
 		}
 
 		// console.log(
-		// 	`TeamDay[id=${this.isoID}, wd=${this.wd}].joinRecurringsWithSinglesAndEmit()`,
+		// 	'SpaceDay[id=${this.isoID}, wd=${this.wd}].joinRecurringsWithSinglesAndEmit()`,
 		// 	`${weekdaySlots?.length || 0} recurrings:`, weekdaySlots,
 		// 	`${this.singles?.length || 0} singles:`, weekdaySlots,
 		// 	`=> ${slots.length} slots:`, slots);

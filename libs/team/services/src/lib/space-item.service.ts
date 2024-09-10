@@ -35,7 +35,7 @@ abstract class SpaceItemBaseService<Brief, Dbo extends Brief> {
 			throw new Error('collectionName is required');
 		}
 		console.log(
-			`TeamItemBaseService.constructor() collectionName=${this.collectionName}`,
+			`SpaceItemBaseService.constructor() collectionName=${this.collectionName}`,
 		);
 		this.sfs = new SneatFirestoreService<Brief, Dbo>();
 	}
@@ -49,7 +49,7 @@ abstract class SpaceItemBaseService<Brief, Dbo extends Brief> {
 		itemID: string,
 	): Observable<ISpaceItemNavContext<Brief, Dbo2>> {
 		console.log(
-			`TeamItemBaseService.watchTeamItemByIdWithTeamRef(space=${space.id}, itemID=${itemID}), collectionName=${this.collectionName}`,
+			`SpaceItemBaseService.watchTeamItemByIdWithTeamRef(space=${space.id}, itemID=${itemID}), collectionName=${this.collectionName}`,
 		);
 		const collectionRef = this.collectionRef<Dbo2>(space.id);
 		return this.sfs.watchByID(collectionRef, itemID).pipe(
@@ -107,7 +107,7 @@ abstract class SpaceItemBaseService<Brief, Dbo extends Brief> {
 		space: ISpaceContext,
 		request: SpaceRequest,
 	): Observable<ISpaceItemWithBriefAndDbo<Brief, Dbo>> {
-		console.log(`TeamItemBaseService.createTeamItem()`, request);
+		console.log(`SpaceItemBaseService.createTeamItem()`, request);
 		return this.sneatApiService
 			.post<ICreateSpaceItemResponse<Brief, Dbo>>(endpoint, request)
 			.pipe(

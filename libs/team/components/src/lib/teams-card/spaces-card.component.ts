@@ -202,7 +202,7 @@ export class SpacesCardComponent implements OnInit, OnDestroy {
 	}
 
 	private unsubscribe(reason?: string): void {
-		console.log(`TeamsCardComponent.unsubscribe(reason: ${reason})`);
+		console.log(`SpacesCardComponent.unsubscribe(reason: ${reason})`);
 		this.subscriptions.forEach((s) => s.unsubscribe());
 		this.subscriptions = [];
 	}
