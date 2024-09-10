@@ -24,6 +24,10 @@
 	[showRepeats]="tab === 'recurrings'"
 />
 
+<!--
+We use style.display  instead of *ngIf to avoid re-creating of the component on tab re-activation.
+This is just a small performance optimization.
+-->
 <sneat-day-tab
 	[style.display]="tab === 'day' ? 'block' : 'none'"
 	[space]="space"
@@ -31,8 +35,16 @@
 	[onSlotClicked]="onSlotClicked"
 />
 
+<!--
+We use *ngIf instead of [style.display] to avoid rendering of the tab when it's not visible.
+This is due to weird bug that affects user service onSnapshot not retuning user data
+when we have more than 1 week components (odd/event for slider).
+This is probably due to the fact that we open 14 listeners (1 for each day of 2 weeks) and Firestore is not able to handle that many listeners?
+
+[style.display]="tab === 'week' ? 'block' : 'none'"
+-->
 <sneat-week-tab
-	[style.display]="tab === 'week' ? 'block' : 'none'"
+	*ngIf="tab === 'week'"
 	[space]="space"
 	[spaceDaysProvider]="spaceDaysProvider"
 	(slotClicked)="onSlotClicked($event)"
