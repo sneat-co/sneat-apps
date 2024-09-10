@@ -23,6 +23,7 @@ import {
 	isoStringsToDate,
 	isValidaTimeString,
 	isValidDateString,
+	SneatSelectAllOnFocusDirective,
 } from '@sneat/core';
 import { emptyTiming, HappeningType, ITiming } from '@sneat/mod-schedulus-core';
 import { dateToTimeOnlyStr } from '@sneat/extensions/schedulus/shared';
@@ -42,6 +43,7 @@ import { TimeSelectorComponent } from './time-selector.component';
 		FormsModule,
 		TimeSelectorComponent,
 		StartEndDatesRangeFormComponent,
+		SneatSelectAllOnFocusDirective,
 	],
 })
 export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
@@ -54,25 +56,25 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 
 	@Output() readonly addClick = new EventEmitter<ITiming>();
 
-	@ViewChild('startTimeInput') startTimeInput?: IonInput;
+	@ViewChild('durationInput') durationInput?: IonInput;
 
-	protected today = new Date();
+	protected readonly today = new Date();
 	protected maxDate = new Date(this.today.getFullYear() + 1, 11, 31)
 		.toISOString()
 		.substring(0, 10);
 
 	protected tab: 'duration' | 'end' = 'duration';
 	protected durationUnits: 'minutes' | 'hours' = 'minutes';
-	protected startDateVal? = new Date().toISOString().substring(0, 10);
+	// protected startDateVal? = new Date().toISOString().substring(0, 10);
 
-	protected startDate = new FormControl<string>(
+	protected readonly startDate = new FormControl<string>(
 		'', //TODO: set to current date only for single happenings: new Date().toISOString().substring(0, 10),
 		{
 			// dateToIso(new Date())
 			validators: Validators.required,
 		},
 	);
-	protected endDate = new FormControl<string>('', {
+	protected readonly endDate = new FormControl<string>('', {
 		// validators: Validators.required,
 	});
 	protected readonly startTime = new FormControl<string>('', {
@@ -214,6 +216,19 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 		};
 		this.setEndTime();
 		this.emitTimingChanged('setStartTime');
+		setTimeout(() => {
+			this.durationInput
+				?.setFocus()
+				.then(() => {
+					// TODO: Remove this workaround once SneatSelectAllOnFocusDirective is fixed
+					this.durationInput?.getInputElement()?.then((el) => el.select());
+				})
+				.catch(
+					this.errorLogger.logErrorHandler(
+						'Failed to set focus to duration input',
+					),
+				);
+		}, 50);
 	}
 
 	protected addToStart(v: { days?: number; hours?: number }): void {

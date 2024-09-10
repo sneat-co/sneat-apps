@@ -19,14 +19,12 @@
 			[lines]="happeningTitle.value ? 'none' : undefined"
 		>
 			<ion-item>
+				<ion-label style="margin-right: 0.5em">Title</ion-label>
 				<ion-input
 					style="font-weight: bold"
 					#titleInput
-					label="Title"
-					labelPlacement="floating"
 					[formControl]="happeningTitle"
 					(keyup.enter)="onTitleEnter($event)"
-					placeholder="Title"
 					type="text"
 				/>
 			</ion-item>

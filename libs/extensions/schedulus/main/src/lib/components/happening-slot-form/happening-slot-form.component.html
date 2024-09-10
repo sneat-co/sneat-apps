@@ -188,9 +188,9 @@
 		@if (yearlyMonth) {
 			<ion-item>
 				<ion-select
-					interface="popover"
-					[ngModel]="yearlyMonth"
 					label="Month"
+					interface="popover"
+					[formControl]="yearlyMonth"
 					(ionChange)="setYearlyMonth($event.detail.value)"
 				>
 					@for (month of months; track month) {
@@ -215,7 +215,7 @@
 
 	@if (
 		(happens() === "monthly" && monthlyMode() === "monthly-day") ||
-		(happens() === "yearly" && yearlyMonth)
+		(happens() === "yearly" && yearlyMonth.value)
 	) {
 		<ion-item-divider>Choose date</ion-item-divider>
 		<ion-grid>

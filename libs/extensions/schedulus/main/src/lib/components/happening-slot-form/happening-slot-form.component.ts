@@ -343,7 +343,9 @@ export class HappeningSlotFormComponent
 		};
 	}
 
-	protected yearlyMonth?: Month;
+	protected readonly yearlyMonth = new FormControl<Month | undefined>(
+		undefined,
+	);
 
 	protected readonly monthDays: readonly number[][] = [
 		[1, 2, 3, 4, 5],
@@ -370,8 +372,8 @@ export class HappeningSlotFormComponent
 	];
 
 	protected setYearlyMonth(month: string): void {
-		this.yearlyMonth = month as Month;
-		switch (this.yearlyMonth) {
+		this.yearlyMonth.setValue(month as Month);
+		switch (this.yearlyMonth.value) {
 			case 'February':
 				this.numberOfDaysInMonth = 28;
 				break;
@@ -408,10 +410,10 @@ export class HappeningSlotFormComponent
 				slot = { ...slot, day };
 				break;
 			case 'yearly':
-				if (!this.yearlyMonth) {
+				if (!this.yearlyMonth.value) {
 					return;
 				}
-				slot = { ...slot, day, month: this.yearlyMonth };
+				slot = { ...slot, day, month: this.yearlyMonth.value };
 				break;
 		}
 		return slot;

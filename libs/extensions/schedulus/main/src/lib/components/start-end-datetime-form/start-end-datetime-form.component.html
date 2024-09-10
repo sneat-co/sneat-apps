@@ -51,6 +51,7 @@
 				<ion-col size="12" size-md="5">
 					<ion-item lines="none">
 						<ion-input
+							#durationInput
 							label="For"
 							[formControl]="duration"
 							(ionChange)="onDurationChanged()"
@@ -250,6 +251,7 @@
 					<ion-item lines="none">
 						<ion-input
 							label="Duration"
+							sneatSelectAllOnFocus
 							[formControl]="duration"
 							(ionChange)="onDurationChanged()"
 							type="number"

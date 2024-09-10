@@ -99,24 +99,27 @@ export class HappeningFormComponent
 		undefined,
 	);
 
-	public happeningTitle = new FormControl<string>('', Validators.required);
+	public readonly happeningTitle = new FormControl<string>(
+		'',
+		Validators.required,
+	);
 
-	protected happeningType = new FormControl<HappeningType>(
+	// protected onTitleChange(event: Event): void {
+	// 	console.log('onTitleChange()', event);
+	// }
+
+	protected readonly happeningType = new FormControl<HappeningType>(
 		'recurring',
 		Validators.required,
 	);
 
-	public happeningForm = new FormGroup({
+	public readonly happeningForm = new FormGroup({
 		title: this.happeningTitle,
 	});
 
-	public singleSlot?: IHappeningSlot;
-
-	private readonly logErrorHandler = this.errorLogger.logErrorHandler;
-	private readonly logError = this.errorLogger.logError;
 	private readonly hasNavHistory: boolean;
 
-	public isToDo = false;
+	protected isToDo = false;
 
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
@@ -195,12 +198,14 @@ export class HappeningFormComponent
 
 	ionViewDidEnter(): void {
 		if (!this.titleInput) {
-			this.logError(new Error('titleInput is not initialized'));
+			this.errorLogger.logError(new Error('titleInput is not initialized'));
 			return;
 		}
 		this.titleInput
 			.setFocus()
-			.catch(this.logErrorHandler('failed to set focus to title input'));
+			.catch(
+				this.errorLogger.logErrorHandler('failed to set focus to title input'),
+			);
 	}
 
 	// onAddSlotModalDismissed(): void {
@@ -226,11 +231,6 @@ export class HappeningFormComponent
 		this.happening = happening;
 		this.happeningForm.markAllAsTouched(); // TODO: Document why we need it and if we can remove it
 		this.happeningChange.emit(happening);
-	}
-
-	protected onSingleSlotChanged(slot: IHappeningSlot): void {
-		console.log('NewHappeningPageComponent.onTimingChanged()', slot);
-		this.singleSlot = slot;
 	}
 
 	protected formIsValid(): boolean {
@@ -305,7 +305,7 @@ export class HappeningFormComponent
 			const space = this.space;
 
 			if (!space) {
-				this.logError(new Error('!space context'));
+				this.errorLogger.logError(new Error('!space context'));
 				return;
 			}
 
@@ -337,7 +337,7 @@ export class HappeningFormComponent
 							this.params.navController
 								.pop()
 								.catch(
-									this.logErrorHandler(
+									this.errorLogger.logErrorHandler(
 										'failed to pop back after creating a happening',
 									),
 								);
@@ -345,7 +345,7 @@ export class HappeningFormComponent
 							this.params.spaceNavService
 								.navigateBackToSpacePage(space, 'calendar')
 								.catch(
-									this.logErrorHandler(
+									this.errorLogger.logErrorHandler(
 										'failed to navigate to space calendar after creating a happening',
 									),
 								);
@@ -353,7 +353,10 @@ export class HappeningFormComponent
 					},
 					error: (err: unknown) => {
 						this.isCreating.set(false);
-						this.logError(err, 'API request failed to create new happening');
+						this.errorLogger.logError(
+							err,
+							'API request failed to create new happening',
+						);
 					},
 					complete: () => {
 						this.isCreating.set(false);

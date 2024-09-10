@@ -17,3 +17,4 @@ export * from './team-type';
 export * from './location-href';
 export * from './anaylytics';
 export * from './interfaces';
+export * from './directives';
