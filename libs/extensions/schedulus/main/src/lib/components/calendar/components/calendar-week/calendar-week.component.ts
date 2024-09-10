@@ -8,7 +8,6 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { dateToIso } from '@sneat/core';
-import { WeekdayCode2 } from '@sneat/mod-schedulus-core';
 import { ISpaceContext } from '@sneat/team-models';
 import { SpaceDaysProvider } from '../../../../services/space-days-provider';
 import {
