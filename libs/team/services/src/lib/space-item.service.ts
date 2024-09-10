@@ -40,6 +40,8 @@ abstract class SpaceItemBaseService<Brief, Dbo extends Brief> {
 		this.sfs = new SneatFirestoreService<Brief, Dbo>();
 	}
 
+	private _collectionRef?: CollectionReference<Dbo>;
+
 	protected abstract collectionRef<Dbo2 extends Dbo>(
 		spaceID: string,
 	): CollectionReference<Dbo2>;
@@ -51,7 +53,13 @@ abstract class SpaceItemBaseService<Brief, Dbo extends Brief> {
 		console.log(
 			`SpaceItemBaseService.watchTeamItemByIdWithTeamRef(space=${space.id}, itemID=${itemID}), collectionName=${this.collectionName}`,
 		);
-		const collectionRef = this.collectionRef<Dbo2>(space.id);
+		let collectionRef: CollectionReference<Dbo2>;
+		if (this._collectionRef?.id == space.id) {
+			collectionRef = this._collectionRef as CollectionReference<Dbo2>;
+		} else {
+			collectionRef = this.collectionRef<Dbo2>(space.id);
+			this._collectionRef = collectionRef;
+		}
 		return this.sfs.watchByID(collectionRef, itemID).pipe(
 			map((o) => ({ space, ...o })),
 			// tap((o) =>
