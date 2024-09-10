@@ -19,6 +19,7 @@ export class CalendarDayService {
 		public readonly afs: AngularFirestore,
 		sneatApiService: SneatApiService,
 	) {
+		console.log('CalendarDayService.constructor()');
 		this.spaceItemService = new ModuleSpaceItemService(
 			'calendarium',
 			'days',
@@ -29,7 +30,7 @@ export class CalendarDayService {
 
 	public watchSpaceDay(space: ISpaceContext, dateID: string) {
 		console.log(
-			`ScheduleDayService.watchTeamDay(space={id=${space.id}, dateID=${dateID})`,
+			`CalendarDayService.watchSpaceDay(space={id=${space.id}, dateID=${dateID})`,
 		);
 		return this.spaceItemService
 			.watchSpaceItemByIdWithSpaceRef(space, dateID)
