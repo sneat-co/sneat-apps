@@ -38,6 +38,7 @@ export class SneatFirestoreService<Brief, Dbo extends Brief> {
 			id,
 		}),
 	) {
+		console.log('SneatFirestoreService.constructor()');
 		if (!dto2brief) {
 			throw new Error('dto2brief is required');
 		}
@@ -53,7 +54,7 @@ export class SneatFirestoreService<Brief, Dbo extends Brief> {
 	watchByDocRef<Dbo2 extends Dbo>(
 		docRef: DocumentReference<Dbo2>,
 	): Observable<IIdAndOptionalBriefAndOptionalDbo<Brief, Dbo2>> {
-		console.log(`SneatFirestoreService.watchByDocRef(${docRef.path})`, docRef);
+		console.log(`SneatFirestoreService.watchByDocRef(${docRef.path})`);
 		const subj = new Subject<DocumentSnapshot<Dbo2>>();
 		// const snapshots = docSnapshots<Dbo2>(docRef);
 		onSnapshot(
