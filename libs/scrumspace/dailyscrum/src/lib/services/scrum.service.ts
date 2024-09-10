@@ -111,15 +111,15 @@ export class ScrumService extends BaseMeetingService {
 	}
 
 	public deleteTask(
-		team: string,
+		spaceID: string,
 		scrumId: string,
 		member: IIdAndBrief<IMemberBrief>,
 		type: TaskType,
 		id: string,
 	): Observable<void> {
-		console.log('deleteTask', team, scrumId, member, type, id);
+		console.log('deleteTask', spaceID, scrumId, member, type, id);
 		const params = new HttpParams()
-			.append('space', s)
+			.append('space', spaceID)
 			.append('date', scrumId)
 			.append('member', member.id)
 			.append('type', type)
