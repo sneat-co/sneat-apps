@@ -284,28 +284,23 @@
 	</ion-item>
 
 	<ion-item *ngIf="showAddSlotButton()">
-		@if (slot) {
-			<ion-button
-				slot="end"
-				color="primary"
-				[disabled]="isUpdating()"
-				(click)="saveChanges()"
-				size="medium"
-			>
+		<ion-button
+			slot="end"
+			color="primary"
+			[disabled]="isUpdating()"
+			(click)="applyChanges()"
+			size="medium"
+		>
+			@if (slot) {
 				<ion-icon name="save-outline" slot="start" />
 				<ion-label>Update slot</ion-label>
-			</ion-button>
-		} @else {
-			<ion-button
-				slot="end"
-				color="primary"
-				[disabled]="isUpdating()"
-				(click)="addSlot()"
-				size="medium"
-			>
+			} @else {
 				<ion-icon name="add-outline" slot="start" />
 				<ion-label>Add slot</ion-label>
-			</ion-button>
-		}
+			}
+			@if (isUpdating()) {
+				<ion-spinner name="lines-small" slot="end"></ion-spinner>
+			}
+		</ion-button>
 	</ion-item>
 </ion-list>

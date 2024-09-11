@@ -491,6 +491,13 @@ export class HappeningSlotFormComponent
 		});
 	}
 
+	protected applyChanges(): void {
+		if (this.slot) {
+			this.saveChanges();
+		} else {
+			this.addSlot();
+		}
+	}
 	protected addSlot(timing?: ITiming): void {
 		console.log('addSlot()', timing);
 		if (this.happening?.id) {
