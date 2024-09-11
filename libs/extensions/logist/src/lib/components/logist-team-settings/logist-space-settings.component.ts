@@ -68,7 +68,7 @@ export class LogistSpaceSettingsComponent
 		private readonly contactService: ContactService, // private readonly navController: NavController,
 	) {}
 
-	ngAfterViewInit(): void {
+	ngAfterViewInit(): void /* Intentionally not ngOnInit */ {
 		const c = this.addressFormComponent;
 		if (c) {
 			Object.entries(c.form.controls).forEach(([key /*, control*/]) => {
@@ -77,11 +77,11 @@ export class LogistSpaceSettingsComponent
 			});
 		}
 
-		console.log(
-			'LogistTeamSettingsComponent.ngAfterViewInit():',
-			c,
-			this.form.controls,
-		);
+		// console.log(
+		// 	'LogistTeamSettingsComponent.ngAfterViewInit():',
+		// 	c,
+		// 	this.form.controls,
+		// );
 	}
 
 	ngOnDestroy(): void {

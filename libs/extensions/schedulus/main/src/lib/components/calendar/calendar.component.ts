@@ -136,7 +136,7 @@ export class CalendarComponent
 		this.spaceDaysProvider.destroy();
 	}
 
-	ngAfterViewInit(): void {
+	ngAfterViewInit(): void /* TODO: check and document if it can't be ngOnInit */ {
 		this.tabChanged.emit(this.tab);
 	}
 

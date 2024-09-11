@@ -176,7 +176,7 @@ from ${from}`;
 		this.destroyed.complete();
 	}
 
-	ngAfterViewInit(): void {
+	ngAfterViewInit(): void /* Intentionally not ngOnInit */ {
 		if (!this.codemirrorComponent) {
 			return;
 		}

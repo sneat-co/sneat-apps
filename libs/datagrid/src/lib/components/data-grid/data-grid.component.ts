@@ -153,7 +153,7 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 	// }
 	// }
 
-	ngAfterViewInit(): void {
+	ngAfterViewInit(): void /* Intentionally not ngOnInit */ {
 		if (this.tabulator) {
 			try {
 				this.tabulator.redraw();

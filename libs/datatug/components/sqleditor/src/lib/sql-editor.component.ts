@@ -48,7 +48,7 @@ export class SqlEditorComponent implements AfterViewInit, OnChanges {
 		this.sqlChanged.emit(this.sql);
 	}
 
-	ngAfterViewInit(): void {
+	ngAfterViewInit(): void /* Intentionally not ngOnInit */ {
 		if (!this.codemirrorComponent) {
 			return;
 		}

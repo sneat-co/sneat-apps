@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import {
-	AfterViewInit,
 	Component,
 	EventEmitter,
 	Inject,
@@ -46,7 +45,7 @@ import { TimeSelectorComponent } from './time-selector.component';
 		SneatSelectAllOnFocusDirective,
 	],
 })
-export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
+export class StartEndDatetimeFormComponent implements OnChanges {
 	@Input() addSlotLabel?: string;
 	@Input({ required: true }) mode?: HappeningType;
 	@Input({ required: true }) date?: string;
@@ -307,22 +306,6 @@ export class StartEndDatetimeFormComponent implements AfterViewInit, OnChanges {
 			};
 			this.emitTimingChanged('setStartDate');
 		}
-	}
-
-	ngAfterViewInit(): void {
-		console.log(
-			`StartEndDatetimeFormComponent.ngAfterViewInit(), happeningType=${this.mode}, happeningSlot:`,
-			this.timing,
-		);
-		// this.setRepeatsBasedOnHappeningType();
-		// setTimeout(() => {
-		// 	if (this.startTimeInput) {
-		// 		this.startTimeInput.setFocus().catch(console.error);
-		// 	} else {
-		// 		console.warn('no startTimeInput');
-		// 	}
-		// }, 300);
-		// this.emitSlotChanged('ngAfterViewInit');
 	}
 
 	private emitTimingChanged(from: string): void {

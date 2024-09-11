@@ -28,7 +28,7 @@ export class NewListDialogComponent implements AfterViewInit {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {}
 
-	ngAfterViewInit(): void {
+	ngAfterViewInit(): void /* Intentionally not ngOnInit */ {
 		setTimeout(() => {
 			this.listNameInput?.setFocus().catch(this.errorLogger.logError);
 		}, 250);

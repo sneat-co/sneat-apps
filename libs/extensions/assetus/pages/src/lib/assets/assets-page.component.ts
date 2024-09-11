@@ -66,10 +66,6 @@ export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewIn
 		});
 	}
 
-	// ngAfterViewInit(): void {
-	// 	this.setSpacePageContext(this.spacePageContext);
-	// }
-
 	public add2Asset(event: Event): void {
 		event.stopPropagation();
 		const alert$ = this.alertCtrl.create({

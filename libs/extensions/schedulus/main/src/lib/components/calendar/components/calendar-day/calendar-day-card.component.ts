@@ -1,9 +1,9 @@
 import {
-	AfterViewInit,
 	Component,
 	EventEmitter,
 	Inject,
 	Input,
+	OnInit,
 	Output,
 } from '@angular/core';
 import { virtualSliderAnimations } from '@sneat/components';
@@ -30,7 +30,7 @@ import { CalendarDayBaseComponent } from './calendar-day-base.component';
 })
 export class CalendarDayCardComponent
 	extends CalendarDayBaseComponent
-	implements AfterViewInit
+	implements OnInit
 {
 	@Input({ required: true }) space: ISpaceContext = { id: '' };
 	@Input({ required: true }) spaceDaysProvider?: SpaceDaysProvider;
@@ -56,8 +56,8 @@ export class CalendarDayCardComponent
 		throw new Error('onSlotClicked not set');
 	};
 
-	ngAfterViewInit(): void {
-		console.log('ngAfterViewInit(), shiftDays=', this.shiftDays);
+	ngOnInit(): void {
+		// console.log('ngOnInit(), shiftDays=', this.shiftDays);
 		if (this.shiftDays < 0) {
 			throw new Error('shiftDays < 0');
 		}

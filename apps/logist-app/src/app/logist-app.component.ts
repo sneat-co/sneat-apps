@@ -26,7 +26,7 @@ export class LogistAppComponent
 		// });
 	}
 
-	ngAfterViewInit(): void {
+	ngAfterViewInit(): void /* Intentionally not ngOnInit */ {
 		if (this.ionSplitPane) {
 			this.ionSplitPane.disabled = location.hash === '#print';
 		}

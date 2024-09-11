@@ -56,10 +56,7 @@ interface MembersGroup {
 		ContactusServicesModule,
 	],
 })
-export class MembersPageComponent
-	extends MembersBasePage
-	implements AfterViewInit
-{
+export class MembersPageComponent extends MembersBasePage {
 	public contactsByMember: Record<
 		string,
 		readonly IIdAndBrief<IContactBrief>[]
@@ -127,10 +124,6 @@ export class MembersPageComponent
 	override onSpaceModuleDtoChanged(dto: IContactusSpaceDbo | null): void {
 		super.onSpaceModuleDtoChanged(dto);
 		this.processContactusSpaceDbo(dto);
-	}
-
-	ngAfterViewInit(): void {
-		this.preloader.preload(['member', 'member-new', 'commune-overview']);
 	}
 
 	goGroup(memberGroup: IMemberGroupContext): void {

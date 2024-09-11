@@ -1,10 +1,10 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
 import {
-	AfterViewInit,
 	Component,
 	ElementRef,
 	Inject,
 	Injectable,
+	OnInit,
 } from '@angular/core';
 import { Input } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
@@ -74,7 +74,7 @@ let authWithTelegramService: SneatAuthWithTelegramService;
 				-->
 	`,
 })
-export class LoginWithTelegramComponent implements AfterViewInit {
+export class LoginWithTelegramComponent implements OnInit {
 	// TODO: Article about Telegram login
 	constructor(
 		private readonly el: ElementRef,
@@ -92,7 +92,7 @@ export class LoginWithTelegramComponent implements AfterViewInit {
 	@Input() public requestAccess: 'write' | 'read' = 'write';
 	@Input() public userPic = true;
 
-	ngAfterViewInit() {
+	ngOnInit() {
 		const botID = this.botID;
 		if (botID) {
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment

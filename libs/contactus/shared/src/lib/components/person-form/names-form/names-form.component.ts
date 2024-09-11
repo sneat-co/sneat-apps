@@ -231,7 +231,7 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 		setValidators(this.fullName, this.fields?.fullName);
 	}
 
-	ngAfterViewInit(): void {
+	ngAfterViewInit(): void /* intentionally not ngOnInit */ {
 		this.isViewInitiated = true;
 		if (this.inputToFocus) {
 			this.setFocusToInput(this.inputToFocus);

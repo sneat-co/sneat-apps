@@ -77,7 +77,7 @@ export class HappeningFormComponent
 
 	@Input({ required: true }) public happening?: IHappeningContext;
 
-	public get space(): ISpaceContext | undefined {
+	protected get space(): ISpaceContext | undefined {
 		return this.happening?.space;
 	}
 
@@ -99,7 +99,7 @@ export class HappeningFormComponent
 		undefined,
 	);
 
-	public readonly happeningTitle = new FormControl<string>(
+	protected readonly happeningTitle = new FormControl<string>(
 		'',
 		Validators.required,
 	);
@@ -113,7 +113,7 @@ export class HappeningFormComponent
 		Validators.required,
 	);
 
-	public readonly happeningForm = new FormGroup({
+	protected readonly happeningForm = new FormGroup({
 		title: this.happeningTitle,
 	});
 
@@ -152,13 +152,13 @@ export class HappeningFormComponent
 		}
 	}
 
-	ngAfterViewInit(): void {
-		console.log('HappeningFormComponent.ngAfterViewInit()');
+	ngAfterViewInit(): void /* Intentionally not ngOnInit*/ {
+		// console.log('HappeningFormComponent.ngAfterViewInit()');
 		this.setFocusToInput(this.titleInput);
 	}
 
 	protected onHappeningTypeChanged(event: Event): void {
-		console.log('onHappeningTypeChanged()', event);
+		// console.log('onHappeningTypeChanged()', event);
 		const happeningType = (event as CustomEvent).detail.value as HappeningType;
 		if (this.happening?.brief) {
 			this.happening = {

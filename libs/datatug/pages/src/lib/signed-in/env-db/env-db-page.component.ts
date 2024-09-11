@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import {
-	AfterViewInit,
 	Component,
 	ElementRef,
 	Inject,
 	OnDestroy,
+	OnInit,
 	ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -41,7 +41,7 @@ interface IRecordsetInfo {
 	standalone: true,
 	imports: [CommonModule, FormsModule, IonicModule],
 })
-export class EnvDbPageComponent implements OnDestroy, AfterViewInit {
+export class EnvDbPageComponent implements OnDestroy, OnInit {
 	@ViewChild('grid', { static: false }) gridElRef?: ElementRef;
 
 	filter = '';
@@ -80,7 +80,7 @@ export class EnvDbPageComponent implements OnDestroy, AfterViewInit {
 		this.destroyed.complete();
 	}
 
-	ngAfterViewInit(): void {
+	ngOnInit(): void {
 		const projectTracker = new ProjectTracker(this.destroyed, this.route);
 		projectTracker.projectRef.subscribe({
 			next: (projectRef) => {

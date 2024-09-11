@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import {
-	AfterViewInit,
 	ChangeDetectionStrategy,
 	Component,
 	EventEmitter,
@@ -10,6 +9,7 @@ import {
 	OnDestroy,
 	Output,
 	SimpleChanges,
+	OnInit,
 } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
 import {
@@ -22,7 +22,7 @@ import {
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
 import { HappeningService } from '@sneat/team-services';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 import { StartEndDatetimeFormComponent } from '../start-end-datetime-form/start-end-datetime-form.component';
 import {
 	HappeningSlotFormComponent,
@@ -42,11 +42,7 @@ import {
 	],
 })
 export class HappeningSlotModalComponent
-	implements
-		AfterViewInit,
-		OnChanges,
-		OnDestroy,
-		IHappeningSlotFormComponentInputs
+	implements OnChanges, OnDestroy, IHappeningSlotFormComponentInputs, OnInit
 {
 	private readonly destroyed = new Subject<void>();
 
@@ -144,8 +140,8 @@ export class HappeningSlotModalComponent
 	// 	}
 	// }
 
-	ngAfterViewInit(): void {
-		console.log('ngAfterViewInit', this.slot);
+	ngOnInit(): void {
+		// console.log('HappeningSlotModalComponent.ngOnInit()', this.slot);
 		this.processHappening();
 	}
 

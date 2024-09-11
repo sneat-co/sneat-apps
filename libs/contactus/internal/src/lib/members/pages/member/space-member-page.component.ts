@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
@@ -28,26 +28,11 @@ import { MemberBasePage } from '../member-base-page';
 		ContactusServicesModule,
 	],
 })
-export class SpaceMemberPageComponent
-	extends MemberBasePage
-	implements AfterViewInit
-{
+export class SpaceMemberPageComponent extends MemberBasePage {
 	public relatedAs?: MemberRelationship;
 
 	constructor(route: ActivatedRoute, params: MemberComponentBaseParams) {
 		super('SpaceMemberPageComponent', route, params);
-	}
-
-	ngAfterViewInit(): void {
-		this.preloader.preload([
-			// TODO: implement preloader
-			'members',
-			'document',
-			'document-new',
-			'contact',
-			'contact-new',
-			'sizes',
-		]);
 	}
 
 	// protected setMemberId(memberId: string): void {

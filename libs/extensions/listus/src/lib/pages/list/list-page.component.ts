@@ -105,7 +105,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 
 	public readonly itemId = (i: number, li: IListItemWithUiState) => li.brief.id;
 
-	ngAfterViewInit(): void {
+	ngAfterViewInit(): void /* Intentionally not ngOnInit */ {
 		if (this.newListItem) {
 			this.newListItem?.adding.subscribe({
 				next: (item: IListItemWithUiState) => {

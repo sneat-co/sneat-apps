@@ -81,9 +81,8 @@ export class GenderFormComponent {
 		this.genderChange.emit(this.genderID);
 	}
 
-	// TODO: Find a way to set focus to a radio group
 	// private readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
-	// ngAfterViewInit(): void {
+	// ngAfterViewInit(): void { // TODO: Find a way to set focus to a radio group
 	// 	this.setFocusToInput(this.radioGroup, 100);
 	// }
 }

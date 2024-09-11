@@ -54,20 +54,6 @@ export abstract class MembersBasePage extends ContactusModuleBaseComponent {
 	// 		.catch(this.logErrorHandler('failed to navigate to contact page'));
 	// };
 
-	// ngAfterViewInit(): void {
-	// 	this.preloader.preload([
-	// 		'member',
-	// 		'member-new',
-	// 		'commune-overview',
-	// 	]);
-	// 	this.onTeamIdChanged();
-	// }
-
-	// override onTeamIdChanged(): void {
-	// 	super.onTeamIdChanged();
-	// 	// this.membersService.
-	// }
-
 	public get supportsMemberGroups(): boolean {
 		return (
 			!!this.space?.brief && isSpaceSupportsMemberGroups(this.space.brief.type)
