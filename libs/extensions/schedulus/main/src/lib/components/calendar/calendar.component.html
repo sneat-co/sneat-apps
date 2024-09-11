@@ -44,7 +44,8 @@ This is probably due to the fact that we open 14 listeners (1 for each day of 2 
 [style.display]="tab === 'week' ? 'block' : 'none'"
 -->
 <sneat-week-tab
-	*ngIf="tab === 'week'"
+	*ngIf="isWeekTabActivated"
+	[style.display]="tab === 'week' ? 'block' : 'none'"
 	[space]="space"
 	[spaceDaysProvider]="spaceDaysProvider"
 	(slotClicked)="onSlotClicked($event)"

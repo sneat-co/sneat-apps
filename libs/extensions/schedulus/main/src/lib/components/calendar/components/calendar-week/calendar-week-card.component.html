@@ -58,6 +58,7 @@
 				(slotClicked)="onSlotClicked($event)"
 			/>
 			<sneat-calendar-week
+				*ngIf="isEvenSlideActivated"
 				class="virtual-slide"
 				[@virtualSlide]="evenSlide?.animationState || 'hide'"
 				[space]="space"

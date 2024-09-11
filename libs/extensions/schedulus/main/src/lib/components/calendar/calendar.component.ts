@@ -6,6 +6,7 @@ import {
 	Input,
 	OnChanges,
 	OnDestroy,
+	OnInit,
 	Output,
 	SimpleChanges,
 	ViewChild,
@@ -45,7 +46,9 @@ import { CalendarStateService } from './calendar-state.service';
 	templateUrl: './calendar.component.html',
 	styleUrls: ['./calendar.component.scss'],
 })
-export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
+export class CalendarComponent
+	implements OnInit, AfterViewInit, OnChanges, OnDestroy
+{
 	private readonly destroyed = new Subject<void>();
 	private filter = emptyScheduleFilter;
 	private date = new Date();
@@ -59,9 +62,10 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 	@Input() public dateID = '';
 	@Output() readonly tabChanged = new EventEmitter<CalendarTab>();
 	@Output() readonly dateChanged = new EventEmitter<string>();
-	public showRecurrings = true;
-	public showEvents = true;
-	allRecurrings?: readonly IHappeningWithUiState[];
+
+	protected isWeekTabActivated = false;
+
+	protected allRecurrings?: readonly IHappeningWithUiState[];
 
 	// private date: Date;
 	recurrings?: readonly IHappeningWithUiState[];
@@ -120,6 +124,9 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 				this.onSpaceIdChanged();
 			}
 		}
+		if (changes['tab'] && this.tab === 'week') {
+			this.isWeekTabActivated = true;
+		}
 	}
 
 	ngOnDestroy(): void {
@@ -132,8 +139,9 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 		this.tabChanged.emit(this.tab);
 	}
 
-	segmentChanged(event: Event): void {
+	protected segmentChanged(event: Event): void {
 		console.log('ScheduleComponent.segmentChanged()', event);
+		this.isWeekTabActivated = true;
 		history.replaceState(
 			history.state,
 			document.title,
@@ -174,18 +182,6 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 				break;
 			default:
 				break;
-		}
-	}
-
-	onShowEventsChanged(): void {
-		if (!this.showEvents) {
-			this.showRecurrings = true;
-		}
-	}
-
-	onShowRecurringsChanged(): void {
-		if (!this.showRecurrings) {
-			this.showEvents = true;
 		}
 	}
 
@@ -240,19 +236,13 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 		this.setDay('onDateSelected', date);
 	};
 
-	readonly index = (i: number): number => i;
-
 	// get inactiveDay(): Day {
 	//     return this.activeDayParity === 'odd' ? this.evenDay : this.oddDay;
 	// }
 
 	// noinspection JSMethodCanBeStatic
 
-	public isToday(): boolean {
-		return isToday(this.date);
-	}
-
-	protected onSpaceIdChanged(): void {
+	private onSpaceIdChanged(): void {
 		console.log('ScheduleComponent.onSpaceIdChanged()', this.space?.id);
 		this.schedulusSpaceSubscription?.unsubscribe();
 		if (this.space?.id) {
@@ -365,7 +355,7 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 
 	// noinspection JSMethodCanBeStatic
 
-	protected hasRepeats(
+	private hasRepeats(
 		repeats: readonly string[],
 		slots?: Readonly<Record<string, IHappeningSlot>>,
 	): boolean {
@@ -456,7 +446,7 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 		// this.slotsProvider.preloadEvents(tx, ...datesToPreload),
 
 		// Change URL
-		if (this.isToday()) {
+		if (isToday(this.date)) {
 			history.replaceState(
 				history.state,
 				document.title,
@@ -478,5 +468,9 @@ export class CalendarComponent implements AfterViewInit, OnChanges, OnDestroy {
 				);
 			}
 		}
+	}
+
+	public ngOnInit(): void {
+		setTimeout(() => (this.isWeekTabActivated = true), 500);
 	}
 }

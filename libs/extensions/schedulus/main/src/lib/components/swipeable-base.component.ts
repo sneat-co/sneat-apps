@@ -6,7 +6,7 @@ import {
 import { dateToIso } from '@sneat/core';
 import { IErrorLogger } from '@sneat/logging';
 import { SneatBaseComponent } from '@sneat/ui';
-import { animationState, areSameDates, isToday } from './schedule-core';
+import { animationState, areSameDates } from './schedule-core';
 import {
 	addDays,
 	getToday,
@@ -25,6 +25,7 @@ export abstract class SwipeableBaseComponent extends SneatBaseComponent {
 		return dateToIso(this.date);
 	}
 	public animationState?: VirtualSliderAnimationStates;
+	protected isEvenSlideActivated = false;
 	public oddSlide?: Swipeable;
 	public evenSlide?: Swipeable;
 
@@ -32,9 +33,9 @@ export abstract class SwipeableBaseComponent extends SneatBaseComponent {
 		return this.parity === 'odd' ? this.oddSlide : this.evenSlide;
 	}
 
-	public get passiveSlide(): Swipeable | undefined {
-		return this.parity === 'odd' ? this.oddSlide : this.evenSlide;
-	}
+	// public get passiveSlide(): Swipeable | undefined {
+	// 	return this.parity === 'odd' ? this.oddSlide : this.evenSlide;
+	// }
 
 	protected constructor(
 		className: string,
@@ -49,28 +50,25 @@ export abstract class SwipeableBaseComponent extends SneatBaseComponent {
 		});
 	}
 
-	public isToday(): boolean {
-		return isToday(this.date);
-	}
+	// protected isToday(): boolean {
+	// 	return isToday(this.date);
+	// }
 
-	public isDefaultDate(): boolean {
+	protected isDefaultDate(): boolean {
 		const defaultDate = addDays(new Date(), this.shiftDays);
 		return areSameDates(this.date, defaultDate);
 	}
 
-	swipeLeft(): void {
+	protected swipeLeft(): void {
 		this.swipeNext();
 	}
 
-	swipeNext(): void {
+	protected swipeNext(): void {
+		this.isEvenSlideActivated = true;
 		this.scheduleSateService.shiftDays(+this.stepDays);
 	}
 
-	swipeRight(): void {
-		this.swipePrev();
-	}
-
-	setToday(): void {
+	protected setToday(): void {
 		this.scheduleSateService.setToday();
 	}
 
@@ -91,8 +89,13 @@ export abstract class SwipeableBaseComponent extends SneatBaseComponent {
 	// 	}
 	// }
 
-	swipePrev(): void {
+	protected swipePrev(): void {
+		this.isEvenSlideActivated = true;
 		this.scheduleSateService.shiftDays(-this.stepDays);
+	}
+
+	protected swipeRight(): void {
+		this.swipePrev();
 	}
 
 	protected onDateChanged(changed: IDateChanged): void {

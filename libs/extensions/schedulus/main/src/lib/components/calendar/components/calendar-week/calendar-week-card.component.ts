@@ -1,10 +1,10 @@
 import {
-	AfterViewInit,
 	Component,
 	EventEmitter,
 	Inject,
 	Input,
 	Output,
+	OnInit,
 } from '@angular/core';
 import { virtualSliderAnimations } from '@sneat/components';
 import { ISlotUIContext } from '@sneat/extensions/schedulus/shared';
@@ -22,7 +22,7 @@ import { SwipeableWeek, swipeableWeek } from '../../../swipeable-ui';
 })
 export class CalendarWeekCardComponent
 	extends SwipeableBaseComponent
-	implements AfterViewInit
+	implements OnInit
 {
 	@Input({ required: true }) space: ISpaceContext = { id: '' };
 	@Input({ required: true }) spaceDaysProvider?: SpaceDaysProvider;
@@ -44,9 +44,10 @@ export class CalendarWeekCardComponent
 		scheduleStateService: CalendarStateService,
 	) {
 		super('ScheduleWeekCardComponent', errorLogger, scheduleStateService, 7);
+		setTimeout(() => (this.isEvenSlideActivated = true), 500);
 	}
 
-	ngAfterViewInit(): void {
+	ngOnInit(): void {
 		if (this.spaceDaysProvider) {
 			this.createSlides();
 		}
