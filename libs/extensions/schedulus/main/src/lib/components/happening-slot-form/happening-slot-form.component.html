@@ -34,6 +34,7 @@
 		listLabelColor="light"
 		[value]="happens()"
 		[items]="repeatsOptions"
+		[isReadonly]="!!date"
 		(valueChange)="onRepeatsChanged($event)"
 		labelPlacement="end"
 		listLabel="divider"
@@ -45,8 +46,9 @@
 				<ion-item color="light" lines="full">
 					<ion-select
 						label="Repeats"
-						[value]="happens()"
 						interface="popover"
+						[value]="happens()"
+						[disabled]="!!date"
 						(ionChange)="onRepeatsChanged($event.detail.value)"
 					>
 						@for (repeatOption of repeatsOptions; track repeatOption.id) {
@@ -63,6 +65,7 @@
 						color="medium"
 						labelPlacement="end"
 						slot="end"
+						[disabled]="!!date"
 						[checked]="weekdaysCheckbox()"
 						(ionChange)="onWeekdaysCheckboxChange($event.detail.checked)"
 					>
@@ -73,6 +76,7 @@
 						labelPlacement="end"
 						slot="end"
 						[checked]="weekendCheckbox()"
+						[disabled]="!!date"
 						(ionChange)="onWeekendCheckboxChange($event.detail.checked)"
 					>
 						<ion-label color="medium">W-end</ion-label>
@@ -90,6 +94,7 @@
 			label="On"
 			[value]="monthlyMode()"
 			[items]="monthlyModes"
+			[isReadonly]="!!date"
 			(valueChange)="onMonthlyModeChanged($event)"
 			labelPlacement="end"
 			listLabel="divider"
@@ -110,6 +115,7 @@
 								slot="start"
 								value="mo"
 								[checked]="weekdayMo()"
+								[disabled]="!!date"
 								(ionChange)="onWeekdayChanged('mo', $event.detail.checked)"
 								labelPlacement="end"
 								>Monday
@@ -120,6 +126,7 @@
 								slot="start"
 								value="tu"
 								[checked]="weekdayTu()"
+								[disabled]="!!date"
 								(ionChange)="onWeekdayChanged('tu', $event.detail.checked)"
 								labelPlacement="end"
 								>Tuesday
@@ -130,6 +137,7 @@
 								slot="start"
 								value="we"
 								[checked]="weekdayWe()"
+								[disabled]="!!date"
 								(ionChange)="onWeekdayChanged('we', $event.detail.checked)"
 								labelPlacement="end"
 								>Wednesday
@@ -142,6 +150,7 @@
 								slot="start"
 								value="th"
 								[checked]="weekdayTh()"
+								[disabled]="!!date"
 								(ionChange)="onWeekdayChanged('th', $event.detail.checked)"
 								labelPlacement="end"
 								>Thursday
@@ -152,6 +161,7 @@
 								slot="start"
 								value="fr"
 								[checked]="weekdayFr()"
+								[disabled]="!!date"
 								(ionChange)="onWeekdayChanged('fr', $event.detail.checked)"
 								labelPlacement="end"
 								>Friday
@@ -164,6 +174,7 @@
 								slot="start"
 								value="sa"
 								[checked]="weekdaySa()"
+								[disabled]="!!date"
 								(ionChange)="onWeekdayChanged('sa', $event.detail.checked)"
 								labelPlacement="end"
 								>Saturday
@@ -174,6 +185,7 @@
 								slot="start"
 								value="su"
 								[checked]="weekdaySu()"
+								[disabled]="!!date"
 								(ionChange)="onWeekdayChanged('su', $event.detail.checked)"
 								labelPlacement="end"
 								>Sunday
@@ -191,6 +203,7 @@
 					label="Month"
 					interface="popover"
 					[formControl]="yearlyMonth"
+					[disabled]="!!date"
 					(ionChange)="setYearlyMonth($event.detail.value)"
 				>
 					@for (month of months; track month) {
