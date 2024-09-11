@@ -28,6 +28,7 @@ import { Weekday } from '../../weekday';
 export class CalendarWeekdayComponent implements OnDestroy {
 	private readonly destroyed = new EventEmitter<void>();
 	private filter = emptyScheduleFilter;
+
 	@Input({ required: true }) space: ISpaceContext = { id: '' };
 	@Input() weekday?: Weekday;
 	@Output() dateSelected = new EventEmitter<Date>();

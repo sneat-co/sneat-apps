@@ -33,9 +33,11 @@ import {
 	BehaviorSubject,
 	distinctUntilChanged,
 	EMPTY,
+	filter,
 	map,
 	Observable,
 	shareReplay,
+	skip,
 	Subject,
 	Subscription,
 } from 'rxjs';
@@ -183,10 +185,11 @@ export class SpaceDaysProvider {
 
 	private readonly recurrings$: Observable<RecurringSlots> =
 		this.schedulusSpace$.pipe(
+			skip(1), // We are not interested in processing the first 'undefined' value of BehaviorSubject
+			filter((schedulusSpace) => !!schedulusSpace), // Not sure if we need this.
 			// TODO: Instead of providing all slots we can provide observables of slots for a specific day
 			// That would minimize number of handlers to be called on watching components
-			// Tough it's a micro optimization that does not seems to worth the effort now.
-			map((schedulusTeam) => groupRecurringSlotsByWeekday(schedulusTeam)),
+			map((schedulusSpace) => groupRecurringSlotsByWeekday(schedulusSpace)),
 			tap((slots) => console.log('SpaceDaysProvider.recurrings$ =>', slots)),
 			shareReplay(1),
 		);

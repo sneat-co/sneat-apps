@@ -26,9 +26,10 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { HappeningService, CalendarDayService } from '@sneat/team-services';
+import { location } from 'ionicons/icons';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { SpaceDaysProvider } from '../../services/space-days-provider';
-import { CalendariumSpaceService } from '../../services/calendarium-space.service';
+import { CalendariumSpaceService } from '../../services';
 import { isToday } from '../schedule-core';
 import {
 	emptyScheduleFilter,
@@ -145,7 +146,7 @@ export class CalendarComponent
 		history.replaceState(
 			history.state,
 			document.title,
-			location.href.replace(/tab=\w+/, `tab=${this.tab}`),
+			window.location.href.replace(/tab=\w+/, `tab=${this.tab}`),
 		);
 		switch (this.tab) {
 			case 'week':
@@ -450,21 +451,21 @@ export class CalendarComponent
 			history.replaceState(
 				history.state,
 				document.title,
-				location.href.replace(/&date=\d{4}-\d{2}-\d{2}/, ''),
+				window.location.href.replace(/&date=\d{4}-\d{2}-\d{2}/, ''),
 			);
 		} else {
 			const isoDate = `&date=${localDateToIso(d)}`;
-			if (!location.href.includes('&date')) {
+			if (!window.location.href.includes('&date')) {
 				history.replaceState(
 					history.state,
 					document.title,
-					location.href + isoDate,
+					window.location.href + isoDate,
 				);
 			} else {
 				history.replaceState(
 					history.state,
 					document.title,
-					location.href.replace(/&date=\d{4}-\d{2}-\d{2}/, isoDate),
+					window.location.href.replace(/&date=\d{4}-\d{2}-\d{2}/, isoDate),
 				);
 			}
 		}

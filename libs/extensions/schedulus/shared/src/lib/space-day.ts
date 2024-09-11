@@ -1,3 +1,4 @@
+import { signal } from '@angular/core';
 import { wdCodeToWeekdayLongName } from '@sneat/components';
 import { dateToIso } from '@sneat/core';
 import {
@@ -42,6 +43,9 @@ export class SpaceDay {
 	public readonly dateID: string;
 	public readonly wd: WeekdayCode2;
 	public readonly wdLongTitle: string;
+
+	public readonly _isLoading = signal(true);
+	public readonly isLoading = this._isLoading.asReadonly();
 
 	public readonly loadingEvents?: boolean;
 	// readonly eventsLoaded?: boolean;
@@ -219,12 +223,12 @@ export class SpaceDay {
 	}
 
 	private readonly processRecurrings = (slots: RecurringSlots): void => {
-		// console.log(
-		// 	'SpaceDay[${this.dateID},wd=${this.wd}].processRecurrings(), ${
-		// 		Object.keys(slots.byWeekday).length
-		// 	} weekdays with slots:`,
-		// 	slots,
-		// );
+		console.log(
+			`SpaceDay[${this.dateID},wd=${this.wd}].processRecurrings(), ${
+				Object.keys(slots.byWeekday).length
+			} weekdays with slots:`,
+			slots,
+		);
 		this.recurringSlots = slots;
 		this.joinRecurringsWithSinglesAndEmit();
 	};
@@ -266,5 +270,6 @@ export class SpaceDay {
 		// 	`${this.singles?.length || 0} singles:`, weekdaySlots,
 		// 	`=> ${slots.length} slots:`, slots);
 		this._slots.next(slots);
+		this._isLoading.set(false);
 	}
 }

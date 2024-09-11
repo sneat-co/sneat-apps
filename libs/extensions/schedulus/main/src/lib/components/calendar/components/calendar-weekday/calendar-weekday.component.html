@@ -25,20 +25,27 @@
 		</ion-button>
 	</ion-buttons>
 </ion-item-divider>
-@if (day?.slots && day?.slots?.length) {
-	<ng-container *ngFor="let slot of day?.slots || []">
+@if (!day || day.isLoading()) {
+	<ion-item>
+		<ion-label color="medium" style="font-style: italic"
+			>Loading data for {{ weekday?.longTitle }}...
+		</ion-label>
+		<ion-spinner name="lines-small" slot="end" color="medium" />
+	</ion-item>
+} @else if (day) {
+	@for (slot of day.slots; track slot.slot.id) {
 		<sneat-day-slot-item
 			*ngIf="showSlot(slot)"
 			[space]="space"
-			[dateID]="day?.dateID"
+			[dateID]="day.dateID"
 			[slotContext]="slot"
 			(slotClicked)="onSlotClicked($event)"
 		/>
-	</ng-container>
-} @else {
-	<ion-item>
-		<ion-label color="medium" style="font-style: italic"
-			>Nothing scheduled yet for {{ weekday?.longTitle }}.
-		</ion-label>
-	</ion-item>
+	} @empty {
+		<ion-item>
+			<ion-label color="medium" style="font-style: italic"
+				>Nothing scheduled yet for {{ weekday?.longTitle }}.
+			</ion-label>
+		</ion-item>
+	}
 }

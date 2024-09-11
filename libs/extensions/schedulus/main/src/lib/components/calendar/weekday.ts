@@ -5,5 +5,5 @@ export interface Weekday {
 	// This is used to
 	readonly id: WeekdayCode2;
 	readonly longTitle: string;
-	readonly day?: SpaceDay; // TODO: make readonly
+	readonly day?: SpaceDay;
 }
