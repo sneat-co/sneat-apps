@@ -7,6 +7,12 @@ import {
 } from '@sneat/mod-schedulus-core';
 import { HappeningSlotModalComponent } from './happening-slot-modal.component';
 
+export interface EditRecurringSlotParams {
+	dateID: string;
+	editMode: 'series' | 'single';
+	adjustment?: ISlotAdjustment;
+}
+
 @Injectable()
 export class HappeningSlotModalService {
 	constructor(private readonly modalController: ModalController) {}
@@ -14,11 +20,7 @@ export class HappeningSlotModalService {
 	async editSingleHappeningSlot(
 		event: Event,
 		happening: IHappeningContext,
-		recurring?: {
-			dateID: string;
-			editMode: 'series' | 'single';
-			adjustment?: ISlotAdjustment;
-		},
+		recurring?: EditRecurringSlotParams,
 		slot?: IHappeningSlotWithID,
 	): Promise<void> {
 		console.log('editSingleHappeningSlot()', happening, recurring, slot);

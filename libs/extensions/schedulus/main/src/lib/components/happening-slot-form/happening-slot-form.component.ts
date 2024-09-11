@@ -472,7 +472,15 @@ export class HappeningSlotFormComponent
 			slot: IHappeningSlotWithID,
 		) => Observable<void> = isNewSlot
 			? this.happeningService.addSlot
-			: this.happeningService.updateSlot;
+			: this.date
+				? (spaceID: string, happeningID: string, slot: IHappeningSlotWithID) =>
+						this.happeningService.adjustSlot(
+							spaceID,
+							happeningID,
+							slot,
+							this.date || '',
+						)
+				: this.happeningService.updateSlot;
 
 		if (!id) {
 			id = this.generateSlotID();

@@ -25,7 +25,10 @@ import {
 	ISlotRequest,
 } from '@sneat/team-services';
 import { NEVER, Observable } from 'rxjs';
-import { HappeningSlotModalService } from '../../../happening-slot-form/happening-slot-modal.service';
+import {
+	EditRecurringSlotParams,
+	HappeningSlotModalService,
+} from '../../../happening-slot-form/happening-slot-modal.service';
 
 const notImplemented = 'Sorry, not implemented yet';
 
@@ -115,7 +118,7 @@ export class SlotContextMenuComponent {
 		if (!this.space) {
 			return;
 		}
-		const recurring = this.dateID
+		const recurring: EditRecurringSlotParams | undefined = this.dateID
 			? {
 					dateID: this.dateID,
 					adjustment: this.slotContext?.adjustment,

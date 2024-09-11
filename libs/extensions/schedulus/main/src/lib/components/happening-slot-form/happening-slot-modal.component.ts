@@ -100,48 +100,49 @@ export class HappeningSlotModalComponent
 		await this.modalController.dismiss();
 	}
 
-	async save(event: Event): Promise<void> {
-		console.log('save()', event);
-		event.stopPropagation();
-		if (!this.space) {
-			this.errorLogger.logError('space context is not set');
-			return;
-		}
-		if (!this.happening) {
-			this.errorLogger.logError('happening context is not set');
-			return;
-		}
-		switch (this.happening.brief?.type) {
-			case 'single':
-		}
-		if (this.happening?.brief?.type === 'single' || !this.dateID) {
-			this.happeningService
-				.updateSlot(this.space.id, this.happening.id, this.slot)
-				.pipe(takeUntil(this.destroyed))
-				.subscribe({
-					next: () =>
-						this.modalController
-							.dismiss()
-							.catch(this.errorLogger.logErrorHandler('failed to close modal')),
-					error: this.errorLogger.logErrorHandler(
-						'Failed to update happening slot',
-					),
-				});
-		} else if (this.happening?.brief?.type === 'recurring' && this.dateID) {
-			this.happeningService
-				.adjustSlot(this.space.id, this.happening.id, this.slot, this.dateID)
-				.pipe(takeUntil(this.destroyed))
-				.subscribe({
-					next: () =>
-						this.modalController
-							.dismiss()
-							.catch(this.errorLogger.logErrorHandler('failed to close modal')),
-					error: this.errorLogger.logErrorHandler(
-						'Failed to adjust happening slot',
-					),
-				});
-		}
-	}
+	// async save(event: Event): Promise<void> {
+	// 	console.log('save()', event);
+	// 	event.stopPropagation();
+	// 	if (!this.space) {
+	// 		this.errorLogger.logError('space context is not set');
+	// 		return;
+	// 	}
+	// 	if (!this.happening) {
+	// 		this.errorLogger.logError('happening context is not set');
+	// 		return;
+	// 	}
+	// 	switch (this.happening.brief?.type) {
+	// 		case 'single':
+	// 	}
+	// 	alert('breakpoint');
+	// 	if (this.happening?.brief?.type === 'single' || !this.dateID) {
+	// 		this.happeningService
+	// 			.updateSlot(this.space.id, this.happening.id, this.slot)
+	// 			.pipe(takeUntil(this.destroyed))
+	// 			.subscribe({
+	// 				next: () =>
+	// 					this.modalController
+	// 						.dismiss()
+	// 						.catch(this.errorLogger.logErrorHandler('failed to close modal')),
+	// 				error: this.errorLogger.logErrorHandler(
+	// 					'Failed to update happening slot',
+	// 				),
+	// 			});
+	// 	} else if (this.happening?.brief?.type === 'recurring' && this.dateID) {
+	// 		this.happeningService
+	// 			.adjustSlot(this.space.id, this.happening.id, this.slot, this.dateID)
+	// 			.pipe(takeUntil(this.destroyed))
+	// 			.subscribe({
+	// 				next: () =>
+	// 					this.modalController
+	// 						.dismiss()
+	// 						.catch(this.errorLogger.logErrorHandler('failed to close modal')),
+	// 				error: this.errorLogger.logErrorHandler(
+	// 					'Failed to adjust happening slot',
+	// 				),
+	// 			});
+	// 	}
+	// }
 
 	ngAfterViewInit(): void {
 		console.log('ngAfterViewInit', this.slot);
