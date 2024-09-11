@@ -1,5 +1,5 @@
 import { IByUser } from '@sneat/dto';
-import { ITiming } from './happening';
+import { IHappeningSlot } from './happening';
 
 export interface ICancellation {
 	readonly at: string;
@@ -8,7 +8,7 @@ export interface ICancellation {
 
 export interface ISlotAdjustment {
 	readonly canceled?: ICancellation;
-	readonly timing?: ITiming;
+	readonly adjustment?: IHappeningSlot;
 }
 
 export interface IHappeningAdjustment {

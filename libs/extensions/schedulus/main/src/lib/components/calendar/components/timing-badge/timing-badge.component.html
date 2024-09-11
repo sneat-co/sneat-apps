@@ -5,11 +5,41 @@
 	[class.canceled]="isCanceled"
 	style="font-weight: normal; background-color: white"
 >
-	From {{ timing?.start?.time }}
+	From
+	@if (
+		adjustment?.adjustment?.start?.time &&
+		adjustment?.adjustment?.start?.time !== timing?.start?.time
+	) {
+		<ion-text
+			color="danger"
+			title="Original: {{ timing?.start?.time }}-{{ timing?.end?.time }}"
+			>{{ adjustment?.adjustment?.start?.time }}</ion-text
+		>
+	} @else {
+		{{ timing?.start?.time }}
+	}
+
 	<div
-		style="font-size: small; color: #777; text-align: center"
-		*ngIf="timing?.end"
+		style="font-size: small; color: #777; text-align: right"
+		*ngIf="adjustment?.adjustment?.end || timing?.end"
 	>
-		<small>ends</small> {{ timing?.end?.time }}
+		<small>ends</small>
+		@if (
+			adjustment?.adjustment?.end?.time &&
+			adjustment?.adjustment?.end?.time !== timing?.end?.time
+		) {
+			<ion-text
+				[color]="
+					adjustment?.adjustment?.start?.time &&
+					adjustment?.adjustment?.start?.time !== timing?.start?.time
+						? 'warning'
+						: 'danger'
+				"
+				title="Original: {{ timing?.start?.time }}-{{ timing?.end?.time }}"
+				>{{ adjustment?.adjustment?.end?.time }}</ion-text
+			>
+		} @else {
+			{{ timing?.end?.time }}
+		}
 	</div>
 </ion-badge>

@@ -23,7 +23,8 @@
 
 	<sneat-timing-badge
 		[isCanceled]="isCanceled"
-		[timing]="slotContext?.adjustment?.timing || slotContext?.timing"
+		[timing]="slotContext?.timing"
+		[adjustment]="slotContext?.adjustment"
 	/>
 
 	<ion-label class="ion-text-wrap">

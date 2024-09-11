@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { ITiming } from '@sneat/mod-schedulus-core';
+import { ISlotAdjustment, ITiming } from '@sneat/mod-schedulus-core';
 
 @Component({
 	selector: 'sneat-timing-badge',
@@ -9,4 +9,5 @@ import { ITiming } from '@sneat/mod-schedulus-core';
 export class TimingBadgeComponent {
 	@Input({ required: true }) isCanceled?: boolean;
 	@Input({ required: true }) timing?: ITiming;
+	@Input({ required: true }) adjustment?: ISlotAdjustment;
 }

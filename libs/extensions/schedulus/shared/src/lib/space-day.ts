@@ -131,6 +131,10 @@ export class SpaceDay {
 						const changed = this.calendarDayDbo != calendarDay.dbo;
 						if (changed) {
 							this.calendarDayDbo = calendarDay.dbo;
+							console.log(
+								'Received calendarDay record for ' + this.dateID,
+								calendarDay,
+							);
 							this.joinRecurringsWithSinglesAndEmit();
 						}
 					},
@@ -250,7 +254,7 @@ export class SpaceDay {
 						this.calendarDayDbo?.happeningAdjustments?.[wdSlot.happening.id]
 							?.slots?.[wdSlot.slot.id];
 					if (adjustment) {
-						return { ...wdSlot, adjustment };
+						return { ...wdSlot, adjustment: adjustment };
 					}
 				}
 				return wdSlot;
