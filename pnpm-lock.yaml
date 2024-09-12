@@ -226,8 +226,8 @@ importers:
         specifier: 29.7.0
         version: 29.7.0
       jest-preset-angular:
-        specifier: 14.2.2
-        version: 14.2.2(7ekbtvyecf2cjresmbkiiiz6fi)
+        specifier: 14.2.3
+        version: 14.2.3(7ekbtvyecf2cjresmbkiiiz6fi)
       jsonc-eslint-parser:
         specifier: 2.4.0
         version: 2.4.0
@@ -4394,11 +4394,6 @@ packages:
   es-module-lexer@1.5.2:
     resolution: {integrity: sha512-l60ETUTmLqbVbVHv1J4/qj+M8nq7AwMzEcg3kmJDt9dCNrTk+yHcYFf/Kw75pMDwd9mPcIGCG5LcS20SxYRzFA==}
 
-  esbuild-wasm@0.21.5:
-    resolution: {integrity: sha512-L/FlOPMMFtw+6qPAbuPvJXdrOYOp9yx/PEwSrIZW0qghY4vgV003evdYDwqQ/9ENMQI0B6RMod9xT4FHtto6OQ==}
-    engines: {node: '>=12'}
-    hasBin: true
-
   esbuild-wasm@0.23.0:
     resolution: {integrity: sha512-6jP8UmWy6R6TUUV8bMuC3ZyZ6lZKI56x0tkxyCIqWwRRJ/DgeQKneh/Oid5EoGoPFLrGNkz47ZEtWAYuiY/u9g==}
     engines: {node: '>=18'}
@@ -5416,8 +5411,8 @@ packages:
       jest-resolve:
         optional: true
 
-  jest-preset-angular@14.2.2:
-    resolution: {integrity: sha512-vdpv1DV4yJMMoBRbTdwRA16Es0UU+8CuOHsV2vfUL0LOy69anvq2RUawh07EyTWSVxko838jOC146jlnCkWOOw==}
+  jest-preset-angular@14.2.3:
+    resolution: {integrity: sha512-f3qI8EyKi2pbV1a0E2JDRAjdM2Fhm3gHTZoZzBNzydEn1lAuEyLcJKfunCaNlNn/6hjL3InRa1j0P9hH7OhLBg==}
     engines: {node: ^14.15.0 || >=16.10.0}
     peerDependencies:
       '@angular-devkit/build-angular': '>=15.0.0 <19.0.0'
@@ -13339,8 +13334,6 @@ snapshots:
 
   es-module-lexer@1.5.2: {}
 
-  esbuild-wasm@0.21.5: {}
-
   esbuild-wasm@0.23.0: {}
 
   esbuild@0.21.5:
@@ -14640,14 +14633,14 @@ snapshots:
     optionalDependencies:
       jest-resolve: 29.7.0
 
-  jest-preset-angular@14.2.2(7ekbtvyecf2cjresmbkiiiz6fi):
+  jest-preset-angular@14.2.3(7ekbtvyecf2cjresmbkiiiz6fi):
     dependencies:
       '@angular-devkit/build-angular': 18.2.4(@angular/compiler-cli@18.2.4(@angular/compiler@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(typescript@5.5.4))(@swc/core@1.7.26(@swc/helpers@0.5.13))(@types/node@20.16.5)(chokidar@3.6.0)(jest-environment-jsdom@29.7.0)(jest@29.7.0(@types/node@20.16.5)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.7.26(@swc/helpers@0.5.13))(@types/node@20.16.5)(typescript@5.5.4)))(ng-packagr@18.2.1(@angular/compiler-cli@18.2.4(@angular/compiler@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(typescript@5.5.4))(tslib@2.7.0)(typescript@5.5.4))(stylus@0.59.0)(typescript@5.5.4)
       '@angular/compiler-cli': 18.2.4(@angular/compiler@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(typescript@5.5.4)
       '@angular/core': 18.2.4(rxjs@7.8.1)(zone.js@0.15.0)
       '@angular/platform-browser-dynamic': 18.2.4(@angular/common@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/compiler@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@18.2.4(@angular/animations@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/common@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))
       bs-logger: 0.2.6
-      esbuild-wasm: 0.21.5
+      esbuild-wasm: 0.23.0
       jest: 29.7.0(@types/node@20.16.5)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.7.26(@swc/helpers@0.5.13))(@types/node@20.16.5)(typescript@5.5.4))
       jest-environment-jsdom: 29.7.0
       jest-util: 29.7.0
