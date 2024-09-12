@@ -226,8 +226,8 @@ importers:
         specifier: 29.7.0
         version: 29.7.0
       jest-preset-angular:
-        specifier: 14.2.3
-        version: 14.2.3(7ekbtvyecf2cjresmbkiiiz6fi)
+        specifier: 14.2.4
+        version: 14.2.4(7ekbtvyecf2cjresmbkiiiz6fi)
       jsonc-eslint-parser:
         specifier: 2.4.0
         version: 2.4.0
@@ -5411,8 +5411,8 @@ packages:
       jest-resolve:
         optional: true
 
-  jest-preset-angular@14.2.3:
-    resolution: {integrity: sha512-f3qI8EyKi2pbV1a0E2JDRAjdM2Fhm3gHTZoZzBNzydEn1lAuEyLcJKfunCaNlNn/6hjL3InRa1j0P9hH7OhLBg==}
+  jest-preset-angular@14.2.4:
+    resolution: {integrity: sha512-xyhkaiBdn3keBgxxkcbqZu/my3ADU9NcDrz6DaMuGRaxz/bf6ZC1qxZ1eQuz5V1WuA3/rD64VA3Kke8P6E9qNg==}
     engines: {node: ^14.15.0 || >=16.10.0}
     peerDependencies:
       '@angular-devkit/build-angular': '>=15.0.0 <19.0.0'
@@ -14633,7 +14633,7 @@ snapshots:
     optionalDependencies:
       jest-resolve: 29.7.0
 
-  jest-preset-angular@14.2.3(7ekbtvyecf2cjresmbkiiiz6fi):
+  jest-preset-angular@14.2.4(7ekbtvyecf2cjresmbkiiiz6fi):
     dependencies:
       '@angular-devkit/build-angular': 18.2.4(@angular/compiler-cli@18.2.4(@angular/compiler@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(typescript@5.5.4))(@swc/core@1.7.26(@swc/helpers@0.5.13))(@types/node@20.16.5)(chokidar@3.6.0)(jest-environment-jsdom@29.7.0)(jest@29.7.0(@types/node@20.16.5)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.7.26(@swc/helpers@0.5.13))(@types/node@20.16.5)(typescript@5.5.4)))(ng-packagr@18.2.1(@angular/compiler-cli@18.2.4(@angular/compiler@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(typescript@5.5.4))(tslib@2.7.0)(typescript@5.5.4))(stylus@0.59.0)(typescript@5.5.4)
       '@angular/compiler-cli': 18.2.4(@angular/compiler@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(typescript@5.5.4)
