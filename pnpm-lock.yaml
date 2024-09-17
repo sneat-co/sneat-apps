@@ -60,11 +60,11 @@ importers:
         specifier: 5.36.0
         version: 5.36.0(@ionic-native/core@5.36.0(rxjs@7.8.1))(rxjs@7.8.1)
       '@ionic/angular':
-        specifier: 8.3.0
-        version: 8.3.0(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(@angular/forms@18.2.4(@angular/common@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@18.2.4(@angular/animations@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/common@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(rxjs@7.8.1))(@angular/router@18.2.4(@angular/common@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@18.2.4(@angular/animations@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/common@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(rxjs@7.8.1))(rxjs@7.8.1)(zone.js@0.15.0)
+        specifier: 8.3.1
+        version: 8.3.1(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(@angular/forms@18.2.4(@angular/common@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@18.2.4(@angular/animations@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/common@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(rxjs@7.8.1))(@angular/router@18.2.4(@angular/common@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@18.2.4(@angular/animations@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/common@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(rxjs@7.8.1))(rxjs@7.8.1)(zone.js@0.15.0)
       '@ionic/core':
-        specifier: 8.3.0
-        version: 8.3.0
+        specifier: 8.3.1
+        version: 8.3.1
       '@nx/angular':
         specifier: 19.7.3
         version: 19.7.3(mpidvn2t6t6g7derjyfvfgko6q)
@@ -2033,8 +2033,8 @@ packages:
       '@ionic-native/core': ^5.1.0
       rxjs: ^5.5.0 || ^6.5.0
 
-  '@ionic/angular@8.3.0':
-    resolution: {integrity: sha512-xC+BMG1nLn/J+p7VwH/B6cwTZ2+JAwxu4KVfCTzrABn+DH8Nw+8EoI6DMtGH9P2RrBGiMXvduLeLgEZTK0lIaA==}
+  '@ionic/angular@8.3.1':
+    resolution: {integrity: sha512-D/qP3R6xbaH/y7qNSQ1F6/hVediPq+F5a6KxfhOIZPXrD94r9haDTD9XpQh7LMoAzoem85h7icn2XfHzcDP1HA==}
     peerDependencies:
       '@angular/core': '>=16.0.0'
       '@angular/forms': '>=16.0.0'
@@ -2042,8 +2042,8 @@ packages:
       rxjs: '>=7.5.0'
       zone.js: '>=0.13.0'
 
-  '@ionic/core@8.3.0':
-    resolution: {integrity: sha512-Yv/LA2OOsvdelhvVYKTNL+0AduKXO74DTdQ3lqS/NN512/wCNf2CVt8J62oCs25XOttLAy8RflDUN8joT3bO7A==}
+  '@ionic/core@8.3.1':
+    resolution: {integrity: sha512-md4JFwKYLgN/YP+uzoTE5H7ah0W5SQQNZ1cJOQtxhv0ytCCHHaXJrfRVzefdy8iy8NdzL9s6EV5ZTKYH98E+ZQ==}
 
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
@@ -2826,8 +2826,8 @@ packages:
     engines: {node: '>=16.0.0', npm: '>=7.10.0'}
     hasBin: true
 
-  '@stencil/core@4.19.2':
-    resolution: {integrity: sha512-ZdnbHmHEl8E5vN0GWDtONe5w6j3CrSqqxZM4hNLBPkV/aouWKug7D5/Mi6RazfYO5U4fmHQYLwMz60rHcx0G4g==}
+  '@stencil/core@4.20.0':
+    resolution: {integrity: sha512-WPrTHFngvN081RY+dJPneKQLwnOFD60OMCOQGmmSHfCW0f4ujPMzzhwWU1gcSwXPWXz5O+8cBiiCaxAbJU7kAg==}
     engines: {node: '>=16.0.0', npm: '>=7.10.0'}
     hasBin: true
 
@@ -10281,21 +10281,21 @@ snapshots:
       '@types/cordova': 11.0.3
       rxjs: 7.8.1
 
-  '@ionic/angular@8.3.0(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(@angular/forms@18.2.4(@angular/common@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@18.2.4(@angular/animations@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/common@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(rxjs@7.8.1))(@angular/router@18.2.4(@angular/common@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@18.2.4(@angular/animations@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/common@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(rxjs@7.8.1))(rxjs@7.8.1)(zone.js@0.15.0)':
+  '@ionic/angular@8.3.1(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(@angular/forms@18.2.4(@angular/common@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@18.2.4(@angular/animations@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/common@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(rxjs@7.8.1))(@angular/router@18.2.4(@angular/common@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@18.2.4(@angular/animations@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/common@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(rxjs@7.8.1))(rxjs@7.8.1)(zone.js@0.15.0)':
     dependencies:
       '@angular/core': 18.2.4(rxjs@7.8.1)(zone.js@0.15.0)
       '@angular/forms': 18.2.4(@angular/common@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@18.2.4(@angular/animations@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/common@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(rxjs@7.8.1)
       '@angular/router': 18.2.4(@angular/common@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@18.2.4(@angular/animations@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/common@18.2.4(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@18.2.4(rxjs@7.8.1)(zone.js@0.15.0)))(rxjs@7.8.1)
-      '@ionic/core': 8.3.0
+      '@ionic/core': 8.3.1
       ionicons: 7.4.0
       jsonc-parser: 3.3.1
       rxjs: 7.8.1
       tslib: 2.7.0
       zone.js: 0.15.0
 
-  '@ionic/core@8.3.0':
+  '@ionic/core@8.3.1':
     dependencies:
-      '@stencil/core': 4.19.2
+      '@stencil/core': 4.20.0
       ionicons: 7.4.0
       tslib: 2.7.0
 
@@ -11661,7 +11661,7 @@ snapshots:
 
   '@stencil/core@4.17.2': {}
 
-  '@stencil/core@4.19.2': {}
+  '@stencil/core@4.20.0': {}
 
   '@swc-node/core@1.13.3(@swc/core@1.7.26(@swc/helpers@0.5.13))(@swc/types@0.1.12)':
     dependencies:
