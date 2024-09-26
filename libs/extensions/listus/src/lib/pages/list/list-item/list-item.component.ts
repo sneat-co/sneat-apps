@@ -118,7 +118,7 @@ export class ListItemComponent {
 			isDone = !this.isDone(item);
 		}
 		const newItem: IListItemWithUiState = {
-			brief: { ...item.brief, isDone },
+			brief: { ...item.brief, status: isDone ? 'done' : undefined },
 			state: { ...item.state, isChangingIsDone: true },
 		};
 		const performSetIsDone = (): void => {

@@ -396,7 +396,9 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 
 	protected deleteCompleted(): void {
 		console.log('deleteCompleted()');
-		this.deleteItems(this.allListItems?.filter((li) => li.brief.isDone));
+		this.deleteItems(
+			this.allListItems?.filter((li) => li.brief.status === 'done'),
+		);
 	}
 
 	protected deleteAll(): void {
@@ -445,7 +447,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			// listType: this.list.brief.type,
 			isDone: false,
 			itemIDs: this.allListItems
-				.filter((li) => li.brief.isDone)
+				.filter((li) => li.brief.status === 'done')
 				.map((li) => li.brief.id),
 		};
 		if (!request.itemIDs.length) {
@@ -488,7 +490,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		if (!doneFilter) {
 			if (
 				!this.allListItems?.length ||
-				this.allListItems?.some((li) => !li.brief.isDone)
+				this.allListItems?.some((li) => li.brief.status !== 'done')
 			) {
 				this.doneFilter = 'active';
 			} else {
@@ -499,8 +501,8 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			this.allListItems?.filter(
 				(li) =>
 					doneFilter === 'all' ||
-					(doneFilter === 'completed' && li.brief.isDone) ||
-					(doneFilter === 'active' && !li.brief.isDone),
+					(doneFilter === 'completed' && li.brief.status === 'done') ||
+					(doneFilter === 'active' && li.brief.status !== 'done'),
 			) || [];
 		this.listItems = [...this.listItems, ...this.addingItems];
 	}

@@ -11,9 +11,9 @@
 			slot="start"
 			labelPlacement="end"
 			justify="start"
-			[checked]="listItem.isDone"
+			[checked]="listItem.status === 'done'"
 			[disabled]="isSettingIsDone"
-			[value]="listItem.isDone"
+			[value]="listItem.status === 'done'"
 			(ionChange)="onIsDoneCheckboxChanged($event)"
 		>
 		</ion-checkbox>

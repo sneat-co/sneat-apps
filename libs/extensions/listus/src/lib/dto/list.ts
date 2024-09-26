@@ -23,11 +23,13 @@ export interface IListItemCommon extends IListCommon {
 
 export type IListItemBase = IListItemCommon;
 
+export type ListItemStatus = 'done' | 'active';
+
 export interface IListItemBrief extends IListItemBase {
 	id: string;
 	readonly created?: string; // UTC datetime
 	readonly emoji?: string;
-	readonly isDone?: boolean; // TODO: make readonly
+	readonly status?: ListItemStatus;
 	readonly img?: string;
 }
 
