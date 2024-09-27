@@ -60,7 +60,7 @@ jobs:
                 with:
                     fetch-depth: 0
 
-            -   uses: sneat-co/sneat-go-backend@main
+            -   uses: sneat-co/sneat-go@main
 
             -   name: Install latest Chrome
                 uses: browser-actions/setup-chrome@v1
