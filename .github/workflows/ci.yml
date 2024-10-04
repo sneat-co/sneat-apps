@@ -61,8 +61,6 @@ jobs:
                     fetch-depth: 0
 
             -   uses: sneat-co/sneat-go-server@main
-#                env:
-#                    GOPRIVATE: github.com/sneat-co
 
             -   name: Install latest Chrome
                 uses: browser-actions/setup-chrome@v1
