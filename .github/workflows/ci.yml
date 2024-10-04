@@ -69,30 +69,25 @@ jobs:
                 with:
                     chrome-version: latest
 
-            -   name: Cache firebase emulators
-                uses: actions/cache@v4
-                with:
-                    path: /home/runner/.cache/firebase/emulators
-                    key: ${{ runner.os }}-firebase-emulators-${{ hashFiles('/home/runner/.cache/firebase/emulators/**') }}
-                continue-on-error: true
+#            -   name: Cache firebase emulators
+#                uses: actions/cache@v4
+#                with:
+#                    path: /home/runner/.cache/firebase/emulators
+#                    key: ${{ runner.os }}-firebase-emulators-${{ hashFiles('/home/runner/.cache/firebase/emulators/**') }}
+#                continue-on-error: true
+#
+#            -   name: Install Firebase Tools
+#                run: curl -sL https://firebase.tools | bash
+#
+#
+#            -   name: Run emulators
+#                run: |
+#                    pnpm run firebase-emulators:ci &
+#                    sleep 10
 
-            -   name: Install Firebase Tools
-                #                run: curl -Lo ./firebase_bin https://firebase.tools/bin/linux/v12.9.1
-                run: curl -sL https://firebase.tools | bash
-                #        run: pnpm install -g firebase-tools
+            - uses: sneat-co/sneat-firebase@main
 
             -   uses: ./.github/actions/pnpm
-
-
-            # Running pnpm install --force bellow because at the moment, @angular/fire is not supporting Angular 17.
-            # It can be removed once @angular/fire is updated to 17 as well.
-            #            -   name: Run pnpm install
-            #                run: pnpm install --force
-
-            -   name: Run emulators
-                run: |
-                    pnpm run firebase-emulators:ci &
-                    sleep 10
 
             -   name: Build and serve application
                 run: |
