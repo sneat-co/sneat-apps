@@ -1,6 +1,6 @@
 // @ts-expect-error TODO: @nx/jest is not found
-import { getJestProjects } from '@nx/jest';
+import { getJestProjectsAsync } from '@nx/jest';
 
-export default {
-	projects: getJestProjects(),
-};
+export default async () => ({
+	projects: await getJestProjectsAsync(),
+});
