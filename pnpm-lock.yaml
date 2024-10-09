@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  rxfire>tslib: ~2.1.0
+  rxfire>tslib: ~2.7.0
 
 importers:
 
