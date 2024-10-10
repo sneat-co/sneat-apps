@@ -1,2 +1,2 @@
 export * from './app-version.component';
-export * from './git-version';
+export * from './build-info';

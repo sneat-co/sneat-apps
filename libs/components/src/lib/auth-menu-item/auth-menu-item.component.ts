@@ -7,7 +7,6 @@ import {
 	SneatAuthStateService,
 	SneatUserService,
 } from '@sneat/auth-core';
-import { gitHash } from '../app-version/git-version';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { personName, SneatPipesModule } from '../pipes';
@@ -19,8 +18,6 @@ import { personName, SneatPipesModule } from '../pipes';
 	imports: [IonicModule, CommonModule, RouterModule, SneatPipesModule],
 })
 export class AuthMenuItemComponent {
-	protected readonly gitHash2 = gitHash;
-
 	public authState?: ISneatAuthState;
 
 	protected user?: ISneatUserState;

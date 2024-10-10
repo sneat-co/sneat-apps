@@ -2,7 +2,6 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { IonSplitPane } from '@ionic/angular';
 import { SneatBaseAppComponent } from '@sneat/app';
 import { TopMenuService } from '@sneat/core';
-import { gitHash } from '@sneat/components';
 
 @Component({
 	selector: 'sneat-root',
@@ -14,9 +13,6 @@ export class LogistAppComponent
 {
 	@ViewChild('ionSplitPane') ionSplitPane!: IonSplitPane;
 
-	getGitHash(): string {
-		return gitHash;
-	}
 	constructor(topMenuService: TopMenuService) {
 		super(topMenuService);
 		// window.addEventListener('hashchange', (event: HashChangeEvent) => {

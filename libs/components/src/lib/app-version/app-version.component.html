@@ -2,5 +2,11 @@
 	<ion-label>App version</ion-label>
 </ion-item-divider>
 <ion-item>
-	<ion-input label="Build:" color="medium" readonly="true" [value]="gitHash" />
+	<ion-input
+		label="Build:"
+		color="medium"
+		readonly="true"
+		[value]="buildInfo.buildTimestamp"
+		[title]="buildInfo.gitHash"
+	/>
 </ion-item>
