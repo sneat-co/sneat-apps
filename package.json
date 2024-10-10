@@ -59,7 +59,7 @@
 		"@types/telegram-web-app": "^7.8.0",
 		"codemirror": "^6.0.1",
 		"date-fns": "4.1.0",
-		"firebase": "10.14.0",
+		"firebase": "10.14.1",
 		"ionicons": "7.4.0",
 		"rxjs": "7.8.1",
 		"tabulator-tables": "6.3.0",
