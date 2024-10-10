@@ -6,7 +6,10 @@
 		label="Build:"
 		color="medium"
 		readonly="true"
-		[value]="buildInfo.buildTimestamp"
+		disabled="true"
+		[value]="
+			buildInfo.gitHash.substring(0, 8) + ' @ ' + buildInfo.buildTimestamp
+		"
 		[title]="buildInfo.gitHash"
 	/>
 </ion-item>
