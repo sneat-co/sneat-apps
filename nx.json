@@ -70,5 +70,6 @@
 			"!{projectRoot}/eslint.config.js"
 		]
 	},
-	"nxCloudAccessToken": "ZTAzOTM2YWMtMTQ0OS00Y2ZmLWJmMTMtMzZkNjIxNmM4ZjNifHJlYWQtd3JpdGU="
+	"nxCloudAccessToken": "ZTAzOTM2YWMtMTQ0OS00Y2ZmLWJmMTMtMzZkNjIxNmM4ZjNifHJlYWQtd3JpdGU=",
+	"useLegacyCache": true
 }
