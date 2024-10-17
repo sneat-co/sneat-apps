@@ -2,7 +2,7 @@
 	"name": "sneat",
 	"version": "0.0.0",
 	"license": "MIT",
-	"packageManager": "pnpm@9.12.1",
+	"packageManager": "pnpm@9.12.2",
 	"scripts": {
 		"nx": "nx",
 		"ng": "nx",
@@ -91,7 +91,7 @@
 		"@swc/core": "1.7.36",
 		"@swc/helpers": "0.5.13",
 		"@types/jest": "29.5.13",
-		"@types/node": "20.16.11",
+		"@types/node": "20.16.12",
 		"@typescript-eslint/eslint-plugin": "8.9.0",
 		"@typescript-eslint/parser": "8.9.0",
 		"@typescript-eslint/utils": "8.9.0",
