@@ -90,7 +90,7 @@
 		"@swc-node/register": "1.10.9",
 		"@swc/core": "1.7.39",
 		"@swc/helpers": "0.5.13",
-		"@types/jest": "29.5.13",
+		"@types/jest": "29.5.14",
 		"@types/node": "20.17.0",
 		"@typescript-eslint/eslint-plugin": "8.11.0",
 		"@typescript-eslint/parser": "8.11.0",
