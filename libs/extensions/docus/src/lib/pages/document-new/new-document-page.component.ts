@@ -27,12 +27,14 @@ import {
 import {
 	AddAssetBaseComponent,
 	AssetService,
+	AssetusServicesModule,
 	ICreateAssetRequest,
 } from '@sneat/extensions/assetus/components';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
 import {
 	ContactService,
 	contactContextFromBrief,
+	ContactusServicesModule,
 } from '@sneat/contactus-services';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { SpaceNavService } from '@sneat/team-services';
@@ -51,6 +53,8 @@ import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 		SneatPipesModule,
 		SelectFromListModule,
 		MembersSelectorModule,
+		AssetusServicesModule,
+		ContactusServicesModule,
 	],
 })
 export class NewDocumentPageComponent
