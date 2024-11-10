@@ -23,7 +23,7 @@ export class AgeGroupFormComponent {
 	@Input() hideCompanyOption = false;
 	@Input() hideUndisclosedOption = false;
 
-	onAgeGroupChanged(event: Event): void {
+	protected onAgeGroupChanged(event: Event): void {
 		event.stopPropagation();
 		this.ageGroupChange.emit(this.ageGroup);
 	}

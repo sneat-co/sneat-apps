@@ -1,6 +1,7 @@
 export type GeoRegion =
 	| 'Europe'
 	| 'Asia'
+	| 'Americas'
 	| 'South America'
 	| 'North America'
 	| 'Pacific Ocean'
@@ -11,6 +12,8 @@ export interface ICountry {
 	id3: string;
 	geoRegions: GeoRegion[];
 	title: string;
+	longTitle?: string;
+	shortTitle?: string;
 	emoji: string;
 }
 
@@ -726,7 +729,8 @@ export const countriesByID: Record<string, ICountry> = {
 		id: 'IR',
 		id3: 'IRN',
 		geoRegions: ['Asia'],
-		title: 'Iran (Islamic Republic of)',
+		title: 'Iran',
+		longTitle: 'Iran (Islamic Republic of)',
 		emoji: '🇮🇷',
 	},
 	IQ: {
@@ -741,6 +745,7 @@ export const countriesByID: Record<string, ICountry> = {
 		id3: 'IRL',
 		geoRegions: ['Europe'],
 		title: 'Ireland',
+		longTitle: 'Ireland (Republic of)',
 		emoji: '🇮🇪',
 	},
 	IM: {
@@ -1637,6 +1642,7 @@ export const countriesByID: Record<string, ICountry> = {
 		id3: 'GBR',
 		geoRegions: ['Europe'],
 		title: 'United Kingdom',
+		shortTitle: 'UK',
 		emoji: '🇬🇧',
 	},
 	US: {
@@ -1644,6 +1650,7 @@ export const countriesByID: Record<string, ICountry> = {
 		id3: 'USA',
 		geoRegions: ['North America'],
 		title: 'United States of America',
+		shortTitle: 'USA',
 		emoji: '🇺🇸',
 	},
 	UM: {

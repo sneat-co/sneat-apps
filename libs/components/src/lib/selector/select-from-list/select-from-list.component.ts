@@ -52,6 +52,8 @@ export class SelectFromListComponent
 	@Input() canAdd = false;
 	@Input() filterItem?: (item: ISelectItem, filter: string) => boolean;
 
+	@Output() readonly filterChanged = new EventEmitter<string>();
+
 	@Input() isReadonly = false;
 
 	// @Input() ngModel?: string;
@@ -110,6 +112,7 @@ export class SelectFromListComponent
 			? this.items?.filter(
 					(v) =>
 						v.title.toLowerCase().includes(f) ||
+						v.longTitle?.toLowerCase().includes(f) ||
 						(this.filterItem && this.filterItem(v, f)),
 				)
 			: this.items;
@@ -121,11 +124,13 @@ export class SelectFromListComponent
 		console.log('SelectFromListComponent.select()', item);
 		this.value = item.id;
 		this.onChange(this.value);
+		this.clearFilter();
 	}
 
 	protected onRadioChanged(event: Event): void {
 		this.value = (event as CustomEvent).detail['value'] as string;
 		this.onChange(this.value);
+		this.clearFilter();
 	}
 
 	protected onSelectChanged(event: Event): void {
@@ -161,10 +166,12 @@ export class SelectFromListComponent
 	protected onFilterChanged(): void {
 		console.log('SelectFromListComponent.onFilterChanged()', this.filter);
 		this.applyFilter();
+		this.filterChanged.emit(this.filter);
 	}
 
 	protected clearFilter(): void {
 		this.filter = '';
+		this.filterChanged.emit(this.filter);
 		this.applyFilter();
 	}
 

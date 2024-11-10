@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
 import {
 	Component,
+	computed,
 	EventEmitter,
 	Input,
 	OnChanges,
 	Output,
+	signal,
 	SimpleChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -20,6 +22,16 @@ import { countries, GeoRegion, ICountry, unknownCountry } from './countries';
 	imports: [CommonModule, FormsModule, IonicModule, SelectFromListModule],
 })
 export class CountrySelectorComponent implements OnChanges {
+	protected readonly geoRegions: readonly {
+		readonly id: string;
+		title?: string;
+	}[] = [
+		{ id: 'Europe' },
+		{ id: 'Asia' },
+		{ id: 'Americas' },
+		{ id: 'Africa' },
+	];
+
 	@Input({ required: true }) countryID?: string;
 
 	@Input() defaultCountryID?: string;
@@ -31,41 +43,58 @@ export class CountrySelectorComponent implements OnChanges {
 
 	@Output() readonly countryIDChange = new EventEmitter<string>();
 
-	constructor() {
-		this.setCountries();
-	}
+	protected readonly filter = signal<string>('');
+	protected readonly geoRegion = signal<GeoRegion | 'All' | 'Americas'>('All');
 
-	protected countries: ISelectItem[] = countries;
+	protected readonly countries = computed<readonly ISelectItem[]>(() => {
+		const filter = this.filter();
+		let countriesToShow: readonly ISelectItem[] = filter
+			? countries
+			: countries.filter(
+					(c) =>
+						this.geoRegion() === 'All' ||
+						(this.geoRegion() === 'Americas' &&
+							(c.geoRegions.includes('North America') ||
+								c.geoRegions.includes('South America'))) ||
+						c.geoRegions.includes(this.geoRegion() as GeoRegion),
+				);
+		if (this.canBeUnknown) {
+			countriesToShow = [...countriesToShow, unknownCountry];
+		}
+		return countriesToShow;
+	});
 
-	protected geoRegion: GeoRegion | 'All' | 'Americas' = 'All';
-	private geoRegions: (GeoRegion | 'All')[] = ['All'];
+	// protected geoRegion: GeoRegion | 'All' | 'Americas' = 'All';
 
-	onChanged(): void {
+	protected onChanged(): void {
 		console.log('CountrySelectorComponent.onChanged()', this.countryID);
 		this.countryIDChange.emit(this.countryID);
 	}
 
+	protected onFilterChanged(filter: string): void {
+		console.log('CountrySelectorComponent.onFilterChanged()', filter);
+		this.filter.set(filter);
+	}
+
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['canBeUnknown']) {
-			this.countries = this.canBeUnknown
-				? [...countries, unknownCountry]
-				: countries;
-		}
 		if (changes['country'] && this.countryID === '--' && !this.canBeUnknown) {
 			this.countryID = undefined;
 		}
 		if (
 			changes['defaultCountryID'] &&
 			!this.countryID &&
-			this.defaultCountryID
+			this.defaultCountryID &&
+			this.defaultCountryID !== '--'
 		) {
 			this.countryID = this.defaultCountryID;
 			this.countryIDChange.emit(this.countryID);
 		}
 	}
 
-	onRegionChanged(): void {
-		this.setCountries();
+	protected onRegionChanged(event: Event): void {
+		this.geoRegion.set(
+			(event as CustomEvent).detail.value as GeoRegion | 'All' | 'Americas',
+		);
 	}
 
 	protected readonly filterCountryByCode = (
@@ -76,15 +105,4 @@ export class CountrySelectorComponent implements OnChanges {
 		const c = item as ICountry;
 		return c.id === f || c.id3.startsWith(f);
 	};
-
-	private setCountries(): void {
-		this.countries = countries.filter(
-			(c) =>
-				this.geoRegion === 'All' ||
-				(this.geoRegion === 'Americas' &&
-					(c.geoRegions.includes('North America') ||
-						c.geoRegions.includes('South America'))) ||
-				c.geoRegions.includes(this.geoRegion as GeoRegion),
-		);
-	}
 }

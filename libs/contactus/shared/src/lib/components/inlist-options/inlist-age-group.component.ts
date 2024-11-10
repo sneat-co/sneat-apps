@@ -6,12 +6,16 @@ import {
 } from '@sneat/contactus-services';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
-import { IdEvent, InlistOptionsComponent } from './inlist-options.component';
+import {
+	OptionEvent,
+	Option,
+	InlistOptionsComponent,
+} from './inlist-options.component';
 
 @Component({
 	selector: 'sneat-inlist-age-group',
 	template:
-		'<sneat-inlist-options [options]="ageOptions" (optionSelected)="onAgeGroupSelected($event)"/>',
+		'<sneat-inlist-options [options]="ageOptions" [selectedOption]="selectedOption" (optionSelected)="onAgeGroupSelected($event)"/>',
 	standalone: true,
 	imports: [InlistOptionsComponent],
 })
@@ -21,22 +25,25 @@ export class InlistAgeGroupComponent {
 		private readonly contactService: ContactService,
 	) {}
 
+	protected selectedOption?: Option;
+
 	@Input({ required: true }) public space?: ISpaceContext;
 	@Input({ required: true }) public contactID = '';
 
-	protected readonly ageOptions: { id: string; title: string }[] = [
+	protected readonly ageOptions: readonly Option[] = [
 		{ id: 'adult', title: 'Adult' },
 		{ id: 'child', title: 'Child' },
 	];
 
-	protected onAgeGroupSelected(idEvent: IdEvent): void {
+	protected onAgeGroupSelected(optionEvent: OptionEvent): void {
 		console.log(
 			'MembersListComponent.setAgeGroup()',
 			this.contactID,
-			idEvent.id,
+			optionEvent.option.id,
 		);
-		idEvent.uiEvent.preventDefault();
-		idEvent.uiEvent.stopPropagation();
+		optionEvent.uiEvent.preventDefault();
+		optionEvent.uiEvent.stopPropagation();
+		this.selectedOption = optionEvent.option;
 		const spaceID = this.space?.id;
 		if (!spaceID) {
 			return;
@@ -44,13 +51,17 @@ export class InlistAgeGroupComponent {
 		const request: IUpdateContactRequest = {
 			spaceID,
 			contactID: this.contactID,
-			ageGroup: idEvent.id as AgeGroupID,
+			ageGroup: optionEvent.option.id as AgeGroupID,
 		};
 		this.contactService.updateContact(request).subscribe({
 			next: () => console.log('age group updated'),
-			error: this.errorLogger.logErrorHandler(
-				'failed to update contact with age group',
-			),
+			error: (err) => {
+				this.errorLogger.logError(
+					err,
+					'failed to update contact with age group',
+				);
+				setTimeout(() => (this.selectedOption = undefined), 500);
+			},
 		});
 	}
 }

@@ -3,31 +3,24 @@
 	[isFilterable]="true"
 	[filterLabel]="label"
 	[label]="label"
-	[items]="countries"
+	[items]="countries()"
 	[(ngModel)]="countryID"
 	(ngModelChange)="onChanged()"
 	[isReadonly]="readonly"
 	[filterItem]="filterCountryByCode"
+	(filterChanged)="onFilterChanged($event)"
 	labelPlacement="start"
 >
 	<ion-segment
-		*ngIf="!countryID"
+		*ngIf="!countryID && !filter()"
 		[(ngModel)]="geoRegion"
-		(ionChange)="onRegionChanged()"
+		(ionChange)="onRegionChanged($event)"
 	>
 		<ion-segment-button value="All">All</ion-segment-button>
-		<ion-segment-button value="Europe"
-			><small>Europe</small></ion-segment-button
-		>
-		<ion-segment-button value="Asia"><small>Asia</small></ion-segment-button>
-		<ion-segment-button value="Americas"
-			><small>Americas</small></ion-segment-button
-		>
-		<ion-segment-button value="Africa"
-			><small>Africa</small></ion-segment-button
-		>
-		<ion-segment-button value="Pacific Ocean"
-			><small>Pacific</small></ion-segment-button
-		>
+		@for (region of geoRegions; track region.id) {
+			<ion-segment-button [value]="region.id">
+				<small>{{ region.id }}</small>
+			</ion-segment-button>
+		}
 	</ion-segment>
 </sneat-select-from-list>
