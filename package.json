@@ -108,7 +108,7 @@
 		"jest-preset-angular": "14.3.1",
 		"jsonc-eslint-parser": "2.4.0",
 		"lint-staged": "15.2.10",
-		"ng-packagr": "18.2.1",
+		"ng-packagr": "19.0.0",
 		"nx": "20.1.2",
 		"postcss": "8.4.49",
 		"postcss-import": "16.1.0",
