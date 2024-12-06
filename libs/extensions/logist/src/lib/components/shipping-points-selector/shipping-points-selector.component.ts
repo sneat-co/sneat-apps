@@ -27,6 +27,7 @@ export type TasksByID = Record<string, selected | undefined>;
 @Component({
 	selector: 'sneat-shipping-points-selector',
 	templateUrl: './shipping-points-selector.component.html',
+	standalone: false,
 })
 export class ShippingPointsSelectorComponent implements OnChanges {
 	@Input() order?: ILogistOrderContext;

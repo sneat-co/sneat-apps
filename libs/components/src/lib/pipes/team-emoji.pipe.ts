@@ -1,7 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { SpaceType } from '@sneat/core';
 
-@Pipe({ name: 'spaceEmoji' })
+@Pipe({
+	name: 'spaceEmoji',
+	standalone: false,
+})
 export class SpaceEmojiPipe implements PipeTransform {
 	transform(communeType: SpaceType): string | undefined {
 		switch (communeType) {

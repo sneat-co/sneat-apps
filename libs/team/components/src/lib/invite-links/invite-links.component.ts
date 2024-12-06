@@ -28,7 +28,6 @@ export const stringHash = (s: string): number => {
 	selector: 'sneat-invite-links',
 	templateUrl: './invite-links.component.html',
 	styleUrls: ['./invite-links.component.scss'],
-	standalone: true,
 	imports: [CommonModule, IonicModule, FormsModule],
 })
 export class InviteLinksComponent implements OnChanges, OnDestroy {

@@ -52,7 +52,6 @@ export interface IContactSelectorProps {
 @Component({
 	selector: 'sneat-contact-selector',
 	templateUrl: './contact-selector.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		IonicModule,

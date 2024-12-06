@@ -32,6 +32,7 @@ import { IUserRecord } from '@sneat/auth-models';
 @Component({
 	selector: 'sneat-my-retro-items',
 	templateUrl: './my-retro-items.component.html',
+	standalone: false,
 })
 export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 	@ViewChild(IonInput, { static: false }) titleInput; // TODO: IonInput;

@@ -17,7 +17,6 @@ import { IProjectContext } from '@sneat/datatug-nav';
 @Component({
 	selector: 'sneat-datatug-environment',
 	templateUrl: './environment-page.component.html',
-	standalone: true,
 	imports: [CommonModule, FormsModule, IonicModule],
 })
 export class EnvironmentPageComponent {

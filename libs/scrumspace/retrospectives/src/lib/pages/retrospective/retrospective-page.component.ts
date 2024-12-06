@@ -19,6 +19,7 @@ import { getMeetingIdFromDate } from '@sneat/meeting';
 @Component({
 	selector: 'sneat-retrospective',
 	templateUrl: './retrospective-page.component.html',
+	standalone: false,
 })
 export class RetrospectivePageComponent
 	extends SpaceBaseComponent

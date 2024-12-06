@@ -17,7 +17,6 @@ import {
 @Component({
 	selector: 'sneat-vehicle-engine',
 	templateUrl: './vehicle-engine.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, SelectFromListModule],
 })
 export class VehicleEngineComponent {

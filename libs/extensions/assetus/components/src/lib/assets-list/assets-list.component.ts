@@ -17,6 +17,7 @@ import { ModalController } from '@ionic/angular';
 @Component({
 	selector: 'sneat-assets-list',
 	templateUrl: './assets-list.component.html',
+	standalone: false,
 })
 export class AssetsListComponent implements OnChanges {
 	protected assets?: IIdAndBrief<IAssetBrief>[];

@@ -18,7 +18,6 @@ import { ISpaceContext } from '@sneat/team-models';
 @Component({
 	selector: 'sneat-asset-reg-number',
 	templateUrl: 'asset-reg-number-input.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, ReactiveFormsModule],
 })
 export class AssetRegNumberInputComponent implements OnChanges {

@@ -9,7 +9,6 @@ import { IColumn, IForeignKey, ITableFull } from '@sneat/datatug-models';
 	selector: 'sneat-datatug-table-meta-card',
 	templateUrl: './table-meta-card.component.html',
 	styleUrls: ['./table-meta-card.component.scss'],
-	standalone: true,
 	imports: [IonicModule, FormsModule, CommonModule, RouterModule],
 })
 export class TableMetaCardComponent {

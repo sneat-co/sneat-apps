@@ -50,7 +50,6 @@ import { HappeningPricesComponent } from './happening-prices/happening-prices.co
 @Component({
 	selector: 'sneat-happening-form',
 	templateUrl: 'happening-form.component.html',
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
 		CommonModule,

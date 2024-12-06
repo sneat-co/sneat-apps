@@ -8,8 +8,6 @@ import { IonicModule } from '@ionic/angular';
 @Component({
 	selector: 'sneat-liability-new',
 	templateUrl: './liability-new-page.component.html',
-	// providers: [CommuneBasePageParams],
-	standalone: true,
 	imports: [CommonModule, FormsModule, IonicModule],
 })
 export class LiabilityNewPageComponent /*extends CommuneBasePage*/ {
@@ -17,7 +15,8 @@ export class LiabilityNewPageComponent /*extends CommuneBasePage*/ {
 	public readonly assignedTo = 'members';
 	public period: 'weekly' | 'monthly' | 'yearly' = 'monthly';
 
-	constructor() { // params: CommuneBasePageParams
+	constructor() {
+		// params: CommuneBasePageParams
 		// super('budget', params);
 	}
 }

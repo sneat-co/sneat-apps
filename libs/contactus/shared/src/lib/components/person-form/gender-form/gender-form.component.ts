@@ -34,24 +34,15 @@ const gendersOptions: readonly GenderOption[] = [
 @Component({
 	selector: 'sneat-gender-form',
 	templateUrl: './gender-form.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, FormsModule, SneatPipesModule],
 	animations: [
 		trigger('radioOut', [
-			transition(':leave', [
-				animate(
-					animationTimings,
-					style({ height: 0 }), // final style after the transition has finished
-				),
-			]),
+			transition(':leave', [animate(animationTimings, style({ height: 0 }))]),
 		]),
 		trigger('selectIn', [
 			transition(':enter', [
 				// style({ display: 'none' }), // initial styles
-				animate(
-					animationTimings,
-					// style({ display: 'block' }), // final style after the transition has finished
-				),
+				animate(animationTimings),
 			]),
 		]),
 	],

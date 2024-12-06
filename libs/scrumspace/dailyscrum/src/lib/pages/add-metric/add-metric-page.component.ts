@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
 	selector: 'sneat-add-metric',
 	templateUrl: './add-metric-page.component.html',
+	standalone: false,
 })
 export class AddMetricPageComponent {
 	public space: ITeam;

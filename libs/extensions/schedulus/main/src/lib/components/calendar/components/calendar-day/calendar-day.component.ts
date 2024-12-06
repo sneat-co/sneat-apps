@@ -31,6 +31,7 @@ import { Weekday } from '../../weekday';
 	selector: 'sneat-calendar-day',
 	templateUrl: './calendar-day.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	standalone: false,
 })
 export class CalendarDayComponent implements OnChanges, OnDestroy {
 	private readonly destroyed = new Subject<void>();

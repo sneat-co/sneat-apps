@@ -40,7 +40,6 @@ import {
 @Component({
 	selector: 'sneat-datatug-sql-editor',
 	templateUrl: './query-page.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,

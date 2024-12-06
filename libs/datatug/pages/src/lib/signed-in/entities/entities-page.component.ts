@@ -27,7 +27,6 @@ type Entities = IRecord<IEntity>[];
 @Component({
 	selector: 'sneat-datatug-entities',
 	templateUrl: './entities-page.component.html',
-	standalone: true,
 	imports: [CommonModule, FormsModule, IonicModule, WormholeModule, RouterLink],
 })
 export class EntitiesPageComponent

@@ -19,6 +19,7 @@ import { ISpaceBrief } from '@sneat/dto';
 	selector: 'sneat-mileage-dialog',
 	templateUrl: './mileage-dialog.component.html',
 	styleUrls: ['./mileage-dialog.component.scss'],
+	standalone: false,
 })
 export class MileAgeDialogComponent {
 	@Input() space?: IIdAndBrief<ISpaceBrief>;

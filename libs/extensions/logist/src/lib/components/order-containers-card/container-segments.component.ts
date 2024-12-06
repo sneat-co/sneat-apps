@@ -17,6 +17,7 @@ interface IContainerRouteRow {
 @Component({
 	selector: 'sneat-container-segments',
 	templateUrl: './container-segments.component.html',
+	standalone: false,
 })
 export class ContainerSegmentsComponent implements OnChanges {
 	@Input() container?: IOrderContainer;
@@ -70,7 +71,7 @@ export class ContainerSegmentsComponent implements OnChanges {
 			this.containerSegments = containerID
 				? this.order?.dbo?.segments?.filter(
 						(s) => s.containerID === containerID,
-				  )
+					)
 				: undefined;
 			if (this.containerSegments?.length === 1 && !this.selectedSegment) {
 				this.selectedSegment = this.containerSegments[0];

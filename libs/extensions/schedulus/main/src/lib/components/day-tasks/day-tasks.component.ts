@@ -4,6 +4,7 @@ import { IErrorLogger } from '@sneat/logging';
 @Component({
 	selector: 'sneat-day-tasks',
 	templateUrl: './day-tasks.component.html',
+	standalone: false,
 })
 export class DayTasksComponent {
 	constructor(

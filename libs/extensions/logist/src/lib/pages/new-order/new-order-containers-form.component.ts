@@ -5,6 +5,7 @@ import { ILogistOrderContext } from '../../dto';
 @Component({
 	selector: 'sneat-new-order-containers-form',
 	templateUrl: './new-order-containers-form.component.html',
+	standalone: false,
 })
 export class NewOrderContainersFormComponent {
 	@Input() order?: ILogistOrderContext;

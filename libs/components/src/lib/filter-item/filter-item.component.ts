@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 @Component({
 	selector: 'sneat-filter-item',
 	templateUrl: './filter-item.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, FormsModule, RouterModule],
 })
 export class FilterItemComponent {

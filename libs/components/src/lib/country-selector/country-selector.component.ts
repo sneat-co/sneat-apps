@@ -18,7 +18,6 @@ import { countries, GeoRegion, ICountry, unknownCountry } from './countries';
 @Component({
 	selector: 'sneat-country-selector',
 	templateUrl: './country-selector.component.html',
-	standalone: true,
 	imports: [CommonModule, FormsModule, IonicModule, SelectFromListModule],
 })
 export class CountrySelectorComponent implements OnChanges {

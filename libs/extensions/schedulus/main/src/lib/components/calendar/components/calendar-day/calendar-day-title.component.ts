@@ -6,6 +6,7 @@ import { SwipeableDay } from '../../../swipeable-ui';
 	selector: 'sneat-calendar-day-title',
 	templateUrl: 'calendar-day-title.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	standalone: false,
 })
 export class CalendarDayTitleComponent {
 	@Input() day?: SwipeableDay;

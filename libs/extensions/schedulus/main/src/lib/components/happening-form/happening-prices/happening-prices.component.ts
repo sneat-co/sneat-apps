@@ -25,14 +25,8 @@ import { HappeningPriceFormComponent } from '../happening-price-form/happening-p
 @Component({
 	selector: 'sneat-happening-pricing',
 	templateUrl: 'happening-prices.component.html',
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [
-		CommonModule,
-		IonicModule,
-		HappeningPriceFormComponent,
-		SneatPipesModule,
-	],
+	imports: [CommonModule, IonicModule, SneatPipesModule],
 })
 export class HappeningPricesComponent {
 	@Input({ required: true }) happening?: IHappeningContext;

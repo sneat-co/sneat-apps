@@ -30,17 +30,13 @@ import { SpacePageBaseComponent } from './SpacePageBaseComponent';
 	selector: 'sneat-space-page',
 	templateUrl: './space-page.component.html',
 	providers: [SpaceComponentBaseParams],
-	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,
 		IonicModule,
 		RouterModule,
-		InviteLinksComponent,
-		SneatCardListComponent,
 		MembersListComponent,
 		ContactusServicesModule,
-		MembersComponent,
 		SpaceServiceModule,
 	],
 })

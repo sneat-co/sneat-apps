@@ -10,6 +10,7 @@ import { OrderPrintMenuComponent } from './order-print-menu.component';
 @Component({
 	selector: 'sneat-logist-order-card',
 	templateUrl: './order-card.component.html',
+	standalone: false,
 })
 export class OrderCardComponent {
 	@Input() public readonly = false;

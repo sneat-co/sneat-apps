@@ -7,7 +7,6 @@ import { PetKind } from '@sneat/contactus-core';
 @Component({
 	selector: 'sneat-pet-kind',
 	templateUrl: './pet-kind-input.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, SelectFromListModule],
 })
 export class PetKindInputComponent {

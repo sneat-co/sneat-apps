@@ -6,7 +6,6 @@ import { ForSpaceTypeCardComponent } from '../../components/for-space-type-card.
 @Component({
 	selector: 'sneat-for-families',
 	templateUrl: './for-families.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, ForSpaceTypeCardComponent],
 })
 export class ForFamiliesComponent {}

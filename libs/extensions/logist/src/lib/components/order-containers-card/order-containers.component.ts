@@ -15,6 +15,7 @@ import { ILogistOrderContext, IOrderContainer } from '../../dto';
 	selector: 'sneat-order-containers-card',
 	templateUrl: './order-containers.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	standalone: false,
 })
 export class OrderContainersComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;

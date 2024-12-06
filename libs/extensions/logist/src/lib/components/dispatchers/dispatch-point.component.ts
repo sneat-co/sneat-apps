@@ -24,6 +24,7 @@ import { OrderContainersSelectorService } from '../order-containers-selector/ord
 @Component({
 	selector: 'sneat-dispatch-point',
 	templateUrl: './dispatch-point.component.html',
+	standalone: false,
 })
 export class DispatchPointComponent implements OnChanges {
 	@Input() dispatchPoint?: IOrderCounterparty;

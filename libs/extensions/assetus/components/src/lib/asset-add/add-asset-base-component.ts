@@ -9,7 +9,10 @@ import { SneatBaseComponent } from '@sneat/ui';
 import { AssetService } from '../services';
 import { ICreateAssetRequest } from '../services';
 
-@Component({ template: '' })
+@Component({
+	template: '',
+	standalone: false,
+})
 export abstract class AddAssetBaseComponent extends SneatBaseComponent {
 	@Input({ required: true }) space?: ISpaceContext;
 

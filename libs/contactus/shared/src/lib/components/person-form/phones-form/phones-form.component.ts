@@ -29,7 +29,6 @@ const emptyPhones: IPhone[] = [
 @Component({
 	selector: 'sneat-phones-form',
 	templateUrl: './phones-form.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, FormsModule],
 })
 export class PhonesFormComponent implements OnChanges {

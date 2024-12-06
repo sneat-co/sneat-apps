@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention */
+ 
 import { ChangeDetectorRef, Component, Inject } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
@@ -17,9 +17,10 @@ import { getMeetingIdFromDate } from '@sneat/meeting';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({
-	selector: 'sneat-retro-tree',
-	templateUrl: './retro-tree-page.component.html',
-	styleUrls: ['./retro-tree-page.component.scss'],
+    selector: 'sneat-retro-tree',
+    templateUrl: './retro-tree-page.component.html',
+    styleUrls: ['./retro-tree-page.component.scss'],
+    standalone: false
 })
 export class RetroTreePageComponent extends SpaceBaseComponent {
 	public meetingId: string;

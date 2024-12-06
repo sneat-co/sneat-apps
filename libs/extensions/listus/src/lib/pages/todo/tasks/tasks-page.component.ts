@@ -7,6 +7,7 @@ import { CommuneTopPage } from '../../../../../pages/constants';
 	selector: 'sneat-to-do',
 	templateUrl: './tasks-page.component.html',
 	providers: [CommuneBasePageParams],
+	standalone: false,
 })
 export class TasksPageComponent extends CommuneBasePage {
 	constructor(params: CommuneBasePageParams) {

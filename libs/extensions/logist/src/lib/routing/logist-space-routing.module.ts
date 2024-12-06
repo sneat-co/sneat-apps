@@ -7,7 +7,10 @@ import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { LogistMenuModule } from '../components';
 import { LogistSpaceMenuComponent } from '../components';
 
-@Component({ template: 'empty component' })
+@Component({
+	template: 'empty component',
+	standalone: false,
+})
 export class EmptyComponent {}
 
 export const logistRoutes: Routes = [

@@ -21,6 +21,7 @@ import { LogistOrderService } from '../../services';
 @Component({
 	selector: 'sneat-order-container-point',
 	templateUrl: './order-container-point.component.html',
+	standalone: false,
 })
 export class OrderContainerPointComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;

@@ -24,6 +24,7 @@ import { secondsToStr } from '@sneat/datetime';
 @Component({
 	selector: 'sneat-retro-timer',
 	templateUrl: './retro-timer.component.html',
+	standalone: false,
 })
 export class RetroTimerComponent implements OnDestroy, OnChanges {
 	@Input() public space?: IRecord<ISpaceDbo>;

@@ -13,6 +13,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	selector: 'sneat-datatug-board',
 	templateUrl: './board.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	standalone: false,
 })
 export class BoardComponent {
 	@Input() boardDef?: IBoardDef;

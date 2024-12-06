@@ -14,7 +14,6 @@ import { SneatPipesModule } from '../pipes';
 @Component({
 	selector: 'sneat-members-as-badges',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	standalone: true,
 	imports: [CommonModule, IonicModule, SneatPipesModule],
 	styles: ['.deleting {text-decoration: line-through}'],
 	template: `

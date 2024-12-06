@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
 @Component({
 	selector: 'sneat-pupils',
 	templateUrl: './pupils-page.component.html',
-	// providers: [CommuneBasePageParams],
+	standalone: false,
 })
 export class PupilsPageComponent /*extends MembersBasePage*/ {
 	segment: 'active' | 'archive' = 'active';
@@ -23,7 +23,8 @@ export class PupilsPageComponent /*extends MembersBasePage*/ {
 		// }
 	}
 
-	constructor() { // preloader: NgModulePreloaderService, // membersService: IMemberService, // params: CommuneBasePageParams,
+	constructor() {
+		// preloader: NgModulePreloaderService, // membersService: IMemberService, // params: CommuneBasePageParams,
 		// super(params, membersService, preloader);
 	}
 

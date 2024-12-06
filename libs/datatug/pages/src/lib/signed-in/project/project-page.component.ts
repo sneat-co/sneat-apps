@@ -51,7 +51,6 @@ import { parseStoreRef } from '@sneat/core';
 @Component({
 	selector: 'sneat-datatug-project',
 	templateUrl: './project-page.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,
@@ -71,7 +70,7 @@ import { parseStoreRef } from '@sneat/core';
 export class ProjectPageComponent
 	implements OnInit, OnDestroy, ViewWillEnter, ViewDidLeave
 {
-	// eslint-disable-next-line @typescript-eslint/naming-convention
+	 
 	// readonly DbModel = ProjectItem.dbModel as const;
 
 	protected project?: IProjectContext;

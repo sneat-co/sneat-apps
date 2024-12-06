@@ -19,6 +19,7 @@ import { SwipeableWeek, swipeableWeek } from '../../../swipeable-ui';
 	selector: 'sneat-week-card',
 	templateUrl: 'calendar-week-card.component.html',
 	animations: virtualSliderAnimations,
+	standalone: false,
 })
 export class CalendarWeekCardComponent
 	extends SwipeableBaseComponent

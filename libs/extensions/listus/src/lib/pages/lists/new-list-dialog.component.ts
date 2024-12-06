@@ -12,6 +12,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 @Component({
 	selector: 'sneat-new-list-popover',
 	templateUrl: 'new-list-dialog.component.html',
+	standalone: false,
 })
 export class NewListDialogComponent implements AfterViewInit {
 	@ViewChild('listNameInput', { static: false }) listNameInput?: IonInput;

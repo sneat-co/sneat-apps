@@ -22,7 +22,6 @@ import { MyStoresComponent } from './my-stores';
 @Component({
 	selector: 'sneat-datatug-home',
 	templateUrl: 'datatug-home-page.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,

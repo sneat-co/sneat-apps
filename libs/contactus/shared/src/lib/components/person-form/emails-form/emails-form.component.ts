@@ -31,7 +31,6 @@ const emptyEmails: emailInput[] = [
 @Component({
 	selector: 'sneat-emails-form',
 	templateUrl: './emails-form.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, FormsModule],
 })
 export class EmailsFormComponent implements OnChanges {

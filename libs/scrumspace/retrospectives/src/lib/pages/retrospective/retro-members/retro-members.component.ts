@@ -24,6 +24,7 @@ interface IMeetingMemberWithCounts extends IMeetingMember {
 @Component({
 	selector: 'sneat-retro-members',
 	templateUrl: './retro-members.component.html',
+	standalone: false,
 })
 export class RetroMembersComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;

@@ -4,6 +4,7 @@ import { ILogistOrderContext, ITransitPoint } from '../../dto';
 @Component({
 	selector: 'sneat-order-route-card',
 	templateUrl: './order-route-card.component.html',
+	standalone: false,
 })
 export class OrderRouteCardComponent {
 	@Input() order: ILogistOrderContext = { id: '', space: { id: '' } };

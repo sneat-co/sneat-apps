@@ -16,7 +16,6 @@ import {
 import { ISpaceContext } from '@sneat/team-models';
 
 @Component({
-	standalone: true,
 	imports: [CommonModule, IonicModule, ContactsListModule],
 	selector: 'sneat-contacts-family',
 	templateUrl: './contacts-by-type.component.html',

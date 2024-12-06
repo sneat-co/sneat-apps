@@ -35,7 +35,6 @@ import { Subscription } from 'rxjs';
 	templateUrl: './contacts-page.component.html',
 	providers: [SpaceComponentBaseParams],
 	animations: [listItemAnimations],
-	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,

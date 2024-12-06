@@ -7,6 +7,7 @@ import { OrderPageBaseComponent } from '../order-page-base.component';
 @Component({
 	selector: 'sneat-new-segment-page',
 	templateUrl: 'new-segment-page.component.html',
+	standalone: false,
 })
 export class NewSegmentPageComponent extends OrderPageBaseComponent {
 	constructor(

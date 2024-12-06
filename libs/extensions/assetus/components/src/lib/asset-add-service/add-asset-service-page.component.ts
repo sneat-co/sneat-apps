@@ -5,6 +5,7 @@ import { AssetBasePage, AssetComponentBaseParams } from '../asset-base-page';
 	selector: 'sneat-add-asset-service-page',
 	templateUrl: './add-asset-service-page.component.html',
 	providers: [AssetComponentBaseParams],
+	standalone: false,
 })
 export class AddAssetServicePageComponent extends AssetBasePage {
 	// serviceProviders: DtoServiceProvider[];

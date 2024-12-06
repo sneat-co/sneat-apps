@@ -7,6 +7,7 @@ import { CommuneTopPage } from '../../../../pages/constants';
 	selector: 'sneat-optimization',
 	templateUrl: './optimization-page.component.html',
 	providers: [CommuneBasePageParams],
+	standalone: false,
 })
 export class OptimizationPageComponent extends CommuneBasePage {
 	constructor(params: CommuneBasePageParams) {

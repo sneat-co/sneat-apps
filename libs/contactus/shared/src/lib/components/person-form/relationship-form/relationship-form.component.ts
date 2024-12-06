@@ -44,7 +44,6 @@ interface IRelationshipWithID extends IRelationshipRole {
 	selector: 'sneat-relationship-form',
 	templateUrl: 'relationship-form.component.html',
 	animations: [formNexInAnimation],
-	standalone: true,
 	imports: [CommonModule, IonicModule, FormsModule, ReactiveFormsModule],
 })
 export class RelationshipFormComponent

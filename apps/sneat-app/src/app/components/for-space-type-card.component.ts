@@ -27,7 +27,6 @@ import { Subscription, takeUntil } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-for-space-card',
 	templateUrl: 'for-space-type-card.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, RouterModule, SpacesListComponent],
 })
 export class ForSpaceTypeCardComponent

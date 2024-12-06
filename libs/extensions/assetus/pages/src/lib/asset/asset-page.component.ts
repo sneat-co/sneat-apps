@@ -23,7 +23,6 @@ interface LiabilityServiceBrief {
 	selector: 'sneat-asset-page',
 	templateUrl: './asset-page.component.html',
 	providers: [SpaceComponentBaseParams, AssetComponentBaseParams],
-	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,

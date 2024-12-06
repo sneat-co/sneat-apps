@@ -39,7 +39,6 @@ import { MemberComponentBaseParams } from '../../member-component-base-params';
 	templateUrl: 'new-member-form.component.html',
 	animations: [formNexInAnimation],
 	providers: [MemberComponentBaseParams],
-	standalone: true,
 	imports: [
 		CommonModule,
 		IonicModule,

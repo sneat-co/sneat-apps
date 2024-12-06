@@ -24,6 +24,7 @@ const reSqlParams = /@(\w+)/;
 @Component({
 	selector: 'sneat-datatug-sql-query-widget',
 	templateUrl: './sql-query-widget.component.html',
+	standalone: false,
 })
 export class SqlQueryWidgetComponent implements OnChanges, OnDestroy {
 	@Input() level?: number;

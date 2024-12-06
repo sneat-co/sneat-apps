@@ -26,7 +26,6 @@ import { DocumentsListComponent } from './components/documents-list/documents-li
 @Component({
 	selector: 'sneat-documents-page',
 	templateUrl: './documents-page.component.html',
-	standalone: true,
 	providers: [SpaceComponentBaseParams],
 	imports: [
 		CommonModule,

@@ -23,7 +23,6 @@ export interface ICardTab {
 @Component({
 	selector: 'sneat-card-list',
 	templateUrl: './sneat-card-list.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, FormsModule, RouterModule],
 })
 export class SneatCardListComponent {

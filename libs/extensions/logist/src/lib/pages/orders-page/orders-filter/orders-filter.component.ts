@@ -7,6 +7,7 @@ import { IOrdersFilter, OrderDirection } from '../../../dto';
 @Component({
 	selector: 'sneat-orders-filter',
 	templateUrl: 'orders-filter.component.html',
+	standalone: false,
 })
 export class OrdersFilterComponent {
 	@Input({ required: true }) space?: ISpaceContext;

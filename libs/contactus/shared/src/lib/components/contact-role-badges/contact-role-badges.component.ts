@@ -14,7 +14,6 @@ import { IonicModule } from '@ionic/angular';
 	],
 	template:
 		'<ion-badge color="medium" *ngFor="let r of _roles" class="ion-margin-start">{{ r }}</ion-badge>',
-	standalone: true,
 	imports: [CommonModule, IonicModule],
 })
 export class ContactRoleBadgesComponent implements OnChanges {

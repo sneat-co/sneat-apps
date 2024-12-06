@@ -14,6 +14,7 @@ import { IContainer } from '../order-containers-selector/condainer-interface';
 @Component({
 	selector: 'sneat-new-shipping-point-form',
 	templateUrl: './new-shipping-point-form.component.html',
+	standalone: false,
 })
 export class NewShippingPointFormComponent {
 	@Input() order?: ILogistOrderContext;

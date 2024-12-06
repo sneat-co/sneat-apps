@@ -18,6 +18,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 @Component({
 	selector: 'sneat-datatug-parameter-lookup',
 	templateUrl: './parameter-lookup.component.html',
+	standalone: false,
 })
 export class ParameterLookupComponent implements OnInit {
 	@Input() parameter?: IParameterDef;

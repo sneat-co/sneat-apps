@@ -14,6 +14,7 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
 	selector: 'sneat-spaces-card',
 	templateUrl: './spaces-card.component.html',
+	standalone: false,
 })
 export class SpacesCardComponent implements OnInit, OnDestroy {
 	@ViewChild(IonInput, { static: false }) addSpaceInput?: IonInput; // TODO: IonInput;

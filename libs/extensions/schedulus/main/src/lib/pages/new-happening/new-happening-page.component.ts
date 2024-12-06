@@ -19,7 +19,6 @@ import { CalendarBasePage } from '../calendar-base-page';
 @Component({
 	selector: 'sneat-happening-new',
 	templateUrl: './new-happening-page.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,

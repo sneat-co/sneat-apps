@@ -10,6 +10,7 @@ import {
 	selector: 'sneat-member-assets',
 	templateUrl: './member-assets-page-components.component.html',
 	providers: [CommuneBasePageParams],
+	standalone: false,
 })
 export class MemberAssetsPageComponent extends MemberBasePage {
 	constructor(

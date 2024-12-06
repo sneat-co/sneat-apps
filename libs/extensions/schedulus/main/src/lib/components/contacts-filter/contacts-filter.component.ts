@@ -25,8 +25,7 @@ import { zipMapBriefsWithIDs } from '@sneat/team-models';
 @Component({
 	selector: 'sneat-contacts-filter',
 	templateUrl: 'contacts-filter.component.html',
-	standalone: true,
-	imports: [IonicModule, NgForOf, NgIf, SneatPipesModule, FormsModule],
+	imports: [IonicModule, NgIf, SneatPipesModule, FormsModule],
 })
 export class ContactsFilterComponent
 	extends ContactusModuleBaseComponent

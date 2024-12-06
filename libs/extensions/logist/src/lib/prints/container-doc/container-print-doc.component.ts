@@ -23,6 +23,7 @@ interface IPoint {
 @Component({
 	selector: 'sneat-container-print-doc',
 	templateUrl: './container-print-doc.component.html',
+	standalone: false,
 })
 export class ContainerPrintDocComponent extends OrderPrintPageBaseComponent {
 	protected containerID?: string | null;

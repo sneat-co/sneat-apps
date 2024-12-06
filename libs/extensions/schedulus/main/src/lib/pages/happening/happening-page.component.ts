@@ -15,7 +15,6 @@ import { HappeningBasePage } from './happening-base-page';
 @Component({
 	selector: 'sneat-happening-page',
 	templateUrl: './happening-page.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,

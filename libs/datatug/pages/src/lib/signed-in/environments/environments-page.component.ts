@@ -10,7 +10,6 @@ import { IProjectSummary } from '@sneat/datatug-models';
 @Component({
 	selector: 'sneat-datatug-environments',
 	templateUrl: './environments-page.component.html',
-	standalone: true,
 	imports: [CommonModule, FormsModule, IonicModule, SneatCardListComponent],
 })
 export class EnvironmentsPageComponent {

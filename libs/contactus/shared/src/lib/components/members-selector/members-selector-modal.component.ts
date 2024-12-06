@@ -9,6 +9,7 @@ import { ISelectMembersOptions } from './members-selector.options';
 @Component({
 	selector: 'sneat-members-selector-modal',
 	templateUrl: 'members-selector-modal.component.html',
+	standalone: false,
 })
 export class MembersSelectorModalComponent implements ISelectMembersOptions {
 	@Input() mode: 'modal' | 'in-page' = 'in-page';

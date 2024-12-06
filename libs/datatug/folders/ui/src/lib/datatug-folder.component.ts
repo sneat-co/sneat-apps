@@ -32,11 +32,11 @@ import { DatatugBoardService } from '@sneat/datatug-board-core';
 @Component({
 	selector: 'sneat-datatug-folder',
 	templateUrl: 'datatug-folder.component.html',
+	standalone: false,
 })
 export class DatatugFolderComponent implements OnChanges, OnDestroy {
-	 
 	readonly Environment: ProjectItemType = ProjectItem.environment as const;
-	 
+
 	readonly Board: ProjectItemType = ProjectItem.Board;
 	readonly Query: ProjectItemType = ProjectItem.query;
 

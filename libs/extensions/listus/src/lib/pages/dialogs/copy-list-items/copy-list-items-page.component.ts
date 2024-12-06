@@ -7,6 +7,7 @@ import { ListService } from '../../../services/list.service';
 @Component({
 	selector: 'sneat-copy-list-items',
 	templateUrl: './copy-list-items-page.component.html',
+	standalone: false,
 })
 export class CopyListItemsPageComponent implements OnInit {
 	@Input() modal?: ModalController;

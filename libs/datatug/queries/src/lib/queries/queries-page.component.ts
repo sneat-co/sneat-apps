@@ -17,6 +17,7 @@ type OrderBy = (typeof orderBys)[number];
 	selector: 'sneat-datatug-sql-queries',
 	templateUrl: './queries-page.component.html',
 	styleUrls: ['./queries-page.component.scss'],
+	standalone: false,
 })
 export class QueriesPageComponent
 	implements OnInit, ViewWillEnter, ViewDidEnter, ViewDidLeave

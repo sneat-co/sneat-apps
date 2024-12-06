@@ -10,6 +10,7 @@ interface ICommuneType {
 @Component({
 	selector: 'sneat-new-commune-page',
 	templateUrl: './new-commune-page.component.html',
+	standalone: false,
 })
 export class NewCommunePageComponent {
 	public types: ICommuneType[] = [

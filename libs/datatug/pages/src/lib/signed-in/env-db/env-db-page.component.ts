@@ -38,7 +38,6 @@ interface IRecordsetInfo {
 @Component({
 	selector: 'sneat-datatug-env-db',
 	templateUrl: './env-db-page.component.html',
-	standalone: true,
 	imports: [CommonModule, FormsModule, IonicModule],
 })
 export class EnvDbPageComponent implements OnDestroy, OnInit {

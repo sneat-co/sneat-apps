@@ -5,6 +5,7 @@ import { IContainer } from './condainer-interface';
 @Component({
 	selector: 'sneat-order-container-form',
 	templateUrl: 'order-container-form.component.html',
+	standalone: false,
 })
 export class OrderContainerFormComponent {
 	@Input() container: IContainer = { id: '', type: 'unknown' };

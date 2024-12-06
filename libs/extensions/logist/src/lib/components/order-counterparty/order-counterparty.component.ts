@@ -22,6 +22,7 @@ import { LogistOrderService } from '../../services';
 @Component({
 	selector: 'sneat-logist-order-counterparty',
 	templateUrl: './order-counterparty.component.html',
+	standalone: false,
 })
 export class OrderCounterpartyComponent implements OnChanges {
 	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';

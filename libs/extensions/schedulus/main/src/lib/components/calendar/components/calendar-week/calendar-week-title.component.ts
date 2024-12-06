@@ -5,6 +5,7 @@ import { SwipeableWeek } from '../../../swipeable-ui';
 	selector: 'sneat-calendar-week-title',
 	templateUrl: 'calendar-week-title.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	standalone: false,
 })
 export class CalendarWeekTitleComponent {
 	@Input() week?: SwipeableWeek;

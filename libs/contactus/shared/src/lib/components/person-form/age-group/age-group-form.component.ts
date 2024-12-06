@@ -9,7 +9,6 @@ import { AgeGroupID } from '@sneat/contactus-core';
 	selector: 'sneat-age-group-form',
 	templateUrl: 'age-group-form.component.html',
 	animations: [formNexInAnimation],
-	standalone: true,
 	imports: [CommonModule, IonicModule, FormsModule],
 })
 export class AgeGroupFormComponent {

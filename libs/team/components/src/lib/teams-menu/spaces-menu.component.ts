@@ -20,7 +20,6 @@ import { SpacesListComponent } from '../teams-list';
 @Component({
 	selector: 'sneat-spaces-menu',
 	templateUrl: './spaces-menu.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		IonicModule,

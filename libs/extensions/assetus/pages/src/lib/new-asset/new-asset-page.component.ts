@@ -19,7 +19,6 @@ import {
 	selector: 'sneat-new-asset-page',
 	templateUrl: './new-asset-page.component.html',
 	providers: [SpaceComponentBaseParams],
-	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,

@@ -7,7 +7,6 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	selector: 'sneat-datatug-new-card-dialog',
 	templateUrl: './new-card-dialog.component.html',
 	styleUrls: ['./new-card-dialog.component.scss'],
-	standalone: true,
 	imports: [CommonModule, IonicModule],
 })
 export class NewCardDialogComponent {

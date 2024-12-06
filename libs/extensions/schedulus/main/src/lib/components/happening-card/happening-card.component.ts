@@ -14,6 +14,7 @@ import {
 	styleUrls: ['happening-card.component.scss'],
 	providers: [...HappeningBaseComponent.providers],
 	...HappeningBaseComponent.metadata,
+	standalone: false,
 })
 export class HappeningCardComponent extends HappeningComponent {
 	protected hasRelatedContacts(): boolean {

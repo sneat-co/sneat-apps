@@ -7,7 +7,6 @@ import { IContactBrief } from '@sneat/contactus-core';
 @Component({
 	selector: 'sneat-contact-contacts',
 	templateUrl: 'contact-contacts.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule],
 })
 export class ContactContactsComponent {

@@ -6,6 +6,7 @@ import { ISlotUIContext } from '@sneat/extensions/schedulus/shared';
 @Component({
 	selector: 'sneat-week-tab',
 	templateUrl: 'calendar-week-tab.component.html',
+	standalone: false,
 })
 export class CalendarWeekTabComponent {
 	@Input({ required: true }) space: ISpaceContext = { id: '' };

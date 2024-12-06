@@ -11,6 +11,7 @@ import {
 	selector: 'sneat-datatug-board-widget',
 	templateUrl: './board-widget.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	standalone: false,
 })
 export class BoardWidgetComponent {
 	@Input() level?: number;

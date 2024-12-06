@@ -22,7 +22,10 @@ export function wdCodeToWeekdayLongName(wd?: WeekdayCode2): string {
 	}
 }
 
-@Pipe({ name: 'wdToWeekday' })
+@Pipe({
+	name: 'wdToWeekday',
+	standalone: false,
+})
 export class WdToWeekdayPipe implements PipeTransform {
 	transform(wd?: WeekdayCode2): string {
 		return wdCodeToWeekdayLongName(wd);

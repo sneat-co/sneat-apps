@@ -27,6 +27,7 @@ import { CalendarDayBaseComponent } from './calendar-day-base.component';
 	selector: 'sneat-calendar-day-card',
 	templateUrl: 'calendar-day-card.component.html',
 	animations: virtualSliderAnimations,
+	standalone: false,
 })
 export class CalendarDayCardComponent
 	extends CalendarDayBaseComponent

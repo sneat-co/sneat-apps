@@ -12,7 +12,6 @@ import { ISpaceContext } from '@sneat/team-models';
 @Component({
 	selector: 'sneat-contact-modules-menu',
 	templateUrl: 'contact-modules-menu.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule],
 })
 export class ContactModulesMenuComponent {

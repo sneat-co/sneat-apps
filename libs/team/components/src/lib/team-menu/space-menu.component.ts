@@ -16,7 +16,6 @@ import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
-	standalone: true,
 	selector: 'sneat-space-menu',
 	templateUrl: './space-menu.component.html',
 	styleUrls: ['./space-menu.component.scss'],

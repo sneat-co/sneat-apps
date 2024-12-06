@@ -9,6 +9,7 @@ import { HappeningUIState } from '@sneat/mod-schedulus-core';
 @Component({
 	selector: 'sneat-day-slot-item',
 	templateUrl: './day-slot-item.component.html',
+	standalone: false,
 })
 export class DaySlotItemComponent {
 	@Input() public slotContext?: ISlotUIContext;

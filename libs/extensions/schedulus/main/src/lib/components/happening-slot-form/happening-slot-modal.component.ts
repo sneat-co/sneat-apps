@@ -33,13 +33,7 @@ import {
 	selector: 'sneat-slot-modal',
 	templateUrl: './happening-slot-modal.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	standalone: true,
-	imports: [
-		CommonModule,
-		IonicModule,
-		StartEndDatetimeFormComponent,
-		HappeningSlotFormComponent,
-	],
+	imports: [CommonModule, IonicModule, HappeningSlotFormComponent],
 })
 export class HappeningSlotModalComponent
 	implements OnChanges, OnDestroy, IHappeningSlotFormComponentInputs, OnInit

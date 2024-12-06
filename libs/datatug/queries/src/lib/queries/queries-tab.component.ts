@@ -31,6 +31,7 @@ type QueryType = 'SQL' | 'GraphQL' | 'HTTP';
 @Component({
 	selector: 'sneat-datatug-queries-tab',
 	templateUrl: 'queries-tab.component.html',
+	standalone: false,
 })
 export class QueriesTabComponent {
 	@Input() rootFolder?: 'shared' | 'personal' | 'bookmarked';

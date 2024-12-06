@@ -37,6 +37,7 @@ export class BoardCardTabService {
 	templateUrl: './board-card.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	providers: [BoardCardTabService],
+	standalone: false,
 })
 export class BoardCardComponent implements OnChanges {
 	@Input() boarCardDef?: IBoardCardDef;

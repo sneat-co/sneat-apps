@@ -10,7 +10,6 @@ import { ContactsListModule } from '../contacts-list';
 @Component({
 	selector: 'sneat-contact-locations',
 	templateUrl: './contact-locations.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, ContactsListModule, RouterLink],
 })
 export class ContactLocationsComponent implements OnChanges {

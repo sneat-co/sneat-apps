@@ -16,6 +16,7 @@ import { recordsetToGridDef } from '@sneat/datatug-services-repo';
 	selector: 'sneat-datatug-grid-widget',
 	templateUrl: './grid-widget.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	standalone: false,
 })
 export class GridWidgetComponent implements OnChanges {
 	@Input() recordset?: IRecordset;

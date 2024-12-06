@@ -6,6 +6,7 @@ import { ITreeNode } from '@angular-dnd/tree';
 	selector: 'sneat-retro-item-card',
 	templateUrl: './retro-item-card.component.html',
 	styleUrls: ['./retro-item-card.component.scss'],
+	standalone: false,
 })
 export class RetroItemCardComponent implements OnChanges {
 	@Input() treeNode: ITreeNode<IRetroItem>;

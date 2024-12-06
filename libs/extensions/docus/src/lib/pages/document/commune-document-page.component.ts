@@ -10,6 +10,7 @@ import { CommuneBasePageParams } from 'sneat-shared/services/params';
 	selector: 'sneat-commune-document',
 	templateUrl: './commune-document-page.component.html',
 	providers: [CommuneBasePageParams],
+	standalone: false,
 })
 export class CommuneDocumentPageComponent
 	extends CommuneBasePage

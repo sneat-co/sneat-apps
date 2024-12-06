@@ -6,6 +6,7 @@ import { TopMenuService } from '@sneat/core';
 @Component({
 	selector: 'sneat-root',
 	templateUrl: './logist-app.component.html',
+	standalone: false,
 })
 export class LogistAppComponent
 	extends SneatBaseAppComponent

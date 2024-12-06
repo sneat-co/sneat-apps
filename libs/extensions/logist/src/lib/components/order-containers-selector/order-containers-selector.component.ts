@@ -13,6 +13,7 @@ import { IContainer } from './condainer-interface';
 @Component({
 	selector: 'sneat-order-containers-selector',
 	templateUrl: './order-containers-selector.component.html',
+	standalone: false,
 })
 export class OrderContainersSelectorComponent implements OnChanges, OnInit {
 	@Input({ required: true }) order?: ILogistOrderContext;

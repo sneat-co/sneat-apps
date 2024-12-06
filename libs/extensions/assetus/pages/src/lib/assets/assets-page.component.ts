@@ -24,7 +24,6 @@ import { AssetsBasePage } from '../assets-base.page';
 	selector: 'sneat-assets-page',
 	templateUrl: './assets-page.component.html',
 	providers: [SpaceComponentBaseParams],
-	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,

@@ -16,6 +16,7 @@ import { Subscription } from 'rxjs';
 @Component({
 	selector: 'sneat-timer-member-button',
 	templateUrl: './timer-member-button.component.html',
+	standalone: false,
 })
 export class TimerMemberButtonComponent implements OnDestroy, OnChanges {
 	@Input() public scrumID?: string;

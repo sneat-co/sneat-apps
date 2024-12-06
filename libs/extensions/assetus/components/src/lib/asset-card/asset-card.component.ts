@@ -8,7 +8,6 @@ import { IAssetContext } from '@sneat/mod-assetus-core';
 @Component({
 	selector: 'sneat-asset-card',
 	templateUrl: './asset-card.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, RouterModule],
 })
 export class AssetCardComponent implements OnChanges {

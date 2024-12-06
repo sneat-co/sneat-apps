@@ -11,6 +11,10 @@ import {
 import { CommunesUiModule } from '@sneat/communes-ui'; // TODO: fix this!
 import { AppVersionComponent, AuthMenuItemComponent } from '@sneat/components';
 import { APP_INFO, coreProviders, IAppInfo } from '@sneat/core';
+import {
+	provideSentryAppInitializer,
+	sentryAppInitializerProviders,
+} from '@sneat/logging';
 import { RANDOM_ID_OPTIONS } from '@sneat/random';
 import { SpacesMenuComponent } from '@sneat/team-components';
 import { SpaceServiceModule } from '@sneat/team-services';
@@ -54,6 +58,8 @@ const appInfo: IAppInfo = {
 	providers: [
 		getAngularFireProviders(environment.firebaseConfig),
 		...coreProviders,
+		...sentryAppInitializerProviders,
+		provideSentryAppInitializer(),
 		{
 			provide: SneatApiBaseUrl,
 			useValue: environment.useNgrok

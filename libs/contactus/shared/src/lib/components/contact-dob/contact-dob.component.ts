@@ -7,7 +7,6 @@ import { IContactBrief, IContactDto } from '@sneat/contactus-core';
 @Component({
 	selector: 'sneat-contact-dob',
 	templateUrl: './contact-dob.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule],
 })
 export class ContactDobComponent {

@@ -20,7 +20,6 @@ import { ITmdbService } from '../watchlist';
 	templateUrl: './movie-card.component.html',
 	styleUrls: ['./movie-card.component.scss'],
 	animations: [listItemAnimations],
-	standalone: true,
 	imports: [IonicModule, CommonModule, NgOptimizedImage],
 })
 export class MovieCardComponent implements OnChanges {

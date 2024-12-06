@@ -7,6 +7,7 @@ import { CalendarFilterService } from '../../../calendar-filter.service';
 	selector: 'sneat-recurrings-tab',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	templateUrl: 'recurrings-tab.component.html',
+	standalone: false,
 })
 export class RecurringsTabComponent {
 	@Input({ required: true }) recurrings?: readonly IHappeningWithUiState[];

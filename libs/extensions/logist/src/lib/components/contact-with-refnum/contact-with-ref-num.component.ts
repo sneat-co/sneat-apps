@@ -9,6 +9,7 @@ import { ILogistOrderContext } from '../../dto';
 @Component({
 	selector: 'sneat-contact-with-ref-num',
 	templateUrl: './contact-with-ref-num.component.html',
+	standalone: false,
 })
 export class ContactWithRefNumComponent {
 	@Input() readonly = false;

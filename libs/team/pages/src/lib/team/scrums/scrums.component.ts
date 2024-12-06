@@ -20,7 +20,6 @@ import { SpaceNavService } from '@sneat/team-services';
 @Component({
 	selector: 'sneat-scrums',
 	templateUrl: './scrums.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule],
 })
 export class ScrumsComponent implements OnChanges, OnDestroy {

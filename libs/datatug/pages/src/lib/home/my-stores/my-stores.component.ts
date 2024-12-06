@@ -21,7 +21,6 @@ import { LoadingItemsComponent } from '../loading-items-component';
 @Component({
 	selector: 'sneat-datatug-my-stores',
 	templateUrl: './my-stores.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, LoadingItemsComponent],
 })
 export class MyStoresComponent implements OnInit, OnDestroy {

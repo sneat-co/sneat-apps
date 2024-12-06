@@ -24,6 +24,7 @@ import { Weekday } from '../../weekday';
 @Component({
 	selector: 'sneat-calendar-weekday',
 	templateUrl: './calendar-weekday.component.html',
+	standalone: false,
 })
 export class CalendarWeekdayComponent implements OnDestroy {
 	private readonly destroyed = new EventEmitter<void>();

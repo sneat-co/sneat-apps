@@ -5,6 +5,7 @@ import { ISlotAdjustment, ITiming } from '@sneat/mod-schedulus-core';
 	selector: 'sneat-timing-badge',
 	templateUrl: 'timing-badge.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	standalone: false,
 })
 export class TimingBadgeComponent {
 	@Input({ required: true }) isCanceled?: boolean;

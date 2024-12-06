@@ -24,6 +24,7 @@ import { BaseListItemPage } from '../base-list-item-page';
 	selector: 'sneat-movie-info',
 	templateUrl: './movie-info-page.component.html',
 	providers: [SpaceComponentBaseParams],
+	standalone: false,
 })
 export class MovieInfoPageComponent
 	extends BaseListItemPage

@@ -17,7 +17,6 @@ import { DocumentsBaseComponent } from '../documents-base.component';
 @Component({
 	selector: 'sneat-documents-list',
 	templateUrl: './documents-list.component.html',
-	standalone: true,
 	...DocumentsBaseComponent.metadata,
 	imports: [CommonModule, IonicModule],
 })

@@ -18,6 +18,7 @@ import { ISpaceContext } from '@sneat/team-models';
 @Component({
 	selector: 'sneat-contact-roles-input',
 	templateUrl: './contact-roles-input.component.html',
+	standalone: false,
 })
 export class ContactRolesInputComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;

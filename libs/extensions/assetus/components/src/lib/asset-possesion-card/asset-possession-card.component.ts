@@ -10,7 +10,6 @@ import {
 } from '@sneat/mod-assetus-core';
 
 @Component({
-	standalone: true,
 	selector: 'sneat-asset-possession-card',
 	templateUrl: './asset-possession-card.component.html',
 	imports: [IonicModule, FormsModule, SelectFromListModule, NgIf],

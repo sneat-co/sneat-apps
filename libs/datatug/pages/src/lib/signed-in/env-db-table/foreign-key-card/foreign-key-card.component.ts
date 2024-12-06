@@ -22,7 +22,6 @@ import { ICommandResponseWithRecordset } from '@sneat/datatug-dto';
 	selector: 'sneat-datatug-fk-card',
 	templateUrl: './foreign-key-card.component.html',
 	styleUrls: ['./foreign-key-card.component.scss'],
-	standalone: true,
 	imports: [CommonModule, IonicModule],
 })
 export class ForeignKeyCardComponent implements OnChanges {

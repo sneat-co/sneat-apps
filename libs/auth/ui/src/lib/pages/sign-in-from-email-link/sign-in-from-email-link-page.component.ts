@@ -7,7 +7,6 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 @Component({
 	selector: 'sneat-sign-in-from-email-link-page',
 	templateUrl: 'sign-in-from-email-link-page.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule],
 })
 export class SignInFromEmailLinkPageComponent {

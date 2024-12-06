@@ -9,7 +9,6 @@ import { CountryInputComponent } from '../country-input';
 import { countries, ICountry } from '../country-selector';
 
 @Component({
-	standalone: true,
 	selector: 'sneat-user-country',
 	templateUrl: './user-country.component.html',
 	imports: [IonicModule, NgIf, CountryInputComponent],

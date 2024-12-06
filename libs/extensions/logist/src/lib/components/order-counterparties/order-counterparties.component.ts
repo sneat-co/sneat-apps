@@ -35,6 +35,7 @@ interface ICounterparty extends IOrderCounterparty {
 @Component({
 	selector: 'sneat-logist-order-counterparties',
 	templateUrl: './order-counterparties.component.html',
+	standalone: false,
 })
 export class OrderCounterpartiesComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;

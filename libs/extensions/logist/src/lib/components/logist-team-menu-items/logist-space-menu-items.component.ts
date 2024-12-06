@@ -6,6 +6,7 @@ import { ISpaceContext } from '@sneat/team-models';
 @Component({
 	selector: 'sneat-logist-space-menu-items',
 	templateUrl: './logist-space-menu-items.component.html',
+	standalone: false,
 })
 export class LogistSpaceMenuItemsComponent {
 	@ViewChild(RouterOutlet) outlet?: RouterOutlet;

@@ -32,12 +32,10 @@ export interface AddSlotParams {
 @Component({
 	selector: 'sneat-happening-slots',
 	templateUrl: './happening-slots.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		IonicModule,
 		SneatPipesModule,
-		HappeningSlotFormComponent,
 		HappeningSlotModalServiceModule,
 	],
 })

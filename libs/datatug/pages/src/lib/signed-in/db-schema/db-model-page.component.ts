@@ -8,7 +8,6 @@ import { IProjDbModelBrief } from '@sneat/datatug-models';
 @Component({
 	selector: 'sneat-datatug-db-schema',
 	templateUrl: './db-model-page.component.html',
-	standalone: true,
 	imports: [CommonModule, FormsModule, IonicModule, SneatCardListComponent],
 })
 export class DbModelPageComponent {

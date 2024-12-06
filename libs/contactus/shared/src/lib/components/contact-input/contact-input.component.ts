@@ -26,6 +26,7 @@ import {
 @Component({
 	selector: 'sneat-contact-input',
 	templateUrl: './contact-input.component.html',
+	standalone: false,
 })
 export class ContactInputComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;

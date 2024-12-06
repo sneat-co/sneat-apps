@@ -9,7 +9,6 @@ import { MyPageRoutingModule } from '../my-routing.module';
 @Component({
 	selector: 'sneat-datatug-my',
 	templateUrl: './datatug-my-page.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,

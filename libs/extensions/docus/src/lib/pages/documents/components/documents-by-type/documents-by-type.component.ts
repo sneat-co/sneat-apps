@@ -29,7 +29,6 @@ interface IDocumentType {
 
 @Component({
 	selector: 'sneat-documents-by-type',
-	standalone: true,
 	imports: [CommonModule, IonicModule],
 	templateUrl: './documents-by-type.component.html',
 	styleUrls: ['./documents-by-type.component.scss'],

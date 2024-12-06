@@ -17,7 +17,6 @@ import { MemberBasePage } from '../member-base-page';
 	selector: 'sneat-space-member-page',
 	templateUrl: './space-member-page.component.html',
 	providers: [MemberComponentBaseParams],
-	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,

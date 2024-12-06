@@ -27,6 +27,7 @@ import { InviteService } from '@sneat/team-services';
 @Component({
 	selector: 'sneat-invite-personal-page',
 	templateUrl: './invite-personal-page.component.html',
+	standalone: false,
 })
 export class InvitePersonalPageComponent implements OnInit {
 	public fullName = '';

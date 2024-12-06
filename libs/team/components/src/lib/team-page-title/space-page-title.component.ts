@@ -4,6 +4,7 @@ import { ISpaceContext } from '@sneat/team-models';
 @Component({
 	selector: 'sneat-space-page-title',
 	templateUrl: './space-page-title.component.html',
+	standalone: false,
 })
 export class SpacePageTitleComponent {
 	@Input() icon?: string;

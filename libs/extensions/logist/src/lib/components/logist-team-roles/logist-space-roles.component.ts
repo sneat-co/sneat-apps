@@ -4,6 +4,7 @@ import { LogistSpaceRole, LogistSpaceRoles } from '../../dto';
 @Component({
 	selector: 'sneat-logist-space-roles',
 	templateUrl: 'logist-space-roles.component.html',
+	standalone: false,
 })
 export class LogistSpaceRolesComponent {
 	protected readonly roles: {

@@ -10,6 +10,7 @@ import { ITask, TaskType } from '@sneat/scrumspace/scrummodels';
 @Component({
 	selector: 'sneat-scrum-task',
 	templateUrl: './scrum-task.component.html',
+	standalone: false,
 })
 export class ScrumTaskComponent implements OnInit {
 	@Input() spaceID?: string;

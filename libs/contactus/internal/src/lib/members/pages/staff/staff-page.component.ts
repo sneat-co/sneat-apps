@@ -10,6 +10,7 @@ import { IRecord, RxRecordKey } from 'rxstore';
 	selector: 'sneat-staff',
 	templateUrl: './staff-page.component.html',
 	providers: [CommuneBasePageParams],
+	standalone: false,
 })
 export class StaffPageComponent extends MembersBasePage {
 	constructor(

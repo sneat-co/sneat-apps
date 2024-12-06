@@ -8,6 +8,7 @@ import { ProjectContextService } from '@sneat/datatug-services-project';
 @Component({
 	selector: 'sneat-datatug-queries-menu',
 	templateUrl: './queries-menu.component.html',
+	standalone: false,
 })
 export class QueriesMenuComponent {
 	tab: 'active' | 'all' | 'bookmarked' = 'all';

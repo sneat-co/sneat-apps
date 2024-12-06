@@ -17,7 +17,10 @@ export function getContactTitle(
 	);
 }
 
-@Pipe({ name: 'contactTitle' })
+@Pipe({
+	name: 'contactTitle',
+	standalone: false,
+})
 export class ContactTitlePipe implements PipeTransform {
 	transform(
 		m?: IIdAndOptionalBriefAndOptionalDbo<IContactBrief, IContactDto>,

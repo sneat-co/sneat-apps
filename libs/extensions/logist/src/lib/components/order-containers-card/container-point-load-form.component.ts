@@ -35,6 +35,7 @@ function debounce<T>(o: Subject<T>): Observable<T> {
 @Component({
 	selector: 'sneat-container-point-load-form',
 	templateUrl: 'container-point-load-form.component.html',
+	standalone: false,
 })
 export class ContainerPointLoadFormComponent implements OnChanges {
 	@Input() order?: ILogistOrderContext;

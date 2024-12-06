@@ -5,6 +5,7 @@ import { IBoardContext, IBoardRowDef } from '@sneat/datatug-models';
 	selector: 'sneat-datatug-board-row',
 	templateUrl: './board-row.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	standalone: false,
 })
 export class BoardRowComponent {
 	@Input() boardRowDef?: IBoardRowDef;

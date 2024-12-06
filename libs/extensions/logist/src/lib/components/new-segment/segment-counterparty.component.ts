@@ -7,6 +7,7 @@ export type SegmentEndpointType = 'port' | 'dispatcher';
 @Component({
 	selector: 'sneat-segment-counterparty',
 	templateUrl: './segment-counterparty.component.html',
+	standalone: false,
 })
 export class SegmentCounterpartyComponent {
 	@Input() endpointDirection?: 'from' | 'to';

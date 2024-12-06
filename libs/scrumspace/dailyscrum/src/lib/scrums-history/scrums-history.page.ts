@@ -14,6 +14,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	selector: 'sneat-scrums-history',
 	templateUrl: './scrums-history.page.html',
 	styleUrls: ['./scrums-history.page.scss'],
+	standalone: false,
 })
 export class ScrumsHistoryPageComponent {
 	public space?: ISpaceContext;

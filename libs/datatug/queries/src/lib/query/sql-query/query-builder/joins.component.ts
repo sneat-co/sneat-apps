@@ -14,6 +14,7 @@ import {
 @Component({
 	selector: 'sneat-datatug-qe-joins',
 	templateUrl: 'joins.component.html',
+	standalone: false,
 })
 export class JoinsComponent {
 	@Input() public sql?: string;

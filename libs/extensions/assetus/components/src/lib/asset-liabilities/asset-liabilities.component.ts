@@ -40,7 +40,6 @@ interface ILiabilityService {
 @Component({
 	selector: 'sneat-asset-liabilities',
 	templateUrl: './asset-liabilities.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule],
 })
 export class AssetLiabilitiesComponent {

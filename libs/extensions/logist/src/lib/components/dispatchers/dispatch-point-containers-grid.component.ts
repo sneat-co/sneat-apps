@@ -23,6 +23,7 @@ interface IDispatchPointContainerRow {
 @Component({
 	selector: 'sneat-dispatch-point-containers-grid',
 	templateUrl: './dispatch-point-containers-grid.component.html',
+	standalone: false,
 })
 export class DispatchPointContainersGridComponent implements OnChanges {
 	@Input() order?: ILogistOrderContext;
@@ -80,7 +81,7 @@ export class DispatchPointContainersGridComponent implements OnChanges {
 		const containerPoints = shippingPointID
 			? this.order?.dbo?.containerPoints?.filter(
 					(cp) => cp.shippingPointID === shippingPointID,
-			  )
+				)
 			: [];
 		const containerPointToRow = (
 			cp: IContainerPoint,
@@ -95,8 +96,8 @@ export class DispatchPointContainersGridComponent implements OnChanges {
 						task === 'load'
 							? cp.toLoad
 							: task === 'unload'
-							? cp.toUnload
-							: undefined;
+								? cp.toUnload
+								: undefined;
 					if (load?.numberOfPallets && load.grossWeightKg) {
 						return `${task} ${load.numberOfPallets} pallets, ${load.grossWeightKg}kg`;
 					} else if (load?.numberOfPallets) {

@@ -14,6 +14,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 @Component({
 	selector: 'sneat-multi-selector',
 	templateUrl: './multi-selector.component.html',
+	standalone: false,
 })
 export class MultiSelectorComponent
 	extends SelectorBaseComponent
@@ -39,8 +40,8 @@ export class MultiSelectorComponent
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['allItems']) {
-			this.selectedItems = this.allItems?.filter(
-				(item) => this.selectedIDs?.includes(item.id),
+			this.selectedItems = this.allItems?.filter((item) =>
+				this.selectedIDs?.includes(item.id),
 			);
 		}
 	}

@@ -21,6 +21,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	selector: 'sneat-datatug-sql',
 	templateUrl: './sql-editor.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	standalone: false,
 })
 export class SqlEditorComponent implements AfterViewInit, OnChanges {
 	@Input() sql?: string;

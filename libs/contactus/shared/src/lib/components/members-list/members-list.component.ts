@@ -40,7 +40,6 @@ import { InlistAgeGroupComponent } from '../inlist-options/inlist-age-group.comp
 	selector: 'sneat-members-list',
 	templateUrl: './members-list.component.html',
 	animations: listAddRemoveAnimation,
-	standalone: true,
 	imports: [
 		CommonModule,
 		IonicModule,

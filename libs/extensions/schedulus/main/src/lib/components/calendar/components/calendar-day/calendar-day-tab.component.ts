@@ -11,7 +11,7 @@ import { addDays, CalendarStateService } from '../../calendar-state.service';
 	selector: 'sneat-day-tab',
 	templateUrl: 'calendar-day-tab.component.html',
 	styleUrls: ['calendar-day-tab.component.scss'],
-	// changeDetection: ChangeDetectionStrategy.OnPush,
+	standalone: false,
 })
 export class CalendarDayTabComponent implements OnDestroy {
 	private readonly destroyed = new Subject<void>();

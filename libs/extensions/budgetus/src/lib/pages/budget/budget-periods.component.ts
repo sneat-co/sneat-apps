@@ -21,7 +21,6 @@ import { BudgetPeriodComponent } from './budget-period.component';
 @Component({
 	selector: 'sneat-budget-periods',
 	templateUrl: './budget-periods.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, BudgetPeriodComponent],
 })
 export class BudgetPeriodsComponent implements OnChanges {

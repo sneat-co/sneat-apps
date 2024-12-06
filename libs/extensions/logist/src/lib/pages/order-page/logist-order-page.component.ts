@@ -27,6 +27,7 @@ type OrderDetailsTab =
 @Component({
 	selector: 'sneat-order-page',
 	templateUrl: './logist-order-page.component.html',
+	standalone: false,
 })
 export class LogistOrderPageComponent
 	extends OrderPageBaseComponent

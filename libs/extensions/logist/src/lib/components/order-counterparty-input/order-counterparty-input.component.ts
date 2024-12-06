@@ -27,6 +27,7 @@ import {
 @Component({
 	selector: 'sneat-logist-order-counterparty-input',
 	templateUrl: './order-counterparty-input.component.html',
+	standalone: false,
 })
 export class OrderCounterpartyInputComponent implements OnChanges {
 	@Input() label?: string = undefined;

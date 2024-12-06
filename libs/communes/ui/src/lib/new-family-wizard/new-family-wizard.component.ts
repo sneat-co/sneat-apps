@@ -4,6 +4,7 @@ import { SelectOption } from '@sneat/wizard';
 @Component({
 	selector: 'sneat-new-family-wizard',
 	templateUrl: './new-family-wizard.component.html',
+	standalone: false,
 })
 export class NewFamilyWizardComponent {
 	@Output() ready = new EventEmitter<boolean>();

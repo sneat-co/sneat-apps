@@ -6,7 +6,6 @@ import { Period } from '@sneat/dto';
 @Component({
 	selector: 'sneat-period-segment',
 	templateUrl: './period-segment.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule],
 })
 export class PeriodSegmentComponent {

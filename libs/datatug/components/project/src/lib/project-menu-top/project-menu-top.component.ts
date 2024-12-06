@@ -22,6 +22,7 @@ interface IProjectTopLevelPage {
 @Component({
 	selector: 'sneat-datatug-project-menu-top',
 	templateUrl: './project-menu-top.component.html',
+	standalone: false,
 })
 export class ProjectMenuTopComponent implements OnDestroy {
 	public readonly projTopLevelPages: IProjectTopLevelPage[] = [

@@ -1,10 +1,10 @@
-// eslint-disable-next-line @typescript-eslint/no-require-imports
+ 
 const baseConfig = require('../../../eslint.config.js');
 
 const {
 	sneatLibConfig,
 	compatConfig,
-	// eslint-disable-next-line @typescript-eslint/no-require-imports
+	 
 } = require('../../../eslint.lib.config.js');
 
 module.exports = [
@@ -20,4 +20,10 @@ module.exports = [
 				'@nx/dependency-checks': 'error',
 			},
 		})),
+	{
+		files: ['**/*.ts'],
+		rules: {
+			'@angular-eslint/prefer-standalone': 'off',
+		},
+	},
 ];

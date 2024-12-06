@@ -18,6 +18,7 @@ import { Observable, Subscription, takeUntil } from 'rxjs';
 @Component({
 	selector: 'sneat-singles-tab',
 	templateUrl: 'singles-tab.component.html',
+	standalone: false,
 })
 export class SinglesTabComponent
 	extends SneatBaseComponent

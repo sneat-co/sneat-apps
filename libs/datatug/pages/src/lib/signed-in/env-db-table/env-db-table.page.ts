@@ -37,7 +37,6 @@ import { ForeignKeyCardComponent } from './foreign-key-card/foreign-key-card.com
 	selector: 'sneat-datatug-env-db-table',
 	templateUrl: './env-db-table.page.html',
 	styleUrls: ['./env-db-table.page.scss'],
-	standalone: true,
 	imports: [
 		CommonModule,
 		IonicModule,

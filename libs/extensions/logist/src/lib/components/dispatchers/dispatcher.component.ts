@@ -26,6 +26,7 @@ import { LogistOrderService } from '../../services';
 @Component({
 	selector: 'sneat-order-dispatcher',
 	templateUrl: './dispatcher.component.html',
+	standalone: false,
 })
 export class DispatcherComponent implements OnChanges {
 	@Input() order?: ILogistOrderContext;

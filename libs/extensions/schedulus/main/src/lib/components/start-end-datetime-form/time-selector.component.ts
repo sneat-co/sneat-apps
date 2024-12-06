@@ -42,7 +42,6 @@ const eveningHours: string[] = [
 @Component({
 	selector: 'sneat-time-selector',
 	templateUrl: './time-selector.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, FormsModule],
 })
 export class TimeSelectorComponent {

@@ -25,7 +25,6 @@ import { DatatugBoardService } from '@sneat/datatug-board-core';
 @Component({
 	selector: 'sneat-datatug-board-page',
 	templateUrl: './board-page.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,

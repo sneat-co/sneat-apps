@@ -5,6 +5,7 @@ import { arrayToGrid, IJsonGridData, IPipe } from '@sneat/datatug-plugins';
 	selector: 'sneat-datatug-json-table',
 	templateUrl: 'json-table.component.html',
 	styleUrls: ['json-component.scss'],
+	standalone: false,
 })
 export class JsonTableComponent implements OnChanges {
 	@Input() path = '';

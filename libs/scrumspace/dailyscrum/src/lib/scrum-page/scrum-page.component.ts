@@ -35,6 +35,7 @@ import { IMetric } from '../interfaces';
 	templateUrl: './scrum-page.component.html',
 	styleUrls: ['./scrum-page.component.scss'],
 	providers: [SpaceComponentBaseParams],
+	standalone: false,
 })
 export class ScrumPageComponent
 	extends SpaceBaseComponent

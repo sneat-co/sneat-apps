@@ -24,6 +24,7 @@ import { NewSegmentService } from '../new-segment/new-segment.service';
 @Component({
 	selector: 'sneat-order-trucker',
 	templateUrl: './order-trucker.component.html',
+	standalone: false,
 })
 export class OrderTruckerComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;

@@ -17,7 +17,6 @@ interface Role {
 	selector: 'sneat-roles-form',
 	templateUrl: 'roles-form.component.html',
 	animations: [formNexInAnimation],
-	standalone: true,
 	imports: [CommonModule, IonicModule, FormsModule],
 })
 export class RolesFormComponent extends SpaceRelatedFormComponent {

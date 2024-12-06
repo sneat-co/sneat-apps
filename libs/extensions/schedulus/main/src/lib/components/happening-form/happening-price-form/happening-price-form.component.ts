@@ -27,7 +27,6 @@ import { SelectOption, WizardModule } from '@sneat/wizard';
 @Component({
 	selector: 'sneat-happening-price-form',
 	templateUrl: 'happening-price-form.component.html',
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
 		CommonModule,

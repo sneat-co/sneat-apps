@@ -13,6 +13,7 @@ import {
 @Component({
 	selector: 'sneat-single-happenings-list',
 	templateUrl: 'single-happenings-list.component.html',
+	standalone: false,
 })
 export class SingleHappeningsListComponent
 	extends SneatBaseComponent

@@ -20,6 +20,7 @@ import { AddAssetBaseComponent } from '../add-asset-base-component';
 	selector: 'sneat-asset-add-document',
 	templateUrl: './asset-add-document.component.html',
 	providers: [SpaceComponentBaseParams],
+	standalone: false,
 })
 export class AssetAddDocumentComponent
 	extends AddAssetBaseComponent

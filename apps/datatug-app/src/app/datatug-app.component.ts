@@ -4,6 +4,7 @@ import { Component, Injector, Type } from '@angular/core';
 @Component({
 	selector: 'sneat-datatug-root',
 	templateUrl: 'datatug-app.component.html',
+	standalone: false,
 })
 export class DatatugAppComponent {
 	menu?: Promise<Type<unknown>>;

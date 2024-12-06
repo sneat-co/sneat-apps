@@ -16,7 +16,6 @@ import { IDateTime, ITiming } from '@sneat/mod-schedulus-core';
 	selector: 'sneat-start-end-dates-range-form',
 	templateUrl: './start-end-dates-range-form.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	standalone: true,
 	imports: [CommonModule, IonicModule],
 })
 export class StartEndDatesRangeFormComponent implements OnChanges {

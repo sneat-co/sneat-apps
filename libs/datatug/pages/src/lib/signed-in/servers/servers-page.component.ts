@@ -18,7 +18,6 @@ import { ServersPageRoutingModule } from './servers-routing.module';
 @Component({
 	selector: 'sneat-datatug-servers',
 	templateUrl: './servers-page.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,

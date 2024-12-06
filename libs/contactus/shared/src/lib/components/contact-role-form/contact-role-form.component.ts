@@ -24,6 +24,7 @@ import { takeUntil } from 'rxjs';
 @Component({
 	selector: 'sneat-contact-role-form',
 	templateUrl: './contact-role-form.component.html',
+	standalone: false,
 })
 export class ContactRoleFormComponent
 	extends SneatBaseComponent

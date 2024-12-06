@@ -23,6 +23,7 @@ interface IContainerInfo {
 @Component({
 	selector: 'sneat-print-order-trucker-summary',
 	templateUrl: './order-trucker-summary.component.html',
+	standalone: false,
 })
 export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 	truckerID?: string;

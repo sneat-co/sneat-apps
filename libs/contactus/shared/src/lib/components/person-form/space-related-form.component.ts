@@ -6,7 +6,10 @@ import {
 } from '@angular/core';
 import { ISpaceContext } from '@sneat/team-models';
 
-@Component({ template: '' })
+@Component({
+	template: '',
+	standalone: false,
+})
 export abstract class SpaceRelatedFormComponent implements OnChanges {
 	// TODO: Needs to be in other place
 

@@ -23,6 +23,7 @@ interface IOrderContainerWithIndex extends IOrderContainer {
 @Component({
 	selector: 'sneat-order-containers-grid',
 	templateUrl: './order-containers-grid.component.html',
+	standalone: false,
 })
 export class OrderContainersGridComponent implements OnChanges {
 	protected containers?: IOrderContainer[];

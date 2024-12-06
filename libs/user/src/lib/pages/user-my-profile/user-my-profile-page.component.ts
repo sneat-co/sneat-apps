@@ -8,7 +8,6 @@ import { ContactusServicesModule } from '@sneat/contactus-services';
 @Component({
 	selector: 'sneat-user-my--profile-page',
 	templateUrl: 'user-my-profile-page.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		IonicModule,

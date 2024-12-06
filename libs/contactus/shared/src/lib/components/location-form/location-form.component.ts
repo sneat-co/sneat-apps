@@ -27,6 +27,7 @@ import { ISpaceContext } from '@sneat/team-models';
 @Component({
 	selector: 'sneat-location-form',
 	templateUrl: './location-form.component.html',
+	standalone: false,
 })
 export class LocationFormComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;

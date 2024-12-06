@@ -23,7 +23,6 @@ import { BudgetPeriodsComponent } from './budget-periods.component';
 @Component({
 	selector: 'sneat-budget-page',
 	templateUrl: './budget-page.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,

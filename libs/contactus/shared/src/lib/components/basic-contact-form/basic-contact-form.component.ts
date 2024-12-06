@@ -12,6 +12,7 @@ import { ISpaceContext } from '@sneat/team-models';
 @Component({
 	selector: 'sneat-basic-contact-form',
 	templateUrl: './basic-contact-form.component.html',
+	standalone: false,
 })
 export class BasicContactFormComponent {
 	@Input() parentContact?: IContactContext;

@@ -12,6 +12,7 @@ import { BaseListPage } from '../base-list-page';
 	selector: 'sneat-add-to-watch-page',
 	templateUrl: './add-to-watch-page.component.html',
 	providers: [CommuneBasePageParams],
+	standalone: false,
 })
 export class AddToWatchPageComponent
 	extends BaseListPage

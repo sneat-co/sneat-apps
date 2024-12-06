@@ -17,7 +17,6 @@ import {
 import { LogistSpaceMenuItemsModule } from '../logist-team-menu-items/logist-space-menu-items.module';
 
 @Component({
-	standalone: true,
 	selector: 'sneat-logist-space-menu',
 	templateUrl: './logist-space-menu.component.html',
 	imports: [

@@ -11,6 +11,7 @@ export interface IRetroQuestion {
 	selector: 'sneat-retro-my-feedback',
 	templateUrl: './retro-my-feedback.page.html',
 	styleUrls: ['./retro-my-feedback.page.scss'],
+	standalone: false,
 })
 export class RetroMyFeedbackPageComponent {
 	spaceID: string;

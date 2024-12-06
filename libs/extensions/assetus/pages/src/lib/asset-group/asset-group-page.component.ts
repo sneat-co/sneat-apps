@@ -32,7 +32,6 @@ class AssetFactory {
 	selector: 'sneat-asset-group',
 	templateUrl: './asset-group-page.component.html',
 	providers: [SpaceComponentBaseParams],
-	standalone: true,
 	imports: [
 		CommonModule,
 		IonicModule,

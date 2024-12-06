@@ -5,6 +5,7 @@ import { IJsonGridData } from '@sneat/datatug-plugins';
 	selector: 'sneat-datatug-json-grid',
 	templateUrl: 'json-grid.component.html',
 	styleUrls: ['json-component.scss'],
+	standalone: false,
 })
 export class JsonGridComponent {
 	@Input() jsonGrid?: IJsonGridData;

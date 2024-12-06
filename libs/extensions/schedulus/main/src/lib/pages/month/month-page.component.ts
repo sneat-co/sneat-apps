@@ -25,6 +25,7 @@ const monthNames = [
 	selector: 'sneat-month',
 	templateUrl: './month-page.component.html',
 	styleUrls: ['./month.page.scss'],
+	standalone: false,
 })
 export class MonthPageComponent {
 	public segment: 'expense' | 'income' | 'balance' = 'expense';

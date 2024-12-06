@@ -24,7 +24,6 @@ import { MyStoresComponent } from '../my-stores';
 @Component({
 	selector: 'sneat-datatug-my-projects',
 	templateUrl: './my-datatug-projects.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		IonicModule,

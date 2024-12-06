@@ -24,7 +24,6 @@ import {
 	selector: 'sneat-budget-period',
 	templateUrl: 'budget-period.component.html',
 	styleUrl: './budget-period.component.scss',
-	standalone: true,
 	imports: [CommonModule, IonicModule, FormsModule, SneatPipesModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

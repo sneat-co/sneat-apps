@@ -11,6 +11,7 @@ export interface IEnv {
 @Component({
 	selector: 'sneat-datatug-env-selector',
 	templateUrl: './env-selector.component.html',
+	standalone: false,
 })
 export class EnvSelectorComponent {
 	public currentEnvId?: string;

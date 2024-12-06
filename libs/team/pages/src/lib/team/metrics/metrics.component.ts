@@ -9,7 +9,6 @@ import { SpaceNavService, SpaceService } from '@sneat/team-services';
 @Component({
 	selector: 'sneat-metrics',
 	templateUrl: './metrics.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule],
 })
 export class MetricsComponent {

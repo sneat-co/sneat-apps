@@ -33,7 +33,6 @@ type Action = 'join' | 'refuse'; // TODO: inject provider for action description
 @Component({
 	selector: 'sneat-login',
 	templateUrl: './login-page.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,

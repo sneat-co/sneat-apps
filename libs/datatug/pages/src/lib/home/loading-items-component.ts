@@ -6,7 +6,6 @@ import { AuthStatus } from '@sneat/auth-core';
 @Component({
 	selector: 'sneat-datatug-loading-items',
 	templateUrl: 'loading-items-component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule],
 })
 export class LoadingItemsComponent {

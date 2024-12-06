@@ -22,7 +22,6 @@ import { distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 @Component({
 	selector: 'sneat-happening-slot-participants',
 	templateUrl: 'happening-slot-participants.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, SneatPipesModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

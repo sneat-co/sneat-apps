@@ -8,6 +8,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 @Component({
 	selector: 'sneat-datatug-add-db-serve',
 	templateUrl: './add-db-server.component.html',
+	standalone: false,
 })
 export class AddDbServerComponent implements OnDestroy {
 	readonly dbServer: IDbServer = {

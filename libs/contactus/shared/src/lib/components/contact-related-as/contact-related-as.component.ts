@@ -6,7 +6,6 @@ import { IContactContext } from '@sneat/contactus-core';
 @Component({
 	selector: 'sneat-contact-related-as',
 	templateUrl: './contact-related-as.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule],
 })
 export class ContactRelatedAsComponent {

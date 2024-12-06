@@ -21,6 +21,7 @@ import { LogistOrderService } from '../../services';
 @Component({
 	selector: 'sneat-trucker-segment',
 	templateUrl: './trucker-segment.component.html',
+	standalone: false,
 })
 export class TruckerSegmentComponent implements OnChanges {
 	@Input() order?: ILogistOrderContext;

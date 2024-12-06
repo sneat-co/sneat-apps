@@ -11,7 +11,6 @@ import { RetroItemType } from '@sneat/scrumspace/scrummodels';
 @Component({
 	selector: 'sneat-retrospectives',
 	templateUrl: './retrospectives.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule],
 })
 export class RetrospectivesComponent {

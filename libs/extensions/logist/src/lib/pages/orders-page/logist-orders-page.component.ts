@@ -14,7 +14,7 @@ const defaultFilter: IOrdersFilter = { status: 'active' };
 @Component({
 	selector: 'sneat-logist-orders-page',
 	templateUrl: 'logist-orders-page.component.html',
-	// changeDetection: ChangeDetectionStrategy.OnPush,
+	standalone: false,
 })
 export class LogistOrdersPageComponent extends SpaceBaseComponent {
 	orders?: ILogistOrderContext[];

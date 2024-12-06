@@ -28,7 +28,6 @@ import { filter, takeUntil, tap } from 'rxjs/operators';
 @Component({
 	selector: 'sneat-datatug-store-page',
 	templateUrl: './datatug-store-page.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		IonicModule,

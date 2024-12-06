@@ -32,7 +32,6 @@ export interface ICheckChangedArgs {
 @Component({
 	selector: 'sneat-contacts-checklist',
 	templateUrl: './contacts-checklist.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

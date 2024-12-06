@@ -31,12 +31,10 @@ import { Subscription } from 'rxjs';
 @Component({
 	selector: 'sneat-happening-participants',
 	templateUrl: 'happening-participants.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		IonicModule,
 		SneatPipesModule,
-		MembersListComponent,
 		ContactsChecklistComponent,
 		FormsModule,
 	],

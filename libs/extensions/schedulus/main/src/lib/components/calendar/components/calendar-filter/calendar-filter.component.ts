@@ -16,6 +16,7 @@ import { ICalendarFilter } from './calendar-filter';
 @Component({
 	selector: 'sneat-calendar-filter',
 	templateUrl: 'calendar-filter.component.html',
+	standalone: false,
 })
 export class CalendarFilterComponent extends WeekdaysFormBase {
 	@ViewChild(IonAccordionGroup) accordionGroup?: IonAccordionGroup;

@@ -40,7 +40,6 @@ const maxNameLenValidator = Validators.maxLength(50);
 @Component({
 	selector: 'sneat-names-form',
 	templateUrl: './names-form.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, FormsModule, ReactiveFormsModule],
 })
 export class NamesFormComponent implements OnChanges, AfterViewInit {

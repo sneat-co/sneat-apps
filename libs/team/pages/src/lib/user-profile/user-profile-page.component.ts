@@ -7,6 +7,7 @@ import { IUserRecord } from '@sneat/auth-models';
 	selector: 'sneat-user-profile',
 	templateUrl: './user-profile-page.component.html',
 	styleUrls: ['./user-profile-page.component.scss'],
+	standalone: false,
 })
 export class UserProfilePageComponent {
 	public user?: IUserRecord | null;

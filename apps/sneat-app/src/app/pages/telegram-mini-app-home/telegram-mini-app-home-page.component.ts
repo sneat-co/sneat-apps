@@ -8,7 +8,6 @@ import { IonicModule } from '@ionic/angular';
 @Component({
 	selector: 'sneat-telegram-menu-page',
 	templateUrl: './telegram-mini-app-home-page.component.html',
-	standalone: true,
 	imports: [IonicModule],
 })
 export class TelegramMiniAppHomePageComponent {

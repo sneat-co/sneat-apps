@@ -1,10 +1,10 @@
-// eslint-disable-next-line @typescript-eslint/no-require-imports
+ 
 const { FlatCompat } = require('@eslint/eslintrc');
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
+ 
 const baseConfig = require('../../../eslint.config.js');
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
+ 
 const js = require('@eslint/js');
 
 const compat = new FlatCompat({
@@ -53,4 +53,10 @@ module.exports = [
 				...config.rules,
 			},
 		})),
+	{
+		files: ['**/*.ts'],
+		rules: {
+			'@angular-eslint/prefer-standalone': 'off',
+		},
+	},
 ];

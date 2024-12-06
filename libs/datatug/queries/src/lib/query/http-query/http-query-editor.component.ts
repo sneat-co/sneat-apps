@@ -22,7 +22,6 @@ export interface IHttpApiEndpoint {
 @Component({
 	selector: 'sneat-datatug-http-query-editor',
 	templateUrl: 'http-query-editor.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,

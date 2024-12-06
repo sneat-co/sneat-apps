@@ -8,7 +8,6 @@ import { DataType, IEntityFieldDef } from '@sneat/datatug-models';
 @Component({
 	selector: 'sneat-datatug-entity-field-dialog',
 	templateUrl: './entity-field-dialog.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, FormsModule],
 })
 export class EntityFieldDialogComponent {

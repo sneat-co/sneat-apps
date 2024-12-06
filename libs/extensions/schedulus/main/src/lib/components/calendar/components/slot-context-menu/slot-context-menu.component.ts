@@ -35,6 +35,7 @@ const notImplemented = 'Sorry, not implemented yet';
 @Component({
 	selector: 'sneat-slot-context-menu',
 	templateUrl: 'slot-context-menu.component.html',
+	standalone: false,
 })
 export class SlotContextMenuComponent {
 	@Input({ required: true }) space: ISpaceContext = { id: '' };

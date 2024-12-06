@@ -5,6 +5,7 @@ import { TopMenuService } from '@sneat/core';
 @Component({
 	selector: 'sneat-app-root',
 	templateUrl: 'sneat-app.component.html',
+	standalone: false,
 })
 export class SneatAppComponent {
 	constructor(

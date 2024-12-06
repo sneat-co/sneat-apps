@@ -11,6 +11,7 @@ import { ILogistOrderContext, IOrderCounterparty } from '../../dto';
 @Component({
 	selector: 'sneat-dispatchers',
 	templateUrl: './dispatchers.component.html',
+	standalone: false,
 })
 export class DispatchersComponent implements OnChanges {
 	@Input() order?: ILogistOrderContext;

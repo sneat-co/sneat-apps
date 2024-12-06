@@ -5,7 +5,6 @@ import { IonicModule, ModalController } from '@ionic/angular';
 @Component({
 	selector: 'sneat-dialog-header',
 	templateUrl: './dialog-header.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule],
 })
 export class DialogHeaderComponent {

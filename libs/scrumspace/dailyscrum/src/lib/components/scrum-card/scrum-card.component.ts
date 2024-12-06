@@ -18,6 +18,7 @@ import { TaskType } from '@sneat/scrumspace/scrummodels';
 	selector: 'sneat-scrum-card',
 	templateUrl: './scrum-card.component.html',
 	styleUrls: ['./scrum-card.component.scss'],
+	standalone: false,
 })
 export class ScrumCardComponent {
 	@Input() space?: IRecord<ISpaceDbo>;

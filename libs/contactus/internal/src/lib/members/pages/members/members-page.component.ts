@@ -46,7 +46,6 @@ interface MembersGroup {
 	selector: 'sneat-members-page',
 	templateUrl: 'members-page.component.html',
 	providers: [SpaceComponentBaseParams, ContactComponentBaseParams],
-	standalone: true,
 	imports: [
 		IonicModule,
 		CommonModule,

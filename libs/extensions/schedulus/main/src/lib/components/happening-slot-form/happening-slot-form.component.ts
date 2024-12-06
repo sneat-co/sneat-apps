@@ -67,7 +67,6 @@ export interface IHappeningSlotFormComponentInputs {
 @Component({
 	selector: 'sneat-happening-slot-form',
 	templateUrl: './happening-slot-form.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		IonicModule,

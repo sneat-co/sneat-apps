@@ -26,6 +26,7 @@ import { ISelectItem } from '..';
 			multi: true,
 		},
 	],
+	standalone: false,
 })
 export class SelectFromListComponent
 	implements ControlValueAccessor, OnChanges, OnDestroy

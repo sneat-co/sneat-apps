@@ -15,7 +15,6 @@ export interface OptionEvent {
 @Component({
 	selector: 'sneat-inlist-options',
 	templateUrl: './inlist-options.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule],
 })
 export class InlistOptionsComponent {

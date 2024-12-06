@@ -15,7 +15,6 @@ import {
 import { AssetType, carMakes, IMake, IModel } from '@sneat/mod-assetus-core';
 
 @Component({
-	standalone: true,
 	selector: 'sneat-make-model-card',
 	templateUrl: './make-model-card.component.html',
 	imports: [CommonModule, IonicModule, SelectFromListModule, FormsModule],

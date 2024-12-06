@@ -44,7 +44,6 @@ import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 	selector: 'sneat-new-document',
 	templateUrl: './new-document-page.component.html',
 	providers: [SpaceComponentBaseParams],
-	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,

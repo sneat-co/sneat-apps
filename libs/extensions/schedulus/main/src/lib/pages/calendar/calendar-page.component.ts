@@ -31,7 +31,6 @@ import { CalendariumServicesModule } from '../../services';
 	styleUrls: ['./calendar-page.component.scss'],
 	providers: [SpaceComponentBaseParams],
 	animations: virtualSliderAnimations,
-	standalone: true,
 	imports: [
 		CommonModule,
 		IonicModule,

@@ -4,6 +4,7 @@ import { ITransitPoint } from '../../dto';
 @Component({
 	selector: 'sneat-transit-point-item',
 	templateUrl: './transit-point-item.component.html',
+	standalone: false,
 })
 export class TransitPointItemComponent {
 	@Input() label = 'Transit point';

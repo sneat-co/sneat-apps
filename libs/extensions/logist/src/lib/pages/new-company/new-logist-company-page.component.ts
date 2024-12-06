@@ -13,6 +13,7 @@ import { first, takeUntil } from 'rxjs';
 @Component({
 	selector: 'sneat-new-logist-company-page',
 	templateUrl: 'new-logist-company-page.component.html',
+	standalone: false,
 })
 export class NewLogistCompanyPageComponent
 	extends SpaceBaseComponent

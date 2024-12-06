@@ -16,7 +16,6 @@ import {
 	selector: 'sneat-inlist-age-group',
 	template:
 		'<sneat-inlist-options [options]="ageOptions" [selectedOption]="selectedOption" (optionSelected)="onAgeGroupSelected($event)"/>',
-	standalone: true,
 	imports: [InlistOptionsComponent],
 })
 export class InlistAgeGroupComponent {

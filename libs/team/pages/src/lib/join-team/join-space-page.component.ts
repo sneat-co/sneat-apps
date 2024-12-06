@@ -39,7 +39,6 @@ export const getPinFromUrl: () => string = () => {
 @Component({
 	selector: 'sneat-join-space',
 	templateUrl: './join-space-page.component.html',
-	standalone: true,
 	imports: [CommonModule, FormsModule, IonicModule, PersonWizardComponent],
 })
 export class JoinSpacePageComponent extends SneatBaseComponent {

@@ -5,7 +5,6 @@ import { IonicModule } from '@ionic/angular';
 import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth-core';
 
 @Component({
-	standalone: true,
 	selector: 'sneat-login-required',
 	templateUrl: './login-required.component.html',
 	imports: [IonicModule, CommonModule, RouterModule],

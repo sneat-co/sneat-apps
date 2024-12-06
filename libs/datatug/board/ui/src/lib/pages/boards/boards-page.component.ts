@@ -22,7 +22,6 @@ import { DatatugFoldersService } from '@sneat/datatug-folders-core';
 @Component({
 	selector: 'sneat-datatug-boards',
 	templateUrl: './boards-page.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, SneatCardListComponent],
 })
 export class BoardsPageComponent implements OnInit, OnDestroy {

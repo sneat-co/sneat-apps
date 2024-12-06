@@ -13,7 +13,6 @@ import { ContactBasePage } from '../contact-base-page';
 @Component({
 	selector: 'sneat-new-location-page',
 	templateUrl: './new-location-page.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, LocationFormModule, SneatPipesModule],
 })
 export class NewLocationPageComponent extends ContactBasePage {

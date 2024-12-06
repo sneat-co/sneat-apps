@@ -14,7 +14,6 @@ export class TestComponent {
 }
 
 @Component({
-	standalone: true,
 	selector: 'sneat-consumer',
 	imports: [TestComponent],
 	template: ` <sneat-test [item]="myItem('test')" />`,

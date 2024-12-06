@@ -9,7 +9,6 @@ import { IForeignKey } from '@sneat/datatug-models';
 @Component({
 	selector: 'sneat-datatug-cell-popover',
 	templateUrl: './cell-popover.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, RouterModule, FormsModule],
 })
 export class CellPopoverComponent {

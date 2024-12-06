@@ -22,7 +22,6 @@ import { IGridColumn } from '@sneat/grid';
 @Component({
 	selector: 'sneat-datatug-entity',
 	templateUrl: './entity-page.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,

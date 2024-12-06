@@ -25,7 +25,6 @@ import { NewMemberFormComponent } from './new-member-form.component';
 	selector: 'sneat-new-member-page',
 	templateUrl: './new-member-page.component.html',
 	providers: [SpaceComponentBaseParams, ContactComponentBaseParams],
-	standalone: true,
 	imports: [
 		CommonModule,
 		IonicModule,

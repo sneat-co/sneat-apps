@@ -50,6 +50,7 @@ import { parseStoreRef } from '@sneat/core';
 	selector: 'sneat-datatug-sql-query',
 	templateUrl: './sql-query-editor.component.html',
 	styleUrls: ['./sql-query-editor.component.scss'],
+	standalone: false,
 })
 export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 	@Input() currentProject?: IProjectContext;

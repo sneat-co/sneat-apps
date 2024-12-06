@@ -45,8 +45,6 @@ export interface AddressRequiredFields {
 @Component({
 	selector: 'sneat-address-form',
 	templateUrl: './address-form.component.html',
-	// changeDetection: ChangeDetectionStrategy.OnPush,
-	standalone: true,
 	imports: [
 		ReactiveFormsModule,
 		FormsModule,

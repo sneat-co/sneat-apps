@@ -14,7 +14,10 @@ import { ISpaceContext } from '@sneat/team-models';
 import { InviteService } from '@sneat/team-services';
 import { Observable, throwError } from 'rxjs';
 
-@Pipe({ name: 'encodeSmsText' })
+@Pipe({
+	name: 'encodeSmsText',
+	standalone: false,
+})
 export class EncodeSmsText implements PipeTransform {
 	transform(text: string): string | undefined {
 		return encodeURIComponent(text);
@@ -24,6 +27,7 @@ export class EncodeSmsText implements PipeTransform {
 @Component({
 	selector: 'sneat-invite-modal',
 	templateUrl: 'invite-modal.component.html',
+	standalone: false,
 })
 export class InviteModalComponent {
 	@Input({ required: true }) space?: ISpaceContext;

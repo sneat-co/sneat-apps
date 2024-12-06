@@ -28,7 +28,6 @@ import { NewListDialogModule } from './new-list-dialog.module';
 @Component({
 	selector: 'sneat-lists-page',
 	templateUrl: './lists-page.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,

@@ -6,6 +6,7 @@ import { ISpaceContext } from '@sneat/team-models';
 @Component({
 	selector: 'sneat-retro-feedback-stage',
 	templateUrl: './retro-feedback-stage.component.html',
+	standalone: false,
 })
 export class RetroFeedbackStageComponent {
 	@Input({ required: true }) space: ISpaceContext = { id: '' };

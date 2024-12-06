@@ -10,7 +10,6 @@ import { SneatUserService } from '@sneat/auth-core';
 @Component({
 	selector: 'sneat-spaces-list',
 	templateUrl: 'spaces-list.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, RouterModule],
 })
 export class SpacesListComponent {

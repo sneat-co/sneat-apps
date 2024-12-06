@@ -29,7 +29,7 @@ import { ShippingPointsSelectorService } from '../shipping-points-selector/shipp
 @Component({
 	selector: 'sneat-order-container',
 	templateUrl: './order-container.component.html',
-	// changeDetection: ChangeDetectionStrategy.Default,
+	standalone: false,
 })
 export class OrderContainerComponent implements OnChanges {
 	@Input() container?: IOrderContainer;

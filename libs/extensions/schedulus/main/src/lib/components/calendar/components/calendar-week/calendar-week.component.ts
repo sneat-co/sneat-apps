@@ -21,6 +21,7 @@ import { Weekday } from '../../weekday';
 @Component({
 	selector: 'sneat-calendar-week',
 	templateUrl: './calendar-week.component.html',
+	standalone: false,
 })
 export class CalendarWeekComponent implements OnChanges {
 	@Input({ required: true }) space: ISpaceContext = { id: '' };

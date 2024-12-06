@@ -7,6 +7,7 @@ import { ILogistOrderContext } from '../../dto';
 @Component({
 	selector: 'sneat-logist-order-print-menu',
 	templateUrl: './order-print-menu.component.html',
+	standalone: false,
 })
 export class OrderPrintMenuComponent {
 	@Input({ required: true }) space?: ISpaceContext;

@@ -19,7 +19,6 @@ import { parseStoreRef } from '@sneat/core';
 @Component({
 	selector: 'sneat-datatug-new-project-form',
 	templateUrl: 'new-project-form.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		IonicModule,

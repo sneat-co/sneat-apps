@@ -14,11 +14,9 @@ import {
 @Component({
 	selector: 'sneat-debtus-home-page',
 	templateUrl: './debtus-home-page.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		IonicModule,
-		ContactsByTypeComponent,
 		SpaceCoreComponentsModule,
 		NewDebtFormComponent,
 		ContactusServicesModule,

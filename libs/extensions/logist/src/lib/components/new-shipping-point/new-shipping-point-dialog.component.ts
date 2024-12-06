@@ -6,6 +6,7 @@ import { ILogistOrderContext, IOrderContainer } from '../../dto';
 @Component({
 	selector: 'sneat-new-shipping-point',
 	templateUrl: './new-shipping-point-dialog.component.html',
+	standalone: false,
 })
 export class NewShippingPointDialogComponent {
 	@Input() order?: ILogistOrderContext;

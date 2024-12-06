@@ -40,13 +40,11 @@ type ListPagePerforming =
 @Component({
 	selector: 'sneat-list',
 	templateUrl: './list-page.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,
 		IonicModule,
 		CopyListItemsPageModule,
-		MovieCardComponent,
 		SharedWithModule,
 		ListusCoreServicesModule,
 		NgOptimizedImage,

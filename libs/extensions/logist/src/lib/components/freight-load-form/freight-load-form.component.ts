@@ -27,6 +27,7 @@ export class FreightLoadForm {
 @Component({
 	selector: 'sneat-freight-load-form',
 	templateUrl: './freight-load-form.component.html',
+	standalone: false,
 })
 export class FreightLoadFormComponent implements OnChanges {
 	label = 'TO BE SET';

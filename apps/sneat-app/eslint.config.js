@@ -1,6 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-require-imports
+ 
 const baseConfig = require('../../eslint.config.js');
-// eslint-disable-next-line @typescript-eslint/no-require-imports
+ 
 const { sneatLibConfig } = require('../../eslint.lib.config.js');
 
 module.exports = [
@@ -9,5 +9,11 @@ module.exports = [
 	{
 		files: ['**/*.cy.{ts,js,tsx,jsx}', 'cypress/**/*.{ts,js,tsx,jsx}'],
 		rules: {},
+	},
+	{
+		files: ['**/*.ts'],
+		rules: {
+			'@angular-eslint/prefer-standalone': 'off',
+		},
 	},
 ];

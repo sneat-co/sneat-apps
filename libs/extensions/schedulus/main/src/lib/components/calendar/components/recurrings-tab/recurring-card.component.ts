@@ -17,6 +17,7 @@ import { takeUntil } from 'rxjs';
 @Component({
 	selector: 'sneat-recurring-card',
 	templateUrl: './recurring-card.component.html',
+	standalone: false,
 })
 export class RecurringCardComponent implements OnDestroy {
 	private readonly destroyed = new EventEmitter<void>();

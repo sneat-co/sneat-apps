@@ -11,6 +11,7 @@ import { CommuneBasePageParams } from 'sneat-shared/services/params';
 	selector: 'sneat-member-budget',
 	templateUrl: './member-budget-page.component.html',
 	providers: [CommuneBasePageParams],
+	standalone: false,
 })
 export class MemberBudgetPageComponent extends MemberBasePage {
 	constructor(

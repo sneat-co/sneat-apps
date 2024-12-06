@@ -34,7 +34,6 @@ import { TimeSelectorComponent } from './time-selector.component';
 @Component({
 	selector: 'sneat-start-end-datetime-form',
 	templateUrl: 'start-end-datetime-form.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		IonicModule,

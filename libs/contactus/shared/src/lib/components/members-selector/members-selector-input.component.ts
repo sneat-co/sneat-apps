@@ -10,6 +10,7 @@ import { MembersSelectorService } from './members-selector.service';
 @Component({
 	selector: 'sneat-members-selector-input',
 	templateUrl: 'members-selector-input.component.html',
+	standalone: false,
 })
 export class MembersSelectorInputComponent {
 	protected contactusSpace?: IContactusSpaceDboAndID;

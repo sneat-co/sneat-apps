@@ -8,6 +8,7 @@ import { CommuneBasePageParams } from 'sneat-shared/services/params';
 	selector: 'sneat-real-estates',
 	templateUrl: './real-estates-page.component.html',
 	providers: [CommuneBasePageParams],
+	standalone: false,
 })
 export class RealEstatesPageComponent extends AssetsBasePage {
 	filter: string;

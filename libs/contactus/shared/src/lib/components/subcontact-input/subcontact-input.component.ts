@@ -14,6 +14,7 @@ import {
 @Component({
 	selector: 'sneat-subcontact-input',
 	templateUrl: './subcontact-input.component.html',
+	standalone: false,
 })
 export class SubcontactInputComponent {
 	@Input() canReset = false;

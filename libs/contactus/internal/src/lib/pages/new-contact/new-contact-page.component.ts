@@ -43,7 +43,6 @@ import {
 	selector: 'sneat-new-contact-page',
 	templateUrl: './new-contact-page.component.html',
 	providers: [SpaceComponentBaseParams],
-	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,

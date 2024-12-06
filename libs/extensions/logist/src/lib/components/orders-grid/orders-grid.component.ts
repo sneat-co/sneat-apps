@@ -28,6 +28,7 @@ interface OrderRow {
 @Component({
 	selector: 'sneat-logist-orders-grid',
 	templateUrl: './orders-grid.component.html',
+	standalone: false,
 })
 export class OrdersGridComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;

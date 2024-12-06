@@ -5,6 +5,7 @@ import { IContactBrief } from '@sneat/contactus-core';
 @Component({
 	selector: 'sneat-contacts-list',
 	templateUrl: './contacts-list.component.html',
+	standalone: false,
 })
 export class ContactsListComponent {
 	@Input() contacts?: IIdAndBrief<IContactBrief>[] = [];

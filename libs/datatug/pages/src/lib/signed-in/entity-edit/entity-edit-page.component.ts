@@ -18,7 +18,6 @@ import {
 @Component({
 	selector: 'sneat-datatug-entity-edit',
 	templateUrl: './entity-edit-page.component.html',
-	standalone: true,
 	imports: [CommonModule, FormsModule, IonicModule, SneatErrorCardComponent],
 })
 export class EntityEditPageComponent implements OnDestroy {

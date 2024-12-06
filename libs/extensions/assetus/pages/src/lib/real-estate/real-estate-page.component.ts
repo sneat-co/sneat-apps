@@ -10,6 +10,7 @@ import { IContact2Asset } from 'sneat-shared/models/dto/dto-contact';
 	selector: 'sneat-real-estate',
 	templateUrl: './real-estate-page.component.html',
 	providers: [CommuneBasePageParams],
+	standalone: false,
 })
 export class RealEstatePageComponent extends AssetBasePage {
 	constructor(params: CommuneBasePageParams, assetService: IAssetService) {

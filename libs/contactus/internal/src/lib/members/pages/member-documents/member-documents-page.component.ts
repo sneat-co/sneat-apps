@@ -11,6 +11,7 @@ import { NgModulePreloaderService } from 'sneat-shared/services/ng-module-preloa
 	selector: 'sneat-member-documents',
 	templateUrl: './member-documents-page.component.html',
 	providers: [CommuneBasePageParams],
+	standalone: false,
 })
 export class MemberDocumentsPageComponent extends MemberBasePage {
 	constructor(

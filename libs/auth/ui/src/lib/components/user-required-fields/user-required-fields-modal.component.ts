@@ -24,7 +24,6 @@ import { takeUntil } from 'rxjs';
 @Component({
 	selector: 'sneat-user-required-fields-form',
 	templateUrl: './user-required-fields-modal.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		IonicModule,

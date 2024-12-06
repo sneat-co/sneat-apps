@@ -29,7 +29,6 @@ import { ContactBasePage } from '../contact-base-page';
 @Component({
 	selector: 'sneat-contact-page',
 	templateUrl: './contact-page.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		FormsModule,
@@ -37,9 +36,7 @@ import { ContactBasePage } from '../contact-base-page';
 		IonicModule,
 		SneatPipesModule,
 		ContactsListModule,
-		AddressFormComponent,
 		ContactRolesInputModule,
-		ContactContactsComponent,
 		ContactDetailsComponent,
 		ContactusServicesModule,
 		ContactComponentBaseParamsModule,

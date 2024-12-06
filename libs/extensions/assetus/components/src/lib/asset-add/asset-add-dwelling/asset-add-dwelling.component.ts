@@ -17,6 +17,7 @@ import { AddAssetBaseComponent } from '../add-asset-base-component';
 	selector: 'sneat-asset-add-dwelling',
 	templateUrl: './asset-add-dwelling.component.html',
 	providers: [SpaceComponentBaseParams],
+	standalone: false,
 })
 export class AssetAddDwellingComponent
 	extends AddAssetBaseComponent

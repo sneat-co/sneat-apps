@@ -15,6 +15,7 @@ import { DbServerService } from '@sneat/datatug-services-unsorted';
 @Component({
 	selector: 'sneat-datatug-dbserver',
 	templateUrl: './dbserver-page.component.html',
+	standalone: false,
 })
 export class DbserverPageComponent implements OnDestroy {
 	tab: 'known' | 'unknown' = 'known';

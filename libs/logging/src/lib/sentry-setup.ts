@@ -1,5 +1,10 @@
-import { Provider, ErrorHandler, APP_INITIALIZER } from '@angular/core';
-import { createErrorHandler, TraceService, init } from '@sentry/angular';
+import {
+	Provider,
+	inject,
+	provideAppInitializer,
+	ErrorHandler,
+} from '@angular/core';
+import { TraceService, init, createErrorHandler } from '@sentry/angular';
 import { Router } from '@angular/router';
 
 export function initSentry(): void {
@@ -9,24 +14,21 @@ export function initSentry(): void {
 	});
 }
 
-export const sneatSentryProviders: Provider[] = [
+export const sentryAppInitializerProviders: readonly Provider[] = [
+	{
+		provide: TraceService,
+		deps: [Router],
+	},
 	{
 		provide: ErrorHandler,
 		useValue: createErrorHandler({
 			showDialog: true,
 		}),
 	},
-	{
-		provide: TraceService,
-		deps: [Router],
-	},
-	{
-		provide: APP_INITIALIZER,
-		useFactory: () => () => {
-			// empty as in documentation
-			// https://docs.sentry.io/platforms/javascript/guides/angular/#register-traceservice
-		},
-		deps: [TraceService],
-		multi: true,
-	},
 ];
+
+export const provideSentryAppInitializer = () => {
+	return provideAppInitializer(() => {
+		inject(TraceService);
+	});
+};

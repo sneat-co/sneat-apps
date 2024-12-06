@@ -18,7 +18,6 @@ import { Subject, takeUntil } from 'rxjs';
 @Component({
 	selector: 'sneat-relate-contact',
 	templateUrl: './related-contact.component.html',
-	standalone: true,
 	imports: [JsonPipe, IonicModule, SneatPipesModule],
 })
 export class RelatedContactComponent implements OnChanges, OnDestroy {

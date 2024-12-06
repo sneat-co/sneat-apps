@@ -7,6 +7,7 @@ import { first, Observable } from 'rxjs';
 @Component({
 	selector: 'sneat-members-selector-list',
 	templateUrl: 'members-selector-list.component.html',
+	standalone: false,
 })
 export class MembersSelectorListComponent {
 	// Intentionally removed @Input({ required: true }) space: ISpaceContext = { id: '' };

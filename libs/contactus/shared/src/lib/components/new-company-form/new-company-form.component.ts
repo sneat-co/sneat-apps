@@ -26,6 +26,7 @@ import { ISpaceContext } from '@sneat/team-models';
 @Component({
 	selector: 'sneat-new-company-form',
 	templateUrl: './new-company-form.component.html',
+	standalone: false,
 })
 export class NewCompanyFormComponent implements OnChanges {
 	@Input() contactRoles?: ISelectItem[];

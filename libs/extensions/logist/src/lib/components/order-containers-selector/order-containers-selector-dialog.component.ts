@@ -6,6 +6,7 @@ import { IContainer } from './condainer-interface';
 @Component({
 	selector: 'sneat-order-containers-selector-dialog',
 	templateUrl: './order-containers-selector-dialog.component.html',
+	standalone: false,
 })
 export class OrderContainersSelectorDialogComponent {
 	@Input() title = 'Select containers';

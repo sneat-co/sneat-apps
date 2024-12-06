@@ -44,6 +44,7 @@ function debounce<T>(field: string, o: Subject<T>): Observable<T> {
 @Component({
 	selector: 'sneat-container-endpoint',
 	templateUrl: './container-endpoint.component.html',
+	standalone: false,
 })
 export class ContainerEndpointComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;

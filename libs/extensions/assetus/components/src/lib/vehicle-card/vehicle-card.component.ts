@@ -28,7 +28,6 @@ import { VehicleEngineComponent } from '../vehicle-engine/vehicle-engine.compone
 @Component({
 	selector: 'sneat-vehicle-card',
 	templateUrl: './vehicle-card.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		IonicModule,

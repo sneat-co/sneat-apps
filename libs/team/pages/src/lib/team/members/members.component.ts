@@ -22,7 +22,6 @@ import { SpaceNavService, SpaceService } from '@sneat/team-services';
 @Component({
 	selector: 'sneat-members',
 	templateUrl: './members.component.html',
-	standalone: true,
 	imports: [CommonModule, FormsModule, IonicModule],
 }) // TODO: use or delete unused MembersComponent
 export class MembersComponent implements OnChanges {

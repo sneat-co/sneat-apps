@@ -12,6 +12,7 @@ import { TasksByID } from './shipping-points-selector.component';
 @Component({
 	selector: 'sneat-shipping-pints-selector-dialog',
 	templateUrl: './shipping-points-selector-dialog.component.html',
+	standalone: false,
 })
 export class ShippingPointsSelectorDialogComponent {
 	@Input() title = 'Select shipping points for container';

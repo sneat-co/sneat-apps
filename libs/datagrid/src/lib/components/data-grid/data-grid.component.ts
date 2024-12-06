@@ -85,7 +85,6 @@ Tabulator.registerModule([
 		<div id="tabulator" #tabulatorDiv></div>
 		<p class="ion-margin-start">Rows: {{ data?.length }}</p>
 	`,
-	standalone: true,
 	imports: [
 		CommonModule,
 		IonicModule,

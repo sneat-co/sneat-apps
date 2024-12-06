@@ -23,6 +23,7 @@ import {
 @Component({
 	selector: 'sneat-order-agents',
 	templateUrl: './order-agents.component.html',
+	standalone: false,
 })
 export class OrderAgentsComponent implements OnChanges {
 	@Input() public readonly = false;
@@ -82,6 +83,7 @@ export class OrderAgentsComponent implements OnChanges {
 			<ion-label>Receive freight agent</ion-label>
 		</ion-item>
 	`,
+	standalone: false,
 })
 export class AgentRoleMenuComponent {
 	@Input({ required: true }) space?: ISpaceContext;

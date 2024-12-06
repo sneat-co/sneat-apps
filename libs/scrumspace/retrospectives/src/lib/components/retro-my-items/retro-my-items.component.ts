@@ -12,6 +12,7 @@ import {
 @Component({
 	selector: 'sneat-retro-my-items',
 	templateUrl: './retro-my-items.component.html',
+	standalone: false,
 })
 export class RetroMyItemsComponent {
 	@ViewChild(IonInput, { static: true }) titleInput?: IonInput; // TODO: strong typing : IonInput;

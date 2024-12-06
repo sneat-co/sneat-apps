@@ -13,7 +13,6 @@ import { HappeningSlotModalService } from '../happening-slot-form/happening-slot
 @Component({
 	selector: 'sneat-happening-slot',
 	templateUrl: 'happening-slot.component.html',
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
 		CommonModule,

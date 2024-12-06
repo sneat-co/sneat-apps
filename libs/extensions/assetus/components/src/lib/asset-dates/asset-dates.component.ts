@@ -13,7 +13,6 @@ interface AssetDate {
 @Component({
 	selector: 'sneat-asset-dates',
 	templateUrl: './asset-dates.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, FormsModule],
 })
 export class AssetDatesComponent {

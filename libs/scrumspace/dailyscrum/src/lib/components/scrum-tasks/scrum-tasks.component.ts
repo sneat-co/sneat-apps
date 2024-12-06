@@ -28,6 +28,7 @@ import { ScrumTaskComponent } from '../scrum-task/scrum-task.component';
 	templateUrl: './scrum-tasks.component.html',
 	styleUrls: ['./scrum-tasks.component.scss'],
 	animations: listAddRemoveAnimation,
+	standalone: false,
 })
 export class ScrumTasksComponent implements OnDestroy, OnChanges {
 	@Input() space?: IRecord<ISpaceDbo>;

@@ -81,7 +81,6 @@ export type IPersonFormWizardFields = {
 	selector: 'sneat-person-form-wizard',
 	templateUrl: './person-wizard.component.html',
 	animations: [formNexInAnimation],
-	standalone: true,
 	imports: [
 		CommonModule,
 		IonicModule,

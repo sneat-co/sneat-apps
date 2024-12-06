@@ -23,6 +23,7 @@ import { LogistOrderService, LogistSpaceService } from '../../services';
 @Component({
 	selector: 'sneat-new-logist-order-page',
 	templateUrl: 'new-logist-order-page.component.html',
+	standalone: false,
 })
 export class NewLogistOrderPageComponent extends SpaceBaseComponent {
 	public order: ILogistOrderContext = {

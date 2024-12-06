@@ -11,6 +11,7 @@ import { SpaceNavService } from '@sneat/team-services';
 	selector: 'sneat-contacts-list-item',
 	templateUrl: './contacts-list-item.component.html',
 	styleUrls: ['./contacts-list-item.component.scss'],
+	standalone: false,
 })
 export class ContactsListItemComponent {
 	@Input() space?: ISpaceContext;

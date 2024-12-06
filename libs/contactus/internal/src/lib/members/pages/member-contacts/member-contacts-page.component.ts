@@ -11,6 +11,7 @@ import { NgModulePreloaderService } from 'sneat-shared/services/ng-module-preloa
 	selector: 'sneat-member-contacts',
 	templateUrl: './member-contacts-page.component.html',
 	providers: [CommuneBasePageParams],
+	standalone: false,
 })
 export class MemberContactsPageComponent extends MemberBasePage {
 	public override segment: 'friends' | 'other' = 'friends';

@@ -18,14 +18,11 @@ import { ForWorkComponent } from './for-work.component';
 	// as it requires few other components specific just to this page
 	selector: 'sneat-sneat-app-home-page',
 	templateUrl: './sneat-app-home-page.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		IonicModule,
 		RouterModule,
-		SpacesListComponent,
 		UserCountryComponent,
-		ForSpaceTypeCardComponent,
 		ForFamiliesComponent,
 		ForEducatorsComponent,
 		ForWorkComponent,

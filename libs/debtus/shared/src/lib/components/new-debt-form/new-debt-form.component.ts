@@ -19,7 +19,6 @@ import {
 @Component({
 	selector: 'sneat-debtus-new-debt-form',
 	templateUrl: './new-debt-form.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		IonicModule,

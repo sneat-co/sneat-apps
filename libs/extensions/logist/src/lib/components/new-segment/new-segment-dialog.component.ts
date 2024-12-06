@@ -7,6 +7,7 @@ import { OrderNavService } from '../../services';
 @Component({
 	selector: 'sneat-new-segment-dialog',
 	templateUrl: 'new-segment-dialog.component.html',
+	standalone: false,
 })
 export class NewSegmentDialogComponent {
 	@Input() order?: ILogistOrderContext;

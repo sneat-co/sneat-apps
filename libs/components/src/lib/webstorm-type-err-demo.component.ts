@@ -15,7 +15,6 @@ function items<B>(o: Record<string, B>): readonly IIdAndBriefDemo<B>[] {
 }
 
 @Component({
-	standalone: true,
 	selector: 'sneat-webstorm-type-err-demo',
 	template: ` <ng-container *ngFor="let item of items; trackBy: idFunc">
 		{{ item.brief.title }}

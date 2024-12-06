@@ -14,7 +14,10 @@ export function personName(name?: IPersonNames): string | undefined {
 	);
 }
 
-@Pipe({ name: 'personTitle' })
+@Pipe({
+	name: 'personTitle',
+	standalone: false,
+})
 export class PersonTitle implements PipeTransform {
 	transform(
 		p?: IIdAndOptionalBriefAndOptionalDbo<IPersonBrief, IPerson>,
@@ -32,7 +35,10 @@ export class PersonTitle implements PipeTransform {
 	}
 }
 
-@Pipe({ name: 'personNames' })
+@Pipe({
+	name: 'personNames',
+	standalone: false,
+})
 export class PersonNamesPipe implements PipeTransform {
 	transform(names?: IPersonNames): string | undefined {
 		if (!names) {

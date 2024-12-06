@@ -6,7 +6,6 @@ import { ContactType, IContact2Asset } from '@sneat/contactus-core';
 @Component({
 	selector: 'sneat-asset-contacts-group',
 	templateUrl: './asset-contacts-group.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule],
 })
 export class AssetContactsGroupComponent {

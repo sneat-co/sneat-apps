@@ -11,6 +11,7 @@ import { IBoardContext, ITabsWidgetSettings } from '@sneat/datatug-models';
 	selector: 'sneat-datatug-tabs-widget',
 	templateUrl: './tabs-widget.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	standalone: false,
 })
 export class TabsWidgetComponent implements OnChanges {
 	public selectedTab?: string;

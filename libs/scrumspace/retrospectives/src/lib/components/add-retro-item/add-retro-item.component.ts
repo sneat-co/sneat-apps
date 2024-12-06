@@ -12,6 +12,7 @@ import { Subject } from 'rxjs';
 @Component({
 	selector: 'sneat-add-retro-item',
 	templateUrl: './add-retro-item.component.html',
+	standalone: false,
 })
 export class AddRetroItemComponent implements OnDestroy {
 	// @Input() retroItemType: RetroItemType;

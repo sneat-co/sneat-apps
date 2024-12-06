@@ -24,6 +24,7 @@ import { SegmentEndpointType } from './segment-counterparty.component';
 @Component({
 	selector: 'sneat-new-segment-form',
 	templateUrl: './new-segment-form.component.html',
+	standalone: false,
 })
 export class NewSegmentFormComponent implements OnInit, OnChanges {
 	@Input() order?: ILogistOrderContext;

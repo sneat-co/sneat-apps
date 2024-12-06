@@ -57,7 +57,6 @@ export class SneatAuthWithTelegramService {
 let authWithTelegramService: SneatAuthWithTelegramService;
 
 @Component({
-	standalone: true,
 	imports: [CommonModule, IonicModule],
 	providers: [SneatAuthWithTelegramService],
 	selector: 'sneat-login-with-telegram',

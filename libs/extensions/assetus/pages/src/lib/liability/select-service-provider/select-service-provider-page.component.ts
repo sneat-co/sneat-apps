@@ -10,7 +10,6 @@ import { SpaceComponentBaseParams } from '@sneat/team-components';
 	selector: 'sneat-select-service-provider',
 	templateUrl: './select-service-provider-page.component.html',
 	providers: [SpaceComponentBaseParams],
-	standalone: true,
 	imports: [CommonModule, FormsModule, IonicModule],
 })
 export class SelectServiceProviderPageComponent extends AssetBasePage {

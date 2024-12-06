@@ -46,6 +46,7 @@ import { CalendarStateService } from './calendar-state.service';
 	selector: 'sneat-calendar',
 	templateUrl: './calendar.component.html',
 	styleUrls: ['./calendar.component.scss'],
+	standalone: false,
 })
 export class CalendarComponent
 	implements OnInit, AfterViewInit, OnChanges, OnDestroy

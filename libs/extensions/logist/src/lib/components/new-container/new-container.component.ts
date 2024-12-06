@@ -15,6 +15,7 @@ import { TasksByID } from '../shipping-points-selector';
 @Component({
 	selector: 'sneat-new-container',
 	templateUrl: './new-container.component.html',
+	standalone: false,
 })
 export class NewContainerComponent {
 	@Input() order?: ILogistOrderContext;

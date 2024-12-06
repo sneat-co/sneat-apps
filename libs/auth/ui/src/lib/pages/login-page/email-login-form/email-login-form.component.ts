@@ -39,7 +39,6 @@ import {
 @Component({
 	selector: 'sneat-email-login-form',
 	templateUrl: 'email-login-form.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, FormsModule],
 })
 export class EmailLoginFormComponent {

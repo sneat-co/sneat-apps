@@ -11,7 +11,6 @@ import { LoginWithTelegramComponent } from '../../pages/login-page/login-with-te
 @Component({
 	selector: 'sneat-user-messaging-apps',
 	templateUrl: './user-messaging-apps.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule, LoginWithTelegramComponent, FormsModule],
 })
 export class UserMessagingAppsComponent {

@@ -20,7 +20,6 @@ import { AssetPossessionCardComponent } from '../asset-possesion-card/asset-poss
 @Component({
 	selector: 'sneat-edit-dwelling-card',
 	templateUrl: './edit-dwelling-card.component.html',
-	standalone: true,
 	imports: [
 		CommonModule,
 		IonicModule,

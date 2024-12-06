@@ -14,7 +14,6 @@ import { personName, SneatPipesModule } from '../pipes';
 @Component({
 	selector: 'sneat-auth-menu-item',
 	templateUrl: './auth-menu-item.component.html',
-	standalone: true,
 	imports: [IonicModule, CommonModule, RouterModule, SneatPipesModule],
 })
 export class AuthMenuItemComponent {
