@@ -2,4 +2,4 @@
 
 git pull
 pnpm install
-pnx build sneat-app
+pnpm run nx build sneat-app
