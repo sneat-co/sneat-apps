@@ -15,8 +15,8 @@
 			/>
 			{{ space.brief?.title || (space.type | titlecase) || space.id }}
 			<ion-text color="medium" *ngIf="topMenuService.isTopMenuHidden | async"
-				>&#64; sneat.app</ion-text
-			>
+				>&#64; sneat.app
+			</ion-text>
 		</ion-title>
 		<ion-title *ngIf="!space"> Space: loading...</ion-title>
 		<!--		<ion-buttons slot="end">-->
@@ -106,6 +106,7 @@
 		</ion-row>
 		<ion-row>
 			<ion-col *ngIf="space.type === 'family' || space.type === 'team'">
+				<sneat-members [contactusSpace]="contactusSpace" />
 				<ion-card>
 					<ion-item
 						routerLink="./members"

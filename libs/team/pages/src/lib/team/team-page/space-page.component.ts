@@ -3,7 +3,6 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { SneatCardListComponent } from '@sneat/components';
 import {
 	IContactusSpaceDbo,
 	IContactusSpaceDboAndID,
@@ -15,10 +14,7 @@ import {
 } from '@sneat/contactus-services';
 import { MembersListComponent } from '@sneat/contactus-shared';
 import { IIdAndOptionalDbo, TopMenuService } from '@sneat/core';
-import {
-	InviteLinksComponent,
-	SpaceComponentBaseParams,
-} from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { zipMapBriefsWithIDs } from '@sneat/team-models';
 import { SpaceServiceModule } from '@sneat/team-services';
 import { Subscription } from 'rxjs';
@@ -38,6 +34,7 @@ import { SpacePageBaseComponent } from './SpacePageBaseComponent';
 		MembersListComponent,
 		ContactusServicesModule,
 		SpaceServiceModule,
+		MembersComponent,
 	],
 })
 export class SpacePageComponent extends SpacePageBaseComponent {
