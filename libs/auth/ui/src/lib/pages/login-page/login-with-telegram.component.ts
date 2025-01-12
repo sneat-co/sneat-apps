@@ -49,7 +49,7 @@ export class SneatAuthWithTelegramService {
 							),
 						);
 				},
-				error: (err) => console.error('signInWithTelegram() error:', err),
+				error: this.errorLogger.logErrorHandler('signInWithTelegram() error:'),
 			});
 	}
 }
