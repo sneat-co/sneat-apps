@@ -49,6 +49,13 @@ export class UserMessagingAppsComponent {
 	protected disconnecting?: 'telegram' | 'viber' | 'whatsapp';
 
 	protected disconnect(provider: 'telegram'): void {
+		if (
+			!confirm(
+				'Are you sure you want to disconnect Telegram login from your account?',
+			)
+		) {
+			return;
+		}
 		this.disconnecting = provider;
 		this.sneatApiService
 			.delete('auth/disconnect?provider=' + provider)

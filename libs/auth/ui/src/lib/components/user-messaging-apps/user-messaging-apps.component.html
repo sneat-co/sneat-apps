@@ -43,7 +43,7 @@
 		}
 		@case ("messaging-apps") {
 			<ion-item>
-				<ion-icon slot="start" name="paper-plane"></ion-icon>
+				<ion-icon slot="start" name="paper-plane" color="primary"></ion-icon>
 				@if (!userRecord) {
 					<ion-label>
 						<h3>Telegram</h3>
@@ -52,7 +52,9 @@
 				} @else if (hasAccount("telegram")) {
 					<ion-label>
 						<h3 style="font-weight: bold">Telegram</h3>
-						<p>Connected! (UID={{ getAccountID("telegram") }})</p>
+						<ion-text color="success" [title]="getAccountID('telegram')"
+							>Connected!</ion-text
+						>
 					</ion-label>
 					<ion-buttons slot="end">
 						<ion-button
