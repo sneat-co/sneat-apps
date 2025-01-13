@@ -25,43 +25,28 @@
 			/>
 		}
 	</ng-template>
-	@if ((slots?.length ?? 0) < 2) {
-		<ion-item tappable (click)="goNewHappening({ type: 'recurring' })">
-			<ion-icon name="duplicate-outline" color="medium" slot="start" />
-			<ion-label color="medium">Add recurring</ion-label>
-		</ion-item>
-		<ion-item
-			lines="none"
-			tappable
-			(click)="goNewHappening({ type: 'single' })"
-		>
-			<ion-icon name="add-circle-outline" color="medium" slot="start" />
-			<ion-label color="medium">Add one-timer</ion-label>
-		</ion-item>
-	} @else if (slots?.length === 2) {
-		<ion-grid class="ion-grid-layout">
-			<ion-row>
-				<ion-col>
-					<ion-item
-						lines="none"
-						tappable
-						(click)="goNewHappening({ type: 'recurring' })"
-					>
-						<ion-icon name="duplicate-outline" color="medium" slot="start" />
-						<ion-label color="medium">Add recurring</ion-label>
-					</ion-item>
-				</ion-col>
-				<ion-col>
-					<ion-item
-						lines="none"
-						tappable
-						(click)="goNewHappening({ type: 'single' })"
-					>
-						<ion-icon name="add-circle-outline" color="medium" slot="start" />
-						<ion-label color="medium">Add one-timer</ion-label>
-					</ion-item>
-				</ion-col>
-			</ion-row>
-		</ion-grid>
-	}
+	<ion-grid class="ion-grid-layout">
+		<ion-row>
+			<ion-col size-sm="6" size="12">
+				<ion-item
+					lines="none"
+					tappable
+					(click)="goNewHappening({ type: 'recurring' })"
+				>
+					<ion-icon name="duplicate-outline" color="medium" slot="start" />
+					<ion-label color="medium">Add recurring</ion-label>
+				</ion-item>
+			</ion-col>
+			<ion-col size-sm="6" size="12">
+				<ion-item
+					lines="none"
+					tappable
+					(click)="goNewHappening({ type: 'single' })"
+				>
+					<ion-icon name="add-circle-outline" color="medium" slot="start" />
+					<ion-label color="medium">Add one-timer</ion-label>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
 }

@@ -3,26 +3,16 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import {
-	IContactusSpaceDbo,
-	IContactusSpaceDboAndID,
-} from '@sneat/contactus-core';
+import { IContactusSpaceDbo } from '@sneat/contactus-core';
 import {
 	ContactusServicesModule,
 	ContactusSpaceContextService,
 	ContactusSpaceService,
 } from '@sneat/contactus-services';
-import {
-	FamilyMembersComponent,
-	MembersListComponent,
-} from '@sneat/contactus-shared';
+import { FamilyMembersComponent } from '@sneat/contactus-shared';
 import { IIdAndOptionalDbo, TopMenuService } from '@sneat/core';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
-import { zipMapBriefsWithIDs } from '@sneat/team-models';
 import { SpaceServiceModule } from '@sneat/team-services';
-import { Subscription } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { MembersComponent } from '../members/members.component';
 import { SpacePageBaseComponent } from './SpacePageBaseComponent';
 
 @Component({
@@ -34,7 +24,6 @@ import { SpacePageBaseComponent } from './SpacePageBaseComponent';
 		FormsModule,
 		IonicModule,
 		RouterModule,
-		MembersListComponent,
 		ContactusServicesModule,
 		SpaceServiceModule,
 		FamilyMembersComponent,
@@ -42,8 +31,6 @@ import { SpacePageBaseComponent } from './SpacePageBaseComponent';
 })
 export class SpacePageComponent extends SpacePageBaseComponent {
 	protected contactusSpace?: IIdAndOptionalDbo<IContactusSpaceDbo>;
-
-	private readonly contactusSpaceContextService: ContactusSpaceContextService;
 
 	constructor(
 		route: ActivatedRoute,
@@ -53,50 +40,24 @@ export class SpacePageComponent extends SpacePageBaseComponent {
 		contactusTeamService: ContactusSpaceService,
 	) {
 		super('SpacePageComponent', route, params, topMenuService, cd);
-		this.contactusSpaceContextService = new ContactusSpaceContextService(
+		new ContactusSpaceContextService(
 			params.errorLogger,
 			this.destroyed$,
 			this.spaceIDChanged$,
 			contactusTeamService,
 			this.userService,
+		).contactusSpaceContext$.subscribe(
+			(contactusSpace) => (this.contactusSpace = contactusSpace),
 		);
-		this.userService.userChanged.pipe(this.takeUntilNeeded()).subscribe({
-			next: (uid) => {
-				if (uid) {
-					this.subscribeForContactusSpaceChanges();
-				} else {
-					this.contactusSpaceSub?.unsubscribe();
-				}
-			},
-		});
-	}
-
-	private contactusSpaceSub?: Subscription;
-
-	private subscribeForContactusSpaceChanges(): void {
-		this.contactusSpaceSub?.unsubscribe();
-		this.contactusSpaceSub =
-			this.contactusSpaceContextService.contactusSpaceContext$
-				.pipe(this.takeUntilNeeded(), takeUntil(this.userService.userChanged))
-				.subscribe({
-					next: (contactusTeam) => {
-						this.contactusSpace = contactusTeam;
-						this.onContactusSpaceChanged(contactusTeam);
-					},
-				});
-	}
-
-	protected onContactusSpaceChanged(contactusTeam?: IContactusSpaceDboAndID) {
-		console.log('SpacePageComponent.onContactusSpaceChanged()', contactusTeam);
-		// super.onContactusTeamChanged(contactusTeam);
-		this.members = zipMapBriefsWithIDs(contactusTeam?.dbo?.contacts)
-			.filter((c) => c.brief?.roles?.includes('member'))
-			.map((c) => ({ ...c, space: this.space }));
-		console.log(
-			'SpacePageComponent.onContactusSpaceChanged() => this.members',
-			this.members,
-		);
-		this.cd.markForCheck();
+		// this.userService.userChanged.pipe(this.takeUntilNeeded()).subscribe({
+		// 	next: (uid) => {
+		// 		if (uid) {
+		// 			this.subscribeForContactusSpaceChanges();
+		// 		} else {
+		// 			this.contactusSpaceSub?.unsubscribe();
+		// 		}
+		// 	},
+		// });
 	}
 
 	protected goMembers(event: Event): void {

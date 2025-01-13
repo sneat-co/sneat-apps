@@ -23,14 +23,21 @@ import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-family-members',
-	template:
-		'<sneat-members-by-role [space]="space" [memberGroups]="predefinedMemberGroups" (addMember)="addMember.emit($event)"/>',
+	template: `
+		<sneat-members-by-role
+			[space]="space"
+			[memberGroups]="predefinedMemberGroups"
+			(addMember)="addMember.emit($event)"
+		/>
+	`,
 	imports: [MembersByRoleComponent],
 })
 export class FamilyMembersComponent implements OnChanges {
 	@Input({ required: true }) public space?: ISpaceContext;
+
 	@Input({ required: true })
 	public contactusSpaceDbo?: IContactusSpaceDbo | null;
+
 	@Output() public readonly addMember = new EventEmitter<MembersGroup>();
 
 	public members?: readonly IIdAndBriefAndOptionalDto<

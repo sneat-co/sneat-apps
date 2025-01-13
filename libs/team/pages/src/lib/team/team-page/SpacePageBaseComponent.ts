@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IIdAndBrief, TopMenuService } from '@sneat/core';
-import { IContactBrief } from '@sneat/contactus-core';
+import { TopMenuService } from '@sneat/core';
 import {
 	SpaceBaseComponent,
 	SpaceComponentBaseParams,
@@ -11,8 +10,6 @@ export abstract class SpacePageBaseComponent
 	extends SpaceBaseComponent
 	implements OnDestroy
 {
-	protected members?: readonly IIdAndBrief<IContactBrief>[]; // TODO: Should be in dedicated component
-
 	protected constructor(
 		className: string,
 		route: ActivatedRoute,

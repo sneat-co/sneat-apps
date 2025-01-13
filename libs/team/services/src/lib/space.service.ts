@@ -218,17 +218,20 @@ export class SpaceService {
 	}
 
 	private readonly subscribeForUserSpaceChanges = (
-		userTeamInfo: IIdAndBrief<IUserSpaceBrief>,
+		userSpaceBrief: IIdAndBrief<IUserSpaceBrief>,
 	): void => {
-		console.log('subscribeForFirestoreTeamChanges', userTeamInfo);
-		let subj = this.spaces$[userTeamInfo.id];
+		console.log(
+			'subscribeForUserSpaceChanges() => userSpaceBrief:',
+			userSpaceBrief,
+		);
+		let subj = this.spaces$[userSpaceBrief.id];
 		if (subj) {
 			let team = subj.value;
 			if (!team.type) {
 				team = {
 					...team,
-					type: userTeamInfo.brief?.type,
-					brief: spaceBriefFromUserSpaceInfo(userTeamInfo.brief),
+					type: userSpaceBrief.brief?.type,
+					brief: spaceBriefFromUserSpaceInfo(userSpaceBrief.brief),
 				};
 				subj.next(team);
 			}
@@ -236,11 +239,11 @@ export class SpaceService {
 		}
 
 		const space: ISpaceContext = {
-			id: userTeamInfo.id,
-			type: userTeamInfo.brief.type,
-			brief: spaceBriefFromUserSpaceInfo(userTeamInfo.brief),
+			id: userSpaceBrief.id,
+			type: userSpaceBrief.brief.type,
+			brief: spaceBriefFromUserSpaceInfo(userSpaceBrief.brief),
 		};
-		this.spaces$[userTeamInfo.id] = subj = new BehaviorSubject<ISpaceContext>(
+		this.spaces$[userSpaceBrief.id] = subj = new BehaviorSubject<ISpaceContext>(
 			space,
 		);
 		this.subscribeForSpaceChanges(subj);

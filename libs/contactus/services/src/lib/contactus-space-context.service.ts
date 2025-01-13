@@ -58,7 +58,7 @@ export class ContactusSpaceContextService {
 		if (!spaceID) {
 			return;
 		}
-		// console.log(`subscribeForContactusSpaceChanges(teamID=${teamID})`);
+		console.log(`subscribeForContactusSpaceChanges(spaceID=${spaceID})`);
 		this.spaceModuleRecordSub = this.contactusSpaceService
 			.watchSpaceModuleRecord(spaceID)
 			.pipe(takeUntil(this.spaceID$), takeUntil(this.destroyed$))
@@ -71,8 +71,9 @@ export class ContactusSpaceContextService {
 	};
 
 	private readonly onContactusSpaceChanged = (
-		contactusTeam: IContactusSpaceDboAndID,
+		contactusSpace: IContactusSpaceDboAndID,
 	): void => {
-		this.contactusSpaceContext.next(contactusTeam);
+		console.log('onContactusSpaceChanged()', contactusSpace);
+		this.contactusSpaceContext.next(contactusSpace);
 	};
 }
