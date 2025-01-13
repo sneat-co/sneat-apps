@@ -12,7 +12,10 @@ import {
 	ContactusSpaceContextService,
 	ContactusSpaceService,
 } from '@sneat/contactus-services';
-import { MembersListComponent } from '@sneat/contactus-shared';
+import {
+	FamilyMembersComponent,
+	MembersListComponent,
+} from '@sneat/contactus-shared';
 import { IIdAndOptionalDbo, TopMenuService } from '@sneat/core';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { zipMapBriefsWithIDs } from '@sneat/team-models';
@@ -34,7 +37,7 @@ import { SpacePageBaseComponent } from './SpacePageBaseComponent';
 		MembersListComponent,
 		ContactusServicesModule,
 		SpaceServiceModule,
-		MembersComponent,
+		FamilyMembersComponent,
 	],
 })
 export class SpacePageComponent extends SpacePageBaseComponent {

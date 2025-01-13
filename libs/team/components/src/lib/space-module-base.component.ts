@@ -31,7 +31,7 @@ export abstract class SpaceModuleBaseComponent<
 				next: (o) => {
 					console.log('spaceModuleDto loaded', o.dbo);
 					this.spaceModuleDbo$.next(o.dbo);
-					this.onSpaceModuleDtoChanged(o.dbo || null);
+					this.onSpaceModuleDboChanged(o.dbo || null);
 				},
 				error: (err) => {
 					console.error('Failed to load team module record', err);
@@ -39,7 +39,7 @@ export abstract class SpaceModuleBaseComponent<
 			});
 	}
 
-	protected onSpaceModuleDtoChanged(dto: Dbo | null) {
-		console.log(`${this.className}.onSpaceModuleDtoChanged()`, dto);
+	protected onSpaceModuleDboChanged(dbo: Dbo | null) {
+		console.log(`${this.className}.onSpaceModuleDtoChanged()`, dbo);
 	}
 }

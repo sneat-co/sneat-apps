@@ -46,33 +46,13 @@
 	<!--	</ion-list>-->
 
 	@if (segment === "all" && spaceType === "family") {
-		@for (group of predefinedMemberGroups; track group.id) {
-			<ion-card *ngIf="group.addLabel || group.members?.length">
-				<ion-item-divider color="light">
-					<ion-label>{{ group.emoji }}&nbsp;&nbsp;{{ group.plural }}</ion-label>
-					<ion-buttons slot="end">
-						<ion-button
-							*ngIf="group.addLabel"
-							[title]="group.addLabel"
-							(click)="goNewMemberPage(group)"
-						>
-							<ion-icon name="add" slot="start" />
-							<ion-label>Add</ion-label>
-						</ion-button>
-					</ion-buttons>
-				</ion-item-divider>
-				<ion-item *ngIf="!group.members">
-					<ion-spinner name="lines-small" color="medium" />
-					<ion-label color="medium">Loading...</ion-label>
-				</ion-item>
-				<sneat-members-list
-					[space]="space"
-					[members]="group.members"
-					[contactsByMember]="contactsByMember"
-					[hideRoles]="[group.role, 'member']"
-				/>
-			</ion-card>
-		}
+		<ion-card>
+			<sneat-family-members
+				[space]="space"
+				[contactusSpaceDbo]="spaceModuleDbo$ | async"
+				(addMember)="goNewMemberPage($event)"
+			/>
+		</ion-card>
 	}
 
 	@if (segment === "groups") {

@@ -1,9 +1,11 @@
-<ion-item *ngIf="!space?.dbo">
-	<ion-avatar slot="start" style="opacity: 0.3">
-		<ion-img title="avatar" src="//www.gravatar.com/avatar/gravatar" />
-	</ion-avatar>
-	<ion-skeleton-text style="width: 50%" animated="animated" />
-</ion-item>
+@if (!membersToDisplay) {
+	<ion-item>
+		<ion-avatar slot="start" style="opacity: 0.3">
+			<ion-img title="avatar" src="//www.gravatar.com/avatar/gravatar" />
+		</ion-avatar>
+		<ion-skeleton-text style="width: 50%" animated="animated" />
+	</ion-item>
+}
 
 <ion-item *ngIf="membersToDisplay && !membersToDisplay.length; else list">
 	<ion-label color="medium">No members</ion-label>

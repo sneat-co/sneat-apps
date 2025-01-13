@@ -106,7 +106,16 @@
 		</ion-row>
 		<ion-row>
 			<ion-col *ngIf="space.type === 'family' || space.type === 'team'">
-				<sneat-members [contactusSpace]="contactusSpace" />
+				<ion-card>
+					<ion-card-header>
+						<ion-card-title>Members</ion-card-title>
+					</ion-card-header>
+					<sneat-family-members
+						[space]="space"
+						[contactusSpaceDbo]="contactusSpace?.dbo"
+					></sneat-family-members>
+				</ion-card>
+
 				<ion-card>
 					<ion-item
 						routerLink="./members"
