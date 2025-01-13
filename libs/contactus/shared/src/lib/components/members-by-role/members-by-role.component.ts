@@ -1,4 +1,3 @@
-import { JsonPipe } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
