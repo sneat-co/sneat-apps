@@ -9,7 +9,7 @@ import {
 	ContactusSpaceContextService,
 	ContactusSpaceService,
 } from '@sneat/contactus-services';
-import { FamilyMembersComponent } from '@sneat/contactus-shared';
+import { MembersShortListCardComponent } from '@sneat/contactus-shared';
 import { IIdAndOptionalDbo, TopMenuService } from '@sneat/core';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { SpaceServiceModule } from '@sneat/team-services';
@@ -26,7 +26,7 @@ import { SpacePageBaseComponent } from './SpacePageBaseComponent';
 		RouterModule,
 		ContactusServicesModule,
 		SpaceServiceModule,
-		FamilyMembersComponent,
+		MembersShortListCardComponent,
 	],
 })
 export class SpacePageComponent extends SpacePageBaseComponent {
@@ -58,17 +58,5 @@ export class SpacePageComponent extends SpacePageBaseComponent {
 		// 		}
 		// 	},
 		// });
-	}
-
-	protected goMembers(event: Event): void {
-		event.stopPropagation();
-		event.preventDefault();
-		this.spaceParams.spaceNavService
-			.navigateForwardToSpacePage(this.space, 'members', {
-				state: {
-					contactusSpace: this.contactusSpace,
-				},
-			})
-			.catch(console.error);
 	}
 }

@@ -55,9 +55,14 @@ import { InlistAgeGroupComponent } from '../inlist-options/inlist-age-group.comp
 // TODO: Is it deprecated and should we migrated to Contacts list?
 export class MembersListComponent implements OnChanges {
 	private selfRemove?: boolean;
-	@Input() public space?: ISpaceContext;
-	@Input() public members?: readonly IIdAndBrief<IContactBrief>[];
+
+	@Input({ required: true }) public space?: ISpaceContext;
+
+	@Input({ required: true })
+	public members?: readonly IIdAndBrief<IContactBrief>[];
+
 	@Input() public role?: string;
+
 	@Output() selfRemoved = new EventEmitter<void>();
 	@Input() public contactsByMember: Record<
 		string,

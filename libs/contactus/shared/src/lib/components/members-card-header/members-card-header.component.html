@@ -1,0 +1,18 @@
+<ion-item
+	routerLink="./members"
+	(click)="goMembers($event)"
+	class="sneat-tiny-end-padding"
+>
+	<ion-icon
+		name="people-circle-outline"
+		slot="start"
+		color="primary"
+		class="sneat-hide-if-width-less-240"
+	/>
+	<ion-label color="primary" style="font-weight: bold">Members</ion-label>
+	<ion-buttons slot="end">
+		<ion-button routerLink="new-member" (click)="$event.stopPropagation()">
+			<ion-icon name="add-outline" />
+		</ion-button>
+	</ion-buttons>
+</ion-item>
