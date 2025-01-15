@@ -47,22 +47,11 @@
 			</div>
 		</ion-label>
 
-		<ion-buttons slot="end" class="sneat-hide-if-width-less-638">
-			<ion-button
-				title="Add recurring"
-				[href]="newHappeningUrl('recurring')"
-				(click)="goNewHappening('recurring')"
-			>
-				<ion-icon name="duplicate-outline" />
-			</ion-button>
-			<ion-button
-				title="Add one-timer"
-				[href]="newHappeningUrl('single')"
-				(click)="goNewHappening('single')"
-			>
-				<ion-icon name="add-circle-outline" />
-			</ion-button>
-		</ion-buttons>
+		<sneat-calendar-add-buttons
+			[space]="space"
+			[dateID]="activeDay?.activeDateID"
+			[weekdayID]="activeDay?.weekday?.id"
+		/>
 	</ion-item>
 
 	<div

@@ -65,24 +65,6 @@ export class CalendarDayCardComponent
 		this.createSlides();
 	}
 
-	protected newHappeningUrl(type: HappeningType): string {
-		// TODO: Should use some shared func to get URL
-		return `space/${this.space?.type}/${this.space?.id}/new-happening?type=${type}&wd=${this.activeDay?.weekday?.id}&date=${this.activeDay?.activeDateID}`;
-	}
-
-	protected goNewHappening(type: HappeningType): boolean {
-		if (!this.space) {
-			return false;
-		}
-		const params: NewHappeningParams = {
-			type,
-			wd: this.activeDay?.weekday?.id,
-			date: this.activeDay?.activeDateID,
-		};
-		this.scheduleNavService.goNewHappening(this.space, params);
-		return false;
-	}
-
 	private createSlides(): void {
 		if (!this.spaceDaysProvider) {
 			throw new Error('!this.teamDaysProvider');

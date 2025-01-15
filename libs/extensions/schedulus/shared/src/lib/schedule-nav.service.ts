@@ -1,4 +1,5 @@
 import { Inject, Injectable, NgModule } from '@angular/core';
+import { excludeEmpty } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
 import { SpaceNavService } from '@sneat/team-services';
@@ -24,7 +25,7 @@ export class ScheduleNavService {
 		console.log('ScheduleNavService.goNewHappening()', params);
 		this.spaceNavService
 			.navigateForwardToSpacePage(space, 'new-happening', {
-				queryParams: params,
+				queryParams: excludeEmpty(params),
 			})
 			.catch(
 				this.errorLogger.logErrorHandler(
