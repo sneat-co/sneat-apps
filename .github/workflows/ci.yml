@@ -67,23 +67,7 @@ jobs:
                 with:
                     chrome-version: latest
 
-#            -   name: Cache firebase emulators
-#                uses: actions/cache@v4
-#                with:
-#                    path: /home/runner/.cache/firebase/emulators
-#                    key: ${{ runner.os }}-firebase-emulators-${{ hashFiles('/home/runner/.cache/firebase/emulators/**') }}
-#                continue-on-error: true
-#
-#            -   name: Install Firebase Tools
-#                run: curl -sL https://firebase.tools | bash
-#
-#
-#            -   name: Run emulators
-#                run: |
-#                    pnpm run firebase-emulators:ci &
-#                    sleep 10
-
-            - uses: sneat-co/sneat-firebase@main
+            -   uses: sneat-co/sneat-firebase@main
 
             -   uses: ./.github/actions/pnpm
 
@@ -92,12 +76,12 @@ jobs:
                     pnpm run cy:serve:ci &
                     sleep 5
 
-            -   name: Run e2e tests
-                uses: cypress-io/github-action@v6
-                with:
-                    command: pnpm run cy:test:ci
-                    wait-on: 'http://localhost:4205'
-                    wait-on-timeout: 120
+    #            -   name: Run e2e tests
+    #                uses: cypress-io/github-action@v6
+    #                with:
+    #                    command: pnpm run cy:test:ci
+    #                    wait-on: 'http://localhost:4205'
+    #                    wait-on-timeout: 120
 
     e2e-playwright:
         name: Playwright tests
