@@ -1,34 +1,45 @@
-<ion-card *ngIf="!happenings">
-	<ion-card-content>
-		<ion-spinner name="lines" class="ion-margin-end" />
-		<ion-text color="medium">Loading 1-timers...</ion-text>
-	</ion-card-content>
-</ion-card>
+@if (!happenings) {
+	<ion-card>
+		<ion-card-content>
+			<ion-spinner name="lines" class="ion-margin-end" />
+			<ion-text color="medium">Loading 1-timers...</ion-text>
+		</ion-card-content>
+	</ion-card>
+} @else {
+	@for (happening of happenings; track happening.id) {
+		<sneat-happening-card
+			[space]="space"
+			[happening]="happening"
+			(deleted)="onHappeningRemoved($event)"
+		/>
+	}
+}
 
-<sneat-happening-card
-	*ngFor="let happening of happenings || []; trackBy: happeningID"
-	[space]="space"
-	[happening]="happening"
-	(deleted)="onHappeningRemoved($event)"
-/>
+@if (!!numberOfHidden) {
+	<div class="ion-margin-top">
+		@if (numberOfHidden === 1) {
+			<span class="ion-margin">
+				1 out of {{ happenings?.length || 0 }} happenings is hidden by filter.
+			</span>
+		}
 
-<div class="ion-margin-top" *ngIf="!!numberOfHidden">
-	<span class="ion-margin" *ngIf="numberOfHidden === 1">
-		1 out of {{ happenings?.length || 0 }} happenings is hidden by filter.
-	</span>
+		@if (numberOfHidden > 1) {
+			<span class="ion-margin">
+				{{ numberOfHidden }} out of {{ happenings?.length || 0 }} happenings are
+				hidden by filter.
+			</span>
+		}
 
-	<span class="ion-margin" *ngIf="numberOfHidden > 1">
-		{{ numberOfHidden }} out of {{ happenings?.length || 0 }} happenings are
-		hidden by filter.
-	</span>
+		<ion-button color="medium" fill="outline" (click)="clearFilter()">
+			<ion-label>Clear filter</ion-label>
+		</ion-button>
+	</div>
+}
 
-	<ion-button color="medium" fill="outline" (click)="clearFilter()">
-		<ion-label>Clear filter</ion-label>
-	</ion-button>
-</div>
-
-<ion-card *ngIf="happenings && !happenings.length">
-	<ion-card-content>
-		<ion-text color="medium">No records found.</ion-text>
-	</ion-card-content>
-</ion-card>
+@if (happenings && !happenings.length) {
+	<ion-card>
+		<ion-card-content>
+			<ion-text color="medium">No records found.</ion-text>
+		</ion-card-content>
+	</ion-card>
+}

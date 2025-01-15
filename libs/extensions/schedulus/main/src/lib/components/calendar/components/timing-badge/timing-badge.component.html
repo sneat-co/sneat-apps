@@ -19,27 +19,26 @@
 		{{ timing?.start?.time }}
 	}
 
-	<div
-		style="font-size: small; color: #777; text-align: right"
-		*ngIf="adjustment?.adjustment?.end || timing?.end"
-	>
-		<small>ends</small>
-		@if (
-			adjustment?.adjustment?.end?.time &&
-			adjustment?.adjustment?.end?.time !== timing?.end?.time
-		) {
-			<ion-text
-				[color]="
-					adjustment?.adjustment?.start?.time &&
-					adjustment?.adjustment?.start?.time !== timing?.start?.time
-						? 'warning'
-						: 'danger'
-				"
-				title="Original: {{ timing?.start?.time }}-{{ timing?.end?.time }}"
-				>{{ adjustment?.adjustment?.end?.time }}</ion-text
-			>
-		} @else {
-			{{ timing?.end?.time }}
-		}
-	</div>
+	@if (adjustment?.adjustment?.end || timing?.end) {
+		<div style="font-size: small; color: #777; text-align: right">
+			<small>ends</small>
+			@if (
+				adjustment?.adjustment?.end?.time &&
+				adjustment?.adjustment?.end?.time !== timing?.end?.time
+			) {
+				<ion-text
+					[color]="
+						adjustment?.adjustment?.start?.time &&
+						adjustment?.adjustment?.start?.time !== timing?.start?.time
+							? 'warning'
+							: 'danger'
+					"
+					title="Original: {{ timing?.start?.time }}-{{ timing?.end?.time }}"
+					>{{ adjustment?.adjustment?.end?.time }}</ion-text
+				>
+			} @else {
+				{{ timing?.end?.time }}
+			}
+		</div>
+	}
 </ion-badge>

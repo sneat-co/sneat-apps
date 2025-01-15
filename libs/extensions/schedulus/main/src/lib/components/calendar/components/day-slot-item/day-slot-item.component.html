@@ -34,9 +34,9 @@
 		>
 			{{ slotContext?.title }}
 		</span>
-		<ion-text color="medium" *ngIf="isCanceled"
-			>&nbsp;&mdash; canceled
-		</ion-text>
+		@if (isCanceled) {
+			<ion-text color="medium">&nbsp;&mdash; canceled</ion-text>
+		}
 
 		<!--		<sneat-members-as-badges-->
 		<!--			*ngIf="mode === 'full'"-->
@@ -47,51 +47,52 @@
 		<!--			"-->
 		<!--		/>-->
 
-		<p
-			*ngIf="
-				mode === 'full' &&
-				(slotContext?.location?.title || slotContext?.location?.address)
-			"
-		>
-			{{ slotContext?.location?.title || slotContext?.location?.address }}
-		</p>
-		<p
-			*ngIf="
-				mode === 'full' &&
-				(slotContext?.participants || slotContext?.levels?.length)
-			"
-		>
-			<!--			<ng-container *ngIf="let participantKeys = oKeys(slot?.participants)">-->
-			<!--				<ion-badge-->
-			<!--					color="light"-->
-			<!--					style="margin-right: 0.5em"-->
-			<!--					*ngFor="let participant of participantKeys"-->
-			<!--				>-->
-			<!--					👩‍🏫 {{ participant }}-->
-			<!--				</ion-badge>-->
-			<!--			</ng-container>-->
-			@if (slotContext?.levels?.length) {
-				<ion-badge
-					color="light"
-					style="margin-right: 0.5em"
-					*ngFor="let level of slotContext?.levels || []"
-				>
-					🎚️ {{ level[0].toUpperCase() + level.substring(1) }}
-				</ion-badge>
-			}
-		</p>
+		@if (
+			mode === "full" &&
+			(slotContext?.location?.title || slotContext?.location?.address)
+		) {
+			<p>
+				{{ slotContext?.location?.title || slotContext?.location?.address }}
+			</p>
+		}
+		@if (
+			mode === "full" &&
+			(slotContext?.participants || slotContext?.levels?.length)
+		) {
+			<p>
+				<!--			<ng-container *ngIf="let participantKeys = oKeys(slot?.participants)">-->
+				<!--				<ion-badge-->
+				<!--					color="light"-->
+				<!--					style="margin-right: 0.5em"-->
+				<!--					*ngFor="let participant of participantKeys"-->
+				<!--				>-->
+				<!--					👩‍🏫 {{ participant }}-->
+				<!--				</ion-badge>-->
+				<!--			</ng-container>-->
+				@if (slotContext?.levels?.length) {
+					@for (level of slotContext?.levels || []; track level) {
+						<ion-badge color="light" style="margin-right: 0.5em">
+							🎚️ {{ level[0].toUpperCase() + level.substring(1) }}
+						</ion-badge>
+					}
+				}
+			</p>
+		}
+
 		<p>
 			<sneat-happening-slot-participants [happeningSlot]="slotContext" />
 		</p>
 	</ion-label>
-	<ion-buttons *ngIf="mode === 'full'">
-		<ion-button color="medium" (click)="showRsvp($event)">
-			<ion-icon name="checkmark-circle-outline" slot="start" />
-			<ion-label>RSVP</ion-label>
-		</ion-button>
-		<ion-button (click)="showContextMenu($event)" color="medium">
-			<ion-icon name="create-outline" slot="start" />
-			<ion-label>Edit</ion-label>
-		</ion-button>
-	</ion-buttons>
+	@if (mode === "full") {
+		<ion-buttons>
+			<ion-button color="medium" (click)="showRsvp($event)">
+				<ion-icon name="checkmark-circle-outline" slot="start" />
+				<ion-label>RSVP</ion-label>
+			</ion-button>
+			<ion-button (click)="showContextMenu($event)" color="medium">
+				<ion-icon name="create-outline" slot="start" />
+				<ion-label>Edit</ion-label>
+			</ion-button>
+		</ion-buttons>
+	}
 </ion-item>

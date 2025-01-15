@@ -28,7 +28,7 @@
 We use style.display  instead of *ngIf to avoid re-creating of the component on tab re-activation.
 This is just a small performance optimization.
 -->
-<sneat-day-tab
+<sneat-calendar-day-tab
 	[style.display]="tab === 'day' ? 'block' : 'none'"
 	[space]="space"
 	[spaceDaysProvider]="spaceDaysProvider"
@@ -43,24 +43,28 @@ This is probably due to the fact that we open 14 listeners (1 for each day of 2 
 
 [style.display]="tab === 'week' ? 'block' : 'none'"
 -->
-<sneat-week-tab
-	*ngIf="isWeekTabActivated"
-	[style.display]="tab === 'week' ? 'block' : 'none'"
-	[space]="space"
-	[spaceDaysProvider]="spaceDaysProvider"
-	(slotClicked)="onSlotClicked($event)"
-/>
+@if (isWeekTabActivated) {
+	<sneat-week-tab
+		[style.display]="tab === 'week' ? 'block' : 'none'"
+		[space]="space"
+		[spaceDaysProvider]="spaceDaysProvider"
+		(slotClicked)="onSlotClicked($event)"
+	/>
+}
 
-<sneat-recurrings-tab
-	*ngIf="tab === 'recurrings'"
-	[space]="space"
-	[recurrings]="recurrings"
-	[allRecurrings]="allRecurrings"
-/>
-
-<sneat-singles-tab
-	*ngIf="tab === 'singles'"
-	[space]="space"
-	[onSlotClicked]="onSlotClicked"
-	[onDateSelected]="onDateSelected"
-/>
+@switch (tab) {
+	@case ("recurrings") {
+		<sneat-recurrings-tab
+			[space]="space"
+			[recurrings]="recurrings"
+			[allRecurrings]="allRecurrings"
+		/>
+	}
+	@case ("singles") {
+		<sneat-singles-tab
+			[space]="space"
+			[onSlotClicked]="onSlotClicked"
+			[onDateSelected]="onDateSelected"
+		/>
+	}
+}

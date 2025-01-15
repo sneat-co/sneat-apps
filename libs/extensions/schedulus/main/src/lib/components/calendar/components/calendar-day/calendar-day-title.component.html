@@ -1,6 +1,9 @@
 <span class="sneat-smaller-if-width-less-638" style="margin-left: 0.5em">
-	<span *ngIf="isToday()" class="ion-margin-end">Today:</span>
-	<span *ngIf="isTomorrow()" class="ion-margin-end">Tomorrow:</span>
+	@if (isToday()) {
+		<span class="ion-margin-end">Today:</span>
+	} @else if (isTomorrow()) {
+		<span class="ion-margin-end">Tomorrow:</span>
+	}
 	@if (day?.weekday) {
 		<b>{{ day?.weekday?.id | wdToWeekday }}</b
 		><span style="font-weight: normal"

@@ -57,15 +57,16 @@
 				[spaceDaysProvider]="spaceDaysProvider"
 				(slotClicked)="onSlotClicked($event)"
 			/>
-			<sneat-calendar-week
-				*ngIf="isEvenSlideActivated"
-				class="virtual-slide"
-				[@virtualSlide]="evenSlide?.animationState || 'hide'"
-				[space]="space"
-				[week]="evenWeek"
-				[spaceDaysProvider]="spaceDaysProvider"
-				(slotClicked)="onSlotClicked($event)"
-			/>
+			@if (isEvenSlideActivated) {
+				<sneat-calendar-week
+					class="virtual-slide"
+					[@virtualSlide]="evenSlide?.animationState || 'hide'"
+					[space]="space"
+					[week]="evenWeek"
+					[spaceDaysProvider]="spaceDaysProvider"
+					(slotClicked)="onSlotClicked($event)"
+				/>
+			}
 		</div>
 	</div>
 </ion-card>

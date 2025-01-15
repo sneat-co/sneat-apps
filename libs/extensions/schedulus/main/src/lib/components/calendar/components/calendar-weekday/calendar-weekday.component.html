@@ -10,12 +10,9 @@
 			{{ day?.date?.getMonth() | shortMonthName }}
 		}
 	</ion-label>
-	<ion-spinner
-		style="opacity: 0.2"
-		name="lines-small"
-		*ngIf="day?.loadingEvents"
-		slot="end"
-	/>
+	@if (day?.loadingEvents) {
+		<ion-spinner style="opacity: 0.2" name="lines-small" slot="end" />
+	}
 	<ion-buttons slot="end">
 		<ion-button title="Add recurring" (click)="goNewHappening('recurring')">
 			<ion-icon name="duplicate-outline" />
@@ -34,13 +31,14 @@
 	</ion-item>
 } @else if (day) {
 	@for (slot of day.slots; track slot.slot.id) {
-		<sneat-day-slot-item
-			*ngIf="showSlot(slot)"
-			[space]="space"
-			[dateID]="day.dateID"
-			[slotContext]="slot"
-			(slotClicked)="onSlotClicked($event)"
-		/>
+		@if (showSlot(slot)) {
+			<sneat-day-slot-item
+				[space]="space"
+				[dateID]="day.dateID"
+				[slotContext]="slot"
+				(slotClicked)="onSlotClicked($event)"
+			/>
+		}
 	} @empty {
 		<ion-item>
 			<ion-label color="medium" style="font-style: italic"
