@@ -28,7 +28,7 @@
 We use style.display  instead of *ngIf to avoid re-creating of the component on tab re-activation.
 This is just a small performance optimization.
 -->
-<sneat-calendar-day-tab
+<sneat-day-tab
 	[style.display]="tab === 'day' ? 'block' : 'none'"
 	[space]="space"
 	[spaceDaysProvider]="spaceDaysProvider"
