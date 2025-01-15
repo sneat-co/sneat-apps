@@ -1,1 +1,25 @@
-<!--<sneat-calendar-day-tab [space]="space" />-->
+<ion-card>
+	<ion-item routerLink="./calendar" lines="full">
+		<ion-icon name="calendar-outline" slot="start"></ion-icon>
+		<ion-label style="font-weight: bold" color="primary">Calendar</ion-label>
+		<ion-buttons slot="end">
+			<ion-button routerLink="new-member">
+				<ion-icon name="add-outline"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+	<ion-item-divider>
+		<ion-label><b>Today</b></ion-label>
+	</ion-item-divider>
+	<ion-item>
+		<ion-label color="medium">Not implemented yet</ion-label>
+		<!--<sneat-calendar-day-tab [space]="space" />-->
+	</ion-item>
+	<ion-item-divider>
+		<ion-label><b>Tomorrow</b></ion-label>
+	</ion-item-divider>
+	<ion-item>
+		<ion-label color="medium">Not implemented yet</ion-label>
+		<!--<sneat-calendar-day-tab [space]="space" />-->
+	</ion-item>
+</ion-card>
