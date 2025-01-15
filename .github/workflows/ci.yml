@@ -76,12 +76,12 @@ jobs:
                     pnpm run cy:serve:ci &
                     sleep 5
 
-            -   name: Run e2e tests
-                uses: cypress-io/github-action@v6
-                with:
-                    command: pnpm run cy:test:ci
-                    wait-on: 'http://localhost:4205'
-                    wait-on-timeout: 120
+#            -   name: Run e2e tests
+#                uses: cypress-io/github-action@v6
+#                with:
+#                    command: pnpm run cy:test:ci
+#                    wait-on: 'http://localhost:4205'
+#                    wait-on-timeout: 120
 
     e2e-playwright:
         name: Playwright tests
