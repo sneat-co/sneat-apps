@@ -199,15 +199,10 @@ export class SpaceDaysProvider {
 
 	private _space?: ISpaceContext;
 
-	public get space(): ISpaceContext | undefined {
-		return this._space;
-	}
-
 	constructor(
 		private readonly errorLogger: IErrorLogger,
 		private readonly happeningService: HappeningService,
-		private readonly scheduleDayService: CalendarDayService,
-		afs: AngularFirestore,
+		private readonly calendarDayService: CalendarDayService,
 		sneatApiService: SneatApiService,
 		// private readonly regularService: IRegularHappeningService,
 		// private readonly singleService: ISingleHappeningService,
@@ -217,15 +212,15 @@ export class SpaceDaysProvider {
 		this.recurringsSpaceItemService = new ModuleSpaceItemService(
 			'calendarium',
 			'recurring_happenings', // TODO: Is this obsolete? Should we use 'happenings' instead?
-			afs,
+			calendarDayService.afs,
 			sneatApiService,
 		);
 	}
 
 	public destroy(): void {
 		this.destroyed.next();
-		Object.entries(this.days).forEach(([, dsp]) => {
-			dsp.destroy();
+		Object.values(this.days).forEach((day) => {
+			day.destroy();
 		});
 	}
 
@@ -239,7 +234,7 @@ export class SpaceDaysProvider {
 				this.recurrings$,
 				this.errorLogger,
 				this.happeningService,
-				this.scheduleDayService,
+				this.calendarDayService,
 			);
 		}
 		return day;
@@ -386,7 +381,7 @@ export class SpaceDaysProvider {
 	private processRecurring(
 		recurring: ISpaceItemNavContext<IHappeningBrief, IHappeningDbo>,
 	): void {
-		if (!this.space?.id) {
+		if (!this._space?.id) {
 			return;
 		}
 		if (
@@ -395,7 +390,7 @@ export class SpaceDaysProvider {
 				recurring.dbo?.related || recurring?.brief?.related,
 				'contactus',
 				'contacts',
-				this.space.id,
+				this._space.id,
 				this.memberId,
 			)
 		) {

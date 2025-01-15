@@ -68,7 +68,7 @@ export class SpaceDay {
 	private subscriptions: Subscription[] = [];
 
 	constructor(
-		spaceID$: Observable<string | undefined>, // do not declare it as member as we apply distinctUntilChanged() to it
+		spaceID$: Observable<string | undefined>, // do not declare it as member as we apply takeUntil(this.destroyed$) & distinctUntilChanged() to it
 		date: Date, // intentionally not marking as public here to have public fields in 1 place
 		recurrings$: Observable<RecurringSlots>,
 		private readonly errorLogger: IErrorLogger,

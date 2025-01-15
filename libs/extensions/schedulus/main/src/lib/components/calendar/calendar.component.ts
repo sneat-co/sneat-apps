@@ -26,7 +26,6 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { HappeningService, CalendarDayService } from '@sneat/team-services';
-import { location } from 'ionicons/icons';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { SpaceDaysProvider } from '../../services/space-days-provider';
 import { CalendariumSpaceService } from '../../services';
@@ -90,7 +89,6 @@ export class CalendarComponent
 			this.errorLogger,
 			happeningService,
 			calendarDayService,
-			calendarDayService.afs,
 			sneatApiService,
 		);
 
