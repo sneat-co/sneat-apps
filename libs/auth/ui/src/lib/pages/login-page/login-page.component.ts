@@ -111,6 +111,7 @@ export class LoginPageComponent extends SneatBaseComponent {
 	}
 
 	loginWith(provider: AuthProviderName) {
+		console.log(`LoginPageComponent.loginWith(provider=${provider})`);
 		this.signingWith = provider;
 		this.authStateService.signInWith(provider).subscribe({
 			next: (userCredential) => this.onLoggedIn(userCredential),

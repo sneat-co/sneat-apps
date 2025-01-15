@@ -3,7 +3,7 @@ import {
 	EnumAsUnionOfKeys,
 	IAnalyticsService,
 } from '@sneat/core';
-import { BehaviorSubject, from, Observable, share, throwError } from 'rxjs';
+import { BehaviorSubject, from, Observable, Subject, throwError } from 'rxjs';
 import { Inject, Injectable } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { distinctUntilChanged, shareReplay } from 'rxjs/operators';
@@ -12,9 +12,6 @@ import {
 	AuthProvider,
 	UserCredential,
 	UserInfo,
-	signInWithEmailLink,
-	signInWithPopup,
-	signInWithCustomToken,
 } from '@angular/fire/auth';
 
 import {
@@ -22,10 +19,13 @@ import {
 	OAuthProvider,
 	GithubAuthProvider,
 	FacebookAuthProvider,
+	signInWithEmailLink,
+	signInWithCustomToken,
+	signInWithPopup,
 } from 'firebase/auth';
 
 // TODO: fix & remove this eslint hint @nrwl/nx/enforce-module-boundaries
- 
+
 import { newRandomId } from '@sneat/random';
 
 export enum AuthStatuses {
@@ -177,17 +177,20 @@ export class SneatAuthStateService {
 			}
 		}
 		this.analyticsService.logEvent('loginWith', eventParams);
-		const result = from(signInWithPopup(this.fbAuth, authProvider)).pipe(
-			share(),
-		);
-		result.subscribe({
-			next: () => {
+		const signInResult = signInWithPopup(this.fbAuth, authProvider);
+
+		const result = new Subject<UserCredential>();
+		signInResult
+			.then((r) => {
+				console.log('signInWithPopup() => result:', r);
 				this.analyticsService.logEvent('signInWithPopup', eventParams);
-			},
-			error: this.errorLogger.logErrorHandler(
-				`Failed to sign-in with ${authProviderName}`,
-			),
-		});
+				result.next(r);
+			})
+			.catch(
+				this.errorLogger.logErrorHandler(
+					`Failed to sign-in with ${authProviderName}`,
+				),
+			);
 		return result;
 	}
 }
