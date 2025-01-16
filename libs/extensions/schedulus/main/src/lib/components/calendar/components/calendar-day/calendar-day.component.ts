@@ -76,13 +76,10 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		const weekdayChange = changes['weekday'];
-		const weekdayCurrent = weekdayChange?.currentValue as Weekday;
-		if (weekdayChange?.firstChange && !weekdayCurrent) {
-			return;
-		}
-		// const dateID = weekdayCurrent?.day?.dateID;
-		// console.log(this.logPrefix(dateID) + '.ngOnChanges()', changes);
 		if (weekdayChange) {
+			if (weekdayChange.firstChange && !weekdayChange.currentValue) {
+				return; // TODO: comment with explanation why we need this
+			}
 			this.subscribeForSlots();
 		}
 	}
