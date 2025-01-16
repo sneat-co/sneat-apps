@@ -56,7 +56,7 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 		private readonly changeDetectorRef: ChangeDetectorRef,
 		private readonly scheduleNavService: ScheduleNavService,
 	) {
-		filterService.filter.subscribe({
+		filterService.filter.pipe(takeUntil(this.destroyed)).subscribe({
 			next: (filter) => {
 				this.filter = filter;
 				this.applyFilter();
