@@ -20,7 +20,10 @@ import {
 	IHappeningContext,
 	IHappeningWithUiState,
 } from '@sneat/mod-schedulus-core';
-import { ISlotUIContext } from '@sneat/extensions/schedulus/shared';
+import {
+	ISlotUIContext,
+	ISlotUIEvent,
+} from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { ISpaceContext } from '@sneat/team-models';
@@ -188,10 +191,7 @@ export class CalendarComponent
 	// 		.catch(this.errorLogger.logErrorHandler('failed to navigate to new happening page'));
 	// };
 
-	protected readonly onSlotClicked = (args: {
-		slot: ISlotUIContext;
-		event: Event;
-	}): void => {
+	protected readonly onSlotClicked = (args: ISlotUIEvent): void => {
 		console.log('ScheduleComponent.onSlotClicked()', args);
 		if (!this.space) {
 			throw new Error('!team');

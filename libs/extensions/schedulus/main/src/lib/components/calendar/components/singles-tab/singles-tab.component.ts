@@ -1,13 +1,18 @@
 import {
 	ChangeDetectorRef,
 	Component,
+	EventEmitter,
 	Inject,
 	Input,
 	OnChanges,
 	OnDestroy,
+	Output,
 	SimpleChanges,
 } from '@angular/core';
-import { ISlotUIContext } from '@sneat/extensions/schedulus/shared';
+import {
+	ISlotUIContext,
+	ISlotUIEvent,
+} from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
 import { ISpaceContext } from '@sneat/team-models';
@@ -36,10 +41,9 @@ export class SinglesTabComponent
 	public tab: 'upcoming' | 'past' | 'recent' = 'upcoming';
 
 	@Input({ required: true }) space: ISpaceContext = { id: '' };
-	@Input() onSlotClicked?: (args: {
-		slot: ISlotUIContext;
-		event: Event;
-	}) => void;
+
+	@Output() readonly slotClicked = new EventEmitter<ISlotUIEvent>();
+
 	@Input() onDateSelected?: (date: Date) => void;
 
 	constructor(

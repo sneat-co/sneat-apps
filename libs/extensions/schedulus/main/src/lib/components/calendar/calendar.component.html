@@ -32,7 +32,7 @@ This is just a small performance optimization.
 	[style.display]="tab === 'day' ? 'block' : 'none'"
 	[space]="_space"
 	[spaceDaysProvider]="spaceDaysProvider"
-	[onSlotClicked]="onSlotClicked"
+	(slotClicked)="onSlotClicked($event)"
 />
 
 <!--
@@ -63,7 +63,7 @@ This is probably due to the fact that we open 14 listeners (1 for each day of 2 
 	@case ("singles") {
 		<sneat-singles-tab
 			[space]="_space"
-			[onSlotClicked]="onSlotClicked"
+			(slotClicked)="onSlotClicked($event)"
 			[onDateSelected]="onDateSelected"
 		/>
 	}

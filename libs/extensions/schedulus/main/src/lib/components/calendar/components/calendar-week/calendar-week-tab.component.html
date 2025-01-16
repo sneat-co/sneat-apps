@@ -1,7 +1,7 @@
 <sneat-week-card
 	[space]="space"
 	[spaceDaysProvider]="spaceDaysProvider"
-	(slotClicked)="onSlotClicked($event)"
+	(slotClicked)="slotClicked.emit($event)"
 />
 <!--
 At the moment it is just a wrapper of sneat-week-card

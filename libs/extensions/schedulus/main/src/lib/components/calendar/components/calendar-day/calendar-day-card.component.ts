@@ -7,13 +7,12 @@ import {
 	Output,
 } from '@angular/core';
 import { virtualSliderAnimations } from '@sneat/components';
-import { HappeningType } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
 import { SpaceDaysProvider } from '../../../../services/space-days-provider';
-import { ScheduleNavService } from '@sneat/extensions/schedulus/shared';
 import {
 	ISlotUIContext,
+	ISlotUIEvent,
 	NewHappeningParams,
 } from '@sneat/extensions/schedulus/shared';
 import { getToday, CalendarStateService } from '../../calendar-state.service';
@@ -35,7 +34,9 @@ export class CalendarDayCardComponent
 {
 	@Input({ required: true }) space: ISpaceContext = { id: '' };
 	@Input({ required: true }) spaceDaysProvider?: SpaceDaysProvider;
-	@Output() goNew = new EventEmitter<NewHappeningParams>();
+
+	@Output() readonly goNew = new EventEmitter<NewHappeningParams>();
+	@Output() readonly slotClicked = new EventEmitter<ISlotUIEvent>();
 
 	@Input() set activeDayPlus(value: number) {
 		this.shiftDays = value;
@@ -45,17 +46,10 @@ export class CalendarDayCardComponent
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		scheduleSateService: CalendarStateService,
-		private readonly scheduleNavService: ScheduleNavService, // private readonly teamDaysProvider: TeamDaysProvider,
+		// private readonly teamDaysProvider: TeamDaysProvider,
 	) {
 		super('ScheduleDayCardComponent', errorLogger, scheduleSateService);
 	}
-
-	@Input() onSlotClicked?: (args: {
-		slot: ISlotUIContext;
-		event: Event;
-	}) => void = () => {
-		throw new Error('onSlotClicked not set');
-	};
 
 	ngOnInit(): void {
 		// console.log('ngOnInit(), shiftDays=', this.shiftDays);

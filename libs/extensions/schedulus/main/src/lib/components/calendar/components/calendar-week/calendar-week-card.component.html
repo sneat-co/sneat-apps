@@ -55,7 +55,7 @@
 				[space]="space"
 				[week]="oddWeek"
 				[spaceDaysProvider]="spaceDaysProvider"
-				(slotClicked)="onSlotClicked($event)"
+				(slotClicked)="slotClicked.emit($event)"
 			/>
 			@if (isEvenSlideActivated) {
 				<sneat-calendar-week
@@ -64,7 +64,7 @@
 					[space]="space"
 					[week]="evenWeek"
 					[spaceDaysProvider]="spaceDaysProvider"
-					(slotClicked)="onSlotClicked($event)"
+					(slotClicked)="slotClicked.emit($event)"
 				/>
 			}
 		</div>
