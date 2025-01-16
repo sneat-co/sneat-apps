@@ -26,8 +26,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { HappeningService, CalendarDayService } from '@sneat/team-services';
-import { Subject, Subscription, takeUntil } from 'rxjs';
-import { SpaceDaysProvider } from '../../services/space-days-provider';
+import { takeUntil } from 'rxjs';
 import { CalendariumSpaceService } from '../../services';
 import { isToday } from '../schedule-core';
 import {
@@ -35,6 +34,7 @@ import {
 	CalendarFilterService,
 } from '../calendar-filter.service';
 import { hasContact } from '../schedule-slots';
+import { CalendarBaseComponent } from './calendar-base.component';
 import { CalendarTab } from './calendar-component-types';
 import { ICalendarFilter } from './components/calendar-filter/calendar-filter';
 import { CalendarFilterComponent } from './components/calendar-filter/calendar-filter.component';
@@ -48,16 +48,21 @@ import { CalendarStateService } from './calendar-state.service';
 	standalone: false,
 })
 export class CalendarComponent
+	extends CalendarBaseComponent
 	implements OnInit, AfterViewInit, OnChanges, OnDestroy
 {
-	private readonly destroyed = new Subject<void>();
 	private filter = emptyScheduleFilter;
-	private date = new Date();
+
 	// prevWeekdays: SlotsGroup[];
-	public readonly spaceDaysProvider: SpaceDaysProvider;
+
 	@ViewChild('scheduleFilterComponent')
-	scheduleFilterComponent?: CalendarFilterComponent;
-	@Input() space: ISpaceContext = { id: '' };
+	public scheduleFilterComponent?: CalendarFilterComponent;
+
+	@Input()
+	set space(space: ISpaceContext) {
+		this._space = space;
+	}
+
 	@Input() member?: IMemberContext;
 	@Input() public tab: CalendarTab = 'day';
 	@Input() public dateID = '';
@@ -66,27 +71,22 @@ export class CalendarComponent
 
 	protected isWeekTabActivated = false;
 
-	protected allRecurrings?: readonly IHappeningWithUiState[];
-
 	// private date: Date;
-	recurrings?: readonly IHappeningWithUiState[];
-
-	private schedulusSpaceDbo?: ICalendariumSpaceDbo | null;
-
-	private schedulusSpaceSubscription?: Subscription;
+	protected recurrings?: readonly IHappeningWithUiState[];
 
 	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		private readonly params: SpaceComponentBaseParams,
 		filterService: CalendarFilterService,
 		scheduleStateService: CalendarStateService,
 		happeningService: HappeningService,
 		calendarDayService: CalendarDayService,
 		sneatApiService: SneatApiService,
-		private readonly calendariumSpaceService: CalendariumSpaceService,
+		calendariumSpaceService: CalendariumSpaceService,
 	) {
-		this.spaceDaysProvider = new SpaceDaysProvider(
-			this.errorLogger,
+		super(
+			errorLogger,
+			calendariumSpaceService,
 			happeningService,
 			calendarDayService,
 			sneatApiService,
@@ -112,27 +112,6 @@ export class CalendarComponent
 		// 	// TODO: Fix this dirty workaround for initial animations
 		// 	this.setToday();
 		// }, 10);
-	}
-
-	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['space']) {
-			this.onSpaceContextChanged();
-			const spaceChange = changes['space'];
-			const prevSpace = spaceChange.previousValue as ISpaceContext;
-			const currentSpace = spaceChange.currentValue as ISpaceContext;
-			if (currentSpace?.id !== prevSpace?.id) {
-				this.onSpaceIdChanged();
-			}
-		}
-		if (changes['tab'] && this.tab === 'week') {
-			this.isWeekTabActivated = true;
-		}
-	}
-
-	ngOnDestroy(): void {
-		this.destroyed.next();
-		this.destroyed.complete();
-		this.spaceDaysProvider.destroy();
 	}
 
 	ngAfterViewInit(): void /* TODO: check and document if it can't be ngOnInit */ {
@@ -242,70 +221,18 @@ export class CalendarComponent
 
 	// noinspection JSMethodCanBeStatic
 
-	private onSpaceIdChanged(): void {
-		console.log('ScheduleComponent.onSpaceIdChanged()', this.space?.id);
-		this.schedulusSpaceSubscription?.unsubscribe();
-		if (this.space?.id) {
-			this.populateRecurrings();
-			this.setDay('onTeamDtoChanged', this.date);
-			this.schedulusSpaceSubscription = this.calendariumSpaceService
-				.watchSpaceModuleRecord(this.space.id)
-				.subscribe({
-					next: (schedulusTeam) => {
-						console.log(
-							'ScheduleComponent.onTeamIdChanged() => schedulusTeam:',
-							schedulusTeam,
-						);
-						this.schedulusSpaceDbo = schedulusTeam?.dbo;
-						this.spaceDaysProvider.setSchedulusSpace({
-							space: this.space,
-							...schedulusTeam,
-						});
-						this.populateRecurrings();
-					},
-				});
-			// this.slotsProvider.setCommuneId(this.team.id)
-			// 	.subscribe(
-			// 		(regulars) => {
-			// 			console.log('Loaded regulars:', regulars);
-			// 			this.allRegulars = regulars;
-			// 			this.regulars = this.filterRegulars();
-			// 		},
-			// 		this.errorLogger.logError,
-			// 		() => {
-			// 			// this.activeWeek.weekdays = [...this.activeWeek.weekdays];
-			// 			this.setDay('onCommuneIdChanged', this.activeDay.date || new Date());
-			// 		},
-			// 	);
-		}
-	}
-
-	private onSpaceContextChanged(): void {
-		if (this.space) {
-			this.spaceDaysProvider.setSpace(this.space);
-		}
-	}
-
 	// noinspection JSMethodCanBqw2se3333eStatic
 
-	private populateRecurrings(): void {
-		const prevAll = this.allRecurrings;
-		this.allRecurrings =
-			zipMapBriefsWithIDs(
-				this.schedulusSpaceDbo?.recurringHappenings || {},
-			)?.map((rh) => {
-				const { id } = rh;
-				const prev = prevAll?.find((p) => p.id === id);
-				const result: IHappeningWithUiState = {
-					id,
-					brief: rh.brief,
-					state: prev?.state || {},
-					space: this.space || { id: '' },
-				};
-				return result;
-			}) || [];
+	override ngOnChanges(changes: SimpleChanges): void {
+		super.ngOnChanges(changes);
+		if (changes['tab'] && this.tab === 'week') {
+			this.isWeekTabActivated = true;
+		}
+	}
+
+	override onRecurringsLoaded(): void {
 		this.recurrings = this.filterRecurrings(this.filter);
-		console.log('populateRecurrings()', this.allRecurrings, this.recurrings);
+		console.log('filterRecurring()', this.allRecurrings, this.recurrings);
 	}
 
 	// We filter recurring at schedule level, so we can share it across different components?
@@ -379,14 +306,8 @@ export class CalendarComponent
 		);
 	}
 
-	private setDay(source: string, d: Date): void {
-		console.log(
-			`ScheduleComponent.setDay(source=${source}), date=${dateToIso(d)}`,
-		);
-		if (!d) {
-			return;
-		}
-
+	protected onDayChanged(d: Date): void {
+		this.changeBrowserURL();
 		// this.setSlidesAnimationState();
 		//
 		// this.activeDay.changeDate(d);
@@ -444,8 +365,9 @@ export class CalendarComponent
 		// 		});
 		// }
 		// this.slotsProvider.preloadEvents(tx, ...datesToPreload),
+	}
 
-		// Change URL
+	private changeBrowserURL(): void {
 		if (isToday(this.date)) {
 			history.replaceState(
 				history.state,
@@ -453,7 +375,7 @@ export class CalendarComponent
 				window.location.href.replace(/&date=\d{4}-\d{2}-\d{2}/, ''),
 			);
 		} else {
-			const isoDate = `&date=${localDateToIso(d)}`;
+			const isoDate = `&date=${localDateToIso(this.date)}`;
 			if (!window.location.href.includes('&date')) {
 				history.replaceState(
 					history.state,
