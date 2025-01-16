@@ -15,7 +15,7 @@ import {
 import { ISpaceContext } from '@sneat/team-models';
 import { takeUntil } from 'rxjs';
 import {
-	emptyScheduleFilter,
+	emptyCalendarFilter,
 	CalendarFilterService,
 } from '../../../calendar-filter.service';
 import { isSlotVisible } from '../../../schedule-slots';
@@ -28,7 +28,7 @@ import { Weekday } from '../../weekday';
 })
 export class CalendarWeekdayComponent implements OnDestroy {
 	private readonly destroyed = new EventEmitter<void>();
-	private filter = emptyScheduleFilter;
+	private filter = emptyCalendarFilter;
 
 	@Input({ required: true }) space: ISpaceContext = { id: '' };
 	@Input() weekday?: Weekday;
@@ -67,7 +67,7 @@ export class CalendarWeekdayComponent implements OnDestroy {
 		return isSlotVisible(
 			this.space?.id,
 			slot,
-			this.filter || emptyScheduleFilter,
+			this.filter || emptyCalendarFilter,
 		);
 	}
 

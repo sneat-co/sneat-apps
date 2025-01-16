@@ -18,8 +18,8 @@
 </ion-segment>
 
 <sneat-calendar-filter
-	#scheduleFilterComponent
-	[space]="space"
+	#calendarFilterComponent
+	[space]="_space"
 	[showWeekdays]="tab === 'recurrings'"
 	[showRepeats]="tab === 'recurrings'"
 />
@@ -30,7 +30,7 @@ This is just a small performance optimization.
 -->
 <sneat-day-tab
 	[style.display]="tab === 'day' ? 'block' : 'none'"
-	[space]="space"
+	[space]="_space"
 	[spaceDaysProvider]="spaceDaysProvider"
 	[onSlotClicked]="onSlotClicked"
 />
@@ -46,7 +46,7 @@ This is probably due to the fact that we open 14 listeners (1 for each day of 2 
 @if (isWeekTabActivated) {
 	<sneat-week-tab
 		[style.display]="tab === 'week' ? 'block' : 'none'"
-		[space]="space"
+		[space]="_space"
 		[spaceDaysProvider]="spaceDaysProvider"
 		(slotClicked)="onSlotClicked($event)"
 	/>
@@ -55,14 +55,14 @@ This is probably due to the fact that we open 14 listeners (1 for each day of 2 
 @switch (tab) {
 	@case ("recurrings") {
 		<sneat-recurrings-tab
-			[space]="space"
+			[space]="_space"
 			[recurrings]="recurrings"
 			[allRecurrings]="allRecurrings"
 		/>
 	}
 	@case ("singles") {
 		<sneat-singles-tab
-			[space]="space"
+			[space]="_space"
 			[onSlotClicked]="onSlotClicked"
 			[onDateSelected]="onDateSelected"
 		/>

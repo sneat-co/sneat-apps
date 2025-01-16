@@ -19,18 +19,17 @@ import {
 	WeekdayCode2,
 	IHappeningContext,
 	IHappeningWithUiState,
-	ICalendariumSpaceDbo,
 } from '@sneat/mod-schedulus-core';
 import { ISlotUIContext } from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
-import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/team-models';
 import { HappeningService, CalendarDayService } from '@sneat/team-services';
 import { takeUntil } from 'rxjs';
 import { CalendariumSpaceService } from '../../services';
 import { isToday } from '../schedule-core';
 import {
-	emptyScheduleFilter,
+	emptyCalendarFilter,
 	CalendarFilterService,
 } from '../calendar-filter.service';
 import { hasContact } from '../schedule-slots';
@@ -51,15 +50,16 @@ export class CalendarComponent
 	extends CalendarBaseComponent
 	implements OnInit, AfterViewInit, OnChanges, OnDestroy
 {
-	private filter = emptyScheduleFilter;
+	private filter = emptyCalendarFilter;
 
 	// prevWeekdays: SlotsGroup[];
 
-	@ViewChild('scheduleFilterComponent')
-	public scheduleFilterComponent?: CalendarFilterComponent;
+	@ViewChild('calendarFilterComponent')
+	public calendarFilterComponent?: CalendarFilterComponent;
 
 	@Input()
 	set space(space: ISpaceContext) {
+		console.log('CalendarComponent.space=', space);
 		this._space = space;
 	}
 
@@ -78,7 +78,7 @@ export class CalendarComponent
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		private readonly params: SpaceComponentBaseParams,
 		filterService: CalendarFilterService,
-		scheduleStateService: CalendarStateService,
+		calendarStateService: CalendarStateService,
 		happeningService: HappeningService,
 		calendarDayService: CalendarDayService,
 		sneatApiService: SneatApiService,
@@ -97,10 +97,10 @@ export class CalendarComponent
 				this.filter = filter;
 				this.recurrings = this.filterRecurrings(filter);
 			},
-			error: this.errorLogger.logErrorHandler('failed to get schedule filter'),
+			error: this.errorLogger.logErrorHandler('failed to get calendar filter'),
 		});
 
-		scheduleStateService.dateChanged.subscribe({
+		calendarStateService.dateChanged.subscribe({
 			next: (changed) => {
 				const { date } = changed;
 				this.date = date;
@@ -235,7 +235,7 @@ export class CalendarComponent
 		console.log('filterRecurring()', this.allRecurrings, this.recurrings);
 	}
 
-	// We filter recurring at schedule level, so we can share it across different components?
+	// We filter recurring at calendar level, so we can share it across different components?
 	private filterRecurrings(
 		filter: ICalendarFilter,
 	): IHappeningWithUiState[] | undefined {
@@ -270,7 +270,7 @@ export class CalendarComponent
 			return !hide;
 		});
 		console.log(
-			`ScheduleComponent.filterRecurrings()`,
+			`CalendarComponent.filterRecurrings()`,
 			filter,
 			this.allRecurrings,
 			' => ',

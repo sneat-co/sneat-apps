@@ -7,7 +7,7 @@ import { WeekdayCode2 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
 import {
-	emptyScheduleFilter,
+	emptyCalendarFilter,
 	CalendarFilterService,
 } from '../../../calendar-filter.service';
 import { WeekdaysFormBase } from '../../../weekdays/weekdays-form-base';
@@ -49,7 +49,7 @@ export class CalendarFilterComponent extends WeekdaysFormBase {
 		);
 	}
 
-	protected filter: ICalendarFilter = emptyScheduleFilter;
+	protected filter: ICalendarFilter = emptyCalendarFilter;
 
 	constructor(
 		private readonly filterService: CalendarFilterService,

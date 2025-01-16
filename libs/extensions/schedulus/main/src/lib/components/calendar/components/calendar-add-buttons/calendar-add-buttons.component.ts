@@ -35,6 +35,7 @@ export class CalendarAddButtonsComponent {
 	}
 
 	protected goNewHappening(event: Event, type: HappeningType): boolean {
+		console.log('goNewHappening()', type, this.space);
 		event.stopPropagation();
 		if (!this.space) {
 			return false;

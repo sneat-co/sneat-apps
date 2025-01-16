@@ -1,7 +1,7 @@
 import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
 import { ICalendarFilter } from './calendar/components/calendar-filter/calendar-filter';
 
-export const emptyScheduleFilter: ICalendarFilter = {
+export const emptyCalendarFilter: ICalendarFilter = {
 	text: '',
 	showRecurrings: true,
 	showSingles: true,
@@ -12,7 +12,7 @@ export const emptyScheduleFilter: ICalendarFilter = {
 
 export class CalendarFilterService {
 	private readonly filter$ = new BehaviorSubject<ICalendarFilter>(
-		emptyScheduleFilter,
+		emptyCalendarFilter,
 	);
 	public readonly filter = this.filter$
 		.asObservable()
@@ -36,6 +36,6 @@ export class CalendarFilterService {
 	};
 
 	resetScheduleFilter(): void {
-		this.filter$.next(emptyScheduleFilter);
+		this.filter$.next(emptyCalendarFilter);
 	}
 }

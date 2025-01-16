@@ -21,7 +21,7 @@ import {
 import { ISpaceContext } from '@sneat/team-models';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import {
-	emptyScheduleFilter,
+	emptyCalendarFilter,
 	CalendarFilterService,
 } from '../../../calendar-filter.service';
 import { isSlotVisible } from '../../../schedule-slots';
@@ -36,7 +36,7 @@ import { Weekday } from '../../weekday';
 export class CalendarDayComponent implements OnChanges, OnDestroy {
 	private readonly destroyed = new Subject<void>();
 	private slotsSubscription?: Subscription;
-	private filter = emptyScheduleFilter;
+	private filter = emptyCalendarFilter;
 	// @Input() filter?: ICalendarFilter;
 	// @Input() showRegulars = true;
 	// @Input() showEvents = true;

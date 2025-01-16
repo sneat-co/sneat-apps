@@ -11,7 +11,7 @@ import {
 	ScheduleNavService,
 } from '@sneat/extensions/schedulus/shared';
 import {
-	emptyScheduleFilter,
+	emptyCalendarFilter,
 	CalendarFilterService,
 } from '../../components/calendar-filter.service';
 import { ICalendarFilter } from '../../components/calendar/components/calendar-filter/calendar-filter';
@@ -64,7 +64,7 @@ export class CalendarPageComponent extends SpaceBaseComponent {
 		});
 	}
 
-	private filter: ICalendarFilter = emptyScheduleFilter;
+	private filter: ICalendarFilter = emptyCalendarFilter;
 
 	private readonly onQueryParamsChanged = (queryParams: ParamMap) => {
 		const tab = queryParams.get('tab') as CalendarTab;
