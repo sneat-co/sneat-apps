@@ -36,7 +36,7 @@
 				[space]="space"
 				[dateID]="day.dateID"
 				[slotContext]="slot"
-				(slotClicked)="onSlotClicked($event)"
+				(slotClicked)="slotClicked.emit($event)"
 			/>
 		}
 	} @empty {

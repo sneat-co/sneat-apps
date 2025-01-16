@@ -12,6 +12,7 @@ import {
 import { dateToIso } from '@sneat/core';
 import {
 	ISlotUIContext,
+	ISlotUIEvent,
 	jsDayToWeekday,
 	NewHappeningParams,
 	ScheduleNavService,
@@ -44,10 +45,7 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 	@Input({ required: true }) space: ISpaceContext = { id: '' };
 	@Input({ required: true }) weekday?: Weekday;
 
-	@Output() readonly slotClicked = new EventEmitter<{
-		slot: ISlotUIContext;
-		event: Event;
-	}>();
+	@Output() readonly slotClicked = new EventEmitter<ISlotUIEvent>();
 
 	public allSlots?: ISlotUIContext[];
 	public slots?: ISlotUIContext[];

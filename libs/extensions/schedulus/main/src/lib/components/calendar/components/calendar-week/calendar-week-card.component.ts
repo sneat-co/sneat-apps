@@ -7,7 +7,10 @@ import {
 	OnInit,
 } from '@angular/core';
 import { virtualSliderAnimations } from '@sneat/components';
-import { ISlotUIContext } from '@sneat/extensions/schedulus/shared';
+import {
+	ISlotUIContext,
+	ISlotUIEvent,
+} from '@sneat/extensions/schedulus/shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
 import { SpaceDaysProvider } from '../../../../services/space-days-provider';
@@ -27,10 +30,8 @@ export class CalendarWeekCardComponent
 {
 	@Input({ required: true }) space: ISpaceContext = { id: '' };
 	@Input({ required: true }) spaceDaysProvider?: SpaceDaysProvider;
-	@Output() readonly slotClicked = new EventEmitter<{
-		slot: ISlotUIContext;
-		event: Event;
-	}>();
+
+	@Output() readonly slotClicked = new EventEmitter<ISlotUIEvent>();
 
 	get oddWeek(): SwipeableWeek {
 		return this.oddSlide as SwipeableWeek;
@@ -73,10 +74,5 @@ export class CalendarWeekCardComponent
 			this.spaceDaysProvider,
 			this.destroyed$,
 		);
-	}
-
-	onSlotClicked(args: { slot: ISlotUIContext; event: Event }): void {
-		console.log('ScheduleWeekCardComponent.onSlotClicked()', args);
-		this.slotClicked.emit(args);
 	}
 }

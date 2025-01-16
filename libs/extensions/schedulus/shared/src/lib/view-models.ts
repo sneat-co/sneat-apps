@@ -44,6 +44,10 @@ export interface ISlotUIContext {
 	readonly participants?: Readonly<Record<string, ISlotParticipant>>;
 	readonly levels?: Level[];
 }
+export interface ISlotUIEvent {
+	slot: ISlotUIContext;
+	event: Event;
+}
 
 export type SlotsByWeekday = Record<string, ISlotUIContext[]>;
 

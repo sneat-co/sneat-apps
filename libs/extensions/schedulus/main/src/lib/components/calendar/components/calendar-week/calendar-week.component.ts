@@ -12,6 +12,7 @@ import { ISpaceContext } from '@sneat/team-models';
 import { SpaceDaysProvider } from '../../../../services/space-days-provider';
 import {
 	ISlotUIContext,
+	ISlotUIEvent,
 	NewHappeningParams,
 } from '@sneat/extensions/schedulus/shared';
 import { ICalendarFilter } from '../calendar-filter/calendar-filter';
@@ -31,24 +32,12 @@ export class CalendarWeekComponent implements OnChanges {
 
 	@Output() readonly goNew = new EventEmitter<NewHappeningParams>();
 	@Output() readonly dateSelected = new EventEmitter<Date>();
-	@Output() readonly slotClicked = new EventEmitter<{
-		slot: ISlotUIContext;
-		event: Event;
-	}>();
+	@Output() readonly slotClicked = new EventEmitter<ISlotUIEvent>();
 
 	protected weekdays: Weekday[] = createWeekdays();
 
 	ngOnChanges(changes: SimpleChanges): void {
 		this.onWeekInputChanged(changes['week']);
-	}
-
-	onDateSelected(date: Date): void {
-		this.dateSelected.next(date);
-	}
-
-	onSlotClicked(args: { slot: ISlotUIContext; event: Event }): void {
-		console.log('ScheduleWeekComponent.onSlotClicked()', args);
-		this.slotClicked.emit(args);
 	}
 
 	private onWeekInputChanged(week: SimpleChange): void {

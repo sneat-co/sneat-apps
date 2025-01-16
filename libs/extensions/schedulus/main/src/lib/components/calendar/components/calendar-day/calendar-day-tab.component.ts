@@ -1,10 +1,20 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
+import {
+	ChangeDetectorRef,
+	Component,
+	EventEmitter,
+	Input,
+	OnDestroy,
+	Output,
+} from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { dateToIso, isoStringsToDate } from '@sneat/core';
 import { ISpaceContext } from '@sneat/team-models';
 import { Subject, takeUntil } from 'rxjs';
 import { SpaceDaysProvider } from '../../../../services/space-days-provider';
-import { ISlotUIContext } from '@sneat/extensions/schedulus/shared';
+import {
+	ISlotUIContext,
+	ISlotUIEvent,
+} from '@sneat/extensions/schedulus/shared';
 import { addDays, CalendarStateService } from '../../calendar-state.service';
 
 @Component({
@@ -24,12 +34,7 @@ export class CalendarDayTabComponent implements OnDestroy {
 	@Input({ required: true }) space: ISpaceContext = { id: '' };
 	@Input({ required: true }) spaceDaysProvider?: SpaceDaysProvider;
 
-	@Input() onSlotClicked?: (args: {
-		slot: ISlotUIContext;
-		event: Event;
-	}) => void = (args: { slot: ISlotUIContext; event: Event }) => {
-		console.error('onSlotClicked is not set', args);
-	};
+	@Output() readonly slotClicked = new EventEmitter<ISlotUIEvent>();
 
 	constructor(
 		private readonly scheduleSateService: CalendarStateService,

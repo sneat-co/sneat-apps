@@ -8,6 +8,7 @@ import {
 import { HappeningType } from '@sneat/mod-schedulus-core';
 import {
 	ISlotUIContext,
+	ISlotUIEvent,
 	NewHappeningParams,
 	ScheduleNavService,
 	SpaceDay,
@@ -32,11 +33,9 @@ export class CalendarWeekdayComponent implements OnDestroy {
 
 	@Input({ required: true }) space: ISpaceContext = { id: '' };
 	@Input() weekday?: Weekday;
+
 	@Output() dateSelected = new EventEmitter<Date>();
-	@Output() slotClicked = new EventEmitter<{
-		slot: ISlotUIContext;
-		event: Event;
-	}>();
+	@Output() slotClicked = new EventEmitter<ISlotUIEvent>();
 
 	protected get day(): SpaceDay | undefined {
 		return this.weekday?.day;
@@ -56,11 +55,6 @@ export class CalendarWeekdayComponent implements OnDestroy {
 	ngOnDestroy(): void {
 		this.destroyed.next();
 		this.destroyed.complete();
-	}
-
-	protected onSlotClicked(args: { slot: ISlotUIContext; event: Event }): void {
-		console.log('ScheduleWeekdayComponent.onSlotClicked', args);
-		this.slotClicked.emit(args);
 	}
 
 	protected showSlot(slot: ISlotUIContext): boolean {
