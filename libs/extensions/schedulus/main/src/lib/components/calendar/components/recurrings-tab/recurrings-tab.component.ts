@@ -12,7 +12,8 @@ import { CalendarFilterService } from '../../../calendar-filter.service';
 export class RecurringsTabComponent {
 	@Input({ required: true }) recurrings?: readonly IHappeningWithUiState[];
 	@Input({ required: true }) allRecurrings?: readonly IHappeningWithUiState[];
-	@Input({ required: true }) space: ISpaceContext = { id: '' };
+	@Input({ required: true }) space?: ISpaceContext;
+
 	public readonly resetFilter: (event: Event) => void;
 
 	public get numberOfHidden(): number {

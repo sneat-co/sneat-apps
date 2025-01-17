@@ -19,7 +19,7 @@ export class SingleHappeningsListComponent
 	extends SneatBaseComponent
 	implements OnChanges
 {
-	@Input({ required: true }) space: ISpaceContext = { id: '' };
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input({ required: true }) public happenings?: IHappeningContext[];
 
 	private filter?: ICalendarFilter;

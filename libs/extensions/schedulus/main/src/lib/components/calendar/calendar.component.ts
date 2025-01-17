@@ -191,25 +191,6 @@ export class CalendarComponent
 	// 		.catch(this.errorLogger.logErrorHandler('failed to navigate to new happening page'));
 	// };
 
-	protected readonly onSlotClicked = (args: ISlotUIEvent): void => {
-		console.log('ScheduleComponent.onSlotClicked()', args);
-		if (!this.space) {
-			throw new Error('!team');
-		}
-		const happening: IHappeningContext = args.slot.happening;
-		console.log('');
-		const page = `happening/${happening.id}`;
-		this.params.spaceNavService
-			.navigateForwardToSpacePage(this.space, page, {
-				state: { happening },
-			})
-			.catch(
-				this.errorLogger.logErrorHandler(
-					'failed to navigate to recurring happening page',
-				),
-			);
-	};
-
 	protected readonly onDateSelected = (date: Date): void => {
 		this.tab = 'day';
 		this.setDay('onDateSelected', date);
@@ -232,13 +213,17 @@ export class CalendarComponent
 
 	override onRecurringsLoaded(): void {
 		this.recurrings = this.filterRecurrings(this.filter);
-		console.log('filterRecurring()', this.allRecurrings, this.recurrings);
+		console.log('onRecurringsLoaded()', this.allRecurrings, this.recurrings);
 	}
 
 	// We filter recurring at calendar level, so we can share it across different components?
 	private filterRecurrings(
 		filter: ICalendarFilter,
 	): IHappeningWithUiState[] | undefined {
+		const spaceID = this._space?.id;
+		if (!spaceID) {
+			return;
+		}
 		const text = filter.text.toLowerCase();
 
 		const filtered = this.allRecurrings?.filter((r) => {
@@ -252,7 +237,7 @@ export class CalendarComponent
 				!hide &&
 				(!r.brief ||
 					!hasContact(
-						this.space.id,
+						spaceID,
 						filter.contactIDs,
 						r.brief.related || r.brief.related,
 					))

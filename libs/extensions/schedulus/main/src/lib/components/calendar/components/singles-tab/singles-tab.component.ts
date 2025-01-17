@@ -40,7 +40,7 @@ export class SinglesTabComponent
 
 	public tab: 'upcoming' | 'past' | 'recent' = 'upcoming';
 
-	@Input({ required: true }) space: ISpaceContext = { id: '' };
+	@Input({ required: true }) space?: ISpaceContext;
 
 	@Output() readonly slotClicked = new EventEmitter<ISlotUIEvent>();
 
@@ -93,6 +93,7 @@ export class SinglesTabComponent
 	}
 
 	private watchUpcomingSingles(): void {
+		if (!this.space) return;
 		this.upcomingSinglesSubscription = this.watchSingles(
 			this.happeningService.watchUpcomingSingles(this.space),
 			this.upcomingSinglesSubscription,
@@ -101,6 +102,7 @@ export class SinglesTabComponent
 	}
 
 	private watchPastSingles(): void {
+		if (!this.space) return;
 		this.pastSinglesSubscription = this.watchSingles(
 			this.happeningService.watchPastSingles(this.space),
 			this.pastSinglesSubscription,
@@ -109,6 +111,7 @@ export class SinglesTabComponent
 	}
 
 	private watchRecentSingles(): void {
+		if (!this.space) return;
 		this.recentSinglesSubscription = this.watchSingles(
 			this.happeningService.watchRecentlyCreatedSingles(this.space),
 			this.recentSinglesSubscription,

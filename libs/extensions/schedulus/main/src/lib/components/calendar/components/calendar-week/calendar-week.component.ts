@@ -25,14 +25,13 @@ import { Weekday } from '../../weekday';
 	standalone: false,
 })
 export class CalendarWeekComponent implements OnChanges {
-	@Input({ required: true }) space: ISpaceContext = { id: '' };
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input({ required: true }) week?: Week;
 	@Input({ required: true }) spaceDaysProvider?: SpaceDaysProvider;
 	@Input() filter?: ICalendarFilter;
 
 	@Output() readonly goNew = new EventEmitter<NewHappeningParams>();
 	@Output() readonly dateSelected = new EventEmitter<Date>();
-	@Output() readonly slotClicked = new EventEmitter<ISlotUIEvent>();
 
 	protected weekdays: Weekday[] = createWeekdays();
 

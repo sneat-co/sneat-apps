@@ -4,18 +4,20 @@
 	<ion-segment-button value="recent">Recently created</ion-segment-button>
 </ion-segment>
 
-<sneat-single-happenings-list
-	*ngIf="tab === 'upcoming'"
-	[space]="space"
-	[happenings]="upcomingSingles"
-/>
-<sneat-single-happenings-list
-	*ngIf="tab === 'past'"
-	[space]="space"
-	[happenings]="pastSingles"
-/>
-<sneat-single-happenings-list
-	*ngIf="tab === 'recent'"
-	[space]="space"
-	[happenings]="recentSingles"
-/>
+@switch (tab) {
+	@case ("upcoming") {
+		<sneat-single-happenings-list
+			[space]="space"
+			[happenings]="upcomingSingles"
+		/>
+	}
+	@case ("past") {
+		<sneat-single-happenings-list [space]="space" [happenings]="pastSingles" />
+	}
+	@case ("recent") {
+		<sneat-single-happenings-list
+			[space]="space"
+			[happenings]="recentSingles"
+		/>
+	}
+}

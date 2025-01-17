@@ -63,7 +63,7 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 
 	protected readonly destroyed = new EventEmitter<void>();
 
-	@Input({ required: true }) space: ISpaceContext = { id: '' };
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() contactusSpace?: IContactusSpaceDboAndID;
 	@Input() happening?: IHappeningContext;
 
@@ -199,7 +199,7 @@ This operation can NOT be undone.`)
 							this.happening?.brief?.related,
 							'contactus',
 							'contacts',
-							this.space.id,
+							space.id,
 						).includes(m.id),
 					) || [],
 				members: teamMembers,

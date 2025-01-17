@@ -22,7 +22,7 @@ import { SpaceDaysProvider } from '../../services/space-days-provider';
 	template: '',
 })
 export abstract class CalendarBaseComponent implements OnChanges, OnDestroy {
-	protected _space: ISpaceContext = { id: '' };
+	protected _space?: ISpaceContext;
 
 	protected readonly destroyed = new Subject<void>();
 	protected date = new Date();
@@ -92,39 +92,41 @@ export abstract class CalendarBaseComponent implements OnChanges, OnDestroy {
 	private onSpaceIdChanged(): void {
 		console.log('ScheduleComponent.onSpaceIdChanged()', this._space?.id);
 		this.schedulusSpaceSubscription?.unsubscribe();
-		if (this._space?.id) {
-			this.populateRecurrings();
-			this.setDay('onTeamDtoChanged', this.date);
-			this.schedulusSpaceSubscription = this.calendariumSpaceService
-				.watchSpaceModuleRecord(this._space.id)
-				.subscribe({
-					next: (schedulusTeam) => {
-						console.log(
-							'ScheduleComponent.onTeamIdChanged() => schedulusTeam:',
-							schedulusTeam,
-						);
-						this.schedulusSpaceDbo = schedulusTeam?.dbo;
-						this.spaceDaysProvider.setSchedulusSpace({
-							space: this._space,
-							...schedulusTeam,
-						});
-						this.populateRecurrings();
-					},
-				});
-			// this.slotsProvider.setCommuneId(this.team.id)
-			// 	.subscribe(
-			// 		(regulars) => {
-			// 			console.log('Loaded regulars:', regulars);
-			// 			this.allRegulars = regulars;
-			// 			this.regulars = this.filterRegulars();
-			// 		},
-			// 		this.errorLogger.logError,
-			// 		() => {
-			// 			// this.activeWeek.weekdays = [...this.activeWeek.weekdays];
-			// 			this.setDay('onCommuneIdChanged', this.activeDay.date || new Date());
-			// 		},
-			// 	);
+		const space = this._space;
+		if (!space) {
+			return;
 		}
+		this.populateRecurrings();
+		this.setDay('onTeamDtoChanged', this.date);
+		this.schedulusSpaceSubscription = this.calendariumSpaceService
+			.watchSpaceModuleRecord(space.id)
+			.subscribe({
+				next: (schedulusTeam) => {
+					console.log(
+						'ScheduleComponent.onTeamIdChanged() => schedulusTeam:',
+						schedulusTeam,
+					);
+					this.schedulusSpaceDbo = schedulusTeam?.dbo;
+					this.spaceDaysProvider.setSchedulusSpace({
+						space,
+						...schedulusTeam,
+					});
+					this.populateRecurrings();
+				},
+			});
+		// this.slotsProvider.setCommuneId(this.team.id)
+		// 	.subscribe(
+		// 		(regulars) => {
+		// 			console.log('Loaded regulars:', regulars);
+		// 			this.allRegulars = regulars;
+		// 			this.regulars = this.filterRegulars();
+		// 		},
+		// 		this.errorLogger.logError,
+		// 		() => {
+		// 			// this.activeWeek.weekdays = [...this.activeWeek.weekdays];
+		// 			this.setDay('onCommuneIdChanged', this.activeDay.date || new Date());
+		// 		},
+		// 	);
 	}
 
 	private onSpaceContextChanged(): void {

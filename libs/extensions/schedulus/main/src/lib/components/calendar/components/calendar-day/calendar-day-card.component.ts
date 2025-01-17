@@ -32,11 +32,10 @@ export class CalendarDayCardComponent
 	extends CalendarDayBaseComponent
 	implements OnInit
 {
-	@Input({ required: true }) space: ISpaceContext = { id: '' };
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input({ required: true }) spaceDaysProvider?: SpaceDaysProvider;
 
 	@Output() readonly goNew = new EventEmitter<NewHappeningParams>();
-	@Output() readonly slotClicked = new EventEmitter<ISlotUIEvent>();
 
 	@Input() set activeDayPlus(value: number) {
 		this.shiftDays = value;
