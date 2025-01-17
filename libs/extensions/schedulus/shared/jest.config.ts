@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'extensions-schedulus-shared',
 	preset: '../../../../jest.preset.js',

@@ -3,15 +3,10 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import {
-	AddressFormComponent,
-	ISaveEvent,
-	SneatPipesModule,
-} from '@sneat/components';
+import { ISaveEvent, SneatPipesModule } from '@sneat/components';
 import {
 	ContactComponentBaseParams,
 	ContactComponentBaseParamsModule,
-	ContactContactsComponent,
 	ContactDetailsComponent,
 	ContactRolesInputModule,
 	ContactsListModule,

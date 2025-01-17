@@ -48,7 +48,6 @@ export class AgentService {
 				params = params.append(`p:${id}:${p.type}`, '' + p.value);
 			});
 		}
-		// eslint-disable-next-line object-shorthand
 		const agentUrl = getStoreUrl(agentId);
 		return this.http.get<IExecuteResponse>(agentUrl + '/exec/select', {
 			params,

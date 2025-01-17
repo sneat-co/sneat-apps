@@ -11,7 +11,6 @@ import {
 } from '@sneat/contactus-services';
 import { MembersShortListCardComponent } from '@sneat/contactus-shared';
 import { IIdAndOptionalDbo, TopMenuService } from '@sneat/core';
-import { CalendarBriefCardComponent } from '@sneat/extensions/schedulus/main';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { SpaceServiceModule } from '@sneat/team-services';
 import { SpacePageBaseComponent } from './SpacePageBaseComponent';
@@ -28,7 +27,7 @@ import { SpacePageBaseComponent } from './SpacePageBaseComponent';
 		ContactusServicesModule,
 		SpaceServiceModule,
 		MembersShortListCardComponent,
-		CalendarBriefCardComponent,
+		// CalendarBriefComponent,
 	],
 })
 export class SpacePageComponent extends SpacePageBaseComponent {

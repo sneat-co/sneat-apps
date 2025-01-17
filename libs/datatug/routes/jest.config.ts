@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'datatug-routes',
 	preset: '../../../jest.preset.js',

@@ -6,7 +6,6 @@ import { IMemberBrief } from '@sneat/contactus-core';
 import { AnalyticsService, IAnalyticsService, IIdAndBrief } from '@sneat/core';
 import { IUserSpaceBrief } from '@sneat/auth-models';
 // import {IRetrospective} from '@sneat/scrumspace/retrospectives';
-import { IRecord } from '@sneat/data';
 import { ISpaceDbo } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';

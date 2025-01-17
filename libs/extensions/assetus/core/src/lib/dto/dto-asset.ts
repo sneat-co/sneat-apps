@@ -10,7 +10,6 @@ import {
 	FuelType,
 } from './assetus-types';
 // import { IContact2Asset } from './dto-contact2item';
-import { IAssetDocumentExtra } from './dto-document';
 import {
 	IDemoRecord,
 	ITitled,

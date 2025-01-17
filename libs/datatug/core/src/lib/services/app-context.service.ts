@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-// eslint-disable-next-line no-shadow
 export enum AppCode {
-	// eslint-disable-next-line @typescript-eslint/naming-convention
 	DataTug = 'datatug',
 	// sneatTeam = 'sneatTeam',
 }

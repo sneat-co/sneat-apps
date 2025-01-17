@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'scrumspace-scrummodels',
 	preset: '../../../jest.preset.js',

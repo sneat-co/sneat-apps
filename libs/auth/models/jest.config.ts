@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'auth-models',
 	preset: '../../jest.preset.js',

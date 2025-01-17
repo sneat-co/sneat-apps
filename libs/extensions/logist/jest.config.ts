@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'extensions-logist',
 	preset: '../../../jest.preset.js',

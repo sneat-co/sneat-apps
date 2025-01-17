@@ -41,6 +41,7 @@ export class ForeignKeyCardComponent implements OnChanges {
 		private readonly agentService: AgentService,
 	) {}
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	public goTable(event: Event, tableRef?: ITableRef): void {
 		event.preventDefault();
 		event.stopPropagation();

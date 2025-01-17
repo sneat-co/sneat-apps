@@ -1,14 +1,6 @@
 import { signal } from '@angular/core';
-import { wdCodeToWeekdayLongName } from '@sneat/components';
 import { dateToIso } from '@sneat/core';
-import {
-	ICalendarDayDbo,
-	ITiming,
-	WeekdayCode2,
-	IHappeningContext,
-} from '@sneat/mod-schedulus-core';
 import { IErrorLogger } from '@sneat/logging';
-import { HappeningService, CalendarDayService } from '@sneat/team-services';
 import {
 	BehaviorSubject,
 	distinctUntilChanged,
@@ -25,7 +17,13 @@ import {
 	ISlotUIContext,
 	RecurringSlots,
 	sortSlotItems,
-} from './view-models';
+	ICalendarDayDbo,
+	WeekdayCode2,
+	wdCodeToWeekdayLongName,
+	IHappeningContext,
+	ITiming,
+} from '@sneat/mod-schedulus-core';
+import { CalendarDayService, HappeningService } from './services';
 
 export class SpaceDay {
 	private readonly destroyed = new Subject<void>();

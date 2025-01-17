@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'extensions-assetus-core',
 	preset: '../../../../jest.preset.js',

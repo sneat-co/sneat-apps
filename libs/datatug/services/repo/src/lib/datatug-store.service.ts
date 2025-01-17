@@ -36,7 +36,6 @@ export class DatatugStoreService {
 	}
 
 	public getProjects(storeId: string): Observable<IProjectBase[]> {
-		// eslint-disable-next-line no-console
 		console.log('getProjects', storeId);
 		if (!storeId) {
 			return throwError(() => 'Parameter "storeId" is required');

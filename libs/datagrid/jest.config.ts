@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'datagrid',
 	preset: '../../jest.preset.js',

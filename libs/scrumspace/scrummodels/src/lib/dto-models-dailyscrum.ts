@@ -13,7 +13,6 @@ export type TimerOperation =
 	| TimerOperationEnum.stop
 	| TimerOperationEnum.pause;
 
-// eslint-disable-next-line no-shadow
 export enum TimerStatusEnum {
 	active = 'active',
 	stopped = 'stopped',

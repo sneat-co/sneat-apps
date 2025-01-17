@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs';
 import { IRecordsetDef } from '@sneat/datatug-models';
 import { IRecordsetResult } from './execute';
 

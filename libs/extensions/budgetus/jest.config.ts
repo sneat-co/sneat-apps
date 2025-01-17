@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'extensions-budgetus',
 	preset: '../../../jest.preset.js',

@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'auth-ui',
 	preset: '../../jest.preset.js',

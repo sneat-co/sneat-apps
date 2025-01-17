@@ -1,6 +1,5 @@
 import { IAssetContext } from '../contexts';
-import { IAssetDboBase, IAssetExtra } from './dto-asset';
-import { IWithAssetIDs, IWithMemberIDs, IWithTag } from '@sneat/dto';
+import { IAssetExtra } from './dto-asset';
 
 export type AssetDocumentType =
 	| 'unspecified'

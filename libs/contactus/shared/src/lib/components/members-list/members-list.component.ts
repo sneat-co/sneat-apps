@@ -22,7 +22,7 @@ import { IContactBrief } from '@sneat/contactus-core';
 import {
 	ScheduleNavService,
 	ScheduleNavServiceModule,
-} from '@sneat/extensions/schedulus/shared';
+} from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	InviteModalComponent,

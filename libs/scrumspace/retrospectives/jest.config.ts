@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'scrumspace-retrospectives',
 	preset: '../../../jest.preset.js',

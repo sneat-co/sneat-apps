@@ -3,7 +3,6 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import {
 	allUserStoresAsFlatList,
 	DatatugProjStoreType,
-	IDatatugStoreBrief,
 	IDatatugStoreBriefWithId,
 } from '@sneat/datatug-models';
 import { AgentStateService, IAgentState } from '@sneat/datatug-services-repo';

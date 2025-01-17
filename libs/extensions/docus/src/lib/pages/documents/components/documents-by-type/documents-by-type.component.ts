@@ -1,4 +1,3 @@
-import { CommandModule } from '@angular/cli/src/command-builder/command-module';
 import { CommonModule } from '@angular/common';
 import {
 	Component,

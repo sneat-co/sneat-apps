@@ -1,3 +1,3 @@
-export * from './view-models';
-export * from './schedule-nav.service';
+export * from './services';
+export * from './components';
 export * from './space-day';

@@ -176,7 +176,7 @@ export class ContainerPointComponent implements OnChanges {
 					this.containerForm.enable();
 				},
 			});
-		} catch (e) {
+		} catch {
 			this.saving = false;
 		}
 	}

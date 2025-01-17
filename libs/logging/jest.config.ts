@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'logging',
 	preset: '../../jest.preset.js',
