@@ -42,10 +42,8 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 	// @Input() showRegulars = true;
 	// @Input() showEvents = true;
 
-	@Input({ required: true }) space: ISpaceContext = { id: '' };
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input({ required: true }) weekday?: Weekday;
-
-	@Output() readonly slotClicked = new EventEmitter<ISlotUIEvent>();
 
 	public allSlots?: ISlotUIContext[];
 	public slots?: ISlotUIContext[];
@@ -85,9 +83,10 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 	}
 
 	private applyFilter(): void {
-		if (this.allSlots?.length) {
+		const spaceID = this.space?.id;
+		if (spaceID && this.allSlots?.length) {
 			this.slots = this.allSlots
-				.filter((slot) => isSlotVisible(this.space?.id, slot, this.filter))
+				.filter((slot) => isSlotVisible(spaceID, slot, this.filter))
 				.sort(sortSlotItems);
 			this.slotsHiddenByFilter = this.allSlots.length - this.slots.length;
 			console.log(

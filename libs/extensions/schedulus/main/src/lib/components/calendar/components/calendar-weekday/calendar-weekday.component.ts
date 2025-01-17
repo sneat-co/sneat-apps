@@ -31,11 +31,10 @@ export class CalendarWeekdayComponent implements OnDestroy {
 	private readonly destroyed = new EventEmitter<void>();
 	private filter = emptyCalendarFilter;
 
-	@Input({ required: true }) space: ISpaceContext = { id: '' };
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() weekday?: Weekday;
 
 	@Output() dateSelected = new EventEmitter<Date>();
-	@Output() slotClicked = new EventEmitter<ISlotUIEvent>();
 
 	protected get day(): SpaceDay | undefined {
 		return this.weekday?.day;
@@ -58,10 +57,9 @@ export class CalendarWeekdayComponent implements OnDestroy {
 	}
 
 	protected showSlot(slot: ISlotUIContext): boolean {
-		return isSlotVisible(
-			this.space?.id,
-			slot,
-			this.filter || emptyCalendarFilter,
+		return (
+			!!this.space &&
+			isSlotVisible(this.space?.id, slot, this.filter || emptyCalendarFilter)
 		);
 	}
 

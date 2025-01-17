@@ -31,10 +31,8 @@ export class CalendarDayTabComponent implements OnDestroy {
 		return this.date && dateToIso(this.date);
 	}
 
-	@Input({ required: true }) space: ISpaceContext = { id: '' };
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input({ required: true }) spaceDaysProvider?: SpaceDaysProvider;
-
-	@Output() readonly slotClicked = new EventEmitter<ISlotUIEvent>();
 
 	constructor(
 		private readonly scheduleSateService: CalendarStateService,

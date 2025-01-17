@@ -1,13 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { PopoverController, PopoverOptions } from '@ionic/angular';
 import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
-import {
-	ISlotUIContext,
-	ISlotUIEvent,
-} from '@sneat/extensions/schedulus/shared';
+import { ISlotUIContext } from '@sneat/extensions/schedulus/shared';
 import { ISpaceContext } from '@sneat/team-models';
+import { CalendarNavService } from '../../../../services/calendar-nav.service';
 import { SlotContextMenuComponent } from '../slot-context-menu/slot-context-menu.component';
-import { HappeningUIState } from '@sneat/mod-schedulus-core';
 
 @Component({
 	selector: 'sneat-day-slot-item',
@@ -22,12 +19,8 @@ export class DaySlotItemComponent {
 	@Input() mode: 'full' | 'brief' = 'full';
 	@Input() color?: 'light';
 
-	@Input({ required: true }) space: ISpaceContext = { id: '' };
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input() contactusSpace?: IContactusSpaceDboAndID;
-
-	@Output() readonly slotClicked = new EventEmitter<ISlotUIEvent>();
-
-	slotState?: HappeningUIState;
 
 	protected get isCanceled(): boolean {
 		return (
@@ -36,14 +29,20 @@ export class DaySlotItemComponent {
 		);
 	}
 
-	constructor(private readonly popoverController: PopoverController) {}
+	constructor(
+		private readonly popoverController: PopoverController,
+		private readonly calendarNavService: CalendarNavService,
+	) {}
 
 	protected onSlotClicked(event: Event): void {
 		console.log('DaySlotItemComponent.onSlotClicked()');
 		if (!this.slotContext) {
 			return;
 		}
-		this.slotClicked.emit({ slot: this.slotContext, event });
+		this.calendarNavService.navigateToHappeningPage({
+			slot: this.slotContext,
+			event,
+		});
 	}
 
 	protected showRsvp(event: Event): void {

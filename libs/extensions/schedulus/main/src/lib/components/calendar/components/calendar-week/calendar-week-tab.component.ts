@@ -12,8 +12,6 @@ import {
 	standalone: false,
 })
 export class CalendarWeekTabComponent {
-	@Input({ required: true }) space: ISpaceContext = { id: '' };
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input({ required: true }) spaceDaysProvider?: SpaceDaysProvider;
-
-	@Output() readonly slotClicked = new EventEmitter<ISlotUIEvent>();
 }

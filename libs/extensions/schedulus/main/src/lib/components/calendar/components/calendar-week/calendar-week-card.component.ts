@@ -28,10 +28,8 @@ export class CalendarWeekCardComponent
 	extends SwipeableBaseComponent
 	implements OnInit
 {
-	@Input({ required: true }) space: ISpaceContext = { id: '' };
+	@Input({ required: true }) space?: ISpaceContext;
 	@Input({ required: true }) spaceDaysProvider?: SpaceDaysProvider;
-
-	@Output() readonly slotClicked = new EventEmitter<ISlotUIEvent>();
 
 	get oddWeek(): SwipeableWeek {
 		return this.oddSlide as SwipeableWeek;
