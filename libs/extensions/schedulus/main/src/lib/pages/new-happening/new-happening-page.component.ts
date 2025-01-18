@@ -13,8 +13,8 @@ import {
 } from '@sneat/mod-schedulus-core';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { first, takeUntil } from 'rxjs';
-import { HappeningFormComponent } from '../../components/happening-form/happening-form.component';
 import { CalendarBasePage } from '../calendar-base-page';
+import { HappeningFormComponent } from '@sneat/extensions/schedulus/shared';
 
 @Component({
 	selector: 'sneat-happening-new',

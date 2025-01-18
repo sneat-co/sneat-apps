@@ -5,25 +5,25 @@ import { IonicModule } from '@ionic/angular';
 
 import { virtualSliderAnimations } from '@sneat/components';
 import { ContactusServicesModule } from '@sneat/contactus-services';
-import { HappeningType } from '@sneat/mod-schedulus-core';
 import {
+	HappeningType,
 	NewHappeningParams,
 	ScheduleNavService,
-} from '@sneat/extensions/schedulus/shared';
-import {
-	emptyCalendarFilter,
-	CalendarFilterService,
-} from '../../components/calendar-filter.service';
-import { ICalendarFilter } from '../../components/calendar/components/calendar-filter/calendar-filter';
-import { CalendarComponentModule } from '../../components/calendar/calendar-component.module';
-import { CalendarTab } from '../../components/calendar/calendar-component-types';
+} from '@sneat/mod-schedulus-core';
 import {
 	SpaceBaseComponent,
 	SpaceComponentBaseParams,
 	SpaceCoreComponentsModule,
 } from '@sneat/team-components';
 import { IMemberContext } from '@sneat/contactus-core';
-import { CalendariumServicesModule } from '../../services';
+import {
+	CalendarComponentModule,
+	CalendariumServicesModule,
+	CalendarTab,
+	CalendarFilterService,
+	emptyCalendarFilter,
+	ICalendarFilter,
+} from '@sneat/extensions/schedulus/shared';
 
 @Component({
 	selector: 'sneat-schedule-page',

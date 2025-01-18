@@ -1,2 +1,2 @@
-export * from './models';
+export * from './timer-models';
 export * from './timer.service';

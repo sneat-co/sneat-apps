@@ -14,6 +14,10 @@ import { IIdAndOptionalDbo, TopMenuService } from '@sneat/core';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { SpaceServiceModule } from '@sneat/team-services';
 import { SpacePageBaseComponent } from './SpacePageBaseComponent';
+import {
+	CalendarBriefComponent,
+	HappeningServiceModule,
+} from '@sneat/extensions/schedulus/shared';
 
 @Component({
 	selector: 'sneat-space-page',
@@ -27,7 +31,8 @@ import { SpacePageBaseComponent } from './SpacePageBaseComponent';
 		ContactusServicesModule,
 		SpaceServiceModule,
 		MembersShortListCardComponent,
-		// CalendarBriefComponent,
+		CalendarBriefComponent,
+		HappeningServiceModule,
 	],
 })
 export class SpacePageComponent extends SpacePageBaseComponent {

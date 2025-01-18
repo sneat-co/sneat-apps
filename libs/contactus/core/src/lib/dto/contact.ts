@@ -1,42 +1,7 @@
-import { IFormField } from '@sneat/core';
-import { IContact2Asset } from './contact2item';
+import { ISpaceModuleItemRef, IWithRelatedAndRelatedIDs } from '@sneat/dto';
 import { IContactBase } from './contact-base';
-import {
-	ISpaceModuleItemRef,
-	IWithRelatedAndRelatedIDs,
-	SpaceMemberType,
-} from '@sneat/dto';
-import { IMemberPerson, IPersonRecord } from './person';
-
-export interface IEmail {
-	readonly type: 'work' | 'personal';
-	readonly address: string;
-}
-
-export interface IPhone {
-	readonly type: 'work' | 'mobile' | 'personal' | 'fax';
-	readonly number: string;
-}
-
-export const ContactTypePerson = 'person',
-	ContactTypeCompany = 'company',
-	ContactTypeLocation = 'location',
-	ContactTypeAnimal = 'animal',
-	ContactTypeVehicle = 'vehicle';
-
-export type ContactType =
-	| SpaceMemberType
-	| typeof ContactTypePerson
-	| typeof ContactTypeCompany
-	| typeof ContactTypeLocation
-	| typeof ContactTypeAnimal
-	| typeof ContactTypeVehicle
-	| 'landlord'
-	| 'tenant';
-
-export type MemberContactType =
-	| typeof ContactTypePerson
-	| typeof ContactTypeAnimal;
+import { IContact2Asset } from './contact2item';
+import { IPersonRecord } from './person';
 
 export interface IRelatedRolesRequest {
 	readonly rolesOfItem?: string[];
@@ -49,25 +14,8 @@ export interface IRelatedToRequest {
 	readonly remove?: IRelatedRolesRequest;
 }
 
-export const emptyContactBase: IContactBase = {
-	type: '' as ContactType,
-	names: {},
-};
-
 // // Default value: 'optional'
 export type RequirementOption = 'required' | 'optional' | 'excluded';
-
-export interface IPersonRequirements {
-	readonly lastName?: IFormField;
-	readonly ageGroup?: IFormField;
-	readonly gender?: IFormField;
-	readonly phone?: IFormField;
-	readonly email?: IFormField;
-	readonly relatedAs?: IFormField;
-	readonly roles?: IFormField;
-}
-
-export const emptyMemberPerson = emptyContactBase as IMemberPerson;
 
 export interface IContactBrief extends IContactBase {
 	readonly parentID?: string;

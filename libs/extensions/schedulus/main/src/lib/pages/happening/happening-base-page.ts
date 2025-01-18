@@ -7,8 +7,8 @@ import {
 	Subscription,
 	takeUntil,
 } from 'rxjs';
-import { HappeningComponentBaseParams } from '../../components/happening-component-base-params';
 import { CalendarBasePage } from '../calendar-base-page';
+import { HappeningComponentBaseParams } from '@sneat/extensions/schedulus/shared';
 
 export abstract class HappeningBasePage extends CalendarBasePage {
 	private readonly happeningID$ = new Subject<string>();

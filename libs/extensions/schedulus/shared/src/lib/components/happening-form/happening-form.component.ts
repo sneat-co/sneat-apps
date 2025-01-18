@@ -35,17 +35,17 @@ import {
 } from '@sneat/mod-schedulus-core';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { ISpaceContext } from '@sneat/team-models';
-import {
-	HappeningService,
-	HappeningServiceModule,
-	ICancelHappeningRequest,
-} from '../..';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
 import { HappeningParticipantsComponent } from '../happening-participants/happening-participants.component';
 import { HappeningSlotFormComponent } from '../happening-slot-form/happening-slot-form.component';
 import { HappeningSlotsComponent } from '../happening-slots/happening-slots.component';
 import { HappeningPricesComponent } from './happening-prices/happening-prices.component';
+import {
+	HappeningService,
+	HappeningServiceModule,
+	ICancelHappeningRequest,
+} from '../../services';
 
 @Component({
 	selector: 'sneat-happening-form',

@@ -1,4 +1,4 @@
-import { IIdAndOptionalBriefAndOptionalDbo } from '../';
+import { IIdAndOptionalBriefAndOptionalDbo } from '../interfaces';
 
 export type SpaceItem = 'happening' | 'contact' | 'document' | 'asset' | 'list';
 

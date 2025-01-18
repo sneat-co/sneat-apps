@@ -20,7 +20,7 @@ import {
 	TimerOperation,
 	TimerOperationEnum,
 	TimerStatusEnum,
-} from './models';
+} from './timer-models';
 
 export interface IMeetingTimerService {
 	readonly meetingType: string;
@@ -32,7 +32,7 @@ export interface IMeetingTimerService {
 
 export class Timer {
 	private tick = new ReplaySubject<ITimerState>(1);
-	 
+
 	public readonly onTick = this.tick.asObservable();
 
 	private state?: ITimerState;

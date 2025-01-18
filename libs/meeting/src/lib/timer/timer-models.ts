@@ -1,14 +1,12 @@
 import { IByUser } from '@sneat/dto';
-import { IMeetingRequest } from '../models';
+import { IMeetingRequest } from '../meeting-request';
 import { Timestamp } from '@firebase/firestore-types';
 
- 
 export enum TimerOperationEnum {
-	 
 	start = 'start',
-	 
+
 	stop = 'stop',
-	 
+
 	pause = 'pause',
 }
 
@@ -17,13 +15,11 @@ export type TimerOperation =
 	| TimerOperationEnum.stop
 	| TimerOperationEnum.pause;
 
- 
 export enum TimerStatusEnum {
-	 
 	active = 'active',
-	 
+
 	stopped = 'stopped',
-	 
+
 	paused = 'paused',
 }
 

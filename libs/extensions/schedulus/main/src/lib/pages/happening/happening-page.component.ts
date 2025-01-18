@@ -4,13 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ContactusServicesModule } from '@sneat/contactus-services';
-import { HappeningServiceModule } from '@sneat/team-services';
+import { HappeningBasePage } from './happening-base-page';
 import {
 	HappeningComponentBaseParams,
 	HappeningComponentBaseParamsModule,
-} from '../../components/happening-component-base-params';
-import { HappeningFormComponent } from '../../components/happening-form/happening-form.component';
-import { HappeningBasePage } from './happening-base-page';
+	HappeningFormComponent,
+	HappeningServiceModule,
+} from '@sneat/extensions/schedulus/shared';
 
 @Component({
 	selector: 'sneat-happening-page',
