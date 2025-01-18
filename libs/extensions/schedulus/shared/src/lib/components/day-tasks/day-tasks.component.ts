@@ -1,14 +1,13 @@
-import { Component } from '@angular/core';
-import { IErrorLogger } from '@sneat/logging';
+import { Component, Inject } from '@angular/core';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({
 	selector: 'sneat-day-tasks',
 	templateUrl: './day-tasks.component.html',
-	standalone: false,
 })
 export class DayTasksComponent {
 	constructor(
-		private readonly errorLogger: IErrorLogger, // private readonly slotsProvider: ISlotsProvider,
+		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger, // private readonly slotsProvider: ISlotsProvider,
 	) {}
 
 	// ngOnInit(): void {

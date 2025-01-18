@@ -33,7 +33,8 @@ import {
 	takeUntil,
 } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { CalendarDayService, HappeningService, SpaceDay } from '..';
+import { SpaceDay } from '..';
+import { CalendarDayService, HappeningService } from '.';
 
 type RecurringsByWeekday = {
 	[wd in WeekdayCode2]: ISlotUIContext[];
