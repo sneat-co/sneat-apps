@@ -5,7 +5,7 @@ import { ISelectorOptions } from './selector-options';
 
 export class SelectorBaseService<T = ISelectItem> {
 	constructor(
-		// eslint-disable-next-line
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 		private readonly component: Function | HTMLElement | string | null,
 		private readonly errorLogger: IErrorLogger,
 		private readonly modalController: ModalController,
