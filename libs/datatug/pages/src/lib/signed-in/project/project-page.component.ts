@@ -62,7 +62,6 @@ import { parseStoreRef } from '@sneat/core';
 		DatatugServicesProjectModule,
 		DatatugServicesStoreModule,
 		DatatugServicesUnsortedModule,
-		SneatCardListComponent,
 		WormholeModule,
 		DatatugFoldersUiModule,
 	],
@@ -70,7 +69,6 @@ import { parseStoreRef } from '@sneat/core';
 export class ProjectPageComponent
 	implements OnInit, OnDestroy, ViewWillEnter, ViewDidLeave
 {
-	 
 	// readonly DbModel = ProjectItem.dbModel as const;
 
 	protected project?: IProjectContext;

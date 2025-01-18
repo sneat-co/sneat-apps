@@ -7,7 +7,6 @@ import {
 	getAngularFireProviders,
 	SneatApplicationModule,
 } from '@sneat/app';
-import { CommunesUiModule } from '@sneat/communes-ui';
 import { AuthMenuItemComponent } from '@sneat/components';
 import { APP_INFO, coreProviders, IAppInfo } from '@sneat/core';
 import { initSentry, sentryAppInitializerProviders } from '@sneat/logging';
@@ -101,7 +100,6 @@ const contactRolesByType: ContactRolesByType = {
 		SneatApplicationModule.defaultSneatApplicationImports(environment),
 		// SneatAuthServicesModule,
 		AuthMenuItemComponent,
-		CommunesUiModule,
 		SpacesMenuComponent,
 		LogistAppRoutingModule,
 	],
