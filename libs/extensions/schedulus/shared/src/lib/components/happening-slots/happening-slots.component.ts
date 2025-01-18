@@ -16,6 +16,7 @@ import {
 	WeekdayCode2,
 	IHappeningContext,
 	IHappeningSlotWithID,
+	WdToWeekdayPipe,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { HappeningService, IDeleteSlotRequest } from '../..';
@@ -36,6 +37,7 @@ export interface AddSlotParams {
 		IonicModule,
 		SneatPipesModule,
 		HappeningSlotModalServiceModule,
+		WdToWeekdayPipe,
 	],
 })
 export class HappeningSlotsComponent implements OnChanges {

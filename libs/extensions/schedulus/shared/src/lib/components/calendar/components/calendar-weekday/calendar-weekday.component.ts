@@ -10,7 +10,6 @@ import {
 	ISlotUIContext,
 	NewHappeningParams,
 	ScheduleNavService,
-	SpaceDay,
 } from '@sneat/mod-schedulus-core';
 import { ISpaceContext } from '@sneat/team-models';
 import { takeUntil } from 'rxjs';
@@ -20,6 +19,7 @@ import {
 } from '../../../calendar-filter.service';
 import { isSlotVisible } from '../../../schedule-slots';
 import { Weekday } from '../../weekday';
+import { SpaceDay } from '../../../..';
 
 @Component({
 	selector: 'sneat-calendar-weekday',

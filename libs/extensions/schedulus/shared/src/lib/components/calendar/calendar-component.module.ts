@@ -10,7 +10,10 @@ import {
 } from '@sneat/components';
 import { MembersSelectorModule } from '@sneat/contactus-shared';
 import { SpaceCoreComponentsModule } from '@sneat/team-components';
-import { ScheduleNavServiceModule } from '@sneat/mod-schedulus-core';
+import {
+	ScheduleNavServiceModule,
+	WdToWeekdayPipe,
+} from '@sneat/mod-schedulus-core';
 import { HappeningServiceModule, CalendarDayServiceModule } from '../..';
 import { ContactsFilterComponent } from '../contacts-filter/contacts-filter.component';
 import { HappeningSlotModalServiceModule } from '../happening-slot-form/happening-slot-modal.service';
@@ -62,6 +65,7 @@ import { TimingBadgeComponent } from './components/timing-badge/timing-badge.com
 		HappeningSlotParticipantsComponent,
 		HappeningSlotsComponent,
 		CalendarAddButtonsComponent,
+		WdToWeekdayPipe,
 	],
 	exports: [CalendarComponent, CalendarDayComponent],
 	declarations: [

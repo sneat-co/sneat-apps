@@ -6,6 +6,7 @@ import {
 	emptyHappeningSlot,
 	IHappeningContext,
 	IHappeningSlotWithID,
+	WdToWeekdayPipe,
 } from '@sneat/mod-schedulus-core';
 import { HappeningSlotModalService } from '../happening-slot-form/happening-slot-modal.service';
 
@@ -17,6 +18,7 @@ import { HappeningSlotModalService } from '../happening-slot-form/happening-slot
 		CommonModule,
 		IonicModule,
 		SneatPipesModule, // TODO(help-wanted): Can we import just specific pipe?
+		WdToWeekdayPipe,
 	],
 })
 export class HappeningSlotComponent {
