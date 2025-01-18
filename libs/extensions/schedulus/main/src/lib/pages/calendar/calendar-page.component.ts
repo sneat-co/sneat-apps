@@ -37,7 +37,7 @@ import {
 		IonicModule,
 		SpaceCoreComponentsModule,
 		// CalendarComponentModule,
-		// ContactusServicesModule,
+		ContactusServicesModule,
 		// CalendariumServicesModule,
 		ScheduleNavServiceModule,
 	],
@@ -53,7 +53,7 @@ export class CalendarPageComponent extends SpaceBaseComponent {
 		// private filterService: CalendarFilterService,
 		private readonly scheduleNavService: ScheduleNavService,
 	) {
-		super('SchedulePageComponent', route, params);
+		super('CalendarPageComponent', route, params);
 
 		// filterService.filter.subscribe({
 		// 	next: (filter) => {
@@ -113,6 +113,6 @@ export class CalendarPageComponent extends SpaceBaseComponent {
 			return;
 		}
 		const params: NewHappeningParams = { type: type };
-		// this.scheduleNavService.goNewHappening(this.space, params);
+		this.scheduleNavService.goNewHappening(this.space, params);
 	}
 }
