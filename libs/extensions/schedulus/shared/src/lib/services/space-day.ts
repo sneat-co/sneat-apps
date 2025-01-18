@@ -94,9 +94,6 @@ export class SpaceDay {
 		console.log('SpaceDay.constructor()', this.dateID, this.date);
 		this.space$ = space$;
 		space$ = space$.pipe(takeUntil(this.destroyed$));
-		space$.subscribe({
-			next: (space) => (this._spaces = space ? [space] : []),
-		});
 		this.spaceID$ = space$.pipe(
 			map((space) => space?.id),
 			distinctUntilChanged(),

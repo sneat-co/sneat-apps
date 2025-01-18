@@ -8,9 +8,11 @@ export function createWeekday(
 ): Weekday {
 	const id = getWd2(date);
 	const day = spaceDaysProvider.getSpaceDay(date);
-	return {
+	const weekday: Weekday = {
 		id,
 		day,
 		longTitle: wdCodeToWeekdayLongName(id),
 	};
+	console.log('createWeekday();', date, spaceDaysProvider, weekday);
+	return weekday;
 }

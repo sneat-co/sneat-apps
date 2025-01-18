@@ -8,31 +8,43 @@
 			[weekdayID]="undefined"
 		/>
 	</ion-item>
-	<ion-item class="sneat-tiny-end-padding">
-		<ion-label color="medium"><b>Today</b></ion-label>
-		<sneat-calendar-add-buttons
-			[space]="_space"
-			dateID="2024-01-15"
-			weekdayID="we"
-		/>
-	</ion-item>
-	<sneat-calendar-day [space]="_space" [weekday]="today" />
-<!--	<ion-item>-->
-<!--		<ion-label color="medium">Not implemented yet</ion-label>-->
-<!--		&lt;!&ndash;<sneat-calendar-day-tab [space]="space" />&ndash;&gt;-->
-<!--	</ion-item>-->
-	<ion-item class="sneat-tiny-end-padding">
-		<ion-label color="medium"><b>Tomorrow</b></ion-label>
-		<sneat-calendar-add-buttons
-			[space]="_space"
-			dateID="2024-01-16"
-			weekdayID="th"
-		/>
-	</ion-item>
-	<sneat-calendar-day [space]="_space" [weekday]="tomorrow" />
-<!--	<ion-item>-->
-<!--		<ion-label color="medium">Not implemented yet</ion-label>-->
-<!--		&lt;!&ndash;<sneat-calendar-day-tab [space]="space" />&ndash;&gt;-->
-<!--	</ion-item>-->
-</ion-card>
 
+	<ion-item color="light" lines="full" class="sneat-tiny-end-padding">
+		<ion-label color="medium">
+			<sneat-calendar-day-title [weekday]="today" />
+		</ion-label>
+		<sneat-calendar-add-buttons
+			[space]="_space"
+			[dateID]="today?.day?.dateID"
+			[weekdayID]="today?.id"
+		/>
+	</ion-item>
+	<sneat-calendar-day
+		[space]="_space"
+		[weekday]="today"
+		[hideAddButtons]="true"
+	/>
+	<!--	<ion-item>-->
+	<!--		<ion-label color="medium">Not implemented yet</ion-label>-->
+	<!--		&lt;!&ndash;<sneat-calendar-day-tab [space]="space" />&ndash;&gt;-->
+	<!--	</ion-item>-->
+	<ion-item color="light" lines="full" class="sneat-tiny-end-padding">
+		<ion-label color="medium">
+			<sneat-calendar-day-title [weekday]="tomorrow" />
+		</ion-label>
+		<sneat-calendar-add-buttons
+			[space]="_space"
+			[dateID]="tomorrow?.day?.dateID"
+			[weekdayID]="tomorrow?.id"
+		/>
+	</ion-item>
+	<sneat-calendar-day
+		[space]="_space"
+		[weekday]="tomorrow"
+		[hideAddButtons]="true"
+	/>
+	<!--	<ion-item>-->
+	<!--		<ion-label color="medium">Not implemented yet</ion-label>-->
+	<!--		&lt;!&ndash;<sneat-calendar-day-tab [space]="space" />&ndash;&gt;-->
+	<!--	</ion-item>-->
+</ion-card>

@@ -1,7 +1,15 @@
 @if (weekday) {
 	@if (!weekday.day?.slots?.length) {
-		<ion-item lines="full" color="light">
-			<ion-label color="medium">Nothing scheduled for this day.</ion-label>
+		<ion-item lines="full">
+			<ion-label color="medium">
+				@if (isToday()) {
+					Nothing scheduled for today.
+				} @else if (isTomorrow()) {
+					Nothing scheduled for tomorrow.
+				} @else {
+					Nothing scheduled for this day.
+				}
+			</ion-label>
 		</ion-item>
 	} @else {
 		@if (slotsHiddenByFilter) {
@@ -23,28 +31,30 @@
 			/>
 		}
 	}
-	<ion-grid class="ion-grid-layout">
-		<ion-row>
-			<ion-col size-sm="6" size="12">
-				<ion-item
-					lines="none"
-					tappable
-					(click)="goNewHappening({ type: 'recurring' })"
-				>
-					<ion-icon name="duplicate-outline" color="medium" slot="start" />
-					<ion-label color="medium">Add recurring</ion-label>
-				</ion-item>
-			</ion-col>
-			<ion-col size-sm="6" size="12">
-				<ion-item
-					lines="none"
-					tappable
-					(click)="goNewHappening({ type: 'single' })"
-				>
-					<ion-icon name="add-circle-outline" color="medium" slot="start" />
-					<ion-label color="medium">Add one-timer</ion-label>
-				</ion-item>
-			</ion-col>
-		</ion-row>
-	</ion-grid>
+	@if (!hideAddButtons) {
+		<ion-grid class="ion-grid-layout">
+			<ion-row>
+				<ion-col size-sm="6" size="12">
+					<ion-item
+						lines="none"
+						tappable
+						(click)="goNewHappening({ type: 'recurring' })"
+					>
+						<ion-icon name="duplicate-outline" color="medium" slot="start" />
+						<ion-label color="medium">Add recurring</ion-label>
+					</ion-item>
+				</ion-col>
+				<ion-col size-sm="6" size="12">
+					<ion-item
+						lines="none"
+						tappable
+						(click)="goNewHappening({ type: 'single' })"
+					>
+						<ion-icon name="add-circle-outline" color="medium" slot="start" />
+						<ion-label color="medium">Add one-timer</ion-label>
+					</ion-item>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	}
 }

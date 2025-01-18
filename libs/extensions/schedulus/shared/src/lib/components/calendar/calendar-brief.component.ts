@@ -1,4 +1,10 @@
-import { Component, Inject, Input } from '@angular/core';
+import {
+	Component,
+	Inject,
+	Input,
+	SimpleChanges,
+	OnChanges,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatApiService } from '@sneat/api';
@@ -25,7 +31,10 @@ import { Weekday } from './weekday';
 		CalendariumServicesModule,
 	],
 })
-export class CalendarBriefComponent extends CalendarBaseComponent {
+export class CalendarBriefComponent
+	extends CalendarBaseComponent
+	implements OnChanges
+{
 	@Input({ required: true }) space?: ISpaceContext;
 
 	protected today?: Weekday;
@@ -61,5 +70,9 @@ export class CalendarBriefComponent extends CalendarBaseComponent {
 
 	override onRecurringsLoaded(): void {
 		// do nothing
+	}
+
+	override ngOnChanges(changes: SimpleChanges): void {
+		super.ngOnChanges(changes);
 	}
 }

@@ -1,6 +1,7 @@
 <ion-card>
 	<ion-item
 		lines="full"
+		color="light"
 		class="sneat-small-end-padding sneat-small-start-padding"
 	>
 		<ion-buttons
@@ -35,13 +36,13 @@
 						class="virtual-slide sneat-smaller-if-width-less-638"
 						[@virtualSlide]="oddDay?.animationState"
 					>
-						<sneat-calendar-day-title [day]="oddDay" />
+						<sneat-calendar-day-title [weekday]="oddDay?.weekday" />
 					</h1>
 					<h1
 						class="virtual-slide"
 						[@virtualSlide]="evenDay?.animationState || 'hide'"
 					>
-						<sneat-calendar-day-title [day]="evenDay" />
+						<sneat-calendar-day-title [weekday]="evenDay?.weekday" />
 					</h1>
 				</div>
 			</div>

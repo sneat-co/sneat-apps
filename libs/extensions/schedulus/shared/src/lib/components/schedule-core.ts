@@ -18,7 +18,10 @@ export function isToday(date: Date): boolean {
 	return areSameDates(date, new Date());
 }
 
-export function isTomorrow(date: Date): boolean {
+export function isTomorrow(date?: Date): boolean {
+	if (!date) {
+		return false;
+	}
 	const tomorrow = addDays(new Date(), 1);
 	return areSameDates(date, tomorrow);
 }
