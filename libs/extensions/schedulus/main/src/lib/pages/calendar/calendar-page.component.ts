@@ -21,9 +21,9 @@ import {
 	CalendarComponentModule,
 	CalendariumServicesModule,
 	CalendarTab,
-	CalendarFilterService,
-	emptyCalendarFilter,
-	ICalendarFilter,
+	// CalendarFilterService,
+	// emptyCalendarFilter,
+	// ICalendarFilter,
 } from '@sneat/extensions/schedulus/shared';
 
 @Component({

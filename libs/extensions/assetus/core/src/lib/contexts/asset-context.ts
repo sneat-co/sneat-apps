@@ -1,5 +1,14 @@
+import { INavContext } from '@sneat/core';
 import { ISpaceItemNavContext } from '@sneat/team-models';
-import { AssetExtraType, IAssetBrief, IAssetDbo, IAssetExtra } from '../dto';
+import {
+	AssetExtraType,
+	IAssetBrief,
+	IAssetDbo,
+	IAssetDtoGroup,
+	IAssetDwellingExtra,
+	IAssetExtra,
+	IAssetVehicleExtra,
+} from '../dto/dto-asset';
 
 export type IAssetContext<
 	ExtraType extends AssetExtraType = string,
@@ -8,3 +17,11 @@ export type IAssetContext<
 	IAssetBrief<ExtraType, Extra>,
 	IAssetDbo<ExtraType, Extra>
 >;
+
+export type IAssetVehicleContext = IAssetContext<'vehicle', IAssetVehicleExtra>;
+export type IAssetDwellingContext = IAssetContext<
+	'dwelling',
+	IAssetDwellingExtra
+>;
+
+export type IAssetGroupContext = INavContext<IAssetDtoGroup, IAssetDtoGroup>;

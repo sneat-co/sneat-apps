@@ -1,4 +1,4 @@
-import { IAssetContext } from '../contexts';
+import { IAssetContext } from '../contexts/asset-context';
 import { IAssetExtra } from './dto-asset';
 
 export type AssetDocumentType =

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { AssetService, AssetusSpaceService } from '.';
+import { AssetService } from './asset-service';
+import { AssetusSpaceService } from './assetus-space.service';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
