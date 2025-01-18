@@ -13,7 +13,6 @@ import {
 	AddDbServerComponent,
 	DatatugDbModalsAddDbServerModule,
 } from '@sneat/datatug-db';
-import { ServersPageRoutingModule } from './servers-routing.module';
 
 @Component({
 	selector: 'sneat-datatug-servers',
@@ -22,7 +21,6 @@ import { ServersPageRoutingModule } from './servers-routing.module';
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		ServersPageRoutingModule,
 		DatatugDbModalsAddDbServerModule,
 	],
 })

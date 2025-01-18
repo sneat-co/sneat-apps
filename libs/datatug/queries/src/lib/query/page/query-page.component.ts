@@ -28,14 +28,14 @@ import {
 	IQueryEnvState,
 	IQueryState,
 } from '@sneat/datatug-editor';
+import { QueriesService } from '../../queries.service';
+import { QueryContextSqlService } from '../../query-context-sql.service';
 import {
 	isQueryChanged,
 	QueryEditorStateService,
-	QueryContextSqlService,
-	QueriesService,
-	SqlQueryComponentModule,
-	HttpQueryEditorComponent,
-} from '../..';
+} from '../../query-editor-state-service';
+import { HttpQueryEditorComponent } from '../http-query/http-query-editor.component';
+import { SqlQueryComponentModule } from '../sql-query/sql-query.component.module';
 
 @Component({
 	selector: 'sneat-datatug-sql-editor',

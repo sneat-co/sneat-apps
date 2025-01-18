@@ -1,4 +1,4 @@
-import { WidgetDef } from './widgets';
+import { IWidgetDef } from './widget';
 
 export interface ITabsWidgetSettings {
 	tabs: ITab[];
@@ -6,5 +6,5 @@ export interface ITabsWidgetSettings {
 
 export interface ITab {
 	title: string;
-	widget: WidgetDef;
+	widget: IWidgetDef;
 }
