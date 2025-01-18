@@ -45,7 +45,7 @@ import {
 	HappeningService,
 	HappeningServiceModule,
 	ICancelHappeningRequest,
-} from '../../services';
+} from '../../services/happening.service';
 
 @Component({
 	selector: 'sneat-happening-form',

@@ -13,7 +13,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
 import { SpaceNavService } from '@sneat/team-services';
 import { takeUntil } from 'rxjs';
-import { HappeningService } from '../../../../services';
+import { HappeningService } from '../../../../services/happening.service';
 
 @Component({
 	selector: 'sneat-recurring-card',

@@ -14,10 +14,8 @@ import {
 	ScheduleNavServiceModule,
 	WdToWeekdayPipe,
 } from '@sneat/mod-schedulus-core';
-import {
-	HappeningServiceModule,
-	CalendarDayServiceModule,
-} from '../../services';
+import { HappeningServiceModule } from '../../services/happening.service';
+import { CalendarDayServiceModule } from '../../services/calendar-day.service';
 import { ContactsFilterComponent } from '../contacts-filter/contacts-filter.component';
 import { HappeningSlotModalServiceModule } from '../happening-slot-form/happening-slot-modal.service';
 import { HappeningSlotParticipantsComponent } from '../happening-slot-participants/happening-slot-participants.component';

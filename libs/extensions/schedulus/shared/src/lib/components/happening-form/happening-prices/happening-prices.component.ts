@@ -16,7 +16,10 @@ import {
 	IHappeningContext,
 	IHappeningPrice,
 } from '@sneat/mod-schedulus-core';
-import { HappeningService, IHappeningPricesRequest } from '../../../services';
+import {
+	HappeningService,
+	IHappeningPricesRequest,
+} from '../../../services/happening.service';
 import { HappeningPriceFormComponent } from '../happening-price-form/happening-price-form.component';
 
 @Component({

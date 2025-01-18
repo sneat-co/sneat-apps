@@ -18,7 +18,10 @@ import {
 	IHappeningPrice,
 	TermUnit,
 } from '@sneat/mod-schedulus-core';
-import { HappeningService, IHappeningPricesRequest } from '../../../services';
+import {
+	HappeningService,
+	IHappeningPricesRequest,
+} from '../../../services/happening.service';
 import { SelectOption, WizardModule } from '@sneat/wizard';
 
 @Component({

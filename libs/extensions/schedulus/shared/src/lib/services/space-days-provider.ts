@@ -33,7 +33,7 @@ import {
 	takeUntil,
 } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { SpaceDay } from '../space-day';
+import { SpaceDay } from './space-day';
 import { HappeningService } from './happening.service';
 import { CalendarDayService } from './calendar-day.service';
 

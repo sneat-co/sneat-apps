@@ -4,12 +4,10 @@ import { IonicModule } from '@ionic/angular';
 import { SneatApiService } from '@sneat/api';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
-import {
-	HappeningService,
-	CalendarDayService,
-	CalendariumSpaceService,
-	CalendariumServicesModule,
-} from '../../services';
+import { CalendarDayService } from '../../services/calendar-day.service';
+import { CalendariumSpaceService } from '../../services/calendarium-space.service';
+import { HappeningService } from '../../services/happening.service';
+import { CalendariumServicesModule } from '../../services/calendarium-services.module';
 import { createWeekday } from '../weekday-functions';
 import { CalendarBaseComponent } from './calendar-base.component';
 import { CalendarComponentModule } from './calendar-component.module';

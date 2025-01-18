@@ -1,5 +1,5 @@
 import { WeekdayCode2 } from '@sneat/mod-schedulus-core';
-import { SpaceDay } from '../../space-day';
+import { SpaceDay } from '../../services/space-day';
 
 export interface Weekday {
 	// This is used to

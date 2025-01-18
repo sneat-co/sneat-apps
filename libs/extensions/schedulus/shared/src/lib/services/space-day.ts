@@ -23,7 +23,8 @@ import {
 	IHappeningContext,
 	ITiming,
 } from '@sneat/mod-schedulus-core';
-import { CalendarDayService, HappeningService } from './services';
+import { HappeningService } from './happening.service';
+import { CalendarDayService } from './calendar-day.service';
 
 export class SpaceDay {
 	private readonly destroyed = new Subject<void>();

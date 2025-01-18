@@ -19,7 +19,7 @@ import {
 } from '../../../calendar-filter.service';
 import { isSlotVisible } from '../../../schedule-slots';
 import { Weekday } from '../../weekday';
-import { SpaceDay } from '../../../../space-day';
+import { SpaceDay } from '../../../../services/space-day';
 
 @Component({
 	selector: 'sneat-calendar-weekday',

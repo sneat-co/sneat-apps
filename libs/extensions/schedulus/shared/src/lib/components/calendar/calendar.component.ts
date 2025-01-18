@@ -23,11 +23,9 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { ISpaceContext } from '@sneat/team-models';
 import { takeUntil } from 'rxjs';
-import {
-	CalendarDayService,
-	CalendariumSpaceService,
-	HappeningService,
-} from '../../services';
+import { CalendarDayService } from '../../services/calendar-day.service';
+import { CalendariumSpaceService } from '../../services/calendarium-space.service';
+import { HappeningService } from '../../services/happening.service';
 import { isToday } from '../schedule-core';
 import {
 	emptyCalendarFilter,

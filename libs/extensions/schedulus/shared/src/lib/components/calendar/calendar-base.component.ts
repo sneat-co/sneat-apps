@@ -7,11 +7,9 @@ import {
 } from '@angular/core';
 import { SneatApiService } from '@sneat/api';
 import { dateToIso } from '@sneat/core';
-import {
-	CalendarDayService,
-	CalendariumSpaceService,
-	HappeningService,
-} from '../../services';
+import { CalendarDayService } from '../../services/calendar-day.service';
+import { CalendariumSpaceService } from '../../services/calendarium-space.service';
+import { HappeningService } from '../../services/happening.service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	ICalendariumSpaceDbo,
