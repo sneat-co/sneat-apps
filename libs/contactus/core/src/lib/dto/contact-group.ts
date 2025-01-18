@@ -1,11 +1,8 @@
+import { IContactGroupBrief } from './contact-group-brief';
 import { IContactRoleBriefWithID } from './contact-roles';
-import { DtoGroupTerms } from './term';
-import { MembersVisibility } from './member';
 
-export interface IContactGroupBrief {
-	readonly emoji?: string;
-	readonly title: string;
-}
+import { MembersVisibility } from './member-types';
+import { DtoGroupTerms } from './term';
 
 export interface IContactGroupDtoCounts {
 	members?: number;

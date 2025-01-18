@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'contactus-services',
 	preset: '../../../jest.preset.js',

@@ -4,6 +4,4 @@ export * from './space.service';
 export * from './space-item.service';
 export * from './space-context.service';
 export * from './invite.service';
-export * from './happening.service';
-export * from './calendar-day.service';
 export * from './space-module.service';

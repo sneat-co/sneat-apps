@@ -2,11 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { IIdAndBrief, listItemAnimations } from '@sneat/core';
-import {
-	ContactsListModule,
-	IContactGroupWithContacts,
-	IContactRoleWithContacts,
-} from '../..';
 import { eq } from '@sneat/core';
 import { ContactRole, IContactBrief } from '@sneat/contactus-core';
 import {
@@ -14,6 +9,11 @@ import {
 	defaultFamilyContactGroups,
 } from '@sneat/contactus-services';
 import { ISpaceContext } from '@sneat/team-models';
+import { ContactsListModule } from '../contacts-list';
+import {
+	IContactGroupWithContacts,
+	IContactRoleWithContacts,
+} from '../../ui-types';
 
 @Component({
 	imports: [CommonModule, IonicModule, ContactsListModule],

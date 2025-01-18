@@ -2,8 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { CountrySelectorComponent } from '../country-selector';
-import { countries } from '../country-selector/countries';
+import { countries } from '../country-selector';
 
 @Component({
 	selector: 'sneat-country-input',

@@ -24,7 +24,6 @@ import { LogistSpaceMenuItemsModule } from '../logist-team-menu-items/logist-spa
 		IonicModule,
 		RouterModule,
 		AuthMenuItemComponent,
-		SpacesMenuComponent,
 		LogistSpaceMenuItemsModule,
 	],
 })

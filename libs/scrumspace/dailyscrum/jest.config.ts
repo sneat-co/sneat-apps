@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'scrumspace-dailyscrum',
 	preset: '../../../jest.preset.js',

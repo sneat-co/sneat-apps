@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'logist-app',
 	preset: '../../jest.preset.js',

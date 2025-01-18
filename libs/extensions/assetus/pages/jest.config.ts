@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'extensions-assetus-pages',
 	preset: '../../../../jest.preset.js',

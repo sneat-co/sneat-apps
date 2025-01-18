@@ -1,5 +1,5 @@
 import { SpaceType } from '@sneat/core';
-import { IUserCommuneInfo } from '.';
+import { IUserCommuneInfo } from './dto-user';
 
 export interface IShortSpaceInfo {
 	type: SpaceType;

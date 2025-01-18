@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'contactus-core',
 	preset: '../../../jest.preset.js',

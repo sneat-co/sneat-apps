@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'datatug-folders-core',
 	preset: '../../../../jest.preset.js',

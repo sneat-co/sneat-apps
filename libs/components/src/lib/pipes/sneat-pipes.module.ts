@@ -12,11 +12,9 @@ import { PersonNamesPipe, PersonTitle } from './person-title.pipe';
 import { SelectedMembersPipe } from './selected-members.pipe';
 import { ShortMonthNamePipe } from './short-month-name.pipe';
 import { SpaceEmojiPipe } from './team-emoji.pipe';
-import { WdToWeekdayPipe } from './wd-to-weekday.pipe';
 
 const pipes: Type<PipeTransform>[] = [
 	SpaceEmojiPipe,
-	WdToWeekdayPipe,
 	LongMonthNamePipe,
 	ShortMonthNamePipe,
 	ContactTitlePipe,

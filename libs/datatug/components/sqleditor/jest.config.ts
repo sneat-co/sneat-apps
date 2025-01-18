@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'datatug-components-sqleditor',
 	preset: '../../../../jest.preset.js',

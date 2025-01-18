@@ -7,8 +7,6 @@ import {
 	getAngularFireProviders,
 	SneatApplicationModule,
 } from '@sneat/app';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { CommunesUiModule } from '@sneat/communes-ui'; // TODO: fix this!
 import { AppVersionComponent, AuthMenuItemComponent } from '@sneat/components';
 import { APP_INFO, coreProviders, IAppInfo } from '@sneat/core';
 import {
@@ -50,7 +48,6 @@ const appInfo: IAppInfo = {
 		AppVersionComponent,
 		// SneatAuthServicesModule,
 		AuthMenuItemComponent,
-		CommunesUiModule,
 		SpaceServiceModule,
 		SpacesMenuComponent,
 		SneatAppRoutingModule,

@@ -1,41 +1,10 @@
 import { IAvatar, SpaceMemberType } from '@sneat/auth-models';
 import { EnumAsUnionOfKeys, excludeUndefined } from '@sneat/core';
-import { IContactGroupBrief } from './contact-group';
 import { ITitledRecordInfo, ITotalsHolder, IVerification } from '@sneat/dto';
 import { IContactBrief } from './contact';
+import { IContactGroupBrief } from './contact-group-brief';
+import { FamilyMemberRelation, MemberRole } from './member-types';
 import { IPersonRecord, ISpaceMemberInfo } from './person';
-
-export type MembersVisibility = 'private' | 'protected' | 'public';
-
-export const RoleSpaceMember = 'member';
-export const MemberRoleContributor = 'contributor';
-export const MemberRoleSpectator = 'spectator';
-export const MemberRoleParish = 'pastor';
-export type MemberRoleEducation =
-	| 'administrator'
-	| 'principal'
-	| 'pupil'
-	| 'teacher';
-export type MemberRoleRealtor = 'administrator' | 'agent';
-
-export type MemberRole =
-	| typeof MemberRoleContributor
-	| typeof MemberRoleSpectator
-	| MemberRoleEducation
-	| MemberRoleRealtor
-	| typeof MemberRoleParish;
-
-export enum FamilyMemberRelation {
-	child = 'child',
-	cousin = 'cousin',
-	grandparent = 'grandparent',
-	grandparentInLaw = 'grandparent_in_law',
-	parent = 'parent',
-	parentInLaw = 'parent_in_law',
-	partner = 'partner',
-	sibling = 'sibling',
-	spouse = 'spouse',
-}
 
 export function relationshipTitle(id: string): string {
 	// TODO: Needs fix to replace all _ with space

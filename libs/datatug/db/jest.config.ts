@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'datatug-db',
 	preset: '../../../jest.preset.js',

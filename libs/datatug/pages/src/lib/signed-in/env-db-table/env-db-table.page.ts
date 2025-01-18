@@ -40,7 +40,6 @@ import { ForeignKeyCardComponent } from './foreign-key-card/foreign-key-card.com
 	imports: [
 		CommonModule,
 		IonicModule,
-		CellPopoverComponent,
 		FormsModule,
 		ForeignKeyCardComponent,
 		CodemirrorModule,

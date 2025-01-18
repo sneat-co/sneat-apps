@@ -1,6 +1,5 @@
 import { IMeeting } from '@sneat/meeting';
 
-// eslint-disable-next-line no-shadow
 export enum RetroItemTypeEnum {
 	good = 'good',
 	bad = 'bad',
@@ -16,7 +15,6 @@ export type RetroItemType =
 	| RetroItemTypeEnum.idea;
 
 export interface IRetroItem {
-	// eslint-disable-next-line @typescript-eslint/naming-convention
 	ID: string; // see comments on RetroItem in Go why it's not `id` in all lower case
 	type?: string; // provided only for root level items
 	title: string;
@@ -38,7 +36,6 @@ export interface IRetroList {
 // 	[type: string]: IRetroList[];
 // }
 
-// eslint-disable-next-line no-shadow
 export enum RetrospectiveStage {
 	upcoming = 'upcoming',
 	feedback = 'feedback',

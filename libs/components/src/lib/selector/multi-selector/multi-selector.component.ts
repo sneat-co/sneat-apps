@@ -8,7 +8,8 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { ISelectItem, ISelectItemEvent, SelectorBaseComponent } from '..';
+import { ISelectItem, ISelectItemEvent } from '../selector-interfaces';
+import { SelectorBaseComponent } from '../selector-base.component';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({

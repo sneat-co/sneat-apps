@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'debtus-internal',
 	preset: '../../../jest.preset.js',

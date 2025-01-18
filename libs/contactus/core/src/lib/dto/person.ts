@@ -1,14 +1,16 @@
 import { isNameEmpty } from '@sneat/auth-models';
 import { excludeUndefined } from '@sneat/core';
 import { IWithRelatedOnly, IWithSpaceIDs } from '@sneat/dto';
+import { IContactBase } from './contact-base';
 import {
+	ContactType,
 	IEmail,
+	IPersonRequirements,
 	IPhone,
 	MemberContactType,
-	IContactBase,
-	IPersonRequirements,
-	MemberRole,
-} from '.';
+} from './contact-types';
+
+import { MemberRole } from './member-types';
 
 export type IPersonBrief = IContactBase;
 
@@ -90,3 +92,9 @@ export function isRelatedPersonReady(
 export interface IPersonRecord extends IWithSpaceIDs, IPerson {
 	/*, IPersonSize*/
 }
+
+export const emptyContactBase: IContactBase = {
+	type: '' as ContactType,
+	names: {},
+};
+export const emptyMemberPerson = emptyContactBase as IMemberPerson;

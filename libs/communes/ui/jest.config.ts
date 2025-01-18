@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'communes-ui',
 	preset: '../../../jest.preset.js',

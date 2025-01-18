@@ -4,7 +4,7 @@ import {
 	IRecordsetDef,
 	NamedParams,
 } from '@sneat/datatug-models';
-import { ICommandResponse } from './response';
+import { ICommandResponse } from './command-response';
 
 // import { IValueCheckResult } from '@sneat/datatug-checks';
 

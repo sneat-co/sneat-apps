@@ -1,7 +1,7 @@
 import { Inject } from '@angular/core';
 import { ModalController, ModalOptions } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISelectItem } from '../../..';
+import { ISelectItem } from '../selector-interfaces';
 import { MultiSelectorComponent } from './multi-selector.component';
 
 export class MultiSelectorService {

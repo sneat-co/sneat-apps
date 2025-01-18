@@ -7,7 +7,6 @@ import { NewProjectFormComponent } from '@sneat/datatug-project';
 import { DatatugServicesBaseModule } from '@sneat/datatug-services-base';
 import { DatatugServicesStoreModule } from '@sneat/datatug-services-repo';
 import { WormholeModule } from '@sneat/wormhole';
-import { HomePageRoutingModule } from './home-routing.module';
 import { MyDatatugProjectsComponent } from './my-projects';
 import { MyStoresComponent } from './my-stores';
 // import {
@@ -26,12 +25,11 @@ import { MyStoresComponent } from './my-stores';
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		HomePageRoutingModule,
 		// CoreModule,
 		WormholeModule,
 		DatatugServicesBaseModule,
 		DatatugServicesStoreModule,
-		NewProjectFormComponent,
+		// NewProjectFormComponent,
 		// GuiGridModule,
 		CopyrightComponent,
 		MyDatatugProjectsComponent,

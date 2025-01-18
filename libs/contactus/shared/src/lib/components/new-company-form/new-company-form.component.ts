@@ -78,7 +78,7 @@ export class NewCompanyFormComponent implements OnChanges {
 				!!this.contact?.dbo?.title &&
 				!!validateAddress(this.contact.dbo?.address)
 			);
-		} catch (e) {
+		} catch {
 			// console.error(e);
 			return false;
 		}

@@ -5,25 +5,26 @@ import { IonicModule } from '@ionic/angular';
 
 import { virtualSliderAnimations } from '@sneat/components';
 import { ContactusServicesModule } from '@sneat/contactus-services';
-import { HappeningType } from '@sneat/mod-schedulus-core';
 import {
+	HappeningType,
 	NewHappeningParams,
 	ScheduleNavService,
-} from '@sneat/extensions/schedulus/shared';
-import {
-	emptyCalendarFilter,
-	CalendarFilterService,
-} from '../../components/calendar-filter.service';
-import { ICalendarFilter } from '../../components/calendar/components/calendar-filter/calendar-filter';
-import { CalendarComponentModule } from '../../components/calendar/calendar-component.module';
-import { CalendarTab } from '../../components/calendar/calendar-component-types';
+	ScheduleNavServiceModule,
+} from '@sneat/mod-schedulus-core';
 import {
 	SpaceBaseComponent,
 	SpaceComponentBaseParams,
 	SpaceCoreComponentsModule,
 } from '@sneat/team-components';
 import { IMemberContext } from '@sneat/contactus-core';
-import { CalendariumServicesModule } from '../../services';
+import {
+	CalendarComponentModule,
+	CalendariumServicesModule,
+	CalendarTab,
+	// CalendarFilterService,
+	// emptyCalendarFilter,
+	// ICalendarFilter,
+} from '@sneat/extensions/schedulus/shared';
 
 @Component({
 	selector: 'sneat-schedule-page',
@@ -38,6 +39,7 @@ import { CalendariumServicesModule } from '../../services';
 		CalendarComponentModule,
 		ContactusServicesModule,
 		CalendariumServicesModule,
+		ScheduleNavServiceModule,
 	],
 })
 export class CalendarPageComponent extends SpaceBaseComponent {
@@ -48,23 +50,23 @@ export class CalendarPageComponent extends SpaceBaseComponent {
 	constructor(
 		route: ActivatedRoute,
 		params: SpaceComponentBaseParams,
-		private filterService: CalendarFilterService,
+		// private filterService: CalendarFilterService,
 		private readonly scheduleNavService: ScheduleNavService,
 	) {
-		super('SchedulePageComponent', route, params);
+		super('CalendarPageComponent', route, params);
 
-		filterService.filter.subscribe({
-			next: (filter) => {
-				this.filter = filter;
-			},
-		});
+		// filterService.filter.subscribe({
+		// 	next: (filter) => {
+		// 		this.filter = filter;
+		// 	},
+		// });
 
 		this.route?.queryParamMap.subscribe({
 			next: this.onQueryParamsChanged,
 		});
 	}
 
-	private filter: ICalendarFilter = emptyCalendarFilter;
+	// private filter: ICalendarFilter = emptyCalendarFilter;
 
 	private readonly onQueryParamsChanged = (queryParams: ParamMap) => {
 		const tab = queryParams.get('tab') as CalendarTab;
@@ -88,7 +90,7 @@ export class CalendarPageComponent extends SpaceBaseComponent {
 		}
 		const memberID = queryParams.get('member');
 		if (memberID) {
-			this.filterService.next({ ...this.filter, contactIDs: [memberID] });
+			// this.filterService.next({ ...this.filter, contactIDs: [memberID] });
 		}
 	};
 

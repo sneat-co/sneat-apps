@@ -19,17 +19,11 @@ import { NewProjectService } from '@sneat/datatug-project';
 import { DatatugNavService } from '@sneat/datatug-services-nav';
 import { IProjectContext } from '@sneat/datatug-nav';
 import { LoadingItemsComponent } from '../loading-items-component';
-import { MyStoresComponent } from '../my-stores';
 
 @Component({
 	selector: 'sneat-datatug-my-projects',
 	templateUrl: './my-datatug-projects.component.html',
-	imports: [
-		CommonModule,
-		IonicModule,
-		MyStoresComponent,
-		LoadingItemsComponent,
-	],
+	imports: [CommonModule, IonicModule, LoadingItemsComponent],
 })
 export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 	@Input() title?: string;

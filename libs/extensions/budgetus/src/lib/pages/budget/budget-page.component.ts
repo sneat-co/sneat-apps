@@ -5,10 +5,6 @@ import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { Member } from '@sneat/contactus-core';
 import { ContactusServicesModule } from '@sneat/contactus-services';
-import {
-	CalendariumServicesModule,
-	CalendariumSpaceService,
-} from '@sneat/extensions/schedulus/main';
 import { AssetGroup } from '@sneat/mod-assetus-core';
 import { ICalendariumSpaceDbo, RepeatPeriod } from '@sneat/mod-schedulus-core';
 import {
@@ -20,6 +16,8 @@ import { takeUntil } from 'rxjs';
 import { LiabilitiesMode } from './budget-component-types';
 import { BudgetPeriodsComponent } from './budget-periods.component';
 
+import { CalendariumSpaceService } from '@sneat/extensions/schedulus/shared';
+
 @Component({
 	selector: 'sneat-budget-page',
 	templateUrl: './budget-page.component.html',
@@ -29,9 +27,8 @@ import { BudgetPeriodsComponent } from './budget-periods.component';
 		IonicModule,
 		ContactusServicesModule,
 		BudgetPeriodsComponent,
-		CalendariumServicesModule,
 	],
-	providers: [SpaceComponentBaseParams],
+	providers: [SpaceComponentBaseParams, CalendariumSpaceService],
 })
 export class BudgetPageComponent extends SpaceBaseComponent {
 	public total?: number;

@@ -1,6 +1,5 @@
 import { IAddress } from '@sneat/contactus-core';
 import { INavContext } from '@sneat/core';
-import { IAssetContext } from '../contexts';
 import {
 	AssetCategory,
 	AssetPossession,
@@ -9,8 +8,6 @@ import {
 	EngineType,
 	FuelType,
 } from './assetus-types';
-// import { IContact2Asset } from './dto-contact2item';
-import { IAssetDocumentExtra } from './dto-document';
 import {
 	IDemoRecord,
 	ITitled,
@@ -20,7 +17,7 @@ import {
 	IWithModified,
 	CountryId,
 } from '@sneat/dto';
-import { LiabilityServiceType } from './';
+import { LiabilityServiceType } from './dto-liability';
 
 export interface AssetLiabilityInfo {
 	id: string;
@@ -138,8 +135,6 @@ export interface IAssetVehicleExtra
 	nextServiceDueTaskId?: string;
 }
 
-export type IAssetVehicleContext = IAssetContext<'vehicle', IAssetVehicleExtra>;
-
 export interface IAssetDwellingExtra extends IAssetExtra {
 	address?: IAddress;
 	rent_price?: {
@@ -149,11 +144,6 @@ export interface IAssetDwellingExtra extends IAssetExtra {
 	numberOfBedrooms?: number;
 	areaSqM?: number;
 }
-
-export type IAssetDwellingContext = IAssetContext<
-	'dwelling',
-	IAssetDwellingExtra
->;
 
 export interface IAssetCategory extends ITitledRecord {
 	id: AssetCategory;
@@ -178,5 +168,3 @@ export interface IAssetDtoGroup
 	categoryId?: AssetCategory;
 	numberOf?: IAssetDtoGroupCounts;
 }
-
-export type IAssetGroupContext = INavContext<IAssetDtoGroup, IAssetDtoGroup>;

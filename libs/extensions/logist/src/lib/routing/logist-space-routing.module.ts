@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { contactusRoutes, membersRoutes } from '@sneat/contactus-internal';
 import { calendariumRoutes } from '@sneat/extensions/schedulus/main';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
-import { LogistMenuModule } from '../components';
 import { LogistSpaceMenuComponent } from '../components';
 
 @Component({
@@ -101,7 +100,6 @@ export const logistRoutes: Routes = [
 		RouterModule.forChild(
 			logistRoutes.map((r) => ({ ...r, path: r.path?.replace('logist/', '') })),
 		),
-		LogistMenuModule,
 	],
 	declarations: [EmptyComponent],
 	providers: [SpaceComponentBaseParams],

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ServersPageComponent } from './servers-page.component';
 import {
 	routingParamDbServerId,
 	routingParamDriver,
@@ -10,7 +9,8 @@ import {
 const routes: Routes = [
 	{
 		path: '',
-		component: ServersPageComponent,
+		loadComponent: () =>
+			import('./servers-page.component').then((m) => m.ServersPageComponent),
 	},
 	{
 		path: `db/:${routingParamDriver}/:${routingParamDbServerId}`,

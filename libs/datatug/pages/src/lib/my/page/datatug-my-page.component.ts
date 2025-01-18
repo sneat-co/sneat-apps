@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { DatatugServicesBaseModule } from '@sneat/datatug-services-base';
 import { DatatugServicesStoreModule } from '@sneat/datatug-services-repo';
-import { MyPageRoutingModule } from '../my-routing.module';
 
 @Component({
 	selector: 'sneat-datatug-my',
@@ -13,7 +12,6 @@ import { MyPageRoutingModule } from '../my-routing.module';
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		MyPageRoutingModule,
 		DatatugServicesBaseModule,
 		DatatugServicesStoreModule,
 	],

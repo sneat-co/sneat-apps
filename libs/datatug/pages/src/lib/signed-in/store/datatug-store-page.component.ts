@@ -28,13 +28,7 @@ import { filter, takeUntil, tap } from 'rxjs/operators';
 @Component({
 	selector: 'sneat-datatug-store-page',
 	templateUrl: './datatug-store-page.component.html',
-	imports: [
-		CommonModule,
-		IonicModule,
-		SneatErrorCardComponent,
-		NewProjectFormComponent,
-		RouterLink,
-	],
+	imports: [CommonModule, IonicModule, SneatErrorCardComponent, RouterLink],
 })
 export class DatatugStorePageComponent
 	implements OnInit, OnDestroy, ViewDidLeave, ViewDidEnter

@@ -1,24 +1,12 @@
-import { Observable } from 'rxjs';
 import { IRecordsetDef } from '@sneat/datatug-models';
+import { ICommandResponseItem } from './command-response';
 import { IRecordsetResult } from './execute';
-
-export interface ICommandResponse {
-	readonly commandId: string;
-	readonly elapsed?: number;
-	readonly items: /*Observable<ICommandResponseItem> |*/ ICommandResponseItem[];
-}
 
 // export interface IRxCommandResponse {
 //     elapsed?: number;
 //
 //     getItems(): Observable<ICommandResponseItem>;
 // }
-
-export interface ICommandResponseItem {
-	type: 'recordset' | 'recordsets' | 'string' | 'integer' | 'object';
-	elapsed?: number;
-	value?: unknown;
-}
 
 export interface ICommandHttpResponse extends ICommandResponseItem {
 	status?: number;

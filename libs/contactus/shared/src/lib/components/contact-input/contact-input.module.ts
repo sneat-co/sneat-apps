@@ -3,22 +3,18 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
-import {
-	ContactSelectorComponent,
-	ContactSelectorService,
-} from '../contact-selector';
+import { ContactSelectorServiceModule } from '../contact-selector/contact-selector.module';
 import { ContactInputComponent } from './contact-input.component';
 
 @NgModule({
 	imports: [
 		CommonModule,
 		IonicModule,
-		ContactSelectorComponent,
 		RouterModule,
 		SneatPipesModule,
+		ContactSelectorServiceModule,
 	],
 	declarations: [ContactInputComponent],
 	exports: [ContactInputComponent],
-	providers: [ContactSelectorService],
 })
 export class ContactInputModule {}

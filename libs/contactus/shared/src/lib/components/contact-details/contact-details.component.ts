@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { IUserSpaceBrief } from '@sneat/auth-models';
 import { SneatPipesModule } from '@sneat/components';
@@ -27,14 +26,9 @@ import { ContactContactsComponent } from '../contact-contacts';
 import { ContactDobComponent } from '../contact-dob';
 import { ContactLocationsComponent } from '../contact-locations';
 import { ContactModulesMenuComponent } from '../contact-modules-menu';
-import { ContactRelatedAsComponent } from '../contact-related-as';
 import { ContactRolesInputModule } from '../contact-roles-input';
 import { ContactsListModule } from '../contacts-list';
-import {
-	GenderFormComponent,
-	PersonWizardComponent,
-	RelationshipFormComponent,
-} from '../person-form';
+import { GenderFormComponent, RelationshipFormComponent } from '../person-form';
 import { RelatedContactComponent } from './related-contact.component';
 
 @Component({

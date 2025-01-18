@@ -17,7 +17,8 @@ import {
 	MemberGroupTypeOther,
 	MemberGroupTypePets,
 } from '@sneat/contactus-core';
-import { MembersByRoleComponent, MembersGroup } from '../members-by-role';
+import { MembersByRoleComponent } from '../members-by-role/members-by-role.component';
+import { MembersGroup } from '../members-by-role/member-group';
 import { IIdAndBrief, IIdAndBriefAndOptionalDto } from '@sneat/core';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 

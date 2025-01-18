@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
 	displayName: 'datetime',
 	preset: '../../jest.preset.js',

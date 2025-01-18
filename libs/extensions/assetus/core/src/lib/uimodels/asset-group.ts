@@ -1,4 +1,5 @@
-import { IAssetDtoGroupCounts, IAssetGroupContext } from '../dto';
+import { IAssetGroupContext } from '../contexts/asset-context';
+import { IAssetDtoGroupCounts } from '../dto/';
 import { Totals } from '@sneat/team-models';
 
 export class AssetGroup {

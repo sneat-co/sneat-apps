@@ -17,7 +17,6 @@ import { IListInfo, IListItemBrief } from '../../dto';
 import { IListContext } from '../../contexts';
 import { takeUntil } from 'rxjs';
 import { ListusComponentBaseParams } from '../../listus-component-base-params';
-import { MovieCardComponent } from '../../movie-card';
 import {
 	IDeleteListItemsRequest,
 	IReorderListItemsRequest,

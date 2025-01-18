@@ -1,6 +1,10 @@
 import { AssetCategory } from './assetus-types';
-import { LiabilityServiceType, ServiceCategory, SettlementType } from '.';
 import { ITitledRecord } from '@sneat/dto';
+import {
+	LiabilityServiceType,
+	ServiceCategory,
+	SettlementType,
+} from './dto-liability';
 
 export interface ServiceProviderContact {
 	type: 'phone' | 'twitter' | 'fbm' | 'post' | 'chat';

@@ -1,11 +1,27 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivationStart, Router, RouterOutlet } from '@angular/router';
+import {
+	ActivationStart,
+	Router,
+	RouterModule,
+	RouterOutlet,
+} from '@angular/router';
+import { IonicModule } from '@ionic/angular';
 import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth-core';
+import { AppVersionComponent, AuthMenuItemComponent } from '@sneat/components';
+import { SpacesMenuComponent } from '@sneat/team-components';
 
 @Component({
 	selector: 'sneat-logist-menu',
 	templateUrl: './logist-menu.component.html',
-	standalone: false,
+	imports: [
+		CommonModule,
+		IonicModule,
+		RouterModule,
+		AuthMenuItemComponent,
+		SpacesMenuComponent,
+		AppVersionComponent,
+	],
 })
 export class LogistMenuComponent implements OnInit {
 	@ViewChild(RouterOutlet) outlet?: RouterOutlet;
@@ -28,3 +44,10 @@ export class LogistMenuComponent implements OnInit {
 		});
 	}
 }
+
+@Component({
+	selector: 'sneat-logist-menu-lazy',
+	template: ` <sneat-logist-menu />`,
+	imports: [LogistMenuComponent],
+})
+export class LogistMenuLazyComponent {}

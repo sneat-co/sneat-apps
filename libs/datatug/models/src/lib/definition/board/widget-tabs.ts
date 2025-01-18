@@ -1,11 +1,4 @@
-import { WidgetDef } from './widgets';
-
-export type TabsWidgetName = 'tabs';
-
-export interface ITabsWidgetDef {
-	name: TabsWidgetName;
-	data: ITabsWidgetSettings;
-}
+import { IWidgetDef } from './widget';
 
 export interface ITabsWidgetSettings {
 	tabs: ITab[];
@@ -13,5 +6,5 @@ export interface ITabsWidgetSettings {
 
 export interface ITab {
 	title: string;
-	widget: WidgetDef;
+	widget: IWidgetDef;
 }
