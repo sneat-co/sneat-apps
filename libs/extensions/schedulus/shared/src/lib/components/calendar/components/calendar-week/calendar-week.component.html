@@ -1,7 +1,6 @@
 @for (weekday of weekdays; track weekday.id) {
 	<ion-item-group style="margin-top: -1px">
 		<sneat-calendar-weekday
-			[space]="space"
 			[weekday]="weekday"
 			(dateSelected)="dateSelected.emit($event)"
 		/>

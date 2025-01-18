@@ -52,7 +52,6 @@
 			<sneat-calendar-week
 				class="virtual-slide"
 				[@virtualSlide]="oddSlide?.animationState || 'show'"
-				[space]="space"
 				[week]="oddWeek"
 				[spaceDaysProvider]="spaceDaysProvider"
 			/>
@@ -60,7 +59,6 @@
 				<sneat-calendar-week
 					class="virtual-slide"
 					[@virtualSlide]="evenSlide?.animationState || 'hide'"
-					[space]="space"
 					[week]="evenWeek"
 					[spaceDaysProvider]="spaceDaysProvider"
 				/>

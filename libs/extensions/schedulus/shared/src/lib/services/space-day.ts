@@ -1,6 +1,7 @@
 import { signal } from '@angular/core';
 import { dateToIso } from '@sneat/core';
 import { IErrorLogger } from '@sneat/logging';
+import { ISpaceContext } from '@sneat/team-models';
 import {
 	BehaviorSubject,
 	distinctUntilChanged,
@@ -37,13 +38,19 @@ export class SpaceDay {
 	private singles?: ISlotUIContext[];
 	// private singles?: ISlotItem[];
 
+	private _spaces: ISpaceContext[] = [];
+
+	public get spaces(): ISpaceContext[] {
+		return this._spaces;
+	}
+
 	private spaceID?: string;
 	public readonly date: Date;
 	public readonly dateID: string;
 	public readonly wd: WeekdayCode2;
 	public readonly wdLongTitle: string;
 
-	public readonly _isLoading = signal(true);
+	private readonly _isLoading = signal(true);
 	public readonly isLoading = this._isLoading.asReadonly();
 
 	public readonly loadingEvents?: boolean;
@@ -62,12 +69,14 @@ export class SpaceDay {
 		return this._slots.value;
 	}
 
+	private readonly space$: Observable<ISpaceContext | undefined>;
 	private readonly spaceID$: Observable<string | undefined>;
 
 	private subscriptions: Subscription[] = [];
 
 	constructor(
-		spaceID$: Observable<string | undefined>, // do not declare it as member as we apply takeUntil(this.destroyed$) & distinctUntilChanged() to it
+		// TODO: Instead of Observable<string | undefined> we should use Observable<ISpaceContext | undefined>
+		space$: Observable<ISpaceContext | undefined>, // do not declare it as member as we apply takeUntil(this.destroyed$) & distinctUntilChanged() to it
 		date: Date, // intentionally not marking as public here to have public fields in 1 place
 		recurrings$: Observable<RecurringSlots>,
 		private readonly errorLogger: IErrorLogger,
@@ -83,8 +92,13 @@ export class SpaceDay {
 			throw new Error('an attempt to set an empty date 1970-01-01');
 		}
 		console.log('SpaceDay.constructor()', this.dateID, this.date);
-		this.spaceID$ = spaceID$.pipe(
-			takeUntil(this.destroyed$),
+		this.space$ = space$;
+		space$ = space$.pipe(takeUntil(this.destroyed$));
+		space$.subscribe({
+			next: (space) => (this._spaces = space ? [space] : []),
+		});
+		this.spaceID$ = space$.pipe(
+			map((space) => space?.id),
 			distinctUntilChanged(),
 		);
 		this.wd = getWd2(date);
@@ -274,5 +288,8 @@ export class SpaceDay {
 		// 	`=> ${slots.length} slots:`, slots);
 		this._slots.next(slots);
 		this._isLoading.set(false);
+		console.log(
+			'SpaceDay[${this.dateID}].joinRecurringsWithSinglesAndEmit() _isLoading=false',
+		);
 	}
 }

@@ -225,14 +225,15 @@ export class SpaceDaysProvider {
 		const id = dateToIso(date);
 		let day = this.days[id];
 		if (!day) {
-			this.days[id] = day = new SpaceDay(
-				this.spaceID$,
+			day = new SpaceDay(
+				this.space$,
 				date,
 				this.recurrings$,
 				this.errorLogger,
 				this.happeningService,
 				this.calendarDayService,
 			);
+			this.days[id] = day;
 		}
 		return day;
 	}

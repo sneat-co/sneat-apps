@@ -1,7 +1,6 @@
 import { Component, Inject, Input } from '@angular/core';
 import { virtualSliderAnimations } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISpaceContext } from '@sneat/team-models';
 import { SpaceDaysProvider } from '../../../../services/space-days-provider';
 import { getToday, CalendarStateService } from '../../calendar-state.service';
 import { SwipeableBaseComponent } from '../../../swipeable-base.component';
@@ -15,7 +14,6 @@ import { SwipeableWeek, swipeableWeek } from '../../../swipeable-ui';
 })
 // implements OnInit
 export class CalendarWeekCardComponent extends SwipeableBaseComponent {
-	@Input({ required: true }) space?: ISpaceContext;
 	@Input({ required: true }) spaceDaysProvider?: SpaceDaysProvider;
 
 	get oddWeek(): SwipeableWeek {
@@ -31,33 +29,18 @@ export class CalendarWeekCardComponent extends SwipeableBaseComponent {
 		scheduleStateService: CalendarStateService,
 	) {
 		super('ScheduleWeekCardComponent', errorLogger, scheduleStateService, 7);
+
+		this.createSlides();
+
+		// Delay creation of the non-active slide for performance reasons
 		setTimeout(() => (this.isEvenSlideActivated = true), 500);
 	}
 
-	// ngOnInit(): void {
-	// 	if (this.spaceDaysProvider) {
-	// 		this.createSlides();
-	// 	}
-	// }
-
 	private createSlides(): void {
-		// if (!this.spaceDaysProvider) {
-		// 	return;
-		// }
 		const current = getToday();
 		const next = new Date();
 		next.setDate(current.getDate() + 7);
-		this.oddSlide = swipeableWeek(
-			'odd',
-			current,
-			// this.spaceDaysProvider,
-			this.destroyed$,
-		);
-		this.evenSlide = swipeableWeek(
-			'even',
-			next,
-			// this.spaceDaysProvider,
-			this.destroyed$,
-		);
+		this.oddSlide = swipeableWeek('odd', current, this.destroyed$);
+		this.evenSlide = swipeableWeek('even', next, this.destroyed$);
 	}
 }

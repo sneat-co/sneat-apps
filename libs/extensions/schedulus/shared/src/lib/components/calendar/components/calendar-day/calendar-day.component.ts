@@ -83,7 +83,7 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 		const spaceID = this.space?.id;
 		if (spaceID && this.allSlots?.length) {
 			this.slots = this.allSlots
-				.filter((slot) => isSlotVisible(spaceID, slot, this.filter))
+				.filter((slot) => isSlotVisible(slot, this.filter))
 				.sort(sortSlotItems);
 			this.slotsHiddenByFilter = this.allSlots.length - this.slots.length;
 			console.log(
