@@ -61,10 +61,12 @@ export abstract class CalendarBaseComponent implements OnChanges, OnDestroy {
 		if (changes['space']) {
 			this.onSpaceContextChanged();
 			const spaceChange = changes['space'];
-			const prevSpace = spaceChange.previousValue as ISpaceContext;
-			const currentSpace = spaceChange.currentValue as ISpaceContext;
-			if (currentSpace?.id !== prevSpace?.id) {
-				this.onSpaceIdChanged();
+			const prevSpace = spaceChange.previousValue as ISpaceContext | undefined;
+			const currentSpace = spaceChange.currentValue as
+				| ISpaceContext
+				| undefined;
+			if (currentSpace && currentSpace?.id !== prevSpace?.id) {
+				this.onSpaceIdChanged(currentSpace);
 			}
 		}
 	}
@@ -90,10 +92,9 @@ export abstract class CalendarBaseComponent implements OnChanges, OnDestroy {
 
 	protected abstract onRecurringsLoaded(): void;
 
-	private onSpaceIdChanged(): void {
+	private onSpaceIdChanged(space: ISpaceContext): void {
 		console.log('ScheduleComponent.onSpaceIdChanged()', this._space?.id);
 		this.schedulusSpaceSubscription?.unsubscribe();
-		const space = this._space;
 		if (!space) {
 			return;
 		}

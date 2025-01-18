@@ -4,10 +4,11 @@
 	} @else if (isTomorrow()) {
 		<span class="ion-margin-end">Tomorrow:</span>
 	}
-	@if (day?.weekday) {
-		<b>{{ day?.weekday?.id | wdToWeekday }}</b
+	@if (weekday) {
+		<b>{{ weekday.id | wdToWeekday }}</b
 		><span style="font-weight: normal"
-			>, {{ date?.getDate() }} {{ date?.getMonth() | longMonthName }}</span
+			>, {{ weekday.day?.date?.getDate() }}
+			{{ weekday.day?.date?.getMonth() | longMonthName }}</span
 		>
 	}
 </span>

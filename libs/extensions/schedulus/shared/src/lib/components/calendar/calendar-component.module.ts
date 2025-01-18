@@ -68,7 +68,7 @@ import { TimingBadgeComponent } from './components/timing-badge/timing-badge.com
 		CalendarAddButtonsComponent,
 		WdToWeekdayPipe,
 	],
-	exports: [CalendarComponent, CalendarDayComponent],
+	exports: [CalendarComponent, CalendarDayComponent, CalendarDayTitleComponent],
 	declarations: [
 		CalendarComponent,
 		SlotContextMenuComponent,

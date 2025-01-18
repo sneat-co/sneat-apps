@@ -5,6 +5,7 @@ import {
 	Input,
 	OnChanges,
 	OnDestroy,
+	signal,
 	SimpleChanges,
 } from '@angular/core';
 import { dateToIso } from '@sneat/core';
@@ -24,6 +25,7 @@ import {
 } from '../../../calendar-filter.service';
 import { isSlotVisible } from '../../../schedule-slots';
 import { Weekday } from '../../weekday';
+import { isToday, isTomorrow } from '../../../schedule-core';
 
 @Component({
 	selector: 'sneat-calendar-day',
@@ -41,6 +43,11 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 
 	@Input({ required: true }) space?: ISpaceContext;
 	@Input({ required: true }) weekday?: Weekday;
+
+	@Input({ required: false }) hideAddButtons = false;
+
+	protected readonly isToday = signal<boolean>(false);
+	protected readonly isTomorrow = signal<boolean>(false);
 
 	public allSlots?: ISlotUIContext[];
 	public slots?: ISlotUIContext[];
@@ -72,16 +79,18 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 	ngOnChanges(changes: SimpleChanges): void {
 		const weekdayChange = changes['weekday'];
 		if (weekdayChange) {
-			if (weekdayChange.firstChange && !weekdayChange.currentValue) {
-				return; // TODO: comment with explanation why we need this
-			}
+			const date = this.weekday?.day?.date;
+			this.isToday.set(!date || isToday(date));
+			this.isTomorrow.set(isTomorrow(date));
+			// if (weekdayChange.firstChange && !weekdayChange.currentValue) {
+			// 	return; // TODO: comment with explanation why we need this
+			// }
 			this.subscribeForSlots();
 		}
 	}
 
 	private applyFilter(): void {
-		const spaceID = this.space?.id;
-		if (spaceID && this.allSlots?.length) {
+		if (this.allSlots?.length) {
 			this.slots = this.allSlots
 				.filter((slot) => isSlotVisible(slot, this.filter))
 				.sort(sortSlotItems);

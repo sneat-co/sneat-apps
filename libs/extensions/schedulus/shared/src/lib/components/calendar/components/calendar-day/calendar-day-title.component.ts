@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { isToday, isTomorrow } from '../../../schedule-core';
-import { SwipeableDay } from '../../../swipeable-ui';
+import { Weekday } from '../../weekday';
 
 @Component({
 	selector: 'sneat-calendar-day-title',
@@ -9,17 +9,18 @@ import { SwipeableDay } from '../../../swipeable-ui';
 	standalone: false,
 })
 export class CalendarDayTitleComponent {
-	@Input() day?: SwipeableDay;
+	@Input({ required: true }) weekday?: Weekday;
 
-	get date(): Date | undefined {
-		return this.day?.weekday?.day?.date;
+	protected get date(): Date | undefined {
+		return this.weekday?.day?.date;
 	}
 
-	isToday(): boolean {
-		return !this.date || isToday(this.date);
+	protected isToday(): boolean {
+		const date = this.date;
+		return !date || isToday(date);
 	}
 
-	isTomorrow(): boolean {
-		return !!this.date && isTomorrow(this.date);
+	protected isTomorrow(): boolean {
+		return isTomorrow(this.date);
 	}
 }
