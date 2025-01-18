@@ -35,13 +35,12 @@ export function hasContact(
 // }
 
 export function isSlotVisible(
-	spaceID: string,
 	slot: ISlotUIContext,
 	filter: ICalendarFilter,
 ): boolean {
 	if (
 		!hasContact(
-			spaceID,
+			slot.happening.space.id,
 			filter.contactIDs,
 			slot.happening?.dbo?.related || slot.happening?.brief?.related,
 		)

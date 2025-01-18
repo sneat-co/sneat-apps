@@ -22,7 +22,6 @@ import { Weekday } from '../../weekday';
 	standalone: false,
 })
 export class CalendarWeekComponent implements OnChanges {
-	@Input({ required: true }) space?: ISpaceContext;
 	@Input({ required: true }) week?: Week;
 	@Input({ required: true }) spaceDaysProvider?: SpaceDaysProvider;
 	@Input() filter?: ICalendarFilter;
@@ -30,19 +29,50 @@ export class CalendarWeekComponent implements OnChanges {
 	@Output() readonly goNew = new EventEmitter<NewHappeningParams>();
 	@Output() readonly dateSelected = new EventEmitter<Date>();
 
-	protected weekdays: Weekday[] = createWeekdays();
+	protected weekdays: readonly Weekday[] = createWeekdays();
 
 	ngOnChanges(changes: SimpleChanges): void {
-		this.onWeekInputChanged(changes['week']);
+		console.log(
+			'CalendarWeekComponent.ngOnChanges()',
+			this.week?.startDate,
+			changes,
+		);
+		if (changes['week']) {
+			this.onWeekInputChanged(changes['week']);
+		}
+		if (changes['spaceDaysProvider']) {
+			this.onSpaceChanged();
+		}
 	}
 
-	private onWeekInputChanged(week: SimpleChange): void {
-		// console.log('ScheduleWeekComponent.onWeekInputChanged()', week);
-		if (!week) {
+	private onSpaceChanged(): void {
+		if (this.week?.startDate) {
+			this.recreateWeekdays(this.week.startDate);
+		}
+	}
+
+	private recreateWeekdays(startDate: Date): void {
+		console.log('ScheduleWeekComponent.recreateWeekdays()', startDate);
+		const spaceDaysProvider = this.spaceDaysProvider;
+		if (!spaceDaysProvider) {
+			console.log('WARN: recreateWeekdays(): spaceDaysProvider is not set');
 			return;
 		}
-		const prevWeek = week.previousValue as Week | undefined;
-		const currentWeek = week.currentValue as Week | undefined;
+		const startDateN = startDate.getDate();
+		this.weekdays = this.weekdays.map((wd, i) => {
+			let date = new Date();
+			date = new Date(date.setDate(startDateN + i));
+			return {
+				...this.weekdays[i],
+				day: spaceDaysProvider.getSpaceDay(date),
+			};
+		});
+	}
+
+	private onWeekInputChanged(weekChange: SimpleChange): void {
+		// console.log('ScheduleWeekComponent.onWeekInputChanged()', week);
+		const prevWeek = weekChange.previousValue as Week | undefined;
+		const currentWeek = weekChange.currentValue as Week | undefined;
 		if (
 			!currentWeek ||
 			prevWeek === currentWeek ||
@@ -52,20 +82,7 @@ export class CalendarWeekComponent implements OnChanges {
 		) {
 			return;
 		}
-		const { spaceDaysProvider } = this;
-		if (!spaceDaysProvider) {
-			return;
-		}
-		const startDate = currentWeek.startDate.getDate();
+		this.recreateWeekdays(currentWeek.startDate);
 		// console.log('ScheduleWeekComponent.onWeekInputChanged() => startDate', startDate, currentWeek.startDate);
-		for (let i = 0; i < 7; i++) {
-			let date = new Date(currentWeek.startDate);
-			date = new Date(date.setDate(startDate + i));
-			// console.log('ScheduleWeekComponent.onWeekInputChanged() => i=', i, '; startDate:', currentWeek.startDate, '; date:', date);
-			this.weekdays[i] = {
-				...this.weekdays[i],
-				day: spaceDaysProvider.getSpaceDay(date),
-			};
-		}
 	}
 }

@@ -25,7 +25,9 @@
 @if (!day || day.isLoading()) {
 	<ion-item>
 		<ion-label color="medium" style="font-style: italic"
-			>Loading data for {{ weekday?.longTitle }}...
+			>Loading data for {{ weekday?.longTitle }} isLoading={{
+				day?.isLoading()
+			}}... weekday.day.id: {{ weekday?.day?.dateID }}
 		</ion-label>
 		<ion-spinner name="lines-small" slot="end" color="medium" />
 	</ion-item>
@@ -33,7 +35,7 @@
 	@for (slot of day.slots; track slot.slot.id) {
 		@if (showSlot(slot)) {
 			<sneat-day-slot-item
-				[space]="space"
+				[space]="slot.happening.space"
 				[dateID]="day.dateID"
 				[slotContext]="slot"
 			/>

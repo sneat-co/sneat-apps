@@ -21,9 +21,11 @@ export abstract class SwipeableBaseComponent extends SneatBaseComponent {
 
 	public parity: Parity = 'odd';
 	public date = getToday();
+
 	public get dateAsIsoString(): string {
 		return dateToIso(this.date);
 	}
+
 	public animationState?: VirtualSliderAnimationStates;
 	protected isEvenSlideActivated = false;
 	public oddSlide?: Swipeable;

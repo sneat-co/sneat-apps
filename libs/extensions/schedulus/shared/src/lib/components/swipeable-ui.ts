@@ -36,6 +36,7 @@ export function swipeableDay(
 	spaceDaysProvider: SpaceDaysProvider,
 	destroyed: Observable<void>,
 ): SwipeableDay {
+	// console.log(`swipeableDay(parity=${parity}, date=${dateToIso(date)})`);
 	const weekday = createWeekday(date, spaceDaysProvider);
 	const animationState = initialAnimationState(parity);
 	const activeDateID = dateToIso(date);
