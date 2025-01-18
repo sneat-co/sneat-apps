@@ -8,7 +8,7 @@ import {
 	HappeningService,
 	CalendarDayService,
 	CalendariumSpaceService,
-	// CalendariumServicesModule
+	CalendariumServicesModule,
 } from '../../services';
 import { createWeekday } from '../weekday-functions';
 import { CalendarBaseComponent } from './calendar-base.component';
@@ -24,7 +24,7 @@ import { Weekday } from './weekday';
 		RouterLink,
 		CalendarComponentModule,
 		CalendarAddButtonsComponent,
-		// CalendariumServicesModule,
+		CalendariumServicesModule,
 	],
 })
 export class CalendarBriefComponent extends CalendarBaseComponent {
