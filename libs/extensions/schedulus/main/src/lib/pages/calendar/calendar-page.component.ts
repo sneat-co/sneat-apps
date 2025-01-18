@@ -36,9 +36,9 @@ import {
 		CommonModule,
 		IonicModule,
 		SpaceCoreComponentsModule,
-		CalendarComponentModule,
-		ContactusServicesModule,
-		CalendariumServicesModule,
+		// CalendarComponentModule,
+		// ContactusServicesModule,
+		// CalendariumServicesModule,
 		ScheduleNavServiceModule,
 	],
 })
@@ -50,23 +50,23 @@ export class CalendarPageComponent extends SpaceBaseComponent {
 	constructor(
 		route: ActivatedRoute,
 		params: SpaceComponentBaseParams,
-		private filterService: CalendarFilterService,
+		// private filterService: CalendarFilterService,
 		private readonly scheduleNavService: ScheduleNavService,
 	) {
 		super('SchedulePageComponent', route, params);
 
-		filterService.filter.subscribe({
-			next: (filter) => {
-				this.filter = filter;
-			},
-		});
+		// filterService.filter.subscribe({
+		// 	next: (filter) => {
+		// 		this.filter = filter;
+		// 	},
+		// });
 
 		this.route?.queryParamMap.subscribe({
 			next: this.onQueryParamsChanged,
 		});
 	}
 
-	private filter: ICalendarFilter = emptyCalendarFilter;
+	// private filter: ICalendarFilter = emptyCalendarFilter;
 
 	private readonly onQueryParamsChanged = (queryParams: ParamMap) => {
 		const tab = queryParams.get('tab') as CalendarTab;
@@ -90,7 +90,7 @@ export class CalendarPageComponent extends SpaceBaseComponent {
 		}
 		const memberID = queryParams.get('member');
 		if (memberID) {
-			this.filterService.next({ ...this.filter, contactIDs: [memberID] });
+			// this.filterService.next({ ...this.filter, contactIDs: [memberID] });
 		}
 	};
 
@@ -113,6 +113,6 @@ export class CalendarPageComponent extends SpaceBaseComponent {
 			return;
 		}
 		const params: NewHappeningParams = { type: type };
-		this.scheduleNavService.goNewHappening(this.space, params);
+		// this.scheduleNavService.goNewHappening(this.space, params);
 	}
 }
