@@ -34,6 +34,12 @@ jobs:
 
             -   uses: ./.github/actions/pnpm
 
+            -   name: Check circular dependencies
+                run: |
+                    npx madge --circular --extensions ts ./libs
+                    npx madge --circular --extensions ts ./apps
+
+
             -   name: Derive appropriate SHAs for base and head for `nx affected` commands
                 uses: nrwl/nx-set-shas@v4
 
@@ -44,6 +50,7 @@ jobs:
                 # https://stackoverflow.com/questions/73876647/using-nx-run-many-shows-another-process-with-id-is-currently-running-ngcc
                 # BE AWARE: Adding PARALLEL options may cause build to pass when it should have been failed
                 run: pnpm run nx affected --target=build,lint --base=${{ env.NX_BASE }} --parallel=8
+
 
 
     e2e-cypress:
