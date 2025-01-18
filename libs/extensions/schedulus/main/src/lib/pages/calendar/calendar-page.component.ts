@@ -9,6 +9,7 @@ import {
 	HappeningType,
 	NewHappeningParams,
 	ScheduleNavService,
+	ScheduleNavServiceModule,
 } from '@sneat/mod-schedulus-core';
 import {
 	SpaceBaseComponent,
@@ -38,6 +39,7 @@ import {
 		CalendarComponentModule,
 		ContactusServicesModule,
 		CalendariumServicesModule,
+		ScheduleNavServiceModule,
 	],
 })
 export class CalendarPageComponent extends SpaceBaseComponent {

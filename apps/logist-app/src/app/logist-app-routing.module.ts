@@ -2,16 +2,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SneatAuthRoutingModule } from '@sneat/auth-ui';
 // TODO: fix & remove this eslint hint @nrwl/nx/enforce-module-boundaries
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { LogistMenuComponent } from '@sneat/extensions/logist';
 
 const routes: Routes = [
 	{
 		path: '',
 		pathMatch: 'full',
-		loadChildren: () =>
-			import('../pages/logist-app-home-page.module').then(
-				(m) => m.LogistAppHomePageModule,
+		loadComponent: () =>
+			import('../pages/logist-app-home-page.component').then(
+				(m) => m.LogistAppHomePageComponent,
 			),
 	},
 	{
@@ -23,8 +21,8 @@ const routes: Routes = [
 		path: '',
 		outlet: 'menu',
 		pathMatch: 'full',
-		// loadChildren: () => import('@sneat/extensions/logist').then(m => m.ExpressTeamMenuModule),
-		component: LogistMenuComponent,
+		loadChildren: () =>
+			import('@sneat/extensions/logist').then((m) => m.LogistMenuLazyComponent),
 	},
 	{
 		path: 'space/:spaceType/:spaceID',
