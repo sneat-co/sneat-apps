@@ -1,15 +1,15 @@
+import { IHappeningContext } from './contexts/happening-context';
 import {
 	HappeningType,
+	IHappeningSlotWithID,
+	ISlotAdjustment,
 	ISlotParticipant,
 	ITiming,
 	Level,
 	RepeatPeriod,
 	SlotLocation,
 	WeekdayCode2,
-	IHappeningContext,
-	ISlotAdjustment,
-	IHappeningSlotWithID,
-} from '.';
+} from './dto';
 
 export interface ISchedulePageParams {
 	readonly member?: string;

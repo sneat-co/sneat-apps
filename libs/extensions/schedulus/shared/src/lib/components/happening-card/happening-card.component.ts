@@ -6,7 +6,7 @@ import {
 	HappeningBaseComponent,
 	HappeningComponent,
 } from '../happening-base.component';
-import { IHappeningContactRequest } from '../..';
+import { IHappeningContactRequest } from '../../services/happening.service';
 
 @Component({
 	selector: 'sneat-happening-card',

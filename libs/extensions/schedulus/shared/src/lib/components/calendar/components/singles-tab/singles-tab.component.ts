@@ -13,7 +13,7 @@ import { ISlotUIEvent } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
 import { ISpaceContext } from '@sneat/team-models';
-import { HappeningService } from '../../../..';
+import { HappeningService } from '../../../../services';
 import { SneatBaseComponent } from '@sneat/ui';
 import { Observable, Subscription, takeUntil } from 'rxjs';
 

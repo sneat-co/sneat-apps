@@ -19,7 +19,10 @@ import {
 	WdToWeekdayPipe,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { HappeningService, IDeleteSlotRequest } from '../..';
+import {
+	HappeningService,
+	IDeleteSlotRequest,
+} from '../../services/happening.service';
 import {
 	HappeningSlotModalService,
 	HappeningSlotModalServiceModule,

@@ -42,7 +42,7 @@ import { newRandomId } from '@sneat/random';
 import { Observable } from 'rxjs';
 import { StartEndDatetimeFormComponent } from '../start-end-datetime-form/start-end-datetime-form.component';
 import { WeekdaysFormBase } from '../weekdays/weekdays-form-base';
-import { HappeningService } from '../..';
+import { HappeningService } from '../../services';
 
 type Happens =
 	| 'once'

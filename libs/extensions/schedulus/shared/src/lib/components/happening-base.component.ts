@@ -22,7 +22,10 @@ import { contactContextFromBrief } from '@sneat/contactus-services';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { SpaceNavService } from '@sneat/team-services';
 import { NEVER, Observable, takeUntil } from 'rxjs';
-import { HappeningService, IHappeningContactRequest } from '..';
+import {
+	HappeningService,
+	IHappeningContactRequest,
+} from '../services/happening.service';
 
 @Injectable()
 export class HappeningBaseComponentParams {

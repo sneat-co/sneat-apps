@@ -36,9 +36,9 @@ import {
 		CommonModule,
 		IonicModule,
 		SpaceCoreComponentsModule,
-		// CalendarComponentModule,
+		CalendarComponentModule,
 		ContactusServicesModule,
-		// CalendariumServicesModule,
+		CalendariumServicesModule,
 		ScheduleNavServiceModule,
 	],
 })

@@ -19,7 +19,10 @@ import {
 import { addRelatedItem, getRelatedItemIDs } from '@sneat/dto';
 import { IHappeningContext, IHappeningBase } from '@sneat/mod-schedulus-core';
 import { ISpaceContext } from '@sneat/team-models';
-import { HappeningService, IHappeningContactRequest } from '../..';
+import {
+	HappeningService,
+	IHappeningContactRequest,
+} from '../../services/happening.service';
 
 @Component({
 	selector: 'sneat-happening-participants',

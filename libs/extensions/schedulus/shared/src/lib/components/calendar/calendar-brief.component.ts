@@ -4,16 +4,17 @@ import { IonicModule } from '@ionic/angular';
 import { SneatApiService } from '@sneat/api';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
-import { CalendarDayService, HappeningService } from '../..';
 import {
-	CalendariumServicesModule,
+	HappeningService,
+	CalendarDayService,
 	CalendariumSpaceService,
-	Weekday,
-} from '../..';
+	// CalendariumServicesModule
+} from '../../services';
 import { createWeekday } from '../weekday-functions';
 import { CalendarBaseComponent } from './calendar-base.component';
 import { CalendarComponentModule } from './calendar-component.module';
 import { CalendarAddButtonsComponent } from './components/calendar-add-buttons/calendar-add-buttons.component';
+import { Weekday } from './weekday';
 
 @Component({
 	selector: 'sneat-calendar-brief',
@@ -23,7 +24,7 @@ import { CalendarAddButtonsComponent } from './components/calendar-add-buttons/c
 		RouterLink,
 		CalendarComponentModule,
 		CalendarAddButtonsComponent,
-		CalendariumServicesModule,
+		// CalendariumServicesModule,
 	],
 })
 export class CalendarBriefComponent extends CalendarBaseComponent {

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { WeekdayCode2 } from '..';
+import { WeekdayCode2 } from '../dto';
 
 export function wdCodeToWeekdayLongName(wd?: WeekdayCode2): string {
 	switch (wd) {

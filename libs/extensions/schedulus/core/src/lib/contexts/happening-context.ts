@@ -7,7 +7,7 @@ import {
 	HappeningType,
 	IHappeningBrief,
 	IHappeningDbo,
-} from '../';
+} from '../dto/happening';
 
 export type IHappeningContext = ISpaceItemNavContext<
 	IHappeningBrief,

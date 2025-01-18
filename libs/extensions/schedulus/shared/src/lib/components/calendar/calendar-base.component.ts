@@ -7,14 +7,17 @@ import {
 } from '@angular/core';
 import { SneatApiService } from '@sneat/api';
 import { dateToIso } from '@sneat/core';
-import { CalendariumSpaceService } from '../..';
+import {
+	CalendarDayService,
+	CalendariumSpaceService,
+	HappeningService,
+} from '../../services';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	ICalendariumSpaceDbo,
 	IHappeningWithUiState,
 } from '@sneat/mod-schedulus-core';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
-import { CalendarDayService, HappeningService } from '../..';
 import { Subject, Subscription } from 'rxjs';
 import { SpaceDaysProvider } from '../../services/space-days-provider';
 

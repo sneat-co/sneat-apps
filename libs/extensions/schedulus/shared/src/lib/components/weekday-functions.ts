@@ -1,6 +1,6 @@
 import { getWd2, wdCodeToWeekdayLongName } from '@sneat/mod-schedulus-core';
 import { SpaceDaysProvider } from '../services/space-days-provider';
-import { Weekday } from '..';
+import { Weekday } from './calendar/weekday';
 
 export function createWeekday(
 	date: Date,

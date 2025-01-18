@@ -11,8 +11,9 @@ import { dateToIso } from '@sneat/core';
 import { ISpaceContext } from '@sneat/team-models';
 import { SpaceDaysProvider } from '../../../../services/space-days-provider';
 import { NewHappeningParams } from '@sneat/mod-schedulus-core';
+import { Week } from '../../../week';
 import { ICalendarFilter } from '../calendar-filter/calendar-filter';
-import { createWeekdays, Week } from '../../../schedule-core';
+import { createWeekdays } from '../../../schedule-core';
 import { Weekday } from '../../weekday';
 
 @Component({

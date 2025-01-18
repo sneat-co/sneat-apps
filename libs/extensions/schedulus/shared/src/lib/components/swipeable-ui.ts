@@ -4,11 +4,11 @@ import {
 	VirtualSlideAnimationsStates,
 } from '@sneat/components';
 import { dateToIso, getWeekdayDate } from '@sneat/core';
-import { Weekday } from '..';
+import { Weekday } from './calendar/weekday';
 import { Observable } from 'rxjs';
 import { SpaceDaysProvider } from '../services/space-days-provider';
-import { Week } from './schedule-core';
 import { IDateChanged } from './calendar/calendar-state.service';
+import { Week } from './week';
 import { createWeekday } from './weekday-functions';
 
 export type Parity = 'odd' | 'even'; // TODO: change to 'current' | 'next' | 'prev';

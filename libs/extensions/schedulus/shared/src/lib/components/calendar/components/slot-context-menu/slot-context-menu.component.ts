@@ -28,7 +28,7 @@ import {
 	IHappeningContactRequest,
 	ISlotRefRequest,
 	ISlotRequest,
-} from '../../../..';
+} from '../../../../services/happening.service';
 
 const notImplemented = 'Sorry, not implemented yet';
 

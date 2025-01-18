@@ -16,3 +16,4 @@ export * from './happening-component-base-params';
 export * from './schedule-core';
 export * from './schedule-slots';
 export * from './weekday-functions';
+export { Week } from './week';

@@ -6,10 +6,10 @@ import {
 	VirtualSliderReversePushedPrev,
 } from '@sneat/components';
 import {
+	wd2,
 	wdCodeToWeekdayLongName,
 	WeekdayCode2,
 } from '@sneat/mod-schedulus-core';
-import { wd2 } from '@sneat/mod-schedulus-core';
 import { addDays } from './calendar/calendar-state.service';
 import { Weekday } from './calendar/weekday';
 import { Parity } from './swipeable-ui';
@@ -50,11 +50,6 @@ export function getWdDate(
 
 export const SHIFT_1_DAY = 1,
 	SHIFT_1_WEEK = 7;
-
-export interface Week {
-	startDate: Date; // e.g. Monday
-	endDate: Date; // e.g. Sunday
-}
 
 export const createWeekdays = (): Weekday[] =>
 	wd2.map((id) => ({ id, longTitle: wdCodeToWeekdayLongName(id) }));
