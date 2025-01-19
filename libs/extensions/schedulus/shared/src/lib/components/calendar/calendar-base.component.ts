@@ -1,6 +1,7 @@
 import {
-	Component,
+	Directive,
 	Inject,
+	Input,
 	OnChanges,
 	OnDestroy,
 	SimpleChanges,
@@ -19,11 +20,9 @@ import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { Subject, Subscription } from 'rxjs';
 import { SpaceDaysProvider } from '../../services/space-days-provider';
 
-@Component({
-	template: '',
-})
+@Directive()
 export abstract class CalendarBaseComponent implements OnChanges, OnDestroy {
-	protected _space?: ISpaceContext;
+	@Input() space?: ISpaceContext;
 
 	protected readonly destroyed = new Subject<void>();
 	protected date = new Date();
@@ -83,7 +82,7 @@ export abstract class CalendarBaseComponent implements OnChanges, OnDestroy {
 					id,
 					brief: rh.brief,
 					state: prev?.state || {},
-					space: this._space || { id: '' },
+					space: this.space || { id: '' },
 				};
 				return result;
 			}) || [];
@@ -93,7 +92,7 @@ export abstract class CalendarBaseComponent implements OnChanges, OnDestroy {
 	protected abstract onRecurringsLoaded(): void;
 
 	private onSpaceIdChanged(space: ISpaceContext): void {
-		console.log('ScheduleComponent.onSpaceIdChanged()', this._space?.id);
+		console.log('ScheduleComponent.onSpaceIdChanged()', this.space?.id);
 		this.schedulusSpaceSubscription?.unsubscribe();
 		if (!space) {
 			return;
@@ -132,8 +131,8 @@ export abstract class CalendarBaseComponent implements OnChanges, OnDestroy {
 	}
 
 	private onSpaceContextChanged(): void {
-		if (this._space) {
-			this.spaceDaysProvider.setSpace(this._space);
+		if (this.space) {
+			this.spaceDaysProvider.setSpace(this.space);
 		}
 	}
 
