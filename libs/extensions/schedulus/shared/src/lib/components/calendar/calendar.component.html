@@ -19,7 +19,7 @@
 
 <sneat-calendar-filter
 	#calendarFilterComponent
-	[space]="_space"
+	[space]="space"
 	[showWeekdays]="tab === 'recurrings'"
 	[showRepeats]="tab === 'recurrings'"
 />
@@ -30,7 +30,7 @@ This is just a small performance optimization.
 -->
 <sneat-day-tab
 	[style.display]="tab === 'day' ? 'block' : 'none'"
-	[space]="_space"
+	[space]="space"
 	[spaceDaysProvider]="spaceDaysProvider"
 />
 
@@ -45,7 +45,7 @@ This is probably due to the fact that we open 14 listeners (1 for each day of 2 
 @if (isWeekTabActivated) {
 	<sneat-week-tab
 		[style.display]="tab === 'week' ? 'block' : 'none'"
-		[space]="_space"
+		[space]="space"
 		[spaceDaysProvider]="spaceDaysProvider"
 	/>
 }
@@ -53,12 +53,12 @@ This is probably due to the fact that we open 14 listeners (1 for each day of 2 
 @switch (tab) {
 	@case ("recurrings") {
 		<sneat-recurrings-tab
-			[space]="_space"
+			[space]="space"
 			[recurrings]="recurrings"
 			[allRecurrings]="allRecurrings"
 		/>
 	}
 	@case ("singles") {
-		<sneat-singles-tab [space]="_space" [onDateSelected]="onDateSelected" />
+		<sneat-singles-tab [space]="space" [onDateSelected]="onDateSelected" />
 	}
 }

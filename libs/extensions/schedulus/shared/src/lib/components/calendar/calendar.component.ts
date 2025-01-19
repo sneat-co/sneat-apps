@@ -56,11 +56,11 @@ export class CalendarComponent
 	@ViewChild('calendarFilterComponent')
 	public calendarFilterComponent?: CalendarFilterComponent;
 
-	@Input()
-	set space(space: ISpaceContext) {
-		console.log('CalendarComponent.space=', space);
-		this._space = space;
-	}
+	// @Input()
+	// set space(space: ISpaceContext) {
+	// 	console.log('CalendarComponent.space=', space);
+	// 	this._space = space;
+	// }
 
 	@Input() member?: IMemberContext;
 	@Input() public tab: CalendarTab = 'day';
@@ -216,7 +216,7 @@ export class CalendarComponent
 	private filterRecurrings(
 		filter: ICalendarFilter,
 	): IHappeningWithUiState[] | undefined {
-		const spaceID = this._space?.id;
+		const spaceID = this.space?.id;
 		if (!spaceID) {
 			return;
 		}

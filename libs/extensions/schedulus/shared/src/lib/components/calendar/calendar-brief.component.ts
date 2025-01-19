@@ -9,7 +9,6 @@ import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatApiService } from '@sneat/api';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISpaceContext } from '@sneat/team-models';
 import { CalendarDayService } from '../../services/calendar-day.service';
 import { CalendariumSpaceService } from '../../services/calendarium-space.service';
 import { HappeningService } from '../../services/happening.service';
@@ -35,8 +34,6 @@ export class CalendarBriefComponent
 	extends CalendarBaseComponent
 	implements OnChanges
 {
-	@Input({ required: true }) space?: ISpaceContext;
-
 	protected today?: Weekday;
 	protected tomorrow?: Weekday;
 
