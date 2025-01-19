@@ -95,21 +95,21 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 				.filter((slot) => isSlotVisible(slot, this.filter))
 				.sort(sortSlotItems);
 			this.slotsHiddenByFilter = this.allSlots.length - this.slots.length;
-			console.log(
-				this.logPrefix() + '.applyFilter() =>',
-				'slotsHiddenByFilter:',
-				this.slotsHiddenByFilter,
-				'filter:',
-				this.filter,
-				'slots before filter:',
-				this.allSlots,
-				'slots after filter:',
-				this.slots,
-			);
+			// console.log(
+			// 	this.logPrefix() + '.applyFilter() =>',
+			// 	'slotsHiddenByFilter:',
+			// 	this.slotsHiddenByFilter,
+			// 	'filter:',
+			// 	this.filter,
+			// 	'slots before filter:',
+			// 	this.allSlots,
+			// 	'slots after filter:',
+			// 	this.slots,
+			// );
 		} else {
 			// console.log(this.logPrefix() + '.applyFilter() for empty slots');
 			this.slots = this.allSlots;
-			this.slotsHiddenByFilter = this.allSlots?.length;
+			this.slotsHiddenByFilter = 0;
 		}
 		this.changeDetectorRef.markForCheck();
 	}
@@ -122,9 +122,7 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 			);
 			this.slotsSubscription = this.weekday.day.slots$
 				.pipe(takeUntil(this.destroyed))
-				.subscribe({
-					next: this.processSlots,
-				});
+				.subscribe(this.processSlots);
 		} else {
 			this.slots = undefined;
 			this.slotsHiddenByFilter = undefined;
@@ -137,8 +135,8 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 		this.applyFilter();
 	};
 
-	private readonly logPrefix = (dateID?: string) =>
-		`ScheduleDayComponent[dateID=${this.weekday?.day?.dateID || dateID}]`;
+	private readonly logPrefix = () =>
+		`CalendarDayComponent{dateID=${this.weekday?.day?.dateID}}`;
 
 	protected goNewHappening(params: NewHappeningParams): void {
 		if (!this.space) {
