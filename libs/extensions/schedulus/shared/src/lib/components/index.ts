@@ -17,3 +17,5 @@ export * from './schedule-core';
 export * from './schedule-slots';
 export * from './weekday-functions';
 export { Week } from './week';
+
+export { CalendarDayTitleComponent } from './calendar/components/calendar-day/calendar-day-title.component';
