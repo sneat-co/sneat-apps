@@ -14,7 +14,7 @@ export const enum CommuneTopPage {
 	members = 'members',
 	landlords = 'landlords',
 	lists = 'lists',
-	schedule = 'schedule',
+	calendar = 'calendar',
 	tasks = 'tasks',
 	tenants = 'tenants',
 	terms = 'terms',
