@@ -1,6 +1,6 @@
 @if (weekday) {
 	@if (!weekday.day?.slots?.length) {
-		<ion-item lines="full">
+		<ion-item [lines]="hideLastBorder ? 'none' : 'full'">
 			<ion-label color="medium">
 				@if (isToday()) {
 					Nothing scheduled for today.

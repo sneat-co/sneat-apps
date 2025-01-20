@@ -45,6 +45,7 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 	@Input({ required: true }) weekday?: Weekday;
 
 	@Input({ required: false }) hideAddButtons = false;
+	@Input() hideLastBorder = false;
 
 	protected readonly isToday = signal<boolean>(false);
 	protected readonly isTomorrow = signal<boolean>(false);
