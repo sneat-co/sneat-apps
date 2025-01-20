@@ -1,7 +1,7 @@
 <ion-list>
 	@for (contact of contacts; track contact.id) {
 		<ion-item-sliding>
-			<sneat-contacts-list-item [contact]="contact" />
+			<sneat-contacts-list-item [space]="space" [contact]="contact" />
 		</ion-item-sliding>
 	}
 </ion-list>

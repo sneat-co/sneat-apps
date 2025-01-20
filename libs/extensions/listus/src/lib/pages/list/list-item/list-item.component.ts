@@ -26,6 +26,8 @@ export class ListItemComponent {
 	@Input()
 	public listItems?: IListItemWithUiState[];
 
+	@Input() isLastItem = false;
+
 	@Input()
 	public showDoneCheckbox = false;
 

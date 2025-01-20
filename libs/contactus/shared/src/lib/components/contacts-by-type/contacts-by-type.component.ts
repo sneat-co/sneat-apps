@@ -41,9 +41,6 @@ export class ContactsByTypeComponent implements OnChanges {
 		}
 	}
 
-	// TODO: have a single `id = (_, o: {id: string) => o.id` function once WebStorm bug is fixed
-	protected readonly contactID = (_: number, o: IIdAndBrief<IContactBrief>) =>
-		o.id;
 	protected readonly roleID = (_: number, o: IContactRoleWithContacts) => o.id;
 	protected readonly contactGroupID = (
 		_: number,

@@ -14,10 +14,14 @@ import { SpaceNavService } from '@sneat/team-services';
 	standalone: false,
 })
 export class ContactsListItemComponent {
-	@Input() space?: ISpaceContext;
+	@Input({ required: true }) space?: ISpaceContext;
+	@Input({ required: true }) contact?: IIdAndBriefAndOptionalDto<
+		IContactBrief,
+		IContactDto
+	>;
 	@Input() excludeRole?: ContactRole;
-	@Input() contact?: IIdAndBriefAndOptionalDto<IContactBrief, IContactDto>;
 	@Input() showAddress = false;
+	@Input() showBorder = true;
 	@Input() hideRoles: string[] = [
 		'--',
 		'creator',
@@ -46,7 +50,7 @@ export class ContactsListItemComponent {
 			return;
 		}
 		if (!this.space) {
-			this.errorLogger.logError('no team');
+			this.errorLogger.logError('no space');
 			return;
 		}
 		this.spaceNavService

@@ -138,11 +138,9 @@
 			</ion-reorder-group>
 		</ion-list>
 
-		<ng-container
-			*ngIf="
-				segment !== 'settings' && listType !== 'watch' && listType !== 'recipes'
-			"
-		>
+		@if (
+			segment !== "settings" && listType !== "watch" && listType !== "recipes"
+		) {
 			<sneat-new-list-item
 				[space]="space"
 				[list]="list"
@@ -150,7 +148,7 @@
 				[disabled]="isPersisting"
 				#newListItem
 			/>
-		</ng-container>
+		}
 	</ion-card>
 
 	<ng-container [ngSwitch]="segment">
