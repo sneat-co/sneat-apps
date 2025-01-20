@@ -41,12 +41,6 @@ export class ContactsByTypeComponent implements OnChanges {
 		}
 	}
 
-	protected readonly roleID = (_: number, o: IContactRoleWithContacts) => o.id;
-	protected readonly contactGroupID = (
-		_: number,
-		o: IContactGroupWithContacts,
-	) => o.id;
-
 	// hideRole(role: string): void {
 	// 	if (!this.commune.id) {
 	// 		throw new Error('!this.commune.id');
