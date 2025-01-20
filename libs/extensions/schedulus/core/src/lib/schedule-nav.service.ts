@@ -12,16 +12,19 @@ export class ScheduleNavService {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 	) {}
 
-	goSchedule(
+	public goCalendar(
 		space: ISpaceContext,
 		queryParams?: ISchedulePageParams,
 	): Promise<boolean> {
-		return this.spaceNavService.navigateForwardToSpacePage(space, 'schedule', {
+		return this.spaceNavService.navigateForwardToSpacePage(space, 'calendar', {
 			queryParams,
 		});
 	}
 
-	goNewHappening(space: ISpaceContext, params: NewHappeningParams): void {
+	public goNewHappening(
+		space: ISpaceContext,
+		params: NewHappeningParams,
+	): void {
 		console.log('ScheduleNavService.goNewHappening()', params);
 		this.spaceNavService
 			.navigateForwardToSpacePage(space, 'new-happening', {

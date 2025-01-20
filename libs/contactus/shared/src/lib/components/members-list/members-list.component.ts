@@ -159,7 +159,7 @@ export class MembersListComponent implements OnChanges {
 		const space = this.space;
 		if (space) {
 			this.scheduleNavService
-				.goSchedule(space, { member: contact.id })
+				.goCalendar(space, { member: contact.id })
 				.catch(
 					this.errorLogger.logErrorHandler(
 						"failed to navigate to member's schedule page",
