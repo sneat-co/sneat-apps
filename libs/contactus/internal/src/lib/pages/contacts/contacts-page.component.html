@@ -56,7 +56,7 @@
 		<div class="segment" *ngIf="!role">
 			<ion-segment [(ngModel)]="segment" *ngIf="space?.type === 'family'">
 				<ion-segment-button value="groups">
-					<ion-label>By type</ion-label>
+					<ion-label> By type </ion-label>
 				</ion-segment-button>
 
 				<ion-segment-button value="list">
@@ -93,7 +93,7 @@
 					[goMember]="goMember"
 				/>
 			}
-			<ng-container *ngIf="groups">
+			@if (groups) {
 				@for (group of groups; track group.id) {
 					<ion-item (click)="goGroup(group)" tappable>
 						<ion-label>
@@ -104,7 +104,7 @@
 						</ion-badge>
 					</ion-item>
 				}
-			</ng-container>
+			}
 		</ion-list>
 	</ion-card>
 </ion-content>
