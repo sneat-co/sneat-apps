@@ -69,6 +69,7 @@
 			@for (contact of contacts; track contact.id) {
 				<ion-item-sliding @listItem>
 					<sneat-contacts-list-item
+						[space]="space"
 						[contact]="contact"
 						[goContact]="goContact"
 						[goMember]="goMember"

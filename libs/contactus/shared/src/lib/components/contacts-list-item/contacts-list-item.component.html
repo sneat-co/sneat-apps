@@ -1,12 +1,17 @@
-<ion-item (click)="goContact(contact)" tappable class="with-buttons">
+<ion-item
+	tappable
+	class="with-buttons"
+	[lines]="showBorder ? undefined : 'none'"
+	(click)="goContact(contact)"
+>
 	<ion-icon slot="start" [name]="contact?.brief?.gender | genderIconName" />
 	<ion-label>
 		{{ contact | personTitle }}
 		<ng-container *ngIf="contact?.brief?.roles?.length">
 			<ng-container *ngFor="let role of contact?.brief?.roles || []">
-				<ion-badge *ngIf="!hideRole(role)" color="light" class="light">{{
-					role
-				}}</ion-badge>
+				<ion-badge *ngIf="!hideRole(role)" color="light" class="light"
+					>{{ role }}
+				</ion-badge>
 			</ng-container>
 		</ng-container>
 

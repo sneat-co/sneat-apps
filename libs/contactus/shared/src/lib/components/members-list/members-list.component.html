@@ -12,9 +12,10 @@
 </ion-item>
 
 <ng-template #list>
-	@for (member of membersToDisplay; track member.id) {
+	@for (member of membersToDisplay; track member.id; let isLast = $last) {
 		<ion-item-sliding [@addRemove]="'added'">
 			<ion-item
+				[lines]="isLast ? 'none' : undefined"
 				routerLink="/space/{{ space?.type || 'UNKNOWN_TYPE' }}/{{
 					space?.id
 				}}/member/{{ member.id }}"

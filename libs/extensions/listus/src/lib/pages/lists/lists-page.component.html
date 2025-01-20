@@ -1,32 +1,20 @@
-<ion-header *ngIf="appId !== 'sneat'">
+<ion-header>
 	<ion-toolbar color="light" class="with-end-buttons">
-		<ion-title [ngSwitch]="appId">
-			<span *ngSwitchCase="'listus'">📜 Listus.app</span>
-			<span *ngSwitchDefault>Lists</span>
-			<ion-badge
-				color="light"
-				style="font-weight: normal; color: grey; margin: 0 1em"
-				>alpha
-			</ion-badge>
-		</ion-title>
-		<ion-buttons slot="start">
-			<ion-menu-button menu="mainMenu" />
-		</ion-buttons>
-	</ion-toolbar>
-</ion-header>
-<ion-header *ngIf="appId === 'sneat'">
-	<ion-toolbar color="light">
-		<ion-buttons slot="start">
-			<ion-back-button [text]="null" [defaultHref]="defaultBackUrl" />
-		</ion-buttons>
-		<ion-title *ngIf="space; else titleNoCommune"
-			>📜 Lists &#64; {{ space.brief?.title }}
-		</ion-title>
-		<ng-template #titleNoCommune>
-			<ion-title>📜 Lists</ion-title>
-		</ng-template>
+		@if (appId === "listus") {
+			<ion-buttons slot="start">
+				<ion-back-button [text]="null" [defaultHref]="defaultBackUrl" />
+			</ion-buttons>
+			<ion-title>📜 Listus.app</ion-title>
+		} @else {
+			<ion-title
+				>📜 Lists
+				@if (space.brief?.title) {
+					&#64; {{ space.brief?.title }}
+				}
+			</ion-title>
+		}
 		<ion-buttons slot="end">
-			<ion-menu-button />
+			<ion-menu-button menu="mainMenu" />
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
@@ -105,9 +93,9 @@
 									[color]="list.itemsCount ? '' : 'medium'"
 									style="padding-left: 0.5em"
 								>
-									<ng-container *ngIf="list.emoji">{{
-										list.emoji
-									}}</ng-container>
+									<ng-container *ngIf="list.emoji"
+										>{{ list.emoji }}
+									</ng-container>
 
 									{{ list.title }}
 
