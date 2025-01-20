@@ -241,8 +241,6 @@ export class ListsPageComponent extends SpaceBaseComponent {
 		this.goList(listInfo);
 	}
 
-	trackByGroupIndex = (index: number, group: IListGroup) => group.type;
-
 	trackById(index: number, item: IListInfo): string | number {
 		return (
 			(item.id && `id:${item.id}`) ||

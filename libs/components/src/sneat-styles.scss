@@ -209,3 +209,9 @@ ion-item.ion-item-no-border {
 .deleting-list-item {
 	text-decoration: line-through;
 }
+
+.no-border-for-last-child {
+	:last-child {
+		--border-style: none !important;
+	}
+}
