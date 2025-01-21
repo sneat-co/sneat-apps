@@ -5,10 +5,10 @@ on:
         branches:
             # - renovate/* - do not build renovate branches as they'll be built by PRs
             - main
-            - feature/*
-            - bugfix/*
-            - improvement/*
-            - personal/*
+#            - feature/*
+#            - bugfix/*
+#            - improvement/*
+#            - personal/*
     pull_request:
     merge_group:
 
