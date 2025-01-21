@@ -45,4 +45,4 @@ read instructions on how to set up local dev environment in [README-DEV-SETUP.md
 
 # Signed commits
 
-Test signed commits 1.
+Test signed commits 2.
