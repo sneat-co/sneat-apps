@@ -34,19 +34,26 @@
 				placeholder="phone #"
 				[formControl]="phone"
 			/>
-			<ion-input
-				*ngIf="tab === 'link'"
-				label="Invite link"
-				labelPlacement="stacked"
-				readonly="readonly"
-				[value]="link ?? 'Generating...'"
-				[color]="link ? 'primary' : 'medium'"
-			/>
-			<ion-buttons *ngIf="tab === 'link' && link" slot="end">
-				<ion-button color="medium" (click)="copyLinkToClipboard()">
-					<ion-icon name="copy-outline" />
-				</ion-button>
-			</ion-buttons>
+			@if (tab === "link") {
+				<ion-input
+					*ngIf="tab === 'link'"
+					label="Invite link"
+					labelPlacement="stacked"
+					readonly="readonly"
+					[disabled]="!link"
+					[value]="link ?? 'Generating...'"
+					[color]="link ? 'primary' : 'medium'"
+				/>
+				@if (link) {
+					<ion-buttons *ngIf="link" slot="end">
+						<ion-button color="medium" (click)="copyLinkToClipboard()">
+							<ion-icon name="copy-outline" />
+						</ion-button>
+					</ion-buttons>
+				} @else {
+					<ion-spinner color="warning" slot="end" name="lines"></ion-spinner>
+				}
+			}
 		</ion-item>
 		<ion-item>
 			<ion-textarea

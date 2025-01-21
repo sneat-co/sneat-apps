@@ -244,6 +244,7 @@ export class InviteModalComponent {
 	}
 
 	private generateLink(): void {
+		console.log('generateLink()', this.space, this.member);
 		if (!this.space) {
 			return;
 		}
