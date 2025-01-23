@@ -53,8 +53,8 @@
 					<ion-label>
 						<h3 style="font-weight: bold">Telegram</h3>
 						<ion-text color="success" [title]="getAccountID('telegram')"
-							>Connected!</ion-text
-						>
+							>Connected!
+						</ion-text>
 					</ion-label>
 					<ion-buttons slot="end">
 						<ion-button
@@ -73,7 +73,7 @@
 						<p>Not connected yet.</p>
 					</ion-label>
 					<ion-buttons slot="end">
-						<sneat-login-with-telegram />
+						<sneat-login-with-telegram [isUserAuthenticated]="true" />
 					</ion-buttons>
 				}
 			</ion-item>

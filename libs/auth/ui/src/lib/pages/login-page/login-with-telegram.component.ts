@@ -1,58 +1,10 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
-import {
-	Component,
-	ElementRef,
-	Inject,
-	Injectable,
-	OnInit,
-} from '@angular/core';
-import { Input } from '@angular/core';
+import { Component, ElementRef, Inject, Input, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { SneatApiService } from '@sneat/api';
-import { SneatAuthStateService } from '@sneat/auth-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-
-interface ITelegramAuthData {
-	id: number;
-	first_name: string;
-	last_name: string;
-	username?: string;
-	photo_url?: string;
-	auth_date: number;
-	hash: string;
-}
-
-@Injectable()
-export class SneatAuthWithTelegramService {
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly apiService: SneatApiService,
-		private readonly authService: SneatAuthStateService,
-	) {}
-
-	public loginWithTelegram(botID: string, tgAuthData: ITelegramAuthData): void {
-		this.apiService
-			.postAsAnonymous<{
-				token: string;
-			}>('auth/login-from-telegram-widget?botID=' + botID, tgAuthData)
-			.subscribe({
-				next: (response) => {
-					console.log('loginWithTelegram() response:', response);
-					this.authService
-						.signInWithToken(response.token)
-						.then(() => {
-							console.log('loginWithTelegram() signed in');
-						})
-						.catch(
-							this.errorLogger.logErrorHandler(
-								'Failed to sign-in with custom token',
-							),
-						);
-				},
-				error: this.errorLogger.logErrorHandler('signInWithTelegram() error:'),
-			});
-	}
-}
+import {
+	ITelegramAuthData,
+	SneatAuthWithTelegramService,
+} from './sneat-auth-with-telegram.service';
 
 let authWithTelegramService: SneatAuthWithTelegramService;
 
@@ -83,6 +35,8 @@ export class LoginWithTelegramComponent implements OnInit {
 		authWithTelegramService = authWithTelegram;
 	}
 
+	@Input() public isUserAuthenticated = false;
+
 	@Input() public botID: string = location.hostname.startsWith('local')
 		? 'AlextDevBot'
 		: 'SneatBot';
@@ -102,7 +56,11 @@ export class LoginWithTelegramComponent implements OnInit {
 				// by calling the callback function data-onauth with the JSON-object containing
 				// id, first_name, last_name, username, photo_url, auth_date and hash fields.
 				console.log('window.onTelegramAuth(): Logged in', tgAuthData);
-				authWithTelegramService.loginWithTelegram(botID, tgAuthData);
+				authWithTelegramService.loginWithTelegram(
+					botID,
+					tgAuthData,
+					this.isUserAuthenticated,
+				);
 			};
 
 			const script = this.document.createElement('script');
