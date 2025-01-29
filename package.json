@@ -109,7 +109,7 @@
 		"jsonc-eslint-parser": "2.4.0",
 		"lint-staged": "15.4.3",
 		"madge": "^8.0.0",
-		"ng-packagr": "19.1.1",
+		"ng-packagr": "19.1.2",
 		"nx": "20.4.0",
 		"postcss": "8.5.1",
 		"postcss-import": "16.1.0",
