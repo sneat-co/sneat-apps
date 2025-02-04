@@ -20,7 +20,11 @@ runs:
         - name: Set up PNPM (corepack)
           id: pnpm-setup
           shell: sh
-          run: corepack enable
+          run: |
+            echo "Before: corepack version => $(corepack --version || echo 'not installed')"
+            npm install -g corepack@latest
+            echo "After : corepack version => $(corepack --version)"
+            corepack enable
 
 #        -   name: Install PNPM
 
