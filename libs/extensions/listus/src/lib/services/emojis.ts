@@ -2,6 +2,7 @@ const emojiKeywords: [string, string[]][] = [
 	[
 		'🍇',
 		[
+			'grape', // en
 			'grapes', // en
 			'виноград', // ru
 		],
