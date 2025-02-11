@@ -2,7 +2,7 @@
 	"name": "sneat",
 	"version": "0.0.0",
 	"license": "MIT",
-	"packageManager": "pnpm@10.2.1",
+	"packageManager": "pnpm@10.3.0",
 	"scripts": {
 		"nx": "nx",
 		"ng": "nx",
@@ -111,7 +111,7 @@
 		"madge": "^8.0.0",
 		"ng-packagr": "19.1.2",
 		"nx": "20.4.2",
-		"postcss": "8.5.1",
+		"postcss": "8.5.2",
 		"postcss-import": "16.1.0",
 		"postcss-preset-env": "10.1.3",
 		"postcss-url": "10.1.3",
