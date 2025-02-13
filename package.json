@@ -29,7 +29,12 @@
 	"pnpm": {
 		"overrides": {
 			"rxfire>tslib": "~2.8.0"
-		}
+		},
+		"onlyBuiltDependencies": [
+			"@swc/core",
+			"cypress",
+			"nx"
+		]
 	},
 	"dependencies": {
 		"@angular/animations": "19.1.6",
