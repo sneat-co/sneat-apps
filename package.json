@@ -104,7 +104,7 @@
 		"cross-env": "^7.0.3",
 		"cypress": "14.1.0",
 		"eslint": "9.21.0",
-		"eslint-config-prettier": "10.0.1",
+		"eslint-config-prettier": "10.0.2",
 		"eslint-plugin-cypress": "4.1.0",
 		"eslint-plugin-json": "4.0.1",
 		"git-describe": "4.1.1",
