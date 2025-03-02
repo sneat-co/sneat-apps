@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { SneatAnalyticsModule } from '@sneat/core';
 import { SneatLoggingModule } from '@sneat/logging';
 import { RandomModule } from '@sneat/random';
+import { SpaceServiceModule } from '@sneat/team-services';
 import { AppComponentService } from './app-component.service';
 
 @NgModule({
@@ -24,6 +25,7 @@ export class SneatApplicationModule {
 			IonicModule.forRoot(), // TODO: Move to specific modules?
 			RandomModule, // TODO: Move to specific modules?
 			SneatApplicationModule,
+			SpaceServiceModule,
 		];
 	}
 }
