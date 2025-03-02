@@ -6,7 +6,7 @@ import {
 
 const useEmulators = false;
 
-export const environment: IEnvironmentConfig = appSpecificConfig(
+export const sneatAppEnvironmentConfig: IEnvironmentConfig = appSpecificConfig(
 	useEmulators,
 	prodEnvironmentConfig,
 	{
