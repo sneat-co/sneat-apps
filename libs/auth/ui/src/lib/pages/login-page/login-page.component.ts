@@ -110,16 +110,18 @@ export class LoginPageComponent extends SneatBaseComponent {
 		this.signingWith = signingWith;
 	}
 
-	loginWith(provider: AuthProviderName) {
+	async loginWith(provider: AuthProviderName) {
 		console.log(`LoginPageComponent.loginWith(provider=${provider})`);
 		this.signingWith = provider;
-		this.authStateService.signInWith(provider).subscribe({
-			next: (userCredential) => this.onLoggedIn(userCredential),
-			complete: () => {
-				this.signingWith = undefined;
-			},
-			// error: undefined, No need to handle or log error as it will be logged in service
-		});
+		const userCredential = await this.authStateService.signInWith(provider);
+		console.log('userCredential:', userCredential);
+		// a.subscribe({
+		// 	next: (userCredential) => this.onLoggedIn(userCredential),
+		// 	complete: () => {
+		// 		this.signingWith = undefined;
+		// 	},
+		// 	// error: undefined, No need to handle or log error as it will be logged in service
+		// });
 	}
 
 	public onLoggedIn(userCredential: UserCredential): void {

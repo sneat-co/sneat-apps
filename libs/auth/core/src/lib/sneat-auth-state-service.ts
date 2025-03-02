@@ -147,14 +147,22 @@ export class SneatAuthStateService {
 		return from(signInWithEmailLink(this.fbAuth, email));
 	}
 
-	public signInWith(
+	private isSigningIn = false;
+
+	public async signInWith(
 		authProviderName: AuthProviderName,
-	): Observable<UserCredential> {
+	): Promise<UserCredential | undefined> {
+		if (this.isSigningIn) {
+			return Promise.resolve(undefined);
+		}
 		const eventParams = { provider: authProviderName };
 		let authProvider: AuthProvider;
 		switch (authProviderName) {
 			case 'Google':
 				authProvider = new GoogleAuthProvider();
+				break;
+			case 'Apple':
+				authProvider = new OAuthProvider('apple.com');
 				break;
 			case 'Microsoft':
 				authProvider = new OAuthProvider('microsoft.com');
@@ -173,26 +181,47 @@ export class SneatAuthStateService {
 					'Unknown or unsupported auth provider: ' + authProviderName,
 				);
 				this.errorLogger.logError(e, 'Coding error');
-				return throwError(() => e);
+				throw e;
+				// return throwError(() => e);
 			}
 		}
 		this.analyticsService.logEvent('loginWith', eventParams);
-		const signInResult = signInWithPopup(this.fbAuth, authProvider);
 
-		const result = new Subject<UserCredential>();
-		signInResult
-			.then((r) => {
-				console.log('signInWithPopup() => result:', r);
-				this.analyticsService.logEvent('signInWithPopup', eventParams);
-				result.next(r);
-			})
-			.catch(
-				this.errorLogger.logErrorHandler(
-					`Failed to sign-in with ${authProviderName}`,
-				),
+		try {
+			this.isSigningIn = true;
+			const userCredentials = await signInWithPopup(this.fbAuth, authProvider);
+			this.isSigningIn = false;
+			return Promise.resolve(userCredentials);
+		} catch (e) {
+			this.errorLogger.logError(
+				e,
+				'Failed to sign-in with ${authProviderName}',
 			);
-		return result;
+			this.isSigningIn = false;
+			return Promise.reject(e);
+		}
+
+		// const signInResult = signInWithPopup(this.fbAuth, authProvider);
+
+		// const result = new Subject<UserCredential>();
+		// signInResult
+		// 	.then((r) => {
+		// 		console.log('signInWithPopup() => result:', r);
+		// 		this.analyticsService.logEvent('signInWithPopup', eventParams);
+		// 		result.next(r);
+		// 	})
+		// 	.catch(
+		// 		this.errorLogger.logErrorHandler(
+		// 			`Failed to sign-in with ${authProviderName}`,
+		// 		),
+		// 	);
+		// return ;
 	}
 }
 
-export type AuthProviderName = 'Google' | 'Microsoft' | 'Facebook' | 'GitHub';
+export type AuthProviderName =
+	| 'Google'
+	| 'Apple'
+	| 'Microsoft'
+	| 'Facebook'
+	| 'GitHub';

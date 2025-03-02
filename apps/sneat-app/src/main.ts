@@ -1,6 +1,6 @@
 // Main entry point for the Sneat.app
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { SneatAppModule } from './app/sneat-app.module';
 
 platformBrowserDynamic()

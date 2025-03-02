@@ -24,7 +24,7 @@ export function getAngularFireProviders(firebaseConfig: IFirebaseConfig) {
 				);
 				connectFirestoreEmulator(
 					firestore,
-					emulator.firestoreHost || 'localhost',
+					emulator.firestoreHost || '127.0.0.1',
 					emulator.firestorePort,
 				);
 				if (emulator.firestorePort === 443) {
@@ -41,11 +41,11 @@ export function getAngularFireProviders(firebaseConfig: IFirebaseConfig) {
 			const auth = getAuth(fbApp);
 			const { emulator } = firebaseConfig;
 			if (firebaseConfig.useEmulators && emulator?.authPort) {
+				// alert('Using firebase auth emulator');
+				const authUrl = `${emulator.authPort === 443 ? 'https' : 'http'}://${emulator.authHost || '127.0.0.1'}:${emulator.authPort}`;
+				console.log('authUrl: ', authUrl);
 				// noinspection HttpUrlsUsage
-				connectAuthEmulator(
-					auth,
-					`${emulator.authPort === 443 ? 'https' : 'http'}://${emulator.authHost || 'localhost'}:${emulator.authPort}`,
-				);
+				connectAuthEmulator(auth, authUrl);
 			}
 			return auth;
 		}),

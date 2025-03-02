@@ -13,6 +13,7 @@ const useEmulators = true;
 const useNgrok = window.location.hostname.includes('.ngrok.');
 const useSSL = useNgrok || window.location.hostname == 'local-app.sneat.ws';
 
+// const nonSecureEmulatorHost = '127.0.0.1'; // 'localhost';
 const nonSecureEmulatorHost = '127.0.0.1'; // 'localhost';
 
 const firebaseConfig: IFirebaseConfig = {
