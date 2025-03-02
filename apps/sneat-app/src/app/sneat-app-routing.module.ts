@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { SneatAuthRoutingModule } from '@sneat/auth-ui';
-import { SneatAppMenuComponent } from './sneat-app-menu-component/sneat-app-menu.component';
 
 const routes: Routes = [
 	{
 		path: '',
 		pathMatch: 'full',
 		outlet: 'menu',
-		component: SneatAppMenuComponent,
+		loadComponent: () =>
+			import('./sneat-app-menu-component/sneat-app-menu.component').then(
+				(m) => m.SneatAppMenuComponent,
+			),
 	},
 	// {
 	// 	path: 'my',
@@ -22,6 +24,13 @@ const routes: Routes = [
 		loadComponent: () =>
 			import('./pages/sneat-app-home-page/sneat-app-home-page.component').then(
 				(m) => m.SneatAppHomePageComponent,
+			),
+	},
+	{
+		path: 'dev',
+		loadComponent: () =>
+			import('./pages/dev-page/dev-page.component').then(
+				(m) => m.DevPageComponent,
 			),
 	},
 	{

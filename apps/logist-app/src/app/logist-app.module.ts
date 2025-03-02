@@ -4,12 +4,12 @@ import { DefaultSneatAppApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
 import {
 	CONTACT_ROLES_BY_TYPE,
 	ContactRolesByType,
-	getAngularFireProviders,
+	getStandardSneatProviders,
 	SneatApplicationModule,
 } from '@sneat/app';
 import { AuthMenuItemComponent } from '@sneat/components';
-import { APP_INFO, coreProviders, IAppInfo } from '@sneat/core';
-import { initSentry, sentryAppInitializerProviders } from '@sneat/logging';
+import { APP_INFO, IAppInfo } from '@sneat/core';
+import { initSentry } from '@sneat/logging';
 import { RANDOM_ID_OPTIONS } from '@sneat/random';
 import { SpacesMenuComponent } from '@sneat/team-components';
 import { environment } from '../environments/environment';
@@ -28,12 +28,6 @@ const appInfo: IAppInfo = {
 };
 
 console.log('logist-app.module: environment:', environment);
-
-const angularFireProviders = getAngularFireProviders(
-	environment.firebaseConfig,
-);
-
-console.log('firebaseModules', angularFireProviders);
 
 const contactRolesByType: ContactRolesByType = {
 	company: [
@@ -97,17 +91,14 @@ const contactRolesByType: ContactRolesByType = {
 @NgModule({
 	imports: [
 		BrowserAnimationsModule,
-		SneatApplicationModule.defaultSneatApplicationImports(environment),
+		SneatApplicationModule.defaultSneatApplicationImports(),
 		// SneatAuthServicesModule,
 		AuthMenuItemComponent,
 		SpacesMenuComponent,
 		LogistAppRoutingModule,
 	],
 	providers: [
-		...angularFireProviders,
-		...coreProviders,
-		...coreProviders,
-		...sentryAppInitializerProviders,
+		...getStandardSneatProviders(environment),
 		{
 			provide: SneatApiBaseUrl,
 			useValue: environment.useEmulators

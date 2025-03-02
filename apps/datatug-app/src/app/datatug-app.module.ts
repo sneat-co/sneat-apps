@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicModule } from '@ionic/angular';
-import { APP_INFO, coreProviders, IAppInfo } from '@sneat/core';
-import { sentryAppInitializerProviders } from '@sneat/logging';
+import { APP_INFO, IAppInfo } from '@sneat/core';
 import { DatatugAppComponent } from './datatug-app.component';
 import { DatatugAppRoutingModule } from './datatug-app-routing.module';
 // import { CoreModule } from '@sneat/core';
 import {
 	EnvConfigToken,
+	getStandardSneatProviders,
 	initFirebase,
 	SneatApplicationModule,
 } from '@sneat/app';
@@ -52,9 +52,7 @@ const appInfo: IAppInfo = {
 		// DatatugMenuModule,
 	],
 	providers: [
-		...coreProviders,
-		...coreProviders,
-		...sentryAppInitializerProviders,
+		...getStandardSneatProviders(environment),
 		{
 			provide: APP_INFO,
 			useValue: appInfo,
