@@ -9,3 +9,4 @@ export * from './lib/init-firebase';
 export * from './lib/init-helpers';
 export * from './lib/contact-extensions';
 export * from './lib/get-standard-sneat-providers';
+export * from './lib/app-specific-providers';
