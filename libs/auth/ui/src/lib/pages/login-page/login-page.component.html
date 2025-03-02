@@ -75,6 +75,24 @@
 							<ion-label color="danger"> Login with Google</ion-label>
 						</ion-item>
 						<ion-item
+							(click)="loginWith('Apple')"
+							tappable
+							[disabled]="!!signingWith"
+						>
+							<ion-icon
+								color="dark"
+								name="logo-apple"
+								slot="start"
+								*ngIf="signingWith !== 'Apple'"
+							/>
+							<ion-spinner
+								slot="start"
+								name="lines-small"
+								*ngIf="signingWith === 'Apple'"
+							/>
+							<ion-label color="dark"> Login with Apple</ion-label>
+						</ion-item>
+						<ion-item
 							*ngIf="false"
 							(click)="loginWith('Facebook')"
 							tappable

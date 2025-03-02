@@ -9,8 +9,7 @@ import {
 
 const useEmulators = true;
 
-// noinspection SpellCheckingInspection
-export const environment: IEnvironmentConfig = appSpecificConfig(
+export const sneatAppEnvironmentConfig: IEnvironmentConfig = appSpecificConfig(
 	useEmulators,
 	environmentConfig,
 	{
