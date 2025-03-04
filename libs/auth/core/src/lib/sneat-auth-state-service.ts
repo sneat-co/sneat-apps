@@ -1,4 +1,10 @@
+import { SignInWithOAuthOptions } from '@capacitor-firebase/authentication/dist/esm/definitions';
+import { Capacitor } from '@capacitor/core';
 import { signInWithRedirect } from '@firebase/auth';
+import {
+	FirebaseAuthentication,
+	SignInResult,
+} from '@capacitor-firebase/authentication';
 import {
 	AnalyticsService,
 	EnumAsUnionOfKeys,
@@ -11,6 +17,8 @@ import { distinctUntilChanged, shareReplay } from 'rxjs/operators';
 import {
 	Auth,
 	AuthProvider,
+	getAuth,
+	signInWithCredential,
 	UserCredential,
 	UserInfo,
 } from '@angular/fire/auth';
@@ -177,76 +185,109 @@ export class SneatAuthStateService {
 	private isSigningInWith?: AuthProviderName;
 
 	public async signInWith(
-		authProviderName: AuthProviderName,
+		authProviderID: AuthProviderID,
 	): Promise<UserCredential | undefined> {
 		console.log(
-			`SneatAuthStateService.signInWith(${authProviderName}), isSigningInWith=${this.isSigningInWith}, location.protocol=${location.protocol}`,
+			`SneatAuthStateService.signInWith(${authProviderID}), isSigningInWith=${this.isSigningInWith}, location.protocol=${location.protocol}`,
 		);
 		if (this.isSigningInWith) {
 			return Promise.reject(
 				new Error(
-					`a repeated call to SneatAuthStateService.signInWith(${authProviderName}) white previous sign in with ${this.isSigningInWith} is in progress`,
+					`a repeated call to SneatAuthStateService.signInWith(${authProviderID}) white previous sign in with ${this.isSigningInWith} is in progress`,
 				),
 			);
 		}
-		const eventParams = { provider: authProviderName };
-		let authProvider: AuthProvider;
-		switch (authProviderName) {
-			case 'Google':
-				authProvider = new GoogleAuthProvider();
-				break;
-			case 'Apple':
-				authProvider = new OAuthProvider('apple.com');
-				// https://developer.apple.com/documentation/sign_in_with_apple/incorporating-sign-in-with-apple-into-other-platforms
-				// (authProvider as OAuthProvider).setCustomParameters({
-				// 	// 	// Localize the Apple authentication screen in current app locale.
-				// 	locale: 'en', // TODO: set locale
-				// });
-				break;
-			case 'Microsoft':
-				authProvider = new OAuthProvider('microsoft.com');
-				break;
-			case 'Facebook':
-				authProvider = new FacebookAuthProvider();
-				(authProvider as FacebookAuthProvider).addScope('email');
-				break;
-			case 'GitHub':
-				authProvider = new GithubAuthProvider();
-				(authProvider as GithubAuthProvider).addScope('read:user');
-				(authProvider as GithubAuthProvider).addScope('user:email');
-				break;
-			default: {
-				return Promise.reject(
-					'unknown or unsupported auth provider: ' + authProviderName,
+		const eventParams = { provider: authProviderID };
+
+		let userCredential: UserCredential | undefined = undefined;
+		let authProvider: AuthProvider | undefined = undefined;
+		let sigInResult: SignInResult | undefined = undefined;
+
+		if (Capacitor.isNativePlatform()) {
+			const o: SignInWithOAuthOptions = {
+				skipNativeAuth: true,
+			};
+			switch (authProviderID) {
+				case 'google.com':
+					sigInResult = await FirebaseAuthentication.signInWithGoogle(o);
+					break;
+				case 'apple.com':
+					sigInResult = await FirebaseAuthentication.signInWithApple(o);
+					break;
+				case 'facebook.com':
+					sigInResult = await FirebaseAuthentication.signInWithFacebook(o);
+					break;
+				case 'microsoft.com':
+					sigInResult = await FirebaseAuthentication.signInWithMicrosoft(o);
+					break;
+				default:
+					throw new Error('unsupported auth provider: ' + authProviderID);
+			}
+			// Sign in on the web layer using the id token and nonce
+			const oauthProvider = new OAuthProvider(authProviderID);
+			const credential = oauthProvider.credential({
+				idToken: sigInResult.credential?.idToken,
+				rawNonce: sigInResult.credential?.nonce,
+			});
+			const auth = getAuth();
+			userCredential = await signInWithCredential(auth, credential);
+		} else {
+			switch (authProviderID) {
+				case 'google.com':
+					authProvider = new GoogleAuthProvider();
+					break;
+				case 'apple.com':
+					authProvider = new OAuthProvider('apple.com');
+					//
+					// https://developer.apple.com/documentation/sign_in_with_apple/incorporating-sign-in-with-apple-into-other-platforms
+					// (authProvider as OAuthProvider).setCustomParameters({
+					// 	// 	// Localize the Apple authentication screen in current app locale.
+					// 	locale: 'en', // TODO: set locale
+					// });
+					break;
+				case 'microsoft.com':
+					authProvider = new OAuthProvider('microsoft.com');
+					break;
+				case 'facebook.com':
+					authProvider = new FacebookAuthProvider();
+					(authProvider as FacebookAuthProvider).addScope('email');
+					break;
+				case 'github.com':
+					authProvider = new GithubAuthProvider();
+					(authProvider as GithubAuthProvider).addScope('read:user');
+					(authProvider as GithubAuthProvider).addScope('user:email');
+					break;
+				default: {
+					return Promise.reject(
+						'unknown or unsupported auth provider: ' + authProviderID,
+					);
+				}
+			}
+			this.analyticsService.logEvent('loginWith', eventParams);
+
+			try {
+				userCredential = await signInWithPopup(this.fbAuth, authProvider);
+				this.isSigningInWith = undefined;
+			} catch (e) {
+				this.isSigningInWith = undefined;
+				this.errorLogger.logError(
+					e,
+					`Failed to sign-in with ${authProviderID}`,
 				);
+				return Promise.reject(e);
 			}
 		}
-		this.analyticsService.logEvent('loginWith', eventParams);
-
-		if (location.protocol.startsWith('capacitor')) {
-			console.log(
-				'Signing in with redirect as signInWithPopup does not work in hybrid apps',
-			);
-			// signInWithPopup does not work in hybrid apps
-			return signInWithRedirect(this.fbAuth, authProvider);
-		}
-
-		try {
-			this.isSigningInWith = authProviderName;
-
-			const userCredentials = await signInWithPopup(this.fbAuth, authProvider);
-			this.isSigningInWith = undefined;
-			return Promise.resolve(userCredentials);
-		} catch (e) {
-			this.isSigningInWith = undefined;
-			this.errorLogger.logError(
-				e,
-				`Failed to sign-in with ${authProviderName}`,
-			);
-			return Promise.reject(e);
-		}
+		return Promise.resolve(userCredential);
 	}
 }
+
+export type AuthProviderID =
+	| 'apple.com'
+	| 'google.com'
+	| 'microsoft.com'
+	| 'facebook.com'
+	| 'github.com'
+	| 'phone';
 
 export type AuthProviderName =
 	| 'Google'

@@ -38,6 +38,9 @@ importers:
       '@angular/router':
         specifier: 19.2.0
         version: 19.2.0(@angular/common@19.2.0(@angular/core@19.2.0(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@19.2.0(rxjs@7.8.2)(zone.js@0.15.0))(@angular/platform-browser@19.2.0(@angular/animations@19.2.0(@angular/core@19.2.0(rxjs@7.8.2)(zone.js@0.15.0)))(@angular/common@19.2.0(@angular/core@19.2.0(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@19.2.0(rxjs@7.8.2)(zone.js@0.15.0)))(rxjs@7.8.2)
+      '@capacitor-firebase/authentication':
+        specifier: ^7.1.0
+        version: 7.1.0(@capacitor/core@7.0.1)(firebase@11.4.0)
       '@capacitor/android':
         specifier: ^7.0.1
         version: 7.0.1(@capacitor/core@7.0.1)
@@ -1216,6 +1219,15 @@ packages:
 
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
+
+  '@capacitor-firebase/authentication@7.1.0':
+    resolution: {integrity: sha512-vPcWd3pjiMNF6qEylR9zxko/BnHT1MD9abbsu421r+grkKndqSvnC3THJQ38yXhk9opoZEV+FlvjocvwyiV8iw==}
+    peerDependencies:
+      '@capacitor/core': '>=7.0.0'
+      firebase: ^11.2.0
+    peerDependenciesMeta:
+      firebase:
+        optional: true
 
   '@capacitor/android@7.0.1':
     resolution: {integrity: sha512-jukJJHfkcyEBOkFBJRD3EwXMIIQo7lSv0ExPWgsIliPdGXLAj6ElvK2JaYEzec3vKyLc4RTNFVv0PMEU0vnImg==}
@@ -10745,6 +10757,12 @@ snapshots:
       '@babel/helper-validator-identifier': 7.25.9
 
   '@bcoe/v8-coverage@0.2.3': {}
+
+  '@capacitor-firebase/authentication@7.1.0(@capacitor/core@7.0.1)(firebase@11.4.0)':
+    dependencies:
+      '@capacitor/core': 7.0.1
+    optionalDependencies:
+      firebase: 11.4.0
 
   '@capacitor/android@7.0.1(@capacitor/core@7.0.1)':
     dependencies:

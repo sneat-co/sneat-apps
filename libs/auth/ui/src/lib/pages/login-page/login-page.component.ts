@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular';
 import {
+	AuthProviderID,
 	AuthProviderName,
 	AuthStatuses,
 	ILoginEventsHandler,
@@ -30,13 +31,6 @@ import { LoginWithTelegramComponent } from './login-with-telegram.component';
 
 type Action = 'join' | 'refuse'; // TODO: inject provider for action descriptions/messages.
 
-type AuthProviderID =
-	| AuthProviderName
-	| 'email'
-	| 'emailLink'
-	| 'resetPassword'
-	| undefined;
-
 @Component({
 	selector: 'sneat-login',
 	templateUrl: './login-page.component.html',
@@ -49,7 +43,9 @@ type AuthProviderID =
 	],
 })
 export class LoginPageComponent extends SneatBaseComponent {
-	protected readonly signingWith = signal<AuthProviderID>(undefined);
+	protected readonly signingWith = signal<AuthProviderID | undefined>(
+		undefined,
+	);
 	private readonly redirectTo?: string;
 	protected readonly to?: string;
 	protected readonly action?: Action; // TODO: document possible values?
@@ -109,10 +105,10 @@ export class LoginPageComponent extends SneatBaseComponent {
 	}
 
 	onEmailFormStatusChanged(signingWith?: EmailFormSigningWith): void {
-		this.signingWith.set(signingWith);
+		this.signingWith.set(signingWith as AuthProviderID);
 	}
 
-	async loginWith(provider: AuthProviderName) {
+	async loginWith(provider: AuthProviderID) {
 		const logPrefix = `LoginPageComponent.loginWith(provider=${provider})`;
 		console.log(logPrefix + ' started');
 		this.signingWith.set(provider);
