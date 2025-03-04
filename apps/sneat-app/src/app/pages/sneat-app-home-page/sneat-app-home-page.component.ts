@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, signal } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	computed,
+	Inject,
+	signal,
+} from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AuthStatus, SneatAuthStateService } from '@sneat/auth-core';
@@ -25,26 +31,39 @@ import { ForWorkComponent } from './for-work.component';
 		ForEducatorsComponent,
 		ForWorkComponent,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SneatAppHomePageComponent extends SneatBaseComponent {
-	protected readonly authStatus = signal<AuthStatus | undefined>(undefined);
+	protected readonly $authStatus = signal<AuthStatus | undefined>(undefined);
+	protected readonly $isAuthenticated = computed(
+		() => this.$authStatus() === 'authenticated',
+	);
+
+	protected readonly url: string = location.href;
+
+	protected readonly $err = signal<unknown>(undefined);
 
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		authStateService: SneatAuthStateService,
-		private router: Router,
+		router: Router,
 	) {
 		super('SneatAppHomePageComponent', errorLogger);
 		authStateService.authState.pipe(takeUntil(this.destroyed$)).subscribe({
 			next: (authState) => {
-				this.authStatus.set(authState.status);
+				this.$authStatus.set(authState.status);
 				if (authState.status === 'notAuthenticated') {
-					router
-						.navigate(['login'])
-						.catch(
-							errorLogger.logErrorHandler('Failed to navigate to login page'),
-						);
+					router.navigate(['login']).catch((err) => {
+						this.$err.set(err);
+						errorLogger.logError(err, 'Failed to navigate to login page');
+					});
+				} else if (authState.err) {
+					this.$err.set(authState.err);
 				}
+			},
+			error: (err) => {
+				this.$err.set(err);
+				errorLogger.logError(err, 'Failed to get authState');
 			},
 		});
 	}

@@ -7,7 +7,6 @@ import {
 } from '@sneat/app';
 import { provideSentryAppInitializer } from '@sneat/logging';
 import { SpacesMenuComponent } from '@sneat/team-components';
-import { SpaceServiceModule } from '@sneat/team-services';
 import { sneatAppEnvironmentConfig } from '../environments/environment';
 import { SneatAppRoutingModule } from './sneat-app-routing.module';
 import { SneatAppComponent } from './sneat-app.component';
