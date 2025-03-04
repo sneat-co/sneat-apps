@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, Optional } from '@angular/core';
+import { Component, Inject, Optional, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular';
@@ -30,6 +30,13 @@ import { LoginWithTelegramComponent } from './login-with-telegram.component';
 
 type Action = 'join' | 'refuse'; // TODO: inject provider for action descriptions/messages.
 
+type AuthProviderID =
+	| AuthProviderName
+	| 'email'
+	| 'emailLink'
+	| 'resetPassword'
+	| undefined;
+
 @Component({
 	selector: 'sneat-login',
 	templateUrl: './login-page.component.html',
@@ -42,14 +49,10 @@ type Action = 'join' | 'refuse'; // TODO: inject provider for action description
 	],
 })
 export class LoginPageComponent extends SneatBaseComponent {
-	public signingWith?:
-		| AuthProviderName
-		| 'email'
-		| 'emailLink'
-		| 'resetPassword';
-	public redirectTo?: string;
-	public to?: string;
-	public action?: Action; // TODO: document possible values?
+	protected readonly signingWith = signal<AuthProviderID>(undefined);
+	private readonly redirectTo?: string;
+	protected readonly to?: string;
+	protected readonly action?: Action; // TODO: document possible values?
 
 	public appTitle = 'Sneat.app';
 
@@ -65,7 +68,6 @@ export class LoginPageComponent extends SneatBaseComponent {
 		private readonly navController: NavController,
 		private readonly userService: SneatUserService,
 		private readonly authStateService: SneatAuthStateService,
-
 		@Inject(APP_INFO) private appInfo: IAppInfo, // TODO: Unused - remove or implement
 
 		@Optional() // TODO: Unused - remove or implement
@@ -107,14 +109,20 @@ export class LoginPageComponent extends SneatBaseComponent {
 	}
 
 	onEmailFormStatusChanged(signingWith?: EmailFormSigningWith): void {
-		this.signingWith = signingWith;
+		this.signingWith.set(signingWith);
 	}
 
 	async loginWith(provider: AuthProviderName) {
-		console.log(`LoginPageComponent.loginWith(provider=${provider})`);
-		this.signingWith = provider;
-		const userCredential = await this.authStateService.signInWith(provider);
-		console.log('userCredential:', userCredential);
+		const logPrefix = `LoginPageComponent.loginWith(provider=${provider})`;
+		console.log(logPrefix + ' started');
+		this.signingWith.set(provider);
+		try {
+			const userCredential = await this.authStateService.signInWith(provider);
+			console.log(logPrefix + ' userCredential:', userCredential);
+		} catch (e) {
+			this.errorLogger.logError(e, logPrefix + ' failed');
+			this.signingWith.set(undefined);
+		}
 		// a.subscribe({
 		// 	next: (userCredential) => this.onLoggedIn(userCredential),
 		// 	complete: () => {
@@ -126,7 +134,7 @@ export class LoginPageComponent extends SneatBaseComponent {
 
 	public onLoggedIn(userCredential: UserCredential): void {
 		console.log('LoginPage.onLoggedIn(userCredential):', userCredential);
-		this.signingWith = undefined;
+		this.signingWith.set(undefined);
 		if (!userCredential.user) {
 			return;
 		}
@@ -163,6 +171,6 @@ export class LoginPageComponent extends SneatBaseComponent {
 		this.errorLogger.logError(err, m, {
 			report: !(err as { code: unknown }).code,
 		});
-		this.signingWith = undefined;
+		this.signingWith.set(undefined);
 	}
 }

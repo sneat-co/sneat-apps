@@ -6,24 +6,45 @@
 		<ion-title
 			>Sneat<span class="sneat-hide-if-width-less-320">.app</span></ion-title
 		>
-		<ion-buttons
-			slot="end"
-			*ngIf="authStatus() === 'notAuthenticated'"
-			class="ion-padding-end"
-		>
-			<ion-button fill="solid" color="danger" routerLink="login">
-				<ion-icon name="log-in-outline" slot="start" />
-				<ion-label class="sneat-hide-if-width-less-240"
-					>Login
-					<span class="sneat-hide-if-width-less-420">to start</span></ion-label
-				>
-			</ion-button>
-		</ion-buttons>
+		@if ($authStatus() === "notAuthenticated") {
+			<ion-buttons slot="end" class="ion-padding-end">
+				<ion-button fill="solid" color="danger" routerLink="login">
+					<ion-icon name="log-in-outline" slot="start" />
+					<ion-label class="sneat-hide-if-width-less-240"
+						>Login
+						<span class="sneat-hide-if-width-less-420"
+							>to start</span
+						></ion-label
+					>
+				</ion-button>
+			</ion-buttons>
+		}
 	</ion-toolbar>
 </ion-header>
 
 <ion-content class="cardy">
-	<sneat-user-country *ngIf="authStatus() === 'authenticated'" />
+	@if ($isAuthenticated()) {
+		<sneat-user-country />
+	} @else {
+		<ion-card>
+			<ion-card-header>
+				<ion-card-title>Debug info</ion-card-title>
+			</ion-card-header>
+			<ion-card-content>
+				<b>$authStatus</b>: {{ $authStatus() }}<br />
+				<b>App URL</b>: <a [href]="url" target="_blank">{{ url }}</a>
+			</ion-card-content>
+		</ion-card>
+
+		<ion-card>
+			<ion-card-content>
+				<ion-button routerLink="login">
+					<ion-icon name="log-in-outline" slot="start" />
+					<ion-label>Login</ion-label>
+				</ion-button>
+			</ion-card-content>
+		</ion-card>
+	}
 
 	<ion-grid>
 		<ion-row>
@@ -38,4 +59,13 @@
 			</ion-col>
 		</ion-row>
 	</ion-grid>
+
+	@if ($err(); as err) {
+		<ion-card>
+			<ion-card-header>
+				<ion-card-title color="danger">Error</ion-card-title>
+				<ion-card-content>{{ err | json }}</ion-card-content>
+			</ion-card-header>
+		</ion-card>
+	}
 </ion-content>

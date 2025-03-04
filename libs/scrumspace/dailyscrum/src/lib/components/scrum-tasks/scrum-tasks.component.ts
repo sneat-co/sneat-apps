@@ -9,9 +9,10 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { IonInput, ModalController } from '@ionic/angular';
+import { IMemberBrief } from '@sneat/contactus-core';
 import { listAddRemoveAnimation } from '@sneat/core';
 import { IRecord } from '@sneat/data';
-import { IMemberBrief, ISpaceDbo } from '@sneat/dto';
+import { ISpaceDbo } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITaskWithUiStatus, ScrumService } from '../../services/scrum.service';
 import {

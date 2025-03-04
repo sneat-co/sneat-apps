@@ -59,36 +59,37 @@
 						<ion-item
 							(click)="loginWith('Google')"
 							tappable
-							[disabled]="!!signingWith"
+							[disabled]="!!signingWith()"
 						>
+							{{ signingWith() }}
 							<ion-icon
 								color="danger"
 								name="logo-google"
 								slot="start"
-								*ngIf="signingWith !== 'Google'"
+								*ngIf="signingWith() !== 'Google'"
 							/>
 							<ion-spinner
 								slot="start"
 								name="lines-small"
-								*ngIf="signingWith === 'Google'"
+								*ngIf="signingWith() === 'Google'"
 							/>
 							<ion-label color="danger"> Login with Google</ion-label>
 						</ion-item>
 						<ion-item
 							(click)="loginWith('Apple')"
 							tappable
-							[disabled]="!!signingWith"
+							[disabled]="!!signingWith()"
 						>
 							<ion-icon
 								color="dark"
 								name="logo-apple"
 								slot="start"
-								*ngIf="signingWith !== 'Apple'"
+								*ngIf="signingWith() !== 'Apple'"
 							/>
 							<ion-spinner
 								slot="start"
 								name="lines-small"
-								*ngIf="signingWith === 'Apple'"
+								*ngIf="signingWith() === 'Apple'"
 							/>
 							<ion-label color="dark"> Login with Apple</ion-label>
 						</ion-item>
@@ -96,19 +97,19 @@
 							*ngIf="false"
 							(click)="loginWith('Facebook')"
 							tappable
-							[disabled]="!!signingWith"
+							[disabled]="!!signingWith()"
 						>
 							<ion-icon
 								slot="start"
 								color="primary"
 								name="logo-facebook"
-								*ngIf="signingWith !== 'Facebook'"
+								*ngIf="signingWith() !== 'Facebook'"
 							/>
 							<ion-spinner
 								slot="start"
 								color="primary"
 								name="lines-small"
-								*ngIf="signingWith === 'Facebook'"
+								*ngIf="signingWith() === 'Facebook'"
 							/>
 							<ion-label color="primary">Login with Facebook</ion-label>
 						</ion-item>
@@ -119,19 +120,19 @@
 						<ion-item
 							(click)="loginWith('Microsoft')"
 							tappable
-							[disabled]="!!signingWith"
+							[disabled]="!!signingWith()"
 						>
 							<ion-icon
 								slot="start"
 								color="secondary"
 								name="logo-windows"
-								*ngIf="signingWith !== 'Microsoft'"
+								*ngIf="signingWith() !== 'Microsoft'"
 							/>
 							<ion-spinner
 								slot="start"
 								color="secondary"
 								name="lines-small"
-								*ngIf="signingWith === 'Microsoft'"
+								*ngIf="signingWith() === 'Microsoft'"
 							/>
 							<ion-label color="secondary">Login with Microsoft</ion-label>
 						</ion-item>
@@ -139,19 +140,19 @@
 							*ngIf="false"
 							(click)="loginWith('GitHub')"
 							tappable
-							[disabled]="!!signingWith"
+							[disabled]="!!signingWith()"
 						>
 							<ion-icon
 								slot="start"
 								color="tertiary"
 								name="logo-github"
-								*ngIf="signingWith !== 'GitHub'"
+								*ngIf="signingWith() !== 'GitHub'"
 							/>
 							<ion-spinner
 								slot="start"
 								color="tertiary"
 								name="lines-small"
-								*ngIf="signingWith === 'GitHub'"
+								*ngIf="signingWith() === 'GitHub'"
 							/>
 							<ion-label color="tertiary">Login with GitHub</ion-label>
 						</ion-item>

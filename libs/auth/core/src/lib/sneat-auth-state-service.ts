@@ -1,9 +1,10 @@
+import { signInWithRedirect } from '@firebase/auth';
 import {
 	AnalyticsService,
 	EnumAsUnionOfKeys,
 	IAnalyticsService,
 } from '@sneat/core';
-import { BehaviorSubject, from, Observable, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, from, Observable } from 'rxjs';
 import { Inject, Injectable } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { distinctUntilChanged, shareReplay } from 'rxjs/operators';
@@ -37,14 +38,15 @@ export enum AuthStatuses {
 export type AuthStatus = EnumAsUnionOfKeys<typeof AuthStatuses>;
 
 export interface ISneatAuthUser extends UserInfo {
-	isAnonymous: boolean;
-	emailVerified: boolean;
+	readonly isAnonymous: boolean;
+	readonly emailVerified: boolean;
 }
 
 export interface ISneatAuthState {
-	status: AuthStatus;
-	token?: string | null;
-	user?: ISneatAuthUser | null;
+	readonly status: AuthStatus;
+	readonly token?: string | null;
+	readonly user?: ISneatAuthUser | null;
+	readonly err?: unknown;
 }
 
 const initialAuthStatus = AuthStatuses.authenticating;
@@ -88,18 +90,35 @@ export class SneatAuthStateService {
 				const status: AuthStatus = fbUser
 					? AuthStatuses.authenticated
 					: AuthStatuses.notAuthenticated;
-				const current = this.authState$.value || {};
-				fbUser?.getIdToken().then((token) => {
-					this.authState$.next({
-						...current,
-						status,
-						token,
-						user: this.authUser$.value,
+				fbUser
+					?.getIdToken()
+					.then((token) => {
+						const current = this.authState$.value || {};
+						this.authState$.next({
+							...current,
+							status,
+							token,
+							user: this.authUser$.value,
+						});
+						this.authStatus$.next(status); // Should be after authState$
+					})
+					.catch((err) => {
+						const current = this.authState$.value || {};
+						this.authState$.next({
+							...current,
+							err: `fbUser.getIdToken() failed: ${err}`,
+						});
+						this.errorLogger.logError(err, 'Failed in fbUser.getIdToken()');
 					});
-					this.authStatus$.next(status); // Should be after authState$
-				});
 			},
-			error: errorLogger.logErrorHandler('failed to get Firebase auth token'),
+			error: (err) => {
+				const current = this.authState$.value || {};
+				this.authState$.next({
+					...current,
+					err: `fbAuth.onIdTokenChanged() failed: ${err}`,
+				});
+				errorLogger.logError(err, 'failed in fbAuth.onIdTokenChanged');
+			},
 			complete: () => void 0,
 		});
 		this.fbAuth.onAuthStateChanged({
@@ -129,9 +148,17 @@ export class SneatAuthStateService {
 				this.authUser$.next(user);
 				this.authState$.next({ ...this.authState$.value, user, status });
 			},
-			error: this.errorLogger.logErrorHandler(
-				'failed to retrieve Firebase auth user information',
-			),
+			error: (err) => {
+				this.errorLogger.logError(
+					err,
+					'failed to retrieve Firebase auth user information',
+				);
+				const current = this.authState$.value || {};
+				this.authState$.next({
+					...current,
+					err: `fbAuth.onAuthStateChanged() failed: ${err}`,
+				});
+			},
 		});
 	}
 
@@ -147,13 +174,20 @@ export class SneatAuthStateService {
 		return from(signInWithEmailLink(this.fbAuth, email));
 	}
 
-	private isSigningIn = false;
+	private isSigningInWith?: AuthProviderName;
 
 	public async signInWith(
 		authProviderName: AuthProviderName,
 	): Promise<UserCredential | undefined> {
-		if (this.isSigningIn) {
-			return Promise.resolve(undefined);
+		console.log(
+			`SneatAuthStateService.signInWith(${authProviderName}), isSigningInWith=${this.isSigningInWith}, location.protocol=${location.protocol}`,
+		);
+		if (this.isSigningInWith) {
+			return Promise.reject(
+				new Error(
+					`a repeated call to SneatAuthStateService.signInWith(${authProviderName}) white previous sign in with ${this.isSigningInWith} is in progress`,
+				),
+			);
 		}
 		const eventParams = { provider: authProviderName };
 		let authProvider: AuthProvider;
@@ -163,6 +197,11 @@ export class SneatAuthStateService {
 				break;
 			case 'Apple':
 				authProvider = new OAuthProvider('apple.com');
+				// https://developer.apple.com/documentation/sign_in_with_apple/incorporating-sign-in-with-apple-into-other-platforms
+				// (authProvider as OAuthProvider).setCustomParameters({
+				// 	// 	// Localize the Apple authentication screen in current app locale.
+				// 	locale: 'en', // TODO: set locale
+				// });
 				break;
 			case 'Microsoft':
 				authProvider = new OAuthProvider('microsoft.com');
@@ -177,45 +216,35 @@ export class SneatAuthStateService {
 				(authProvider as GithubAuthProvider).addScope('user:email');
 				break;
 			default: {
-				const e = new Error(
-					'Unknown or unsupported auth provider: ' + authProviderName,
+				return Promise.reject(
+					'unknown or unsupported auth provider: ' + authProviderName,
 				);
-				this.errorLogger.logError(e, 'Coding error');
-				throw e;
-				// return throwError(() => e);
 			}
 		}
 		this.analyticsService.logEvent('loginWith', eventParams);
 
-		try {
-			this.isSigningIn = true;
-			const userCredentials = await signInWithPopup(this.fbAuth, authProvider);
-			this.isSigningIn = false;
-			return Promise.resolve(userCredentials);
-		} catch (e) {
-			this.errorLogger.logError(
-				e,
-				'Failed to sign-in with ${authProviderName}',
+		if (location.protocol.startsWith('capacitor')) {
+			console.log(
+				'Signing in with redirect as signInWithPopup does not work in hybrid apps',
 			);
-			this.isSigningIn = false;
-			return Promise.reject(e);
+			// signInWithPopup does not work in hybrid apps
+			return signInWithRedirect(this.fbAuth, authProvider);
 		}
 
-		// const signInResult = signInWithPopup(this.fbAuth, authProvider);
+		try {
+			this.isSigningInWith = authProviderName;
 
-		// const result = new Subject<UserCredential>();
-		// signInResult
-		// 	.then((r) => {
-		// 		console.log('signInWithPopup() => result:', r);
-		// 		this.analyticsService.logEvent('signInWithPopup', eventParams);
-		// 		result.next(r);
-		// 	})
-		// 	.catch(
-		// 		this.errorLogger.logErrorHandler(
-		// 			`Failed to sign-in with ${authProviderName}`,
-		// 		),
-		// 	);
-		// return ;
+			const userCredentials = await signInWithPopup(this.fbAuth, authProvider);
+			this.isSigningInWith = undefined;
+			return Promise.resolve(userCredentials);
+		} catch (e) {
+			this.isSigningInWith = undefined;
+			this.errorLogger.logError(
+				e,
+				`Failed to sign-in with ${authProviderName}`,
+			);
+			return Promise.reject(e);
+		}
 	}
 }
 

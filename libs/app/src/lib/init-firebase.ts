@@ -1,5 +1,13 @@
-import { connectAuthEmulator, provideAuth } from '@angular/fire/auth';
+import { Type } from '@angular/core';
+import {
+	Auth,
+	connectAuthEmulator,
+	indexedDBLocalPersistence,
+	initializeAuth,
+	provideAuth,
+} from '@angular/fire/auth';
 import { connectFirestoreEmulator } from '@angular/fire/firestore';
+import { Capacitor } from '@capacitor/core';
 import { IFirebaseConfig } from './environment-config';
 import {
 	provideFirebaseApp,
@@ -37,8 +45,15 @@ export function getAngularFireProviders(firebaseConfig: IFirebaseConfig) {
 		}),
 		provideAuth((injector) => {
 			console.log('AngularFire: provideAuth');
-			const fbApp = injector.get(FirebaseApp);
-			const auth = getAuth(fbApp);
+			const fbApp = injector.get<FirebaseApp>(FirebaseApp as Type<FirebaseApp>);
+			let auth: Auth;
+			if (Capacitor.isNativePlatform()) {
+				auth = initializeAuth(fbApp, {
+					persistence: indexedDBLocalPersistence,
+				});
+			} else {
+				auth = getAuth(fbApp);
+			}
 			const { emulator } = firebaseConfig;
 			if (firebaseConfig.useEmulators && emulator?.authPort) {
 				// alert('Using firebase auth emulator');
