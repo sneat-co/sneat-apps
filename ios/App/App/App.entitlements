@@ -6,5 +6,18 @@
 	<array>
 		<string>Default</string>
 	</array>
+
+	    <!-- 🔒 Required for Sign in with Apple -->
+        <key>com.apple.developer.applesignin</key>
+        <array>
+            <string>Default</string>
+        </array>
+
+        <!-- 🔒 Required for Sign in with Google (via Firebase) -->
+        <key>com.apple.developer.authentication-services.autofill-credential-provider</key>
+        <array>
+            <string>Default</string>
+        </array>
+
 </dict>
 </plist>
