@@ -114,11 +114,16 @@ export class LoginPageComponent extends SneatBaseComponent {
 		this.signingWith.set(provider);
 		try {
 			const userCredential = await this.authStateService.signInWith(provider);
-			console.log(logPrefix + ' userCredential:', userCredential);
+			// console.log(logPrefix + ' userCredential:', userCredential);
+			// We do not reset this.signingWith in case of succesful sign in as we should redirect from login page
+			// and not to allow user to do a double sign-in.
 		} catch (e) {
+			const errMsg = (e as { errorMessage?: string }).errorMessage;
 			if (
-				(e as { errorMessage: string }).errorMessage !==
-				'The user canceled the sign-in flow.'
+				errMsg !== 'The user canceled the sign-in flow.' &&
+				!errMsg?.includes(
+					'com.apple.AuthenticationServices.AuthorizationError error 1001.',
+				)
 			) {
 				this.errorLogger.logError(e, `Failed to sign-in with ${provider}`);
 			}

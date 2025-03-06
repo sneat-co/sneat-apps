@@ -183,12 +183,106 @@ export class SneatAuthStateService {
 
 	private isSigningInWith?: AuthProviderName;
 
+	private async signInOnNativeLayer(
+		authProviderID: AuthProviderID,
+	): Promise<UserCredential> {
+		let signInResult: SignInResult | undefined;
+
+		const o: SignInWithOAuthOptions = { skipNativeAuth: true };
+
+		switch (authProviderID) {
+			case 'google.com':
+				signInResult = await FirebaseAuthentication.signInWithGoogle(o);
+				break;
+			case 'apple.com':
+				signInResult = await FirebaseAuthentication.signInWithApple(o);
+				break;
+			case 'facebook.com':
+				signInResult = await FirebaseAuthentication.signInWithFacebook(o);
+				break;
+			case 'microsoft.com':
+				signInResult = await FirebaseAuthentication.signInWithMicrosoft(o);
+				break;
+			default:
+				return Promise.reject('unsupported auth provider: ' + authProviderID);
+		}
+
+		console.log(
+			`SneatAuthStateService.signInWith(${authProviderID}) => signed in on native layer, authenticating in webview...`,
+			signInResult,
+		);
+		// we need to authenticate on webview layer using the id token and nonce from signInResult
+		const userCredential = await this.authenticateOnWebviewLayer(
+			authProviderID,
+			signInResult,
+		);
+
+		return Promise.resolve(userCredential);
+	}
+
+	private async authenticateOnWebviewLayer(
+		authProviderID: AuthProviderID,
+		signInResult: SignInResult,
+	): Promise<UserCredential> {
+		const oauthProvider = new OAuthProvider(authProviderID);
+		const credential = oauthProvider.credential({
+			idToken: signInResult.credential?.idToken,
+			rawNonce: signInResult.credential?.nonce,
+		});
+		const auth = getAuth();
+		return Promise.resolve(await signInWithCredential(auth, credential));
+	}
+
+	private async signInWithWebSDK(
+		authProviderID: AuthProviderID,
+	): Promise<UserCredential> {
+		let authProvider: AuthProvider | undefined = undefined;
+
+		switch (authProviderID) {
+			case 'google.com':
+				authProvider = new GoogleAuthProvider();
+				break;
+			case 'apple.com':
+				authProvider = new OAuthProvider('apple.com');
+				//
+				// https://developer.apple.com/documentation/sign_in_with_apple/incorporating-sign-in-with-apple-into-other-platforms
+				// (authProvider as OAuthProvider).setCustomParameters({
+				// 	// 	// Localize the Apple authentication screen in current app locale.
+				// 	locale: 'en', // TODO: set locale
+				// });
+				break;
+			case 'microsoft.com':
+				authProvider = new OAuthProvider('microsoft.com');
+				break;
+			case 'facebook.com':
+				authProvider = new FacebookAuthProvider();
+				(authProvider as FacebookAuthProvider).addScope('email');
+				break;
+			case 'github.com':
+				authProvider = new GithubAuthProvider();
+				(authProvider as GithubAuthProvider).addScope('read:user');
+				(authProvider as GithubAuthProvider).addScope('user:email');
+				break;
+			default: {
+				return Promise.reject(
+					'unknown or unsupported auth provider: ' + authProviderID,
+				);
+			}
+		}
+
+		const userCredential = await signInWithPopup(this.fbAuth, authProvider);
+		return Promise.resolve(userCredential);
+	}
+
 	public async signInWith(
 		authProviderID: AuthProviderID,
 	): Promise<UserCredential | undefined> {
 		console.log(
 			`SneatAuthStateService.signInWith(${authProviderID}), isSigningInWith=${this.isSigningInWith}, location.protocol=${location.protocol}`,
 		);
+		this.analyticsService.logEvent('signingInWith', {
+			provider: authProviderID,
+		});
 		try {
 			if (this.isSigningInWith) {
 				return Promise.reject(
@@ -197,83 +291,19 @@ export class SneatAuthStateService {
 					),
 				);
 			}
-			const eventParams = { provider: authProviderID };
 
 			let userCredential: UserCredential | undefined = undefined;
-			let authProvider: AuthProvider | undefined = undefined;
-			let sigInResult: SignInResult | undefined = undefined;
 
 			if (Capacitor.isNativePlatform()) {
-				const o: SignInWithOAuthOptions = {
-					skipNativeAuth: true,
-				};
-				switch (authProviderID) {
-					case 'google.com':
-						sigInResult = await FirebaseAuthentication.signInWithGoogle(o);
-						break;
-					case 'apple.com':
-						sigInResult = await FirebaseAuthentication.signInWithApple(o);
-						break;
-					case 'facebook.com':
-						sigInResult = await FirebaseAuthentication.signInWithFacebook(o);
-						break;
-					case 'microsoft.com':
-						sigInResult = await FirebaseAuthentication.signInWithMicrosoft(o);
-						break;
-					default:
-						return Promise.reject(
-							'unsupported auth provider: ' + authProviderID,
-						);
-				}
-				console.log(
-					'SneatAuthStateService.signInWithGoogle => result:',
-					sigInResult,
-				);
-				// Sign in on the web layer using the id token and nonce
-				const oauthProvider = new OAuthProvider(authProviderID);
-				const credential = oauthProvider.credential({
-					idToken: sigInResult.credential?.idToken,
-					rawNonce: sigInResult.credential?.nonce,
-				});
-				const auth = getAuth();
-				userCredential = await signInWithCredential(auth, credential);
+				userCredential = await this.signInOnNativeLayer(authProviderID);
 			} else {
-				switch (authProviderID) {
-					case 'google.com':
-						authProvider = new GoogleAuthProvider();
-						break;
-					case 'apple.com':
-						authProvider = new OAuthProvider('apple.com');
-						//
-						// https://developer.apple.com/documentation/sign_in_with_apple/incorporating-sign-in-with-apple-into-other-platforms
-						// (authProvider as OAuthProvider).setCustomParameters({
-						// 	// 	// Localize the Apple authentication screen in current app locale.
-						// 	locale: 'en', // TODO: set locale
-						// });
-						break;
-					case 'microsoft.com':
-						authProvider = new OAuthProvider('microsoft.com');
-						break;
-					case 'facebook.com':
-						authProvider = new FacebookAuthProvider();
-						(authProvider as FacebookAuthProvider).addScope('email');
-						break;
-					case 'github.com':
-						authProvider = new GithubAuthProvider();
-						(authProvider as GithubAuthProvider).addScope('read:user');
-						(authProvider as GithubAuthProvider).addScope('user:email');
-						break;
-					default: {
-						return Promise.reject(
-							'unknown or unsupported auth provider: ' + authProviderID,
-						);
-					}
-				}
-				this.analyticsService.logEvent('loginWith', eventParams);
-
-				userCredential = await signInWithPopup(this.fbAuth, authProvider);
-				this.isSigningInWith = undefined;
+				userCredential = await this.signInWithWebSDK(authProviderID);
 			}
+
+			this.isSigningInWith = undefined;
+			this.analyticsService.logEvent('signedInWith', {
+				provider: authProviderID,
+			});
 			return Promise.resolve(userCredential);
 		} catch (e) {
 			this.isSigningInWith = undefined;
