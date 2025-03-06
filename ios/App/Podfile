@@ -14,7 +14,7 @@ def capacitor_pods
   pod 'CapacitorFirebaseAuthentication', :path => '../../node_modules/.pnpm/@capacitor-firebase+authentication@7.1.0_@capacitor+core@7.0.1_firebase@11.4.0/node_modules/@capacitor-firebase/authentication'
 end
 
-target 'App' do
+target 'Sneat.app' do
   capacitor_pods
   # Add your Pods here
 end
