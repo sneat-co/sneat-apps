@@ -17,6 +17,7 @@ end
 target 'Sneat.app' do
   capacitor_pods
   # Add your Pods here
+  pod 'CapacitorFirebaseAuthentication/Google', :path => '../../node_modules/.pnpm/@capacitor-firebase+authentication@7.1.0_@capacitor+core@7.0.1_firebase@11.4.0/node_modules/@capacitor-firebase/authentication'
 end
 
 post_install do |installer|

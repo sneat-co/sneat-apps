@@ -116,7 +116,12 @@ export class LoginPageComponent extends SneatBaseComponent {
 			const userCredential = await this.authStateService.signInWith(provider);
 			console.log(logPrefix + ' userCredential:', userCredential);
 		} catch (e) {
-			this.errorLogger.logError(e, logPrefix + ' failed');
+			if (
+				(e as { errorMessage: string }).errorMessage !==
+				'The user canceled the sign-in flow.'
+			) {
+				this.errorLogger.logError(e, `Failed to sign-in with ${provider}`);
+			}
 			this.signingWith.set(undefined);
 		}
 		// a.subscribe({
