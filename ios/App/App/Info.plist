@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
+	
+	<key>FacebookAppID</key>
+	<string>967757390090619</string>
+	<key>FacebookDisplayName</key>
+	<string>Sneat.app</string>
+	
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -10,14 +18,14 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.588648831063-gitp5v1vvsdiaeuqcllkr71eqaq0tpve</string>
+				<string>fb967757390090619</string>
 			</array>
 		</dict>
 	</array>
-
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-        <string>Sneat.app</string>
+	<string>Sneat.app</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
