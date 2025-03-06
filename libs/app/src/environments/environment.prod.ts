@@ -1,4 +1,5 @@
 import { IEnvironmentConfig, IFirebaseConfig } from '../lib/environment-config';
+import { firebaseEmulatorConfig } from './environment.base';
 
 const useEmulators = false;
 
@@ -12,6 +13,8 @@ export function isSneatHost(): boolean {
 }
 
 export const firebaseConfigForSneatApp: IFirebaseConfig = {
+	useEmulators: true,
+	emulator: firebaseEmulatorConfig,
 	apiKey: 'AIzaSyCeQu1WC182yD0VHrRm4nHUxVf27fY-MLQ',
 	authDomain: 'sneat.app',
 	projectId: 'sneat-eur3-1',
