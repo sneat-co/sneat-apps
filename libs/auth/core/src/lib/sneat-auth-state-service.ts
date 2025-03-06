@@ -277,7 +277,6 @@ export class SneatAuthStateService {
 			return Promise.resolve(userCredential);
 		} catch (e) {
 			this.isSigningInWith = undefined;
-			this.errorLogger.logError(e, `Failed to sign-in with ${authProviderID}`);
 			return Promise.reject(e);
 		}
 	}
