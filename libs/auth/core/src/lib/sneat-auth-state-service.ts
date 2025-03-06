@@ -1,6 +1,5 @@
 import { SignInWithOAuthOptions } from '@capacitor-firebase/authentication/dist/esm/definitions';
 import { Capacitor } from '@capacitor/core';
-import { signInWithRedirect } from '@firebase/auth';
 import {
 	FirebaseAuthentication,
 	SignInResult,
