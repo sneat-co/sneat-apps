@@ -4,7 +4,7 @@
 <dict>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
-		
+
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -17,13 +17,19 @@
 			</array>
 		</dict>
 	</array>
-	
+
 	<key>FacebookAppID</key>
 	<string>967757390090619</string>
 	<key>FacebookDisplayName</key>
 	<string>Sneat.app</string>
+
+	<!-- https://developers.facebook.com/docs/facebook-login/guides/access-tokens/
+	A client token is used to access app-level APIs that you can embed into your native or desktop apps to identify your app.
+	The client token isn't meant to be a secret identifier because it's embedded in apps.
+	-->
 	<key>FacebookClientToken</key>
-	<string>7fe1ddc51c31e48b1dfa958190050f25</string>
+	<string>9d45eb7d38d301c6f368d56ecf2ba553</string>
+
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 	<string>fbapi</string>
@@ -43,7 +49,7 @@
 	<string>fbshareextension</string>
 	</array>
 
-	
+
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
