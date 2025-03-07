@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject, Optional, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Capacitor } from '@capacitor/core';
 import { IonicModule, NavController } from '@ionic/angular';
 import {
 	AuthProviderID,
@@ -50,11 +51,9 @@ export class LoginPageComponent extends SneatBaseComponent {
 	protected readonly to?: string;
 	protected readonly action?: Action; // TODO: document possible values?
 
-	public appTitle = 'Sneat.app';
+	protected readonly isNativePlatform = Capacitor.isNativePlatform();
 
-	protected readonly telegramBotID = location.hostname.startsWith('local')
-		? 'AlextDevBot'
-		: 'SneatBot';
+	protected readonly appTitle: string;
 
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
@@ -72,7 +71,7 @@ export class LoginPageComponent extends SneatBaseComponent {
 	) {
 		super('LoginPageComponent', errorLogger);
 		console.log('LoginPageComponent.constructor()');
-		this.appTitle = appInfo.appTitle;
+		this.appTitle = appInfo.appTitle || 'Sneat.app';
 		if (location.hash.startsWith('#/')) {
 			this.redirectTo = location.hash.substring(1);
 		}
@@ -104,17 +103,16 @@ export class LoginPageComponent extends SneatBaseComponent {
 			});
 	}
 
-	onEmailFormStatusChanged(signingWith?: EmailFormSigningWith): void {
+	protected onEmailFormStatusChanged(signingWith?: EmailFormSigningWith): void {
 		this.signingWith.set(signingWith as AuthProviderID);
 	}
 
-	async loginWith(provider: AuthProviderID) {
+	protected async loginWith(provider: AuthProviderID) {
 		const logPrefix = `LoginPageComponent.loginWith(provider=${provider})`;
 		console.log(logPrefix + ' started');
 		this.signingWith.set(provider);
 		try {
-			const userCredential = await this.authStateService.signInWith(provider);
-			// console.log(logPrefix + ' userCredential:', userCredential);
+			await this.authStateService.signInWith(provider);
 			// We do not reset this.signingWith in case of succesful sign in as we should redirect from login page
 			// and not to allow user to do a double sign-in.
 		} catch (e) {
@@ -129,16 +127,9 @@ export class LoginPageComponent extends SneatBaseComponent {
 			}
 			this.signingWith.set(undefined);
 		}
-		// a.subscribe({
-		// 	next: (userCredential) => this.onLoggedIn(userCredential),
-		// 	complete: () => {
-		// 		this.signingWith = undefined;
-		// 	},
-		// 	// error: undefined, No need to handle or log error as it will be logged in service
-		// });
 	}
 
-	public onLoggedIn(userCredential: UserCredential): void {
+	protected onLoggedIn(userCredential: UserCredential): void {
 		console.log('LoginPage.onLoggedIn(userCredential):', userCredential);
 		this.signingWith.set(undefined);
 		if (!userCredential.user) {

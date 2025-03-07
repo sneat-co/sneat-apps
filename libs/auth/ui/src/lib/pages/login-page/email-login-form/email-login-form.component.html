@@ -116,7 +116,13 @@
 				(click)="signIn()"
 			>
 				<ion-icon name="enter-outline" slot="start" />
-				<ion-label *ngIf="signingWith !== 'email'">Sign in</ion-label>
+				<ion-label *ngIf="signingWith !== 'email'">
+					<b>Sign in</b>&nbsp;<ion-text
+						color="light"
+						style="text-transform: none"
+						>with password</ion-text
+					>
+				</ion-label>
 				<ion-label *ngIf="signingWith === 'email'">Signing in...</ion-label>
 				<ion-spinner
 					class="ion-margin-start"
