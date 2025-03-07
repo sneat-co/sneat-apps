@@ -2,9 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>LSApplicationCategoryType</key>
-	<string></string>
-
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -17,45 +16,35 @@
 			</array>
 		</dict>
 	</array>
-
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-
 	<key>FacebookAppID</key>
 	<string>967757390090619</string>
 	<key>FacebookDisplayName</key>
 	<string>Sneat.app</string>
-
-	<!-- https://developers.facebook.com/docs/facebook-login/guides/access-tokens/
-	A client token is used to access app-level APIs that you can embed into your native or desktop apps to identify your app.
-	The client token isn't meant to be a secret identifier because it's embedded in apps.
-	-->
 	<key>FacebookClientToken</key>
 	<string>9d45eb7d38d301c6f368d56ecf2ba553</string>
-
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-	<string>fbapi</string>
-	<string>fbapi20130214</string>
-	<string>fbapi20130410</string>
-	<string>fbapi20130702</string>
-	<string>fbapi20131010</string>
-	<string>fbapi20131219</string>
-	<string>fbapi20140410</string>
-	<string>fbapi20140116</string>
-	<string>fbapi20150313</string>
-	<string>fbapi20150629</string>
-	<string>fbapi20160328</string>
-	<string>fbauth</string>
-	<string>fb-messenger-share-api</string>
-	<string>fbauth2</string>
-	<string>fbshareextension</string>
+		<string>fbapi</string>
+		<string>fbapi20130214</string>
+		<string>fbapi20130410</string>
+		<string>fbapi20130702</string>
+		<string>fbapi20131010</string>
+		<string>fbapi20131219</string>
+		<string>fbapi20140410</string>
+		<string>fbapi20140116</string>
+		<string>fbapi20150313</string>
+		<string>fbapi20150629</string>
+		<string>fbapi20160328</string>
+		<string>fbauth</string>
+		<string>fb-messenger-share-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
 	</array>
-
-
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
