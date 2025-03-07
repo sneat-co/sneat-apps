@@ -18,43 +18,26 @@ export function firebaseProjectId(
 // 		`https://${projectId}.firebaseio.com`;
 // }
 
-interface IFirebaseAppSpecificConfig {
-	nickname: string;
-	apiKey: string;
-	appId: string;
-	measurementId: string;
-	messagingSenderId: string;
-}
-
-export interface IAppSpecificConfig {
-	firebase?: IFirebaseAppSpecificConfig;
-}
-
 // TODO: document why needed
 export function appSpecificConfig(
-	useEmulators: boolean,
 	envConfig: IEnvironmentConfig,
-	appConfig: IAppSpecificConfig,
+	// appConfig: IAppSpecificConfig,
 ): IEnvironmentConfig {
 	let config: IEnvironmentConfig = {
 		...envConfig,
-		useEmulators,
 		firebaseConfig: {
 			...envConfig.firebaseConfig,
-			...appConfig.firebase,
 		},
 	};
-	const projectId = firebaseProjectId(
-		useEmulators,
-		config.firebaseConfig.projectId,
-	);
+	const { firebaseConfig } = config;
+	const useEmulator = !!config.firebaseConfig.emulator;
+	const projectId = firebaseProjectId(useEmulator, firebaseConfig.projectId);
 	config = {
 		...config,
 		firebaseConfig: {
-			...config.firebaseConfig,
-			apiKey: firebaseApiKey(useEmulators, config.firebaseConfig.apiKey),
+			...firebaseConfig,
+			apiKey: firebaseApiKey(useEmulator, firebaseConfig.apiKey),
 			projectId: projectId,
-			// databaseURL: firebaseDatabaseURL(useEmulators, projectId),
 		},
 	};
 	return config;
