@@ -18,6 +18,24 @@
 		</dict>
 	</array>
 
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>api.sneat.ws</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<false/>
+				<!--
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSTemporaryExceptionMinimumTLSVersion</key>
+				<string>TLSv1.2</string>
+				-->
+			</dict>
+		</dict>
+	</dict>
+
 	<key>FacebookAppID</key>
 	<string>967757390090619</string>
 	<key>FacebookDisplayName</key>
