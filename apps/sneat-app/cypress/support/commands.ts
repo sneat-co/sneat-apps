@@ -23,7 +23,6 @@ import { initializeApp } from 'firebase/app';
 // } from '@firebase/firestore';
 
 const FIREBASE_CONFIG: IFirebaseConfig = {
-	useEmulators: true,
 	emulator: {
 		firestoreHost: '127.0.0.1',
 		authPort: 9099,

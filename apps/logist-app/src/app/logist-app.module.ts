@@ -101,7 +101,7 @@ const contactRolesByType: ContactRolesByType = {
 		...getStandardSneatProviders(environment),
 		{
 			provide: SneatApiBaseUrl,
-			useValue: environment.useEmulators
+			useValue: environment.firebaseConfig.emulator
 				? 'http://localhost:4300/v0/'
 				: DefaultSneatAppApiBaseUrl,
 		},

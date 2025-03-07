@@ -12,8 +12,6 @@ import {
  */
 // import 'zone.js/dist/zone-error';
 
-const useEmulators = true;
-
 const useNgrok = window.location.hostname.includes('.ngrok.');
 const useSSL = useNgrok || window.location.hostname == 'local-app.sneat.ws';
 
@@ -36,20 +34,16 @@ export const firebaseEmulatorConfig: IFirebaseEmulatorConfig = {
 };
 
 const firebaseConfig: IFirebaseConfig = {
-	useEmulators,
 	emulator: firebaseEmulatorConfig,
-	apiKey: 'AIzaSyAYGGhSQQ8gUcyPUcUOFW7tTSYduRD3cuw',
+	apiKey: 'not-needed-for-emulator',
 	authDomain: 'sneat.app',
 	projectId: 'local-sneat-app', // The 'demo-' prefix is added if useEmulators is true
-	// 	storageBucket: 'sneat-team.appspot.com',
-	// 	messagingSenderId: '724666284649',
-	appId: '1:724666284649:web:080ffaab56bb71e49740f8',
-	measurementId: 'G-RRM3BNCN0S',
+	appId: 'not-needed-for-emulator',
+	measurementId: 'G-PROVIDE_IF_NEEDED',
 };
 
 export const baseEnvironmentConfig: IEnvironmentConfig = {
 	production: false,
-	useEmulators,
 	useNgrok,
 	agents: {},
 	firebaseConfig,

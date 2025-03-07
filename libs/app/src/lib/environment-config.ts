@@ -8,7 +8,6 @@ export interface IFirebaseEmulatorConfig {
 }
 
 export interface IFirebaseConfig {
-	useEmulators?: boolean;
 	emulator?: IFirebaseEmulatorConfig;
 	//
 	projectId: string;
@@ -23,7 +22,6 @@ export interface IFirebaseConfig {
 
 export interface IEnvironmentConfig {
 	production: boolean;
-	useEmulators: boolean;
 	useNgrok?: boolean;
 	agents: Record<string, string>;
 	firebaseConfig: IFirebaseConfig;

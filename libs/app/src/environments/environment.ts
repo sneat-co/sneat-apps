@@ -9,9 +9,6 @@ import { baseEnvironmentConfig } from './environment.base';
  */
 // import 'zone.js/dist/zone-error';
 
-const useEmulators = true;
-
 export const environmentConfig: IEnvironmentConfig = {
 	...baseEnvironmentConfig,
-	useEmulators,
 };

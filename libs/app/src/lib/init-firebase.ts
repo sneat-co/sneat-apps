@@ -26,7 +26,7 @@ export function getAngularFireProviders(firebaseConfig: IFirebaseConfig) {
 			const fbApp = injector.get(FirebaseApp);
 			const firestore = getFirestore(fbApp);
 			const { emulator } = firebaseConfig;
-			if (firebaseConfig.useEmulators && emulator) {
+			if (emulator) {
 				console.log(
 					`using firebase firestore emulator on ${emulator.firestoreHost}:${emulator.firestorePort}`,
 				);
@@ -55,7 +55,7 @@ export function getAngularFireProviders(firebaseConfig: IFirebaseConfig) {
 				auth = getAuth(fbApp);
 			}
 			const { emulator } = firebaseConfig;
-			if (firebaseConfig.useEmulators && emulator?.authPort) {
+			if (emulator?.authPort) {
 				// alert('Using firebase auth emulator');
 				const authUrl = `${emulator.authPort === 443 ? 'https' : 'http'}://${emulator.authHost || '127.0.0.1'}:${emulator.authPort}`;
 				console.log('authUrl: ', authUrl);
@@ -74,9 +74,7 @@ export function getAngularFireProviders(firebaseConfig: IFirebaseConfig) {
 export function initFirebase(firebaseConfig: IFirebaseConfig): FirebaseApp {
 	console.log(
 		'initFirebase()' +
-			(firebaseConfig.useEmulators && firebaseConfig.emulator
-				? ' - using firebase emulators'
-				: ''),
+			(firebaseConfig.emulator ? ' - using firebase emulators' : ''),
 		firebaseConfig,
 	);
 	return initializeApp(firebaseConfig);

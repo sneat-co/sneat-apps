@@ -17,7 +17,7 @@ export function getStandardSneatProviders(
 			provide: SneatApiBaseUrl,
 			useValue: environmentConfig.useNgrok
 				? `//${location.host}/v0/`
-				: environmentConfig.useEmulators
+				: environmentConfig.firebaseConfig.emulator
 					? 'https://local-api.sneat.ws/v0/' // 'http://localhost:4300/v0/'
 					: DefaultSneatAppApiBaseUrl,
 		},
