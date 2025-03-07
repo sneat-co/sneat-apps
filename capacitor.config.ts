@@ -5,6 +5,9 @@ const config: CapacitorConfig = {
 	appName: 'Sneat.app',
 	webDir: 'dist/apps/sneat-app',
 	plugins: {
+		CapacitorHttp: {
+			enabled: true,
+		},
 		FirebaseAuthentication: {
 			skipNativeAuth: false,
 			providers: [
