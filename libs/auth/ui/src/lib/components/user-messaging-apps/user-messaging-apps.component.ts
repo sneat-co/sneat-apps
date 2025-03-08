@@ -14,7 +14,7 @@ import { LoginWithTelegramComponent } from '../../pages/login-page/login-with-te
 	imports: [CommonModule, IonicModule, LoginWithTelegramComponent, FormsModule],
 })
 export class UserMessagingAppsComponent {
-	protected integrations: 'messaging-apps' | 'quick-logins' = 'messaging-apps';
+	// protected integrations: 'messaging-apps' | 'quick-logins' = 'messaging-apps';
 
 	protected userRecord?: IUserRecord;
 
