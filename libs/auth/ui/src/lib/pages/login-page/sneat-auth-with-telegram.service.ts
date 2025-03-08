@@ -31,9 +31,14 @@ export class SneatAuthWithTelegramService {
 		tgAuthData: ITelegramAuthData,
 		isUserAuthenticated: boolean,
 	): void {
-		const postRequest = isUserAuthenticated
-			? this.apiService.post<IResponse>
-			: this.apiService.postAsAnonymous<IResponse>;
+		const postRequest: (
+			endpoint: string,
+			body: unknown,
+		) => Observable<IResponse> = isUserAuthenticated
+			? (endpoint: string, body: unknown) =>
+					this.apiService.post<IResponse>(endpoint, body)
+			: (endpoint: string, body: unknown) =>
+					this.apiService.postAsAnonymous<IResponse>(endpoint, body);
 		postRequest(
 			'auth/login-from-telegram-widget?botID=' + botID,
 			tgAuthData,
