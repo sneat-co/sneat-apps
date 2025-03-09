@@ -26,86 +26,92 @@
 	<!--			<ion-segment-button value="quick-logins">Quick logins</ion-segment-button>-->
 	<!--		</ion-segment>-->
 	<!--	</ion-item>-->
-	<ion-item-divider color="light">
-		<ion-label>Quick logins</ion-label>
-	</ion-item-divider>
-	<ion-item>
-		<ion-label color="medium">
-			<h3>Google</h3>
-			<p>Not implemented yet</p>
-		</ion-label>
-	</ion-item>
-	<ion-item>
-		<ion-label color="medium">
-			<h3>Microsoft</h3>
-			<p>Not implemented yet</p>
-		</ion-label>
-	</ion-item>
-	<ion-item>
-		<ion-label color="medium">
-			<h3>Apple</h3>
-			<p>Not implemented yet</p>
-		</ion-label>
-	</ion-item>
-	<ion-item-divider color="light">
-		<ion-label>Messaging apps</ion-label>
-	</ion-item-divider>
-	<ion-item>
-		<ion-icon slot="start" name="paper-plane" color="primary"></ion-icon>
-		@if (!userRecord) {
-			<ion-label>
-				<h3>Telegram</h3>
-				<p>Checking....</p>
+	<ion-list>
+		<ion-item-divider color="light">
+			<ion-label color="medium" style="font-weight: bold"
+				>Quick logins</ion-label
+			>
+		</ion-item-divider>
+		<sneat-user-auth-provider-status
+			providerID="google.com"
+			[signingInWith]="signingInWith()"
+			(signingInWithChange)="signingInWith.set($event)"
+		/>
+		<sneat-user-auth-provider-status
+			providerID="apple.com"
+			[signingInWith]="signingInWith()"
+			(signingInWithChange)="signingInWith.set($event)"
+		/>
+		<sneat-user-auth-provider-status
+			providerID="microsoft.com"
+			[signingInWith]="signingInWith()"
+			(signingInWithChange)="signingInWith.set($event)"
+		/>
+	</ion-list>
+	<ion-list>
+		<ion-item-divider color="light">
+			<ion-label color="medium" style="font-weight: bold"
+				>Messaging apps</ion-label
+			>
+		</ion-item-divider>
+
+		<ion-item>
+			<ion-icon slot="start" name="paper-plane" color="primary"></ion-icon>
+			@if (!userRecord) {
+				<ion-label>
+					<h3>Telegram</h3>
+					<p>Checking....</p>
+				</ion-label>
+			} @else if (hasAccount("telegram")) {
+				<ion-label>
+					<h3 style="font-weight: bold">Telegram</h3>
+					<ion-text color="success" [title]="getAccountID('telegram')"
+						>Connected!
+					</ion-text>
+				</ion-label>
+				<ion-buttons slot="end">
+					<ion-button
+						[disabled]="disconnecting"
+						color="warning"
+						fill="solid"
+						(click)="disconnect('telegram')"
+					>
+						<ion-icon name="close" slot="start"></ion-icon>
+						<ion-label>Disconnect</ion-label>
+					</ion-button>
+				</ion-buttons>
+			} @else {
+				<ion-label>
+					<h3>Telegram</h3>
+					<p>Not connected yet.</p>
+				</ion-label>
+				<ion-buttons slot="end">
+					<sneat-login-with-telegram [isUserAuthenticated]="true" />
+				</ion-buttons>
+			}
+		</ion-item>
+		<ion-item>
+			<ion-icon slot="start" name="logo-whatsapp"></ion-icon>
+			<ion-label color="medium">
+				<h3 style="font-weight: bold">WhatsApp</h3>
+				<p>Not implemented yet - coming soon!</p>
 			</ion-label>
-		} @else if (hasAccount("telegram")) {
-			<ion-label>
-				<h3 style="font-weight: bold">Telegram</h3>
-				<ion-text color="success" [title]="getAccountID('telegram')"
-					>Connected!
-				</ion-text>
+			<!--		<ion-buttons slot="end">-->
+			<!--			<ion-button color="danger">-->
+			<!--				<ion-icon name="close-circle-outline" slot="start"></ion-icon>-->
+			<!--				<ion-label>I have no WhatsApp</ion-label>-->
+			<!--			</ion-button>-->
+			<!--		</ion-buttons>-->
+		</ion-item>
+		<ion-item>
+			<ion-icon slot="start" name="logo-whatsapp"></ion-icon>
+			<!-- TODO: place Viber logo here -->
+			<ion-label color="medium">
+				<h3 style="font-weight: bold">Viber</h3>
+				<p>Not implemented yet - coming soon!</p>
 			</ion-label>
-			<ion-buttons slot="end">
-				<ion-button
-					[disabled]="disconnecting"
-					color="warning"
-					fill="solid"
-					(click)="disconnect('telegram')"
-				>
-					<ion-icon name="close" slot="start"></ion-icon>
-					<ion-label>Disconnect</ion-label>
-				</ion-button>
-			</ion-buttons>
-		} @else {
-			<ion-label>
-				<h3>Telegram</h3>
-				<p>Not connected yet.</p>
-			</ion-label>
-			<ion-buttons slot="end">
-				<sneat-login-with-telegram [isUserAuthenticated]="true" />
-			</ion-buttons>
-		}
-	</ion-item>
-	<ion-item>
-		<ion-icon slot="start" name="logo-whatsapp"></ion-icon>
-		<ion-label color="medium">
-			<h3 style="font-weight: bold">WhatsApp</h3>
-			<p>Not implemented yet - coming soon!</p>
-		</ion-label>
-		<!--		<ion-buttons slot="end">-->
-		<!--			<ion-button color="danger">-->
-		<!--				<ion-icon name="close-circle-outline" slot="start"></ion-icon>-->
-		<!--				<ion-label>I have no WhatsApp</ion-label>-->
-		<!--			</ion-button>-->
-		<!--		</ion-buttons>-->
-	</ion-item>
-	<ion-item>
-		<ion-icon slot="start" name="logo-whatsapp"></ion-icon>
-		<!-- TODO: place Viber logo here -->
-		<ion-label color="medium">
-			<h3 style="font-weight: bold">Viber</h3>
-			<p>Not implemented yet - coming soon!</p>
-		</ion-label>
-	</ion-item>
+		</ion-item>
+	</ion-list>
 	<ion-card-content>
 		<p>
 			You'll get much more out of Sneat.app if you integrate it with messaging

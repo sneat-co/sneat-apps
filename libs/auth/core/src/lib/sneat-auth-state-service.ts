@@ -18,6 +18,7 @@ import {
 	AuthProvider,
 	getAuth,
 	signInWithCredential,
+	User,
 	UserCredential,
 	UserInfo,
 } from '@angular/fire/auth';
@@ -30,6 +31,8 @@ import {
 	signInWithEmailLink,
 	signInWithCustomToken,
 	signInWithPopup,
+	linkWithPopup,
+	unlink,
 } from 'firebase/auth';
 
 // TODO: fix & remove this eslint hint @nrwl/nx/enforce-module-boundaries
@@ -47,6 +50,7 @@ export type AuthStatus = EnumAsUnionOfKeys<typeof AuthStatuses>;
 export interface ISneatAuthUser extends UserInfo {
 	readonly isAnonymous: boolean;
 	readonly emailVerified: boolean;
+	readonly providerData: readonly UserInfo[];
 }
 
 export interface ISneatAuthState {
@@ -89,7 +93,7 @@ export class SneatAuthStateService {
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		@Inject(AnalyticsService)
 		private readonly analyticsService: IAnalyticsService,
-		private readonly fbAuth: Auth,
+		public readonly fbAuth: Auth,
 	) {
 		console.log(`SneatAuthStateService.constructor(): id=${this.id}`);
 		this.fbAuth.onIdTokenChanged({
@@ -135,25 +139,19 @@ export class SneatAuthStateService {
 					`SneatAuthStateService => authStatus: ${this.authStatus$.value}; fbUser`,
 					fbUser,
 				);
-				const user: ISneatAuthUser | null = fbUser && {
-					isAnonymous: fbUser.isAnonymous,
-					emailVerified: fbUser.emailVerified,
-					email: fbUser.email,
-					uid: fbUser.uid,
-					displayName: fbUser.displayName,
-					phoneNumber: fbUser.phoneNumber,
-					photoURL: fbUser.photoURL,
-					providerId:
-						fbUser.providerData?.length === 1 && fbUser.providerData[0]
-							? fbUser.providerData[0].providerId
-							: fbUser.providerId,
-				};
-				const status = user
+
+				const authUser = createSneatAuthUserFromFbUser(fbUser);
+
+				const status = authUser
 					? AuthStatuses.authenticated
 					: AuthStatuses.notAuthenticated;
 				this.authStatus$.next(status);
-				this.authUser$.next(user);
-				this.authState$.next({ ...this.authState$.value, user, status });
+				this.authUser$.next(authUser);
+				this.authState$.next({
+					...this.authState$.value,
+					user: authUser,
+					status,
+				});
 			},
 			error: (err) => {
 				this.errorLogger.logError(
@@ -243,42 +241,42 @@ export class SneatAuthStateService {
 	private async signInWithWebSDK(
 		authProviderID: AuthProviderID,
 	): Promise<UserCredential> {
-		let authProvider: AuthProvider | undefined = undefined;
-
-		switch (authProviderID) {
-			case 'google.com':
-				authProvider = new GoogleAuthProvider();
-				break;
-			case 'apple.com':
-				authProvider = new OAuthProvider('apple.com');
-				//
-				// https://developer.apple.com/documentation/sign_in_with_apple/incorporating-sign-in-with-apple-into-other-platforms
-				// (authProvider as OAuthProvider).setCustomParameters({
-				// 	// 	// Localize the Apple authentication screen in current app locale.
-				// 	locale: 'en', // TODO: set locale
-				// });
-				break;
-			case 'microsoft.com':
-				authProvider = new OAuthProvider('microsoft.com');
-				break;
-			case 'facebook.com':
-				authProvider = new FacebookAuthProvider();
-				(authProvider as FacebookAuthProvider).addScope('email');
-				break;
-			case 'github.com':
-				authProvider = new GithubAuthProvider();
-				(authProvider as GithubAuthProvider).addScope('read:user');
-				(authProvider as GithubAuthProvider).addScope('user:email');
-				break;
-			default: {
-				return Promise.reject(
-					'unknown or unsupported auth provider: ' + authProviderID,
-				);
-			}
-		}
-
+		const authProvider = getAuthProvider(authProviderID);
 		const userCredential = await signInWithPopup(this.fbAuth, authProvider);
 		return Promise.resolve(userCredential);
+	}
+
+	public async linkWith(
+		authProviderID: AuthProviderID,
+	): Promise<UserCredential | undefined> {
+		const authProvider = getAuthProvider(authProviderID);
+		if (!this.fbAuth.currentUser) {
+			return Promise.reject('no current user');
+		}
+		const userCredential = await linkWithPopup(
+			this.fbAuth.currentUser,
+			authProvider,
+		);
+		return Promise.resolve(userCredential);
+	}
+
+	public async unlinkAuthProvider(authProviderID: string): Promise<void> {
+		const currentUser = this.fbAuth.currentUser;
+		if (currentUser) {
+			try {
+				const updatedUser = await unlink(currentUser, authProviderID);
+				console.log(authProviderID + ' account unlinked successfully!');
+				const authUser = createSneatAuthUserFromFbUser(updatedUser);
+				this.authUser$.next(authUser);
+				return Promise.resolve();
+			} catch (error) {
+				return Promise.reject(
+					`Failed to unlink ${authProviderID} account:` + error,
+				);
+			}
+		} else {
+			return Promise.reject('No user is currently signed in.');
+		}
 	}
 
 	public async signInWith(
@@ -333,3 +331,54 @@ export type AuthProviderName =
 	| 'Microsoft'
 	| 'Facebook'
 	| 'GitHub';
+
+function getAuthProvider(authProviderID: AuthProviderID): AuthProvider {
+	switch (authProviderID) {
+		case 'google.com':
+			return new GoogleAuthProvider();
+		case 'apple.com':
+			return new OAuthProvider('apple.com');
+		//
+		// https://developer.apple.com/documentation/sign_in_with_apple/incorporating-sign-in-with-apple-into-other-platforms
+		// (authProvider as OAuthProvider).setCustomParameters({
+		// 	// 	// Localize the Apple authentication screen in current app locale.
+		// 	locale: 'en', // TODO: set locale
+		// });
+		case 'microsoft.com':
+			return new OAuthProvider('microsoft.com');
+		case 'facebook.com': {
+			const facebookAuthProvider = new FacebookAuthProvider();
+			facebookAuthProvider.addScope('email');
+			return facebookAuthProvider;
+		}
+		case 'github.com': {
+			const githubAuthProvider = new GithubAuthProvider();
+			githubAuthProvider.addScope('read:user');
+			githubAuthProvider.addScope('user:email');
+			return githubAuthProvider;
+		}
+		default:
+			throw new Error('unsupported auth provider: ' + authProviderID);
+	}
+}
+
+function createSneatAuthUserFromFbUser(
+	fbUser: User | null,
+): ISneatAuthUser | null {
+	return (
+		fbUser && {
+			isAnonymous: fbUser.isAnonymous,
+			emailVerified: fbUser.emailVerified,
+			email: fbUser.email,
+			uid: fbUser.uid,
+			displayName: fbUser.displayName,
+			phoneNumber: fbUser.phoneNumber,
+			photoURL: fbUser.photoURL,
+			providerId:
+				fbUser.providerData?.length === 1 && fbUser.providerData[0]
+					? fbUser.providerData[0].providerId
+					: fbUser.providerId,
+			providerData: fbUser.providerData,
+		}
+	);
+}

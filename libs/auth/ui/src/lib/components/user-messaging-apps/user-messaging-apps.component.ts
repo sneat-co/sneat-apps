@@ -1,22 +1,37 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SneatApiService } from '@sneat/api';
-import { SneatUserService } from '@sneat/auth-core';
+import { AuthProviderID, SneatUserService } from '@sneat/auth-core';
 import { IUserRecord } from '@sneat/auth-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { LoginWithTelegramComponent } from '../../pages/login-page/login-with-telegram.component';
+import { UserAuthAProviderStatusComponent } from './user-auth-provider-status';
 
 @Component({
 	selector: 'sneat-user-messaging-apps',
 	templateUrl: './user-messaging-apps.component.html',
-	imports: [CommonModule, IonicModule, LoginWithTelegramComponent, FormsModule],
+	imports: [
+		CommonModule,
+		IonicModule,
+		LoginWithTelegramComponent,
+		FormsModule,
+		UserAuthAProviderStatusComponent,
+	],
 })
 export class UserMessagingAppsComponent {
 	// protected integrations: 'messaging-apps' | 'quick-logins' = 'messaging-apps';
 
+	protected readonly signingWith = signal<AuthProviderID | undefined>(
+		undefined,
+	);
+
 	protected userRecord?: IUserRecord;
+
+	protected readonly signingInWith = signal<AuthProviderID | undefined>(
+		undefined,
+	);
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
