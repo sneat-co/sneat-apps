@@ -92,7 +92,7 @@ export class ContactsPageComponent extends SpaceItemsBaseComponent {
 		// this.teamIDChanged$.subscribe({
 		// 	next: this.onTeamIDChangedWorker,
 		// });
-		route.queryParamMap.pipe(this.takeUntilNeeded()).subscribe({
+		route.queryParamMap.pipe(this.takeUntilDestroyed()).subscribe({
 			next: (q) => {
 				this.role = (q.get('role') as ContactRole) || undefined;
 				this.applyFilter(this.filter, this.role);

@@ -80,7 +80,7 @@ export abstract class ContactBasePage extends SpaceItemPageBaseComponent<
 		if (this.space?.id) {
 			this.contactusSpaceService
 				.watchContactBriefs(this.space.id)
-				.pipe(this.takeUntilNeeded(), takeUntil(this.spaceIDChanged$))
+				.pipe(this.takeUntilDestroyed(), takeUntil(this.spaceIDChanged$))
 				.subscribe({
 					next: (contacts) => {
 						console.log(

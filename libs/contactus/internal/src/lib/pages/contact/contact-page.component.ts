@@ -65,7 +65,7 @@ export class ContactPageComponent extends ContactBasePage {
 		}
 		this.contactsService
 			.watchChildContacts(space, this.contact?.id)
-			.pipe(this.takeUntilNeeded())
+			.pipe(this.takeUntilDestroyed())
 			.subscribe({
 				next: (children) => {
 					console.log('children', children);

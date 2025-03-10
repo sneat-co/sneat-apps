@@ -81,7 +81,7 @@ export class LoginPageComponent extends SneatBaseComponent {
 
 		const userRecordLoaded = new Subject<void>();
 		this.userService.userState
-			.pipe(takeUntil(userRecordLoaded), this.takeUntilNeeded())
+			.pipe(takeUntil(userRecordLoaded), this.takeUntilDestroyed())
 			.subscribe({
 				next: (userState) => {
 					if (userState.record) {

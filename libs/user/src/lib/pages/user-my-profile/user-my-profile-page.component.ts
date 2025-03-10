@@ -2,9 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { UserMessagingAppsComponent } from '@sneat/auth-ui';
+import { UserAuthAccountsComponent } from '@sneat/auth-ui';
 import { UserCountryComponent } from '@sneat/components';
 import { ContactusServicesModule } from '@sneat/contactus-services';
+import { BetaFlagsComponent } from './beta-flags.component';
 
 @Component({
 	selector: 'sneat-user-my--profile-page',
@@ -14,8 +15,9 @@ import { ContactusServicesModule } from '@sneat/contactus-services';
 		IonicModule,
 		UserCountryComponent,
 		ContactusServicesModule,
-		UserMessagingAppsComponent,
+		UserAuthAccountsComponent,
 		FormsModule,
+		BetaFlagsComponent,
 	],
 })
 export class UserMyProfilePageComponent {

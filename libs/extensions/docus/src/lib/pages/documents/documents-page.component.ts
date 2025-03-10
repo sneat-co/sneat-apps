@@ -68,7 +68,7 @@ export class DocumentsPageComponent extends SpaceBaseComponent {
 		if (this.space?.id) {
 			this.assetService
 				.watchSpaceAssets<'document', IAssetDocumentExtra>(this.space)
-				.pipe(this.takeUntilNeeded())
+				.pipe(this.takeUntilDestroyed())
 				.subscribe({
 					next: (documents) => {
 						this.documents = documents;

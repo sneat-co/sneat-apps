@@ -1,17 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, signal } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Inject,
+	signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SneatApiService } from '@sneat/api';
 import { AuthProviderID, SneatUserService } from '@sneat/auth-core';
 import { IUserRecord } from '@sneat/auth-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { SneatBaseComponent } from '@sneat/ui';
 import { LoginWithTelegramComponent } from '../../pages/login-page/login-with-telegram.component';
 import { UserAuthAProviderStatusComponent } from './user-auth-provider-status';
 
 @Component({
-	selector: 'sneat-user-messaging-apps',
-	templateUrl: './user-messaging-apps.component.html',
+	selector: 'sneat-user-auth-accounts',
+	templateUrl: './user-auth-accounts.component.html',
+	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
 		CommonModule,
 		IonicModule,
@@ -20,34 +27,29 @@ import { UserAuthAProviderStatusComponent } from './user-auth-provider-status';
 		UserAuthAProviderStatusComponent,
 	],
 })
-export class UserMessagingAppsComponent {
-	// protected integrations: 'messaging-apps' | 'quick-logins' = 'messaging-apps';
-
-	protected readonly signingWith = signal<AuthProviderID | undefined>(
-		undefined,
-	);
-
-	protected userRecord?: IUserRecord;
+export class UserAuthAccountsComponent extends SneatBaseComponent {
+	protected readonly $userRecord = signal<IUserRecord | undefined>(undefined);
 
 	protected readonly signingInWith = signal<AuthProviderID | undefined>(
 		undefined,
 	);
 
 	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
+		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		private readonly sneatUserService: SneatUserService,
 		private readonly sneatApiService: SneatApiService,
 	) {
-		this.sneatUserService.userState.subscribe({
+		super('UserAuthAccountsComponent', errorLogger);
+		this.sneatUserService.userState.pipe(this.takeUntilDestroyed()).subscribe({
 			next: (user) => {
-				this.userRecord = user.record || undefined;
+				this.$userRecord.set(user.record || undefined);
 			},
 		});
 	}
 
 	protected hasAccount(provider: 'telegram' | 'viber' | 'whatsapp'): boolean {
 		provider = provider + ':';
-		for (const account of this.userRecord?.accounts || []) {
+		for (const account of this.$userRecord()?.accounts || []) {
 			if (account.startsWith(provider)) {
 				return true;
 			}
@@ -57,7 +59,7 @@ export class UserMessagingAppsComponent {
 
 	protected getAccountID(provider: 'telegram'): string {
 		const prefix = provider + '::';
-		const a = this.userRecord?.accounts?.find((a) => a.startsWith(prefix));
+		const a = this.$userRecord()?.accounts?.find((a) => a.startsWith(prefix));
 		return a?.replace(prefix, '') || '';
 	}
 

@@ -129,7 +129,7 @@ export abstract class SpaceItemPageBaseComponent<
 			this.itemSubscription?.unsubscribe();
 			this.itemSubscription = this.watchItemChanges()
 				.pipe(
-					this.takeUntilNeeded(),
+					this.takeUntilDestroyed(),
 					takeUntil(
 						this.spaceIDChanged$.pipe(
 							tap((teamID) =>

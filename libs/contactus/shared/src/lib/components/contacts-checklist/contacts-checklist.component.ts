@@ -70,7 +70,7 @@ export class ContactsChecklistComponent
 		);
 		this.contactusSpaceSubscription = this.contactusSpaceService
 			.watchContactBriefs(space.id)
-			.pipe(this.takeUntilNeeded())
+			.pipe(this.takeUntilDestroyed())
 			.subscribe({
 				next: (contacts) => {
 					console.log(

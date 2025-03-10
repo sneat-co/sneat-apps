@@ -54,7 +54,7 @@ export class ContactsFilterComponent
 			userService,
 		);
 		contactusSpaceContextService.contactusSpaceContext$
-			.pipe(this.takeUntilNeeded())
+			.pipe(this.takeUntilDestroyed())
 			.subscribe({
 				next: this.onContactusSpaceChanged,
 			});
