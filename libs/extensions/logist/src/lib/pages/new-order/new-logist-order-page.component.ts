@@ -79,7 +79,7 @@ export class NewLogistOrderPageComponent extends SpaceBaseComponent {
 		}
 		this.logistSpaceService
 			.watchLogistSpaceByID(this.space.id)
-			.pipe(this.takeUntilNeeded(), takeUntil(this.spaceIDChanged$))
+			.pipe(this.takeUntilDestroyed(), takeUntil(this.spaceIDChanged$))
 			.subscribe({
 				next: (logistTeam) => {
 					if (logistTeam.dbo?.contactID) {

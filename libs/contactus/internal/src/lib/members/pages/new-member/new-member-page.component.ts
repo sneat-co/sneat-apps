@@ -81,7 +81,7 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
 		});
 
 		contactusSpaceContextService.contactusSpaceContext$
-			.pipe(this.takeUntilNeeded())
+			.pipe(this.takeUntilDestroyed())
 			.subscribe({
 				next: (contactusTeam) => {
 					this.contactusSpace = contactusTeam;

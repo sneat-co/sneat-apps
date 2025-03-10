@@ -32,7 +32,7 @@ export abstract class SneatBaseComponent implements OnDestroy {
 		this.console.log(`${this.className}.SneatBaseComponent.constructor()`);
 	}
 
-	protected takeUntilNeeded<T>(): MonoTypeOperatorFunction<T> {
+	protected takeUntilDestroyed<T>(): MonoTypeOperatorFunction<T> {
 		return takeUntil(this.destroyed$);
 	}
 

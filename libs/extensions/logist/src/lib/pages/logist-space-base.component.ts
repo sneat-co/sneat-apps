@@ -24,7 +24,7 @@ export class LogistSpaceBaseComponent extends SpaceBaseComponent {
 		if (space?.id) {
 			this.logistSpaceService
 				.watchLogistSpaceByID(space.id)
-				.pipe(this.takeUntilNeeded())
+				.pipe(this.takeUntilDestroyed())
 				.subscribe({
 					next: (logistSpace) => {
 						console.log('logistSpace:', logistSpace);

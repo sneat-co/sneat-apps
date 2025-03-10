@@ -42,7 +42,7 @@ interface provider {
 })
 export class UserAuthAProviderStatusComponent implements OnDestroy {
 	private readonly $destroyed = new Subject<void>();
-	public providerID = input.required<AuthProviderID | undefined>();
+	public providerID = input.required<AuthProviderID>();
 	protected readonly provider = computed<provider>(() => {
 		const id = this.providerID();
 		switch (id) {

@@ -148,7 +148,7 @@ export class NewContactPageComponent
 		if (contactRole && !this.contactRole) {
 			this.contactRoleService
 				.getContactRoleByID(contactRole)
-				.pipe(first(), this.takeUntilNeeded())
+				.pipe(first(), this.takeUntilDestroyed())
 				.subscribe({
 					next: (contactRole) => {
 						this.contactRole = contactRole;
@@ -167,7 +167,7 @@ export class NewContactPageComponent
 			this.asset = { id: assetId, space };
 			this.assetService
 				.watchAssetByID(space, assetId)
-				.pipe(this.takeUntilNeeded())
+				.pipe(this.takeUntilDestroyed())
 				.subscribe({
 					next: (asset) => {
 						this.asset = asset;
@@ -180,7 +180,7 @@ export class NewContactPageComponent
 			this.contact = { id: memberId, space: space };
 			this.contactService
 				.watchContactById(space, memberId)
-				.pipe(this.takeUntilNeeded())
+				.pipe(this.takeUntilDestroyed())
 				.subscribe((member) => {
 					this.contact = member;
 				});

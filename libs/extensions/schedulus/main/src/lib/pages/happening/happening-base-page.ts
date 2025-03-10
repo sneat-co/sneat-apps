@@ -117,7 +117,7 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 		try {
 			this.params.happeningService
 				.watchHappeningByID(space, id)
-				.pipe(this.takeUntilNeeded(), takeUntil(this.happeningID$))
+				.pipe(this.takeUntilDestroyed(), takeUntil(this.happeningID$))
 				.subscribe({
 					next: (happening) => {
 						// This can be called twice - first for `snapshot.type=added`, then `snapshot.type=modified`
@@ -145,7 +145,7 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 	private trackHappeningIDFromUrl(): void {
 		this.route?.params
 			.pipe(
-				this.takeUntilNeeded(),
+				this.takeUntilDestroyed(),
 				map((params) => params['happeningID']),
 				distinctUntilChanged(),
 			)

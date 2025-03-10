@@ -46,7 +46,7 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 	private readonly spaceChanged = new Subject<ISpaceContext>();
 	protected readonly spaceChanged$ = this.spaceChanged
 		.asObservable()
-		.pipe(this.takeUntilNeeded());
+		.pipe(this.takeUntilDestroyed());
 
 	protected readonly navController: NavController;
 	// protected readonly activeCommuneService: IActiveCommuneService;
@@ -144,7 +144,9 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 
 	public ngOnInit(): void {
 		// We can't call this in constructor as some members of the child class may not be initialized yet
-		this.trackRouteParamMap(this.route.paramMap.pipe(this.takeUntilNeeded()));
+		this.trackRouteParamMap(
+			this.route.paramMap.pipe(this.takeUntilDestroyed()),
+		);
 	}
 
 	// public ionViewWillLeave(): void {
@@ -245,7 +247,7 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 		this.console.log(`${this.className}.subscribeForSpaceChanges()`, space);
 		this.spaceService
 			.watchSpace(space)
-			.pipe(takeUntil(this.spaceIDChanged$), this.takeUntilNeeded())
+			.pipe(takeUntil(this.spaceIDChanged$), this.takeUntilDestroyed())
 			.subscribe({
 				next: this.onSpaceContextChanged,
 				error: (err) => {
@@ -276,7 +278,7 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 
 	private cleanupOnUserLogout(): void {
 		try {
-			this.userService.userChanged.pipe(this.takeUntilNeeded()).subscribe({
+			this.userService.userChanged.pipe(this.takeUntilDestroyed()).subscribe({
 				next: (uid) => {
 					if (!uid) {
 						this.unsubscribe('user signed out');
