@@ -22,12 +22,12 @@ const routes: Routes = [
 		outlet: 'menu',
 		pathMatch: 'full',
 		loadChildren: () =>
-			import('@sneat/extensions/logist').then((m) => m.LogistMenuLazyComponent),
+			import('@sneat/extensions-logist').then((m) => m.LogistMenuLazyComponent),
 	},
 	{
 		path: 'space/:spaceType/:spaceID',
 		loadChildren: () =>
-			import('@sneat/extensions/logist').then(
+			import('@sneat/extensions-logist').then(
 				(m) => m.LogistSpaceRoutingModule,
 			),
 	},

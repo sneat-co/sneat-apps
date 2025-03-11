@@ -11,11 +11,11 @@ import { ITimerState, Timer, TimerFactory } from '@sneat/meeting';
 import {
 	IRetrospectiveRequest,
 	RetrospectiveService,
-} from '@sneat/scrumspace/retrospectives';
+} from '@sneat/scrumspace-retrospectives';
 import {
 	IRetrospective,
 	RetrospectiveStage,
-} from '@sneat/scrumspace/scrummodels';
+} from '@sneat/scrumspace-scrummodels';
 import { Subscription } from 'rxjs';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRecord } from '@sneat/data';

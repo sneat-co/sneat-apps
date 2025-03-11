@@ -7,7 +7,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-// import { RetroItemType } from '@sneat/scrumspace/retrospectives';
+// import { RetroItemType } from '@sneat/scrumspace-retrospectives';
 
 @Component({
 	selector: 'sneat-add-retro-item',

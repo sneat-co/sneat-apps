@@ -5,7 +5,7 @@ import { IRecord } from '@sneat/data';
 import { IUserDbo } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ScrumService } from '../../services/scrum.service';
-import { ITask, TaskType } from '@sneat/scrumspace/scrummodels';
+import { ITask, TaskType } from '@sneat/scrumspace-scrummodels';
 
 @Component({
 	selector: 'sneat-scrum-task',

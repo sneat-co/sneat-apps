@@ -20,7 +20,7 @@ import {
 	TimerFactory,
 } from '@sneat/meeting';
 import { ScrumService } from '../services/scrum.service';
-import { IScrumDbo, IStatus, TaskType } from '@sneat/scrumspace/scrummodels';
+import { IScrumDbo, IStatus, TaskType } from '@sneat/scrumspace-scrummodels';
 import {
 	SpaceBaseComponent,
 	SpaceComponentBaseParams,

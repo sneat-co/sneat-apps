@@ -29,7 +29,7 @@ import {
 	AssetService,
 	AssetusServicesModule,
 	ICreateAssetRequest,
-} from '@sneat/extensions/assetus/components';
+} from '@sneat/extensions-assetus-components';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
 import {
 	ContactService,

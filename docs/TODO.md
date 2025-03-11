@@ -6,7 +6,7 @@
 
 ## Must do
 
-- `@sneat/team-services` should not depend on `@sneat/scrumspace/...`
+- `@sneat/team-services` should not depend on `@sneat/scrumspace-...`
 - Decrease budgets.maximumError for `sneat-app`
 
 ## Undecided

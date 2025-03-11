@@ -2,7 +2,7 @@ import { Component, Inject, Input, ViewChild } from '@angular/core';
 import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { IonInput } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IRetroItem, RetroItemType } from '@sneat/scrumspace/scrummodels';
+import { IRetroItem, RetroItemType } from '@sneat/scrumspace-scrummodels';
 import {
 	IAddRetroItemRequest,
 	IRetroItemRequest,

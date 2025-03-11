@@ -10,7 +10,7 @@ import { IRecord } from '@sneat/data';
 import {
 	IRetrospective,
 	RetrospectiveStage,
-} from '@sneat/scrumspace/scrummodels';
+} from '@sneat/scrumspace-scrummodels';
 import { SpaceService } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';

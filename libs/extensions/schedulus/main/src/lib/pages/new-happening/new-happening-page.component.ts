@@ -14,7 +14,7 @@ import {
 import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { first, takeUntil } from 'rxjs';
 import { CalendarBasePage } from '../calendar-base-page';
-import { HappeningFormComponent } from '@sneat/extensions/schedulus/shared';
+import { HappeningFormComponent } from '@sneat/extensions-schedulus-shared';
 
 @Component({
 	selector: 'sneat-happening-new',

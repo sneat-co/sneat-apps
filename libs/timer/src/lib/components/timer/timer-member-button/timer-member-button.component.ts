@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITimerState, Timer } from '@sneat/meeting';
-import { IScrumDbo, TimerStatusEnum } from '@sneat/scrumspace/scrummodels';
+import { IScrumDbo, TimerStatusEnum } from '@sneat/scrumspace-scrummodels';
 import { Subscription } from 'rxjs';
 
 @Component({

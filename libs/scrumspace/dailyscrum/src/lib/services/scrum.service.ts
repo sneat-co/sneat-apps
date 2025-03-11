@@ -25,7 +25,7 @@ import {
 	ITask,
 	IThumbUpRequest,
 	TaskType,
-} from '@sneat/scrumspace/scrummodels';
+} from '@sneat/scrumspace-scrummodels';
 import { RandomIdService } from '@sneat/random';
 import { SneatUserService } from '@sneat/auth-core';
 

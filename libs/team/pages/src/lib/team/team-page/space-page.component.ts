@@ -14,7 +14,7 @@ import { IIdAndOptionalDbo, TopMenuService } from '@sneat/core';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { SpaceServiceModule } from '@sneat/team-services';
 import { SpacePageBaseComponent } from './SpacePageBaseComponent';
-import { CalendarBriefComponent } from '@sneat/extensions/schedulus/shared';
+import { CalendarBriefComponent } from '@sneat/extensions-schedulus-shared';
 
 @Component({
 	selector: 'sneat-space-page',

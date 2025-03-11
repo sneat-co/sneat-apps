@@ -8,7 +8,7 @@ import { IAssetCategory } from '@sneat/mod-assetus-core';
 import {
 	AddAssetComponentsModule,
 	AssetusServicesModule,
-} from '@sneat/extensions/assetus/components';
+} from '@sneat/extensions-assetus-components';
 import {
 	SpaceBaseComponent,
 	SpaceComponentBaseParams,

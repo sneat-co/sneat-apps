@@ -9,7 +9,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { IonicModule, ToastController } from '@ionic/angular';
-import { AssetService } from '@sneat/extensions/assetus/components';
+import { AssetService } from '@sneat/extensions-assetus-components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IAssetDocumentContext } from '@sneat/mod-assetus-core';
 import { DocumentsBaseComponent } from '../documents-base.component';

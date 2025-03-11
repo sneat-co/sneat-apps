@@ -5,7 +5,7 @@ import {
 	IAssetBrief,
 	IAssetusSpaceContext,
 } from '@sneat/mod-assetus-core';
-import { AssetService } from '@sneat/extensions/assetus/components';
+import { AssetService } from '@sneat/extensions-assetus-components';
 import {
 	SpaceBaseComponent,
 	SpaceComponentBaseParams,

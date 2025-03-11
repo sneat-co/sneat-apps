@@ -8,7 +8,7 @@ import {
 import { IMeetingMember } from '@sneat/meeting';
 import { IRecord } from '@sneat/data';
 import { ISpaceContext } from '@sneat/team-models';
-import { IRetrospective } from '@sneat/scrumspace/scrummodels';
+import { IRetrospective } from '@sneat/scrumspace-scrummodels';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 interface IRetroCount {

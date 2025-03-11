@@ -24,7 +24,7 @@ import {
 	// CalendarFilterService,
 	// emptyCalendarFilter,
 	// ICalendarFilter,
-} from '@sneat/extensions/schedulus/shared';
+} from '@sneat/extensions-schedulus-shared';
 
 @Component({
 	selector: 'sneat-schedule-page',

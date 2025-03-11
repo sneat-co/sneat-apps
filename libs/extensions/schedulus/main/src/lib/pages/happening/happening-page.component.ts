@@ -10,7 +10,7 @@ import {
 	HappeningComponentBaseParamsModule,
 	HappeningFormComponent,
 	HappeningServiceModule,
-} from '@sneat/extensions/schedulus/shared';
+} from '@sneat/extensions-schedulus-shared';
 
 @Component({
 	selector: 'sneat-happening-page',

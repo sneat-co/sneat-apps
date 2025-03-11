@@ -6,7 +6,7 @@ import { Period } from '@sneat/dto';
 import {
 	AssetCardComponent,
 	PeriodSegmentComponent,
-} from '@sneat/extensions/assetus/components';
+} from '@sneat/extensions-assetus-components';
 import { IAssetContext, IAssetDtoGroup } from '@sneat/mod-assetus-core';
 import {
 	SpaceComponentBaseParams,

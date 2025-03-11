@@ -14,7 +14,7 @@ import {
 	IAssetDocumentContext,
 	standardDocTypesByID,
 } from '@sneat/mod-assetus-core';
-import { AssetService } from '@sneat/extensions/assetus/components';
+import { AssetService } from '@sneat/extensions-assetus-components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { DocumentsBaseComponent } from '../documents-base.component';
 

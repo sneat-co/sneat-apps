@@ -20,7 +20,7 @@ import {
 	ITask,
 	IThumbUpRequest,
 	TaskType,
-} from '@sneat/scrumspace/scrummodels';
+} from '@sneat/scrumspace-scrummodels';
 import { Subscription } from 'rxjs';
 import { ScrumTaskComponent } from '../scrum-task/scrum-task.component';
 

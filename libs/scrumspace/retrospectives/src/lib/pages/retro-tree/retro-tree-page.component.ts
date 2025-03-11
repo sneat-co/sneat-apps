@@ -1,4 +1,3 @@
- 
 import { ChangeDetectorRef, Component, Inject } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
@@ -10,17 +9,17 @@ import {
 	IRetroItem,
 	IRetrospective,
 	RetrospectiveStage,
-} from '@sneat/scrumspace/scrummodels';
+} from '@sneat/scrumspace-scrummodels';
 import { SpaceService } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { getMeetingIdFromDate } from '@sneat/meeting';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({
-    selector: 'sneat-retro-tree',
-    templateUrl: './retro-tree-page.component.html',
-    styleUrls: ['./retro-tree-page.component.scss'],
-    standalone: false
+	selector: 'sneat-retro-tree',
+	templateUrl: './retro-tree-page.component.html',
+	styleUrls: ['./retro-tree-page.component.scss'],
+	standalone: false,
 })
 export class RetroTreePageComponent extends SpaceBaseComponent {
 	public meetingId: string;

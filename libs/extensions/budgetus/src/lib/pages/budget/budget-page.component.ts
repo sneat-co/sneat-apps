@@ -16,7 +16,7 @@ import { takeUntil } from 'rxjs';
 import { LiabilitiesMode } from './budget-component-types';
 import { BudgetPeriodsComponent } from './budget-periods.component';
 
-import { CalendariumSpaceService } from '@sneat/extensions/schedulus/shared';
+import { CalendariumSpaceService } from '@sneat/extensions-schedulus-shared';
 
 @Component({
 	selector: 'sneat-budget-page',

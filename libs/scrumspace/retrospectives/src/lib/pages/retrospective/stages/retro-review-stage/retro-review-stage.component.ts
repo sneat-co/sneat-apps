@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { IRecord } from '@sneat/data';
-import { IRetrospective } from '@sneat/scrumspace/scrummodels';
+import { IRetrospective } from '@sneat/scrumspace-scrummodels';
 import { ISpaceContext } from '@sneat/team-models';
 
 @Component({
