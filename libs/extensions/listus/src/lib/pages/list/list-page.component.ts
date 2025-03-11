@@ -88,8 +88,8 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		private readonly listusAppStateService: IListusAppStateService,
 		private readonly changeDetectorRef: ChangeDetectorRef, // private readonly listusDbService: IListusService,
 	) {
-		super('ListPage', route, params);
-		console.log('ListPage.constructor(), userId:', this.currentUserId);
+		super('ListPageComponent', route, params);
+		console.log('ListPageComponent.constructor(), userId:', this.currentUserId);
 		this.preloader.markAsPreloaded('list');
 		if (location.pathname.includes('/lists')) {
 			// TODO: document why & how it is possible

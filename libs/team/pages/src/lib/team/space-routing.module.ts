@@ -10,6 +10,7 @@ import { docusRoutes } from '@sneat/extensions-docus';
 import { listusRoutes } from '@sneat/extensions-listus';
 
 import { calendariumRoutes } from '@sneat/extensions-schedulus-main';
+import { trackusSpaceRoutes } from '@sneat/extensions-trackus';
 import {
 	SpaceComponentBaseParams,
 	SpaceMenuComponent,
@@ -41,6 +42,7 @@ const routes: Routes = [
 	...docusRoutes,
 	...listusRoutes,
 	...calendariumRoutes,
+	...trackusSpaceRoutes,
 	// ...expressRoutes,
 	// {
 	// 	path: '',

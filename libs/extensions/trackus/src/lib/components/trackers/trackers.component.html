@@ -1,0 +1,26 @@
+<ion-card>
+	<ion-list>
+		@if ($trackers() === undefined) {
+			<ion-item>
+				<ion-spinner
+					color="medium"
+					name="lines-small"
+					slot="start"
+				></ion-spinner>
+				<ion-label color="medium">Loading...</ion-label>
+			</ion-item>
+		} @else {
+			@for (tracker of $trackers(); track tracker.id) {
+				<ion-item [routerLink]="'../trackers/' + tracker.id">
+					<ion-label
+						>{{ tracker.brief.emoji }} {{ tracker.brief.title }}</ion-label
+					>
+				</ion-item>
+			} @empty {
+				<ion-item>
+					<ion-label color="medium">No trackers has been added yet.</ion-label>
+				</ion-item>
+			}
+		}
+	</ion-list>
+</ion-card>

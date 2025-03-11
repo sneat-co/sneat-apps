@@ -1,0 +1,20 @@
+{
+	"name": "@sneat/extensions-trackus",
+	"version": "0.0.1",
+	"peerDependencies": {
+		"@angular/common": "^19.2.0",
+		"@angular/core": "^19.2.0",
+		"jest-preset-angular": "14.5.3",
+		"@angular/router": "19.2.1",
+		"@ionic/angular": "8.4.3",
+		"rxjs": "7.8.2",
+		"@angular/fire": "19.0.0",
+		"@sneat/core": "0.0.1",
+		"@sneat/logging": "0.0.1",
+		"@sneat/team-models": "0.0.1",
+		"@sneat/ui": "0.0.1",
+		"@sneat/team-components": "0.0.1",
+		"@sneat/team-services": "0.0.1"
+	},
+	"sideEffects": false
+}

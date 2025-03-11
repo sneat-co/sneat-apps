@@ -4,14 +4,12 @@ import {
 	provideAppInfo,
 	provideRolesByType,
 	SneatApplicationModule,
-	CapacitorHttpInterceptor,
 } from '@sneat/app';
 import { provideSentryAppInitializer } from '@sneat/logging';
 import { SpacesMenuComponent } from '@sneat/team-components';
 import { sneatAppEnvironmentConfig } from '../environments/environment';
 import { SneatAppRoutingModule } from './sneat-app-routing.module';
 import { SneatAppComponent } from './sneat-app.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
 	declarations: [SneatAppComponent],

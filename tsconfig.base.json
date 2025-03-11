@@ -95,6 +95,7 @@
 			"@sneat/extensions-schedulus-shared": [
 				"libs/extensions/schedulus/shared/src/index.ts"
 			],
+			"@sneat/extensions-trackus": ["libs/extensions/trackus/src/index.ts"],
 			"@sneat/grid": ["libs/grid/src/index.ts"],
 			"@sneat/logging": ["libs/logging/src/index.ts"],
 			"@sneat/meeting": ["libs/meeting/src/index.ts"],

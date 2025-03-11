@@ -140,5 +140,15 @@
 		<ion-icon name="people-circle-outline" slot="start" />
 		<ion-label>Members</ion-label>
 	</ion-item>
+	<ion-item
+		[routerLink]="spacePageUrl('trackers')"
+		routerDirection="root"
+		[disabled]="!space.id"
+		[class.currentPage]="isCurrentPage('trackers')"
+		(click)="closeMenu()"
+	>
+		<ion-icon name="bar-chart-outline" slot="start" />
+		<ion-label>Trackers</ion-label>
+	</ion-item>
 	<sneat-auth-menu-item />
 </ion-list>
