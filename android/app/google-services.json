@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "769133939610",
+    "project_id": "ionicvuefirebase-f42c6",
+    "storage_bucket": "ionicvuefirebase-f42c6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:769133939610:android:9b6c78d0b6bc6bff578823",
+        "android_client_info": {
+          "package_name": "co.sneat.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "769133939610-8hc9ajto0v5591ci7184mr0nlufhbcv3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.sneat.app",
+            "certificate_hash": "6014290f9188e61a1ea57a5a2a686f85cd1fa86a"
+          }
+        },
+        {
+          "client_id": "769133939610-327oeu9t0akgtk5jtvb9kf0eob0fr7cl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5WWg2Ce97MsmFw47FGIPEbuUzY_1-57Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "769133939610-327oeu9t0akgtk5jtvb9kf0eob0fr7cl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
