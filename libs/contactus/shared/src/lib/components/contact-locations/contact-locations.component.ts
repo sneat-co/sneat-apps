@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { IIdAndBrief, IIdAndBriefAndOptionalDto } from '@sneat/core';
+import { IIdAndBrief, IIdAndBriefAndOptionalDbo } from '@sneat/core';
 import { IContactBrief, IContactDto } from '@sneat/contactus-core';
 import { ISpaceContext } from '@sneat/team-models';
 import { ContactsListModule } from '../contacts-list';
@@ -14,7 +14,7 @@ import { ContactsListModule } from '../contacts-list';
 })
 export class ContactLocationsComponent implements OnChanges {
 	@Input({ required: true }) public space?: ISpaceContext;
-	@Input({ required: true }) public contact?: IIdAndBriefAndOptionalDto<
+	@Input({ required: true }) public contact?: IIdAndBriefAndOptionalDbo<
 		IContactBrief,
 		IContactDto
 	>;

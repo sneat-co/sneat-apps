@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { IUserSpaceBrief } from '@sneat/auth-models';
 import { SneatPipesModule } from '@sneat/components';
 import { IUpdateContactRequest } from '@sneat/contactus-services';
-import { IIdAndBrief, IIdAndBriefAndOptionalDto } from '@sneat/core';
+import { IIdAndBrief, IIdAndBriefAndOptionalDbo } from '@sneat/core';
 import {
 	ContactType,
 	Gender,
@@ -60,10 +60,10 @@ export class ContactDetailsComponent implements OnChanges {
 	private userContactID?: string;
 
 	protected get contactWithBriefAndOptionalDto():
-		| IIdAndBriefAndOptionalDto<IContactBrief, IContactDto>
+		| IIdAndBriefAndOptionalDbo<IContactBrief, IContactDto>
 		| undefined {
 		return this.contact?.brief
-			? (this.contact as IIdAndBriefAndOptionalDto<IContactBrief, IContactDto>)
+			? (this.contact as IIdAndBriefAndOptionalDbo<IContactBrief, IContactDto>)
 			: undefined;
 	}
 

@@ -40,26 +40,30 @@ export class TrackersComponent extends SneatBaseComponent {
 		private readonly trackusSpaceService: TrackusSpaceService,
 	) {
 		super('TrackersComponent', errorLogger);
-		effect(() => {
-			this.trackersSub = this.$trackusSpace()
-				.pipe(this.takeUntilDestroyed())
-				.subscribe({
-					next: (trackusSpace) => {
-						console.log('trackusSpace:', trackusSpace);
-						const trackers =
-							Object.entries(trackusSpace.dbo?.trackers || {}).map(
-								([id, brief]) => ({
-									id,
-									brief,
-								}),
-							) || [];
-						trackers.sort((a, b) => a.brief.title.localeCompare(b.brief.title));
-						this.$trackers.set(trackers);
-						this.$loading.set(false);
-					},
-				});
-		});
+		this.destroyed$.subscribe(effect(this.onTrackusSpaceChanged).destroy);
+		this.destroyed$.subscribe(() => this.trackersSub?.unsubscribe());
 	}
+
+	private readonly onTrackusSpaceChanged = () => {
+		this.trackersSub?.unsubscribe();
+		this.trackersSub = this.$trackusSpace()
+			.pipe(this.takeUntilDestroyed())
+			.subscribe({
+				next: (trackusSpace) => {
+					console.log('trackusSpace:', trackusSpace);
+					const trackers =
+						Object.entries(trackusSpace.dbo?.trackers || {}).map(
+							([id, brief]) => ({
+								id,
+								brief,
+							}),
+						) || [];
+					trackers.sort((a, b) => a.brief.title.localeCompare(b.brief.title));
+					this.$trackers.set(trackers);
+					this.$loading.set(false);
+				},
+			});
+	};
 
 	private readonly $trackusSpace = computed(() => {
 		const spaceID = this.$spaceID();

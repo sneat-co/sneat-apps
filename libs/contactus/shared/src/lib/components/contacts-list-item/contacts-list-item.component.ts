@@ -1,5 +1,5 @@
 import { Component, Inject, Input } from '@angular/core';
-import { IIdAndBrief, IIdAndBriefAndOptionalDto } from '@sneat/core';
+import { IIdAndBrief, IIdAndBriefAndOptionalDbo } from '@sneat/core';
 import { ContactRole, IContactBrief, IContactDto } from '@sneat/contactus-core';
 import { IRelatedItem, IRelationshipRoles } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -15,7 +15,7 @@ import { SpaceNavService } from '@sneat/team-services';
 })
 export class ContactsListItemComponent {
 	@Input({ required: true }) space?: ISpaceContext;
-	@Input({ required: true }) contact?: IIdAndBriefAndOptionalDto<
+	@Input({ required: true }) contact?: IIdAndBriefAndOptionalDbo<
 		IContactBrief,
 		IContactDto
 	>;

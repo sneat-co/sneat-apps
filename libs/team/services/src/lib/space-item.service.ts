@@ -6,7 +6,10 @@ import {
 } from '@angular/fire/firestore';
 import { QuerySnapshot } from '@firebase/firestore-types';
 import { IQueryArgs, SneatApiService, SneatFirestoreService } from '@sneat/api';
-import { IIdAndBriefAndDbo } from '@sneat/core';
+import {
+	IIdAndBriefAndDbo,
+	IIdAndOptionalBriefAndOptionalDbo,
+} from '@sneat/core';
 import { ISpaceDbo } from '@sneat/dto';
 import {
 	ISpaceContext,
@@ -241,11 +244,11 @@ export class ModuleSpaceItemService<
 	private readonly spaceRef = (id: string) => doc(this.spacesCollection, id);
 
 	public watchModuleSpaceItem<Dbo2 extends Dbo>(
-		team: ISpaceRef,
+		space: ISpaceRef,
 		itemID: string,
-	): Observable<IIdAndBriefAndDbo<Brief, Dbo2>[]> {
-		console.log(team, itemID);
-		throw new Error('Method not implemented.');
+	): Observable<IIdAndOptionalBriefAndOptionalDbo<Brief, Dbo2>> {
+		const collection = this.collectionRef<Dbo2>(space.id);
+		return this.sfs.watchByID<Dbo2>(collection, itemID);
 	}
 
 	public watchModuleSpaceItemsWithSpaceRef<Dbo2 extends Dbo>(

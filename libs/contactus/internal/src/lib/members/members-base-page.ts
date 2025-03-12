@@ -1,7 +1,7 @@
 import { ActivatedRoute } from '@angular/router';
 import { SpaceMemberType } from '@sneat/auth-models';
 import { ContactusModuleBaseComponent } from '@sneat/contactus-shared';
-import { IIdAndBriefAndOptionalDto, SpaceType } from '@sneat/core';
+import { IIdAndBriefAndOptionalDbo, SpaceType } from '@sneat/core';
 import { isSpaceSupportsMemberGroups } from '@sneat/dto';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
 import {
@@ -11,7 +11,7 @@ import {
 import { IContactBrief, IContactDto } from '@sneat/contactus-core';
 
 export abstract class MembersBasePage extends ContactusModuleBaseComponent {
-	public members?: readonly IIdAndBriefAndOptionalDto<
+	public members?: readonly IIdAndBriefAndOptionalDbo<
 		IContactBrief,
 		IContactDto
 	>[];

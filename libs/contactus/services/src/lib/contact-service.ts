@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { IFilter, SneatApiService } from '@sneat/api';
 import { SneatUserService } from '@sneat/auth-core';
-import { IIdAndBriefAndOptionalDto } from '@sneat/core';
+import { IIdAndBriefAndOptionalDbo } from '@sneat/core';
 import {
 	ContactRole,
 	IContactBrief,
@@ -78,7 +78,7 @@ export class ContactService extends ModuleSpaceItemService<
 		role: string,
 		status: 'active' | 'archived' = 'active',
 		filter?: readonly IFilter[],
-	): Observable<IIdAndBriefAndOptionalDto<IContactBrief, IContactDto>[]> {
+	): Observable<IIdAndBriefAndOptionalDbo<IContactBrief, IContactDto>[]> {
 		filter = [
 			...(filter || []),
 			{ field: 'roles', operator: '==', value: role },
@@ -90,7 +90,7 @@ export class ContactService extends ModuleSpaceItemService<
 		space: ISpaceContext,
 		status: 'active' | 'archived' = 'active',
 		filter?: readonly IFilter[],
-	): Observable<IIdAndBriefAndOptionalDto<IContactBrief, IContactDto>[]> {
+	): Observable<IIdAndBriefAndOptionalDbo<IContactBrief, IContactDto>[]> {
 		filter = [
 			{
 				field: 'status',

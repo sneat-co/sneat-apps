@@ -19,7 +19,7 @@ import {
 } from '@sneat/contactus-core';
 import { MembersByRoleComponent } from '../members-by-role/members-by-role.component';
 import { MembersGroup } from '../members-by-role/member-group';
-import { IIdAndBrief, IIdAndBriefAndOptionalDto } from '@sneat/core';
+import { IIdAndBrief, IIdAndBriefAndOptionalDbo } from '@sneat/core';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 
 @Component({
@@ -41,7 +41,7 @@ export class FamilyMembersComponent implements OnChanges {
 
 	@Output() public readonly addMember = new EventEmitter<MembersGroup>();
 
-	public members?: readonly IIdAndBriefAndOptionalDto<
+	public members?: readonly IIdAndBriefAndOptionalDbo<
 		IContactBrief,
 		IContactDto
 	>[];
