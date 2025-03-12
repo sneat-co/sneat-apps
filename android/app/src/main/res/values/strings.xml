@@ -4,4 +4,7 @@
     <string name="title_activity_main">Sneat.app</string>
     <string name="package_name">co.sneat.app</string>
     <string name="custom_url_scheme">co.sneat.app</string>
+	<string name="facebook_app_id">967757390090619</string>
+	<string name="fb_login_protocol_scheme">fb967757390090619</string>
+	<string name="facebook_client_token">9d45eb7d38d301c6f368d56ecf2ba553</string>
 </resources>
