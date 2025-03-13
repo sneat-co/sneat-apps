@@ -35,23 +35,25 @@ export interface ITrackerRequest {
 }
 
 export interface ICreateTrackerRequest {
-	spaceID: string;
+	readonly spaceID: string;
 }
 
 export interface IAddTrackerEntryRequest {
-	spaceID: string;
-	trackerID: string;
-	value: unknown;
+	readonly spaceID: string;
+	readonly trackerID: string;
+	readonly trackByKind: 'space' | 'contact' | 'asset';
+	readonly trackByID: string;
+	readonly i?: number;
 }
 
 export interface IDeleteTrackerEntryRequest {
-	spaceID: string;
-	trackerID: string;
-	timeStamp: string;
+	readonly spaceID: string;
+	readonly trackerID: string;
+	readonly timeStamp: string;
 }
 
 export interface IAddTrackerEntryResponse {
-	entryID: string;
+	readonly entryID: string;
 }
 
 export interface ICreateTrackerResponse {

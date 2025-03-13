@@ -39,18 +39,18 @@
 				<ion-label>
 					<b>{{ target.targetKey }}</b>
 					&mdash;
-					@for (entry of target.entries; track entry.t; let isLast = $last) {
+					@for (entry of target.entries; track entry.ts; let isLast = $last) {
 						<ion-chip style="padding-right: 0 !important">
 							<ion-label
 								style="font-weight: bold"
-								title="Added at {{ entry.t.toDate() | date: 'HH:mm' }}"
+								title="Added at {{ entry.ts.toDate() | date: 'HH:mm' }}"
 							>
 								{{ entry.i }}
 							</ion-label>
 							<ion-buttons>
 								<ion-button
 									title="Delete record"
-									(click)="deleteTrackerRecord(target.targetKey, entry.t)"
+									(click)="deleteTrackerRecord(target.targetKey, entry.ts)"
 								>
 									<ion-icon name="close-outline" color="medium" />
 								</ion-button>
