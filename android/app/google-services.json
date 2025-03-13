@@ -1,42 +1,50 @@
 {
   "project_info": {
-    "project_number": "769133939610",
-    "project_id": "ionicvuefirebase-f42c6",
-    "storage_bucket": "ionicvuefirebase-f42c6.firebasestorage.app"
+    "project_number": "588648831063",
+    "project_id": "sneat-eur3-1",
+    "storage_bucket": "sneat-eur3-1.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:769133939610:android:9b6c78d0b6bc6bff578823",
+        "mobilesdk_app_id": "1:588648831063:android:cd6ce2f34ae23cb30d6b12",
         "android_client_info": {
           "package_name": "co.sneat.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "769133939610-8hc9ajto0v5591ci7184mr0nlufhbcv3.apps.googleusercontent.com",
+          "client_id": "588648831063-4jqsc383nj3ts4610km69lgsn2hun3ik.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "co.sneat.app",
-            "certificate_hash": "6014290f9188e61a1ea57a5a2a686f85cd1fa86a"
+            "certificate_hash": "7e5b9e9ba862e89aab60f9f9a141b6137e5a0a3d"
           }
         },
         {
-          "client_id": "769133939610-327oeu9t0akgtk5jtvb9kf0eob0fr7cl.apps.googleusercontent.com",
+          "client_id": "588648831063-85a4mor5tivua7jj5qj79q4ussjh8qe5.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC5WWg2Ce97MsmFw47FGIPEbuUzY_1-57Y"
+          "current_key": "AIzaSyB70I76sgdCjKl3g-h3SD-a93tSNqz6yNE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "769133939610-327oeu9t0akgtk5jtvb9kf0eob0fr7cl.apps.googleusercontent.com",
+              "client_id": "588648831063-85a4mor5tivua7jj5qj79q4ussjh8qe5.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "588648831063-gitp5v1vvsdiaeuqcllkr71eqaq0tpve.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "co.sneat.app",
+                "app_store_id": "6742752063"
+              }
             }
           ]
         }
