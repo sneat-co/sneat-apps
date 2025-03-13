@@ -1,57 +1,76 @@
 import { Timestamp } from '@firebase/firestore';
+import { IWithCreated } from '@sneat/dto';
 
-export interface ITrackerBrief {
-	readonly emoji?: string;
+type TrackerValueType =
+	| 'int'
+	| 'float'
+	| 'string'
+	| 'bool'
+	| 'money'
+	| 'integers'
+	| 'floats';
+
+export interface IWithEntryType {
+	readonly trackBy: 'space' | 'contact' | 'asset';
+	readonly valueType: TrackerValueType;
+}
+
+export interface ITrackerBrief extends IWithEntryType {
 	readonly title: string;
+	readonly emoji?: string;
 }
 
-export interface ITrackerEntry {
-	readonly t: Timestamp; // Time
-	readonly n: string; // Note
-	readonly i?: number;
-	readonly f?: number;
-	readonly s?: string;
-}
-
-export interface IIntEntry extends ITrackerEntry {
+export interface IIntEntry {
 	readonly i: number;
 }
 
-export interface IIntegersEntry extends ITrackerEntry {
+export interface IIntegersEntry {
 	readonly I: readonly number[];
 }
 
-export interface IFloatEntry extends ITrackerEntry {
+export interface IFloatEntry {
 	readonly f: number;
 }
 
-export interface IFloatsEntry extends ITrackerEntry {
+export interface IFloatsEntry {
 	readonly F: readonly number[];
 }
 
-export interface IStringEntry extends ITrackerEntry {
+export interface IStringEntry {
 	readonly s: string;
 }
 
-export interface IBoolEntry extends ITrackerEntry {
+export interface IBoolEntry {
 	readonly b: boolean;
 }
 
-export interface IMoneyEntry extends ITrackerEntry {
+export interface IMoneyEntry {
 	readonly m: number;
 }
 
-export type TrackerEntry =
-	| ITrackerEntry
+export type TrackerValue =
 	| IIntEntry
 	| IFloatEntry
 	| IStringEntry
 	| IBoolEntry
 	| IMoneyEntry
-	| IIntegersEntry;
+	| IIntegersEntry
+	| IFloatsEntry;
+
+export interface ITrackerEntryBrief {
+	readonly ts: Timestamp; // Time
+
+	// // TODO: This should be defined using TrackerValue
+	readonly i?: number;
+	readonly f?: number;
+	readonly b?: boolean;
+	readonly s?: string;
+}
+
+export interface ITrackerEntryDbo extends ITrackerEntryBrief, IWithCreated {}
 
 export interface ITrackerDbo extends ITrackerBrief {
-	readonly entries: Readonly<Record<string, TrackerEntry[]>>;
+	readonly entries: Readonly<Record<string, ITrackerEntryDbo[]>>;
 }
 
 export function isStandardTracker(id: string): boolean {

@@ -12,15 +12,16 @@ import {
 import { CommonModule } from '@angular/common';
 import { Timestamp } from '@firebase/firestore';
 import { IonicModule, IonInput } from '@ionic/angular';
+import { SneatAuthStateService, SneatUserService } from '@sneat/auth-core';
 import { IIdAndOptionalBriefAndOptionalDbo } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
 import { SneatBaseComponent } from '@sneat/ui';
-import { Subscription } from 'rxjs';
+import { distinctUntilChanged, map, Subscription } from 'rxjs';
 import {
 	ITrackerBrief,
 	ITrackerDbo,
-	ITrackerEntry,
+	ITrackerEntryDbo,
 } from '../../dbo/i-tracker-dbo';
 import { TrackersService, TrackersServiceModule } from '../../trackers-service';
 import {
@@ -34,7 +35,7 @@ interface ListOfEntriesForDate {
 	readonly dateID: string;
 	readonly targets: {
 		readonly targetKey: string;
-		readonly entries: readonly ITrackerEntry[];
+		readonly entries: readonly ITrackerEntryDbo[];
 	}[];
 }
 
@@ -56,6 +57,9 @@ export class TrackerComponent
 	public readonly $space = input.required<ISpaceContext>();
 	public readonly $trackerID = input.required<string | undefined>();
 
+	private trackBy: 'contact' | 'space' = 'contact';
+	protected $trackByID = signal<string>('');
+
 	protected readonly $tracker = signal<
 		IIdAndOptionalBriefAndOptionalDbo<ITrackerBrief, ITrackerDbo> | undefined
 	>(undefined);
@@ -66,13 +70,13 @@ export class TrackerComponent
 		const tracker = this.$tracker();
 		const entriesByDateAndTargetKey: Record<
 			string,
-			Record<string, ITrackerEntry[]>
+			Record<string, ITrackerEntryDbo[]>
 		> = {};
 
 		Object.entries(tracker?.dbo?.entries || {}).forEach(
 			([targetKey, entries]) => {
 				entries.forEach((entry) => {
-					const dateID = entry.t.toDate().toISOString().slice(0, 10);
+					const dateID = entry.ts.toDate().toISOString().slice(0, 10);
 					// debugger;
 					let entriesByTargetKey = entriesByDateAndTargetKey[dateID];
 					if (!entriesByTargetKey) {
@@ -111,8 +115,20 @@ export class TrackerComponent
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		private readonly trackersService: TrackersService,
 		private readonly trackusApiService: TrackusApiService,
+		private readonly userService: SneatAuthStateService,
 	) {
 		super('TrackerComponent', errorLogger);
+		userService.authState
+			.pipe(
+				this.takeUntilDestroyed(),
+				map((authState) => authState.user?.uid),
+				distinctUntilChanged(),
+			)
+			.subscribe((uid) => {
+				if (uid) {
+					this.$trackByID.set(uid);
+				}
+			});
 		const trackerIDEffect = effect(this.onSpaceOrTrackerIDChanged);
 		this.destroyed$.subscribe(() => {
 			trackerIDEffect?.destroy();
@@ -177,19 +193,32 @@ export class TrackerComponent
 	protected addTrackerRecord(): void {
 		const trackerID = this.$trackerID();
 		const spaceID = this.$space().id;
-		const value = this.numberInput?.value;
+		let value: unknown = this.numberInput?.value;
 		if (!spaceID || !trackerID || value === undefined || value === '') {
 			return;
+		}
+		const tracker = this.$tracker();
+		if (
+			tracker?.dbo?.valueType === 'int' ||
+			tracker?.dbo?.valueType === 'float'
+		) {
+			value = Number(value);
 		}
 		const request: IAddTrackerEntryRequest = {
 			spaceID,
 			trackerID,
-			value,
+			trackByKind: this.trackBy,
+			trackByID: this.$trackByID(),
+			i: Number(value),
 		};
 		this.$isSubmitting.set(true);
 		this.trackusApiService.addTrackerEntry(request).subscribe({
 			next: () => {
 				this.$isSubmitting.set(false);
+				if (this.numberInput) {
+					this.numberInput.value = '';
+					this.setFocusToInput(this.numberInput);
+				}
 			},
 			error: (err) => {
 				this.$isSubmitting.set(false);
