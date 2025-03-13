@@ -13,7 +13,7 @@
 			@for (tracker of $trackers(); track tracker.id) {
 				<ion-item [routerLink]="'../trackers/' + tracker.id">
 					<ion-label
-						>{{ tracker.brief.emoji }} {{ tracker.brief.title }}</ion-label
+						>{{ tracker.brief.emoji }} {{ getTrackerTitle(tracker) }}</ion-label
 					>
 				</ion-item>
 			} @empty {

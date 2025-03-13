@@ -30,46 +30,44 @@
 </ion-card>
 
 <ion-card>
-	<!--	<ion-segment [value]="$selectedTargetKey()" (ionChange)="onSelectedTargetKeyChanged($event)">-->
-	<!--		@for (targetKey of $targetKeys(); track targetKey) {-->
-	<!--			<ion-segment-button [value]="targetKey">-->
-	<!--				<ion-label>{{ targetKey }}</ion-label>-->
-	<!--			</ion-segment-button>-->
-	<!--		}-->
-	<!--	</ion-segment>-->
-
-	@for (date of $entriesByDate(); track date.dateID) {
+	@for (date of $entriesByDateAndTargetKey(); track date.dateID) {
 		<ion-item-divider color="light">
 			<ion-label>{{ date.dateID }}</ion-label>
 		</ion-item-divider>
-		<ion-item>
-			<ion-label>
-				{{ $selectedTargetKey() }}
-				@for (entry of date.entries; track entry.t; let isLast = $last) {
-					<ion-chip style="padding-right: 0 !important">
-						<ion-label
-							style="font-weight: bold"
-							title="Added at {{ entry.t.toDate() | date: 'HH:mm' }}"
-						>
-							{{ entry.i }}
-						</ion-label>
-						<ion-buttons>
-							<ion-button
-								title="Delete record"
-								(click)="deleteTrackerRecord($selectedTargetKey(), entry.t)"
+		@for (target of date.targets; track target.targetKey) {
+			<ion-item>
+				<ion-label>
+					<b>{{ target.targetKey }}</b>
+					&mdash;
+					@for (entry of target.entries; track entry.t; let isLast = $last) {
+						<ion-chip style="padding-right: 0 !important">
+							<ion-label
+								style="font-weight: bold"
+								title="Added at {{ entry.t.toDate() | date: 'HH:mm' }}"
 							>
-								<ion-icon name="close-outline" color="medium" />
-							</ion-button>
-						</ion-buttons>
-					</ion-chip>
-					@if (!isLast) {
-						+
+								{{ entry.i }}
+							</ion-label>
+							<ion-buttons>
+								<ion-button
+									title="Delete record"
+									(click)="deleteTrackerRecord(target.targetKey, entry.t)"
+								>
+									<ion-icon name="close-outline" color="medium" />
+								</ion-button>
+							</ion-buttons>
+						</ion-chip>
+						@if (!isLast) {
+							+
+						}
 					}
-				}
-				@if (date.entries.length > 1) {
-					= <ion-chip color="secondary">12</ion-chip>
-				}
-			</ion-label>
-		</ion-item>
+					@if (target.entries.length > 1) {
+						=
+						<ion-chip color="tertiary" style="font-weight: bold">
+							<ion-label>12</ion-label>
+						</ion-chip>
+					}
+				</ion-label>
+			</ion-item>
+		}
 	}
 </ion-card>

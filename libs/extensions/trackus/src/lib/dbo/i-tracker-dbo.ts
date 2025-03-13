@@ -53,3 +53,21 @@ export type TrackerEntry =
 export interface ITrackerDbo extends ITrackerBrief {
 	readonly entries: Readonly<Record<string, TrackerEntry[]>>;
 }
+
+export function isStandardTracker(id: string): boolean {
+	return id.startsWith('_');
+}
+
+export function getStandardTrackerTitle(id: string): string {
+	switch (id) {
+		case '_pull_ups':
+			return 'Pull-ups';
+		case '_push_ups':
+			return 'Push-ups';
+		default:
+			if (id.startsWith('_')) {
+				return id.substring(1);
+			}
+			return id;
+	}
+}

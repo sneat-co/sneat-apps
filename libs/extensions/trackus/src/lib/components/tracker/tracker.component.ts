@@ -30,6 +30,14 @@ import {
 	TrackusApiServiceModule,
 } from '../../trackus-api.service';
 
+interface ListOfEntriesForDate {
+	readonly dateID: string;
+	readonly targets: {
+		readonly targetKey: string;
+		readonly entries: readonly ITrackerEntry[];
+	}[];
+}
+
 @Component({
 	selector: 'sneat-tracker',
 	imports: [
@@ -52,36 +60,44 @@ export class TrackerComponent
 		IIdAndOptionalBriefAndOptionalDbo<ITrackerBrief, ITrackerDbo> | undefined
 	>(undefined);
 
-	protected $selectedTargetKey = signal<string>('');
-
-	protected $targetKeys = computed(() => {
+	protected readonly $entriesByDateAndTargetKey = computed<
+		ListOfEntriesForDate[]
+	>(() => {
 		const tracker = this.$tracker();
-		return Object.keys(tracker?.dbo?.entries || {});
-	});
+		const entriesByDateAndTargetKey: Record<
+			string,
+			Record<string, ITrackerEntry[]>
+		> = {};
 
-	protected readonly $entriesByDate = computed(() => {
-		const tracker = this.$tracker();
-		const targetKey = this.$selectedTargetKey();
-		const targetEntries = tracker?.dbo?.entries[targetKey];
-
-		const entriesByDate = targetEntries?.reduce(
-			(acc, item) => {
-				const dateKey = item.t.toDate().toISOString().slice(0, 10);
-				(acc[dateKey] = acc[dateKey] || []).push(item);
-				return acc;
+		Object.entries(tracker?.dbo?.entries || {}).forEach(
+			([targetKey, entries]) => {
+				entries.forEach((entry) => {
+					const dateID = entry.t.toDate().toISOString().slice(0, 10);
+					// debugger;
+					let entriesByTargetKey = entriesByDateAndTargetKey[dateID];
+					if (!entriesByTargetKey) {
+						entriesByDateAndTargetKey[dateID] = entriesByTargetKey = {};
+					}
+					let targetEntries = entriesByTargetKey[targetKey];
+					if (!targetEntries) {
+						entriesByTargetKey[targetKey] = targetEntries = [];
+					}
+					targetEntries.push(entry);
+				});
 			},
-			{} as Record<string, ITrackerEntry[]>,
 		);
-		return Object.entries(entriesByDate || {}).map(([dateID, entries]) => ({
-			dateID,
-			entries,
-		}));
+		return Object.entries(entriesByDateAndTargetKey).map(
+			([dateID, byTargetKey]) => {
+				return {
+					dateID,
+					targets: Object.entries(byTargetKey).map(([targetKey, entries]) => ({
+						targetKey,
+						entries,
+					})),
+				};
+			},
+		);
 	});
-
-	protected onSelectedTargetKeyChanged(event: CustomEvent): void {
-		// const ce = event as CustomEvent;
-		this.$selectedTargetKey.set(event.detail.value as string);
-	}
 
 	@ViewChild('numberInput') numberInput?: IonInput;
 	private trackerSub?: Subscription;
@@ -98,18 +114,8 @@ export class TrackerComponent
 	) {
 		super('TrackerComponent', errorLogger);
 		const trackerIDEffect = effect(this.onSpaceOrTrackerIDChanged);
-		const trackerEffect = effect(() => {
-			const tracker = this.$tracker();
-			if (tracker?.dbo?.entries && !this.$selectedTargetKey()) {
-				const keys = Object.keys(tracker.dbo.entries);
-				if (keys?.length) {
-					this.$selectedTargetKey.set(keys[0]);
-				}
-			}
-		});
 		this.destroyed$.subscribe(() => {
 			trackerIDEffect?.destroy();
-			trackerEffect?.destroy();
 			this.trackerSub?.unsubscribe();
 		});
 	}
