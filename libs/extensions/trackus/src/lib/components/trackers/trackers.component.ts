@@ -15,7 +15,11 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { Subscription } from 'rxjs';
-import { ITrackerBrief } from '../../dbo/i-tracker-dbo';
+import {
+	getStandardTrackerTitle,
+	isStandardTracker,
+	ITrackerBrief,
+} from '../../dbo/i-tracker-dbo';
 import {
 	TrackusSpaceService,
 	TrackusSpaceServiceModule,
@@ -58,7 +62,9 @@ export class TrackersComponent extends SneatBaseComponent {
 								brief,
 							}),
 						) || [];
-					trackers.sort((a, b) => a.brief.title.localeCompare(b.brief.title));
+					trackers.sort((a, b) =>
+						(a.brief.title || a.id).localeCompare(b.brief.title || b.id),
+					);
 					this.$trackers.set(trackers);
 					this.$loading.set(false);
 				},
@@ -71,6 +77,16 @@ export class TrackersComponent extends SneatBaseComponent {
 		this.trackersSub?.unsubscribe();
 		return this.trackusSpaceService.watchSpaceModuleRecord(spaceID);
 	});
+
+	protected getTrackerTitle(tracker: IIdAndBrief<ITrackerBrief>): string {
+		if (tracker.brief.title) {
+			return tracker.brief.title;
+		}
+		if (isStandardTracker(tracker.id)) {
+			return getStandardTrackerTitle(tracker.id);
+		}
+		return tracker.id;
+	}
 
 	protected readonly $trackers = signal<
 		undefined | readonly IIdAndBrief<ITrackerBrief>[]

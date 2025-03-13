@@ -14,7 +14,9 @@
 		"@sneat/team-models": "0.0.1",
 		"@sneat/ui": "0.0.1",
 		"@sneat/team-components": "0.0.1",
-		"@sneat/team-services": "0.0.1"
+		"@sneat/team-services": "0.0.1",
+		"@firebase/firestore": "4.7.9",
+		"@sneat/api": "0.0.1"
 	},
 	"sideEffects": false
 }
