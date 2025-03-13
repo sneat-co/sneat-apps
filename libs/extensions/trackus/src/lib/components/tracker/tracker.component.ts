@@ -150,11 +150,11 @@ export class TrackerComponent
 		if (!spaceID || !trackerID) {
 			return;
 		}
-		const created = ts.toDate().toISOString();
+		const timeStamp = ts.toDate().toISOString();
 		const request: IDeleteTrackerEntryRequest = {
 			spaceID,
 			trackerID,
-			created,
+			timeStamp,
 		};
 		const deletingKeys = this.$deletingTrackerEntryKeys();
 		this.$deletingTrackerEntryKeys.set([...deletingKeys, request]);
