@@ -21,13 +21,23 @@ import {
 	ITrackerBrief,
 } from '../../dbo/i-tracker-dbo';
 import {
+	TrackusApiService,
+	TrackusApiServiceModule,
+} from '../../trackus-api.service';
+import {
 	TrackusSpaceService,
 	TrackusSpaceServiceModule,
 } from '../../trackus-space.service';
 
 @Component({
 	selector: 'sneat-trackers',
-	imports: [CommonModule, IonicModule, TrackusSpaceServiceModule, RouterLink],
+	imports: [
+		CommonModule,
+		IonicModule,
+		TrackusSpaceServiceModule,
+		RouterLink,
+		TrackusApiServiceModule,
+	],
 	templateUrl: './trackers.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -42,6 +52,7 @@ export class TrackersComponent extends SneatBaseComponent {
 	constructor(
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		private readonly trackusSpaceService: TrackusSpaceService,
+		private readonly trackusApiService: TrackusApiService,
 	) {
 		super('TrackersComponent', errorLogger);
 		this.destroyed$.subscribe(effect(this.onTrackusSpaceChanged).destroy);
@@ -91,4 +102,18 @@ export class TrackersComponent extends SneatBaseComponent {
 	protected readonly $trackers = signal<
 		undefined | readonly IIdAndBrief<ITrackerBrief>[]
 	>(undefined);
+
+	protected archiveTracker(event: Event, trackerID: string): void {
+		event.stopPropagation();
+		event.preventDefault();
+		if (
+			!confirm(
+				'Are you sure want to archive this tracker? Please note the restoration from archive is not implemented yet.',
+			)
+		) {
+			return;
+		}
+		const spaceID = this.$spaceID();
+		this.trackusApiService.archiveTracker({ spaceID, trackerID }).subscribe({});
+	}
 }
