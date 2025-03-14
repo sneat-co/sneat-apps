@@ -12,7 +12,12 @@ import {
 import { CommonModule } from '@angular/common';
 import { Timestamp } from '@firebase/firestore';
 import { IonicModule, IonInput } from '@ionic/angular';
-import { SneatAuthStateService, SneatUserService } from '@sneat/auth-core';
+import { SneatAuthStateService } from '@sneat/auth-core';
+import { IContactusSpaceDbo } from '@sneat/contactus-core';
+import {
+	ContactusServicesModule,
+	ContactusSpaceService,
+} from '@sneat/contactus-services';
 import { IIdAndOptionalBriefAndOptionalDbo } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
@@ -31,12 +36,22 @@ import {
 	TrackusApiServiceModule,
 } from '../../trackus-api.service';
 
+interface ITarget {
+	readonly key: string;
+	readonly kind: string;
+	readonly id: string;
+	readonly title: string;
+	readonly entries: readonly ITrackerEntryDbo[];
+	readonly sum?: number;
+}
+
 interface ListOfEntriesForDate {
 	readonly dateID: string;
-	readonly targets: {
-		readonly targetKey: string;
-		readonly entries: readonly ITrackerEntryDbo[];
-	}[];
+	readonly targets: ITarget[];
+}
+
+interface ITargetInfo {
+	readonly title: string;
 }
 
 @Component({
@@ -46,6 +61,7 @@ interface ListOfEntriesForDate {
 		IonicModule,
 		TrackersServiceModule,
 		TrackusApiServiceModule,
+		ContactusServicesModule,
 	],
 	templateUrl: './tracker.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -57,6 +73,30 @@ export class TrackerComponent
 	public readonly $space = input.required<ISpaceContext>();
 	public readonly $trackerID = input.required<string | undefined>();
 
+	private readonly $spaceID = computed(() => this.$space().id);
+
+	private readonly $contactusSpace = signal<IContactusSpaceDbo | undefined>(
+		undefined,
+	);
+
+	private $targetInfos = computed<Readonly<Record<string, ITargetInfo>>>(() => {
+		const contacts = this.$contactusSpace()?.contacts;
+		console.log('$targetInfos: contacts:', contacts);
+		if (!contacts) {
+			return {};
+		}
+		const targetInfos: Record<string, ITargetInfo> = {};
+		Object.entries(contacts).forEach(([id, contact]) => {
+			const targetKey = 'contact:' + id;
+			targetInfos[targetKey] = {
+				title: contact.names
+					? `${contact.names?.firstName} ${contact.names?.lastName}`
+					: targetKey,
+			};
+		});
+		return targetInfos;
+	});
+
 	private trackBy: 'contact' | 'space' = 'contact';
 	protected $trackByID = signal<string>('');
 
@@ -64,44 +104,60 @@ export class TrackerComponent
 		IIdAndOptionalBriefAndOptionalDbo<ITrackerBrief, ITrackerDbo> | undefined
 	>(undefined);
 
-	protected readonly $entriesByDateAndTargetKey = computed<
-		ListOfEntriesForDate[]
-	>(() => {
-		const tracker = this.$tracker();
-		const entriesByDateAndTargetKey: Record<
-			string,
-			Record<string, ITrackerEntryDbo[]>
-		> = {};
+	protected readonly $entriesByDateAndTarget = computed<ListOfEntriesForDate[]>(
+		() => {
+			const targetInfos = this.$targetInfos();
+			console.log('$entriesByDateAndTarget: targetInfos=', targetInfos);
+			const tracker = this.$tracker();
+			const entriesByDateAndTarget: Record<
+				string,
+				Record<string, ITrackerEntryDbo[]>
+			> = {};
 
-		Object.entries(tracker?.dbo?.entries || {}).forEach(
-			([targetKey, entries]) => {
-				entries.forEach((entry) => {
-					const dateID = entry.ts.toDate().toISOString().slice(0, 10);
-					// debugger;
-					let entriesByTargetKey = entriesByDateAndTargetKey[dateID];
-					if (!entriesByTargetKey) {
-						entriesByDateAndTargetKey[dateID] = entriesByTargetKey = {};
-					}
-					let targetEntries = entriesByTargetKey[targetKey];
-					if (!targetEntries) {
-						entriesByTargetKey[targetKey] = targetEntries = [];
-					}
-					targetEntries.push(entry);
-				});
-			},
-		);
-		return Object.entries(entriesByDateAndTargetKey).map(
-			([dateID, byTargetKey]) => {
-				return {
-					dateID,
-					targets: Object.entries(byTargetKey).map(([targetKey, entries]) => ({
-						targetKey,
-						entries,
-					})),
-				};
-			},
-		);
-	});
+			Object.entries(tracker?.dbo?.entries || {}).forEach(
+				([targetKey, entries]) => {
+					entries.forEach((entry) => {
+						const dateID = entry.ts.toDate().toISOString().slice(0, 10);
+						// debugger;
+						let entriesByTargetKey = entriesByDateAndTarget[dateID];
+						if (!entriesByTargetKey) {
+							entriesByDateAndTarget[dateID] = entriesByTargetKey = {};
+						}
+						let targetEntries = entriesByTargetKey[targetKey];
+						if (!targetEntries) {
+							entriesByTargetKey[targetKey] = targetEntries = [];
+						}
+						targetEntries.push(entry);
+					});
+				},
+			);
+			return Object.entries(entriesByDateAndTarget).map(
+				([dateID, byTargetKey]) => {
+					return {
+						dateID,
+						targets: Object.entries(byTargetKey).map(([key, entries]) => {
+							const [kind, id] = key.split(':');
+							const targetInfo = targetInfos[key];
+							console.log('targetKey:', key);
+							console.log('targetInfo:', targetInfo);
+							const target: ITarget = {
+								key,
+								kind,
+								id,
+								entries,
+								title: targetInfo?.title || id,
+								sum: entries.reduce(
+									(acc, entry) => acc + (entry.i || entry.f || 0),
+									0,
+								),
+							};
+							return target;
+						}),
+					};
+				},
+			);
+		},
+	);
 
 	@ViewChild('numberInput') numberInput?: IonInput;
 	private trackerSub?: Subscription;
@@ -115,7 +171,8 @@ export class TrackerComponent
 		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		private readonly trackersService: TrackersService,
 		private readonly trackusApiService: TrackusApiService,
-		private readonly userService: SneatAuthStateService,
+		userService: SneatAuthStateService,
+		private readonly contactusSpaceService: ContactusSpaceService,
 	) {
 		super('TrackerComponent', errorLogger);
 		userService.authState
@@ -129,9 +186,29 @@ export class TrackerComponent
 					this.$trackByID.set(uid);
 				}
 			});
+
+		let contactusSpaceSub: Subscription | undefined = undefined;
+
+		const contactusSpaceEffect = effect(() => {
+			contactusSpaceSub?.unsubscribe();
+			const spaceID = this.$spaceID();
+			contactusSpaceSub = contactusSpaceService
+				.watchSpaceModuleRecord(spaceID)
+				.pipe(this.takeUntilDestroyed())
+				.subscribe({
+					next: (contactusSpace) => {
+						console.log('contactusSpace:', contactusSpace);
+						this.$contactusSpace.set(contactusSpace?.dbo || undefined);
+					},
+				});
+		});
+
 		const trackerIDEffect = effect(this.onSpaceOrTrackerIDChanged);
+
 		this.destroyed$.subscribe(() => {
+			contactusSpaceSub?.unsubscribe();
 			trackerIDEffect?.destroy();
+			contactusSpaceEffect?.destroy();
 			this.trackerSub?.unsubscribe();
 		});
 	}
@@ -160,7 +237,11 @@ export class TrackerComponent
 		this.setFocusToInput(this.numberInput);
 	}
 
-	protected deleteTrackerRecord(tarketKey: string, ts: Timestamp): void {
+	protected deleteTargetDateRecord(key: string): void {
+		console.log('deleteTargetDateRecord:', key);
+	}
+
+	protected deleteTrackerRecord(ts: Timestamp): void {
 		const spaceID = this.$space().id;
 		const trackerID = this.$trackerID();
 		if (!spaceID || !trackerID) {
