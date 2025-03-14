@@ -16,7 +16,11 @@
 		"@sneat/team-components": "0.0.1",
 		"@sneat/team-services": "0.0.1",
 		"@firebase/firestore": "4.7.9",
-		"@sneat/api": "0.0.1"
+		"@sneat/api": "0.0.1",
+		"@sneat/auth-core": "0.0.1",
+		"@sneat/dto": "0.0.1",
+		"@sneat/contactus-core": "0.0.1",
+		"@sneat/contactus-services": "0.0.1"
 	},
 	"sideEffects": false
 }
