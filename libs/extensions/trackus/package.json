@@ -1,6 +1,6 @@
 {
 	"name": "@sneat/extensions-trackus",
-	"version": "0.0.1",
+	"version": "workspace:*",
 	"peerDependencies": {
 		"@angular/common": "^19.2.0",
 		"@angular/core": "^19.2.0",
@@ -9,18 +9,18 @@
 		"@ionic/angular": "8.4.3",
 		"rxjs": "7.8.2",
 		"@angular/fire": "19.0.0",
-		"@sneat/core": "0.0.1",
-		"@sneat/logging": "0.0.1",
-		"@sneat/team-models": "0.0.1",
-		"@sneat/ui": "0.0.1",
-		"@sneat/team-components": "0.0.1",
-		"@sneat/team-services": "0.0.1",
+		"@sneat/core": "workspace:*",
+		"@sneat/logging": "workspace:*",
+		"@sneat/team-models": "workspace:*",
+		"@sneat/ui": "workspace:*",
+		"@sneat/team-components": "workspace:*",
+		"@sneat/team-services": "workspace:*",
 		"@firebase/firestore": "4.7.9",
-		"@sneat/api": "0.0.1",
-		"@sneat/auth-core": "0.0.1",
-		"@sneat/dto": "0.0.1",
-		"@sneat/contactus-core": "0.0.1",
-		"@sneat/contactus-services": "0.0.1"
+		"@sneat/api": "workspace:*",
+		"@sneat/auth-core": "workspace:*",
+		"@sneat/dto": "workspace:*",
+		"@sneat/contactus-core": "workspace:*",
+		"@sneat/contactus-services": "workspace:*"
 	},
 	"sideEffects": false
 }
