@@ -1,4 +1,4 @@
-import { Directive, OnInit } from '@angular/core';
+import { Directive, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
@@ -12,13 +12,7 @@ import {
 } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { SneatBaseComponent } from '@sneat/ui';
-import {
-	distinctUntilChanged,
-	Observable,
-	shareReplay,
-	Subject,
-	tap,
-} from 'rxjs';
+import { distinctUntilChanged, Observable, shareReplay, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SpaceComponentBaseParams } from './space-component-base-params.service';
 
@@ -29,6 +23,7 @@ import { SpaceComponentBaseParams } from './space-component-base-params.service'
 // }) // we need this decorator so we can implement Angular interfaces
 @Directive() /* abstract */
 export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
+	protected readonly $spaceID = signal<string | undefined>(undefined);
 	protected readonly spaceIDChanged = new Subject<string | undefined>();
 	protected readonly spaceTypeChanged = new Subject<SpaceType | undefined>();
 
@@ -41,7 +36,15 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 		ISpaceDbo | undefined | null
 	>();
 
-	protected spaceContext?: ISpaceContext; // TODO: check - is it duplication of team?
+	protected readonly $spaceContext = signal<ISpaceContext | undefined>(
+		undefined,
+	);
+
+	protected get spaceContext(): ISpaceContext | undefined {
+		return this.$spaceContext();
+	}
+
+	// protected spaceContext?: ISpaceContext;
 
 	private readonly spaceChanged = new Subject<ISpaceContext>();
 	protected readonly spaceChanged$ = this.spaceChanged
@@ -71,7 +74,7 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 	public readonly spaceIDChanged$ = this.spaceIDChanged.asObservable().pipe(
 		takeUntil(this.destroyed$),
 		distinctUntilChanged(),
-		tap((id) => console.log(this.className + '=> teamIDChanged$: ' + id)),
+		// tap((id) => console.log(this.className + '=> spaceIDChanged$: ' + id)),
 	);
 
 	public readonly spaceTypeChanged$: Observable<SpaceType | undefined> =
@@ -282,7 +285,7 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 				next: (uid) => {
 					if (!uid) {
 						this.unsubscribe('user signed out');
-						this.spaceContext = undefined;
+						this.$spaceContext.set(undefined);
 					}
 					this.onUserIdChanged();
 				},
@@ -329,8 +332,9 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 		this.console.log(
 			`${this.className} extends SpaceBaseComponent.setNewSpaceContext(id=${spaceContext?.id}) => idChanged=${idChanged}, spaceTypeChanged=${spaceTypeChanged}, briefChanged=${briefChanged}, dtoChanged=${dboChanged}`,
 		);
-		this.spaceContext = spaceContext;
+		this.$spaceContext.set(spaceContext);
 		if (idChanged) {
+			this.$spaceID.set(spaceContext?.id);
 			this.spaceIDChanged.next(spaceContext?.id);
 			this.onSpaceIdChanged();
 			if (spaceContext) {
@@ -425,7 +429,7 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 			}
 		}
 		this.setNewSpaceContext(space);
-		this.spaceContext = space;
+		this.$spaceContext.set(space);
 		if (dtoChanged) {
 			this.onSpaceDboChanged();
 		}

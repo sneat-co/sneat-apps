@@ -30,19 +30,18 @@
 </ion-card>
 
 <ion-card>
-	@for (date of $entriesByDateAndTargetKey(); track date.dateID) {
+	@for (date of $entriesByDateAndTarget(); track date.dateID) {
 		<ion-item-divider color="light">
 			<ion-label>{{ date.dateID }}</ion-label>
 		</ion-item-divider>
-		@for (target of date.targets; track target.targetKey) {
+		@for (target of date.targets; track target.key) {
 			<ion-item>
 				<ion-label>
-					<b>{{ target.targetKey }}</b>
+					<b>{{ target.title }}</b>
 					&mdash;
 					@for (entry of target.entries; track entry.ts; let isLast = $last) {
 						<ion-chip style="padding-right: 0 !important">
 							<ion-label
-								style="font-weight: bold"
 								title="Added at {{ entry.ts.toDate() | date: 'HH:mm' }}"
 							>
 								{{ entry.i }}
@@ -50,7 +49,7 @@
 							<ion-buttons>
 								<ion-button
 									title="Delete record"
-									(click)="deleteTrackerRecord(target.targetKey, entry.ts)"
+									(click)="deleteTrackerRecord(entry.ts)"
 								>
 									<ion-icon name="close-outline" color="medium" />
 								</ion-button>
@@ -62,8 +61,19 @@
 					}
 					@if (target.entries.length > 1) {
 						=
-						<ion-chip color="tertiary" style="font-weight: bold">
-							<ion-label>12</ion-label>
+						<ion-chip
+							color="tertiary"
+							style="font-weight: bold; padding-right: 0 !important"
+						>
+							<ion-label>{{ target.sum }}</ion-label>
+							<ion-buttons>
+								<ion-button
+									title="Delete record"
+									(click)="deleteTargetDateRecord(target.key)"
+								>
+									<ion-icon name="close-outline" color="medium" />
+								</ion-button>
+							</ion-buttons>
 						</ion-chip>
 					}
 				</ion-label>
