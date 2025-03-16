@@ -70,7 +70,9 @@ export interface ITrackerEntryBrief {
 export interface ITrackerEntryDbo extends ITrackerEntryBrief, IWithCreated {}
 
 export interface ITrackerDbo extends ITrackerBrief {
-	readonly entries: Readonly<Record<string, ITrackerEntryDbo[]>>;
+	readonly entries: Readonly<
+		Record<string, Readonly<Record<string, ITrackerEntryDbo>>>
+	>;
 }
 
 export function isStandardTracker(id: string): boolean {

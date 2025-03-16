@@ -116,7 +116,7 @@ export class TrackerComponent
 
 			Object.entries(tracker?.dbo?.entries || {}).forEach(
 				([targetKey, entries]) => {
-					entries.forEach((entry) => {
+					Object.entries(entries).forEach(([, entry]) => {
 						const dateID = entry.ts.toDate().toISOString().slice(0, 10);
 						// debugger;
 						let entriesByTargetKey = entriesByDateAndTarget[dateID];
