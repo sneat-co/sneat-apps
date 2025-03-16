@@ -20,9 +20,16 @@ export interface IFirebaseConfig {
 	storageBucket?: string;
 }
 
+export interface IPosthogConfig {
+	posthogKey: string;
+	posthogHost: string;
+	person_profiles?: 'always' | 'never' | 'identified_only';
+}
+
 export interface IEnvironmentConfig {
 	production: boolean;
 	useNgrok?: boolean;
+	posthog?: IPosthogConfig;
 	agents: Record<string, string>;
 	firebaseConfig: IFirebaseConfig;
 	firebaseBaseUrl?: string;

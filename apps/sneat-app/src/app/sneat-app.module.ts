@@ -10,6 +10,14 @@ import { SpacesMenuComponent } from '@sneat/team-components';
 import { sneatAppEnvironmentConfig } from '../environments/environment';
 import { SneatAppRoutingModule } from './sneat-app-routing.module';
 import { SneatAppComponent } from './sneat-app.component';
+import posthog from 'posthog-js';
+
+if (sneatAppEnvironmentConfig.posthog) {
+	posthog.init(sneatAppEnvironmentConfig.posthog.posthogKey, {
+		api_host: sneatAppEnvironmentConfig.posthog.posthogHost,
+		person_profiles: sneatAppEnvironmentConfig.posthog.person_profiles, // or 'always' to create profiles for anonymous users as well
+	});
+}
 
 @NgModule({
 	declarations: [SneatAppComponent],
