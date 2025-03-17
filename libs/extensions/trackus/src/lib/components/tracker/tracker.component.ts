@@ -26,7 +26,7 @@ import { distinctUntilChanged, map, Subscription } from 'rxjs';
 import {
 	ITrackerBrief,
 	ITrackerDbo,
-	ITrackerEntryDbo,
+	ITrackerEntryBrief,
 } from '../../dbo/i-tracker-dbo';
 import { TrackersService, TrackersServiceModule } from '../../trackers-service';
 import {
@@ -41,7 +41,7 @@ interface ITarget {
 	readonly kind: string;
 	readonly id: string;
 	readonly title: string;
-	readonly entries: readonly ITrackerEntryDbo[];
+	readonly entries: readonly ITrackerEntryBrief[];
 	readonly sum?: number;
 }
 
@@ -111,14 +111,16 @@ export class TrackerComponent
 			const tracker = this.$tracker();
 			const entriesByDateAndTarget: Record<
 				string,
-				Record<string, ITrackerEntryDbo[]>
+				Record<string, ITrackerEntryBrief[]>
 			> = {};
 
 			Object.entries(tracker?.dbo?.entries || {}).forEach(
 				([targetKey, entries]) => {
-					Object.entries(entries).forEach(([, entry]) => {
+					Object.entries(entries).forEach(([id, entry]) => {
+						if (!entry.ts) {
+							entry = { ...entry, ts: Timestamp.fromMillis(Number(id)) };
+						}
 						const dateID = entry.ts.toDate().toISOString().slice(0, 10);
-						// debugger;
 						let entriesByTargetKey = entriesByDateAndTarget[dateID];
 						if (!entriesByTargetKey) {
 							entriesByDateAndTarget[dateID] = entriesByTargetKey = {};
@@ -138,8 +140,8 @@ export class TrackerComponent
 						targets: Object.entries(byTargetKey).map(([key, entries]) => {
 							const [kind, id] = key.split(':');
 							const targetInfo = targetInfos[key];
-							console.log('targetKey:', key);
-							console.log('targetInfo:', targetInfo);
+							// console.log('targetKey:', key);
+							// console.log('targetInfo:', targetInfo);
 							const target: ITarget = {
 								key,
 								kind,

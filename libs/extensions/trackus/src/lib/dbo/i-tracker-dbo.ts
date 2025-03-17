@@ -67,11 +67,9 @@ export interface ITrackerEntryBrief {
 	readonly s?: string;
 }
 
-export interface ITrackerEntryDbo extends ITrackerEntryBrief, IWithCreated {}
-
 export interface ITrackerDbo extends ITrackerBrief {
 	readonly entries: Readonly<
-		Record<string, Readonly<Record<string, ITrackerEntryDbo>>>
+		Record<string, Readonly<Record<string, ITrackerEntryBrief>>>
 	>;
 }
 
