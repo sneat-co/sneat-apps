@@ -16,16 +16,16 @@ export class TrackusApiService {
 		return this.sneatApiService.post('trackus/archive_tracker', request);
 	}
 
-	public addTrackerEntry(
-		request: IAddTrackerEntryRequest,
-	): Observable<IAddTrackerEntryResponse> {
-		return this.sneatApiService.post('trackus/add_tracker_entry', request);
+	public addTrackerPoint(
+		request: IAddTrackerPointRequest,
+	): Observable<IAddTrackerPointResponse> {
+		return this.sneatApiService.post('trackus/add_tracker_point', request);
 	}
 
-	public deleteTrackerEntry(
-		request: IDeleteTrackerEntryRequest,
+	public deleteTrackerPoints(
+		request: IDeleteTrackerPointsRequest,
 	): Observable<void> {
-		return this.sneatApiService.post('trackus/delete_tracker_entry', request);
+		return this.sneatApiService.post('trackus/delete_tracker_points', request);
 	}
 }
 
@@ -38,7 +38,7 @@ export interface ICreateTrackerRequest {
 	readonly spaceID: string;
 }
 
-export interface IAddTrackerEntryRequest {
+export interface IAddTrackerPointRequest {
 	readonly spaceID: string;
 	readonly trackerID: string;
 	readonly trackByKind: 'space' | 'contact' | 'asset';
@@ -46,13 +46,15 @@ export interface IAddTrackerEntryRequest {
 	readonly i?: number;
 }
 
-export interface IDeleteTrackerEntryRequest {
+export interface IDeleteTrackerPointsRequest {
 	readonly spaceID: string;
 	readonly trackerID: string;
-	readonly timeStamp: string;
+	readonly entityRef?: string;
+	readonly date?: string;
+	readonly pointIDs?: string[];
 }
 
-export interface IAddTrackerEntryResponse {
+export interface IAddTrackerPointResponse {
 	readonly entryID: string;
 }
 

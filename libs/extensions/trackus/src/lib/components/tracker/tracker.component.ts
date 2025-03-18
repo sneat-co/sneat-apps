@@ -18,7 +18,7 @@ import {
 	ContactusServicesModule,
 	ContactusSpaceService,
 } from '@sneat/contactus-services';
-import { IIdAndOptionalBriefAndOptionalDbo } from '@sneat/core';
+import { IIdAndBrief, IIdAndOptionalBriefAndOptionalDbo } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
 import { SneatBaseComponent } from '@sneat/ui';
@@ -26,12 +26,12 @@ import { distinctUntilChanged, map, Subscription } from 'rxjs';
 import {
 	ITrackerBrief,
 	ITrackerDbo,
-	ITrackerEntryBrief,
+	ITrackerPointBrief,
 } from '../../dbo/i-tracker-dbo';
 import { TrackersService, TrackersServiceModule } from '../../trackers-service';
 import {
-	IAddTrackerEntryRequest,
-	IDeleteTrackerEntryRequest,
+	IAddTrackerPointRequest,
+	IDeleteTrackerPointsRequest,
 	TrackusApiService,
 	TrackusApiServiceModule,
 } from '../../trackus-api.service';
@@ -41,7 +41,7 @@ interface ITarget {
 	readonly kind: string;
 	readonly id: string;
 	readonly title: string;
-	readonly entries: readonly ITrackerEntryBrief[];
+	readonly points: readonly IIdAndBrief<ITrackerPointBrief>[];
 	readonly sum?: number;
 }
 
@@ -111,16 +111,18 @@ export class TrackerComponent
 			const tracker = this.$tracker();
 			const entriesByDateAndTarget: Record<
 				string,
-				Record<string, ITrackerEntryBrief[]>
+				Record<string, IIdAndBrief<ITrackerPointBrief>[]>
 			> = {};
 
 			Object.entries(tracker?.dbo?.entries || {}).forEach(
 				([targetKey, entries]) => {
-					Object.entries(entries).forEach(([id, entry]) => {
-						if (!entry.ts) {
-							entry = { ...entry, ts: Timestamp.fromMillis(Number(id)) };
+					Object.entries(entries).forEach(([id, brief]) => {
+						let ts = brief.ts;
+						if (!ts) {
+							ts = Timestamp.fromMillis(Number(id));
+							brief = { ...brief, ts };
 						}
-						const dateID = entry.ts.toDate().toISOString().slice(0, 10);
+						const dateID = ts.toDate().toISOString().slice(0, 10);
 						let entriesByTargetKey = entriesByDateAndTarget[dateID];
 						if (!entriesByTargetKey) {
 							entriesByDateAndTarget[dateID] = entriesByTargetKey = {};
@@ -129,7 +131,7 @@ export class TrackerComponent
 						if (!targetEntries) {
 							entriesByTargetKey[targetKey] = targetEntries = [];
 						}
-						targetEntries.push(entry);
+						targetEntries.push({ id, brief });
 					});
 				},
 			);
@@ -137,7 +139,7 @@ export class TrackerComponent
 				([dateID, byTargetKey]) => {
 					return {
 						dateID,
-						targets: Object.entries(byTargetKey).map(([key, entries]) => {
+						targets: Object.entries(byTargetKey).map(([key, points]) => {
 							const [kind, id] = key.split(':');
 							const targetInfo = targetInfos[key];
 							// console.log('targetKey:', key);
@@ -146,10 +148,10 @@ export class TrackerComponent
 								key,
 								kind,
 								id,
-								entries,
+								points,
 								title: targetInfo?.title || id,
-								sum: entries.reduce(
-									(acc, entry) => acc + (entry.i || entry.f || 0),
+								sum: points.reduce(
+									(acc, entry) => acc + (entry.brief.i || entry.brief.f || 0),
 									0,
 								),
 							};
@@ -165,8 +167,8 @@ export class TrackerComponent
 	private trackerSub?: Subscription;
 
 	protected readonly $isSubmitting = signal<boolean>(false);
-	protected readonly $deletingTrackerEntryKeys = signal<
-		IDeleteTrackerEntryRequest[]
+	protected readonly $deletingTrackerPointRequests = signal<
+		IDeleteTrackerPointsRequest[]
 	>([]);
 
 	constructor(
@@ -239,30 +241,46 @@ export class TrackerComponent
 		this.setFocusToInput(this.numberInput);
 	}
 
-	protected deleteTargetDateRecord(key: string): void {
-		console.log('deleteTargetDateRecord:', key);
-	}
-
-	protected deleteTrackerRecord(ts: Timestamp): void {
+	protected deleteTrackerPointsByDate(dateID: string) {
 		const spaceID = this.$space().id;
 		const trackerID = this.$trackerID();
 		if (!spaceID || !trackerID) {
 			return;
 		}
-		const timeStamp = ts.toDate().toISOString();
-		const request: IDeleteTrackerEntryRequest = {
+		const request: IDeleteTrackerPointsRequest = {
 			spaceID,
 			trackerID,
-			timeStamp,
+			date: dateID,
 		};
-		const deletingKeys = this.$deletingTrackerEntryKeys();
-		this.$deletingTrackerEntryKeys.set([...deletingKeys, request]);
+		this.deleteTrackerPoints(request);
+	}
+
+	protected deleteTrackerPointsByDateAndEntity(
+		entityRef: string,
+		dateID: string,
+	): void {
+		const spaceID = this.$space().id;
+		const trackerID = this.$trackerID();
+		if (!spaceID || !trackerID) {
+			return;
+		}
+		const request: IDeleteTrackerPointsRequest = {
+			spaceID,
+			trackerID,
+			entityRef,
+			date: dateID,
+		};
+		this.deleteTrackerPoints(request);
+	}
+	protected deleteTrackerPoints(request: IDeleteTrackerPointsRequest): void {
+		const deletingKeys = this.$deletingTrackerPointRequests();
+		this.$deletingTrackerPointRequests.set([...deletingKeys, request]);
 		const removeKey = () => {
-			this.$deletingTrackerEntryKeys.update((keys) =>
+			this.$deletingTrackerPointRequests.update((keys) =>
 				keys.filter((k) => k !== request),
 			);
 		};
-		this.trackusApiService.deleteTrackerEntry(request).subscribe({
+		this.trackusApiService.deleteTrackerPoints(request).subscribe({
 			next: () => {
 				removeKey();
 			},
@@ -271,6 +289,20 @@ export class TrackerComponent
 				removeKey();
 			},
 		});
+	}
+	protected deleteTrackerPoint(entityRef: string, pointID: string): void {
+		const spaceID = this.$space().id;
+		const trackerID = this.$trackerID();
+		if (!spaceID || !trackerID) {
+			return;
+		}
+		const request: IDeleteTrackerPointsRequest = {
+			spaceID,
+			trackerID,
+			entityRef,
+			pointIDs: [pointID],
+		};
+		this.deleteTrackerPoints(request);
 	}
 
 	protected addTrackerRecord(): void {
@@ -287,7 +319,7 @@ export class TrackerComponent
 		) {
 			value = Number(value);
 		}
-		const request: IAddTrackerEntryRequest = {
+		const request: IAddTrackerPointRequest = {
 			spaceID,
 			trackerID,
 			trackByKind: this.trackBy,
@@ -295,7 +327,7 @@ export class TrackerComponent
 			i: Number(value),
 		};
 		this.$isSubmitting.set(true);
-		this.trackusApiService.addTrackerEntry(request).subscribe({
+		this.trackusApiService.addTrackerPoint(request).subscribe({
 			next: () => {
 				this.$isSubmitting.set(false);
 				if (this.numberInput) {

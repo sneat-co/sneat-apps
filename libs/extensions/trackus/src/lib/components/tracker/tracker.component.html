@@ -33,23 +33,34 @@
 	@for (date of $entriesByDateAndTarget(); track date.dateID) {
 		<ion-item-divider color="light">
 			<ion-label>{{ date.dateID }}</ion-label>
+			<ion-buttons slot="end">
+				<ion-button
+					title="Delete all records for the date"
+					(click)="deleteTrackerPointsByDate(date.dateID)"
+				>
+					<ion-icon name="trash" slot="start" color="medium" />
+					<!--					<ion-label color="medium">Delete</ion-label>-->
+				</ion-button>
+			</ion-buttons>
 		</ion-item-divider>
 		@for (target of date.targets; track target.key) {
 			<ion-item>
 				<ion-label>
 					<b>{{ target.title }}</b>
 					&mdash;
-					@for (entry of target.entries; track entry.ts; let isLast = $last) {
+					@for (point of target.points; track point.id; let isLast = $last) {
 						<ion-chip style="padding-right: 0 !important">
-							<ion-label
-								title="Added at {{ entry.ts.toDate() | date: 'HH:mm' }}"
-							>
-								{{ entry.i }}
-							</ion-label>
+							@if (point.brief.ts) {
+								<ion-label
+									title="Added at {{ point.brief.ts.toDate() | date: 'HH:mm' }}"
+								>
+									{{ point.brief.i || point.brief.f }}
+								</ion-label>
+							}
 							<ion-buttons>
 								<ion-button
 									title="Delete record"
-									(click)="deleteTrackerRecord(entry.ts)"
+									(click)="deleteTrackerPoint(target.key, point.id)"
 								>
 									<ion-icon name="close-outline" color="medium" />
 								</ion-button>
@@ -59,7 +70,7 @@
 							+
 						}
 					}
-					@if (target.entries.length > 1) {
+					@if (target.points.length > 1) {
 						=
 						<ion-chip
 							color="tertiary"
@@ -69,7 +80,9 @@
 							<ion-buttons>
 								<ion-button
 									title="Delete record"
-									(click)="deleteTargetDateRecord(target.key)"
+									(click)="
+										deleteTrackerPointsByDateAndEntity(target.key, date.dateID)
+									"
 								>
 									<ion-icon name="close-outline" color="medium" />
 								</ion-button>

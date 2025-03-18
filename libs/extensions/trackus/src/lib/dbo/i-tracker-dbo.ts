@@ -20,56 +20,102 @@ export interface ITrackerBrief extends IWithEntryType {
 	readonly emoji?: string;
 }
 
-export interface IIntEntry {
+export interface ITrackerPointBase {
+	readonly ts?: Timestamp; // Time, if empty generate from id that is a UnixTime
+	readonly i?: number;
+	readonly I?: readonly number[];
+	readonly f?: number;
+	readonly F?: readonly number[];
+	readonly s?: string;
+	readonly b?: boolean;
+	readonly m?: number;
+}
+
+export interface IIntTrackerPoint extends ITrackerPointBase {
 	readonly i: number;
+	I?: never;
+	f?: never;
+	F?: never;
+	s?: never;
+	b?: never;
+	m?: never;
 }
 
-export interface IIntegersEntry {
+export interface IIntsTrackerPoint extends ITrackerPointBase {
 	readonly I: readonly number[];
+	i?: never;
+	f?: never;
+	F?: never;
+	s?: never;
+	b?: never;
+	m?: never;
 }
 
-export interface IFloatEntry {
+export interface IFloatTrackerPoint extends ITrackerPointBase {
 	readonly f: number;
 }
 
-export interface IFloatsEntry {
+export interface IFloatsTrackerPoint extends ITrackerPointBase {
 	readonly F: readonly number[];
+	i?: never;
+	I?: never;
+	f?: never;
+	s?: never;
+	b?: never;
+	m?: never;
 }
 
-export interface IStringEntry {
+export interface IStringTrackerPoint extends ITrackerPointBase {
 	readonly s: string;
+	i?: never;
+	I?: never;
+	f?: never;
+	F?: never;
+	b?: never;
+	m?: never;
 }
 
-export interface IBoolEntry {
+export interface IBoolTrackerPoint extends ITrackerPointBase {
 	readonly b: boolean;
+	i?: never;
+	I?: never;
+	f?: never;
+	F?: never;
+	s?: never;
+	m?: never;
 }
 
-export interface IMoneyEntry {
-	readonly m: number;
+export interface IMoneyTrackerPoint extends ITrackerPointBase {
+	readonly m: number; // Amount in cents
+	i?: never;
+	I?: never;
+	f?: never;
+	F?: never;
+	s?: never;
 }
 
-export type TrackerValue =
-	| IIntEntry
-	| IFloatEntry
-	| IStringEntry
-	| IBoolEntry
-	| IMoneyEntry
-	| IIntegersEntry
-	| IFloatsEntry;
+export type ITrackerPointBrief =
+	| IIntTrackerPoint
+	| IIntsTrackerPoint
+	| IFloatTrackerPoint
+	| IFloatsTrackerPoint
+	| IStringTrackerPoint
+	| IBoolTrackerPoint
+	| IMoneyTrackerPoint;
 
-export interface ITrackerEntryBrief {
-	readonly ts: Timestamp; // Time
-
-	// // TODO: This should be defined using TrackerValue
-	readonly i?: number;
-	readonly f?: number;
-	readonly b?: boolean;
-	readonly s?: string;
-}
+// interface ITrackerPointBrief {
+// 	readonly ts?: Timestamp; // Time, if empty generate from id that is a UnixTime
+//
+// 	// // TODO: This should be defined using TrackerPoint
+// 	readonly i?: number;
+// 	readonly f?: number;
+// 	readonly b?: boolean;
+// 	readonly s?: string;
+// }
 
 export interface ITrackerDbo extends ITrackerBrief {
 	readonly entries: Readonly<
-		Record<string, Readonly<Record<string, ITrackerEntryBrief>>>
+		Record<string, Readonly<Record<string, ITrackerPointBrief>>>
 	>;
 }
 
