@@ -26,7 +26,7 @@ import { distinctUntilChanged, map, Subscription } from 'rxjs';
 import {
 	ITrackerBrief,
 	ITrackerDbo,
-	ITrackerPointBrief,
+	TrackerPointBrief,
 } from '../../dbo/i-tracker-dbo';
 import { TrackersService, TrackersServiceModule } from '../../trackers-service';
 import {
@@ -41,7 +41,7 @@ interface ITarget {
 	readonly kind: string;
 	readonly id: string;
 	readonly title: string;
-	readonly points: readonly IIdAndBrief<ITrackerPointBrief>[];
+	readonly points: readonly IIdAndBrief<TrackerPointBrief>[];
 	readonly sum?: number;
 }
 
@@ -111,7 +111,7 @@ export class TrackerComponent
 			const tracker = this.$tracker();
 			const entriesByDateAndTarget: Record<
 				string,
-				Record<string, IIdAndBrief<ITrackerPointBrief>[]>
+				Record<string, IIdAndBrief<TrackerPointBrief>[]>
 			> = {};
 
 			Object.entries(tracker?.dbo?.entries || {}).forEach(
@@ -176,7 +176,7 @@ export class TrackerComponent
 		private readonly trackersService: TrackersService,
 		private readonly trackusApiService: TrackusApiService,
 		userService: SneatAuthStateService,
-		private readonly contactusSpaceService: ContactusSpaceService,
+		contactusSpaceService: ContactusSpaceService,
 	) {
 		super('TrackerComponent', errorLogger);
 		userService.authState

@@ -1,5 +1,4 @@
 import { Timestamp } from '@firebase/firestore';
-import { IWithCreated } from '@sneat/dto';
 
 type TrackerValueType =
 	| 'int'
@@ -22,79 +21,85 @@ export interface ITrackerBrief extends IWithEntryType {
 
 export interface ITrackerPointBase {
 	readonly ts?: Timestamp; // Time, if empty generate from id that is a UnixTime
-	readonly i?: number;
-	readonly I?: readonly number[];
-	readonly f?: number;
-	readonly F?: readonly number[];
-	readonly s?: string;
-	readonly b?: boolean;
-	readonly m?: number;
+	// readonly i?: number;
+	// readonly I?: readonly number[];
+	// readonly f?: number;
+	// readonly F?: readonly number[];
+	// readonly s?: string;
+	// readonly b?: boolean;
+	// readonly m?: number;
 }
 
 export interface IIntTrackerPoint extends ITrackerPointBase {
 	readonly i: number;
-	I?: never;
-	f?: never;
-	F?: never;
-	s?: never;
-	b?: never;
-	m?: never;
+	readonly I?: never;
+	readonly f?: never;
+	readonly F?: never;
+	readonly s?: never;
+	readonly b?: never;
+	readonly m?: never;
 }
 
 export interface IIntsTrackerPoint extends ITrackerPointBase {
 	readonly I: readonly number[];
-	i?: never;
-	f?: never;
-	F?: never;
-	s?: never;
-	b?: never;
-	m?: never;
+	readonly i?: never;
+	readonly f?: never;
+	readonly F?: never;
+	readonly s?: never;
+	readonly b?: never;
+	readonly m?: never;
 }
 
 export interface IFloatTrackerPoint extends ITrackerPointBase {
 	readonly f: number;
+	readonly i?: never;
+	readonly I?: never;
+	readonly F?: never;
+	readonly s?: never;
+	readonly b?: never;
+	readonly m?: never;
 }
 
 export interface IFloatsTrackerPoint extends ITrackerPointBase {
 	readonly F: readonly number[];
-	i?: never;
-	I?: never;
-	f?: never;
-	s?: never;
-	b?: never;
-	m?: never;
+	readonly i?: never;
+	readonly I?: never;
+	readonly f?: never;
+	readonly s?: never;
+	readonly b?: never;
+	readonly m?: never;
 }
 
 export interface IStringTrackerPoint extends ITrackerPointBase {
 	readonly s: string;
-	i?: never;
-	I?: never;
-	f?: never;
-	F?: never;
-	b?: never;
-	m?: never;
+	readonly i?: never;
+	readonly I?: never;
+	readonly f?: never;
+	readonly F?: never;
+	readonly b?: never;
+	readonly m?: never;
 }
 
 export interface IBoolTrackerPoint extends ITrackerPointBase {
 	readonly b: boolean;
-	i?: never;
-	I?: never;
-	f?: never;
-	F?: never;
-	s?: never;
-	m?: never;
+	readonly i?: never;
+	readonly I?: never;
+	readonly f?: never;
+	readonly F?: never;
+	readonly s?: never;
+	readonly m?: never;
 }
 
 export interface IMoneyTrackerPoint extends ITrackerPointBase {
 	readonly m: number; // Amount in cents
-	i?: never;
-	I?: never;
-	f?: never;
-	F?: never;
-	s?: never;
+	readonly i?: never;
+	readonly I?: never;
+	readonly f?: never;
+	readonly F?: never;
+	readonly s?: never;
 }
 
-export type ITrackerPointBrief =
+export type TrackerPointBrief =
 	| IIntTrackerPoint
 	| IIntsTrackerPoint
 	| IFloatTrackerPoint
@@ -115,7 +120,7 @@ export type ITrackerPointBrief =
 
 export interface ITrackerDbo extends ITrackerBrief {
 	readonly entries: Readonly<
-		Record<string, Readonly<Record<string, ITrackerPointBrief>>>
+		Record<string, Readonly<Record<string, TrackerPointBrief>>>
 	>;
 }
 
