@@ -31,9 +31,9 @@ export abstract class SpaceModuleService<Dto> extends ModuleSpaceItemService<
 			spaceID,
 			'modules',
 		) as CollectionReference<Dto>;
-		if (this.moduleID === 'trackus') {
-			return throwError(() => new Error('test error'));
-		}
+		// if (this.moduleID === 'trackus') {
+		// 	return throwError(() => new Error('test error'));
+		// }
 		return this.sfs
 			.watchByID<Dto>(collectionRef, this.moduleID)
 			.pipe
