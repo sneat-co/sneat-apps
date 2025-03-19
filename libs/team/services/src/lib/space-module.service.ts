@@ -5,7 +5,7 @@ import {
 } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { IIdAndBrief, IIdAndOptionalDbo } from '@sneat/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ModuleSpaceItemService } from './space-item.service';
 
@@ -24,13 +24,16 @@ export abstract class SpaceModuleService<Dto> extends ModuleSpaceItemService<
 	}
 
 	watchSpaceModuleRecord(spaceID: string): Observable<IIdAndOptionalDbo<Dto>> {
-		const logPrefix = `watchTeamModuleEntry(teamID=${spaceID}, moduleID=${this.moduleID})`;
+		const logPrefix = `SpaceModuleService.watchSpaceModuleRecord(spaceID=${spaceID}, moduleID=${this.moduleID})`;
 		console.log(logPrefix);
 		const collectionRef = collection(
 			this.spacesCollection,
 			spaceID,
 			'modules',
 		) as CollectionReference<Dto>;
+		if (this.moduleID === 'trackus') {
+			return throwError(() => new Error('test error'));
+		}
 		return this.sfs
 			.watchByID<Dto>(collectionRef, this.moduleID)
 			.pipe

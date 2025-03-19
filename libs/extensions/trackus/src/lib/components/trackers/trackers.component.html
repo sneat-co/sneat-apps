@@ -1,6 +1,6 @@
 <ion-card>
 	<ion-list>
-		@if ($trackers() === undefined) {
+		@if ($loading()) {
 			<ion-item>
 				<ion-spinner
 					color="medium"
@@ -8,6 +8,15 @@
 					slot="start"
 				></ion-spinner>
 				<ion-label color="medium">Loading...</ion-label>
+			</ion-item>
+		} @else if ($error()) {
+			<ion-item>
+				<ion-label color="danger">{{ $error() }}</ion-label>
+				<ion-buttons slot="end">
+					<ion-button color="danger" (click)="retry()" fill="solid"
+						>Retry</ion-button
+					>
+				</ion-buttons>
 			</ion-item>
 		} @else {
 			@for (tracker of $trackers(); track tracker.id) {

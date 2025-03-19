@@ -1,28 +1,25 @@
-import { Directive, OnInit, signal } from '@angular/core';
+import { Directive, Inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
 import { ILogger, SpaceType } from '@sneat/core';
 import { equalSpaceBriefs, ISpaceBrief, ISpaceDbo } from '@sneat/dto';
-import { ILogErrorOptions } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
 import {
 	SpaceService,
 	trackSpaceIdAndTypeFromRouteParameter,
 } from '@sneat/team-services';
 import { SneatUserService } from '@sneat/auth-core';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { distinctUntilChanged, Observable, shareReplay, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SpaceComponentBaseParams } from './space-component-base-params.service';
 
-// @Component({
-// 	selector: 'sneat-team-base-component',
-// 	standalone: true,
-// 	template: '',
-// }) // we need this decorator so we can implement Angular interfaces
-@Directive() /* abstract */
-export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
+@Directive() // The @Directive is required by Angular as we are implementing OnInit
+export abstract class SpaceBaseComponent
+	extends SneatBaseComponent
+	implements OnInit
+{
 	protected readonly $spaceID = signal<string | undefined>(undefined);
 	protected readonly spaceIDChanged = new Subject<string | undefined>();
 	protected readonly spaceTypeChanged = new Subject<SpaceType | undefined>();
@@ -61,25 +58,15 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 	// protected readonly willLeave = new Subject<void>();
 	protected defaultBackPage?: string;
 
-	protected readonly logError: (
-		e: unknown,
-		message?: string,
-		options?: ILogErrorOptions,
-	) => void;
-	protected readonly logErrorHandler: (
-		message?: string,
-		options?: ILogErrorOptions,
-	) => (error: unknown) => void;
-
 	public readonly spaceIDChanged$ = this.spaceIDChanged.asObservable().pipe(
-		takeUntil(this.destroyed$),
+		this.takeUntilDestroyed(),
 		distinctUntilChanged(),
 		// tap((id) => console.log(this.className + '=> spaceIDChanged$: ' + id)),
 	);
 
 	public readonly spaceTypeChanged$: Observable<SpaceType | undefined> =
 		this.spaceTypeChanged.pipe(
-			takeUntil(this.destroyed$),
+			this.takeUntilDestroyed(),
 			distinctUntilChanged(),
 			// tap(v => console.log('spaceTypeChanged$ before replay =>', v)),
 			shareReplay(1),
@@ -88,11 +75,11 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 
 	public readonly spaceBriefChanged$ = this.spaceBriefChanged
 		.asObservable()
-		.pipe(takeUntil(this.destroyed$), distinctUntilChanged(equalSpaceBriefs));
+		.pipe(this.takeUntilDestroyed(), distinctUntilChanged(equalSpaceBriefs));
 
 	public readonly spaceDboChanged$ = this.spaceDboChanged
 		.asObservable()
-		.pipe(takeUntil(this.destroyed$), distinctUntilChanged());
+		.pipe(this.takeUntilDestroyed(), distinctUntilChanged());
 
 	public get space(): ISpaceContext {
 		// TODO: Document why we do not allow undefined
@@ -118,15 +105,12 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 	}
 
 	protected constructor(
-		// we need this fake token so we can implement Angular interfaces
-		className: string,
+		@Inject(ClassName) className: string,
 		protected readonly route: ActivatedRoute,
 		protected readonly spaceParams: SpaceComponentBaseParams,
 	) {
 		super(className, spaceParams.errorLogger);
 		// console.log(`${className} extends TeamBasePageDirective.constructor()`);
-		this.logError = spaceParams.errorLogger.logError;
-		this.logErrorHandler = spaceParams.errorLogger.logErrorHandler;
 		try {
 			this.route = route;
 
@@ -153,7 +137,7 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 	}
 
 	// public ionViewWillLeave(): void {
-	// 	// console.log(`${this.className}.ionViewWillLeave()`);
+	// 	// console.log(`${this.className}:SpaceBaseComponent.ionViewWillLeave()`);
 	// 	this.willLeave.next();
 	// }
 
@@ -187,17 +171,14 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 
 	protected onSpaceIdChanged(): void {
 		this.console.log(
-			`${this.className}: SpaceBaseComponent.onSpaceIdChanged()`,
-			this.className,
-			this.space?.id,
+			`${this.className}:SpaceBaseComponent.onSpaceIdChanged() spaceID=${this.space?.id}`,
 		);
 	}
 
 	protected onSpaceDboChanged(): void {
 		this.console.log(
-			`${this.className}.onSpaceDboChanged()`,
-			this.className,
-			this.space?.dbo,
+			`${this.className}:SpaceBaseComponent.onSpaceDboChanged(): ` +
+				JSON.stringify(this.space.dbo),
 		);
 	}
 
@@ -228,7 +209,7 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 
 	private readonly onSpaceIdChangedInUrl = (space?: ISpaceContext): void => {
 		console.log(
-			`${this.className}.onSpaceIdChangedInUrl()`,
+			`${this.className}:SpaceBaseComponent.onSpaceIdChangedInUrl()`,
 			this.spaceContext?.id,
 			' => ',
 			space,
@@ -247,7 +228,10 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 	};
 
 	private subscribeForSpaceChanges(space: ISpaceContext): void {
-		this.console.log(`${this.className}.subscribeForSpaceChanges()`, space);
+		this.console.log(
+			`${this.className}:SpaceBaseComponent.subscribeForSpaceChanges()`,
+			space,
+		);
 		this.spaceService
 			.watchSpace(space)
 			.pipe(takeUntil(this.spaceIDChanged$), this.takeUntilDestroyed())
@@ -269,7 +253,7 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 	private getSpaceContextFromRouteState(): void {
 		const space = history.state?.team as ISpaceContext;
 		this.console.log(
-			`${this.className}.getSpaceContextFromRouteState()`,
+			`${this.className}:SpaceBaseComponent.getSpaceContextFromRouteState()`,
 			space,
 		);
 		if (!space?.id) {
@@ -309,7 +293,7 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 
 	private setNewSpaceContext(spaceContext?: ISpaceContext): void {
 		this.console.log(
-			`${this.className}.setNewSpaceContext(id=${spaceContext?.id}), previous id=${this.spaceContext?.id}`,
+			`${this.className}:SpaceBaseComponent.setNewSpaceContext(id=${spaceContext?.id}), previous id=${this.spaceContext?.id}`,
 			spaceContext,
 		);
 		if (!spaceContext?.type && this.spaceContext?.type) {
@@ -330,7 +314,7 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 		);
 		const dboChanged = this.spaceContext?.dbo != spaceContext?.dbo;
 		this.console.log(
-			`${this.className} extends SpaceBaseComponent.setNewSpaceContext(id=${spaceContext?.id}) => idChanged=${idChanged}, spaceTypeChanged=${spaceTypeChanged}, briefChanged=${briefChanged}, dtoChanged=${dboChanged}`,
+			`${this.className}:SpaceBaseComponent.setNewSpaceContext(id=${spaceContext?.id}) => idChanged=${idChanged}, spaceTypeChanged=${spaceTypeChanged}, briefChanged=${briefChanged}, dtoChanged=${dboChanged}`,
 		);
 		this.$spaceContext.set(spaceContext);
 		if (idChanged) {
@@ -417,7 +401,7 @@ export class SpaceBaseComponent extends SneatBaseComponent implements OnInit {
 	private readonly onSpaceContextChanged = (space: ISpaceContext): void => {
 		const dtoChanged = space.dbo !== this.spaceContext?.dbo;
 		this.console.log(
-			`${this.className}.onSpaceContextChanged() => dtoChanged=${dtoChanged}, space:`,
+			`${this.className}:SpaceBaseComponent.onSpaceContextChanged() => dtoChanged=${dtoChanged}, space:`,
 			space,
 		);
 		if (!space.brief && space.dbo) {

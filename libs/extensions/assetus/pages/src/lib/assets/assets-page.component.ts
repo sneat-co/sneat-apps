@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { AlertController, IonicModule } from '@ionic/angular';
@@ -34,22 +34,15 @@ import { AssetsBasePage } from '../assets-base.page';
 		ContactusServicesModule,
 		AssetusServicesModule,
 	],
-})
-export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewInit*/ {
+}) /*implements AfterViewInit*/
+export class AssetsPageComponent extends AssetsBasePage implements OnInit {
 	public vehicles?: IAssetContext[];
 
-	assetTypes: IAssetCategory[] = [
+	protected readonly assetTypes: IAssetCategory[] = [
 		{ id: 'vehicle', title: 'Vehicles', iconName: 'car-outline' },
 		{ id: 'dwelling', title: 'Real estates', iconName: 'home-outline' },
 	];
 
-	// ngOnInit(): void {
-	//     super.ngOnInit();
-	//     this.assetService.watchByCommuneId(this.communeRealId).subscribe(assets => {
-	//         this.assets = assets;
-	//         this.vehicles = assets.filter(a => a.categoryId === 'vehicles');
-	//     });
-	// }
 	public segment: 'all' | 'byCategory' = 'byCategory';
 
 	constructor(
@@ -60,7 +53,11 @@ export class AssetsPageComponent extends AssetsBasePage /*implements AfterViewIn
 		private readonly alertCtrl: AlertController,
 	) {
 		super('AssetsPageComponent', route, params, assetService);
-		this.spaceIDChanged$.subscribe({
+	}
+
+	override ngOnInit(): void {
+		super.ngOnInit();
+		this.spaceIDChanged$.pipe(this.takeUntilDestroyed()).subscribe({
 			next: () => this.watchSpaceAssets(),
 		});
 	}

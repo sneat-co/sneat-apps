@@ -5,12 +5,13 @@ import {
 	effect,
 	Inject,
 	input,
+	OnInit,
 	signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { IIdAndBrief } from '@sneat/core';
+import { IIdAndBrief, IIdAndOptionalDbo } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
 import { SneatBaseComponent } from '@sneat/ui';
@@ -20,6 +21,7 @@ import {
 	isStandardTracker,
 	ITrackerBrief,
 } from '../../dbo/i-tracker-dbo';
+import { ITrackusSpaceDbo } from '../../dbo/i-trackus-space-dbo';
 import {
 	TrackusApiService,
 	TrackusApiServiceModule,
@@ -41,11 +43,51 @@ import {
 	templateUrl: './trackers.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TrackersComponent extends SneatBaseComponent {
+export class TrackersComponent extends SneatBaseComponent implements OnInit {
 	public readonly $space = input.required<ISpaceContext>();
+
+	// This makes sure we react to distinct space ID values only
 	protected readonly $spaceID = computed(() => this.$space().id);
 
-	protected readonly $loading = signal<boolean>(true);
+	protected readonly $error = signal<string | undefined>(undefined);
+
+	private $retry = signal<number>(0);
+
+	private readonly watchTrackusSpace = () => {
+		this.trackersSub?.unsubscribe();
+		this.$error.set(undefined);
+		const spaceID = this.$spaceID();
+		if (!spaceID) {
+			return;
+		}
+		const retry = this.$retry();
+		if (retry) {
+			console.info(
+				`Attempt #${retry} to retry loading of trackus space record for spaceID=${spaceID},`,
+			);
+		}
+		this.$trackers.set(undefined);
+		this.trackersSub = this.trackusSpaceService
+			.watchSpaceModuleRecord(spaceID)
+			.pipe(this.takeUntilDestroyed())
+			.subscribe({
+				next: this.processTrackusSpace,
+				error: (err) => {
+					const errMsg = 'Failed to load tracker';
+					this.logError(err, errMsg, { show: !!retry });
+					this.$error.set(errMsg);
+					this.$trackers.set(undefined);
+				},
+			});
+	};
+
+	protected readonly $trackers = signal<
+		undefined | readonly IIdAndBrief<ITrackerBrief>[]
+	>(undefined);
+
+	protected readonly $loading = computed<boolean>(
+		() => !!this.$spaceID() && this.$trackers() === undefined && !this.$error(),
+	);
 
 	private trackersSub?: Subscription;
 
@@ -55,39 +97,31 @@ export class TrackersComponent extends SneatBaseComponent {
 		private readonly trackusApiService: TrackusApiService,
 	) {
 		super('TrackersComponent', errorLogger);
-		this.destroyed$.subscribe(effect(this.onTrackusSpaceChanged).destroy);
-		this.destroyed$.subscribe(() => this.trackersSub?.unsubscribe());
+		const watchTrackusSpaceEffect = effect(this.watchTrackusSpace);
+		this.destroyed$.subscribe(() => {
+			this.trackersSub?.unsubscribe();
+			watchTrackusSpaceEffect.destroy();
+		});
 	}
 
-	private readonly onTrackusSpaceChanged = () => {
-		this.trackersSub?.unsubscribe();
-		this.trackersSub = this.$trackusSpace()
-			.pipe(this.takeUntilDestroyed())
-			.subscribe({
-				next: (trackusSpace) => {
-					console.log('trackusSpace:', trackusSpace);
-					const trackers =
-						Object.entries(trackusSpace.dbo?.trackers || {}).map(
-							([id, brief]) => ({
-								id,
-								brief,
-							}),
-						) || [];
-					trackers.sort((a, b) =>
-						(a.brief.title || a.id).localeCompare(b.brief.title || b.id),
-					);
-					this.$trackers.set(trackers);
-					this.$loading.set(false);
-				},
-			});
-	};
+	ngOnInit(): void {
+		console.log('TrackersComponent.ngOnInit()');
+	}
 
-	private readonly $trackusSpace = computed(() => {
-		const spaceID = this.$spaceID();
-		console.log('TrackersComponent => spaceID changed:', spaceID);
-		this.trackersSub?.unsubscribe();
-		return this.trackusSpaceService.watchSpaceModuleRecord(spaceID);
-	});
+	private readonly processTrackusSpace = (
+		trackusSpace: IIdAndOptionalDbo<ITrackusSpaceDbo>,
+	) => {
+		console.log('trackusSpace: ' + JSON.stringify(trackusSpace));
+		const trackers =
+			Object.entries(trackusSpace.dbo?.trackers || {}).map(([id, brief]) => ({
+				id,
+				brief,
+			})) || [];
+		trackers.sort((a, b) =>
+			(a.brief.title || a.id).localeCompare(b.brief.title || b.id),
+		);
+		this.$trackers.set(trackers);
+	};
 
 	protected getTrackerTitle(tracker: IIdAndBrief<ITrackerBrief>): string {
 		if (tracker.brief.title) {
@@ -98,10 +132,6 @@ export class TrackersComponent extends SneatBaseComponent {
 		}
 		return tracker.id;
 	}
-
-	protected readonly $trackers = signal<
-		undefined | readonly IIdAndBrief<ITrackerBrief>[]
-	>(undefined);
 
 	protected archiveTracker(event: Event, trackerID: string): void {
 		event.stopPropagation();
@@ -115,5 +145,9 @@ export class TrackersComponent extends SneatBaseComponent {
 		}
 		const spaceID = this.$spaceID();
 		this.trackusApiService.archiveTracker({ spaceID, trackerID }).subscribe({});
+	}
+
+	protected retry(): void {
+		this.$retry.set(this.$retry() + 1);
 	}
 }

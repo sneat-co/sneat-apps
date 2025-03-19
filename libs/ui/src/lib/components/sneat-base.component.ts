@@ -1,6 +1,6 @@
 import { Inject, Injectable, InjectionToken, OnDestroy } from '@angular/core';
 import { createSetFocusToInput } from '@sneat/components';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger, ILogErrorOptions } from '@sneat/logging';
 import { MonoTypeOperatorFunction, Subject, Subscription, take } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -11,6 +11,8 @@ export interface IConsole {
 
 	trace(...data: unknown[]): void;
 }
+
+export const ClassName = new InjectionToken<string>('className');
 
 @Injectable()
 export abstract class SneatBaseComponent implements OnDestroy {
@@ -25,11 +27,16 @@ export abstract class SneatBaseComponent implements OnDestroy {
 
 	protected readonly console: IConsole = console;
 
+	protected readonly logError = this.errorLogger.logError;
+	protected readonly logErrorHandler = this.errorLogger.logErrorHandler;
+
 	protected constructor(
-		@Inject(new InjectionToken('className')) public readonly className: string,
+		@Inject(ClassName) public readonly className: string,
 		@Inject(ErrorLogger) protected readonly errorLogger: IErrorLogger,
 	) {
 		this.console.log(`${this.className}.SneatBaseComponent.constructor()`);
+		this.logError = errorLogger.logError;
+		this.logErrorHandler = errorLogger.logErrorHandler;
 	}
 
 	protected takeUntilDestroyed<T>(): MonoTypeOperatorFunction<T> {
