@@ -64,13 +64,13 @@ function logistSpaceDocRef(
 	);
 }
 
-export function logistSpaceModuleSubCollection<Dto>(
+export function logistSpaceModuleSubCollection<Dbo>(
 	afs: AngularFirestore,
 	spaceID: string,
 	collectionName: string,
-): CollectionReference<Dto> {
+): CollectionReference<Dbo> {
 	const moduleRef = logistSpaceDocRef(afs, spaceID);
-	return collection(moduleRef, collectionName) as CollectionReference<Dto>;
+	return collection(moduleRef, collectionName) as CollectionReference<Dbo>;
 }
 
 @NgModule({

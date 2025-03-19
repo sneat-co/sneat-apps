@@ -10,14 +10,8 @@ export function zipMapBriefsWithIDs<Brief>(
 	briefs?: Readonly<Record<string, Brief>>,
 ): readonly IIdAndBrief<Brief>[] {
 	return briefs
-		? Object.keys(briefs).map((id) => ({ id, brief: briefs[id] }))
+		? Object.entries(briefs).map(([id, brief]) => ({ id, brief }))
 		: [];
-}
-
-export function zipMapDTOsWithIDs<DTO>(
-	o?: Readonly<Record<string, DTO>>,
-): readonly IIdAndBrief<DTO>[] {
-	return o ? Object.keys(o).map((id) => ({ id, brief: o[id] })) : [];
 }
 
 export interface ISpaceContext

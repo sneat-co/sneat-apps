@@ -12,9 +12,9 @@ import { ModuleSpaceItemService } from './space-item.service';
 // import firebase from "firebase/compat";
 // import Item = firebase.analytics.Item;
 
-export abstract class SpaceModuleService<Dto> extends ModuleSpaceItemService<
-	Dto,
-	Dto
+export abstract class SpaceModuleService<Dbo> extends ModuleSpaceItemService<
+	Dbo,
+	Dbo
 > {
 	// protected readonly sfs: SneatFirestoreService<Brief, Dto>;
 
@@ -23,19 +23,19 @@ export abstract class SpaceModuleService<Dto> extends ModuleSpaceItemService<
 		super(moduleID, 'modules', afs, undefined as unknown as SneatApiService);
 	}
 
-	watchSpaceModuleRecord(spaceID: string): Observable<IIdAndOptionalDbo<Dto>> {
+	watchSpaceModuleRecord(spaceID: string): Observable<IIdAndOptionalDbo<Dbo>> {
 		const logPrefix = `SpaceModuleService.watchSpaceModuleRecord(spaceID=${spaceID}, moduleID=${this.moduleID})`;
 		console.log(logPrefix);
 		const collectionRef = collection(
 			this.spacesCollection,
 			spaceID,
 			'modules',
-		) as CollectionReference<Dto>;
+		) as CollectionReference<Dbo>;
 		// if (this.moduleID === 'trackus') {
 		// 	return throwError(() => new Error('test error'));
 		// }
 		return this.sfs
-			.watchByID<Dto>(collectionRef, this.moduleID)
+			.watchByID<Dbo>(collectionRef, this.moduleID)
 			.pipe
 			// tap((o) => console.log(`${logPrefix} =>`, o)),
 			();
@@ -43,7 +43,7 @@ export abstract class SpaceModuleService<Dto> extends ModuleSpaceItemService<
 
 	watchBriefs<ItemBrief>(
 		spaceID: string,
-		getBriefs: (dto?: Dto) => Readonly<Record<string, ItemBrief>>,
+		getBriefs: (dto?: Dbo) => Readonly<Record<string, ItemBrief>>,
 	): Observable<IIdAndBrief<ItemBrief>[]> {
 		const o = this.watchSpaceModuleRecord(spaceID);
 		return o.pipe(
