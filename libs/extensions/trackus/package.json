@@ -9,7 +9,7 @@
 		"@ionic/angular": "8.5.1",
 		"rxjs": "7.8.2",
 		"jest-preset-angular": "14.5.3",
-		"@firebase/firestore": "4.7.9",
+		"@firebase/firestore": "4.7.10",
 		"@sneat/core": "workspace:*",
 		"@sneat/logging": "workspace:*",
 		"@sneat/team-models": "workspace:*",
