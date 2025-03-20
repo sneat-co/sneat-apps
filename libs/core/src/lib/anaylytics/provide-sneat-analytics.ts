@@ -1,4 +1,4 @@
-import { Analytics } from '@angular/fire/analytics';
+import { Analytics, getAnalytics } from '@angular/fire/analytics';
 import { FirebaseApp } from '@angular/fire/app';
 import { IEnvironmentConfig } from '../environment-config';
 import { AnalyticsService, IAnalyticsService } from './analytics.interface';
@@ -41,7 +41,7 @@ export function provideSneatAnalytics(
 			// Analytics,
 			[new Optional(), Analytics],
 		],
-		useFactory: (errorLogger: IErrorLogger, analytics: Analytics) => {
+		useFactory: (errorLogger: IErrorLogger, fbApp: FirebaseApp) => {
 			const config = getAnalyticsConfig(environmentConfig);
 			console.log(`provideSneatAnalytics(), config: ${JSON.stringify(config)}`);
 			const as: IAnalyticsService[] = [];
@@ -49,6 +49,7 @@ export function provideSneatAnalytics(
 				as.push(new PosthogAnalyticsService(errorLogger));
 			}
 			if (config?.addFirebaseAnalytics) {
+				const analytics = getAnalytics(fbApp);
 				if (analytics) {
 					as.push(new FireAnalyticsService(errorLogger, analytics));
 				} else {
