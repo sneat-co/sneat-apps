@@ -21,6 +21,12 @@ export function getStandardSneatProviders(
 		'getStandardSneatProviders(), environmentConfig:' +
 			JSON.stringify(environmentConfig, undefined, '\t'),
 	);
+
+	const useAnalytics =
+		location.host === 'sneat.app' || location.protocol === 'https:';
+
+	const firebaseMeasurementId = environmentConfig.firebaseConfig?.measurementId;
+
 	return [
 		provideHttpClient(),
 		{ provide: LOGGER_FACTORY, useValue: loggerFactory },
@@ -42,7 +48,13 @@ export function getStandardSneatProviders(
 			provide: RANDOM_ID_OPTIONS,
 			useValue: { len: 9 },
 		},
-		provideSneatAnalytics(),
-		AppComponentService,
+		provideSneatAnalytics({
+			addPosthog: useAnalytics && !!environmentConfig.posthog?.posthogKey,
+			addFirebaseAnalytics:
+				useAnalytics &&
+				!!firebaseMeasurementId &&
+				firebaseMeasurementId !== 'G-PROVIDE_IF_NEEDED',
+		}),
+		AppComponentService, // TODO: check if it's used and probably remove
 	];
 }

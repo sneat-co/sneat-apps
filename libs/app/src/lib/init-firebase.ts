@@ -20,7 +20,7 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 export function getAngularFireProviders(firebaseConfig: IFirebaseConfig) {
 	// console.log('ImportFirebaseModules');
-	return [
+	const providers = [
 		provideFirebaseApp(() => initFirebase(firebaseConfig)),
 		provideFirestore((injector) => {
 			console.log('AngularFire: provideFirestore');
@@ -65,11 +65,16 @@ export function getAngularFireProviders(firebaseConfig: IFirebaseConfig) {
 			}
 			return auth;
 		}),
-		provideAnalytics(() => {
-			console.log('AngularFire: provideAnalytics');
-			return getAnalytics();
-		}),
 	];
+	if (firebaseConfig?.measurementId !== 'G-PROVIDE_IF_NEEDED') {
+		providers.push(
+			provideAnalytics(() => {
+				console.log('AngularFire: provideAnalytics');
+				return getAnalytics();
+			}),
+		);
+	}
+	return providers;
 }
 
 function initFirebase(firebaseConfig: IFirebaseConfig): FirebaseApp {

@@ -33,12 +33,14 @@ export const firebaseEmulatorConfig: IFirebaseEmulatorConfig = {
 			: nonSecureEmulatorHost,
 };
 
+export const notNeededForEmulator = 'not-needed-for-emulator';
+
 const firebaseConfig: IFirebaseConfig = {
 	emulator: firebaseEmulatorConfig,
-	apiKey: 'not-needed-for-emulator',
+	apiKey: notNeededForEmulator,
 	authDomain: 'sneat.app',
 	projectId: 'local-sneat-app', // The 'demo-' prefix is added if useEmulators is true
-	appId: 'not-needed-for-emulator',
+	appId: notNeededForEmulator,
 	measurementId: 'G-PROVIDE_IF_NEEDED',
 };
 

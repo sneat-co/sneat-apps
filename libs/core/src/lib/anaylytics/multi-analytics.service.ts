@@ -8,9 +8,10 @@ const prefix = 'MultiAnalyticsService.';
 
 export class MultiAnalyticsService implements IAnalyticsService {
 	constructor(private readonly as: readonly IAnalyticsService[]) {
-		if (!as || as.length === 0) {
-			throw new Error('No analytics services provided');
-		}
+		console.log(
+			prefix +
+				`.constructor() as=[${as.map((a) => a.constructor.name).join(',')}]`,
+		);
 	}
 
 	public identify(
