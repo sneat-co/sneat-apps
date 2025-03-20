@@ -97,11 +97,17 @@ export class SneatAuthStateService {
 	) {
 		console.log(`SneatAuthStateService.constructor(): id=${this.id}`);
 		this.fbAuth.onIdTokenChanged({
-			next: (fbUser) => {
-				const status: AuthStatus = fbUser
+			next: (firebaseUser) => {
+				const status: AuthStatus = firebaseUser
 					? AuthStatuses.authenticated
 					: AuthStatuses.notAuthenticated;
-				fbUser
+				if (
+					firebaseUser &&
+					this.authState$.value?.user?.uid !== firebaseUser?.uid
+				) {
+					this.analyticsService.identify(firebaseUser.uid);
+				}
+				firebaseUser
 					?.getIdToken()
 					.then((token) => {
 						const current = this.authState$.value || {};

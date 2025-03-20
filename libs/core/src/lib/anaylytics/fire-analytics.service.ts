@@ -1,13 +1,13 @@
 import { Inject, Injectable, Optional } from '@angular/core';
+import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import firebase from 'firebase/compat';
 import {
 	IAnalyticsCallOptions,
 	IAnalyticsService,
+	UserProperties,
 } from './analytics.interface';
-import {
-	Analytics as AngularFireAnalytics,
-	logEvent,
-} from '@angular/fire/analytics';
+import CustomParams = firebase.analytics.CustomParams;
 
 // const logErrOptions: ILogErrorOptions = { show: false, feedback: false };
 
@@ -15,7 +15,7 @@ import {
 export class FireAnalyticsService implements IAnalyticsService {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		@Optional() private readonly angularFireAnalytics?: AngularFireAnalytics,
+		private readonly angularFireAnalytics: AngularFireAnalytics,
 	) {}
 
 	public logEvent(
@@ -23,9 +23,7 @@ export class FireAnalyticsService implements IAnalyticsService {
 		eventParams?: Record<string, unknown>,
 		options?: IAnalyticsCallOptions,
 	): void {
-		if (this.angularFireAnalytics) {
-			logEvent(this.angularFireAnalytics, eventName, eventParams, options);
-		}
+		this.angularFireAnalytics.logEvent(eventName, eventParams, options);
 	}
 
 	public setCurrentScreen(
@@ -35,5 +33,30 @@ export class FireAnalyticsService implements IAnalyticsService {
 		console.log(screenName, options);
 		// setCurrentScreen
 		// logEvent(this.angularFireAnalytics, 'screen_view', {'screenName': screenName}, options);
+	}
+
+	private readonly logError = this.errorLogger.logErrorHandler;
+
+	public identify(
+		userID: string,
+		userPropertiesToSet?: UserProperties,
+		userPropertiesToSetOnce?: UserProperties,
+	): void {
+		this.angularFireAnalytics
+			?.setUserId(userID)
+			.catch(this.logError('failed to set user id in Firebase analytics'));
+		if (userPropertiesToSetOnce) {
+			this.angularFireAnalytics
+				?.setUserProperties(userPropertiesToSet as CustomParams)
+				.catch(
+					this.logError('failed to set user properties in Firebase analytics'),
+				);
+		}
+	}
+
+	public loggedOut() {
+		this.angularFireAnalytics
+			.setUserId(null as unknown as string)
+			.catch(this.logError('failed to logout user in Firebase analytics'));
 	}
 }

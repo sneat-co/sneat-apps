@@ -14,6 +14,7 @@ import posthog from 'posthog-js';
 
 if (sneatAppEnvironmentConfig.posthog) {
 	posthog.init(sneatAppEnvironmentConfig.posthog.posthogKey, {
+		autocapture: true,
 		api_host: sneatAppEnvironmentConfig.posthog.posthogHost,
 		person_profiles: sneatAppEnvironmentConfig.posthog.person_profiles, // or 'always' to create profiles for anonymous users as well
 	});

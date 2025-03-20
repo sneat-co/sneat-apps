@@ -6,7 +6,6 @@ import { Capacitor } from '@capacitor/core';
 import { IonicModule, NavController } from '@ionic/angular';
 import {
 	AuthProviderID,
-	AuthProviderName,
 	AuthStatuses,
 	ILoginEventsHandler,
 	ISneatAuthState,

@@ -5,15 +5,25 @@ export interface IAnalyticsCallOptions {
 	global: boolean;
 }
 
+export type UserProperties = Record<string, unknown>;
+
 /*
  * An interface for analytics service
  */
 export interface IAnalyticsService {
 	logEvent(
 		eventName: string,
-		eventParams?: Record<string, unknown>,
+		eventParams?: Readonly<Record<string, unknown>>,
 		options?: IAnalyticsCallOptions,
 	): void;
+
+	identify(
+		userID: string,
+		userPropertiesToSet?: UserProperties,
+		userPropertiesToSetOnce?: UserProperties,
+	): void;
+
+	loggedOut(): void;
 
 	setCurrentScreen(screenName: string, options?: IAnalyticsCallOptions): void;
 }
