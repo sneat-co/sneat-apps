@@ -4,19 +4,23 @@ import {
 	UserProperties,
 } from './analytics.interface';
 
+const prefix = 'MultiAnalyticsService.';
+
 export class MultiAnalyticsService implements IAnalyticsService {
-	constructor(
-		private readonly analyticsServices: readonly IAnalyticsService[],
-	) {}
+	constructor(private readonly as: readonly IAnalyticsService[]) {
+		if (!as || as.length === 0) {
+			throw new Error('No analytics services provided');
+		}
+	}
 
 	public identify(
 		userID: string,
-		userPropertiesToSet?: UserProperties,
-		userPropertiesToSetOnce?: UserProperties,
+		userPropsToSet?: UserProperties,
+		userPropsToSetOnce?: UserProperties,
 	): void {
-		console.log(`MultiAnalyticsService.identify(userID=${userID})`);
-		this.analyticsServices.forEach((as) =>
-			as.identify(userID, userPropertiesToSet, userPropertiesToSetOnce),
+		console.log(prefix + `identify(userID=${userID})`);
+		this.as.forEach((as) =>
+			setTimeout(() => as.identify(userID, userPropsToSet, userPropsToSetOnce)),
 		);
 	}
 
@@ -25,9 +29,9 @@ export class MultiAnalyticsService implements IAnalyticsService {
 		eventParams?: Readonly<Record<string, unknown>>,
 		options?: IAnalyticsCallOptions,
 	): void {
-		console.log(`MultiAnalyticsService.logEvent(eventName=${eventName})`);
-		this.analyticsServices.forEach((as) =>
-			as.logEvent(eventName, eventParams, options),
+		console.log(prefix + `logEvent(eventName=${eventName})`);
+		this.as.forEach((as) =>
+			setTimeout(() => as.logEvent(eventName, eventParams, options)),
 		);
 	}
 
@@ -35,16 +39,12 @@ export class MultiAnalyticsService implements IAnalyticsService {
 		screenName: string,
 		options?: IAnalyticsCallOptions,
 	): void {
-		console.log(
-			`MultiAnalyticsService.setCurrentScreen(screenName=${screenName})`,
-		);
-		this.analyticsServices.forEach((as) =>
-			as.setCurrentScreen(screenName, options),
-		);
+		console.log(prefix + `setCurrentScreen(screenName=${screenName})`);
+		this.as.forEach((as) => as.setCurrentScreen(screenName, options));
 	}
 
 	public loggedOut(): void {
-		console.log('MultiAnalyticsService.loggedOut()');
-		this.analyticsServices.forEach((as) => as.loggedOut());
+		console.log(prefix + 'loggedOut()');
+		this.as.forEach((as) => setTimeout(() => as.loggedOut()));
 	}
 }
