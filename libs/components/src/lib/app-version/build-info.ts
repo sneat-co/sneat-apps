@@ -1,7 +1,8 @@
 export const buildInfo: {
+	// TODO: Needs pre-commit hook to check gitHash and buildTimestamp are NOT changed.
 	readonly gitHash: string;
 	readonly buildTimestamp: string;
 } = {
-	gitHash: '5b97f5f87916e995254c3d6f2e72b88ab394c4a4',
-	buildTimestamp: '2025-03-20 07:31:48',
+	gitHash: 'gitHash t0be$et',
+	buildTimestamp: 'timestamp t0be$et',
 };
