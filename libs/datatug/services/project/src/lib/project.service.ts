@@ -1,9 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-// import {
-// 	AngularFirestore,
-// 	AngularFirestoreCollection,
-// } from '@angular/fire/compat/firestore';
 import { getStoreUrl, SneatApiServiceFactory } from '@sneat/api';
 import { PrivateTokenStoreService } from '@sneat/auth-core';
 import {
