@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import {
+	getStandardSneatImports,
 	getStandardSneatProviders,
 	provideAppInfo,
 	provideRolesByType,
-	SneatApplicationModule,
 } from '@sneat/app';
 import { provideSentryAppInitializer } from '@sneat/logging';
 import { SpacesMenuComponent } from '@sneat/team-components';
@@ -20,10 +20,12 @@ if (sneatAppEnvironmentConfig.posthog) {
 	});
 }
 
+console.log('sneatAppEnvironmentConfig:', sneatAppEnvironmentConfig);
+
 @NgModule({
 	declarations: [SneatAppComponent],
 	imports: [
-		...SneatApplicationModule.defaultSneatApplicationImports(),
+		...getStandardSneatImports(),
 		SpacesMenuComponent,
 		SneatAppRoutingModule,
 		// HttpClientModule, // This is needed so we can define HTTP_INTERCEPTORS

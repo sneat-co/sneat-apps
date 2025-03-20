@@ -1,6 +1,11 @@
-import { Inject, Injectable, Optional } from '@angular/core';
-import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { Inject, Injectable } from '@angular/core';
+import {
+	Analytics,
+	logEvent,
+	setUserId,
+	setUserProperties,
+} from '@angular/fire/analytics';
+import { ErrorLogger, IErrorLogger, ILogErrorOptions } from '@sneat/logging';
 import firebase from 'firebase/compat';
 import {
 	IAnalyticsCallOptions,
@@ -9,54 +14,73 @@ import {
 } from './analytics.interface';
 import CustomParams = firebase.analytics.CustomParams;
 
-// const logErrOptions: ILogErrorOptions = { show: false, feedback: false };
+const logErrOptions: ILogErrorOptions = { show: false, feedback: false };
 
 @Injectable()
 export class FireAnalyticsService implements IAnalyticsService {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly angularFireAnalytics: AngularFireAnalytics,
-	) {}
+		private readonly analytics: Analytics,
+	) {
+		if (!errorLogger) {
+			console.error(`FireAnalyticsService() - !errorLogger`);
+		}
+		if (!analytics) {
+			console.error(`FireAnalyticsService() - !analytics`);
+		}
+	}
+
+	private readonly logError = (e: unknown, m: string) =>
+		this.errorLogger.logError(e, m, logErrOptions);
 
 	public logEvent(
 		eventName: string,
 		eventParams?: Record<string, unknown>,
 		options?: IAnalyticsCallOptions,
 	): void {
-		this.angularFireAnalytics.logEvent(eventName, eventParams, options);
+		try {
+			logEvent(this.analytics, eventName, eventParams, options);
+		} catch (e) {
+			this.logError(e, 'Failed to log event to Firebase analytics');
+		}
 	}
 
 	public setCurrentScreen(
 		screenName: string,
 		options?: IAnalyticsCallOptions,
 	): void {
-		console.log(screenName, options);
-		// setCurrentScreen
-		// logEvent(this.angularFireAnalytics, 'screen_view', {'screenName': screenName}, options);
+		try {
+			const args = { screenName: screenName };
+			logEvent(this.analytics, '$screen_view', args, options);
+		} catch (e) {
+			this.logError(e, 'Failed to log screen view to Firebase analytics');
+		}
 	}
-
-	private readonly logError = this.errorLogger.logErrorHandler;
 
 	public identify(
 		userID: string,
 		userPropertiesToSet?: UserProperties,
 		userPropertiesToSetOnce?: UserProperties,
 	): void {
-		this.angularFireAnalytics
-			?.setUserId(userID)
-			.catch(this.logError('failed to set user id in Firebase analytics'));
+		try {
+			setUserId(this.analytics, userID);
+		} catch (e) {
+			this.logError(e, 'Failed to set user id in Firebase analytics');
+		}
 		if (userPropertiesToSetOnce) {
-			this.angularFireAnalytics
-				?.setUserProperties(userPropertiesToSet as CustomParams)
-				.catch(
-					this.logError('failed to set user properties in Firebase analytics'),
-				);
+			try {
+				setUserProperties(this.analytics, userPropertiesToSet as CustomParams);
+			} catch (e) {
+				this.logError(e, 'Failed to set user props in Firebase analytics');
+			}
 		}
 	}
 
-	public loggedOut() {
-		this.angularFireAnalytics
-			.setUserId(null as unknown as string)
-			.catch(this.logError('failed to logout user in Firebase analytics'));
+	public loggedOut(): void {
+		try {
+			setUserId(this.analytics, null);
+		} catch (e) {
+			this.logError(e, 'Failed to logout user from Firebase analytics');
+		}
 	}
 }

@@ -8,7 +8,6 @@ export * from './sneat-enum-keys';
 export * from './services';
 export * from './exclude-undefined';
 export * from './logging';
-export * from './core-providers';
 export * from './utils';
 export * from './eq';
 export * from './sneat-extensions';

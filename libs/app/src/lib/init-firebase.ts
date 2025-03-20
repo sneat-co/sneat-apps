@@ -1,4 +1,5 @@
 import { Type } from '@angular/core';
+import { getAnalytics, provideAnalytics } from '@angular/fire/analytics';
 import {
 	Auth,
 	connectAuthEmulator,
@@ -64,14 +65,14 @@ export function getAngularFireProviders(firebaseConfig: IFirebaseConfig) {
 			}
 			return auth;
 		}),
-		// provideAnalytics(() => {
-		// 	console.log('AngularFire: provideAnalytics');
-		// 	return getAnalytics();
-		// })
+		provideAnalytics(() => {
+			console.log('AngularFire: provideAnalytics');
+			return getAnalytics();
+		}),
 	];
 }
 
-export function initFirebase(firebaseConfig: IFirebaseConfig): FirebaseApp {
+function initFirebase(firebaseConfig: IFirebaseConfig): FirebaseApp {
 	console.log(
 		'initFirebase()' +
 			(firebaseConfig.emulator ? ' - using firebase emulators' : ''),

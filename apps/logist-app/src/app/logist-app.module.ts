@@ -4,8 +4,8 @@ import { DefaultSneatAppApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
 import {
 	CONTACT_ROLES_BY_TYPE,
 	ContactRolesByType,
+	getStandardSneatImports,
 	getStandardSneatProviders,
-	SneatApplicationModule,
 } from '@sneat/app';
 import { AuthMenuItemComponent } from '@sneat/components';
 import { APP_INFO, IAppInfo } from '@sneat/core';
@@ -90,8 +90,7 @@ const contactRolesByType: ContactRolesByType = {
 
 @NgModule({
 	imports: [
-		BrowserAnimationsModule,
-		SneatApplicationModule.defaultSneatApplicationImports(),
+		...getStandardSneatImports(),
 		// SneatAuthServicesModule,
 		AuthMenuItemComponent,
 		SpacesMenuComponent,
