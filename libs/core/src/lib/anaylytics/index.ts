@@ -1,2 +1,2 @@
-export * from './sneat-analytics.module';
+export * from './provide-sneat-analytics';
 export * from './analytics.interface';

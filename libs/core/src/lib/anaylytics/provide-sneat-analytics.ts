@@ -13,7 +13,7 @@ export interface IAnalyticsConfig {
 	addFirebaseAnalytics?: boolean;
 }
 
-export function getAnalyticsConfig(
+function getAnalyticsConfig(
 	environmentConfig: IEnvironmentConfig,
 ): IAnalyticsConfig {
 	const useAnalytics =
@@ -30,8 +30,9 @@ export function getAnalyticsConfig(
 	};
 }
 
-export function provideSneatAnalytics(config: IAnalyticsConfig): Provider {
-	console.log(`provideSneatAnalytics(), config: ${JSON.stringify(config)}`);
+export function provideSneatAnalytics(
+	environmentConfig: IEnvironmentConfig,
+): Provider {
 	return {
 		provide: AnalyticsService,
 		deps: [
@@ -41,6 +42,8 @@ export function provideSneatAnalytics(config: IAnalyticsConfig): Provider {
 			[new Optional(), Analytics],
 		],
 		useFactory: (errorLogger: IErrorLogger, analytics: Analytics) => {
+			const config = getAnalyticsConfig(environmentConfig);
+			console.log(`provideSneatAnalytics(), config: ${JSON.stringify(config)}`);
 			const as: IAnalyticsService[] = [];
 			if (config?.addPosthog) {
 				as.push(new PosthogAnalyticsService(errorLogger));
