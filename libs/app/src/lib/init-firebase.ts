@@ -69,10 +69,20 @@ export function getAngularFireProviders(firebaseConfig: IFirebaseConfig) {
 	if (firebaseConfig?.measurementId !== 'G-PROVIDE_IF_NEEDED') {
 		providers.push(
 			provideAnalytics((injector) => {
-				// console.log('AngularFire: provideAnalytics');
-				return getAnalytics(
-					injector.get<FirebaseApp>(FirebaseApp as Type<FirebaseApp>),
+				const fbApp = injector.get<FirebaseApp>(
+					FirebaseApp as Type<FirebaseApp>,
 				);
+				const fbAnalytics = getAnalytics(fbApp);
+				console.log(
+					'AngularFire: provideAnalytics() => ',
+					'fbApp:',
+					fbApp,
+					'fbAnalytics:',
+					fbAnalytics,
+					'fbAnalytics.app:',
+					fbAnalytics.app,
+				);
+				return fbAnalytics;
 			}),
 		);
 	}
