@@ -6,7 +6,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { FireAnalyticsService } from './fire-analytics.service';
 import { MultiAnalyticsService } from './multi-analytics.service';
 import { PosthogAnalyticsService } from './posthog-analytics.service';
-import { Optional, Provider } from '@angular/core';
+import { Provider } from '@angular/core';
 
 export interface IAnalyticsConfig {
 	addPosthog?: boolean;
@@ -38,8 +38,7 @@ export function provideSneatAnalytics(
 		deps: [
 			ErrorLogger,
 			FirebaseApp,
-			// Analytics,
-			[new Optional(), Analytics],
+			// [new Optional(), Analytics], // TODO: The received Analytics instance does not have app property :(
 		],
 		useFactory: (errorLogger: IErrorLogger, fbApp: FirebaseApp) => {
 			const config = getAnalyticsConfig(environmentConfig);
@@ -49,7 +48,7 @@ export function provideSneatAnalytics(
 				as.push(new PosthogAnalyticsService(errorLogger));
 			}
 			if (config?.addFirebaseAnalytics) {
-				const analytics = getAnalytics(fbApp);
+				const analytics: Analytics = fbApp && getAnalytics(fbApp); // Ideally we would want to get it from the DI
 				if (analytics) {
 					as.push(new FireAnalyticsService(errorLogger, analytics));
 				} else {
