@@ -21,6 +21,7 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 export function provideFireApp(firebaseConfig: IFirebaseConfig) {
 	return provideFirebaseApp(() => initFirebase(firebaseConfig));
 }
+
 export function getAngularFireProviders(
 	firebaseConfig: IFirebaseConfig,
 ): EnvironmentProviders[] {
@@ -72,19 +73,18 @@ export function getAngularFireProviders(
 	];
 	if (firebaseConfig?.measurementId !== 'G-PROVIDE_IF_NEEDED') {
 		providers.push(
-			provideAnalytics((injector) => {
-				const fbApp = injector.get<FirebaseApp>(
-					FirebaseApp as Type<FirebaseApp>,
-				);
-				const fbAnalytics = getAnalytics(fbApp);
+			provideAnalytics(() => {
+				// const fbApp = injector.get<FirebaseApp>(
+				// 	FirebaseApp as Type<FirebaseApp>,
+				// );
+				// const fbAnalytics = getAnalytics(fbApp);
+				const fbAnalytics = getAnalytics();
 				console.log(
 					'AngularFire: provideAnalytics() => ',
-					'fbApp:',
-					fbApp,
+					// 'fbApp:',
+					// fbApp,
 					'fbAnalytics:',
 					fbAnalytics,
-					'fbAnalytics.app:',
-					fbAnalytics.app,
 				);
 				return fbAnalytics;
 			}),

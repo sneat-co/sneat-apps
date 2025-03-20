@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicModule } from '@ionic/angular';
-import { APP_INFO, IAppInfo } from '@sneat/core';
+import { APP_INFO, EnvConfigToken, IAppInfo } from '@sneat/core';
 import { DatatugAppComponent } from './datatug-app.component';
 import { DatatugAppRoutingModule } from './datatug-app-routing.module';
-import { EnvConfigToken, getStandardSneatProviders } from '@sneat/app';
+import { getStandardSneatProviders } from '@sneat/app';
 import { CommonModule } from '@angular/common';
 import { WormholeModule } from '@sneat/wormhole';
 import { HelloWorldPageComponent } from './hello-world-page.component';

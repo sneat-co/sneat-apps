@@ -4,7 +4,6 @@ import { RouteReuseStrategy } from '@angular/router';
 import { IonicRouteStrategy } from '@ionic/angular';
 import { DefaultSneatAppApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
 import {
-	getAnalyticsConfig,
 	LOGGER_FACTORY,
 	loggerFactory,
 	provideSneatAnalytics,
@@ -17,6 +16,7 @@ import { RANDOM_ID_OPTIONS } from '@sneat/random';
 import { AppComponentService } from './app-component.service';
 import { IEnvironmentConfig } from '@sneat/core';
 import { getAngularFireProviders } from './init-firebase';
+
 // import { getAngularFireImports } from './init-firebase';
 
 export function getStandardSneatProviders(
@@ -49,7 +49,7 @@ export function getStandardSneatProviders(
 			useValue: { len: 9 },
 		},
 		getAngularFireProviders(environmentConfig.firebaseConfig),
-		provideSneatAnalytics(getAnalyticsConfig(environmentConfig)),
+		provideSneatAnalytics(environmentConfig),
 		AppComponentService, // TODO: check if it's used and probably remove
 	];
 }

@@ -1,4 +1,4 @@
-import { Analytics } from '@angular/fire/analytics';
+import { Analytics, getAnalytics } from '@angular/fire/analytics';
 import { FirebaseApp } from '@angular/fire/app';
 import { IEnvironmentConfig } from '../environment-config';
 import { AnalyticsService, IAnalyticsService } from './analytics.interface';
@@ -6,14 +6,14 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { FireAnalyticsService } from './fire-analytics.service';
 import { MultiAnalyticsService } from './multi-analytics.service';
 import { PosthogAnalyticsService } from './posthog-analytics.service';
-import { Optional, Provider } from '@angular/core';
+import { Provider } from '@angular/core';
 
 export interface IAnalyticsConfig {
 	addPosthog?: boolean;
 	addFirebaseAnalytics?: boolean;
 }
 
-export function getAnalyticsConfig(
+function getAnalyticsConfig(
 	environmentConfig: IEnvironmentConfig,
 ): IAnalyticsConfig {
 	const useAnalytics =
@@ -30,22 +30,25 @@ export function getAnalyticsConfig(
 	};
 }
 
-export function provideSneatAnalytics(config: IAnalyticsConfig): Provider {
-	console.log(`provideSneatAnalytics(), config: ${JSON.stringify(config)}`);
+export function provideSneatAnalytics(
+	environmentConfig: IEnvironmentConfig,
+): Provider {
 	return {
 		provide: AnalyticsService,
 		deps: [
 			ErrorLogger,
 			FirebaseApp,
-			// Analytics,
-			[new Optional(), Analytics],
+			// [new Optional(), Analytics], // TODO: The received Analytics instance does not have app property :(
 		],
-		useFactory: (errorLogger: IErrorLogger, analytics: Analytics) => {
+		useFactory: (errorLogger: IErrorLogger, fbApp: FirebaseApp) => {
+			const config = getAnalyticsConfig(environmentConfig);
+			console.log(`provideSneatAnalytics(), config: ${JSON.stringify(config)}`);
 			const as: IAnalyticsService[] = [];
 			if (config?.addPosthog) {
 				as.push(new PosthogAnalyticsService(errorLogger));
 			}
 			if (config?.addFirebaseAnalytics) {
+				const analytics: Analytics = fbApp && getAnalytics(fbApp); // Ideally we would want to get it from the DI
 				if (analytics) {
 					as.push(new FireAnalyticsService(errorLogger, analytics));
 				} else {
