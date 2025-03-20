@@ -4,7 +4,7 @@
 	"peerDependencies": {
 		"@angular/common": "^19.2.0",
 		"@angular/core": "^19.2.0",
-		"@angular/router": "19.2.2",
+		"@angular/router": "19.2.3",
 		"@angular/fire": "19.0.0",
 		"@ionic/angular": "8.5.1",
 		"rxjs": "7.8.2",
