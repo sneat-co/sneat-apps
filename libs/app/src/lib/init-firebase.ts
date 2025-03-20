@@ -1,4 +1,4 @@
-import { Type } from '@angular/core';
+import { EnvironmentProviders, Type } from '@angular/core';
 import { getAnalytics, provideAnalytics } from '@angular/fire/analytics';
 import {
 	Auth,
@@ -9,7 +9,7 @@ import {
 } from '@angular/fire/auth';
 import { connectFirestoreEmulator } from '@angular/fire/firestore';
 import { Capacitor } from '@capacitor/core';
-import { IFirebaseConfig } from './environment-config';
+import { IFirebaseConfig } from '@sneat/core';
 import {
 	provideFirebaseApp,
 	initializeApp,
@@ -18,8 +18,12 @@ import {
 import { getAuth } from 'firebase/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
-export function getAngularFireProviders(firebaseConfig: IFirebaseConfig) {
-	// console.log('ImportFirebaseModules');
+export function provideFireApp(firebaseConfig: IFirebaseConfig) {
+	return provideFirebaseApp(() => initFirebase(firebaseConfig));
+}
+export function getAngularFireProviders(
+	firebaseConfig: IFirebaseConfig,
+): EnvironmentProviders[] {
 	const providers = [
 		provideFirebaseApp(() => initFirebase(firebaseConfig)),
 		provideFirestore((injector) => {

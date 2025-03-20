@@ -1,4 +1,4 @@
-import { IEnvironmentConfig } from './environment-config';
+import { IEnvironmentConfig } from '@sneat/core';
 
 function firebaseApiKey(useEmulators: boolean, apiKey: string): string {
 	return useEmulators ? 'emulator-does-not-need-api-key' : apiKey;

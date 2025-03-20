@@ -1,8 +1,7 @@
 // Main entry point for the Sneat.app
 
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { SneatAppModule } from './app/sneat-app.module';
+import { bootstrapAsModuleApp } from './main-module.app';
+bootstrapAsModuleApp();
 
-platformBrowserDynamic()
-	.bootstrapModule(SneatAppModule)
-	.catch((err) => console.error(err));
+// import { bootstrapAsStandaloneApp } from './main-standalone.app';
+// bootstrapAsStandaloneApp();

@@ -17,3 +17,4 @@ export * from './location-href';
 export * from './anaylytics';
 export * from './interfaces';
 export * from './directives';
+export * from './environment-config';

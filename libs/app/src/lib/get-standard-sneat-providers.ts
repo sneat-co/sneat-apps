@@ -4,15 +4,20 @@ import { RouteReuseStrategy } from '@angular/router';
 import { IonicRouteStrategy } from '@ionic/angular';
 import { DefaultSneatAppApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
 import {
+	getAnalyticsConfig,
 	LOGGER_FACTORY,
 	loggerFactory,
 	provideSneatAnalytics,
 } from '@sneat/core';
-import { sentryAppInitializerProviders } from '@sneat/logging';
+import {
+	provideErrorLogger,
+	sentryAppInitializerProviders,
+} from '@sneat/logging';
 import { RANDOM_ID_OPTIONS } from '@sneat/random';
 import { AppComponentService } from './app-component.service';
-import { IEnvironmentConfig } from './environment-config';
+import { IEnvironmentConfig } from '@sneat/core';
 import { getAngularFireProviders } from './init-firebase';
+// import { getAngularFireImports } from './init-firebase';
 
 export function getStandardSneatProviders(
 	environmentConfig: IEnvironmentConfig,
@@ -22,20 +27,15 @@ export function getStandardSneatProviders(
 			JSON.stringify(environmentConfig, undefined, '\t'),
 	);
 
-	const useAnalytics =
-		location.host === 'sneat.app' || location.protocol === 'https:';
-
-	const firebaseMeasurementId = environmentConfig.firebaseConfig?.measurementId;
-
 	return [
 		provideHttpClient(),
+		provideErrorLogger(),
 		{ provide: LOGGER_FACTORY, useValue: loggerFactory },
 		{
 			provide: RouteReuseStrategy,
 			useClass: IonicRouteStrategy,
 		},
 		...sentryAppInitializerProviders,
-		...getAngularFireProviders(environmentConfig.firebaseConfig),
 		{
 			provide: SneatApiBaseUrl,
 			useValue: environmentConfig.useNgrok
@@ -48,13 +48,8 @@ export function getStandardSneatProviders(
 			provide: RANDOM_ID_OPTIONS,
 			useValue: { len: 9 },
 		},
-		provideSneatAnalytics({
-			addPosthog: useAnalytics && !!environmentConfig.posthog?.posthogKey,
-			addFirebaseAnalytics:
-				useAnalytics &&
-				!!firebaseMeasurementId &&
-				firebaseMeasurementId !== 'G-PROVIDE_IF_NEEDED',
-		}),
+		getAngularFireProviders(environmentConfig.firebaseConfig),
+		provideSneatAnalytics(getAnalyticsConfig(environmentConfig)),
 		AppComponentService, // TODO: check if it's used and probably remove
 	];
 }

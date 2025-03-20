@@ -6,6 +6,8 @@ import { TopMenuService } from '@sneat/core';
 	selector: 'sneat-app-root',
 	templateUrl: 'sneat-app.component.html',
 	standalone: false,
+	// imports: [IonicModule],
+	providers: [TelegramAuthService],
 })
 export class SneatAppComponent {
 	constructor(

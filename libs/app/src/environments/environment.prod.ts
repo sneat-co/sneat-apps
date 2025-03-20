@@ -1,4 +1,4 @@
-import { IEnvironmentConfig, IFirebaseConfig } from '../lib/environment-config';
+import { IEnvironmentConfig, IFirebaseConfig } from '@sneat/core';
 // import { firebaseEmulatorConfig } from './environment.base';
 
 export const firebaseConfigForSneatApp: IFirebaseConfig = {

@@ -1,5 +1,6 @@
 import { Analytics } from '@angular/fire/analytics';
 import { FirebaseApp } from '@angular/fire/app';
+import { IEnvironmentConfig } from '../environment-config';
 import { AnalyticsService, IAnalyticsService } from './analytics.interface';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { FireAnalyticsService } from './fire-analytics.service';
@@ -10,6 +11,23 @@ import { Optional, Provider } from '@angular/core';
 export interface IAnalyticsConfig {
 	addPosthog?: boolean;
 	addFirebaseAnalytics?: boolean;
+}
+
+export function getAnalyticsConfig(
+	environmentConfig: IEnvironmentConfig,
+): IAnalyticsConfig {
+	const useAnalytics =
+		location.host === 'sneat.app' || location.protocol === 'https:';
+
+	const firebaseMeasurementId = environmentConfig.firebaseConfig?.measurementId;
+
+	return {
+		addPosthog: useAnalytics && !!environmentConfig.posthog?.posthogKey,
+		addFirebaseAnalytics:
+			useAnalytics &&
+			!!firebaseMeasurementId &&
+			firebaseMeasurementId !== 'G-PROVIDE_IF_NEEDED',
+	};
 }
 
 export function provideSneatAnalytics(config: IAnalyticsConfig): Provider {

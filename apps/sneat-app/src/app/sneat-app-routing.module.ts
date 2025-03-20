@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { SneatAuthRoutingModule } from '@sneat/auth-ui';
 
-const routes: Routes = [
+export const routes: Routes = [
 	{
 		path: '',
 		pathMatch: 'full',

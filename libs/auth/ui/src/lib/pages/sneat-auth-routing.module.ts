@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [
+export const authRoutes: Routes = [
 	{
 		path: 'login',
 		loadComponent: () =>
@@ -19,7 +19,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [RouterModule.forChild(routes)],
+	imports: [RouterModule.forChild(authRoutes)],
 	exports: [RouterModule],
 })
 export class SneatAuthRoutingModule {}

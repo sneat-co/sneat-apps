@@ -1,4 +1,4 @@
-import { IEnvironmentConfig } from '../lib/environment-config';
+import { IEnvironmentConfig } from '@sneat/core';
 import { baseEnvironmentConfig } from './environment.base';
 /*
  * For easier debugging in development mode, you can import the following file

@@ -1,8 +1,5 @@
-import {
-	appSpecificConfig,
-	IEnvironmentConfig,
-	prodEnvironmentConfig,
-} from '@sneat/app';
+import { appSpecificConfig, prodEnvironmentConfig } from '@sneat/app';
+import { IEnvironmentConfig } from '@sneat/core';
 
 export const sneatAppEnvironmentConfig: IEnvironmentConfig = {
 	...appSpecificConfig(prodEnvironmentConfig), // Not sure why we need this, needs to be documented or cleaned up

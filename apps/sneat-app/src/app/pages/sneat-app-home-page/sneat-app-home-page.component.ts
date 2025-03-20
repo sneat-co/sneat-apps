@@ -53,10 +53,10 @@ export class SneatAppHomePageComponent extends SneatBaseComponent {
 			next: (authState) => {
 				this.$authStatus.set(authState.status);
 				if (authState.status === 'notAuthenticated') {
-					router.navigate(['login']).catch((err) => {
-						this.$err.set(err);
-						errorLogger.logError(err, 'Failed to navigate to login page');
-					});
+					// router.navigate(['login']).catch((err) => {
+					// 	this.$err.set(err);
+					// 	errorLogger.logError(err, 'Failed to navigate to login page');
+					// });
 				} else if (authState.err) {
 					this.$err.set(authState.err);
 				}
