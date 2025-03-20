@@ -23,7 +23,7 @@ export function getAngularFireProviders(firebaseConfig: IFirebaseConfig) {
 	const providers = [
 		provideFirebaseApp(() => initFirebase(firebaseConfig)),
 		provideFirestore((injector) => {
-			console.log('AngularFire: provideFirestore');
+			// console.log('AngularFire: provideFirestore');
 			const fbApp = injector.get(FirebaseApp);
 			const firestore = getFirestore(fbApp);
 			const { emulator } = firebaseConfig;
@@ -45,7 +45,7 @@ export function getAngularFireProviders(firebaseConfig: IFirebaseConfig) {
 			return firestore;
 		}),
 		provideAuth((injector) => {
-			console.log('AngularFire: provideAuth');
+			// console.log('AngularFire: provideAuth');
 			const fbApp = injector.get<FirebaseApp>(FirebaseApp as Type<FirebaseApp>);
 			let auth: Auth;
 			if (Capacitor.isNativePlatform()) {
@@ -59,7 +59,7 @@ export function getAngularFireProviders(firebaseConfig: IFirebaseConfig) {
 			if (emulator?.authPort) {
 				// alert('Using firebase auth emulator');
 				const authUrl = `${emulator.authPort === 443 ? 'https' : 'http'}://${emulator.authHost || '127.0.0.1'}:${emulator.authPort}`;
-				console.log('authUrl: ', authUrl);
+				// console.log('authUrl: ', authUrl);
 				// noinspection HttpUrlsUsage
 				connectAuthEmulator(auth, authUrl);
 			}
@@ -68,9 +68,11 @@ export function getAngularFireProviders(firebaseConfig: IFirebaseConfig) {
 	];
 	if (firebaseConfig?.measurementId !== 'G-PROVIDE_IF_NEEDED') {
 		providers.push(
-			provideAnalytics(() => {
-				console.log('AngularFire: provideAnalytics');
-				return getAnalytics();
+			provideAnalytics((injector) => {
+				// console.log('AngularFire: provideAnalytics');
+				return getAnalytics(
+					injector.get<FirebaseApp>(FirebaseApp as Type<FirebaseApp>),
+				);
 			}),
 		);
 	}
