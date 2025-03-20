@@ -9,9 +9,10 @@ import { PosthogAnalyticsService } from './posthog-analytics.service';
 @NgModule({
 	imports: [SneatLoggingModule],
 	providers: [
+		AngularFireAnalytics,
 		{
 			provide: AnalyticsService,
-			deps: [ErrorLogger],
+			deps: [ErrorLogger, AngularFireAnalytics],
 			useFactory: (
 				errorLogger: IErrorLogger,
 				angularFireAnalytics: AngularFireAnalytics,
