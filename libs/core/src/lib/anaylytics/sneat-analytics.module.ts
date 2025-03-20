@@ -34,7 +34,12 @@ export function provideSneatAnalytics(config: IAnalyticsConfig): Provider {
 	console.log(`provideSneatAnalytics(), config: ${JSON.stringify(config)}`);
 	return {
 		provide: AnalyticsService,
-		deps: [ErrorLogger, FirebaseApp, [new Optional(), Analytics]],
+		deps: [
+			ErrorLogger,
+			FirebaseApp,
+			// Analytics,
+			[new Optional(), Analytics],
+		],
 		useFactory: (errorLogger: IErrorLogger, analytics: Analytics) => {
 			const as: IAnalyticsService[] = [];
 			if (config?.addPosthog) {
