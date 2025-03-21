@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
@@ -18,7 +18,6 @@ import {
 	IRelatedPerson,
 	IJoinSpaceInfoResponse,
 } from '@sneat/contactus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	IRejectPersonalInviteRequest,
 	ISpaceContext,
@@ -70,14 +69,13 @@ export class JoinSpacePageComponent extends SneatBaseComponent {
 	public authStatus: AuthStatus = AuthStatuses.authenticating;
 
 	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		protected readonly route: ActivatedRoute,
 		private readonly navService: SpaceNavService,
 		private readonly spaceService: SpaceService,
 		private readonly inviteService: InviteService,
 		private readonly authStateService: SneatAuthStateService,
 	) {
-		super('JoinSpacePageComponent', errorLogger);
+		super('JoinSpacePageComponent');
 		this.getActionFromLocationHash();
 		this.id = this.route.snapshot.queryParamMap.get('id') || undefined;
 		try {
@@ -90,26 +88,26 @@ export class JoinSpacePageComponent extends SneatBaseComponent {
 			this.spaceService.getSpaceJoinInfo(this.id, this.pin).subscribe({
 				next: (response) => {
 					console.log('join_team:', response);
-					if (response) {
-						this.inviteInfo = response;
-						if (response.member) {
-							this.newPerson = {
-								...response.member,
-								roles: undefined,
-							};
-						}
-						// this.relatedPerson = {
-						// 	gender: this.invite.to.
-						// }
-						if (this.status === 'loading') {
-							if (this.authStatus === 'authenticated' && this.action) {
-								this.processAction();
-							} else {
-								this.status = 'reviewing';
-							}
-						}
-					} else {
+					if (!response) {
 						this.errorLogger.logError('EmptyResponse', errMsg);
+						return;
+					}
+					this.inviteInfo = response;
+					if (response.member) {
+						this.newPerson = {
+							...response.member,
+							roles: undefined,
+						};
+					}
+					// this.relatedPerson = {
+					// 	gender: this.invite.to.
+					// }
+					if (this.status === 'loading') {
+						if (this.authStatus === 'authenticated' && this.action) {
+							this.processAction();
+						} else {
+							this.status = 'reviewing';
+						}
 					}
 				},
 				error: (err) => this.errorLogger.logError(err, errMsg),

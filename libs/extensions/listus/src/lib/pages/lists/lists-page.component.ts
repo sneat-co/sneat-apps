@@ -48,7 +48,6 @@ export class ListsPageComponent extends SpaceBaseComponent {
 	private collapsedGroups?: string[];
 
 	constructor(
-		route: ActivatedRoute,
 		private readonly params: ListusComponentBaseParams,
 		@Inject(APP_INFO) private readonly appService: IAppInfo,
 		private readonly modalCtrl: PopoverController,
@@ -56,7 +55,7 @@ export class ListsPageComponent extends SpaceBaseComponent {
 		// private preloaderService: NgModulePreloaderService,
 		private readonly listusAppStateService: IListusAppStateService,
 	) {
-		super('ListsPageComponent', route, params.spaceParams);
+		super('ListsPageComponent');
 		// this.preloaderService.markAsPreloaded('lists');
 		this.listusAppStateService.changed.subscribe((appState) => {
 			this.collapsedGroups = appState.collapsedGroups;

@@ -1,9 +1,7 @@
-import { ActivatedRoute } from '@angular/router';
 import { SpaceMemberType } from '@sneat/auth-models';
 import { ContactusModuleBaseComponent } from '@sneat/contactus-shared';
 import { IIdAndBriefAndOptionalDbo, SpaceType } from '@sneat/core';
 import { isSpaceSupportsMemberGroups } from '@sneat/dto';
-import { SpaceComponentBaseParams } from '@sneat/team-components';
 import {
 	ContactusSpaceService,
 	MemberService,
@@ -26,12 +24,10 @@ export abstract class MembersBasePage extends ContactusModuleBaseComponent {
 
 	protected constructor(
 		className: string,
-		route: ActivatedRoute,
-		params: SpaceComponentBaseParams,
 		contactusTeamService: ContactusSpaceService,
 		protected membersService: MemberService,
 	) {
-		super(className, route, params, contactusTeamService);
+		super(className, contactusTeamService);
 		// this.userService.currentUserLoaded.subscribe(user => this.setCurrentUser(user));
 	}
 

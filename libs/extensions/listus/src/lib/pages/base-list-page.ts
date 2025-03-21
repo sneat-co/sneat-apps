@@ -1,4 +1,4 @@
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ParamMap } from '@angular/router';
 import { emptyTimestamp } from '@sneat/dto';
 import { SpaceItemPageBaseComponent } from '@sneat/team-components';
 import { Observable } from 'rxjs';
@@ -19,17 +19,9 @@ export abstract class BaseListPage extends SpaceItemPageBaseComponent<
 	protected constructor(
 		className: string,
 		// defaultBackPage: DefaultBackPage,
-		route: ActivatedRoute,
 		protected readonly params: ListusComponentBaseParams,
 	) {
-		super(
-			className,
-			route,
-			params.spaceParams,
-			'lists',
-			'list',
-			params.listService,
-		);
+		super(className, 'lists', 'list', params.listService);
 	}
 
 	protected override setItemContext(item: IListContext): void {

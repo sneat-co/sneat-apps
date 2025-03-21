@@ -1,4 +1,4 @@
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ParamMap } from '@angular/router';
 import { INavContext, SpaceItem } from '@sneat/core';
 import { ModuleSpaceItemService } from '@sneat/team-services';
 import {
@@ -12,7 +12,6 @@ import {
 } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SpacePageBaseComponent } from './space-page-base-component.service';
-import { SpaceComponentBaseParams } from './space-component-base-params.service';
 
 // type watchByIdFunc<Brief, Dto> = (params: ParamMap, itemId: string, teamId?: string) => Observable<INavContext<Brief, Dto>>;
 
@@ -24,13 +23,11 @@ export abstract class SpaceItemPageBaseComponent<
 
 	protected constructor(
 		className: string,
-		route: ActivatedRoute,
-		teamParams: SpaceComponentBaseParams,
 		defaultBackPage: string,
 		private readonly itemName: SpaceItem,
 		protected readonly spaceItemService: ModuleSpaceItemService<Brief, Dbo>,
 	) {
-		super(className, route, teamParams);
+		super(className);
 		this.defaultBackPage = defaultBackPage;
 		const item = window.history.state[itemName] as INavContext<Brief, Dbo>;
 		if (item) {

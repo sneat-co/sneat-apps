@@ -9,7 +9,7 @@
 			icon="🏡"
 			[titlesBySpaceType]="{
 				personal: 'New personal asset',
-				family: 'New family asset'
+				family: 'New family asset',
 			}"
 		/>
 	</ion-toolbar>
@@ -35,9 +35,19 @@
 		</ion-list>
 	</ion-card>
 
-	<ng-container [ngSwitch]="category?.id">
-		<sneat-asset-add-vehicle *ngSwitchCase="'vehicle'" [space]="space" />
-		<sneat-asset-add-dwelling *ngSwitchCase="'dwelling'" [space]="space" />
-		<sneat-asset-add-document *ngSwitchCase="'document'" [space]="space" />
-	</ng-container>
+	@switch (category?.id) {
+		@case ("vehicle") {
+			<sneat-asset-add-vehicle />
+		}
+		@case ("dwelling") {
+			<sneat-asset-add-dwelling />
+		}
+		@case ("document") {
+			<sneat-asset-add-document />
+		}
+		@default {
+			unknown category {{ category?.id }}
+		}
+	}
+	<ng-container [ngSwitch]="category?.id"> </ng-container>
 </ion-content>

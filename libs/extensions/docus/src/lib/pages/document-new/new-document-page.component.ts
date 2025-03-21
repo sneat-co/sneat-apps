@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import {
 	CountrySelectorComponent,
@@ -26,7 +25,6 @@ import {
 } from '@sneat/mod-assetus-core';
 import {
 	AddAssetBaseComponent,
-	AssetService,
 	AssetusServicesModule,
 	ICreateAssetRequest,
 } from '@sneat/extensions-assetus-components';
@@ -36,7 +34,7 @@ import {
 	contactContextFromBrief,
 	ContactusServicesModule,
 } from '@sneat/contactus-services';
-import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
+import { zipMapBriefsWithIDs } from '@sneat/team-models';
 import { SpaceNavService } from '@sneat/team-services';
 import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 
@@ -60,7 +58,7 @@ export class NewDocumentPageComponent
 	extends AddAssetBaseComponent
 	implements OnChanges
 {
-	@Input() public override space?: ISpaceContext;
+	// @Input() public override space?: ISpaceContext;
 	@Input() public override contactusSpace?: IContactusSpaceDboAndID;
 
 	belongsTo: 'member' | 'commune' = 'commune';
@@ -83,13 +81,10 @@ export class NewDocumentPageComponent
 	public selectedMembers?: readonly IIdAndBrief<IContactBrief>[];
 
 	constructor(
-		route: ActivatedRoute,
-		params: SpaceComponentBaseParams,
-		assetService: AssetService,
 		private readonly contactService: ContactService,
 		private readonly spaceNavService: SpaceNavService,
 	) {
-		super('NewDocumentPageComponent', route, params, assetService);
+		super('NewDocumentPageComponent');
 		this.trackUrl();
 	}
 

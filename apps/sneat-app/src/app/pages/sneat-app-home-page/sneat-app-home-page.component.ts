@@ -3,14 +3,12 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	computed,
-	Inject,
 	signal,
 } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AuthStatus, SneatAuthStateService } from '@sneat/auth-core';
 import { UserCountryComponent } from '@sneat/components';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
 import { ForEducatorsComponent } from './for-educators.component';
@@ -43,12 +41,8 @@ export class SneatAppHomePageComponent extends SneatBaseComponent {
 
 	protected readonly $err = signal<unknown>(undefined);
 
-	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
-		authStateService: SneatAuthStateService,
-		router: Router,
-	) {
-		super('SneatAppHomePageComponent', errorLogger);
+	constructor(authStateService: SneatAuthStateService) {
+		super('SneatAppHomePageComponent');
 		authStateService.authState.pipe(takeUntil(this.destroyed$)).subscribe({
 			next: (authState) => {
 				this.$authStatus.set(authState.status);
@@ -63,7 +57,7 @@ export class SneatAppHomePageComponent extends SneatBaseComponent {
 			},
 			error: (err) => {
 				this.$err.set(err);
-				errorLogger.logError(err, 'Failed to get authState');
+				this.errorLogger.logError(err, 'Failed to get authState');
 			},
 		});
 	}

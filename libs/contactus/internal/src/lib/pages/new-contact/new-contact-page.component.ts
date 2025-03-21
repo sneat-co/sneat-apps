@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ParamMap } from '@angular/router';
 import { IonicModule, IonInput } from '@ionic/angular';
 import {
 	ContactRoleFormModule,
@@ -103,14 +103,12 @@ export class NewContactPageComponent
 	protected personFormIsReadyToSubmit = false;
 
 	constructor(
-		params: SpaceComponentBaseParams,
-		route: ActivatedRoute,
 		private readonly assetService: AssetService,
 		private readonly contactGroupService: ContactGroupService,
 		private readonly contactService: ContactService,
 		private readonly contactRoleService: ContactRoleService, // private readonly businessLogic: IBusinessLogic,
 	) {
-		super('NewContactPageComponent', route, params);
+		super('NewContactPageComponent');
 		this.defaultBackPage = 'contacts';
 		this.contact = window.history.state.contact as IContactContext;
 		this.asset = window.history.state.asset as IAssetContext;

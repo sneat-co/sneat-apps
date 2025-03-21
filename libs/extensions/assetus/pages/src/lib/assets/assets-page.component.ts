@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { IIdAndBrief } from '@sneat/core';
@@ -46,13 +46,11 @@ export class AssetsPageComponent extends AssetsBasePage implements OnInit {
 	public segment: 'all' | 'byCategory' = 'byCategory';
 
 	constructor(
-		route: ActivatedRoute,
-		params: SpaceComponentBaseParams,
 		private readonly assetusSpaceService: AssetusSpaceService,
 		assetService: AssetService,
 		private readonly alertCtrl: AlertController,
 	) {
-		super('AssetsPageComponent', route, params, assetService);
+		super('AssetsPageComponent', assetService);
 	}
 
 	override ngOnInit(): void {

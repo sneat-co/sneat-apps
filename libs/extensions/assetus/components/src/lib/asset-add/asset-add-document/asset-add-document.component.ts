@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';
 import { timestamp } from '@sneat/dto';
 import {
@@ -10,9 +9,7 @@ import {
 	IAssetDocumentExtra,
 } from '@sneat/mod-assetus-core';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
-import { ISpaceContext } from '@sneat/team-models';
 import { format, parseISO } from 'date-fns';
-import { AssetService } from '../../services';
 import { ICreateAssetRequest } from '../../services';
 import { AddAssetBaseComponent } from '../add-asset-base-component';
 
@@ -26,7 +23,7 @@ export class AssetAddDocumentComponent
 	extends AddAssetBaseComponent
 	implements OnChanges
 {
-	@Input() public override space?: ISpaceContext;
+	// @Input() public override space?: ISpaceContext;
 	@Input() public documentAsset?: IAssetDocumentContext;
 
 	protected documentType?: AssetVehicleType;
@@ -75,13 +72,9 @@ export class AssetAddDocumentComponent
 		}
 	}
 
-	constructor(
-		route: ActivatedRoute,
-		teamParams: SpaceComponentBaseParams,
-		assetService: AssetService,
-	) {
+	constructor() {
 		// super('AssetAddVehicleComponent', route, teamParams, assetService);
-		super('AssetAddVehicleComponent', route, teamParams, assetService);
+		super('AssetAddVehicleComponent');
 	}
 
 	protected onAssetChanged(asset: IAssetContext): void {

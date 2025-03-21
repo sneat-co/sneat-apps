@@ -172,13 +172,12 @@ export class TrackerComponent
 	>([]);
 
 	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		private readonly trackersService: TrackersService,
 		private readonly trackusApiService: TrackusApiService,
 		userService: SneatAuthStateService,
 		contactusSpaceService: ContactusSpaceService,
 	) {
-		super('TrackerComponent', errorLogger);
+		super('TrackerComponent');
 		userService.authState
 			.pipe(
 				this.takeUntilDestroyed(),

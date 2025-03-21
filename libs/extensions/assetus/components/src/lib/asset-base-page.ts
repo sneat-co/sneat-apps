@@ -1,4 +1,3 @@
-import { ActivatedRoute } from '@angular/router';
 import {
 	IAssetBrief,
 	IAssetDboBase,
@@ -26,18 +25,10 @@ export abstract class AssetBasePage extends SpaceItemPageBaseComponent<
 
 	protected constructor(
 		className: string,
-		route: ActivatedRoute,
 		public readonly params: AssetComponentBaseParams,
 		parentPagePath = 'assets',
 	) {
-		super(
-			className,
-			route,
-			params.spaceParams,
-			parentPagePath,
-			'asset',
-			params.assetService,
-		);
+		super(className, parentPagePath, 'asset', params.assetService);
 	}
 
 	protected override watchItemChanges(): Observable<IAssetContext> {

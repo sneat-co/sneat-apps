@@ -4,7 +4,6 @@ import {
 	ChangeDetectorRef,
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	OnChanges,
 	Output,
@@ -16,7 +15,6 @@ import { personName } from '@sneat/components';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import { IIdAndBrief } from '@sneat/core';
 import { IContactBrief } from '@sneat/contactus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { Subscription } from 'rxjs';
@@ -57,11 +55,10 @@ export class ContactsChecklistComponent
 	) => contact.id;
 
 	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		private readonly changeDetectorRef: ChangeDetectorRef,
 		private readonly contactusSpaceService: ContactusSpaceService,
 	) {
-		super('ContactsChecklistComponent', errorLogger);
+		super('ContactsChecklistComponent');
 	}
 
 	private subscribeForContactBriefs(space: ISpaceContext): void {

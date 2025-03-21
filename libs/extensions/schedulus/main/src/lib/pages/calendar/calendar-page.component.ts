@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ParamMap } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { virtualSliderAnimations } from '@sneat/components';
@@ -48,12 +48,10 @@ export class CalendarPageComponent extends SpaceBaseComponent {
 	member?: IMemberContext;
 
 	constructor(
-		route: ActivatedRoute,
-		params: SpaceComponentBaseParams,
 		// private filterService: CalendarFilterService,
 		private readonly scheduleNavService: ScheduleNavService,
 	) {
-		super('CalendarPageComponent', route, params);
+		super('CalendarPageComponent');
 
 		// filterService.filter.subscribe({
 		// 	next: (filter) => {

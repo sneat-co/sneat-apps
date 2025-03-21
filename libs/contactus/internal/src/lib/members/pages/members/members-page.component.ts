@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { Params } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SpaceMemberType } from '@sneat/auth-models';
 import {
@@ -46,20 +46,11 @@ export class MembersPageComponent extends MembersBasePage {
 	readonly memberType: SpaceMemberType = 'member';
 
 	constructor(
-		route: ActivatedRoute,
-		// private readonly memberGroupService: MemberGroupService,
-		params: SpaceComponentBaseParams,
 		memberService: MemberService,
 		contactusTeamService: ContactusSpaceService,
 		private readonly memberGroupService: MemberGroupService,
 	) {
-		super(
-			'MembersPageComponent',
-			route,
-			params,
-			contactusTeamService,
-			memberService,
-		);
+		super('MembersPageComponent', contactusTeamService, memberService);
 	}
 
 	protected goGroup(memberGroup: IMemberGroupContext): void {

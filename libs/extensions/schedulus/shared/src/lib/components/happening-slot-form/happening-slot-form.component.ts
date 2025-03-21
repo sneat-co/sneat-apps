@@ -3,7 +3,6 @@ import {
 	Component,
 	computed,
 	EventEmitter,
-	Inject,
 	Input,
 	OnChanges,
 	OnDestroy,
@@ -37,7 +36,6 @@ import {
 	RepeatPeriod,
 	IHappeningSlotWithID,
 } from '@sneat/mod-schedulus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { newRandomId } from '@sneat/random';
 import { Observable } from 'rxjs';
 import { StartEndDatetimeFormComponent } from '../start-end-datetime-form/start-end-datetime-form.component';
@@ -182,11 +180,10 @@ export class HappeningSlotFormComponent
 	});
 
 	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		protected readonly modalCtrl: ModalController,
 		private readonly happeningService: HappeningService,
 	) {
-		super('RecurringSlotFormComponent', errorLogger, true);
+		super('RecurringSlotFormComponent', true);
 		// const now = new Date();
 		const preselectedWd = window.history.state.wd as WeekdayCode2;
 		if (preselectedWd) {

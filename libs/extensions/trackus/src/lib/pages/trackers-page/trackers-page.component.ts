@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import {
-	SpaceBaseComponent,
-	SpaceComponentBaseParams,
-} from '@sneat/team-components';
+import { SpaceBaseComponent } from '@sneat/team-components';
 import { TrackersComponent } from '../../components';
 
 @Component({
@@ -14,8 +10,8 @@ import { TrackersComponent } from '../../components';
 	templateUrl: './trackers-page.component.html',
 })
 export class TrackersPageComponent extends SpaceBaseComponent {
-	constructor(route: ActivatedRoute, params: SpaceComponentBaseParams) {
-		super('TrackersPageComponent', route, params);
+	constructor() {
+		super('TrackersPageComponent');
 	}
 
 	override onSpaceIdChanged(): void {

@@ -1,4 +1,10 @@
-import { Inject, Injectable, InjectionToken, OnDestroy } from '@angular/core';
+import {
+	inject,
+	Inject,
+	Injectable,
+	InjectionToken,
+	OnDestroy,
+} from '@angular/core';
 import { createSetFocusToInput } from '@sneat/components';
 import { ErrorLogger, IErrorLogger, ILogErrorOptions } from '@sneat/logging';
 import { MonoTypeOperatorFunction, Subject, Subscription, take } from 'rxjs';
@@ -22,21 +28,21 @@ export abstract class SneatBaseComponent implements OnDestroy {
 
 	// All active subscriptions of a component. Will be unsubscribed on destroy
 	protected readonly subs = new Subscription();
-	// Passes focus to the input element
-	protected readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
 
 	protected readonly console: IConsole = console;
+
+	protected readonly errorLogger = inject(ErrorLogger);
 
 	protected readonly logError = this.errorLogger.logError;
 	protected readonly logErrorHandler = this.errorLogger.logErrorHandler;
 
-	protected constructor(
-		@Inject(ClassName) public readonly className: string,
-		@Inject(ErrorLogger) protected readonly errorLogger: IErrorLogger,
-	) {
+	// Passes focus to the input element
+	protected readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
+
+	protected constructor(@Inject(ClassName) public readonly className: string) {
 		this.console.log(`${this.className}.SneatBaseComponent.constructor()`);
-		this.logError = errorLogger.logError;
-		this.logErrorHandler = errorLogger.logErrorHandler;
+		// this.logError = this.errorLogger.logError;
+		// this.logErrorHandler = this.errorLogger.logErrorHandler;
 	}
 
 	protected takeUntilDestroyed<T>(): MonoTypeOperatorFunction<T> {

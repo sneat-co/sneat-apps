@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import { ContactusServicesModule } from '@sneat/contactus-services';
@@ -30,8 +29,8 @@ import { MemberBasePage } from '../member-base-page';
 export class SpaceMemberPageComponent extends MemberBasePage {
 	public relatedAs?: MemberRelationship;
 
-	constructor(route: ActivatedRoute, params: MemberComponentBaseParams) {
-		super('SpaceMemberPageComponent', route, params);
+	constructor(params: MemberComponentBaseParams) {
+		super('SpaceMemberPageComponent', params);
 	}
 
 	// protected setMemberId(memberId: string): void {

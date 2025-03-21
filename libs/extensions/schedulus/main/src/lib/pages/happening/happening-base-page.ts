@@ -1,4 +1,3 @@
-import { ActivatedRoute } from '@angular/router';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
 import {
 	distinctUntilChanged,
@@ -19,11 +18,10 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 
 	protected constructor(
 		className: string,
-		route: ActivatedRoute,
 		protected readonly params: HappeningComponentBaseParams, // 	HappeningModuleSchema,
 	) {
 		// 	typeof SingleHappeningKind | typeof RegularHappeningKind>,
-		super(className, route, params.spaceParams);
+		super(className);
 		try {
 			const happening = window.history.state
 				.happening as unknown as IHappeningContext;

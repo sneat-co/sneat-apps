@@ -1,10 +1,9 @@
-import { Component, Inject, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { IonAccordionGroup } from '@ionic/angular';
 import { IIdAndBrief } from '@sneat/core';
 import { IContactBrief } from '@sneat/contactus-core';
 import { WeekdayCode2 } from '@sneat/mod-schedulus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
 import {
 	emptyCalendarFilter,
@@ -51,11 +50,8 @@ export class CalendarFilterComponent extends WeekdaysFormBase {
 
 	protected filter: ICalendarFilter = emptyCalendarFilter;
 
-	constructor(
-		private readonly filterService: CalendarFilterService,
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
-	) {
-		super('ScheduleFilterComponent', errorLogger, false);
+	constructor(private readonly filterService: CalendarFilterService) {
+		super('ScheduleFilterComponent', false);
 		filterService.filter.subscribe({
 			next: this.onFilterChanged,
 		});

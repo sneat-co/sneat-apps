@@ -3,7 +3,6 @@ import {
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
 	Component,
-	Inject,
 	Input,
 	OnChanges,
 	OnDestroy,
@@ -13,7 +12,6 @@ import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatUserService } from '@sneat/auth-core';
 import { SpaceType } from '@sneat/core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SpacesListComponent } from '@sneat/team-components';
 import {
 	ISpaceContext,
@@ -45,11 +43,10 @@ export class ForSpaceTypeCardComponent
 	private subscription?: Subscription;
 
 	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		private readonly userService: SneatUserService,
 		private readonly changeDetectorRef: ChangeDetectorRef,
 	) {
-		super('ForSpaceTypeCardComponent', errorLogger);
+		super('ForSpaceTypeCardComponent');
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {

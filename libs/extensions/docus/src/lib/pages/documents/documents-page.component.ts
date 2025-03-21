@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { FilterItemComponent } from '@sneat/components';
 import { IMemberContext } from '@sneat/contactus-core';
@@ -46,12 +45,8 @@ export class DocumentsPageComponent extends SpaceBaseComponent {
 	public rootDocs?: IAssetDocumentContext[];
 	filter = '';
 
-	constructor(
-		route: ActivatedRoute,
-		params: SpaceComponentBaseParams,
-		private assetService: AssetService,
-	) {
-		super('DocumentsPageComponent', route, params);
+	constructor(private assetService: AssetService) {
+		super('DocumentsPageComponent');
 		this.documents = window.history.state.documents as IAssetContext<
 			'document',
 			IAssetDocumentExtra

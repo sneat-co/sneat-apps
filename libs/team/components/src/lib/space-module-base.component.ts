@@ -1,7 +1,5 @@
-import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { SpaceComponentBaseParams } from './space-component-base-params.service';
 import { SpaceBaseComponent } from './space-base-component.directive';
 import { SpaceModuleService } from '@sneat/team-services';
 
@@ -15,11 +13,9 @@ export abstract class SpaceModuleBaseComponent<
 
 	constructor(
 		className: string,
-		route: ActivatedRoute,
-		teamParams: SpaceComponentBaseParams,
 		protected spaceModuleService: SpaceModuleService<Dbo>,
 	) {
-		super(className, route, teamParams);
+		super(className);
 	}
 
 	protected override onSpaceIdChanged() {

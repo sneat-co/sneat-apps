@@ -7,7 +7,6 @@ import { computed, signal } from '@angular/core';
 // 	ValidatorFn,
 // } from '@angular/forms';
 import { WeekdayCode2 } from '@sneat/mod-schedulus-core';
-import { IErrorLogger } from '@sneat/logging';
 import { SneatBaseComponent } from '@sneat/ui';
 
 // const weekdayRequired: ValidatorFn = (
@@ -101,9 +100,8 @@ export abstract class WeekdaysFormBase extends SneatBaseComponent {
 
 	protected constructor(
 		className: string,
-		errorLogger: IErrorLogger,
 		protected readonly isWeekdayRequired: boolean,
 	) {
-		super(className, errorLogger);
+		super(className);
 	}
 }

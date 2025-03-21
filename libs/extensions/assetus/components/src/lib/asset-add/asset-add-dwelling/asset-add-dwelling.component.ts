@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { ISelectItem } from '@sneat/components';
 import { timestamp } from '@sneat/dto';
 import {
@@ -10,7 +9,6 @@ import {
 } from '@sneat/mod-assetus-core';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { ICreateAssetRequest } from '../../services';
-import { AssetService } from '../../services/asset-service';
 import { AddAssetBaseComponent } from '../add-asset-base-component';
 
 @Component({
@@ -32,12 +30,8 @@ export class AssetAddDwellingComponent
 		{ id: 'room', title: 'Room', iconName: 'storefront-outline' },
 	];
 
-	constructor(
-		route: ActivatedRoute,
-		teamParams: SpaceComponentBaseParams,
-		assetService: AssetService,
-	) {
-		super('AssetAddDwellingComponent', route, teamParams, assetService);
+	constructor() {
+		super('AssetAddDwellingComponent');
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -96,10 +90,12 @@ export class AssetAddDwellingComponent
 		this.isSubmitting = true;
 
 		if (assetDto.extra) {
-			if (assetDto.extra.numberOfBedrooms)
+			if (assetDto.extra.numberOfBedrooms) {
 				assetDto.extra.numberOfBedrooms = +assetDto.extra?.numberOfBedrooms;
-			if (assetDto.extra.areaSqM)
+			}
+			if (assetDto.extra.areaSqM) {
 				assetDto.extra.areaSqM = +assetDto.extra?.areaSqM;
+			}
 		}
 
 		const request: ICreateAssetRequest<'dwelling', IAssetDwellingExtra> = {

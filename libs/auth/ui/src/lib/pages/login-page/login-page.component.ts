@@ -19,7 +19,6 @@ import {
 	IAnalyticsService,
 	IAppInfo,
 } from '@sneat/core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SneatBaseComponent } from '@sneat/ui';
 import { Subject, takeUntil } from 'rxjs';
 import {
@@ -55,7 +54,6 @@ export class LoginPageComponent extends SneatBaseComponent {
 	protected readonly appTitle: string;
 
 	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		@Inject(AnalyticsService)
 		private readonly analyticsService: IAnalyticsService,
 		private readonly route: ActivatedRoute,
@@ -68,7 +66,7 @@ export class LoginPageComponent extends SneatBaseComponent {
 		@Inject(LoginEventsHandler)
 		private readonly loginEventsHandler: ILoginEventsHandler,
 	) {
-		super('LoginPageComponent', errorLogger);
+		super('LoginPageComponent');
 		console.log('LoginPageComponent.constructor()');
 		this.appTitle = appInfo.appTitle || 'Sneat.app';
 		if (location.hash.startsWith('#/')) {

@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import {
@@ -23,11 +22,10 @@ export class NewLocationPageComponent extends ContactBasePage {
 	};
 
 	constructor(
-		route: ActivatedRoute,
 		params: ContactComponentBaseParams,
 		// private readonly contactService: ContactService,
 	) {
-		super('ContactPageComponent', route, params);
+		super('ContactPageComponent', params);
 		this.defaultBackPage = 'contacts';
 	}
 

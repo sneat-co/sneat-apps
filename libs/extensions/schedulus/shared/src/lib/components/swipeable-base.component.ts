@@ -4,7 +4,6 @@ import {
 	VirtualSliderAnimationStates,
 } from '@sneat/components';
 import { dateToIso } from '@sneat/core';
-import { IErrorLogger } from '@sneat/logging';
 import { SneatBaseComponent } from '@sneat/ui';
 import { animationState, areSameDates } from './schedule-core';
 import {
@@ -41,11 +40,10 @@ export abstract class SwipeableBaseComponent extends SneatBaseComponent {
 
 	protected constructor(
 		className: string,
-		errorLogger: IErrorLogger,
 		protected readonly scheduleSateService: CalendarStateService,
 		private readonly stepDays: number,
 	) {
-		super(className, errorLogger);
+		super(className);
 		// this.animationState = this.parity === 'odd' ? showVirtualSlide : hideVirtualSlide;
 		scheduleSateService.dateChanged.subscribe({
 			next: (value) => this.onDateChanged(value),

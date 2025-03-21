@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {
 	FormControl,
 	FormGroup,
@@ -16,7 +16,6 @@ import {
 } from '@sneat/auth-core';
 import { ISelectItem, SelectFromListModule } from '@sneat/components';
 import { AgeGroupID, Gender } from '@sneat/contactus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
@@ -64,12 +63,11 @@ export class UserRequiredFieldsModalComponent extends SneatBaseComponent {
 	protected userState?: ISneatUserState;
 
 	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		private readonly modalController: ModalController,
 		private readonly userRecordService: UserRecordService,
 		private readonly sneatUserService: SneatUserService,
 	) {
-		super('UserRequiredFieldsModalComponent', errorLogger);
+		super('UserRequiredFieldsModalComponent');
 		this.sneatUserService.userState.pipe(takeUntil(this.destroyed$)).subscribe({
 			next: (userState) => (this.userState = userState),
 		});

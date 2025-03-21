@@ -1,8 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
-import {
-	SpaceBaseComponent,
-	SpaceComponentBaseParams,
-} from '@sneat/team-components';
+import { SpaceBaseComponent } from '@sneat/team-components';
 
 export class CalendarBasePage extends SpaceBaseComponent {
 	public override get defaultBackUrl(): string {
@@ -10,11 +6,7 @@ export class CalendarBasePage extends SpaceBaseComponent {
 		return t ? `/space/${t.type}/${t.id}/calendar` : '';
 	}
 
-	constructor(
-		className: string,
-		route: ActivatedRoute,
-		teamParams: SpaceComponentBaseParams,
-	) {
-		super(className, route, teamParams);
+	constructor(className: string) {
+		super(className);
 	}
 }

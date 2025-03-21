@@ -1,5 +1,4 @@
-import { Component, Inject, Input, OnChanges } from '@angular/core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { Component, Input, OnChanges } from '@angular/core';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
 import { ISpaceContext } from '@sneat/team-models';
 import { SneatBaseComponent } from '@sneat/ui';
@@ -26,11 +25,8 @@ export class SingleHappeningsListComponent
 
 	protected happeningsMatchingFilter?: IHappeningContext[];
 
-	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
-		readonly filterService: CalendarFilterService,
-	) {
-		super('SingleHappeningsListComponent', errorLogger);
+	constructor(readonly filterService: CalendarFilterService) {
+		super('SingleHappeningsListComponent');
 		filterService.filter
 			.pipe(takeUntil(this.destroyed$))
 			.subscribe((filter) => {

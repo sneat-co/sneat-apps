@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { LiabilityServiceType } from '@sneat/mod-assetus-core';
@@ -51,8 +50,8 @@ export class AssetPageComponent extends AssetBasePage {
 
 	mode: 'view' | 'edit' = 'view';
 
-	constructor(route: ActivatedRoute, params: AssetComponentBaseParams) {
-		super('AssetPageComponent', route, params);
+	constructor(params: AssetComponentBaseParams) {
+		super('AssetPageComponent', params);
 		// const path = location.pathname;
 		// if (path.includes('vehicle')) {
 		// 	this.assetTypeId = 'vehicles';

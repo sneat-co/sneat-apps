@@ -1,4 +1,3 @@
-import { ActivatedRoute } from '@angular/router';
 import { IIdAndBrief } from '@sneat/core';
 import {
 	AssetCategory,
@@ -6,10 +5,7 @@ import {
 	IAssetusSpaceContext,
 } from '@sneat/mod-assetus-core';
 import { AssetService } from '@sneat/extensions-assetus-components';
-import {
-	SpaceBaseComponent,
-	SpaceComponentBaseParams,
-} from '@sneat/team-components';
+import { SpaceBaseComponent } from '@sneat/team-components';
 
 export abstract class AssetsBasePage extends SpaceBaseComponent {
 	protected assets?: IIdAndBrief<IAssetBrief>[];
@@ -18,11 +14,9 @@ export abstract class AssetsBasePage extends SpaceBaseComponent {
 
 	protected constructor(
 		className: string,
-		route: ActivatedRoute,
-		params: SpaceComponentBaseParams,
 		protected readonly assetService: AssetService,
 	) {
-		super(className, route, params);
+		super(className);
 	}
 
 	public goNew(assetType?: AssetCategory): void {

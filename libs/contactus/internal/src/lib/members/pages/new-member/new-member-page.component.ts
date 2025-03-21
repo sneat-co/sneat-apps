@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { IonicModule, IonInput } from '@ionic/angular';
 import {
 	ContactusServicesModule,
@@ -47,8 +46,8 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
 		return url && this.defaultBackPage ? url + '/' + this.defaultBackPage : url;
 	}
 
-	constructor(route: ActivatedRoute, params: ContactComponentBaseParams) {
-		super('NewMemberPageComponent', route, params.spaceParams);
+	constructor(params: ContactComponentBaseParams) {
+		super('NewMemberPageComponent');
 		const contactusSpaceContextService = new ContactusSpaceContextService(
 			params.errorLogger,
 			this.destroyed$,
@@ -57,7 +56,7 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
 			this.userService,
 		);
 		this.trackFirstSpaceTypeChanged();
-		route.queryParams.subscribe((params) => {
+		this.route.queryParams.subscribe((params) => {
 			const group = params['group'];
 			console.log('group', group);
 			switch (group) {

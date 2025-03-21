@@ -1,7 +1,6 @@
 import {
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	OnChanges,
 	Output,
@@ -17,7 +16,6 @@ import {
 	IContactGroupDbo,
 	IContactRoleBriefWithID,
 } from '@sneat/contactus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
 
@@ -69,11 +67,8 @@ export class ContactRoleFormComponent
 	protected readonly groupID = (_: number, o: IIdAndDbo<IContactGroupDbo>) =>
 		o.id;
 
-	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
-		private readonly contactGroupService: ContactGroupService,
-	) {
-		super('ContactRoleFormComponent', errorLogger);
+	constructor(private readonly contactGroupService: ContactGroupService) {
+		super('ContactRoleFormComponent');
 		contactGroupService
 			.getContactGroups()
 			.pipe(takeUntil(this.destroyed$))

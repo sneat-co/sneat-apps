@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { IContactusSpaceDbo } from '@sneat/contactus-core';
 import {
@@ -36,13 +36,12 @@ export class SpacePageComponent extends SpacePageBaseComponent {
 	protected contactusSpace?: IIdAndOptionalDbo<IContactusSpaceDbo>;
 
 	constructor(
-		route: ActivatedRoute,
 		params: SpaceComponentBaseParams,
 		topMenuService: TopMenuService,
 		cd: ChangeDetectorRef, // readonly navService: TeamNavService,
 		contactusTeamService: ContactusSpaceService,
 	) {
-		super('SpacePageComponent', route, params, topMenuService, cd);
+		super('SpacePageComponent', topMenuService, cd);
 		new ContactusSpaceContextService(
 			params.errorLogger,
 			this.destroyed$,

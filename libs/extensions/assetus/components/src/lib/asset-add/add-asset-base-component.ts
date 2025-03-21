@@ -1,21 +1,22 @@
-import { Component, Inject, InjectionToken, Input } from '@angular/core';
+import {
+	Component,
+	inject,
+	Inject,
+	InjectionToken,
+	Input,
+} from '@angular/core';
 import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { AssetExtraType, IAssetExtra } from '@sneat/mod-assetus-core';
-import { SpaceComponentBaseParams } from '@sneat/team-components';
+import { SpaceBaseComponent } from '@sneat/team-components';
 import { ISpaceContext } from '@sneat/team-models';
-import { SneatBaseComponent } from '@sneat/ui';
-import { AssetService } from '../services';
-import { ICreateAssetRequest } from '../services';
+import { AssetService, ICreateAssetRequest } from '../services';
 
 @Component({
 	template: '',
 	standalone: false,
 })
-export abstract class AddAssetBaseComponent extends SneatBaseComponent {
-	@Input({ required: true }) space?: ISpaceContext;
-
+export abstract class AddAssetBaseComponent extends SpaceBaseComponent {
 	public static readonly metadata = {
 		inputs: ['space'],
 	};
@@ -29,13 +30,12 @@ export abstract class AddAssetBaseComponent extends SneatBaseComponent {
 		title: new FormControl<string>('', Validators.required),
 	});
 
+	protected readonly assetService = inject(AssetService);
+
 	protected constructor(
 		@Inject(new InjectionToken('className')) className: string,
-		protected readonly route: ActivatedRoute,
-		protected spaceParams: SpaceComponentBaseParams,
-		protected readonly assetService: AssetService,
 	) {
-		super(className, spaceParams.errorLogger);
+		super(className);
 	}
 
 	protected createAssetAndGoToAssetPage<

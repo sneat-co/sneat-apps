@@ -121,13 +121,12 @@ export class HappeningFormComponent
 	protected isToDo = false;
 
 	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		routingState: RoutingState,
 		private readonly changeDetectorRef: ChangeDetectorRef,
 		private readonly happeningService: HappeningService,
 		private readonly params: SpaceComponentBaseParams,
 	) {
-		super('', errorLogger);
+		super('');
 		this.hasNavHistory = routingState.hasHistory();
 	}
 

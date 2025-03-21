@@ -10,7 +10,6 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { ISlotUIEvent } from '@sneat/mod-schedulus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
 import { ISpaceContext } from '@sneat/team-models';
 import { HappeningService } from '../../../../services/happening.service';
@@ -44,11 +43,10 @@ export class SinglesTabComponent
 	@Input() onDateSelected?: (date: Date) => void;
 
 	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		private readonly happeningService: HappeningService,
 		private readonly changeDetectorRef: ChangeDetectorRef,
 	) {
-		super('SinglesTabComponent', errorLogger);
+		super('SinglesTabComponent');
 	}
 
 	public ngOnChanges(changes: SimpleChanges): void {

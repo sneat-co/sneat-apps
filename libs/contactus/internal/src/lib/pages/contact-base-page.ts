@@ -1,4 +1,3 @@
-import { ActivatedRoute } from '@angular/router';
 import {
 	ContactService,
 	ContactusSpaceService,
@@ -25,18 +24,10 @@ export abstract class ContactBasePage extends SpaceItemPageBaseComponent<
 
 	protected constructor(
 		className: string,
-		route: ActivatedRoute,
 		params: ContactComponentBaseParams,
 		// protected preloader: NgModulePreloaderService,
 	) {
-		super(
-			className,
-			route,
-			params.spaceParams,
-			'contacts',
-			'contact',
-			params.contactService,
-		);
+		super(className, 'contacts', 'contact', params.contactService);
 		this.contactusSpaceService = params.contactusSpaceService;
 		this.contactService = params.contactService;
 		this.defaultBackPage = 'contacts';

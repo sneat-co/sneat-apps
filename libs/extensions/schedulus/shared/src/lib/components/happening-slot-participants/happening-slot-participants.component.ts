@@ -3,7 +3,6 @@ import {
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
 	Component,
-	Inject,
 	Input,
 	OnChanges,
 	SimpleChanges,
@@ -15,7 +14,6 @@ import { ContactusSpaceService } from '@sneat/contactus-services';
 import { IIdAndBrief, IIdAndOptionalBrief } from '@sneat/core';
 import { getRelatedItems, IRelatedItem } from '@sneat/dto';
 import { ISlotUIContext } from '@sneat/mod-schedulus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SneatBaseComponent } from '@sneat/ui';
 import { distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 
@@ -39,11 +37,10 @@ export class HappeningSlotParticipantsComponent
 	private readonly spaceID$ = new Subject<string>();
 
 	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		private readonly changedDetectorRef: ChangeDetectorRef,
 		private readonly contactusService: ContactusSpaceService,
 	) {
-		super('HappeningSlotParticipantsComponent', errorLogger);
+		super('HappeningSlotParticipantsComponent');
 		this.spaceID$
 			.pipe(takeUntil(this.destroyed$), distinctUntilChanged())
 			.subscribe((teamID) => {

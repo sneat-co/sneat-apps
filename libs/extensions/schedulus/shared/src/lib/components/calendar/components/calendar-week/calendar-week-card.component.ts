@@ -1,6 +1,5 @@
 import { Component, Inject, Input } from '@angular/core';
 import { virtualSliderAnimations } from '@sneat/components';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SpaceDaysProvider } from '../../../../services/space-days-provider';
 import { getToday, CalendarStateService } from '../../calendar-state.service';
 import { SwipeableBaseComponent } from '../../../swipeable-base.component';
@@ -24,11 +23,8 @@ export class CalendarWeekCardComponent extends SwipeableBaseComponent {
 		return this.evenSlide as SwipeableWeek;
 	}
 
-	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
-		scheduleStateService: CalendarStateService,
-	) {
-		super('ScheduleWeekCardComponent', errorLogger, scheduleStateService, 7);
+	constructor(scheduleStateService: CalendarStateService) {
+		super('ScheduleWeekCardComponent', scheduleStateService, 7);
 
 		this.createSlides();
 

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { ISneatUserState } from '@sneat/auth-core';
 import { IUserSpaceBrief } from '@sneat/auth-models';
@@ -32,16 +31,14 @@ import { IonicModule } from '@ionic/angular';
 export class SpaceMenuComponent extends SpaceBaseComponent {
 	protected spaces?: readonly IIdAndBrief<IUserSpaceBrief>[];
 
-	constructor(
-		route: ActivatedRoute,
-		params: SpaceComponentBaseParams,
-		private readonly menuCtrl: MenuController,
-	) {
-		super('SpaceMenuComponent', route, params);
-		params.userService.userState.pipe(takeUntil(this.destroyed$)).subscribe({
-			next: this.onUserStateChanged,
-			error: this.errorLogger.logErrorHandler('failed to get user stage'),
-		});
+	constructor(private readonly menuCtrl: MenuController) {
+		super('SpaceMenuComponent');
+		this.spaceParams.userService.userState
+			.pipe(takeUntil(this.destroyed$))
+			.subscribe({
+				next: this.onUserStateChanged,
+				error: this.errorLogger.logErrorHandler('failed to get user stage'),
+			});
 	}
 
 	protected goOverview(): boolean {

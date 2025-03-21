@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { Member } from '@sneat/contactus-core';
 import { ContactusServicesModule } from '@sneat/contactus-services';
@@ -46,14 +45,12 @@ export class BudgetPageComponent extends SpaceBaseComponent {
 	}
 
 	constructor(
-		route: ActivatedRoute,
-		params: SpaceComponentBaseParams,
 		private readonly calendariumSpaceService: CalendariumSpaceService,
 		// private readonly assetGroupsService: IAssetGroupService,
 		// private readonly memberService: IMemberService,
 	) {
-		super('BudgetPageComponent', route, params);
-		route.queryParamMap.subscribe((qp) => {
+		super('BudgetPageComponent');
+		this.route.queryParamMap.subscribe((qp) => {
 			const tab = qp.get('tab');
 			if (tab === 'incomes' || tab === 'expenses') {
 				this.liabilitiesMode = tab as LiabilitiesMode;

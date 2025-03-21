@@ -1,0 +1,14 @@
+<ion-header>
+	<ion-toolbar color="light" class="with-end-buttons">
+		<ion-buttons slot="start">
+			<ion-back-button [defaultHref]="defaultBackUrl + '/trackers'" />
+		</ion-buttons>
+		<ion-title>📊 New Tracker </ion-title>
+		<ion-buttons slot="end">
+			<ion-menu-button menu="mainMenu" />
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+<ion-content>
+	<sneat-tracker [$space]="space" [$trackerID]="$trackerID()" />
+</ion-content>

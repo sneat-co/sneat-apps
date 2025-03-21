@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { IAssetCategory } from '@sneat/mod-assetus-core';
@@ -39,13 +38,9 @@ export class NewAssetPageComponent extends SpaceBaseComponent {
 		{ id: 'dwelling', title: 'Real estate', order: 2 },
 	];
 
-	constructor(
-		// assetCategoryService: IAssetCategoryService,
-		// assetService: IAssetService,
-		route: ActivatedRoute,
-		params: SpaceComponentBaseParams,
-	) {
-		super('AssetNewPageComponent', route, params);
+	constructor() {
+		// assetService: IAssetService, // assetCategoryService: IAssetCategoryService,
+		super('AssetNewPageComponent');
 		const assetType = window.history.state['assetType'];
 		if (assetType) {
 			this.category = this.categories.find((c) => c.id === assetType);

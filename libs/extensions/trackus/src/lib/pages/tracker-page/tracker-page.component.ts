@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import {
 	SpaceBaseComponent,
-	SpaceComponentBaseParams,
+	SpacePageBaseComponent,
 } from '@sneat/team-components';
 import { distinctUntilChanged, map } from 'rxjs';
 import { TrackerComponent } from '../../components';
@@ -15,12 +14,12 @@ import { TrackerComponent } from '../../components';
 	templateUrl: './tracker-page.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TrackerPageComponent extends SpaceBaseComponent {
+export class TrackerPageComponent extends SpacePageBaseComponent {
 	protected readonly $trackerID = signal<string | undefined>(undefined);
 
-	constructor(route: ActivatedRoute, params: SpaceComponentBaseParams) {
-		super('TrackerPageComponent', route, params);
-		route.paramMap
+	constructor() {
+		super('TrackerPageComponent');
+		this.route.paramMap
 			.pipe(
 				map((p) => p.get('trackerID')),
 				distinctUntilChanged(),

@@ -1,13 +1,5 @@
-import {
-	Component,
-	EventEmitter,
-	Inject,
-	Input,
-	OnInit,
-	Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { virtualSliderAnimations } from '@sneat/components';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
 import { SpaceDaysProvider } from '../../../../services/space-days-provider';
 import { NewHappeningParams } from '@sneat/mod-schedulus-core';
@@ -39,11 +31,10 @@ export class CalendarDayCardComponent
 	}
 
 	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		scheduleSateService: CalendarStateService,
 		// private readonly spaceDaysProvider: SpaceDaysProvider,
 	) {
-		super('ScheduleDayCardComponent', errorLogger, scheduleSateService);
+		super('ScheduleDayCardComponent', scheduleSateService);
 	}
 
 	ngOnInit(): void {

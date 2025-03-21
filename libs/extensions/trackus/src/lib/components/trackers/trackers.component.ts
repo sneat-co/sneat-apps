@@ -4,7 +4,6 @@ import {
 	computed,
 	effect,
 	inject,
-	Inject,
 	input,
 	OnInit,
 	signal,
@@ -12,13 +11,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import {
-	AnalyticsService,
-	IAnalyticsService,
-	IIdAndBrief,
-	IIdAndOptionalDbo,
-} from '@sneat/core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { AnalyticsService, IIdAndBrief, IIdAndOptionalDbo } from '@sneat/core';
 import { ISpaceContext } from '@sneat/team-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { Subscription } from 'rxjs';
@@ -220,8 +213,8 @@ export class TrackersComponent extends SneatBaseComponent implements OnInit {
 	private readonly trackusSpaceService = inject(TrackusSpaceService);
 	private readonly trackusApiService = inject(TrackusApiService);
 
-	constructor(@Inject(ErrorLogger) errorLogger: IErrorLogger) {
-		super('TrackersComponent', errorLogger);
+	constructor() {
+		super('TrackersComponent');
 		const watchTrackusSpaceEffect = effect(this.watchTrackusSpace);
 		this.destroyed$.subscribe(() => {
 			this.trackersSub?.unsubscribe();

@@ -8,7 +8,6 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatUserService } from '@sneat/auth-core';
 import { SneatPipesModule } from '@sneat/components';
@@ -40,12 +39,11 @@ export class ContactsFilterComponent
 	members?: IIdAndBrief<IContactBrief>[];
 
 	constructor(
-		route: ActivatedRoute,
 		spaceParams: SpaceComponentBaseParams,
 		userService: SneatUserService,
 		contactusSpaceService: ContactusSpaceService,
 	) {
-		super('ContactsFilterComponent', route, spaceParams, contactusSpaceService);
+		super('ContactsFilterComponent', contactusSpaceService);
 		const contactusSpaceContextService = new ContactusSpaceContextService(
 			spaceParams.errorLogger,
 			this.destroyed$,

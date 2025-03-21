@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ISaveEvent, SneatPipesModule } from '@sneat/components';
 import {
@@ -41,12 +41,11 @@ export class ContactPageComponent extends ContactBasePage {
 	protected segment: 'contact' | 'members' | 'assets' = 'contact';
 
 	constructor(
-		route: ActivatedRoute,
 		params: ContactComponentBaseParams,
 		private readonly contactsService: ContactService,
 		private readonly sneatNavService: SneatNavService,
 	) {
-		super('ContactPageComponent', route, params);
+		super('ContactPageComponent', params);
 		this.defaultBackPage = 'contacts';
 	}
 

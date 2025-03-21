@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import { ContactusServicesModule } from '@sneat/contactus-services';
@@ -42,8 +41,8 @@ export class NewHappeningPageComponent extends CalendarBasePage {
 
 	protected happening?: IHappeningContext;
 
-	constructor(route: ActivatedRoute, params: SpaceComponentBaseParams) {
-		super('NewHappeningPageComponent', route, params);
+	constructor() {
+		super('NewHappeningPageComponent');
 		this.isToDo = location.pathname.includes('/new-task');
 		this.date = (history.state.date as string) || '';
 		console.log('date', this.date);
@@ -52,32 +51,34 @@ export class NewHappeningPageComponent extends CalendarBasePage {
 		if (type && this.space && !this.happening) {
 			this.createHappeningContext(type);
 		}
-		route.queryParamMap.pipe(takeUntil(this.destroyed$), first()).subscribe({
-			next: (queryParams) => {
-				console.log(
-					'NewHappeningPage.constructor() => queryParams:',
-					queryParams,
-				);
-				const type = queryParams.get('type');
-				if (type !== 'single' && type !== 'recurring') {
-					console.warn('unknown happening type passed in URL: type=' + type);
-					return;
-				}
-				if (this.space && !this.happening) {
-					this.createHappeningContext(type);
-				}
-				if (!this.wd) {
-					this.wd = queryParams.get('wd') as WeekdayCode2;
-				}
-				if (!this.date) {
-					this.date = queryParams.get('date') || '';
-				}
-				// if (!this.initialHappeningType) {
-				// 	this.initialHappeningType = queryParams.get('type') as HappeningType;
-				// }
-			},
-			error: this.logErrorHandler('failed to get query params'),
-		});
+		this.route.queryParamMap
+			.pipe(takeUntil(this.destroyed$), first())
+			.subscribe({
+				next: (queryParams) => {
+					console.log(
+						'NewHappeningPage.constructor() => queryParams:',
+						queryParams,
+					);
+					const type = queryParams.get('type');
+					if (type !== 'single' && type !== 'recurring') {
+						console.warn('unknown happening type passed in URL: type=' + type);
+						return;
+					}
+					if (this.space && !this.happening) {
+						this.createHappeningContext(type);
+					}
+					if (!this.wd) {
+						this.wd = queryParams.get('wd') as WeekdayCode2;
+					}
+					if (!this.date) {
+						this.date = queryParams.get('date') || '';
+					}
+					// if (!this.initialHappeningType) {
+					// 	this.initialHappeningType = queryParams.get('type') as HappeningType;
+					// }
+				},
+				error: this.logErrorHandler('failed to get query params'),
+			});
 		this.spaceChanged$.subscribe({
 			next: () => {
 				if (this.happening) {

@@ -7,7 +7,6 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { SharedWithModule } from '@sneat/contactus-shared';
@@ -77,7 +76,6 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 	// protected activeListItems?: IListItemWithUiState[];
 
 	constructor(
-		route: ActivatedRoute,
 		params: ListusComponentBaseParams,
 		private readonly zone: NgZone,
 		// private readonly listusService: IListusService,
@@ -88,7 +86,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		private readonly listusAppStateService: IListusAppStateService,
 		private readonly changeDetectorRef: ChangeDetectorRef, // private readonly listusDbService: IListusService,
 	) {
-		super('ListPageComponent', route, params);
+		super('ListPageComponent', params);
 		console.log('ListPageComponent.constructor(), userId:', this.currentUserId);
 		this.preloader.markAsPreloaded('list');
 		if (location.pathname.includes('/lists')) {

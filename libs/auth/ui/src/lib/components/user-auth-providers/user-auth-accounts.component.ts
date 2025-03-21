@@ -1,16 +1,10 @@
 import { CommonModule } from '@angular/common';
-import {
-	ChangeDetectionStrategy,
-	Component,
-	Inject,
-	signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SneatApiService } from '@sneat/api';
 import { AuthProviderID, SneatUserService } from '@sneat/auth-core';
 import { IUserRecord } from '@sneat/auth-models';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SneatBaseComponent } from '@sneat/ui';
 import { LoginWithTelegramComponent } from '../../pages/login-page/login-with-telegram.component';
 import { UserAuthAProviderStatusComponent } from './user-auth-provider-status';
@@ -35,11 +29,10 @@ export class UserAuthAccountsComponent extends SneatBaseComponent {
 	);
 
 	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		private readonly sneatUserService: SneatUserService,
 		private readonly sneatApiService: SneatApiService,
 	) {
-		super('UserAuthAccountsComponent', errorLogger);
+		super('UserAuthAccountsComponent');
 		this.sneatUserService.userState.pipe(this.takeUntilDestroyed()).subscribe({
 			next: (user) => {
 				this.$userRecord.set(user.record || undefined);

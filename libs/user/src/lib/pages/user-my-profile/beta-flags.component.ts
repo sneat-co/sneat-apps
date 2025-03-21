@@ -1,8 +1,7 @@
-import { Component, Inject, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { SneatUserService } from '@sneat/auth-core';
 import { IUserRecord } from '@sneat/auth-models';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SneatBaseComponent } from '@sneat/ui';
 
 @Component({
@@ -15,11 +14,8 @@ export class BetaFlagsComponent extends SneatBaseComponent {
 		undefined,
 	);
 
-	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
-		userService: SneatUserService,
-	) {
-		super('BetaFlagsComponent', errorLogger);
+	constructor(userService: SneatUserService) {
+		super('BetaFlagsComponent');
 		userService.userState.pipe(this.takeUntilDestroyed()).subscribe({
 			next: (user) => this.$userRecord.set(user.record),
 		});

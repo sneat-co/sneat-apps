@@ -1,4 +1,4 @@
-import { Directive, Inject, OnInit, signal } from '@angular/core';
+import { Directive, inject, Inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
@@ -104,16 +104,14 @@ export abstract class SpaceBaseComponent
 		return url && this.defaultBackPage ? url + '/' + this.defaultBackPage : url;
 	}
 
-	protected constructor(
-		@Inject(ClassName) className: string,
-		protected readonly route: ActivatedRoute,
-		protected readonly spaceParams: SpaceComponentBaseParams,
-	) {
-		super(className, spaceParams.errorLogger);
+	protected readonly route = inject(ActivatedRoute);
+	protected readonly spaceParams = inject(SpaceComponentBaseParams);
+
+	protected constructor(@Inject(ClassName) className: string) {
+		super(className);
+		const spaceParams = this.spaceParams;
 		// console.log(`${className} extends TeamBasePageDirective.constructor()`);
 		try {
-			this.route = route;
-
 			this.navController = spaceParams.navController;
 			this.spaceService = spaceParams.spaceService;
 			this.userService = spaceParams.userService;

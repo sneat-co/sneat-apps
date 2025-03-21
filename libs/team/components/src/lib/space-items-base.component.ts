@@ -1,15 +1,11 @@
-import { ActivatedRoute } from '@angular/router';
 import { SpaceBaseComponent } from './space-base-component.directive';
-import { SpaceComponentBaseParams } from './space-component-base-params.service';
 
 export abstract class SpaceItemsBaseComponent extends SpaceBaseComponent {
 	protected constructor(
 		className: string,
-		route: ActivatedRoute,
-		teamParams: SpaceComponentBaseParams,
 		private parentPagePath: string,
 	) {
-		super(className, route, teamParams);
+		super(className);
 	}
 
 	override get defaultBackUrl(): string {

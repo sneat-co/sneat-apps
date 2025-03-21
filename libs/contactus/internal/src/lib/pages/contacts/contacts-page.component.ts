@@ -73,12 +73,10 @@ export class ContactsPageComponent extends SpaceItemsBaseComponent {
 	}
 
 	constructor(
-		route: ActivatedRoute,
-		params: SpaceComponentBaseParams,
 		// private readonly contactService: ContactService,
 		private readonly contactusSpaceService: ContactusSpaceService,
 	) {
-		super('ContactsPageComponent', route, params, '');
+		super('ContactsPageComponent', '');
 		const role = location.pathname.match(/(applicant|landlord|tenant)/);
 		if (role) {
 			this.role = role[1] as ContactRole;
@@ -92,7 +90,7 @@ export class ContactsPageComponent extends SpaceItemsBaseComponent {
 		// this.teamIDChanged$.subscribe({
 		// 	next: this.onTeamIDChangedWorker,
 		// });
-		route.queryParamMap.pipe(this.takeUntilDestroyed()).subscribe({
+		this.route.queryParamMap.pipe(this.takeUntilDestroyed()).subscribe({
 			next: (q) => {
 				this.role = (q.get('role') as ContactRole) || undefined;
 				this.applyFilter(this.filter, this.role);
