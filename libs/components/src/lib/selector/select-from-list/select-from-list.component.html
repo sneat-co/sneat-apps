@@ -1,31 +1,32 @@
-<ion-item *ngIf="value" [class]="{ 'sneat-tiny-end-padding': !isReadonly }">
-	<ion-select
-		#selectInput
-		*ngIf="value"
-		interface="popover"
-		[label]="label"
-		[(ngModel)]="value"
-		(ionChange)="onSelectChanged($event)"
-		[disabled]="isReadonly"
-	>
-		@for (item of items; track item.id) {
-			<ion-select-option [value]="item.id">
-				{{ item.emoji }}
-				@if (item.shortTitle) {
-					{{ item.shortTitle }}
-				} @else {
-					{{ item.title }}
-				}
-			</ion-select-option>
-		}
-		<!--		<ion-select-option value="other">OTHER</ion-select-option>-->
-	</ion-select>
-	<ion-buttons slot="end" class="ion-no-margin" *ngIf="!isReadonly">
-		<ion-button color="medium" title="Deselect" (click)="deselect()">
-			<ion-icon name="close-outline" />
-		</ion-button>
-	</ion-buttons>
-</ion-item>
+@if (value) {
+	<ion-item [class]="{ 'sneat-tiny-end-padding': !isReadonly }">
+		<ion-select
+			#selectInput
+			interface="popover"
+			[label]="label"
+			[(ngModel)]="value"
+			(ionChange)="onSelectChanged($event)"
+			[disabled]="isReadonly"
+		>
+			@for (item of items; track item.id) {
+				<ion-select-option [value]="item.id">
+					{{ item.emoji }}
+					@if (item.shortTitle) {
+						{{ item.shortTitle }}
+					} @else {
+						{{ item.title }}
+					}
+				</ion-select-option>
+			}
+			<!--		<ion-select-option value="other">OTHER</ion-select-option>-->
+		</ion-select>
+		<ion-buttons slot="end" class="ion-no-margin" *ngIf="!isReadonly">
+			<ion-button color="medium" title="Deselect" (click)="deselect()">
+				<ion-icon name="close-outline" />
+			</ion-button>
+		</ion-buttons>
+	</ion-item>
+}
 
 <!--<ion-item *ngIf="isFilterable && !value">-->
 <!--	<ion-input-->

@@ -3,12 +3,14 @@
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="defaultBackUrl + '/trackers'" />
 		</ion-buttons>
-		<ion-title>📊 New Tracker </ion-title>
+		<ion-title>📊 New Tracker</ion-title>
 		<ion-buttons slot="end">
 			<ion-menu-button menu="mainMenu" />
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
-<ion-content>
-	<sneat-tracker [$space]="space" [$trackerID]="$trackerID()" />
+<ion-content class="ion-padding">
+	<ion-card>
+		<sneat-new-tracker-form [category]="$category()" />
+	</ion-card>
 </ion-content>

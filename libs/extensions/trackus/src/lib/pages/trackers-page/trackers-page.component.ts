@@ -17,4 +17,17 @@ export class TrackersPageComponent extends SpaceBaseComponent {
 	override onSpaceIdChanged(): void {
 		super.onSpaceIdChanged();
 	}
+
+	protected goNewTracker(category?: string): void {
+		console.log('goNewTracker', category);
+		this.navController
+			.navigateForward(this.spacePageUrl('trackers/new-tracker'), {
+				queryParams: category ? { category } : undefined,
+			})
+			.catch(
+				this.errorLogger.logErrorHandler(
+					'Failed to navigate to new tracker page',
+				),
+			);
+	}
 }

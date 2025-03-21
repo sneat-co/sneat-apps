@@ -10,7 +10,7 @@
 			}
 		</ion-title>
 		<ion-buttons slot="end">
-			<ion-button>
+			<ion-button (click)="goNewTracker()">
 				<ion-icon name="add" slot="start" />
 				<ion-label>Add</ion-label>
 			</ion-button>
@@ -20,5 +20,8 @@
 </ion-header>
 
 <ion-content>
-	<sneat-trackers [$space]="space"></sneat-trackers>
+	<sneat-trackers
+		[$space]="space"
+		(goNewTracker)="goNewTracker($event)"
+	></sneat-trackers>
 </ion-content>

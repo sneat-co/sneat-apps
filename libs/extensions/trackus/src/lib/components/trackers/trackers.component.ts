@@ -3,9 +3,11 @@ import {
 	Component,
 	computed,
 	effect,
+	EventEmitter,
 	inject,
 	input,
 	OnInit,
+	Output,
 	signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -36,6 +38,109 @@ interface Category {
 	readonly emoji: string;
 	readonly trackers: readonly IIdAndBrief<ITrackerBrief>[];
 }
+
+const standardTrackers: readonly IIdAndBrief<ITrackerBrief>[] = [
+	{
+		id: '_push_ups',
+		brief: {
+			trackBy: 'contact',
+			valueType: 'int',
+			categories: ['fitness'],
+			title: 'Push-ups',
+			emoji: '🏋️',
+		},
+	},
+	{
+		id: '_pull_ups',
+		brief: {
+			trackBy: 'contact',
+			valueType: 'int',
+			categories: ['fitness'],
+			title: 'Pull-ups',
+			emoji: '🏋️',
+		},
+	},
+	{
+		id: '_squats',
+		brief: {
+			trackBy: 'contact',
+			valueType: 'int',
+			categories: ['fitness'],
+			title: 'Squats',
+			emoji: '🏋️',
+		},
+	},
+	{
+		id: '_weight',
+		brief: {
+			trackBy: 'contact',
+			valueType: 'float',
+			categories: ['fitness', 'health'],
+			title: 'Weight',
+			emoji: '⚖️',
+		},
+	},
+	{
+		id: '_body_temperature',
+		brief: {
+			trackBy: 'contact',
+			valueType: 'float',
+			categories: ['health'],
+			title: 'Temperature',
+			emoji: '🌡️',
+		},
+	},
+	{
+		id: '_mileage',
+		brief: {
+			trackBy: 'asset',
+			valueType: 'int',
+			categories: ['vehicles'],
+			title: 'Mileage',
+			emoji: '🛣️',
+		},
+	},
+	{
+		id: '_fuel',
+		brief: {
+			trackBy: 'asset',
+			valueType: 'float',
+			categories: ['vehicles'],
+			title: 'Fuel',
+			emoji: '⛽',
+		},
+	},
+	{
+		id: '_electricity',
+		brief: {
+			trackBy: 'asset',
+			valueType: 'int',
+			categories: ['home'],
+			title: 'Electricity',
+			emoji: '💡',
+		},
+	},
+	{
+		id: '_lpg',
+		brief: {
+			trackBy: 'asset',
+			valueType: 'int',
+			categories: ['home'],
+			title: 'LPG',
+			emoji: '🔥',
+		},
+	},
+	{
+		id: '_heating',
+		brief: {
+			trackBy: 'asset',
+			valueType: 'money',
+			categories: ['home'],
+			title: 'Heating',
+			emoji: '🔥',
+		},
+	},
+];
 
 @Component({
 	selector: 'sneat-trackers',
@@ -104,109 +209,6 @@ export class TrackersComponent extends SneatBaseComponent implements OnInit {
 		{ id: 'vehicles', title: 'Vehicles', trackers: [], emoji: '🚗' },
 	]);
 
-	protected readonly standardTrackers: readonly IIdAndBrief<ITrackerBrief>[] = [
-		{
-			id: '_push_ups',
-			brief: {
-				trackBy: 'contact',
-				valueType: 'int',
-				categories: ['fitness'],
-				title: 'Push-ups',
-				emoji: '🏋️',
-			},
-		},
-		{
-			id: '_pull_ups',
-			brief: {
-				trackBy: 'contact',
-				valueType: 'int',
-				categories: ['fitness'],
-				title: 'Pull-ups',
-				emoji: '🏋️',
-			},
-		},
-		{
-			id: '_squats',
-			brief: {
-				trackBy: 'contact',
-				valueType: 'int',
-				categories: ['fitness'],
-				title: 'Squats',
-				emoji: '🏋️',
-			},
-		},
-		{
-			id: '_weight',
-			brief: {
-				trackBy: 'contact',
-				valueType: 'float',
-				categories: ['fitness', 'health'],
-				title: 'Weight',
-				emoji: '⚖️',
-			},
-		},
-		{
-			id: '_body_temperature',
-			brief: {
-				trackBy: 'contact',
-				valueType: 'float',
-				categories: ['health'],
-				title: 'Temperature',
-				emoji: '🌡️',
-			},
-		},
-		{
-			id: '_mileage',
-			brief: {
-				trackBy: 'asset',
-				valueType: 'int',
-				categories: ['vehicles'],
-				title: 'Mileage',
-				emoji: '🛣️',
-			},
-		},
-		{
-			id: '_fuel',
-			brief: {
-				trackBy: 'asset',
-				valueType: 'float',
-				categories: ['vehicles'],
-				title: 'Fuel',
-				emoji: '⛽',
-			},
-		},
-		{
-			id: '_electricity',
-			brief: {
-				trackBy: 'asset',
-				valueType: 'int',
-				categories: ['home'],
-				title: 'Electricity',
-				emoji: '💡',
-			},
-		},
-		{
-			id: '_lpg',
-			brief: {
-				trackBy: 'asset',
-				valueType: 'int',
-				categories: ['home'],
-				title: 'LPG',
-				emoji: '🔥',
-			},
-		},
-		{
-			id: '_heating',
-			brief: {
-				trackBy: 'asset',
-				valueType: 'money',
-				categories: ['home'],
-				title: 'Heating',
-				emoji: '🔥',
-			},
-		},
-	];
-
 	private trackersSub?: Subscription;
 
 	private readonly analyticsService = inject(AnalyticsService);
@@ -236,7 +238,7 @@ export class TrackersComponent extends SneatBaseComponent implements OnInit {
 				brief,
 			})) || [];
 
-		this.standardTrackers.forEach((tracker) => {
+		standardTrackers.forEach((tracker) => {
 			const isRemovedTracker = trackusSpace.dbo?.archivedTrackers?.[tracker.id];
 			if (!isRemovedTracker && !trackers.find((t) => t.id === tracker.id)) {
 				trackers.push(tracker);
@@ -333,9 +335,12 @@ export class TrackersComponent extends SneatBaseComponent implements OnInit {
 		this.$category.set(selectedValue);
 	};
 
-	protected newTracker(event: Event, category: string): void {
-		console.log('newTracker', category);
+	@Output() public readonly goNewTracker = new EventEmitter<string>();
+
+	protected openNewTracker(event: Event, category: string): void {
+		console.log('goNewTracker', category);
 		event.stopPropagation();
 		event.preventDefault();
+		this.goNewTracker.emit(category);
 	}
 }

@@ -9,7 +9,7 @@
 					<ion-label>{{ category.emoji }} {{ category.title }}</ion-label>
 					@if ($category() === category.id) {
 						<ion-buttons slot="end">
-							<ion-button (click)="newTracker($event, category.id)">
+							<ion-button (click)="openNewTracker($event, category.id)">
 								<ion-icon slot="start" name="add-outline" color="secondary" />
 								<ion-label color="medium">Add</ion-label>
 							</ion-button>

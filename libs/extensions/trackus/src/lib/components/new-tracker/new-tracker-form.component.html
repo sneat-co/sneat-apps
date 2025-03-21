@@ -1,0 +1,65 @@
+<ion-item lines="full">
+	<ion-input label="Title" placeholder="Name of tracker here" />
+</ion-item>
+
+@if (!$categoryState()) {
+	<ion-item-divider color="light">
+		<ion-label>Category</ion-label>
+	</ion-item-divider>
+}
+<sneat-select-from-list
+	label="Category"
+	labelPlacement="start"
+	[items]="categories"
+	[value]="$categoryState()"
+	(valueChange)="$category.set($event)"
+/>
+
+@if (!$valueType()) {
+	<ion-item-divider color="light">
+		<ion-label>Type</ion-label>
+	</ion-item-divider>
+}
+<sneat-select-from-list
+	label="Type"
+	labelPlacement="start"
+	[items]="typeOptions"
+	[value]="$valueType()"
+	(valueChange)="$valueType.set($event)"
+/>
+
+@if ($valueType() === "int" || $valueType() === "float") {
+	<ion-item-group>
+		<ion-item-divider color="light">
+			<ion-label color="medium">Number type</ion-label>
+		</ion-item-divider>
+		<ion-radio-group
+			name="number_type"
+			[value]="$numberType()"
+			(ionChange)="$numberType.set($event.detail.value)"
+		>
+			<ion-item>
+				<ion-radio value="current">Fixed value tracker</ion-radio>
+			</ion-item>
+			<ion-item-divider>
+				<ion-label
+					>Records absolute values that don’t add up over time (e.g., mileage,
+					odometer readings).</ion-label
+				>
+			</ion-item-divider>
+			<ion-item>
+				<ion-radio value="delta">Cumulative value tracker</ion-radio>
+			</ion-item>
+			<ion-item-divider
+				>Records values that can be summed over time (e.g., fuel volume,
+				expenses, distance traveled per trip).
+			</ion-item-divider>
+		</ion-radio-group>
+	</ion-item-group>
+}
+
+<div class="ion-padding">
+	<ion-button [disabled]="!$valueType() || !$numberType()">
+		<ion-label>Create tracker</ion-label>
+	</ion-button>
+</div>
