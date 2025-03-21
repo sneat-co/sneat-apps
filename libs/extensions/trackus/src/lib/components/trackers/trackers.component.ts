@@ -244,13 +244,16 @@ export class TrackersComponent extends SneatBaseComponent implements OnInit {
 			})) || [];
 
 		this.standardTrackers.forEach((tracker) => {
-			const isRemovedTracker = trackusSpace.dbo?.removedTrackers?.[tracker.id];
+			const isRemovedTracker = trackusSpace.dbo?.archivedTrackers?.[tracker.id];
 			if (!isRemovedTracker && !trackers.find((t) => t.id === tracker.id)) {
 				trackers.push(tracker);
 			}
 		});
 
-		const categories = [...this.$categories()];
+		const categories: Category[] = this.$categories().map((c) => ({
+			...c,
+			trackers: [],
+		}));
 
 		const addTrackersToCategories = (
 			trackers: readonly IIdAndBrief<ITrackerBrief>[],
@@ -295,6 +298,8 @@ export class TrackersComponent extends SneatBaseComponent implements OnInit {
 		return tracker.id;
 	}
 
+	protected readonly $archivingTrackerIDs = signal<readonly string[]>([]);
+
 	protected archiveTracker(event: Event, trackerID: string): void {
 		event.stopPropagation();
 		event.preventDefault();
@@ -306,7 +311,21 @@ export class TrackersComponent extends SneatBaseComponent implements OnInit {
 			return;
 		}
 		const spaceID = this.$spaceID();
-		this.trackusApiService.archiveTracker({ spaceID, trackerID }).subscribe({});
+		const archivingTrackerIDs = this.$archivingTrackerIDs();
+		if (!archivingTrackerIDs.includes(trackerID)) {
+			this.$archivingTrackerIDs.set([...archivingTrackerIDs, trackerID]);
+		}
+		const onArchivingComplete = () =>
+			this.$archivingTrackerIDs.set(
+				archivingTrackerIDs.filter((id) => id !== trackerID),
+			);
+		this.trackusApiService.archiveTracker({ spaceID, trackerID }).subscribe({
+			next: onArchivingComplete,
+			error: (err) => {
+				onArchivingComplete();
+				this.logError(err, 'Failed to archive tracker');
+			},
+		});
 	}
 
 	protected retry(): void {
