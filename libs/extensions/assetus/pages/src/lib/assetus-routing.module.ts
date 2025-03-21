@@ -10,6 +10,7 @@ const assetusRoutes: Route[] = [
 	},
 	{
 		path: 'assets',
+		data: { title: 'Assets' },
 		loadComponent: () => import('./assets').then((m) => m.AssetsPageComponent),
 		// ...guardRoute,
 	},

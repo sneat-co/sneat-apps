@@ -4,6 +4,7 @@ import { Route } from '@angular/router';
 export const calendariumRoutes: Route[] = [
 	{
 		path: 'calendar',
+		data: { title: 'Calendar' },
 		loadComponent: () =>
 			import('./pages/calendar/calendar-page.component').then(
 				(m) => m.CalendarPageComponent,
@@ -12,6 +13,7 @@ export const calendariumRoutes: Route[] = [
 	},
 	{
 		path: 'new-happening',
+		data: { title: 'New happening' },
 		loadComponent: () =>
 			import('./pages/new-happening/new-happening-page.component').then(
 				(m) => m.NewHappeningPageComponent,
@@ -20,6 +22,7 @@ export const calendariumRoutes: Route[] = [
 	},
 	{
 		path: 'happening/:happeningID',
+		data: { title: 'Happening' },
 		loadComponent: () =>
 			import('./pages/happening/happening-page.component').then(
 				(m) => m.HappeningPageComponent,

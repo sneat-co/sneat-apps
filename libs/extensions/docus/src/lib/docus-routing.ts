@@ -4,6 +4,7 @@ import { Route } from '@angular/router';
 export const docusRoutes: Route[] = [
 	{
 		path: 'documents',
+		data: { title: 'Documents' },
 		loadComponent: () =>
 			import('./pages/documents/documents-page.component').then(
 				(m) => m.DocumentsPageComponent,
@@ -18,6 +19,7 @@ export const docusRoutes: Route[] = [
 	// },
 	{
 		path: 'new-document',
+		data: { title: 'New Document' },
 		loadComponent: () =>
 			import('./pages/document-new/new-document-page.component').then(
 				(m) => m.NewDocumentPageComponent,

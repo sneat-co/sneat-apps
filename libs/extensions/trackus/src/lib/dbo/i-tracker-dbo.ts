@@ -14,7 +14,15 @@ export interface IWithEntryType {
 	readonly valueType: TrackerValueType;
 }
 
+export type TrackerCategory =
+	| 'fitness'
+	| 'health'
+	| 'home'
+	| 'vehicles'
+	| string;
+
 export interface ITrackerBrief extends IWithEntryType {
+	readonly categories: readonly TrackerCategory[];
 	readonly title: string;
 	readonly emoji?: string;
 }

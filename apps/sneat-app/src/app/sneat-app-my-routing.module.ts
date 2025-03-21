@@ -11,11 +11,13 @@ import { RouterModule } from '@angular/router';
 			},
 			{
 				path: 'profile',
+				data: { title: "User's profile" },
 				loadComponent: () =>
 					import('@sneat/user').then((m) => m.UserMyProfilePageComponent),
 			},
 			{
 				path: 'spaces',
+				data: { title: "User's spaces" },
 				loadChildren: () =>
 					import('@sneat/team-pages').then((m) => m.SpacesPageModule),
 			},

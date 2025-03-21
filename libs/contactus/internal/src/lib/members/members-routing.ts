@@ -3,6 +3,7 @@ import { Route } from '@angular/router';
 export const membersRoutes: Route[] = [
 	{
 		path: 'members',
+		data: { title: 'Members' },
 		loadComponent: () =>
 			import('./pages/members/members-page.component').then(
 				(m) => m.MembersPageComponent,
@@ -11,12 +12,14 @@ export const membersRoutes: Route[] = [
 	},
 	{
 		path: 'new-member',
+		data: { title: 'New member' },
 		loadComponent: () =>
 			import('./pages/new-member').then((m) => m.NewMemberPageComponent),
 		// ...guardRoute,
 	},
 	{
 		path: 'member/:contactID',
+		data: { title: 'Member' },
 		loadChildren: () =>
 			import('./pages/member-routing').then((m) => m.MemberRoutingModule),
 	},

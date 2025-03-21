@@ -25,6 +25,7 @@ const routes: Routes = [
 	},
 	{
 		path: '',
+		data: { title: 'Space' },
 		// pathMatch: 'full',
 		loadComponent: () =>
 			import('./team-page/space-page.component').then(

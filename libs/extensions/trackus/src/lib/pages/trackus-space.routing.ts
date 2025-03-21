@@ -4,6 +4,7 @@ import { Route } from '@angular/router';
 export const trackusSpaceRoutes: Route[] = [
 	{
 		path: 'trackers',
+		data: { title: 'Trackers' },
 		pathMatch: 'full',
 		loadComponent: () =>
 			import('./trackers-page/trackers-page.component').then(

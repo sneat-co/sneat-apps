@@ -5,6 +5,7 @@ import { Route } from '@angular/router';
 export const listusRoutes: Route[] = [
 	{
 		path: 'lists',
+		data: { title: 'Lists' },
 		// canActivate: [AuthGuard],
 		loadComponent: () =>
 			import('./pages/lists/lists-page.component').then(
@@ -14,6 +15,7 @@ export const listusRoutes: Route[] = [
 	},
 	{
 		path: 'list/:listType/:listID',
+		data: { title: 'List' },
 		// canActivate: [AuthGuard],
 		loadComponent: () =>
 			import('./pages/list/list-page.component').then(

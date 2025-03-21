@@ -5,6 +5,7 @@ import { memberRoutes, membersRoutes } from './members';
 export const contactusRoutes: Route[] = [
 	{
 		path: 'contacts',
+		data: { title: 'Contacts' },
 		loadComponent: () =>
 			import('./pages/contacts/contacts-page.component').then(
 				(m) => m.ContactsPageComponent,
@@ -13,17 +14,20 @@ export const contactusRoutes: Route[] = [
 	},
 	{
 		path: 'new-contact',
+		data: { title: 'New Contact' },
 		loadComponent: () =>
 			import('./pages').then((m) => m.NewContactPageComponent),
 		// ...guardRoute,
 	},
 	{
 		path: 'contact/:contactID',
+		data: { title: 'Contact' },
 		loadComponent: () => import('./pages').then((m) => m.ContactPageComponent),
 		// ...guardRoute,
 	},
 	{
 		path: 'contact/:contactID/new-location',
+		data: { title: 'New location' },
 		loadComponent: () =>
 			import('./pages').then((m) => m.NewLocationPageComponent),
 		// ...guardRoute,
