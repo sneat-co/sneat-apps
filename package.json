@@ -64,7 +64,7 @@
 		"@ionic/core": "8.5.1",
 		"@nx/angular": "20.6.2",
 		"@sentry/angular": "9.7.0",
-		"@sentry/browser": "9.7.0",
+		"@sentry/browser": "9.8.0",
 		"@sneat/random": "0.0.4",
 		"@sneat/wormhole": "^0.0.6",
 		"@types/tabulator-tables": "6.2.4",
