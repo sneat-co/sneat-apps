@@ -1,6 +1,7 @@
 import {
 	Component,
 	EventEmitter,
+	input,
 	Input,
 	OnDestroy,
 	Output,
@@ -11,6 +12,7 @@ import {
 	NewHappeningParams,
 	ScheduleNavService,
 } from '@sneat/mod-schedulus-core';
+import { ISpaceContext } from '@sneat/team-models';
 import { takeUntil } from 'rxjs';
 import {
 	emptyCalendarFilter,
@@ -26,6 +28,7 @@ import { SpaceDay } from '../../../../services/space-day';
 	standalone: false,
 })
 export class CalendarWeekdayComponent implements OnDestroy {
+	public readonly $space = input.required<ISpaceContext | undefined>();
 	private readonly destroyed = new EventEmitter<void>();
 	private filter = emptyCalendarFilter;
 
@@ -68,10 +71,13 @@ export class CalendarWeekdayComponent implements OnDestroy {
 	}
 
 	protected goNewHappening(type: HappeningType): void {
-		console.log('ScheduleWeekdayComponent.goNewHappening()', type);
-		const space = this.weekday?.day?.spaces?.length
-			? this.weekday.day.spaces[0]
-			: undefined;
+		// const space = this.weekday?.day?.spaces?.length
+		// 	? this.weekday.day.spaces[0]
+		// 	: undefined;
+		const space = this.$space();
+		console.log(
+			`ScheduleWeekdayComponent.goNewHappening() type=${type}, space=${JSON.stringify(space)}`,
+		);
 		if (!space) {
 			return;
 		}

@@ -1,5 +1,6 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Inject, input, Input } from '@angular/core';
 import { virtualSliderAnimations } from '@sneat/components';
+import { ISpaceContext } from '@sneat/team-models';
 import { SpaceDaysProvider } from '../../../../services/space-days-provider';
 import { getToday, CalendarStateService } from '../../calendar-state.service';
 import { SwipeableBaseComponent } from '../../../swipeable-base.component';
@@ -13,6 +14,7 @@ import { SwipeableWeek, swipeableWeek } from '../../../swipeable-ui';
 })
 // implements OnInit
 export class CalendarWeekCardComponent extends SwipeableBaseComponent {
+	public readonly $space = input.required<ISpaceContext | undefined>();
 	@Input({ required: true }) spaceDaysProvider?: SpaceDaysProvider;
 
 	get oddWeek(): SwipeableWeek {

@@ -1,6 +1,7 @@
 import {
 	Component,
 	EventEmitter,
+	input,
 	Input,
 	OnChanges,
 	Output,
@@ -22,6 +23,8 @@ import { Weekday } from '../../weekday';
 	standalone: false,
 })
 export class CalendarWeekComponent implements OnChanges {
+	public readonly $space = input.required<ISpaceContext | undefined>();
+
 	@Input({ required: true }) week?: Week;
 	@Input({ required: true }) spaceDaysProvider?: SpaceDaysProvider;
 	@Input() filter?: ICalendarFilter;
