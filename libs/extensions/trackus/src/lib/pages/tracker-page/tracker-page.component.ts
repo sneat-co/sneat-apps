@@ -1,10 +1,7 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import {
-	SpaceBaseComponent,
-	SpacePageBaseComponent,
-} from '@sneat/team-components';
+import { SpacePageBaseComponent } from '@sneat/team-components';
 import { distinctUntilChanged, map } from 'rxjs';
 import { TrackerComponent } from '../../components';
 

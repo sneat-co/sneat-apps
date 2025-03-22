@@ -4,7 +4,6 @@ import {
 	Component,
 	computed,
 	effect,
-	Inject,
 	input,
 	signal,
 	ViewChild,
@@ -19,7 +18,6 @@ import {
 	ContactusSpaceService,
 } from '@sneat/contactus-services';
 import { IIdAndBrief, IIdAndOptionalBriefAndOptionalDbo } from '@sneat/core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { distinctUntilChanged, map, Subscription } from 'rxjs';
