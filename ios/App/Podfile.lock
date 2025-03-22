@@ -5,9 +5,9 @@ PODS:
   - AppAuth/Core (1.7.6)
   - AppAuth/ExternalUserAgent (1.7.6):
     - AppAuth/Core
-  - Capacitor (7.0.1):
+  - Capacitor (7.1.0):
     - CapacitorCordova
-  - CapacitorCordova (7.0.1)
+  - CapacitorCordova (7.1.0)
   - CapacitorFirebaseAuthentication (7.1.0):
     - Capacitor
     - CapacitorFirebaseAuthentication/Lite (= 7.1.0)
@@ -32,7 +32,7 @@ PODS:
   - FBSDKCoreKit_Basics (18.0.0)
   - FBSDKLoginKit (18.0.0):
     - FBSDKCoreKit (= 18.0.0)
-  - FirebaseAppCheckInterop (11.9.0)
+  - FirebaseAppCheckInterop (11.10.0)
   - FirebaseAuth (11.7.0):
     - FirebaseAppCheckInterop (~> 11.0)
     - FirebaseAuthInterop (~> 11.0)
@@ -42,7 +42,7 @@ PODS:
     - GoogleUtilities/Environment (~> 8.0)
     - GTMSessionFetcher/Core (< 5.0, >= 3.4)
     - RecaptchaInterop (~> 100.0)
-  - FirebaseAuthInterop (11.9.0)
+  - FirebaseAuthInterop (11.10.0)
   - FirebaseCore (11.7.0):
     - FirebaseCoreInternal (~> 11.7.0)
     - GoogleUtilities/Environment (~> 8.0)
@@ -83,11 +83,11 @@ PODS:
   - RecaptchaInterop (100.0.0)
 
 DEPENDENCIES:
-  - "Capacitor (from `../../node_modules/.pnpm/@capacitor+ios@7.0.1_@capacitor+core@7.0.1/node_modules/@capacitor/ios`)"
-  - "CapacitorCordova (from `../../node_modules/.pnpm/@capacitor+ios@7.0.1_@capacitor+core@7.0.1/node_modules/@capacitor/ios`)"
-  - "CapacitorFirebaseAuthentication (from `../../node_modules/.pnpm/@capacitor-firebase+authentication@7.1.0_@capacitor+core@7.0.1_firebase@11.4.0/node_modules/@capacitor-firebase/authentication`)"
-  - "CapacitorFirebaseAuthentication/Facebook (from `../../node_modules/.pnpm/@capacitor-firebase+authentication@7.1.0_@capacitor+core@7.0.1_firebase@11.4.0/node_modules/@capacitor-firebase/authentication`)"
-  - "CapacitorFirebaseAuthentication/Google (from `../../node_modules/.pnpm/@capacitor-firebase+authentication@7.1.0_@capacitor+core@7.0.1_firebase@11.4.0/node_modules/@capacitor-firebase/authentication`)"
+  - "Capacitor (from `../../node_modules/.pnpm/@capacitor+ios@7.1.0_@capacitor+core@7.1.0/node_modules/@capacitor/ios`)"
+  - "CapacitorCordova (from `../../node_modules/.pnpm/@capacitor+ios@7.1.0_@capacitor+core@7.1.0/node_modules/@capacitor/ios`)"
+  - "CapacitorFirebaseAuthentication (from `../../node_modules/.pnpm/@capacitor-firebase+authentication@7.1.0_@capacitor+core@7.1.0_firebase@11.5.0/node_modules/@capacitor-firebase/authentication`)"
+  - "CapacitorFirebaseAuthentication/Facebook (from `../../node_modules/.pnpm/@capacitor-firebase+authentication@7.1.0_@capacitor+core@7.1.0_firebase@11.5.0/node_modules/@capacitor-firebase/authentication`)"
+  - "CapacitorFirebaseAuthentication/Google (from `../../node_modules/.pnpm/@capacitor-firebase+authentication@7.1.0_@capacitor+core@7.1.0_firebase@11.5.0/node_modules/@capacitor-firebase/authentication`)"
 
 SPEC REPOS:
   trunk:
@@ -110,24 +110,24 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   Capacitor:
-    :path: "../../node_modules/.pnpm/@capacitor+ios@7.0.1_@capacitor+core@7.0.1/node_modules/@capacitor/ios"
+    :path: "../../node_modules/.pnpm/@capacitor+ios@7.1.0_@capacitor+core@7.1.0/node_modules/@capacitor/ios"
   CapacitorCordova:
-    :path: "../../node_modules/.pnpm/@capacitor+ios@7.0.1_@capacitor+core@7.0.1/node_modules/@capacitor/ios"
+    :path: "../../node_modules/.pnpm/@capacitor+ios@7.1.0_@capacitor+core@7.1.0/node_modules/@capacitor/ios"
   CapacitorFirebaseAuthentication:
-    :path: "../../node_modules/.pnpm/@capacitor-firebase+authentication@7.1.0_@capacitor+core@7.0.1_firebase@11.4.0/node_modules/@capacitor-firebase/authentication"
+    :path: "../../node_modules/.pnpm/@capacitor-firebase+authentication@7.1.0_@capacitor+core@7.1.0_firebase@11.5.0/node_modules/@capacitor-firebase/authentication"
 
 SPEC CHECKSUMS:
   AppAuth: d4f13a8fe0baf391b2108511793e4b479691fb73
-  Capacitor: de199cba6c8b20995428ad0b7cb0bc6ca625ffd4
-  CapacitorCordova: 63d476958d5022d76f197031e8b7ea3519988c64
+  Capacitor: bceb785fb78f5e81e4a9e37843bc1c24bd9c7194
+  CapacitorCordova: 866217f32c1d25b326c568a10ea3ed0c36b13e29
   CapacitorFirebaseAuthentication: e4455d89768e02dbe65e1d25f28232e14d643a52
   FBAEMKit: e34530df538b8eb8aeb53c35867715ba6c63ef0c
   FBSDKCoreKit: d3f479a69127acebb1c6aad91c1a33907bcf6c2f
   FBSDKCoreKit_Basics: 017b6dc2a1862024815a8229e75661e627ac1e29
   FBSDKLoginKit: 5875762d1fe09ddcb05d03365d4f5dc34413843d
-  FirebaseAppCheckInterop: 9226f7217b43e99dfa0bc9f674ad8108cef89feb
+  FirebaseAppCheckInterop: 9664c858489710f682766ef54e2b6741d3b62070
   FirebaseAuth: 77e25aa24f3e1c626c5babd3338551fc1669ee0e
-  FirebaseAuthInterop: 2a26ee1bea6d47df8048683cfa071e7da657798f
+  FirebaseAuthInterop: 01a804fb074424fd58b92dd50dd0272277199356
   FirebaseCore: 3227e35f4197a924206fbcdc0349325baf4f5de4
   FirebaseCoreExtension: 206c1b399f0d103055207c16f299b28e3dbd1949
   FirebaseCoreInternal: d6c17dafc8dc33614733a8b52df78fcb4394c881
@@ -137,6 +137,6 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 5aea5ba6bd522a239e236100971f10cb71b96ab6
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
 
-PODFILE CHECKSUM: 1bcfce50e8d906f323ee4381ca1c432612aa78df
+PODFILE CHECKSUM: 0b1beed26cf9180f36d6cd1025183789d13064b0
 
 COCOAPODS: 1.16.2

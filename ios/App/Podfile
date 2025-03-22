@@ -1,4 +1,4 @@
-require_relative '../../node_modules/.pnpm/@capacitor+ios@7.0.1_@capacitor+core@7.0.1/node_modules/@capacitor/ios/scripts/pods_helpers'
+require_relative '../../node_modules/.pnpm/@capacitor+ios@7.1.0_@capacitor+core@7.1.0/node_modules/@capacitor/ios/scripts/pods_helpers'
 
 platform :ios, '14.0'
 use_frameworks!
@@ -9,16 +9,16 @@ use_frameworks!
 install! 'cocoapods', :disable_input_output_paths => true
 
 def capacitor_pods
-  pod 'Capacitor', :path => '../../node_modules/.pnpm/@capacitor+ios@7.0.1_@capacitor+core@7.0.1/node_modules/@capacitor/ios'
-  pod 'CapacitorCordova', :path => '../../node_modules/.pnpm/@capacitor+ios@7.0.1_@capacitor+core@7.0.1/node_modules/@capacitor/ios'
-  pod 'CapacitorFirebaseAuthentication', :path => '../../node_modules/.pnpm/@capacitor-firebase+authentication@7.1.0_@capacitor+core@7.0.1_firebase@11.4.0/node_modules/@capacitor-firebase/authentication'
+  pod 'Capacitor', :path => '../../node_modules/.pnpm/@capacitor+ios@7.1.0_@capacitor+core@7.1.0/node_modules/@capacitor/ios'
+  pod 'CapacitorCordova', :path => '../../node_modules/.pnpm/@capacitor+ios@7.1.0_@capacitor+core@7.1.0/node_modules/@capacitor/ios'
+  pod 'CapacitorFirebaseAuthentication', :path => '../../node_modules/.pnpm/@capacitor-firebase+authentication@7.1.0_@capacitor+core@7.1.0_firebase@11.5.0/node_modules/@capacitor-firebase/authentication'
 end
 
 target 'Sneat.app' do
   capacitor_pods
   # Add your Pods here
-  pod 'CapacitorFirebaseAuthentication/Google', :path => '../../node_modules/.pnpm/@capacitor-firebase+authentication@7.1.0_@capacitor+core@7.0.1_firebase@11.4.0/node_modules/@capacitor-firebase/authentication'
-  pod 'CapacitorFirebaseAuthentication/Facebook', :path => '../../node_modules/.pnpm/@capacitor-firebase+authentication@7.1.0_@capacitor+core@7.0.1_firebase@11.4.0/node_modules/@capacitor-firebase/authentication'
+  pod 'CapacitorFirebaseAuthentication/Google', :path => '../../node_modules/.pnpm/@capacitor-firebase+authentication@7.1.0_@capacitor+core@7.1.0_firebase@11.5.0/node_modules/@capacitor-firebase/authentication'
+  pod 'CapacitorFirebaseAuthentication/Facebook', :path => '../../node_modules/.pnpm/@capacitor-firebase+authentication@7.1.0_@capacitor+core@7.1.0_firebase@11.5.0/node_modules/@capacitor-firebase/authentication'
 end
 
 post_install do |installer|
