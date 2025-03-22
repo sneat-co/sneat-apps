@@ -1,6 +1,6 @@
 import { Timestamp } from '@firebase/firestore';
 
-type TrackerValueType =
+export type TrackerValueType =
 	| 'int'
 	| 'float'
 	| 'string'
@@ -9,9 +9,14 @@ type TrackerValueType =
 	| 'integers'
 	| 'floats';
 
+export type NumberKind = 'absolute' | 'cumulative';
+
+export type TrackBy = 'space' | 'contact' | 'asset';
+
 export interface IWithEntryType {
-	readonly trackBy: 'space' | 'contact' | 'asset';
+	readonly trackBy: TrackBy[];
 	readonly valueType: TrackerValueType;
+	readonly numberKind?: NumberKind;
 }
 
 export type TrackerCategory =

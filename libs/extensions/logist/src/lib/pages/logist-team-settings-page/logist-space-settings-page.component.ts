@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { LogistSpaceService } from '../../services';
 import { LogistSpaceBaseComponent } from '../logist-space-base.component';
 
@@ -10,16 +8,7 @@ import { LogistSpaceBaseComponent } from '../logist-space-base.component';
 	standalone: false,
 })
 export class LogistSpaceSettingsPageComponent extends LogistSpaceBaseComponent {
-	constructor(
-		route: ActivatedRoute,
-		teamParams: SpaceComponentBaseParams,
-		logistTeamService: LogistSpaceService,
-	) {
-		super(
-			'LogistTeamSettingsPageComponent',
-			route,
-			teamParams,
-			logistTeamService,
-		);
+	constructor(logistTeamService: LogistSpaceService) {
+		super('LogistTeamSettingsPageComponent', logistTeamService);
 	}
 }

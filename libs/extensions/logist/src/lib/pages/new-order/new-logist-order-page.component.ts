@@ -1,14 +1,10 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { ContactService } from '@sneat/contactus-services';
 import { excludeUndefined } from '@sneat/core';
 import { IContactContext } from '@sneat/contactus-core';
 import { first, takeUntil } from 'rxjs';
 import { ISelectItem } from '@sneat/components';
-import {
-	SpaceBaseComponent,
-	SpaceComponentBaseParams,
-} from '@sneat/team-components';
+import { SpaceBaseComponent } from '@sneat/team-components';
 import {
 	CounterpartyRole,
 	IOrderCounterparty,
@@ -56,13 +52,11 @@ export class NewLogistOrderPageComponent extends SpaceBaseComponent {
 	readonly = false;
 
 	constructor(
-		route: ActivatedRoute,
-		teamParams: SpaceComponentBaseParams,
 		private readonly freightOrdersService: LogistOrderService,
 		private readonly logistSpaceService: LogistSpaceService,
 		private readonly contactService: ContactService,
 	) {
-		super('NewLogistOrderPageComponent', route, teamParams);
+		super('NewLogistOrderPageComponent');
 	}
 
 	get formIsValid(): boolean {

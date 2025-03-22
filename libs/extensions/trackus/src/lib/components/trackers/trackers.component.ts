@@ -43,7 +43,7 @@ const standardTrackers: readonly IIdAndBrief<ITrackerBrief>[] = [
 	{
 		id: '_push_ups',
 		brief: {
-			trackBy: 'contact',
+			trackBy: ['contact'],
 			valueType: 'int',
 			categories: ['fitness'],
 			title: 'Push-ups',
@@ -53,7 +53,7 @@ const standardTrackers: readonly IIdAndBrief<ITrackerBrief>[] = [
 	{
 		id: '_pull_ups',
 		brief: {
-			trackBy: 'contact',
+			trackBy: ['contact'],
 			valueType: 'int',
 			categories: ['fitness'],
 			title: 'Pull-ups',
@@ -63,7 +63,7 @@ const standardTrackers: readonly IIdAndBrief<ITrackerBrief>[] = [
 	{
 		id: '_squats',
 		brief: {
-			trackBy: 'contact',
+			trackBy: ['contact'],
 			valueType: 'int',
 			categories: ['fitness'],
 			title: 'Squats',
@@ -73,7 +73,7 @@ const standardTrackers: readonly IIdAndBrief<ITrackerBrief>[] = [
 	{
 		id: '_weight',
 		brief: {
-			trackBy: 'contact',
+			trackBy: ['contact'],
 			valueType: 'float',
 			categories: ['fitness', 'health'],
 			title: 'Weight',
@@ -83,7 +83,7 @@ const standardTrackers: readonly IIdAndBrief<ITrackerBrief>[] = [
 	{
 		id: '_body_temperature',
 		brief: {
-			trackBy: 'contact',
+			trackBy: ['contact'],
 			valueType: 'float',
 			categories: ['health'],
 			title: 'Temperature',
@@ -93,7 +93,7 @@ const standardTrackers: readonly IIdAndBrief<ITrackerBrief>[] = [
 	{
 		id: '_mileage',
 		brief: {
-			trackBy: 'asset',
+			trackBy: ['asset'],
 			valueType: 'int',
 			categories: ['vehicles'],
 			title: 'Mileage',
@@ -103,7 +103,7 @@ const standardTrackers: readonly IIdAndBrief<ITrackerBrief>[] = [
 	{
 		id: '_fuel',
 		brief: {
-			trackBy: 'asset',
+			trackBy: ['asset'],
 			valueType: 'float',
 			categories: ['vehicles'],
 			title: 'Fuel',
@@ -113,7 +113,7 @@ const standardTrackers: readonly IIdAndBrief<ITrackerBrief>[] = [
 	{
 		id: '_electricity',
 		brief: {
-			trackBy: 'asset',
+			trackBy: ['asset'],
 			valueType: 'int',
 			categories: ['home'],
 			title: 'Electricity',
@@ -123,7 +123,7 @@ const standardTrackers: readonly IIdAndBrief<ITrackerBrief>[] = [
 	{
 		id: '_lpg',
 		brief: {
-			trackBy: 'asset',
+			trackBy: ['asset'],
 			valueType: 'int',
 			categories: ['home'],
 			title: 'LPG',
@@ -133,7 +133,7 @@ const standardTrackers: readonly IIdAndBrief<ITrackerBrief>[] = [
 	{
 		id: '_heating',
 		brief: {
-			trackBy: 'asset',
+			trackBy: ['asset'],
 			valueType: 'money',
 			categories: ['home'],
 			title: 'Heating',

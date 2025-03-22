@@ -1,14 +1,10 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { CONTACT_ROLES_BY_TYPE, IContactRole } from '@sneat/app';
 import { ISelectItem } from '@sneat/components';
 import { ContactRole } from '@sneat/contactus-core';
-import {
-	SpaceBaseComponent,
-	SpaceComponentBaseParams,
-} from '@sneat/team-components';
+import { SpaceBaseComponent } from '@sneat/team-components';
 import { IContactContext } from '@sneat/contactus-core';
-import { first, takeUntil } from 'rxjs';
+import { first } from 'rxjs';
 
 @Component({
 	selector: 'sneat-new-logist-company-page',
@@ -30,19 +26,18 @@ export class NewLogistCompanyPageComponent
 	protected contactRole?: ContactRole;
 
 	constructor(
-		route: ActivatedRoute,
-		teamParams: SpaceComponentBaseParams,
 		@Inject(CONTACT_ROLES_BY_TYPE)
 		public readonly contactRolesByType: Record<string, IContactRole[]>,
 	) {
-		super('NewLogistCompanyPageComponent', route, teamParams);
-		const roles = contactRolesByType['company'];
-		this.contactTypes = roles;
-		route.queryParamMap.pipe(first(), takeUntil(this.destroyed$)).subscribe({
-			next: (value) => {
-				this.contactRole = (value.get('role') as ContactRole) || undefined;
-			},
-		});
+		super('NewLogistCompanyPageComponent');
+		this.contactTypes = contactRolesByType['company'];
+		this.route.queryParamMap
+			.pipe(first(), this.takeUntilDestroyed())
+			.subscribe({
+				next: (value) => {
+					this.contactRole = (value.get('role') as ContactRole) || undefined;
+				},
+			});
 	}
 
 	onContactCreated(contact: IContactContext): void {

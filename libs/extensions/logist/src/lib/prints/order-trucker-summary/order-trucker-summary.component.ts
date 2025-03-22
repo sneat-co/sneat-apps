@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { SpaceComponentBaseParams } from '@sneat/team-components';
 import {
 	IContainerSegment,
 	IFreightLoad,
@@ -36,13 +34,9 @@ export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 
 	buyerRefNumber?: string;
 
-	constructor(
-		route: ActivatedRoute,
-		teamParams: SpaceComponentBaseParams,
-		orderService: LogistOrderService,
-	) {
-		super('OrderTruckerSummaryComponent', route, teamParams, orderService);
-		route.queryParams?.subscribe({
+	constructor(orderService: LogistOrderService) {
+		super('OrderTruckerSummaryComponent', orderService);
+		this.route.queryParams?.pipe(this.takeUntilDestroyed())?.subscribe({
 			next: (params) => {
 				this.truckerID = params['truckerID'];
 				console.log('truckerID', this.truckerID);

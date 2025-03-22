@@ -1,10 +1,17 @@
 import { Injectable, NgModule } from '@angular/core';
 import { SneatApiService } from '@sneat/api';
 import { Observable } from 'rxjs';
+import { ITrackerBrief } from './dbo/i-tracker-dbo';
 
 @Injectable()
 export class TrackusApiService {
 	constructor(private readonly sneatApiService: SneatApiService) {}
+
+	public addTracker(
+		request: ICreateTrackerRequest,
+	): Observable<ICreateTrackerResponse> {
+		return this.sneatApiService.post('trackus/add_tracker', request);
+	}
 
 	public createTracker(
 		request: ICreateTrackerRequest,
@@ -34,7 +41,7 @@ export interface ITrackerRequest {
 	trackerID: string;
 }
 
-export interface ICreateTrackerRequest {
+export interface ICreateTrackerRequest extends ITrackerBrief {
 	readonly spaceID: string;
 }
 

@@ -1,9 +1,5 @@
 import { Directive, Inject, InjectionToken } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import {
-	SpaceBaseComponent,
-	SpaceComponentBaseParams,
-} from '@sneat/team-components';
+import { SpaceBaseComponent } from '@sneat/team-components';
 import { ILogistOrderContext } from '../dto';
 import { LogistOrderService } from '../services';
 
@@ -14,32 +10,26 @@ export class OrderPageBaseComponent extends SpaceBaseComponent {
 
 	constructor(
 		@Inject(new InjectionToken('className')) className: string,
-		route: ActivatedRoute,
-		teamParams: SpaceComponentBaseParams,
 		private readonly orderService: LogistOrderService,
 	) {
-		super(className, route, teamParams);
-		route.paramMap
-			// .pipe(
-			// 	takeUntil(this.destroyed),
-			// )
-			.subscribe((params) => {
-				this.order = {
-					id: params.get('orderID') || '',
-					space: { id: params.get('spaceID') || '' },
-				};
-				if (this.space?.id && this.order?.id) {
-					this.orderService
-						.watchOrderByID(this.space.id, this.order.id)
-						.subscribe({
-							next: (order) => {
-								this.setOrder(order);
-								this.order = order;
-							},
-							error: this.errorLogger.logErrorHandler('failed to load order'),
-						});
-				}
-			});
+		super(className);
+		this.route.paramMap.pipe(this.takeUntilDestroyed()).subscribe((params) => {
+			this.order = {
+				id: params.get('orderID') || '',
+				space: { id: params.get('spaceID') || '' },
+			};
+			if (this.space?.id && this.order?.id) {
+				this.orderService
+					.watchOrderByID(this.space.id, this.order.id)
+					.subscribe({
+						next: (order) => {
+							this.setOrder(order);
+							this.order = order;
+						},
+						error: this.errorLogger.logErrorHandler('failed to load order'),
+					});
+			}
+		});
 	}
 
 	private setOrder(order: ILogistOrderContext): void {

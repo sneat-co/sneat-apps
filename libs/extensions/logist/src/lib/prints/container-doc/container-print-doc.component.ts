@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { IAddress } from '@sneat/contactus-core';
-import { SpaceComponentBaseParams } from '@sneat/team-components';
 import {
 	IContainerPoint,
 	ILogistOrderContext,
@@ -35,15 +33,13 @@ export class ContainerPrintDocComponent extends OrderPrintPageBaseComponent {
 
 	protected total? = { numberOfPallets: 0, grossWeightKg: 0 };
 
-	constructor(
-		route: ActivatedRoute,
-		teamParams: SpaceComponentBaseParams,
-		orderService: LogistOrderService,
-	) {
-		super('OrderShippingDocComponent', route, teamParams, orderService);
-		route.queryParamMap.subscribe((params) => {
-			this.containerID = params.get('id');
-		});
+	constructor(orderService: LogistOrderService) {
+		super('OrderShippingDocComponent', orderService);
+		this.route.queryParamMap
+			.pipe(this.takeUntilDestroyed())
+			.subscribe((params) => {
+				this.containerID = params.get('id');
+			});
 	}
 
 	protected showArrivalLabel(cp: IContainerPoint): boolean {

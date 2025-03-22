@@ -1,10 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { excludeEmpty } from '@sneat/core';
-import {
-	SpaceBaseComponent,
-	SpaceComponentBaseParams,
-} from '@sneat/team-components';
+import { SpaceBaseComponent } from '@sneat/team-components';
 import { Subscription, takeUntil } from 'rxjs';
 import { ILogistOrderContext, IOrdersFilter } from '../../dto';
 import { LogistOrderService } from '../../services';
@@ -25,12 +21,10 @@ export class LogistOrdersPageComponent extends SpaceBaseComponent {
 	protected viewMode: 'list' | 'grid' = 'grid';
 
 	constructor(
-		route: ActivatedRoute,
-		teamParams: SpaceComponentBaseParams,
 		private readonly ordersService: LogistOrderService,
 		private readonly changeDetectorRef: ChangeDetectorRef,
 	) {
-		super('OrdersPageComponent', route, teamParams);
+		super('OrdersPageComponent');
 	}
 
 	protected override onSpaceIdChanged() {

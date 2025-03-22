@@ -1,11 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import {
 	ModalController,
 	PopoverController,
 	ToastController,
 } from '@ionic/angular';
-import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { first } from 'rxjs';
 import { NewContainerComponent } from '../../components/new-container/new-container.component';
 import { NewSegmentService } from '../../components/new-segment/new-segment.service';
@@ -38,8 +36,6 @@ export class LogistOrderPageComponent
 	private modal?: HTMLIonModalElement;
 
 	constructor(
-		route: ActivatedRoute,
-		teamParams: SpaceComponentBaseParams,
 		orderService: LogistOrderService,
 		private readonly newSegmentService: NewSegmentService,
 		private readonly newShippingPointService: NewShippingPointService,
@@ -47,11 +43,13 @@ export class LogistOrderPageComponent
 		private readonly popoverController: PopoverController,
 		private readonly toastController: ToastController,
 	) {
-		super('LogistOrderPageComponent', route, teamParams, orderService);
+		super('LogistOrderPageComponent', orderService);
 		try {
-			route.queryParamMap.pipe(first()).subscribe((params) => {
-				this.tab = (params.get('tab') as OrderDetailsTab) || this.tab;
-			});
+			this.route.queryParamMap
+				.pipe(first(), this.takeUntilDestroyed())
+				.subscribe((params) => {
+					this.tab = (params.get('tab') as OrderDetailsTab) || this.tab;
+				});
 		} catch (e) {
 			this.errorLogger.logError(e);
 		}

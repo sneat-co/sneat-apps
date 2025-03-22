@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { SpaceComponentBaseParams } from '@sneat/team-components';
-import { LogistOrderService, OrderNavService } from '../../services';
+import { LogistOrderService } from '../../services';
 import { OrderPageBaseComponent } from '../order-page-base.component';
 
 @Component({
@@ -11,11 +9,9 @@ import { OrderPageBaseComponent } from '../order-page-base.component';
 })
 export class NewShippingPointPageComponent extends OrderPageBaseComponent {
 	constructor(
-		route: ActivatedRoute,
-		teamParams: SpaceComponentBaseParams,
 		orderService: LogistOrderService,
-		private readonly orderNavService: OrderNavService,
+		// private readonly orderNavService: OrderNavService,
 	) {
-		super('NewShippingPointPageComponent', route, teamParams, orderService);
+		super('NewShippingPointPageComponent', orderService);
 	}
 }

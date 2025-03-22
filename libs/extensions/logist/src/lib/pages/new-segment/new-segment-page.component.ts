@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { LogistOrderService, OrderNavService } from '../../services';
 import { OrderPageBaseComponent } from '../order-page-base.component';
 
@@ -11,12 +9,10 @@ import { OrderPageBaseComponent } from '../order-page-base.component';
 })
 export class NewSegmentPageComponent extends OrderPageBaseComponent {
 	constructor(
-		route: ActivatedRoute,
-		teamParams: SpaceComponentBaseParams,
 		orderService: LogistOrderService,
 		private readonly orderNavService: OrderNavService,
 	) {
-		super('NewSegmentPageComponent', route, teamParams, orderService);
+		super('NewSegmentPageComponent', orderService);
 	}
 
 	back(): void {

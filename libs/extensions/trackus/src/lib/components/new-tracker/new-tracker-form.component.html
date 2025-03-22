@@ -1,5 +1,10 @@
 <ion-item lines="full">
-	<ion-input label="Title" placeholder="Name of tracker here" />
+	<ion-input
+		label="Title"
+		placeholder="Name of tracker here"
+		[formControl]="titleFormControl"
+		(ionChange)="onTitleChange($event)"
+	/>
 </ion-item>
 
 @if (!$categoryState()) {
@@ -25,41 +30,50 @@
 	labelPlacement="start"
 	[items]="typeOptions"
 	[value]="$valueType()"
-	(valueChange)="$valueType.set($event)"
+	(valueChange)="onValueTypeChange($event)"
 />
 
-@if ($valueType() === "int" || $valueType() === "float") {
-	<ion-item-group>
+@if ($askNumberKind()) {
+	@if (!$numberKind()) {
 		<ion-item-divider color="light">
-			<ion-label color="medium">Number type</ion-label>
+			<ion-label>Number Type</ion-label>
 		</ion-item-divider>
-		<ion-radio-group
-			name="number_type"
-			[value]="$numberType()"
-			(ionChange)="$numberType.set($event.detail.value)"
+	}
+	<sneat-select-from-list
+		label="Number Type"
+		labelPlacement="start"
+		[items]="numberTypes"
+		[value]="$numberKind()"
+		(valueChange)="onNumberTypeChange($event)"
+	/>
+}
+
+@if ($showTrackBy()) {
+	<ion-item-divider color="light">
+		<ion-label>Track by</ion-label>
+	</ion-item-divider>
+	<ion-item>
+		<ion-checkbox
+			value="contact"
+			labelPlacement="end"
+			(ionChange)="onTrackByChange('contact', $event)"
 		>
-			<ion-item>
-				<ion-radio value="current">Fixed value tracker</ion-radio>
-			</ion-item>
-			<ion-item-divider>
-				<ion-label
-					>Records absolute values that don’t add up over time (e.g., mileage,
-					odometer readings).</ion-label
-				>
-			</ion-item-divider>
-			<ion-item>
-				<ion-radio value="delta">Cumulative value tracker</ion-radio>
-			</ion-item>
-			<ion-item-divider
-				>Records values that can be summed over time (e.g., fuel volume,
-				expenses, distance traveled per trip).
-			</ion-item-divider>
-		</ion-radio-group>
-	</ion-item-group>
+			Contact
+		</ion-checkbox>
+	</ion-item>
+	<ion-item lines="full">
+		<ion-checkbox
+			value="asset"
+			labelPlacement="end"
+			(ionChange)="onTrackByChange('asset', $event)"
+		>
+			Asset
+		</ion-checkbox>
+	</ion-item>
 }
 
 <div class="ion-padding">
-	<ion-button [disabled]="!$valueType() || !$numberType()">
+	<ion-button [disabled]="$submitDisabled()" (click)="submit()">
 		<ion-label>Create tracker</ion-label>
 	</ion-button>
 </div>

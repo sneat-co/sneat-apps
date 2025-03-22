@@ -1,8 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
-import {
-	SpaceBaseComponent,
-	SpaceComponentBaseParams,
-} from '@sneat/team-components';
+import { SpaceBaseComponent } from '@sneat/team-components';
 import { ILogistSpaceContext } from '../dto';
 import { LogistSpaceService } from '../services';
 
@@ -11,11 +7,9 @@ export class LogistSpaceBaseComponent extends SpaceBaseComponent {
 
 	constructor(
 		className: string,
-		route: ActivatedRoute,
-		teamParams: SpaceComponentBaseParams,
 		private readonly logistSpaceService: LogistSpaceService,
 	) {
-		super(className, route, teamParams);
+		super(className);
 	}
 
 	protected override onSpaceIdChanged() {

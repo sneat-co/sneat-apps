@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
-	ActivatedRoute,
 	ActivationStart,
 	Router,
 	RouterModule,
@@ -9,11 +8,7 @@ import {
 } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AuthMenuItemComponent } from '@sneat/components';
-import {
-	SpaceBaseComponent,
-	SpaceComponentBaseParams,
-	SpacesMenuComponent,
-} from '@sneat/team-components';
+import { SpaceBaseComponent } from '@sneat/team-components';
 import { LogistSpaceMenuItemsModule } from '../logist-team-menu-items/logist-space-menu-items.module';
 
 @Component({
@@ -33,12 +28,8 @@ export class LogistSpaceMenuComponent
 {
 	@ViewChild(RouterOutlet) outlet?: RouterOutlet;
 
-	constructor(
-		route: ActivatedRoute,
-		teamParams: SpaceComponentBaseParams,
-		private readonly router: Router,
-	) {
-		super('LogistTeamMenuComponent', route, teamParams);
+	constructor(private readonly router: Router) {
+		super('LogistTeamMenuComponent');
 	}
 
 	override ngOnInit(): void {
