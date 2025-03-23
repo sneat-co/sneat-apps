@@ -8,8 +8,8 @@ import {
 	SelectFromListModule,
 } from '@sneat/components';
 import {
-	LocationFormModule,
-	NewCompanyFormModule,
+	LocationFormComponent,
+	NewCompanyFormComponent,
 } from '@sneat/contactus-shared';
 import { NewLogistCompanyPageComponent } from './new-logist-company-page.component';
 
@@ -18,7 +18,7 @@ import { NewLogistCompanyPageComponent } from './new-logist-company-page.compone
 		CommonModule,
 		IonicModule,
 		FormsModule,
-		LocationFormModule,
+		LocationFormComponent,
 		SelectFromListModule,
 		RouterModule.forChild([
 			{
@@ -27,7 +27,7 @@ import { NewLogistCompanyPageComponent } from './new-logist-company-page.compone
 			},
 		]),
 		CountrySelectorComponent,
-		NewCompanyFormModule,
+		NewCompanyFormComponent,
 	],
 	declarations: [NewLogistCompanyPageComponent],
 })
