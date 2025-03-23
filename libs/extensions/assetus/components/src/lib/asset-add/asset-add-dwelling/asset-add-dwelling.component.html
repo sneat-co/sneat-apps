@@ -1,32 +1,40 @@
-<h1 class="ion-padding" *ngIf="!dwellingType">New dwelling</h1>
-<h1 class="ion-padding" *ngIf="dwellingType">New {{ dwellingType }}</h1>
+@if (dwellingType) {
+	<h1 class="ion-padding">New {{ dwellingType }}</h1>
+} @else {
+	<h1 class="ion-padding">New dwelling</h1>
+}
 
-<ion-card *ngIf="!dwellingType">
-	<sneat-select-from-list
-		[(ngModel)]="dwellingType"
-		(ngModelChange)="onDwellingTypeChanged()"
-		[isFilterable]="false"
-		title="Type"
-		[items]="dwellingTypes"
+@if (dwellingType) {
+	<sneat-edit-dwelling-card
+		[space]="space"
+		[(dwellingAsset)]="dwellingAsset"
+		(dwellingAssetChange)="onAssetChanged($event)"
 	/>
-</ion-card>
+} @else {
+	<ion-card>
+		<sneat-select-from-list
+			[(ngModel)]="dwellingType"
+			(ngModelChange)="onDwellingTypeChanged()"
+			[isFilterable]="false"
+			title="Type"
+			[items]="dwellingTypes"
+		/>
+	</ion-card>
+}
 
-<sneat-edit-dwelling-card
-	*ngIf="dwellingType"
-	[space]="space"
-	[(dwellingAsset)]="dwellingAsset"
-	(dwellingAssetChange)="onAssetChanged($event)"
-/>
-
-<ion-button
-	*ngIf="dwellingAsset?.dbo?.type || dwellingAsset?.dbo?.countryID"
-	[color]="dwellingAsset?.dbo?.type ? 'primary' : 'light'"
-	size="large"
-	class="ion-margin"
-	expand="full"
-	[disabled]="!space || isSubmitting"
-	(click)="submitDwellingForm()"
->
-	<ng-container *ngIf="!isSubmitting">Add dwelling</ng-container>
-	<ng-container *ngIf="isSubmitting">Adding dwelling...</ng-container>
-</ion-button>
+@if (dwellingAsset?.dbo?.type || dwellingAsset?.dbo?.countryID) {
+	<ion-button
+		[color]="dwellingAsset?.dbo?.type ? 'primary' : 'light'"
+		size="large"
+		class="ion-margin"
+		expand="full"
+		[disabled]="!space || isSubmitting"
+		(click)="submitDwellingForm()"
+	>
+		@if (isSubmitting) {
+			Adding dwelling...
+		} @else {
+			Add dwelling
+		}
+	</ion-button>
+}

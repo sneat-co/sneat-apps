@@ -1,5 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { ISelectItem } from '@sneat/components';
+import { FormsModule } from '@angular/forms';
+import { IonButton, IonCard } from '@ionic/angular/standalone';
+import { ISelectItem, SelectFromListModule } from '@sneat/components';
 import { timestamp } from '@sneat/dto';
 import {
 	AssetRealEstateType,
@@ -8,6 +10,7 @@ import {
 	IAssetDwellingExtra,
 } from '@sneat/mod-assetus-core';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
+import { AddDwellingCardComponent } from '../../edit-dwelling-card/edit-dwelling-card.component';
 import { ICreateAssetRequest } from '../../services';
 import { AddAssetBaseComponent } from '../add-asset-base-component';
 
@@ -15,7 +18,13 @@ import { AddAssetBaseComponent } from '../add-asset-base-component';
 	selector: 'sneat-asset-add-dwelling',
 	templateUrl: './asset-add-dwelling.component.html',
 	providers: [SpaceComponentBaseParams],
-	standalone: false,
+	imports: [
+		AddDwellingCardComponent,
+		IonCard,
+		SelectFromListModule,
+		FormsModule,
+		IonButton,
+	],
 })
 export class AssetAddDwellingComponent
 	extends AddAssetBaseComponent

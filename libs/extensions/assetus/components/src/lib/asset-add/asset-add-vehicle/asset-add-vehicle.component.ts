@@ -1,5 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { ISelectItem } from '@sneat/components';
+import { FormsModule } from '@angular/forms';
+import { IonButton, IonCard } from '@ionic/angular/standalone';
+import { ISelectItem, SelectFromListModule } from '@sneat/components';
 import { timestamp } from '@sneat/dto';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
 import {
@@ -12,13 +14,20 @@ import {
 } from '@sneat/mod-assetus-core';
 import { format, parseISO } from 'date-fns';
 import { ICreateAssetRequest } from '../../services';
+import { VehicleCardComponent } from '../../vehicle-card/vehicle-card.component';
 import { AddAssetBaseComponent } from '../add-asset-base-component';
 
 @Component({
 	selector: 'sneat-asset-add-vehicle',
 	templateUrl: './asset-add-vehicle.component.html',
 	providers: [SpaceComponentBaseParams],
-	standalone: false,
+	imports: [
+		SelectFromListModule,
+		FormsModule,
+		IonCard,
+		VehicleCardComponent,
+		IonButton,
+	],
 })
 export class AssetAddVehicleComponent
 	extends AddAssetBaseComponent
