@@ -8,6 +8,7 @@ import {
 	SpacePageTitleComponent,
 	SpacePageBaseComponent,
 } from '@sneat/team-components';
+import { SpaceServiceModule } from '@sneat/team-services';
 
 @Component({
 	selector: 'sneat-debtus-home-page',
@@ -18,6 +19,7 @@ import {
 		SpacePageTitleComponent,
 		NewDebtFormComponent,
 		ContactusServicesModule,
+		SpaceServiceModule,
 	],
 	providers: [SpaceComponentBaseParams],
 })

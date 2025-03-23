@@ -10,6 +10,7 @@ import {
 } from '@ionic/angular';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { APP_INFO, eq, IAppInfo } from '@sneat/core';
+import { SpaceServiceModule } from '@sneat/team-services';
 import { IListGroup, IListInfo, ListType } from '../../dto';
 import {
 	SpaceBaseComponent,
@@ -35,6 +36,7 @@ import { NewListDialogModule } from './new-list-dialog.module';
 		ListusCoreServicesModule,
 		NewListDialogModule,
 		ContactusServicesModule,
+		SpaceServiceModule,
 	],
 	providers: [SpaceComponentBaseParams, ListusComponentBaseParams],
 })

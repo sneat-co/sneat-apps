@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ContactusServicesModule } from '@sneat/contactus-services';
+import { SpaceServiceModule } from '@sneat/team-services';
 import { HappeningBasePage } from './happening-base-page';
 import {
 	HappeningComponentBaseParams,
@@ -22,6 +23,7 @@ import {
 		HappeningFormComponent,
 		ContactusServicesModule,
 		HappeningComponentBaseParamsModule,
+		SpaceServiceModule,
 	],
 })
 export class HappeningPageComponent extends HappeningBasePage {

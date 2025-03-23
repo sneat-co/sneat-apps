@@ -17,6 +17,7 @@ import {
 	SpacePageTitleComponent,
 } from '@sneat/team-components';
 import { IAssetContext } from '@sneat/mod-assetus-core';
+import { SpaceServiceModule } from '@sneat/team-services';
 import { takeUntil } from 'rxjs';
 import { AssetsBasePage } from '../assets-base.page';
 
@@ -33,6 +34,7 @@ import { AssetsBasePage } from '../assets-base.page';
 		SpacePageTitleComponent,
 		ContactusServicesModule,
 		AssetusServicesModule,
+		SpaceServiceModule,
 	],
 }) /*implements AfterViewInit*/
 export class AssetsPageComponent extends AssetsBasePage implements OnInit {

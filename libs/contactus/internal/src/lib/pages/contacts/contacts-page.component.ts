@@ -23,6 +23,7 @@ import {
 	ContactusServicesModule,
 	ContactusSpaceService,
 } from '@sneat/contactus-services';
+import { SpaceServiceModule } from '@sneat/team-services';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -39,6 +40,7 @@ import { Subscription } from 'rxjs';
 		ContactsListModule,
 		ContactsByTypeComponent,
 		ContactusServicesModule,
+		SpaceServiceModule,
 	],
 })
 export class ContactsPageComponent extends SpaceItemsBaseComponent {

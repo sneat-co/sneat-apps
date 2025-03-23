@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { SharedWithModule } from '@sneat/contactus-shared';
+import { RandomIdService } from '@sneat/random';
+import { SpaceServiceModule } from '@sneat/team-services';
 import { ListusCoreServicesModule } from '../../services';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { IListInfo, IListItemBrief } from '../../dto';
@@ -49,12 +51,14 @@ type ListPagePerforming =
 		ContactusServicesModule,
 		ListItemComponent,
 		NewListItemComponent,
+		SpaceServiceModule,
 	],
 	styleUrls: ['./list-page.component.scss'],
 	providers: [
 		SpaceComponentBaseParams,
 		ListusComponentBaseParams,
 		ListDialogsService,
+		RandomIdService,
 	],
 })
 export class ListPageComponent extends BaseListPage implements AfterViewInit {

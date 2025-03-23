@@ -11,6 +11,7 @@ import {
 	SpaceComponentBaseParams,
 } from '@sneat/team-components';
 import { Totals } from '@sneat/team-models';
+import { SpaceServiceModule } from '@sneat/team-services';
 import { takeUntil } from 'rxjs';
 import { LiabilitiesMode } from './budget-component-types';
 import { BudgetPeriodsComponent } from './budget-periods.component';
@@ -26,6 +27,7 @@ import { CalendariumSpaceService } from '@sneat/extensions-schedulus-shared';
 		IonicModule,
 		ContactusServicesModule,
 		BudgetPeriodsComponent,
+		SpaceServiceModule,
 	],
 	providers: [SpaceComponentBaseParams, CalendariumSpaceService],
 })

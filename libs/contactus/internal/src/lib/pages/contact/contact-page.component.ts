@@ -19,6 +19,7 @@ import {
 	IContactRequest,
 	IUpdateContactRequest,
 } from '@sneat/contactus-services';
+import { SpaceService, SpaceServiceModule } from '@sneat/team-services';
 import { ContactBasePage } from '../contact-base-page';
 
 @Component({
@@ -35,7 +36,9 @@ import { ContactBasePage } from '../contact-base-page';
 		ContactusServicesModule,
 		ContactComponentBaseParamsModule,
 		PersonTitle,
+		SpaceServiceModule,
 	],
+	providers: [ContactComponentBaseParams],
 })
 export class ContactPageComponent extends ContactBasePage {
 	protected segment: 'contact' | 'members' | 'assets' = 'contact';

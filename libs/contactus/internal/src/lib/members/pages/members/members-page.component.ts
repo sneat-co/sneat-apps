@@ -20,6 +20,7 @@ import {
 	SpaceComponentBaseParams,
 	SpacePageTitleComponent,
 } from '@sneat/team-components';
+import { SpaceServiceModule } from '@sneat/team-services';
 import { MembersBasePage } from '../../members-base-page';
 import { Component } from '@angular/core';
 
@@ -34,6 +35,7 @@ import { Component } from '@angular/core';
 		SpacePageTitleComponent,
 		ContactusServicesModule,
 		FamilyMembersComponent,
+		SpaceServiceModule,
 	],
 })
 export class MembersPageComponent extends MembersBasePage {
