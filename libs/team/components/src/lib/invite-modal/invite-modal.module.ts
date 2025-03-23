@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ContactTitlePipe } from '@sneat/components';
-import { EncodeSmsText, InviteModalComponent } from './invite-modal.component';
+import { InviteModalComponent } from './invite-modal.component';
 
 @NgModule({
 	imports: [
@@ -13,7 +13,7 @@ import { EncodeSmsText, InviteModalComponent } from './invite-modal.component';
 		ReactiveFormsModule,
 		ContactTitlePipe,
 	],
-	declarations: [InviteModalComponent, EncodeSmsText],
+	declarations: [InviteModalComponent],
 	exports: [InviteModalComponent],
 })
 export class InviteModalModule {}

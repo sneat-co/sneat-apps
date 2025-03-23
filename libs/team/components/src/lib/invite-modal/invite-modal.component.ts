@@ -14,10 +14,7 @@ import { ISpaceContext } from '@sneat/team-models';
 import { InviteService } from '@sneat/team-services';
 import { Observable, throwError } from 'rxjs';
 
-@Pipe({
-	name: 'encodeSmsText',
-	standalone: false,
-})
+@Pipe({ name: 'encodeSmsText' })
 export class EncodeSmsText implements PipeTransform {
 	transform(text: string): string | undefined {
 		return encodeURIComponent(text);
