@@ -1,15 +1,20 @@
-<h1 class="ion-padding" *ngIf="!documentType">New vehicle</h1>
-<h1 class="ion-padding" *ngIf="documentType">New {{ documentType }}</h1>
+@if (documentType) {
+	<h1 class="ion-padding">New {{ documentType }}</h1>
+} @else {
+	<h1 class="ion-padding">New vehicle</h1>
+}
 
-<ion-card *ngIf="!documentType">
-	<sneat-select-from-list
-		[(ngModel)]="documentType"
-		(ngModelChange)="onVehicleTypeChanged()"
-		[isFilterable]="false"
-		title="Type"
-		[items]="documentTypes"
-	/>
-</ion-card>
+@if (!documentType) {
+	<ion-card>
+		<sneat-select-from-list
+			[(ngModel)]="documentType"
+			(ngModelChange)="onVehicleTypeChanged()"
+			[isFilterable]="false"
+			title="Type"
+			[items]="documentTypes"
+		/>
+	</ion-card>
+}
 
 <ion-card>
 	<ion-item>
@@ -40,18 +45,22 @@
 	<!--		</ion-item>-->
 </ion-card>
 
-<ion-button
-	*ngIf="documentAsset?.dbo?.extra?.['regNumber']"
-	[color]="documentAsset?.dbo?.extra?.['regNumber'] ? 'primary' : 'light'"
-	size="large"
-	class="ion-margin"
-	expand="full"
-	[disabled]="!space || isSubmitting"
-	(click)="submitDocumentForm()"
->
-	<ng-container *ngIf="!isSubmitting">Add vehicle</ng-container>
-	<ng-container *ngIf="isSubmitting">Adding vehicle...</ng-container>
-</ion-button>
+@if (documentAsset?.dbo?.extra?.["regNumber"]) {
+	<ion-button
+		[color]="documentAsset?.dbo?.extra?.['regNumber'] ? 'primary' : 'light'"
+		size="large"
+		class="ion-margin"
+		expand="full"
+		[disabled]="!space || isSubmitting"
+		(click)="submitDocumentForm()"
+	>
+		@if (isSubmitting) {
+			Adding vehicle...
+		} @else {
+			Add vehicle
+		}
+	</ion-button>
+}
 
 <div style="height: 300px"></div>
 <!--TODO: workaround for calendar overlap -->

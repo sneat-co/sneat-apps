@@ -15,16 +15,8 @@ import { AssetAddDwellingComponent } from './asset-add-dwelling/asset-add-dwelli
 import { AddDwellingCardComponent } from '../edit-dwelling-card/edit-dwelling-card.component';
 
 @NgModule({
-	declarations: [
-		AssetAddDocumentComponent,
-		AssetAddVehicleComponent,
-		AssetAddDwellingComponent,
-	],
-	exports: [
-		AssetAddDocumentComponent,
-		AssetAddVehicleComponent,
-		AssetAddDwellingComponent,
-	],
+	declarations: [AssetAddVehicleComponent, AssetAddDwellingComponent],
+	exports: [AssetAddVehicleComponent, AssetAddDwellingComponent],
 	imports: [
 		CommonModule,
 		FormsModule,

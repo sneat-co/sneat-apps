@@ -1,5 +1,16 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { ISelectItem } from '@sneat/components';
+import { FormsModule } from '@angular/forms';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonDatetime,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonPopover,
+} from '@ionic/angular/standalone';
+import { ISelectItem, SelectFromListModule } from '@sneat/components';
 import { timestamp } from '@sneat/dto';
 import {
 	AssetPossession,
@@ -17,7 +28,18 @@ import { AddAssetBaseComponent } from '../add-asset-base-component';
 	selector: 'sneat-asset-add-document',
 	templateUrl: './asset-add-document.component.html',
 	providers: [SpaceComponentBaseParams],
-	standalone: false,
+	imports: [
+		IonCard,
+		SelectFromListModule,
+		FormsModule,
+		IonItem,
+		IonInput,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonPopover,
+		IonDatetime,
+	],
 })
 export class AssetAddDocumentComponent
 	extends AddAssetBaseComponent

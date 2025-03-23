@@ -6,6 +6,7 @@ import { ContactusServicesModule } from '@sneat/contactus-services';
 import { IAssetCategory } from '@sneat/mod-assetus-core';
 import {
 	AddAssetComponentsModule,
+	AssetAddDocumentComponent,
 	AssetusServicesModule,
 } from '@sneat/extensions-assetus-components';
 import {
@@ -26,6 +27,7 @@ import {
 		SpaceCoreComponentsModule,
 		ContactusServicesModule,
 		AssetusServicesModule,
+		AssetAddDocumentComponent,
 	],
 })
 export class NewAssetPageComponent extends SpaceBaseComponent {
