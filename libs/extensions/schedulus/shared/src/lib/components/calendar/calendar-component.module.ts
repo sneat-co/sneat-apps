@@ -4,8 +4,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import {
+	ContactTitlePipe,
 	FilterItemComponent,
 	MembersAsBadgesComponent,
+	ShortMonthNamePipe,
 } from '@sneat/components';
 import { MembersSelectorModule } from '@sneat/contactus-shared';
 import { SpacePageTitleComponent } from '@sneat/team-components';
@@ -69,6 +71,8 @@ import { TimingBadgeComponent } from './components/timing-badge/timing-badge.com
 		CalendarDayTitleComponent,
 		RecurringsTabComponent,
 		HappeningCardComponent,
+		ShortMonthNamePipe,
+		ContactTitlePipe,
 	],
 	exports: [CalendarComponent, CalendarDayComponent],
 	declarations: [
