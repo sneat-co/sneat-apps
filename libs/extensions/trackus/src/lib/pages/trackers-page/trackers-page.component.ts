@@ -1,13 +1,41 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
-import { SpaceBaseComponent } from '@sneat/team-components';
+import {
+	IonBackButton,
+	IonButton,
+	IonButtons,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonLabel,
+	IonMenuButton,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
+import {
+	SpaceBaseComponent,
+	SpaceComponentBaseParams,
+} from '@sneat/team-components';
+import { SpaceServiceModule } from '@sneat/team-services';
 import { TrackersComponent } from '../../components';
 
 @Component({
 	selector: 'sneat-trackers-page',
-	imports: [CommonModule, IonicModule, TrackersComponent],
+	imports: [
+		TrackersComponent,
+		SpaceServiceModule,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		IonButton,
+		IonIcon,
+		IonLabel,
+		IonMenuButton,
+		IonContent,
+	],
 	templateUrl: './trackers-page.component.html',
+	providers: [SpaceComponentBaseParams],
 })
 export class TrackersPageComponent extends SpaceBaseComponent {
 	constructor() {

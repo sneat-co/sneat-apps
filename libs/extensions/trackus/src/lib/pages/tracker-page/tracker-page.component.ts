@@ -1,15 +1,37 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
-import { SpacePageBaseComponent } from '@sneat/team-components';
+import {
+	IonBackButton,
+	IonButtons,
+	IonContent,
+	IonHeader,
+	IonMenuButton,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
+import {
+	SpaceComponentBaseParams,
+	SpacePageBaseComponent,
+} from '@sneat/team-components';
+import { SpaceServiceModule } from '@sneat/team-services';
 import { distinctUntilChanged, map } from 'rxjs';
 import { TrackerComponent } from '../../components';
 
 @Component({
 	selector: 'sneat-tracker-page',
-	imports: [CommonModule, IonicModule, TrackerComponent],
+	imports: [
+		TrackerComponent,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		IonMenuButton,
+		IonContent,
+		SpaceServiceModule,
+	],
 	templateUrl: './tracker-page.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	providers: [SpaceComponentBaseParams],
 })
 export class TrackerPageComponent extends SpacePageBaseComponent {
 	protected readonly $trackerID = signal<string | undefined>(undefined);
