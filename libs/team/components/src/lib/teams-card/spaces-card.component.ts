@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { IonInput, ToastController } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
+import { IonicModule, IonInput, ToastController } from '@ionic/angular';
 import { AnalyticsService, IAnalyticsService } from '@sneat/core';
 import { IUserSpaceBrief } from '@sneat/auth-models';
 import { IIdAndBrief } from '@sneat/core';
@@ -14,7 +16,7 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
 	selector: 'sneat-spaces-card',
 	templateUrl: './spaces-card.component.html',
-	standalone: false,
+	imports: [FormsModule, IonicModule],
 })
 export class SpacesCardComponent implements OnInit, OnDestroy {
 	@ViewChild(IonInput, { static: false }) addSpaceInput?: IonInput; // TODO: IonInput;

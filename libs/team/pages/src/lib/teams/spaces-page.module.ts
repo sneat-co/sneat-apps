@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
-import { SpacesCardModule } from '@sneat/team-components';
+import { SpacesCardComponent } from '@sneat/team-components';
 
 import { SpacesPageComponent } from './spaces-page.component';
 import { IntroComponent } from './intro/intro.component';
@@ -19,7 +19,7 @@ import { IntroComponent } from './intro/intro.component';
 				component: SpacesPageComponent,
 			},
 		]),
-		SpacesCardModule,
+		SpacesCardComponent,
 	],
 	declarations: [SpacesPageComponent, IntroComponent],
 })
