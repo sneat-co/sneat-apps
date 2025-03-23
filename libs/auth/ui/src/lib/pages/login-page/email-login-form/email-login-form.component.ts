@@ -14,7 +14,22 @@ import {
 	sendSignInLinkToEmail,
 } from '@angular/fire/auth';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, IonInput, ToastController } from '@ionic/angular';
+import {
+	ToastController,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardContent,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonSegment,
+	IonSegmentButton,
+	IonSpinner,
+	IonText,
+} from '@ionic/angular/standalone';
 import { SneatApiService } from '@sneat/api';
 import { IInitUserRecordRequest, UserRecordService } from '@sneat/auth-core';
 import { createSetFocusToInput } from '@sneat/components';
@@ -39,7 +54,22 @@ import {
 @Component({
 	selector: 'sneat-email-login-form',
 	templateUrl: 'email-login-form.component.html',
-	imports: [CommonModule, IonicModule, FormsModule],
+	imports: [
+		FormsModule,
+		IonCard,
+		IonItemDivider,
+		IonSegment,
+		IonSegmentButton,
+		IonIcon,
+		IonLabel,
+		IonCardContent,
+		IonItem,
+		IonInput,
+		IonSpinner,
+		IonText,
+		IonButton,
+		IonButtons,
+	],
 })
 export class EmailLoginFormComponent {
 	protected sign: 'in' | 'up' = 'up'; // TODO: document here what 'in' & 'up' means
@@ -320,10 +350,10 @@ export class EmailLoginFormComponent {
 	}
 
 	private setFocusToEmail(): void {
-		this.setFocusToInput(this.emailInput);
+		this.setFocusToInput(undefined /*this.emailInput*/);
 	}
 
 	private setFocusToSpaceTitle(): void {
-		this.setFocusToInput(this.spaceTitleInput);
+		this.setFocusToInput(undefined /*this.spaceTitleInput*/);
 	}
 }
