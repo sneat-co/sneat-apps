@@ -5,8 +5,9 @@ import { IonicModule } from '@ionic/angular';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { IAssetCategory } from '@sneat/mod-assetus-core';
 import {
-	AddAssetComponentsModule,
 	AssetAddDocumentComponent,
+	AssetAddDwellingComponent,
+	AssetAddVehicleComponent,
 	AssetusServicesModule,
 } from '@sneat/extensions-assetus-components';
 import {
@@ -23,11 +24,12 @@ import {
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		AddAssetComponentsModule,
 		SpaceCoreComponentsModule,
 		ContactusServicesModule,
 		AssetusServicesModule,
 		AssetAddDocumentComponent,
+		AssetAddVehicleComponent,
+		AssetAddDwellingComponent,
 	],
 })
 export class NewAssetPageComponent extends SpaceBaseComponent {
