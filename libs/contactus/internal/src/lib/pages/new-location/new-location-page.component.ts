@@ -4,7 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { SneatPipesModule } from '@sneat/components';
 import {
 	ContactComponentBaseParams,
-	LocationFormModule,
+	LocationFormComponent,
 } from '@sneat/contactus-shared';
 import { IContactContext } from '@sneat/contactus-core';
 import { ContactBasePage } from '../contact-base-page';
@@ -12,7 +12,7 @@ import { ContactBasePage } from '../contact-base-page';
 @Component({
 	selector: 'sneat-new-location-page',
 	templateUrl: './new-location-page.component.html',
-	imports: [CommonModule, IonicModule, LocationFormModule, SneatPipesModule],
+	imports: [CommonModule, IonicModule, LocationFormComponent, SneatPipesModule],
 })
 export class NewLocationPageComponent extends ContactBasePage {
 	newLocation: IContactContext = {

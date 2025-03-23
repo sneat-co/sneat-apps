@@ -8,9 +8,25 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IonInput } from '@ionic/angular';
-import { createSetFocusToInput } from '@sneat/components';
+import {
+	FormControl,
+	FormGroup,
+	FormsModule,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
+import {
+	IonButton,
+	IonCard,
+	IonCardContent,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonSpinner,
+} from '@ionic/angular/standalone';
+import { AddressFormComponent, createSetFocusToInput } from '@sneat/components';
 import {
 	ContactRole,
 	ContactType,
@@ -27,7 +43,20 @@ import { ISpaceContext } from '@sneat/team-models';
 @Component({
 	selector: 'sneat-location-form',
 	templateUrl: './location-form.component.html',
-	standalone: false,
+	imports: [
+		FormsModule,
+		AddressFormComponent,
+		ReactiveFormsModule,
+		IonCard,
+		IonItemDivider,
+		IonItem,
+		IonLabel,
+		IonInput,
+		IonCardContent,
+		IonButton,
+		IonIcon,
+		IonSpinner,
+	],
 })
 export class LocationFormComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;
@@ -143,7 +172,8 @@ export class LocationFormComponent implements OnChanges {
 
 	private setFocusToTitle(): void {
 		setTimeout(() => {
-			this.setFocusToInput(this.titleInput);
+			throw new Error('Fix for standalone');
+			// this.setFocusToInput(this.titleInput);
 		}, 100);
 	}
 

@@ -6,7 +6,7 @@ import {
 	OnDestroy,
 } from '@angular/core';
 import { createSetFocusToInput } from '@sneat/components';
-import { ErrorLogger, IErrorLogger, ILogErrorOptions } from '@sneat/logging';
+import { ErrorLogger } from '@sneat/logging';
 import { MonoTypeOperatorFunction, Subject, Subscription, take } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

@@ -30,8 +30,8 @@ import {
 import { ISpaceContext } from '@sneat/team-models';
 import { map, Subject, Subscription } from 'rxjs';
 import { BasicContactFormModule } from '../basic-contact-form';
-import { LocationFormModule } from '../location-form';
-import { NewCompanyFormModule } from '../new-company-form';
+import { LocationFormComponent } from '../location-form';
+import { NewCompanyFormComponent } from '../new-company-form';
 import {
 	ContactSelectorService,
 	IContactSelectorOptions,
@@ -45,9 +45,9 @@ import {
 		IonicModule,
 		FormsModule,
 		SelectFromListModule,
-		LocationFormModule,
+		LocationFormComponent,
 		BasicContactFormModule,
-		NewCompanyFormModule,
+		NewCompanyFormComponent,
 	],
 	providers: [ContactSelectorService],
 })

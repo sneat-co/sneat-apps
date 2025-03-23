@@ -1,23 +1,25 @@
 <ion-card>
-	<sneat-select-from-list
-		*ngIf="!contactRole || !hideRole"
-		label="Role"
-		[disabled]="isCreating"
-		[items]="contactRoles"
-		[(ngModel)]="contactRole"
-	/>
+	@if (!contactRole || !hideRole) {
+		<sneat-select-from-list
+			label="Role"
+			[disabled]="isCreating"
+			[items]="contactRoles"
+			[(ngModel)]="contactRole"
+		/>
+	}
 </ion-card>
 
-<sneat-location-form
-	*ngIf="!!contactRole"
-	contactType="company"
-	label="Company details"
-	[space]="space"
-	[parentContact]="parentContact"
-	[contact]="contact"
-	(contactChange)="onContactChanged($event)"
-	[hideSubmitButton]="true"
-/>
+@if (!!contactRole) {
+	<sneat-location-form
+		contactType="company"
+		label="Company details"
+		[space]="space"
+		[parentContact]="parentContact"
+		[contact]="contact"
+		(contactChange)="onContactChanged($event)"
+		[hideSubmitButton]="true"
+	/>
+}
 
 <!--team: {{team|json}}-->
 <!--contact: {{contact|json}}-->
@@ -28,19 +30,26 @@
 		(click)="create()"
 		[disabled]="isCreating || (false && !formIsValid)"
 	>
-		<ion-label *ngIf="!isCreating">Create company</ion-label>
-		<ion-label *ngIf="isCreating">Creating company...</ion-label>
-		<ion-spinner name="lines-small" slot="end" *ngIf="isCreating" />
+		@if (isCreating) {
+			<ion-label>Creating company...</ion-label>
+			<ion-spinner name="lines-small" slot="end" />
+		} @else {
+			<ion-label>Create company</ion-label>
+		}
 	</ion-button>
 </div>
 
-<ion-card *ngIf="!form.valid && form.errors">
-	<ion-card-header>
-		<ion-card-title color="danger">Errors</ion-card-title>
-	</ion-card-header>
-	<ion-list>
-		<ion-item *ngFor="let err of Object.values(form.errors)">
-			<ion-label>{{ err | json }}</ion-label>
-		</ion-item>
-	</ion-list>
-</ion-card>
+@if (!form.valid && form.errors) {
+	<ion-card>
+		<ion-card-header>
+			<ion-card-title color="danger">Errors</ion-card-title>
+		</ion-card-header>
+		<ion-list>
+			@for (err of Object.values(form.errors); track err) {
+				<ion-item>
+					<ion-label>{{ err | json }}</ion-label>
+				</ion-item>
+			}
+		</ion-list>
+	</ion-card>
+}

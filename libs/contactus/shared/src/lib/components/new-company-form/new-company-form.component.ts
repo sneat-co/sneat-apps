@@ -1,3 +1,4 @@
+import { CommonModule, JsonPipe } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -7,9 +8,25 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+	FormControl,
+	FormGroup,
+	FormsModule,
+	Validators,
+} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ISelectItem } from '@sneat/components';
+import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonCard,
+	IonCardHeader,
+	IonCardTitle,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonSpinner,
+} from '@ionic/angular/standalone';
+import { ISelectItem, SelectFromListModule } from '@sneat/components';
 import { excludeEmpty } from '@sneat/core';
 import {
 	ContactRole,
@@ -22,11 +39,25 @@ import {
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
 import { ISpaceContext } from '@sneat/team-models';
+import { LocationFormComponent } from '../location-form';
 
 @Component({
 	selector: 'sneat-new-company-form',
 	templateUrl: './new-company-form.component.html',
-	standalone: false,
+	imports: [
+		SelectFromListModule,
+		FormsModule,
+		JsonPipe,
+		IonItem,
+		IonCard,
+		IonCardHeader,
+		IonCardTitle,
+		IonList,
+		IonLabel,
+		IonButton,
+		IonSpinner,
+		LocationFormComponent,
+	],
 })
 export class NewCompanyFormComponent implements OnChanges {
 	@Input() contactRoles?: ISelectItem[];
