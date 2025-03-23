@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { SneatPipesModule } from '@sneat/components';
+import { GenderColorPipe, GenderIconNamePipe } from '@sneat/components';
 import {
 	Gender,
 	GenderFemale,
@@ -34,7 +34,13 @@ const gendersOptions: readonly GenderOption[] = [
 @Component({
 	selector: 'sneat-gender-form',
 	templateUrl: './gender-form.component.html',
-	imports: [CommonModule, IonicModule, FormsModule, SneatPipesModule],
+	imports: [
+		CommonModule,
+		IonicModule,
+		FormsModule,
+		GenderColorPipe,
+		GenderIconNamePipe,
+	],
 	animations: [
 		trigger('radioOut', [
 			transition(':leave', [animate(animationTimings, style({ height: 0 }))]),

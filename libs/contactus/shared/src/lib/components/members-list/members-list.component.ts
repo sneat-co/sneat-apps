@@ -29,7 +29,7 @@ import {
 	IonLabel,
 	IonSkeletonText,
 } from '@ionic/angular/standalone';
-import { ContactTitlePipe, SneatPipesModule } from '@sneat/components';
+import { ContactTitlePipe } from '@sneat/components';
 import { IIdAndBrief, listAddRemoveAnimation } from '@sneat/core';
 import { IContactBrief } from '@sneat/contactus-core';
 import {
@@ -57,7 +57,7 @@ import { InlistAgeGroupComponent } from '../inlist-options/inlist-age-group.comp
 		CommonModule,
 		FormsModule,
 		ScheduleNavServiceModule,
-		SneatPipesModule,
+
 		InviteModalModule,
 		RouterModule,
 		ContactRoleBadgesComponent,

@@ -9,12 +9,12 @@ import {
 import { IonicModule } from '@ionic/angular';
 import { IIdAndBrief } from '@sneat/core';
 import { IContactBrief } from '@sneat/contactus-core';
-import { SneatPipesModule } from '../pipes';
+import { PersonTitle } from '../pipes';
 
 @Component({
 	selector: 'sneat-members-as-badges',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [CommonModule, IonicModule, SneatPipesModule],
+	imports: [CommonModule, IonicModule, PersonTitle],
 	styles: ['.deleting {text-decoration: line-through}'],
 	template: `
 		@for (member of members || []; track member.id) {

@@ -1,9 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-	name: 'longMonthName',
-	standalone: false,
-})
+@Pipe({ name: 'longMonthName' })
 export class LongMonthNamePipe implements PipeTransform {
 	transform(month?: number): string {
 		switch (month) {

@@ -3,7 +3,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { IUserSpaceBrief } from '@sneat/auth-models';
-import { ContactTitlePipe, SneatPipesModule } from '@sneat/components';
+import { ContactTitlePipe } from '@sneat/components';
 import { IUpdateContactRequest } from '@sneat/contactus-services';
 import { IIdAndBrief, IIdAndBriefAndOptionalDbo } from '@sneat/core';
 import {
@@ -38,7 +38,6 @@ import { RelatedContactComponent } from './related-contact.component';
 		CommonModule,
 		IonicModule,
 		FormsModule,
-		SneatPipesModule,
 		ContactDobComponent,
 		ContactModulesMenuComponent,
 		ContactContactsComponent,

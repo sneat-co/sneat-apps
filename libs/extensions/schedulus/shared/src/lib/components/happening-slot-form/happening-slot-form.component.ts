@@ -18,11 +18,7 @@ import {
 	UntypedFormGroup,
 } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
-import {
-	ISelectItem,
-	SelectFromListModule,
-	SneatPipesModule,
-} from '@sneat/components';
+import { ISelectItem, SelectFromListModule } from '@sneat/components';
 import {
 	emptyTiming,
 	HappeningType,
@@ -70,7 +66,7 @@ export interface IHappeningSlotFormComponentInputs {
 		IonicModule,
 		FormsModule,
 		ReactiveFormsModule,
-		SneatPipesModule,
+
 		SelectFromListModule,
 		StartEndDatetimeFormComponent,
 	],

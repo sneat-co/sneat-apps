@@ -21,7 +21,6 @@ import {
 	Validators,
 } from '@angular/forms';
 import { IonicModule, IonInput } from '@ionic/angular';
-import { SneatPipesModule } from '@sneat/components';
 import { RoutingState } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
@@ -56,7 +55,7 @@ import {
 		IonicModule,
 		FormsModule,
 		ReactiveFormsModule,
-		SneatPipesModule,
+
 		HappeningServiceModule,
 		HappeningParticipantsComponent,
 		HappeningPricesComponent,

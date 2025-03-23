@@ -6,7 +6,6 @@ import { IonicModule } from '@ionic/angular';
 import {
 	FilterItemComponent,
 	MembersAsBadgesComponent,
-	SneatPipesModule,
 } from '@sneat/components';
 import { MembersSelectorModule } from '@sneat/contactus-shared';
 import { SpacePageTitleComponent } from '@sneat/team-components';
@@ -51,7 +50,7 @@ import { TimingBadgeComponent } from './components/timing-badge/timing-badge.com
 		IonicModule,
 		FormsModule,
 		RouterModule,
-		SneatPipesModule,
+
 		SpacePageTitleComponent,
 		FilterItemComponent,
 		HappeningServiceModule,

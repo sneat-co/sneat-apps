@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { SneatPipesModule } from '@sneat/components';
 import { ContactSelectorServiceModule } from '@sneat/contactus-shared';
 import { DataGridComponent } from '@sneat/datagrid';
 import { FreightLoadFormModule } from '../freight-load-form/freight-load-form.module';
@@ -16,7 +15,7 @@ import { DispatcherComponent } from './dispatcher.component';
 	imports: [
 		CommonModule,
 		IonicModule,
-		SneatPipesModule,
+
 		FormsModule,
 		ReactiveFormsModule,
 		FreightLoadFormModule,

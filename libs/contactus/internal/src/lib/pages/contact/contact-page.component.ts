@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { ISaveEvent, SneatPipesModule } from '@sneat/components';
+import { ISaveEvent, PersonTitle } from '@sneat/components';
 import {
 	ContactComponentBaseParams,
 	ContactComponentBaseParamsModule,
@@ -29,12 +29,12 @@ import { ContactBasePage } from '../contact-base-page';
 		FormsModule,
 		RouterModule,
 		IonicModule,
-		SneatPipesModule,
 		ContactsListModule,
 		ContactRolesInputModule,
 		ContactDetailsComponent,
 		ContactusServicesModule,
 		ContactComponentBaseParamsModule,
+		PersonTitle,
 	],
 })
 export class ContactPageComponent extends ContactBasePage {

@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { SneatPipesModule } from '@sneat/components';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import {
 	ContactsChecklistComponent,
@@ -27,13 +26,7 @@ import {
 @Component({
 	selector: 'sneat-happening-participants',
 	templateUrl: 'happening-participants.component.html',
-	imports: [
-		CommonModule,
-		IonicModule,
-		SneatPipesModule,
-		ContactsChecklistComponent,
-		FormsModule,
-	],
+	imports: [CommonModule, IonicModule, ContactsChecklistComponent, FormsModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HappeningParticipantsComponent implements OnChanges {

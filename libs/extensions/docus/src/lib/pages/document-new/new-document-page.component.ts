@@ -6,7 +6,6 @@ import {
 	CountrySelectorComponent,
 	ISelectItem,
 	SelectFromListModule,
-	SneatPipesModule,
 } from '@sneat/components';
 import {
 	IContactBrief,
@@ -47,7 +46,7 @@ import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 		FormsModule,
 		IonicModule,
 		CountrySelectorComponent,
-		SneatPipesModule,
+
 		SelectFromListModule,
 		MembersSelectorModule,
 		AssetusServicesModule,

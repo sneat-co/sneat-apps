@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { SneatPipesModule } from '@sneat/components';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import {
 	HappeningType,
@@ -23,7 +22,7 @@ import { HappeningFormComponent } from '@sneat/extensions-schedulus-shared';
 		FormsModule,
 		IonicModule,
 		ReactiveFormsModule,
-		SneatPipesModule,
+
 		HappeningFormComponent,
 		ContactusServicesModule,
 	],

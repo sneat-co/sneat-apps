@@ -1,17 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-	name: 'decimal64p2',
-	standalone: false,
-})
+@Pipe({ name: 'decimal64p2' })
 export class Decimal64p2Pipe implements PipeTransform {
 	readonly transform = (value?: number) => (value ? value / 100 : 0);
 }
 
-@Pipe({
-	name: 'numeral',
-	standalone: false,
-})
+@Pipe({ name: 'numeral' })
 export class Numeral2Pipe implements PipeTransform {
 	readonly transform = (value?: number | string) => {
 		const s = value?.toString();

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { SneatPipesModule } from '@sneat/components';
+import { PersonTitle } from '@sneat/components';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import {
 	ContactComponentBaseParamsModule,
@@ -20,10 +20,10 @@ import { MemberBasePage } from '../member-base-page';
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		SneatPipesModule,
 		ContactDetailsComponent,
 		ContactComponentBaseParamsModule,
 		ContactusServicesModule,
+		PersonTitle,
 	],
 })
 export class SpaceMemberPageComponent extends MemberBasePage {

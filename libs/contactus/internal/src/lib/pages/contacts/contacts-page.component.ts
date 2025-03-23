@@ -1,18 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import {
 	ContactsByTypeComponent,
 	ContactsListModule,
 } from '@sneat/contactus-shared';
 import { IIdAndBrief, listItemAnimations } from '@sneat/core';
-import {
-	FilterItemComponent,
-	ISelectItem,
-	SneatPipesModule,
-} from '@sneat/components';
+import { FilterItemComponent, ISelectItem } from '@sneat/components';
 import { setHrefQueryParam } from '@sneat/core';
 import {
 	ContactRole,
@@ -41,7 +36,6 @@ import { Subscription } from 'rxjs';
 		IonicModule,
 		SpacePageTitleComponent,
 		FilterItemComponent,
-		SneatPipesModule,
 		ContactsListModule,
 		ContactsByTypeComponent,
 		ContactusServicesModule,

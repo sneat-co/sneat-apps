@@ -10,7 +10,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { SneatPipesModule } from '@sneat/components';
+import { Numeral2Pipe } from '@sneat/components';
 import {
 	IHappeningSlot,
 	WeekdayCode2,
@@ -38,9 +38,10 @@ export interface AddSlotParams {
 	imports: [
 		CommonModule,
 		IonicModule,
-		SneatPipesModule,
+
 		HappeningSlotModalServiceModule,
 		WdToWeekdayPipe,
+		Numeral2Pipe,
 	],
 })
 export class HappeningSlotsComponent implements OnChanges {

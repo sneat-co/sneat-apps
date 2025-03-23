@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { SneatPipesModule } from '@sneat/components';
+import { Decimal64p2Pipe } from '@sneat/components';
 import { IAmount, RepeatPeriod, ShowBy } from '@sneat/mod-schedulus-core';
 import {
 	ILiabilityBase,
@@ -24,7 +24,7 @@ import {
 	selector: 'sneat-budget-period',
 	templateUrl: 'budget-period.component.html',
 	styleUrl: './budget-period.component.scss',
-	imports: [CommonModule, IonicModule, FormsModule, SneatPipesModule],
+	imports: [CommonModule, IonicModule, FormsModule, Decimal64p2Pipe],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BudgetPeriodComponent implements OnChanges {

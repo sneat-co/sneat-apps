@@ -7,7 +7,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { SneatPipesModule } from '@sneat/components';
+import { GenderIconNamePipe } from '@sneat/components';
 import { IContactBrief } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import { IIdAndBrief } from '@sneat/core';
@@ -18,7 +18,7 @@ import { Subject, takeUntil } from 'rxjs';
 @Component({
 	selector: 'sneat-relate-contact',
 	templateUrl: './related-contact.component.html',
-	imports: [JsonPipe, IonicModule, SneatPipesModule],
+	imports: [JsonPipe, IonicModule, GenderIconNamePipe],
 })
 export class RelatedContactComponent implements OnChanges, OnDestroy {
 	@Input({ required: true }) public space?: ISpaceContext;

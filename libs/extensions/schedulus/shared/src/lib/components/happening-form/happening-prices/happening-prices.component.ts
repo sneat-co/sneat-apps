@@ -9,7 +9,7 @@ import {
 	signal,
 } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
-import { SneatPipesModule } from '@sneat/components';
+import { Decimal64p2Pipe } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	IHappeningBrief,
@@ -26,7 +26,7 @@ import { HappeningPriceFormComponent } from '../happening-price-form/happening-p
 	selector: 'sneat-happening-pricing',
 	templateUrl: 'happening-prices.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [CommonModule, IonicModule, SneatPipesModule],
+	imports: [CommonModule, IonicModule, Decimal64p2Pipe],
 })
 export class HappeningPricesComponent {
 	@Input({ required: true }) happening?: IHappeningContext;

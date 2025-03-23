@@ -8,7 +8,11 @@ import {
 	IonLabel,
 	IonText,
 } from '@ionic/angular/standalone';
-import { MembersAsBadgesComponent, SneatPipesModule } from '@sneat/components';
+import {
+	LongMonthNamePipe,
+	MembersAsBadgesComponent,
+	SelectedMembersPipe,
+} from '@sneat/components';
 import { IContactBrief } from '@sneat/contactus-core';
 import { IIdAndBrief } from '@sneat/core';
 import { getRelatedItemIDs } from '@sneat/dto';
@@ -30,7 +34,7 @@ import { HappeningSlotsComponent } from '../happening-slots/happening-slots.comp
 		IonText,
 		WdToWeekdayPipe,
 		IonLabel,
-		SneatPipesModule,
+
 		IonCard,
 		IonItem,
 		IonButtons,
@@ -38,6 +42,8 @@ import { HappeningSlotsComponent } from '../happening-slots/happening-slots.comp
 		IonIcon,
 		HappeningSlotsComponent,
 		MembersAsBadgesComponent,
+		LongMonthNamePipe,
+		SelectedMembersPipe,
 	],
 })
 export class HappeningCardComponent extends HappeningBaseComponent {

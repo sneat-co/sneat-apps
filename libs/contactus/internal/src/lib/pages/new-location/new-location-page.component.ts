@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { SneatPipesModule } from '@sneat/components';
+import { PersonTitle } from '@sneat/components';
 import {
 	ContactComponentBaseParams,
 	LocationFormComponent,
@@ -12,7 +12,7 @@ import { ContactBasePage } from '../contact-base-page';
 @Component({
 	selector: 'sneat-new-location-page',
 	templateUrl: './new-location-page.component.html',
-	imports: [CommonModule, IonicModule, LocationFormComponent, SneatPipesModule],
+	imports: [CommonModule, IonicModule, LocationFormComponent, PersonTitle],
 })
 export class NewLocationPageComponent extends ContactBasePage {
 	newLocation: IContactContext = {

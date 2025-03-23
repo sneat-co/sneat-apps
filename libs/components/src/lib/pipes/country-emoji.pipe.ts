@@ -4,18 +4,12 @@ import { countriesByID } from '../country-selector';
 export const countryFlagEmoji = (countryID?: string): string =>
 	countryID ? countriesByID[countryID]?.emoji || countryID : '';
 
-@Pipe({
-	name: 'countryFlag',
-	standalone: false,
-})
+@Pipe({ name: 'countryFlag' })
 export class CountryFlagPipe implements PipeTransform {
 	readonly transform = countryFlagEmoji;
 }
 
-@Pipe({
-	name: 'countryTitle',
-	standalone: false,
-})
+@Pipe({ name: 'countryTitle' })
 export class CountryTitle implements PipeTransform {
 	transform(countryID?: string): string {
 		return countryID ? countriesByID[countryID]?.title || countryID : '';

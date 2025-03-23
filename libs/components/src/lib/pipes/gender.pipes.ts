@@ -1,10 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Gender } from '@sneat/contactus-core';
 
-@Pipe({
-	name: 'genderIconName',
-	standalone: false,
-})
+@Pipe({ name: 'genderIconName' })
 export class GenderIconNamePipe implements PipeTransform {
 	transform(gender?: Gender): string {
 		switch (gender) {
@@ -23,10 +20,7 @@ export class GenderIconNamePipe implements PipeTransform {
 	}
 }
 
-@Pipe({
-	name: 'genderEmoji',
-	standalone: false,
-})
+@Pipe({ name: 'genderEmoji' })
 export class GenderEmojiPipe implements PipeTransform {
 	transform(gender?: Gender): string {
 		switch (gender) {
@@ -39,10 +33,7 @@ export class GenderEmojiPipe implements PipeTransform {
 	}
 }
 
-@Pipe({
-	name: 'genderColor',
-	standalone: false,
-})
+@Pipe({ name: 'genderColor' })
 export class GenderColorPipe implements PipeTransform {
 	transform(
 		gender?: Gender,

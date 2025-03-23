@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { SneatPipesModule } from '@sneat/components';
 import {
 	emptyHappeningSlot,
 	IHappeningContext,
@@ -17,7 +16,7 @@ import { HappeningSlotModalService } from '../happening-slot-form/happening-slot
 	imports: [
 		CommonModule,
 		IonicModule,
-		SneatPipesModule, // TODO(help-wanted): Can we import just specific pipe?
+		// TODO(help-wanted): Can we import just specific pipe?
 		WdToWeekdayPipe,
 	],
 })

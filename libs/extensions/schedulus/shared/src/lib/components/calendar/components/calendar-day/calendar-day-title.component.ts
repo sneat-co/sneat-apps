@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { SneatPipesModule } from '@sneat/components';
+import { LongMonthNamePipe } from '@sneat/components';
 import { WdToWeekdayPipe } from '@sneat/mod-schedulus-core';
 import { isToday, isTomorrow } from '../../../schedule-core';
 import { Weekday } from '../../weekday';
@@ -8,7 +8,7 @@ import { Weekday } from '../../weekday';
 	selector: 'sneat-calendar-day-title',
 	templateUrl: 'calendar-day-title.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [WdToWeekdayPipe, SneatPipesModule],
+	imports: [WdToWeekdayPipe, LongMonthNamePipe],
 })
 export class CalendarDayTitleComponent {
 	@Input({ required: true }) weekday?: Weekday;

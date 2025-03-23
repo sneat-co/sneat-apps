@@ -15,10 +15,7 @@ export const shortMonthNamesByNumber = [
 	'Dec',
 ];
 
-@Pipe({
-	name: 'shortMonthName',
-	standalone: false,
-})
+@Pipe({ name: 'shortMonthName' })
 export class ShortMonthNamePipe implements PipeTransform {
 	transform(month?: number): string {
 		if (month !== undefined && month >= 0 && month <= 11) {

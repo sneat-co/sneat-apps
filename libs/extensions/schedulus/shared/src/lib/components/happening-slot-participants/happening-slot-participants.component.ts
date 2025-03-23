@@ -8,7 +8,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { SneatPipesModule } from '@sneat/components';
+import { PersonNamesPipe } from '@sneat/components';
 import { IContactBrief } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import { IIdAndBrief, IIdAndOptionalBrief } from '@sneat/core';
@@ -20,7 +20,7 @@ import { distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 @Component({
 	selector: 'sneat-happening-slot-participants',
 	templateUrl: 'happening-slot-participants.component.html',
-	imports: [CommonModule, IonicModule, SneatPipesModule],
+	imports: [CommonModule, IonicModule, PersonNamesPipe],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HappeningSlotParticipantsComponent

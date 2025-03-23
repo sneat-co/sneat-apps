@@ -17,12 +17,12 @@ import {
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
-import { personName, SneatPipesModule } from '../pipes';
+import { personName, PersonNamesPipe } from '../pipes';
 
 @Component({
 	selector: 'sneat-auth-menu-item',
 	templateUrl: './auth-menu-item.component.html',
-	imports: [IonicModule, CommonModule, RouterModule, SneatPipesModule],
+	imports: [IonicModule, CommonModule, RouterModule, PersonNamesPipe],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthMenuItemComponent implements OnDestroy {

@@ -10,7 +10,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SneatUserService } from '@sneat/auth-core';
-import { ContactTitlePipe, SneatPipesModule } from '@sneat/components';
+import { ContactTitlePipe } from '@sneat/components';
 import { IContactBrief, IContactusSpaceDbo } from '@sneat/contactus-core';
 import {
 	ContactusSpaceContextService,
@@ -24,7 +24,7 @@ import { zipMapBriefsWithIDs } from '@sneat/team-models';
 @Component({
 	selector: 'sneat-contacts-filter',
 	templateUrl: 'contacts-filter.component.html',
-	imports: [IonicModule, NgIf, SneatPipesModule, FormsModule, ContactTitlePipe],
+	imports: [IonicModule, NgIf, FormsModule, ContactTitlePipe],
 })
 export class ContactsFilterComponent
 	extends ContactusModuleBaseComponent
