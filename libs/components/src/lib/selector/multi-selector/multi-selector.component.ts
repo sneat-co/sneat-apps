@@ -7,7 +7,7 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { IonicModule, ModalController } from '@ionic/angular';
 import { ISelectItem, ISelectItemEvent } from '../selector-interfaces';
 import { SelectorBaseComponent } from '../selector-base.component';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -15,7 +15,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 @Component({
 	selector: 'sneat-multi-selector',
 	templateUrl: './multi-selector.component.html',
-	standalone: false,
+	imports: [IonicModule],
 })
 export class MultiSelectorComponent
 	extends SelectorBaseComponent
