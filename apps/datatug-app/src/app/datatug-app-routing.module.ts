@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
 import { DatatugRoutingModule } from '@sneat/datatug-routes';
-import { HelloWorldPageComponent } from './hello-world-page.component';
 import { IonicRouteStrategy } from '@ionic/angular';
 import { SneatAuthRoutingModule } from '@sneat/auth-ui';
 
 const routes: Routes = [
 	{
 		path: 'hello-world',
-		component: HelloWorldPageComponent,
+		loadChildren: () =>
+			import('./hello-world-page.component').then(
+				(m) => m.HelloWorldPageComponent,
+			),
 	},
 	{
 		path: 'home',
