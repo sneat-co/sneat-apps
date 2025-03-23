@@ -9,7 +9,7 @@ import {
 	SneatPipesModule,
 } from '@sneat/components';
 import { MembersSelectorModule } from '@sneat/contactus-shared';
-import { SpaceCoreComponentsModule } from '@sneat/team-components';
+import { SpacePageTitleComponent } from '@sneat/team-components';
 import {
 	ScheduleNavServiceModule,
 	WdToWeekdayPipe,
@@ -52,7 +52,7 @@ import { TimingBadgeComponent } from './components/timing-badge/timing-badge.com
 		FormsModule,
 		RouterModule,
 		SneatPipesModule,
-		SpaceCoreComponentsModule,
+		SpacePageTitleComponent,
 		FilterItemComponent,
 		HappeningServiceModule,
 		CalendarDayServiceModule,

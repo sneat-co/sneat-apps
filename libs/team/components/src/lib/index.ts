@@ -4,7 +4,6 @@ export * from './team-menu';
 export * from './teams-menu';
 export * from './team-page-title/space-page-title.component';
 export * from './space-page-base-component.service';
-export * from './space-core-components.module';
 export * from './space-component-base-params.service';
 export * from './space-item-page-base.component';
 export * from './space-items-base.component';

@@ -14,7 +14,7 @@ import {
 } from '@sneat/extensions-assetus-components';
 import {
 	SpaceComponentBaseParams,
-	SpaceCoreComponentsModule,
+	SpacePageTitleComponent,
 } from '@sneat/team-components';
 import { IAssetContext } from '@sneat/mod-assetus-core';
 import { takeUntil } from 'rxjs';
@@ -30,7 +30,7 @@ import { AssetsBasePage } from '../assets-base.page';
 		IonicModule,
 		RouterModule,
 		AssetsListComponentModule,
-		SpaceCoreComponentsModule,
+		SpacePageTitleComponent,
 		ContactusServicesModule,
 		AssetusServicesModule,
 	],

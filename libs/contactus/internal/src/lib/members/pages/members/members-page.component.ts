@@ -18,7 +18,7 @@ import { IMemberGroupContext } from '@sneat/contactus-core';
 import { isSpaceSupportsMemberGroups } from '@sneat/dto';
 import {
 	SpaceComponentBaseParams,
-	SpaceCoreComponentsModule,
+	SpacePageTitleComponent,
 } from '@sneat/team-components';
 import { MembersBasePage } from '../../members-base-page';
 import { Component } from '@angular/core';
@@ -31,7 +31,7 @@ import { Component } from '@angular/core';
 		IonicModule,
 		CommonModule,
 		FormsModule,
-		SpaceCoreComponentsModule,
+		SpacePageTitleComponent,
 		ContactusServicesModule,
 		FamilyMembersComponent,
 	],

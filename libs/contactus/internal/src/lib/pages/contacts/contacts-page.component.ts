@@ -21,7 +21,7 @@ import {
 } from '@sneat/contactus-core';
 import {
 	SpaceComponentBaseParams,
-	SpaceCoreComponentsModule,
+	SpacePageTitleComponent,
 	SpaceItemsBaseComponent,
 } from '@sneat/team-components';
 import {
@@ -39,7 +39,7 @@ import { Subscription } from 'rxjs';
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		SpaceCoreComponentsModule,
+		SpacePageTitleComponent,
 		FilterItemComponent,
 		SneatPipesModule,
 		ContactsListModule,

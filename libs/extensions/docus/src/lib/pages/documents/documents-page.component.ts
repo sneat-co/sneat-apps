@@ -12,7 +12,7 @@ import {
 import {
 	SpaceBaseComponent,
 	SpaceComponentBaseParams,
-	SpaceCoreComponentsModule,
+	SpacePageTitleComponent,
 } from '@sneat/team-components';
 import {
 	IAssetContext,
@@ -33,7 +33,7 @@ import { DocumentsListComponent } from './components/documents-list/documents-li
 		FilterItemComponent,
 		DocumentsByTypeComponent,
 		FormsModule,
-		SpaceCoreComponentsModule,
+		SpacePageTitleComponent,
 		ContactusServicesModule,
 		AssetusServicesModule,
 	],

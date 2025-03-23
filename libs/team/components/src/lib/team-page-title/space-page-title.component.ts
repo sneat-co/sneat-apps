@@ -1,10 +1,15 @@
+import { TitleCasePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
 import { ISpaceContext } from '@sneat/team-models';
 
 @Component({
 	selector: 'sneat-space-page-title',
 	templateUrl: './space-page-title.component.html',
-	standalone: false,
+	imports: [
+		IonicModule, // TODO(help-wanted): For some reason this fails: import { ... } from '@ionic/angular/standalone';
+		TitleCasePipe,
+	],
 })
 export class SpacePageTitleComponent {
 	@Input() icon?: string;

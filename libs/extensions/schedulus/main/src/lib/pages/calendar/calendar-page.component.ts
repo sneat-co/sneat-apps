@@ -24,7 +24,7 @@ import {
 import {
 	SpaceBaseComponent,
 	SpaceComponentBaseParams,
-	SpaceCoreComponentsModule,
+	SpacePageTitleComponent,
 } from '@sneat/team-components';
 import { IMemberContext } from '@sneat/contactus-core';
 import {
@@ -44,7 +44,7 @@ import {
 	animations: virtualSliderAnimations,
 	imports: [
 		CommonModule,
-		SpaceCoreComponentsModule,
+		SpacePageTitleComponent,
 		CalendarComponentModule,
 		ContactusServicesModule,
 		CalendariumServicesModule,

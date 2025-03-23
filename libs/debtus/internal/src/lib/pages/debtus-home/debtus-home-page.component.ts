@@ -5,7 +5,7 @@ import { ContactusServicesModule } from '@sneat/contactus-services';
 import { NewDebtFormComponent } from '@sneat/debtus-shared';
 import {
 	SpaceComponentBaseParams,
-	SpaceCoreComponentsModule,
+	SpacePageTitleComponent,
 	SpacePageBaseComponent,
 } from '@sneat/team-components';
 
@@ -15,7 +15,7 @@ import {
 	imports: [
 		CommonModule,
 		IonicModule,
-		SpaceCoreComponentsModule,
+		SpacePageTitleComponent,
 		NewDebtFormComponent,
 		ContactusServicesModule,
 	],
