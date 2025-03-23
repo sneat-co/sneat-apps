@@ -6,6 +6,7 @@ import { AuthMenuItemComponent } from '@sneat/components';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { IIdAndBrief } from '@sneat/core';
 import { zipMapBriefsWithIDs } from '@sneat/team-models';
+import { SpaceServiceModule } from '@sneat/team-services';
 import { takeUntil } from 'rxjs/operators';
 import { SpaceBaseComponent } from '../space-base-component.directive';
 import { SpaceComponentBaseParams } from '../space-component-base-params.service';
@@ -25,6 +26,7 @@ import { IonicModule } from '@ionic/angular';
 		RouterModule,
 		AuthMenuItemComponent,
 		ContactusServicesModule,
+		SpaceServiceModule,
 	],
 	providers: [SpaceComponentBaseParams],
 })

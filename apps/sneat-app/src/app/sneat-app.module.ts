@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
 import {
 	getStandardSneatImports,
 	getStandardSneatProviders,
@@ -26,6 +27,7 @@ console.log('sneatAppEnvironmentConfig:', sneatAppEnvironmentConfig);
 	declarations: [SneatAppComponent],
 	imports: [
 		...getStandardSneatImports(),
+		IonicModule.forRoot(),
 		SpacesMenuComponent,
 		SneatAppRoutingModule,
 		// HttpClientModule, // This is needed so we can define HTTP_INTERCEPTORS

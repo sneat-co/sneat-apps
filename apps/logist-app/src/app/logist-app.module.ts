@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { IonicModule } from '@ionic/angular';
 import { DefaultSneatAppApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
 import {
 	CONTACT_ROLES_BY_TYPE,
@@ -91,6 +92,7 @@ const contactRolesByType: ContactRolesByType = {
 @NgModule({
 	imports: [
 		...getStandardSneatImports(),
+		IonicModule.forRoot(),
 		// SneatAuthServicesModule,
 		AuthMenuItemComponent,
 		SpacesMenuComponent,

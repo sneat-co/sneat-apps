@@ -3,6 +3,7 @@ import { IonList } from '@ionic/angular/standalone';
 import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth-core';
 import { AppVersionComponent, AuthMenuItemComponent } from '@sneat/components';
 import { SpacesMenuComponent } from '@sneat/team-components';
+import { SpaceServiceModule } from '@sneat/team-services';
 
 @Component({
 	selector: 'sneat-app-menu',
@@ -12,6 +13,7 @@ import { SpacesMenuComponent } from '@sneat/team-components';
 		AuthMenuItemComponent,
 		AppVersionComponent,
 		IonList,
+		SpaceServiceModule,
 	],
 	// standalone: false,
 })
