@@ -1,16 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { contactusRoutes, membersRoutes } from '@sneat/contactus-internal';
 import { calendariumRoutes } from '@sneat/extensions-schedulus-main';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { LogistSpaceMenuComponent } from '../components';
-
-@Component({
-	template: 'empty component',
-	standalone: false,
-})
-export class EmptyComponent {}
 
 export const logistRoutes: Routes = [
 	{
@@ -101,7 +95,6 @@ export const logistRoutes: Routes = [
 			logistRoutes.map((r) => ({ ...r, path: r.path?.replace('logist/', '') })),
 		),
 	],
-	declarations: [EmptyComponent],
 	providers: [SpaceComponentBaseParams],
 })
 export class LogistSpaceRoutingModule {}
