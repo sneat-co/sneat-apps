@@ -1,12 +1,24 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonText,
+} from '@ionic/angular/standalone';
+import { MembersAsBadgesComponent, SneatPipesModule } from '@sneat/components';
 import { IContactBrief } from '@sneat/contactus-core';
 import { IIdAndBrief } from '@sneat/core';
 import { getRelatedItemIDs } from '@sneat/dto';
+import { WdToWeekdayPipe } from '@sneat/mod-schedulus-core';
 import {
 	HappeningBaseComponent,
-	HappeningComponent,
+	HappeningBaseComponentParams,
 } from '../happening-base.component';
 import { IHappeningContactRequest } from '../../services/happening.service';
+import { HappeningSlotsComponent } from '../happening-slots/happening-slots.component';
 
 @Component({
 	selector: 'sneat-happening-card',
@@ -14,20 +26,51 @@ import { IHappeningContactRequest } from '../../services/happening.service';
 	styleUrls: ['happening-card.component.scss'],
 	providers: [...HappeningBaseComponent.providers],
 	...HappeningBaseComponent.metadata,
-	standalone: false,
+	imports: [
+		IonText,
+		WdToWeekdayPipe,
+		IonLabel,
+		SneatPipesModule,
+		IonCard,
+		IonItem,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		HappeningSlotsComponent,
+		MembersAsBadgesComponent,
+	],
 })
-export class HappeningCardComponent extends HappeningComponent {
+export class HappeningCardComponent extends HappeningBaseComponent {
 	protected hasRelatedContacts(): boolean {
+		const [, happening] = this.spaceAndHappening();
+		if (!happening) {
+			return false;
+		}
 		return !!getRelatedItemIDs(
-			this.happening?.brief?.related,
+			happening.brief?.related,
 			'contactus',
 			'contacts',
 		).length;
 	}
 
+	constructor(
+		happeningBaseComponentParams: HappeningBaseComponentParams,
+		changeDetectorRef: ChangeDetectorRef,
+	) {
+		super(
+			'HappeningCardComponent',
+			happeningBaseComponentParams,
+			changeDetectorRef,
+		);
+	}
+
 	protected getRelatedContactIDs(): readonly string[] {
+		const [, happening] = this.spaceAndHappening();
+		if (!happening) {
+			return [];
+		}
 		return getRelatedItemIDs(
-			this.happening?.dbo?.related || this.happening?.brief?.related,
+			happening.dbo?.related || happening.brief?.related,
 			'contactus',
 			'contacts',
 		);
@@ -35,15 +78,13 @@ export class HappeningCardComponent extends HappeningComponent {
 
 	protected removeMember(member: IIdAndBrief<IContactBrief>): void {
 		console.log('removeMember', member);
-		if (!this.happening) {
-			return;
-		}
-		if (!this.space) {
+		const [space, happening] = this.spaceAndHappening();
+		if (!space || !happening) {
 			return;
 		}
 		const request: IHappeningContactRequest = {
-			spaceID: this.space.id,
-			happeningID: this.happening.id,
+			spaceID: space.id,
+			happeningID: happening.id,
 			contact: { id: member.id },
 		};
 		this.happeningService.removeParticipant(request).subscribe({

@@ -16,6 +16,19 @@ import {
 	ModalController,
 	NavController,
 } from '@ionic/angular';
+import {
+	IonAvatar,
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonImg,
+	IonItem,
+	IonItemOption,
+	IonItemOptions,
+	IonItemSliding,
+	IonLabel,
+	IonSkeletonText,
+} from '@ionic/angular/standalone';
 import { SneatPipesModule } from '@sneat/components';
 import { IIdAndBrief, listAddRemoveAnimation } from '@sneat/core';
 import { IContactBrief } from '@sneat/contactus-core';
@@ -42,7 +55,6 @@ import { InlistAgeGroupComponent } from '../inlist-options/inlist-age-group.comp
 	animations: listAddRemoveAnimation,
 	imports: [
 		CommonModule,
-		IonicModule,
 		FormsModule,
 		ScheduleNavServiceModule,
 		SneatPipesModule,
@@ -50,6 +62,17 @@ import { InlistAgeGroupComponent } from '../inlist-options/inlist-age-group.comp
 		RouterModule,
 		ContactRoleBadgesComponent,
 		InlistAgeGroupComponent,
+		IonItem,
+		IonAvatar,
+		IonImg,
+		IonSkeletonText,
+		IonItemSliding,
+		IonLabel,
+		IonIcon,
+		IonButtons,
+		IonButton,
+		IonItemOptions,
+		IonItemOption,
 	],
 })
 // TODO: Is it deprecated and should we migrated to Contacts list?

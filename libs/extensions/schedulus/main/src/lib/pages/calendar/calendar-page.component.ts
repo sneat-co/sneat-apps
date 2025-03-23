@@ -1,8 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ParamMap } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
-
+import {
+	IonBackButton,
+	IonButton,
+	IonButtons,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonLabel,
+	IonMenuButton,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { virtualSliderAnimations } from '@sneat/components';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import {
@@ -34,18 +44,27 @@ import {
 	animations: virtualSliderAnimations,
 	imports: [
 		CommonModule,
-		IonicModule,
 		SpaceCoreComponentsModule,
 		CalendarComponentModule,
 		ContactusServicesModule,
 		CalendariumServicesModule,
 		ScheduleNavServiceModule,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		IonIcon,
+		IonLabel,
+		IonButton,
+		IonContent,
+		IonMenuButton,
 	],
 })
 export class CalendarPageComponent extends SpaceBaseComponent {
-	public tab: CalendarTab = 'day';
-	public date = '';
-	member?: IMemberContext;
+	protected tab: CalendarTab = 'day';
+	protected date = '';
+	protected member?: IMemberContext;
 
 	constructor(
 		// private filterService: CalendarFilterService,
@@ -92,7 +111,7 @@ export class CalendarPageComponent extends SpaceBaseComponent {
 		}
 	};
 
-	onTabChanged(tab: CalendarTab): void {
+	protected onTabChanged(tab: CalendarTab): void {
 		this.tab = tab;
 		let { href } = location;
 		if (!href.includes('?')) {
@@ -102,11 +121,11 @@ export class CalendarPageComponent extends SpaceBaseComponent {
 		history.replaceState(history.state, document.title, href);
 	}
 
-	onDateChanged(date: string): void {
+	protected onDateChanged(date: string): void {
 		this.date = date;
 	}
 
-	goNew(type: HappeningType): void {
+	protected goNew(type: HappeningType): void {
 		if (!this.space) {
 			return;
 		}

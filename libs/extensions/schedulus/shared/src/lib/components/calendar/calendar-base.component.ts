@@ -35,13 +35,15 @@ export abstract class CalendarBaseComponent implements OnChanges, OnDestroy {
 
 	protected allRecurrings?: readonly IHappeningWithUiState[];
 
-	constructor(
+	protected constructor(
+		private className: string,
 		@Inject(ErrorLogger) protected readonly errorLogger: IErrorLogger,
 		private readonly calendariumSpaceService: CalendariumSpaceService,
 		happeningService: HappeningService,
 		calendarDayService: CalendarDayService,
 		sneatApiService: SneatApiService,
 	) {
+		console.log(`${className}:CalendarBaseComponent.constructor()`);
 		this.spaceDaysProvider = new SpaceDaysProvider(
 			this.errorLogger,
 			happeningService,

@@ -1,10 +1,4 @@
-import {
-	Component,
-	Inject,
-	Input,
-	SimpleChanges,
-	OnChanges,
-} from '@angular/core';
+import { Component, Inject, SimpleChanges, OnChanges } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SneatApiService } from '@sneat/api';
@@ -17,6 +11,7 @@ import { createWeekday } from '../weekday-functions';
 import { CalendarBaseComponent } from './calendar-base.component';
 import { CalendarComponentModule } from './calendar-component.module';
 import { CalendarAddButtonsComponent } from './components/calendar-add-buttons/calendar-add-buttons.component';
+import { CalendarDayTitleComponent } from './components/calendar-day/calendar-day-title.component';
 import { Weekday } from './weekday';
 
 @Component({
@@ -28,7 +23,9 @@ import { Weekday } from './weekday';
 		CalendarComponentModule,
 		CalendarAddButtonsComponent,
 		CalendariumServicesModule,
+		CalendarDayTitleComponent,
 	],
+	providers: [],
 })
 export class CalendarBriefComponent
 	extends CalendarBaseComponent
@@ -45,6 +42,7 @@ export class CalendarBriefComponent
 		sneatApiService: SneatApiService,
 	) {
 		super(
+			'CalendarBriefComponent',
 			errorLogger,
 			calendariumSpaceService,
 			happeningService,

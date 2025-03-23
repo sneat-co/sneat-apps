@@ -5,7 +5,7 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonCard } from '@ionic/angular/standalone';
 import { IContactBrief, IContactusSpaceDbo } from '@sneat/contactus-core';
 import { IIdAndBrief } from '@sneat/core';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
@@ -18,7 +18,10 @@ import { MembersListComponent } from '../members-list';
 		<ion-card>
 			<sneat-members-card-header
 				[space]="space"
-				[contactusSpace]="{ id: space?.id || '', dbo: contactusSpaceDbo }"
+				[contactusSpace]="{
+					id: space?.id || '',
+					dbo: contactusSpaceDbo || null,
+				}"
 			/>
 			<sneat-members-list
 				[space]="space"
@@ -26,7 +29,7 @@ import { MembersListComponent } from '../members-list';
 			></sneat-members-list>
 		</ion-card>
 	`,
-	imports: [IonicModule, MembersListComponent, MembersCardHeaderComponent],
+	imports: [IonCard, MembersListComponent, MembersCardHeaderComponent],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MembersShortListCardComponent implements OnChanges {

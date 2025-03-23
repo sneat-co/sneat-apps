@@ -19,7 +19,7 @@ import {
 const routes: Routes = [
 	{
 		path: '',
-		// pathMatch: 'full',
+		// pathMatch: 'full', -- for all routes
 		component: SpaceMenuComponent,
 		outlet: 'menu',
 	},
@@ -34,29 +34,11 @@ const routes: Routes = [
 	},
 	...contactusRoutes,
 	...spacePagesRoutes,
-	// {
-	// 	path: '',
-	// 	loadChildren: () =>
-	// 		import('@sneat/contactus-internal').then((m) => m.ContactusRoutingModule),
-	// },
 	...budgetusRoutes,
 	...docusRoutes,
 	...listusRoutes,
 	...calendariumRoutes,
 	...trackusSpaceRoutes,
-	// ...expressRoutes,
-	// {
-	// 	path: '',
-	// 	component: SpacePageComponent, // intentionally not lazy loading
-	// 	pathMatch: 'full',
-	// 	children: [
-	// 		{
-	// 			path: '',
-	// 			pathMatch: 'full',
-	// 			loadChildren: () => import('./team-page/team-page.module').then(m => m.SpacePageModule),
-	// 		},
-	// 	],
-	// },
 ];
 
 @NgModule({

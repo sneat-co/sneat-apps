@@ -12,12 +12,6 @@ export const routes: Routes = [
 				(m) => m.SneatAppMenuComponent,
 			),
 	},
-	// {
-	// 	path: 'my',
-	// 	pathMatch: 'full',
-	// 	loadChildren: () =>
-	// 		import('./sneat-app-home-page/sneat-app-home-page.component.module').then(m => m.SneatAppHomePageComponentModule),
-	// },
 	{
 		path: '',
 		pathMatch: 'full',
@@ -58,10 +52,6 @@ export const routes: Routes = [
 		loadComponent: () =>
 			import('@sneat/team-pages').then((m) => m.JoinSpacePageComponent),
 	},
-	// {
-	// 	path: 'invite-to/:spaceType',
-	// 	loadChildren: () => import('@sneat/space-pages').then(m => m.)
-	// },
 	{
 		path: 'communes', // TODO: Obsolete route naming and probably the whole route
 		loadChildren: () =>

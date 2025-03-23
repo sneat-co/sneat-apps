@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { IonButton, IonButtons, IonIcon } from '@ionic/angular/standalone';
 import {
 	HappeningType,
 	WeekdayCode2,
@@ -11,7 +11,8 @@ import { ISpaceContext } from '@sneat/team-models';
 @Component({
 	selector: 'sneat-calendar-add-buttons',
 	templateUrl: './calendar-add-buttons.component.html',
-	imports: [IonicModule],
+	imports: [IonButtons, IonButton, IonIcon],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarAddButtonsComponent {
 	@Input({ required: true }) public space?: ISpaceContext;

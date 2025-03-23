@@ -57,8 +57,8 @@ export class SingleHappeningsListComponent
 		);
 	}
 
-	protected clearFilter(): void {
-		this.filterService.resetScheduleFilter();
+	protected clearFilter(event: Event): void {
+		this.filterService.resetScheduleFilter(event);
 	}
 
 	public ngOnChanges(/*changes: SimpleChanges*/): void {

@@ -2,7 +2,23 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCol,
+	IonContent,
+	IonGrid,
+	IonHeader,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonMenuButton,
+	IonRow,
+	IonText,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { IContactusSpaceDbo } from '@sneat/contactus-core';
 import {
 	ContactusServicesModule,
@@ -23,12 +39,26 @@ import { CalendarBriefComponent } from '@sneat/extensions-schedulus-shared';
 	imports: [
 		CommonModule,
 		FormsModule,
-		IonicModule,
 		RouterModule,
 		ContactusServicesModule,
 		SpaceServiceModule,
 		MembersShortListCardComponent,
 		CalendarBriefComponent,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonMenuButton,
+		IonTitle,
+		IonIcon,
+		IonText,
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonItem,
+		IonLabel,
+		IonButton,
+		IonCard,
+		IonContent,
 		// HappeningServiceModule,
 	],
 })

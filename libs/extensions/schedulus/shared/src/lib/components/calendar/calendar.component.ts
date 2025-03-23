@@ -84,6 +84,7 @@ export class CalendarComponent
 		calendariumSpaceService: CalendariumSpaceService,
 	) {
 		super(
+			'CalendarComponent',
 			errorLogger,
 			calendariumSpaceService,
 			happeningService,

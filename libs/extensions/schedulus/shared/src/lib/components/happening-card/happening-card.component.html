@@ -13,7 +13,9 @@
 			}
 
 			<ion-text color="primary" style="font-weight: bold">
-				{{ happening?.brief?.title || happening?.dbo?.title || "Loading..." }}
+				{{
+					$happening().brief?.title || $happening().dbo?.title || "Loading..."
+				}}
 			</ion-text>
 			<!--			<p *ngIf='Object.keys(happening?.dto?.participants || {}).length'>-->
 			<!--				<ion-badge-->
@@ -33,7 +35,7 @@
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
-	<sneat-happening-slots [happening]="happening" />
+	<sneat-happening-slots [happening]="$happening()" />
 	<!--	<sneat-happening-slot-->
 	<!--		[slot]="slot"-->
 	<!--		[happening]="happening"-->

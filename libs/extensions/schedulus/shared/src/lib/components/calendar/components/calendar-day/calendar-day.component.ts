@@ -67,10 +67,8 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 		});
 	}
 
-	protected resetFilter(event: Event): void {
-		event.stopPropagation();
-		this.filterService.resetScheduleFilter();
-	}
+	protected readonly resetFilter = (event: Event) =>
+		this.filterService.resetScheduleFilter(event);
 
 	ngOnDestroy(): void {
 		this.destroyed.next();

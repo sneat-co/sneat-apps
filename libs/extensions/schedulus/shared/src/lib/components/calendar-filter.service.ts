@@ -30,12 +30,8 @@ export class CalendarFilterService {
 		this.filter$.next(filter);
 	}
 
-	readonly resetFilterHandler = (event: Event): void => {
+	resetScheduleFilter(event: Event): void {
 		event.stopPropagation();
-		this.resetScheduleFilter();
-	};
-
-	resetScheduleFilter(): void {
 		this.filter$.next(emptyCalendarFilter);
 	}
 }

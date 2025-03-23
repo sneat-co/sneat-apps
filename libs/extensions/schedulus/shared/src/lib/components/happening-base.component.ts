@@ -4,11 +4,10 @@ import {
 	EventEmitter,
 	Inject,
 	Injectable,
+	input,
 	Input,
-	OnChanges,
 	OnDestroy,
 	Output,
-	SimpleChanges,
 } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { IContactBrief, IContactusSpaceDboAndID } from '@sneat/contactus-core';
@@ -21,6 +20,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { contactContextFromBrief } from '@sneat/contactus-services';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
 import { SpaceNavService } from '@sneat/team-services';
+import { SneatBaseComponent } from '@sneat/ui';
 import { NEVER, Observable, takeUntil } from 'rxjs';
 import {
 	HappeningService,
@@ -39,7 +39,6 @@ export class HappeningBaseComponentParams {
 	) {}
 }
 
-@Directive()
 /* The meatadata should be passed to component declaration as:
 
 	```
@@ -53,7 +52,8 @@ export class HappeningBaseComponentParams {
 	class SomeComponent extends BaseComponent
 	```
  */
-export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
+@Directive()
+export abstract class HappeningBaseComponent extends SneatBaseComponent {
 	static providers = [HappeningBaseComponentParams];
 
 	static metadata = {
@@ -61,19 +61,21 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 		outputs: ['deleted'],
 	};
 
-	protected readonly destroyed = new EventEmitter<void>();
+	public readonly $space = input.required<ISpaceContext>();
+	public readonly $happening = input.required<IHappeningContext>();
 
-	@Input({ required: true }) space?: ISpaceContext;
+	// @Input({ required: true }) space?: ISpaceContext;
 	@Input() contactusSpace?: IContactusSpaceDboAndID;
-	@Input() happening?: IHappeningContext;
+	// @Input() happening?: IHappeningContext;
 
 	@Output() readonly deleted = new EventEmitter<string>();
 
 	get date(): Date | undefined {
-		if (!this.happening?.dbo?.dates?.length) {
+		const happeningDbo = this.$happening().dbo;
+		if (!happeningDbo?.dates?.length) {
 			return undefined;
 		}
-		return isoStringsToDate(this.happening.dbo.dates[0]);
+		return isoStringsToDate(happeningDbo.dates[0]);
 	}
 
 	get wd(): WeekdayCode2 | undefined {
@@ -82,10 +84,6 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 	}
 
 	public deleting = false;
-
-	get errorLogger() {
-		return this.happeningBaseComponentParams.errorLogger;
-	}
 
 	get happeningService() {
 		return this.happeningBaseComponentParams.happeningService;
@@ -100,32 +98,24 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 	}
 
 	protected constructor(
+		className: string,
 		private readonly happeningBaseComponentParams: HappeningBaseComponentParams,
 		protected changeDetectorRef: ChangeDetectorRef,
-	) {}
-
-	ngOnDestroy(): void {
-		this.destroyed.next();
-		this.destroyed.complete();
+	) {
+		super(className);
 	}
 
 	protected goHappening(event: Event): void {
 		event.stopPropagation();
-		if (!this.space) {
-			this.errorLogger.logErrorHandler(
-				'not able to navigate to happening without space context',
-			);
+		const [space, happening] = this.spaceAndHappening();
+		if (!space || !happening) {
 			return;
 		}
-		console.log('goHappening()', this.happening, this.space);
+		console.log('goHappening()', happening, space);
 		this.spaceNavService
-			.navigateForwardToSpacePage(
-				this.space,
-				`happening/${this.happening?.id}`,
-				{
-					state: { happening: this.happening },
-				},
-			)
+			.navigateForwardToSpacePage(space, `happening/${happening.id}`, {
+				state: { happening },
+			})
 			.catch(
 				this.errorLogger.logErrorHandler(
 					'failed to navigate to happening page',
@@ -137,7 +127,11 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 	delete(event: Event): void {
 		console.log('HappeningCardComponent.delete()');
 		event.stopPropagation();
-		if (!this.happening) {
+		const [space, happening] = this.spaceAndHappening();
+		if (!space || !happening) {
+			return;
+		}
+		if (!happening) {
 			this.errorLogger.logError(
 				new Error(
 					'Single happening card has no happening context at moment of delete attempt',
@@ -147,7 +141,7 @@ export abstract class HappeningBaseComponent implements OnChanges, OnDestroy {
 		}
 		if (
 			!confirm(`
-DELETING: ${this.happening?.brief?.title}
+DELETING: ${happening?.brief?.title}
 
 Are you sure you want to delete this happening?
 
@@ -157,16 +151,16 @@ This operation can NOT be undone.`)
 		}
 		this.deleting = true;
 
-		const happening: IHappeningContext = this.happening.space
-			? this.happening
+		const happeningWithSpace: IHappeningContext = happening?.space
+			? happening
 			: {
-					...this.happening,
-					space: this.space || { id: '' },
+					...happening,
+					space: space || { id: '' },
 				};
 
 		this.happeningService
-			.deleteHappening(happening)
-			.pipe(takeUntil(this.destroyed))
+			.deleteHappening(happeningWithSpace)
+			.pipe(this.takeUntilDestroyed())
 			.subscribe({
 				next: () => this.deleted.emit(),
 				error: (e) => {
@@ -178,8 +172,8 @@ This operation can NOT be undone.`)
 
 	protected selectMembers(event: Event): void {
 		event.stopPropagation();
-		const space = this.space;
-		if (!space) {
+		const [space, happening] = this.spaceAndHappening();
+		if (!space || !happening) {
 			return;
 		}
 		const spaceID = space?.id;
@@ -196,7 +190,7 @@ This operation can NOT be undone.`)
 				selectedMembers:
 					teamMembers?.filter((m) =>
 						getRelatedItemIDs(
-							this.happening?.brief?.related,
+							happening?.brief?.related,
 							'contactus',
 							'contacts',
 							space.id,
@@ -214,59 +208,42 @@ This operation can NOT be undone.`)
 	private readonly onMemberAdded = (
 		member: IIdAndBrief<IContactBrief>,
 	): Observable<void> => {
-		if (!this.happening) {
-			return NEVER;
-		}
-		if (!this.space) {
+		const [space, happening] = this.spaceAndHappening();
+		if (!space || !happening) {
 			return NEVER;
 		}
 		const request: IHappeningContactRequest = {
-			spaceID: this.space.id,
-			happeningID: this.happening.id,
+			spaceID: space.id,
+			happeningID: happening.id,
 			contact: { id: member.id },
 		};
 		return this.happeningService.addParticipant(request);
-		// result
-		// 	.pipe(takeUntil(this.destroyed))
-		// 	.subscribe({
-		// 		next: () => {
-		// 			this.changeDetectorRef.markForCheck();
-		// 		},
-		// 	});
 	};
+
+	protected spaceAndHappening(): [ISpaceContext, IHappeningContext] {
+		const happening = this.$happening();
+		if (!happening) {
+			console.error(this.className + ': $happening is not set');
+		}
+		const space = this.$space();
+		if (!space) {
+			console.error(this.className + ': $space is not set');
+		}
+		return [space, happening];
+	}
 
 	private readonly onMemberRemoved = (
 		member: IIdAndBrief<IContactBrief>,
 	): Observable<void> => {
-		if (!this.happening) {
-			return NEVER;
-		}
-		if (!this.space) {
+		const [space, happening] = this.spaceAndHappening();
+		if (!space || !happening) {
 			return NEVER;
 		}
 		const request: IHappeningContactRequest = {
-			spaceID: this.space.id,
-			happeningID: this.happening.id,
+			spaceID: space.id,
+			happeningID: happening.id,
 			contact: { id: member.id },
 		};
 		return this.happeningService.removeParticipant(request);
 	};
-
-	ngOnChanges(changes: SimpleChanges): void {
-		console.log(
-			'HappeningCardComponent.ngOnChanges()',
-			this.happening?.id,
-			changes,
-		);
-	}
-}
-
-@Directive()
-export class HappeningComponent extends HappeningBaseComponent {
-	constructor(
-		happeningBaseComponentParams: HappeningBaseComponentParams,
-		changeDetectorRef: ChangeDetectorRef,
-	) {
-		super(happeningBaseComponentParams, changeDetectorRef);
-	}
 }

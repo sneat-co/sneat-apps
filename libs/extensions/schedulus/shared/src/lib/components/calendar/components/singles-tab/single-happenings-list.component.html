@@ -5,11 +5,11 @@
 			<ion-text color="medium">Loading 1-timers...</ion-text>
 		</ion-card-content>
 	</ion-card>
-} @else {
+} @else if (space) {
 	@for (happening of happenings; track happening.id) {
 		<sneat-happening-card
-			[space]="space"
-			[happening]="happening"
+			[$space]="space"
+			[$happening]="happening"
 			(deleted)="onHappeningRemoved($event)"
 		/>
 	}
@@ -30,7 +30,7 @@
 			</span>
 		}
 
-		<ion-button color="medium" fill="outline" (click)="clearFilter()">
+		<ion-button color="medium" fill="outline" (click)="clearFilter($event)">
 			<ion-label>Clear filter</ion-label>
 		</ion-button>
 	</div>

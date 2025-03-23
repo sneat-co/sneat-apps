@@ -9,14 +9,21 @@ import {
 	signal,
 	SimpleChanges,
 } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonCheckbox,
+	IonCol,
+	IonGrid,
+	IonInput,
+	IonItem,
+	IonRow,
+} from '@ionic/angular/standalone';
 import { IDateTime, ITiming } from '@sneat/mod-schedulus-core';
 
 @Component({
 	selector: 'sneat-start-end-dates-range-form',
 	templateUrl: './start-end-dates-range-form.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [CommonModule, IonicModule],
+	imports: [IonGrid, IonRow, IonCol, IonItem, IonCheckbox, IonInput],
 })
 export class StartEndDatesRangeFormComponent implements OnChanges {
 	@Input({ required: true }) timing?: ITiming;

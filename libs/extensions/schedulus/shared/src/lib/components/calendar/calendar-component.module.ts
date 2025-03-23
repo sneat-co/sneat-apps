@@ -22,14 +22,14 @@ import { HappeningSlotParticipantsComponent } from '../happening-slot-participan
 import { HappeningSlotComponent } from '../happening-slot/happening-slot.component';
 import { HappeningSlotsComponent } from '../happening-slots/happening-slots.component';
 import { CalendarAddButtonsComponent } from './components/calendar-add-buttons/calendar-add-buttons.component';
+import { CalendarDayTitleComponent } from './components/calendar-day/calendar-day-title.component';
 import { DaySlotItemComponent } from './components/day-slot-item/day-slot-item.component';
+import { RecurringsTabComponent } from './components/recurrings-tab/recurrings-tab.component';
 import { SingleHappeningsListComponent } from './components/singles-tab/single-happenings-list.component';
 import { RecurringCardComponent } from './components/recurrings-tab/recurring-card.component';
-import { RecurringsTabComponent } from './components/recurrings-tab/recurrings-tab.component';
 import { CalendarCardHeaderComponent } from './components/calendar-card-header/calendar-card-header.component';
 import { CalendarDayCardComponent } from './components/calendar-day/calendar-day-card.component';
 import { CalendarDayTabComponent } from './components/calendar-day/calendar-day-tab.component';
-import { CalendarDayTitleComponent } from './components/calendar-day/calendar-day-title.component';
 import { CalendarDayComponent } from './components/calendar-day/calendar-day.component';
 import { CalendarFilterService } from '../calendar-filter.service';
 import { CalendarFilterComponent } from './components/calendar-filter/calendar-filter.component';
@@ -67,8 +67,11 @@ import { TimingBadgeComponent } from './components/timing-badge/timing-badge.com
 		HappeningSlotsComponent,
 		CalendarAddButtonsComponent,
 		WdToWeekdayPipe,
+		CalendarDayTitleComponent,
+		RecurringsTabComponent,
+		HappeningCardComponent,
 	],
-	exports: [CalendarComponent, CalendarDayComponent, CalendarDayTitleComponent],
+	exports: [CalendarComponent, CalendarDayComponent],
 	declarations: [
 		CalendarComponent,
 		SlotContextMenuComponent,
@@ -77,13 +80,10 @@ import { TimingBadgeComponent } from './components/timing-badge/timing-badge.com
 		CalendarDayComponent,
 		CalendarWeekComponent,
 		CalendarWeekdayComponent,
-		RecurringsTabComponent,
 		RecurringCardComponent,
 		SinglesTabComponent,
-		HappeningCardComponent,
 		CalendarDayCardComponent,
 		CalendarDayTabComponent,
-		CalendarDayTitleComponent,
 		CalendarWeekTabComponent,
 		CalendarWeekCardComponent,
 		CalendarWeekTitleComponent,
