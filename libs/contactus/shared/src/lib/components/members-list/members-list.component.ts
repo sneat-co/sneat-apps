@@ -29,7 +29,7 @@ import {
 	IonLabel,
 	IonSkeletonText,
 } from '@ionic/angular/standalone';
-import { SneatPipesModule } from '@sneat/components';
+import { ContactTitlePipe, SneatPipesModule } from '@sneat/components';
 import { IIdAndBrief, listAddRemoveAnimation } from '@sneat/core';
 import { IContactBrief } from '@sneat/contactus-core';
 import {
@@ -73,6 +73,7 @@ import { InlistAgeGroupComponent } from '../inlist-options/inlist-age-group.comp
 		IonButton,
 		IonItemOptions,
 		IonItemOption,
+		ContactTitlePipe,
 	],
 })
 // TODO: Is it deprecated and should we migrated to Contacts list?

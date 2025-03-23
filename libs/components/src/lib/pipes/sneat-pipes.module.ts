@@ -7,7 +7,6 @@ import {
 	GenderIconNamePipe,
 } from './gender.pipes';
 import { LongMonthNamePipe } from './long-month-name.pipe';
-import { ContactTitlePipe } from './member-title.pipe';
 import { PersonNamesPipe, PersonTitle } from './person-title.pipe';
 import { SelectedMembersPipe } from './selected-members.pipe';
 import { ShortMonthNamePipe } from './short-month-name.pipe';
@@ -17,7 +16,6 @@ const pipes: Type<PipeTransform>[] = [
 	SpaceEmojiPipe,
 	LongMonthNamePipe,
 	ShortMonthNamePipe,
-	ContactTitlePipe,
 	PersonTitle,
 	PersonNamesPipe,
 	GenderIconNamePipe,

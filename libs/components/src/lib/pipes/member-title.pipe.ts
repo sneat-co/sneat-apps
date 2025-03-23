@@ -19,7 +19,6 @@ export function getContactTitle(
 
 @Pipe({
 	name: 'contactTitle',
-	standalone: false,
 })
 export class ContactTitlePipe implements PipeTransform {
 	transform(
