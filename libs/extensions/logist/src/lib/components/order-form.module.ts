@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { ContactInputModule } from '@sneat/contactus-shared';
+import { ContactInputComponent } from '@sneat/contactus-shared';
 import { LogistOrderServiceModule } from '../services';
 import {
 	AgentRoleMenuComponent,
@@ -22,7 +22,7 @@ import { OrderCounterpartyComponent } from './order-counterparty/order-counterpa
 		IonicModule,
 		FormsModule,
 		RouterModule,
-		ContactInputModule,
+		ContactInputComponent,
 		LogistOrderServiceModule,
 	],
 	declarations: [

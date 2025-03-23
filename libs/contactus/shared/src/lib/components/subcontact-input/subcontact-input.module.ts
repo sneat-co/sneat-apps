@@ -8,4 +8,4 @@ import { SubcontactInputComponent } from './subcontact-input.component';
 	declarations: [SubcontactInputComponent],
 	exports: [SubcontactInputComponent],
 })
-export class SubcontactInputModule {}
+export class SubContactInputComponent {}

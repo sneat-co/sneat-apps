@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -7,6 +8,8 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
 import { countryFlagEmoji } from '@sneat/components';
 import { IIdAndOptionalBriefAndOptionalDbo } from '@sneat/core';
 import {
@@ -20,13 +23,19 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
 import {
 	ContactSelectorService,
+	ContactSelectorServiceModule,
 	IContactSelectorOptions,
 } from '../contact-selector';
 
 @Component({
 	selector: 'sneat-contact-input',
 	templateUrl: './contact-input.component.html',
-	standalone: false,
+	imports: [
+		CommonModule,
+		IonicModule,
+		RouterModule,
+		ContactSelectorServiceModule,
+	],
 })
 export class ContactInputComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;

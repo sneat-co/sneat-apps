@@ -23,7 +23,7 @@ import {
 		CommonModule,
 		IonicModule,
 		ReactiveFormsModule,
-		// ContactInputModule,
+		// ContactInputComponent,
 		// forwardRef(() => ContactInputComponent),
 	],
 	providers: [DebtusService],

@@ -7,7 +7,7 @@ import {
 	CountryInputComponent,
 	CountrySelectorComponent,
 } from '@sneat/components';
-import { ContactInputModule } from '@sneat/contactus-shared';
+import { ContactInputComponent } from '@sneat/contactus-shared';
 import { OrdersGridModule } from '../../components/orders-grid/orders-grid.module';
 import { LogistOrderServiceModule } from '../../services/logist-order.service';
 import { OrdersListModule } from '../../components/orders-list/orders-list.module';
@@ -30,7 +30,7 @@ const routes: Routes = [
 		OrdersListModule,
 		OrdersGridModule,
 		LogistOrderServiceModule,
-		ContactInputModule,
+		ContactInputComponent,
 		CountrySelectorComponent,
 		CountryInputComponent,
 	],
