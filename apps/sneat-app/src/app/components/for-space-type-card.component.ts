@@ -10,6 +10,16 @@ import {
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonCard,
+	IonCardContent,
+	IonCardHeader,
+	IonCardTitle,
+	IonItemDivider,
+	IonLabel,
+	IonList,
+} from '@ionic/angular/standalone';
 import { SneatUserService } from '@sneat/auth-core';
 import { SpaceType } from '@sneat/core';
 import { SpacesListComponent } from '@sneat/team-components';
@@ -25,7 +35,18 @@ import { Subscription, takeUntil } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-for-space-card',
 	templateUrl: 'for-space-type-card.component.html',
-	imports: [CommonModule, IonicModule, RouterModule, SpacesListComponent],
+	imports: [
+		RouterModule,
+		SpacesListComponent,
+		IonCard,
+		IonCardHeader,
+		IonCardTitle,
+		IonCardContent,
+		IonButton,
+		IonLabel,
+		IonList,
+		IonItemDivider,
+	],
 })
 export class ForSpaceTypeCardComponent
 	extends SneatBaseComponent

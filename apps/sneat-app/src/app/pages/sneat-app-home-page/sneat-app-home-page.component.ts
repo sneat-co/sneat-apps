@@ -6,34 +6,63 @@ import {
 	signal,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardContent,
+	IonCardHeader,
+	IonCardTitle,
+	IonCol,
+	IonContent,
+	IonGrid,
+	IonHeader,
+	IonIcon,
+	IonLabel,
+	IonMenuButton,
+	IonRow,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { AuthStatus, SneatAuthStateService } from '@sneat/auth-core';
 import { UserCountryComponent } from '@sneat/components';
 import { SneatBaseComponent } from '@sneat/ui';
-import { takeUntil } from 'rxjs';
 import { ForEducatorsComponent } from './for-educators.component';
 import { ForFamiliesComponent } from './for-families.component';
 import { ForWorkComponent } from './for-work.component';
 
 @Component({
-	// Do not make it standalone component,
-	// as it requires few other components specific just to this page
 	selector: 'sneat-sneat-app-home-page',
 	templateUrl: './sneat-app-home-page.component.html',
 	imports: [
 		CommonModule,
-		IonicModule,
 		RouterModule,
 		UserCountryComponent,
 		ForFamiliesComponent,
 		ForEducatorsComponent,
 		ForWorkComponent,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonMenuButton,
+		IonTitle,
+		IonButton,
+		IonIcon,
+		IonLabel,
+		IonContent,
+		IonCard,
+		IonCardHeader,
+		IonCardTitle,
+		IonCardContent,
+		IonGrid,
+		IonRow,
+		IonCol,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SneatAppHomePageComponent extends SneatBaseComponent {
 	protected readonly $authStatus = signal<AuthStatus | undefined>(undefined);
-	protected readonly $isAuthenticated = computed(
+	protected readonly $isAuthenticated = computed<boolean>(
 		() => this.$authStatus() === 'authenticated',
 	);
 
@@ -43,7 +72,7 @@ export class SneatAppHomePageComponent extends SneatBaseComponent {
 
 	constructor(authStateService: SneatAuthStateService) {
 		super('SneatAppHomePageComponent');
-		authStateService.authState.pipe(takeUntil(this.destroyed$)).subscribe({
+		authStateService.authState.pipe(this.takeUntilDestroyed()).subscribe({
 			next: (authState) => {
 				this.$authStatus.set(authState.status);
 				if (authState.status === 'notAuthenticated') {
