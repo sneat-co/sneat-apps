@@ -15,7 +15,6 @@ import { SpaceServiceModule } from '@sneat/team-services';
 		IonList,
 		SpaceServiceModule,
 	],
-	// standalone: false,
 })
 export class SneatAppMenuComponent {
 	public authState?: ISneatAuthState;
