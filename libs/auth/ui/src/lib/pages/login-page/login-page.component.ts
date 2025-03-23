@@ -3,7 +3,27 @@ import { Component, Inject, Optional, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
-import { IonicModule, NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonButtons,
+	IonCard,
+	IonCardContent,
+	IonCol,
+	IonContent,
+	IonGrid,
+	IonHeader,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonList,
+	IonRow,
+	IonSpinner,
+	IonText,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import {
 	AuthProviderID,
 	AuthStatuses,
@@ -19,6 +39,7 @@ import {
 	IAnalyticsService,
 	IAppInfo,
 } from '@sneat/core';
+import { RandomIdService } from '@sneat/random';
 import { SneatBaseComponent } from '@sneat/ui';
 import { Subject, takeUntil } from 'rxjs';
 import {
@@ -36,10 +57,28 @@ type Action = 'join' | 'refuse'; // TODO: inject provider for action description
 	imports: [
 		CommonModule,
 		FormsModule,
-		IonicModule,
 		LoginWithTelegramComponent,
 		EmailLoginFormComponent,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		IonContent,
+		IonCardContent,
+		IonText,
+		IonCard,
+		IonItemDivider,
+		IonLabel,
+		IonRow,
+		IonCol,
+		IonItem,
+		IonSpinner,
+		IonIcon,
+		IonList,
+		IonGrid,
 	],
+	providers: [RandomIdService],
 })
 export class LoginPageComponent extends SneatBaseComponent {
 	protected readonly signingWith = signal<AuthProviderID | undefined>(
