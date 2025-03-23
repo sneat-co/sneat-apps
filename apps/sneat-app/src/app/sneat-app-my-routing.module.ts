@@ -19,7 +19,7 @@ import { RouterModule } from '@angular/router';
 				path: 'spaces',
 				data: { title: "User's spaces" },
 				loadChildren: () =>
-					import('@sneat/team-pages').then((m) => m.SpacesPageModule),
+					import('@sneat/team-pages').then((m) => m.SpacesPageComponent),
 			},
 		]),
 	],
