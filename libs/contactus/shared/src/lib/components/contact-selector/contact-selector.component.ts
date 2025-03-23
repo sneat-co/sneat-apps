@@ -14,7 +14,7 @@ import { CONTACT_ROLES_BY_TYPE, ContactRolesByType } from '@sneat/app';
 import {
 	countryFlagEmoji,
 	ISelectItem,
-	SelectFromListModule,
+	SelectFromListComponent,
 	SelectorBaseComponent,
 } from '@sneat/components';
 import {
@@ -44,7 +44,7 @@ import {
 		CommonModule,
 		IonicModule,
 		FormsModule,
-		SelectFromListModule,
+		SelectFromListComponent,
 		LocationFormComponent,
 		BasicContactFormModule,
 		NewCompanyFormComponent,

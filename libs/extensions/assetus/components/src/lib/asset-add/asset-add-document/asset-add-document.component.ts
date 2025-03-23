@@ -10,7 +10,7 @@ import {
 	IonItem,
 	IonPopover,
 } from '@ionic/angular/standalone';
-import { ISelectItem, SelectFromListModule } from '@sneat/components';
+import { ISelectItem, SelectFromListComponent } from '@sneat/components';
 import { timestamp } from '@sneat/dto';
 import {
 	AssetPossession,
@@ -30,7 +30,7 @@ import { AddAssetBaseComponent } from '../add-asset-base-component';
 	providers: [SpaceComponentBaseParams],
 	imports: [
 		IonCard,
-		SelectFromListModule,
+		SelectFromListComponent,
 		FormsModule,
 		IonItem,
 		IonInput,

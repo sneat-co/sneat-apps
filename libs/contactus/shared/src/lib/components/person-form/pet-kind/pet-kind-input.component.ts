@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { ISelectItem, SelectFromListModule } from '@sneat/components';
+import { ISelectItem, SelectFromListComponent } from '@sneat/components';
 import { PetKind } from '@sneat/contactus-core';
 
 @Component({
 	selector: 'sneat-pet-kind',
 	templateUrl: './pet-kind-input.component.html',
-	imports: [CommonModule, IonicModule, SelectFromListModule],
+	imports: [CommonModule, IonicModule, SelectFromListComponent],
 })
 export class PetKindInputComponent {
 	@Input({ required: true }) petKind?: PetKind;

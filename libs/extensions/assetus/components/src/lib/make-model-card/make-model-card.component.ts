@@ -8,16 +8,13 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import {
-	SelectFromListComponent,
-	SelectFromListModule,
-} from '@sneat/components';
+import { SelectFromListComponent } from '@sneat/components';
 import { AssetType, carMakes, IMake, IModel } from '@sneat/mod-assetus-core';
 
 @Component({
 	selector: 'sneat-make-model-card',
 	templateUrl: './make-model-card.component.html',
-	imports: [CommonModule, IonicModule, SelectFromListModule, FormsModule],
+	imports: [CommonModule, IonicModule, SelectFromListComponent, FormsModule],
 })
 export class MakeModelCardComponent {
 	@Input() assetType?: AssetType;

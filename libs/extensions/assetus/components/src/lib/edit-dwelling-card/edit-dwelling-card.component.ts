@@ -11,7 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import {
 	CountrySelectorComponent,
-	SelectFromListModule,
+	SelectFromListComponent,
 } from '@sneat/components';
 import { IAssetContext, IAssetDwellingContext } from '@sneat/mod-assetus-core';
 import { ISpaceContext } from '@sneat/team-models';
@@ -25,7 +25,6 @@ import { AssetPossessionCardComponent } from '../asset-possesion-card/asset-poss
 		IonicModule,
 		FormsModule,
 		ReactiveFormsModule,
-		SelectFromListModule,
 		CountrySelectorComponent,
 		AssetPossessionCardComponent,
 	],

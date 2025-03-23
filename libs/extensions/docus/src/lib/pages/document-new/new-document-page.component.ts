@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import {
 	CountrySelectorComponent,
 	ISelectItem,
-	SelectFromListModule,
+	SelectFromListComponent,
 } from '@sneat/components';
 import {
 	IContactBrief,
@@ -47,7 +47,7 @@ import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 		IonicModule,
 		CountrySelectorComponent,
 
-		SelectFromListModule,
+		SelectFromListComponent,
 		MembersSelectorModule,
 		AssetusServicesModule,
 		ContactusServicesModule,

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { SelectFromListModule } from '@sneat/components';
+import { SelectFromListComponent } from '@sneat/components';
 import { NewSegmentModule } from '../../components/new-segment/new-segment.module';
 import { OrderRouteCardModule } from '../../components/order-route-card/order-route-card.module';
 import { OrderContainersModule } from '../../components/order-containers-card';
@@ -30,7 +30,7 @@ import { NewOrderContainersFormComponent } from './new-order-containers-form.com
 		LogistSpaceServiceModule,
 		FormsModule,
 		NewSegmentModule,
-		SelectFromListModule,
+		SelectFromListComponent,
 	],
 	declarations: [NewLogistOrderPageComponent, NewOrderContainersFormComponent],
 })

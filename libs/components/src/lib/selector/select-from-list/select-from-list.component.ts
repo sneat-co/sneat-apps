@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -10,8 +11,13 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { IonInput, IonSelect } from '@ionic/angular';
+import {
+	ControlValueAccessor,
+	FormsModule,
+	NG_VALUE_ACCESSOR,
+} from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { IonicModule, IonInput, IonSelect } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { NEVER, Observable, Subject, takeUntil } from 'rxjs';
 import { ISelectItem } from '..';
@@ -26,7 +32,7 @@ import { ISelectItem } from '..';
 			multi: true,
 		},
 	],
-	standalone: false,
+	imports: [CommonModule, IonicModule, FormsModule, RouterModule],
 })
 export class SelectFromListComponent
 	implements ControlValueAccessor, OnChanges, OnDestroy

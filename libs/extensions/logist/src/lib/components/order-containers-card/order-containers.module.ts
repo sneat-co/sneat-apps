@@ -3,7 +3,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { DialogHeaderComponent, SelectFromListModule } from '@sneat/components';
+import {
+	DialogHeaderComponent,
+	SelectFromListComponent,
+} from '@sneat/components';
 import { DataGridComponent } from '@sneat/datagrid';
 import { ContactInputComponent } from '@sneat/contactus-shared';
 import { FreightLoadFormModule } from '../freight-load-form/freight-load-form.module';
@@ -25,7 +28,7 @@ import { OrderContainersComponent } from './order-containers.component';
 		CommonModule,
 		IonicModule,
 		FormsModule,
-		SelectFromListModule,
+		SelectFromListComponent,
 		ReactiveFormsModule,
 		DataGridComponent,
 		ShippingPointsSelectorModule,

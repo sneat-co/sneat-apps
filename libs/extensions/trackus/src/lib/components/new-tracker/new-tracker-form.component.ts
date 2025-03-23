@@ -20,7 +20,7 @@ import {
 	IonItemDivider,
 	IonLabel,
 } from '@ionic/angular/standalone';
-import { ISelectItem, SelectFromListModule } from '@sneat/components';
+import { ISelectItem, SelectFromListComponent } from '@sneat/components';
 import { ErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/team-models';
 import { NumberKind, TrackBy, TrackerValueType } from '../../dbo/i-tracker-dbo';
@@ -36,7 +36,7 @@ import {
 		IonLabel,
 		IonItem,
 		IonInput,
-		SelectFromListModule,
+		SelectFromListComponent,
 		ReactiveFormsModule,
 		IonItemDivider,
 		IonButton,

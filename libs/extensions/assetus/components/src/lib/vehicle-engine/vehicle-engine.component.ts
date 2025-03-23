@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { ISelectItem, SelectFromListModule } from '@sneat/components';
+import { ISelectItem, SelectFromListComponent } from '@sneat/components';
 import {
 	EngineType,
 	EngineTypeCombustion,
@@ -17,7 +17,7 @@ import {
 @Component({
 	selector: 'sneat-vehicle-engine',
 	templateUrl: './vehicle-engine.component.html',
-	imports: [CommonModule, IonicModule, SelectFromListModule],
+	imports: [CommonModule, IonicModule, SelectFromListComponent],
 })
 export class VehicleEngineComponent {
 	@Input() public vehicleAsset?: IAssetVehicleContext;

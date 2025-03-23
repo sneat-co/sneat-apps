@@ -26,7 +26,7 @@ import {
 	IonList,
 	IonSpinner,
 } from '@ionic/angular/standalone';
-import { ISelectItem, SelectFromListModule } from '@sneat/components';
+import { ISelectItem, SelectFromListComponent } from '@sneat/components';
 import { excludeEmpty } from '@sneat/core';
 import {
 	ContactRole,
@@ -45,7 +45,7 @@ import { LocationFormComponent } from '../location-form';
 	selector: 'sneat-new-company-form',
 	templateUrl: './new-company-form.component.html',
 	imports: [
-		SelectFromListModule,
+		SelectFromListComponent,
 		FormsModule,
 		JsonPipe,
 		IonItem,

@@ -14,7 +14,7 @@ import {
 	SneatUserService,
 	UserRecordService,
 } from '@sneat/auth-core';
-import { ISelectItem, SelectFromListModule } from '@sneat/components';
+import { ISelectItem, SelectFromListComponent } from '@sneat/components';
 import { AgeGroupID, Gender } from '@sneat/contactus-core';
 import { ISpaceContext } from '@sneat/team-models';
 import { SneatBaseComponent } from '@sneat/ui';
@@ -28,7 +28,7 @@ import { takeUntil } from 'rxjs';
 		IonicModule,
 		FormsModule,
 		ReactiveFormsModule,
-		SelectFromListModule,
+		SelectFromListComponent,
 	],
 })
 export class UserRequiredFieldsModalComponent extends SneatBaseComponent {

@@ -12,13 +12,13 @@ import {
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ISelectItem } from '../selector';
-import { SelectFromListModule } from '../selector/select-from-list';
+import { SelectFromListComponent } from '../selector/select-from-list';
 import { countries, GeoRegion, ICountry, unknownCountry } from './countries';
 
 @Component({
 	selector: 'sneat-country-selector',
 	templateUrl: './country-selector.component.html',
-	imports: [CommonModule, FormsModule, IonicModule, SelectFromListModule],
+	imports: [CommonModule, FormsModule, IonicModule, SelectFromListComponent],
 })
 export class CountrySelectorComponent implements OnChanges {
 	protected readonly geoRegions: readonly {

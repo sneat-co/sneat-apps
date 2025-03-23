@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import {
 	CountrySelectorComponent,
-	SelectFromListModule,
+	SelectFromListComponent,
 } from '@sneat/components';
 import {
 	LocationFormComponent,
@@ -19,7 +19,7 @@ import { NewLogistCompanyPageComponent } from './new-logist-company-page.compone
 		IonicModule,
 		FormsModule,
 		LocationFormComponent,
-		SelectFromListModule,
+		SelectFromListComponent,
 		RouterModule.forChild([
 			{
 				path: '',

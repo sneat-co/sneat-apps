@@ -33,7 +33,7 @@ import { VehicleEngineComponent } from '../vehicle-engine/vehicle-engine.compone
 		IonicModule,
 		FormsModule,
 		ReactiveFormsModule,
-		// SelectFromListModule,
+		// SelectFromListComponent,
 		CountrySelectorComponent,
 		MakeModelCardComponent,
 		AssetPossessionCardComponent,
