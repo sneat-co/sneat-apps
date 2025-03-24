@@ -28,7 +28,8 @@ import {
 import { isSlotVisible } from '../../../schedule-slots';
 import { Weekday } from '../../weekday';
 import { isToday, isTomorrow } from '../../../schedule-core';
-import { DaySlotItemModule } from '../day-slot-item/daly-slot-item.module';
+// import { DaySlotItemModule } from '../day-slot-item/daly-slot-item.module';
+import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
 
 @Component({
 	selector: 'sneat-calendar-day',
@@ -38,7 +39,8 @@ import { DaySlotItemModule } from '../day-slot-item/daly-slot-item.module';
 		IonicModule,
 		// DaySlotItemComponent,
 		ScheduleNavServiceModule,
-		DaySlotItemModule,
+		// DaySlotItemModule,
+		DaySlotItemComponent,
 	],
 })
 export class CalendarDayComponent implements OnChanges, OnDestroy {

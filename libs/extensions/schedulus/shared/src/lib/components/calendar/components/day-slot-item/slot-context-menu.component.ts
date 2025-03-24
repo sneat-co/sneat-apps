@@ -1,8 +1,10 @@
 import { Component, inject, Input, signal } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { IonicModule, PopoverController } from '@ionic/angular';
+// import { MembersAsBadgesComponent } from '@sneat/components';
 import { IContactBrief, IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { excludeUndefined, IIdAndBrief } from '@sneat/core';
 import { hasRelatedItemID } from '@sneat/dto';
+import { CalendarNavServicesModule } from '../../../../services';
 import {
 	HappeningUIState,
 	IHappeningContext,
@@ -12,6 +14,7 @@ import { ISlotUIContext } from '@sneat/mod-schedulus-core';
 import { ErrorLogger } from '@sneat/logging';
 import {
 	ISelectMembersOptions,
+	MembersSelectorModule,
 	MembersSelectorService,
 } from '@sneat/contactus-shared';
 import { contactContextFromBrief } from '@sneat/contactus-services';
@@ -20,9 +23,11 @@ import { NEVER, Observable } from 'rxjs';
 import {
 	EditRecurringSlotParams,
 	HappeningSlotModalService,
+	HappeningSlotModalServiceModule,
 } from '../../../happening-slot-form/happening-slot-modal.service';
 import {
 	HappeningService,
+	HappeningServiceModule,
 	// HappeningService,
 	ICancelHappeningRequest,
 	IDeleteSlotRequest,
@@ -30,13 +35,22 @@ import {
 	ISlotRefRequest,
 	ISlotRequest,
 } from '../../../../services/happening.service';
+// import { HappeningSlotParticipantsComponent } from '../../../happening-slot-participants/happening-slot-participants.component';
+// import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
 
 const notImplemented = 'Sorry, not implemented yet';
 
 @Component({
 	selector: 'sneat-slot-context-menu',
 	templateUrl: 'slot-context-menu.component.html',
-	standalone: false, //
+	standalone: true, // circle dependencies SlotContextMenuComponent->DaySlotItemComponent->SlotContextMenuComponent
+	imports: [
+		IonicModule,
+		HappeningServiceModule,
+		MembersSelectorModule,
+		HappeningSlotModalServiceModule,
+		CalendarNavServicesModule,
+	],
 })
 export class SlotContextMenuComponent {
 	@Input({ required: true }) space: ISpaceContext = { id: '' };
