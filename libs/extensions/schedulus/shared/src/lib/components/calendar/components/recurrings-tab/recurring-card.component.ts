@@ -5,6 +5,7 @@ import {
 	Input,
 	OnDestroy,
 } from '@angular/core';
+import { IonCard } from '@ionic/angular/standalone';
 import {
 	IHappeningContext,
 	IHappeningWithUiState,
@@ -18,7 +19,7 @@ import { HappeningService } from '../../../../services/happening.service';
 @Component({
 	selector: 'sneat-recurring-card',
 	templateUrl: './recurring-card.component.html',
-	standalone: false,
+	imports: [IonCard],
 })
 export class RecurringCardComponent implements OnDestroy {
 	private readonly destroyed = new EventEmitter<void>();

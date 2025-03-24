@@ -28,7 +28,6 @@ import { CalendarWeekTitleComponent } from './components/calendar-week/calendar-
 import { DaySlotItemComponent } from './components/day-slot-item/day-slot-item.component';
 import { RecurringsTabComponent } from './components/recurrings-tab/recurrings-tab.component';
 import { SingleHappeningsListComponent } from './components/singles-tab/single-happenings-list.component';
-import { RecurringCardComponent } from './components/recurrings-tab/recurring-card.component';
 import { CalendarCardHeaderComponent } from './components/calendar-card-header/calendar-card-header.component';
 import { CalendarDayCardComponent } from './components/calendar-day/calendar-day-card.component';
 import { CalendarDayTabComponent } from './components/calendar-day/calendar-day-tab.component';
@@ -83,7 +82,6 @@ import { TimingBadgeComponent } from './components/timing-badge/timing-badge.com
 		CalendarDayComponent,
 		CalendarWeekComponent,
 		CalendarWeekdayComponent,
-		RecurringCardComponent,
 		SinglesTabComponent,
 		CalendarDayCardComponent,
 		CalendarDayTabComponent,
