@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import {
 	IonBackButton,
@@ -15,6 +16,8 @@ import {
 import { SpaceServiceModule } from '@sneat/team-services';
 import { distinctUntilChanged, map } from 'rxjs';
 import { TrackerComponent } from '../../components';
+import { OptionalTrackerWithIdAndOptionalBriefAndOptionalDbo } from '../../dbo/i-tracker-dbo';
+import { TrackerProviderComponent } from '../../components/tracker/tracker-provider.component';
 
 @Component({
 	selector: 'sneat-tracker-page',
@@ -28,6 +31,7 @@ import { TrackerComponent } from '../../components';
 		IonMenuButton,
 		IonContent,
 		SpaceServiceModule,
+		TrackerProviderComponent,
 	],
 	templateUrl: './tracker-page.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,6 +39,8 @@ import { TrackerComponent } from '../../components';
 })
 export class TrackerPageComponent extends SpacePageBaseComponent {
 	protected readonly $trackerID = signal<string | undefined>(undefined);
+	protected readonly $tracker =
+		signal<OptionalTrackerWithIdAndOptionalBriefAndOptionalDbo>(undefined);
 
 	constructor() {
 		super('TrackerPageComponent');

@@ -31,6 +31,7 @@ import {
 	SpaceComponentBaseParams,
 } from '@sneat/team-components';
 import { IAssetContext } from '@sneat/mod-assetus-core';
+import { SpaceServiceModule } from '@sneat/team-services';
 import { first, takeUntil } from 'rxjs';
 import {
 	ContactGroupService,
@@ -51,6 +52,7 @@ import {
 		PersonWizardComponent,
 		ContactusServicesModule,
 		AssetusServicesModule,
+		SpaceServiceModule,
 	],
 })
 export class NewContactPageComponent

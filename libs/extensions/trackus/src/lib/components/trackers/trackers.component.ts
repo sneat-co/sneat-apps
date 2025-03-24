@@ -21,6 +21,7 @@ import {
 	getStandardTrackerTitle,
 	isStandardTracker,
 	ITrackerBrief,
+	standardTrackers,
 } from '../../dbo/i-tracker-dbo';
 import { ITrackusSpaceDbo } from '../../dbo/i-trackus-space-dbo';
 import {
@@ -38,109 +39,6 @@ interface Category {
 	readonly emoji: string;
 	readonly trackers: readonly IIdAndBrief<ITrackerBrief>[];
 }
-
-const standardTrackers: readonly IIdAndBrief<ITrackerBrief>[] = [
-	{
-		id: '_push_ups',
-		brief: {
-			trackBy: ['contact'],
-			valueType: 'int',
-			categories: ['fitness'],
-			title: 'Push-ups',
-			emoji: '🏋️',
-		},
-	},
-	{
-		id: '_pull_ups',
-		brief: {
-			trackBy: ['contact'],
-			valueType: 'int',
-			categories: ['fitness'],
-			title: 'Pull-ups',
-			emoji: '🏋️',
-		},
-	},
-	{
-		id: '_squats',
-		brief: {
-			trackBy: ['contact'],
-			valueType: 'int',
-			categories: ['fitness'],
-			title: 'Squats',
-			emoji: '🏋️',
-		},
-	},
-	{
-		id: '_weight',
-		brief: {
-			trackBy: ['contact'],
-			valueType: 'float',
-			categories: ['fitness', 'health'],
-			title: 'Weight',
-			emoji: '⚖️',
-		},
-	},
-	{
-		id: '_body_temperature',
-		brief: {
-			trackBy: ['contact'],
-			valueType: 'float',
-			categories: ['health'],
-			title: 'Temperature',
-			emoji: '🌡️',
-		},
-	},
-	{
-		id: '_mileage',
-		brief: {
-			trackBy: ['asset'],
-			valueType: 'int',
-			categories: ['vehicles'],
-			title: 'Mileage',
-			emoji: '🛣️',
-		},
-	},
-	{
-		id: '_fuel',
-		brief: {
-			trackBy: ['asset'],
-			valueType: 'float',
-			categories: ['vehicles'],
-			title: 'Fuel',
-			emoji: '⛽',
-		},
-	},
-	{
-		id: '_electricity',
-		brief: {
-			trackBy: ['asset'],
-			valueType: 'int',
-			categories: ['home'],
-			title: 'Electricity',
-			emoji: '💡',
-		},
-	},
-	{
-		id: '_lpg',
-		brief: {
-			trackBy: ['asset'],
-			valueType: 'int',
-			categories: ['home'],
-			title: 'LPG',
-			emoji: '🔥',
-		},
-	},
-	{
-		id: '_heating',
-		brief: {
-			trackBy: ['asset'],
-			valueType: 'money',
-			categories: ['home'],
-			title: 'Heating',
-			emoji: '🔥',
-		},
-	},
-];
 
 @Component({
 	selector: 'sneat-trackers',
@@ -233,10 +131,15 @@ export class TrackersComponent extends SneatBaseComponent implements OnInit {
 	) => {
 		console.log('trackusSpace: ' + JSON.stringify(trackusSpace));
 		const trackers =
-			Object.entries(trackusSpace.dbo?.trackers || {}).map(([id, brief]) => ({
-				id,
-				brief,
-			})) || [];
+			Object.entries(trackusSpace.dbo?.trackers || {}).map(([id, brief]) => {
+				if ((id.startsWith('_') && !brief.title) || !brief.emoji) {
+					const standardBrief = standardTrackers.find(
+						(st) => st.id === id,
+					)?.brief;
+					brief = { ...standardBrief, ...brief };
+				}
+				return { id, brief };
+			}) || [];
 
 		standardTrackers.forEach((tracker) => {
 			const isRemovedTracker = trackusSpace.dbo?.archivedTrackers?.[tracker.id];

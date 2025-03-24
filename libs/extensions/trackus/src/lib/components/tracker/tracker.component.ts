@@ -20,10 +20,12 @@ import {
 import { IIdAndBrief, IIdAndOptionalBriefAndOptionalDbo } from '@sneat/core';
 import { ISpaceContext } from '@sneat/team-models';
 import { SneatBaseComponent } from '@sneat/ui';
+// import { QRCodeComponent } from 'angularx-qrcode';
 import { distinctUntilChanged, map, Subscription } from 'rxjs';
 import {
 	ITrackerBrief,
 	ITrackerDbo,
+	OptionalTrackerWithIdAndOptionalBriefAndOptionalDbo,
 	TrackerPointBrief,
 } from '../../dbo/i-tracker-dbo';
 import { TrackersService, TrackersServiceModule } from '../../trackers-service';
@@ -69,7 +71,13 @@ export class TrackerComponent
 	implements AfterViewInit
 {
 	public readonly $space = input.required<ISpaceContext>();
-	public readonly $trackerID = input.required<string | undefined>();
+
+	public readonly $tracker =
+		input.required<OptionalTrackerWithIdAndOptionalBriefAndOptionalDbo>();
+
+	private readonly $trackerID = computed(() => this.$tracker()?.id);
+
+	// public readonly $trackerID = input.required<string | undefined>();
 
 	private readonly $spaceID = computed(() => this.$space().id);
 
@@ -97,10 +105,6 @@ export class TrackerComponent
 
 	private trackBy: 'contact' | 'space' = 'contact';
 	protected $trackByID = signal<string>('');
-
-	protected readonly $tracker = signal<
-		IIdAndOptionalBriefAndOptionalDbo<ITrackerBrief, ITrackerDbo> | undefined
-	>(undefined);
 
 	protected readonly $entriesByDateAndTarget = computed<ListOfEntriesForDate[]>(
 		() => {
@@ -204,35 +208,12 @@ export class TrackerComponent
 				});
 		});
 
-		const trackerIDEffect = effect(this.onSpaceOrTrackerIDChanged);
-
 		this.destroyed$.subscribe(() => {
 			contactusSpaceSub?.unsubscribe();
-			trackerIDEffect?.destroy();
 			contactusSpaceEffect?.destroy();
 			this.trackerSub?.unsubscribe();
 		});
 	}
-
-	private onSpaceOrTrackerIDChanged = () => {
-		const spaceID = this.$space().id;
-		const trackerID = this.$trackerID();
-		console.log(
-			`TrackerComponent.onSpaceOrTrackerIDChanged: spaceID=${spaceID}, trackerID=${trackerID}`,
-		);
-		this.trackerSub?.unsubscribe();
-		if (!spaceID || !trackerID) {
-			this.$tracker.set(undefined);
-			return;
-		}
-		const spaceRef = { id: spaceID };
-		this.trackerSub = this.trackersService
-			.watchModuleSpaceItem(spaceRef, trackerID)
-			.pipe(this.takeUntilDestroyed())
-			.subscribe({
-				next: this.$tracker.set,
-			});
-	};
 
 	public ngAfterViewInit(): void {
 		this.setFocusToInput(this.numberInput);
@@ -240,7 +221,7 @@ export class TrackerComponent
 
 	protected deleteTrackerPointsByDate(dateID: string) {
 		const spaceID = this.$space().id;
-		const trackerID = this.$trackerID();
+		const trackerID = this.$tracker()?.id;
 		if (!spaceID || !trackerID) {
 			return;
 		}

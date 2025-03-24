@@ -1,4 +1,5 @@
 import { Timestamp } from '@firebase/firestore';
+import { IIdAndBrief, IIdAndOptionalBriefAndOptionalDbo } from '@sneat/core';
 
 export type TrackerValueType =
 	| 'int'
@@ -136,6 +137,113 @@ export interface ITrackerDbo extends ITrackerBrief {
 		Record<string, Readonly<Record<string, TrackerPointBrief>>>
 	>;
 }
+
+export type OptionalTrackerWithIdAndOptionalBriefAndOptionalDbo =
+	| IIdAndOptionalBriefAndOptionalDbo<ITrackerBrief, ITrackerDbo>
+	| undefined;
+
+export const standardTrackers: readonly IIdAndBrief<ITrackerBrief>[] = [
+	{
+		id: '_push_ups',
+		brief: {
+			trackBy: ['contact'],
+			valueType: 'int',
+			categories: ['fitness'],
+			title: 'Push-ups',
+			emoji: '🏋️',
+		},
+	},
+	{
+		id: '_pull_ups',
+		brief: {
+			trackBy: ['contact'],
+			valueType: 'int',
+			categories: ['fitness'],
+			title: 'Pull-ups',
+			emoji: '🏋️',
+		},
+	},
+	{
+		id: '_squats',
+		brief: {
+			trackBy: ['contact'],
+			valueType: 'int',
+			categories: ['fitness'],
+			title: 'Squats',
+			emoji: '🏋️',
+		},
+	},
+	{
+		id: '_weight',
+		brief: {
+			trackBy: ['contact'],
+			valueType: 'float',
+			categories: ['fitness', 'health'],
+			title: 'Weight',
+			emoji: '⚖️',
+		},
+	},
+	{
+		id: '_body_temperature',
+		brief: {
+			trackBy: ['contact'],
+			valueType: 'float',
+			categories: ['health'],
+			title: 'Temperature',
+			emoji: '🌡️',
+		},
+	},
+	{
+		id: '_mileage',
+		brief: {
+			trackBy: ['asset'],
+			valueType: 'int',
+			categories: ['vehicles'],
+			title: 'Mileage',
+			emoji: '🛣️',
+		},
+	},
+	{
+		id: '_fuel',
+		brief: {
+			trackBy: ['asset'],
+			valueType: 'float',
+			categories: ['vehicles'],
+			title: 'Fuel',
+			emoji: '⛽',
+		},
+	},
+	{
+		id: '_electricity',
+		brief: {
+			trackBy: ['asset'],
+			valueType: 'int',
+			categories: ['home'],
+			title: 'Electricity',
+			emoji: '💡',
+		},
+	},
+	{
+		id: '_lpg',
+		brief: {
+			trackBy: ['asset'],
+			valueType: 'int',
+			categories: ['home'],
+			title: 'LPG',
+			emoji: '🔥',
+		},
+	},
+	{
+		id: '_heating',
+		brief: {
+			trackBy: ['asset'],
+			valueType: 'money',
+			categories: ['home'],
+			title: 'Heating',
+			emoji: '🔥',
+		},
+	},
+];
 
 export function isStandardTracker(id: string): boolean {
 	return id.startsWith('_');
