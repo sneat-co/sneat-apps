@@ -1,5 +1,5 @@
-import { Component, Inject, Input, signal } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { Component, inject, Input, signal } from '@angular/core';
+import { IonicModule, PopoverController } from '@ionic/angular';
 import { IContactBrief, IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { excludeUndefined, IIdAndBrief } from '@sneat/core';
 import { hasRelatedItemID } from '@sneat/dto';
@@ -9,9 +9,10 @@ import {
 	HappeningStatus,
 } from '@sneat/mod-schedulus-core';
 import { ISlotUIContext } from '@sneat/mod-schedulus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger } from '@sneat/logging';
 import {
 	ISelectMembersOptions,
+	MembersSelectorModule,
 	MembersSelectorService,
 } from '@sneat/contactus-shared';
 import { contactContextFromBrief } from '@sneat/contactus-services';
@@ -20,22 +21,35 @@ import { NEVER, Observable } from 'rxjs';
 import {
 	EditRecurringSlotParams,
 	HappeningSlotModalService,
+	// HappeningSlotModalService,
+	HappeningSlotModalServiceModule,
 } from '../../../happening-slot-form/happening-slot-modal.service';
 import {
 	HappeningService,
+	// HappeningService,
+	HappeningServiceModule,
 	ICancelHappeningRequest,
 	IDeleteSlotRequest,
 	IHappeningContactRequest,
 	ISlotRefRequest,
 	ISlotRequest,
 } from '../../../../services/happening.service';
+import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
+// import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
 
 const notImplemented = 'Sorry, not implemented yet';
 
 @Component({
 	selector: 'sneat-slot-context-menu',
 	templateUrl: 'slot-context-menu.component.html',
-	standalone: false,
+	imports: [
+		IonicModule,
+		// DaySlotItemComponent,
+		HappeningServiceModule,
+		MembersSelectorModule,
+		HappeningSlotModalServiceModule,
+		DaySlotItemComponent,
+	],
 })
 export class SlotContextMenuComponent {
 	@Input({ required: true }) space: ISpaceContext = { id: '' };
@@ -61,13 +75,13 @@ export class SlotContextMenuComponent {
 		return !!this.happeningState;
 	}
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly popoverController: PopoverController,
-		private readonly happeningService: HappeningService,
-		private readonly membersSelectorService: MembersSelectorService,
-		private readonly happeningSlotModalService: HappeningSlotModalService,
-	) {}
+	private readonly errorLogger = inject(ErrorLogger);
+	private readonly popoverController = inject(PopoverController);
+	private readonly happeningService = inject(HappeningService);
+	private readonly membersSelectorService = inject(MembersSelectorService);
+	private readonly happeningSlotModalService = inject(
+		HappeningSlotModalService,
+	);
 
 	assign(event: Event, to: 'member' | 'contact'): void {
 		console.log(`SlotContextMenuComponent.assign(${to})`);
@@ -361,13 +375,6 @@ export class SlotContextMenuComponent {
 			contact: { id: member.id },
 		};
 		return this.happeningService.addParticipant(request);
-		// result
-		// 	.pipe(takeUntil(this.destroyed))
-		// 	.subscribe({
-		// 		next: () => {
-		// 			this.changeDetectorRef.markForCheck();
-		// 		},
-		// 	});
 	};
 
 	private readonly onMemberRemoved = (

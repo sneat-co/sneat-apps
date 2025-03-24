@@ -11,6 +11,8 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
 import { SneatApiService } from '@sneat/api';
 import { IMemberContext } from '@sneat/contactus-core';
 import { dateToIso, localDateToIso } from '@sneat/core';
@@ -34,16 +36,28 @@ import {
 import { hasContact } from '../schedule-slots';
 import { CalendarBaseComponent } from './calendar-base.component';
 import { CalendarTab } from './calendar-component-types';
+import { CalendarDayTabComponent } from './components/calendar-day/calendar-day-tab.component';
 import { ICalendarFilter } from './components/calendar-filter/calendar-filter';
 import { CalendarFilterComponent } from './components/calendar-filter/calendar-filter.component';
 
 import { CalendarStateService } from './calendar-state.service';
+import { CalendarWeekTabComponent } from './components/calendar-week/calendar-week-tab.component';
+import { RecurringsTabComponent } from './components/recurrings-tab/recurrings-tab.component';
+import { SinglesTabComponent } from './components/singles-tab/singles-tab.component';
 
 @Component({
 	selector: 'sneat-calendar',
 	templateUrl: './calendar.component.html',
 	styleUrls: ['./calendar.component.scss'],
-	standalone: false,
+	imports: [
+		IonicModule,
+		SinglesTabComponent,
+		RecurringsTabComponent,
+		CalendarWeekTabComponent,
+		CalendarDayTabComponent,
+		CalendarFilterComponent,
+		FormsModule,
+	],
 })
 export class CalendarComponent
 	extends CalendarBaseComponent

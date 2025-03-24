@@ -1,6 +1,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { IonAccordionGroup } from '@ionic/angular';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { IonAccordionGroup, IonicModule } from '@ionic/angular';
+import { ContactTitlePipe } from '@sneat/components';
 import { IIdAndBrief } from '@sneat/core';
 import { IContactBrief } from '@sneat/contactus-core';
 import { WeekdayCode2 } from '@sneat/mod-schedulus-core';
@@ -10,12 +11,18 @@ import {
 	CalendarFilterService,
 } from '../../../calendar-filter.service';
 import { WeekdaysFormBase } from '../../../weekdays/weekdays-form-base';
+import { ContactsFilterComponent } from '../contacts-filter/contacts-filter.component';
 import { ICalendarFilter } from './calendar-filter';
 
 @Component({
 	selector: 'sneat-calendar-filter',
 	templateUrl: 'calendar-filter.component.html',
-	standalone: false,
+	imports: [
+		IonicModule,
+		ContactTitlePipe,
+		ContactsFilterComponent,
+		ReactiveFormsModule,
+	],
 })
 export class CalendarFilterComponent extends WeekdaysFormBase {
 	@ViewChild(IonAccordionGroup) accordionGroup?: IonAccordionGroup;

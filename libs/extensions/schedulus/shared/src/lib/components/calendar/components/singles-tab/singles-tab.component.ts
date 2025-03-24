@@ -9,17 +9,20 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
 import { ISlotUIEvent } from '@sneat/mod-schedulus-core';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
 import { ISpaceContext } from '@sneat/team-models';
 import { HappeningService } from '../../../../services/happening.service';
 import { SneatBaseComponent } from '@sneat/ui';
 import { Observable, Subscription, takeUntil } from 'rxjs';
+import { SingleHappeningsListComponent } from './single-happenings-list.component';
 
 @Component({
 	selector: 'sneat-singles-tab',
 	templateUrl: 'singles-tab.component.html',
-	standalone: false,
+	imports: [IonicModule, SingleHappeningsListComponent, FormsModule],
 })
 export class SinglesTabComponent
 	extends SneatBaseComponent

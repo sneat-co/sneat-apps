@@ -1,9 +1,10 @@
-<sneat-day-slot-item
-	[space]="space"
-	[slotContext]="slotContext"
-	color="light"
-	mode="brief"
-/>
+<b>TODO: resolve circular dependency</b>
+<!--<sneat-day-slot-item TODO: resolve circular dependency -->
+<!--	[space]="space"-->
+<!--	[slotContext]="slotContext"-->
+<!--	color="light"-->
+<!--	mode="brief"-->
+<!--/>-->
 
 <ion-item-group>
 	<ion-item-divider>
@@ -51,8 +52,8 @@
 			} @else {
 				<ion-label
 					>Cancel 1 on {{ dateID }} at
-					{{ slotContext?.timing?.start?.time }}</ion-label
-				>
+					{{ slotContext?.timing?.start?.time }}
+				</ion-label>
 			}
 		</ion-item>
 	}
@@ -82,8 +83,8 @@
 				<ion-spinner slot="end" />
 			} @else {
 				<ion-label
-					>Cancel series at {{ slotContext?.timing?.start?.time }}</ion-label
-				>
+					>Cancel series at {{ slotContext?.timing?.start?.time }}
+				</ion-label>
 			}
 		</ion-item>
 	}

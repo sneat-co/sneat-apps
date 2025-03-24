@@ -8,6 +8,7 @@ import {
 	SimpleChange,
 	SimpleChanges,
 } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
 import { dateToIso } from '@sneat/core';
 import { ISpaceContext } from '@sneat/team-models';
 import { SpaceDaysProvider } from '../../../../services/space-days-provider';
@@ -16,11 +17,12 @@ import { Week } from '../../../week';
 import { ICalendarFilter } from '../calendar-filter/calendar-filter';
 import { createWeekdays } from '../../../schedule-core';
 import { Weekday } from '../../weekday';
+import { CalendarWeekdayComponent } from '../calendar-weekday/calendar-weekday.component';
 
 @Component({
 	selector: 'sneat-calendar-week',
 	templateUrl: './calendar-week.component.html',
-	standalone: false,
+	imports: [IonicModule, CalendarWeekdayComponent],
 })
 export class CalendarWeekComponent implements OnChanges {
 	public readonly $space = input.required<ISpaceContext | undefined>();

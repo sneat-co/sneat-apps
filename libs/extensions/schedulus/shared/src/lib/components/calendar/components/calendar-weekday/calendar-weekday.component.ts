@@ -6,6 +6,8 @@ import {
 	OnDestroy,
 	Output,
 } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
+import { ShortMonthNamePipe } from '@sneat/components';
 import { HappeningType } from '@sneat/mod-schedulus-core';
 import {
 	ISlotUIContext,
@@ -21,11 +23,12 @@ import {
 import { isSlotVisible } from '../../../schedule-slots';
 import { Weekday } from '../../weekday';
 import { SpaceDay } from '../../../../services/space-day';
+import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
 
 @Component({
 	selector: 'sneat-calendar-weekday',
 	templateUrl: './calendar-weekday.component.html',
-	standalone: false,
+	imports: [IonicModule, DaySlotItemComponent, ShortMonthNamePipe],
 })
 export class CalendarWeekdayComponent implements OnDestroy {
 	public readonly $space = input.required<ISpaceContext | undefined>();

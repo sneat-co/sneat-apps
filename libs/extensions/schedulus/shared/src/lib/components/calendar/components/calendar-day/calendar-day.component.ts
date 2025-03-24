@@ -8,12 +8,14 @@ import {
 	signal,
 	SimpleChanges,
 } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
 import { dateToIso } from '@sneat/core';
 import {
 	ISlotUIContext,
 	jsDayToWeekday,
 	NewHappeningParams,
 	ScheduleNavService,
+	ScheduleNavServiceModule,
 	sortSlotItems,
 	WeekdayNumber,
 } from '@sneat/mod-schedulus-core';
@@ -26,12 +28,18 @@ import {
 import { isSlotVisible } from '../../../schedule-slots';
 import { Weekday } from '../../weekday';
 import { isToday, isTomorrow } from '../../../schedule-core';
+import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
 
 @Component({
 	selector: 'sneat-calendar-day',
 	templateUrl: './calendar-day.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	standalone: false,
+	imports: [
+		IonicModule,
+		// DaySlotItemComponent,
+		ScheduleNavServiceModule,
+		DaySlotItemComponent,
+	],
 })
 export class CalendarDayComponent implements OnChanges, OnDestroy {
 	private readonly destroyed = new Subject<void>();
@@ -47,8 +55,8 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 	@Input({ required: false }) hideAddButtons = false;
 	@Input() hideLastBorder = false;
 
-	protected readonly isToday = signal<boolean>(false);
-	protected readonly isTomorrow = signal<boolean>(false);
+	protected readonly $isToday = signal<boolean>(false);
+	protected readonly $isTomorrow = signal<boolean>(false);
 
 	public allSlots?: ISlotUIContext[];
 	public slots?: ISlotUIContext[];
@@ -79,8 +87,8 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 		const weekdayChange = changes['weekday'];
 		if (weekdayChange) {
 			const date = this.weekday?.day?.date;
-			this.isToday.set(!date || isToday(date));
-			this.isTomorrow.set(isTomorrow(date));
+			this.$isToday.set(!date || isToday(date));
+			this.$isTomorrow.set(isTomorrow(date));
 			// if (weekdayChange.firstChange && !weekdayChange.currentValue) {
 			// 	return; // TODO: comment with explanation why we need this
 			// }
