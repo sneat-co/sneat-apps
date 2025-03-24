@@ -5,6 +5,7 @@ import {
 	Input,
 	OnChanges,
 	OnDestroy,
+	signal,
 	SimpleChanges,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
@@ -35,8 +36,8 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 
 	public timer?: Timer;
 
-	public feedbackDuration = 10;
-	public reviewDuration = 50;
+	public $feedbackDuration = signal<number>(10);
+	public $reviewDuration = signal<number>(50);
 
 	leftInSeconds = 600;
 	public totalElapsed?: string;
@@ -94,8 +95,8 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 				.startRetrospective({
 					...this.createRetroRequest(),
 					durationInMinutes: {
-						feedback: this.feedbackDuration,
-						review: this.reviewDuration,
+						feedback: this.$feedbackDuration(),
+						review: this.$reviewDuration(),
 					},
 				})
 				.subscribe({

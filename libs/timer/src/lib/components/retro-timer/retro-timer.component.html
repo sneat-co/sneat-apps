@@ -17,7 +17,11 @@
 			<ion-col size="12" size-md="4" class="ion-no-margin ion-no-padding">
 				<ion-item>
 					<ion-label color="medium">Feedback</ion-label>
-					<ion-select [(ngModel)]="feedbackDuration" interface="popover">
+					<ion-select
+						interface="popover"
+						[value]="$feedbackDuration()"
+						(ionChange)="$feedbackDuration.set(0 + $event.detail.value)"
+					>
 						<ion-select-option [value]="5">5 mins</ion-select-option>
 						<ion-select-option [value]="10">10 mins</ion-select-option>
 						<ion-select-option [value]="15">15 mins</ion-select-option>
@@ -30,7 +34,11 @@
 			<ion-col size="12" size-md="4" class="ion-no-margin ion-no-padding">
 				<ion-item>
 					<ion-label color="medium">Review</ion-label>
-					<ion-select [(ngModel)]="reviewDuration" interface="popover">
+					<ion-select
+						interface="popover"
+						[value]="$reviewDuration()"
+						(ionChange)="$reviewDuration.set(0 + $event.detail.value)"
+					>
 						<ion-select-option [value]="10">10 mins</ion-select-option>
 						<ion-select-option [value]="20">20 mins</ion-select-option>
 						<ion-select-option [value]="30">30 mins</ion-select-option>
