@@ -1,6 +1,6 @@
 export * from './calendar/calendar-brief.component';
 export * from './calendar/calendar-component-types';
-// export * from './calendar/calendar.component';
+export * from './calendar/calendar.component';
 // export * from './calendar/weekday';
 // export * from './calendar-filter.service';
 // export * from './day-tasks/day-tasks.component';

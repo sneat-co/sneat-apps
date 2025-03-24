@@ -38,14 +38,15 @@
 			<ion-text color="medium">&nbsp;&mdash; canceled</ion-text>
 		}
 
-		<!--		<sneat-members-as-badges-->
-		<!--			*ngIf="mode === 'full'"-->
-		<!--			[showDelete]="false"-->
-		<!--			[members]="-->
-		<!--				slot?.happening?.brief?.contactIDs || []-->
-		<!--					| selectedMembers: contactusTeam?.dto?.contacts-->
-		<!--			"-->
-		<!--		/>-->
+		<!--		@if (mode === 'full') {-->
+		<!--			<sneat-members-as-badges-->
+		<!--				[showDelete]="false"-->
+		<!--				[members]="-->
+		<!--						slot?.happening?.brief?.contactIDs || []-->
+		<!--							| selectedMembers: contactusTeam?.dto?.contacts-->
+		<!--					"-->
+		<!--			/>-->
+		<!--		}-->
 
 		@if (
 			mode === "full" &&
@@ -60,15 +61,6 @@
 			(slotContext?.participants || slotContext?.levels?.length)
 		) {
 			<p>
-				<!--			<ng-container *ngIf="let participantKeys = oKeys(slot?.participants)">-->
-				<!--				<ion-badge-->
-				<!--					color="light"-->
-				<!--					style="margin-right: 0.5em"-->
-				<!--					*ngFor="let participant of participantKeys"-->
-				<!--				>-->
-				<!--					👩‍🏫 {{ participant }}-->
-				<!--				</ion-badge>-->
-				<!--			</ng-container>-->
 				@if (slotContext?.levels?.length) {
 					@for (level of slotContext?.levels || []; track level) {
 						<ion-badge color="light" style="margin-right: 0.5em">

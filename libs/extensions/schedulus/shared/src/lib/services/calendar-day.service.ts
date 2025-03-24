@@ -46,7 +46,5 @@ export class CalendarDayService {
 	}
 }
 
-@NgModule({
-	providers: [CalendarDayService],
-})
-export class CalendarDayServiceModule {}
+@NgModule({ providers: [CalendarDayService] })
+export class CalendarDayServiceModule {} // TODO: Should we simply pass to `provide: []`?

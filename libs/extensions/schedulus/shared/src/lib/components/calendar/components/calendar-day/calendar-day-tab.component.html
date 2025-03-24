@@ -1,4 +1,4 @@
-<ion-item id="pick-date">
+<ion-item id="pick-date" lines="full" class="ion-margin-start ion-no-padding">
 	<ion-buttons slot="start">
 		<ion-button title="Previous day" (click)="swipe(-1, $event)">
 			<ion-icon name="chevron-back-sharp" slot="start" />
@@ -25,15 +25,15 @@
 	<ng-template>
 		<ion-item>
 			<ion-button fill="clear" color="primary" (click)="goToday()"
-				>Today</ion-button
-			>
+				>Today
+			</ion-button>
 			<ion-button
 				fill="clear"
 				color="tertiary"
 				(click)="goTomorrow()"
 				slot="end"
-				>Tomorrow</ion-button
-			>
+				>Tomorrow
+			</ion-button>
 		</ion-item>
 		<ion-datetime
 			class="sneat-date-picker"

@@ -1,5 +1,5 @@
 import { Component, inject, Input, signal } from '@angular/core';
-import { IonicModule, PopoverController } from '@ionic/angular';
+import { PopoverController } from '@ionic/angular';
 import { IContactBrief, IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { excludeUndefined, IIdAndBrief } from '@sneat/core';
 import { hasRelatedItemID } from '@sneat/dto';
@@ -12,7 +12,6 @@ import { ISlotUIContext } from '@sneat/mod-schedulus-core';
 import { ErrorLogger } from '@sneat/logging';
 import {
 	ISelectMembersOptions,
-	MembersSelectorModule,
 	MembersSelectorService,
 } from '@sneat/contactus-shared';
 import { contactContextFromBrief } from '@sneat/contactus-services';
@@ -21,35 +20,23 @@ import { NEVER, Observable } from 'rxjs';
 import {
 	EditRecurringSlotParams,
 	HappeningSlotModalService,
-	// HappeningSlotModalService,
-	HappeningSlotModalServiceModule,
 } from '../../../happening-slot-form/happening-slot-modal.service';
 import {
 	HappeningService,
 	// HappeningService,
-	HappeningServiceModule,
 	ICancelHappeningRequest,
 	IDeleteSlotRequest,
 	IHappeningContactRequest,
 	ISlotRefRequest,
 	ISlotRequest,
 } from '../../../../services/happening.service';
-import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
-// import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
 
 const notImplemented = 'Sorry, not implemented yet';
 
 @Component({
 	selector: 'sneat-slot-context-menu',
 	templateUrl: 'slot-context-menu.component.html',
-	imports: [
-		IonicModule,
-		// DaySlotItemComponent,
-		HappeningServiceModule,
-		MembersSelectorModule,
-		HappeningSlotModalServiceModule,
-		DaySlotItemComponent,
-	],
+	standalone: false, //
 })
 export class SlotContextMenuComponent {
 	@Input({ required: true }) space: ISpaceContext = { id: '' };
