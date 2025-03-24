@@ -1,15 +1,13 @@
 import { Component, Input } from '@angular/core';
-import { IonicModule, PopoverController, PopoverOptions } from '@ionic/angular';
+import { PopoverController, PopoverOptions } from '@ionic/angular';
 import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
-import {
-	CalendarNavService,
-	CalendarNavServicesModule,
-} from '../../../../services';
+import { CalendarNavService } from '../../../../services';
 import { ISlotUIContext } from '@sneat/mod-schedulus-core';
 import { ISpaceContext } from '@sneat/team-models';
-import { HappeningSlotParticipantsComponent } from '../../../happening-slot-participants/happening-slot-participants.component';
-import { SlotContextMenuComponent } from '../slot-context-menu/slot-context-menu.component';
-import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
+import { SlotContextMenuComponent } from './slot-context-menu.component';
+
+// import { HappeningSlotParticipantsComponent } from '../../../happening-slot-participants/happening-slot-participants.component';
+// import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
 // import { SlotContextMenuComponent } from '../slot-context-menu/slot-context-menu.component';
 // import { HappeningSlotParticipantsComponent } from '../../../happening-slot-participants/happening-slot-participants.component';
 // import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
@@ -17,15 +15,7 @@ import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
 @Component({
 	selector: 'sneat-day-slot-item',
 	templateUrl: './day-slot-item.component.html',
-	imports: [
-		IonicModule,
-		CalendarNavServicesModule,
-		TimingBadgeComponent,
-		HappeningSlotParticipantsComponent,
-		// TimingBadgeComponent,
-		// HappeningSlotParticipantsComponent,
-		// CalendariumServicesModule,
-	],
+	standalone: false, // For now we need to use module due to circle dependencies
 })
 export class DaySlotItemComponent {
 	@Input() public slotContext?: ISlotUIContext;

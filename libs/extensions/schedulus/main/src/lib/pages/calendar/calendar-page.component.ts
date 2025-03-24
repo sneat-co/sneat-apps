@@ -46,8 +46,8 @@ import { SpaceServiceModule } from '@sneat/team-services';
 	imports: [
 		CommonModule,
 		SpacePageTitleComponent,
-		ContactusServicesModule,
-		CalendariumServicesModule,
+		// ContactusServicesModule,
+		// CalendariumServicesModule,
 		ScheduleNavServiceModule,
 		IonHeader,
 		IonToolbar,

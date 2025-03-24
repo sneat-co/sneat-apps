@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SneatApiService } from '@sneat/api';
 import { IMemberContext } from '@sneat/contactus-core';
+import { ContactusSpaceService } from '@sneat/contactus-services';
 import { dateToIso, localDateToIso } from '@sneat/core';
 import {
 	IHappeningSlot,
@@ -25,7 +26,10 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
 import { ISpaceContext } from '@sneat/team-models';
 import { takeUntil } from 'rxjs';
-import { CalendarDayService } from '../../services/calendar-day.service';
+import {
+	CalendarDayService,
+	CalendarDayServiceModule,
+} from '../../services/calendar-day.service';
 import { CalendariumSpaceService } from '../../services/calendarium-space.service';
 import { HappeningService } from '../../services/happening.service';
 import { isToday } from '../schedule-core';
@@ -57,6 +61,13 @@ import { SinglesTabComponent } from './components/singles-tab/singles-tab.compon
 		CalendarDayTabComponent,
 		CalendarFilterComponent,
 		FormsModule,
+		CalendarDayServiceModule,
+	],
+	providers: [
+		CalendarFilterService,
+		CalendarStateService,
+		CalendariumSpaceService,
+		ContactusSpaceService,
 	],
 })
 export class CalendarComponent
