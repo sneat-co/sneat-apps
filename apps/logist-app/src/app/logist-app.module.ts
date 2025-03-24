@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IonicModule } from '@ionic/angular';
 import { DefaultSneatAppApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
 import {

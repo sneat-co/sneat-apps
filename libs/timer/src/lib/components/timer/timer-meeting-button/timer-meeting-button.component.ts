@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { IScrumDbo } from '@sneat/scrumspace-scrummodels';

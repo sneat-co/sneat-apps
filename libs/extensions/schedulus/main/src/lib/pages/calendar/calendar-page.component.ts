@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ParamMap } from '@angular/router';
 import {
 	IonBackButton,
