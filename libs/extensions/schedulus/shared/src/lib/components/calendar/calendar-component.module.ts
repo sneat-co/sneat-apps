@@ -24,6 +24,7 @@ import { HappeningSlotComponent } from '../happening-slot/happening-slot.compone
 import { HappeningSlotsComponent } from '../happening-slots/happening-slots.component';
 import { CalendarAddButtonsComponent } from './components/calendar-add-buttons/calendar-add-buttons.component';
 import { CalendarDayTitleComponent } from './components/calendar-day/calendar-day-title.component';
+import { CalendarWeekTitleComponent } from './components/calendar-week/calendar-week-title.component';
 import { DaySlotItemComponent } from './components/day-slot-item/day-slot-item.component';
 import { RecurringsTabComponent } from './components/recurrings-tab/recurrings-tab.component';
 import { SingleHappeningsListComponent } from './components/singles-tab/single-happenings-list.component';
@@ -38,7 +39,6 @@ import { CalendarStateService } from './calendar-state.service';
 import { CalendarWeekComponent } from './components/calendar-week/calendar-week.component';
 import { CalendarWeekTabComponent } from './components/calendar-week/calendar-week-tab.component';
 import { CalendarWeekCardComponent } from './components/calendar-week/calendar-week-card.component';
-import { CalendarWeekTitleComponent } from './components/calendar-week/calendar-week-title.component';
 import { CalendarWeekdayComponent } from './components/calendar-weekday/calendar-weekday.component';
 import { CalendarComponent } from './calendar.component';
 import { HappeningCardComponent } from '../happening-card/happening-card.component';
@@ -52,7 +52,6 @@ import { TimingBadgeComponent } from './components/timing-badge/timing-badge.com
 		IonicModule,
 		FormsModule,
 		RouterModule,
-
 		SpacePageTitleComponent,
 		FilterItemComponent,
 		HappeningServiceModule,
@@ -73,6 +72,7 @@ import { TimingBadgeComponent } from './components/timing-badge/timing-badge.com
 		HappeningCardComponent,
 		ShortMonthNamePipe,
 		ContactTitlePipe,
+		CalendarWeekTitleComponent,
 	],
 	exports: [CalendarComponent, CalendarDayComponent],
 	declarations: [
@@ -89,7 +89,6 @@ import { TimingBadgeComponent } from './components/timing-badge/timing-badge.com
 		CalendarDayTabComponent,
 		CalendarWeekTabComponent,
 		CalendarWeekCardComponent,
-		CalendarWeekTitleComponent,
 		CalendarFilterComponent,
 		CalendarCardHeaderComponent,
 		SingleHappeningsListComponent,
