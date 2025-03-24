@@ -5,12 +5,12 @@ import { IonicModule } from '@ionic/angular';
 import { IIdAndBrief, IIdAndBriefAndOptionalDbo } from '@sneat/core';
 import { IContactBrief, IContactDto } from '@sneat/contactus-core';
 import { ISpaceContext } from '@sneat/team-models';
-import { ContactsListModule } from '../contacts-list';
+import { ContactsListComponent } from '../contacts-list';
 
 @Component({
 	selector: 'sneat-contact-locations',
 	templateUrl: './contact-locations.component.html',
-	imports: [CommonModule, IonicModule, ContactsListModule, RouterLink],
+	imports: [CommonModule, IonicModule, ContactsListComponent, RouterLink],
 })
 export class ContactLocationsComponent implements OnChanges {
 	@Input({ required: true }) public space?: ISpaceContext;

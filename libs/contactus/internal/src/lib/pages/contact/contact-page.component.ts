@@ -9,7 +9,7 @@ import {
 	ContactComponentBaseParamsModule,
 	ContactDetailsComponent,
 	ContactRolesInputModule,
-	ContactsListModule,
+	ContactsListComponent,
 } from '@sneat/contactus-shared';
 import { SneatNavService } from '@sneat/core';
 import { IAddress } from '@sneat/contactus-core';
@@ -30,7 +30,6 @@ import { ContactBasePage } from '../contact-base-page';
 		FormsModule,
 		RouterModule,
 		IonicModule,
-		ContactsListModule,
 		ContactRolesInputModule,
 		ContactDetailsComponent,
 		ContactusServicesModule,

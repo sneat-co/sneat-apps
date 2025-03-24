@@ -1,4 +1,11 @@
 import { Component, Inject, Input } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
+import {
+	CountryFlagPipe,
+	CountryTitle,
+	GenderIconNamePipe,
+	PersonTitle,
+} from '@sneat/components';
 import { IIdAndBrief, IIdAndBriefAndOptionalDbo } from '@sneat/core';
 import { ContactRole, IContactBrief, IContactDto } from '@sneat/contactus-core';
 import { IRelatedItem, IRelationshipRoles } from '@sneat/dto';
@@ -11,7 +18,13 @@ import { SpaceNavService } from '@sneat/team-services';
 	selector: 'sneat-contacts-list-item',
 	templateUrl: './contacts-list-item.component.html',
 	styleUrls: ['./contacts-list-item.component.scss'],
-	standalone: false,
+	imports: [
+		IonicModule,
+		CountryTitle,
+		CountryFlagPipe,
+		GenderIconNamePipe,
+		PersonTitle,
+	],
 })
 export class ContactsListItemComponent {
 	@Input({ required: true }) space?: ISpaceContext;
@@ -63,9 +76,6 @@ export class ContactsListItemComponent {
 	};
 
 	@Input() goMember: (memberId: string, event: Event) => void = () => void 0;
-
-	protected readonly contactID = (_: number, v: IIdAndBrief<IRelatedItem>) =>
-		v.id;
 
 	protected firstRelated(contactRelationships?: IRelationshipRoles): string {
 		if (!contactRelationships) {

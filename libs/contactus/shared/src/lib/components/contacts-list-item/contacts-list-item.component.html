@@ -7,64 +7,78 @@
 	<ion-icon slot="start" [name]="contact?.brief?.gender | genderIconName" />
 	<ion-label>
 		{{ contact | personTitle }}
-		<ng-container *ngIf="contact?.brief?.roles?.length">
-			<ng-container *ngFor="let role of contact?.brief?.roles || []">
-				<ion-badge *ngIf="!hideRole(role)" color="light" class="light"
-					>{{ role }}
+		@if (contact?.brief?.roles?.length) {
+			@for (role of contact?.brief?.roles || []; track role) {
+				@if (!hideRole(role)) {
+					<ion-badge color="light" class="light">
+						{{ role }}
+					</ion-badge>
+				}
+			}
+		}
+
+		@for (relatedContact of relatedContacts; track relatedContact.id) {
+			@if (firstRelated(relatedContact.brief.rolesOfItem)) {
+				<ion-badge>
+					firstRelated(relatedContact.brief.relatedAs) &#125;&#125; of
+					<a
+						[href]="relatedContact.id"
+						(click)="goMember(relatedContact.id, $event)"
+						>{{ relatedContact.id }} (TODO: lookup contact by ID);</a
+					>
 				</ion-badge>
-			</ng-container>
-		</ng-container>
+			}
+		}
 
-		<ng-container
-			*ngFor="let relatedContact of relatedContacts; trackBy: contactID"
-		>
-			<ion-badge *ngIf="firstRelated(relatedContact.brief.rolesOfItem)">
-				firstRelated(relatedContact.brief.relatedAs) &#125;&#125; of
-				<a
-					[href]="relatedContact.id"
-					(click)="goMember(relatedContact.id, $event)"
-					>{{ relatedContact.id }} (TODO: lookup contact by ID);</a
-				>
-			</ion-badge>
-		</ng-container>
-
-		<span
-			*ngIf="contact?.brief?.countryID && contact?.brief?.countryID !== '--'"
-			style="margin: 0 1em"
-			title="{{ contact?.brief?.countryID | countryTitle }}"
-			>{{ contact?.brief?.countryID | countryFlag }}</span
-		>
+		@if (contact?.brief?.countryID && contact?.brief?.countryID !== "--") {
+			<span
+				style="margin: 0 1em"
+				title="{{ contact?.brief?.countryID | countryTitle }}"
+			>
+				{{ contact?.brief?.countryID | countryFlag }}
+			</span>
+		}
 	</ion-label>
 
 	<ion-buttons slot="end">
-		<ion-button
-			*ngIf="contact?.dbo?.email"
-			href="mailto:{{ contact?.dbo?.email }}"
-			color="primary"
-			[title]="contact?.dbo?.email"
-			(click)="$event.stopPropagation()"
-			>&#64;
-		</ion-button>
-		<ion-button
-			*ngIf="contact?.dbo?.phone"
-			href="tel:{{ contact?.dbo?.phone }}"
-			color="primary"
-			[title]="contact?.dbo?.phone"
-			(click)="$event.stopPropagation()"
-		>
-			<ion-icon name="call" />
-		</ion-button>
-		<ion-button *ngIf="!contact?.dbo?.email" color="light">&#64;</ion-button>
-		<ion-button *ngIf="!contact?.dbo?.phone" color="light">
-			<ion-icon name="call" />
-		</ion-button>
+		@if (contact?.dbo?.email) {
+			<ion-button
+				href="mailto:{{ contact?.dbo?.email }}"
+				color="primary"
+				[title]="contact?.dbo?.email"
+				(click)="$event.stopPropagation()"
+				>&#64;
+			</ion-button>
+		}
+
+		@if (contact?.dbo?.phone) {
+			<ion-button
+				href="tel:{{ contact?.dbo?.phone }}"
+				color="primary"
+				[title]="contact?.dbo?.phone"
+				(click)="$event.stopPropagation()"
+			>
+				<ion-icon name="call" />
+			</ion-button>
+		}
+		@if (!contact?.dbo?.email) {
+			<ion-button color="light">&#64;</ion-button>
+		}
+		@if (!contact?.dbo?.phone) {
+			<ion-button color="light">
+				<ion-icon name="call" />
+			</ion-button>
+		}
 	</ion-buttons>
 </ion-item>
 
-<ion-item *ngIf="showAddress && contact?.dbo?.address">
-	<ion-label>Address</ion-label>
-	<ion-textarea readonly="readonly" [value]="contact?.dbo?.address" />
-</ion-item>
+@if (showAddress && contact?.dbo?.address) {
+	<ion-item>
+		<ion-label>Address</ion-label>
+		<ion-textarea readonly="readonly" [value]="contact?.dbo?.address" />
+	</ion-item>
+}
+
 <ion-item-options slot="end">
 	<ion-item-option color="warning" (click)="archiveContact()"
 		>Archive

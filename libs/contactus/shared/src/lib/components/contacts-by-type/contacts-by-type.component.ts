@@ -9,14 +9,14 @@ import {
 	defaultFamilyContactGroups,
 } from '@sneat/contactus-services';
 import { ISpaceContext } from '@sneat/team-models';
-import { ContactsListModule } from '../contacts-list';
+import { ContactsListItemComponent } from '../contacts-list';
 import {
 	IContactGroupWithContacts,
 	IContactRoleWithContacts,
 } from '../../ui-types';
 
 @Component({
-	imports: [CommonModule, IonicModule, ContactsListModule],
+	imports: [CommonModule, IonicModule, ContactsListItemComponent],
 	selector: 'sneat-contacts-family',
 	templateUrl: './contacts-by-type.component.html',
 	animations: [listItemAnimations],

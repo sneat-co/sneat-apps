@@ -27,7 +27,7 @@ import { ContactDobComponent } from '../contact-dob';
 import { ContactLocationsComponent } from '../contact-locations';
 import { ContactModulesMenuComponent } from '../contact-modules-menu';
 import { ContactRolesInputModule } from '../contact-roles-input';
-import { ContactsListModule } from '../contacts-list';
+import { ContactsListComponent } from '../contacts-list';
 import { GenderFormComponent, RelationshipFormComponent } from '../person-form';
 import { RelatedContactComponent } from './related-contact.component';
 
@@ -42,7 +42,6 @@ import { RelatedContactComponent } from './related-contact.component';
 		ContactModulesMenuComponent,
 		ContactContactsComponent,
 		ContactRolesInputModule,
-		ContactsListModule,
 		ContactLocationsComponent,
 		RelationshipFormComponent,
 		GenderFormComponent,

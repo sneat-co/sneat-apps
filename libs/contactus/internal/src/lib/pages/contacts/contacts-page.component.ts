@@ -4,7 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import {
 	ContactsByTypeComponent,
-	ContactsListModule,
+	ContactsListComponent,
+	ContactsListItemComponent,
 } from '@sneat/contactus-shared';
 import { IIdAndBrief, listItemAnimations } from '@sneat/core';
 import { FilterItemComponent, ISelectItem } from '@sneat/components';
@@ -37,10 +38,10 @@ import { Subscription } from 'rxjs';
 		IonicModule,
 		SpacePageTitleComponent,
 		FilterItemComponent,
-		ContactsListModule,
 		ContactsByTypeComponent,
 		ContactusServicesModule,
 		SpaceServiceModule,
+		ContactsListItemComponent,
 	],
 })
 export class ContactsPageComponent extends SpaceItemsBaseComponent {
