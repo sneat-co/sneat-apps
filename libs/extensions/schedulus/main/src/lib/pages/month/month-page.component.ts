@@ -1,4 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Period } from 'sneat-shared/models/types';
 import { DtoLiability } from 'sneat-shared/models/dto/dto-liability';
@@ -25,20 +28,20 @@ const monthNames = [
 	selector: 'sneat-month',
 	templateUrl: './month-page.component.html',
 	styleUrls: ['./month.page.scss'],
-	standalone: false,
+	imports: [CommonModule, FormsModule, IonicModule],
 })
 export class MonthPageComponent {
 	public segment: 'expense' | 'income' | 'balance' = 'expense';
 	public period: Period = 'month';
 	public current: 'This' | 'Next' | 'Previous' = 'This';
-	public balance: number;
+	public balance?: number;
 
-	public expandedAssetId: string;
-	public expandedAssetLiabilities: DtoLiability[];
-	private expandedLiabilitiesSubscription: Subscription;
+	public expandedAssetId?: string;
+	public expandedAssetLiabilities?: DtoLiability[];
+	private expandedLiabilitiesSubscription?: Subscription;
 
-	private allAssets: Asset[];
-	public assets: Asset[];
+	private allAssets?: Asset[];
+	public assets?: Asset[];
 
 	constructor(
 		assetService: IAssetService,
@@ -56,7 +59,7 @@ export class MonthPageComponent {
 
 	private filterAndOrderAssets(): void {
 		const s = this.segment;
-		this.assets = this.allAssets.filter((a) =>
+		this.assets = this.allAssets?.filter((a) =>
 			s === 'expense'
 				? a.totals.expenses.count
 				: s === 'income'
@@ -67,36 +70,36 @@ export class MonthPageComponent {
 		switch (this.segment) {
 			case 'expense':
 				this.assets = this.allAssets
-					.filter((a) => a.totals.expenses.count)
+					?.filter((a) => a.totals.expenses.count)
 					.sort(
 						(a1, a2) =>
 							a2.totals.expenses.perMonth() - a1.totals.expenses.perMonth(),
 					);
 				this.balance = this.assets
-					.map((a) => a.totals.expenses.perMonth())
+					?.map((a) => a.totals.expenses.perMonth())
 					.reduce((a, b) => a + b);
 				break;
 			case 'income':
 				this.assets = this.allAssets
-					.filter((a) => a.totals.incomes.count)
+					?.filter((a) => a.totals.incomes.count)
 					.sort(
 						(a1, a2) =>
 							a2.totals.incomes.perMonth() - a1.totals.incomes.perMonth(),
 					);
 				this.balance = this.assets
-					.map((a) => a.totals.incomes.perMonth())
+					?.map((a) => a.totals.incomes.perMonth())
 					.reduce((a, b) => a + b);
 				break;
 			case 'balance':
 				this.assets = this.allAssets
-					.filter((a) => a.totals.count)
+					?.filter((a) => a.totals.count)
 					.sort(
 						(a1, a2) =>
 							Math.abs(a2.totals.per('month')) -
 							Math.abs(a1.totals.per('month')),
 					);
 				this.balance = this.assets
-					.map((a) => a.totals.per('month'))
+					?.map((a) => a.totals.per('month'))
 					.reduce((a, b) => a + b);
 				break;
 			default:

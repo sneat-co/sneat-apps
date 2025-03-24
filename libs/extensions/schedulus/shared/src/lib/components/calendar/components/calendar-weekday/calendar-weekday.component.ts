@@ -23,12 +23,13 @@ import {
 import { isSlotVisible } from '../../../schedule-slots';
 import { Weekday } from '../../weekday';
 import { SpaceDay } from '../../../../services/space-day';
-import { DaySlotItemModule } from '../day-slot-item/daly-slot-item.module';
+import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
+// import { DaySlotItemModule } from '../day-slot-item/daly-slot-item.module';
 
 @Component({
 	selector: 'sneat-calendar-weekday',
 	templateUrl: './calendar-weekday.component.html',
-	imports: [IonicModule, DaySlotItemModule, ShortMonthNamePipe],
+	imports: [IonicModule, DaySlotItemComponent, ShortMonthNamePipe],
 })
 export class CalendarWeekdayComponent implements OnDestroy {
 	public readonly $space = input.required<ISpaceContext | undefined>();
