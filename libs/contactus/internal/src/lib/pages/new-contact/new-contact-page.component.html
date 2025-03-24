@@ -21,14 +21,14 @@
 	</ion-item-divider>
 
 	<sneat-contact-role-form
-		[contactGroupID]="contactGroup?.id"
+		[contactGroupID]="$contactGroup()?.id"
 		(contactGroupChange)="onContactGroupChanged($event)"
-		[contactRoleID]="contactRole?.id"
+		[contactRoleID]="$contactRole()?.id"
 		(contactRoleIDChange)="onContactRoleIDChanged($event)"
 	/>
 
 	<sneat-person-form-wizard
-		*ngIf="contactRole"
+		*ngIf="$contactRole"
 		[space]="space"
 		[hideRelationship]="true"
 		[hidePetOption]="true"

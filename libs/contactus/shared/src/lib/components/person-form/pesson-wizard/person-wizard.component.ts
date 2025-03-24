@@ -42,7 +42,7 @@ import { PhonesFormComponent } from '../phones-form';
 import { RelationshipFormComponent } from '../relationship-form';
 import { RolesFormComponent } from '../roles-form';
 
-interface personWizardState {
+export interface PersonWizardState {
 	// wizard state
 	readonly contactType?: boolean;
 	readonly ageGroup?: boolean;
@@ -56,7 +56,7 @@ interface personWizardState {
 	readonly submitButton?: boolean;
 }
 
-type WizardStepID = keyof personWizardState;
+type WizardStepID = keyof PersonWizardState;
 
 interface WizardStepCondition {
 	readonly contactTypes: MemberContactType[];
@@ -74,7 +74,7 @@ interface WizardStepDef {
 }
 
 export type IPersonFormWizardFields = {
-	[id in keyof personWizardState]: IFormField;
+	[id in keyof PersonWizardState]: IFormField;
 };
 
 @Component({
@@ -121,7 +121,7 @@ export class PersonWizardComponent implements OnChanges {
 	public isReadyToSubmit = false;
 	@Output() readonly isReadyToSubmitChange = new EventEmitter<boolean>();
 
-	public show: personWizardState = {};
+	public show: PersonWizardState = {};
 
 	public wizardStep: WizardStepID = 'contactType';
 
@@ -424,7 +424,7 @@ export class PersonWizardComponent implements OnChanges {
 		return false;
 	}
 
-	private openNext(currentStepID: keyof personWizardState): void {
+	private openNext(currentStepID: keyof PersonWizardState): void {
 		for (;;) {
 			console.log('openNext()', currentStepID);
 			const i = this.formOrder.findIndex((step) => step.id === currentStepID);

@@ -1,10 +1,28 @@
 <ion-card>
-	<ng-container *ngIf="!contactRoleID">
-		<ion-item-divider color="primary">
-			<ion-label *ngIf="!contactGroupID">Please select contact type</ion-label>
-			<ion-label *ngIf="contactGroupID"
-				>Please select primary contact role</ion-label
+	@if (contactRoleID) {
+		<ion-item>
+			<ion-label position="stacked">Contact type/role</ion-label>
+			<ion-select
+				interface="popover"
+				[value]="contactRoleID"
+				(ionChange)="onContactRoleIDChanged($event)"
 			>
+				@for (r of contactGroup?.dbo?.roles || []; track roleBriefID(r)) {
+					<ion-select-option [value]="r.id"
+						>{{ r.emoji }} {{ r.title || r.id }}</ion-select-option
+					>
+				}
+			</ion-select>
+		</ion-item>
+	} @else {
+		<ion-item-divider color="primary">
+			<ion-label>
+				@if (contactGroupID) {
+					Please select primary contact role
+				} @else {
+					Please select contact type
+				}
+			</ion-label>
 		</ion-item-divider>
 		<sneat-select-from-list
 			label="Contact group"
@@ -12,66 +30,20 @@
 			[value]="contactGroupID || ''"
 			(valueChange)="onContactGroupIDChanged($event)"
 		/>
-		<!--    <ion-radio-group *ngIf='!contactGroupID' (ionChange)='onContactGroupIDChanged($event)' [(ngModel)]='contactGroupID'>-->
-		<!--      <ion-item *ngFor='let g of groups || []; trackBy: groupID'>-->
-		<!--        <ion-radio slot='start' [value]='g.id' labelPlacement='end'>-->
-		<!--          {{ g.dto.emoji }} {{ g.dto.title || g.id }}-->
-		<!--        </ion-radio>-->
-		<!--      </ion-item>-->
-		<!--    </ion-radio-group>-->
-		<!--    <ion-segment *ngIf='contactGroupID'-->
-		<!--                 [(ngModel)]='contactGroupID'-->
-		<!--                 (ionChange)='onContactGroupIDChanged($event)'-->
-		<!--    >-->
-		<!--      <ion-segment-button-->
-		<!--        *ngFor='let g of groups || []; trackBy: groupID'-->
-		<!--        [value]='g.id'-->
-		<!--      >-->
-		<!--        <ion-label>{{ g.dto.emoji }} {{ g.dto.title || g.id }}</ion-label>-->
-		<!--      </ion-segment-button>-->
-		<!--    </ion-segment>-->
-
-		<ion-radio-group
-			*ngIf="contactGroup"
-			[(ngModel)]="contactRoleID"
-			(ionChange)="onContactRoleIDChanged($event)"
-		>
-			<ion-item
-				*ngFor="let r of contactGroup.dbo.roles || []; trackBy: roleBriefID"
-			>
-				<ion-radio slot="start" [value]="r.id" />
-				<ion-label>{{ r.emoji }} {{ r.title || r.id | titlecase }}</ion-label>
-			</ion-item>
-		</ion-radio-group>
-	</ng-container>
-
-	<ng-container *ngIf="contactRoleID">
-		<!--    <ion-item>-->
-		<!--      <ion-label position='stacked'>Contact group</ion-label>-->
-		<!--      <ion-select-->
-		<!--        interface='popover'-->
-		<!--        [(ngModel)]='contactGroupID'-->
-		<!--      >-->
-		<!--        <ion-select-option-->
-		<!--          *ngFor='let g of groups || []; trackBy: groupID'-->
-		<!--          [value]='g.id'-->
-		<!--        >{{ g.dto.title || g.id }}</ion-select-option-->
-		<!--        >-->
-		<!--      </ion-select>-->
-		<!--    </ion-item>-->
-		<ion-item>
-			<ion-label position="stacked">Contact type/role</ion-label>
-			<ion-select
-				interface="popover"
-				[(ngModel)]="contactRoleID"
+		@if (contactGroup) {
+			<ion-radio-group
+				[value]="contactRoleID"
 				(ionChange)="onContactRoleIDChanged($event)"
 			>
-				<ion-select-option
-					*ngFor="let r of contactGroup?.dbo?.roles || []; trackBy: roleBriefID"
-					[value]="r.id"
-					>{{ r.emoji }} {{ r.title || r.id }}</ion-select-option
-				>
-			</ion-select>
-		</ion-item>
-	</ng-container>
+				@for (r of contactGroup.dbo.roles || []; track roleBriefID(r)) {
+					<ion-item>
+						<ion-radio slot="start" [value]="r.id" />
+						<ion-label
+							>{{ r.emoji }} {{ r.title || r.id | titlecase }}</ion-label
+						>
+					</ion-item>
+				}
+			</ion-radio-group>
+		}
+	}
 </ion-card>

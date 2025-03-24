@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, signal, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ParamMap } from '@angular/router';
 import { IonicModule, IonInput } from '@ionic/angular';
 import {
-	ContactRoleFormModule,
+	ContactRoleFormComponent,
 	PersonWizardComponent,
 } from '@sneat/contactus-shared';
 import { IIdAndBrief, IIdAndDbo, IIdAndOptionalDbo } from '@sneat/core';
@@ -47,7 +47,7 @@ import {
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		ContactRoleFormModule,
+		ContactRoleFormComponent,
 		PersonWizardComponent,
 		ContactusServicesModule,
 		AssetusServicesModule,
@@ -87,16 +87,19 @@ export class NewContactPageComponent
 
 	public asset?: IAssetContext;
 
-	protected contactGroup?: IIdAndOptionalDbo<IContactGroupDbo>;
-	protected contactRole?: IIdAndBrief<IContactRoleBrief>;
+	protected readonly $contactGroup = signal<
+		undefined | IIdAndOptionalDbo<IContactGroupDbo>
+	>(undefined);
+	protected readonly $contactRole = signal<
+		undefined | IIdAndBrief<IContactRoleBrief>
+	>(undefined);
 
 	protected assetRelation?: ContactToAssetRelation;
 
 	protected get title(): string {
-		return this.contactRole?.brief
-			? `${
-					this.contactRole.brief.emoji
-				} New ${this.contactRole.brief.title.toLowerCase()}`
+		const contactRoleBrief = this.$contactRole()?.brief;
+		return contactRoleBrief
+			? `${contactRoleBrief.emoji} New ${contactRoleBrief.title.toLowerCase()}`
 			: 'New contact';
 	}
 
@@ -130,26 +133,26 @@ export class NewContactPageComponent
 			this.relation = relation as ContactToContactRelation; // TODO: verify
 		}
 		const contactGroupID = params.get('group');
-		if (contactGroupID && !this.contactGroup) {
+		if (contactGroupID && !this.$contactGroup()) {
 			this.contactGroupService
 				.getContactGroupByID(contactGroupID, this.space)
 				.pipe(first(), takeUntil(this.destroyed$))
 				.subscribe({
 					next: (contactGroup) => {
-						this.contactGroup = contactGroup;
+						this.$contactGroup.set(contactGroup);
 					},
 					error: this.logErrorHandler('Failed to get contact group by ID'),
 				});
 		}
 		const contactRole = params.get('role');
 
-		if (contactRole && !this.contactRole) {
+		if (contactRole && !this.$contactRole) {
 			this.contactRoleService
 				.getContactRoleByID(contactRole)
 				.pipe(first(), this.takeUntilDestroyed())
 				.subscribe({
 					next: (contactRole) => {
-						this.contactRole = contactRole;
+						this.$contactRole.set(contactRole);
 					},
 					error: this.logErrorHandler('Failed to get contact role by ID'),
 				});
@@ -185,19 +188,19 @@ export class NewContactPageComponent
 		}
 	};
 
-	public onContactGroupChanged(
+	protected onContactGroupChanged(
 		contactGroup?: IIdAndDbo<IContactGroupDbo>,
 	): void {
 		console.log('onContactGroupChanged()', contactGroup);
-		this.contactGroup = contactGroup;
+		this.$contactGroup.set(contactGroup);
 	}
 
-	public onContactRoleIDChanged(contactRoleID?: string): void {
-		const brief = this.contactGroup?.dbo?.roles?.find(
+	protected onContactRoleIDChanged(contactRoleID?: string): void {
+		const brief = this.$contactGroup()?.dbo?.roles?.find(
 			(r) => r.id === contactRoleID,
 		);
-		this.contactRole = brief && { id: brief.id, brief };
-		console.log('onContactRoleIDChanged()', contactRoleID, this.contactRole);
+		this.$contactRole.set(brief && { id: brief.id, brief });
+		console.log('onContactRoleIDChanged()', contactRoleID, this.$contactRole);
 	}
 
 	public onRelatedPersonChange(myPerson: IRelatedPerson): void {
@@ -245,7 +248,7 @@ export class NewContactPageComponent
 			};
 			request.relatedToAssets = [contact2Asset];
 		}
-		const roleID = this.contactRole?.id;
+		const roleID = this.$contactRole()?.id;
 		if (roleID) {
 			if (request.person && !request.person.roles) {
 				request = {

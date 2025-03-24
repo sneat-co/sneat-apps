@@ -1,12 +1,17 @@
+import { TitleCasePipe } from '@angular/common';
 import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
 	Component,
 	EventEmitter,
+	inject,
 	Input,
 	OnChanges,
 	Output,
 	SimpleChanges,
 } from '@angular/core';
-import { ISelectItem } from '@sneat/components';
+import { IonicModule } from '@ionic/angular';
+import { ISelectItem, SelectFromListComponent } from '@sneat/components';
 import {
 	ContactGroupService,
 	defaultFamilyContactGroups,
@@ -17,20 +22,23 @@ import {
 	IContactRoleBriefWithID,
 } from '@sneat/contactus-core';
 import { SneatBaseComponent } from '@sneat/ui';
-import { takeUntil } from 'rxjs';
 
 @Component({
 	selector: 'sneat-contact-role-form',
 	templateUrl: './contact-role-form.component.html',
-	standalone: false,
+	imports: [IonicModule, SelectFromListComponent, TitleCasePipe],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactRoleFormComponent
 	extends SneatBaseComponent
 	implements OnChanges
 {
+	private readonly changeDetectorRef = inject(ChangeDetectorRef);
+
 	public contactGroup?: IIdAndDbo<IContactGroupDbo> | null;
 
-	@Input() public contactGroupID? = defaultFamilyContactGroups[0].id;
+	@Input({ required: true }) contactGroupID?: string =
+		defaultFamilyContactGroups[0].id;
 
 	@Output() readonly contactGroupIDChange = new EventEmitter<
 		string | undefined
@@ -40,7 +48,7 @@ export class ContactRoleFormComponent
 		IIdAndDbo<IContactGroupDbo> | undefined
 	>();
 
-	@Input() public contactRoleID?: string;
+	@Input({ required: true }) public contactRoleID?: string;
 
 	@Output() readonly contactRoleIDChange = new EventEmitter<
 		string | undefined
@@ -62,16 +70,15 @@ export class ContactRoleFormComponent
 		);
 	}
 
-	protected readonly roleBriefID = (_: number, o: IContactRoleBriefWithID) =>
-		o.id;
+	protected readonly roleBriefID = (o: IContactRoleBriefWithID) => o.id;
 	protected readonly groupID = (_: number, o: IIdAndDbo<IContactGroupDbo>) =>
 		o.id;
 
-	constructor(private readonly contactGroupService: ContactGroupService) {
+	constructor(contactGroupService: ContactGroupService) {
 		super('ContactRoleFormComponent');
 		contactGroupService
 			.getContactGroups()
-			.pipe(takeUntil(this.destroyed$))
+			.pipe(this.takeUntilDestroyed())
 			.subscribe({
 				next: (groups) => {
 					this.groups = groups;
@@ -89,15 +96,17 @@ export class ContactRoleFormComponent
 		this.contactGroupChange.emit(this.contactGroup || undefined);
 	}
 
-	public onContactRoleIDChanged(event: Event): void {
+	public onContactRoleIDChanged(event: CustomEvent): void {
 		event.stopPropagation();
-		// const contactRole = this.contactGroup?.dto?.roles?.find(r => r.id === this.contactRoleID);
+		this.contactRoleID = event.detail.value as string;
 		this.contactRoleIDChange.emit(this.contactRoleID);
+		this.changeDetectorRef.markForCheck();
 	}
 
 	clearContactType(): void {
 		this.contactRoleID = undefined;
 		this.contactRoleIDChange.emit(this.contactRoleID);
+		this.changeDetectorRef.markForCheck();
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -107,12 +116,9 @@ export class ContactRoleFormComponent
 	}
 
 	private setContactGroup(): void {
-		this.contactGroup = this.groups?.find((g) => g.id === this.contactGroupID);
-		console.log(
-			'setContactGroup()',
-			this.contactGroupID,
-			this.contactRoleID,
-			this.contactGroup,
-		);
+		const contactGroupID = this.contactGroupID;
+		this.contactGroup = this.groups?.find((g) => g.id === contactGroupID);
+		this.changeDetectorRef.markForCheck();
+		// console.log(`setContactGroup(): contactGroupID=${contactGroupID}`);
 	}
 }
