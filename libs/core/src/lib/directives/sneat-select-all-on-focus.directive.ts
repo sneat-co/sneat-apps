@@ -2,7 +2,6 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
 	selector: '[sneatSelectAllOnFocus]',
-	standalone: true,
 })
 export class SneatSelectAllOnFocusDirective {
 	constructor(private readonly el: ElementRef) {}
