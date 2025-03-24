@@ -5,7 +5,6 @@ import { IonicModule } from '@ionic/angular';
 @Component({
 	selector: 'sneat-logist-app-home-page',
 	templateUrl: 'logist-app-home-page.component.html',
-	standalone: true,
 	imports: [CommonModule, IonicModule],
 })
 export class LogistAppHomePageComponent {}

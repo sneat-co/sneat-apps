@@ -43,7 +43,6 @@ const notImplemented = 'Sorry, not implemented yet';
 @Component({
 	selector: 'sneat-slot-context-menu',
 	templateUrl: 'slot-context-menu.component.html',
-	standalone: true, // circle dependencies SlotContextMenuComponent->DaySlotItemComponent->SlotContextMenuComponent
 	imports: [
 		IonicModule,
 		HappeningServiceModule,

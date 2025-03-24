@@ -7,7 +7,6 @@ import { NewTrackerFormComponent } from '../../components/new-tracker/new-tracke
 	selector: 'sneat-new-tracker',
 	templateUrl: './new-tracker-page.component.html',
 	imports: [IonicModule, NewTrackerFormComponent],
-	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewTrackerPageComponent extends SpaceBaseComponent {

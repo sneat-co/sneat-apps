@@ -6,7 +6,6 @@ interface IItem {
 
 @Component({
 	selector: 'sneat-test',
-	standalone: true,
 	template: `Today's item: {{ item }}`,
 })
 export class TestComponent {
