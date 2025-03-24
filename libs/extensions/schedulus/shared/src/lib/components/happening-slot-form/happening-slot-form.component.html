@@ -27,64 +27,65 @@
 <!--	</ion-segment>-->
 <!--</ion-item-divider>-->
 
-<ng-container *ngIf="happeningType === 'recurring'">
-	<sneat-select-from-list
-		*ngIf="!happens()"
-		label="Repeats"
-		listLabelColor="light"
-		[value]="happens()"
-		[items]="repeatsOptions"
-		[isReadonly]="!!date"
-		(valueChange)="onRepeatsChanged($event)"
-		labelPlacement="end"
-		listLabel="divider"
-		justify="start"
-	/>
-	<ion-grid *ngIf="happens()" class="ion-grid-layout">
-		<ion-row>
-			<ion-col>
-				<ion-item color="light" lines="full">
-					<ion-select
-						label="Repeats"
-						interface="popover"
-						[value]="happens()"
-						[disabled]="!!date"
-						(ionChange)="onRepeatsChanged($event.detail.value)"
-					>
-						@for (repeatOption of repeatsOptions; track repeatOption.id) {
-							<ion-select-option [value]="repeatOption.id"
-								>{{ repeatOption.title }}
-							</ion-select-option>
-						}
-					</ion-select>
-				</ion-item>
-			</ion-col>
-			<ion-col *ngIf="showWeekdays()">
-				<ion-item color="light" lines="full">
-					<ion-checkbox
-						color="medium"
-						labelPlacement="end"
-						slot="end"
-						[disabled]="!!date"
-						[checked]="weekdaysCheckbox()"
-						(ionChange)="onWeekdaysCheckboxChange($event.detail.checked)"
-					>
-						<ion-label color="medium">W-days</ion-label>
-					</ion-checkbox>
-					<ion-checkbox
-						color="medium"
-						labelPlacement="end"
-						slot="end"
-						[checked]="weekendCheckbox()"
-						[disabled]="!!date"
-						(ionChange)="onWeekendCheckboxChange($event.detail.checked)"
-					>
-						<ion-label color="medium">W-end</ion-label>
-					</ion-checkbox>
-				</ion-item>
-			</ion-col>
-		</ion-row>
-	</ion-grid>
+@if (happeningType === "recurring") {
+	@if (happens()) {
+		<ion-grid class="ion-grid-layout">
+			<ion-row>
+				<ion-col>
+					<ion-item color="light" lines="full">
+						<ion-select
+							label="Repeats"
+							interface="popover"
+							[value]="happens()"
+							(ionChange)="onRepeatsChanged($event.detail.value)"
+						>
+							@for (repeatOption of repeatsOptions; track repeatOption.id) {
+								<ion-select-option [value]="repeatOption.id">
+									{{ repeatOption.title }}
+								</ion-select-option>
+							}
+						</ion-select>
+					</ion-item>
+				</ion-col>
+				@if (showWeekdays()) {
+					<ion-col>
+						<ion-item color="light" lines="full">
+							<ion-checkbox
+								color="medium"
+								labelPlacement="end"
+								slot="end"
+								[checked]="weekdaysCheckbox()"
+								(ionChange)="onWeekdaysCheckboxChange($event.detail.checked)"
+							>
+								<ion-label color="medium">W-days</ion-label>
+							</ion-checkbox>
+							<ion-checkbox
+								color="medium"
+								labelPlacement="end"
+								slot="end"
+								[checked]="weekendCheckbox()"
+								(ionChange)="onWeekendCheckboxChange($event.detail.checked)"
+							>
+								<ion-label color="medium">W-end</ion-label>
+							</ion-checkbox>
+						</ion-item>
+					</ion-col>
+				}
+			</ion-row>
+		</ion-grid>
+	} @else {
+		<sneat-select-from-list
+			label="Repeats"
+			listLabelColor="light"
+			[value]="happens()"
+			[items]="repeatsOptions"
+			[isReadonly]="!!date"
+			(valueChange)="onRepeatsChanged($event)"
+			labelPlacement="end"
+			listLabel="divider"
+			justify="start"
+		/>
+	}
 
 	@if (happens() === "monthly") {
 		<!--		<ion-item-divider>-->
@@ -103,9 +104,9 @@
 	}
 
 	@if (showWeekdays()) {
-		<ion-item-divider *ngIf="!hasWeekdaySelected()"
-			>Choose day of the week
-		</ion-item-divider>
+		@if (!hasWeekdaySelected()) {
+			<ion-item-divider> Choose day of the week </ion-item-divider>
+		}
 		<form>
 			<ion-grid class="ion-grid-layout">
 				<ion-row>
@@ -115,7 +116,6 @@
 								slot="start"
 								value="mo"
 								[checked]="weekdayMo()"
-								[disabled]="!!date"
 								(ionChange)="onWeekdayChanged('mo', $event.detail.checked)"
 								labelPlacement="end"
 								>Monday
@@ -126,7 +126,6 @@
 								slot="start"
 								value="tu"
 								[checked]="weekdayTu()"
-								[disabled]="!!date"
 								(ionChange)="onWeekdayChanged('tu', $event.detail.checked)"
 								labelPlacement="end"
 								>Tuesday
@@ -137,7 +136,6 @@
 								slot="start"
 								value="we"
 								[checked]="weekdayWe()"
-								[disabled]="!!date"
 								(ionChange)="onWeekdayChanged('we', $event.detail.checked)"
 								labelPlacement="end"
 								>Wednesday
@@ -150,7 +148,6 @@
 								slot="start"
 								value="th"
 								[checked]="weekdayTh()"
-								[disabled]="!!date"
 								(ionChange)="onWeekdayChanged('th', $event.detail.checked)"
 								labelPlacement="end"
 								>Thursday
@@ -161,7 +158,6 @@
 								slot="start"
 								value="fr"
 								[checked]="weekdayFr()"
-								[disabled]="!!date"
 								(ionChange)="onWeekdayChanged('fr', $event.detail.checked)"
 								labelPlacement="end"
 								>Friday
@@ -174,7 +170,6 @@
 								slot="start"
 								value="sa"
 								[checked]="weekdaySa()"
-								[disabled]="!!date"
 								(ionChange)="onWeekdayChanged('sa', $event.detail.checked)"
 								labelPlacement="end"
 								>Saturday
@@ -185,7 +180,6 @@
 								slot="start"
 								value="su"
 								[checked]="weekdaySu()"
-								[disabled]="!!date"
 								(ionChange)="onWeekdayChanged('su', $event.detail.checked)"
 								labelPlacement="end"
 								>Sunday
@@ -203,7 +197,6 @@
 					label="Month"
 					interface="popover"
 					[formControl]="yearlyMonth"
-					[disabled]="!!date"
 					(ionChange)="setYearlyMonth($event.detail.value)"
 				>
 					@for (month of months; track month) {
@@ -254,7 +247,7 @@
 			<!--			</ion-row>-->
 		</ion-grid>
 	}
-</ng-container>
+}
 
 @if (showTimeForm()) {
 	<!--	<ion-item-divider color="light">-->
@@ -291,29 +284,35 @@
 
 <!--happeningType: {{happeningType}}, happens: {{happens}};-->
 
-<ion-list lines="none" *ngIf="error() || showAddSlotButton()">
-	<ion-item *ngIf="error()">
-		<ion-label color="danger">{{ error() }}</ion-label>
-	</ion-item>
+@if (error() || showAddSlotButton()) {
+	<ion-list lines="none">
+		@if (error()) {
+			<ion-item>
+				<ion-label color="danger">{{ error() }}</ion-label>
+			</ion-item>
+		}
 
-	<ion-item *ngIf="showAddSlotButton()">
-		<ion-button
-			slot="end"
-			color="primary"
-			[disabled]="isUpdating()"
-			(click)="applyChanges()"
-			size="medium"
-		>
-			@if (slot) {
-				<ion-icon name="save-outline" slot="start" />
-				<ion-label>Update slot</ion-label>
-			} @else {
-				<ion-icon name="add-outline" slot="start" />
-				<ion-label>Add slot</ion-label>
-			}
-			@if (isUpdating()) {
-				<ion-spinner name="lines-small" slot="end"></ion-spinner>
-			}
-		</ion-button>
-	</ion-item>
-</ion-list>
+		@if (showAddSlotButton()) {
+			<ion-item>
+				<ion-button
+					slot="end"
+					color="primary"
+					[disabled]="isUpdating()"
+					(click)="applyChanges()"
+					size="medium"
+				>
+					@if (slot) {
+						<ion-icon name="save-outline" slot="start" />
+						<ion-label>Update slot</ion-label>
+					} @else {
+						<ion-icon name="add-outline" slot="start" />
+						<ion-label>Add slot</ion-label>
+					}
+					@if (isUpdating()) {
+						<ion-spinner name="lines-small" slot="end"></ion-spinner>
+					}
+				</ion-button>
+			</ion-item>
+		}
+	</ion-list>
+}

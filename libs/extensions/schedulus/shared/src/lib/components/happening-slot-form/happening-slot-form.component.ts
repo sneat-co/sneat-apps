@@ -62,11 +62,9 @@ export interface IHappeningSlotFormComponentInputs {
 	selector: 'sneat-happening-slot-form',
 	templateUrl: './happening-slot-form.component.html',
 	imports: [
-		CommonModule,
 		IonicModule,
 		FormsModule,
 		ReactiveFormsModule,
-
 		SelectFromListComponent,
 		StartEndDatetimeFormComponent,
 	],
@@ -108,7 +106,7 @@ export class HappeningSlotFormComponent
 	// maxDate = '' + (new Date().getFullYear() + 5);
 
 	protected readonly repeatsOptions: readonly ISelectItem[] = [
-		{ id: 'daily', title: 'Daily' },
+		// { id: 'daily', title: 'Daily' },  // Daily does not make much sense, weekly covers it
 		{ id: 'weekly', title: 'Weekly' },
 		{ id: 'monthly', title: 'Monthly' },
 		{ id: 'yearly', title: 'Yearly' },
@@ -156,6 +154,7 @@ export class HappeningSlotFormComponent
 		const monthlyDate = this.monthlyDate();
 		const hasWeekdaySelected = this.hasWeekdaySelected();
 		return (
+			this.happeningType === 'single' ||
 			happens === 'daily' ||
 			(happens === 'weekly' && hasWeekdaySelected) ||
 			(happens === 'monthly' &&

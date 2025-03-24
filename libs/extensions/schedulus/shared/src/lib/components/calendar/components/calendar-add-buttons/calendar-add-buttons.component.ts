@@ -24,10 +24,10 @@ export class CalendarAddButtonsComponent {
 
 	protected newHappeningUrl(type: HappeningType): string {
 		const params: string[] = [];
-		if (this.weekdayID && type === 'recurring') {
+		if (this.weekdayID) {
 			params.push(`wd=${this.weekdayID}`);
 		}
-		if (this.dateID && type === 'single') {
+		if (this.dateID) {
 			params.push(`date=${this.dateID}`);
 		}
 		return (
@@ -49,8 +49,8 @@ export class CalendarAddButtonsComponent {
 		}
 		const params: NewHappeningParams = {
 			type,
-			wd: type === 'recurring' ? this.weekdayID : undefined,
-			date: type === 'single' ? this.dateID : undefined,
+			wd: this.weekdayID ? this.weekdayID : undefined,
+			date: this.dateID ? this.dateID : undefined,
 		};
 		this.scheduleNavService.goNewHappening(this.space, params);
 		return false;

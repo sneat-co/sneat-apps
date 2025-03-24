@@ -10,7 +10,8 @@ import {
 	newEmptyHappeningContext,
 } from '@sneat/mod-schedulus-core';
 import { SpaceComponentBaseParams } from '@sneat/team-components';
-import { first, takeUntil } from 'rxjs';
+import { SpaceServiceModule } from '@sneat/team-services';
+import { first } from 'rxjs';
 import { CalendarBasePage } from '../calendar-base-page';
 import { HappeningFormComponent } from '@sneat/extensions-schedulus-shared';
 
@@ -22,9 +23,9 @@ import { HappeningFormComponent } from '@sneat/extensions-schedulus-shared';
 		FormsModule,
 		IonicModule,
 		ReactiveFormsModule,
-
 		HappeningFormComponent,
 		ContactusServicesModule,
+		SpaceServiceModule,
 	],
 	providers: [SpaceComponentBaseParams],
 })
@@ -51,7 +52,7 @@ export class NewHappeningPageComponent extends CalendarBasePage {
 			this.createHappeningContext(type);
 		}
 		this.route.queryParamMap
-			.pipe(takeUntil(this.destroyed$), first())
+			.pipe(this.takeUntilDestroyed(), first())
 			.subscribe({
 				next: (queryParams) => {
 					console.log(
@@ -78,7 +79,7 @@ export class NewHappeningPageComponent extends CalendarBasePage {
 				},
 				error: this.logErrorHandler('failed to get query params'),
 			});
-		this.spaceChanged$.subscribe({
+		this.spaceChanged$.pipe(this.takeUntilDestroyed()).subscribe({
 			next: () => {
 				if (this.happening) {
 					this.happening = { ...this.happening, space: this.space };
