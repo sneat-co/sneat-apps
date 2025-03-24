@@ -35,7 +35,7 @@ export class ContactRoleFormComponent
 {
 	private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
-	public contactGroup?: IIdAndDbo<IContactGroupDbo> | null;
+	protected contactGroup?: IIdAndDbo<IContactGroupDbo> | null;
 
 	@Input({ required: true }) contactGroupID?: string =
 		defaultFamilyContactGroups[0].id;
@@ -87,7 +87,7 @@ export class ContactRoleFormComponent
 			});
 	}
 
-	public onContactGroupIDChanged(contactGroupID: string): void {
+	protected onContactGroupIDChanged(contactGroupID: string): void {
 		// event.stopPropagation();
 		this.contactGroupID = contactGroupID;
 		this.clearContactType();
@@ -96,14 +96,14 @@ export class ContactRoleFormComponent
 		this.contactGroupChange.emit(this.contactGroup || undefined);
 	}
 
-	public onContactRoleIDChanged(event: CustomEvent): void {
+	protected onContactRoleIDChanged(event: CustomEvent): void {
 		event.stopPropagation();
 		this.contactRoleID = event.detail.value as string;
 		this.contactRoleIDChange.emit(this.contactRoleID);
 		this.changeDetectorRef.markForCheck();
 	}
 
-	clearContactType(): void {
+	protected clearContactType(): void {
 		this.contactRoleID = undefined;
 		this.contactRoleIDChange.emit(this.contactRoleID);
 		this.changeDetectorRef.markForCheck();
