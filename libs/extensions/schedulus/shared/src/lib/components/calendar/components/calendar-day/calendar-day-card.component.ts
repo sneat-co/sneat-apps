@@ -1,10 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
 import { virtualSliderAnimations } from '@sneat/components';
+import { CalendarDayComponent } from './calendar-day.component';
+import { CalendarDayTitleComponent } from './calendar-day-title.component';
 import { ISpaceContext } from '@sneat/team-models';
 import { SpaceDaysProvider } from '../../../../services/space-days-provider';
 import { NewHappeningParams } from '@sneat/mod-schedulus-core';
 import { getToday, CalendarStateService } from '../../calendar-state.service';
 import { swipeableDay } from '../../../swipeable-ui';
+import { CalendarAddButtonsComponent } from '../calendar-add-buttons/calendar-add-buttons.component';
 import { CalendarDayBaseComponent } from './calendar-day-base.component';
 
 // This is 1 of the 2 "day cards" used at ScheduleDayTabComponent
@@ -14,7 +18,12 @@ import { CalendarDayBaseComponent } from './calendar-day-base.component';
 	selector: 'sneat-calendar-day-card',
 	templateUrl: 'calendar-day-card.component.html',
 	animations: virtualSliderAnimations,
-	standalone: false,
+	imports: [
+		IonicModule,
+		CalendarDayComponent,
+		CalendarAddButtonsComponent,
+		CalendarDayTitleComponent,
+	],
 })
 export class CalendarDayCardComponent
 	extends CalendarDayBaseComponent

@@ -1,9 +1,11 @@
 import { Component, Input, OnChanges } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
 import { ISpaceContext } from '@sneat/team-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
 import { CalendarFilterService } from '../../../calendar-filter.service';
+import { HappeningCardComponent } from '../../../happening-card/happening-card.component';
 import {
 	ICalendarFilter,
 	isMatchingScheduleFilter,
@@ -12,7 +14,7 @@ import {
 @Component({
 	selector: 'sneat-single-happenings-list',
 	templateUrl: 'single-happenings-list.component.html',
-	standalone: false,
+	imports: [IonicModule, HappeningCardComponent],
 })
 export class SingleHappeningsListComponent
 	extends SneatBaseComponent

@@ -3,7 +3,6 @@ import { Component, Input } from '@angular/core';
 @Component({
 	selector: 'sneat-calendar-card-header',
 	templateUrl: 'calendar-card-header.component.html',
-	standalone: false,
 })
 export class CalendarCardHeaderComponent {
 	@Input() date = new Date();

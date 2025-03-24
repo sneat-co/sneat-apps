@@ -2,15 +2,15 @@ import { Route } from '@angular/router';
 // import {guardRoute} from '../../utils/guard-route';
 
 export const calendariumRoutes: Route[] = [
-	{
-		path: 'calendar',
-		data: { title: 'Calendar' },
-		loadComponent: () =>
-			import('./pages/calendar/calendar-page.component').then(
-				(m) => m.CalendarPageComponent,
-			),
-		// ...guardRoute,
-	},
+	// {
+	// 	path: 'calendar',
+	// 	data: { title: 'Calendar' },
+	// 	loadComponent: () =>
+	// 		import('./pages/calendar/calendar-page.component').then(
+	// 			(m) => m.CalendarPageComponent,
+	// 		),
+	// 	// ...guardRoute,
+	// },
 	{
 		path: 'new-happening',
 		data: { title: 'New happening' },

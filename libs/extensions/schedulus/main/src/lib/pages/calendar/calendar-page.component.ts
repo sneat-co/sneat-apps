@@ -28,7 +28,7 @@ import {
 } from '@sneat/team-components';
 import { IMemberContext } from '@sneat/contactus-core';
 import {
-	CalendarComponentModule,
+	CalendarComponent,
 	CalendariumServicesModule,
 	CalendarTab,
 	// CalendarFilterService,
@@ -46,7 +46,6 @@ import { SpaceServiceModule } from '@sneat/team-services';
 	imports: [
 		CommonModule,
 		SpacePageTitleComponent,
-		CalendarComponentModule,
 		ContactusServicesModule,
 		CalendariumServicesModule,
 		ScheduleNavServiceModule,
@@ -61,6 +60,7 @@ import { SpaceServiceModule } from '@sneat/team-services';
 		IonContent,
 		IonMenuButton,
 		SpaceServiceModule,
+		CalendarComponent,
 	],
 })
 export class CalendarPageComponent extends SpaceBaseComponent {

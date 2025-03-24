@@ -1,17 +1,16 @@
-import { Inject, Injectable } from '@angular/core';
+import { inject, Injectable, NgModule } from '@angular/core';
+import { ErrorLogger } from '@sneat/logging';
 import { ISlotUIEvent } from '@sneat/mod-schedulus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
 import { SpaceNavService } from '@sneat/team-services';
 
 @Injectable()
 export class CalendarNavService {
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly spaceNavService: SpaceNavService,
-	) {}
+	private readonly errorLogger = inject(ErrorLogger);
+	private readonly spaceNavService = inject(SpaceNavService);
 
 	public navigateToHappeningPage(args: ISlotUIEvent): void {
+		console.log('Navigating happeningPage', args);
 		const happening: IHappeningContext = args.slot.happening;
 		const page = `happening/${happening.id}`;
 		this.spaceNavService
@@ -25,3 +24,8 @@ export class CalendarNavService {
 			);
 	}
 }
+
+@NgModule({
+	providers: [CalendarNavService],
+})
+export class CalendarNavServicesModule {}

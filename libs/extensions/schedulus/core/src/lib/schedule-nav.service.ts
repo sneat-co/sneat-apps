@@ -37,8 +37,3 @@ export class ScheduleNavService {
 			);
 	}
 }
-
-@NgModule({
-	providers: [ScheduleNavService],
-})
-export class ScheduleNavServiceModule {}
