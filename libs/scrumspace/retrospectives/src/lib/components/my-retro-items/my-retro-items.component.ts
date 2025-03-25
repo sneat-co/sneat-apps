@@ -35,12 +35,12 @@ import { IUserRecord } from '@sneat/auth-models';
 	standalone: false,
 })
 export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
-	@ViewChild(IonInput, { static: false }) titleInput; // TODO: IonInput;
+	@ViewChild(IonInput, { static: false }) titleInput?: IonInput; // TODO: IonInput;
 
 	@Input() isEditable = true;
-	@Input() noExpandCollapse: boolean;
-	@Input() tabAutoSelect;
-	@Input() spaceID: string;
+	@Input() noExpandCollapse?: boolean;
+	@Input() tabAutoSelect?: string;
+	@Input() spaceID?: string;
 	@Input() title = 'My feedback for next retrospective';
 
 	public typeControl = new FormControl('', [Validators.required]);
@@ -62,7 +62,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 		{ id: RetroItemTypeEnum.idea, title: '💡 Ideas' },
 	];
 
-	private userSubscription: Subscription;
+	private userSubscription?: Subscription;
 
 	constructor(
 		private readonly retrospectiveService: RetrospectiveService,
@@ -96,7 +96,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 	}
 
 	public ngOnChanges(changes: SimpleChanges): void {
-		if (changes.tabAutoSelect && this.tabAutoSelect) {
+		if (changes['tabAutoSelect'] && this.tabAutoSelect) {
 			if (!this.typeControl.value) {
 				this.typeControl.setValue('good');
 			}
@@ -106,7 +106,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 	public typeChanged(): void {
 		setTimeout(() => {
 			this.titleInput
-				.setFocus()
+				?.setFocus()
 				.catch((err) =>
 					this.errorLogger.logError(
 						err,
@@ -127,7 +127,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 	}
 
 	public items(type: string): IRetroListItem[] {
-		return this.retroLists.find((rl) => rl.id === type)?.items || [];
+		return this.retroLists?.find((rl) => rl.id === type)?.items || [];
 	}
 
 	public listColor(id: RetroItemType): string {
@@ -140,6 +140,8 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 				return 'primary';
 			case RetroItemTypeEnum.idea:
 				return 'tertiary';
+			default:
+				return '';
 		}
 	}
 
@@ -149,14 +151,18 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 		this.retrospectiveService
 			.deleteRetroItem({
 				type,
-				spaceID: this.spaceID,
+				spaceID: this.spaceID || '',
 				meeting: RetrospectiveStage.upcoming,
 				item: item.ID,
 			})
 			.subscribe({
 				next: () => {
-					const list = this.retroLists.find((l) => l.id === type);
-					list.items = list.items.filter((v) => v.ID !== item.ID);
+					let list = this.retroLists?.find((l) => l.id === type);
+					if (list)
+						list = {
+							...list,
+							items: list?.items?.filter((v) => v.ID !== item.ID),
+						};
 				},
 				error: (err) => {
 					item.isDeleting = false;
@@ -182,7 +188,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 				return;
 			}
 			const request: IAddRetroItemRequest = {
-				spaceID: this.spaceID,
+				spaceID: this.spaceID || '',
 				meeting: RetrospectiveStage.upcoming,
 				type,
 				title,
@@ -219,9 +225,11 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 					// }
 				},
 				(err) => {
-					this.retroLists[type] = this.retroLists[type].filter(
-						(item) => item.Id || item.title !== title,
-					);
+					if (this.retroLists) {
+						// this.retroLists[type] = this.retroLists[type].filter(
+						// 	(item) => item.Id || item.title !== title,
+						// );
+					}
 					this.errorLogger.logError(
 						err,
 						'Failed to add a private retrospective item',
@@ -237,7 +245,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 
 	private processUserRecord(user: IRecord<IUserRecord>): void {
 		try {
-			const spaceInfo = user?.dbo?.spaces?.[this.spaceID];
+			const spaceInfo = user?.dbo?.spaces?.[this.spaceID || ''];
 			console.log(
 				`user.data.teams[${this.spaceID}].retroItems:`,
 				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -253,7 +261,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 				// @ts-ignore
 				Object.entries(spaceInfo.retroItems).forEach(([itemType, items]) => {
-					const retroList = this.retroLists.find((rl) => rl.id === itemType);
+					const retroList = this.retroLists?.find((rl) => rl.id === itemType);
 					if (retroList) {
 						// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 						// @ts-ignore
@@ -271,7 +279,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 					}
 				});
 			} else {
-				this.retroLists.forEach((retroList) => delete retroList.items);
+				this.retroLists?.forEach((retroList) => delete retroList.items);
 			}
 		} catch (e) {
 			this.errorLogger.logError(e, 'Failed to process user record');
