@@ -9,7 +9,11 @@
 			>
 		</ion-buttons>
 	</ion-item-divider>
-	<ion-item tappable (click)="navigateToCurrentRetro()" [disabled]="!space?.dbo">
+	<ion-item
+		tappable
+		(click)="navigateToCurrentRetro()"
+		[disabled]="!space?.dbo"
+	>
 		<!--		<ion-label color="primary">{{-->
 		<!--			team?.dto?.active?.retrospective-->
 		<!--				? 'Active retrospective'-->

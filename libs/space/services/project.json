@@ -1,31 +1,31 @@
 {
-	"name": "team-components",
+	"name": "team-services",
 	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
 	"projectType": "library",
-	"sourceRoot": "libs/team/components/src",
+	"sourceRoot": "libs/space/services/src",
 	"prefix": "sneat",
 	"targets": {
 		"build": {
 			"executor": "@nx/angular:ng-packagr-lite",
-			"outputs": ["{workspaceRoot}/dist/libs/team/components"],
+			"outputs": ["{workspaceRoot}/dist/libs/space/services"],
 			"options": {
-				"project": "libs/team/components/ng-package.json"
+				"project": "libs/space/services/ng-package.json"
 			},
 			"configurations": {
 				"production": {
-					"tsConfig": "libs/team/components/tsconfig.lib.prod.json"
+					"tsConfig": "libs/space/services/tsconfig.lib.prod.json"
 				},
 				"development": {
-					"tsConfig": "libs/team/components/tsconfig.lib.json"
+					"tsConfig": "libs/space/services/tsconfig.lib.json"
 				}
 			},
 			"defaultConfiguration": "production"
 		},
 		"test": {
 			"executor": "@nx/jest:jest",
-			"outputs": ["{workspaceRoot}/coverage/libs/team/components"],
+			"outputs": ["{workspaceRoot}/coverage/libs/space/services"],
 			"options": {
-				"jestConfig": "libs/team/components/jest.config.ts"
+				"jestConfig": "libs/space/services/jest.config.ts"
 			}
 		},
 		"lint": {

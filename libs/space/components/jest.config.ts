@@ -1,10 +1,9 @@
- 
 export default {
-	displayName: 'space-models',
+	displayName: 'space-components',
 	preset: '../../../jest.preset.js',
 	setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
 	globals: {},
-	coverageDirectory: '../../../coverage/libs/team/models',
+	coverageDirectory: '../../../coverage/libs/space/components',
 	transform: {
 		'^.+\\.(ts|mjs|js|html)$': [
 			'jest-preset-angular',
