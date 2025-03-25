@@ -5,7 +5,7 @@ import {
 	RetroItemType,
 } from '@sneat/ext-scrumspace-scrummodels';
 import { Observable } from 'rxjs';
-import { BaseMeetingService, IMeetingRequest } from '@sneat/meeting';
+import { BaseMeetingService, IMeetingRequest } from '@sneat/ext-meeting';
 import { SneatApiService } from '@sneat/api';
 import { IRecord } from '@sneat/data';
 

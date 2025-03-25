@@ -18,7 +18,7 @@ import {
 	ITimerState,
 	Timer,
 	TimerFactory,
-} from '@sneat/meeting';
+} from '@sneat/ext-meeting';
 import { ScrumService } from '../services/scrum.service';
 import {
 	IScrumDbo,

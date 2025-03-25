@@ -5,7 +5,7 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
-import { IMeetingMember } from '@sneat/meeting';
+import { IMeetingMember } from '@sneat/ext-meeting';
 import { IRecord } from '@sneat/data';
 import { ISpaceContext } from '@sneat/space-models';
 import { IRetrospective } from '@sneat/ext-scrumspace-scrummodels';

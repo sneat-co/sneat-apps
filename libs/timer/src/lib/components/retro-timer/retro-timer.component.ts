@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { ISpaceDbo } from '@sneat/dto';
-import { ITimerState, Timer, TimerFactory } from '@sneat/meeting';
+import { ITimerState, Timer, TimerFactory } from '@sneat/ext-meeting';
 import {
 	IRetrospectiveRequest,
 	RetrospectiveService,

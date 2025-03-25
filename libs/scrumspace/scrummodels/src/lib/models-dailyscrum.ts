@@ -1,7 +1,7 @@
 import { IAvatar } from '@sneat/auth-models';
 import { Modified } from '@sneat/data';
 import { IMemberBrief, MemberRole, IBy } from '@sneat/contactus-core';
-import { IMeeting } from '@sneat/meeting';
+import { IMeeting } from '@sneat/ext-meeting';
 import { ISpaceItemNavContext } from '@sneat/space-models';
 
 export type TaskType = 'done' | 'risk' | 'todo' | 'plan' | 'qna' | 'kudos';

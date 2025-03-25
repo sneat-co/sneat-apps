@@ -1,6 +1,6 @@
 import { IByUser } from '@sneat/dto';
 import { ITaskRequest } from '@sneat/space-models';
-import { IMeetingRequest, ITimerState } from '@sneat/meeting';
+import { IMeetingRequest, ITimerState } from '@sneat/ext-meeting';
 
 export enum TimerOperationEnum {
 	start = 'start',

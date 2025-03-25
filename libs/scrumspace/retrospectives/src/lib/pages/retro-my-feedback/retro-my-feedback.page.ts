@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { getMeetingIdFromDate } from '@sneat/meeting';
+import { getMeetingIdFromDate } from '@sneat/ext-meeting';
 
 export interface IRetroQuestion {
 	id: string;
