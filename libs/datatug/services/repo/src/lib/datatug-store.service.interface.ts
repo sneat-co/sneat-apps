@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { IProjectSummary } from '@sneat/datatug-models';
+import { IProjectSummary } from '@sneat/ext-datatug-models';
 
 export interface IDatatugStoreService {
 	getProjectSummary(projectId: string): Observable<IProjectSummary>;

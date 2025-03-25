@@ -7,14 +7,14 @@ import {
 	ISqlQueryRequest,
 	ISqlQueryTarget,
 	QueryType,
-} from '@sneat/datatug-models';
-import { Coordinator } from '@sneat/datatug-executor';
+} from '@sneat/ext-datatug-models';
+import { Coordinator } from '@sneat/ext-datatug-executor';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	EnvironmentService,
 	IAstQuery,
 	SqlParser,
-} from '@sneat/datatug-services-unsorted';
+} from '@sneat/ext-datatug-services-unsorted';
 import {
 	ICommandResponseItem,
 	ICommandResponseWithRecordset,
@@ -22,7 +22,7 @@ import {
 	IRecordset,
 	IRecordsetResult,
 	ISqlCommandRequest,
-} from '@sneat/datatug-dto';
+} from '@sneat/ext-datatug-dto';
 import { RandomIdService } from '@sneat/random';
 import { ISqlChanged } from './intefaces';
 import {
@@ -32,8 +32,8 @@ import {
 import {
 	DatatugNavContextService,
 	ProjectTracker,
-} from '@sneat/datatug-services-nav';
-import { IEnvContext, IProjectContext } from '@sneat/datatug-nav';
+} from '@sneat/ext-datatug-services-nav';
+import { IEnvContext, IProjectContext } from '@sneat/ext-datatug-nav';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ViewDidEnter } from '@ionic/angular';
@@ -41,7 +41,7 @@ import {
 	IQueryEditorState,
 	IQueryEnvState,
 	IQueryState,
-} from '@sneat/datatug-editor';
+} from '@sneat/ext-datatug-editor';
 import { QueriesService } from '../../queries.service';
 import { QueryContextSqlService } from '../../query-context-sql.service';
 import { parseStoreRef } from '@sneat/core';

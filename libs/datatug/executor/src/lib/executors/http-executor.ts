@@ -10,7 +10,7 @@ import {
 	IExecuteResponse,
 	IHttpCommand,
 	IRequestCommand,
-} from '@sneat/datatug-dto';
+} from '@sneat/ext-datatug-dto';
 
 @Injectable()
 export class HttpExecutor implements IRequestExecutor, ICommandExecutor {

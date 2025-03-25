@@ -9,18 +9,18 @@ import {
 	routingParamEntityId,
 	routingParamEnvironmentId,
 	routingParamServerType,
-} from '@sneat/datatug-core';
+} from '@sneat/ext-datatug-core';
 
 export const datatugProjectRoutes: Routes = [
 	{
 		path: '',
 		loadComponent: () =>
-			import('@sneat/datatug-pages').then((m) => m.ProjectPageComponent),
+			import('@sneat/ext-datatug-pages').then((m) => m.ProjectPageComponent),
 	},
 	{
 		path: 'board/:' + routingParamBoard,
 		loadComponent: () =>
-			import('@sneat/datatug-board-ui').then((m) => m.BoardPageComponent),
+			import('@sneat/ext-datatug-board-ui').then((m) => m.BoardPageComponent),
 	},
 	{
 		path: 'board',
@@ -29,22 +29,24 @@ export const datatugProjectRoutes: Routes = [
 	{
 		path: 'boards',
 		loadComponent: () =>
-			import('@sneat/datatug-board-ui').then((m) => m.BoardsPageComponent),
+			import('@sneat/ext-datatug-board-ui').then((m) => m.BoardsPageComponent),
 	},
 	{
 		path: 'entities',
 		loadComponent: () =>
-			import('@sneat/datatug-pages').then((m) => m.EntitiesPageComponent),
+			import('@sneat/ext-datatug-pages').then((m) => m.EntitiesPageComponent),
 	},
 	{
 		path: 'new-entity',
 		loadComponent: () =>
-			import('@sneat/datatug-pages').then((m) => m.EntityEditPageComponent),
+			import('@sneat/ext-datatug-pages').then((m) => m.EntityEditPageComponent),
 	},
 	{
 		path: 'environments',
 		loadComponent: () =>
-			import('@sneat/datatug-pages').then((m) => m.EnvironmentsPageComponent),
+			import('@sneat/ext-datatug-pages').then(
+				(m) => m.EnvironmentsPageComponent,
+			),
 	},
 	{
 		path: 'env',
@@ -53,22 +55,22 @@ export const datatugProjectRoutes: Routes = [
 	{
 		path: 'widgets',
 		loadComponent: () =>
-			import('@sneat/datatug-pages').then((m) => m.WidgetsPageComponent),
+			import('@sneat/ext-datatug-pages').then((m) => m.WidgetsPageComponent),
 	},
 	{
 		path: 'tags',
 		loadComponent: () =>
-			import('@sneat/datatug-pages').then((m) => m.TagsPageComponent),
+			import('@sneat/ext-datatug-pages').then((m) => m.TagsPageComponent),
 	},
 	{
 		path: 'project',
 		loadComponent: () =>
-			import('@sneat/datatug-pages').then((m) => m.ProjectPageComponent),
+			import('@sneat/ext-datatug-pages').then((m) => m.ProjectPageComponent),
 	},
 	{
 		path: 'dbmodel/:' + routingParamDbModelId,
 		loadComponent: () =>
-			import('@sneat/datatug-pages').then((m) => m.DbModelPageComponent),
+			import('@sneat/ext-datatug-pages').then((m) => m.DbModelPageComponent),
 	},
 	{
 		path: 'dbmodel',
@@ -77,22 +79,22 @@ export const datatugProjectRoutes: Routes = [
 	{
 		path: 'dbmodels',
 		loadComponent: () =>
-			import('@sneat/datatug-pages').then((m) => m.DbModelsPageComponent),
+			import('@sneat/ext-datatug-pages').then((m) => m.DbModelsPageComponent),
 	},
 	{
 		path: 'resources',
 		loadComponent: () =>
-			import('@sneat/datatug-pages').then((m) => m.ResourcesPageComponent),
+			import('@sneat/ext-datatug-pages').then((m) => m.ResourcesPageComponent),
 	},
 	{
 		path: 'variables',
 		loadComponent: () =>
-			import('@sneat/datatug-pages').then((m) => m.VariablesPageComponent),
+			import('@sneat/ext-datatug-pages').then((m) => m.VariablesPageComponent),
 	},
 	{
 		path: 'entity/:' + routingParamEntityId,
 		loadComponent: () =>
-			import('@sneat/datatug-pages').then((m) => m.EntityPageComponent),
+			import('@sneat/ext-datatug-pages').then((m) => m.EntityPageComponent),
 	},
 	{
 		path: 'entity',
@@ -108,17 +110,17 @@ export const datatugProjectRoutes: Routes = [
 	{
 		path: 'query/:queryId',
 		loadChildren: () =>
-			import('@sneat/datatug-queries').then((m) => m.QueryPageComponent),
+			import('@sneat/ext-datatug-queries').then((m) => m.QueryPageComponent),
 	},
 	{
 		path: 'queries',
 		loadChildren: () =>
-			import('@sneat/datatug-queries').then((m) => m.QueriesPageModule),
+			import('@sneat/ext-datatug-queries').then((m) => m.QueriesPageModule),
 	},
 	{
 		path: 'servers',
 		loadComponent: () =>
-			import('@sneat/datatug-pages').then((m) => m.ServersPageComponent),
+			import('@sneat/ext-datatug-pages').then((m) => m.ServersPageComponent),
 	},
 	{
 		// e.g. "db/sqlserver/localhost/AdventureWorks" for MS SQL Server
@@ -131,7 +133,7 @@ export const datatugProjectRoutes: Routes = [
 	{
 		path: 'diff',
 		loadComponent: () =>
-			import('@sneat/datatug-pages').then((m) => m.DiffPageComponent),
+			import('@sneat/ext-datatug-pages').then((m) => m.DiffPageComponent),
 	},
 ];
 

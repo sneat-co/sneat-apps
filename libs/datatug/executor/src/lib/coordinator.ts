@@ -2,8 +2,8 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpExecutor } from './executors/http-executor';
 import { IRequestExecutor } from './command-executor';
-import { AgentService } from '@sneat/datatug-services-repo';
-import { IExecuteRequest, IExecuteResponse } from '@sneat/datatug-dto';
+import { AgentService } from '@sneat/ext-datatug-services-repo';
+import { IExecuteRequest, IExecuteResponse } from '@sneat/ext-datatug-dto';
 
 @Injectable()
 export class Coordinator {

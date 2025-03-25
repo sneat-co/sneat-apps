@@ -11,7 +11,7 @@ import {
 } from '@angular/fire/firestore';
 import { map, tap } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
-import { BaseMeetingService } from '@sneat/meeting';
+import { BaseMeetingService } from '@sneat/ext-meeting';
 import { IRecord } from '@sneat/data';
 import { SneatApiService } from '@sneat/api';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
-import { DatatugRoutingModule } from '@sneat/datatug-routes';
+import { DatatugRoutingModule } from '@sneat/ext-datatug-routes';
 import { IonicRouteStrategy } from '@ionic/angular';
 import { SneatAuthRoutingModule } from '@sneat/auth-ui';
 
@@ -15,7 +15,9 @@ const routes: Routes = [
 	{
 		path: 'home',
 		loadChildren: () =>
-			import('@sneat/datatug-pages').then((m) => m.DatatugHomePageComponent),
+			import('@sneat/ext-datatug-pages').then(
+				(m) => m.DatatugHomePageComponent,
+			),
 	},
 	{
 		path: '',

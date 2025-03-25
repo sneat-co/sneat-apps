@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { arrayToGrid, IJsonGridData, IPipe } from '@sneat/datatug-plugins';
+import { arrayToGrid, IJsonGridData, IPipe } from '@sneat/ext-datatug-plugins';
 
 @Component({
 	selector: 'sneat-datatug-json-table',

@@ -5,7 +5,7 @@ import {
 	IExecuteResponse,
 	ISelectRequest,
 	ISqlCommandRequest,
-} from '@sneat/datatug-dto';
+} from '@sneat/ext-datatug-dto';
 import { Observable, throwError } from 'rxjs';
 import { getStoreUrl } from '@sneat/api';
 

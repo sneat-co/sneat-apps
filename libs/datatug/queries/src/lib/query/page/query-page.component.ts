@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IProjectRef } from '@sneat/datatug-core';
+import { IProjectRef } from '@sneat/ext-datatug-core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
 	IEnvDbServer,
@@ -10,16 +10,19 @@ import {
 	IQueryDef,
 	ISqlQueryRequest,
 	QueryType,
-} from '@sneat/datatug-models';
-import { Coordinator } from '@sneat/datatug-executor';
+} from '@sneat/ext-datatug-models';
+import { Coordinator } from '@sneat/ext-datatug-executor';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { EnvironmentService } from '@sneat/datatug-services-unsorted';
+import { EnvironmentService } from '@sneat/ext-datatug-services-unsorted';
 import { RandomIdService } from '@sneat/random';
 import {
 	DatatugNavContextService,
 	ProjectTracker,
-} from '@sneat/datatug-services-nav';
-import { IProjectContext, newProjectContextFromRef } from '@sneat/datatug-nav';
+} from '@sneat/ext-datatug-services-nav';
+import {
+	IProjectContext,
+	newProjectContextFromRef,
+} from '@sneat/ext-datatug-nav';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { IonicModule, ViewDidEnter } from '@ionic/angular';
@@ -27,7 +30,7 @@ import {
 	IQueryEditorState,
 	IQueryEnvState,
 	IQueryState,
-} from '@sneat/datatug-editor';
+} from '@sneat/ext-datatug-editor';
 import { QueriesService } from '../../queries.service';
 import { QueryContextSqlService } from '../../query-context-sql.service';
 import {

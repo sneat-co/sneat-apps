@@ -6,8 +6,8 @@ import {
 	IQueryDef,
 	IQueryRequest,
 	QueryType,
-} from '@sneat/datatug-models';
-import { IExecuteResponse, IRecordset } from '@sneat/datatug-dto';
+} from '@sneat/ext-datatug-models';
+import { IExecuteResponse, IRecordset } from '@sneat/ext-datatug-dto';
 
 export interface IQueryEditorState {
 	readonly currentQueryId?: string;

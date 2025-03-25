@@ -7,9 +7,9 @@ import {
 } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { IRecord } from '@sneat/data';
-import { NavService } from '@sneat/datatug-core';
+import { NavService } from '@sneat/ext-datatug-core';
 import { IMemberBrief, ISpaceDbo } from '@sneat/dto';
-import { Timer } from '@sneat/meeting';
+import { Timer } from '@sneat/ext-meeting';
 import { IScrumDbo, IStatus, ITask } from '@sneat/ext-scrumspace-scrummodels';
 import { Md5 } from 'ts-md5/dist/md5';
 import { TaskType } from '@sneat/ext-scrumspace-scrummodels';

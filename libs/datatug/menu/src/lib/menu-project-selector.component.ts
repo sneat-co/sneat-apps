@@ -11,14 +11,14 @@ import {
 	IDatatugProjectBriefWithId,
 	IDatatugUser,
 	projectsBriefFromDictToFlatList,
-} from '@sneat/datatug-models';
+} from '@sneat/ext-datatug-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	DatatugNavContextService,
 	DatatugNavService,
-} from '@sneat/datatug-services-nav';
-import { NewProjectService } from '@sneat/datatug-project';
-import { IProjectContext } from '@sneat/datatug-nav';
+} from '@sneat/ext-datatug-services-nav';
+import { NewProjectService } from '@sneat/ext-datatug-project';
+import { IProjectContext } from '@sneat/ext-datatug-nav';
 import { parseStoreRef } from '@sneat/core';
 
 @Component({

@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Auth as AngularFireAuth } from '@angular/fire/auth';
 import { IRecord } from '@sneat/data';
-import { NavService } from '@sneat/datatug-core';
+import { NavService } from '@sneat/ext-datatug-core';
 import { ISpaceDbo } from '@sneat/dto';
 import { IScrumDbo } from '@sneat/ext-scrumspace-scrummodels';
 import { ISpaceContext } from '@sneat/space-models';

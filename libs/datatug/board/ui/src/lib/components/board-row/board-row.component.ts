@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { IBoardContext, IBoardRowDef } from '@sneat/datatug-models';
+import { IBoardContext, IBoardRowDef } from '@sneat/ext-datatug-models';
 
 @Component({
 	selector: 'sneat-datatug-board-row',

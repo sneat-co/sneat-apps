@@ -1,7 +1,7 @@
-import { CreateNamedRequest } from '@sneat/datatug-dto';
+import { CreateNamedRequest } from '@sneat/ext-datatug-dto';
 import { Observable, throwError } from 'rxjs';
 import { IRecord } from '@sneat/data';
-import { IProjItemBrief } from '@sneat/datatug-models';
+import { IProjItemBrief } from '@sneat/ext-datatug-models';
 
 interface PostService {
 	post<T>(endpoint: string, payload: unknown): Observable<T>;

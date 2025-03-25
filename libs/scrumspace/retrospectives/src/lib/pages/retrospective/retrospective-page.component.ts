@@ -14,7 +14,7 @@ import {
 import { SpaceService } from '@sneat/space-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { getMeetingIdFromDate } from '@sneat/meeting';
+import { getMeetingIdFromDate } from '@sneat/ext-meeting';
 
 @Component({
 	selector: 'sneat-retrospective',

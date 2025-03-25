@@ -1,17 +1,19 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { routingParamProjectId } from '@sneat/datatug-core';
+import { routingParamProjectId } from '@sneat/ext-datatug-core';
 
 export const datatugStoreRoutes: Routes = [
 	{
 		path: '',
 		loadComponent: () =>
-			import('@sneat/datatug-pages').then((m) => m.DatatugStorePageComponent),
+			import('@sneat/ext-datatug-pages').then(
+				(m) => m.DatatugStorePageComponent,
+			),
 	},
 	{
 		path: 'diff',
 		loadComponent: () =>
-			import('@sneat/datatug-pages').then((m) => m.DiffPageComponent),
+			import('@sneat/ext-datatug-pages').then((m) => m.DiffPageComponent),
 	},
 	{
 		path: 'project/:' + routingParamProjectId,
@@ -27,7 +29,9 @@ export const datatugStoreRoutes: Routes = [
 	{
 		path: 'environment',
 		loadComponent: () =>
-			import('@sneat/datatug-pages').then((m) => m.EnvironmentPageComponent),
+			import('@sneat/ext-datatug-pages').then(
+				(m) => m.EnvironmentPageComponent,
+			),
 	},
 ];
 

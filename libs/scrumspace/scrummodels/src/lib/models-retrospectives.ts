@@ -1,4 +1,4 @@
-import { IMeeting } from '@sneat/meeting';
+import { IMeeting } from '@sneat/ext-meeting';
 
 export enum RetroItemTypeEnum {
 	good = 'good',

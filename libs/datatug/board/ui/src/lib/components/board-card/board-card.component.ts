@@ -14,7 +14,7 @@ import {
 	QueryType,
 	sqlWidgetName,
 	WidgetName,
-} from '@sneat/datatug-models';
+} from '@sneat/ext-datatug-models';
 
 @Injectable()
 export class BoardCardTabService {

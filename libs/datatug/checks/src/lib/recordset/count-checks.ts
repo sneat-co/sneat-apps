@@ -1,5 +1,8 @@
-import { IRecordsetCheckResult, IRecordsetResult } from '@sneat/datatug-dto';
-import { IRecordsetMinCountCheckDef } from '@sneat/datatug-models';
+import {
+	IRecordsetCheckResult,
+	IRecordsetResult,
+} from '@sneat/ext-datatug-dto';
+import { IRecordsetMinCountCheckDef } from '@sneat/ext-datatug-models';
 import { IRecordsetCheck } from './interfaces';
 
 export class RecordsetMinCountCheck implements IRecordsetCheck {

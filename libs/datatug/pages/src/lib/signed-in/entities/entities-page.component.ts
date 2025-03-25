@@ -12,14 +12,14 @@ import {
 	ViewDidLeave,
 } from '@ionic/angular';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { IEntity, IProjEntity } from '@sneat/datatug-models';
-import { IProjectContext } from '@sneat/datatug-nav';
+import { IEntity, IProjEntity } from '@sneat/ext-datatug-models';
+import { IProjectContext } from '@sneat/ext-datatug-nav';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	DatatugNavContextService,
 	DatatugNavService,
-} from '@sneat/datatug-services-nav';
-import { EntityService } from '@sneat/datatug-services-unsorted';
+} from '@sneat/ext-datatug-services-nav';
+import { EntityService } from '@sneat/ext-datatug-services-unsorted';
 import { IRecord } from '@sneat/data';
 
 type Entities = IRecord<IEntity>[];

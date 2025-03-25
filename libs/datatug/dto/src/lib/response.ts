@@ -1,4 +1,4 @@
-import { IRecordsetDef } from '@sneat/datatug-models';
+import { IRecordsetDef } from '@sneat/ext-datatug-models';
 import { ICommandResponseItem } from './command-response';
 import { IRecordsetResult } from './execute';
 

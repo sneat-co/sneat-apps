@@ -5,7 +5,7 @@ import {
 	ITabsWidgetSettings,
 	QueryType,
 	WidgetDef,
-} from '@sneat/datatug-models';
+} from '@sneat/ext-datatug-models';
 
 @Component({
 	selector: 'sneat-datatug-board-widget',

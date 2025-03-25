@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IFolder } from '@sneat/datatug-models';
-import { DatatugStoreServiceFactory } from '@sneat/datatug-services-repo';
-import { IProjectItemRef } from '@sneat/datatug-core';
+import { IFolder } from '@sneat/ext-datatug-models';
+import { DatatugStoreServiceFactory } from '@sneat/ext-datatug-services-repo';
+import { IProjectItemRef } from '@sneat/ext-datatug-core';
 
 @Injectable()
 export class DatatugFoldersService {

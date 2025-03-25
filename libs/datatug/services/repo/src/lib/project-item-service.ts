@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
 import { map, startWith, take, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { IProjectRef } from '@sneat/datatug-core';
-import { IProjItemBrief, IProjItemsFolder } from '@sneat/datatug-models';
+import { IProjectRef } from '@sneat/ext-datatug-core';
+import { IProjItemBrief, IProjItemsFolder } from '@sneat/ext-datatug-models';
 import { StoreApiService } from './store-api.service';
 import {
 	collection,

@@ -1,6 +1,6 @@
 import { ActivatedRoute } from '@angular/router';
 import { distinctUntilChanged, map, takeUntil } from 'rxjs/operators';
-import { routingParamStoreId } from '@sneat/datatug-core';
+import { routingParamStoreId } from '@sneat/ext-datatug-core';
 import { Observable } from 'rxjs';
 
 // function factory(route: ActivatedRoute): StoreContextService {

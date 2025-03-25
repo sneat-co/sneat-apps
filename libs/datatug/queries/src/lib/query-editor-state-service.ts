@@ -13,13 +13,13 @@ import {
 	IQueryDef,
 	ISqlQueryRequest,
 	QueryType,
-} from '@sneat/datatug-models';
+} from '@sneat/ext-datatug-models';
 import { QueriesService } from './queries.service';
-import { IProjectRef } from '@sneat/datatug-core';
-import { DatatugNavContextService } from '@sneat/datatug-services-nav';
-import { IProjectContext } from '@sneat/datatug-nav';
+import { IProjectRef } from '@sneat/ext-datatug-core';
+import { DatatugNavContextService } from '@sneat/ext-datatug-services-nav';
+import { IProjectContext } from '@sneat/ext-datatug-nav';
 import { filter } from 'rxjs/operators';
-import { IQueryEditorState, IQueryState } from '@sneat/datatug-editor';
+import { IQueryEditorState, IQueryState } from '@sneat/ext-datatug-editor';
 
 export const isQueryChanged = (queryState: IQueryState): boolean => {
 	if (!queryState) {

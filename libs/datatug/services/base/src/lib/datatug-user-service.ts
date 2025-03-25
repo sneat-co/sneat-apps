@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IDatatugUser } from '@sneat/datatug-models';
+import { IDatatugUser } from '@sneat/ext-datatug-models';
 import { map, shareReplay } from 'rxjs/operators';
 import { ISneatUserState, SneatUserService } from '@sneat/auth-core';
 import { newRandomId } from '@sneat/random';

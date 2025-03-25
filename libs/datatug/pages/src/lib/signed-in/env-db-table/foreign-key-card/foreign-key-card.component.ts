@@ -7,16 +7,16 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { IForeignKey, ITableFull, ITableRef } from '@sneat/datatug-models';
+import { IForeignKey, ITableFull, ITableRef } from '@sneat/ext-datatug-models';
 import {
 	DatatugNavService,
 	IDbObjectNavParams,
-} from '@sneat/datatug-services-nav';
+} from '@sneat/ext-datatug-services-nav';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IGridDef } from '@sneat/grid';
-import { ProjectService } from '@sneat/datatug-services-project';
-import { AgentService } from '@sneat/datatug-services-repo';
-import { ICommandResponseWithRecordset } from '@sneat/datatug-dto';
+import { ProjectService } from '@sneat/ext-datatug-services-project';
+import { AgentService } from '@sneat/ext-datatug-services-repo';
+import { ICommandResponseWithRecordset } from '@sneat/ext-datatug-dto';
 
 @Component({
 	selector: 'sneat-datatug-fk-card',

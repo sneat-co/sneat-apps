@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {
 	routingParamDbServerId,
 	routingParamDriver,
-} from '@sneat/datatug-core';
+} from '@sneat/ext-datatug-core';
 
 const routes: Routes = [
 	{

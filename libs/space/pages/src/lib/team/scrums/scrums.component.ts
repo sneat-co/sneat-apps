@@ -12,7 +12,7 @@ import { ISpaceDbo } from '@sneat/dto';
 import { ScrumService } from '@sneat/ext-scrumspace-dailyscrum';
 import { Subject } from 'rxjs';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { getMeetingIdFromDate, getToday } from '@sneat/meeting';
+import { getMeetingIdFromDate, getToday } from '@sneat/ext-meeting';
 import { IRecord } from '@sneat/data';
 import { IScrumDbo } from '@sneat/ext-scrumspace-scrummodels';
 import { SpaceNavService } from '@sneat/space-services';

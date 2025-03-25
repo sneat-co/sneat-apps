@@ -1,6 +1,6 @@
 import { BehaviorSubject, EMPTY, Observable, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { IProjectRef } from '@sneat/datatug-core';
+import { IProjectRef } from '@sneat/ext-datatug-core';
 
 export class ProjectItemsByAgent<T> {
 	// private readonly byAgent: {[store: string]: {[id: string]: T[]}} = {};

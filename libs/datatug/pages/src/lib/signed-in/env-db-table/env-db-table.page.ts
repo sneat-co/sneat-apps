@@ -11,23 +11,23 @@ import { ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { CodemirrorComponent, CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { IonicModule, PopoverController } from '@ionic/angular';
-import { ProjectService } from '@sneat/datatug-services-project';
-import { AgentService } from '@sneat/datatug-services-repo';
-import { IForeignKey } from '@sneat/datatug-models';
+import { ProjectService } from '@sneat/ext-datatug-services-project';
+import { AgentService } from '@sneat/ext-datatug-services-repo';
+import { IForeignKey } from '@sneat/ext-datatug-models';
 import {
 	DatatugNavContextService,
 	DatatugNavService,
 	IDbObjectNavParams,
-} from '@sneat/datatug-services-nav';
+} from '@sneat/ext-datatug-services-nav';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	ICommandResponseItem,
 	ICommandResponseWithRecordset,
 	IExecuteResponse,
 	IRecordsetResult,
-} from '@sneat/datatug-dto';
+} from '@sneat/ext-datatug-dto';
 import { IGridColumn, IGridDef } from '@sneat/grid';
-import { IEnvDbTableContext, IProjectContext } from '@sneat/datatug-nav';
+import { IEnvDbTableContext, IProjectContext } from '@sneat/ext-datatug-nav';
 import { Subject } from 'rxjs';
 import { CellPopoverComponent, DataGridComponent } from '@sneat/datagrid';
 import { ColumnComponent } from 'tabulator-tables';

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ICellWidgetDef } from '@sneat/datatug-models';
+import { ICellWidgetDef } from '@sneat/ext-datatug-models';
 
 @Component({
 	selector: 'sneat-datatug-cell-widgets',

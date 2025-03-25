@@ -3,7 +3,7 @@ import {
 	IForeignKey,
 	ISqlQueryTarget,
 	ITableFull,
-} from '@sneat/datatug-models';
+} from '@sneat/ext-datatug-models';
 import { BehaviorSubject } from 'rxjs';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
@@ -12,7 +12,7 @@ import {
 	IDbCatalogObjectWithRefs,
 	SqlParser,
 	TableService,
-} from '@sneat/datatug-services-unsorted';
+} from '@sneat/ext-datatug-services-unsorted';
 
 const equalRecordsets = (a?: IAstRecordset, b?: IAstRecordset): boolean =>
 	(!a && !b) || (a?.name === b?.name && a?.schema === b?.schema);

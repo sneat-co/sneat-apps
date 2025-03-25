@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { IProjectContext } from '@sneat/datatug-nav';
+import { IProjectContext } from '@sneat/ext-datatug-nav';
 import { combineLatest, Observable } from 'rxjs';
 import { StoreTracker } from './store.tracker';
 import {
@@ -14,7 +14,7 @@ import {
 	IProjectRef,
 	isValidProjectRef,
 	routingParamProjectId,
-} from '@sneat/datatug-core';
+} from '@sneat/ext-datatug-core';
 
 export class ProjectTracker {
 	public readonly storeTracker: StoreTracker;

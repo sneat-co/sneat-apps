@@ -1,9 +1,12 @@
-import { IRecordsetCheckResults, IRecordsetResult } from '@sneat/datatug-dto';
+import {
+	IRecordsetCheckResults,
+	IRecordsetResult,
+} from '@sneat/ext-datatug-dto';
 import {
 	IRecordsetCheckDef,
 	IRecordsetDef,
 	IRecordsetMinCountCheckDef,
-} from '@sneat/datatug-models';
+} from '@sneat/ext-datatug-models';
 import { IRecordsetCheck } from './recordset/interfaces';
 import {
 	RecordsetMaxCountCheck,

@@ -3,11 +3,11 @@ import { catchError, Observable, of, take } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ProjectItemsByAgent } from './caching';
-import { StoreApiService } from '@sneat/datatug-services-repo';
+import { StoreApiService } from '@sneat/ext-datatug-services-repo';
 import { IRecord, mapToRecord } from '@sneat/data';
-import { IEntity } from '@sneat/datatug-models';
+import { IEntity } from '@sneat/ext-datatug-models';
 import { STORE_ID_GITHUB_COM } from '@sneat/core';
-import { IProjectRef } from '@sneat/datatug-core';
+import { IProjectRef } from '@sneat/ext-datatug-core';
 import { IHttpRequestOptions } from '@sneat/api';
 
 @Injectable()

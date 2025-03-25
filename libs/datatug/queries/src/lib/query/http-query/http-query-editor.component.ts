@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { DatatugComponentsJsontugModule } from '@sneat/datatug-components-jsontug';
-import { currencyFlag, LookupPipe } from '@sneat/datatug-plugins';
+import { DatatugComponentsJsontugModule } from '@sneat/ext-datatug-components-jsontug';
+import { currencyFlag, LookupPipe } from '@sneat/ext-datatug-plugins';
 
 export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT' | 'PATCH';
 

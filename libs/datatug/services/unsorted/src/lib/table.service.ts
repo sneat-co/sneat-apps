@@ -7,7 +7,7 @@ import {
 	IReferencedBy,
 	ISqlQueryTarget,
 	ITableFull,
-} from '@sneat/datatug-models';
+} from '@sneat/ext-datatug-models';
 import { map, mergeMap } from 'rxjs/operators';
 import { PrivateTokenStoreService } from '@sneat/auth-core';
 

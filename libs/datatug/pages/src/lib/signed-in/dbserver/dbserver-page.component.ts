@@ -8,9 +8,9 @@ import {
 	IDbCatalogSummary,
 	IDbServer,
 	IDbServerSummary,
-} from '@sneat/datatug-models';
-import { ProjectContextService } from '@sneat/datatug-services-project';
-import { DbServerService } from '@sneat/datatug-services-unsorted';
+} from '@sneat/ext-datatug-models';
+import { ProjectContextService } from '@sneat/ext-datatug-services-project';
+import { DbServerService } from '@sneat/ext-datatug-services-unsorted';
 
 @Component({
 	selector: 'sneat-datatug-dbserver',

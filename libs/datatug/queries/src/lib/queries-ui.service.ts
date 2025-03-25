@@ -1,10 +1,10 @@
 import { ActionSheetController } from '@ionic/angular';
 import { Injectable } from '@angular/core';
-import { QueryType } from '@sneat/datatug-models';
+import { QueryType } from '@sneat/ext-datatug-models';
 import { QueryEditorStateService } from './query-editor-state-service';
 import { RandomIdService } from '@sneat/random';
-import { DatatugNavService } from '@sneat/datatug-services-nav';
-import { IProjectRef } from '@sneat/datatug-core';
+import { DatatugNavService } from '@sneat/ext-datatug-services-nav';
+import { IProjectRef } from '@sneat/ext-datatug-core';
 
 @Injectable()
 export class QueriesUiService {

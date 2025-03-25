@@ -6,8 +6,8 @@ import { RouterModule } from '@angular/router';
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { DataGridComponent } from '@sneat/datagrid';
 
-import { DatatugComponentsSqlEditorModule } from '@sneat/datatug-components-sqleditor';
-import { DatatugComponentsParametersModule } from '@sneat/datatug-components-parameters';
+import { DatatugComponentsSqlEditorModule } from '@sneat/ext-datatug-components-sqleditor';
+import { DatatugComponentsParametersModule } from '@sneat/ext-datatug-components-parameters';
 import { BoardComponent } from './components/board/board.component';
 import { EnvSelectorComponent } from './components/env-selector/env-selector.component';
 import { GridWidgetComponent } from './components/widgets/grid-widget/grid-widget.component';

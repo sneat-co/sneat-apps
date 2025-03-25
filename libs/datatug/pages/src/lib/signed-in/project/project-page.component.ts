@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SneatCardListComponent } from '@sneat/components';
-import { DatatugComponentsProjectModule } from '@sneat/datatug-components-project';
-import { DatatugFoldersUiModule } from '@sneat/datatug-folders-ui';
-import { DatatugServicesStoreModule } from '@sneat/datatug-services-repo';
+import { DatatugComponentsProjectModule } from '@sneat/ext-datatug-components-project';
+import { DatatugFoldersUiModule } from '@sneat/ext-datatug-folders-ui';
+import { DatatugServicesStoreModule } from '@sneat/ext-datatug-services-repo';
 import { WormholeModule } from '@sneat/wormhole';
 import { race, Subject } from 'rxjs';
 import { skip, takeUntil } from 'rxjs/operators';
@@ -26,26 +26,26 @@ import {
 	IProjItemBrief,
 	ProjectItem,
 	ProjectItemType,
-} from '@sneat/datatug-models';
-import { IProjectContext } from '@sneat/datatug-nav';
+} from '@sneat/ext-datatug-models';
+import { IProjectContext } from '@sneat/ext-datatug-nav';
 import {
 	DatatugNavContextService,
 	DatatugNavService,
 	DatatugServicesNavModule,
 	ProjectTopLevelPage,
 	ProjectTracker,
-} from '@sneat/datatug-services-nav';
+} from '@sneat/ext-datatug-services-nav';
 import {
 	DatatugServicesProjectModule,
 	ProjectService,
-} from '@sneat/datatug-services-project';
+} from '@sneat/ext-datatug-services-project';
 import {
 	DatatugServicesUnsortedModule,
 	EntityService,
 	EnvironmentService,
 	SchemaService,
-} from '@sneat/datatug-services-unsorted';
-import { DatatugCoreModule, IProjectRef } from '@sneat/datatug-core';
+} from '@sneat/ext-datatug-services-unsorted';
+import { DatatugCoreModule, IProjectRef } from '@sneat/ext-datatug-core';
 import { parseStoreRef } from '@sneat/core';
 
 @Component({

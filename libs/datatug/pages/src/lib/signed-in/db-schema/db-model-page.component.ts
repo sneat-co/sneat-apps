@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SneatCardListComponent } from '@sneat/components';
-import { IProjDbModelBrief } from '@sneat/datatug-models';
+import { IProjDbModelBrief } from '@sneat/ext-datatug-models';
 
 @Component({
 	selector: 'sneat-datatug-db-schema',
