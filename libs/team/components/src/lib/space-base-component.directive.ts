@@ -4,11 +4,11 @@ import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
 import { ILogger, SpaceType } from '@sneat/core';
 import { equalSpaceBriefs, ISpaceBrief, ISpaceDbo } from '@sneat/dto';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import {
 	SpaceService,
 	trackSpaceIdAndTypeFromRouteParameter,
-} from '@sneat/team-services';
+} from '@sneat/space-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { distinctUntilChanged, Observable, shareReplay, Subject } from 'rxjs';

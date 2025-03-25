@@ -38,7 +38,7 @@ import {
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { LocationFormComponent } from '../location-form';
 
 @Component({

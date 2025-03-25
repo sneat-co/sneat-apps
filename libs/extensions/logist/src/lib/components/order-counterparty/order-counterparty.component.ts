@@ -10,7 +10,7 @@ import {
 import { ToastController } from '@ionic/angular';
 import { LogistOrderContactRole, ContactType } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { CounterpartyRole } from '../../dto';
 import {
 	ILogistOrderContext,

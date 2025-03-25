@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@angular/core';
 import { excludeUndefined } from '@sneat/core';
 import { ContactRole } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISpaceContext } from '@sneat/team-models';
-import { SpaceNavService } from '@sneat/team-services';
+import { ISpaceContext } from '@sneat/space-models';
+import { SpaceNavService } from '@sneat/space-services';
 
 export interface INewContactPageParams {
 	group?: string;

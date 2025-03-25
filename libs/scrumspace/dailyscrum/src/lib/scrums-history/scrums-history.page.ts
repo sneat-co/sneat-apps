@@ -5,8 +5,8 @@ import { IRecord } from '@sneat/data';
 import { NavService } from '@sneat/datatug-core';
 import { ISpaceDbo } from '@sneat/dto';
 import { IScrumDbo } from '@sneat/scrumspace-scrummodels';
-import { ISpaceContext } from '@sneat/team-models';
-import { SpaceService } from '@sneat/team-services';
+import { ISpaceContext } from '@sneat/space-models';
+import { SpaceService } from '@sneat/space-services';
 import { ScrumService } from '../services/scrum.service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 

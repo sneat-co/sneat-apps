@@ -11,8 +11,8 @@ import {
 	IHappeningWithUiState,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISpaceContext } from '@sneat/team-models';
-import { SpaceNavService } from '@sneat/team-services';
+import { ISpaceContext } from '@sneat/space-models';
+import { SpaceNavService } from '@sneat/space-services';
 import { takeUntil } from 'rxjs';
 import { HappeningService } from '../../../../services/happening.service';
 

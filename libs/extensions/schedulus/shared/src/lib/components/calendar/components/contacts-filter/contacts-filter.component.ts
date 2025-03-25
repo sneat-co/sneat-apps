@@ -18,8 +18,8 @@ import {
 } from '@sneat/contactus-services';
 import { ContactusModuleBaseComponent } from '@sneat/contactus-shared';
 import { IIdAndBrief, IIdAndOptionalDbo } from '@sneat/core';
-import { SpaceComponentBaseParams } from '@sneat/team-components';
-import { zipMapBriefsWithIDs } from '@sneat/team-models';
+import { SpaceComponentBaseParams } from '@sneat/space-components';
+import { zipMapBriefsWithIDs } from '@sneat/space-models';
 
 @Component({
 	selector: 'sneat-contacts-filter',

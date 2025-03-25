@@ -12,8 +12,8 @@ import {
 	ISpaceContext,
 	spaceContextFromBrief,
 	zipMapBriefsWithIDs,
-} from '@sneat/team-models';
-import { SpaceNavService, SpaceService } from '@sneat/team-services';
+} from '@sneat/space-models';
+import { SpaceNavService, SpaceService } from '@sneat/space-services';
 import { first } from 'rxjs';
 import { SpacesListComponent } from '../teams-list';
 

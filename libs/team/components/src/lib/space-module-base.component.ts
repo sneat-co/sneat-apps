@@ -1,7 +1,7 @@
 import { BehaviorSubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SpaceBaseComponent } from './space-base-component.directive';
-import { SpaceModuleService } from '@sneat/team-services';
+import { SpaceModuleService } from '@sneat/space-services';
 
 export abstract class SpaceModuleBaseComponent<
 	Brief,

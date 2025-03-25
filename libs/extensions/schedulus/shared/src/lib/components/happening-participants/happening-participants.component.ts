@@ -17,7 +17,7 @@ import {
 } from '@sneat/contactus-shared';
 import { addRelatedItem, getRelatedItemIDs } from '@sneat/dto';
 import { IHappeningContext, IHappeningBase } from '@sneat/mod-schedulus-core';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import {
 	HappeningService,
 	IHappeningContactRequest,

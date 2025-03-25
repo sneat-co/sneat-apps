@@ -29,9 +29,9 @@ import {
 import {
 	SpaceBaseComponent,
 	SpaceComponentBaseParams,
-} from '@sneat/team-components';
+} from '@sneat/space-components';
 import { IAssetContext } from '@sneat/mod-assetus-core';
-import { SpaceServiceModule } from '@sneat/team-services';
+import { SpaceServiceModule } from '@sneat/space-services';
 import { first, takeUntil } from 'rxjs';
 import {
 	ContactGroupService,

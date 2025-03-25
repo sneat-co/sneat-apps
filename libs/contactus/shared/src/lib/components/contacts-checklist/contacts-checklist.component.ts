@@ -15,7 +15,7 @@ import { personName } from '@sneat/components';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import { IIdAndBrief } from '@sneat/core';
 import { IContactBrief } from '@sneat/contactus-core';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { Subscription } from 'rxjs';
 

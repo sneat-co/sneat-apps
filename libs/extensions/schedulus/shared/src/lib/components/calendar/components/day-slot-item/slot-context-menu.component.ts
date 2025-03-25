@@ -18,7 +18,7 @@ import {
 	MembersSelectorService,
 } from '@sneat/contactus-shared';
 import { contactContextFromBrief } from '@sneat/contactus-services';
-import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
+import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/space-models';
 import { NEVER, Observable } from 'rxjs';
 import {
 	EditRecurringSlotParams,

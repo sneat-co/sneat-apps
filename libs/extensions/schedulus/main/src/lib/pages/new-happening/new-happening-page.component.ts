@@ -9,8 +9,8 @@ import {
 	IHappeningContext,
 	newEmptyHappeningContext,
 } from '@sneat/mod-schedulus-core';
-import { SpaceComponentBaseParams } from '@sneat/team-components';
-import { SpaceServiceModule } from '@sneat/team-services';
+import { SpaceComponentBaseParams } from '@sneat/space-components';
+import { SpaceServiceModule } from '@sneat/space-services';
 import { first } from 'rxjs';
 import { CalendarBasePage } from '../calendar-base-page';
 import { HappeningFormComponent } from '@sneat/extensions-schedulus-shared';

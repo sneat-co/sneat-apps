@@ -11,8 +11,8 @@ import {
 import {
 	SpaceComponentBaseParams,
 	SpacePageBaseComponent,
-} from '@sneat/team-components';
-import { SpaceServiceModule } from '@sneat/team-services';
+} from '@sneat/space-components';
+import { SpaceServiceModule } from '@sneat/space-services';
 import { distinctUntilChanged, map } from 'rxjs';
 import { TrackerComponent } from '../../components';
 import { TrackerProviderComponent } from '../../components/tracker/tracker-provider.component';

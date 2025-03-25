@@ -2,7 +2,7 @@ import { inject, Injectable, NgModule } from '@angular/core';
 import { ErrorLogger } from '@sneat/logging';
 import { ISlotUIEvent } from '@sneat/mod-schedulus-core';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
-import { SpaceNavService } from '@sneat/team-services';
+import { SpaceNavService } from '@sneat/space-services';
 
 @Injectable()
 export class CalendarNavService {

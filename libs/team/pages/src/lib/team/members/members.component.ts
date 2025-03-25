@@ -16,8 +16,8 @@ import {
 	IContactusSpaceDboAndID,
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { zipMapBriefsWithIDs } from '@sneat/team-models';
-import { SpaceNavService, SpaceService } from '@sneat/team-services';
+import { zipMapBriefsWithIDs } from '@sneat/space-models';
+import { SpaceNavService, SpaceService } from '@sneat/space-services';
 
 @Component({
 	selector: 'sneat-members',

@@ -11,8 +11,8 @@ import {
 	AssetExtraType,
 	IAssetExtra,
 } from '@sneat/mod-assetus-core';
-import { ISpaceContext } from '@sneat/team-models';
-import { ModuleSpaceItemService } from '@sneat/team-services';
+import { ISpaceContext } from '@sneat/space-models';
+import { ModuleSpaceItemService } from '@sneat/space-services';
 import { Observable } from 'rxjs';
 import {
 	IAddVehicleRecordRequest,

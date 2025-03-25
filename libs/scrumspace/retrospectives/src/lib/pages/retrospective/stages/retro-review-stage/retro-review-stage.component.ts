@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { IRecord } from '@sneat/data';
 import { IRetrospective } from '@sneat/scrumspace-scrummodels';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 
 @Component({
 	selector: 'sneat-retro-review-stage',

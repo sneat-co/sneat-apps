@@ -18,8 +18,8 @@ import {
 	ISpaceItemNavContext,
 	ISpaceItemWithOptionalDbo,
 	zipMapBriefsWithIDs,
-} from '@sneat/team-models';
-import { ModuleSpaceItemService } from '@sneat/team-services';
+} from '@sneat/space-models';
+import { ModuleSpaceItemService } from '@sneat/space-services';
 import {
 	BehaviorSubject,
 	distinctUntilChanged,

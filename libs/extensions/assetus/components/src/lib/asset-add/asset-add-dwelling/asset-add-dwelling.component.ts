@@ -9,7 +9,7 @@ import {
 	IAssetDwellingContext,
 	IAssetDwellingExtra,
 } from '@sneat/mod-assetus-core';
-import { SpaceComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/space-components';
 import { AddDwellingCardComponent } from '../../edit-dwelling-card/edit-dwelling-card.component';
 import { ICreateAssetRequest } from '../../services';
 import { AddAssetBaseComponent } from '../add-asset-base-component';

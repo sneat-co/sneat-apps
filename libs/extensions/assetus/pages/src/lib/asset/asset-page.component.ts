@@ -11,7 +11,7 @@ import {
 	ModuleAssetRealEstate,
 	VehicleCardComponent,
 } from '@sneat/extensions-assetus-components';
-import { SpaceComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/space-components';
 
 interface LiabilityServiceBrief {
 	type: LiabilityServiceType;

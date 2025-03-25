@@ -1,8 +1,8 @@
 import { Inject, Injectable, NgModule } from '@angular/core';
 import { excludeEmpty } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISpaceContext } from '@sneat/team-models';
-import { SpaceNavService } from '@sneat/team-services';
+import { ISpaceContext } from '@sneat/space-models';
+import { SpaceNavService } from '@sneat/space-services';
 import { ISchedulePageParams, NewHappeningParams } from './view-models';
 
 @Injectable()

@@ -24,8 +24,8 @@ import { IScrumDbo, IStatus, TaskType } from '@sneat/scrumspace-scrummodels';
 import {
 	SpaceBaseComponent,
 	SpaceComponentBaseParams,
-} from '@sneat/team-components';
-import { ScrumPageTab } from '@sneat/team-services';
+} from '@sneat/space-components';
+import { ScrumPageTab } from '@sneat/space-services';
 import { Subscription } from 'rxjs';
 import { first, mergeMap } from 'rxjs/operators';
 import { IMetric } from '../interfaces';

@@ -5,7 +5,7 @@ import { ToastOptions } from '@ionic/core/dist/types/components/toast/toast-inte
 import { listItemAnimations } from '@sneat/core';
 import { IListItemBrief } from '../../../dto';
 import { IListContext } from '../../../contexts';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { ListusComponentBaseParams } from '../../../listus-component-base-params';
 import {
 	IListItemIDsRequest,

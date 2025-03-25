@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
 import { CalendarFilterService } from '../../../calendar-filter.service';

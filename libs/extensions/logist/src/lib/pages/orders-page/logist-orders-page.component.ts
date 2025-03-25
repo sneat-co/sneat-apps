@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { excludeEmpty } from '@sneat/core';
-import { SpaceBaseComponent } from '@sneat/team-components';
+import { SpaceBaseComponent } from '@sneat/space-components';
 import { Subscription, takeUntil } from 'rxjs';
 import { ILogistOrderContext, IOrdersFilter } from '../../dto';
 import { LogistOrderService } from '../../services';

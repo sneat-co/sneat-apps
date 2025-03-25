@@ -15,7 +15,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { getMeetingIdFromDate, getToday } from '@sneat/meeting';
 import { IRecord } from '@sneat/data';
 import { IScrumDbo } from '@sneat/scrumspace-scrummodels';
-import { SpaceNavService } from '@sneat/team-services';
+import { SpaceNavService } from '@sneat/space-services';
 
 @Component({
 	selector: 'sneat-scrums',

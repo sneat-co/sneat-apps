@@ -1,5 +1,5 @@
 import { Directive, Inject, InjectionToken } from '@angular/core';
-import { SpaceBaseComponent } from '@sneat/team-components';
+import { SpaceBaseComponent } from '@sneat/space-components';
 import { ILogistOrderContext } from '../dto';
 import { LogistOrderService } from '../services';
 

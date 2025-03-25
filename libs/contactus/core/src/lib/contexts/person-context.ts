@@ -8,7 +8,7 @@ import {
 	ISpaceItemNavContext,
 	ISpaceItemWithBriefAndDbo,
 	Totals,
-} from '@sneat/team-models';
+} from '@sneat/space-models';
 import { IPerson, IPersonBrief } from '../dto';
 
 export type IMemberContext = ISpaceItemNavContext<IMemberBrief, IMemberDbo>;

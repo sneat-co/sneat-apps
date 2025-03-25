@@ -4,7 +4,7 @@ import { IonicModule, NavController } from '@ionic/angular';
 import { IBoolMetricVal, ISpaceDbo, ISpaceMetric } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRecord } from '@sneat/data';
-import { SpaceNavService, SpaceService } from '@sneat/team-services';
+import { SpaceNavService, SpaceService } from '@sneat/space-services';
 
 @Component({
 	selector: 'sneat-metrics',

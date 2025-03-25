@@ -1,7 +1,7 @@
 import { Component, Inject, input, Input } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { virtualSliderAnimations } from '@sneat/components';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { SpaceDaysProvider } from '../../../../services/space-days-provider';
 import { getToday, CalendarStateService } from '../../calendar-state.service';
 import { SwipeableBaseComponent } from '../../../swipeable-base.component';

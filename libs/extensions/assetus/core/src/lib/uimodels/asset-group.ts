@@ -1,6 +1,6 @@
 import { IAssetGroupContext } from '../contexts/asset-context';
 import { IAssetDtoGroupCounts } from '../dto/';
-import { Totals } from '@sneat/team-models';
+import { Totals } from '@sneat/space-models';
 
 export class AssetGroup {
 	public readonly totals: Totals;

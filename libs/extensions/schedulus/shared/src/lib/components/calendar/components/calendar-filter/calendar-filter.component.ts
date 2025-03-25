@@ -5,7 +5,7 @@ import { ContactTitlePipe } from '@sneat/components';
 import { IIdAndBrief } from '@sneat/core';
 import { IContactBrief } from '@sneat/contactus-core';
 import { WeekdayCode2 } from '@sneat/mod-schedulus-core';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import {
 	emptyCalendarFilter,
 	CalendarFilterService,

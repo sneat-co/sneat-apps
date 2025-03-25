@@ -11,7 +11,7 @@ import { IAssetContext, IAssetDtoGroup } from '@sneat/mod-assetus-core';
 import {
 	SpaceComponentBaseParams,
 	SpacePageBaseComponent,
-} from '@sneat/team-components';
+} from '@sneat/space-components';
 import { Observable } from 'rxjs';
 
 interface IAssetGroupService {

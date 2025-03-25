@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ISlotUIEvent } from '@sneat/mod-schedulus-core';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { HappeningService } from '../../../../services/happening.service';
 import { SneatBaseComponent } from '@sneat/ui';
 import { Observable, Subscription, takeUntil } from 'rxjs';

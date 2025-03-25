@@ -16,8 +16,8 @@ import {
 	SpacePageBaseComponent,
 	SpaceComponentBaseParams,
 	InviteLinksComponent,
-} from '@sneat/team-components';
-import { SpaceServiceModule } from '@sneat/team-services';
+} from '@sneat/space-components';
+import { SpaceServiceModule } from '@sneat/space-services';
 import { QRCodeComponent } from 'angularx-qrcode';
 import { filter, first, takeUntil } from 'rxjs';
 import { NewMemberFormComponent } from './new-member-form.component';

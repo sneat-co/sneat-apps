@@ -27,7 +27,7 @@ import {
 	ITitledRecord,
 	IWithCreatedShort,
 } from '@sneat/dto';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { SpaceRelatedFormComponent } from '../space-related-form.component';
 
 const getRelOptions = (r: FamilyMemberRelation[]): ITitledRecord[] => [

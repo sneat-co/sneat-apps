@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { ICalendariumSpaceDbo } from '@sneat/mod-schedulus-core';
-import { SpaceModuleService } from '@sneat/team-services';
+import { SpaceModuleService } from '@sneat/space-services';
 
 @Injectable()
 export class CalendariumSpaceService extends SpaceModuleService<ICalendariumSpaceDbo> {

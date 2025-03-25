@@ -4,13 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { RetrospectiveService } from '../../retrospective.service';
 import { takeUntil } from 'rxjs/operators';
-import { SpaceBaseComponent } from '@sneat/team-components';
+import { SpaceBaseComponent } from '@sneat/space-components';
 import {
 	IRetroItem,
 	IRetrospective,
 	RetrospectiveStage,
 } from '@sneat/scrumspace-scrummodels';
-import { SpaceService } from '@sneat/team-services';
+import { SpaceService } from '@sneat/space-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { getMeetingIdFromDate } from '@sneat/meeting';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';

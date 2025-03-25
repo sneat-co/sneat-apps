@@ -16,7 +16,7 @@ import {
 } from '@sneat/auth-core';
 import { ISelectItem, SelectFromListComponent } from '@sneat/components';
 import { AgeGroupID, Gender } from '@sneat/contactus-core';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
 

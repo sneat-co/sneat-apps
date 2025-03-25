@@ -18,7 +18,7 @@ import { ContactService } from '@sneat/contactus-services';
 import { excludeUndefined } from '@sneat/core';
 import { IAddress } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { Subject, takeUntil } from 'rxjs';
 import { ILogistSpaceContext, ISetLogistSpaceSettingsRequest } from '../../dto';
 import { LogistSpaceService } from '../../services';

@@ -17,7 +17,7 @@ import { RandomIdService } from '@sneat/random';
 import {
 	IAcceptInviteResponse,
 	IRejectPersonalInviteRequest,
-} from '@sneat/team-models';
+} from '@sneat/space-models';
 import { from, Observable, switchMap, throwError } from 'rxjs';
 
 @Injectable({

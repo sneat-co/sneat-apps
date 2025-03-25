@@ -11,7 +11,7 @@ import { AuthMenuItemComponent } from '@sneat/components';
 import { APP_INFO, IAppInfo } from '@sneat/core';
 import { initSentry } from '@sneat/logging';
 import { RANDOM_ID_OPTIONS } from '@sneat/random';
-import { SpacesMenuComponent } from '@sneat/team-components';
+import { SpacesMenuComponent } from '@sneat/space-components';
 import { environment } from '../environments/environment';
 import { LogistAppRoutingModule } from './logist-app-routing.module';
 

@@ -17,7 +17,7 @@ import {
 	ISpaceItemWithBriefAndDbo,
 	ISpaceRef,
 	SpaceRequest,
-} from '@sneat/team-models';
+} from '@sneat/space-models';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

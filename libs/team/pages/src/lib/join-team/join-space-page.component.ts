@@ -21,12 +21,12 @@ import {
 import {
 	IRejectPersonalInviteRequest,
 	ISpaceContext,
-} from '@sneat/team-models';
+} from '@sneat/space-models';
 import {
 	InviteService,
 	SpaceNavService,
 	SpaceService,
-} from '@sneat/team-services';
+} from '@sneat/space-services';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs/operators';
 

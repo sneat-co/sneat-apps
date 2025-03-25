@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { spacePageUrl } from '@sneat/team-components';
-import { ISpaceContext } from '@sneat/team-models';
+import { spacePageUrl } from '@sneat/space-components';
+import { ISpaceContext } from '@sneat/space-models';
 
 @Component({
 	selector: 'sneat-logist-space-menu-items',

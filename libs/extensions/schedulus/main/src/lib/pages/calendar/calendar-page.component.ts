@@ -25,7 +25,7 @@ import {
 	SpaceBaseComponent,
 	SpaceComponentBaseParams,
 	SpacePageTitleComponent,
-} from '@sneat/team-components';
+} from '@sneat/space-components';
 import { IMemberContext } from '@sneat/contactus-core';
 import {
 	CalendarComponent,
@@ -35,7 +35,7 @@ import {
 	// emptyCalendarFilter,
 	// ICalendarFilter,
 } from '@sneat/extensions-schedulus-shared';
-import { SpaceServiceModule } from '@sneat/team-services';
+import { SpaceServiceModule } from '@sneat/space-services';
 
 @Component({
 	selector: 'sneat-schedule-page',

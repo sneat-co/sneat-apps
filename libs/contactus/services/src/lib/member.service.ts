@@ -13,7 +13,10 @@ import {
 } from '@sneat/contactus-core';
 import { ContactService } from './contact-service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISpaceContext, ISpaceItemBriefWithSpaceRef } from '@sneat/team-models';
+import {
+	ISpaceContext,
+	ISpaceItemBriefWithSpaceRef,
+} from '@sneat/space-models';
 import { Observable } from 'rxjs';
 import { ContactusSpaceService } from './contactus-space.service';
 

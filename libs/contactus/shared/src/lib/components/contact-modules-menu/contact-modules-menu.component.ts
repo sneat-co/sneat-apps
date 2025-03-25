@@ -7,7 +7,7 @@ import {
 	ISneatExtension,
 } from '@sneat/core';
 import { IContactBrief } from '@sneat/contactus-core';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 
 @Component({
 	selector: 'sneat-contact-modules-menu',

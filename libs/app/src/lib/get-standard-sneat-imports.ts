@@ -5,7 +5,7 @@ import { SneatLoggingModule } from '@sneat/logging';
 // import { RandomModule } from '@sneat/random';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-// import { SpaceServiceModule } from '@sneat/team-services';
+// import { SpaceServiceModule } from '@sneat/space-services';
 
 export function getStandardSneatImports() {
 	return [

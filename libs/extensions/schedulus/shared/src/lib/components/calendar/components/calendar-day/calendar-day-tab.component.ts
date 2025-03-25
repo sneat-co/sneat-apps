@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
 import { IonicModule, PopoverController } from '@ionic/angular';
 import { dateToIso, isoStringsToDate } from '@sneat/core';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { Subject, takeUntil } from 'rxjs';
 import { SpaceDaysProvider } from '../../../../services/space-days-provider';
 import { addDays, CalendarStateService } from '../../calendar-state.service';

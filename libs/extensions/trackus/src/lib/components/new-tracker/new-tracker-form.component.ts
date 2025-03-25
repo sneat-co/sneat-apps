@@ -22,7 +22,7 @@ import {
 } from '@ionic/angular/standalone';
 import { ISelectItem, SelectFromListComponent } from '@sneat/components';
 import { ErrorLogger } from '@sneat/logging';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { NumberKind, TrackBy, TrackerValueType } from '../../dbo/i-tracker-dbo';
 import {
 	ICreateTrackerRequest,

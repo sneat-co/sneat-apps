@@ -7,7 +7,7 @@ import {
 	provideRolesByType,
 } from '@sneat/app';
 import { provideSentryAppInitializer } from '@sneat/logging';
-import { SpacesMenuComponent } from '@sneat/team-components';
+import { SpacesMenuComponent } from '@sneat/space-components';
 import { sneatAppEnvironmentConfig } from '../environments/environment';
 import { SneatAppRoutingModule } from './sneat-app-routing.module';
 import { SneatAppComponent } from './sneat-app.component';

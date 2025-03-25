@@ -10,13 +10,13 @@ import {
 } from '@ionic/angular';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { APP_INFO, eq, IAppInfo } from '@sneat/core';
-import { SpaceServiceModule } from '@sneat/team-services';
+import { SpaceServiceModule } from '@sneat/space-services';
 import { IListGroup, IListInfo, ListType } from '../../dto';
 import {
 	SpaceBaseComponent,
 	SpaceComponentBaseParams,
-} from '@sneat/team-components';
-import { createShortSpaceInfoFromDbo } from '@sneat/team-models';
+} from '@sneat/space-components';
+import { createShortSpaceInfoFromDbo } from '@sneat/space-models';
 import { Subscription } from 'rxjs';
 import { ListusComponentBaseParams } from '../../listus-component-base-params';
 import {

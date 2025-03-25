@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { IonButton, IonCard } from '@ionic/angular/standalone';
 import { ISelectItem, SelectFromListComponent } from '@sneat/components';
 import { timestamp } from '@sneat/dto';
-import { SpaceComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/space-components';
 import {
 	AssetVehicleType,
 	EngineTypes,

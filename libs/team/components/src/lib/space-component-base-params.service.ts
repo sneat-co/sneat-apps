@@ -8,7 +8,7 @@ import {
 	NgModulePreloaderService,
 } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { SpaceNavService, SpaceService } from '@sneat/team-services';
+import { SpaceNavService, SpaceService } from '@sneat/space-services';
 import { SneatUserService } from '@sneat/auth-core';
 
 @Injectable()

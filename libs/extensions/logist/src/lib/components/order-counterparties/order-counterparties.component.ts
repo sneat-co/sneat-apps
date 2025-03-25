@@ -17,7 +17,7 @@ import {
 	IContactSelectorOptions,
 } from '@sneat/contactus-shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import {
 	CounterpartyRole,
 	IAddOrderShippingPointRequest,

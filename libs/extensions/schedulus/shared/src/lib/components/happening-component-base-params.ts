@@ -1,6 +1,6 @@
 import { Injectable, NgModule } from '@angular/core';
 import { CalendariumSpaceService } from '../services/calendarium-space.service';
-import { SpaceComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/space-components';
 import { HappeningService } from '../services/happening.service';
 
 @Injectable()

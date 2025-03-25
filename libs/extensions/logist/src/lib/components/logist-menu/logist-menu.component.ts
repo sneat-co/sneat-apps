@@ -9,7 +9,7 @@ import {
 import { IonicModule } from '@ionic/angular';
 import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth-core';
 import { AppVersionComponent, AuthMenuItemComponent } from '@sneat/components';
-import { SpacesMenuComponent } from '@sneat/team-components';
+import { SpacesMenuComponent } from '@sneat/space-components';
 
 @Component({
 	selector: 'sneat-logist-menu',

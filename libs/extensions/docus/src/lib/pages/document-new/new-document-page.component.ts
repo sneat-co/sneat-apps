@@ -26,14 +26,14 @@ import {
 	AssetusServicesModule,
 	ICreateAssetRequest,
 } from '@sneat/extensions-assetus-components';
-import { SpaceComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/space-components';
 import {
 	ContactService,
 	contactContextFromBrief,
 	ContactusServicesModule,
 } from '@sneat/contactus-services';
-import { zipMapBriefsWithIDs } from '@sneat/team-models';
-import { SpaceNavService, SpaceServiceModule } from '@sneat/team-services';
+import { zipMapBriefsWithIDs } from '@sneat/space-models';
+import { SpaceNavService, SpaceServiceModule } from '@sneat/space-services';
 import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 
 @Component({

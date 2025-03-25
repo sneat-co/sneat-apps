@@ -14,7 +14,7 @@ import {
 	SelectFromListComponent,
 } from '@sneat/components';
 import { IAssetContext, IAssetDwellingContext } from '@sneat/mod-assetus-core';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { AssetPossessionCardComponent } from '../asset-possesion-card/asset-possession-card.component';
 
 @Component({

@@ -4,7 +4,7 @@ import {
 	SimpleChange,
 	SimpleChanges,
 } from '@angular/core';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 
 @Component({
 	template: '',

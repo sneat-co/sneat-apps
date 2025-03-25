@@ -1,6 +1,6 @@
 import { Injectable, NgModule } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
-import { SpaceModuleService } from '@sneat/team-services';
+import { SpaceModuleService } from '@sneat/space-services';
 import { ITrackusSpaceDbo } from './dbo/i-trackus-space-dbo';
 
 @Injectable()

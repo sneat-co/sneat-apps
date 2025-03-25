@@ -10,7 +10,7 @@
 // // 	ShortMonthNamePipe,
 // // } from '@sneat/components';
 // // import { MembersSelectorModule } from '@sneat/contactus-shared';
-// // import { SpacePageTitleComponent } from '@sneat/team-components';
+// // import { SpacePageTitleComponent } from '@sneat/space-components';
 // // import {
 // // 	ScheduleNavServiceModule,
 // // 	WdToWeekdayPipe,

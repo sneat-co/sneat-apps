@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { IIdAndBrief, IIdAndBriefAndOptionalDbo } from '@sneat/core';
 import { IContactBrief, IContactDto } from '@sneat/contactus-core';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { ContactsListComponent } from '../contacts-list';
 
 @Component({

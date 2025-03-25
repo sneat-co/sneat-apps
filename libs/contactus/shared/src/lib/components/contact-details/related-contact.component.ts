@@ -12,7 +12,7 @@ import { IContactBrief } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import { IIdAndBrief } from '@sneat/core';
 import { IRelatedItem } from '@sneat/dto';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({

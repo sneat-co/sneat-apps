@@ -19,7 +19,7 @@ import {
 	IContactRequest,
 	IUpdateContactRequest,
 } from '@sneat/contactus-services';
-import { SpaceService, SpaceServiceModule } from '@sneat/team-services';
+import { SpaceService, SpaceServiceModule } from '@sneat/space-services';
 import { ContactBasePage } from '../contact-base-page';
 
 @Component({

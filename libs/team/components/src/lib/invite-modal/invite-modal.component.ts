@@ -10,8 +10,8 @@ import {
 	InviteChannel,
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISpaceContext } from '@sneat/team-models';
-import { InviteService } from '@sneat/team-services';
+import { ISpaceContext } from '@sneat/space-models';
+import { InviteService } from '@sneat/space-services';
 import { Observable, throwError } from 'rxjs';
 
 @Pipe({ name: 'encodeSmsText' })

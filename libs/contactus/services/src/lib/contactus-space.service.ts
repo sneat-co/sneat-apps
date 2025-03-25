@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { IContactBrief, IContactusSpaceDbo } from '@sneat/contactus-core';
-import { SpaceModuleService } from '@sneat/team-services';
+import { SpaceModuleService } from '@sneat/space-services';
 
 @Injectable()
 export class ContactusSpaceService extends SpaceModuleService<IContactusSpaceDbo> {

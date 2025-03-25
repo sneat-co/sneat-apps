@@ -16,7 +16,7 @@ import {
 	ICalendariumSpaceDbo,
 	IHappeningWithUiState,
 } from '@sneat/mod-schedulus-core';
-import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
+import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/space-models';
 import { Subject, Subscription } from 'rxjs';
 import { SpaceDaysProvider } from '../../services/space-days-provider';
 

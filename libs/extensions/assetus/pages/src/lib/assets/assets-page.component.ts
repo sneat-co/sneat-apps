@@ -15,9 +15,9 @@ import {
 import {
 	SpaceComponentBaseParams,
 	SpacePageTitleComponent,
-} from '@sneat/team-components';
+} from '@sneat/space-components';
 import { IAssetContext } from '@sneat/mod-assetus-core';
-import { SpaceServiceModule } from '@sneat/team-services';
+import { SpaceServiceModule } from '@sneat/space-services';
 import { takeUntil } from 'rxjs';
 import { AssetsBasePage } from '../assets-base.page';
 

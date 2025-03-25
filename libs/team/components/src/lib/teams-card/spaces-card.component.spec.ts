@@ -5,7 +5,7 @@ import { SpacesCardComponent } from './spaces-card.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserService } from '../../../services/user-service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { SpaceService } from '@sneat/team-services';
+import { SpaceService } from '@sneat/space-services';
 
 describe('SpacesCardComponent', () => {
 	let component: SpacesCardComponent;

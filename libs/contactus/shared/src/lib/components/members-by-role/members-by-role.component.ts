@@ -8,7 +8,7 @@ import {
 import { IonicModule } from '@ionic/angular';
 import { IContactBrief } from '@sneat/contactus-core';
 import { IIdAndBrief } from '@sneat/core';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { MembersListComponent } from '../members-list';
 import { MembersGroup } from './member-group';
 

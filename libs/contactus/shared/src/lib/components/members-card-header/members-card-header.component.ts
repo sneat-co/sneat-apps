@@ -3,8 +3,8 @@ import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { IContactusSpaceDbo } from '@sneat/contactus-core';
 import { IIdAndOptionalDbo } from '@sneat/core';
-import { ISpaceContext } from '@sneat/team-models';
-import { SpaceNavService } from '@sneat/team-services';
+import { ISpaceContext } from '@sneat/space-models';
+import { SpaceNavService } from '@sneat/space-services';
 
 @Component({
 	selector: 'sneat-members-card-header',

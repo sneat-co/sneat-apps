@@ -11,8 +11,8 @@ import { ContactRole, IContactBrief, IContactDto } from '@sneat/contactus-core';
 import { IRelatedItem, IRelationshipRoles } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
-import { ISpaceContext } from '@sneat/team-models';
-import { SpaceNavService } from '@sneat/team-services';
+import { ISpaceContext } from '@sneat/space-models';
+import { SpaceNavService } from '@sneat/space-services';
 
 @Component({
 	selector: 'sneat-contacts-list-item',

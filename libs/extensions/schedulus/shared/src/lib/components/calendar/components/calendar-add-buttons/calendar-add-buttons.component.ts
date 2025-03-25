@@ -6,7 +6,7 @@ import {
 	NewHappeningParams,
 	ScheduleNavService,
 } from '@sneat/mod-schedulus-core';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 
 @Component({
 	selector: 'sneat-calendar-add-buttons',

@@ -9,7 +9,7 @@ import {
 	MemberContactType,
 } from '../dto';
 import { IMemberContext } from '../contexts';
-import { SpaceRequest, SpaceMemberStatus } from '@sneat/team-models';
+import { SpaceRequest, SpaceMemberStatus } from '@sneat/space-models';
 
 export interface ICreateSpaceMemberRequest
 	extends SpaceRequest,

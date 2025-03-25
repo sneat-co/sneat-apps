@@ -1,6 +1,6 @@
 import { ParamMap } from '@angular/router';
 import { emptyTimestamp } from '@sneat/dto';
-import { SpaceItemPageBaseComponent } from '@sneat/team-components';
+import { SpaceItemPageBaseComponent } from '@sneat/space-components';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IListContext } from '../contexts';

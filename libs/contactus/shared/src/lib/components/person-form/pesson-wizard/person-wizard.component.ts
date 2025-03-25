@@ -32,7 +32,7 @@ import {
 	IRelationshipRoles,
 	ISpaceModuleItemRef,
 } from '@sneat/dto';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { AgeGroupFormComponent } from '../age-group';
 import { EmailsFormComponent } from '../emails-form';
 import { GenderFormComponent } from '../gender-form';

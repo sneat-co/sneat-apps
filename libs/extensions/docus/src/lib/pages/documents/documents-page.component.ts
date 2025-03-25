@@ -13,13 +13,13 @@ import {
 	SpaceBaseComponent,
 	SpaceComponentBaseParams,
 	SpacePageTitleComponent,
-} from '@sneat/team-components';
+} from '@sneat/space-components';
 import {
 	IAssetContext,
 	IAssetDocumentContext,
 	IAssetDocumentExtra,
 } from '@sneat/mod-assetus-core';
-import { SpaceServiceModule } from '@sneat/team-services';
+import { SpaceServiceModule } from '@sneat/space-services';
 import { DocumentsByTypeComponent } from './components/documents-by-type/documents-by-type.component';
 import { DocumentsListComponent } from './components/documents-list/documents-list.component';
 

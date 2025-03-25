@@ -7,8 +7,8 @@ import {
 	IContactGroupDbo,
 	IContactRoleBriefWithID,
 } from '@sneat/contactus-core';
-import { ISpaceContext, ISpaceRef } from '@sneat/team-models';
-import { ModuleSpaceItemService } from '@sneat/team-services';
+import { ISpaceContext, ISpaceRef } from '@sneat/space-models';
+import { ModuleSpaceItemService } from '@sneat/space-services';
 import { Observable, of } from 'rxjs';
 
 const contactTypeFamilyMember: IContactRoleBriefWithID = {

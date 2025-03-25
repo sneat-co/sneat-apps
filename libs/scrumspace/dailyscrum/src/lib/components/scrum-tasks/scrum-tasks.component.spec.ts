@@ -4,7 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { ScrumTasksComponent } from './scrum-tasks.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { UserService } from '../../../services/user-service';
-import { SpaceService } from '@sneat/team-services';
+import { SpaceService } from '@sneat/space-services';
 
 describe('ScrumTasksComponent', () => {
 	let component: ScrumTasksComponent;

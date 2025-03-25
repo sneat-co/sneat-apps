@@ -4,7 +4,7 @@ import {
 	IHappeningPrice,
 	IHappeningSlot,
 } from '@sneat/mod-schedulus-core';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import {
 	IHappeningLiability,
 	LiabilitiesByPeriod,

@@ -1,7 +1,7 @@
 import { Injectable, NgModule } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
-import { ModuleSpaceItemService } from '@sneat/team-services';
+import { ModuleSpaceItemService } from '@sneat/space-services';
 import { ITrackerBrief, ITrackerDbo } from './dbo/i-tracker-dbo';
 
 @Injectable()

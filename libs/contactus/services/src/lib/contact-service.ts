@@ -15,8 +15,8 @@ import {
 	ISpaceContext,
 	ISpaceItemWithBriefAndDbo,
 	ISpaceItemWithOptionalBriefAndOptionalDbo,
-} from '@sneat/team-models';
-import { ModuleSpaceItemService } from '@sneat/team-services';
+} from '@sneat/space-models';
+import { ModuleSpaceItemService } from '@sneat/space-services';
 import { ContactusSpaceService } from './contactus-space.service';
 import { map, Observable, throwError } from 'rxjs';
 import {

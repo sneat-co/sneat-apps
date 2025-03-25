@@ -27,7 +27,7 @@ import {
 	IRelatedPerson,
 	isRelatedPersonReady,
 } from '@sneat/contactus-core';
-import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
+import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/space-models';
 import { MemberComponentBaseParams } from '../../member-component-base-params';
 
 @Component({

@@ -5,7 +5,7 @@ import {
 	IAssetusSpaceContext,
 } from '@sneat/mod-assetus-core';
 import { AssetService } from '@sneat/extensions-assetus-components';
-import { SpaceBaseComponent } from '@sneat/team-components';
+import { SpaceBaseComponent } from '@sneat/space-components';
 
 export abstract class AssetsBasePage extends SpaceBaseComponent {
 	protected assets?: IIdAndBrief<IAssetBrief>[];

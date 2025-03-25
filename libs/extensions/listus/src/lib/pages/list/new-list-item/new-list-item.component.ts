@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, IonInput, ToastController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { RandomIdService } from '@sneat/random';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { IListContext } from '../../../contexts';
 import {
 	detectEmoji,

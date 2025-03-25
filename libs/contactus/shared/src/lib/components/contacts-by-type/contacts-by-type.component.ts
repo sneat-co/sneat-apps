@@ -8,7 +8,7 @@ import {
 	ContactNavService,
 	defaultFamilyContactGroups,
 } from '@sneat/contactus-services';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { ContactsListItemComponent } from '../contacts-list';
 import {
 	IContactGroupWithContacts,

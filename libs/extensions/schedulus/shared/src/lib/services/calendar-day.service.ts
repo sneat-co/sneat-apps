@@ -3,8 +3,8 @@ import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { ICalendarDayBrief, ICalendarDayDbo } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISpaceContext } from '@sneat/team-models';
-import { ModuleSpaceItemService } from '@sneat/team-services';
+import { ISpaceContext } from '@sneat/space-models';
+import { ModuleSpaceItemService } from '@sneat/space-services';
 import { tap } from 'rxjs';
 
 @Injectable()

@@ -14,8 +14,8 @@ import {
 	SpaceBaseComponent,
 	SpaceComponentBaseParams,
 	SpacePageTitleComponent,
-} from '@sneat/team-components';
-import { SpaceServiceModule } from '@sneat/team-services';
+} from '@sneat/space-components';
+import { SpaceServiceModule } from '@sneat/space-services';
 
 @Component({
 	selector: 'sneat-new-asset-page',

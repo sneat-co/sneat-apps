@@ -45,12 +45,12 @@ export const routes: Routes = [
 	{
 		path: 'space/:spaceType/:spaceID',
 		loadChildren: () =>
-			import('@sneat/team-pages').then((m) => m.SpaceRoutingModule),
+			import('@sneat/space-pages').then((m) => m.SpaceRoutingModule),
 	},
 	{
 		path: 'join/:spaceType',
 		loadComponent: () =>
-			import('@sneat/team-pages').then((m) => m.JoinSpacePageComponent),
+			import('@sneat/space-pages').then((m) => m.JoinSpacePageComponent),
 	},
 	{
 		path: 'communes', // TODO: Obsolete route naming and probably the whole route

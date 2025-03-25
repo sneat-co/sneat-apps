@@ -1,4 +1,4 @@
-import { SpaceBaseComponent } from '@sneat/team-components';
+import { SpaceBaseComponent } from '@sneat/space-components';
 
 export class CalendarBasePage extends SpaceBaseComponent {
 	public override get defaultBackUrl(): string {

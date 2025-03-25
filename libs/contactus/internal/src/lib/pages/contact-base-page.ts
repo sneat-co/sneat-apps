@@ -8,7 +8,7 @@ import {
 	IContactDto,
 	IContactContext,
 } from '@sneat/contactus-core';
-import { SpaceItemPageBaseComponent } from '@sneat/team-components';
+import { SpaceItemPageBaseComponent } from '@sneat/space-components';
 import { Observable, takeUntil, throwError } from 'rxjs';
 
 export abstract class ContactBasePage extends SpaceItemPageBaseComponent<

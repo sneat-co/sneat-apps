@@ -32,8 +32,8 @@ import {
 	mergeValuesWithIDs,
 	WeekdayCode2,
 } from '@sneat/mod-schedulus-core';
-import { SpaceComponentBaseParams } from '@sneat/team-components';
-import { ISpaceContext } from '@sneat/team-models';
+import { SpaceComponentBaseParams } from '@sneat/space-components';
+import { ISpaceContext } from '@sneat/space-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
 import { HappeningParticipantsComponent } from '../happening-participants/happening-participants.component';

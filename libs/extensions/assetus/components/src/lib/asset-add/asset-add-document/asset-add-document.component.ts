@@ -19,7 +19,7 @@ import {
 	IAssetDocumentContext,
 	IAssetDocumentExtra,
 } from '@sneat/mod-assetus-core';
-import { SpaceComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/space-components';
 import { format, parseISO } from 'date-fns';
 import { ICreateAssetRequest } from '../../services';
 import { AddAssetBaseComponent } from '../add-asset-base-component';

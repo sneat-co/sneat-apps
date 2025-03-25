@@ -19,8 +19,8 @@ import { isSpaceSupportsMemberGroups } from '@sneat/dto';
 import {
 	SpaceComponentBaseParams,
 	SpacePageTitleComponent,
-} from '@sneat/team-components';
-import { SpaceServiceModule } from '@sneat/team-services';
+} from '@sneat/space-components';
+import { SpaceServiceModule } from '@sneat/space-services';
 import { MembersBasePage } from '../../members-base-page';
 import { Component } from '@angular/core';
 

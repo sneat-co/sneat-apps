@@ -4,7 +4,7 @@ import { SneatUserService } from '@sneat/auth-core';
 
 import { SpacePageComponent } from './space-page.component';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { SpaceService } from '@sneat/team-services';
+import { SpaceService } from '@sneat/space-services';
 
 describe('SpacePage', () => {
 	let component: SpacePageComponent;

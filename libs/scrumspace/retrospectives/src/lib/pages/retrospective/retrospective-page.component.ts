@@ -5,13 +5,13 @@ import { NavController } from '@ionic/angular';
 import { filter, first, mergeMap, takeUntil } from 'rxjs/operators';
 import { RetrospectiveService } from '../../retrospective.service';
 import { Subscription } from 'rxjs';
-import { SpaceBaseComponent } from '@sneat/team-components';
+import { SpaceBaseComponent } from '@sneat/space-components';
 import { IRecord } from '@sneat/data';
 import {
 	IRetrospective,
 	RetrospectiveStage,
 } from '@sneat/scrumspace-scrummodels';
-import { SpaceService } from '@sneat/team-services';
+import { SpaceService } from '@sneat/space-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { getMeetingIdFromDate } from '@sneat/meeting';

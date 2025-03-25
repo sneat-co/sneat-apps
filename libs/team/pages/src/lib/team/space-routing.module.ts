@@ -14,7 +14,7 @@ import { trackusSpaceRoutes } from '@sneat/extensions-trackus';
 import {
 	SpaceComponentBaseParams,
 	SpaceMenuComponent,
-} from '@sneat/team-components';
+} from '@sneat/space-components';
 
 const routes: Routes = [
 	{

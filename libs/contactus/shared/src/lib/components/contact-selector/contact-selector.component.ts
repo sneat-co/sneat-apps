@@ -27,7 +27,7 @@ import {
 	ContactService,
 	ContactusSpaceService,
 } from '@sneat/contactus-services';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { map, Subject, Subscription } from 'rxjs';
 import { BasicContactFormModule } from '../basic-contact-form';
 import { LocationFormComponent } from '../location-form';

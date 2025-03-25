@@ -3,7 +3,7 @@ import {
 	ContactType,
 	IContactContext,
 } from '@sneat/contactus-core';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 
 export interface IContactSelectorProps {
 	readonly space: ISpaceContext;

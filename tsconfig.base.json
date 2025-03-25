@@ -112,10 +112,10 @@
 			"@sneat/scrumspace-scrummodels": [
 				"libs/scrumspace/scrummodels/src/index.ts"
 			],
-			"@sneat/team-components": ["libs/team/components/src/index.ts"],
-			"@sneat/team-models": ["libs/team/models/src/index.ts"],
-			"@sneat/team-pages": ["libs/team/pages/src/index.ts"],
-			"@sneat/team-services": ["libs/team/services/src/index.ts"],
+			"@sneat/space-components": ["libs/team/components/src/index.ts"],
+			"@sneat/space-models": ["libs/team/models/src/index.ts"],
+			"@sneat/space-pages": ["libs/team/pages/src/index.ts"],
+			"@sneat/space-services": ["libs/team/services/src/index.ts"],
 			"@sneat/timer": ["libs/timer/src/index.ts"],
 			"@sneat/ui": ["libs/ui/src/index.ts"],
 			"@sneat/user": ["libs/user/src/index.ts"],

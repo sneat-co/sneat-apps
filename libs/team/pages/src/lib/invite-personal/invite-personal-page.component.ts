@@ -19,10 +19,10 @@ import { MemberService } from '@sneat/contactus-services';
 import {
 	IRejectPersonalInviteRequest,
 	zipMapBriefsWithIDs,
-} from '@sneat/team-models';
+} from '@sneat/space-models';
 import { SneatApiService } from '@sneat/api';
 import { RandomIdService } from '@sneat/random';
-import { InviteService } from '@sneat/team-services';
+import { InviteService } from '@sneat/space-services';
 
 @Component({
 	selector: 'sneat-invite-personal-page',

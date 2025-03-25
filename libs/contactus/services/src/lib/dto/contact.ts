@@ -1,6 +1,6 @@
 import { AgeGroupID, IRelatedToRequest } from '@sneat/contactus-core';
 import { IAddress } from '@sneat/contactus-core';
-import { SpaceRequest } from '@sneat/team-models';
+import { SpaceRequest } from '@sneat/space-models';
 
 export interface IContactRequest extends SpaceRequest {
 	readonly contactID: string;

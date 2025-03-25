@@ -1,6 +1,6 @@
 import { Timestamp } from '@firebase/firestore';
 import { IIdAndBrief, IIdAndOptionalBriefAndOptionalDbo } from '@sneat/core';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 
 export type TrackerValueType =
 	| 'int'

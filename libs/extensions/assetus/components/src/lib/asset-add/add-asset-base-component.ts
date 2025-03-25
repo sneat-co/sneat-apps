@@ -8,8 +8,8 @@ import {
 import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { AssetExtraType, IAssetExtra } from '@sneat/mod-assetus-core';
-import { SpaceBaseComponent } from '@sneat/team-components';
-import { ISpaceContext } from '@sneat/team-models';
+import { SpaceBaseComponent } from '@sneat/space-components';
+import { ISpaceContext } from '@sneat/space-models';
 import { AssetService, ICreateAssetRequest } from '../services';
 
 @Component({

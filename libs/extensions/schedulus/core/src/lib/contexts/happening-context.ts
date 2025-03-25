@@ -1,6 +1,6 @@
 import { DeleteOperationState } from '@sneat/core';
 import { UiState } from '@sneat/dto';
-import { ISpaceContext, ISpaceItemNavContext } from '@sneat/team-models';
+import { ISpaceContext, ISpaceItemNavContext } from '@sneat/space-models';
 import {
 	HappeningKind,
 	HappeningStatus,

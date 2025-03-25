@@ -1,5 +1,5 @@
 import { Injectable, NgModule } from '@angular/core';
-import { SpaceComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/space-components';
 import {
 	ContactService,
 	ContactusSpaceService,

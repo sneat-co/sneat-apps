@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { SpaceDaysProvider } from '../../../../services/space-days-provider';
 import { CalendarWeekCardComponent } from './calendar-week-card.component';
 

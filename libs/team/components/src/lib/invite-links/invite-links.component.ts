@@ -5,7 +5,7 @@ import { IonicModule, NavController } from '@ionic/angular';
 import { IIdAndOptionalDbo } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactusSpaceDbo } from '@sneat/contactus-core';
-import { SpaceNavService } from '@sneat/team-services';
+import { SpaceNavService } from '@sneat/space-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { Subscription } from 'rxjs';
 

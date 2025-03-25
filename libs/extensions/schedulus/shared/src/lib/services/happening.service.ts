@@ -16,10 +16,10 @@ import {
 	IHappeningSlotWithID,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISpaceContext, SpaceRequest } from '@sneat/team-models';
+import { ISpaceContext, SpaceRequest } from '@sneat/space-models';
 import { QueryOrderByConstraint } from 'firebase/firestore';
 import { map, Observable, tap, throwError } from 'rxjs';
-import { ModuleSpaceItemService } from '@sneat/team-services';
+import { ModuleSpaceItemService } from '@sneat/space-services';
 
 export interface ICreateHappeningRequest {
 	readonly spaceID: string;

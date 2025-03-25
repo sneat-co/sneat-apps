@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AssetService } from './services';
-import { SpaceComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/space-components';
 
 @Injectable()
 export class AssetComponentBaseParams {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SpaceComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/space-components';
 import { ListService } from './services/list.service';
 
 @Injectable()

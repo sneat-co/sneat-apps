@@ -7,7 +7,7 @@ import {
 	IListItemDbo,
 } from '../dto';
 import { IListContext } from '../contexts';
-import { ISpaceContext, SpaceRequest } from '@sneat/team-models';
+import { ISpaceContext, SpaceRequest } from '@sneat/space-models';
 
 export interface GetOrCreateCommuneItemIds {
 	id?: string;

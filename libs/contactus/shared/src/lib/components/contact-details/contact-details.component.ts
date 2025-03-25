@@ -19,7 +19,7 @@ import {
 	IRelationshipRoles,
 	ISpaceModuleItemRef,
 } from '@sneat/dto';
-import { ISpaceRef } from '@sneat/team-models';
+import { ISpaceRef } from '@sneat/space-models';
 import { MemberPages } from '../../constants';
 import { ContactComponentBaseParams } from '../../contact-component-base-params';
 import { ContactContactsComponent } from '../contact-contacts';

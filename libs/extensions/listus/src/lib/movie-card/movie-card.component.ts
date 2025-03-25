@@ -11,7 +11,7 @@ import { IonicModule } from '@ionic/angular';
 import { listItemAnimations } from '@sneat/core';
 import { IMovie, IMovieDbo } from '../dto';
 import { IListContext } from '../contexts';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { ListusComponentBaseParams } from '../listus-component-base-params';
 import { ITmdbService } from '../watchlist';
 

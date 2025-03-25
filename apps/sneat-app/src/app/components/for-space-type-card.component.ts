@@ -20,12 +20,12 @@ import {
 } from '@ionic/angular/standalone';
 import { SneatUserService } from '@sneat/auth-core';
 import { SpaceType } from '@sneat/core';
-import { SpacesListComponent } from '@sneat/team-components';
+import { SpacesListComponent } from '@sneat/space-components';
 import {
 	ISpaceContext,
 	spaceContextFromBrief,
 	zipMapBriefsWithIDs,
-} from '@sneat/team-models';
+} from '@sneat/space-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { Subscription, takeUntil } from 'rxjs';
 

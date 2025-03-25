@@ -3,7 +3,7 @@ import { IonicModule } from '@ionic/angular';
 import { virtualSliderAnimations } from '@sneat/components';
 import { CalendarDayComponent } from './calendar-day.component';
 import { CalendarDayTitleComponent } from './calendar-day-title.component';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { SpaceDaysProvider } from '../../../../services/space-days-provider';
 import { NewHappeningParams } from '@sneat/mod-schedulus-core';
 import { getToday, CalendarStateService } from '../../calendar-state.service';

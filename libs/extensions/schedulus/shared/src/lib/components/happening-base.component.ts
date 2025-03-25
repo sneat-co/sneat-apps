@@ -18,8 +18,8 @@ import { MembersSelectorService } from '@sneat/contactus-shared';
 import { getWd2 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { contactContextFromBrief } from '@sneat/contactus-services';
-import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
-import { SpaceNavService } from '@sneat/team-services';
+import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/space-models';
+import { SpaceNavService } from '@sneat/space-services';
 import { SneatBaseComponent } from '@sneat/ui';
 import { NEVER, Observable, takeUntil } from 'rxjs';
 import {

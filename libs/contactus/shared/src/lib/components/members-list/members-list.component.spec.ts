@@ -5,7 +5,7 @@ import { SneatUserService } from '@sneat/auth-core';
 import { MembersListComponent } from './members-list.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { SpaceService } from '@sneat/team-services';
+import { SpaceService } from '@sneat/space-services';
 
 describe('MembersListComponent', () => {
 	let component: MembersListComponent;

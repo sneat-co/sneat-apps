@@ -4,7 +4,7 @@ import { eq } from '@sneat/core';
 import { IAssetDocumentContext } from '@sneat/mod-assetus-core';
 import { AssetService } from '@sneat/extensions-assetus-components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { ignoreElements } from 'rxjs/operators';
 
 @Directive()

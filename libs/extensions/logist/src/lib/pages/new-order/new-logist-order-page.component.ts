@@ -4,7 +4,7 @@ import { excludeUndefined } from '@sneat/core';
 import { IContactContext } from '@sneat/contactus-core';
 import { first, takeUntil } from 'rxjs';
 import { ISelectItem } from '@sneat/components';
-import { SpaceBaseComponent } from '@sneat/team-components';
+import { SpaceBaseComponent } from '@sneat/space-components';
 import {
 	CounterpartyRole,
 	IOrderCounterparty,

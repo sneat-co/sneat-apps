@@ -1,5 +1,5 @@
 import { INavContext } from '@sneat/core';
-import { ISpaceItemNavContext } from '@sneat/team-models';
+import { ISpaceItemNavContext } from '@sneat/space-models';
 import {
 	AssetExtraType,
 	IAssetBrief,

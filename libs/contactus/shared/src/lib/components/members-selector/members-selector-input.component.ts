@@ -3,7 +3,7 @@ import { IIdAndBrief } from '@sneat/core';
 import { IContactBrief, IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { contactContextFromBrief } from '@sneat/contactus-services';
-import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
+import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/space-models';
 import { ISelectMembersOptions } from './members-selector.options';
 import { MembersSelectorService } from './members-selector.service';
 

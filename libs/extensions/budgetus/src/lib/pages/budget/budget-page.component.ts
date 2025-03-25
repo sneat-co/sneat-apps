@@ -9,9 +9,9 @@ import { ICalendariumSpaceDbo, RepeatPeriod } from '@sneat/mod-schedulus-core';
 import {
 	SpaceBaseComponent,
 	SpaceComponentBaseParams,
-} from '@sneat/team-components';
-import { Totals } from '@sneat/team-models';
-import { SpaceServiceModule } from '@sneat/team-services';
+} from '@sneat/space-components';
+import { Totals } from '@sneat/space-models';
+import { SpaceServiceModule } from '@sneat/space-services';
 import { takeUntil } from 'rxjs';
 import { LiabilitiesMode } from './budget-component-types';
 import { BudgetPeriodsComponent } from './budget-periods.component';

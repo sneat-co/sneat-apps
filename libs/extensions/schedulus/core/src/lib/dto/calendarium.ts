@@ -1,6 +1,6 @@
 import { IIdAndDbo } from '@sneat/core';
 import { IWithRelatedOnly } from '@sneat/dto';
-import { ISpaceItemWithOptionalDbo } from '@sneat/team-models';
+import { ISpaceItemWithOptionalDbo } from '@sneat/space-models';
 import { IHappeningBrief } from './happening';
 
 export interface ICalendarHappeningBrief

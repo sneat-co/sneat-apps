@@ -5,7 +5,7 @@ import {
 	IAssetContext,
 	IAssetVehicleContext,
 } from '@sneat/mod-assetus-core';
-import { SpaceItemPageBaseComponent } from '@sneat/team-components';
+import { SpaceItemPageBaseComponent } from '@sneat/space-components';
 import { NEVER, Observable, throwError } from 'rxjs';
 import { AssetComponentBaseParams } from './asset-component-base-params';
 

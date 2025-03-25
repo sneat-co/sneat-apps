@@ -9,7 +9,7 @@ import {
 	HappeningServiceModule,
 } from '../../../../services';
 import { ISlotUIContext } from '@sneat/mod-schedulus-core';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { HappeningSlotModalServiceModule } from '../../../happening-slot-form/happening-slot-modal.service';
 import { HappeningSlotParticipantsComponent } from '../../../happening-slot-participants/happening-slot-participants.component';
 import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';

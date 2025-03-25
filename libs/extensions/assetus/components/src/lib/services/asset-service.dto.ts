@@ -4,7 +4,7 @@ import {
 	IAssetExtra,
 } from '@sneat/mod-assetus-core';
 import { CurrencyCode } from '@sneat/mod-schedulus-core';
-import { SpaceRequest } from '@sneat/team-models';
+import { SpaceRequest } from '@sneat/space-models';
 
 export interface ICreateAssetRequest<
 	ExtraType extends AssetExtraType,

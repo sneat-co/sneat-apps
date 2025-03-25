@@ -2,7 +2,7 @@ import { Component, Inject, Input } from '@angular/core';
 import { PopoverController, ToastController } from '@ionic/angular';
 import { LogistOrderContactRole } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { ILogistOrderContext } from '../../dto';
 import { LogistOrderService } from '../../services';
 import { OrderPrintMenuComponent } from './order-print-menu.component';

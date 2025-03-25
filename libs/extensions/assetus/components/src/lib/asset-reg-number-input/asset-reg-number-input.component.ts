@@ -13,7 +13,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule, IonInput } from '@ionic/angular';
 import { AssetService, IUpdateAssetRequest } from '../services';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 
 @Component({
 	selector: 'sneat-asset-reg-number',

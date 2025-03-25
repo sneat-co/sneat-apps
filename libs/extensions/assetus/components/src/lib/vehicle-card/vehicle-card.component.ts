@@ -17,7 +17,7 @@ import {
 	IAssetVehicleContext,
 	IAssetVehicleExtra,
 } from '@sneat/mod-assetus-core';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { AssetPossessionCardComponent } from '../asset-possesion-card/asset-possession-card.component';
 import { AssetRegNumberInputComponent } from '../asset-reg-number-input/asset-reg-number-input.component';
 import { MakeModelCardComponent } from '../make-model-card/make-model-card.component';

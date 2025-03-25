@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ParamMap } from '@angular/router';
 import { distinctUntilChanged, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { SpaceType } from '@sneat/core';
 
 @Injectable({

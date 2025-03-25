@@ -1,6 +1,6 @@
 import { ParamMap } from '@angular/router';
 import { INavContext, SpaceItem } from '@sneat/core';
-import { ModuleSpaceItemService } from '@sneat/team-services';
+import { ModuleSpaceItemService } from '@sneat/space-services';
 import {
 	distinctUntilChanged,
 	map,

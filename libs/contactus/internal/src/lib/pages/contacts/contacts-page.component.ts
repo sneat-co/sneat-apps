@@ -19,12 +19,12 @@ import {
 	SpaceComponentBaseParams,
 	SpacePageTitleComponent,
 	SpaceItemsBaseComponent,
-} from '@sneat/team-components';
+} from '@sneat/space-components';
 import {
 	ContactusServicesModule,
 	ContactusSpaceService,
 } from '@sneat/contactus-services';
-import { SpaceServiceModule } from '@sneat/team-services';
+import { SpaceServiceModule } from '@sneat/space-services';
 import { Subscription } from 'rxjs';
 
 @Component({

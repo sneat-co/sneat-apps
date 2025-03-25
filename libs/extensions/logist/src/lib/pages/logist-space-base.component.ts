@@ -1,4 +1,4 @@
-import { SpaceBaseComponent } from '@sneat/team-components';
+import { SpaceBaseComponent } from '@sneat/space-components';
 import { ILogistSpaceContext } from '../dto';
 import { LogistSpaceService } from '../services';
 

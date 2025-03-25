@@ -20,7 +20,7 @@ import {
 import { MembersByRoleComponent } from '../members-by-role/members-by-role.component';
 import { MembersGroup } from '../members-by-role/member-group';
 import { IIdAndBrief, IIdAndBriefAndOptionalDbo } from '@sneat/core';
-import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';
+import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/space-models';
 
 @Component({
 	selector: 'sneat-family-members',

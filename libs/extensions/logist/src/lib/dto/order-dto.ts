@@ -1,7 +1,7 @@
 import { ContactType, IAddress } from '@sneat/contactus-core';
 import { IContactRequest } from '@sneat/contactus-services';
 import { IWithModified } from '@sneat/dto';
-import { ISpaceItemNavContext, SpaceRequest } from '@sneat/team-models';
+import { ISpaceItemNavContext, SpaceRequest } from '@sneat/space-models';
 import { CounterpartyRole } from './logist-team-dto';
 import { OrderDirection } from './orders-filter';
 

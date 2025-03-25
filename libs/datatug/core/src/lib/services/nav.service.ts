@@ -8,7 +8,7 @@ import { IUserSpaceBrief } from '@sneat/auth-models';
 // import {IRetrospective} from '@sneat/scrumspace-retrospectives';
 import { ISpaceDbo } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 // import {IScrum} from '@sneat/scrumspace-scrummodels';
 
 export type ScrumPageTab = 'team' | 'my' | 'risks' | 'qna';

@@ -14,8 +14,8 @@ import {
 import {
 	SpaceBaseComponent,
 	SpaceComponentBaseParams,
-} from '@sneat/team-components';
-import { SpaceServiceModule } from '@sneat/team-services';
+} from '@sneat/space-components';
+import { SpaceServiceModule } from '@sneat/space-services';
 import { TrackersComponent } from '../../components';
 
 @Component({

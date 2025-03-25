@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { excludeEmpty } from '@sneat/core';
 import { IContactContext, ContactRole } from '@sneat/contactus-core';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { IOrdersFilter, OrderDirection } from '../../../dto';
 
 @Component({

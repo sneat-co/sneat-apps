@@ -9,8 +9,8 @@ import {
 import { SneatApiService } from '@sneat/api';
 import { IListBrief, IListDbo, ListType } from '../dto';
 import { IListContext } from '../contexts';
-import { ISpaceContext } from '@sneat/team-models';
-import { ModuleSpaceItemService } from '@sneat/team-services';
+import { ISpaceContext } from '@sneat/space-models';
+import { ModuleSpaceItemService } from '@sneat/space-services';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {

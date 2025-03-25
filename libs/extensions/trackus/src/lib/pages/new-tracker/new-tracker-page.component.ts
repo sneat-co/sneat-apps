@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { SpaceBaseComponent } from '@sneat/team-components';
+import { SpaceBaseComponent } from '@sneat/space-components';
 import { NewTrackerFormComponent } from '../../components/new-tracker/new-tracker-form.component';
 
 @Component({

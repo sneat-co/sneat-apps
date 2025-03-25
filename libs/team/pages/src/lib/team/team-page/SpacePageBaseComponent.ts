@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { TopMenuService } from '@sneat/core';
-import { SpaceBaseComponent } from '@sneat/team-components';
+import { SpaceBaseComponent } from '@sneat/space-components';
 
 export abstract class SpacePageBaseComponent
 	extends SpaceBaseComponent

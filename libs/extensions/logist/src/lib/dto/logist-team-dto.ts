@@ -1,6 +1,6 @@
 import { INavContext } from '@sneat/core';
 import { IAddress } from '@sneat/contactus-core';
-import { SpaceRequest } from '@sneat/team-models';
+import { SpaceRequest } from '@sneat/space-models';
 
 export type CounterpartyRole =
 	| 'buyer'

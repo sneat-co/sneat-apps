@@ -40,11 +40,11 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	InviteModalComponent,
 	InviteModalModule,
-} from '@sneat/team-components';
+} from '@sneat/space-components';
 import { ContactService } from '@sneat/contactus-services';
 import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
-import { ISpaceContext } from '@sneat/team-models';
-import { SpaceNavService } from '@sneat/team-services';
+import { ISpaceContext } from '@sneat/space-models';
+import { SpaceNavService } from '@sneat/space-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { ContactRoleBadgesComponent } from '../contact-role-badges/contact-role-badges.component';
 import { InlistAgeGroupComponent } from '../inlist-options/inlist-age-group.component';

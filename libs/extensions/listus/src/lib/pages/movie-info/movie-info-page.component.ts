@@ -4,7 +4,7 @@ import { NavController } from '@ionic/angular';
 import {
 	SpaceComponentBaseParams,
 	SpacePageBaseComponent,
-} from '@sneat/team-components';
+} from '@sneat/space-components';
 import { IListItemBrief, IMovie } from '../../dto';
 import { ListusComponentBaseParams } from '../../listus-component-base-params';
 // import { IMovie } from '../../../../models/movie-models';

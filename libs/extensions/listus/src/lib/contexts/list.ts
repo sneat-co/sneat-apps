@@ -1,4 +1,4 @@
-import { ISpaceItemNavContext } from '@sneat/team-models';
+import { ISpaceItemNavContext } from '@sneat/space-models';
 import { IListBrief, IListDbo, ListType } from '../dto';
 
 export interface IListKey {

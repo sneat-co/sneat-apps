@@ -5,7 +5,7 @@ import {
 	IUpdateContactRequest,
 } from '@sneat/contactus-services';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import {
 	OptionEvent,
 	Option,

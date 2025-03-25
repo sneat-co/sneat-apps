@@ -8,8 +8,8 @@ import {
 import { IIdAndBrief } from '@sneat/core';
 import { AssetCategory, IAssetBrief } from '@sneat/mod-assetus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISpaceContext } from '@sneat/team-models';
-import { SpaceNavService } from '@sneat/team-services';
+import { ISpaceContext } from '@sneat/space-models';
+import { SpaceNavService } from '@sneat/space-services';
 import { AssetService } from '../services';
 import { MileAgeDialogComponent } from '../mileage-dialog/mileage-dialog.component';
 import { ModalController } from '@ionic/angular';

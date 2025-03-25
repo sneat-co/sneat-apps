@@ -9,7 +9,7 @@ import {
 	ContactDetailsComponent,
 } from '@sneat/contactus-shared';
 import { MemberRelationship } from '@sneat/contactus-core';
-import { SpaceServiceModule } from '@sneat/team-services';
+import { SpaceServiceModule } from '@sneat/space-services';
 import { MemberComponentBaseParams } from '../../member-component-base-params';
 import { MemberBasePage } from '../member-base-page';
 

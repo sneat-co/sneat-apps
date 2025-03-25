@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { IRecord } from '@sneat/data';
 import { DtoServiceProvider } from '@sneat/dto';
-import { SpaceComponentBaseParams } from '@sneat/team-components';
+import { SpaceComponentBaseParams } from '@sneat/space-components';
 
 @Component({
 	selector: 'sneat-select-service-provider',

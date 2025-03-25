@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { dateToIso } from '@sneat/core';
-import { ISpaceContext } from '@sneat/team-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { SpaceDaysProvider } from '../../../../services/space-days-provider';
 import { NewHappeningParams } from '@sneat/mod-schedulus-core';
 import { Week } from '../../../week';

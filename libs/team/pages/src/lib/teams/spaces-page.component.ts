@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { SpacesCardComponent } from '@sneat/team-components';
+import { SpacesCardComponent } from '@sneat/space-components';
 
 @Component({
 	selector: 'sneat-spaces-page',

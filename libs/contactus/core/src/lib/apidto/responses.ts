@@ -1,4 +1,4 @@
-import { IInviteSpace } from '@sneat/team-models';
+import { IInviteSpace } from '@sneat/space-models';
 import { IMemberBrief } from '../dto';
 import { IInviteFromContact, IInviteToContact } from './requests';
 
