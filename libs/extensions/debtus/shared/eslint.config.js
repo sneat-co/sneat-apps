@@ -1,11 +1,9 @@
- 
-const baseConfig = require('../../../eslint.config.js');
+const baseConfig = require('../../../../eslint.config.js');
 
 const {
 	sneatLibConfig,
 	compatConfig,
-	 
-} = require('../../../eslint.lib.config.js');
+} = require('../../../../eslint.lib.config.js');
 
 module.exports = [
 	...baseConfig,

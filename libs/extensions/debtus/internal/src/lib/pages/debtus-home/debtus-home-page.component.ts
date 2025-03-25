@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { ContactusServicesModule } from '@sneat/contactus-services';
-import { NewDebtFormComponent } from '@sneat/debtus-shared';
+import { NewDebtFormComponent } from '@sneat/ext-debtus-shared';
 import {
 	SpaceComponentBaseParams,
 	SpacePageTitleComponent,

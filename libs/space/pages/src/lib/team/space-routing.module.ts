@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { contactusRoutes } from '@sneat/contactus-internal';
-import { spacePagesRoutes } from '@sneat/debtus-internal';
+import { spacePagesRoutes } from '@sneat/ext-debtus-internal';
 import { AssetusRoutingModule } from '@sneat/extensions-assetus-pages';
 import { budgetusRoutes } from '@sneat/extensions-budgetus';
 import { docusRoutes } from '@sneat/extensions-docus';

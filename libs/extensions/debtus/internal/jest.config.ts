@@ -1,8 +1,8 @@
 export default {
 	displayName: 'debtus-internal',
-	preset: '../../../jest.preset.js',
+	preset: '../../../../jest.preset.js',
 	setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-	coverageDirectory: '../../../coverage/libs/debtus/internal',
+	coverageDirectory: '../../../../coverage/libs/extensions/debtus/internal',
 	transform: {
 		'^.+\\.(ts|mjs|js|html)$': [
 			'jest-preset-angular',

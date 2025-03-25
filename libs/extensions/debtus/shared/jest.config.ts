@@ -1,8 +1,8 @@
 export default {
-	displayName: 'debtus-shared',
-	preset: '../../../jest.preset.js',
+	displayName: 'ext-debtus-shared',
+	preset: '../../../../jest.preset.js',
 	setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-	coverageDirectory: '../../../coverage/libs/debtus/shared',
+	coverageDirectory: '../../../../coverage/libs/extensions/debtus/shared',
 	transform: {
 		'^.+\\.(ts|mjs|js|html)$': [
 			'jest-preset-angular',

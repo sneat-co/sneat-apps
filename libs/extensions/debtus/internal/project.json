@@ -1,0 +1,40 @@
+{
+	"name": "ext-debtus-internal",
+	"$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "libs/extensions/debtus/internal/src",
+	"prefix": "sneat-debtus",
+	"projectType": "library",
+	"tags": [],
+	"targets": {
+		"build": {
+			"executor": "@nx/angular:package",
+			"outputs": [
+				"{workspaceRoot}/dist/{projectRoot}"
+			],
+			"options": {
+				"project": "libs/extensions/debtus/internal/ng-package.json"
+			},
+			"configurations": {
+				"production": {
+					"tsConfig": "libs/extensions/debtus/internal/tsconfig.lib.prod.json"
+				},
+				"development": {
+					"tsConfig": "libs/extensions/debtus/internal/tsconfig.lib.json"
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"test": {
+			"executor": "@nx/jest:jest",
+			"outputs": [
+				"{workspaceRoot}/coverage/{projectRoot}"
+			],
+			"options": {
+				"jestConfig": "libs/extensions/debtus/internal/jest.config.ts"
+			}
+		},
+		"lint": {
+			"executor": "@nx/eslint:lint"
+		}
+	}
+}
