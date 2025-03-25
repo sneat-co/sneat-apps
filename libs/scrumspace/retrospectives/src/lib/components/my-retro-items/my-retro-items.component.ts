@@ -24,7 +24,7 @@ import {
 	RetroItemType,
 	RetroItemTypeEnum,
 	RetrospectiveStage,
-} from '@sneat/scrumspace-scrummodels';
+} from '@sneat/ext-scrumspace-scrummodels';
 import { SneatUserService } from '@sneat/auth-core';
 import { IRecord } from '@sneat/data';
 import { IUserRecord } from '@sneat/auth-models';

@@ -11,7 +11,7 @@ import {
 import { IonicModule } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITimerState, Timer } from '@sneat/meeting';
-import { IScrumDbo, TimerStatusEnum } from '@sneat/scrumspace-scrummodels';
+import { IScrumDbo, TimerStatusEnum } from '@sneat/ext-scrumspace-scrummodels';
 import { Subscription } from 'rxjs';
 
 @Component({

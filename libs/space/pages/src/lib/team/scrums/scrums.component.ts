@@ -9,12 +9,12 @@ import {
 } from '@angular/core';
 import { IonicModule, NavController } from '@ionic/angular';
 import { ISpaceDbo } from '@sneat/dto';
-import { ScrumService } from '@sneat/scrumspace-dailyscrum';
+import { ScrumService } from '@sneat/ext-scrumspace-dailyscrum';
 import { Subject } from 'rxjs';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { getMeetingIdFromDate, getToday } from '@sneat/meeting';
 import { IRecord } from '@sneat/data';
-import { IScrumDbo } from '@sneat/scrumspace-scrummodels';
+import { IScrumDbo } from '@sneat/ext-scrumspace-scrummodels';
 import { SpaceNavService } from '@sneat/space-services';
 
 @Component({

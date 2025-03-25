@@ -3,7 +3,7 @@ import {
 	IRetroItem,
 	IRetrospective,
 	RetroItemType,
-} from '@sneat/scrumspace-scrummodels';
+} from '@sneat/ext-scrumspace-scrummodels';
 import { Observable } from 'rxjs';
 import { BaseMeetingService, IMeetingRequest } from '@sneat/meeting';
 import { SneatApiService } from '@sneat/api';

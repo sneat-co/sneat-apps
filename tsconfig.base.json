@@ -103,13 +103,13 @@
 			"@sneat/mod-schedulus-core": [
 				"libs/extensions/schedulus/core/src/index.ts"
 			],
-			"@sneat/scrumspace-dailyscrum": [
+			"@sneat/ext-scrumspace-dailyscrum": [
 				"libs/scrumspace/dailyscrum/src/index.ts"
 			],
-			"@sneat/scrumspace-retrospectives": [
+			"@sneat/ext-scrumspace-retrospectives": [
 				"libs/scrumspace/retrospectives/src/index.ts"
 			],
-			"@sneat/scrumspace-scrummodels": [
+			"@sneat/ext-scrumspace-scrummodels": [
 				"libs/scrumspace/scrummodels/src/index.ts"
 			],
 			"@sneat/space-components": ["libs/space/components/src/index.ts"],

@@ -9,7 +9,7 @@ import {
 	IRetroItem,
 	IRetrospective,
 	RetrospectiveStage,
-} from '@sneat/scrumspace-scrummodels';
+} from '@sneat/ext-scrumspace-scrummodels';
 import { SpaceService } from '@sneat/space-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { getMeetingIdFromDate } from '@sneat/meeting';
