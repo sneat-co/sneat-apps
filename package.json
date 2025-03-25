@@ -33,6 +33,7 @@
 		"onlyBuiltDependencies": [
 			"@firebase/util",
 			"@swc/core",
+			"core-js",
 			"cypress",
 			"esbuild",
 			"lmdb",
