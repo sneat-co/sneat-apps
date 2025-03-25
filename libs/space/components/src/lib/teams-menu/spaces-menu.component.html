@@ -1,53 +1,24 @@
 <ion-item>
-	<ion-label color="medium">{{ spacesLabel || "Spaces" }}</ion-label>
-	<!--	<ion-buttons slot="end">-->
-	<!--		<ion-button (click)="newTeam()">-->
-	<!--			<ion-icon name="add-outline" color="medium"></ion-icon>-->
-	<!--		</ion-button>-->
-	<!--	</ion-buttons>-->
-</ion-item>
-<ion-item *ngIf="!spaces" [disabled]="true">
-	<ion-icon name="person" slot="start" />
-	<ion-label>Family</ion-label>
-	<ion-spinner slot="end" *ngIf="!spaces" />
+	<ion-label color="medium" style="font-weight: bold">{{
+		spacesLabel || "Spaces"
+	}}</ion-label>
 </ion-item>
 
-@if (spaces) {
-	<ion-item *ngIf="spaceType && spaces && !spaces.length">
+@if ($spacesToShow().length) {
+	<sneat-spaces-list
+		[spaces]="$spacesToShow()"
+		[userID]="$userID()"
+		(beforeNavigateToSpace)="closeMenu()"
+	/>
+} @else if (spaceType) {
+	<ion-item>
 		<ion-icon name="people-outline" slot="start" />
-		<ion-label *ngIf="spaceType === 'company'">No companies</ion-label>
-		<ion-label color="medium" *ngIf="spaceType !== 'company'"
-			>No {{ spaceType }}
+		<ion-label color="medium">
+			@if (spaceType === "company") {
+				No companies
+			} @else {
+				No {{ spaceType }}
+			}
 		</ion-label>
-		<!--		<ion-buttons>-->
-		<!--			<ion-button routerLink="new-company">New company</ion-button>-->
-		<!--		</ion-buttons>-->
 	</ion-item>
-	<ion-item
-		*ngIf="
-			(!spaceType || spaceType === 'family') &&
-			familySpaces &&
-			!familySpaces.length
-		"
-		tappable
-		[disabled]="!spaces"
-		(click)="newFamily($event)"
-	>
-		<ion-icon name="people-circle-outline" slot="start" />
-		<ion-label
-			>Family
-			<ion-text color="medium"><i>(new)</i></ion-text>
-		</ion-label>
-		<ion-spinner slot="end" *ngIf="!spaces" />
-	</ion-item>
-	<sneat-spaces-list
-		*ngIf="!spaceType || spaceType === 'family'"
-		[spaces]="familySpaces"
-		(beforeNavigateToSpace)="closeMenu()"
-	/>
-	<sneat-spaces-list
-		[spaces]="spaces"
-		[pathPrefix]="pathPrefix"
-		(beforeNavigateToSpace)="closeMenu()"
-	/>
 }

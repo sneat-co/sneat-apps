@@ -1,5 +1,7 @@
-@for (space of spaces; track space.id) {
+@for (space of spaces; track space.id; let last = $last) {
 	<ion-item
+		[disabled]="!space.brief"
+		[lines]="last ? 'full' : 'inset'"
 		routerLink="{{ pathPrefix }}/{{ space.type }}/{{ space.id }}"
 		(click)="goSpace($event, space)"
 	>
@@ -15,6 +17,12 @@
 		/>
 		<ion-label class="ion-text-wrap">
 			{{ space.brief?.title || (space.type | titlecase) || space.id }}
+			@if (!space.id && space.brief) {
+				<ion-badge color="light">(new)</ion-badge>
+			}
 		</ion-label>
+		@if (!space.id && !space.brief) {
+			<ion-spinner name="lines-small" />
+		}
 	</ion-item>
 }

@@ -1,137 +1,123 @@
-import { CommonModule } from '@angular/common';
-import { Component, Inject, Input } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	computed,
+	Input,
+	signal,
+} from '@angular/core';
 import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { ISneatUserState, SneatUserService } from '@sneat/auth-core';
 import { UserRequiredFieldsService } from '@sneat/auth-ui';
 import { SpaceType } from '@sneat/core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
-	ICreateSpaceRequest,
 	ISpaceContext,
 	spaceContextFromBrief,
 	zipMapBriefsWithIDs,
 } from '@sneat/space-models';
-import { SpaceNavService, SpaceService } from '@sneat/space-services';
-import { first } from 'rxjs';
+import { SneatBaseComponent } from '@sneat/ui';
 import { SpacesListComponent } from '../teams-list';
 
 @Component({
 	selector: 'sneat-spaces-menu',
 	templateUrl: './spaces-menu.component.html',
 	imports: [
-		CommonModule,
-		IonicModule,
-		FormsModule,
-		RouterModule,
 		SpacesListComponent,
+		IonicModule,
+		// TODO: import standalone Ionic components
 	],
 	providers: [UserRequiredFieldsService],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SpacesMenuComponent {
+export class SpacesMenuComponent extends SneatBaseComponent {
 	@Input() spacesLabel = 'Spaces';
-	@Input() spaceType?: SpaceType;
 	@Input() pathPrefix = '/space';
 
-	protected spaces?: ISpaceContext[];
-	protected familySpaces?: ISpaceContext[];
-	protected familySpace?: ISpaceContext;
+	@Input() spaceType?: SpaceType;
+
+	protected readonly $userSpaces = signal<ISpaceContext[] | undefined>(
+		undefined,
+	);
+
+	protected readonly $userID = signal<string>('');
+
+	protected readonly $spacesToShow = computed<ISpaceContext[]>(() => {
+		const userSpaces = this.$userSpaces();
+		const spaces =
+			(this.spaceType
+				? userSpaces?.filter((t) => t.type === this.spaceType)
+				: userSpaces) || [];
+		if (!this.spaceType) {
+			const addPseudoSpace = (type: 'family' | 'private'): void => {
+				if (!spaces.some((t) => t.type === type)) {
+					spaces.push({
+						id: '',
+						type,
+						brief: userSpaces
+							? {
+									type,
+									title: '',
+								}
+							: undefined, // define brief indicates we have user record loaded
+					});
+				}
+			};
+			addPseudoSpace('family');
+			addPseudoSpace('private');
+		}
+		const sortOrder: Record<string, number> = {
+			family: 1,
+			private: 2,
+		};
+		spaces.sort((a: ISpaceContext, b: ISpaceContext) => {
+			// Determine the sorting priority (lower values mean higher priority)
+			const priorityA = (a.type && sortOrder[a.type]) ?? 3; // Default to 3 for all other types
+			const priorityB = (b.type && sortOrder[b.type]) ?? 3;
+
+			// Compare priority first
+			if (priorityA !== priorityB) {
+				return priorityA - priorityB;
+			}
+
+			// If same priority, sort by title alphabetically
+			return a.brief?.title.localeCompare(b.brief?.title || '') || 0;
+		});
+		return spaces;
+	});
+
+	private onUserStateChanged = (user: ISneatUserState): void => {
+		console.log('SpacesMenuComponent.onUserStateChanged', user);
+		this.$userID.set(user.user?.uid || '');
+		if (!user?.record) {
+			this.$userSpaces.set(undefined);
+			return;
+		}
+
+		this.$userSpaces.set(
+			user?.record?.spaces
+				? zipMapBriefsWithIDs(user?.record?.spaces).map((t) =>
+						spaceContextFromBrief(t.id, t.brief),
+					)
+				: [],
+		);
+	};
+
+	protected readonly $familySpace = signal<ISpaceContext | undefined>(
+		undefined,
+	);
 
 	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		readonly userService: SneatUserService,
-		private readonly spaceService: SpaceService,
-		private readonly spaceNavService: SpaceNavService,
+		// private readonly spaceNavService: SpaceNavService,
 		private readonly navController: NavController,
 		private readonly menuController: MenuController,
-		private readonly userRequiredFieldsService: UserRequiredFieldsService,
 	) {
-		userService.userState.subscribe({
+		super('SpacesMenuComponent');
+		userService.userState.pipe(this.takeUntilDestroyed()).subscribe({
 			next: this.onUserStateChanged,
 		});
 	}
 
-	public newFamily(event: Event): boolean {
-		event.stopPropagation();
-		event.preventDefault();
-
-		const request: ICreateSpaceRequest = {
-			type: 'family',
-			// roles: [TeamMemberType.creator],
-		};
-
-		this.userService.userState.pipe(first()).subscribe({
-			next: (userState) => {
-				if (userState.record) {
-					this.createSpace(request);
-				} else {
-					this.userRequiredFieldsService
-						.open()
-						.then((modalResult) => {
-							if (modalResult) {
-								this.createSpace(request);
-							}
-						})
-						.catch(
-							this.errorLogger.logErrorHandler(
-								'Failed to open user required fields modal',
-							),
-						);
-				}
-			},
-		});
-		this.closeMenu();
-		return false;
-	}
-
-	private createSpace(request: ICreateSpaceRequest): void {
-		this.spaceService.createSpace(request).subscribe({
-			next: (value) => {
-				console.log('Space created:', value);
-				this.navController
-					.navigateForward('/space/family/' + value.id)
-					.catch(
-						this.errorLogger.logErrorHandler(
-							'failed to navigate to newly created family team',
-						),
-					);
-			},
-			error: this.errorLogger.logErrorHandler(
-				'failed to create a new family team',
-			),
-		});
-	}
-
-	public newSpace(): void {
-		alert('Creation of a new space is not implemented yet');
-	}
-
-	private onUserStateChanged = (user: ISneatUserState): void => {
-		console.log('onUserStateChanged', user);
-		if (!user?.record) {
-			this.spaces = undefined;
-			this.familySpaces = undefined;
-			this.familySpace = undefined;
-			return;
-		}
-
-		this.spaces = user?.record?.spaces
-			? zipMapBriefsWithIDs(user?.record?.spaces)
-					.filter((t) => !this.spaceType || t.brief.type === this.spaceType)
-					.map((t) => spaceContextFromBrief(t.id, t.brief))
-			: [];
-
-		this.familySpaces = this.spaces?.filter((t) => t.type === 'family') || [];
-		this.familySpace =
-			this.familySpaces.length === 1 ? this.familySpaces[0] : undefined;
-
-		if (this.familySpace) {
-			this.spaces = this.spaces?.filter((t) => t.type !== 'family');
-		}
-	};
-
-	public closeMenu(): void {
+	protected closeMenu(): void {
 		this.menuController
 			.close()
 			.catch(this.errorLogger.logErrorHandler('Failed to close teams menu'));
