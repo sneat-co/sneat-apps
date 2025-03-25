@@ -4,19 +4,23 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { DataGridComponent } from '@sneat/datagrid';
-import { DatatugBoardUiModule } from '@sneat/datatug-board-ui';
+import { DatatugBoardUiModule } from '@sneat/ext-datatug-board-ui';
 import { Subject } from 'rxjs';
 import { takeUntil, takeWhile } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { RecordsetValue } from '@sneat/datatug-dto';
+import { RecordsetValue } from '@sneat/ext-datatug-dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { EntityService } from '@sneat/datatug-services-unsorted';
+import { EntityService } from '@sneat/ext-datatug-services-unsorted';
 import {
 	routingParamEntityId,
 	routingParamProjectId,
 	routingParamStoreId,
-} from '@sneat/datatug-core';
-import { EntityContentType, IEntity, IProjEntity } from '@sneat/datatug-models';
+} from '@sneat/ext-datatug-core';
+import {
+	EntityContentType,
+	IEntity,
+	IProjEntity,
+} from '@sneat/ext-datatug-models';
 import { IGridColumn } from '@sneat/grid';
 
 @Component({

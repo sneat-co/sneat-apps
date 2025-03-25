@@ -3,7 +3,7 @@ import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, PopoverController } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { DataType, IEntityFieldDef } from '@sneat/datatug-models';
+import { DataType, IEntityFieldDef } from '@sneat/ext-datatug-models';
 
 @Component({
 	selector: 'sneat-datatug-entity-field-dialog',

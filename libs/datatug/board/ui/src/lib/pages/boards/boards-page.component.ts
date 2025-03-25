@@ -7,17 +7,17 @@ import {
 	IFolder,
 	IProjBoard,
 	IProjItemBrief,
-} from '@sneat/datatug-models';
-import { IProjectContext } from '@sneat/datatug-nav';
+} from '@sneat/ext-datatug-models';
+import { IProjectContext } from '@sneat/ext-datatug-nav';
 import {
 	DatatugNavContextService,
 	DatatugNavService,
-} from '@sneat/datatug-services-nav';
+} from '@sneat/ext-datatug-services-nav';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { DatatugBoardService } from '@sneat/datatug-board-core';
-import { DatatugFoldersService } from '@sneat/datatug-folders-core';
+import { DatatugBoardService } from '@sneat/ext-datatug-board-core';
+import { DatatugFoldersService } from '@sneat/ext-datatug-folders-core';
 
 @Component({
 	selector: 'sneat-datatug-boards',

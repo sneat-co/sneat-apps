@@ -3,8 +3,8 @@ import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { IRecordsetColumn } from '@sneat/datatug-dto';
-import { IForeignKey } from '@sneat/datatug-models';
+import { IRecordsetColumn } from '@sneat/ext-datatug-dto';
+import { IForeignKey } from '@sneat/ext-datatug-models';
 
 @Component({
 	selector: 'sneat-datatug-cell-popover',

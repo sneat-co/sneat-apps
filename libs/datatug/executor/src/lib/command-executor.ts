@@ -4,7 +4,7 @@ import {
 	IExecuteRequest,
 	IExecuteResponse,
 	IRequestCommand,
-} from '@sneat/datatug-dto';
+} from '@sneat/ext-datatug-dto';
 
 export interface ICommandExecutor {
 	executeCommand(command: IRequestCommand): Observable<ICommandResponse>;

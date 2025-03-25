@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { IProjectRef } from '@sneat/datatug-core';
+import { IProjectRef } from '@sneat/ext-datatug-core';
 
 @Injectable()
 export class ProjectContextService {

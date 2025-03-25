@@ -6,14 +6,14 @@ import { SneatErrorCardComponent } from '@sneat/components';
 import { Subject } from 'rxjs';
 import { IonicModule, IonInput, PopoverController } from '@ionic/angular';
 import { EntityFieldDialogComponent } from './entity-field-dialog/entity-field-dialog.component';
-import { IEntity, IEntityFieldDef } from '@sneat/datatug-models';
-import { IProjectContext } from '@sneat/datatug-nav';
+import { IEntity, IEntityFieldDef } from '@sneat/ext-datatug-models';
+import { IProjectContext } from '@sneat/ext-datatug-nav';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { EntityService } from '@sneat/datatug-services-unsorted';
+import { EntityService } from '@sneat/ext-datatug-services-unsorted';
 import {
 	DatatugNavContextService,
 	DatatugNavService,
-} from '@sneat/datatug-services-nav';
+} from '@sneat/ext-datatug-services-nav';
 
 @Component({
 	selector: 'sneat-datatug-entity-edit',

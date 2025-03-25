@@ -3,7 +3,7 @@ import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ViewDidEnter, ViewDidLeave, ViewWillEnter } from '@ionic/angular';
-import { getStoreId, IProjectContext } from '@sneat/datatug-nav';
+import { getStoreId, IProjectContext } from '@sneat/ext-datatug-nav';
 
 // const paramTab = 'tab';
 const tabs = ['active', 'bookmarked', 'personal', 'shared'] as const;

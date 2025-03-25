@@ -6,7 +6,7 @@ import {
 	IQueryFolderContext,
 	ISqlQueryRequest,
 	QueryItem,
-} from '@sneat/datatug-models';
+} from '@sneat/ext-datatug-models';
 import { Subscription } from 'rxjs';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,8 +14,8 @@ import { QueriesService } from '../queries.service';
 import {
 	DatatugNavContextService,
 	DatatugNavService,
-} from '@sneat/datatug-services-nav';
-import { IProjectContext } from '@sneat/datatug-nav';
+} from '@sneat/ext-datatug-services-nav';
+import { IProjectContext } from '@sneat/ext-datatug-nav';
 
 interface FilteredItem {
 	folders: string[];

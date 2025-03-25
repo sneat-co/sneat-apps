@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { DatatugServicesStoreModule } from '@sneat/datatug-services-repo';
+import { DatatugServicesStoreModule } from '@sneat/ext-datatug-services-repo';
 import { Coordinator } from './coordinator';
 
 @NgModule({

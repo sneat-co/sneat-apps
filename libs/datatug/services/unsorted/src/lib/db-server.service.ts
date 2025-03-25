@@ -5,16 +5,16 @@ import { map } from 'rxjs/operators';
 import {
 	ProjectContextService,
 	ProjectService,
-} from '@sneat/datatug-services-project';
+} from '@sneat/ext-datatug-services-project';
 import {
 	IDbCatalogSummary,
 	IDbServer,
 	IDbServerSummary,
 	IProjDbServerSummary,
-} from '@sneat/datatug-models';
+} from '@sneat/ext-datatug-models';
 import { getStoreUrl } from '@sneat/api';
-import { GetServerDatabasesRequest } from '@sneat/datatug-dto';
-import { IProjectRef } from '@sneat/datatug-core';
+import { GetServerDatabasesRequest } from '@sneat/ext-datatug-dto';
+import { IProjectRef } from '@sneat/ext-datatug-core';
 
 @Injectable()
 export class DbServerService {
@@ -88,12 +88,11 @@ export class DbServerService {
 	): Observable<IProjDbServerSummary[]> {
 		console.log('getDbServers()', projectRef);
 		return this.projectService.getFull(projectRef).pipe(
-			map(
-				(p) =>
-					p.dbServers?.map((dbServerFull) => ({
-						dbServer: dbServerFull.dbServer,
-						databasesCount: dbServerFull.databases?.length || 0,
-					})),
+			map((p) =>
+				p.dbServers?.map((dbServerFull) => ({
+					dbServer: dbServerFull.dbServer,
+					databasesCount: dbServerFull.databases?.length || 0,
+				})),
 			),
 		);
 	}

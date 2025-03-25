@@ -3,8 +3,11 @@ import { Observable, Subject } from 'rxjs';
 import { IonInput, ModalController } from '@ionic/angular';
 import { share } from 'rxjs/operators';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IParameterDef, IParameterValueWithoutID } from '@sneat/datatug-models';
-import { AgentService } from '@sneat/datatug-services-repo';
+import {
+	IParameterDef,
+	IParameterValueWithoutID,
+} from '@sneat/ext-datatug-models';
+import { AgentService } from '@sneat/ext-datatug-services-repo';
 // import { ParameterLookupComponent } from "./parameter-lookup.component";
 
 @Injectable()

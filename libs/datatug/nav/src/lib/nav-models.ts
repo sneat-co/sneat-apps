@@ -5,8 +5,8 @@ import {
 	IProjectSummary,
 	IProjEnv,
 	ITableFull,
-} from '@sneat/datatug-models';
-import { IProjectRef } from '@sneat/datatug-core';
+} from '@sneat/ext-datatug-models';
+import { IProjectRef } from '@sneat/ext-datatug-core';
 import { IStoreRef, parseStoreRef } from '@sneat/core';
 
 export interface IDatatugStoreContext {

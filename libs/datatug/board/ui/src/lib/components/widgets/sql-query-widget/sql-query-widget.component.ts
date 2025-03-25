@@ -14,9 +14,9 @@ import {
 	IBoardContext,
 	ISqlWidgetSettings,
 	QueryType,
-} from '@sneat/datatug-models';
-import { AgentService } from '@sneat/datatug-services-repo';
-import { IRecordset, IRecordsetResult } from '@sneat/datatug-dto';
+} from '@sneat/ext-datatug-models';
+import { AgentService } from '@sneat/ext-datatug-services-repo';
+import { IRecordset, IRecordsetResult } from '@sneat/ext-datatug-dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 const reSqlParams = /@(\w+)/;

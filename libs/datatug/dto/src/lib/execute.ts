@@ -3,10 +3,10 @@ import {
 	IRecordsetCheckDef,
 	IRecordsetDef,
 	NamedParams,
-} from '@sneat/datatug-models';
+} from '@sneat/ext-datatug-models';
 import { ICommandResponse } from './command-response';
 
-// import { IValueCheckResult } from '@sneat/datatug-checks';
+// import { IValueCheckResult } from '@sneat/ext-datatug-checks';
 
 export interface ISelectRequest {
 	// TODO: document where & how it is used

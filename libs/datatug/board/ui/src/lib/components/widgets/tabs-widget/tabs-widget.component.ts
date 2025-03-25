@@ -5,7 +5,7 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
-import { IBoardContext, ITabsWidgetSettings } from '@sneat/datatug-models';
+import { IBoardContext, ITabsWidgetSettings } from '@sneat/ext-datatug-models';
 
 @Component({
 	selector: 'sneat-datatug-tabs-widget',

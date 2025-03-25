@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SneatCardListComponent } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { DatatugNavContextService } from '@sneat/datatug-services-nav';
-import { IProjectSummary } from '@sneat/datatug-models';
+import { DatatugNavContextService } from '@sneat/ext-datatug-services-nav';
+import { IProjectSummary } from '@sneat/ext-datatug-models';
 
 @Component({
 	selector: 'sneat-datatug-environments',

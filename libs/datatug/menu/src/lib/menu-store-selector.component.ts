@@ -9,12 +9,12 @@ import {
 	allUserStoresAsFlatList,
 	IDatatugStoreBriefWithId,
 	IDatatugUser,
-} from '@sneat/datatug-models';
+} from '@sneat/ext-datatug-models';
 import { IErrorLogger } from '@sneat/logging';
 import {
 	DatatugNavContextService,
 	DatatugNavService,
-} from '@sneat/datatug-services-nav';
+} from '@sneat/ext-datatug-services-nav';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 

@@ -5,12 +5,12 @@ import { takeUntil } from 'rxjs/operators';
 import {
 	DatatugNavContextService,
 	DatatugNavService,
-} from '@sneat/datatug-services-nav';
-import { IEnvDbTableContext, IProjectContext } from '@sneat/datatug-nav';
+} from '@sneat/ext-datatug-services-nav';
+import { IEnvDbTableContext, IProjectContext } from '@sneat/ext-datatug-nav';
 import {
 	DatatugUserService,
 	IDatatugUserState,
-} from '@sneat/datatug-services-base';
+} from '@sneat/ext-datatug-services-base';
 import {
 	AuthStatus,
 	AuthStatuses,

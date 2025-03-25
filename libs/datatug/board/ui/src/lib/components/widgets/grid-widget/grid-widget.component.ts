@@ -7,10 +7,10 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
-import { IRecordset } from '@sneat/datatug-dto';
+import { IRecordset } from '@sneat/ext-datatug-dto';
 import { IGridDef } from '@sneat/grid';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { recordsetToGridDef } from '@sneat/datatug-services-repo';
+import { recordsetToGridDef } from '@sneat/ext-datatug-services-repo';
 
 @Component({
 	selector: 'sneat-datatug-grid-widget',

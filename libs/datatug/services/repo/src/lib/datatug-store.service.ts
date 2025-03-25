@@ -1,7 +1,7 @@
 import {
 	DatatugUserService,
 	IDatatugUserState,
-} from '@sneat/datatug-services-base';
+} from '@sneat/ext-datatug-services-base';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -10,9 +10,9 @@ import {
 	IParameter,
 	IProjectBase,
 	projectsBriefFromDictToFlatList,
-} from '@sneat/datatug-models';
+} from '@sneat/ext-datatug-models';
 import { getStoreUrl } from '@sneat/api';
-import { IRecordset } from '@sneat/datatug-dto';
+import { IRecordset } from '@sneat/ext-datatug-dto';
 import { IGridColumn, IGridDef } from '@sneat/grid';
 import { storeCanProvideListOfProjects } from '@sneat/core';
 

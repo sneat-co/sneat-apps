@@ -6,13 +6,13 @@ import {
 	ProjectItemServiceFactory,
 	ProjItemServiceModule,
 	StoreApiService,
-} from '@sneat/datatug-services-repo';
+} from '@sneat/ext-datatug-services-repo';
 import { QueryContextSqlService } from './query-context-sql.service';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { IonicModule } from '@ionic/angular';
 import { QueryEditorStateService } from './query-editor-state-service';
 import { QueriesUiService } from './queries-ui.service';
-import { DatatugServicesUnsortedModule } from '@sneat/datatug-services-unsorted';
+import { DatatugServicesUnsortedModule } from '@sneat/ext-datatug-services-unsorted';
 
 @NgModule({
 	imports: [

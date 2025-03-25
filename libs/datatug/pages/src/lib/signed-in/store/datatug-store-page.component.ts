@@ -8,19 +8,22 @@ import { parseStoreRef } from '@sneat/core';
 import {
 	IProjectBase,
 	// projectsBriefFromDictToFlatList,
-} from '@sneat/datatug-models';
-import { DatatugNavService, StoreTracker } from '@sneat/datatug-services-nav';
+} from '@sneat/ext-datatug-models';
+import {
+	DatatugNavService,
+	StoreTracker,
+} from '@sneat/ext-datatug-services-nav';
 import {
 	AgentStateService,
 	DatatugStoreService,
 	IAgentState,
-} from '@sneat/datatug-services-repo';
-import { IDatatugStoreContext, IProjectContext } from '@sneat/datatug-nav';
+} from '@sneat/ext-datatug-services-repo';
+import { IDatatugStoreContext, IProjectContext } from '@sneat/ext-datatug-nav';
 import {
 	NewProjectFormComponent,
 	NewProjectService,
-} from '@sneat/datatug-project';
-import { DatatugUserService } from '@sneat/datatug-services-base';
+} from '@sneat/ext-datatug-project';
+import { DatatugUserService } from '@sneat/ext-datatug-services-base';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { merge, Subject } from 'rxjs';
 import { filter, takeUntil, tap } from 'rxjs/operators';

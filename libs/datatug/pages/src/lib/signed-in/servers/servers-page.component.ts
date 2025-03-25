@@ -4,15 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController, NavController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { IDbServer, IProjDbServerSummary } from '@sneat/datatug-models';
+import { IDbServer, IProjDbServerSummary } from '@sneat/ext-datatug-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { DbServerService } from '@sneat/datatug-services-unsorted';
-import { IProjectRef } from '@sneat/datatug-core';
-import { ProjectContextService } from '@sneat/datatug-services-project';
+import { DbServerService } from '@sneat/ext-datatug-services-unsorted';
+import { IProjectRef } from '@sneat/ext-datatug-core';
+import { ProjectContextService } from '@sneat/ext-datatug-services-project';
 import {
 	AddDbServerComponent,
 	DatatugDbModalsAddDbServerModule,
-} from '@sneat/datatug-db';
+} from '@sneat/ext-datatug-db';
 
 @Component({
 	selector: 'sneat-datatug-servers',

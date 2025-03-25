@@ -3,16 +3,19 @@ import { IRecord } from '@sneat/data';
 import { Observable, of, throwError } from 'rxjs';
 
 import { SneatApiService } from '@sneat/api';
-import { StoreApiService } from '@sneat/datatug-services-repo';
-import { CreateNamedRequest } from '@sneat/datatug-dto';
-import { IEnvironmentSummary, IOptionallyTitled } from '@sneat/datatug-models';
-import { createProjItem } from '@sneat/datatug-services-base';
+import { StoreApiService } from '@sneat/ext-datatug-services-repo';
+import { CreateNamedRequest } from '@sneat/ext-datatug-dto';
+import {
+	IEnvironmentSummary,
+	IOptionallyTitled,
+} from '@sneat/ext-datatug-models';
+import { createProjItem } from '@sneat/ext-datatug-services-base';
 import { startWith, tap } from 'rxjs/operators';
-import { IProjectRef } from '@sneat/datatug-core';
+import { IProjectRef } from '@sneat/ext-datatug-core';
 import {
 	ProjectContextService,
 	ProjectService,
-} from '@sneat/datatug-services-project';
+} from '@sneat/ext-datatug-services-project';
 
 const getEnvCacheKey = (projectRef: IProjectRef, env: string): string => {
 	return `${projectRef.projectId}@${projectRef.storeId}/${env}`;

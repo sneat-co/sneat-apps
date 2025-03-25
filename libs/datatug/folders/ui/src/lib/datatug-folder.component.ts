@@ -7,7 +7,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { Observable, Subject, throwError } from 'rxjs';
-import { IProjectRef } from '@sneat/datatug-core';
+import { IProjectRef } from '@sneat/ext-datatug-core';
 import { takeUntil, tap } from 'rxjs/operators';
 import {
 	folderItemsAsList,
@@ -16,18 +16,18 @@ import {
 	IProjItemBrief,
 	ProjectItem,
 	ProjectItemType,
-} from '@sneat/datatug-models';
-import { CreateNamedRequest } from '@sneat/datatug-dto';
+} from '@sneat/ext-datatug-models';
+import { CreateNamedRequest } from '@sneat/ext-datatug-dto';
 import { IRecord } from '@sneat/data';
-import { DatatugNavService } from '@sneat/datatug-services-nav';
+import { DatatugNavService } from '@sneat/ext-datatug-services-nav';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	EntityService,
 	EnvironmentService,
 	SchemaService,
-} from '@sneat/datatug-services-unsorted';
-import { DatatugFoldersService } from '@sneat/datatug-folders-core';
-import { DatatugBoardService } from '@sneat/datatug-board-core';
+} from '@sneat/ext-datatug-services-unsorted';
+import { DatatugFoldersService } from '@sneat/ext-datatug-folders-core';
+import { DatatugBoardService } from '@sneat/ext-datatug-board-core';
 
 @Component({
 	selector: 'sneat-datatug-folder',

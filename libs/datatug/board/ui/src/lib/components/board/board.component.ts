@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { NewCardDialogComponent } from '../../modals/new-card-dialog/new-card-dialog.component';
-import { IBoardContext, IBoardDef } from '@sneat/datatug-models';
+import { IBoardContext, IBoardDef } from '@sneat/ext-datatug-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({

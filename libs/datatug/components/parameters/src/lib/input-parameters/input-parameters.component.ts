@@ -11,7 +11,7 @@ import {
 	IParameterDef,
 	IParamWithDefAndValue,
 	ParameterValue,
-} from '@sneat/datatug-models';
+} from '@sneat/ext-datatug-models';
 
 @Component({
 	selector: 'sneat-datatug-input-parameters',

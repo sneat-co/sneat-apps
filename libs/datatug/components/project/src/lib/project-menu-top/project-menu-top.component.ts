@@ -3,13 +3,13 @@ import {
 	DatatugNavContextService,
 	DatatugNavService,
 	ProjectTopLevelPage,
-} from '@sneat/datatug-services-nav';
-import { IProjectSummary } from '@sneat/datatug-models';
+} from '@sneat/ext-datatug-services-nav';
+import { IProjectSummary } from '@sneat/ext-datatug-models';
 import { Observable, Subject } from 'rxjs';
-import { IProjectContext } from '@sneat/datatug-nav';
+import { IProjectContext } from '@sneat/ext-datatug-nav';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { takeUntil } from 'rxjs/operators';
-import { DatatugUserService } from '@sneat/datatug-services-base';
+import { DatatugUserService } from '@sneat/ext-datatug-services-base';
 
 interface IProjectTopLevelPage {
 	path: ProjectTopLevelPage;

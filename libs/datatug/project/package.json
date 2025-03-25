@@ -1,5 +1,5 @@
 {
-	"name": "@sneat/datatug-project",
+	"name": "@sneat/ext-datatug-project",
 	"version": "0.0.1",
 	"peerDependencies": {
 		"@angular/common": "^17.1.0 || ^18.0.0 || ^19.0.0",

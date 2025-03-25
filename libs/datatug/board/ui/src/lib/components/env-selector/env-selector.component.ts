@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { DatatugNavContextService } from '@sneat/datatug-services-nav';
-import { IProjEnv } from '@sneat/datatug-models';
+import { DatatugNavContextService } from '@sneat/ext-datatug-services-nav';
+import { IProjEnv } from '@sneat/ext-datatug-models';
 
 export interface IEnv {
 	readonly id: string;

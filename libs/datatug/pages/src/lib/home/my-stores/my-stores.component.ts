@@ -4,16 +4,19 @@ import {
 	allUserStoresAsFlatList,
 	DatatugProjStoreType,
 	IDatatugStoreBriefWithId,
-} from '@sneat/datatug-models';
-import { AgentStateService, IAgentState } from '@sneat/datatug-services-repo';
+} from '@sneat/ext-datatug-models';
+import {
+	AgentStateService,
+	IAgentState,
+} from '@sneat/ext-datatug-services-repo';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { DatatugNavService } from '@sneat/datatug-services-nav';
+import { DatatugNavService } from '@sneat/ext-datatug-services-nav';
 import { IonicModule, NavController } from '@ionic/angular';
-import { DatatugUserService } from '@sneat/datatug-services-base';
+import { DatatugUserService } from '@sneat/ext-datatug-services-base';
 import { AuthStatus } from '@sneat/auth-core';
-import { IDatatugStoreContext } from '@sneat/datatug-nav';
+import { IDatatugStoreContext } from '@sneat/ext-datatug-nav';
 import { parseStoreRef } from '@sneat/core';
 import { LoadingItemsComponent } from '../loading-items-component';
 

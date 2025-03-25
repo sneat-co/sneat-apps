@@ -14,10 +14,10 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	ProjectContextService,
 	ProjectService,
-} from '@sneat/datatug-services-project';
-import { IProjectSummary } from '@sneat/datatug-models';
-import { AppContextService, IProjectRef } from '@sneat/datatug-core';
-import { EnvironmentService } from '@sneat/datatug-services-unsorted';
+} from '@sneat/ext-datatug-services-project';
+import { IProjectSummary } from '@sneat/ext-datatug-models';
+import { AppContextService, IProjectRef } from '@sneat/ext-datatug-core';
+import { EnvironmentService } from '@sneat/ext-datatug-services-unsorted';
 import {
 	IDatatugNavContext,
 	IEnvContext,
@@ -25,7 +25,7 @@ import {
 	IEnvDbTableContext,
 	IProjectContext,
 	populateProjectBriefFromSummaryIfMissing,
-} from '@sneat/datatug-nav';
+} from '@sneat/ext-datatug-nav';
 import { parseStoreRef } from '@sneat/core';
 import { newRandomId } from '@sneat/random';
 

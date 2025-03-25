@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { IColumn, IForeignKey, ITableFull } from '@sneat/datatug-models';
+import { IColumn, IForeignKey, ITableFull } from '@sneat/ext-datatug-models';
 
 @Component({
 	selector: 'sneat-datatug-table-meta-card',

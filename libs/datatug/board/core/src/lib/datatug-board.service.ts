@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { IBoardDef, IProjBoard } from '@sneat/datatug-models';
-// import {StoreApiService} from '@sneat/datatug-services-repo';
+import { IBoardDef, IProjBoard } from '@sneat/ext-datatug-models';
+// import {StoreApiService} from '@sneat/ext-datatug-services-repo';
 import { SneatApiServiceFactory } from '@sneat/api';
-import { ICreateProjectItemRequest } from '@sneat/datatug-services-project';
-import { CreateNamedRequest } from '@sneat/datatug-dto';
+import { ICreateProjectItemRequest } from '@sneat/ext-datatug-services-project';
+import { CreateNamedRequest } from '@sneat/ext-datatug-dto';
 
 @Injectable()
 export class DatatugBoardService {

@@ -2,17 +2,20 @@ import { Component, Inject, Input, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ModalController } from '@ionic/angular';
-import { IParameterDef, IParameterValueWithoutID } from '@sneat/datatug-models';
+import {
+	IParameterDef,
+	IParameterValueWithoutID,
+} from '@sneat/ext-datatug-models';
 import {
 	ICommandResponseItem,
 	ICommandResponseWithRecordset,
 	IExecuteResponse,
-} from '@sneat/datatug-dto';
+} from '@sneat/ext-datatug-dto';
 import { IGridDef } from '@sneat/grid';
 import {
 	DatatugStoreService,
 	recordsetToGridDef,
-} from '@sneat/datatug-services-repo';
+} from '@sneat/ext-datatug-services-repo';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({

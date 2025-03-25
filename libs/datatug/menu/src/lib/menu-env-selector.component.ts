@@ -4,8 +4,8 @@ import { IErrorLogger } from '@sneat/logging';
 import {
 	DatatugNavContextService,
 	DatatugNavService,
-} from '@sneat/datatug-services-nav';
-import { IProjectContext } from '@sneat/datatug-nav';
+} from '@sneat/ext-datatug-services-nav';
+import { IProjectContext } from '@sneat/ext-datatug-nav';
 
 @Component({
 	selector: 'sneat-datatug-menu-env-selector',

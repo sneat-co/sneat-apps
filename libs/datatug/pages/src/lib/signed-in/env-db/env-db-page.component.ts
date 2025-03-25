@@ -13,16 +13,19 @@ import { IonicModule } from '@ionic/angular';
 import { GlobalTooltipOption, Options, Tabulator } from 'tabulator-tables';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { getTabulatorCols, IGridColumn } from '@sneat/grid';
-import { routingParamEnvironmentId } from '@sneat/datatug-core';
+import { routingParamEnvironmentId } from '@sneat/ext-datatug-core';
 import {
 	IDatabaseFull,
 	IEnvironmentFull,
 	IProjectFull,
 	ITableFull,
-} from '@sneat/datatug-models';
-import { ProjectService } from '@sneat/datatug-services-project';
-import { DatatugNavService, ProjectTracker } from '@sneat/datatug-services-nav';
-import { IProjectContext } from '@sneat/datatug-nav';
+} from '@sneat/ext-datatug-models';
+import { ProjectService } from '@sneat/ext-datatug-services-project';
+import {
+	DatatugNavService,
+	ProjectTracker,
+} from '@sneat/ext-datatug-services-nav';
+import { IProjectContext } from '@sneat/ext-datatug-nav';
 import { Subject } from 'rxjs';
 
 interface IRecordsetInfo {

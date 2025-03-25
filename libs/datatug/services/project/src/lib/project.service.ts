@@ -11,9 +11,9 @@ import {
 	IProjectRef,
 	isValidProjectRef,
 	projectRefToString,
-} from '@sneat/datatug-core';
-import { IProjectFull, IProjectSummary } from '@sneat/datatug-models';
-import { DatatugStoreServiceFactory } from '@sneat/datatug-services-repo';
+} from '@sneat/ext-datatug-core';
+import { IProjectFull, IProjectSummary } from '@sneat/ext-datatug-models';
+import { DatatugStoreServiceFactory } from '@sneat/ext-datatug-services-repo';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	map,

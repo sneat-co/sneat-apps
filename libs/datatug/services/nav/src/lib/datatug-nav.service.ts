@@ -7,13 +7,13 @@ import {
 	IProjEntity,
 	IProjEnv,
 	IQueryDef,
-} from '@sneat/datatug-models';
+} from '@sneat/ext-datatug-models';
 import {
 	getStoreId,
 	IDatatugStoreContext,
 	IProjectContext,
-} from '@sneat/datatug-nav';
-import { IProjectRef, isValidProjectRef } from '@sneat/datatug-core';
+} from '@sneat/ext-datatug-nav';
+import { IProjectRef, isValidProjectRef } from '@sneat/ext-datatug-core';
 import { IStoreRef, storeRefToId } from '@sneat/core';
 
 export type ProjectTopLevelPage =

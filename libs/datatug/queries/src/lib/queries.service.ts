@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { QUERY_PROJ_ITEM_SERVICE } from './queries.service.token';
-import { IQueryDef, IQueryFolder } from '@sneat/datatug-models';
-import { IProjectRef } from '@sneat/datatug-core';
-import { ProjectItemService } from '@sneat/datatug-services-repo';
+import { IQueryDef, IQueryFolder } from '@sneat/ext-datatug-models';
+import { IProjectRef } from '@sneat/ext-datatug-core';
+import { ProjectItemService } from '@sneat/ext-datatug-services-repo';
 
 @Injectable()
 export class QueriesService {

@@ -11,16 +11,16 @@ import {
 	projectRefToString,
 	QueryParamsService,
 	routingParamBoard,
-} from '@sneat/datatug-core';
+} from '@sneat/ext-datatug-core';
 import {
 	IBoardContext,
 	IBoardDef,
 	IParamWithDefAndValue,
 	IProjBoard,
-} from '@sneat/datatug-models';
-import { DatatugNavContextService } from '@sneat/datatug-services-nav';
-import { ParameterLookupService } from '@sneat/datatug-components-parameters';
-import { DatatugBoardService } from '@sneat/datatug-board-core';
+} from '@sneat/ext-datatug-models';
+import { DatatugNavContextService } from '@sneat/ext-datatug-services-nav';
+import { ParameterLookupService } from '@sneat/ext-datatug-components-parameters';
+import { DatatugBoardService } from '@sneat/ext-datatug-board-core';
 
 @Component({
 	selector: 'sneat-datatug-board-page',

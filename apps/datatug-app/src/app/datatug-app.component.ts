@@ -21,7 +21,7 @@ export class DatatugAppComponent {
 
 	// loadMenu(): void {
 	// 	if (!this.menu) {
-	// 		this.menu = import(`@sneat/datatug-menu`).then(
+	// 		this.menu = import(`@sneat/ext-datatug-menu`).then(
 	// 			({ DatatugMenuModule, DatatugMenuComponent }) => {
 	// 				const factory =
 	// 					this.componentFactoryResolver.resolveComponentFactory(

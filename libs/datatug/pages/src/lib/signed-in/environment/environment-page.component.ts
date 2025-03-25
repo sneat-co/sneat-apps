@@ -8,11 +8,11 @@ import {
 	IEnvDbServer,
 	IEnvironmentSummary,
 	IProjEnv,
-} from '@sneat/datatug-models';
+} from '@sneat/ext-datatug-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { EnvironmentService } from '@sneat/datatug-services-unsorted';
-import { DatatugNavContextService } from '@sneat/datatug-services-nav';
-import { IProjectContext } from '@sneat/datatug-nav';
+import { EnvironmentService } from '@sneat/ext-datatug-services-unsorted';
+import { DatatugNavContextService } from '@sneat/ext-datatug-services-nav';
+import { IProjectContext } from '@sneat/ext-datatug-nav';
 
 @Component({
 	selector: 'sneat-datatug-environment',

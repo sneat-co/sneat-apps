@@ -11,9 +11,9 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	DatatugServicesProjectModule,
 	ProjectService,
-} from '@sneat/datatug-services-project';
-import { DatatugNavService } from '@sneat/datatug-services-nav';
-import { IProjectContext } from '@sneat/datatug-nav';
+} from '@sneat/ext-datatug-services-project';
+import { DatatugNavService } from '@sneat/ext-datatug-services-nav';
+import { IProjectContext } from '@sneat/ext-datatug-nav';
 import { parseStoreRef } from '@sneat/core';
 
 @Component({
