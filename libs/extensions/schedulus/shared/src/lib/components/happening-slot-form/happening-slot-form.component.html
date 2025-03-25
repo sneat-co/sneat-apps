@@ -28,7 +28,7 @@
 <!--</ion-item-divider>-->
 
 @if (happeningType === "recurring") {
-	@if (happens()) {
+	@if (repeats()) {
 		<ion-grid class="ion-grid-layout">
 			<ion-row>
 				<ion-col>
@@ -36,7 +36,7 @@
 						<ion-select
 							label="Repeats"
 							interface="popover"
-							[value]="happens()"
+							[value]="repeats()"
 							(ionChange)="onRepeatsChanged($event.detail.value)"
 						>
 							@for (repeatOption of repeatsOptions; track repeatOption.id) {
@@ -77,7 +77,7 @@
 		<sneat-select-from-list
 			label="Repeats"
 			listLabelColor="light"
-			[value]="happens()"
+			[value]="repeats() || ''"
 			[items]="repeatsOptions"
 			[isReadonly]="!!date"
 			(valueChange)="onRepeatsChanged($event)"
@@ -87,7 +87,7 @@
 		/>
 	}
 
-	@if (happens() === "monthly") {
+	@if (repeats() === "monthly") {
 		<!--		<ion-item-divider>-->
 		<!--			<ion-label>On</ion-label>-->
 		<!--		</ion-item-divider>-->
@@ -190,7 +190,7 @@
 			</ion-grid>
 		</form>
 	}
-	@if (happens() === "yearly") {
+	@if (repeats() === "yearly") {
 		@if (yearlyMonth) {
 			<ion-item>
 				<ion-select
@@ -220,8 +220,8 @@
 	}
 
 	@if (
-		(happens() === "monthly" && monthlyMode() === "monthly-day") ||
-		(happens() === "yearly" && yearlyMonth.value)
+		(repeats() === "monthly" && monthlyMode() === "monthly-day") ||
+		(repeats() === "yearly" && yearlyMonth.value)
 	) {
 		<ion-item-divider>Choose date</ion-item-divider>
 		<ion-grid>

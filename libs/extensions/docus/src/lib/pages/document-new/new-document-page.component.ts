@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
@@ -34,7 +33,7 @@ import {
 	ContactusServicesModule,
 } from '@sneat/contactus-services';
 import { zipMapBriefsWithIDs } from '@sneat/team-models';
-import { SpaceNavService } from '@sneat/team-services';
+import { SpaceNavService, SpaceServiceModule } from '@sneat/team-services';
 import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -42,11 +41,10 @@ import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 	templateUrl: './new-document-page.component.html',
 	providers: [SpaceComponentBaseParams],
 	imports: [
-		CommonModule,
 		FormsModule,
 		IonicModule,
 		CountrySelectorComponent,
-
+		SpaceServiceModule,
 		SelectFromListComponent,
 		MembersSelectorModule,
 		AssetusServicesModule,
@@ -60,24 +58,23 @@ export class NewDocumentPageComponent
 	// @Input() public override space?: ISpaceContext;
 	@Input() public override contactusSpace?: IContactusSpaceDboAndID;
 
-	belongsTo: 'member' | 'commune' = 'commune';
+	protected contact?: IContactContext;
 
-	public contact?: IContactContext;
+	protected isMissingRequiredParams = false;
 
-	public isMissingRequiredParams = false;
+	protected readonly docTypes: ISelectItem[] =
+		Object.values(standardDocTypesByID);
 
-	public readonly docTypes: ISelectItem[] = Object.values(standardDocTypesByID);
-
-	public docTitle = '';
-	public docType: AssetDocumentType = 'unspecified';
-	public docFields: IDocTypeStandardFields = {};
-	public docNumber = '';
+	protected docTitle = '';
+	protected docType: AssetDocumentType = 'unspecified';
+	protected docFields: IDocTypeStandardFields = {};
+	protected docNumber = '';
 
 	private readonly memberChanged = new Subject<void>();
 
-	public members?: readonly IIdAndBrief<IContactBrief>[];
+	protected members?: readonly IIdAndBrief<IContactBrief>[];
 
-	public selectedMembers?: readonly IIdAndBrief<IContactBrief>[];
+	protected selectedMembers?: readonly IIdAndBrief<IContactBrief>[];
 
 	constructor(
 		private readonly contactService: ContactService,
@@ -96,7 +93,7 @@ export class NewDocumentPageComponent
 		this.trackUrlDocType();
 	}
 
-	public get isFormValid(): boolean {
+	protected get isFormValid(): boolean {
 		const fields = standardDocTypesByID[this.docType].fields;
 		this.docFields = fields || {};
 		if (!fields) {
@@ -165,7 +162,7 @@ export class NewDocumentPageComponent
 		});
 	};
 
-	public submit(): void {
+	protected submit(): void {
 		if (!this.space) {
 			return;
 		}
