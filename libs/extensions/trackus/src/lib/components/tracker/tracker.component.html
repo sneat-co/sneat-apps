@@ -1,38 +1,9 @@
-@let tracker = $tracker();
-
-<ion-card>
-	<ion-item color="light">
-		<ion-label>
-			<ion-text class="ion-padding-end" color="medium">Record for:</ion-text>
-			<b>myself</b>
-		</ion-label>
-	</ion-item>
-	<ion-item>
-		<ion-input
-			#numberInput
-			type="number"
-			[disabled]="$isSubmitting()"
-			label="{{ tracker?.brief?.emoji }} {{ tracker?.brief?.title }}"
-			(keyup.enter)="addTrackerRecord()"
-		/>
-		<ion-buttons slot="end">
-			<ion-button
-				fill="solid"
-				color="primary"
-				[disabled]="$isSubmitting() || numberInput.value === ''"
-				(click)="addTrackerRecord()"
-			>
-				<ion-icon name="add-outline" slot="start" />
-				<ion-label>Add entry</ion-label>
-			</ion-button>
-		</ion-buttons>
-	</ion-item>
-</ion-card>
+<sneat-tracker-form [$tracker]="$tracker()" />
 
 <ion-item>
 	<ion-label style="font-weight: bold" color="medium"
-		>Tracker history</ion-label
-	>
+		>Tracker history
+	</ion-label>
 	<ion-buttons slot="end">
 		<ion-button fill="outline" color="primary">
 			<ion-icon name="share-outline" slot="start"></ion-icon>
@@ -41,68 +12,7 @@
 	</ion-buttons>
 </ion-item>
 
-<ion-card>
-	@for (date of $entriesByDateAndTarget(); track date.dateID) {
-		<ion-item-divider color="light">
-			<ion-label>{{ date.dateID }}</ion-label>
-			<ion-buttons slot="end">
-				<ion-button
-					title="Delete all records for the date"
-					(click)="deleteTrackerPointsByDate(date.dateID)"
-				>
-					<ion-icon name="trash" slot="start" color="medium" />
-					<!--					<ion-label color="medium">Delete</ion-label>-->
-				</ion-button>
-			</ion-buttons>
-		</ion-item-divider>
-		@for (target of date.targets; track target.key) {
-			<ion-item>
-				<ion-label>
-					<b>{{ target.title }}</b>
-					&mdash;
-					@for (point of target.points; track point.id; let isLast = $last) {
-						<ion-chip style="padding-right: 0 !important">
-							@if (point.brief.ts) {
-								<ion-label
-									title="Added at {{ point.brief.ts.toDate() | date: 'HH:mm' }}"
-								>
-									{{ point.brief.i || point.brief.f }}
-								</ion-label>
-							}
-							<ion-buttons>
-								<ion-button
-									title="Delete record"
-									(click)="deleteTrackerPoint(target.key, point.id)"
-								>
-									<ion-icon name="close-outline" color="medium" />
-								</ion-button>
-							</ion-buttons>
-						</ion-chip>
-						@if (!isLast) {
-							+
-						}
-					}
-					@if (target.points.length > 1) {
-						=
-						<ion-chip
-							color="tertiary"
-							style="font-weight: bold; padding-right: 0 !important"
-						>
-							<ion-label>{{ target.sum }}</ion-label>
-							<ion-buttons>
-								<ion-button
-									title="Delete record"
-									(click)="
-										deleteTrackerPointsByDateAndEntity(target.key, date.dateID)
-									"
-								>
-									<ion-icon name="close-outline" color="medium" />
-								</ion-button>
-							</ion-buttons>
-						</ion-chip>
-					}
-				</ion-label>
-			</ion-item>
-		}
-	}
-</ion-card>
+<sneat-tracker-history
+	[$tracker]="$tracker()"
+	[$contactusSpace]="$contactusSpace()"
+/>

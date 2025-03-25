@@ -1,5 +1,6 @@
 import { Timestamp } from '@firebase/firestore';
 import { IIdAndBrief, IIdAndOptionalBriefAndOptionalDbo } from '@sneat/core';
+import { ISpaceContext } from '@sneat/team-models';
 
 export type TrackerValueType =
 	| 'int'
@@ -138,9 +139,10 @@ export interface ITrackerDbo extends ITrackerBrief {
 	>;
 }
 
-export type OptionalTrackerWithIdAndOptionalBriefAndOptionalDbo =
-	| IIdAndOptionalBriefAndOptionalDbo<ITrackerBrief, ITrackerDbo>
-	| undefined;
+export interface ITracker
+	extends IIdAndOptionalBriefAndOptionalDbo<ITrackerBrief, ITrackerDbo> {
+	space: ISpaceContext;
+}
 
 export const standardTrackers: readonly IIdAndBrief<ITrackerBrief>[] = [
 	{

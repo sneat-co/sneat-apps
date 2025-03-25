@@ -9,10 +9,7 @@ import {
 } from '@angular/core';
 import { SneatBaseComponent } from '@sneat/ui';
 import { Subscription } from 'rxjs';
-import {
-	OptionalTrackerWithIdAndOptionalBriefAndOptionalDbo,
-	standardTrackers,
-} from '../../dbo/i-tracker-dbo';
+import { ITracker, standardTrackers } from '../../dbo/i-tracker-dbo';
 import { TrackersService } from '../../trackers-service';
 
 // template: ` <ng-container
@@ -34,14 +31,12 @@ export class TrackerProviderComponent
 		super('TrackerProviderComponent');
 	}
 
-	@Output() trackerChange =
-		new EventEmitter<OptionalTrackerWithIdAndOptionalBriefAndOptionalDbo>();
+	@Output() trackerChange = new EventEmitter<ITracker>();
 
 	public readonly $spaceID = input.required<string | undefined>();
 	public readonly $trackerID = input.required<string | undefined>();
 
-	protected readonly $tracker =
-		signal<OptionalTrackerWithIdAndOptionalBriefAndOptionalDbo>(undefined);
+	protected readonly $tracker = signal<ITracker | undefined>(undefined);
 
 	private trackerSub?: Subscription;
 
@@ -73,11 +68,27 @@ export class TrackerProviderComponent
 							(t) => t.id === tracker.id,
 						)?.brief;
 						if (brief) {
-							tracker = { ...tracker, brief: { ...brief, ...tracker.brief } };
+							tracker = { ...tracker, brief: { ...brief, ...tracker.dbo } };
+							if (brief.title && tracker.brief?.title) {
+								tracker = {
+									...tracker,
+									brief: { ...tracker.brief, title: brief.title },
+								};
+							}
+							if (brief.emoji && tracker.brief?.emoji) {
+								tracker = {
+									...tracker,
+									brief: { ...tracker.brief, emoji: brief.emoji },
+								};
+							}
 						}
 					}
-					this.$tracker.set(tracker);
-					this.trackerChange.emit(tracker);
+					const iTracker: ITracker = {
+						...tracker,
+						space: spaceRef,
+					};
+					this.$tracker.set(iTracker);
+					this.trackerChange.emit(iTracker);
 				},
 			});
 	};
