@@ -100,7 +100,7 @@ export class TrackerHistoryComponent extends SneatBaseComponent {
 					});
 				},
 			);
-			return Object.entries(entriesByDateAndTarget).map(
+			const result = Object.entries(entriesByDateAndTarget).map(
 				([dateID, byTargetKey]) => {
 					return {
 						dateID,
@@ -125,6 +125,8 @@ export class TrackerHistoryComponent extends SneatBaseComponent {
 					};
 				},
 			);
+			result.sort((a, b) => (a.dateID < b.dateID ? 1 : -1));
+			return result;
 		},
 	);
 

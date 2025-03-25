@@ -16,12 +16,10 @@ import {
 import { SneatBaseComponent } from '@sneat/ui';
 import { Subscription } from 'rxjs';
 import { ITracker } from '../../dbo/i-tracker-dbo';
-import { TrackersService, TrackersServiceModule } from '../../trackers-service';
+import { TrackersServiceModule } from '../../trackers-service';
 import { TrackusApiServiceModule } from '../../trackus-api.service';
 import { TrackerFormComponent } from './tracker-form.component';
 import { TrackerHistoryComponent } from './tracker-history.component';
-
-// import { QRCodeComponent } from 'angularx-qrcode';
 
 @Component({
 	selector: 'sneat-tracker',
@@ -39,11 +37,8 @@ import { TrackerHistoryComponent } from './tracker-history.component';
 })
 export class TrackerComponent extends SneatBaseComponent {
 	public readonly $tracker = input.required<ITracker | undefined>();
-	// private readonly $trackerID = computed(() => this.$tracker()?.id);
 
-	// public readonly $trackerID = input.required<string | undefined>();
-
-	private readonly $spaceID = computed(() => this.$tracker()?.id);
+	private readonly $spaceID = computed(() => this.$tracker()?.space?.id);
 
 	protected readonly $contactusSpace = signal<IContactusSpaceDbo | undefined>(
 		undefined,
@@ -76,5 +71,9 @@ export class TrackerComponent extends SneatBaseComponent {
 			contactusSpaceSub?.unsubscribe();
 			contactusSpaceEffect?.destroy();
 		});
+	}
+
+	protected share(): void {
+		alert('Tracker sharing is not implemented yet');
 	}
 }
