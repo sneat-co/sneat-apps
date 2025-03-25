@@ -130,7 +130,7 @@ export class TrackerHistoryComponent extends SneatBaseComponent {
 		},
 	);
 
-	protected deleteTrackerPoints(request: IDeleteTrackerPointsRequest): void {
+	private deleteTrackerPoints(request: IDeleteTrackerPointsRequest): void {
 		const deletingKeys = this.$deletingTrackerPointRequests();
 		this.$deletingTrackerPointRequests.set([...deletingKeys, request]);
 		const removeKey = () => {
