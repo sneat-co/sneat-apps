@@ -15,6 +15,7 @@ import {
 	SpaceComponentBaseParams,
 	SpacePageTitleComponent,
 } from '@sneat/team-components';
+import { SpaceServiceModule } from '@sneat/team-services';
 
 @Component({
 	selector: 'sneat-new-asset-page',
@@ -30,6 +31,7 @@ import {
 		AssetAddDocumentComponent,
 		AssetAddVehicleComponent,
 		AssetAddDwellingComponent,
+		SpaceServiceModule,
 	],
 })
 export class NewAssetPageComponent extends SpaceBaseComponent {

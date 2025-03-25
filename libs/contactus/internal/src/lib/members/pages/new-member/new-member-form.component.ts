@@ -9,14 +9,11 @@ import {
 	ViewChild,
 } from '@angular/core';
 import {
-	// FormControl,
 	FormsModule,
 	ReactiveFormsModule,
 	UntypedFormGroup,
-	// Validators,
 } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-// import { TeamMemberType } from '@sneat/auth-models';
 import { PersonWizardComponent } from '@sneat/contactus-shared';
 import { formNexInAnimation } from '@sneat/core';
 import { personName } from '@sneat/components';
@@ -28,7 +25,6 @@ import {
 	IMemberPerson,
 	IPersonRequirements,
 	IRelatedPerson,
-	// isRelatedPersonNotReady,
 	isRelatedPersonReady,
 } from '@sneat/contactus-core';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/team-models';

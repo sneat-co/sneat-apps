@@ -18,9 +18,9 @@ import {
 	InviteLinksComponent,
 } from '@sneat/team-components';
 import { SpaceServiceModule } from '@sneat/team-services';
+import { QRCodeComponent } from 'angularx-qrcode';
 import { filter, first, takeUntil } from 'rxjs';
 import { NewMemberFormComponent } from './new-member-form.component';
-// import { QRCodeComponent } from 'angularx-qrcode';
 
 @Component({
 	selector: 'sneat-new-member-page',
@@ -34,7 +34,7 @@ import { NewMemberFormComponent } from './new-member-form.component';
 		NewMemberFormComponent,
 		InviteLinksComponent,
 		SpaceServiceModule,
-		// QRCodeComponent,
+		QRCodeComponent,
 	],
 })
 export class NewMemberPageComponent extends SpacePageBaseComponent {
