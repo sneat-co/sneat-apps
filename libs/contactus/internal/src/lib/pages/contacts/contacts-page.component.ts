@@ -84,8 +84,8 @@ export class ContactsPageComponent extends SpaceItemsBaseComponent {
 		if (this.allContacts) {
 			this.applyFilter('', this.role);
 		}
-		// this.teamIDChanged$.subscribe({
-		// 	next: this.onTeamIDChangedWorker,
+		// this.spaceIDChanged$.subscribe({
+		// 	next: this.onSpaceIDChangedWorker,
 		// });
 		this.route.queryParamMap.pipe(this.takeUntilDestroyed()).subscribe({
 			next: (q) => {
@@ -93,8 +93,8 @@ export class ContactsPageComponent extends SpaceItemsBaseComponent {
 				this.applyFilter(this.filter, this.role);
 			},
 		});
-		// this.teamDtoChanged$.subscribe({
-		// 	next: this.onTeamDtoChanged,
+		// this.spaceDtoChanged$.subscribe({
+		// 	next: this.onSpaceDtoChanged,
 		// })
 	}
 

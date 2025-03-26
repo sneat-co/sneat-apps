@@ -175,10 +175,10 @@ export abstract class SpaceBaseComponent
 	}
 
 	protected onSpaceDboChanged(): void {
-		this.console.log(
-			`${this.className}:SpaceBaseComponent.onSpaceDboChanged(): ` +
-				JSON.stringify(this.space.dbo),
-		);
+		// this.console.log(
+		// 	`${this.className}:SpaceBaseComponent.onSpaceDboChanged(): ` +
+		// 		JSON.stringify(this.space.dbo),
+		// );
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function

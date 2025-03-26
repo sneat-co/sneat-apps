@@ -286,7 +286,7 @@ export class ListsPageComponent extends SpaceBaseComponent {
 				this.listGroups = [];
 			}
 		} catch (e) {
-			this.errorLogger.logError(e, 'Failed to process onTeamDtoChanged');
+			this.errorLogger.logError(e, 'Failed to process onSpaceDboChanged');
 		}
 	}
 

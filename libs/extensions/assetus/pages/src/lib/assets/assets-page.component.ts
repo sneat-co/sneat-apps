@@ -121,7 +121,7 @@ export class AssetsPageComponent extends AssetsBasePage implements OnInit {
 				.subscribe({
 					next: (assets: IIdAndBrief<IAssetBrief>[]) => {
 						console.log(
-							'AssetsPageComponent.onTeamIdChanged() => assets:',
+							'AssetsPageComponent.watchSpaceAssets() => assets:',
 							assets,
 						);
 						this.assets = assets;
@@ -129,7 +129,7 @@ export class AssetsPageComponent extends AssetsBasePage implements OnInit {
 					error: (err) => {
 						const errStr: string = err.toString();
 						console.log(
-							'AssetsPageComponent.onTeamIdChanged() => error:',
+							'AssetsPageComponent.watchSpaceAssets() => error:',
 							errStr,
 						);
 						if (err.code === 'permission-denied') {

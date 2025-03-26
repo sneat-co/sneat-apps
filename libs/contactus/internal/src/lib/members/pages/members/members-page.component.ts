@@ -96,14 +96,14 @@ export class MembersPageComponent extends MembersBasePage {
 		if (!this.space) {
 			throw new Error('!this.commune');
 		}
-		console.log(`MembersPageComponent.onTeamDtoChanged()`);
+		console.log(`MembersPageComponent.onSpaceDboChanged()`);
 		// if (this.team?.dto?.numberOf?.members) {
 		// 	this.loadingStubs = Array(this.team?.dto?.numberOf?.members).fill(1);
 		// }
 		// if (!isNaN(this.prevMembersCount) && this.prevMembersCount != this.commune.numberOf.members) {
 		//     this.loadData();
 		// }
-		this.loadData('onTeamDtoChanged');
+		this.loadData('onSpaceDboChanged');
 		// this.prevMembersCount = this.team?.dto?.numberOf?.members || 0;
 	}
 

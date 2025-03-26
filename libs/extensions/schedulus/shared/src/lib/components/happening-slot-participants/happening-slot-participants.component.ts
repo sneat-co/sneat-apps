@@ -85,7 +85,7 @@ export class HappeningSlotParticipantsComponent
 	}
 
 	private onSpaceIDChanged(spaceID: string): void {
-		// console.log('HappeningSlotParticipantsComponent.onTeamIDChanged()', teamID);
+		// console.log('HappeningSlotParticipantsComponent.onSpaceIDChanged()', teamID);
 		this.contactusService
 			.watchContactBriefs(spaceID)
 			.pipe(takeUntil(this.spaceID$), takeUntil(this.destroyed$))

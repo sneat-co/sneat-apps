@@ -100,19 +100,19 @@ export abstract class CalendarBaseComponent implements OnChanges, OnDestroy {
 			return;
 		}
 		this.populateRecurrings();
-		this.setDay('onTeamDtoChanged', this.date);
+		this.setDay('onSpaceIdChanged', this.date);
 		this.schedulusSpaceSubscription = this.calendariumSpaceService
 			.watchSpaceModuleRecord(space.id)
 			.subscribe({
-				next: (schedulusTeam) => {
+				next: (calendariumSpace) => {
 					console.log(
-						'ScheduleComponent.onTeamIdChanged() => schedulusTeam:',
-						schedulusTeam,
+						'ScheduleComponent.onSpaceIdChanged() => calendariumSpace:',
+						calendariumSpace,
 					);
-					this.schedulusSpaceDbo = schedulusTeam?.dbo;
+					this.schedulusSpaceDbo = calendariumSpace?.dbo;
 					this.spaceDaysProvider.setSchedulusSpace({
 						space,
-						...schedulusTeam,
+						...calendariumSpace,
 					});
 					this.populateRecurrings();
 				},

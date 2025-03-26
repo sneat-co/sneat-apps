@@ -74,10 +74,10 @@ export class RetrospectivePageComponent
 		}
 	}
 
-	protected onSpaceIdChanged() {
+	protected override onSpaceIdChanged() {
 		super.onSpaceIdChanged();
 		try {
-			console.log('RetrospectivePage.onTeamIdChanged()');
+			console.log('RetrospectivePage.onSpaceIdChanged()');
 			if (this.retrospective?.id) {
 				this.watchRetro();
 			}

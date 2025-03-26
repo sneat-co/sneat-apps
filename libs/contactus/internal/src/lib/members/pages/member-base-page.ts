@@ -19,15 +19,6 @@ export abstract class MemberBasePage extends ContactBasePage {
 		return this.memberContext;
 	}
 
-	override onSpaceDboChanged(): void {
-		super.onSpaceDboChanged();
-		console.log(
-			'MemberBasePage.onTeamDtoChanged()',
-			this.space?.dbo,
-			this.memberContext,
-		);
-	}
-
 	protected goNew = (
 		event: Event,
 		type: 'new-contact' | 'new-document' | 'new-liability' | 'new-asset',
