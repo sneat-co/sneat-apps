@@ -2,6 +2,7 @@ import {
 	Component,
 	computed,
 	EventEmitter,
+	input,
 	Input,
 	OnChanges,
 	OnDestroy,
@@ -20,7 +21,6 @@ import { IonicModule, ModalController } from '@ionic/angular';
 import { ISelectItem, SelectFromListComponent } from '@sneat/components';
 import {
 	emptyTiming,
-	HappeningType,
 	IHappeningSlot,
 	ITiming,
 	MonthlyMode,
@@ -72,8 +72,13 @@ export class HappeningSlotFormComponent
 	extends WeekdaysFormBase
 	implements OnChanges, OnDestroy, IHappeningSlotFormComponentInputs
 {
+	public readonly $happening = input.required<IHappeningContext>();
+	public readonly $happeningID = computed(() => this.$happening().id);
+	protected readonly $happeningType = computed(
+		() => this.$happening().brief?.type,
+	);
+
 	@Input({ required: true }) mode?: HappeningSlotFormMode;
-	@Input({ required: true }) happening?: IHappeningContext;
 	@Input() slot?: IHappeningSlotWithID;
 	@Input() wd?: WeekdayCode2;
 	@Input() date?: string;
@@ -91,10 +96,6 @@ export class HappeningSlotFormComponent
 	protected readonly error = signal('');
 
 	protected tab: 'when' | 'where' = 'when';
-
-	protected get happeningType(): HappeningType | undefined {
-		return this.happening?.brief?.type;
-	}
 
 	// minDate = '2000';
 	// maxDate = '' + (new Date().getFullYear() + 5);
@@ -148,7 +149,7 @@ export class HappeningSlotFormComponent
 		const monthlyDate = this.monthlyDate();
 		const hasWeekdaySelected = this.hasWeekdaySelected();
 		return (
-			this.happeningType === 'single' ||
+			this.$happeningType() === 'single' ||
 			// happens === 'daily' ||
 			(happens === 'weekly' && hasWeekdaySelected) ||
 			(happens === 'monthly' &&
@@ -214,7 +215,7 @@ export class HappeningSlotFormComponent
 			' => this.slotForm.errors:',
 			this.slotForm.controls['locationTitle']?.errors,
 		);
-		if (this.happeningType === 'recurring' && !this.hasWeekdaySelected()) {
+		if (this.$happeningType() === 'recurring' && !this.hasWeekdaySelected()) {
 			this.error.set('At least 1 weekday should be selected');
 		}
 		if (!this.startEndDatetimeForm?.isValid) {
@@ -280,7 +281,7 @@ export class HappeningSlotFormComponent
 			throw new Error('!this.timing');
 		}
 		let slot = this.initiateSlot(timing);
-		if (this.happeningType === 'recurring') {
+		if (this.$happeningType() === 'recurring') {
 			slot = {
 				...slot,
 				weekdays: this.selectedWeekdayCodes(),
@@ -302,7 +303,7 @@ export class HappeningSlotFormComponent
 
 	private initiateSlot(timing?: ITiming): IHappeningSlot {
 		const repeats: RepeatPeriod | undefined =
-			this.happeningType === 'single' ? 'once' : this.repeats();
+			this.$happeningType() === 'single' ? 'once' : this.repeats();
 		if (!repeats) {
 			throw new Error('!repeats');
 		}
@@ -389,7 +390,7 @@ export class HappeningSlotFormComponent
 	}
 
 	private addSlotToHappening(timing?: ITiming): void {
-		if (!this.happening?.brief) {
+		if (!this.$happening().brief) {
 			throw new Error('!this.happening?.brief');
 		}
 		const slot = this.getSlot(timing);
@@ -398,16 +399,22 @@ export class HappeningSlotFormComponent
 		}
 		const slotID = this.generateSlotID();
 
-		this.happening = {
-			...this.happening,
+		let happening = this.$happening();
+
+		if (!happening.brief) {
+			return;
+		}
+
+		happening = {
+			...happening,
 			brief: {
-				...this.happening.brief,
-				slots: { ...this.happening.brief.slots, [slotID]: slot },
+				...happening.brief,
+				slots: { ...(happening.brief?.slots || {}), [slotID]: slot },
 			},
 		};
-		console.log('happening:', this.happening);
+		console.log('happening:', happening);
 		this.slotAdded.emit(slot);
-		this.happeningChange.emit(this.happening);
+		this.happeningChange.emit(happening);
 	}
 
 	private addYearlySlot(): IHappeningSlot {
@@ -428,8 +435,9 @@ export class HappeningSlotFormComponent
 	protected saveChanges(): void {
 		console.log('saveChanges()');
 		const slot = this.getSlot();
-		const spaceID = this.happening?.space?.id;
-		const happeningID = this.happening?.id;
+		const happening = this.$happening();
+		const spaceID = happening.space.id;
+		const happeningID = happening.id;
 		if (!spaceID || !happeningID || !slot) {
 			return;
 		}
@@ -478,7 +486,7 @@ export class HappeningSlotFormComponent
 
 	protected addSlot(timing?: ITiming): void {
 		console.log('addSlot()', timing);
-		if (this.happening?.id) {
+		if (this.$happeningID()) {
 			this.saveChanges();
 		} else {
 			this.addSlotToHappening();
@@ -488,7 +496,7 @@ export class HappeningSlotFormComponent
 	private generateSlotID(): string {
 		for (let i = 0; i < 10; i++) {
 			const slotID = newRandomId({ len: 4 });
-			if (!this.happening?.brief?.slots?.[slotID]) {
+			if (!this.$happening().brief?.slots?.[slotID]) {
 				return slotID;
 			}
 		}
@@ -496,7 +504,7 @@ export class HappeningSlotFormComponent
 	}
 
 	private getSlot(timing?: ITiming): IHappeningSlot | undefined {
-		switch (this.happeningType) {
+		switch (this.$happeningType()) {
 			case 'single':
 				return this.addOnceSlot(timing);
 			case 'recurring': {

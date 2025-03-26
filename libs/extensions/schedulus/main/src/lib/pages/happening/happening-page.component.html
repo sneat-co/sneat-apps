@@ -5,7 +5,7 @@
 			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
 		<ion-title color="medium">
-			@if (happening) {
+			@if ($happening(); as happening) {
 				@switch (happening.brief?.type) {
 					@case ("recurring") {
 						Recurring happening
@@ -25,7 +25,10 @@
 </ion-header>
 
 <ion-content class="cardy">
-	<sneat-happening-form [happening]="happening" />
+	<sneat-happening-form
+		[$happening]="$happening()"
+		(happeningChange)="$happening.set($event)"
+	/>
 	<!--	<ion-card>-->
 	<!--		<ion-item>-->
 	<!--			<ion-label>Title: {{happening?.brief?.title}}</ion-label>-->

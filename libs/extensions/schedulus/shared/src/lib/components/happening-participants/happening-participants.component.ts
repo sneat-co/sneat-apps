@@ -1,14 +1,14 @@
-import { CommonModule } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
+	computed,
 	EventEmitter,
-	Input,
+	input,
 	OnChanges,
 	Output,
+	signal,
 	SimpleChanges,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import {
@@ -17,7 +17,6 @@ import {
 } from '@sneat/contactus-shared';
 import { addRelatedItem, getRelatedItemIDs } from '@sneat/dto';
 import { IHappeningContext, IHappeningBase } from '@sneat/mod-schedulus-core';
-import { ISpaceContext } from '@sneat/space-models';
 import {
 	HappeningService,
 	IHappeningContactRequest,
@@ -26,22 +25,21 @@ import {
 @Component({
 	selector: 'sneat-happening-participants',
 	templateUrl: 'happening-participants.component.html',
-	imports: [CommonModule, IonicModule, ContactsChecklistComponent, FormsModule],
+	imports: [IonicModule, ContactsChecklistComponent],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HappeningParticipantsComponent implements OnChanges {
 	// @Input({ required: true }) space?: ISpaceContext;
-	@Input({ required: true }) happening?: IHappeningContext;
+	public readonly $happening = input.required<IHappeningContext>();
+	// @Input({ required: true }) happening?: IHappeningContext;
 
-	protected get space(): ISpaceContext | undefined {
-		return this.happening?.space;
-	}
+	public readonly $space = computed(() => this.$happening().space);
 
 	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
 
-	public checkedContactIDs: readonly string[] = [];
-	public contacts: number[] = [];
-	public tab: 'members' | 'others' = 'members';
+	protected readonly $checkedContactIDs = signal<readonly string[]>([]);
+
+	protected readonly $tab = signal<'members' | 'others'>('members');
 
 	// protected members?: readonly IIdAndBrief<IContactBrief>[];
 
@@ -69,26 +67,27 @@ export class HappeningParticipantsComponent implements OnChanges {
 	// }
 
 	ngOnChanges(changes: SimpleChanges): void {
+		const happening = this.$happening();
 		console.log(
 			'HappeningParticipantsComponent.ngOnChanges()',
 			changes,
-			this.happening?.dbo?.related,
+			happening.dbo?.related,
 		);
 		if (changes['happening']) {
-			this.checkedContactIDs = getRelatedItemIDs(
-				this.happening?.dbo?.related || this.happening?.brief?.related,
+			const checkedContactIDs = getRelatedItemIDs(
+				happening.dbo?.related || happening.brief?.related,
 				'contactus',
 				'contacts',
-				this.space?.id,
+				this.$space().id,
 			);
-			console.log('checkedContactIDs', this.checkedContactIDs, this.happening);
+			this.$checkedContactIDs.set(checkedContactIDs);
+			console.log('checkedContactIDs', checkedContactIDs, happening);
 		}
 	}
 
 	public get membersTabLabel(): string {
-		return this.space?.brief?.type === 'family'
-			? 'Family members'
-			: 'Team members';
+		const space = this.$space();
+		return space.type === 'family' ? 'Family members' : 'Team members';
 	}
 
 	// protected get members(): readonly IContactContext[] | undefined {
@@ -106,13 +105,30 @@ export class HappeningParticipantsComponent implements OnChanges {
 	protected isMemberCheckChanged(args: ICheckChangedArgs): void {
 		console.log('isMemberCheckChanged()', args);
 		// this.populateParticipants();
-		if (!this.happening?.id || !this.space?.id) {
+
+		const addRemoveContactID = () => {
+			const checkedContactIDs = this.$checkedContactIDs();
+			if (args.checked && !checkedContactIDs.includes(args.id)) {
+				this.$checkedContactIDs.set([...checkedContactIDs, args.id]);
+			} else if (!args.checked && checkedContactIDs.includes(args.id)) {
+				this.$checkedContactIDs.set(
+					checkedContactIDs.filter((id) => id !== args.id),
+				);
+			}
+		};
+
+		const space = this.$space();
+		const happening = this.$happening();
+
+		if (!happening.id) {
+			addRemoveContactID();
+			this.populateParticipants();
 			args.resolve();
 			return;
 		}
 		const request: IHappeningContactRequest = {
-			spaceID: this.space.id,
-			happeningID: this.happening?.id,
+			spaceID: space.id,
+			happeningID: happening?.id,
 			contact: { id: args.id },
 		};
 		const apiCall = args.checked
@@ -120,61 +136,57 @@ export class HappeningParticipantsComponent implements OnChanges {
 			: this.happeningService.removeParticipant;
 		apiCall(request).subscribe({
 			next: () => {
-				if (args.checked && !this.checkedContactIDs.includes(args.id)) {
-					this.checkedContactIDs = [...this.checkedContactIDs, args.id];
-				} else if (!args.checked && this.checkedContactIDs.includes(args.id)) {
-					this.checkedContactIDs = this.checkedContactIDs.filter(
-						(id) => id !== args.id,
-					);
-				}
+				addRemoveContactID();
 				args.resolve();
 			},
 			error: args.reject,
 		});
 	}
 
-	private readonly emitHappeningChange = () =>
-		this.happeningChange.emit(this.happening);
+	private readonly emitHappeningChange = (happening: IHappeningContext) =>
+		this.happeningChange.emit(happening);
 
 	private populateParticipants(): void {
-		if (!this.happening) {
-			return;
-		}
-		const { brief, dbo } = this.happening;
+		let happening = this.$happening();
+		const { brief, dbo } = happening;
 		if (!brief || !dbo) {
 			return;
 		}
 		let happeningBase: IHappeningBase = {
 			...(dbo || brief),
 		};
-		this.checkedContactIDs.forEach((contactID) => {
+		this.$checkedContactIDs().forEach((contactID) => {
 			happeningBase = {
 				...happeningBase,
 				related: addRelatedItem(
 					happeningBase.related,
 					'contactus',
 					'contacts',
-					this.space?.id || '',
+					happening.space.id || '',
 					contactID,
 				),
 			};
 		});
-		this.happening = {
-			...this.happening,
+
+		happening = {
+			...happening,
 			brief: {
-				...(this.happening.brief || {}),
+				...(brief || {}),
 				...happeningBase,
 			},
 			dbo: {
-				// TODO: It does not make much sense to update DTO as brief should be enough?
-				...(this.happening.dbo || {}),
+				...(dbo || {}), // TODO: It does not make much sense to update DTO as brief should be enough?
 				...happeningBase,
 			},
 		};
-		this.emitHappeningChange();
+		this.emitHappeningChange(happening);
 	}
 
 	addContact(): void {
-		this.contacts.push(1);
+		alert('Not implemented yet');
+	}
+
+	protected onTabChanged(event: CustomEvent): void {
+		this.$tab.set(event.detail.value);
 	}
 }

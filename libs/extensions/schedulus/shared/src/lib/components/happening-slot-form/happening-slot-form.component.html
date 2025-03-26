@@ -27,7 +27,9 @@
 <!--	</ion-segment>-->
 <!--</ion-item-divider>-->
 
-@if (happeningType === "recurring") {
+happeningType: {{ $happeningType() }}
+
+@if ($happeningType() === "recurring") {
 	@if (repeats()) {
 		<ion-grid class="ion-grid-layout">
 			<ion-row>
@@ -257,7 +259,7 @@
 	<sneat-start-end-datetime-form
 		#startEndDatetimeForm
 		[date]="date"
-		[mode]="happeningType"
+		[mode]="$happeningType()"
 		[timing]="timing"
 		addSlotLabel="Add slot"
 		(timingChange)="onTimingChanged($event)"

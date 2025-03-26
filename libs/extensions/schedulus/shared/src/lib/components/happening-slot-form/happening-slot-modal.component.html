@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar color="primary">
 		<ion-title>
-			{{ happening?.brief?.title || "Happening Slot Modal" }}
+			{{ happening.brief?.title || "Happening Slot Modal" }}
 			@if (dateID) {
 				on {{ dateID }}
 			}
@@ -17,7 +17,7 @@
 <ion-content>
 	<sneat-happening-slot-form
 		mode="modal"
-		[happening]="happening"
+		[$happening]="happening"
 		[slot]="slot"
 		[date]="dateID"
 		(happeningChange)="onHappeningChanged($event)"

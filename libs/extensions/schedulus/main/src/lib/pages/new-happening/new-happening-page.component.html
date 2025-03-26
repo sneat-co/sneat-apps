@@ -20,7 +20,7 @@
 <ion-content class="cardy">
 	<sneat-happening-form
 		#happeningPageFormComponent
-		[happening]="happening"
+		[$happening]="$happening()"
 		(happeningChange)="onHappeningChanged($event)"
 		[wd]="wd"
 		[date]="date"

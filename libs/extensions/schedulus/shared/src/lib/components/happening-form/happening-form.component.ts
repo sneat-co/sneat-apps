@@ -1,11 +1,12 @@
-import { CommonModule } from '@angular/common';
 import {
 	AfterViewInit,
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
 	Component,
+	computed,
+	effect,
 	EventEmitter,
-	Inject,
+	input,
 	Input,
 	OnChanges,
 	Output,
@@ -22,7 +23,6 @@ import {
 } from '@angular/forms';
 import { IonicModule, IonInput } from '@ionic/angular';
 import { RoutingState } from '@sneat/core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	HappeningType,
 	IHappeningContext,
@@ -33,7 +33,6 @@ import {
 	WeekdayCode2,
 } from '@sneat/mod-schedulus-core';
 import { SpaceComponentBaseParams } from '@sneat/space-components';
-import { ISpaceContext } from '@sneat/space-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
 import { HappeningParticipantsComponent } from '../happening-participants/happening-participants.component';
@@ -49,52 +48,46 @@ import {
 @Component({
 	selector: 'sneat-happening-form',
 	templateUrl: 'happening-form.component.html',
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
-		CommonModule,
 		IonicModule,
 		FormsModule,
 		ReactiveFormsModule,
-
 		HappeningServiceModule,
 		HappeningParticipantsComponent,
 		HappeningPricesComponent,
 		HappeningSlotFormComponent,
 		HappeningSlotsComponent,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HappeningFormComponent
 	extends SneatBaseComponent
 	implements OnChanges, AfterViewInit
 {
-	// @Input() public initialHappeningType?: HappeningType;
+	public readonly $happening = input.required<IHappeningContext>();
 	@Input() public wd?: WeekdayCode2;
 	@Input() public date?: string;
+	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
 
 	// @Input({ required: true }) public space?: ISpaceContext;
 
-	@Input({ required: true }) public happening?: IHappeningContext;
-
-	protected get space(): ISpaceContext | undefined {
-		return this.happening?.space;
-	}
-
-	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
+	protected readonly $space = computed(() => this.$happening().space);
 
 	@ViewChild('titleInput', { static: true }) titleInput?: IonInput;
 	@ViewChild('happeningSlotsComponent', { static: false })
 	happeningSlotsComponent?: HappeningSlotsComponent;
 
-	protected readonly isCreating = signal(false);
-	protected readonly isCancelling = signal(false);
-	protected readonly isDeleting = signal(false);
+	protected readonly $isCreating = signal(false);
+	protected readonly $isCancelling = signal(false);
+	protected readonly $isDeleting = signal(false);
 
-	// public get slots(): readonly IHappeningSlot[] | undefined {
-	// 	return this.happening?.brief?.slots;
-	// }
-
-	protected readonly slots = signal<IHappeningSlotWithID[] | undefined>(
-		undefined,
+	protected readonly $slots = computed<IHappeningSlotWithID[] | undefined>(
+		() => {
+			const happening = this.$happening();
+			return happening.brief
+				? mergeValuesWithIDs(happening.brief.slots)
+				: undefined;
+		},
 	);
 
 	protected readonly happeningTitle = new FormControl<string>(
@@ -127,25 +120,24 @@ export class HappeningFormComponent
 	) {
 		super('');
 		this.hasNavHistory = routingState.hasHistory();
+		effect(() => {
+			const happening = this.$happening();
+			const happeningType = happening?.brief?.type;
+			if (happeningType) {
+				this.happeningType.setValue(happeningType);
+			}
+			if (happening.brief?.title && this.happeningTitle.untouched) {
+				this.happeningTitle.setValue(happening?.brief?.title);
+				// this.changeDetectorRef.markForCheck();
+				// this.slots = this?.happening?.brief?.slots || [];
+			}
+			// this.changeDetectorRef.markForCheck();
+		});
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['happening']) {
-			const happeningType = this.happening?.brief?.type;
-			if (happeningType) {
-				this.happeningType.setValue(happeningType);
-			}
-			if (this.happening?.brief?.title && this.happeningTitle.untouched) {
-				this.happeningTitle.setValue(this.happening?.brief?.title);
-				this.changeDetectorRef.markForCheck();
-				// this.slots = this?.happening?.brief?.slots || [];
-			}
-			if (this.happening?.brief) {
-				this.slots.set(mergeValuesWithIDs(this.happening?.brief?.slots));
-			} else {
-				this.slots.set(undefined);
-			}
-			this.changeDetectorRef.markForCheck();
+			const happening = this.$happening();
 		}
 	}
 
@@ -155,14 +147,26 @@ export class HappeningFormComponent
 	}
 
 	protected onHappeningTypeChanged(event: Event): void {
-		// console.log('onHappeningTypeChanged()', event);
 		const happeningType = (event as CustomEvent).detail.value as HappeningType;
-		if (this.happening?.brief) {
-			this.happening = {
-				...this.happening,
-				brief: { ...this.happening?.brief, type: happeningType },
-			};
-		}
+		let happening = this.$happening();
+		console.log(
+			'HappeningFormComponent.onHappeningTypeChanged()',
+			happeningType,
+			happening,
+		);
+		happening = {
+			...happening,
+			brief: {
+				...(happening.brief || {
+					type: happeningType,
+					status: 'draft',
+					kind: 'activity',
+					title: '',
+				}),
+				type: happeningType,
+			},
+		};
+		this.happeningChange.emit(happening);
 
 		// const setSlots = (slots?: IHappeningSlot[]) => {
 		//    if (slots && this.happening?.brief) {
@@ -184,13 +188,22 @@ export class HappeningFormComponent
 		//       setSlots(this.happening?.brief?.slots);
 		//       break;
 		// }
-
-		this.happeningChange.emit(this.happening);
 	}
 
 	protected onTitleEnter(event: Event): void {
 		console.log('onTitleEnter()', event);
 		this.changeDetectorRef.markForCheck();
+	}
+
+	protected onTitleChanged(event: CustomEvent): void {
+		console.log('onTitleChanged()', event);
+		const happening = this.$happening();
+		if (happening.brief) {
+			this.happeningChange.emit({
+				...happening,
+				brief: { ...happening.brief, title: event.detail.value },
+			});
+		}
 	}
 
 	ionViewDidEnter(): void {
@@ -219,13 +232,13 @@ export class HappeningFormComponent
 	// }
 
 	protected onSlotAdded(slot: IHappeningSlot): void {
-		console.log('onSlotAdded()', slot, this.happening);
+		console.log('onSlotAdded()', slot, this.$happening());
 		this.happeningForm.markAllAsTouched();
 	}
 
 	protected onHappeningChanged(happening: IHappeningContext): void {
 		console.log('HappeningFormComponent.onHappeningChanged()', happening);
-		this.happening = happening;
+		// this.happening = happening;
 		this.happeningForm.markAllAsTouched(); // TODO: Document why we need it and if we can remove it
 		this.happeningChange.emit(happening);
 	}
@@ -234,24 +247,26 @@ export class HappeningFormComponent
 		if (!this.happeningForm.valid) {
 			return false;
 		}
-		return !!this.slots()?.length;
+		return !!this.$slots()?.length;
 	}
 
 	private makeHappeningDto(): IHappeningDbo {
-		if (!this.space) {
+		const space = this.$space();
+		if (!space) {
 			throw new Error('!this.team');
 		}
-		if (!this.happening) {
+		const happening = this.$happening();
+		if (!happening) {
 			throw new Error('!this.happening');
 		}
-		if (!this.happening.brief) {
+		if (!happening.brief) {
 			throw new Error('!this.happening.brief');
 		}
 		const activityFormValue = this.happeningForm.value;
 		const dto: IHappeningDbo = {
-			...this.happening.dbo,
-			...this.happening.brief,
-			spaceIDs: [this.space.id], // TODO: should be already in this.happening.brief
+			...happening.dbo,
+			...happening.brief,
+			spaceIDs: [space.id], // TODO: should be already in this.happening.brief
 			title: activityFormValue.title || '', // TODO: should be already in this.happening.brief
 		};
 		// switch (dto.type) {
@@ -276,8 +291,8 @@ export class HappeningFormComponent
 	}
 
 	protected submit(): void {
-		if (this.happening?.id) {
-			// Update happening
+		if (this.$happening()?.id) {
+			alert('editing existing happening is not implemented yet');
 		} else {
 			//Create happening
 			this.createHappening();
@@ -286,7 +301,9 @@ export class HappeningFormComponent
 
 	private createHappening(): void {
 		console.log('NewHappeningPageComponent.createHappening()');
-		if (!this.space) {
+		const space = this.$space();
+		if (!space) {
+			this.errorLogger.logError(new Error('!space context'));
 			return;
 		}
 		try {
@@ -299,14 +316,8 @@ export class HappeningFormComponent
 			// 	// }
 			// 	return;
 			// }
-			const space = this.space;
 
-			if (!space) {
-				this.errorLogger.logError(new Error('!space context'));
-				return;
-			}
-
-			this.isCreating.set(true);
+			this.$isCreating.set(true);
 
 			let happening = this.makeHappeningDto();
 
@@ -349,48 +360,47 @@ export class HappeningFormComponent
 						}
 					},
 					error: (err: unknown) => {
-						this.isCreating.set(false);
+						this.$isCreating.set(false);
 						this.errorLogger.logError(
 							err,
 							'API request failed to create new happening',
 						);
 					},
 					complete: () => {
-						this.isCreating.set(false);
+						this.$isCreating.set(false);
 					},
 				});
 		} catch (e) {
-			this.isCreating.set(false);
+			this.$isCreating.set(false);
 			this.errorLogger.logError(e, 'failed to create new happening');
 		}
 	}
 
 	protected cancel(): void {
+		const space = this.$space();
+		const happening = this.$happening();
 		const request: ICancelHappeningRequest = {
-			spaceID: this.space?.id || '',
-			happeningID: this.happening?.id || '',
+			spaceID: space.id || '',
+			happeningID: happening.id || '',
 		};
-		this.isCancelling.set(true);
+		this.$isCancelling.set(true);
 		this.happeningService.cancelHappening(request).subscribe({
-			next: () => this.isCancelling.set(false),
+			next: () => this.$isCancelling.set(false),
 			error: (err) => {
 				this.errorLogger.logError(err, 'failed to cancel happening');
-				this.isCancelling.set(false);
+				this.$isCancelling.set(false);
 			},
 			// complete: () => this.isCancelling.set(false), -- TODO(help-wanted): Why is not working?
 		});
 	}
 
 	protected delete(): void {
-		if (!this.happening) {
-			return;
-		}
-		this.isDeleting.set(true);
-		this.happeningService.deleteHappening(this.happening).subscribe({
-			next: () => this.isDeleting.set(false),
+		this.$isDeleting.set(true);
+		this.happeningService.deleteHappening(this.$happening()).subscribe({
+			next: () => this.$isDeleting.set(false),
 			error: (err) => {
 				this.errorLogger.logError(err, 'failed to delete happening');
-				this.isDeleting.set(false);
+				this.$isDeleting.set(false);
 			},
 		});
 	}

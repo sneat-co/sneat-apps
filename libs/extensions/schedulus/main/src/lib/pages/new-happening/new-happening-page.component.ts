@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ContactusServicesModule } from '@sneat/contactus-services';
@@ -39,7 +39,10 @@ export class NewHappeningPageComponent extends CalendarBasePage {
 	protected wd?: WeekdayCode2;
 	protected date?: string;
 
-	protected happening?: IHappeningContext;
+	protected readonly $happening = signal<IHappeningContext>({
+		id: '',
+		space: { id: '' },
+	});
 
 	constructor() {
 		super('NewHappeningPageComponent');
@@ -48,7 +51,7 @@ export class NewHappeningPageComponent extends CalendarBasePage {
 		console.log('date', this.date);
 
 		const type = window.history.state.type as HappeningType;
-		if (type && this.space && !this.happening) {
+		if (type && this.space?.id && !this.$happening().id) {
 			this.createHappeningContext(type);
 		}
 		this.route.queryParamMap
@@ -64,7 +67,7 @@ export class NewHappeningPageComponent extends CalendarBasePage {
 						console.warn('unknown happening type passed in URL: type=' + type);
 						return;
 					}
-					if (this.space && !this.happening) {
+					if (this.space && !this.$happening().id) {
 						this.createHappeningContext(type);
 					}
 					if (!this.wd) {
@@ -81,8 +84,9 @@ export class NewHappeningPageComponent extends CalendarBasePage {
 			});
 		this.spaceChanged$.pipe(this.takeUntilDestroyed()).subscribe({
 			next: () => {
-				if (this.happening) {
-					this.happening = { ...this.happening, space: this.space };
+				const happening = this.$happening();
+				if (happening) {
+					this.$happening.set({ ...happening, space: this.space });
 				}
 			},
 		});
@@ -94,11 +98,8 @@ export class NewHappeningPageComponent extends CalendarBasePage {
 		if (!space) {
 			throw new Error('!space');
 		}
-		this.happening = newEmptyHappeningContext(
-			space,
-			type,
-			'appointment',
-			'active',
+		this.$happening.set(
+			newEmptyHappeningContext(space, type, 'activity', 'active'),
 		);
 	}
 
@@ -113,10 +114,10 @@ export class NewHappeningPageComponent extends CalendarBasePage {
 	// }
 
 	protected onHappeningChanged(happening: IHappeningContext): void {
+		console.log('NewHappeningPageComponent.onHappeningChanged()', happening);
 		const happeningType = happening.brief?.type;
-		const typeChange =
-			happeningType && happeningType !== this.happening?.brief?.type;
-		this.happening = happening;
+		const typeChange = happeningType && happeningType !== happening.brief?.type;
+		this.$happening.set(happening);
 		if (typeChange) {
 			this.onHappeningTypeChanged(happeningType);
 		}

@@ -1,3 +1,4 @@
+import { computed, signal } from '@angular/core';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
 import {
 	distinctUntilChanged,
@@ -9,9 +10,16 @@ import {
 import { CalendarBasePage } from '../calendar-base-page';
 import { HappeningComponentBaseParams } from '@sneat/extensions-schedulus-shared';
 
+const emptyHappeningContext = { id: '', space: { id: '' } };
+
 export abstract class HappeningBasePage extends CalendarBasePage {
-	private readonly happeningID$ = new Subject<string>();
-	protected happening?: IHappeningContext;
+	private readonly happeningID$ = new Subject<string>(); //TODO: switch to $happeningID signal?
+	protected readonly $happening = signal<IHappeningContext>(
+		emptyHappeningContext,
+	);
+	protected readonly $happeningID = computed<string | undefined>(
+		() => this.$happening().id || undefined,
+	);
 
 	// private calendariumSpaceDbo?: ICalendariumSpaceDbo | null;
 	private calendariumSpaceSub?: Subscription;
@@ -39,13 +47,11 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 		}
 		this.spaceChanged$.subscribe({
 			next: (space) => {
-				if (space && this.happening) {
-					this.setHappening(
-						{ ...this.happening, space: space },
-						'spaceChanged$',
-					);
+				const happening = this.$happening();
+				if (space && happening) {
+					this.setHappening({ ...happening, space: space }, 'spaceChanged$');
 				} else if (!space) {
-					this.happening = undefined;
+					this.$happening.set(emptyHappeningContext);
 				}
 			},
 		});
@@ -58,7 +64,7 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 			.watchSpaceModuleRecord(this.space.id)
 			.subscribe({
 				next: (calendariumSpace) => {
-					const happening = this.happening;
+					const happening = this.$happening();
 					if (
 						happening?.id &&
 						!happening?.dbo // If we loaded happening record we use it as a brief and ignore the brief from calendariumSpace
@@ -81,21 +87,22 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 		from: string,
 	): void => {
 		console.log(`${this.className}.setHappening(from=${from})`, happening);
-		if (!happening.dbo && this.happening?.brief) {
-			this.happening = { ...happening, brief: this.happening.brief };
+		const prevHappening = this.$happening();
+		if (!happening.dbo && prevHappening.brief) {
+			happening = { ...happening, brief: prevHappening.brief };
 		}
-		this.happening = happening;
-		if (!this.space?.id && this.happening.space) {
-			this.$space.set(this.happening.space);
+		this.$happening.set(happening);
+		if (!this.space?.id && happening.space) {
+			this.$space.set(happening.space);
 		}
 	};
 
 	private readonly onHappeningIDChanged = (id?: string): void => {
 		if (!id) {
-			this.happening = undefined;
+			this.$happening.set(emptyHappeningContext);
 			return;
 		}
-		if (this.happening?.id === id) {
+		if (this.$happening().id === id) {
 			return;
 		}
 		const space = this.space;
@@ -123,7 +130,7 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 							'onHappeningIDChanged => watchHappeningByID => happening:',
 							happening,
 						);
-						if (happening.id === this.happening?.id) {
+						if (happening.id === this.$happeningID()) {
 							this.setHappening(
 								happening,
 								'watchHappeningChanges() => watchHappeningByID',
@@ -149,13 +156,21 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 			)
 			.subscribe({
 				next: (happeningID) => {
-					if (this.happening?.id !== happeningID) {
+					if (this.$happeningID() !== happeningID) {
+						this.$happening.set({
+							id: happeningID,
+							space: this.space,
+						});
 						this.happeningID$.next(happeningID);
 					}
 				},
 			});
-		this.happeningID$.pipe(distinctUntilChanged()).subscribe({
-			next: this.onHappeningIDChanged,
-		});
+		this.happeningID$
+			.pipe(this.takeUntilDestroyed(), distinctUntilChanged())
+			.subscribe({
+				next: (happeningID) => {
+					this.onHappeningIDChanged(happeningID);
+				},
+			});
 	}
 }

@@ -40,7 +40,10 @@ export class HappeningSlotModalComponent
 	private readonly destroyed = new Subject<void>();
 
 	@Input({ required: true }) space?: ISpaceContext;
-	@Input({ required: true }) happening?: IHappeningContext;
+	@Input({ required: true }) happening: IHappeningContext = {
+		id: '',
+		space: { id: '' },
+	};
 	@Input() slot: IHappeningSlotWithID = emptyHappeningSlot;
 	@Input() adjustment?: IHappeningAdjustment;
 
