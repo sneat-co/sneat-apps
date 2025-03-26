@@ -94,7 +94,7 @@ export abstract class CalendarBaseComponent implements OnChanges, OnDestroy {
 	protected abstract onRecurringsLoaded(): void;
 
 	private onSpaceIdChanged(space: ISpaceContext): void {
-		console.log('ScheduleComponent.onSpaceIdChanged()', this.space?.id);
+		// console.log('ScheduleComponent.onSpaceIdChanged()', this.space?.id);
 		this.schedulusSpaceSubscription?.unsubscribe();
 		if (!space) {
 			return;
@@ -105,10 +105,10 @@ export abstract class CalendarBaseComponent implements OnChanges, OnDestroy {
 			.watchSpaceModuleRecord(space.id)
 			.subscribe({
 				next: (calendariumSpace) => {
-					console.log(
-						'ScheduleComponent.onSpaceIdChanged() => calendariumSpace:',
-						calendariumSpace,
-					);
+					// console.log(
+					// 	'ScheduleComponent.onSpaceIdChanged() => calendariumSpace:',
+					// 	calendariumSpace,
+					// );
 					this.schedulusSpaceDbo = calendariumSpace?.dbo;
 					this.spaceDaysProvider.setSchedulusSpace({
 						space,
