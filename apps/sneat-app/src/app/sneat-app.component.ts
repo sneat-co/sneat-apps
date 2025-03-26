@@ -22,8 +22,8 @@ function capitalizeFirstLetter(text: string): string {
 })
 export class SneatAppComponent {
 	// private analyticsService = inject(AnalyticsService);
-	private titleService = inject(Title);
-	private activatedRoute = inject(ActivatedRoute);
+	private readonly titleService = inject(Title);
+	private readonly activatedRoute = inject(ActivatedRoute);
 
 	constructor(
 		readonly telegramAuthService: TelegramAuthService, // used in constructor

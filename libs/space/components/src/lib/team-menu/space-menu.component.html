@@ -1,46 +1,41 @@
 <ion-list>
 	<ion-item>
 		<!--		<ion-icon [name]="space.type === 'family' ? 'people-outline' : space.type === 'private' ? 'person-circle-outline' : 'people-outline' " slot="end" />-->
-		@if (spaces) {
-			<ion-select
-				label="Space"
-				[value]="space.id"
-				interface="popover"
-				(ionChange)="onSpaceSelected($event)"
-				style="font-weight: bold"
-			>
-				@for (userSpace of spaces; track userSpace.id) {
-					<ion-select-option [value]="userSpace.id"
-						>{{
-							userSpace.brief.title ||
-								(userSpace.brief.type | titlecase) ||
-								space.id
-						}}
-					</ion-select-option>
-				}
-			</ion-select>
-		} @else {
-			<ion-spinner name="lines" slot="start"></ion-spinner>
-			<ion-select
-				label="Space"
-				[value]="space.id"
-				interface="popover"
-				style="font-weight: bold"
-				disabled="true"
-			>
-				@if (space) {
-					<ion-select-option [value]="space.id">{{
-						space.brief?.title || (space.type | titlecase) || space.id
-					}}</ion-select-option>
-				}
-			</ion-select>
-		}
+		<ion-select
+			label="Space"
+			[value]="$space()?.id"
+			interface="popover"
+			(ionChange)="onSpaceSelected($event)"
+			style="font-weight: bold"
+		>
+			@for (userSpace of $spaces(); track userSpace.id) {
+				<ion-select-option [value]="userSpace.id"
+					>{{
+						userSpace.brief.title ||
+							(userSpace.brief.type | titlecase) ||
+							space.id
+					}}
+				</ion-select-option>
+			} @empty {
+				@let space = $space();
+				<ion-select-option [value]="space?.id">
+					@if (!space || (!space?.id && !space?.type)) {
+						Loading...
+					} @else {
+						{{ space.brief?.title || (space.type | titlecase) || space.id }}
+					}
+				</ion-select-option>
+			}
+		</ion-select>
+		<!--		@if (!spaces) {-->
+		<!--			<ion-spinner name="lines" slot="end"></ion-spinner>-->
+		<!--		}-->
 	</ion-item>
 	<ion-item
 		tappable
 		[routerLink]="spacePageUrl('overview')"
-		[disabled]="!space.id"
-		[class.currentPage]="isCurrentPage('overview')"
+		[disabled]="$disabled()"
+		[class.currentPage]="$currentPage() === ''"
 		(click)="goOverview()"
 	>
 		<ion-icon name="home-outline" slot="start" />
@@ -49,8 +44,8 @@
 	<ion-item
 		[routerLink]="spacePageUrl('assets')"
 		routerDirection="root"
-		[disabled]="!space.id"
-		[class.currentPage]="isCurrentPage('assets')"
+		[disabled]="$disabled()"
+		[class.currentPage]="$currentPage() === 'assets'"
 		(click)="goSpacePage($event, 'assets')"
 	>
 		<ion-icon name="car-sport-outline" slot="start" />
@@ -59,8 +54,8 @@
 	<ion-item
 		[routerLink]="spacePageUrl('budget')"
 		routerDirection="root"
-		[disabled]="!space.id"
-		[class.currentPage]="isCurrentPage('budget')"
+		[disabled]="$disabled()"
+		[class.currentPage]="$currentPage() === 'budget'"
 		(click)="goSpacePage($event, 'budget')"
 	>
 		<ion-icon name="cash-outline" slot="start" />
@@ -69,8 +64,8 @@
 	<ion-item
 		[routerLink]="spacePageUrl('calendar')"
 		routerDirection="root"
-		[disabled]="!space.id"
-		[class.currentPage]="isCurrentPage('calendar')"
+		[disabled]="$disabled()"
+		[class.currentPage]="$currentPage() === 'calendar'"
 		(click)="closeMenu()"
 	>
 		<ion-icon name="calendar-outline" slot="start" />
@@ -83,8 +78,8 @@
 	<ion-item
 		[routerLink]="spacePageUrl('contacts')"
 		routerDirection="root"
-		[disabled]="!space.id"
-		[class.currentPage]="isCurrentPage('contacts')"
+		[disabled]="$disabled()"
+		[class.currentPage]="$currentPage() === 'contacts'"
 		(click)="goSpacePage($event, 'contacts')"
 	>
 		<ion-icon name="people-outline" slot="start" />
@@ -93,8 +88,8 @@
 	<ion-item
 		[routerLink]="spacePageUrl('debts')"
 		routerDirection="root"
-		[disabled]="!space.id"
-		[class.currentPage]="isCurrentPage('debts')"
+		[disabled]="$disabled()"
+		[class.currentPage]="$currentPage() === 'debts'"
 		(click)="goSpacePage($event, 'debts')"
 	>
 		<ion-icon name="cash-outline" slot="start" />
@@ -103,8 +98,8 @@
 	<ion-item
 		[routerLink]="spacePageUrl('documents')"
 		routerDirection="root"
-		[disabled]="!space.id"
-		[class.currentPage]="isCurrentPage('documents')"
+		[disabled]="$disabled()"
+		[class.currentPage]="$currentPage() === 'documents'"
 		(click)="goSpacePage($event, 'documents')"
 	>
 		<ion-icon name="documents-outline" slot="start" />
@@ -113,8 +108,8 @@
 	<ion-item
 		[routerLink]="spacePageUrl('lists')"
 		routerDirection="root"
-		[disabled]="!space.id"
-		[class.currentPage]="isCurrentPage('lists')"
+		[disabled]="$disabled()"
+		[class.currentPage]="$currentPage() === 'lists'"
 		(click)="goSpacePage($event, 'lists')"
 	>
 		<ion-icon name="list-outline" slot="start" />
@@ -133,8 +128,8 @@
 	<ion-item
 		[routerLink]="spacePageUrl('members')"
 		routerDirection="root"
-		[disabled]="!space.id"
-		[class.currentPage]="isCurrentPage('members')"
+		[disabled]="$disabled()"
+		[class.currentPage]="$currentPage() === 'members'"
 		(click)="closeMenu()"
 	>
 		<ion-icon name="people-circle-outline" slot="start" />
@@ -143,8 +138,8 @@
 	<ion-item
 		[routerLink]="spacePageUrl('trackers')"
 		routerDirection="root"
-		[disabled]="!space.id"
-		[class.currentPage]="isCurrentPage('trackers')"
+		[disabled]="$disabled()"
+		[class.currentPage]="$currentPage() === 'trackers'"
 		(click)="closeMenu()"
 	>
 		<ion-icon name="bar-chart-outline" slot="start" />

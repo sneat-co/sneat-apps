@@ -1,4 +1,17 @@
-import { Component } from '@angular/core';
+import { TitleCasePipe } from '@angular/common';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	computed,
+	inject,
+	signal,
+} from '@angular/core';
+import {
+	ActivatedRoute,
+	NavigationEnd,
+	Router,
+	RouterLink,
+} from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { ISneatUserState } from '@sneat/auth-core';
 import { IUserSpaceBrief } from '@sneat/auth-models';
@@ -7,33 +20,40 @@ import { ContactusServicesModule } from '@sneat/contactus-services';
 import { IIdAndBrief } from '@sneat/core';
 import { zipMapBriefsWithIDs } from '@sneat/space-models';
 import { SpaceServiceModule } from '@sneat/space-services';
+import { filter } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SpaceBaseComponent } from '../space-base-component.directive';
 import { SpaceComponentBaseParams } from '../space-component-base-params.service';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
 	selector: 'sneat-space-menu',
 	templateUrl: './space-menu.component.html',
-	styleUrls: ['./space-menu.component.scss'],
+	styles: '.currentPage ion-label {font-weight: bold}',
 	imports: [
-		CommonModule,
 		IonicModule,
-		FormsModule,
-		RouterModule,
 		AuthMenuItemComponent,
 		ContactusServicesModule,
 		SpaceServiceModule,
+		TitleCasePipe,
+		RouterLink,
 	],
 	providers: [SpaceComponentBaseParams],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpaceMenuComponent extends SpaceBaseComponent {
-	protected spaces?: readonly IIdAndBrief<IUserSpaceBrief>[];
+	protected readonly $spaces = signal<
+		readonly IIdAndBrief<IUserSpaceBrief>[] | undefined
+	>(undefined);
 
-	constructor(private readonly menuCtrl: MenuController) {
+	protected readonly $disabled = computed(() => !this.$spaceID());
+
+	protected readonly $currentPage = signal<string>('');
+
+	private readonly activatedRoute = inject(ActivatedRoute);
+	private readonly menuCtrl = inject(MenuController);
+
+	constructor(router: Router) {
 		super('SpaceMenuComponent');
 		this.spaceParams.userService.userState
 			.pipe(takeUntil(this.destroyed$))
@@ -41,14 +61,30 @@ export class SpaceMenuComponent extends SpaceBaseComponent {
 				next: this.onUserStateChanged,
 				error: this.errorLogger.logErrorHandler('failed to get user stage'),
 			});
+		router.events
+			.pipe(
+				this.takeUntilDestroyed(),
+				filter((event) => event instanceof NavigationEnd),
+			)
+			.subscribe((event: NavigationEnd) => {
+				console.log('SpaceMenuComponent.router.events.subscribe():', event);
+				let route = this.activatedRoute.firstChild;
+				while (route?.firstChild) {
+					route = route.firstChild;
+				}
+				const url = event.urlAfterRedirects.split('/');
+				this.$currentPage.set(url.length > 4 ? url[4] : '');
+			});
 	}
 
+	// TODO: Should we use goSpacePage('') instead?
 	protected goOverview(): boolean {
-		if (!this.space) {
-			this.errorLogger.logError('no team context');
+		const space = this.$space();
+		if (!space) {
+			this.errorLogger.logError('no space context');
 			return false;
 		}
-		this.spaceParams.spaceNavService.navigateToSpace(this.space).then((v) => {
+		this.spaceParams.spaceNavService.navigateToSpace(space).then((v) => {
 			if (v) {
 				this.closeMenu();
 			}
@@ -58,8 +94,9 @@ export class SpaceMenuComponent extends SpaceBaseComponent {
 
 	protected goSpacePage(event: Event, p: string): boolean {
 		console.log('SpaceMenuComponent.goSpacePage()', p, event);
+		// At the moment we use routerLink for navigation
 		event.stopPropagation();
-		event.preventDefault();
+		// event.preventDefault();
 		this.closeMenu();
 		return false;
 	}
@@ -68,42 +105,14 @@ export class SpaceMenuComponent extends SpaceBaseComponent {
 		this.menuCtrl.close().catch(this.errorLogger.logError);
 	}
 
-	override onSpaceDboChanged(): void {
-		super.onSpaceDboChanged();
-		// console.log('SpaceMenuComponent.onTeamDtoChanged()', this.team?.dto);
-	}
-
-	protected spaceLabelClicked(event: Event): void {
-		event.stopPropagation();
-		event.preventDefault();
-	}
-
-	protected isCurrentPage(page: string): boolean {
-		if (!this.space) {
-			return false;
-		}
-		const { id } = this.space;
-		const idp = '/' + id;
-		const { pathname } = location;
-		if (page === 'overview') {
-			return pathname.endsWith(idp);
-		}
-		return (
-			pathname.endsWith(idp + '/' + page) ||
-			pathname.indexOf(idp + '/' + page) > 0
-		);
-	}
-
 	protected onSpaceSelected(event: Event): void {
 		const spaceID = (event as CustomEvent).detail.value as string;
-
-		// console.log('SpaceMenuComponent.onTeamSelected', teamID);
 		if (spaceID === this.space?.id) {
 			return;
 		}
-		const space = this.spaces?.find((t) => t.id === spaceID);
+		const space = this.$spaces()?.find((t) => t.id === spaceID);
 		if (space) {
-			this.$spaceContext.set(space);
+			this.$space.set(space);
 			this.spaceNav
 				.navigateToSpace(space)
 				.catch(
@@ -118,10 +127,10 @@ export class SpaceMenuComponent extends SpaceBaseComponent {
 
 	private readonly onUserStateChanged = (userState: ISneatUserState): void => {
 		console.log('SpaceMenuComponent.onUserStateChanged():', userState);
-		if (userState?.record) {
-			this.spaces = zipMapBriefsWithIDs(userState.record.spaces) || [];
-		} else {
-			this.spaces = undefined;
-		}
+		this.$spaces.set(
+			userState?.record
+				? zipMapBriefsWithIDs(userState.record.spaces) || []
+				: undefined,
+		);
 	};
 }

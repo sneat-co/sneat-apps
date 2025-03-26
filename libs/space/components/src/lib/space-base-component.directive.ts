@@ -1,4 +1,11 @@
-import { Directive, inject, Inject, OnInit, signal } from '@angular/core';
+import {
+	computed,
+	Directive,
+	inject,
+	Inject,
+	OnInit,
+	signal,
+} from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
@@ -20,7 +27,9 @@ export abstract class SpaceBaseComponent
 	extends SneatBaseComponent
 	implements OnInit
 {
-	protected readonly $spaceID = signal<string | undefined>(undefined);
+	protected readonly $space = signal<ISpaceContext | undefined>(undefined);
+	protected readonly $spaceID = computed(() => this.$space()?.id);
+
 	protected readonly spaceIDChanged = new Subject<string | undefined>();
 	protected readonly spaceTypeChanged = new Subject<SpaceType | undefined>();
 
@@ -32,14 +41,6 @@ export abstract class SpaceBaseComponent
 	protected readonly spaceDboChanged = new Subject<
 		ISpaceDbo | undefined | null
 	>();
-
-	protected readonly $spaceContext = signal<ISpaceContext | undefined>(
-		undefined,
-	);
-
-	protected get spaceContext(): ISpaceContext | undefined {
-		return this.$spaceContext();
-	}
 
 	// protected spaceContext?: ISpaceContext;
 
@@ -58,13 +59,13 @@ export abstract class SpaceBaseComponent
 	// protected readonly willLeave = new Subject<void>();
 	protected defaultBackPage?: string;
 
-	public readonly spaceIDChanged$ = this.spaceIDChanged.asObservable().pipe(
+	protected readonly spaceIDChanged$ = this.spaceIDChanged.asObservable().pipe(
 		this.takeUntilDestroyed(),
 		distinctUntilChanged(),
 		// tap((id) => console.log(this.className + '=> spaceIDChanged$: ' + id)),
 	);
 
-	public readonly spaceTypeChanged$: Observable<SpaceType | undefined> =
+	protected readonly spaceTypeChanged$: Observable<SpaceType | undefined> =
 		this.spaceTypeChanged.pipe(
 			this.takeUntilDestroyed(),
 			distinctUntilChanged(),
@@ -73,7 +74,7 @@ export abstract class SpaceBaseComponent
 			// tap(v => console.log('spaceTypeChanged$ after replay =>', v)),
 		);
 
-	public readonly spaceBriefChanged$ = this.spaceBriefChanged
+	protected readonly spaceBriefChanged$ = this.spaceBriefChanged
 		.asObservable()
 		.pipe(this.takeUntilDestroyed(), distinctUntilChanged(equalSpaceBriefs));
 
@@ -81,26 +82,26 @@ export abstract class SpaceBaseComponent
 		.asObservable()
 		.pipe(this.takeUntilDestroyed(), distinctUntilChanged());
 
-	public get space(): ISpaceContext {
+	protected get space(): ISpaceContext {
 		// TODO: Document why we do not allow undefined
-		return this.spaceContext || ({ id: '' } as ISpaceContext);
+		return this.$space() || ({ id: '' } as ISpaceContext);
 	}
 
-	public get preloader() {
+	protected get preloader() {
 		return this.spaceParams.preloader;
 	}
 
-	public get spaceNav() {
+	protected get spaceNav() {
 		return this.spaceParams.spaceNavService;
 	}
 
-	public get currentUserId() {
+	protected get currentUserId() {
 		return this.userService.currentUserID;
 	}
 
-	public get defaultBackUrl(): string {
-		const t = this.spaceContext;
-		const url = t ? `/space/${t.type}/${t.id}` : '';
+	protected get defaultBackUrl(): string {
+		const space = this.$space();
+		const url = space ? `/space/${space.type}/${space.id}` : '';
 		return url && this.defaultBackPage ? url + '/' + this.defaultBackPage : url;
 	}
 
@@ -206,13 +207,13 @@ export abstract class SpaceBaseComponent
 	}
 
 	private readonly onSpaceIdChangedInUrl = (space?: ISpaceContext): void => {
-		console.log(
-			`${this.className}:SpaceBaseComponent.onSpaceIdChangedInUrl()`,
-			this.spaceContext?.id,
-			' => ',
-			space,
-		);
-		const prevSpace = this.spaceContext;
+		const prevSpace = this.$space();
+		// console.log(
+		// 	`${this.className}:SpaceBaseComponent.onSpaceIdChangedInUrl()`,
+		// 	prevSpace?.id,
+		// 	' => ',
+		// 	space,
+		// );
 		if (
 			space === prevSpace ||
 			(space?.id === prevSpace?.id && space?.type === prevSpace?.type)
@@ -267,7 +268,7 @@ export abstract class SpaceBaseComponent
 				next: (uid) => {
 					if (!uid) {
 						this.unsubscribe('user signed out');
-						this.$spaceContext.set(undefined);
+						this.$space.set(undefined);
 					}
 					this.onUserIdChanged();
 				},
@@ -291,32 +292,32 @@ export abstract class SpaceBaseComponent
 
 	private setNewSpaceContext(spaceContext?: ISpaceContext): void {
 		this.console.log(
-			`${this.className}:SpaceBaseComponent.setNewSpaceContext(id=${spaceContext?.id}), previous id=${this.spaceContext?.id}`,
+			`${this.className}:SpaceBaseComponent.setNewSpaceContext(id=${spaceContext?.id}), previous id=${this.$space()?.id}`,
 			spaceContext,
 		);
-		if (!spaceContext?.type && this.spaceContext?.type) {
+		const prevSpace = this.$space();
+		if (!spaceContext?.type && prevSpace?.type) {
 			throw new Error('!spaceContext?.type && this.spaceContext?.type');
 		}
-		if (this.spaceContext == spaceContext) {
+		if (prevSpace == spaceContext) {
 			console.warn(
 				'Duplicate call to SpaceBaseComponent.setNewSpaceContext() with same spaceContext:',
 				spaceContext,
 			);
 			// return;
 		}
-		const idChanged = this.spaceContext?.id != spaceContext?.id;
-		const spaceTypeChanged = this.spaceContext?.type != spaceContext?.type;
+		const idChanged = prevSpace?.id != spaceContext?.id;
+		const spaceTypeChanged = prevSpace?.type != spaceContext?.type;
 		const briefChanged = equalSpaceBriefs(
-			this.spaceContext?.brief,
+			prevSpace?.brief,
 			spaceContext?.brief,
 		);
-		const dboChanged = this.spaceContext?.dbo != spaceContext?.dbo;
+		const dboChanged = prevSpace?.dbo != spaceContext?.dbo;
 		this.console.log(
 			`${this.className}:SpaceBaseComponent.setNewSpaceContext(id=${spaceContext?.id}) => idChanged=${idChanged}, spaceTypeChanged=${spaceTypeChanged}, briefChanged=${briefChanged}, dtoChanged=${dboChanged}`,
 		);
-		this.$spaceContext.set(spaceContext);
+		this.$space.set(spaceContext);
 		if (idChanged) {
-			this.$spaceID.set(spaceContext?.id);
 			this.spaceIDChanged.next(spaceContext?.id);
 			this.onSpaceIdChanged();
 			if (spaceContext) {
@@ -365,8 +366,8 @@ export abstract class SpaceBaseComponent
 			// 			error: this.logErrorHandler(`failed to load space by id=${id}`),
 			// 		}),
 			// );
-			if (this.spaceContext) {
-				this.spaceChanged.next(this.spaceContext);
+			if (spaceContext) {
+				this.spaceChanged.next(spaceContext);
 			}
 		}
 
@@ -397,11 +398,11 @@ export abstract class SpaceBaseComponent
 	}
 
 	private readonly onSpaceContextChanged = (space: ISpaceContext): void => {
-		const dtoChanged = space.dbo !== this.spaceContext?.dbo;
-		this.console.log(
-			`${this.className}:SpaceBaseComponent.onSpaceContextChanged() => dtoChanged=${dtoChanged}, space:`,
-			space,
-		);
+		const dtoChanged = space.dbo !== this.$space()?.dbo;
+		// this.console.log(
+		// 	`${this.className}:SpaceBaseComponent.onSpaceContextChanged() => dtoChanged=${dtoChanged}, space:`,
+		// 	space,
+		// );
 		if (!space.brief && space.dbo) {
 			space = { ...space, brief: space.dbo };
 		}
@@ -411,7 +412,7 @@ export abstract class SpaceBaseComponent
 			}
 		}
 		this.setNewSpaceContext(space);
-		this.$spaceContext.set(space);
+		this.$space.set(space);
 		if (dtoChanged) {
 			this.onSpaceDboChanged();
 		}
@@ -431,7 +432,7 @@ export abstract class SpaceBaseComponent
 	}
 
 	protected spacePageUrl(page: string): string {
-		return spacePageUrl(this.spaceContext, page) || '';
+		return spacePageUrl(this.$space(), page) || '';
 	}
 }
 
