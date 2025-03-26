@@ -1,6 +1,6 @@
 import { SneatApiService } from '@sneat/api';
 import { dateToIso, INavContext } from '@sneat/core';
-import { hasRelatedItemID } from '@sneat/dto';
+import { hasRelated } from '@sneat/dto';
 import {
 	IHappeningBrief,
 	IHappeningDbo,
@@ -384,12 +384,11 @@ export class SpaceDaysProvider {
 		}
 		if (
 			this.memberId &&
-			hasRelatedItemID(
+			hasRelated(
 				recurring.dbo?.related || recurring?.brief?.related,
 				'contactus',
 				'contacts',
-				this._space.id,
-				this.memberId,
+				{ spaceID: this._space.id, itemID: this.memberId },
 			)
 		) {
 			return;

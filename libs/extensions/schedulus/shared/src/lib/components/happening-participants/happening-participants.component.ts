@@ -15,7 +15,11 @@ import {
 	ContactsChecklistComponent,
 	ICheckChangedArgs,
 } from '@sneat/contactus-shared';
-import { addRelatedItem, getRelatedItemIDs } from '@sneat/dto';
+import {
+	addRelatedItem,
+	getRelatedItemIDs,
+	removeRelatedItem,
+} from '@sneat/dto';
 import { IHappeningContext, IHappeningBase } from '@sneat/mod-schedulus-core';
 import {
 	HappeningService,
@@ -37,7 +41,14 @@ export class HappeningParticipantsComponent implements OnChanges {
 
 	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
 
-	protected readonly $checkedContactIDs = signal<readonly string[]>([]);
+	protected readonly $checkedContactIDs = computed<readonly string[]>(() => {
+		const happening = this.$happening();
+		return getRelatedItemIDs(
+			happening.dbo?.related || happening.brief?.related,
+			'contactus',
+			'contacts',
+		);
+	});
 
 	protected readonly $tab = signal<'members' | 'others'>('members');
 
@@ -73,16 +84,6 @@ export class HappeningParticipantsComponent implements OnChanges {
 			changes,
 			happening.dbo?.related,
 		);
-		if (changes['happening']) {
-			const checkedContactIDs = getRelatedItemIDs(
-				happening.dbo?.related || happening.brief?.related,
-				'contactus',
-				'contacts',
-				this.$space().id,
-			);
-			this.$checkedContactIDs.set(checkedContactIDs);
-			console.log('checkedContactIDs', checkedContactIDs, happening);
-		}
 	}
 
 	public get membersTabLabel(): string {
@@ -102,27 +103,19 @@ export class HappeningParticipantsComponent implements OnChanges {
 	// 	);
 	// }
 
+	// protected isParticipantCheckDisabled(contactID: string): boolean {
+	// 	return this.$checkChanging()[contactID];
+	// }
+
 	protected isMemberCheckChanged(args: ICheckChangedArgs): void {
 		console.log('isMemberCheckChanged()', args);
 		// this.populateParticipants();
-
-		const addRemoveContactID = () => {
-			const checkedContactIDs = this.$checkedContactIDs();
-			if (args.checked && !checkedContactIDs.includes(args.id)) {
-				this.$checkedContactIDs.set([...checkedContactIDs, args.id]);
-			} else if (!args.checked && checkedContactIDs.includes(args.id)) {
-				this.$checkedContactIDs.set(
-					checkedContactIDs.filter((id) => id !== args.id),
-				);
-			}
-		};
 
 		const space = this.$space();
 		const happening = this.$happening();
 
 		if (!happening.id) {
-			addRemoveContactID();
-			this.populateParticipants();
+			this.addRemoveRelated(args);
 			args.resolve();
 			return;
 		}
@@ -136,7 +129,7 @@ export class HappeningParticipantsComponent implements OnChanges {
 			: this.happeningService.removeParticipant;
 		apiCall(request).subscribe({
 			next: () => {
-				addRemoveContactID();
+				this.addRemoveRelated(args);
 				args.resolve();
 			},
 			error: args.reject,
@@ -146,7 +139,7 @@ export class HappeningParticipantsComponent implements OnChanges {
 	private readonly emitHappeningChange = (happening: IHappeningContext) =>
 		this.happeningChange.emit(happening);
 
-	private populateParticipants(): void {
+	private addRemoveRelated(args: ICheckChangedArgs): void {
 		let happening = this.$happening();
 		const { brief, dbo } = happening;
 		if (!brief || !dbo) {
@@ -155,18 +148,18 @@ export class HappeningParticipantsComponent implements OnChanges {
 		let happeningBase: IHappeningBase = {
 			...(dbo || brief),
 		};
-		this.$checkedContactIDs().forEach((contactID) => {
-			happeningBase = {
-				...happeningBase,
-				related: addRelatedItem(
-					happeningBase.related,
-					'contactus',
-					'contacts',
-					happening.space.id || '',
-					contactID,
-				),
-			};
-		});
+		const addOrRemove = args.checked ? addRelatedItem : removeRelatedItem;
+
+		happeningBase = {
+			...happeningBase,
+			related: addOrRemove(
+				happeningBase.related,
+				'contactus',
+				'contacts',
+				happening.space.id || '',
+				args.id,
+			),
+		};
 
 		happening = {
 			...happening,

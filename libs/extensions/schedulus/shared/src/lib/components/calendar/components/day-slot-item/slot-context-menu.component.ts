@@ -3,7 +3,7 @@ import { IonicModule, PopoverController } from '@ionic/angular';
 // import { MembersAsBadgesComponent } from '@sneat/components';
 import { IContactBrief, IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { excludeUndefined, IIdAndBrief } from '@sneat/core';
-import { hasRelatedItemID } from '@sneat/dto';
+import { hasRelated } from '@sneat/dto';
 import { CalendarNavServicesModule } from '../../../../services';
 import {
 	HappeningUIState,
@@ -97,12 +97,11 @@ export class SlotContextMenuComponent {
 			) || [];
 		const happening = this.slotContext.happening;
 		const selectedMembers = members.filter((m) =>
-			hasRelatedItemID(
+			hasRelated(
 				happening?.dbo?.related || happening?.brief?.related,
 				'contactus',
 				'contacts',
-				this.space?.id || '',
-				m.id,
+				{ spaceID: this.space?.id || '', itemID: m.id },
 			),
 		);
 		const options: ISelectMembersOptions = {
