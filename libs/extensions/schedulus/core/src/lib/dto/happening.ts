@@ -64,7 +64,7 @@ export interface IWithDates {
 }
 
 export interface IWithSpaceDates extends IWithSpaceIDs, IWithDates {
-	readonly spaceDates?: string[]; // ISO date strings prefixed with teamID e.g. [`abc123:2019-12-01`, `abc123:2019-12-02`]
+	readonly spaceDates?: string[]; // ISO date strings prefixed with spaceID e.g. [`abc123:2019-12-01`, `abc123:2019-12-02`]
 }
 
 export interface IHappeningDbo extends IHappeningBrief, IWithSpaceDates {}

@@ -74,8 +74,8 @@ export class ScrumTaskComponent implements OnInit {
 		//   if (!this.type) {
 		//     throw new Error('!this.type');
 		//   }
-		//   if (!this.teamID) {
-		//     throw new Error('!this.teamID');
+		//   if (!this.spaceID) {
+		//     throw new Error('!this.spaceID');
 		//   }
 		//   if (!this.date) {
 		//     throw new Error('!this.date');

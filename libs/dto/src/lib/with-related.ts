@@ -14,8 +14,8 @@ export interface IRelationshipRole {
 export type IRelationshipRoles = Readonly<Record<string, IRelationshipRole>>;
 
 export interface IRelatedItemKey {
-	readonly spaceID: string;
 	readonly itemID: string;
+	readonly spaceID?: string;
 }
 
 export interface IRelatedItem {
@@ -120,17 +120,18 @@ export const getRelatedItemIDs = (
 	related: IRelatedItemsByModule | undefined,
 	module: string,
 	collection: string,
-	teamID?: string,
+	spaceID?: string,
 ): readonly string[] => {
 	if (!related) {
 		return [];
 	}
+	console.log('getRelatedItemIDs', module, collection, spaceID, related);
 	const collectionRelated = (related || {})[module] || {};
 	const relatedItems = collectionRelated[collection];
 	const itemIDs = relatedItems
 		?.map((i) =>
 			i.keys
-				.filter((k) => !teamID || k.spaceID === teamID)
+				.filter((k) => !spaceID || k.spaceID === spaceID)
 				.map((k) => k.itemID),
 		)
 		?.flat();

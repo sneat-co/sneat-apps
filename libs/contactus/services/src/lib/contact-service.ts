@@ -177,7 +177,7 @@ export class ContactService extends ModuleSpaceItemService<
 		request: IContactRequestWithOptionalMessage,
 	): Observable<ISpaceContext> {
 		console.log(
-			`removeTeamMember(teamID=${request.spaceID}, contactID=${request.contactID})`,
+			`removeTeamMember(spaceID=${request.spaceID}, contactID=${request.contactID})`,
 		);
 		try {
 			validateContactRequest(request);
@@ -185,7 +185,7 @@ export class ContactService extends ModuleSpaceItemService<
 			return throwError(() => ex);
 		}
 
-		// const request: IContactRequest = { teamID, contactID };
+		// const request: IContactRequest = { spaceID, contactID };
 		return this.sneatApiService.post('contactus/remove_team_member', request);
 	}
 }

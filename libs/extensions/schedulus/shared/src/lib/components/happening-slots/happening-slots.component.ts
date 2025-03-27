@@ -110,7 +110,7 @@ export class HappeningSlotsComponent implements OnChanges {
 		}
 		const spaceID = this.happening?.space.id;
 		if (!spaceID) {
-			throw new Error('!teamID');
+			throw new Error('!spaceID');
 		}
 		const request: IDeleteSlotRequest = {
 			spaceID: spaceID,

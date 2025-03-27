@@ -96,7 +96,7 @@ export class RelationshipFormComponent
 		if (this.relatedTo && this.relatedItems) {
 			if (!this.relatedTo.space) {
 				console.error(
-					'onRelatedChanged(): relatedTo.teamID is not set',
+					'onRelatedChanged(): relatedTo.spaceID is not set',
 					this.relatedTo,
 				);
 			}

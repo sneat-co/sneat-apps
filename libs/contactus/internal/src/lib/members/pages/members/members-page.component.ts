@@ -124,7 +124,7 @@ export class MembersPageComponent extends MembersBasePage {
 		// } else {
 		// 	this.contactService
 		// 		.watchContactsWithRole(space, 'space_member') // TODO: use constant
-		// 		.pipe(takeUntil(this.teamIDChanged$))
+		// 		.pipe(takeUntil(this.spaceIDChanged$))
 		// 		.subscribe({
 		// 			next: (members) => {
 		// 				console.log(

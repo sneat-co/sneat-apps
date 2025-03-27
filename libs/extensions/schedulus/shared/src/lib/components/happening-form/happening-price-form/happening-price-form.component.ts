@@ -176,7 +176,7 @@ export class HappeningPriceFormComponent {
 			return;
 		}
 		if (!spaceID) {
-			this.errorLogger.logError('!teamID');
+			this.errorLogger.logError('!spaceID');
 			return;
 		}
 

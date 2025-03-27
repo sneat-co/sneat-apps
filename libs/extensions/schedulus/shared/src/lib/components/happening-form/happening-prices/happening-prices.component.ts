@@ -81,7 +81,7 @@ export class HappeningPricesComponent {
 		}
 
 		const happeningID = this.happening?.id,
-			teamID = this.happening?.space?.id;
+			spaceID = this.happening?.space?.id;
 
 		if (!happeningID) {
 			const removePrice = <T extends IHappeningBrief>(h: T) => ({
@@ -99,7 +99,7 @@ export class HappeningPricesComponent {
 			return;
 		}
 
-		if (!teamID) {
+		if (!spaceID) {
 			return;
 		}
 
@@ -107,7 +107,7 @@ export class HappeningPricesComponent {
 
 		this.happeningService
 			.deleteHappeningPrices({
-				spaceID: teamID,
+				spaceID: spaceID,
 				happeningID,
 				priceIDs: [price.id],
 			})

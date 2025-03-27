@@ -7,7 +7,6 @@ import {
 	input,
 	OnChanges,
 	Output,
-	SimpleChanges,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import {
@@ -39,12 +38,15 @@ import {
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HappeningParticipantsComponent implements OnChanges {
+export class HappeningParticipantsComponent {
 	// @Input({ required: true }) space?: ISpaceContext;
 	public readonly $happening = input.required<IHappeningContext>();
 	// @Input({ required: true }) happening?: IHappeningContext;
 
 	public readonly $space = computed(() => this.$happening().space);
+	protected readonly $membersTabLabel = computed(() =>
+		this.$space().type === 'family' ? 'Family members' : 'Team members',
+	);
 
 	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
 
@@ -63,38 +65,6 @@ export class HappeningParticipantsComponent implements OnChanges {
 
 	constructor(private readonly happeningService: HappeningService) {}
 
-	// private contactusSpaceSubscription?: Subscription;
-	// private onSpaceIdChanged(): void {
-	// 	this.contactusSpaceSubscription?.unsubscribe();
-	// 	const spaceID = this.space?.id;
-	// 	if (!spaceID) {
-	// 		return;
-	// 	}
-	// 	this.contactusSpaceSubscription = this.contactusSpaceService
-	// 		.watchContactBriefs(spaceID)
-	// 		.subscribe({
-	// 			next: (contactBriefs) => {
-	// 				this.members = contactBriefs;
-	// 			},
-	// 			error: (error) =>
-	// 				console.error('Failed to load contactus space', error),
-	// 		});
-	// }
-
-	ngOnChanges(changes: SimpleChanges): void {
-		const happening = this.$happening();
-		console.log(
-			'HappeningParticipantsComponent.ngOnChanges()',
-			changes,
-			happening.dbo?.related,
-		);
-	}
-
-	public get membersTabLabel(): string {
-		const space = this.$space();
-		return space.type === 'family' ? 'Family members' : 'Team members';
-	}
-
 	protected onCheckChanged(args: ICheckChangedArgs): void {
 		console.log('HappeningParticipantsComponent.onCheckChanged()', args);
 		this.analytics.logEvent(
@@ -106,7 +76,7 @@ export class HappeningParticipantsComponent implements OnChanges {
 		const happening = this.$happening();
 
 		if (!happening.id) {
-			this.addRemoveRelated(args);
+			this.addRemoveRelated([args]);
 			args.resolve();
 			return;
 		}
@@ -120,7 +90,7 @@ export class HappeningParticipantsComponent implements OnChanges {
 			: this.happeningService.removeParticipant;
 		apiCall(request).subscribe({
 			next: () => {
-				this.addRemoveRelated(args);
+				this.addRemoveRelated([args]);
 				args.resolve();
 			},
 			error: args.reject,
@@ -130,7 +100,7 @@ export class HappeningParticipantsComponent implements OnChanges {
 	private readonly emitHappeningChange = (happening: IHappeningContext) =>
 		this.happeningChange.emit(happening);
 
-	private addRemoveRelated(args: ICheckChangedArgs): void {
+	private addRemoveRelated(args: readonly ICheckChangedArgs[]): void {
 		let happening = this.$happening();
 		const { brief, dbo } = happening;
 		if (!brief || !dbo) {
@@ -139,18 +109,20 @@ export class HappeningParticipantsComponent implements OnChanges {
 		let happeningBase: IHappeningBase = {
 			...(dbo || brief),
 		};
-		const addOrRemove = args.checked ? addRelatedItem : removeRelatedItem;
+		args.forEach((arg) => {
+			const addOrRemove = arg.checked ? addRelatedItem : removeRelatedItem;
 
-		happeningBase = {
-			...happeningBase,
-			related: addOrRemove(
-				happeningBase.related,
-				'contactus',
-				'contacts',
-				happening.space.id || '',
-				args.id,
-			),
-		};
+			happeningBase = {
+				...happeningBase,
+				related: addOrRemove(
+					happeningBase.related,
+					'contactus',
+					'contacts',
+					happening.space.id || '',
+					arg.id,
+				),
+			};
+		});
 
 		happening = {
 			...happening,
@@ -166,7 +138,7 @@ export class HappeningParticipantsComponent implements OnChanges {
 		this.emitHappeningChange(happening);
 	}
 
-	protected addContact(source: string): void {
+	protected addContact(event: Event, source: string): void {
 		this.analytics.logEvent('happening/participants/add_contact', { source });
 		const spaceID = this.$space().id;
 		if (!spaceID) {
@@ -201,6 +173,16 @@ export class HappeningParticipantsComponent implements OnChanges {
 							console.log(
 								`${contactsToAdd.length} contacts added as participants`,
 							);
+							const args: readonly ICheckChangedArgs[] = request.contacts.map(
+								(c) => ({
+									event,
+									id: c.id,
+									checked: true,
+									resolve: () => void 0,
+									reject: () => void 0,
+								}),
+							);
+							this.addRemoveRelated(args);
 						},
 					});
 				} else {

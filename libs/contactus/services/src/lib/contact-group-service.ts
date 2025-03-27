@@ -171,7 +171,7 @@ export class ContactGroupService {
 		space: ISpaceRef,
 		status: 'active' | 'archived' = 'active',
 	): Observable<IIdAndDbo<IContactGroupDbo>[]> {
-		// console.log('watchMemberGroupsByTeamID()', teamID);
+		// console.log('watchMemberGroupsByTeamID()', spaceID);
 		return this.spaceItemService.watchModuleSpaceItemsWithSpaceRef(space, {
 			filter: [{ field: 'status', operator: '==', value: status }],
 		});

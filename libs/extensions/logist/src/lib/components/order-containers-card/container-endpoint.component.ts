@@ -197,22 +197,22 @@ export class ContainerEndpointComponent implements OnChanges {
 			shippingPointID = this.shippingPointID,
 			containerID = this.containerPoint?.containerID,
 			orderID = this.order?.id,
-			teamID = this.order?.space?.id;
+			spaceID = this.order?.space?.id;
 
 		if (
 			!endpointSide ||
 			!containerID ||
 			!shippingPointID ||
 			!orderID ||
-			!teamID ||
+			!spaceID ||
 			!this.containerPoint
 		) {
 			throw new Error(
-				`ContainerEndpointComponent.createSetContainerEndpointFieldsRequest(): invalid parameters: endpointSide=${endpointSide}, containerID=${containerID}, shippingPointID=${shippingPointID}, orderID=${orderID}, teamID=${teamID}`,
+				`ContainerEndpointComponent.createSetContainerEndpointFieldsRequest(): invalid parameters: endpointSide=${endpointSide}, containerID=${containerID}, shippingPointID=${shippingPointID}, orderID=${orderID}, spaceID=${spaceID}`,
 			);
 		}
 		return {
-			spaceID: teamID,
+			spaceID: spaceID,
 			orderID,
 			shippingPointID,
 			containerID,

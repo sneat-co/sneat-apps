@@ -135,7 +135,7 @@ export class OrderContainerPointComponent implements OnChanges {
 		const spaceID = this.space?.id;
 		if (!spaceID) {
 			throw new Error(
-				'ContainerPointComponent.delete(): teamID is not defined',
+				'ContainerPointComponent.delete(): spaceID is not defined',
 			);
 		}
 		const orderID = this.order?.id;

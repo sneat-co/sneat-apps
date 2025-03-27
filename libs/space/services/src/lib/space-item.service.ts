@@ -267,7 +267,7 @@ export class ModuleSpaceItemService<
 		console.log('watchModuleSpaceItems()', spaceID, this.collectionName);
 		// filter = [
 		// 	...(filter || []),
-		// 	// { field: 'spaceIDs', operator: '==', value: teamID },
+		// 	// { field: 'spaceIDs', operator: '==', value: spaceID },
 		// ];
 		const collectionRef = this.collectionRef<Dbo2>(spaceID);
 		return this.queryItems<Dbo2>(collectionRef, queryArgs);

@@ -118,7 +118,7 @@ function processPrice(
 				if (!contactLiability) {
 					contactLiability = {
 						contact: {
-							id: contactKey.spaceID,
+							id: contactKey.itemID,
 							space: happeningLiability.happening.space,
 						},
 						valuesByCurrency: {},

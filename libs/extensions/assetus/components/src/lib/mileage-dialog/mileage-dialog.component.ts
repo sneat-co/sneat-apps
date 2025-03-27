@@ -136,7 +136,7 @@ export class MileAgeDialogComponent {
 		});
 
 		// const request: ICreateDebtRecordRequest = {
-		// 	teamID,
+		// 	spaceID,
 		// 	contactID,
 		// 	amount: this.amount.value,
 		// 	currency: this.currency.value,

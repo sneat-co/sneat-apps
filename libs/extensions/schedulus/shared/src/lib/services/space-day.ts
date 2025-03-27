@@ -158,7 +158,7 @@ export class SpaceDay {
 
 	private readonly subscribeForSingles = (): void => {
 		if (!this.spaceID) {
-			console.error('Tried to subscribe for single happenings without teamID');
+			console.error('Tried to subscribe for single happenings without spaceID');
 			return;
 		}
 		if (!this.dateID) {

@@ -33,6 +33,7 @@ export class HappeningSlotParticipantsComponent extends SneatBaseComponent {
 
 	protected readonly $relatedItems = computed(() => {
 		const happeningSlot = this.$happeningSlot();
+		console.log('happeningSlot:', happeningSlot);
 		return getRelatedItems(
 			'contactus',
 			'contacts',
@@ -46,16 +47,23 @@ export class HappeningSlotParticipantsComponent extends SneatBaseComponent {
 			return;
 		}
 		const happeningSlot = this.$happeningSlot();
-		console.log(
-			`HappeningSlotParticipantsComponent.$contacts(): spaceID=${spaceID}, wd=${happeningSlot.wd}, slotID=${happeningSlot.slot.id}`,
-			spaceID,
-		);
 		const relatedItems = this.$relatedItems();
 		const spaceContacts = this.$spaceContacts();
 		const contacts = relatedItems.map((relatedItem) => {
-			const keys = relatedItem.keys.filter((k) => k.spaceID == spaceID);
+			const keys = relatedItem.keys.filter(
+				(k) => !k.spaceID || k.spaceID == spaceID,
+			);
 			return spaceContacts?.find((tc) => keys.some((k) => k.itemID === tc.id));
 		});
+		console.log(
+			`HappeningSlotParticipantsComponent.$contacts(): spaceID=${spaceID}, wd=${happeningSlot.wd}, slotID=${happeningSlot.slot.id}`,
+			'relatedItems:',
+			relatedItems,
+			'spaceContacts:',
+			spaceContacts,
+			'contacts:',
+			contacts,
+		);
 		return (
 			(contacts.filter((c) => !!c?.brief) as IIdAndBrief<IContactBrief>[]) || []
 		);
@@ -92,7 +100,7 @@ export class HappeningSlotParticipantsComponent extends SneatBaseComponent {
 	}
 
 	private onSpaceIDChanged(spaceID: string): void {
-		// console.log('HappeningSlotParticipantsComponent.onSpaceIDChanged()', teamID);
+		// console.log('HappeningSlotParticipantsComponent.onSpaceIDChanged()', spaceID);
 		this.contactusService
 			.watchContactBriefs(spaceID)
 			.pipe(this.takeUntilDestroyed())

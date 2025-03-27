@@ -1,10 +1,10 @@
-@for (contact of contacts(); track contact.id; let last = $last) {
+@for (contact of $contactsToDisplay(); track contact.id; let last = $last) {
 	<ion-item [lines]="last ? $lastItemLine() : undefined">
 		<ion-checkbox
 			labelPlacement="end"
 			justify="start"
 			[value]="contact.id"
-			[checked]="isChecked(contact)"
+			[checked]="contact.isChecked"
 			[disabled]="isDisabled(contact.id)"
 			(ionChange)="onCheckboxChange($event, contact)"
 		>
@@ -17,7 +17,7 @@
 	</ion-item>
 } @empty {
 	<ion-item>
-		@if (contacts()) {
+		@if ($spaceContacts()) {
 			<ion-label>{{ noContactsMessage || "No contacts" }}</ion-label>
 		} @else {
 			<ion-label>Loading...</ion-label>

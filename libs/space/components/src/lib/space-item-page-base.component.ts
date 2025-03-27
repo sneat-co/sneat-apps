@@ -129,10 +129,10 @@ export abstract class SpaceItemPageBaseComponent<
 					this.takeUntilDestroyed(),
 					takeUntil(
 						this.spaceIDChanged$.pipe(
-							tap((teamID) =>
+							tap((spaceID) =>
 								console.log(
-									'cancelling item subscription as teamID changed to:',
-									teamID,
+									'cancelling item subscription as spaceID changed to:',
+									spaceID,
 								),
 							),
 						),

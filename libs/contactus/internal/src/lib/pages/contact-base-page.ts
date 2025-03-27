@@ -43,7 +43,7 @@ export abstract class ContactBasePage extends SpaceItemPageBaseComponent<
 			return throwError(() => new Error('no team context'));
 		}
 		return this.contactService.watchContactById(space, this.item?.id);
-		// .pipe(this.takeUntilNeeded(), takeUntil(this.teamIDChanged$))
+		// .pipe(this.takeUntilNeeded(), takeUntil(this.spaceIDChanged$))
 	}
 
 	override setItemContext(item: IContactContext): void {
