@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { CopyrightComponent } from '@sneat/components';
-import { NewProjectFormComponent } from '@sneat/ext-datatug-project';
 import { DatatugServicesBaseModule } from '@sneat/ext-datatug-services-base';
 import { DatatugServicesStoreModule } from '@sneat/ext-datatug-services-repo';
 import { WormholeModule } from '@sneat/wormhole';

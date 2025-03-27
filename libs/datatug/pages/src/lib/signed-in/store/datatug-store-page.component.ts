@@ -19,10 +19,7 @@ import {
 	IAgentState,
 } from '@sneat/ext-datatug-services-repo';
 import { IDatatugStoreContext, IProjectContext } from '@sneat/ext-datatug-nav';
-import {
-	NewProjectFormComponent,
-	NewProjectService,
-} from '@sneat/ext-datatug-project';
+import { NewProjectService } from '@sneat/ext-datatug-project';
 import { DatatugUserService } from '@sneat/ext-datatug-services-base';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { merge, Subject } from 'rxjs';
