@@ -114,7 +114,7 @@ export class SelectFromListComponent
 
 	private applyFilter(): void {
 		const f = this.filter.trim().toLowerCase();
-		console.log('SelectFromListComponent.applyFilter', f);
+		// console.log('SelectFromListComponent.applyFilter', f);
 		this.displayItems = f
 			? this.items?.filter(
 					(v) =>

@@ -115,7 +115,7 @@ export class AgentRoleMenuComponent {
 			.dismiss()
 			.catch(this.errorLogger.logErrorHandler('Failed to dismiss popover'));
 		this.contactSelectorService
-			.selectSingleContactInModal(selectorOptions)
+			.selectSingleInModal(selectorOptions)
 			.then((contact) => {
 				console.log(
 					'OrderAgentsComponent.openContactSelector() contact:',

@@ -1,9 +1,9 @@
-import { CommonModule } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
 	Component,
 	EventEmitter,
+	input,
 	Input,
 	OnChanges,
 	Output,
@@ -30,13 +30,17 @@ export interface ICheckChangedArgs {
 @Component({
 	selector: 'sneat-contacts-checklist',
 	templateUrl: './contacts-checklist.component.html',
-	imports: [CommonModule, IonicModule],
+	imports: [IonicModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactsChecklistComponent
 	extends SneatBaseComponent
 	implements OnChanges
 {
+	public readonly $lastItemLine = input<
+		undefined | 'full' | 'none' | 'inset'
+	>();
+
 	@Input({ required: true }) space?: ISpaceContext;
 	@Input() roles: string[] = ['member'];
 	@Input({ required: true }) checkedContactIDs: readonly string[] = [];

@@ -1,17 +1,21 @@
+import { inject } from '@angular/core';
 import { ModalController, ModalOptions } from '@ionic/angular';
-import { IErrorLogger } from '@sneat/logging';
+import type { ComponentRef } from '@ionic/core';
+import { ErrorLogger } from '@sneat/logging';
 import { ISelectItem } from './selector-interfaces';
 import { ISelectorOptions } from './selector-options';
 
 export class SelectorBaseService<T = ISelectItem> {
+	protected readonly errorLogger = inject(ErrorLogger);
+	private readonly modalController = inject(ModalController);
+
 	constructor(
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-		private readonly component: Function | HTMLElement | string | null,
-		private readonly errorLogger: IErrorLogger,
-		private readonly modalController: ModalController,
+		// _eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+		// private readonly component: Function | HTMLElement | string | null,
+		private readonly component: ComponentRef,
 	) {}
 
-	selectSingleInModal(options: ISelectorOptions<T>): Promise<T | null> {
+	public selectSingleInModal(options: ISelectorOptions<T>): Promise<T | null> {
 		console.log('selectSingleInModal(), options:', options);
 		return new Promise<T | null>((resolve, reject) => {
 			this.selectMultipleInModal(options)
@@ -20,7 +24,9 @@ export class SelectorBaseService<T = ISelectItem> {
 		});
 	}
 
-	selectMultipleInModal(options: ISelectorOptions<T>): Promise<T[] | null> {
+	public selectMultipleInModal(
+		options: ISelectorOptions<T>,
+	): Promise<T[] | null> {
 		console.log('selectInModal(), options:', options);
 		// if (!options.items) {
 		// 	return Promise.reject(new Error('items is required parameter'))
@@ -44,6 +50,7 @@ export class SelectorBaseService<T = ISelectItem> {
 				componentProps: {
 					// ...options,
 					...options.componentProps,
+					selectMode: 'multiple',
 					onSelected: options.onSelected,
 					mode: 'modal',
 				},

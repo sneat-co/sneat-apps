@@ -22,20 +22,13 @@ import {
 	ContactType,
 	IContactContext,
 } from '@sneat/contactus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import {
-	ContactService,
-	ContactusSpaceService,
-} from '@sneat/contactus-services';
+import { ContactusSpaceService } from '@sneat/contactus-services';
 import { ISpaceContext } from '@sneat/space-models';
 import { map, Subject, Subscription } from 'rxjs';
 import { BasicContactFormModule } from '../basic-contact-form';
 import { LocationFormComponent } from '../location-form';
 import { NewCompanyFormComponent } from '../new-company-form';
-import {
-	ContactSelectorService,
-	IContactSelectorOptions,
-} from './contact-selector.service';
+import { IContactSelectorOptions } from './contact-selector.service';
 
 @Component({
 	selector: 'sneat-contact-selector',
@@ -49,7 +42,6 @@ import {
 		BasicContactFormModule,
 		NewCompanyFormComponent,
 	],
-	providers: [ContactSelectorService],
 })
 export class ContactSelectorComponent
 	extends SelectorBaseComponent
@@ -108,18 +100,17 @@ export class ContactSelectorComponent
 	}
 
 	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		modalController: ModalController,
 		@Inject(CONTACT_ROLES_BY_TYPE)
 		private readonly contactRolesByType: ContactRolesByType,
-		private readonly contactService: ContactService,
+		// private readonly contactService: ContactService,
 		private readonly contactusSpaceService: ContactusSpaceService,
 	) {
-		super(errorLogger, modalController);
+		super(modalController);
 	}
 
 	ngOnInit(): void {
-		console.log('ngOnInit()');
+		console.log('ContactSelectComponent.ngOnInit()');
 		this.subscribeForData('ngOnInit');
 	}
 
@@ -135,7 +126,7 @@ export class ContactSelectorComponent
 		this.destroyed.complete();
 	}
 
-	subscribeForData(calledFrom: 'ngOnInit' | 'ngOnChanges'): void {
+	private subscribeForData(calledFrom: 'ngOnInit' | 'ngOnChanges'): void {
 		console.log(
 			`ContactSelectorComponent.subscribeForData(calledFrom=${calledFrom})`,
 		);
@@ -153,6 +144,10 @@ export class ContactSelectorComponent
 			.pipe(map((contacts) => contacts.map((c) => ({ ...c, space }))))
 			.subscribe((contacts) => {
 				this.allContacts = contacts;
+				console.log(
+					'ContactSelectorComponent.watchContactBriefs() => contacts:',
+					contacts,
+				);
 				this.setContacts();
 			});
 	}
@@ -199,6 +194,7 @@ export class ContactSelectorComponent
 		this.contactItems = this.contacts
 			?.filter(removeExcluded(this.excludeContactIDs))
 			.map(this.getChildItem);
+		console.log('ContactSelectComponent.contactItems:', this.contactItems);
 		this.parentItems = this.parentContacts
 			?.filter(removeExcluded(this.excludeParentIDs))
 			.map(this.getChildItem);
@@ -252,7 +248,7 @@ export class ContactSelectorComponent
 	}
 
 	protected onParentContactIDChanged(contactID: string): void {
-		console.log('onParentContactSelected()', contactID);
+		console.log('ContactSelectComponent.onParentContactSelected()', contactID);
 		const parentContact = this.parentContacts?.find((c) => c.id === contactID);
 		this.onParentContactChanged(parentContact);
 	}
@@ -274,14 +270,14 @@ export class ContactSelectorComponent
 	}
 
 	protected onSubContactCreated(contact: IContactContext): void {
-		console.log('onSubContactCreated()', contact);
+		console.log('ContactSelectComponent.onSubContactCreated()', contact);
 		this.selectedSubContactID = contact.id;
 		this.selectedContact = contact;
 		this.emitOnSelected(contact);
 	}
 
 	private onParentContactChanged(contact?: IContactContext): void {
-		console.log('onParentContactChanged()', contact);
+		console.log('ContactSelectComponent.onParentContactChanged()', contact);
 		this.parentTab = 'existing';
 		this.selectedParent = contact || undefined;
 		this.parentContactID = contact?.id;
@@ -290,7 +286,7 @@ export class ContactSelectorComponent
 	}
 
 	protected onContactSelected(contactID: string): void {
-		console.log('onContactSelected()', contactID);
+		console.log('ContactSelectComponent.onContactSelected()', contactID);
 		this.selectedSubContactID = contactID;
 		this.selectedContact = this.contacts?.find((c) => c.id === contactID);
 		if (!this.selectedContact) {

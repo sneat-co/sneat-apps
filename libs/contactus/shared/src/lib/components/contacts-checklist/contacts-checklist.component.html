@@ -1,31 +1,26 @@
-<ion-list>
-	@for (contact of contacts(); track contact.id) {
-		<ion-item>
-			<ion-checkbox
-				labelPlacement="end"
-				justify="start"
-				[value]="contact.id"
-				[checked]="isChecked(contact)"
-				[disabled]="isDisabled(contact.id)"
-				(ionChange)="onCheckboxChange($event, contact)"
-			>
-				{{ personName(contact.brief.names) }}
-				<!--TODO: use pipe-->
-			</ion-checkbox>
-			<ion-spinner
-				*ngIf="isDisabled(contact.id)"
-				name="lines-small"
-				slot="end"
-				color="medium"
-			></ion-spinner>
-		</ion-item>
-	} @empty {
-		<ion-item>
-			@if (contacts()) {
-				<ion-label>{{ noContactsMessage || "No contacts" }}</ion-label>
-			} @else {
-				<ion-label>Loading...</ion-label>
-			}
-		</ion-item>
-	}
-</ion-list>
+@for (contact of contacts(); track contact.id; let last = $last) {
+	<ion-item [lines]="last ? $lastItemLine() : undefined">
+		<ion-checkbox
+			labelPlacement="end"
+			justify="start"
+			[value]="contact.id"
+			[checked]="isChecked(contact)"
+			[disabled]="isDisabled(contact.id)"
+			(ionChange)="onCheckboxChange($event, contact)"
+		>
+			{{ personName(contact.brief.names) }}
+			<!--TODO: use pipe-->
+		</ion-checkbox>
+		@if (isDisabled(contact.id)) {
+			<ion-spinner name="lines-small" slot="end" color="medium" />
+		}
+	</ion-item>
+} @empty {
+	<ion-item>
+		@if (contacts()) {
+			<ion-label>{{ noContactsMessage || "No contacts" }}</ion-label>
+		} @else {
+			<ion-label>Loading...</ion-label>
+		}
+	</ion-item>
+}

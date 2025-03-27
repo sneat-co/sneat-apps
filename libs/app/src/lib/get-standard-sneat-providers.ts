@@ -22,10 +22,10 @@ import { getAngularFireProviders } from './init-firebase';
 export function getStandardSneatProviders(
 	environmentConfig: IEnvironmentConfig,
 ): readonly (Provider | EnvironmentProviders)[] {
-	console.log(
-		'getStandardSneatProviders(), environmentConfig:' +
-			JSON.stringify(environmentConfig, undefined, '\t'),
-	);
+	// console.log(
+	// 	'getStandardSneatProviders(), environmentConfig:' +
+	// 		JSON.stringify(environmentConfig, undefined, '\t'),
+	// );
 
 	return [
 		provideHttpClient(),

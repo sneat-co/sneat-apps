@@ -1,10 +1,14 @@
-import { IErrorLogger } from '@sneat/logging';
+import { Directive, inject, input } from '@angular/core';
+import { ErrorLogger } from '@sneat/logging';
 import { IDismissable } from '../dismissable';
 
-export class SelectorBaseComponent {
-	constructor(
-		protected readonly errorLogger: IErrorLogger,
+@Directive()
+export abstract class SelectorBaseComponent {
+	protected readonly errorLogger = inject(ErrorLogger);
 
+	public readonly selectMode = input<'single' | 'multiple'>();
+
+	constructor(
 		// This expects either ModalController or PopoverController
 		protected readonly overlayController: IDismissable,
 	) {}

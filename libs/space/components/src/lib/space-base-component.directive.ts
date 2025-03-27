@@ -111,7 +111,7 @@ export abstract class SpaceBaseComponent
 	protected constructor(@Inject(ClassName) className: string) {
 		super(className);
 		const spaceParams = this.spaceParams;
-		// console.log(`${className} extends TeamBasePageDirective.constructor()`);
+		console.log(`${className}.SpaceBaseComponent.constructor()`);
 		try {
 			this.navController = spaceParams.navController;
 			this.spaceService = spaceParams.spaceService;
@@ -208,12 +208,9 @@ export abstract class SpaceBaseComponent
 
 	private readonly onSpaceIdChangedInUrl = (space?: ISpaceContext): void => {
 		const prevSpace = this.$space();
-		// console.log(
-		// 	`${this.className}:SpaceBaseComponent.onSpaceIdChangedInUrl()`,
-		// 	prevSpace?.id,
-		// 	' => ',
-		// 	space,
-		// );
+		console.log(
+			`${this.className}:SpaceBaseComponent.onSpaceIdChangedInUrl(): prevSpace.id: ${prevSpace?.id} => ${space?.id}`,
+		);
 		if (
 			space === prevSpace ||
 			(space?.id === prevSpace?.id && space?.type === prevSpace?.type)

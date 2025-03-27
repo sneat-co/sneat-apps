@@ -119,7 +119,7 @@ export class DispatcherComponent implements OnChanges {
 			},
 		};
 		this.contactSelectorService
-			.selectSingleContactInModal(selectorOptions)
+			.selectSingleInModal(selectorOptions)
 			.then((contact) => {
 				console.log(
 					'OrderCounterpartiesCardComponent.openContactSelector() contact:',

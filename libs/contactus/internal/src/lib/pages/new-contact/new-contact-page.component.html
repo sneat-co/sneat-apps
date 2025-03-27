@@ -10,15 +10,22 @@
 </ion-header>
 
 <ion-content>
-	<ion-item-divider color="light" *ngIf="asset?.id">
-		<ion-label color="medium">{{ asset?.brief?.title || asset?.id }}</ion-label>
-	</ion-item-divider>
+	defaultBackUrl: {{ defaultBackUrl }}
+	@if (asset?.id) {
+		<ion-item-divider color="light">
+			<ion-label color="medium">{{
+				asset?.brief?.title || asset?.id
+			}}</ion-label>
+		</ion-item-divider>
+	}
 
-	<ion-item-divider color="light" *ngIf="contact?.id">
-		<ion-label color="medium">{{
-			contact?.brief?.title || contact?.id
-		}}</ion-label>
-	</ion-item-divider>
+	@if (contact?.id) {
+		<ion-item-divider color="light">
+			<ion-label color="medium">{{
+				contact?.brief?.title || contact?.id
+			}}</ion-label>
+		</ion-item-divider>
+	}
 
 	<sneat-contact-role-form
 		[contactGroupID]="$contactGroup()?.id"
@@ -27,17 +34,18 @@
 		(contactRoleIDChange)="onContactRoleIDChanged($event)"
 	/>
 
-	<sneat-person-form-wizard
-		*ngIf="$contactRole"
-		[space]="space"
-		[hideRelationship]="true"
-		[hidePetOption]="true"
-		[fields]="{ contactType: { hide: true }, relatedAs: { hide: true } }"
-		[displayAgeGroupValue]="true"
-		[requires]="personRequires"
-		(newPersonChange)="onRelatedPersonChange($event)"
-		(isReadyToSubmitChange)="onPersonFormIsReadyToSubmit()"
-	/>
+	@if ($contactRole()) {
+		<sneat-person-form-wizard
+			[space]="space"
+			[hideRelationship]="true"
+			[hidePetOption]="true"
+			[fields]="{ contactType: { hide: true }, relatedAs: { hide: true } }"
+			[displayAgeGroupValue]="true"
+			[requires]="personRequires"
+			(newPersonChange)="onRelatedPersonChange($event)"
+			(isReadyToSubmitChange)="onPersonFormIsReadyToSubmit()"
+		/>
+	}
 
 	<!--	<ng-container *ngIf="member && !relation">-->
 	<!--		<p *ngIf="!member">Please select relation to member</p>-->
@@ -59,8 +67,8 @@
 	<!--	</ion-list>-->
 
 	<!--	<div class="ion-padding" *ngIf="!isContactNotReady">-->
+
 	<div class="ion-padding">
-		<!--		*ngIf="personFormIsReadyToSubmit"-->
 		<ion-button
 			expand="full"
 			[disabled]="creating || isContactNotReady"

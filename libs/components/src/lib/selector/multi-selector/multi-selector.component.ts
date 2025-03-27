@@ -1,7 +1,6 @@
 import {
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	OnChanges,
 	Output,
@@ -10,7 +9,6 @@ import {
 import { IonicModule, ModalController } from '@ionic/angular';
 import { ISelectItem, ISelectItemEvent } from '../selector-interfaces';
 import { SelectorBaseComponent } from '../selector-base.component';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({
 	selector: 'sneat-multi-selector',
@@ -32,11 +30,8 @@ export class MultiSelectorComponent
 
 	protected selectedItems?: ISelectItem[];
 
-	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
-		modalController: ModalController,
-	) {
-		super(errorLogger, modalController);
+	constructor(modalController: ModalController) {
+		super(modalController);
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {

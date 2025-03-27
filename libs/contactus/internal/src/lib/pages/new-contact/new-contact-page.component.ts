@@ -32,7 +32,7 @@ import {
 } from '@sneat/space-components';
 import { IAssetContext } from '@sneat/mod-assetus-core';
 import { SpaceServiceModule } from '@sneat/space-services';
-import { first, takeUntil } from 'rxjs';
+import { first } from 'rxjs';
 import {
 	ContactGroupService,
 	ContactRoleService,
@@ -124,8 +124,9 @@ export class NewContactPageComponent
 	// }
 
 	override ngOnInit(): void {
+		super.ngOnInit();
 		this.route.queryParamMap
-			.pipe(takeUntil(this.destroyed$))
+			.pipe(this.takeUntilDestroyed())
 			.subscribe(this.onUrlParamsChanged);
 	}
 
@@ -138,7 +139,7 @@ export class NewContactPageComponent
 		if (contactGroupID && !this.$contactGroup()) {
 			this.contactGroupService
 				.getContactGroupByID(contactGroupID, this.space)
-				.pipe(first(), takeUntil(this.destroyed$))
+				.pipe(first(), this.takeUntilDestroyed())
 				.subscribe({
 					next: (contactGroup) => {
 						this.$contactGroup.set(contactGroup);
@@ -214,7 +215,7 @@ export class NewContactPageComponent
 	}
 
 	submit(): void {
-		const space = this.space;
+		const space = this.$space();
 		if (!space) {
 			throw new Error('Space is not defined');
 		}

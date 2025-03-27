@@ -3,6 +3,7 @@ import {
 	Component,
 	computed,
 	EventEmitter,
+	inject,
 	input,
 	OnChanges,
 	Output,
@@ -13,6 +14,8 @@ import { IonicModule } from '@ionic/angular';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import {
 	ContactsChecklistComponent,
+	ContactSelectorService,
+	ContactSelectorServiceModule,
 	ICheckChangedArgs,
 } from '@sneat/contactus-shared';
 import {
@@ -29,7 +32,11 @@ import {
 @Component({
 	selector: 'sneat-happening-participants',
 	templateUrl: 'happening-participants.component.html',
-	imports: [IonicModule, ContactsChecklistComponent],
+	imports: [
+		IonicModule,
+		ContactsChecklistComponent,
+		ContactSelectorServiceModule,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HappeningParticipantsComponent implements OnChanges {
@@ -53,6 +60,8 @@ export class HappeningParticipantsComponent implements OnChanges {
 	protected readonly $tab = signal<'members' | 'others'>('members');
 
 	// protected members?: readonly IIdAndBrief<IContactBrief>[];
+
+	private readonly contactSelectorService = inject(ContactSelectorService);
 
 	constructor(
 		private readonly happeningService: HappeningService,
@@ -175,11 +184,16 @@ export class HappeningParticipantsComponent implements OnChanges {
 		this.emitHappeningChange(happening);
 	}
 
-	addContact(): void {
-		alert('Not implemented yet');
-	}
-
-	protected onTabChanged(event: CustomEvent): void {
-		this.$tab.set(event.detail.value);
+	protected addContact(): void {
+		this.contactSelectorService
+			.selectMultipleInModal({
+				componentProps: {
+					space: this.$space(),
+				},
+			})
+			.then((selectedContacts) => {
+				alert(`You've selected ${selectedContacts?.length || 0} contacts:`);
+			})
+			.catch((err) => alert(err));
 	}
 }
