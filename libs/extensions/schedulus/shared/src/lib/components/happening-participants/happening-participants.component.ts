@@ -26,6 +26,7 @@ import { IHappeningContext, IHappeningBase } from '@sneat/mod-schedulus-core';
 import {
 	HappeningService,
 	IHappeningContactRequest,
+	IHappeningContactsRequest,
 } from '../../services/happening.service';
 
 @Component({
@@ -47,7 +48,7 @@ export class HappeningParticipantsComponent implements OnChanges {
 
 	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
 
-	protected readonly $checkedContactIDs = computed<readonly string[]>(() => {
+	protected readonly $relatedContactIDs = computed<readonly string[]>(() => {
 		const happening = this.$happening();
 		return getRelatedItemIDs(
 			happening.dbo?.related || happening.brief?.related,
@@ -167,6 +168,11 @@ export class HappeningParticipantsComponent implements OnChanges {
 
 	protected addContact(source: string): void {
 		this.analytics.logEvent('happening/participants/add_contact', { source });
+		const spaceID = this.$space().id;
+		if (!spaceID) {
+			return;
+		}
+		const happeningID = this.$happening().id;
 		this.contactSelectorService
 			.selectMultipleInModal({
 				selectedItems: [],
@@ -175,7 +181,31 @@ export class HappeningParticipantsComponent implements OnChanges {
 				},
 			})
 			.then((selectedContacts) => {
-				alert(`You've selected ${selectedContacts?.length || 0} contacts:`);
+				console.log(
+					`${selectedContacts?.length || 0} contacts select by user to be added as participants`,
+				);
+				const existingContactIDs = this.$relatedContactIDs();
+				const contactsToAdd = selectedContacts?.filter(
+					(c) => !existingContactIDs.includes(c.id),
+				);
+				if (contactsToAdd?.length) {
+					const request: IHappeningContactsRequest = {
+						spaceID,
+						happeningID,
+						contacts: contactsToAdd.map((c) => ({
+							id: c.id,
+						})),
+					};
+					this.happeningService.addParticipants(request).subscribe({
+						next: () => {
+							console.log(
+								`${contactsToAdd.length} contacts added as participants`,
+							);
+						},
+					});
+				} else {
+					console.log('selected contacts already added as participants');
+				}
 			})
 			.catch((err) => alert(err));
 	}

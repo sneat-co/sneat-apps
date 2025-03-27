@@ -15,7 +15,7 @@
 		<sneat-contacts-checklist
 			[space]="$space()"
 			[$lastItemLine]="'full'"
-			[checkedContactIDs]="$checkedContactIDs()"
+			[checkedContactIDs]="$relatedContactIDs()"
 			noContactsMessage="No members"
 			(checkedChange)="onCheckChanged($event)"
 		/>
@@ -34,8 +34,17 @@
 				</ion-button>
 			</ion-buttons>
 		</ion-item>
-		<ion-item-divider>
-			No contacts has been added to participants yet.
-		</ion-item-divider>
+		<sneat-contacts-checklist
+			[space]="$space()"
+			[$spaceRoles]="[]"
+			[$spaceRolesToExclude]="['member']"
+			[$lastItemLine]="'full'"
+			[checkedContactIDs]="$relatedContactIDs()"
+			noContactsMessage="No contacts added as participants"
+			(checkedChange)="onCheckChanged($event)"
+		/>
+		<!--		<ion-item-divider>-->
+		<!--			No contacts has been added to participants yet.-->
+		<!--		</ion-item-divider>-->
 	</ion-item-group>
 </ion-card>

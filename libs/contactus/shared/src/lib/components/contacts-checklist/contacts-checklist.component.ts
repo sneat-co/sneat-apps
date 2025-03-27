@@ -41,8 +41,12 @@ export class ContactsChecklistComponent
 		undefined | 'full' | 'none' | 'inset'
 	>();
 
+	public readonly $spaceRoles = input<readonly string[]>(['member']);
+	public readonly $spaceRolesToExclude = input<undefined | readonly string[]>();
+
 	@Input({ required: true }) space?: ISpaceContext;
 	@Input() roles: string[] = ['member'];
+
 	@Input({ required: true }) checkedContactIDs: readonly string[] = [];
 	@Input() noContactsMessage = 'No members found';
 
@@ -74,14 +78,28 @@ export class ContactsChecklistComponent
 			.pipe(this.takeUntilDestroyed())
 			.subscribe({
 				next: (contacts) => {
+					const roles = this.$spaceRoles();
+					const hasIncludedRole = roles.length
+						? (c: IIdAndBrief<IContactBrief>) =>
+								roles.some((r) => c.brief?.roles?.includes(r))
+						: () => true;
+
+					const rolesToExclude = this.$spaceRolesToExclude();
+					const hasExcludedRole = rolesToExclude
+						? (c: IIdAndBrief<IContactBrief>) =>
+								rolesToExclude.some((r) => c.brief?.roles?.includes(r))
+						: () => false;
+
 					console.log(
 						'ContactsChecklistComponent.subscribeForContactBriefs() =>',
 						contacts,
+						roles,
+						rolesToExclude,
 					);
-					const roles = this.roles;
+
 					this.contacts.set(
 						contacts
-							.filter((c) => roles?.some((r) => c.brief?.roles?.includes(r)))
+							.filter((c) => hasIncludedRole(c) && !hasExcludedRole(c))
 							.map((c) => ({ id: c.id, brief: c.brief as IContactBrief })),
 					);
 				},

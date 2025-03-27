@@ -41,6 +41,11 @@ export interface IHappeningContactRequest extends SpaceRequest {
 	readonly contact: ISpaceModuleDocShortRef;
 }
 
+export interface IHappeningContactsRequest extends SpaceRequest {
+	readonly happeningID: string;
+	readonly contacts: readonly ISpaceModuleDocShortRef[];
+}
+
 export interface IHappeningSlotRequest extends IHappeningRequest {
 	readonly slot: IHappeningSlotWithID;
 }
@@ -195,8 +200,17 @@ export class HappeningService {
 
 	public readonly addParticipant = (
 		request: IHappeningContactRequest,
+	): Observable<void> => {
+		return this.addParticipants({
+			spaceID: request.spaceID,
+			happeningID: request.happeningID,
+			contacts: [request.contact],
+		});
+	};
+	public readonly addParticipants = (
+		request: IHappeningContactsRequest,
 	): Observable<void> =>
-		this.sneatApiService.post('happenings/add_participant', request);
+		this.sneatApiService.post('happenings/add_participants', request);
 
 	public readonly addSlot = (
 		spaceID: string,
