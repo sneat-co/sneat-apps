@@ -28,7 +28,7 @@ import { map, Subject, Subscription } from 'rxjs';
 import { BasicContactFormModule } from '../basic-contact-form';
 import { LocationFormComponent } from '../location-form';
 import { NewCompanyFormComponent } from '../new-company-form';
-import { IContactSelectorOptions } from './contact-selector.service';
+import { IContactSelectorOptions } from './contact-selector.interfaces';
 
 @Component({
 	selector: 'sneat-contact-selector',
