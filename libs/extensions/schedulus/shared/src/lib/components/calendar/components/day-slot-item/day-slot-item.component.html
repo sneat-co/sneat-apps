@@ -4,6 +4,8 @@
 		color: grey;
 	}
 </style>
+@let slotContext = $slotContext();
+
 <ion-item
 	button="button"
 	lines="full"
@@ -22,7 +24,7 @@
 	/>
 
 	<sneat-timing-badge
-		[isCanceled]="isCanceled"
+		[isCanceled]="$isCanceled()"
 		[timing]="slotContext?.timing"
 		[adjustment]="slotContext?.adjustment"
 	/>
@@ -30,11 +32,11 @@
 	<ion-label class="ion-text-wrap">
 		<span
 			style="font-size: 1em; margin-bottom: 0.4em; font-weight: bold"
-			[class.canceled]="isCanceled"
+			[class.canceled]="$isCanceled()"
 		>
 			{{ slotContext?.title }}
 		</span>
-		@if (isCanceled) {
+		@if ($isCanceled()) {
 			<ion-text color="medium">&nbsp;&mdash; canceled</ion-text>
 		}
 
@@ -58,11 +60,11 @@
 		}
 		@if (
 			mode === "full" &&
-			(slotContext?.participants || slotContext?.levels?.length)
+			(slotContext.participants || slotContext.levels?.length)
 		) {
 			<p>
-				@if (slotContext?.levels?.length) {
-					@for (level of slotContext?.levels || []; track level) {
+				@if (slotContext.levels?.length) {
+					@for (level of slotContext.levels || []; track level) {
 						<ion-badge color="light" style="margin-right: 0.5em">
 							🎚️ {{ level[0].toUpperCase() + level.substring(1) }}
 						</ion-badge>
@@ -72,7 +74,7 @@
 		}
 
 		<p>
-			<sneat-happening-slot-participants [happeningSlot]="slotContext" />
+			<sneat-happening-slot-participants [$happeningSlot]="slotContext" />
 		</p>
 	</ion-label>
 	@if (mode === "full") {

@@ -1,4 +1,4 @@
-@for (contact of contacts; track contact.id) {
+@for (contact of $contacts(); track contact.id) {
 	<ion-badge color="light" class="ion-margin-end">
 		<ion-label color="medium">{{
 			isUniqueFirstName(contact)

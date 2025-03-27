@@ -1,6 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, input, computed } from '@angular/core';
 import { IonicModule, PopoverController, PopoverOptions } from '@ionic/angular';
-// import { MembersAsBadgesComponent } from '@sneat/components';
 import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { MembersSelectorModule } from '@sneat/contactus-shared';
 import {
@@ -30,7 +29,7 @@ import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
 	// standalone: false, // circle dependencies DaySlotItemComponent->SlotContextMenuComponent->DaySlotItemComponent
 })
 export class DaySlotItemComponent {
-	@Input() public slotContext?: ISlotUIContext;
+	public readonly $slotContext = input.required<ISlotUIContext>();
 
 	@Input() dateID?: string;
 
@@ -40,12 +39,10 @@ export class DaySlotItemComponent {
 	@Input({ required: true }) space?: ISpaceContext;
 	@Input() contactusSpace?: IContactusSpaceDboAndID;
 
-	protected get isCanceled(): boolean {
-		return (
-			!!this.slotContext?.adjustment?.canceled ||
-			this.slotContext?.happening?.brief?.status === 'canceled'
-		);
-	}
+	protected readonly $isCanceled = computed(() => {
+		const { happening, adjustment } = this.$slotContext();
+		return happening?.brief?.status === 'canceled' || !!adjustment?.canceled;
+	});
 
 	constructor(
 		private readonly popoverController: PopoverController,
@@ -55,11 +52,12 @@ export class DaySlotItemComponent {
 	protected onSlotClicked(event: Event): void {
 		console.log('DaySlotItemComponent.onSlotClicked()');
 		event.stopPropagation();
-		if (!this.slotContext) {
+		const slot = this.$slotContext();
+		if (!slot) {
 			return;
 		}
 		this.calendarNavService.navigateToHappeningPage({
-			slot: this.slotContext,
+			slot: slot,
 			event,
 		});
 	}
@@ -84,11 +82,12 @@ export class DaySlotItemComponent {
 
 		// TODO: Verify lazy loading works and try to make DaySlotItemComponent & SlotContextMenuComponent standalone
 		import('./slot-context-menu.component').then(async (m) => {
+			const slotContext = this.$slotContext();
 			const popoverOptions: PopoverOptions = {
 				component: m.SlotContextMenuComponent,
 				componentProps: {
 					space: this.space,
-					slotContext: this.slotContext,
+					slotContext,
 					dateID: this.dateID,
 					// state: stateOutput,
 				},

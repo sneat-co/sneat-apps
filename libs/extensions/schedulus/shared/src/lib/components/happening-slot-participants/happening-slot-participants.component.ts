@@ -3,19 +3,19 @@ import {
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
 	Component,
-	Input,
-	OnChanges,
-	SimpleChanges,
+	input,
+	signal,
+	computed,
+	effect,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { PersonNamesPipe } from '@sneat/components';
 import { IContactBrief } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import { IIdAndBrief, IIdAndOptionalBrief } from '@sneat/core';
-import { getRelatedItems, IRelatedItem } from '@sneat/dto';
+import { getRelatedItems } from '@sneat/dto';
 import { ISlotUIContext } from '@sneat/mod-schedulus-core';
 import { SneatBaseComponent } from '@sneat/ui';
-import { distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 
 @Component({
 	selector: 'sneat-happening-slot-participants',
@@ -23,29 +23,62 @@ import { distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 	imports: [CommonModule, IonicModule, PersonNamesPipe],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HappeningSlotParticipantsComponent
-	extends SneatBaseComponent
-	implements OnChanges
-{
-	// @Input({ required: true }) public contactus?: IIdAndOptionalDto;
-	@Input({ required: true }) public happeningSlot?: ISlotUIContext;
-
-	protected relatedItems?: readonly IRelatedItem[];
+export class HappeningSlotParticipantsComponent extends SneatBaseComponent {
 	protected contacts?: readonly IIdAndBrief<IContactBrief>[];
-	protected spaceContacts?: IIdAndBrief<IContactBrief>[];
+	protected readonly $spaceContacts = signal<
+		IIdAndBrief<IContactBrief>[] | undefined
+	>(undefined);
 
-	private readonly spaceID$ = new Subject<string>();
+	public readonly $happeningSlot = input.required<ISlotUIContext>();
+
+	protected readonly $relatedItems = computed(() => {
+		const happeningSlot = this.$happeningSlot();
+		return getRelatedItems(
+			'contactus',
+			'contacts',
+			happeningSlot.happening.brief?.related,
+		);
+	});
+
+	protected $contacts = computed(() => {
+		const spaceID = this.$happeningSlot().happening?.space?.id;
+		if (!spaceID) {
+			return;
+		}
+		const happeningSlot = this.$happeningSlot();
+		console.log(
+			`HappeningSlotParticipantsComponent.$contacts(): spaceID=${spaceID}, wd=${happeningSlot.wd}, slotID=${happeningSlot.slot.id}`,
+			spaceID,
+		);
+		const relatedItems = this.$relatedItems();
+		const spaceContacts = this.$spaceContacts();
+		const contacts = relatedItems.map((relatedItem) => {
+			const keys = relatedItem.keys.filter((k) => k.spaceID == spaceID);
+			return spaceContacts?.find((tc) => keys.some((k) => k.itemID === tc.id));
+		});
+		return (
+			(contacts.filter((c) => !!c?.brief) as IIdAndBrief<IContactBrief>[]) || []
+		);
+	});
+
+	private readonly $spaceID = computed(
+		() => this.$happeningSlot().happening.space.id,
+	);
+
+	// private readonly spaceID$ = new Subject<string>();
 
 	constructor(
 		private readonly changedDetectorRef: ChangeDetectorRef,
 		private readonly contactusService: ContactusSpaceService,
 	) {
 		super('HappeningSlotParticipantsComponent');
-		this.spaceID$
-			.pipe(takeUntil(this.destroyed$), distinctUntilChanged())
-			.subscribe((teamID) => {
-				this.onSpaceIDChanged(teamID);
-			});
+		const effectRef = effect(() => {
+			const spaceID = this.$spaceID();
+			this.onSpaceIDChanged(spaceID);
+		});
+		this.destroyed$.subscribe(() => {
+			effectRef.destroy();
+		});
 	}
 
 	protected isUniqueFirstName(contact: IIdAndBrief<IContactBrief>): boolean {
@@ -53,42 +86,16 @@ export class HappeningSlotParticipantsComponent
 		if (!firstName) {
 			return false;
 		}
-		return !!this.contacts?.some(
+		return !!this.$contacts()?.some(
 			(c) => c.brief?.names?.firstName === firstName,
 		);
-	}
-
-	public ngOnChanges(changes: SimpleChanges): void {
-		// console.log(
-		// 	'HappeningSlotParticipantsComponent.ngOnChanges()',
-		// 	this.happeningSlot?.slotID,
-		// 	changes,
-		// );
-		const { happeningSlot } = changes;
-		if (happeningSlot) {
-			const previous = happeningSlot.previousValue as ISlotUIContext;
-			const current = happeningSlot.currentValue as ISlotUIContext;
-			if (current?.happening?.space?.id !== previous?.happening?.space?.id) {
-				this.spaceID$.next(current?.happening?.space?.id);
-			}
-		}
-		if (changes['happeningSlot']) {
-			this.relatedItems = getRelatedItems(
-				'contactus',
-				'contacts',
-				this.happeningSlot?.happening?.brief?.related,
-			);
-			if (this.spaceContacts) {
-				this.populateContacts();
-			}
-		}
 	}
 
 	private onSpaceIDChanged(spaceID: string): void {
 		// console.log('HappeningSlotParticipantsComponent.onSpaceIDChanged()', teamID);
 		this.contactusService
 			.watchContactBriefs(spaceID)
-			.pipe(takeUntil(this.spaceID$), takeUntil(this.destroyed$))
+			.pipe(this.takeUntilDestroyed())
 			.subscribe({
 				next: (contacts) => {
 					// console.log(
@@ -96,36 +103,8 @@ export class HappeningSlotParticipantsComponent
 					// 	this.happeningSlot?.slotID,
 					// 	contacts,
 					// );
-					this.spaceContacts = contacts;
-					this.populateContacts();
+					this.$spaceContacts.set(contacts);
 				},
 			});
-	}
-
-	private populateContacts(): void {
-		const spaceID = this.happeningSlot?.happening?.space?.id;
-		if (!spaceID) {
-			return;
-		}
-		// console.log(
-		// 	'HappeningSlotParticipantsComponent.populateContacts()',
-		// 	teamID,
-		// 	this.happeningSlot?.slotID,
-		// 	this.happeningSlot?.wd,
-		// );
-		const contacts = (this.relatedItems || []).map((relatedItem) => {
-			const key = relatedItem.keys.find((k) => k.spaceID == spaceID);
-			const id = key?.itemID;
-			const contact: IIdAndOptionalBrief<IContactBrief> =
-				this.spaceContacts?.find((tc) => tc.id === id) || {
-					id: relatedItem.keys[0].itemID,
-					brief: undefined,
-				};
-			return contact;
-		});
-		this.contacts = contacts.filter(
-			(c) => !!c.brief,
-		) as IIdAndBrief<IContactBrief>[];
-		this.changedDetectorRef.markForCheck();
 	}
 }
