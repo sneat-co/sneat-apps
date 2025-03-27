@@ -26,7 +26,8 @@ import {
 	IonLabel,
 	IonSpinner,
 } from '@ionic/angular/standalone';
-import { AddressFormComponent, createSetFocusToInput } from '@sneat/components';
+import { AddressFormComponent } from '@sneat/components';
+import { createSetFocusToInput } from '@sneat/ui';
 import {
 	ContactRole,
 	ContactType,

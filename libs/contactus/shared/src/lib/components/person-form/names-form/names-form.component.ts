@@ -21,7 +21,7 @@ import {
 	Validators,
 } from '@angular/forms';
 import { IonicModule, IonInput } from '@ionic/angular';
-import { createSetFocusToInput } from '@sneat/components';
+import { createSetFocusToInput } from '@sneat/ui';
 import { excludeEmpty } from '@sneat/core';
 import { IPersonNames, isNameEmpty } from '@sneat/auth-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';

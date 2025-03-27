@@ -1,22 +1,22 @@
-import { CommonModule } from '@angular/common';
+import { TitleCasePipe } from '@angular/common';
 import {
 	Component,
 	Inject,
 	Input,
 	OnChanges,
-	OnDestroy,
 	OnInit,
 	SimpleChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { CONTACT_ROLES_BY_TYPE, ContactRolesByType } from '@sneat/app';
+import { getFullName } from '@sneat/auth-models';
+import { countryFlagEmoji } from '@sneat/components';
 import {
-	countryFlagEmoji,
 	ISelectItem,
 	SelectFromListComponent,
 	SelectorBaseComponent,
-} from '@sneat/components';
+} from '@sneat/ui';
 import {
 	ContactRole,
 	ContactType,
@@ -34,20 +34,19 @@ import { IContactSelectorOptions } from './contact-selector.service';
 	selector: 'sneat-contact-selector',
 	templateUrl: './contact-selector.component.html',
 	imports: [
-		CommonModule,
 		IonicModule,
 		FormsModule,
 		SelectFromListComponent,
 		LocationFormComponent,
 		BasicContactFormModule,
 		NewCompanyFormComponent,
+		TitleCasePipe,
 	],
 })
 export class ContactSelectorComponent
 	extends SelectorBaseComponent
-	implements IContactSelectorOptions, OnInit, OnChanges, OnDestroy
+	implements IContactSelectorOptions, OnInit, OnChanges
 {
-	private readonly destroyed = new Subject<void>();
 	private readonly parentChanged = new Subject<void>();
 
 	parentTab: 'existing' | 'new' = 'existing';
@@ -55,6 +54,7 @@ export class ContactSelectorComponent
 
 	@Input() parentIcon = 'business-outline';
 	@Input() contactIcon = 'business-outline';
+
 	@Input() space: ISpaceContext = { id: '' };
 	@Input() contactRole?: ContactRole;
 	@Input() parentType?: ContactType;
@@ -106,7 +106,7 @@ export class ContactSelectorComponent
 		// private readonly contactService: ContactService,
 		private readonly contactusSpaceService: ContactusSpaceService,
 	) {
-		super(modalController);
+		super('ContactSelectorComponent', modalController);
 	}
 
 	ngOnInit(): void {
@@ -119,11 +119,6 @@ export class ContactSelectorComponent
 		if (changes['space']) {
 			this.subscribeForData('ngOnChanges');
 		}
-	}
-
-	ngOnDestroy(): void {
-		this.destroyed.next();
-		this.destroyed.complete();
 	}
 
 	private subscribeForData(calledFrom: 'ngOnInit' | 'ngOnChanges'): void {
@@ -231,11 +226,19 @@ export class ContactSelectorComponent
 		iconName: this.parentIcon,
 	});
 
-	private readonly getChildItem = (c: IContactContext): ISelectItem => ({
-		id: c.id,
-		title: `${countryFlagEmoji(c.brief?.countryID)} ${c.brief?.title || c.id}`,
-		iconName: this.contactIcon,
-	});
+	private readonly getChildItem = (c: IContactContext): ISelectItem => {
+		const { brief } = c;
+		let title = brief?.title;
+		if (!title && brief?.names) {
+			title = getFullName(brief.names);
+		}
+		return {
+			id: c.id,
+			title: title || c.id,
+			emoji: countryFlagEmoji(brief?.countryID),
+			iconName: this.contactIcon,
+		};
+	};
 
 	protected onLocationCreated(contact: IContactContext): void {
 		// contact = {

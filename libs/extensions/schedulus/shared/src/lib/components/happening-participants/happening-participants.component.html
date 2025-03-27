@@ -2,7 +2,7 @@
 	<ion-item lines="full">
 		<ion-card-title>Participants</ion-card-title>
 		<ion-buttons slot="end">
-			<ion-button color="primary" (click)="addContact()">
+			<ion-button color="primary" (click)="addContact('participants')">
 				<ion-icon name="add" />
 				<ion-label>Add participant</ion-label>
 			</ion-button>
@@ -17,14 +17,18 @@
 			[$lastItemLine]="'full'"
 			[checkedContactIDs]="$checkedContactIDs()"
 			noContactsMessage="No members"
-			(checkedChange)="isMemberCheckChanged($event)"
+			(checkedChange)="onCheckChanged($event)"
 		/>
 	}
 	<ion-item-group>
 		<ion-item color="light" lines="full">
 			<ion-label>Contacts</ion-label>
 			<ion-buttons slot="end">
-				<ion-button color="primary" (click)="addContact()" title="Add contact">
+				<ion-button
+					color="primary"
+					(click)="addContact('contacts')"
+					title="Add contact"
+				>
 					<ion-icon name="add" />
 					<ion-label>Add</ion-label>
 				</ion-button>

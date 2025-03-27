@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonButton, IonCard } from '@ionic/angular/standalone';
-import { ISelectItem, SelectFromListComponent } from '@sneat/components';
+import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import { timestamp } from '@sneat/dto';
 import {
 	AssetRealEstateType,

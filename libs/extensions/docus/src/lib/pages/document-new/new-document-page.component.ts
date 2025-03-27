@@ -1,11 +1,8 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import {
-	CountrySelectorComponent,
-	ISelectItem,
-	SelectFromListComponent,
-} from '@sneat/components';
+import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
+import { CountrySelectorComponent } from '@sneat/components';
 import {
 	IContactBrief,
 	IContactContext,

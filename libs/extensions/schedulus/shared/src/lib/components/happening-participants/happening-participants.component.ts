@@ -7,17 +7,16 @@ import {
 	input,
 	OnChanges,
 	Output,
-	signal,
 	SimpleChanges,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { ContactusSpaceService } from '@sneat/contactus-services';
 import {
 	ContactsChecklistComponent,
 	ContactSelectorService,
 	ContactSelectorServiceModule,
 	ICheckChangedArgs,
 } from '@sneat/contactus-shared';
+import { AnalyticsService } from '@sneat/core';
 import {
 	addRelatedItem,
 	getRelatedItemIDs,
@@ -57,16 +56,11 @@ export class HappeningParticipantsComponent implements OnChanges {
 		);
 	});
 
-	protected readonly $tab = signal<'members' | 'others'>('members');
-
-	// protected members?: readonly IIdAndBrief<IContactBrief>[];
-
 	private readonly contactSelectorService = inject(ContactSelectorService);
 
-	constructor(
-		private readonly happeningService: HappeningService,
-		private readonly contactusSpaceService: ContactusSpaceService,
-	) {}
+	private readonly analytics = inject(AnalyticsService);
+
+	constructor(private readonly happeningService: HappeningService) {}
 
 	// private contactusSpaceSubscription?: Subscription;
 	// private onSpaceIdChanged(): void {
@@ -100,24 +94,11 @@ export class HappeningParticipantsComponent implements OnChanges {
 		return space.type === 'family' ? 'Family members' : 'Team members';
 	}
 
-	// protected get members(): readonly IContactContext[] | undefined {
-	// 	const contactusSpace = this.contactusSpace,
-	// 		space = this.space;
-	//
-	// 	if (!space || !contactusSpace) {
-	// 		return;
-	// 	}
-	// 	return zipMapBriefsWithIDs(contactusSpace?.dbo?.contacts).map((m) =>
-	// 		contactContextFromBrief(m, space),
-	// 	);
-	// }
-
-	// protected isParticipantCheckDisabled(contactID: string): boolean {
-	// 	return this.$checkChanging()[contactID];
-	// }
-
-	protected isMemberCheckChanged(args: ICheckChangedArgs): void {
-		console.log('isMemberCheckChanged()', args);
+	protected onCheckChanged(args: ICheckChangedArgs): void {
+		console.log('HappeningParticipantsComponent.onCheckChanged()', args);
+		this.analytics.logEvent(
+			`happening/participants/${args.checked ? 'checked' : 'unchecked'}`,
+		);
 		// this.populateParticipants();
 
 		const space = this.$space();
@@ -184,9 +165,11 @@ export class HappeningParticipantsComponent implements OnChanges {
 		this.emitHappeningChange(happening);
 	}
 
-	protected addContact(): void {
+	protected addContact(source: string): void {
+		this.analytics.logEvent('happening/participants/add_contact', { source });
 		this.contactSelectorService
 			.selectMultipleInModal({
+				selectedItems: [],
 				componentProps: {
 					space: this.$space(),
 				},

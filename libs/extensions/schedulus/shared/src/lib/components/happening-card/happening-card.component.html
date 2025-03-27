@@ -46,11 +46,11 @@
 	<!--	/>-->
 	<ion-item>
 		<ion-label color="medium">
-			@if (!hasRelatedContacts()) {
+			@if (!$hasRelatedContacts()) {
 				<sneat-members-as-badges
 					[members]="
-						getRelatedContactIDs()
-							| selectedMembers: contactusSpace?.dbo?.contacts
+						$relatedContactIDs()
+							| selectedContacts: contactusSpace?.dbo?.contacts
 					"
 					(deleteMember)="removeMember($event)"
 				/>

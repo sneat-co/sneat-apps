@@ -4,6 +4,6 @@ export * from './member-title.pipe';
 export * from './team-emoji.pipe';
 export * from './long-month-name.pipe';
 export * from './short-month-name.pipe';
-export * from './selected-members.pipe';
+export * from './selected-contacts.pipe';
 export * from './country-emoji.pipe';
 export * from './decimal64p2.pipe';

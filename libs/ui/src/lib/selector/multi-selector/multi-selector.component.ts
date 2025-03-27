@@ -31,7 +31,7 @@ export class MultiSelectorComponent
 	protected selectedItems?: ISelectItem[];
 
 	constructor(modalController: ModalController) {
-		super(modalController);
+		super('MultiSelectorComponent', modalController);
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {

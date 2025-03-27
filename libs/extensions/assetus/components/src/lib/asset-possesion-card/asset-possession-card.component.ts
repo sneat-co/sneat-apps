@@ -2,7 +2,7 @@ import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonCard, IonItem, IonLabel } from '@ionic/angular/standalone';
-import { ISelectItem, SelectFromListComponent } from '@sneat/components';
+import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import {
 	AssetPossession,
 	AssetPossessions,

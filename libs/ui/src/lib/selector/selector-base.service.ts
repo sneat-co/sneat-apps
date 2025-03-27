@@ -5,15 +5,11 @@ import { ErrorLogger } from '@sneat/logging';
 import { ISelectItem } from './selector-interfaces';
 import { ISelectorOptions } from './selector-options';
 
-export class SelectorBaseService<T = ISelectItem> {
+export abstract class SelectorBaseService<T = ISelectItem> {
 	protected readonly errorLogger = inject(ErrorLogger);
 	private readonly modalController = inject(ModalController);
 
-	constructor(
-		// _eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-		// private readonly component: Function | HTMLElement | string | null,
-		private readonly component: ComponentRef,
-	) {}
+	protected constructor(private readonly component: ComponentRef) {}
 
 	public selectSingleInModal(options: ISelectorOptions<T>): Promise<T | null> {
 		console.log('selectSingleInModal(), options:', options);
@@ -27,12 +23,9 @@ export class SelectorBaseService<T = ISelectItem> {
 	public selectMultipleInModal(
 		options: ISelectorOptions<T>,
 	): Promise<T[] | null> {
-		console.log('selectInModal(), options:', options);
-		// if (!options.items) {
-		// 	return Promise.reject(new Error('items is required parameter'))
-		// }
+		console.log('selectMultipleInModal(), options:', options);
 
-		const result = new Promise<T[] | null>((resolve, reject) => {
+		return new Promise<T[] | null>((resolve, reject) => {
 			if (!options.onSelected) {
 				options = {
 					...options,
@@ -65,7 +58,5 @@ export class SelectorBaseService<T = ISelectItem> {
 				)
 				.catch(this.errorLogger.logErrorHandler('Failed to create modal'));
 		});
-
-		return result;
 	}
 }

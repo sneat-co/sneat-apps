@@ -5,9 +5,9 @@ import {
 	InjectionToken,
 	OnDestroy,
 } from '@angular/core';
-import { createSetFocusToInput } from '@sneat/components';
+import { createSetFocusToInput } from '../focus';
 import { ErrorLogger } from '@sneat/logging';
-import { MonoTypeOperatorFunction, Subject, Subscription, take } from 'rxjs';
+import { MonoTypeOperatorFunction, Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 export interface IConsole {

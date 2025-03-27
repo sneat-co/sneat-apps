@@ -1,6 +1,6 @@
 import { Component, Inject, Input, ViewChild } from '@angular/core';
 import { IonInput, ModalController } from '@ionic/angular';
-import { createSetFocusToInput, ISelectItem } from '@sneat/components';
+import { createSetFocusToInput, ISelectItem } from '@sneat/ui';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
 import {

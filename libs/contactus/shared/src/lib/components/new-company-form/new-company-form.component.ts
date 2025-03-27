@@ -26,7 +26,7 @@ import {
 	IonList,
 	IonSpinner,
 } from '@ionic/angular/standalone';
-import { ISelectItem, SelectFromListComponent } from '@sneat/components';
+import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import { excludeEmpty } from '@sneat/core';
 import {
 	ContactRole,

@@ -1,6 +1,6 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { CONTACT_ROLES_BY_TYPE, IContactRole } from '@sneat/app';
-import { ISelectItem } from '@sneat/components';
+import { ISelectItem } from '@sneat/ui';
 import { ContactRole } from '@sneat/contactus-core';
 import { SpaceBaseComponent } from '@sneat/space-components';
 import { IContactContext } from '@sneat/contactus-core';

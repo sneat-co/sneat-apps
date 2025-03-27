@@ -40,3 +40,17 @@ export function trimNames(n: IPersonNames): IPersonNames {
 	}
 	return n;
 }
+
+export function getFullName(n: IPersonNames): string {
+	if (n.fullName) {
+		return n.fullName;
+	}
+	return [
+		n.firstName,
+		n.middleName,
+		n.lastName,
+		n.nickName ? `(${n.nickName})` : '',
+	]
+		.filter((v) => !!v)
+		.join(' ');
+}

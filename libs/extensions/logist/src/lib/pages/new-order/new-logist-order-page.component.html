@@ -16,62 +16,64 @@
 		/>
 	</ion-card>
 
-	<ion-card *ngIf="direction">
-		<ion-item-divider color="light">
-			<ion-label>Counterparties</ion-label>
-		</ion-item-divider>
+	@if (direction) {
+		<ion-card>
+			<ion-item-divider color="light">
+				<ion-label>Counterparties</ion-label>
+			</ion-item-divider>
 
-		<sneat-logist-order-counterparty
-			[space]="space"
-			[order]="order"
-			(orderChange)="onOrderChanged($event)"
-			[readonly]="readonly"
-			[useColumns]="true"
-			counterpartyRole="buyer"
-			contactRole="buyer"
-			labelPosition="fixed"
-		/>
+			<sneat-logist-order-counterparty
+				[space]="space"
+				[order]="order"
+				(orderChange)="onOrderChanged($event)"
+				[readonly]="readonly"
+				[useColumns]="true"
+				counterpartyRole="buyer"
+				contactRole="buyer"
+				labelPosition="fixed"
+			/>
 
-		<sneat-logist-order-counterparty
-			[space]="space"
-			[order]="order"
-			(orderChange)="onOrderChanged($event)"
-			[readonly]="readonly"
-			[useColumns]="true"
-			label="Shipping line"
-			counterpartyRole="shipping_line"
-			contactRole="shipping_line"
-			labelPosition="fixed"
-		/>
+			<sneat-logist-order-counterparty
+				[space]="space"
+				[order]="order"
+				(orderChange)="onOrderChanged($event)"
+				[readonly]="readonly"
+				[useColumns]="true"
+				label="Shipping line"
+				counterpartyRole="shipping_line"
+				contactRole="shipping_line"
+				labelPosition="fixed"
+			/>
 
-		<sneat-logist-order-counterparty
-			[space]="space"
-			[order]="order"
-			(orderChange)="onOrderChanged($event)"
-			[readonly]="readonly"
-			[useColumns]="true"
-			counterpartyRole="notify_party"
-			label="Notify party"
-			contactRole="notify_party"
-			labelPosition="fixed"
-		/>
-		<sneat-logist-order-counterparty
-			[space]="space"
-			[order]="order"
-			(orderChange)="onOrderChanged($event)"
-			[readonly]="readonly"
-			[useColumns]="true"
-			counterpartyRole="consignee"
-			label="Consignee"
-			contactRole="consignee"
-			labelPosition="fixed"
-		/>
-		<sneat-order-agents
-			[space]="space"
-			[order]="order"
-			(added)="onCounterpartiesAdded($event)"
-		/>
-	</ion-card>
+			<sneat-logist-order-counterparty
+				[space]="space"
+				[order]="order"
+				(orderChange)="onOrderChanged($event)"
+				[readonly]="readonly"
+				[useColumns]="true"
+				counterpartyRole="notify_party"
+				label="Notify party"
+				contactRole="notify_party"
+				labelPosition="fixed"
+			/>
+			<sneat-logist-order-counterparty
+				[space]="space"
+				[order]="order"
+				(orderChange)="onOrderChanged($event)"
+				[readonly]="readonly"
+				[useColumns]="true"
+				counterpartyRole="consignee"
+				label="Consignee"
+				contactRole="consignee"
+				labelPosition="fixed"
+			/>
+			<sneat-order-agents
+				[space]="space"
+				[order]="order"
+				(added)="onCounterpartiesAdded($event)"
+			/>
+		</ion-card>
+	}
 
 	<!--	<ion-card>-->
 	<!--		<sneat-logist-order-counterparties-->
@@ -88,21 +90,25 @@
 	<!--		(orderChange)="onOrderChanged($event)"-->
 	<!--	></sneat-order-route-card>-->
 
-	<sneat-new-order-containers-form
-		*ngIf="direction"
-		[order]="order"
-		(numberOfContainersChange)="onNumberOfContainersChanged($event)"
-	/>
-
-	<ion-card *ngIf="direction">
-		<ion-card-content>
-			<ion-button size="large" (click)="createOrder()">
-				<ion-label>Create order</ion-label>
-			</ion-button>
-			<ion-button disabled fill="clear" color="medium">or</ion-button>
-			<ion-button size="large" color="medium" fill="outline" (click)="cancel()"
-				>Cancel</ion-button
-			>
-		</ion-card-content>
-	</ion-card>
+	@if (direction) {
+		<sneat-new-order-containers-form
+			[order]="order"
+			(numberOfContainersChange)="onNumberOfContainersChanged($event)"
+		/>
+		<ion-card>
+			<ion-card-content>
+				<ion-button size="large" (click)="createOrder()">
+					<ion-label>Create order</ion-label>
+				</ion-button>
+				<ion-button disabled fill="clear" color="medium">or</ion-button>
+				<ion-button
+					size="large"
+					color="medium"
+					fill="outline"
+					(click)="cancel()"
+					>Cancel</ion-button
+				>
+			</ion-card-content>
+		</ion-card>
+	}
 </ion-content>

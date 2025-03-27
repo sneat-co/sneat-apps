@@ -20,7 +20,7 @@ import { RouterModule } from '@angular/router';
 import { IonicModule, IonInput, IonSelect } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { NEVER, Observable, Subject, takeUntil } from 'rxjs';
-import { ISelectItem } from '..';
+import { ISelectItem } from '../index';
 
 @Component({
 	selector: 'sneat-select-from-list',

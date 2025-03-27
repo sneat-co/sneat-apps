@@ -18,7 +18,7 @@ import {
 	UntypedFormGroup,
 } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
-import { ISelectItem, SelectFromListComponent } from '@sneat/components';
+import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import {
 	emptyTiming,
 	IHappeningSlot,

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { MultiSelectorComponent } from '@sneat/components';
+import { MultiSelectorComponent } from '@sneat/ui';
 import { ContactRolesInputComponent } from './contact-roles-input.component';
 
 @NgModule({

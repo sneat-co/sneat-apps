@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { SelectFromListComponent } from '@sneat/components';
+import { SelectFromListComponent } from '@sneat/ui';
 import { AssetType, carMakes, IMake, IModel } from '@sneat/mod-assetus-core';
 
 @Component({

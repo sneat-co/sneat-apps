@@ -3,10 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import {
-	CountrySelectorComponent,
-	SelectFromListComponent,
-} from '@sneat/components';
+import { CountrySelectorComponent } from '@sneat/components';
+import { SelectFromListComponent } from '@sneat/ui';
 import {
 	LocationFormComponent,
 	NewCompanyFormComponent,

@@ -3,3 +3,4 @@ export * from './selector-options';
 export * from './selector-base.service';
 export * from './selector-base.component';
 export * from './multi-selector';
+export * from './select-from-list';

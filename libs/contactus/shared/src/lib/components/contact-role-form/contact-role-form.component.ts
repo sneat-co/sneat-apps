@@ -11,7 +11,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { ISelectItem, SelectFromListComponent } from '@sneat/components';
+import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import {
 	ContactGroupService,
 	defaultFamilyContactGroups,

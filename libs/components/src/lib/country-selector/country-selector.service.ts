@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SelectorBaseService } from '../selector';
+import { SelectorBaseService } from '@sneat/ui';
 import { ICountry } from './countries';
 import { CountrySelectorComponent } from './country-selector.component';
 

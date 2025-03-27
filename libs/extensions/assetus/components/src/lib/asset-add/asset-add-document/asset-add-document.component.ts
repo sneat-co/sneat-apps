@@ -10,7 +10,7 @@ import {
 	IonItem,
 	IonPopover,
 } from '@ionic/angular/standalone';
-import { ISelectItem, SelectFromListComponent } from '@sneat/components';
+import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import { timestamp } from '@sneat/dto';
 import {
 	AssetPossession,

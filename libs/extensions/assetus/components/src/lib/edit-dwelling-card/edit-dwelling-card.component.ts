@@ -9,10 +9,7 @@ import {
 } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import {
-	CountrySelectorComponent,
-	SelectFromListComponent,
-} from '@sneat/components';
+import { CountrySelectorComponent } from '@sneat/components';
 import { IAssetContext, IAssetDwellingContext } from '@sneat/mod-assetus-core';
 import { ISpaceContext } from '@sneat/space-models';
 import { AssetPossessionCardComponent } from '../asset-possesion-card/asset-possession-card.component';

@@ -1,7 +1,5 @@
-import { Inject, Injectable } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { ISelectorOptions, SelectorBaseService } from '@sneat/components';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { Injectable } from '@angular/core';
+import { ISelectorOptions, SelectorBaseService } from '@sneat/ui';
 import {
 	ILogistOrderContext,
 	IOrderContainer,
@@ -11,11 +9,8 @@ import { ShippingPointsSelectorDialogComponent } from './shipping-points-selecto
 
 @Injectable()
 export class ShippingPointsSelectorService extends SelectorBaseService<IOrderShippingPoint> {
-	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
-		modalController: ModalController,
-	) {
-		super(ShippingPointsSelectorDialogComponent, errorLogger, modalController);
+	constructor() {
+		super(ShippingPointsSelectorDialogComponent);
 	}
 
 	public selectShippingPointsInModal(

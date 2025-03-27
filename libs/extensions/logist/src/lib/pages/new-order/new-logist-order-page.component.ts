@@ -3,7 +3,7 @@ import { ContactService } from '@sneat/contactus-services';
 import { excludeUndefined } from '@sneat/core';
 import { IContactContext } from '@sneat/contactus-core';
 import { first, takeUntil } from 'rxjs';
-import { ISelectItem } from '@sneat/components';
+import { ISelectItem } from '@sneat/ui';
 import { SpaceBaseComponent } from '@sneat/space-components';
 import {
 	CounterpartyRole,

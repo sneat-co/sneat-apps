@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, computed } from '@angular/core';
 import {
 	IonButton,
 	IonButtons,
@@ -11,7 +11,7 @@ import {
 import {
 	LongMonthNamePipe,
 	MembersAsBadgesComponent,
-	SelectedMembersPipe,
+	SelectedContactsPipe,
 } from '@sneat/components';
 import { IContactBrief } from '@sneat/contactus-core';
 import { IIdAndBrief } from '@sneat/core';
@@ -34,7 +34,6 @@ import { HappeningSlotsComponent } from '../happening-slots/happening-slots.comp
 		IonText,
 		WdToWeekdayPipe,
 		IonLabel,
-
 		IonCard,
 		IonItem,
 		IonButtons,
@@ -43,21 +42,25 @@ import { HappeningSlotsComponent } from '../happening-slots/happening-slots.comp
 		HappeningSlotsComponent,
 		MembersAsBadgesComponent,
 		LongMonthNamePipe,
-		SelectedMembersPipe,
+		SelectedContactsPipe,
 	],
 })
 export class HappeningCardComponent extends HappeningBaseComponent {
-	protected hasRelatedContacts(): boolean {
-		const [, happening] = this.spaceAndHappening();
+	protected readonly $relatedContactIDs = computed(() => {
+		const happening = this.$happening();
 		if (!happening) {
-			return false;
+			return [];
 		}
-		return !!getRelatedItemIDs(
-			happening.brief?.related,
+		return getRelatedItemIDs(
+			happening.dbo?.related || happening.brief?.related,
 			'contactus',
 			'contacts',
-		).length;
-	}
+		);
+	});
+
+	protected readonly $hasRelatedContacts = computed(
+		() => this.$relatedContactIDs().length > 0,
+	);
 
 	constructor(
 		happeningBaseComponentParams: HappeningBaseComponentParams,
@@ -67,18 +70,6 @@ export class HappeningCardComponent extends HappeningBaseComponent {
 			'HappeningCardComponent',
 			happeningBaseComponentParams,
 			changeDetectorRef,
-		);
-	}
-
-	protected getRelatedContactIDs(): readonly string[] {
-		const [, happening] = this.spaceAndHappening();
-		if (!happening) {
-			return [];
-		}
-		return getRelatedItemIDs(
-			happening.dbo?.related || happening.brief?.related,
-			'contactus',
-			'contacts',
 		);
 	}
 

@@ -2,7 +2,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { countriesByID } from '../country-selector';
 
 export const countryFlagEmoji = (countryID?: string): string =>
-	countryID ? countriesByID[countryID]?.emoji || countryID : '';
+	countryID && countryID !== '--'
+		? countriesByID[countryID]?.emoji || countryID
+		: '';
 
 @Pipe({ name: 'countryFlag' })
 export class CountryFlagPipe implements PipeTransform {

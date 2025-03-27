@@ -11,8 +11,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { ISelectItem } from '../selector';
-import { SelectFromListComponent } from '../selector/select-from-list';
+import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import { countries, GeoRegion, ICountry, unknownCountry } from './countries';
 
 @Component({

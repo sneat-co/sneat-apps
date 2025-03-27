@@ -1,9 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { SelectFromListComponent } from '@sneat/components';
+import { SelectFromListComponent } from '@sneat/ui';
 import { NewSegmentModule } from '../../components/new-segment/new-segment.module';
 import { OrderRouteCardModule } from '../../components/order-route-card/order-route-card.module';
 import { OrderContainersModule } from '../../components/order-containers-card';
@@ -15,7 +14,6 @@ import { NewOrderContainersFormComponent } from './new-order-containers-form.com
 
 @NgModule({
 	imports: [
-		CommonModule,
 		IonicModule,
 		RouterModule.forChild([
 			{

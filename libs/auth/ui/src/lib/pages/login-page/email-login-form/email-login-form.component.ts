@@ -32,7 +32,7 @@ import {
 } from '@ionic/angular/standalone';
 import { SneatApiService } from '@sneat/api';
 import { IInitUserRecordRequest, UserRecordService } from '@sneat/auth-core';
-import { createSetFocusToInput } from '@sneat/components';
+import { createSetFocusToInput } from '@sneat/ui';
 import {
 	AnalyticsService,
 	APP_INFO,

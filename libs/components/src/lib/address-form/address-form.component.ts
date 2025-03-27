@@ -22,7 +22,7 @@ import { excludeUndefined } from '@sneat/core';
 import { IAddress } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { CountrySelectorComponent } from '../country-selector';
-import { createSetFocusToInput } from '../focus';
+import { createSetFocusToInput } from '@sneat/ui';
 import { ISaveEvent } from '../save-event';
 
 export interface IAddressFormControls {
