@@ -24,3 +24,5 @@ npx madge --circular --extensions ts ./libs
 npx madge --circular --extensions ts ./apps
 
 pnpx lint-staged
+
+pnpx run-many --target=lint --all
