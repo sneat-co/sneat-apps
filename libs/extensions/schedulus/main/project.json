@@ -1,5 +1,5 @@
 {
-	"name": "extensions-schedulus-main",
+	"name": "ext-schedulus-main",
 	"$schema": "../../../../node_modules/nx/schemas/project-schema.json",
 	"projectType": "library",
 	"sourceRoot": "libs/extensions/schedulus/main/src",

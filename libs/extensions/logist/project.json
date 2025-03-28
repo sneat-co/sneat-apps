@@ -1,6 +1,6 @@
 {
-	"name": "extensions-logist",
-	"$schema": "../node_modules/nx/schemas/project-schema.json",
+	"name": "ext-logist",
+	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
 	"projectType": "library",
 	"sourceRoot": "libs/extensions/logist/src",
 	"prefix": "sneat",

@@ -1,5 +1,5 @@
 {
-	"name": "extensions-schedulus-core",
+	"name": "ext-schedulus-core",
 	"$schema": "../../../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "libs/extensions/schedulus/core/src",
 	"prefix": "sneat",
