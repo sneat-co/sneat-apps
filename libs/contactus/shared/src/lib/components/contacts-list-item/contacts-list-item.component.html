@@ -70,6 +70,7 @@
 			</ion-button>
 		}
 	</ion-buttons>
+	<ion-checkbox slot="end" (click)="checkboxClicked($event)" />
 </ion-item>
 
 @if (showAddress && contact?.dbo?.address) {

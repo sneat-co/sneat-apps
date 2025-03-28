@@ -12,6 +12,7 @@ import {
 import {
 	SpaceBaseComponent,
 	SpaceComponentBaseParams,
+	SpaceItemsBaseComponent,
 	SpacePageTitleComponent,
 } from '@sneat/space-components';
 import {
@@ -40,15 +41,14 @@ import { DocumentsListComponent } from './components/documents-list/documents-li
 		SpaceServiceModule,
 	],
 })
-export class DocumentsPageComponent extends SpaceBaseComponent {
+export class DocumentsPageComponent extends SpaceItemsBaseComponent {
 	public segment: 'type' | 'owner' | 'list' = 'type';
 
 	public documents: IAssetDocumentContext[];
 	public rootDocs?: IAssetDocumentContext[];
-	filter = '';
 
 	constructor(private assetService: AssetService) {
-		super('DocumentsPageComponent');
+		super('DocumentsPageComponent', '');
 		this.documents = window.history.state.documents as IAssetContext<
 			'document',
 			IAssetDocumentExtra
@@ -116,7 +116,7 @@ export class DocumentsPageComponent extends SpaceBaseComponent {
 
 	applyFilter(filter: string) {
 		filter = filter && filter.toLowerCase();
-		this.filter = filter;
+		this.$filter.set(filter);
 		// this.contacts = !filter && !role
 		//     ? this.allContacts
 		//     : this.allContacts.filter(c =>

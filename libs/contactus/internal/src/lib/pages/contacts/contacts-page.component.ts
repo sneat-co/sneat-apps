@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import {
@@ -26,6 +25,7 @@ import {
 } from '@sneat/contactus-services';
 import { SpaceServiceModule } from '@sneat/space-services';
 import { Subscription } from 'rxjs';
+import { ContactsComponent } from './contacts.component';
 
 @Component({
 	selector: 'sneat-contacts-page',
@@ -33,28 +33,33 @@ import { Subscription } from 'rxjs';
 	providers: [SpaceComponentBaseParams],
 	animations: [listItemAnimations],
 	imports: [
-		CommonModule,
 		FormsModule,
 		IonicModule,
 		SpacePageTitleComponent,
-		FilterItemComponent,
-		ContactsByTypeComponent,
 		ContactusServicesModule,
 		SpaceServiceModule,
+		ContactsComponent,
+		ContactsByTypeComponent,
 		ContactsListItemComponent,
+		FilterItemComponent,
 	],
 })
 export class ContactsPageComponent extends SpaceItemsBaseComponent {
-	public allContacts?: IIdAndBrief<IContactBrief>[];
-	public contactsByRole?: Record<string, IIdAndBrief<IContactBrief>[]>;
-	public contacts?: IIdAndBrief<IContactBrief>[];
-	public groups: IMemberGroupContext[] = [];
+	public allContacts?: readonly IIdAndBrief<IContactBrief>[];
+	public contactsByRole?: Record<string, readonly IIdAndBrief<IContactBrief>[]>;
+	protected readonly $contacts = signal<
+		readonly IIdAndBrief<IContactBrief>[] | undefined
+	>(undefined);
+	public groups: readonly IMemberGroupContext[] = [];
 	public segment: 'list' | 'groups' = 'groups';
-	public filter = '';
-	public role?: ContactRole;
+	// public readonly $filter = signal<string>('');
+	public readonly $role = signal<ContactRole | undefined>(undefined);
+	protected readonly $showTabs = computed(
+		() => !this.$role() && this.space.type === 'family',
+	);
 	private contactsSubscription?: Subscription;
 
-	readonly roles: ISelectItem[] = [
+	readonly roles: readonly ISelectItem[] = [
 		{ id: '', title: 'All', iconName: 'people-outline' },
 		{ id: 'freight_agent', title: 'Agents', iconName: 'body-outline' },
 		{ id: 'buyer', title: 'Buyers', iconName: 'cash-outline' },
@@ -63,11 +68,13 @@ export class ContactsPageComponent extends SpaceItemsBaseComponent {
 		{ id: 'shipping_line', title: 'Shipping lines', iconName: 'boat-outline' },
 	];
 
-	public contactsNumber(role: string): number {
-		const roleContacts =
-			(this.contactsByRole && this.contactsByRole[role]) ?? [];
-		return roleContacts?.length ?? 0;
-	}
+	protected $pageTitle = computed(() => {
+		const role = this.$role();
+		if (role) {
+			return `${role.toUpperCase() + role.substr(1)}s`;
+		}
+		return 'Contacts';
+	});
 
 	constructor(
 		// private readonly contactService: ContactService,
@@ -76,21 +83,22 @@ export class ContactsPageComponent extends SpaceItemsBaseComponent {
 		super('ContactsPageComponent', '');
 		const role = location.pathname.match(/(applicant|landlord|tenant)/);
 		if (role) {
-			this.role = role[1] as ContactRole;
+			this.$role.set(role[1] as ContactRole);
 		}
 		this.allContacts = window.history.state
 			.contacts as IIdAndBrief<IContactBrief>[];
 
 		if (this.allContacts) {
-			this.applyFilter('', this.role);
+			this.$filter.set('');
+			this.applyFilter();
 		}
 		// this.spaceIDChanged$.subscribe({
 		// 	next: this.onSpaceIDChangedWorker,
 		// });
 		this.route.queryParamMap.pipe(this.takeUntilDestroyed()).subscribe({
 			next: (q) => {
-				this.role = (q.get('role') as ContactRole) || undefined;
-				this.applyFilter(this.filter, this.role);
+				this.$role.set((q.get('role') as ContactRole) || undefined);
+				this.applyFilter();
 			},
 		});
 		// this.spaceDtoChanged$.subscribe({
@@ -111,20 +119,19 @@ export class ContactsPageComponent extends SpaceItemsBaseComponent {
 		this.contactusSpaceService.watchContactBriefs(this.space.id).subscribe({
 			next: (contacts) => {
 				this.setSpaceContacts(contacts || []);
-				this.applyFilter(this.filter, this.role);
+				this.applyFilter();
 			},
 		});
 	}
 
-	get pageTitle(): string {
-		if (this.role) {
-			return `${this.role[0].toUpperCase() + this.role.substr(1)}s`;
-		}
-		return 'Contacts';
+	public contactsNumber(role: string): number {
+		const roleContacts =
+			(this.contactsByRole && this.contactsByRole[role]) ?? [];
+		return roleContacts?.length ?? 0;
 	}
 
-	get titleIcon(): string {
-		switch (this.role) {
+	protected $titleIcon = computed(() => {
+		switch (this.$role()) {
 			case 'tenant':
 				return '🤠';
 			case 'landlord':
@@ -134,30 +141,45 @@ export class ContactsPageComponent extends SpaceItemsBaseComponent {
 			default:
 				return '📇';
 		}
-	}
+	});
 
-	get canAdd(): boolean {
-		const { role } = this;
+	protected $canAdd = computed<boolean>(() => {
+		const role = this.$role();
 		return role !== 'tenant' && role !== 'landlord';
-	}
+	});
 
-	applyFilter(filter: string, role?: ContactRole): void {
-		console.log(
-			'ContactsPageComponent.applyFilter()',
-			filter,
-			role,
-			this.allContacts,
-		);
-		filter = filter && filter.toLowerCase();
-		this.filter = filter;
-		this.contacts =
+	protected applyFilter(filter?: string): void {
+		if (filter || filter === '') {
+			this.$filter.set(filter);
+			filter = filter.toLowerCase();
+		} else {
+			filter = this.$filter().toLowerCase();
+		}
+		const role = this.$role();
+		const contacts =
 			!filter && !role
 				? this.allContacts
 				: this.allContacts?.filter(
 						(c) =>
-							(!filter || c.brief?.title?.toLowerCase().includes(filter)) &&
+							(!filter ||
+								c.brief?.title?.toLowerCase().includes(filter) ||
+								c.brief?.names?.firstName?.toLowerCase().includes(filter) ||
+								c.brief?.names?.lastName?.toLowerCase().includes(filter) ||
+								c.brief?.names?.nickName?.toLowerCase().includes(filter) ||
+								c.brief?.names?.middleName?.toLowerCase().includes(filter) ||
+								c.brief?.names?.fullName?.toLowerCase().includes(filter)) &&
 							(!role || (c.brief?.roles && c?.brief.roles.includes(role))),
 					);
+		console.log(
+			'ContactsPageComponent.applyFilter()',
+			filter,
+			role,
+			'allContacts:',
+			this.allContacts,
+			'contactsToShow:',
+			contacts,
+		);
+		this.$contacts.set(contacts);
 	}
 
 	protected readonly goContact = (
@@ -195,7 +217,7 @@ export class ContactsPageComponent extends SpaceItemsBaseComponent {
 			navResult = this.spaceParams.spaceNavService.navigateForwardToSpacePage(
 				this.space,
 				'new-company',
-				{ queryParams: this.role ? { role: this.role } : undefined },
+				{ queryParams: this.$role ? { role: this.$role } : undefined },
 			);
 		}
 
@@ -262,14 +284,15 @@ export class ContactsPageComponent extends SpaceItemsBaseComponent {
 			});
 		});
 		this.contactsByRole = contactsByRole;
-		this.applyFilter(this.filter, this.role);
+		this.applyFilter();
 	};
 
-	protected onRoleChanged(event: Event): void {
+	protected onRoleChanged(event: CustomEvent): void {
 		event.stopPropagation();
-		const url = setHrefQueryParam('role', this.role || '');
+		this.$role.set(event.detail.value);
+		const url = setHrefQueryParam('role', this.$role() || '');
 		history.replaceState(undefined, document.title, url);
-		this.applyFilter(this.filter, this.role);
+		this.applyFilter();
 	}
 
 	// roleSegmentButtonClicked(event: Event): void {

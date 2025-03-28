@@ -43,6 +43,10 @@ export class ContactsListItemComponent {
 		'space_member',
 	];
 
+	checkboxClicked(event: Event): void {
+		event.stopPropagation();
+	}
+
 	protected get relatedContacts(): readonly IIdAndBrief<IRelatedItem>[] {
 		return []; // zipMapBriefsWithIDs(this.contact?.dto?.related);
 	}

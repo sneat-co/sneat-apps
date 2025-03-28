@@ -1,27 +1,44 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	EventEmitter,
+	input,
+	Output,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
 	selector: 'sneat-filter-item',
 	templateUrl: './filter-item.component.html',
-	imports: [CommonModule, IonicModule, FormsModule, RouterModule],
+	imports: [IonicModule, FormsModule],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilterItemComponent {
-	@Input() public filter = '';
+	public readonly $filter = input.required<string>();
 
-	@Output() changed = new EventEmitter<string>();
+	@Output() readonly changed = new EventEmitter<string>();
 	@Output() readonly blured = new EventEmitter<Event>();
 
-	clearFilter(): void {
+	protected clearFilter(event: Event): void {
 		console.log('clearFilter()');
-		this.filter = '';
-		this.onChanged();
+		event.stopPropagation();
+		event.preventDefault();
+		this.emitChanged('');
 	}
 
-	onChanged(): void {
-		this.changed.emit(this.filter.trim());
+	protected onFilterChanged(event: CustomEvent): void {
+		// console.log(`FilterItemComponent.onFilterChanged()`, event);
+		this.emitChanged(event.detail.value || '');
+	}
+
+	protected onBlured(event: Event): void {
+		console.log(`FilterItemComponent.onBlured()`, event);
+		this.blured.emit(event);
+	}
+
+	private emitChanged(value: string): void {
+		// console.log(`FilterItemComponent.emitChange(value=${value})`);
+		this.changed.emit(value);
 	}
 }

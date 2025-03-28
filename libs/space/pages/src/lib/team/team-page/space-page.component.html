@@ -3,22 +3,25 @@
 		<ion-buttons slot="end">
 			<ion-menu-button />
 		</ion-buttons>
-		<ion-title *ngIf="space.dbo || space.type">
-			<ion-icon
-				[name]="
-					space.type === 'family'
-						? 'people-outline'
-						: space.type === 'private'
-							? 'person-circle-outline'
-							: 'people-outline'
-				"
-			/>
-			{{ space.brief?.title || (space.type | titlecase) || space.id }}
-			<ion-text color="medium" *ngIf="topMenuService.isTopMenuHidden | async"
-				>&#64; sneat.app
-			</ion-text>
-		</ion-title>
-		<ion-title *ngIf="!space"> Space: loading...</ion-title>
+		@if (space.dbo || space.type) {
+			<ion-title>
+				<ion-icon
+					[name]="
+						space.type === 'family'
+							? 'people-outline'
+							: space.type === 'private'
+								? 'person-circle-outline'
+								: 'people-outline'
+					"
+				/>
+				{{ space.brief?.title || (space.type | titlecase) || space.id }}
+				@if (topMenuService.isTopMenuHidden | async) {
+					<ion-text color="medium">&#64; sneat.app</ion-text>
+				}
+			</ion-title>
+		} @else {
+			<ion-title> Space: loading...</ion-title>
+		}
 		<!--		<ion-buttons slot="end">-->
 		<!--			<ion-button>-->
 		<!--				<ion-icon name="settings" slot="start" />-->
@@ -48,78 +51,82 @@
 
 	<ion-grid class="ion-grid-layout">
 		<ion-row>
-			<ion-col *ngIf="space.type === 'family' || space.type === 'team'">
-				<sneat-members-short-list
-					role="member"
-					[space]="space"
-					[contactusSpaceDbo]="contactusSpace?.dbo"
-				/>
-			</ion-col>
+			@if (space.type === "family" || space.type === "team") {
+				<ion-col>
+					<sneat-members-short-list
+						role="member"
+						[space]="space"
+						[contactusSpaceDbo]="contactusSpace?.dbo"
+					/>
+				</ion-col>
+			}
 			<ion-col>
 				<sneat-calendar-brief />
 				<!--				<sneat-calendar-brief [space]="space" />-->
 			</ion-col>
 		</ion-row>
 		<ion-row>
-			<ion-col *ngIf="topMenuService.isTopMenuHidden | async">
-				<ion-card class="last-child-no-border">
-					<ion-item>
-						<ion-label style="font-weight: bold">Apps</ion-label>
-						<ion-buttons slot="end">
-							<ion-button>
-								<ion-icon name="settings" color="medium" />
-							</ion-button>
-						</ion-buttons>
-					</ion-item>
-					<ion-item routerLink="./assets" detail>
-						<ion-icon name="car-sport-outline" slot="start" />
-						<ion-label>Assets</ion-label>
-					</ion-item>
-					<!--					<ion-item routerLink="./calendar" detail="">-->
-					<!--						<ion-icon name="calendar-outline" slot="start" />-->
-					<!--						<ion-label>Calendar</ion-label>-->
-					<!--						&lt;!&ndash;						<ion-buttons slot="end">&ndash;&gt;-->
-					<!--						&lt;!&ndash;							<ion-button>&ndash;&gt;-->
-					<!--						&lt;!&ndash;								<ion-label style="text-transform: none" color="primary">Today</ion-label>&ndash;&gt;-->
-					<!--						&lt;!&ndash;							</ion-button>&ndash;&gt;-->
-					<!--						&lt;!&ndash;							<ion-button>&ndash;&gt;-->
-					<!--						&lt;!&ndash;								<ion-label style="text-transform: none" color="primary">Tomorrow</ion-label>&ndash;&gt;-->
-					<!--						&lt;!&ndash;							</ion-button>&ndash;&gt;-->
-					<!--						&lt;!&ndash;						</ion-buttons>&ndash;&gt;-->
-					<!--					</ion-item>-->
-					<ion-item routerLink="./contacts" detail>
-						<ion-icon name="people-outline" slot="start" />
-						<ion-label>Contacts</ion-label>
-					</ion-item>
-					<ion-item routerLink="./documents" detail>
-						<ion-icon name="documents-outline" slot="start" />
-						<ion-label>Documents</ion-label>
-					</ion-item>
-					<ion-item routerLink="./lists">
-						<ion-icon name="cart-outline" slot="start" />
-						<ion-label>Lists</ion-label>
-						<ion-buttons slot="end">
-							<ion-button
-								routerLink="./list/buy/groceries"
-								(click)="$event.stopPropagation()"
-							>
-								<ion-label style="text-transform: none" color="primary">
-									<span>🛒</span>
-									<span
-										class="sneat-hide-if-width-less-320"
-										style="margin-left: 0.5em"
-										>Groceries</span
-									>
-								</ion-label>
-							</ion-button>
-						</ion-buttons>
-					</ion-item>
-					<ion-item routerLink="./trackers" detail>
-						<ion-icon name="bar-chart-outline" slot="start" />
-						<ion-label>Trackers</ion-label>
-					</ion-item>
-				</ion-card>
-			</ion-col>
+			@if (topMenuService.isTopMenuHidden | async) {
+				<ion-col>
+					<ion-card class="last-child-no-border">
+						<ion-item>
+							<ion-label style="font-weight: bold">Apps</ion-label>
+							<ion-buttons slot="end">
+								<ion-button>
+									<ion-icon name="settings" color="medium" />
+								</ion-button>
+							</ion-buttons>
+						</ion-item>
+						<ion-item routerLink="./assets" tappable detail>
+							<ion-icon name="car-sport-outline" slot="start" />
+							<ion-label>Assets</ion-label>
+						</ion-item>
+						<!--					<ion-item routerLink="./calendar" detail="">-->
+						<!--						<ion-icon name="calendar-outline" slot="start" />-->
+						<!--						<ion-label>Calendar</ion-label>-->
+						<!--						&lt;!&ndash;						<ion-buttons slot="end">&ndash;&gt;-->
+						<!--						&lt;!&ndash;							<ion-button>&ndash;&gt;-->
+						<!--						&lt;!&ndash;								<ion-label style="text-transform: none" color="primary">Today</ion-label>&ndash;&gt;-->
+						<!--						&lt;!&ndash;							</ion-button>&ndash;&gt;-->
+						<!--						&lt;!&ndash;							<ion-button>&ndash;&gt;-->
+						<!--						&lt;!&ndash;								<ion-label style="text-transform: none" color="primary">Tomorrow</ion-label>&ndash;&gt;-->
+						<!--						&lt;!&ndash;							</ion-button>&ndash;&gt;-->
+						<!--						&lt;!&ndash;						</ion-buttons>&ndash;&gt;-->
+						<!--					</ion-item>-->
+						<ion-item routerLink="./contacts" tappable detail>
+							<ion-icon name="people-outline" slot="start" />
+							<ion-label>Contacts</ion-label>
+						</ion-item>
+						<ion-item routerLink="./documents" tappable detail>
+							<ion-icon name="documents-outline" slot="start" />
+							<ion-label>Documents</ion-label>
+						</ion-item>
+						<ion-item routerLink="./lists" tappable detail>
+							<ion-icon name="cart-outline" tappable slot="start" />
+							<ion-label>Lists</ion-label>
+							<ion-buttons slot="end">
+								<ion-button
+									routerLink="./list/buy/groceries"
+									(click)="$event.stopPropagation()"
+								>
+									<ion-label style="text-transform: none" color="primary">
+										<span>🛒</span>
+										<span
+											class="sneat-hide-if-width-less-320"
+											style="margin-left: 0.5em"
+											>Groceries</span
+										>
+									</ion-label>
+								</ion-button>
+							</ion-buttons>
+						</ion-item>
+						<ion-item routerLink="./trackers" tappable detail>
+							<ion-icon name="bar-chart-outline" slot="start" />
+							<ion-label>Trackers</ion-label>
+						</ion-item>
+					</ion-card>
+				</ion-col>
+			}
 		</ion-row>
 	</ion-grid>
 </ion-content>

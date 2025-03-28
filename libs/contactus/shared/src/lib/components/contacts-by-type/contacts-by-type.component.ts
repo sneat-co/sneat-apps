@@ -22,13 +22,13 @@ import {
 	animations: [listItemAnimations],
 })
 export class ContactsByTypeComponent implements OnChanges {
-	protected otherContacts?: IIdAndBrief<IContactBrief>[];
-	protected contactGroups: IContactGroupWithContacts[] = [];
+	protected otherContacts?: readonly IIdAndBrief<IContactBrief>[];
+	protected contactGroups: readonly IContactGroupWithContacts[] = [];
 
 	//
 	@Input() filter = '';
 	@Input({ required: true }) space?: ISpaceContext;
-	@Input() contacts?: IIdAndBrief<IContactBrief>[];
+	@Input() contacts?: readonly IIdAndBrief<IContactBrief>[];
 	@Input() goContact: (contact?: IIdAndBrief<IContactBrief>) => void = () =>
 		void 0;
 	@Input() goMember: (id: string, event: Event) => boolean = () => false;
@@ -111,7 +111,7 @@ export class ContactsByTypeComponent implements OnChanges {
 			};
 
 			if (groupWithContacts.roles.length) {
-				this.contactGroups?.push(groupWithContacts);
+				this.contactGroups = [...this.contactGroups, groupWithContacts];
 			}
 		});
 		this.otherContacts = otherContacts;

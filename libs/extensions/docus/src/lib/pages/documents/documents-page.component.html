@@ -9,7 +9,7 @@
 			icon="📃"
 			[titlesBySpaceType]="{
 				personal: 'Personal documents',
-				family: 'Family documents'
+				family: 'Family documents',
 			}"
 		/>
 		<ion-buttons slot="end">
@@ -40,10 +40,13 @@
 		</div>
 
 		<ng-container *ngIf="segment === 'list'">
-			<sneat-filter-item (changed)="applyFilter($event)" />
+			<sneat-filter-item
+				[$filter]="$filter()"
+				(changed)="applyFilter($event)"
+			/>
 			<sneat-documents-list
 				[allDocuments]="documents"
-				[filter]="filter"
+				[filter]="$filter()"
 				(goDoc)="goDoc($event)"
 			/>
 		</ng-container>

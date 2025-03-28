@@ -1,7 +1,7 @@
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, TitleCasePipe } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import {
 	IonButton,
 	IonButtons,
@@ -37,9 +37,7 @@ import { CalendarBriefComponent } from '@sneat/extensions-schedulus-shared';
 	templateUrl: './space-page.component.html',
 	providers: [SpaceComponentBaseParams],
 	imports: [
-		CommonModule,
 		FormsModule,
-		RouterModule,
 		ContactusServicesModule,
 		SpaceServiceModule,
 		MembersShortListCardComponent,
@@ -59,6 +57,9 @@ import { CalendarBriefComponent } from '@sneat/extensions-schedulus-shared';
 		IonButton,
 		IonCard,
 		IonContent,
+		AsyncPipe,
+		TitleCasePipe,
+		RouterLink,
 		// HappeningServiceModule,
 	],
 })

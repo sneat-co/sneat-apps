@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import {
 	defaultFamilyMemberExtensions,
@@ -12,7 +13,7 @@ import { ISpaceContext } from '@sneat/space-models';
 @Component({
 	selector: 'sneat-contact-modules-menu',
 	templateUrl: 'contact-modules-menu.component.html',
-	imports: [CommonModule, IonicModule],
+	imports: [CommonModule, IonicModule, RouterLink],
 })
 export class ContactModulesMenuComponent {
 	@Input({ required: true }) space?: ISpaceContext;
