@@ -3,12 +3,13 @@
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
-		<ion-title *ngIf="contact; else titleNoContact">{{
-			contact | personTitle
-		}}</ion-title>
-		<ng-template #titleNoContact>
-			<ion-title>Contact</ion-title>
-		</ng-template>
+		<ion-title>
+			@if (contact) {
+				{{ contact | personTitle }}
+			} @else {
+				Contact
+			}
+		</ion-title>
 		<ion-buttons slot="end">
 			<ion-button
 				title="Delete contact"

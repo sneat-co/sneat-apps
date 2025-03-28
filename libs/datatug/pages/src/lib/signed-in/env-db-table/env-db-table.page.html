@@ -89,7 +89,8 @@
 	}
 
 	<ion-card [style]="{display: tab === 'grid' ? 'block' : 'none'}">
-		<ion-item *ngIf="groupByFks?.length">
+		@if (groupByFks?.length) {
+		<ion-item>
 			<ion-label> Group by</ion-label>
 			<ion-select
 				[(ngModel)]="groupByFk"
@@ -111,6 +112,7 @@
 				</ion-button>
 			</ion-buttons>
 		</ion-item>
+		}
 		<ion-card-content style="padding: 0.5em">
 			<sneat-datagrid
 				[data]="grid?.rows"

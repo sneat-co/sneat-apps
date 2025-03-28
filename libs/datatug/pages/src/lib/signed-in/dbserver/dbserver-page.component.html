@@ -6,7 +6,9 @@
 		</ion-buttons>
 		<ion-title>
 			DB server: {{ dbServer?.host }}
-			<span *ngIf="dbServer?.port">{{ dbServer?.port }}</span>
+			@if (dbServer?.port) {
+				<span>{{ dbServer?.port }}</span>
+			}
 		</ion-title>
 	</ion-toolbar>
 </ion-header>

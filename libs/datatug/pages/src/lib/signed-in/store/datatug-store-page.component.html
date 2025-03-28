@@ -4,12 +4,11 @@
 			<ion-menu-button />
 			<ion-back-button defaultHref="/" />
 		</ion-buttons>
-		<ion-title *ngIf="storeId === 'firestore'"
-			>DataTug Projects Cloud Store
-		</ion-title>
-		<ion-title *ngIf="storeId !== 'firestore'"
-			>DataTug projects &#64; {{ storeId }}
-		</ion-title>
+		@if (storeId === "firestore") {
+			<ion-title>DataTug Projects Cloud Store</ion-title>
+		} @else {
+			<ion-title>DataTug projects &#64; {{ storeId }}</ion-title>
+		}
 	</ion-toolbar>
 </ion-header>
 
@@ -28,22 +27,23 @@
 						</ion-button>
 					</ion-buttons>
 				</ion-item-divider>
-				<ng-container [ngSwitch]="authStatus">
-					<ion-item *ngSwitchCase="'authenticating'">
-						<ion-label color="medium">Authenticating...</ion-label>
-					</ion-item>
-					<ion-item *ngSwitchCase="'notAuthenticated'">
-						<ion-label color="medium">Please sign in to see projects</ion-label>
-					</ion-item>
-					<ng-container *ngSwitchCase="'authenticated'">
+				@switch (authStatus) {
+					@case ("authenticating") {
+						<ion-item>
+							<ion-label color="medium">Authenticating...</ion-label>
+						</ion-item>
+					}
+					@case ("notAuthenticated") {
+						<ion-item>
+							<ion-label color="medium"
+								>Please sign in to see projects</ion-label
+							>
+						</ion-item>
+					}
+					@case ("authenticated") {
 						@if (projects) {
-							@if (!projects.length) {
-								<ion-item>
-									<ion-label color="medium">No projects yet</ion-label>
-								</ion-item>
-							} @else {
+							@for (project of projects; track project.id) {
 								<ion-item
-									*ngFor="let project of projects"
 									tappable
 									(click)="goProject(project, $event)"
 									[routerLink]="'project/' + project.id"
@@ -51,6 +51,10 @@
 									<ion-label>
 										<h3>{{ project.title || project.id }}</h3>
 									</ion-label>
+								</ion-item>
+							} @empty {
+								<ion-item>
+									<ion-label color="medium">No projects yet</ion-label>
 								</ion-item>
 							}
 						} @else {
@@ -64,22 +68,24 @@
 								</ion-label>
 							</ion-item>
 						}
-					</ng-container>
-				</ng-container>
+					}
+				}
 			</ion-list>
 		</ion-card>
-		<ion-card *ngIf="agentState?.isNotAvailable">
-			<ion-card-header>
-				<ion-card-title color="warning"
-					>Agent is offline or not available
-				</ion-card-title>
-			</ion-card-header>
-			<ion-card-content>
-				<p>
-					You need to start the DataTug agent to be able to see list of it's
-					projects.
-				</p>
-			</ion-card-content>
-		</ion-card>
+		@if (agentState?.isNotAvailable) {
+			<ion-card>
+				<ion-card-header>
+					<ion-card-title color="warning"
+						>Agent is offline or not available
+					</ion-card-title>
+				</ion-card-header>
+				<ion-card-content>
+					<p>
+						You need to start the DataTug agent to be able to see list of it's
+						projects.
+					</p>
+				</ion-card-content>
+			</ion-card>
+		}
 	}
 </ion-content>
