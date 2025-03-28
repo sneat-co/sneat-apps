@@ -2,6 +2,9 @@
 @let role = $role();
 @let filter = $filter();
 
+Space has {{ $allContacts()?.length }} contacts Space has
+{{ $contacts()?.length }} visible contacts
+
 @if (space.type === "company") {
 	<ion-segment [value]="role" (ionChange)="onRoleChanged($event)">
 		<!--		<ion-segment-button>All</ion-segment-button>-->

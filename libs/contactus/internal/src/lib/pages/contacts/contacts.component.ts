@@ -1,4 +1,5 @@
 import {
+	ChangeDetectionStrategy,
 	Component,
 	computed,
 	EventEmitter,
@@ -34,7 +35,7 @@ import { ISelectItem, SneatBaseComponent } from '@sneat/ui';
 		ContactsListItemComponent,
 		FilterItemComponent,
 	],
-	standalone: true,
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactsComponent extends SneatBaseComponent {
 	public readonly $space = input.required<ISpaceContext>();
@@ -70,6 +71,7 @@ export class ContactsComponent extends SneatBaseComponent {
 	private $contactsByRole = computed<
 		Record<string, readonly IIdAndBrief<IContactBrief>[]>
 	>(() => {
+		console.log('$contactsByRole - started');
 		const contacts = this.$allContacts() || [];
 		const contactsByRole: Record<string, IIdAndBrief<IContactBrief>[]> = {
 			'': [],
@@ -85,6 +87,7 @@ export class ContactsComponent extends SneatBaseComponent {
 				}
 			});
 		});
+		console.log('$contactsByRole complete:', contacts, contactsByRole);
 		return contactsByRole;
 	});
 
@@ -113,6 +116,8 @@ export class ContactsComponent extends SneatBaseComponent {
 			role = this.$role();
 
 		const filter = this.$filter().trim().toLowerCase();
+
+		console.log('$contacts - started', allContacts?.length);
 
 		return !filter && !role
 			? allContacts
