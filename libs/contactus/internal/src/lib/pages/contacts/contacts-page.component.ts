@@ -1,4 +1,9 @@
-import { Component, computed, signal } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	computed,
+	signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { IIdAndBrief, listItemAnimations } from '@sneat/core';
@@ -30,14 +35,11 @@ import { ContactsComponent } from './contacts.component';
 		SpaceServiceModule,
 		ContactsComponent,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactsPageComponent extends SpaceItemsBaseComponent {
 	protected readonly $allContacts = signal<
 		undefined | readonly IIdAndBrief<IContactBrief>[]
-	>(undefined);
-
-	protected readonly $contacts = signal<
-		readonly IIdAndBrief<IContactBrief>[] | undefined
 	>(undefined);
 
 	// public readonly $filter = signal<string>('');
@@ -100,11 +102,6 @@ export class ContactsPageComponent extends SpaceItemsBaseComponent {
 			default:
 				return '📇';
 		}
-	});
-
-	protected $canAdd = computed<boolean>(() => {
-		const role = this.$role();
-		return role !== 'tenant' && role !== 'landlord';
 	});
 
 	private readonly setSpaceContacts = (

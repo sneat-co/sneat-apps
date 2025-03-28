@@ -35,25 +35,23 @@
 					[lines]="isLastRole && isLastContactGroup ? 'none' : 'full'"
 				>
 					<ion-label color="medium"
-						>{{ role.emoji }} {{ role.title }}</ion-label
-					>
+						>{{ role.emoji }} {{ role.title }}
+					</ion-label>
 					<ion-buttons slot="end">
-						<ion-button
-							target="_blank"
-							[href]="'https:' + role.finder"
-							color="medium"
-							*ngIf="role.finder"
-							[title]="'Find at https://' + role.finder"
-							>Find
-						</ion-button>
+						@if (role.finder) {
+							<ion-button
+								target="_blank"
+								[href]="'https:' + role.finder"
+								color="medium"
+								[title]="'Find at https://' + role.finder"
+								>Find
+							</ion-button>
+						}
 						<ion-button
 							color="medium"
 							(click)="addContact($event, contactGroup.id, role.id)"
 							>Add
 						</ion-button>
-						<!--                <ion-button color="medium" (click)="hideRole(role.id)">-->
-						<!--                    <ion-icon name="close"></ion-icon>-->
-						<!--                </ion-button>-->
 					</ion-buttons>
 				</ion-item>
 			}
@@ -61,18 +59,20 @@
 	</ion-item-group>
 }
 
-<ion-item-group *ngIf="otherContacts && otherContacts.length" @listItem>
-	<ion-item-divider color="light">
-		<ion-label>Other</ion-label>
-	</ion-item-divider>
-	@for (contact of contacts || []; track contact.id) {
-		<ion-item-sliding @listItem>
-			<sneat-contacts-list-item
-				[space]="space"
-				[contact]="contact"
-				[goContact]="goContact"
-				[goMember]="goMember"
-			/>
-		</ion-item-sliding>
-	}
-</ion-item-group>
+@if (otherContacts && otherContacts.length) {
+	<ion-item-group @listItem>
+		<ion-item-divider color="light">
+			<ion-label>Other</ion-label>
+		</ion-item-divider>
+		@for (contact of contacts || []; track contact.id) {
+			<ion-item-sliding @listItem>
+				<sneat-contacts-list-item
+					[space]="space"
+					[contact]="contact"
+					[goContact]="goContact"
+					[goMember]="goMember"
+				/>
+			</ion-item-sliding>
+		}
+	</ion-item-group>
+}
