@@ -16,6 +16,7 @@ import {
 	IContactBrief,
 	IMemberGroupContext,
 } from '@sneat/contactus-core';
+import { defaultFamilyContactGroups } from '@sneat/contactus-services';
 import {
 	ContactsByTypeComponent,
 	ContactsListItemComponent,
@@ -63,10 +64,11 @@ export class ContactsComponent extends SneatBaseComponent {
 		readonly IIdAndBrief<IContactBrief>[] | undefined
 	>();
 
-	public groups: readonly IMemberGroupContext[] = [];
+	protected readonly familyGroupDefinitions = defaultFamilyContactGroups;
+
 	public segment: 'list' | 'groups' = 'groups';
 
-	public allContacts?: readonly IIdAndBrief<IContactBrief>[];
+	public groups: readonly IMemberGroupContext[] = [];
 
 	private $contactsByRole = computed<
 		Record<string, readonly IIdAndBrief<IContactBrief>[]>

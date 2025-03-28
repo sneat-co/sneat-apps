@@ -1,13 +1,19 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
-import { IIdAndBrief, listItemAnimations } from '@sneat/core';
-import { eq } from '@sneat/core';
-import { ContactRole, IContactBrief } from '@sneat/contactus-core';
 import {
-	ContactNavService,
-	defaultFamilyContactGroups,
-} from '@sneat/contactus-services';
+	Component,
+	input,
+	Input,
+	OnChanges,
+	SimpleChanges,
+} from '@angular/core';
+import { IonicModule } from '@ionic/angular';
+import { IIdAndBrief, IIdAndDbo, listItemAnimations } from '@sneat/core';
+import { eq } from '@sneat/core';
+import {
+	ContactRole,
+	IContactBrief,
+	IContactGroupDbo,
+} from '@sneat/contactus-core';
+import { ContactNavService } from '@sneat/contactus-services';
 import { ISpaceContext } from '@sneat/space-models';
 import { ContactsListItemComponent } from '../contacts-list';
 import {
@@ -16,14 +22,17 @@ import {
 } from '../../ui-types';
 
 @Component({
-	imports: [CommonModule, IonicModule, ContactsListItemComponent],
-	selector: 'sneat-contacts-family',
+	imports: [IonicModule, ContactsListItemComponent],
+	selector: 'sneat-contacts-by-type',
 	templateUrl: './contacts-by-type.component.html',
 	animations: [listItemAnimations],
 })
 export class ContactsByTypeComponent implements OnChanges {
 	protected otherContacts?: readonly IIdAndBrief<IContactBrief>[];
 	protected contactGroups: readonly IContactGroupWithContacts[] = [];
+
+	public readonly $contactGroupDefinitions =
+		input.required<readonly IIdAndDbo<IContactGroupDbo>[]>();
 
 	//
 	@Input() filter = '';
@@ -74,7 +83,9 @@ export class ContactsByTypeComponent implements OnChanges {
 			: contacts &&
 				contacts.filter((c) => c.brief?.title?.toLowerCase().includes(filter)));
 
-		defaultFamilyContactGroups.forEach((group) => {
+		const contactGroupDefinitions = this.$contactGroupDefinitions();
+
+		contactGroupDefinitions.forEach((group) => {
 			const rolesWithContacts: IContactRoleWithContacts[] = [];
 			group.dbo?.roles?.forEach((role) => {
 				const roleWithContacts: IContactRoleWithContacts = {

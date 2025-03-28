@@ -2,9 +2,6 @@
 @let role = $role();
 @let filter = $filter();
 
-Space has {{ $allContacts()?.length }} contacts Space has
-{{ $contacts()?.length }} visible contacts
-
 @if (space.type === "company") {
 	<ion-segment [value]="role" (ionChange)="onRoleChanged($event)">
 		<!--		<ion-segment-button>All</ion-segment-button>-->
@@ -31,23 +28,32 @@ Space has {{ $allContacts()?.length }} contacts Space has
 <ion-card>
 	<ion-grid class="ion-grid-layout">
 		<ion-row>
-			<ion-col size="12" size-sm="6">
+			<ion-col size="12" size-sm="5">
 				<sneat-filter-item
 					[$filter]="filter"
 					(changed)="onFilterChanged($event)"
 				/>
 			</ion-col>
 			@if ($showTabs()) {
-				<ion-col size="12" size-sm="6">
-					<ion-segment [(ngModel)]="segment">
-						<ion-segment-button value="groups">
-							<ion-label> By type</ion-label>
-						</ion-segment-button>
-
-						<ion-segment-button value="list">
-							<ion-label>List</ion-label>
-						</ion-segment-button>
-					</ion-segment>
+				<ion-col size="12" size-sm="7">
+					<ion-item lines="none" class="ion-no-padding-ion-no-margin">
+						<ion-segment [(ngModel)]="segment">
+							<ion-segment-button value="list">
+								<ion-label>List</ion-label>
+							</ion-segment-button>
+							<ion-segment-button value="groups">
+								<ion-label>By type</ion-label>
+							</ion-segment-button>
+						</ion-segment>
+						@if (segment === "groups") {
+							<ion-buttons slot="end">
+								<ion-button color="tertiary">
+									<ion-icon name="add-outline" slot="start" />
+									<ion-label>Add group</ion-label>
+								</ion-button>
+							</ion-buttons>
+						}
+					</ion-item>
 				</ion-col>
 			}
 		</ion-row>
@@ -78,8 +84,9 @@ Space has {{ $allContacts()?.length }} contacts Space has
 	@if (segment === "groups") {
 		<ion-list>
 			@if (space.type === "family") {
-				<sneat-contacts-family
-					[contacts]="allContacts"
+				<sneat-contacts-by-type
+					[contacts]="$allContacts()"
+					[$contactGroupDefinitions]="familyGroupDefinitions"
 					[space]="space"
 					[filter]="filter"
 					[goContact]="goContact"
