@@ -28,11 +28,11 @@ import { map, Subject, Subscription } from 'rxjs';
 import { BasicContactFormModule } from '../basic-contact-form';
 import { LocationFormComponent } from '../location-form';
 import { NewCompanyFormComponent } from '../new-company-form';
-import { IContactSelectorOptions } from './contact-selector.interfaces';
+import { IContactSelectorOptions } from './contacts-selector.interfaces';
 
 @Component({
-	selector: 'sneat-contact-selector',
-	templateUrl: './contact-selector.component.html',
+	selector: 'sneat-contacts-selector',
+	templateUrl: './contacts-selector.component.html',
 	imports: [
 		IonicModule,
 		FormsModule,
@@ -41,9 +41,10 @@ import { IContactSelectorOptions } from './contact-selector.interfaces';
 		BasicContactFormModule,
 		NewCompanyFormComponent,
 		TitleCasePipe,
+		TitleCasePipe,
 	],
 })
-export class ContactSelectorComponent
+export class ContactsSelectorComponent
 	extends SelectorBaseComponent
 	implements IContactSelectorOptions, OnInit, OnChanges
 {
@@ -56,13 +57,15 @@ export class ContactSelectorComponent
 	@Input() contactIcon = 'business-outline';
 
 	@Input() space: ISpaceContext = { id: '' };
+	@Input() title = 'Contacts selector';
 	@Input() contactRole?: ContactRole;
 	@Input() parentType?: ContactType;
 	@Input() parentRole?: ContactRole;
 	@Input() contactType?: ContactType;
 	@Input() excludeContactIDs?: string[];
 	@Input() excludeParentIDs?: string[];
-	@Input() onSelected?: (items: IContactContext[] | null) => void;
+
+	@Input() onSelected?: (items: IContactContext[] | null) => Promise<void>;
 
 	readonly contactRoles: ISelectItem[] = [
 		{ id: 'agent', title: 'Agent', iconName: 'body-outline' },
@@ -307,6 +310,10 @@ export class ContactSelectorComponent
 		//
 		// }
 		this.close(undefined);
+	}
+
+	protected save(event: Event): void {
+		console.log('ContactSelectComponent.save(event)', event);
 	}
 
 	// protected onContactSelected2(contactID: string): void {

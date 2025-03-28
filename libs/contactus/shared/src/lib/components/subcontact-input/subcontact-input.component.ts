@@ -7,9 +7,9 @@ import {
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
 import {
-	ContactSelectorService,
+	ContactsSelectorService,
 	IContactSelectorOptions,
-} from '../contact-selector';
+} from '../contacts-selector';
 
 @Component({
 	selector: 'sneat-subcontact-input',
@@ -39,7 +39,7 @@ export class SubcontactInputComponent {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly contactSelectorService: ContactSelectorService,
+		private readonly contactSelectorService: ContactsSelectorService,
 	) {}
 
 	get contactLink(): string {

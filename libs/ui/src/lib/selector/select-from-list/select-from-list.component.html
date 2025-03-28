@@ -20,85 +20,117 @@
 			}
 			<!--		<ion-select-option value="other">OTHER</ion-select-option>-->
 		</ion-select>
-		<ion-buttons slot="end" class="ion-no-margin" *ngIf="!isReadonly">
-			<ion-button color="medium" title="Deselect" (click)="deselect()">
-				<ion-icon name="close-outline" />
-			</ion-button>
-		</ion-buttons>
+		@if (!isReadonly) {
+			<ion-buttons slot="end" class="ion-no-margin">
+				<ion-button color="medium" title="Deselect" (click)="deselect()">
+					<ion-icon name="close-outline" />
+				</ion-button>
+			</ion-buttons>
+		}
 	</ion-item>
-}
+} @else {
+	@if (isFilterable) {
+		<ion-item class="sneat-tiny-end-padding">
+			<ion-input
+				#filterInput
+				color="medium"
+				placeholder="filter"
+				[label]="filterLabel"
+				[value]="$filter()"
+				(ionChange)="onFilterChanged($event, 'ionChange')"
+				(ionInput)="onFilterChanged($event, 'ionInput')"
+			/>
+			@if ($filter()) {
+				<ion-buttons slot="end">
+					@if (canAdd && $hiddenCount()) {
+						<ion-button
+							title="Use this"
+							color="primary"
+							(click)="onAdd($event)"
+						>
+							<ion-icon name="add-outline" />
+							<ion-label>Add</ion-label>
+						</ion-button>
+					}
+					<ion-button (click)="clearFilter()" title="Clear filter">
+						<ion-icon name="close-outline" />
+					</ion-button>
+				</ion-buttons>
+			}
+		</ion-item>
+	}
 
-<!--<ion-item *ngIf="isFilterable && !value">-->
-<!--	<ion-input-->
-<!--		[(ngModel)]="filter"-->
-<!--		placeholder="filter"-->
-<!--	></ion-input>-->
-<!--</ion-item>-->
-@if (!value) {
-	<ion-item *ngIf="isFilterable" class="sneat-tiny-end-padding">
-		<!--		<ion-label *ngIf="filterLabel" color="medium">{{filterLabel}}</ion-label>-->
-		<ion-input
-			#filterInput
-			color="medium"
-			placeholder="filter"
-			[(ngModel)]="filter"
-			[label]="filterLabel"
-			(ionInput)="onFilterChanged()"
-		/>
-		<ion-buttons slot="end" *ngIf="!!filter">
-			<ion-button
-				*ngIf="canAdd && hiddenCount"
-				title="Use this"
-				color="primary"
-				(click)="onAdd($event)"
-			>
-				<ion-icon name="add-outline" />
-				<ion-label>Add</ion-label>
-			</ion-button>
-			<ion-button (click)="clearFilter()" title="Clear filter">
-				<ion-icon name="close-outline" />
-			</ion-button>
-		</ion-buttons>
-	</ion-item>
-	<ng-content />
-	<ion-item-divider *ngIf="items && !items?.length">
-		<ion-label>No items yet.</ion-label>
-	</ion-item-divider>
+	@if (items && !items.length) {
+		<ion-item-divider>
+			<ion-label>No items yet.</ion-label>
+		</ion-item-divider>
+	}
+
 	@if (labelPlacement) {
 		<ion-radio-group [(ngModel)]="value" (ionChange)="onRadioChanged($event)">
 			<ion-list class="ion-no-padding" lines="full">
-				<ion-item *ngIf="listLabel === 'divider'" [color]="listLabelColor">
-					<ion-label>{{ label }}</ion-label>
-				</ion-item>
-				@for (item of displayItems; track item.id) {
+				@if (listLabel === "divider") {
+					<ion-item [color]="listLabelColor">
+						<ion-label>{{ label }}</ion-label>
+					</ion-item>
+				}
+				@for (item of $displayItems(); track item.id) {
 					<ion-item
 						[lines]="item.description1 ? 'inset' : 'full'"
 						(click)="select(item)"
 						tappable="true"
 					>
-						<ion-radio
-							[value]="item.id"
-							[labelPlacement]="labelPlacement"
-							[justify]="
-								justify ||
-								(!labelPlacement || labelPlacement === 'start'
-									? 'space-between'
-									: 'start')
-							"
-						>
-							{{ item.emoji }}
-							@if (item.shortTitle) {
-								@if (item.longTitle) {
-									{{ item.longTitle }} - {{ item.shortTitle }}
-								} @else {
-									{{ item.title }} - {{ item.shortTitle }}
-								}
-							} @else if (item.longTitle) {
-								{{ item.longTitle }}
-							} @else {
-								{{ item.title }}
+						@switch (selectMode) {
+							@case ("multiple") {
+								<ion-checkbox
+									slot="start"
+									[value]="item.id"
+									[checked]="false"
+									[disabled]="isDisabled"
+									(ionChange)="onCheckboxChange($event, item)"
+								/>
+								<ion-label>
+									<!-- TODO: duplicate code with the next case -->
+									{{ item.emoji }}
+									@if (item.shortTitle) {
+										@if (item.longTitle) {
+											{{ item.longTitle }} - {{ item.shortTitle }}
+										} @else {
+											{{ item.title }} - {{ item.shortTitle }}
+										}
+									} @else if (item.longTitle) {
+										{{ item.longTitle }}
+									} @else {
+										{{ item.title }}
+									}
+								</ion-label>
 							}
-						</ion-radio>
+							@case ("single") {
+								<ion-radio
+									[value]="item.id"
+									[labelPlacement]="labelPlacement"
+									[justify]="
+										justify ||
+										(!labelPlacement || labelPlacement === 'start'
+											? 'space-between'
+											: 'start')
+									"
+								>
+									{{ item.emoji }}
+									@if (item.shortTitle) {
+										@if (item.longTitle) {
+											{{ item.longTitle }} - {{ item.shortTitle }}
+										} @else {
+											{{ item.title }} - {{ item.shortTitle }}
+										}
+									} @else if (item.longTitle) {
+										{{ item.longTitle }}
+									} @else {
+										{{ item.title }}
+									}
+								</ion-radio>
+							}
+						}
 					</ion-item>
 					@if (item.description1) {
 						<ion-item-divider>
@@ -115,22 +147,25 @@
 		</ion-radio-group>
 	} @else {
 		<ion-item-group>
-			@for (item of displayItems; track item.id) {
+			@for (item of $displayItems(); track item.id) {
 				<ion-item
 					[lines]="item.description1 ? 'inset' : 'full'"
 					button
 					(click)="select(item)"
 				>
-					<ion-icon
-						slot="start"
-						*ngIf="item.iconName"
-						[name]="item.iconName"
-						[color]="item.labelColor || 'medium'"
-					/>
-					<ion-label *ngIf="!labelPlacement" [color]="item.labelColor">
-						<span class="ion-margin-end">{{ item.emoji }}</span>
-						{{ item.title }}
-					</ion-label>
+					@if (item.iconName) {
+						<ion-icon
+							slot="start"
+							[name]="item.iconName"
+							[color]="item.labelColor || 'medium'"
+						/>
+					}
+					@if (!labelPlacement) {
+						<ion-label [color]="item.labelColor">
+							<span class="ion-margin-end">{{ item.emoji }}</span>
+							{{ item.title }}
+						</ion-label>
+					}
 				</ion-item>
 				@if (item.description1) {
 					<ion-item-divider>
@@ -145,15 +180,17 @@
 			}
 		</ion-item-group>
 	}
-	<ion-item-divider *ngIf="hiddenCount">
-		<ion-label color="medium"
-			>{{ hiddenCount }} out of {{ items?.length }} items are hidden by filter
-		</ion-label>
-		<ion-buttons slot="end">
-			<ion-button (click)="clearFilter()">
-				<ion-icon name="close-outline" slot="start" />
-				<ion-label>Clear filter</ion-label>
-			</ion-button>
-		</ion-buttons>
-	</ion-item-divider>
+	@if ($hiddenCount(); as hiddenCount) {
+		<ion-item-divider>
+			<ion-label color="medium"
+				>{{ hiddenCount }} out of {{ items?.length }} items are hidden by filter
+			</ion-label>
+			<ion-buttons slot="end">
+				<ion-button (click)="clearFilter()">
+					<ion-icon name="close-outline" slot="start" />
+					<ion-label>Clear filter</ion-label>
+				</ion-button>
+			</ion-buttons>
+		</ion-item-divider>
+	}
 }

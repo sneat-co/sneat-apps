@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { CountryFlagPipe } from '@sneat/components';
-import { ContactSelectorServiceModule } from '@sneat/contactus-shared';
+import { ContactsSelectorModule } from '@sneat/contactus-shared';
 import { DataGridComponent } from '@sneat/datagrid';
 import { FreightLoadFormModule } from '../freight-load-form/freight-load-form.module';
 import { ContainerPointComponent } from './container-point.component';
@@ -21,7 +21,7 @@ import { DispatcherComponent } from './dispatcher.component';
 		ReactiveFormsModule,
 		FreightLoadFormModule,
 		DataGridComponent,
-		ContactSelectorServiceModule,
+		ContactsSelectorModule,
 		CountryFlagPipe,
 	],
 	declarations: [

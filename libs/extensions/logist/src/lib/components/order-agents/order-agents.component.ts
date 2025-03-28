@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import {
-	ContactSelectorService,
+	ContactsSelectorService,
 	IContactSelectorOptions,
 } from '@sneat/contactus-shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -93,7 +93,7 @@ export class AgentRoleMenuComponent {
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		protected readonly popoverController: PopoverController,
-		private readonly contactSelectorService: ContactSelectorService,
+		private readonly contactSelectorService: ContactsSelectorService,
 	) {}
 
 	protected openContactSelector(event: Event, role: CounterpartyRole): void {

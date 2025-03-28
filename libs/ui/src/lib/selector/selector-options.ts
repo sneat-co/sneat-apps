@@ -1,12 +1,17 @@
 import { ComponentProps } from '@ionic/core';
 import { Observable } from 'rxjs';
 
-export interface ISelectorOptions<T> {
+export interface ISelectorEvents<T> {
+	readonly onSelected?: (item: T[] | null) => Promise<void>;
+	readonly onAdded?: (item: T) => Observable<void>;
+	readonly onRemoved?: (item: T) => Observable<void>;
+}
+
+export interface ISelectorOptions<T> extends ISelectorEvents<T> {
 	readonly items?: Observable<T[]>;
 	readonly selectedItems?: T[];
 	readonly max?: number;
-	readonly onSelected?: (item: T[] | null) => void;
-	readonly onAdded?: (item: T) => Observable<void>;
-	readonly onRemoved?: (item: T) => Observable<void>;
+	readonly title?: string;
+
 	componentProps?: ComponentProps<unknown>;
 }

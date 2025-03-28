@@ -3,7 +3,7 @@
 		@if (contactRole) {
 			{{ contactRole | titlecase }} selector
 		} @else {
-			Contact selector
+			{{ title }}
 		}
 	</ion-label>
 	<ion-buttons slot="end">
@@ -78,37 +78,37 @@
 					<ion-segment-button value="new">New</ion-segment-button>
 				</ion-segment>
 			}
-			@if (
-				contactTab === "existing" &&
-				selectedParent &&
-				contacts &&
-				!contacts.length
-			) {
-				<p class="ion-padding">
-					<ion-text color="medium">No locations for selected contact</ion-text>
-				</p>
-			}
-			@if (contactTab === "existing") {
-				<sneat-select-from-list
-					[label]="''"
-					[items]="contactItems"
-					[(ngModel)]="selectedSubContactID"
-					(ngModelChange)="onContactSelected($event)"
-					[isFilterable]="true"
-					labelPlacement="start"
-				/>
-			}
-			@if (contactTab === "new") {
-				@if (contactType === "location") {
-					<sneat-location-form
-						contactType="location"
-						[contactRole]="contactRole"
-						[space]="space"
-						[parentContact]="selectedParent"
-						(contactCreated)="onLocationCreated($event)"
+
+			@switch (contactTab) {
+				@case ("existing") {
+					@if (selectedParent && contacts && !contacts.length) {
+						<p class="ion-padding">
+							<ion-text color="medium"
+								>No locations for selected contact</ion-text
+							>
+						</p>
+					}
+					<sneat-select-from-list
+						[selectMode]="'multiple'"
+						label=""
+						labelPlacement="start"
+						[items]="contactItems"
+						[(ngModel)]="selectedSubContactID"
+						(ngModelChange)="onContactSelected($event)"
+						[isFilterable]="true"
 					/>
-				} @else {
+				}
+				@case ("new") {
 					@switch (contactType) {
+						@case ("location") {
+							<sneat-location-form
+								contactType="location"
+								[contactRole]="contactRole"
+								[space]="space"
+								[parentContact]="selectedParent"
+								(contactCreated)="onLocationCreated($event)"
+							/>
+						}
 						@case ("company") {
 							<sneat-new-company-form
 								[space]="space"
@@ -134,6 +134,14 @@
 					}
 				}
 			}
+		</ion-card>
+	}
+
+	@if (selectMode === "multiple") {
+		<ion-card>
+			<ion-card-content>
+				<ion-button (click)="save($event)">Save</ion-button>
+			</ion-card-content>
 		</ion-card>
 	}
 </ion-content>

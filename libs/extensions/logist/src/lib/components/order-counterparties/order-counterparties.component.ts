@@ -13,7 +13,7 @@ import {
 	LogistOrderContactRole,
 } from '@sneat/contactus-core';
 import {
-	ContactSelectorService,
+	ContactsSelectorService,
 	IContactSelectorOptions,
 } from '@sneat/contactus-shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -58,7 +58,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly contactSelectorService: ContactSelectorService,
+		private readonly contactSelectorService: ContactsSelectorService,
 		private readonly ordersService: LogistOrderService,
 	) {}
 

@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { ModalController, ModalOptions } from '@ionic/angular';
-import type { ComponentRef } from '@ionic/core';
+import type { ComponentProps, ComponentRef } from '@ionic/core';
 import { ErrorLogger } from '@sneat/logging';
 import { ISelectItem } from './selector-interfaces';
 import { ISelectorOptions } from './selector-options';
@@ -29,24 +29,31 @@ export abstract class SelectorBaseService<T = ISelectItem> {
 			if (!options.onSelected) {
 				options = {
 					...options,
-					onSelected: (items: T[] | null): void => {
-						this.modalController.dismiss(items).catch((err) => {
-							this.errorLogger.logError(err, 'Failed to dismiss modal');
-							reject(err);
+					onSelected: (items: T[] | null): Promise<void> => {
+						return new Promise((resolve2, reject2) => {
+							this.modalController.dismiss(items).catch((err) => {
+								this.errorLogger.logError(err, 'Failed to dismiss modal');
+								reject2(err);
+								reject(err);
+							});
+							resolve2();
+							resolve(items);
 						});
-						resolve(items);
 					},
 				};
 			}
+			let componentProps: ComponentProps<unknown> = {
+				...options.componentProps,
+				selectMode: 'multiple',
+				onSelected: options.onSelected,
+				mode: 'modal',
+			};
+			if (options.title) {
+				componentProps = { ...componentProps, title: options.title };
+			}
 			const modalOptions: ModalOptions = {
 				component: this.component,
-				componentProps: {
-					// ...options,
-					...options.componentProps,
-					selectMode: 'multiple',
-					onSelected: options.onSelected,
-					mode: 'modal',
-				},
+				componentProps: componentProps,
 				keyboardClose: true,
 			};
 			this.modalController

@@ -22,20 +22,15 @@ import {
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
 import {
-	ContactSelectorService,
-	ContactSelectorServiceModule,
+	ContactsSelectorService,
+	ContactsSelectorModule,
 	IContactSelectorOptions,
-} from '../contact-selector';
+} from '../contacts-selector';
 
 @Component({
 	selector: 'sneat-contact-input',
 	templateUrl: './contact-input.component.html',
-	imports: [
-		CommonModule,
-		IonicModule,
-		RouterModule,
-		ContactSelectorServiceModule,
-	],
+	imports: [CommonModule, IonicModule, RouterModule, ContactsSelectorModule],
 })
 export class ContactInputComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;
@@ -80,7 +75,7 @@ export class ContactInputComponent implements OnChanges {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly contactSelectorService: ContactSelectorService,
+		private readonly contactSelectorService: ContactsSelectorService,
 	) {}
 
 	protected parentTitle(): string {

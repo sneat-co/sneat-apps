@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import {
+	ChangeDetectionStrategy,
 	Component,
+	computed,
 	EventEmitter,
 	forwardRef,
 	Inject,
@@ -8,6 +10,7 @@ import {
 	OnChanges,
 	OnDestroy,
 	Output,
+	signal,
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
@@ -32,7 +35,8 @@ import { ISelectItem } from '../selector-interfaces';
 			multi: true,
 		},
 	],
-	imports: [CommonModule, IonicModule, FormsModule, RouterModule],
+	imports: [IonicModule, FormsModule, RouterModule],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectFromListComponent
 	implements ControlValueAccessor, OnChanges, OnDestroy
@@ -53,6 +57,8 @@ export class SelectFromListComponent
 	@Input() isLoading?: boolean;
 	@Input() items?: readonly ISelectItem[];
 	@Input() items$: Observable<ISelectItem[]> = NEVER;
+	private $items = signal<undefined | readonly ISelectItem[]>(undefined);
+
 	@Input() labelPlacement?: 'start' | 'end' | 'fixed' | 'stacked';
 	@Input() justify?: 'start' | 'end' | 'space-between';
 	@Input() other: 'top' | 'bottom' | 'none' = 'none';
@@ -60,6 +66,8 @@ export class SelectFromListComponent
 	@Input() filterItem?: (item: ISelectItem, filter: string) => boolean;
 
 	@Output() readonly filterChanged = new EventEmitter<string>();
+
+	@Input() selectMode: 'single' | 'multiple' = 'single';
 
 	@Input() isReadonly = false;
 
@@ -72,12 +80,17 @@ export class SelectFromListComponent
 	@ViewChild('filterInput', { static: false }) filterInput?: IonInput;
 	@ViewChild('selectInput', { static: false }) selectInput?: IonSelect;
 
-	protected displayItems?: readonly ISelectItem[];
-	protected hiddenCount = 0;
+	protected readonly $displayItems = signal<undefined | readonly ISelectItem[]>(
+		undefined,
+	);
+
+	protected readonly $hiddenCount = computed(() => {
+		return (this.$items()?.length || 0) - (this.$displayItems()?.length || 0);
+	});
 
 	protected isDisabled = false;
 
-	protected filter = '';
+	protected readonly $filter = signal('');
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
@@ -102,39 +115,49 @@ export class SelectFromListComponent
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['items']) {
+			this.$items.set(this.items);
 			this.applyFilter();
 		}
 		if (changes['items$'] && this.items$) {
 			this.items$?.pipe(takeUntil(this.destroyed)).subscribe((items) => {
-				this.items = items;
+				this.$items.set(items);
 				this.applyFilter();
 			});
 		}
 	}
 
 	private applyFilter(): void {
-		const f = this.filter.trim().toLowerCase();
+		const f = this.$filter().trim().toLowerCase();
 		// console.log('SelectFromListComponent.applyFilter', f);
-		this.displayItems = f
-			? this.items?.filter(
-					(v) =>
-						v.title.toLowerCase().includes(f) ||
-						v.longTitle?.toLowerCase().includes(f) ||
-						(this.filterItem && this.filterItem(v, f)),
-				)
-			: this.items;
-		this.hiddenCount =
-			(this.items?.length || 0) - (this.displayItems?.length || 0);
+		const items = this.$items();
+		this.$displayItems.set(
+			f
+				? items?.filter(
+						(v) =>
+							v.title.toLowerCase().includes(f) ||
+							v.longTitle?.toLowerCase().includes(f) ||
+							(this.filterItem && this.filterItem(v, f)),
+					)
+				: items,
+		);
 	}
 
 	protected select(item: ISelectItem): void {
 		console.log('SelectFromListComponent.select()', item);
-		this.value = item.id;
-		this.onChange(this.value);
-		this.clearFilter();
+		switch (this.selectMode) {
+			case 'multiple':
+				return;
+			case 'single':
+				this.value = item.id;
+				this.onChange(this.value);
+				this.clearFilter();
+		}
 	}
 
 	protected onRadioChanged(event: Event): void {
+		if (this.selectMode !== 'single') {
+			return;
+		}
 		this.value = (event as CustomEvent).detail['value'] as string;
 		this.onChange(this.value);
 		this.clearFilter();
@@ -170,15 +193,22 @@ export class SelectFromListComponent
 		this.value = obj as string;
 	}
 
-	protected onFilterChanged(): void {
-		console.log('SelectFromListComponent.onFilterChanged()', this.filter);
+	protected onFilterChanged(
+		event: CustomEvent,
+		source: 'ionChange' | 'ionInput',
+	): void {
+		console.log(
+			`SelectFromListComponent.onFilterChanged(source=${source})`,
+			event,
+		);
+		this.$filter.set(event.detail.value || '');
 		this.applyFilter();
-		this.filterChanged.emit(this.filter);
+		this.filterChanged.emit(this.$filter());
 	}
 
 	protected clearFilter(): void {
-		this.filter = '';
-		this.filterChanged.emit(this.filter);
+		this.$filter.set('');
+		this.filterChanged.emit(this.$filter());
 		this.applyFilter();
 	}
 
@@ -189,8 +219,12 @@ export class SelectFromListComponent
 
 	protected onAdd(event: Event): void {
 		event.preventDefault();
-		this.value = this.filter;
+		this.value = this.$filter();
 		this.onChange(this.value);
+	}
+
+	protected onCheckboxChange(event: CustomEvent, item: ISelectItem): void {
+		console.log('SelectFromListComponent.onCheckboxChange()', event, item);
 	}
 
 	ngOnDestroy(): void {

@@ -1,10 +1,10 @@
-import { Directive, input } from '@angular/core';
+import { Directive, Input } from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { SneatBaseComponent } from '../components/sneat-base.component';
 
 @Directive()
 export abstract class SelectorBaseComponent extends SneatBaseComponent {
-	public readonly selectMode = input<'single' | 'multiple'>();
+	@Input() public selectMode?: 'single' | 'multiple';
 
 	protected constructor(
 		className: string,

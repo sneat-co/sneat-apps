@@ -5,14 +5,13 @@ import {
 	EventEmitter,
 	inject,
 	input,
-	OnChanges,
 	Output,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import {
 	ContactsChecklistComponent,
-	ContactSelectorService,
-	ContactSelectorServiceModule,
+	ContactsSelectorService,
+	ContactsSelectorModule,
 	ICheckChangedArgs,
 } from '@sneat/contactus-shared';
 import { AnalyticsService } from '@sneat/core';
@@ -22,6 +21,7 @@ import {
 	removeRelatedItem,
 } from '@sneat/dto';
 import { IHappeningContext, IHappeningBase } from '@sneat/mod-schedulus-core';
+import { delay } from 'rxjs';
 import {
 	HappeningService,
 	IHappeningContactRequest,
@@ -31,11 +31,7 @@ import {
 @Component({
 	selector: 'sneat-happening-participants',
 	templateUrl: 'happening-participants.component.html',
-	imports: [
-		IonicModule,
-		ContactsChecklistComponent,
-		ContactSelectorServiceModule,
-	],
+	imports: [IonicModule, ContactsChecklistComponent, ContactsSelectorModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HappeningParticipantsComponent {
@@ -59,7 +55,7 @@ export class HappeningParticipantsComponent {
 		);
 	});
 
-	private readonly contactSelectorService = inject(ContactSelectorService);
+	private readonly contactSelectorService = inject(ContactsSelectorService);
 
 	private readonly analytics = inject(AnalyticsService);
 
@@ -147,47 +143,62 @@ export class HappeningParticipantsComponent {
 		const happeningID = this.$happening().id;
 		this.contactSelectorService
 			.selectMultipleInModal({
+				title: 'Add participants',
 				selectedItems: [],
 				componentProps: {
 					space: this.$space(),
 				},
+				onSelected: (selectedContacts): Promise<void> => {
+					console.log(
+						`${selectedContacts?.length || 0} contacts select by user to be added as participants`,
+					);
+					return new Promise((resolve, reject) => {
+						const existingContactIDs = this.$relatedContactIDs();
+						const contactsToAdd = selectedContacts?.filter(
+							(c) => !existingContactIDs.includes(c.id),
+						);
+						if (contactsToAdd?.length) {
+							const request: IHappeningContactsRequest = {
+								spaceID,
+								happeningID,
+								contacts: contactsToAdd.map((c) => ({
+									id: c.id,
+								})),
+							};
+							this.happeningService
+								.addParticipants(request)
+								.pipe(delay(3000))
+								.subscribe({
+									error: (err) => reject(err),
+									next: () => {
+										console.log(
+											`${contactsToAdd.length} contacts added as participants (api call completed)`,
+										);
+										const args: readonly ICheckChangedArgs[] =
+											request.contacts.map((c) => ({
+												event,
+												id: c.id,
+												checked: true,
+												resolve,
+												reject,
+											}));
+										this.addRemoveRelated(args);
+										resolve();
+									},
+								});
+						} else {
+							console.log('selected contacts already added as participants');
+						}
+					});
+				},
 			})
 			.then((selectedContacts) => {
 				console.log(
-					`${selectedContacts?.length || 0} contacts select by user to be added as participants`,
+					`${selectedContacts?.length || 0} contacts added added as participants`,
 				);
-				const existingContactIDs = this.$relatedContactIDs();
-				const contactsToAdd = selectedContacts?.filter(
-					(c) => !existingContactIDs.includes(c.id),
+				alert(
+					`${selectedContacts?.length || 0} contacts added added as participants`,
 				);
-				if (contactsToAdd?.length) {
-					const request: IHappeningContactsRequest = {
-						spaceID,
-						happeningID,
-						contacts: contactsToAdd.map((c) => ({
-							id: c.id,
-						})),
-					};
-					this.happeningService.addParticipants(request).subscribe({
-						next: () => {
-							console.log(
-								`${contactsToAdd.length} contacts added as participants`,
-							);
-							const args: readonly ICheckChangedArgs[] = request.contacts.map(
-								(c) => ({
-									event,
-									id: c.id,
-									checked: true,
-									resolve: () => void 0,
-									reject: () => void 0,
-								}),
-							);
-							this.addRemoveRelated(args);
-						},
-					});
-				} else {
-					console.log('selected contacts already added as participants');
-				}
 			})
 			.catch((err) => alert(err));
 	}

@@ -6,7 +6,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ContactSelectorService } from '@sneat/contactus-shared';
+import { ContactsSelectorService } from '@sneat/contactus-shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	getSegmentCounterparty,
@@ -60,7 +60,7 @@ export class ContainerPointComponent implements OnChanges {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly contactSelectorService: ContactSelectorService,
+		private readonly contactSelectorService: ContactsSelectorService,
 		private readonly ordersService: LogistOrderService,
 	) {}
 
