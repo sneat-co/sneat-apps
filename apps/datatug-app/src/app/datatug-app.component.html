@@ -9,12 +9,12 @@
 				</ion-toolbar>
 			</ion-header>
 			<ion-content color="light">
-				<ng-container *ngIf="menu">
+				@if (menu) {
 					<ng-template
 						[ngComponentOutlet]="menu | async"
 						[ngComponentOutletInjector]="menuInjector"
 					/>
-				</ng-container>
+				}
 			</ion-content>
 		</ion-menu>
 		<ion-router-outlet id="main-content" />

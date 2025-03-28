@@ -1,7 +1,5 @@
 <ion-list lines="none">
-	<ng-container
-		*ngIf="space && retrospective?.dbo?.stage === 'upcoming'; else notUpcoming"
-	>
+	@if (space && retrospective?.dbo?.stage === "upcoming") {
 		<ion-row class="ion-no-padding ion-no-margin">
 			<ion-col size="11" size-md="3" class="ion-no-margin ion-no-padding">
 				<ion-item>
@@ -49,50 +47,46 @@
 				</ion-item>
 			</ion-col>
 		</ion-row>
-	</ng-container>
-	<ng-template #notUpcoming>
+	} @else {
 		<ion-item>
 			<ion-buttons slot="start">
-				<ion-button
-					color="primary"
-					(click)="pauseRetro()"
-					[disabled]="!timer"
-					*ngIf="
-						retrospective?.dbo &&
-						retrospective?.dbo?.stage !== 'upcoming' &&
-						retrospective?.dbo?.timer?.status !== 'stopped'
-					"
-				>
-					<ion-icon name="pause-circle-outline" slot="start" />
-					<ion-label>Pause</ion-label>
-				</ion-button>
-				<ion-button
-					color="primary"
-					(click)="startRetro()"
-					[disabled]="!timer"
-					*ngIf="
-						retrospective?.dbo &&
-						retrospective?.dbo?.stage !== 'upcoming' &&
-						retrospective?.dbo?.timer?.status === 'stopped'
-					"
-				>
-					<ion-icon name="play-outline" slot="start" />
-					<ion-label>Resume</ion-label>
-				</ion-button>
+				@if (
+					retrospective?.dbo &&
+					retrospective?.dbo?.stage !== "upcoming" &&
+					retrospective?.dbo?.timer?.status !== "stopped"
+				) {
+					<ion-button
+						color="primary"
+						(click)="pauseRetro()"
+						[disabled]="!timer"
+					>
+						<ion-icon name="pause-circle-outline" slot="start" />
+						<ion-label>Pause</ion-label>
+					</ion-button>
+				}
+				@if (
+					retrospective?.dbo &&
+					retrospective?.dbo?.stage !== "upcoming" &&
+					retrospective?.dbo?.timer?.status === "stopped"
+				) {
+					<ion-button
+						color="primary"
+						(click)="startRetro()"
+						[disabled]="!timer"
+					>
+						<ion-icon name="play-outline" slot="start" />
+						<ion-label>Resume</ion-label>
+					</ion-button>
+				}
 			</ion-buttons>
 			<ion-label>
-				<ng-container
-					*ngIf="retrospective?.dbo?.stage === 'upcoming'; else notUpcoming"
-				>
+				@if (retrospective?.dbo?.stage === "upcoming") {
 					Start retrospective to activate timer
-				</ng-container>
-				<ng-template #notUpcoming>
-					<ng-container>
-						<b>Stage</b>: Gather feedback &mdash;
-						<i>ends in {{ minutesLeft }} min {{ secondsLeft }} sec</i>
-						{{ totalElapsed }}
-					</ng-container>
-				</ng-template>
+				} @else {
+					<b>Stage</b>: Gather feedback &mdash;
+					<i>ends in {{ minutesLeft }} min {{ secondsLeft }} sec</i>
+					{{ totalElapsed }}
+				}
 			</ion-label>
 			<ion-buttons>
 				<ion-button color="tertiary">
@@ -100,5 +94,5 @@
 				</ion-button>
 			</ion-buttons>
 		</ion-item>
-	</ng-template>
+	}
 </ion-list>

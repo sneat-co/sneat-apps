@@ -3,28 +3,25 @@
 	(click)="toggleTimer($event)"
 	[disabled]="isDisabled"
 >
-	<ion-spinner
-		name="lines-small"
-		*ngIf="
-			(timerState?.isToggling && timerState?.activeMemberId === memberID) ||
-			!timerState
-		"
-	/>
-	<ng-container
-		*ngIf="
-			timerState &&
-			(!timerState.status ||
-				timerState.status === 'stopped' ||
-				timerState.activeMemberId !== memberID)
-		"
-	>
-		<ion-icon
-			slot="start"
-			name="play-outline"
-			*ngIf="!timerState?.isToggling"
-		/>
-		<ion-label *ngIf="!totalElapsed">Start</ion-label>
-	</ng-container>
+	@if (
+		(timerState?.isToggling && timerState?.activeMemberId === memberID) ||
+		!timerState
+	) {
+		<ion-spinner name="lines-small" />
+	}
+	@if (
+		timerState &&
+		(!timerState.status ||
+			timerState.status === "stopped" ||
+			timerState.activeMemberId !== memberID)
+	) {
+		@if (!timerState?.isToggling) {
+			<ion-icon slot="start" name="play-outline" />
+		}
+		@if (!totalElapsed) {
+			<ion-label>Start</ion-label>
+		}
+	}
 	<ion-icon
 		name="pause-outline"
 		*ngIf="
