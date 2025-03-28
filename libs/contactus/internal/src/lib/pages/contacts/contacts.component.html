@@ -1,0 +1,102 @@
+@let space = $space();
+@let role = $role();
+@let filter = $filter();
+
+@if (space.type === "company") {
+	<ion-segment [value]="role" (ionChange)="onRoleChanged($event)">
+		<!--		<ion-segment-button>All</ion-segment-button>-->
+		@for (r of roles; track r.id) {
+			<ion-segment-button [value]="r.id">
+				@if (r.iconName) {
+					<ion-icon [name]="r.iconName" />
+				}
+				<ion-label style="font-size: smaller"
+					>{{ r.title }}
+					<ion-badge color="light">
+						<ion-label
+							color="medium"
+							style="font-size: smaller; font-weight: normal"
+							>{{ contactsNumber(r.id) }}
+						</ion-label>
+					</ion-badge>
+				</ion-label>
+			</ion-segment-button>
+		}
+	</ion-segment>
+}
+
+<ion-card>
+	<ion-grid class="ion-grid-layout">
+		<ion-row>
+			<ion-col size="12" size-sm="6">
+				<sneat-filter-item
+					[$filter]="filter"
+					(changed)="onFilterChanged($event)"
+				/>
+			</ion-col>
+			@if ($showTabs()) {
+				<ion-col size="12" size-sm="6">
+					<ion-segment [(ngModel)]="segment">
+						<ion-segment-button value="groups">
+							<ion-label> By type</ion-label>
+						</ion-segment-button>
+
+						<ion-segment-button value="list">
+							<ion-label>List</ion-label>
+						</ion-segment-button>
+					</ion-segment>
+				</ion-col>
+			}
+		</ion-row>
+	</ion-grid>
+
+	@if (segment === "list" || space.type !== "family") {
+		<ion-list>
+			@for (contact of $contacts(); track contact.id) {
+				<ion-item-sliding @listItem>
+					<sneat-contacts-list-item
+						[space]="space"
+						[contact]="contact"
+						[goContact]="goContact"
+						[goMember]="goMember"
+						[excludeRole]="$role()"
+					/>
+				</ion-item-sliding>
+			}
+			@if ($canAdd()) {
+				<ion-item button (click)="goNewContact()">
+					<ion-icon name="add" color="primary" />
+					<ion-label color="primary">Add contact</ion-label>
+				</ion-item>
+			}
+		</ion-list>
+	}
+
+	@if (segment === "groups") {
+		<ion-list>
+			@if (space.type === "family") {
+				<sneat-contacts-family
+					[contacts]="allContacts"
+					[space]="space"
+					[filter]="filter"
+					[goContact]="goContact"
+					[goMember]="goMember"
+				/>
+			}
+			@if (groups) {
+				@for (group of groups; track group.id) {
+					<ion-item (click)="goGroup(group)" tappable>
+						<ion-label>
+							{{ group.brief?.title }}
+						</ion-label>
+						@if (group.dbo?.numberOf?.members) {
+							<ion-badge color="light">
+								{{ group.dbo?.numberOf?.members }}
+							</ion-badge>
+						}
+					</ion-item>
+				}
+			}
+		</ion-list>
+	}
+</ion-card>

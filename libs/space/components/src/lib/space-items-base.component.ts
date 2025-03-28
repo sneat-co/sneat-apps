@@ -1,4 +1,3 @@
-import { signal } from '@angular/core';
 import { SpaceBaseComponent } from './space-base-component.directive';
 
 export abstract class SpaceItemsBaseComponent extends SpaceBaseComponent {
@@ -8,8 +7,6 @@ export abstract class SpaceItemsBaseComponent extends SpaceBaseComponent {
 	) {
 		super(className);
 	}
-
-	protected readonly $filter = signal<string>('');
 
 	override get defaultBackUrl(): string {
 		const url = super.defaultBackUrl;

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { FilterItemComponent } from '@sneat/components';
@@ -46,6 +46,8 @@ export class DocumentsPageComponent extends SpaceItemsBaseComponent {
 
 	public documents: IAssetDocumentContext[];
 	public rootDocs?: IAssetDocumentContext[];
+
+	protected $filter = signal<string>('');
 
 	constructor(private assetService: AssetService) {
 		super('DocumentsPageComponent', '');
