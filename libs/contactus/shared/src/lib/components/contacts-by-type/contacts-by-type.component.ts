@@ -174,7 +174,9 @@ export class ContactsByTypeComponent
 				this.$contactGroups.update((v) => [...v, groupWithContacts]);
 			}
 		});
-		this.$otherContacts.set(otherContacts);
+		if (otherContacts.length || this.$otherContacts().length) {
+			this.$otherContacts.set(otherContacts);
+		}
 		// console.log(
 		// 	'ContactsByTypeComponent.setContactGroups()',
 		// 	this.$space(),
