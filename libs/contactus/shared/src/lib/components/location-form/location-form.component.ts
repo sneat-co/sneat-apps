@@ -33,7 +33,7 @@ import {
 	ContactType,
 	IAddress,
 	IContactBrief,
-	IContactDto,
+	IContactDbo,
 	IContactContext,
 	ICreateContactRequest,
 } from '@sneat/contactus-core';
@@ -127,7 +127,7 @@ export class LocationFormComponent implements OnChanges {
 			};
 		}
 		const title = this.title.value || '';
-		const dbo = (this.contact?.dbo || {}) as IContactDto;
+		const dbo = (this.contact?.dbo || {}) as IContactDbo;
 		this.contact = {
 			...this.contact,
 			dbo: { ...dbo, title },

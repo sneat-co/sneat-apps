@@ -16,7 +16,7 @@ import {
 	ContactRole,
 	ContactType,
 	IContactBrief,
-	IContactDto,
+	IContactDbo,
 	IContactContext,
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -88,7 +88,7 @@ export class ContactInputComponent implements OnChanges {
 
 	private getTitle(
 		showFlag: boolean,
-		contact?: IIdAndOptionalBriefAndOptionalDbo<IContactBrief, IContactDto>,
+		contact?: IIdAndOptionalBriefAndOptionalDbo<IContactBrief, IContactDbo>,
 	): string {
 		if (!contact) {
 			return '';

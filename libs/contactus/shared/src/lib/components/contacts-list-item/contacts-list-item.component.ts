@@ -1,4 +1,13 @@
-import { Component, Inject, Input } from '@angular/core';
+import { TitleCasePipe } from '@angular/common';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	EventEmitter,
+	Inject,
+	input,
+	Input,
+	Output,
+} from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import {
 	CountryFlagPipe,
@@ -7,12 +16,13 @@ import {
 	PersonTitle,
 } from '@sneat/components';
 import { IIdAndBrief, IIdAndBriefAndOptionalDbo } from '@sneat/core';
-import { ContactRole, IContactBrief, IContactDto } from '@sneat/contactus-core';
+import { ContactRole, IContactBrief, IContactDbo } from '@sneat/contactus-core';
 import { IRelatedItem, IRelationshipRoles } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
 import { ISpaceContext } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
+import { ICheckChangedArgs } from '../contacts-checklist';
 
 @Component({
 	selector: 'sneat-contacts-list-item',
@@ -24,17 +34,18 @@ import { SpaceNavService } from '@sneat/space-services';
 		CountryFlagPipe,
 		GenderIconNamePipe,
 		PersonTitle,
+		TitleCasePipe,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactsListItemComponent {
-	@Input({ required: true }) space?: ISpaceContext;
-	@Input({ required: true }) contact?: IIdAndBriefAndOptionalDbo<
-		IContactBrief,
-		IContactDto
-	>;
+	public readonly $contact =
+		input.required<IIdAndBriefAndOptionalDbo<IContactBrief, IContactDbo>>();
+	public readonly $space = input.required<ISpaceContext>();
+
 	@Input() excludeRole?: ContactRole;
 	@Input() showAddress = false;
-	@Input() showBorder = true;
+	@Input() showBorder: undefined | 'full' | 'inset' | 'none' = undefined;
 	@Input() hideRoles: string[] = [
 		'--',
 		'creator',
@@ -43,8 +54,18 @@ export class ContactsListItemComponent {
 		'space_member',
 	];
 
-	checkboxClicked(event: Event): void {
+	@Output() public readonly checkChange = new EventEmitter<ICheckChangedArgs>();
+
+	protected checkboxChanged(event: CustomEvent): void {
 		event.stopPropagation();
+		const args: ICheckChangedArgs = {
+			event,
+			id: this.$contact().id,
+			checked: !!event.detail.checked,
+			resolve: () => void 0,
+			reject: () => void 0,
+		};
+		this.checkChange.emit(args);
 	}
 
 	protected get relatedContacts(): readonly IIdAndBrief<IRelatedItem>[] {
@@ -66,12 +87,8 @@ export class ContactsListItemComponent {
 			this.errorLogger.logError('no contact');
 			return;
 		}
-		if (!this.space) {
-			this.errorLogger.logError('no space');
-			return;
-		}
 		this.spaceNavService
-			.navigateForwardToSpacePage(this.space, `contact/${contact.id}`, {
+			.navigateForwardToSpacePage(this.$space(), `contact/${contact.id}`, {
 				state: { contact },
 			})
 			.catch(
@@ -91,15 +108,17 @@ export class ContactsListItemComponent {
 
 	archiveContact(): void {
 		console.log('ContactListItemComponent.removeContact()');
-		if (!this.space) {
+		const space = this.$space();
+		if (!space.id) {
 			return;
 		}
-		if (this.contact?.id) {
+		const contact = this.$contact();
+		if (contact?.id) {
 			this.contactService
 				.setContactsStatus({
 					status: 'archived',
-					spaceID: this.space.id,
-					contactIDs: [this.contact.id],
+					spaceID: space.id,
+					contactIDs: [contact.id],
 				})
 				.subscribe({
 					next: () => {

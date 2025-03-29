@@ -4,56 +4,58 @@
 	let isLastContactGroup = $last
 ) {
 	<ion-item-group @listItem>
-		<ion-item-divider color="light">
+		<ion-item color="light" lines="full" class="sneat-tiny-end-padding">
 			<ion-label>{{ contactGroup.title }}</ion-label>
 			<ion-buttons slot="end">
-				<ion-button (click)="addContact($event, contactGroup.id)">
-					<ion-icon name="add" />
+				<ion-button color="tertiary" (click)="addSubGroup($event)">
+					<ion-icon name="add" slot="start" />
+					<ion-label>Add sub-group</ion-label>
 				</ion-button>
 			</ion-buttons>
-		</ion-item-divider>
-		@for (role of contactGroup.roles; track role.id; let isLastRole = $last) {
+		</ion-item>
+		@for (role of contactGroup.roles; track role.id; let lastRole = $last) {
+			<ion-item
+				class="sneat-tiny-end-padding"
+				[lines]="lastRole && isLastContactGroup ? 'none' : 'full'"
+			>
+				<ion-label color="medium">
+					<span class="ion-margin-end">{{ role.emoji }}</span>
+					{{ role.titlePlural || role.title }}
+				</ion-label>
+				<ion-buttons slot="end">
+					@if (role.finder) {
+						<ion-button
+							target="_blank"
+							color="primary"
+							[href]="'https:' + role.finder"
+							[title]="'Find at https://' + role.finder"
+							>Find
+						</ion-button>
+					}
+					<ion-button
+						color="tertiary"
+						(click)="addContact($event, contactGroup.id, role.id)"
+					>
+						<ion-icon name="add-outline" slot="start" />
+						<ion-label>Add</ion-label>
+					</ion-button>
+				</ion-buttons>
+			</ion-item>
 			@for (
-				contact of role.contacts || [];
+				contact of role.contacts;
 				track contact.id;
-				let isLastContact = $last
+				let lastContact = $last
 			) {
 				<ion-item-sliding @listItem>
 					<sneat-contacts-list-item
-						[space]="space"
-						[contact]="contact"
+						[$space]="$space()"
+						[$contact]="contact"
 						[goContact]="goContact"
 						[goMember]="goMember"
-						[showBorder]="!isLastContact || !isLastRole"
+						[showBorder]="lastContact ? 'full' : 'inset'"
+						(checkChange)="checkChanged($event)"
 					/>
 				</ion-item-sliding>
-			}
-			@if (!role.contacts || !role.contacts.length) {
-				<ion-item
-					button
-					class="with-buttons"
-					[lines]="isLastRole && isLastContactGroup ? 'none' : 'full'"
-				>
-					<ion-label color="medium"
-						>{{ role.emoji }} {{ role.title }}
-					</ion-label>
-					<ion-buttons slot="end">
-						@if (role.finder) {
-							<ion-button
-								target="_blank"
-								[href]="'https:' + role.finder"
-								color="medium"
-								[title]="'Find at https://' + role.finder"
-								>Find
-							</ion-button>
-						}
-						<ion-button
-							color="medium"
-							(click)="addContact($event, contactGroup.id, role.id)"
-							>Add
-						</ion-button>
-					</ion-buttons>
-				</ion-item>
 			}
 		}
 	</ion-item-group>
@@ -67,8 +69,8 @@
 		@for (contact of contacts || []; track contact.id) {
 			<ion-item-sliding @listItem>
 				<sneat-contacts-list-item
-					[space]="space"
-					[contact]="contact"
+					[$space]="$space()"
+					[$contact]="contact"
 					[goContact]="goContact"
 					[goMember]="goMember"
 				/>

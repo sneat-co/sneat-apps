@@ -21,7 +21,7 @@ export interface IContactBrief extends IContactBase {
 	readonly parentID?: string;
 }
 
-export interface IContactDto
+export interface IContactDbo
 	extends IContactBase,
 		IPersonRecord,
 		IWithRelatedAndRelatedIDs {

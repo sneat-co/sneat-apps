@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { IIdAndBrief } from '@sneat/core';
@@ -12,6 +12,9 @@ import { ContactsListItemComponent } from '../contacts-list-item/contacts-list-i
 	imports: [IonicModule, RouterModule, ContactsListItemComponent],
 })
 export class ContactsListComponent {
-	@Input({ required: true }) space?: ISpaceContext;
-	@Input({ required: true }) contacts?: IIdAndBrief<IContactBrief>[] = [];
+	@Input() public emptyText = 'No contacts';
+	public readonly $space = input.required<ISpaceContext>();
+	public readonly $contacts = input.required<
+		undefined | readonly IIdAndBrief<IContactBrief>[]
+	>();
 }

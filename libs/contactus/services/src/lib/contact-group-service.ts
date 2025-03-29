@@ -14,61 +14,72 @@ import { Observable, of } from 'rxjs';
 const contactTypeFamilyMember: IContactRoleBriefWithID = {
 		id: 'member',
 		title: 'Family member',
+		titlePlural: 'Members',
 		emoji: '👪',
 	},
 	contactTypeRelative: IContactRoleBriefWithID = {
 		id: 'relative',
 		title: 'Relative',
+		titlePlural: 'Relatives',
 		emoji: '👪',
 	},
 	contactTypeTeacher: IContactRoleBriefWithID = {
 		id: 'teacher',
 		title: 'Teacher',
+		titlePlural: 'Teachers',
 		emoji: '👩‍🏫',
 	},
 	contactTypeBabysitter: IContactRoleBriefWithID = {
 		id: 'babysitter',
 		title: 'Babysitter',
+		titlePlural: 'Babysitters',
 		emoji: '👧',
 		finder: 'babysitters.express',
 	},
 	contactTypeFriendOfKid: IContactRoleBriefWithID = {
 		id: 'friend',
 		title: 'Friend',
+		titlePlural: 'Friends',
 		emoji: '🚸',
 	},
 	// contactTypeGP: IContactRoleBrief = { id: 'gp', title: 'Family doctor', emoji: '👩‍⚕️', finder: 'gpconnect.app' },
 	contactTypePlumber: IContactRoleBriefWithID = {
 		id: 'plumber',
 		title: 'Plumber',
+		titlePlural: 'Plumbers',
 		emoji: '🚽',
 		finder: 'plumbers.express',
 	},
 	contactTypeElectrician: IContactRoleBriefWithID = {
 		id: 'electrician',
 		title: 'Electrician',
+		titlePlural: 'Electricians',
 		emoji: '🔌',
 		finder: 'electricians.express',
 	},
 	contactTypeHandyman: IContactRoleBriefWithID = {
 		id: 'handyman',
 		title: 'Handyman',
+		titlePlural: 'Handymen',
 		emoji: '🔨',
 	},
 	contactTypeGardener: IContactRoleBriefWithID = {
 		id: 'gardener',
 		title: 'Gardener',
+		titlePlural: 'Gardeners',
 		emoji: '👨‍🌾',
 		finder: 'gardeners.express',
 	},
 	contactTypeInsurer: IContactRoleBriefWithID = {
 		id: 'insurer',
 		title: 'Insurer',
+		titlePlural: 'Insurers',
 		emoji: '🧾',
 	},
 	contactTypeMechanic: IContactRoleBriefWithID = {
 		id: 'mechanic',
 		title: 'Mechanic',
+		titlePlural: 'Mechanics',
 		emoji: '👨‍🔧',
 	};
 

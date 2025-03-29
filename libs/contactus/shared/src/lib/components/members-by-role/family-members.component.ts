@@ -9,7 +9,7 @@ import {
 import { SpaceMemberTypeEnum } from '@sneat/auth-models';
 import {
 	IContactBrief,
-	IContactDto,
+	IContactDbo,
 	IContactusSpaceDbo,
 	MemberGroupType,
 	MemberGroupTypeAdults,
@@ -43,7 +43,7 @@ export class FamilyMembersComponent implements OnChanges {
 
 	public members?: readonly IIdAndBriefAndOptionalDbo<
 		IContactBrief,
-		IContactDto
+		IContactDbo
 	>[];
 
 	protected adults: MembersGroup = {

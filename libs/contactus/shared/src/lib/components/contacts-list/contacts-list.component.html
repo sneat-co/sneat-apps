@@ -1,7 +1,11 @@
 <ion-list>
-	@for (contact of contacts; track contact.id) {
+	@for (contact of $contacts(); track contact.id) {
 		<ion-item-sliding>
-			<sneat-contacts-list-item [space]="space" [contact]="contact" />
+			<sneat-contacts-list-item [$space]="$space()" [$contact]="contact" />
 		</ion-item-sliding>
+	} @empty {
+		<ion-item-divider>
+			{{ emptyText }}
+		</ion-item-divider>
 	}
 </ion-list>

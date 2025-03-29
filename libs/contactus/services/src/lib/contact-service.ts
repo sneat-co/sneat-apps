@@ -6,7 +6,7 @@ import { IIdAndBriefAndOptionalDbo } from '@sneat/core';
 import {
 	ContactRole,
 	IContactBrief,
-	IContactDto,
+	IContactDbo,
 	MemberRole,
 	IContactContext,
 	ICreateContactRequest,
@@ -36,7 +36,7 @@ export interface IChangeMemberRoleRequest {
 @Injectable()
 export class ContactService extends ModuleSpaceItemService<
 	IContactBrief,
-	IContactDto
+	IContactDbo
 > {
 	constructor(
 		afs: AngularFirestore,
@@ -52,7 +52,7 @@ export class ContactService extends ModuleSpaceItemService<
 		space: ISpaceContext,
 		request: ICreateContactRequest,
 		endpoint = 'contactus/create_contact',
-	): Observable<ISpaceItemWithBriefAndDbo<IContactBrief, IContactDto>> {
+	): Observable<ISpaceItemWithBriefAndDbo<IContactBrief, IContactDbo>> {
 		return this.createSpaceItem(endpoint, space, request);
 	}
 
@@ -78,7 +78,7 @@ export class ContactService extends ModuleSpaceItemService<
 		role: string,
 		status: 'active' | 'archived' = 'active',
 		filter?: readonly IFilter[],
-	): Observable<IIdAndBriefAndOptionalDbo<IContactBrief, IContactDto>[]> {
+	): Observable<IIdAndBriefAndOptionalDbo<IContactBrief, IContactDbo>[]> {
 		filter = [
 			...(filter || []),
 			{ field: 'roles', operator: '==', value: role },
@@ -90,7 +90,7 @@ export class ContactService extends ModuleSpaceItemService<
 		space: ISpaceContext,
 		status: 'active' | 'archived' = 'active',
 		filter?: readonly IFilter[],
-	): Observable<IIdAndBriefAndOptionalDbo<IContactBrief, IContactDto>[]> {
+	): Observable<IIdAndBriefAndOptionalDbo<IContactBrief, IContactDbo>[]> {
 		filter = [
 			{
 				field: 'status',
@@ -104,7 +104,7 @@ export class ContactService extends ModuleSpaceItemService<
 			},
 			...(filter || []),
 		];
-		return this.watchModuleSpaceItemsWithSpaceRef<IContactDto>(space, {
+		return this.watchModuleSpaceItemsWithSpaceRef<IContactDbo>(space, {
 			filter,
 		});
 	}
@@ -113,7 +113,7 @@ export class ContactService extends ModuleSpaceItemService<
 		space: ISpaceContext,
 		contactID: string,
 	): Observable<
-		ISpaceItemWithOptionalBriefAndOptionalDbo<IContactBrief, IContactDto>
+		ISpaceItemWithOptionalBriefAndOptionalDbo<IContactBrief, IContactDbo>
 	> {
 		return this.watchSpaceItemByIdWithSpaceRef(space, contactID);
 	}

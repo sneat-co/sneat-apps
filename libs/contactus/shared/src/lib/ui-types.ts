@@ -6,7 +6,7 @@ import {
 import { IIdAndBrief } from '@sneat/core';
 
 export interface IContactRoleWithContacts extends IContactRoleBriefWithID {
-	contacts?: IIdAndBrief<IContactBrief>[];
+	contacts: readonly IIdAndBrief<IContactBrief>[];
 }
 
 export interface IContactGroupWithContacts extends IContactGroupBrief {

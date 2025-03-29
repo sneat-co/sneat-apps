@@ -27,7 +27,6 @@ import { ScrumTaskComponent } from '../scrum-task/scrum-task.component';
 @Component({
 	selector: 'sneat-scrum-tasks',
 	templateUrl: './scrum-tasks.component.html',
-	styleUrls: ['./scrum-tasks.component.scss'],
 	animations: listAddRemoveAnimation,
 	standalone: false,
 })

@@ -47,7 +47,7 @@
 						</ion-segment>
 						@if (segment === "groups") {
 							<ion-buttons slot="end">
-								<ion-button color="tertiary">
+								<ion-button color="tertiary" (click)="addGroup($event)">
 									<ion-icon name="add-outline" slot="start" />
 									<ion-label>Add group</ion-label>
 								</ion-button>
@@ -64,8 +64,8 @@
 			@for (contact of $contacts(); track contact.id) {
 				<ion-item-sliding @listItem>
 					<sneat-contacts-list-item
-						[space]="space"
-						[contact]="contact"
+						[$space]="space"
+						[$contact]="contact"
 						[goContact]="goContact"
 						[goMember]="goMember"
 						[excludeRole]="$role()"
@@ -87,7 +87,7 @@
 				<sneat-contacts-by-type
 					[contacts]="$allContacts()"
 					[$contactGroupDefinitions]="familyGroupDefinitions"
-					[space]="space"
+					[$space]="space"
 					[filter]="filter"
 					[goContact]="goContact"
 					[goMember]="goMember"

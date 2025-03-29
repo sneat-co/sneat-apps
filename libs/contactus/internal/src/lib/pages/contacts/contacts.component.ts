@@ -220,4 +220,10 @@ export class ContactsComponent extends SneatBaseComponent {
 		event.stopPropagation();
 		this.roleChange.emit(event.detail.value);
 	}
+
+	protected addGroup(event: Event): void {
+		event.stopPropagation();
+		event.preventDefault();
+		alert('Not implemented yet');
+	}
 }

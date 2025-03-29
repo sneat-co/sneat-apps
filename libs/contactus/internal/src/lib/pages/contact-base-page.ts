@@ -5,7 +5,7 @@ import {
 import { ContactComponentBaseParams } from '@sneat/contactus-shared';
 import {
 	IContactBrief,
-	IContactDto,
+	IContactDbo,
 	IContactContext,
 } from '@sneat/contactus-core';
 import { SpaceItemPageBaseComponent } from '@sneat/space-components';
@@ -13,7 +13,7 @@ import { Observable, takeUntil, throwError } from 'rxjs';
 
 export abstract class ContactBasePage extends SpaceItemPageBaseComponent<
 	IContactBrief,
-	IContactDto
+	IContactDbo
 > {
 	public get contact(): IContactContext | undefined {
 		return this.item as IContactContext;

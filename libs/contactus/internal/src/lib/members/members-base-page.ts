@@ -6,12 +6,12 @@ import {
 	ContactusSpaceService,
 	MemberService,
 } from '@sneat/contactus-services';
-import { IContactBrief, IContactDto } from '@sneat/contactus-core';
+import { IContactBrief, IContactDbo } from '@sneat/contactus-core';
 
 export abstract class MembersBasePage extends ContactusModuleBaseComponent {
 	public members?: readonly IIdAndBriefAndOptionalDbo<
 		IContactBrief,
-		IContactDto
+		IContactDbo
 	>[];
 
 	// protected currentUserDto: IDtoUser;

@@ -3,6 +3,7 @@ import {
 	input,
 	Input,
 	OnChanges,
+	signal,
 	SimpleChanges,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
@@ -15,6 +16,7 @@ import {
 } from '@sneat/contactus-core';
 import { ContactNavService } from '@sneat/contactus-services';
 import { ISpaceContext } from '@sneat/space-models';
+import { ICheckChangedArgs } from '../contacts-checklist';
 import { ContactsListItemComponent } from '../contacts-list';
 import {
 	IContactGroupWithContacts,
@@ -28,6 +30,8 @@ import {
 	animations: [listItemAnimations],
 })
 export class ContactsByTypeComponent implements OnChanges {
+	public readonly $space = input.required<ISpaceContext>();
+
 	protected otherContacts?: readonly IIdAndBrief<IContactBrief>[];
 	protected contactGroups: readonly IContactGroupWithContacts[] = [];
 
@@ -36,7 +40,6 @@ export class ContactsByTypeComponent implements OnChanges {
 
 	//
 	@Input() filter = '';
-	@Input({ required: true }) space?: ISpaceContext;
 	@Input() contacts?: readonly IIdAndBrief<IContactBrief>[];
 	@Input() goContact: (contact?: IIdAndBrief<IContactBrief>) => void = () =>
 		void 0;
@@ -76,8 +79,8 @@ export class ContactsByTypeComponent implements OnChanges {
 		this.contactGroups = [];
 		const filter = this.filter;
 		const contacts = this.contacts || [];
-		console.log('setContactGroups()', this.space, filter, contacts);
-		const noContactRoles = this.space?.dbo?.noContactRoles;
+		console.log('setContactGroups()', this.$space(), filter, contacts);
+		const noContactRoles = this.$space().dbo?.noContactRoles;
 		let otherContacts = (this.otherContacts = !filter
 			? contacts
 			: contacts &&
@@ -128,11 +131,23 @@ export class ContactsByTypeComponent implements OnChanges {
 		this.otherContacts = otherContacts;
 	}
 
-	public addContact(event: Event, group: string, role?: ContactRole): void {
+	protected addContact(event: Event, group: string, role?: ContactRole): void {
 		event.stopPropagation();
-		if (!this.space) {
+		if (!this.$space().id) {
 			return;
 		}
-		this.contactNavService.goNewContactPage(this.space, { group, role });
+		this.contactNavService.goNewContactPage(this.$space(), { group, role });
+	}
+
+	protected addSubGroup(event: Event): void {
+		event.preventDefault();
+		event.stopPropagation();
+		alert('Not implemented yet');
+	}
+
+	private readonly checkedContactIDs = signal<readonly string[]>([]);
+
+	protected checkChanged(args: ICheckChangedArgs) {
+		this.checkedContactIDs.update((v) => [...v, args.id]);
 	}
 }

@@ -5,12 +5,12 @@ import { IonicModule } from '@ionic/angular';
 import { IUserSpaceBrief } from '@sneat/auth-models';
 import { ContactTitlePipe } from '@sneat/components';
 import { IUpdateContactRequest } from '@sneat/contactus-services';
-import { IIdAndBrief, IIdAndBriefAndOptionalDbo } from '@sneat/core';
+import { IIdAndBrief, IIdAndBriefAndOptionalDbo, SpaceType } from '@sneat/core';
 import {
 	ContactType,
 	Gender,
 	IContactBrief,
-	IContactDto,
+	IContactDbo,
 	IContactContext,
 } from '@sneat/contactus-core';
 import {
@@ -27,7 +27,6 @@ import { ContactDobComponent } from '../contact-dob';
 import { ContactLocationsComponent } from '../contact-locations';
 import { ContactModulesMenuComponent } from '../contact-modules-menu';
 import { ContactRolesInputModule } from '../contact-roles-input';
-import { ContactsListComponent } from '../contacts-list';
 import { GenderFormComponent, RelationshipFormComponent } from '../person-form';
 import { RelatedContactComponent } from './related-contact.component';
 
@@ -50,7 +49,10 @@ import { RelatedContactComponent } from './related-contact.component';
 	],
 })
 export class ContactDetailsComponent implements OnChanges {
-	@Input({ required: true }) public space?: ISpaceRef;
+	@Input({ required: true }) public space: ISpaceRef = {
+		id: '',
+		type: '' as SpaceType,
+	};
 	@Input({ required: true }) public contact?: IContactContext;
 
 	protected relatedContactsOfCurrentSpace?: readonly IIdAndBrief<IRelatedItem>[];
@@ -59,10 +61,10 @@ export class ContactDetailsComponent implements OnChanges {
 	private userContactID?: string;
 
 	protected get contactWithBriefAndOptionalDto():
-		| IIdAndBriefAndOptionalDbo<IContactBrief, IContactDto>
+		| IIdAndBriefAndOptionalDbo<IContactBrief, IContactDbo>
 		| undefined {
 		return this.contact?.brief
-			? (this.contact as IIdAndBriefAndOptionalDbo<IContactBrief, IContactDto>)
+			? (this.contact as IIdAndBriefAndOptionalDbo<IContactBrief, IContactDbo>)
 			: undefined;
 	}
 

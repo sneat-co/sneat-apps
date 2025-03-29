@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { IIdAndBriefAndOptionalDbo } from '@sneat/core';
-import { IContactBrief, IContactDto } from '@sneat/contactus-core';
+import { IContactBrief, IContactDbo } from '@sneat/contactus-core';
 
 @Component({
 	selector: 'sneat-contact-dob',
@@ -12,6 +12,6 @@ import { IContactBrief, IContactDto } from '@sneat/contactus-core';
 export class ContactDobComponent {
 	@Input({ required: true }) public contact?: IIdAndBriefAndOptionalDbo<
 		IContactBrief,
-		IContactDto
+		IContactDbo
 	>;
 }

@@ -79,6 +79,7 @@ export type ContactRole =
 
 export interface IContactRoleBrief {
 	title: string;
+	titlePlural?: string;
 	emoji?: string;
 	finder?: string;
 }
