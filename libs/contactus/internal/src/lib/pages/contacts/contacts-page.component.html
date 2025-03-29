@@ -35,18 +35,32 @@
 		[$role]="$role()"
 		[$allContacts]="$allContacts()"
 		(roleChange)="onRoleChanged($event)"
+		(selectedContactsChange)="selectedContactsChanged($event)"
+		[command]="command.asObservable()"
 	/>
 	<div style="height: 30px"></div>
 </ion-content>
 
-<!--<ion-footer>-->
-<!--	<ion-toolbar color="light">-->
-<!--		@if (contacts) {-->
-<!--			<ion-label>-->
-<!--				<b>Total</b>: {{ contacts.length }} {{contacts.length === 1 ? 'contact' : 'contacts'}}-->
-<!--			</ion-label>-->
-<!--		} @else {-->
-<!--			<ion-label>Loading...</ion-label>-->
-<!--		}-->
-<!--	</ion-toolbar>-->
-<!--</ion-footer>-->
+@if ($selectedContacts().length; as numberOfSelectedContacts) {
+	<ion-footer>
+		<ion-toolbar color="light">
+			<ion-buttons slot="start">
+				<ion-button title="Reset" (click)="command.next('reset_selected')">
+					<ion-icon name="close-circle-outline"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+			<ion-title>
+				@if (numberOfSelectedContacts === 1) {
+					{{ numberOfSelectedContacts }} contact selected
+				} @else {
+					{{ numberOfSelectedContacts }} contacts selected
+				}
+			</ion-title>
+			<ion-buttons slot="end">
+				<ion-button color="success">Share</ion-button>
+				<ion-button color="warning">Archive</ion-button>
+				<!--				<ion-button color="danger">Delete</ion-button>-->
+			</ion-buttons>
+		</ion-toolbar>
+	</ion-footer>
+}

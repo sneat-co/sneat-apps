@@ -85,12 +85,14 @@
 		<ion-list>
 			@if (space.type === "family") {
 				<sneat-contacts-by-type
-					[contacts]="$allContacts()"
+					[$contacts]="$allContacts() || []"
 					[$contactGroupDefinitions]="familyGroupDefinitions"
 					[$space]="space"
 					[filter]="filter"
 					[goContact]="goContact"
 					[goMember]="goMember"
+					[command]="command"
+					(contactSelectionChange)="contactSelectionChanged($event)"
 				/>
 			}
 			@if (groups) {

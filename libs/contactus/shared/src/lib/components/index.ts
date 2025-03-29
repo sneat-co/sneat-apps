@@ -1,5 +1,7 @@
 export * from './contactus-module.base.component';
 export * from './basic-contact-form';
+export * from './contacts-component/contacts.component';
+export * from './contacts-component.commands';
 export * from './contact-dob';
 export * from './contacts-checklist';
 export * from './contact-details';

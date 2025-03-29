@@ -1,3 +1,4 @@
+import { IIdAndBriefAndOptionalDbo } from '@sneat/core';
 import { ISpaceModuleItemRef, IWithRelatedAndRelatedIDs } from '@sneat/dto';
 import { IContactBase } from './contact-base';
 import { IContact2Asset } from './contact2item';
@@ -30,4 +31,9 @@ export interface IContactDbo
 
 export interface IContactsBrief {
 	readonly contacts?: readonly IContactBrief[];
+}
+
+export interface IContactWithCheck // TODO: replace IIdAndBriefAndOptionalDbo with IIdAndBrief?
+	extends IIdAndBriefAndOptionalDbo<IContactBrief, IContactDbo> {
+	readonly isChecked?: boolean;
 }

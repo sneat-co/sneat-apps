@@ -15,13 +15,17 @@ import {
 	GenderIconNamePipe,
 	PersonTitle,
 } from '@sneat/components';
-import { IIdAndBrief, IIdAndBriefAndOptionalDbo } from '@sneat/core';
-import { ContactRole, IContactBrief, IContactDbo } from '@sneat/contactus-core';
+import { IIdAndBrief } from '@sneat/core';
+import {
+	ContactRole,
+	IContactBrief,
+	IContactWithCheck,
+} from '@sneat/contactus-core';
 import { IRelatedItem, IRelationshipRoles } from '@sneat/dto';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
 import { ISpaceContext } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
+import { SneatBaseComponent } from '@sneat/ui';
 import { ICheckChangedArgs } from '../contacts-checklist';
 
 @Component({
@@ -38,9 +42,8 @@ import { ICheckChangedArgs } from '../contacts-checklist';
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ContactsListItemComponent {
-	public readonly $contact =
-		input.required<IIdAndBriefAndOptionalDbo<IContactBrief, IContactDbo>>();
+export class ContactsListItemComponent extends SneatBaseComponent {
+	public readonly $contact = input.required<IContactWithCheck>();
 	public readonly $space = input.required<ISpaceContext>();
 
 	@Input() excludeRole?: ContactRole;
@@ -58,6 +61,7 @@ export class ContactsListItemComponent {
 
 	protected checkboxChanged(event: CustomEvent): void {
 		event.stopPropagation();
+		event.preventDefault();
 		const args: ICheckChangedArgs = {
 			event,
 			id: this.$contact().id,
@@ -77,10 +81,11 @@ export class ContactsListItemComponent {
 	}
 
 	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly spaceNavService: SpaceNavService,
 		private readonly contactService: ContactService,
-	) {}
+	) {
+		super('ContactsListItemComponent');
+	}
 
 	@Input() goContact = (contact?: IIdAndBrief<IContactBrief>): void => {
 		if (!contact) {

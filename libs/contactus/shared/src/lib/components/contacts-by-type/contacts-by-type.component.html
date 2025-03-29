@@ -1,5 +1,5 @@
 @for (
-	contactGroup of contactGroups;
+	contactGroup of $contactGroups();
 	track contactGroup.id;
 	let isLastContactGroup = $last
 ) {
@@ -20,7 +20,18 @@
 			>
 				<ion-label color="medium">
 					<span class="ion-margin-end">{{ role.emoji }}</span>
-					{{ role.titlePlural || role.title }}
+					<b class="ion-margin-end">{{ role.titlePlural || role.title }}</b>
+					&mdash;
+					<i class="ion-margin-start">
+						@switch (role.contacts.length) {
+							@case (0) {
+								not added yet
+							}
+							@default {
+								{{ role.contacts.length }}
+							}
+						}
+					</i>
 				</ion-label>
 				<ion-buttons slot="end">
 					@if (role.finder) {
@@ -53,7 +64,7 @@
 						[goContact]="goContact"
 						[goMember]="goMember"
 						[showBorder]="lastContact ? 'full' : 'inset'"
-						(checkChange)="checkChanged($event)"
+						(checkChange)="checkChanged($event, role.id)"
 					/>
 				</ion-item-sliding>
 			}
@@ -61,12 +72,12 @@
 	</ion-item-group>
 }
 
-@if (otherContacts && otherContacts.length) {
+@if ($otherContacts().length) {
 	<ion-item-group @listItem>
 		<ion-item-divider color="light">
 			<ion-label>Other</ion-label>
 		</ion-item-divider>
-		@for (contact of contacts || []; track contact.id) {
+		@for (contact of $contacts() || []; track contact.id) {
 			<ion-item-sliding @listItem>
 				<sneat-contacts-list-item
 					[$space]="$space()"

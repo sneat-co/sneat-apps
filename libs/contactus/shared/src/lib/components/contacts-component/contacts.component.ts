@@ -4,7 +4,9 @@ import {
 	computed,
 	EventEmitter,
 	inject,
+	Input,
 	input,
+	OnInit,
 	Output,
 	signal,
 } from '@angular/core';
@@ -14,17 +16,21 @@ import { FilterItemComponent } from '@sneat/components';
 import {
 	ContactRole,
 	IContactBrief,
+	IContactWithCheck,
 	IMemberGroupContext,
 } from '@sneat/contactus-core';
 import { defaultFamilyContactGroups } from '@sneat/contactus-services';
-import {
-	ContactsByTypeComponent,
-	ContactsListItemComponent,
-} from '@sneat/contactus-shared';
-import { IIdAndBrief } from '@sneat/core';
+import { IIdAndBrief, listItemAnimations } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
 import { ISelectItem, SneatBaseComponent } from '@sneat/ui';
+import { Observable } from 'rxjs';
+import {
+	ContactsByTypeComponent,
+	ContactsListItemComponent,
+	ICheckChangedArgs,
+} from '../';
+import { ContactsComponentCommand } from '../contacts-component.commands';
 
 @Component({
 	selector: 'sneat-contacts',
@@ -37,12 +43,20 @@ import { ISelectItem, SneatBaseComponent } from '@sneat/ui';
 		FilterItemComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	animations: [listItemAnimations],
 })
-export class ContactsComponent extends SneatBaseComponent {
+export class ContactsComponent extends SneatBaseComponent implements OnInit {
 	public readonly $space = input.required<ISpaceContext>();
 
 	public readonly $role = input<undefined | ContactRole>();
+
+	@Input() command?: Observable<ContactsComponentCommand>;
+
 	@Output() readonly roleChange = new EventEmitter<undefined | ContactRole>();
+
+	@Output() public readonly selectedContactsChange = new EventEmitter<
+		readonly IIdAndBrief<IContactBrief>[]
+	>();
 
 	protected readonly $showTabs = computed(
 		() => !this.$role() && this.$space().type === 'family',
@@ -70,8 +84,23 @@ export class ContactsComponent extends SneatBaseComponent {
 
 	public groups: readonly IMemberGroupContext[] = [];
 
+	ngOnInit() {
+		console.log('ContactsComponent.ngOnInit()');
+		this.command?.pipe(this.takeUntilDestroyed()).subscribe((command) => {
+			console.log('ContactsComponent.ngOnInit() command=' + command);
+			switch (command) {
+				case 'reset_selected':
+					this.$selectedContactIDs.set([]);
+					this.selectedContactsChange.emit(this.$selectedContacts());
+					break;
+				case 'select_all':
+					break;
+			}
+		});
+	}
+
 	private $contactsByRole = computed<
-		Record<string, readonly IIdAndBrief<IContactBrief>[]>
+		Record<string, readonly IContactWithCheck[]>
 	>(() => {
 		console.log('$contactsByRole - started');
 		const contacts = this.$allContacts() || [];
@@ -183,6 +212,26 @@ export class ContactsComponent extends SneatBaseComponent {
 			),
 		);
 	};
+
+	private readonly $selectedContactIDs = signal<readonly string[]>([]);
+
+	private readonly $selectedContacts = computed<
+		readonly IIdAndBrief<IContactBrief>[]
+	>(() => {
+		const contacts = this.$contacts();
+		const selectedContactIDs = this.$selectedContactIDs();
+		return contacts?.filter((c) => selectedContactIDs.includes(c.id)) || [];
+	});
+
+	protected contactSelectionChanged(args: ICheckChangedArgs) {
+		this.$selectedContactIDs.update((v) => {
+			if (args.checked) {
+				return [...v, args.id];
+			}
+			return v.filter((id) => id !== args.id);
+		});
+		this.selectedContactsChange.emit(this.$selectedContacts());
+	}
 
 	protected goMember(id: string, event: Event): boolean {
 		event.stopPropagation();

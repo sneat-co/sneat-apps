@@ -12,11 +12,9 @@
 		@if (contact.brief.roles?.length) {
 			@for (role of contact.brief.roles || []; track role) {
 				@if (!hideRole(role)) {
-					<ion-badge color="light"
-						><ion-text color="medium">{{
-							role | titlecase
-						}}</ion-text></ion-badge
-					>
+					<ion-badge color="light">
+						<ion-text color="medium">{{ role | titlecase }} </ion-text>
+					</ion-badge>
 				}
 			}
 		}
@@ -74,13 +72,18 @@
 			</ion-button>
 		}
 	</ion-buttons>
-	<ion-checkbox slot="end" (ionChange)="checkboxChanged($event)" />
+	<ion-checkbox
+		slot="end"
+		[checked]="$contact().isChecked"
+		(ionChange)="checkboxChanged($event)"
+		(click)="$event.stopPropagation()"
+	/>
 </ion-item>
 
-@if (showAddress && $contact().dbo?.address) {
+@if (showAddress && contact.dbo?.address) {
 	<ion-item>
 		<ion-label>Address</ion-label>
-		<ion-textarea readonly="readonly" [value]="$contact().dbo?.address" />
+		<ion-textarea readonly="readonly" [value]="contact.dbo?.address" />
 	</ion-item>
 }
 

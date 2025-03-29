@@ -2,10 +2,15 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	computed,
+	OnDestroy,
 	signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import {
+	ContactsComponent,
+	ContactsComponentCommand,
+} from '@sneat/contactus-shared';
 import { IIdAndBrief, listItemAnimations } from '@sneat/core';
 import { setHrefQueryParam } from '@sneat/core';
 import { ContactRole, IContactBrief } from '@sneat/contactus-core';
@@ -19,8 +24,7 @@ import {
 	ContactusSpaceService,
 } from '@sneat/contactus-services';
 import { SpaceServiceModule } from '@sneat/space-services';
-import { Subscription } from 'rxjs';
-import { ContactsComponent } from './contacts.component';
+import { Subject, Subscription } from 'rxjs';
 
 @Component({
 	selector: 'sneat-contacts-page',
@@ -37,7 +41,10 @@ import { ContactsComponent } from './contacts.component';
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ContactsPageComponent extends SpaceItemsBaseComponent {
+export class ContactsPageComponent
+	extends SpaceItemsBaseComponent
+	implements OnDestroy
+{
 	protected readonly $allContacts = signal<
 		undefined | readonly IIdAndBrief<IContactBrief>[]
 	>(undefined);
@@ -53,6 +60,16 @@ export class ContactsPageComponent extends SpaceItemsBaseComponent {
 		}
 		return 'Contacts';
 	});
+
+	protected readonly $selectedContacts = signal<
+		readonly IIdAndBrief<IContactBrief>[]
+	>([]);
+
+	protected selectedContactsChanged(
+		contacts: readonly IIdAndBrief<IContactBrief>[],
+	): void {
+		this.$selectedContacts.set(contacts);
+	}
 
 	constructor(
 		// private readonly contactService: ContactService,
@@ -115,5 +132,12 @@ export class ContactsPageComponent extends SpaceItemsBaseComponent {
 		this.$role.set(role);
 		const url = setHrefQueryParam('role', role || '');
 		history.replaceState(undefined, document.title, url);
+	}
+
+	protected readonly command = new Subject<ContactsComponentCommand>();
+
+	public override ngOnDestroy(): void {
+		this.command.complete();
+		super.ngOnDestroy();
 	}
 }

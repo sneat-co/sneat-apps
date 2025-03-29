@@ -14,8 +14,12 @@ import {
 import { IonicModule } from '@ionic/angular';
 import { personName } from '@sneat/components';
 import { ContactusSpaceService } from '@sneat/contactus-services';
-import { IIdAndBrief } from '@sneat/core';
-import { IContactBrief } from '@sneat/contactus-core';
+import { IIdAndBrief, IIdAndBriefAndOptionalDbo } from '@sneat/core';
+import {
+	IContactBrief,
+	IContactDbo,
+	IContactWithCheck,
+} from '@sneat/contactus-core';
 import { ISpaceContext } from '@sneat/space-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { Subscription } from 'rxjs';
@@ -26,10 +30,6 @@ export interface ICheckChangedArgs {
 	checked: boolean;
 	resolve: () => void;
 	reject: (reason?: unknown) => void;
-}
-
-interface IContactWithCheck extends IIdAndBrief<IContactBrief> {
-	readonly isChecked: boolean;
 }
 
 @Component({
