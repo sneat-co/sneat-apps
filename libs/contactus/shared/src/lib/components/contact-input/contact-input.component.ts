@@ -21,16 +21,14 @@ import {
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
-import {
-	ContactsSelectorService,
-	ContactsSelectorModule,
-	IContactSelectorOptions,
-} from '../contacts-selector';
+import { IContactSelectorOptions } from '../contacts-selector/contacts-selector.interfaces';
+import { ContactsSelectorModule } from '../contacts-selector/contacts-selector.module';
+import { ContactsSelectorService } from '../contacts-selector/contacts-selector.service';
 
 @Component({
 	selector: 'sneat-contact-input',
 	templateUrl: './contact-input.component.html',
-	imports: [CommonModule, IonicModule, RouterModule, ContactsSelectorModule],
+	imports: [IonicModule, RouterModule, ContactsSelectorModule],
 })
 export class ContactInputComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;

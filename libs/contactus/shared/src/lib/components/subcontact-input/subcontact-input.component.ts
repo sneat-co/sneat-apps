@@ -6,10 +6,8 @@ import {
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
-import {
-	ContactsSelectorService,
-	IContactSelectorOptions,
-} from '../contacts-selector';
+import { ContactsSelectorService } from '../contacts-selector/contacts-selector.service';
+import { IContactSelectorOptions } from '../contacts-selector/contacts-selector.interfaces';
 
 @Component({
 	selector: 'sneat-subcontact-input',

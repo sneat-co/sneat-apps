@@ -27,12 +27,10 @@ import { ISpaceContext } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
 import { ISelectItem, SneatBaseComponent } from '@sneat/ui';
 import { Observable } from 'rxjs';
-import {
-	ContactsByTypeComponent,
-	ContactsListItemComponent,
-	ICheckChangedArgs,
-} from '../';
+import { ContactsByTypeComponent } from '../contacts-by-type';
+import { ICheckChangedArgs } from '../contacts-checklist';
 import { ContactsComponentCommand } from '../contacts-component.commands';
+import { ContactsListItemComponent } from '../contacts-list-item/contacts-list-item.component';
 
 @Component({
 	selector: 'sneat-contacts',

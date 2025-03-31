@@ -4,9 +4,6 @@
 	(click)="openContactSelector($event)"
 	[class.deleting-list-item]="deleting"
 >
-	<!--	<span *ngIf="showFlag"> &lt;!&ndash; TODO: Move into input label &ndash;&gt;-->
-	<!--		{{()|countryFlag}}-->
-	<!--	</span>-->
 	<ion-input
 		[label]="labelText()"
 		labelPlacement="fixed"
@@ -16,33 +13,35 @@
 		[value]="contactTitle()"
 	/>
 
-	<!--	<span style="padding-left: 0.25em" *ngIf="showParentFlag"> &lt;!&ndash; TODO: Move into input label &ndash;&gt;-->
-	<!--		{{(parentContact?.brief?.countryID || parentContact?.dto?.countryID)|countryFlag}}-->
-	<!--	</span>-->
-	<ion-input
-		*ngIf="parentRole"
-		[label]="subLabel"
-		[disabled]="disabled"
-		[value]="parentTitle()"
-	/>
-
-	<ion-buttons slot="end" *ngIf="!readonly && canChangeContact">
-		<ion-button
-			*ngIf="!deleting"
-			(click)="openContactSelector($event)"
+	@if (parentRole) {
+		<ion-input
+			[label]="subLabel"
 			[disabled]="disabled"
-		>
-			<ion-label>...</ion-label>
-		</ion-button>
+			[value]="parentTitle()"
+		/>
+	}
 
-		<ion-button
-			color="medium"
-			(click)="reset($event)"
-			*ngIf="contact && canReset"
-			[disabled]="disabled || deleting"
-		>
-			<ion-icon name="close-outline" *ngIf="!deleting" />
-			<ion-spinner name="lines-small" *ngIf="deleting" slot="end" />
-		</ion-button>
-	</ion-buttons>
+	@if (!readonly && canChangeContact) {
+		<ion-buttons slot="end">
+			@if (!deleting) {
+				<ion-button (click)="openContactSelector($event)" [disabled]="disabled">
+					<ion-label>...</ion-label>
+				</ion-button>
+			}
+
+			@if (contact && canReset) {
+				<ion-button
+					color="medium"
+					(click)="reset($event)"
+					[disabled]="disabled || deleting"
+				>
+					@if (deleting) {
+						<ion-spinner name="lines-small" slot="end" />
+					} @else {
+						<ion-icon name="close-outline" />
+					}
+				</ion-button>
+			}
+		</ion-buttons>
+	}
 </ion-item>

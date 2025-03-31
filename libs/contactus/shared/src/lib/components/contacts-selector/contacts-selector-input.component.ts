@@ -32,6 +32,7 @@ import { ContactsSelectorService } from './contacts-selector.service';
 	],
 })
 export class ContactsSelectorInputComponent {
+	// TODO: Is it duplicate of ContactInputComponent?
 	protected readonly $contactusSpace = signal<
 		IContactusSpaceDboAndID | undefined
 	>(undefined);
