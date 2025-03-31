@@ -6,8 +6,11 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { CONTACT_ROLES_BY_TYPE, IContactRole } from '@sneat/app';
-import { IIdAndBrief } from '@sneat/core';
-import { ContactRole, ContactType, IContactBrief } from '@sneat/contactus-core';
+import {
+	ContactRole,
+	ContactType,
+	IContactWithBrief,
+} from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	ContactService,
@@ -18,11 +21,11 @@ import { ISpaceContext } from '@sneat/space-models';
 @Component({
 	selector: 'sneat-contact-roles-input',
 	templateUrl: './contact-roles-input.component.html',
-	standalone: false,
+	standalone: false, // TODO: make standalone or document why not
 })
 export class ContactRolesInputComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;
-	@Input() contact?: IIdAndBrief<IContactBrief>;
+	@Input() contact?: IContactWithBrief;
 	// @Output() readonly rolesChange = new EventEmitter<ContactRole[]>();
 
 	protected roles?: IContactRole[];

@@ -6,22 +6,26 @@ import {
 	Injectable,
 	input,
 	Input,
-	OnDestroy,
 	Output,
+	signal,
 } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { IContactBrief, IContactusSpaceDboAndID } from '@sneat/contactus-core';
-import { IIdAndBrief, isoStringsToDate } from '@sneat/core';
+import {
+	addSpace,
+	IContactusSpaceDboAndID,
+	IContactWithBrief,
+	IContactWithSpace,
+} from '@sneat/contactus-core';
+import { ContactsSelectorService } from '@sneat/contactus-shared';
+import { isoStringsToDate } from '@sneat/core';
 import { getRelatedItemIDs } from '@sneat/dto';
 import { IHappeningContext, WeekdayCode2 } from '@sneat/mod-schedulus-core';
-import { MembersSelectorService } from '@sneat/contactus-shared';
 import { getWd2 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { contactContextFromBrief } from '@sneat/contactus-services';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
 import { SneatBaseComponent } from '@sneat/ui';
-import { NEVER, Observable, takeUntil } from 'rxjs';
+import { from, NEVER, Observable } from 'rxjs';
 import {
 	HappeningService,
 	IHappeningContactRequest,
@@ -33,7 +37,7 @@ export class HappeningBaseComponentParams {
 		@Inject(ErrorLogger) public readonly errorLogger: IErrorLogger,
 		public readonly happeningService: HappeningService,
 		public readonly spaceNavService: SpaceNavService,
-		public readonly membersSelectorService: MembersSelectorService,
+		public readonly contactsSelectorService: ContactsSelectorService,
 		public readonly modalController: ModalController,
 		// public readonly happeningSlotModalService: HappeningSlotModalService,
 	) {}
@@ -89,8 +93,8 @@ export abstract class HappeningBaseComponent extends SneatBaseComponent {
 		return this.happeningBaseComponentParams.happeningService;
 	}
 
-	get membersSelectorService() {
-		return this.happeningBaseComponentParams.membersSelectorService;
+	get contactsSelectorService() {
+		return this.happeningBaseComponentParams.contactsSelectorService;
 	}
 
 	get spaceNavService() {
@@ -180,15 +184,14 @@ This operation can NOT be undone.`)
 		if (!spaceID) {
 			return;
 		}
-		const teamMembers: IIdAndBrief<IContactBrief>[] | undefined =
-			zipMapBriefsWithIDs(this.contactusSpace?.dbo?.contacts)?.map((m) =>
-				contactContextFromBrief(m, space),
-			);
+		const teamContacts: IContactWithSpace[] | undefined = zipMapBriefsWithIDs(
+			this.contactusSpace?.dbo?.contacts,
+		)?.map(addSpace(space));
 
-		this.membersSelectorService
-			.selectMembersInModal({
-				selectedMembers:
-					teamMembers?.filter((m) =>
+		this.contactsSelectorService
+			.selectMultipleInModal({
+				selectedItems:
+					teamContacts?.filter((m) =>
 						getRelatedItemIDs(
 							happening?.brief?.related,
 							'contactus',
@@ -196,7 +199,7 @@ This operation can NOT be undone.`)
 							space.id,
 						).includes(m.id),
 					) || [],
-				members: teamMembers,
+				items: signal(teamContacts), // TODO: provide proper observable
 				onAdded: this.onMemberAdded,
 				onRemoved: this.onMemberRemoved,
 			})
@@ -206,7 +209,7 @@ This operation can NOT be undone.`)
 	}
 
 	private readonly onMemberAdded = (
-		member: IIdAndBrief<IContactBrief>,
+		member: IContactWithBrief,
 	): Observable<void> => {
 		const [space, happening] = this.spaceAndHappening();
 		if (!space || !happening) {
@@ -233,7 +236,7 @@ This operation can NOT be undone.`)
 	}
 
 	private readonly onMemberRemoved = (
-		member: IIdAndBrief<IContactBrief>,
+		member: IContactWithBrief,
 	): Observable<void> => {
 		const [space, happening] = this.spaceAndHappening();
 		if (!space || !happening) {

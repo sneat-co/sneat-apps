@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
-import { IIdAndDbo } from '@sneat/core';
+import { IIdAndDbo, ISpaceRef } from '@sneat/core';
 import {
 	IContactGroupBrief,
 	IContactGroupDbo,
 	IContactRoleBriefWithID,
 } from '@sneat/contactus-core';
-import { ISpaceContext, ISpaceRef } from '@sneat/space-models';
+import { ISpaceContext } from '@sneat/space-models';
 import { ModuleSpaceItemService } from '@sneat/space-services';
 import { Observable, of } from 'rxjs';
 

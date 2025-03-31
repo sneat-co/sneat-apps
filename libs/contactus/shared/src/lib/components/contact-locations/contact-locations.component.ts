@@ -1,16 +1,21 @@
-import { CommonModule } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
 	input,
 	Input,
 	OnChanges,
+	signal,
 	SimpleChanges,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { IIdAndBrief, IIdAndBriefAndOptionalDbo } from '@sneat/core';
-import { IContactBrief, IContactDbo } from '@sneat/contactus-core';
+import { IIdAndBriefAndOptionalDbo } from '@sneat/core';
+import {
+	IContactBrief,
+	IContactDbo,
+	IContactWithBrief,
+	IContactWithCheck,
+} from '@sneat/contactus-core';
 import { ISpaceContext } from '@sneat/space-models';
 import { ContactsListComponent } from '../contacts-list';
 
@@ -28,7 +33,9 @@ export class ContactLocationsComponent implements OnChanges {
 		IContactDbo
 	>;
 
-	public contactLocations?: IIdAndBrief<IContactBrief>[];
+	protected readonly $contactLocations = signal<readonly IContactWithCheck[]>(
+		[],
+	);
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['contact']) {
@@ -36,14 +43,16 @@ export class ContactLocationsComponent implements OnChanges {
 			if (!space) {
 				return;
 			}
-			this.contactLocations = this.getContactLocations().map((c) => ({
-				...c,
-				space,
-			}));
+			this.$contactLocations.set(
+				this.getContactLocations().map((c) => ({
+					...c,
+					space,
+				})),
+			);
 		}
 	}
 
-	private getContactLocations(): IIdAndBrief<IContactBrief>[] {
+	private getContactLocations(): IContactWithBrief[] {
 		return [];
 		// return (
 		// 	zipMapBriefsWithIDs<IContactRelationships>(this.contact?.dto?.relatedContacts)

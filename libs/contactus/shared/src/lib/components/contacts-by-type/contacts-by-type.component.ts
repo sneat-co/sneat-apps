@@ -18,6 +18,7 @@ import {
 	ContactRole,
 	IContactBrief,
 	IContactGroupDbo,
+	IContactWithBrief,
 	IContactWithCheck,
 } from '@sneat/contactus-core';
 import { ContactNavService } from '@sneat/contactus-services';
@@ -57,18 +58,15 @@ export class ContactsByTypeComponent
 		Readonly<Record<string, readonly string[]>>
 	>({});
 
-	protected readonly $otherContacts = signal<
-		readonly IIdAndBrief<IContactBrief>[]
-	>([]);
+	protected readonly $otherContacts = signal<readonly IContactWithBrief[]>([]);
 	protected readonly $contactGroups = signal<
 		readonly IContactGroupWithContacts[]
 	>([]);
 
 	//
 	@Input() filter = '';
-	// @Input() contacts?: readonly IIdAndBrief<IContactBrief>[];
-	@Input() goContact: (contact?: IIdAndBrief<IContactBrief>) => void = () =>
-		void 0;
+	// @Input() contacts?: readonly IContactWithSpace[];
+	@Input() goContact: (contact?: IContactWithBrief) => void = () => void 0;
 	@Input() goMember: (id: string, event: Event) => boolean = () => false;
 
 	@Input() command?: Observable<ContactsComponentCommand>;

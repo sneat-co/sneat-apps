@@ -1,7 +1,7 @@
-import { Component, Input, input } from '@angular/core';
+import { Component, computed, Input, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { IContactWithCheck } from '@sneat/contactus-core';
+import { addSpace, IContactWithCheck } from '@sneat/contactus-core';
 import { ISpaceContext } from '@sneat/space-models';
 import { ContactsListItemComponent } from '../contacts-list-item/contacts-list-item.component';
 
@@ -16,4 +16,9 @@ export class ContactsListComponent {
 	public readonly $contacts = input.required<
 		undefined | readonly IContactWithCheck[]
 	>();
+
+	protected readonly $contactsWithSpace = computed(() => {
+		const space = this.$space();
+		return this.$contacts()?.map(addSpace(space)) || [];
+	});
 }

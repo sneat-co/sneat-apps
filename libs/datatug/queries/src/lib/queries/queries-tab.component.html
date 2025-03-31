@@ -44,7 +44,7 @@
 	</ion-item>
 	@if (!isFiltering() && currentFolder.folders) {
 		<ion-item-divider>
-			@if (!parentFolders?.length) {
+			@if (!parentFolders.length) {
 				<ion-label>{{ rootFolder || "" | titlecase }} queries</ion-label>
 			}
 			@for (parentFolder of parentFolders; track parentFolder.id) {
@@ -90,7 +90,7 @@
 	<!--					<ion-icon name="close" tappable></ion-icon>-->
 	<!--				</ion-badge>-->
 	<!--			</ion-item>-->
-	@if (parentFolders?.length) {
+	@if (parentFolders.length) {
 		<ion-item tappable (click)="cd('..')">
 			<ion-icon name="folder-open-outline" slot="start" />
 			<ion-label>..</ion-label>
@@ -103,7 +103,7 @@
 				<ion-icon name="document-text-outline" slot="start" />
 				<ion-label>
 					{{ item.query.title || item.query.id }}
-					@if (item.folders?.length) {
+					@if (item.folders.length) {
 						<p>
 							<ion-text color="medium">Folder:&nbsp;</ion-text>
 							<code>

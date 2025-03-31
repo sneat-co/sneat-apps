@@ -1,23 +1,18 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import {
-	defaultFamilyMemberExtensions,
-	IIdAndBrief,
-	ISneatExtension,
-} from '@sneat/core';
-import { IContactBrief } from '@sneat/contactus-core';
+import { defaultFamilyMemberExtensions, ISneatExtension } from '@sneat/core';
+import { IContactWithBrief } from '@sneat/contactus-core';
 import { ISpaceContext } from '@sneat/space-models';
 
 @Component({
 	selector: 'sneat-contact-modules-menu',
 	templateUrl: 'contact-modules-menu.component.html',
-	imports: [CommonModule, IonicModule, RouterLink],
+	imports: [IonicModule, RouterLink],
 })
 export class ContactModulesMenuComponent {
 	@Input({ required: true }) space?: ISpaceContext;
-	@Input({ required: true }) public contact?: IIdAndBrief<IContactBrief>;
+	@Input({ required: true }) public contact?: IContactWithBrief;
 
 	public readonly extensions = defaultFamilyMemberExtensions;
 

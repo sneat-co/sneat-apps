@@ -13,10 +13,10 @@
 	<sneat-location-form
 		contactType="company"
 		label="Company details"
-		[space]="space"
+		[$space]="$space()"
 		[parentContact]="parentContact"
-		[contact]="contact"
-		(contactChange)="onContactChanged($event)"
+		[location]="contact"
+		(locationChange)="onContactChanged($event)"
 		[hideSubmitButton]="true"
 	/>
 }

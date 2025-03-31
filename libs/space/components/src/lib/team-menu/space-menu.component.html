@@ -3,7 +3,7 @@
 		<!--		<ion-icon [name]="space.type === 'family' ? 'people-outline' : space.type === 'private' ? 'person-circle-outline' : 'people-outline' " slot="end" />-->
 		<ion-select
 			label="Space"
-			[value]="$space()?.id"
+			[value]="$space().id"
 			interface="popover"
 			(ionChange)="onSpaceSelected($event)"
 			style="font-weight: bold"

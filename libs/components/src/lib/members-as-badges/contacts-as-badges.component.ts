@@ -7,20 +7,19 @@ import {
 	Output,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { IIdAndBrief } from '@sneat/core';
-import { IContactBrief } from '@sneat/contactus-core';
+import { IContactWithBrief, IContactWithSpace } from '@sneat/contactus-core';
 import { PersonTitle } from '../pipes';
 
 @Component({
-	selector: 'sneat-members-as-badges',
+	selector: 'sneat-contacts-as-badges',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [CommonModule, IonicModule, PersonTitle],
 	styles: ['.deleting {text-decoration: line-through}'],
 	template: `
 		@for (member of members || []; track member.id) {
 			<ion-chip outline color="medium">
-				<ion-label color="medium" [class.deleting]="isDeleting(member.id)"
-					>{{ member | personTitle }}
+				<ion-label color="medium" [class.deleting]="isDeleting(member.id)">
+					{{ member | personTitle }}
 				</ion-label>
 				<ion-icon
 					*ngIf="showDelete && !isDeleting(member.id)"
@@ -32,11 +31,11 @@ import { PersonTitle } from '../pipes';
 		}
 	`,
 })
-export class MembersAsBadgesComponent {
+export class ContactsAsBadgesComponent {
 	private readonly deletingMemberIDs: string[] = [];
 
 	@Input({ required: true })
-	public members?: readonly IIdAndBrief<IContactBrief>[];
+	public members?: readonly IContactWithSpace[];
 	@Input() color:
 		| 'primary'
 		| 'light'
@@ -46,15 +45,13 @@ export class MembersAsBadgesComponent {
 		| 'tertiary' = 'light';
 	@Input() showDelete = false;
 
-	@Output() readonly deleteMember = new EventEmitter<
-		IIdAndBrief<IContactBrief>
-	>();
+	@Output() readonly deleteMember = new EventEmitter<IContactWithBrief>();
 
 	public isDeleting(id: string): boolean {
 		return this.deletingMemberIDs.includes(id);
 	}
 
-	protected delete(event: Event, member: IIdAndBrief<IContactBrief>): void {
+	protected delete(event: Event, member: IContactWithBrief): void {
 		event.stopPropagation();
 		this.deletingMemberIDs.push(member.id);
 		this.deleteMember.emit(member);

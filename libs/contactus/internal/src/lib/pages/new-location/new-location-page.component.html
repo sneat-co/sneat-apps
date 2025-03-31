@@ -13,10 +13,10 @@
 
 <ion-content>
 	<sneat-location-form
-		[space]="space"
+		[$space]="$space()"
 		[parentContact]="contact"
-		[contact]="newLocation"
-		(contactChange)="onContactChanged($event)"
-		(contactCreated)="onContactCreated($event)"
+		[location]="newLocation"
+		(locationChange)="onLocationChanged($event)"
+		(locationCreated)="onContactCreated($event)"
 	/>
 </ion-content>

@@ -6,8 +6,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { IonCard } from '@ionic/angular/standalone';
-import { IContactBrief, IContactusSpaceDbo } from '@sneat/contactus-core';
-import { IIdAndBrief } from '@sneat/core';
+import { IContactusSpaceDbo, IContactWithBrief } from '@sneat/contactus-core';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/space-models';
 import { MembersCardHeaderComponent } from '../members-card-header/members-card-header.component';
 import { MembersListComponent } from '../members-list';
@@ -40,7 +39,7 @@ export class MembersShortListCardComponent implements OnChanges {
 
 	@Input() public role?: string;
 
-	protected spaceContacts?: readonly IIdAndBrief<IContactBrief>[];
+	protected spaceContacts?: readonly IContactWithBrief[];
 
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['contactusSpaceDbo'] || changes['role']) {
@@ -51,8 +50,8 @@ export class MembersShortListCardComponent implements OnChanges {
 	}
 
 	private readonly filterMembers = (
-		contacts?: readonly IIdAndBrief<IContactBrief>[],
-	): readonly IIdAndBrief<IContactBrief>[] | undefined => {
+		contacts?: readonly IContactWithBrief[],
+	): readonly IContactWithBrief[] | undefined => {
 		return !this.role
 			? contacts
 			: contacts?.filter((m) => m.brief?.roles?.some((r) => r === this.role));

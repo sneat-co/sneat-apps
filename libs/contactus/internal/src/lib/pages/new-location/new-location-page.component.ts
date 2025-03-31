@@ -6,7 +6,10 @@ import {
 	ContactComponentBaseParams,
 	LocationFormComponent,
 } from '@sneat/contactus-shared';
-import { IContactContext } from '@sneat/contactus-core';
+import {
+	IContactContext,
+	IContactWithOptionalDbo,
+} from '@sneat/contactus-core';
 import { ContactBasePage } from '../contact-base-page';
 
 @Component({
@@ -15,10 +18,10 @@ import { ContactBasePage } from '../contact-base-page';
 	imports: [CommonModule, IonicModule, LocationFormComponent, PersonTitle],
 })
 export class NewLocationPageComponent extends ContactBasePage {
-	newLocation: IContactContext = {
+	newLocation: IContactWithOptionalDbo = {
 		id: '',
-		dbo: { type: 'location' },
-		space: this.space,
+		brief: { type: 'location' },
+		// space: this.space,
 	};
 
 	constructor(
@@ -36,11 +39,11 @@ export class NewLocationPageComponent extends ContactBasePage {
 		// }
 	}
 
-	onContactChanged(contact: IContactContext): void {
+	onLocationChanged(contact: IContactWithOptionalDbo): void {
 		this.newLocation = contact;
 	}
 
-	onContactCreated(contact: IContactContext): void {
+	onContactCreated(contact: IContactWithOptionalDbo): void {
 		this.newLocation = contact;
 		const space = this.space;
 		if (!space) {

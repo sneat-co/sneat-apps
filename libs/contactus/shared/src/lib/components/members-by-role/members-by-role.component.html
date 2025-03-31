@@ -1,6 +1,6 @@
 @for (group of memberGroups; track group.id) {
 	<ion-item-group>
-		@if (group.addLabel || group.members?.length) {
+		@if (group.addLabel || group.contacts?.length) {
 			<ion-item-divider color="light">
 				<ion-label>{{ group.emoji }}&nbsp;&nbsp;{{ group.plural }}</ion-label>
 				@if (group.addLabel) {
@@ -16,7 +16,7 @@
 				}
 			</ion-item-divider>
 
-			@if (group.members === undefined) {
+			@if (group.contacts === undefined) {
 				<ion-item>
 					<ion-spinner name="lines-small" color="medium" />
 					<ion-label color="medium">Loading...</ion-label>
@@ -26,7 +26,7 @@
 			<!--			<ion-item>group.members: {{ group.members|json }}</ion-item>-->
 			<sneat-members-list
 				[space]="space"
-				[members]="group.members"
+				[members]="group.contacts"
 				[contactsByMember]="contactsByMember"
 				[hideRoles]="[group.role, 'member']"
 			/>

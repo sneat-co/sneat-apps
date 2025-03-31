@@ -19,6 +19,7 @@ import { IIdAndBrief } from '@sneat/core';
 import {
 	ContactRole,
 	IContactBrief,
+	IContactWithBrief,
 	IContactWithCheck,
 } from '@sneat/contactus-core';
 import { IRelatedItem, IRelationshipRoles } from '@sneat/dto';
@@ -87,7 +88,7 @@ export class ContactsListItemComponent extends SneatBaseComponent {
 		super('ContactsListItemComponent');
 	}
 
-	@Input() goContact = (contact?: IIdAndBrief<IContactBrief>): void => {
+	@Input() goContact = (contact?: IContactWithBrief): void => {
 		if (!contact) {
 			this.errorLogger.logError('no contact');
 			return;

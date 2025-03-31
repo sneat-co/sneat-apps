@@ -1,14 +1,11 @@
+import { ISpaceItemWithBriefAndDbo } from '@sneat/core';
 import {
 	IContactGroupBrief,
 	IContactGroupDbo,
 	IMemberBrief,
 	IMemberDbo,
 } from '../dto';
-import {
-	ISpaceItemNavContext,
-	ISpaceItemWithBriefAndDbo,
-	Totals,
-} from '@sneat/space-models';
+import { ISpaceItemNavContext, Totals } from '@sneat/space-models';
 import { IPerson, IPersonBrief } from '../dto';
 
 export type IMemberContext = ISpaceItemNavContext<IMemberBrief, IMemberDbo>;

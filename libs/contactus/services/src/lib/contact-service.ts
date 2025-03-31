@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { IFilter, SneatApiService } from '@sneat/api';
 import { SneatUserService } from '@sneat/auth-core';
-import { IIdAndBriefAndOptionalDbo } from '@sneat/core';
+import { IIdAndBriefAndOptionalDbo, ISpaceRef } from '@sneat/core';
 import {
 	ContactRole,
 	IContactBrief,
@@ -10,10 +10,10 @@ import {
 	MemberRole,
 	IContactContext,
 	ICreateContactRequest,
+	IContactWithDboAndSpace,
 } from '@sneat/contactus-core';
 import {
 	ISpaceContext,
-	ISpaceItemWithBriefAndDbo,
 	ISpaceItemWithOptionalBriefAndOptionalDbo,
 } from '@sneat/space-models';
 import { ModuleSpaceItemService } from '@sneat/space-services';
@@ -49,11 +49,11 @@ export class ContactService extends ModuleSpaceItemService<
 	}
 
 	public createContact(
-		space: ISpaceContext,
+		spaceRef: ISpaceRef,
 		request: ICreateContactRequest,
 		endpoint = 'contactus/create_contact',
-	): Observable<ISpaceItemWithBriefAndDbo<IContactBrief, IContactDbo>> {
-		return this.createSpaceItem(endpoint, space, request);
+	): Observable<IContactWithDboAndSpace> {
+		return this.createSpaceItem(endpoint, spaceRef, request);
 	}
 
 	public deleteContact(request: IContactRequest): Observable<void> {

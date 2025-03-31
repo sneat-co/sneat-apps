@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { GenderIconNamePipe } from '@sneat/components';
-import { IContactBrief } from '@sneat/contactus-core';
+import { IContactBrief, IContactWithBrief } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import { IIdAndBrief } from '@sneat/core';
 import { IRelatedItem } from '@sneat/dto';
@@ -26,7 +26,7 @@ export class RelatedContactComponent implements OnChanges, OnDestroy {
 
 	private readonly destroyed = new Subject<void>();
 
-	protected spaceContacts?: IIdAndBrief<IContactBrief>[];
+	protected spaceContacts?: IContactWithBrief[];
 	protected contactBrief?: IContactBrief;
 
 	constructor(private readonly contactusSpaceService: ContactusSpaceService) {}

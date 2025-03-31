@@ -7,12 +7,13 @@ import {
 	AnalyticsService,
 	IAnalyticsService,
 	IIdAndOptionalDbo,
+	ISpaceRef,
 } from '@sneat/core';
 import { IRecord } from '@sneat/data';
 import { ISpaceDbo } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRetrospective, IScrumDbo } from '@sneat/ext-scrumspace-scrummodels';
-import { ISpaceContext, ISpaceRef } from '@sneat/space-models';
+import { ISpaceContext } from '@sneat/space-models';
 
 export type ScrumPageTab = 'team' | 'my' | 'risks' | 'qna';
 

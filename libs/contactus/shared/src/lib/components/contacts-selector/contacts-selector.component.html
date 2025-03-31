@@ -43,7 +43,7 @@
 				}
 				@case ("new") {
 					<sneat-new-company-form
-						[space]="space"
+						[$space]="$space()"
 						[contactRoles]="contactRoles"
 						[contactRole]="parentRole"
 						[hideRole]="true"
@@ -81,22 +81,23 @@
 
 			@switch (contactTab) {
 				@case ("existing") {
-					@if (selectedParent && contacts && !contacts.length) {
-						<p class="ion-padding">
-							<ion-text color="medium"
-								>No locations for selected contact</ion-text
-							>
-						</p>
+					@if ($contacts(); as contacts) {
+						@if (selectedParent && !contacts.length) {
+							<ion-text color="medium" class="ion-padding">
+								<p>No locations for selected contact</p>
+							</ion-text>
+						}
 					}
-					<sneat-select-from-list
-						[selectMode]="'multiple'"
-						label=""
-						labelPlacement="start"
-						[items]="contactItems"
-						[(ngModel)]="selectedSubContactID"
-						(ngModelChange)="onContactSelected($event)"
-						[isFilterable]="true"
-					/>
+					<sneat-contacts [$space]="$space()" [$allContacts]="$contacts()" />
+					<!--					<sneat-select-from-list-->
+					<!--						[selectMode]="'multiple'"-->
+					<!--						label=""-->
+					<!--						labelPlacement="start"-->
+					<!--						[items]="contactItems"-->
+					<!--						[(ngModel)]="selectedSubContactID"-->
+					<!--						(ngModelChange)="onContactSelected($event)"-->
+					<!--						[isFilterable]="true"-->
+					<!--					/>-->
 				}
 				@case ("new") {
 					@switch (contactType) {
@@ -104,14 +105,14 @@
 							<sneat-location-form
 								contactType="location"
 								[contactRole]="contactRole"
-								[space]="space"
+								[$space]="$space()"
 								[parentContact]="selectedParent"
-								(contactCreated)="onLocationCreated($event)"
+								(locationCreated)="onLocationCreated($event)"
 							/>
 						}
 						@case ("company") {
 							<sneat-new-company-form
-								[space]="space"
+								[$space]="$space()"
 								[contactRoles]="contactRoles"
 								[contactRole]="contactRole"
 								[hideRole]="true"
@@ -124,7 +125,7 @@
 								<ion-label>{{ contactRole || "" | titlecase }}</ion-label>
 							</ion-item-divider>
 							<sneat-basic-contact-form
-								[space]="space"
+								[space]="$space()"
 								[contactType]="contactType"
 								[contactRoles]="contactRole ? [contactRole] : undefined"
 								[parentContact]="selectedParent"

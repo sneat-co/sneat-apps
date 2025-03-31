@@ -26,7 +26,7 @@
 
 	@if (title.value) {
 		<sneat-address-form
-			[address]="contact?.dbo?.address"
+			[address]="location?.dbo?.address"
 			(addressChange)="onAddressChanged($event)"
 		/>
 	}

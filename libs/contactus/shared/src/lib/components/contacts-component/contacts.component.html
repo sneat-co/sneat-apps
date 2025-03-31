@@ -64,7 +64,7 @@
 			@for (contact of $contacts(); track contact.id) {
 				<ion-item-sliding @listItem>
 					<sneat-contacts-list-item
-						[$space]="space"
+						[$space]="$space()"
 						[$contact]="contact"
 						[goContact]="goContact"
 						[goMember]="goMember"
@@ -85,7 +85,7 @@
 		<ion-list>
 			@if (space.type === "family") {
 				<sneat-contacts-by-type
-					[$contacts]="$allContacts() || []"
+					[$contacts]="$contactsWithSpace()"
 					[$contactGroupDefinitions]="familyGroupDefinitions"
 					[$space]="space"
 					[filter]="filter"

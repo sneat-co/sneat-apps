@@ -10,11 +10,17 @@ import {
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { PersonNamesPipe } from '@sneat/components';
-import { IContactBrief } from '@sneat/contactus-core';
+import {
+	ContactType,
+	IContactBrief,
+	IContactWithBrief,
+	IContactWithSpace,
+} from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import { IIdAndBrief, IIdAndOptionalBrief } from '@sneat/core';
 import { getRelatedItems } from '@sneat/dto';
 import { ISlotUIContext } from '@sneat/mod-schedulus-core';
+import { ISpaceRef } from '@sneat/core';
 import { SneatBaseComponent } from '@sneat/ui';
 
 @Component({
@@ -24,9 +30,9 @@ import { SneatBaseComponent } from '@sneat/ui';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HappeningSlotParticipantsComponent extends SneatBaseComponent {
-	protected contacts?: readonly IIdAndBrief<IContactBrief>[];
+	protected contacts?: readonly IContactWithSpace[];
 	protected readonly $spaceContacts = signal<
-		IIdAndBrief<IContactBrief>[] | undefined
+		readonly IContactWithBrief[] | undefined
 	>(undefined);
 
 	public readonly $happeningSlot = input.required<ISlotUIContext>();
@@ -42,19 +48,31 @@ export class HappeningSlotParticipantsComponent extends SneatBaseComponent {
 	});
 
 	protected $contacts = computed(() => {
-		const spaceID = this.$happeningSlot().happening?.space?.id;
+		const spaceID = this.$happeningSlot().happening?.space?.id || '';
 		if (!spaceID) {
 			return;
 		}
 		const happeningSlot = this.$happeningSlot();
 		const relatedItems = this.$relatedItems();
 		const spaceContacts = this.$spaceContacts();
-		const contacts = relatedItems.map((relatedItem) => {
-			const keys = relatedItem.keys.filter(
-				(k) => !k.spaceID || k.spaceID == spaceID,
-			);
-			return spaceContacts?.find((tc) => keys.some((k) => k.itemID === tc.id));
-		});
+		const space: ISpaceRef = { id: spaceID };
+		const contacts: readonly IContactWithSpace[] = relatedItems.map(
+			(relatedItem): IContactWithSpace => {
+				const keys = relatedItem.keys.filter(
+					(k) => !k.spaceID || k.spaceID == spaceID,
+				);
+				let contact = spaceContacts?.find((tc) =>
+					keys.some((k) => k.itemID === tc.id),
+				);
+				if (!contact) {
+					contact = {
+						id: keys[0].itemID,
+						brief: { type: undefined as unknown as ContactType },
+					};
+				}
+				return { ...contact, space };
+			},
+		);
 		console.log(
 			`HappeningSlotParticipantsComponent.$contacts(): spaceID=${spaceID}, wd=${happeningSlot.wd}, slotID=${happeningSlot.slot.id}`,
 			'relatedItems:',
@@ -64,9 +82,7 @@ export class HappeningSlotParticipantsComponent extends SneatBaseComponent {
 			'contacts:',
 			contacts,
 		);
-		return (
-			(contacts.filter((c) => !!c?.brief) as IIdAndBrief<IContactBrief>[]) || []
-		);
+		return contacts.filter((c) => !!c?.brief) || [];
 	});
 
 	private readonly $spaceID = computed(
@@ -89,7 +105,7 @@ export class HappeningSlotParticipantsComponent extends SneatBaseComponent {
 		});
 	}
 
-	protected isUniqueFirstName(contact: IIdAndBrief<IContactBrief>): boolean {
+	protected isUniqueFirstName(contact: IContactWithSpace): boolean {
 		const firstName = contact.brief?.names?.firstName;
 		if (!firstName) {
 			return false;
@@ -101,6 +117,7 @@ export class HappeningSlotParticipantsComponent extends SneatBaseComponent {
 
 	private onSpaceIDChanged(spaceID: string): void {
 		// console.log('HappeningSlotParticipantsComponent.onSpaceIDChanged()', spaceID);
+		const space = { id: spaceID };
 		this.contactusService
 			.watchContactBriefs(spaceID)
 			.pipe(this.takeUntilDestroyed())
@@ -111,7 +128,7 @@ export class HappeningSlotParticipantsComponent extends SneatBaseComponent {
 					// 	this.happeningSlot?.slotID,
 					// 	contacts,
 					// );
-					this.$spaceContacts.set(contacts);
+					this.$spaceContacts.set(contacts.map((c) => ({ ...c, space })));
 				},
 			});
 	}

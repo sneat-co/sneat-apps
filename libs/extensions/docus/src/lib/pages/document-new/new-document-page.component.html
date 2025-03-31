@@ -47,21 +47,22 @@
 				<p>This page is missing a required parameter.</p>
 			}
 
-			@if (!selectedMembers) {
+			@if (!$hasSelectedContacts()) {
 				<p class="ion-margin">
 					<ion-text color="medium">Step 3 of 4</ion-text>
 				</p>
 			}
 			<ion-card>
-				<sneat-members-selector-input
-					[space]="space"
-					[members]="members"
-					[max]="docFields.members?.max"
-					[(selectedMembers)]="selectedMembers"
+				<sneat-contacts-selector-input
+					[$space]="$space()"
+					[$contacts]="$contacts()"
+					[$max]="docFields.members?.max"
+					[$selectedContacts]="$selectedContacts()"
+					(selectedContactsChange)="$selectedContacts.set($event)"
 				/>
 			</ion-card>
 
-			@if (selectedMembers) {
+			@if ($hasSelectedContacts()) {
 				@if (!isMissingRequiredParams) {
 					<p class="ion-margin">
 						<ion-text color="medium">Step 4 of 4</ion-text>

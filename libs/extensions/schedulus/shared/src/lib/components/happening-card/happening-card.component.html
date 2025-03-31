@@ -47,7 +47,7 @@
 	<ion-item>
 		<ion-label color="medium">
 			@if (!$hasRelatedContacts()) {
-				<sneat-members-as-badges
+				<sneat-contacts-as-badges
 					[members]="
 						$relatedContactIDs()
 							| selectedContacts: contactusSpace?.dbo?.contacts

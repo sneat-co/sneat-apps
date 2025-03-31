@@ -18,6 +18,7 @@ import {
 import { IProjectContext } from '@sneat/ext-datatug-nav';
 
 interface FilteredItem {
+	//TODO: make readonly
 	folders: string[];
 	query: IQueryDef;
 }

@@ -1,11 +1,10 @@
-import { IContactBrief, MemberGroupType } from '@sneat/contactus-core';
-import { IIdAndBrief } from '@sneat/core';
+import { IContactWithSpace, MemberGroupType } from '@sneat/contactus-core';
 
-export interface MembersGroup {
+export interface MemberGroup {
 	readonly id: MemberGroupType;
 	readonly role: string;
 	readonly emoji: string;
 	readonly plural: string;
 	readonly addLabel: string;
-	readonly members?: readonly IIdAndBrief<IContactBrief>[];
+	readonly contacts?: readonly IContactWithSpace[];
 }

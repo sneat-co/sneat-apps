@@ -1,1 +1,1 @@
-export * from './members-as-badges.component';
+export * from './contacts-as-badges.component';

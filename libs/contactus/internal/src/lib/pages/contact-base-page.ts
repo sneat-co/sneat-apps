@@ -15,8 +15,8 @@ export abstract class ContactBasePage extends SpaceItemPageBaseComponent<
 	IContactBrief,
 	IContactDbo
 > {
-	public get contact(): IContactContext | undefined {
-		return this.item as IContactContext;
+	public get contact(): IContactContext {
+		return (this.$item() as IContactContext) || { id: '' };
 	}
 
 	protected readonly contactusSpaceService: ContactusSpaceService;
@@ -35,14 +35,15 @@ export abstract class ContactBasePage extends SpaceItemPageBaseComponent<
 	}
 
 	protected override watchItemChanges(): Observable<IContactContext> {
-		if (!this.item?.id) {
+		const itemID = this.$itemID();
+		if (!itemID) {
 			return throwError(() => new Error('no contact context'));
 		}
 		const space = this.space;
 		if (!space) {
 			return throwError(() => new Error('no team context'));
 		}
-		return this.contactService.watchContactById(space, this.item?.id);
+		return this.contactService.watchContactById(space, itemID);
 		// .pipe(this.takeUntilNeeded(), takeUntil(this.spaceIDChanged$))
 	}
 

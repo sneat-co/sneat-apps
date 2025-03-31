@@ -1,10 +1,11 @@
-import { IIdAndBrief, INavContext, SpaceType } from '@sneat/core';
+import { computed } from '@angular/core';
+import {
+	IIdAndBrief,
+	IIdAndBriefWithSpaceRef,
+	INavContext,
+	ISpaceRef,
+} from '@sneat/core';
 import { IShortSpaceInfo, ISpaceBrief, ISpaceDbo } from '@sneat/dto';
-
-export interface ISpaceRef {
-	readonly id: string;
-	readonly type?: SpaceType;
-}
 
 export function zipMapBriefsWithIDs<Brief>(
 	briefs?: Readonly<Record<string, Brief>>,
@@ -14,12 +15,32 @@ export function zipMapBriefsWithIDs<Brief>(
 		: [];
 }
 
+export function zipMapBriefsWithIDsAndSpaceRef<Brief>(
+	space: ISpaceRef,
+	briefs?: Readonly<Record<string, Brief>>,
+): readonly IIdAndBriefWithSpaceRef<Brief>[] {
+	return briefs
+		? Object.entries(briefs).map(([id, brief]) => ({ id, brief, space }))
+		: [];
+}
+
 export interface ISpaceContext
 	extends ISpaceRef,
 		INavContext<ISpaceBrief, ISpaceDbo> {
 	// readonly type?: SpaceType;
 	// readonly assets?: IAssetContext[]; // TODO: this should not be here
 	// readonly contacts?: IContactContext[]; // TODO: this should not be here
+}
+
+export function computeSpaceRefFromSpaceContext($space: () => ISpaceContext) {
+	return computed<ISpaceRef>(() => {
+		const space = $space();
+		return space.type ? { type: space.type, id: space.id } : { id: space.id };
+	});
+}
+
+export function computeSpaceIdFromSpaceRef($spaceRef: () => ISpaceRef) {
+	return computed<string>(() => $spaceRef().id);
 }
 
 export const spaceContextFromBrief = (

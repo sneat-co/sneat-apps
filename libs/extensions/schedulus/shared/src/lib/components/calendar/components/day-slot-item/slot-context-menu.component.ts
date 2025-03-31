@@ -1,8 +1,11 @@
 import { Component, inject, Input, signal } from '@angular/core';
 import { IonicModule, PopoverController } from '@ionic/angular';
-// import { MembersAsBadgesComponent } from '@sneat/components';
-import { IContactBrief, IContactusSpaceDboAndID } from '@sneat/contactus-core';
-import { excludeUndefined, IIdAndBrief } from '@sneat/core';
+import {
+	addSpace,
+	IContactusSpaceDboAndID,
+	IContactWithBrief,
+} from '@sneat/contactus-core';
+import { excludeUndefined } from '@sneat/core';
 import { hasRelated } from '@sneat/dto';
 import { CalendarNavServicesModule } from '../../../../services';
 import {
@@ -13,11 +16,10 @@ import {
 import { ISlotUIContext } from '@sneat/mod-schedulus-core';
 import { ErrorLogger } from '@sneat/logging';
 import {
-	ISelectMembersOptions,
-	MembersSelectorModule,
-	MembersSelectorService,
+	ContactsSelectorModule,
+	ContactsSelectorService,
+	IContactSelectorOptions,
 } from '@sneat/contactus-shared';
-import { contactContextFromBrief } from '@sneat/contactus-services';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/space-models';
 import { NEVER, Observable } from 'rxjs';
 import {
@@ -28,15 +30,12 @@ import {
 import {
 	HappeningService,
 	HappeningServiceModule,
-	// HappeningService,
 	ICancelHappeningRequest,
 	IDeleteSlotRequest,
 	IHappeningContactRequest,
 	ISlotRefRequest,
 	ISlotRequest,
 } from '../../../../services/happening.service';
-// import { HappeningSlotParticipantsComponent } from '../../../happening-slot-participants/happening-slot-participants.component';
-// import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
 
 const notImplemented = 'Sorry, not implemented yet';
 
@@ -46,7 +45,7 @@ const notImplemented = 'Sorry, not implemented yet';
 	imports: [
 		IonicModule,
 		HappeningServiceModule,
-		MembersSelectorModule,
+		ContactsSelectorModule,
 		HappeningSlotModalServiceModule,
 		CalendarNavServicesModule,
 	],
@@ -78,7 +77,7 @@ export class SlotContextMenuComponent {
 	private readonly errorLogger = inject(ErrorLogger);
 	private readonly popoverController = inject(PopoverController);
 	private readonly happeningService = inject(HappeningService);
-	private readonly membersSelectorService = inject(MembersSelectorService);
+	private readonly contactsSelectorService = inject(ContactsSelectorService);
 	private readonly happeningSlotModalService = inject(
 		HappeningSlotModalService,
 	);
@@ -91,30 +90,32 @@ export class SlotContextMenuComponent {
 		if (!space || !this.slotContext) {
 			return;
 		}
-		const members =
-			zipMapBriefsWithIDs(this.contactusSpace?.dbo?.contacts)?.map((mb) =>
-				contactContextFromBrief(mb, space),
+		const contacts =
+			zipMapBriefsWithIDs(this.contactusSpace?.dbo?.contacts)?.map(
+				addSpace(space),
 			) || [];
 		const happening = this.slotContext.happening;
-		const selectedMembers = members.filter((m) =>
-			hasRelated(
-				happening?.dbo?.related || happening?.brief?.related,
-				'contactus',
-				'contacts',
-				{ spaceID: this.space?.id || '', itemID: m.id },
-			),
-		);
-		const options: ISelectMembersOptions = {
-			members,
-			selectedMembers,
-			onAdded: this.onMemberAdded,
-			onRemoved: this.onMemberRemoved,
+		const selectedContacts = contacts
+			.filter((m) =>
+				hasRelated(
+					happening?.dbo?.related || happening?.brief?.related,
+					'contactus',
+					'contacts',
+					{ spaceID: space.id || '', itemID: m.id },
+				),
+			)
+			.map(addSpace(space));
+		const options: IContactSelectorOptions = {
+			// items: from(contacts),
+			selectedItems: selectedContacts,
+			onAdded: this.onContactAdded,
+			onRemoved: this.onContactRemoved,
 		};
 		this.popoverController.dismiss().catch(console.error);
-		this.membersSelectorService
-			.selectMembersInModal(options)
-			.then((selectedMembers) => {
-				console.log('selected members:', selectedMembers);
+		this.contactsSelectorService
+			.selectMultipleInModal(options)
+			.then((selectedContacts) => {
+				console.log('selected contacts:', selectedContacts);
 			});
 	}
 
@@ -354,10 +355,10 @@ export class SlotContextMenuComponent {
 		return n;
 	}
 
-	private readonly onMemberAdded = (
-		member: IIdAndBrief<IContactBrief>,
+	private readonly onContactAdded = (
+		contact: IContactWithBrief,
 	): Observable<void> => {
-		console.log('SlotContextMenuComponent.onMemberAdded()', member);
+		console.log('SlotContextMenuComponent.onContactAdded()', contact);
 		if (!this.slotContext) {
 			return NEVER;
 		}
@@ -371,13 +372,13 @@ export class SlotContextMenuComponent {
 		const request: IHappeningContactRequest = {
 			spaceID: this.space.id,
 			happeningID,
-			contact: { id: member.id },
+			contact: { id: contact.id },
 		};
 		return this.happeningService.addParticipant(request);
 	};
 
-	private readonly onMemberRemoved = (
-		member: IIdAndBrief<IContactBrief>,
+	private readonly onContactRemoved = (
+		member: IContactWithBrief,
 	): Observable<void> => {
 		console.log('SlotContextMenuComponent.onMemberRemoved()', member);
 		if (!this.slotContext || !this.space) {

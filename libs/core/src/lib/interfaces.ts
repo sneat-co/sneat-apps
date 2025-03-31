@@ -1,6 +1,21 @@
+import { SpaceType } from './team-type';
+
+export interface ISpaceRef {
+	readonly id: string;
+	readonly type?: SpaceType;
+}
+
+export const emptySpaceRef: ISpaceRef = { id: '' };
+
 export interface IIdAndBrief<Brief> {
 	readonly id: string;
 	readonly brief: Brief;
+}
+
+export interface IIdAndBriefWithSpaceRef<Brief> {
+	readonly id: string;
+	readonly brief: Brief;
+	readonly space: ISpaceRef;
 }
 
 export interface IIdAndOptionalBrief<Brief> {
@@ -34,4 +49,21 @@ export interface IIdAndBriefAndDbo<Brief, Dbo extends Brief> {
 	readonly id: string;
 	readonly brief: Brief;
 	readonly dbo: Dbo;
+}
+
+export interface ISpaceItemWithBriefAndDbo<Brief, Dbo extends Brief>
+	extends IIdAndBriefAndDbo<Brief, Dbo> {
+	readonly space: ISpaceRef;
+}
+
+export interface ISpaceItemBriefWithSpace<Brief> extends IIdAndBrief<Brief> {
+	readonly space: ISpaceRef;
+}
+
+export function spaceItemBriefWithSpaceRefFromBrief<Brief>(
+	space: ISpaceRef,
+	id: string,
+	brief: Brief,
+): ISpaceItemBriefWithSpace<Brief> {
+	return { id, brief, space };
 }

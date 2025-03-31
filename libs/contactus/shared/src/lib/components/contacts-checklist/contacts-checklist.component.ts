@@ -14,13 +14,17 @@ import {
 import { IonicModule } from '@ionic/angular';
 import { personName } from '@sneat/components';
 import { ContactusSpaceService } from '@sneat/contactus-services';
-import { IIdAndBrief, IIdAndBriefAndOptionalDbo } from '@sneat/core';
 import {
-	IContactBrief,
-	IContactDbo,
+	addSpace,
+	IContactWithBrief,
 	IContactWithCheck,
 } from '@sneat/contactus-core';
-import { ISpaceContext } from '@sneat/space-models';
+import { ISpaceRef } from '@sneat/core';
+import {
+	computeSpaceIdFromSpaceRef,
+	computeSpaceRefFromSpaceContext,
+	ISpaceContext,
+} from '@sneat/space-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { Subscription } from 'rxjs';
 
@@ -51,7 +55,11 @@ export class ContactsChecklistComponent
 	public readonly $onlySelected = input<boolean>(false);
 	public readonly $checkedContactIDs = input.required<readonly string[]>();
 
-	@Input({ required: true }) space?: ISpaceContext;
+	public readonly $space = input.required<ISpaceContext>();
+	protected readonly $spaceRef = computeSpaceRefFromSpaceContext(this.$space);
+	protected readonly $spaceID = computeSpaceIdFromSpaceRef(this.$spaceRef);
+
+	space?: ISpaceContext;
 	@Input() roles: string[] = ['member'];
 
 	@Input() noContactsMessage = 'No members found';
@@ -60,9 +68,9 @@ export class ContactsChecklistComponent
 
 	private contactusSpaceSubscription?: Subscription;
 
-	protected readonly $spaceContacts = signal<
-		IIdAndBrief<IContactBrief>[] | undefined
-	>(undefined);
+	protected readonly $spaceContacts = signal<IContactWithBrief[] | undefined>(
+		undefined,
+	);
 
 	protected readonly $contactsToDisplay = computed<
 		undefined | readonly IContactWithCheck[]
@@ -81,12 +89,11 @@ export class ContactsChecklistComponent
 				checkedInProgress.includes(contactID));
 
 		const hasIncludedRole = roles.length
-			? (c: IIdAndBrief<IContactBrief>) =>
-					roles.some((r) => c.brief?.roles?.includes(r))
+			? (c: IContactWithBrief) => roles.some((r) => c.brief?.roles?.includes(r))
 			: () => true;
 
 		const hasExcludedRole = rolesToExclude
-			? (c: IIdAndBrief<IContactBrief>) =>
+			? (c: IContactWithBrief) =>
 					rolesToExclude.some((r) => c.brief?.roles?.includes(r))
 			: () => false;
 
@@ -101,6 +108,8 @@ export class ContactsChecklistComponent
 			rolesToExclude,
 		);
 
+		const spaceRef = this.$spaceRef();
+
 		return contacts
 			.filter((c) => hasIncludedRole(c) && !hasExcludedRole(c))
 			.map((c) => ({
@@ -108,13 +117,12 @@ export class ContactsChecklistComponent
 				brief: c.brief,
 				isChecked: isSelected(c.id),
 			}))
-			.filter((c) => !onlySelected || c.isChecked);
+			.filter((c) => !onlySelected || c.isChecked)
+			.map(addSpace(spaceRef));
 	});
 
-	protected readonly contactID = (
-		_: number,
-		contact: IIdAndBrief<IContactBrief>,
-	) => contact.id;
+	protected readonly contactID = (_: number, contact: IContactWithBrief) =>
+		contact.id;
 
 	constructor(
 		private readonly changeDetectorRef: ChangeDetectorRef,
@@ -123,12 +131,12 @@ export class ContactsChecklistComponent
 		super('ContactsChecklistComponent');
 	}
 
-	private subscribeForContactBriefs(space: ISpaceContext): void {
+	private subscribeForContactBriefs(spaceID: string): void {
 		console.log(
-			`ContactsChecklistComponent.subscribeForContactBriefs(space=${space?.id})`,
+			`ContactsChecklistComponent.subscribeForContactBriefs(spaceID=${spaceID})`,
 		);
 		this.contactusSpaceSubscription = this.contactusSpaceService
-			.watchContactBriefs(space.id)
+			.watchContactBriefs(spaceID)
 			.pipe(this.takeUntilDestroyed())
 			.subscribe({
 				next: (contacts) => {
@@ -145,8 +153,8 @@ export class ContactsChecklistComponent
 
 			if (previousSpace?.id !== this.space?.id) {
 				this.contactusSpaceSubscription?.unsubscribe();
-				if (this.space?.id) {
-					this.subscribeForContactBriefs(this.space);
+				if (this.$spaceID()) {
+					this.subscribeForContactBriefs(this.$spaceID());
 				}
 			}
 		}
@@ -162,10 +170,7 @@ export class ContactsChecklistComponent
 	protected readonly $checkedInProgress = signal<readonly string[]>([]);
 	protected readonly $uncheckedInProgress = signal<readonly string[]>([]);
 
-	protected onCheckboxChange(
-		event: Event,
-		contact: IIdAndBrief<IContactBrief>,
-	): void {
+	protected onCheckboxChange(event: Event, contact: IContactWithBrief): void {
 		const ce = event as CustomEvent;
 		const cID = contact.id;
 

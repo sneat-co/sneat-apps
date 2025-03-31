@@ -3,6 +3,7 @@ import {
 	Component,
 	EventEmitter,
 	Inject,
+	input,
 	Input,
 	OnChanges,
 	Output,
@@ -15,7 +16,6 @@ import {
 	Validators,
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
 import {
 	IonButton,
 	IonCard,
@@ -35,10 +35,17 @@ import {
 	validateAddress,
 	IContactContext,
 	ICreateContactCompanyRequest,
+	IContactWithBrief,
+	IContactWithOptionalDbo,
+	IContactWithDboAndSpace,
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
-import { ISpaceContext } from '@sneat/space-models';
+import {
+	computeSpaceIdFromSpaceRef,
+	computeSpaceRefFromSpaceContext,
+	ISpaceContext,
+} from '@sneat/space-models';
 import { LocationFormComponent } from '../location-form';
 
 @Component({
@@ -60,19 +67,22 @@ import { LocationFormComponent } from '../location-form';
 	],
 })
 export class NewCompanyFormComponent implements OnChanges {
+	public readonly $space = input.required<ISpaceContext>();
+	protected readonly $spaceRef = computeSpaceRefFromSpaceContext(this.$space);
+	protected readonly $spaceID = computeSpaceIdFromSpaceRef(this.$spaceRef);
+
 	@Input() contactRoles?: ISelectItem[];
-	@Input({ required: true }) space?: ISpaceContext;
 	@Input() contactRole?: ContactRole = undefined;
 	@Input() hideRole = false;
 	@Input() parentContact?: IContactContext;
 
-	@Output() contactCreated = new EventEmitter<IContactContext>();
+	@Output() contactCreated = new EventEmitter<IContactWithDboAndSpace>();
 
 	protected readonly Object = Object;
 
 	protected isCreating = false;
 
-	protected contact?: IContactContext;
+	protected contact?: IContactWithOptionalDbo;
 
 	protected readonly form = new FormGroup({
 		role: new FormControl<ContactRole | undefined>(
@@ -89,10 +99,10 @@ export class NewCompanyFormComponent implements OnChanges {
 	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['space'] && this.space) {
+		if (changes['$space'] && this.$space()) {
 			if (!this.contact) {
 				const brief: IContactBrief = { type: 'company' };
-				this.contact = { id: '', dbo: brief, space: this.space };
+				this.contact = { id: '', brief: brief, dbo: brief };
 				// } else {
 				// 	this.contact = { ...this.contact, team: this.team };
 			}
@@ -115,17 +125,13 @@ export class NewCompanyFormComponent implements OnChanges {
 		}
 	}
 
-	onContactChanged(contact: IContactContext): void {
+	onContactChanged(contact: IContactWithOptionalDbo): void {
 		console.log('onContactChanged()', contact);
 		this.contact = contact;
 	}
 
 	create(): void {
 		console.log('create()', this.contactRole, this.contact);
-		if (!this.space) {
-			alert('Contact team is a required field');
-			return;
-		}
 		if (!this.contact?.dbo?.title) {
 			alert('Contact title is a required field');
 			return;
@@ -145,10 +151,10 @@ export class NewCompanyFormComponent implements OnChanges {
 					roles: [this.contactRole],
 				}),
 				roles: [this.contactRole],
-				spaceID: this.space.id,
+				spaceID: this.$spaceID(),
 			});
 			this.isCreating = true;
-			this.contactService.createContact(this.space, request).subscribe({
+			this.contactService.createContact(this.$space(), request).subscribe({
 				next: (contact) => {
 					console.log('created contact:', contact);
 					this.contactCreated.emit(contact);

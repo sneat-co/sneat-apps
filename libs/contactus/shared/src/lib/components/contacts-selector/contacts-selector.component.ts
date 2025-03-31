@@ -2,9 +2,11 @@ import { TitleCasePipe } from '@angular/common';
 import {
 	Component,
 	Inject,
+	input,
 	Input,
 	OnChanges,
 	OnInit,
+	signal,
 	SimpleChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -21,11 +23,18 @@ import {
 	ContactRole,
 	ContactType,
 	IContactContext,
+	IContactWithBrief,
+	IContactWithCheck,
+	IContactWithSpace,
 } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
-import { ISpaceContext } from '@sneat/space-models';
+import {
+	computeSpaceRefFromSpaceContext,
+	ISpaceContext,
+} from '@sneat/space-models';
 import { map, Subject, Subscription } from 'rxjs';
 import { BasicContactFormModule } from '../basic-contact-form';
+import { ContactsComponent } from '../contacts-component/contacts.component';
 import { LocationFormComponent } from '../location-form';
 import { NewCompanyFormComponent } from '../new-company-form';
 import { IContactSelectorOptions } from './contacts-selector.interfaces';
@@ -42,6 +51,7 @@ import { IContactSelectorOptions } from './contacts-selector.interfaces';
 		NewCompanyFormComponent,
 		TitleCasePipe,
 		TitleCasePipe,
+		ContactsComponent,
 	],
 })
 export class ContactsSelectorComponent
@@ -53,10 +63,12 @@ export class ContactsSelectorComponent
 	parentTab: 'existing' | 'new' = 'existing';
 	contactTab: 'existing' | 'new' = 'existing';
 
+	public readonly $space = input.required<ISpaceContext>();
+	public readonly $spaceRef = computeSpaceRefFromSpaceContext(this.$space);
+
 	@Input() parentIcon = 'business-outline';
 	@Input() contactIcon = 'business-outline';
 
-	@Input() space: ISpaceContext = { id: '' };
 	@Input() title = 'Contacts selector';
 	@Input() contactRole?: ContactRole;
 	@Input() parentType?: ContactType;
@@ -65,7 +77,9 @@ export class ContactsSelectorComponent
 	@Input() excludeContactIDs?: string[];
 	@Input() excludeParentIDs?: string[];
 
-	@Input() onSelected?: (items: IContactContext[] | null) => Promise<void>;
+	@Input() onSelected?: (
+		items: readonly IContactWithSpace[] | null,
+	) => Promise<void>;
 
 	readonly contactRoles: ISelectItem[] = [
 		{ id: 'agent', title: 'Agent', iconName: 'body-outline' },
@@ -79,19 +93,22 @@ export class ContactsSelectorComponent
 
 	private contactBriefsSub?: Subscription;
 
-	private allContacts?: IContactContext[];
+	private allContacts?: IContactWithSpace[];
 	//
-	protected parentContacts?: IContactContext[];
-	protected contacts?: IContactContext[];
+	protected parentContacts?: readonly IContactWithSpace[];
 
-	protected selectedParent?: IContactContext;
-	protected selectedContact?: IContactContext;
+	protected readonly $contacts = signal<
+		readonly IContactWithCheck[] | undefined
+	>(undefined);
+
+	protected selectedParent?: IContactWithSpace;
+	protected selectedContact?: IContactWithSpace;
 
 	protected parentContactID?: string;
 	protected selectedSubContactID?: string;
 
-	private readonly items$ = new Subject<IContactContext[]>();
-	public readonly items = this.items$.asObservable();
+	// private readonly items$ = new Subject<readonly IContactWithSpace[]>();
+	// public readonly items = this.items$.asObservable();
 
 	protected parentItems?: ISelectItem[];
 
@@ -129,16 +146,13 @@ export class ContactsSelectorComponent
 			`ContactSelectorComponent.subscribeForData(calledFrom=${calledFrom})`,
 		);
 		this.contactBriefsSub?.unsubscribe();
-		if (!this.space) {
-			return;
-		}
 		this.watchContactBriefs();
 	}
 
 	private watchContactBriefs(): void {
-		const space = this.space;
+		const space = this.$spaceRef();
 		this.contactBriefsSub = this.contactusSpaceService
-			.watchContactBriefs(this.space.id)
+			.watchContactBriefs(space.id)
 			.pipe(map((contacts) => contacts.map((c) => ({ ...c, space }))))
 			.subscribe((contacts) => {
 				this.allContacts = contacts;
@@ -153,7 +167,7 @@ export class ContactsSelectorComponent
 	private setContacts(): void {
 		const filterByTypeRoleAndParentID =
 			(t?: ContactType, r?: ContactRole, parentID?: string) =>
-			(c: IContactContext) => {
+			(c: IContactWithBrief) => {
 				const roleIDs: ContactRole[] = [];
 				if (r) {
 					roleIDs.push(r);
@@ -179,17 +193,19 @@ export class ContactsSelectorComponent
 						filterByTypeRoleAndParentID(this.parentType, this.parentRole),
 					) || []
 				: undefined;
-		this.contacts = allContactBriefs?.filter(
-			filterByTypeRoleAndParentID(
-				this.contactType,
-				this.contactRole,
-				this.parentContactID,
+		this.$contacts.set(
+			allContactBriefs?.filter(
+				filterByTypeRoleAndParentID(
+					this.contactType,
+					this.contactRole,
+					this.parentContactID,
+				),
 			),
 		);
 
-		const removeExcluded = (ids?: string[]) => (c: IContactContext) =>
+		const removeExcluded = (ids?: string[]) => (c: IContactWithBrief) =>
 			!ids?.includes(c.id);
-		this.contactItems = this.contacts
+		this.contactItems = this.$contacts()
 			?.filter(removeExcluded(this.excludeContactIDs))
 			.map(this.getChildItem);
 		console.log('ContactSelectComponent.contactItems:', this.contactItems);
@@ -206,7 +222,7 @@ export class ContactsSelectorComponent
 				this.parentTab = 'new';
 			}
 		}
-		if (this.contacts && !this.contacts.length) {
+		if (this.$contacts && !this.$contacts.length) {
 			this.contactTab = 'new';
 		}
 		console.log(
@@ -214,7 +230,7 @@ export class ContactsSelectorComponent
 			this.allContacts,
 			this.contactRole,
 			this.contactType,
-			this.contacts,
+			this.$contacts,
 			this.parentType,
 			this.parentRole,
 			this.parentContactID,
@@ -229,27 +245,27 @@ export class ContactsSelectorComponent
 		iconName: this.parentIcon,
 	});
 
-	private readonly getChildItem = (c: IContactContext): ISelectItem => {
+	private readonly getChildItem = (c: IContactWithBrief): ISelectItem => {
 		const { brief } = c;
-		let title = brief?.title;
-		if (!title && brief?.names) {
+		let title = brief.title;
+		if (!title && brief.names) {
 			title = getFullName(brief.names);
 		}
 		return {
 			id: c.id,
 			title: title || c.id,
-			emoji: countryFlagEmoji(brief?.countryID),
+			emoji: countryFlagEmoji(brief.countryID),
 			iconName: this.contactIcon,
 		};
 	};
 
-	protected onLocationCreated(contact: IContactContext): void {
+	protected onLocationCreated(contact: IContactWithBrief): void {
 		// contact = {
 		// 	...contact,
 		// 	parentContact: this.selectedParent,
 		// };
-		const c = { ...contact, brief: contact.dbo };
-		this.emitOnSelected(c);
+		// const c = { ...contact, brief: contact.brief };
+		this.emitOnSelected({ ...contact, space: this.$spaceRef() });
 		this.close(undefined);
 	}
 
@@ -259,30 +275,34 @@ export class ContactsSelectorComponent
 		this.onParentContactChanged(parentContact);
 	}
 
-	protected onParentContactCreated(contact: IContactContext): void {
-		const parentContact = { ...contact, brief: contact.dbo, space: this.space };
+	protected onParentContactCreated(contact: IContactWithBrief): void {
+		const parentContact = { ...contact, space: this.$spaceRef() };
 		this.parentItems?.push(this.getParentItem(parentContact));
 		this.onParentContactChanged(parentContact);
 	}
 
-	protected onContactCreated(contact: IContactContext): void {
+	protected onContactCreated(contact: IContactWithBrief): void {
 		// contact = {
 		// 	...contact,
 		// 	parentContact: this.selectedContact,
 		// };
 		// this.selectedSubContactID = contact?.id
-		this.selectedContact = { ...contact, brief: contact.dbo };
+		this.selectedContact = { ...contact, space: this.$spaceRef() };
 		this.emitOnSelected(this.selectedContact);
 	}
 
-	protected onSubContactCreated(contact: IContactContext): void {
+	protected onSubContactCreated(contact: IContactWithBrief): void {
 		console.log('ContactSelectComponent.onSubContactCreated()', contact);
 		this.selectedSubContactID = contact.id;
-		this.selectedContact = contact;
-		this.emitOnSelected(contact);
+		const selectedContact: IContactWithSpace = {
+			...contact,
+			space: this.$spaceRef(),
+		};
+		this.selectedContact = selectedContact;
+		this.emitOnSelected(selectedContact);
 	}
 
-	private onParentContactChanged(contact?: IContactContext): void {
+	private onParentContactChanged(contact?: IContactWithSpace): void {
 		console.log('ContactSelectComponent.onParentContactChanged()', contact);
 		this.parentTab = 'existing';
 		this.selectedParent = contact || undefined;
@@ -294,12 +314,13 @@ export class ContactsSelectorComponent
 	protected onContactSelected(contactID: string): void {
 		console.log('ContactSelectComponent.onContactSelected()', contactID);
 		this.selectedSubContactID = contactID;
-		this.selectedContact = this.contacts?.find((c) => c.id === contactID);
-		if (!this.selectedContact) {
-			console.error('contact not found by ID', contactID, this.contacts);
+		const selectedContact = this.$contacts()?.find((c) => c.id === contactID);
+		if (!selectedContact) {
+			console.error('contact not found by ID', contactID, this.$contacts);
+			return;
 		}
-		const contact = this.selectedContact;
-		this.emitOnSelected(contact);
+		this.selectedContact = { ...selectedContact, space: this.$spaceRef() };
+		this.emitOnSelected(this.selectedContact);
 		// if (this.selectedParent?.dto) {
 		// 	const contactBrief = this.selectedParent.dto.relatedContacts?.find(c => c.id === contactID);
 		// 	if (contactBrief) {
@@ -342,10 +363,12 @@ export class ContactsSelectorComponent
 	// 	};
 	// }
 
-	protected emitOnSelected(contact?: IContactContext): void {
+	protected emitOnSelected(contact?: IContactWithSpace): void {
 		console.log('ContactSelectorComponent.emitOnSelected()', contact);
 		if (this.onSelected) {
-			this.onSelected(contact ? [contact] : null);
+			this.onSelected(contact ? [contact] : null).catch(
+				this.errorLogger.logErrorHandler('Failed to call onSelected callback'),
+			);
 		} else {
 			console.warn(
 				'instance ContactSelectorComponent has unset `onSelected` input callback.',

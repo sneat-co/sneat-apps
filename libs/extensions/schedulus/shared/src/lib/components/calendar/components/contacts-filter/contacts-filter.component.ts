@@ -5,19 +5,25 @@ import {
 	Input,
 	OnChanges,
 	Output,
+	signal,
 	SimpleChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SneatUserService } from '@sneat/auth-core';
 import { ContactTitlePipe } from '@sneat/components';
-import { IContactBrief, IContactusSpaceDbo } from '@sneat/contactus-core';
+import {
+	addSpace,
+	ContactType,
+	IContactusSpaceDbo,
+	IContactWithSpace,
+} from '@sneat/contactus-core';
 import {
 	ContactusSpaceContextService,
 	ContactusSpaceService,
 } from '@sneat/contactus-services';
 import { ContactusModuleBaseComponent } from '@sneat/contactus-shared';
-import { IIdAndBrief, IIdAndOptionalDbo } from '@sneat/core';
+import { IIdAndOptionalDbo } from '@sneat/core';
 import { SpaceComponentBaseParams } from '@sneat/space-components';
 import { zipMapBriefsWithIDs } from '@sneat/space-models';
 
@@ -35,8 +41,10 @@ export class ContactsFilterComponent
 	@Input({ required: true }) contactIDs: readonly string[] = [];
 
 	contactID = '';
-	selectedContacts: IIdAndBrief<IContactBrief>[] = [];
-	members?: IIdAndBrief<IContactBrief>[];
+	protected readonly $selectedContacts = signal<readonly IContactWithSpace[]>(
+		[],
+	);
+	contacts?: IContactWithSpace[];
 
 	constructor(
 		spaceParams: SpaceComponentBaseParams,
@@ -67,7 +75,7 @@ export class ContactsFilterComponent
 			...m,
 			space: this.space || { id: '' },
 		}));
-		this.members = contactBriefs.filter((c) =>
+		this.contacts = contactBriefs.filter((c) =>
 			c.brief.roles?.includes('member'),
 		);
 	}
@@ -102,9 +110,20 @@ export class ContactsFilterComponent
 	}
 
 	private setSelectedMembers(): void {
-		const members = this.members || [];
-		this.selectedContacts = this.contactIDs.map(
-			(mID) => members.find((m) => m.id == mID) as IIdAndBrief<IContactBrief>,
-		);
+		const space = this.$space();
+		const contacts = this.contacts || [];
+		const selectedContacts = this.contactIDs.map((id) => {
+			let contact = contacts.find((m) => m.id == id);
+			if (!contact) {
+				contact = {
+					id,
+					brief: { type: 'not_found' as ContactType },
+					space: space,
+				};
+			}
+			return contact;
+		});
+		this.$selectedContacts.set(selectedContacts.map(addSpace(space)));
+		// this.selectedContacts;
 	}
 }

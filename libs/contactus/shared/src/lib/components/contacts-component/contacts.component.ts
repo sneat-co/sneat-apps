@@ -14,13 +14,15 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { FilterItemComponent } from '@sneat/components';
 import {
+	addSpace,
 	ContactRole,
-	IContactBrief,
+	IContactWithBrief,
 	IContactWithCheck,
+	IContactWithSpace,
 	IMemberGroupContext,
 } from '@sneat/contactus-core';
 import { defaultFamilyContactGroups } from '@sneat/contactus-services';
-import { IIdAndBrief, listItemAnimations } from '@sneat/core';
+import { listItemAnimations } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
 import { ISelectItem, SneatBaseComponent } from '@sneat/ui';
@@ -48,14 +50,14 @@ import { ContactsComponentCommand } from '../contacts-component.commands';
 export class ContactsComponent extends SneatBaseComponent implements OnInit {
 	public readonly $space = input.required<ISpaceContext>();
 
-	public readonly $role = input<undefined | ContactRole>();
+	public readonly $role = input<ContactRole | undefined>();
 
 	@Input() command?: Observable<ContactsComponentCommand>;
 
 	@Output() readonly roleChange = new EventEmitter<undefined | ContactRole>();
 
 	@Output() public readonly selectedContactsChange = new EventEmitter<
-		readonly IIdAndBrief<IContactBrief>[]
+		readonly IContactWithSpace[]
 	>();
 
 	protected readonly $showTabs = computed(
@@ -75,8 +77,16 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 	private readonly spaceNavService = inject(SpaceNavService);
 
 	public readonly $allContacts = input.required<
-		readonly IIdAndBrief<IContactBrief>[] | undefined
+		readonly IContactWithBrief[] | undefined
 	>();
+
+	protected readonly $contactsWithSpace = computed<
+		readonly IContactWithSpace[]
+	>(() => {
+		const contacts = this.$contacts();
+		const space = this.$space();
+		return contacts?.map(addSpace(space)) || [];
+	});
 
 	protected readonly familyGroupDefinitions = defaultFamilyContactGroups;
 
@@ -104,17 +114,19 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 	>(() => {
 		console.log('$contactsByRole - started');
 		const contacts = this.$allContacts() || [];
-		const contactsByRole: Record<string, IIdAndBrief<IContactBrief>[]> = {
+		const contactsByRole: Record<string, IContactWithSpace[]> = {
 			'': [],
 		};
+		const space = this.$space();
 		contacts.forEach((c) => {
-			contactsByRole[''].push(c);
+			const contact = { ...c, space };
+			contactsByRole[''].push(contact);
 			c.brief?.roles?.forEach((role) => {
 				const roleContacts = contactsByRole[role as ContactRole];
 				if (roleContacts) {
-					roleContacts.push(c);
+					roleContacts.push(contact);
 				} else {
-					contactsByRole[role] = [c];
+					contactsByRole[role] = [contact];
 				}
 			});
 		});
@@ -150,24 +162,26 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 
 		console.log('$contacts - started', allContacts?.length);
 
-		return !filter && !role
-			? allContacts
-			: allContacts?.filter(
-					(c) =>
-						(!filter ||
-							c.brief?.title?.toLowerCase().includes(filter) ||
-							c.brief?.names?.firstName?.toLowerCase().includes(filter) ||
-							c.brief?.names?.lastName?.toLowerCase().includes(filter) ||
-							c.brief?.names?.nickName?.toLowerCase().includes(filter) ||
-							c.brief?.names?.middleName?.toLowerCase().includes(filter) ||
-							c.brief?.names?.fullName?.toLowerCase().includes(filter)) &&
-						(!role || (c.brief?.roles && c?.brief.roles.includes(role))),
-				);
+		const space = this.$space();
+
+		const contacts =
+			!filter && !role
+				? allContacts
+				: allContacts?.filter(
+						(c) =>
+							(!filter ||
+								c.brief?.title?.toLowerCase().includes(filter) ||
+								c.brief?.names?.firstName?.toLowerCase().includes(filter) ||
+								c.brief?.names?.lastName?.toLowerCase().includes(filter) ||
+								c.brief?.names?.nickName?.toLowerCase().includes(filter) ||
+								c.brief?.names?.middleName?.toLowerCase().includes(filter) ||
+								c.brief?.names?.fullName?.toLowerCase().includes(filter)) &&
+							(!role || (c.brief?.roles && c?.brief.roles.includes(role))),
+					);
+		return contacts?.map(addSpace(space));
 	});
 
-	protected readonly goContact = (
-		contact?: IIdAndBrief<IContactBrief>,
-	): void => {
+	protected readonly goContact = (contact?: IContactWithBrief): void => {
 		if (!contact) {
 			this.errorLogger.logError('no contact');
 			return;
@@ -215,13 +229,21 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 
 	private readonly $selectedContactIDs = signal<readonly string[]>([]);
 
-	private readonly $selectedContacts = computed<
-		readonly IIdAndBrief<IContactBrief>[]
-	>(() => {
-		const contacts = this.$contacts();
-		const selectedContactIDs = this.$selectedContactIDs();
-		return contacts?.filter((c) => selectedContactIDs.includes(c.id)) || [];
-	});
+	private readonly $selectedContacts = computed<readonly IContactWithSpace[]>(
+		() => {
+			const contacts = this.$contacts();
+			if (!contacts) {
+				return [];
+			}
+			const selectedContactIDs = this.$selectedContactIDs();
+			const space = this.$space();
+			return (
+				contacts
+					.filter((c) => selectedContactIDs.includes(c.id))
+					.map(addSpace(space)) || []
+			);
+		},
+	);
 
 	protected contactSelectionChanged(args: ICheckChangedArgs) {
 		this.$selectedContactIDs.update((v) => {

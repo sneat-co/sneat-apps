@@ -2,9 +2,12 @@ import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import {
 	ContactRole,
 	ContactType,
+	IContactBrief,
 	IContactContext,
+	IContactWithBrief,
 	ICreateContactBasicRequest,
 } from '@sneat/contactus-core';
+import { IIdAndBrief } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
 import { ISpaceContext } from '@sneat/space-models';
@@ -15,15 +18,15 @@ import { ISpaceContext } from '@sneat/space-models';
 	standalone: false,
 })
 export class BasicContactFormComponent {
-	@Input() parentContact?: IContactContext;
+	@Input() parentContact?: IContactWithBrief;
 	@Input({ required: true }) space?: ISpaceContext;
 	@Input() contactType?: ContactType;
 
 	// @Input() contactRole?: ContactRole; // use contactRoles to support multiple roles
 	@Input() contactRoles?: ContactRole[];
 
-	@Output() readonly contactChange = new EventEmitter<IContactContext>();
-	@Output() readonly contactCreated = new EventEmitter<IContactContext>();
+	@Output() readonly contactChange = new EventEmitter<IContactWithBrief>();
+	@Output() readonly contactCreated = new EventEmitter<IContactWithBrief>();
 
 	isSubmitting = false;
 	isCreated = false;

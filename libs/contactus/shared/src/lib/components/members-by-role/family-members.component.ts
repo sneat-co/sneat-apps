@@ -8,9 +8,12 @@ import {
 } from '@angular/core';
 import { SpaceMemberTypeEnum } from '@sneat/auth-models';
 import {
+	addSpace,
 	IContactBrief,
 	IContactDbo,
 	IContactusSpaceDbo,
+	IContactWithBrief,
+	IContactWithSpace,
 	MemberGroupType,
 	MemberGroupTypeAdults,
 	MemberGroupTypeKids,
@@ -18,8 +21,12 @@ import {
 	MemberGroupTypePets,
 } from '@sneat/contactus-core';
 import { MembersByRoleComponent } from '../members-by-role/members-by-role.component';
-import { MembersGroup } from '../members-by-role/member-group';
-import { IIdAndBrief, IIdAndBriefAndOptionalDbo } from '@sneat/core';
+import { MemberGroup } from '../members-by-role/member-group';
+import {
+	emptySpaceRef,
+	IIdAndBrief,
+	IIdAndBriefAndOptionalDbo,
+} from '@sneat/core';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/space-models';
 
 @Component({
@@ -39,35 +46,35 @@ export class FamilyMembersComponent implements OnChanges {
 	@Input({ required: true })
 	public contactusSpaceDbo?: IContactusSpaceDbo | null;
 
-	@Output() public readonly addMember = new EventEmitter<MembersGroup>();
+	@Output() public readonly addMember = new EventEmitter<MemberGroup>();
 
 	public members?: readonly IIdAndBriefAndOptionalDbo<
 		IContactBrief,
 		IContactDbo
 	>[];
 
-	protected adults: MembersGroup = {
+	protected adults: MemberGroup = {
 		id: MemberGroupTypeAdults,
 		emoji: '🧓',
 		role: 'adult',
 		plural: 'Adults',
 		addLabel: 'Add adult',
 	};
-	protected children: MembersGroup = {
+	protected children: MemberGroup = {
 		id: MemberGroupTypeKids,
 		emoji: '🚸',
 		role: 'child',
 		plural: 'Children',
 		addLabel: 'Add child',
 	};
-	protected pets: MembersGroup = {
+	protected pets: MemberGroup = {
 		id: MemberGroupTypePets,
 		emoji: '🐕',
 		plural: 'Pets',
 		addLabel: 'Add pet',
 		role: 'animal',
 	};
-	protected other: MembersGroup = {
+	protected other: MemberGroup = {
 		id: MemberGroupTypeOther,
 		emoji: '👻',
 		plural: 'Other',
@@ -75,7 +82,7 @@ export class FamilyMembersComponent implements OnChanges {
 		role: 'other',
 	};
 
-	protected predefinedMemberGroups: readonly MembersGroup[] = [
+	protected predefinedMemberGroups: readonly MemberGroup[] = [
 		this.adults,
 		this.children,
 		this.pets,
@@ -107,60 +114,63 @@ export class FamilyMembersComponent implements OnChanges {
 
 	private processMembers(): void {
 		console.log('MembersPageComponent.processMembers()', this.members);
-		const adults: IIdAndBrief<IContactBrief>[] = [];
-		const children: IIdAndBrief<IContactBrief>[] = [];
-		const pets: IIdAndBrief<IContactBrief>[] = [];
-		const other: IIdAndBrief<IContactBrief>[] = [];
+		const adults: IContactWithBrief[] = [];
+		const children: IContactWithBrief[] = [];
+		const pets: IContactWithBrief[] = [];
+		const other: IContactWithBrief[] = [];
 		// this.adults = {...this.adults, members: []};
 		// this.children = {...this.children, members = []};
 		// this.other = {...this.other, members = []};
 		let addedToGroup = false;
 		this.members
 			?.filter((c) => c.brief?.roles?.includes('member'))
-			.forEach((m) => {
-				if (m.brief?.type === 'animal') {
-					pets.push(m);
+			.forEach((c) => {
+				if (c.brief?.type === 'animal') {
+					pets.push(c);
 					addedToGroup = true;
 				}
-				switch (m.brief?.ageGroup) {
+				switch (c.brief?.ageGroup) {
 					case 'adult':
-						adults?.push(m);
+						adults?.push(c);
 						addedToGroup = true;
 						break;
 					case 'child':
-						children?.push(m);
+						children?.push(c);
 						addedToGroup = true;
 						break;
 				}
-				if (m.dbo?.type === SpaceMemberTypeEnum.pet) {
+				if (c.dbo?.type === SpaceMemberTypeEnum.pet) {
 					addedToGroup = true;
-					pets.push(m);
+					pets.push(c);
 				}
 				if (!this.space) {
 					throw new Error('!this.team');
 				}
-				if (m.brief?.groupIDs?.length) {
-					m.brief.groupIDs.forEach((groupID) => {
+				if (c.brief?.groupIDs?.length) {
+					c.brief.groupIDs.forEach((groupID) => {
 						const groupIndex = this.predefinedMemberGroups.findIndex(
 							(g) => g.id === groupID,
 						);
-						let group: MembersGroup;
+						let group: MemberGroup;
 						if (groupIndex < 0) {
 							group = {
 								id: groupID as MemberGroupType,
 								role: groupID,
 								plural: groupID + 's',
-								members: [],
+								contacts: [],
 								emoji: '',
 								addLabel: 'Add member',
 							};
 						} else {
 							group = this.predefinedMemberGroups[groupIndex];
 						}
-						if (!group.members) {
-							group = { ...group, members: [m] };
-						} else if (!group.members.find((m2) => m2.id === m.id)) {
-							group = { ...group, members: [...group.members, m] };
+						if (!group.contacts) {
+							group = { ...group, contacts: [{ ...c, space }] };
+						} else if (!group.contacts.find((m2) => m2.id === c.id)) {
+							group = {
+								...group,
+								contacts: [...group.contacts, { ...c, space }],
+							};
 						}
 						this.predefinedMemberGroups = this.predefinedMemberGroups.map(
 							(g, i) => (i === groupIndex ? group : g),
@@ -178,18 +188,22 @@ export class FamilyMembersComponent implements OnChanges {
 					// 	}
 				}
 				if (!addedToGroup) {
-					other.push(m);
+					other.push(c);
 				}
 			});
-		this.adults = { ...this.adults, members: adults };
-		this.children = { ...this.children, members: children };
-		this.pets = { ...this.pets, members: pets };
-		this.other = { ...this.other, members: other };
+		const space = this.space || emptySpaceRef;
+		this.adults = { ...this.adults, contacts: adults.map(addSpace(space)) };
+		this.children = {
+			...this.children,
+			contacts: children.map(addSpace(space)),
+		};
+		this.pets = { ...this.pets, contacts: pets.map(addSpace(space)) };
+		this.other = { ...this.other, contacts: other.map(addSpace(space)) };
 		this.predefinedMemberGroups = [
 			this.adults,
 			this.children,
 			this.pets,
 			this.other,
-		].map((g) => ({ ...g, members: g.members || [] }));
+		].map((g) => ({ ...g, contacts: g.contacts || [] }));
 	}
 }

@@ -1,3 +1,4 @@
+import { computed, signal } from '@angular/core';
 import { ParamMap } from '@angular/router';
 import { INavContext, SpaceItem } from '@sneat/core';
 import { ModuleSpaceItemService } from '@sneat/space-services';
@@ -19,7 +20,11 @@ export abstract class SpaceItemPageBaseComponent<
 	Brief,
 	Dbo extends Brief,
 > extends SpacePageBaseComponent {
-	protected item?: INavContext<Brief, Dbo>;
+	// protected item?: INavContext<Brief, Dbo>;
+	protected readonly $item = signal<INavContext<Brief, Dbo> | undefined>(
+		undefined,
+	);
+	protected readonly $itemID = computed(() => this.$item()?.id);
 
 	protected constructor(
 		className: string,
@@ -36,18 +41,22 @@ export abstract class SpaceItemPageBaseComponent<
 	}
 
 	protected setItemContext(item?: INavContext<Brief, Dbo>): void {
-		console.log('SpaceItemBaseComponent.setItemContext()', item, {
-			...this.item,
-		});
-		if (item && this.item?.id === item?.id) {
-			this.item = {
+		// console.log(
+		// 	`SpaceItemBaseComponent.${this.className}.setItemContext()`,
+		// 	item,
+		// 	{
+		// 		...this.$item(),
+		// 	},
+		// );
+		const prevItem = this.$item();
+		if (item && prevItem?.id === item?.id && item !== prevItem) {
+			item = {
 				id: item.id,
-				brief: item.brief || item.dbo || this.item.brief,
-				dbo: item.dbo || this.item.dbo,
+				brief: item.brief || item.dbo || prevItem.brief,
+				dbo: item.dbo || prevItem.dbo,
 			};
-		} else {
-			this.item = item;
 		}
+		this.$item.set(item);
 	}
 
 	protected abstract briefs(): Readonly<Record<string, Brief>> | undefined;
@@ -57,14 +66,12 @@ export abstract class SpaceItemPageBaseComponent<
 	// Caller of this method will track changing of team & item IDs in route and close observable
 	protected watchItemChanges(): Observable<INavContext<Brief, Dbo>> {
 		console.log('SpaceItemBaseComponent.watchItemChanges()', this.itemName);
-		const itemID = this.item?.id;
+		const itemID = this.$itemID();
 		if (!itemID) {
 			throw throwError(() => 'no item ID');
 		}
-		return this.spaceItemService.watchSpaceItemByIdWithSpaceRef(
-			this.space,
-			itemID,
-		);
+		const space = this.$space();
+		return this.spaceItemService.watchSpaceItemByIdWithSpaceRef(space, itemID);
 	}
 
 	protected override trackRouteParamMap(paramMap$: Observable<ParamMap>): void {
@@ -119,7 +126,7 @@ export abstract class SpaceItemPageBaseComponent<
 			this.setItemContext(undefined);
 			return;
 		}
-		const item = this.item;
+		const item = this.$item();
 		if (item?.id !== itemID || !this.itemSubscription) {
 			this.setItemContext({ ...item, id: itemID });
 			this.setBriefFromSpace(itemID);
@@ -159,12 +166,12 @@ export abstract class SpaceItemPageBaseComponent<
 	}
 
 	private setBriefFromSpace(id: string): void {
-		if (this.item && !this.item.brief) {
+		const item = this.$item();
+		if (item && !item.brief) {
 			const briefs = this.briefs();
 			if (briefs) {
 				const brief = briefs[id];
 				if (brief) {
-					const item = this.item;
 					this.setItemContext({ ...item, brief });
 				}
 			}

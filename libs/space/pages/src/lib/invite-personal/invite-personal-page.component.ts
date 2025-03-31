@@ -7,6 +7,7 @@ import {
 	IMemberBrief,
 	IAcceptPersonalInviteRequest,
 	IPersonalInvite,
+	IContactWithSpace,
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { NavController } from '@ionic/angular';
@@ -19,6 +20,7 @@ import { MemberService } from '@sneat/contactus-services';
 import {
 	IRejectPersonalInviteRequest,
 	zipMapBriefsWithIDs,
+	zipMapBriefsWithIDsAndSpaceRef,
 } from '@sneat/space-models';
 import { SneatApiService } from '@sneat/api';
 import { RandomIdService } from '@sneat/random';
@@ -41,7 +43,7 @@ export class InvitePersonalPageComponent implements OnInit {
 	public rejecting = false;
 
 	public invite?: IPersonalInvite;
-	public members?: IIdAndBrief<IContactBrief>[];
+	public members?: readonly IContactWithSpace[];
 
 	private inviteId = '';
 	private spaceID = '';
@@ -86,9 +88,10 @@ export class InvitePersonalPageComponent implements OnInit {
 					next: (response) => {
 						console.log('invite record:', response);
 						this.invite = response.invite;
-						this.members = zipMapBriefsWithIDs(response.members)?.filter(
-							(m) => m.id !== response.invite?.memberID,
-						);
+						this.members = zipMapBriefsWithIDsAndSpaceRef(
+							{ id: spaceID },
+							response.members,
+						)?.filter((m) => m.id !== response.invite?.memberID);
 						if (response.invite) {
 							this.fullName = response.invite.to.title || '';
 							if (response.invite.to.channel === 'email') {

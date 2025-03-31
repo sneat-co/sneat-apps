@@ -1,4 +1,5 @@
 import { ComponentProps } from '@ionic/core';
+import { Signal } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export interface ISelectorEvents<T> {
@@ -8,8 +9,8 @@ export interface ISelectorEvents<T> {
 }
 
 export interface ISelectorOptions<T> extends ISelectorEvents<T> {
-	readonly items?: Observable<T[]>;
-	readonly selectedItems?: T[];
+	readonly items?: Signal<readonly T[]>;
+	readonly selectedItems?: readonly T[];
 	readonly max?: number;
 	readonly title?: string;
 

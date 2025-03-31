@@ -10,10 +10,10 @@ import {
 } from '@ionic/angular/standalone';
 import {
 	LongMonthNamePipe,
-	MembersAsBadgesComponent,
+	ContactsAsBadgesComponent,
 	SelectedContactsPipe,
 } from '@sneat/components';
-import { IContactBrief } from '@sneat/contactus-core';
+import { IContactBrief, IContactWithBrief } from '@sneat/contactus-core';
 import { IIdAndBrief } from '@sneat/core';
 import { getRelatedItemIDs } from '@sneat/dto';
 import { WdToWeekdayPipe } from '@sneat/mod-schedulus-core';
@@ -40,7 +40,7 @@ import { HappeningSlotsComponent } from '../happening-slots/happening-slots.comp
 		IonButton,
 		IonIcon,
 		HappeningSlotsComponent,
-		MembersAsBadgesComponent,
+		ContactsAsBadgesComponent,
 		LongMonthNamePipe,
 		SelectedContactsPipe,
 	],
@@ -73,7 +73,7 @@ export class HappeningCardComponent extends HappeningBaseComponent {
 		);
 	}
 
-	protected removeMember(member: IIdAndBrief<IContactBrief>): void {
+	protected removeMember(member: IContactWithBrief): void {
 		console.log('removeMember', member);
 		const [space, happening] = this.spaceAndHappening();
 		if (!space || !happening) {

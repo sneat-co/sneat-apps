@@ -27,7 +27,7 @@ export abstract class SpaceBaseComponent
 	extends SneatBaseComponent
 	implements OnInit
 {
-	protected readonly $space = signal<ISpaceContext | undefined>(undefined);
+	protected readonly $space = signal<ISpaceContext>({ id: '' });
 	protected readonly $spaceID = computed(() => this.$space()?.id);
 
 	protected readonly spaceIDChanged = new Subject<string | undefined>();
@@ -265,7 +265,7 @@ export abstract class SpaceBaseComponent
 				next: (uid) => {
 					if (!uid) {
 						this.unsubscribe('user signed out');
-						this.$space.set(undefined);
+						this.$space.set({ id: '' });
 					}
 					this.onUserIdChanged();
 				},
@@ -313,7 +313,7 @@ export abstract class SpaceBaseComponent
 		this.console.log(
 			`${this.className}:SpaceBaseComponent.setNewSpaceContext(id=${spaceContext?.id}) => idChanged=${idChanged}, spaceTypeChanged=${spaceTypeChanged}, briefChanged=${briefChanged}, dtoChanged=${dboChanged}`,
 		);
-		this.$space.set(spaceContext);
+		this.$space.set(spaceContext || { id: '' });
 		if (idChanged) {
 			this.spaceIDChanged.next(spaceContext?.id);
 			this.onSpaceIdChanged();

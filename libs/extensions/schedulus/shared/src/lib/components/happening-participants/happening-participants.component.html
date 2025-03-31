@@ -13,7 +13,7 @@
 			<ion-label>{{ $membersTabLabel() }}</ion-label>
 		</ion-item-divider>
 		<sneat-contacts-checklist
-			[space]="$space()"
+			[$space]="$space()"
 			[$lastItemLine]="'full'"
 			[$checkedContactIDs]="$relatedContactIDs()"
 			noContactsMessage="No members"
@@ -35,7 +35,7 @@
 			</ion-buttons>
 		</ion-item-divider>
 		<sneat-contacts-checklist
-			[space]="$space()"
+			[$space]="$space()"
 			[$spaceRoles]="[]"
 			[$spaceRolesToExclude]="['member']"
 			[$onlySelected]="true"

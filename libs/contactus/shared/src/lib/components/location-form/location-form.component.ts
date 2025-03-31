@@ -2,6 +2,7 @@ import {
 	Component,
 	EventEmitter,
 	Inject,
+	input,
 	Input,
 	OnChanges,
 	Output,
@@ -34,12 +35,18 @@ import {
 	IAddress,
 	IContactBrief,
 	IContactDbo,
-	IContactContext,
 	ICreateContactRequest,
+	IContactWithBrief,
+	IContactWithOptionalDbo,
+	IContactWithDboAndSpace,
+	IContactContext,
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
-import { ISpaceContext } from '@sneat/space-models';
+import {
+	computeSpaceRefFromSpaceContext,
+	ISpaceContext,
+} from '@sneat/space-models';
 
 @Component({
 	selector: 'sneat-location-form',
@@ -60,17 +67,22 @@ import { ISpaceContext } from '@sneat/space-models';
 	],
 })
 export class LocationFormComponent implements OnChanges {
-	@Input({ required: true }) space?: ISpaceContext;
+	public readonly $space = input.required<ISpaceContext>();
+	protected readonly $spaceRef = computeSpaceRefFromSpaceContext(this.$space);
+
 	@Input() contactRole?: ContactRole;
 	@Input() countryID = '';
-	@Input() contact?: IContactContext;
+	@Input() location?: IContactWithOptionalDbo;
 	@Input() parentContact?: IContactContext;
 	@Input() hideSubmitButton = false;
 	@Input() label = 'Location details';
 	@Input() contactType: ContactType = 'location';
 
-	@Output() readonly contactChange = new EventEmitter<IContactContext>();
-	@Output() readonly contactCreated = new EventEmitter<IContactContext>();
+	@Output() readonly locationChange =
+		new EventEmitter<IContactWithOptionalDbo>();
+
+	@Output() readonly locationCreated =
+		new EventEmitter<IContactWithOptionalDbo>();
 
 	@ViewChild('titleInput', { static: false }) titleInput?: IonInput;
 
@@ -97,68 +109,62 @@ export class LocationFormComponent implements OnChanges {
 
 	onAddressChanged(address: IAddress): void {
 		console.log('onAddressChanged()', address);
-		if (!this.contact) {
+		if (!this.location) {
 			return;
 		}
-		this.contact = {
-			...this.contact,
+		this.location = {
+			...this.location,
 			dbo: {
-				...this.contact?.dbo,
+				...this.location?.dbo,
 				type: this.contactType,
 				address,
 			},
 		};
-		this.contactChange.emit(this.contact);
+		this.locationChange.emit(this.location);
 	}
 
 	onTitleChanged(): void {
 		console.log('onTitleChanged()', this.title.value);
-		if (!this.space) {
-			return;
-		}
-		if (!this.contact) {
+		if (!this.location) {
 			const title = this.title.value || '';
 			const brief: IContactBrief = { type: this.contactType, title };
-			this.contact = {
+			this.location = {
 				id: '',
 				// team: this.team,
-				dbo: brief,
-				space: this.space,
+				brief,
 			};
 		}
 		const title = this.title.value || '';
-		const dbo = (this.contact?.dbo || {}) as IContactDbo;
-		this.contact = {
-			...this.contact,
+		const dbo = (this.location.dbo || this.location.brief) as IContactDbo;
+		this.location = {
+			...this.location,
 			dbo: { ...dbo, title },
 		};
-		this.contactChange.emit(this.contact);
+		this.locationChange.emit(this.location);
 	}
 
 	private emitContactChange(): void {
-		this.contactChange.emit(this.contact);
+		this.locationChange.emit(this.location);
 	}
 
-	private readonly onContactCreated = (contact: IContactContext): void => {
-		if (!this.space) {
-			return;
-		}
+	private readonly onContactCreated = (
+		contact: IContactWithDboAndSpace,
+	): void => {
 		// contact = { ...contact, parentContact: this.parentContact };
 		console.log('LocationFormComponent.onContactCreated()', contact);
-		this.contact = contact;
+		this.location = contact;
 		this.emitContactChange();
-		this.contactCreated.emit(contact);
+		this.locationCreated.emit(contact);
 	};
 
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log('LocationFormComponent.ngOnChanges()', changes);
 		if (changes['contactType']) {
-			if (!this.contact?.dbo && this.contactType && this.space) {
-				this.contact = {
-					id: this.contact?.id || '',
+			if (!this.location?.dbo && this.contactType) {
+				this.location = {
+					id: this.location?.id || '',
 					// team: this.team,
-					dbo: { type: this.contactType },
-					space: this.space,
+					brief: { type: this.contactType },
 				};
 				this.emitContactChange();
 			}
@@ -179,12 +185,12 @@ export class LocationFormComponent implements OnChanges {
 	}
 
 	submit(): void {
-		const contactDto = this.contact?.dbo;
+		const contactDto = this.location?.dbo;
 		if (!contactDto) {
 			alert('contact brief is not defined');
 			return;
 		}
-		if (!this.space) {
+		if (!this.$spaceRef().id) {
 			return;
 		}
 		// if (!this.parentContact) {
@@ -213,9 +219,10 @@ export class LocationFormComponent implements OnChanges {
 			alert('address lines are required');
 			return;
 		}
+		const space = this.$spaceRef();
 		const request: ICreateContactRequest = {
 			status: 'active',
-			spaceID: this.space.id,
+			spaceID: space.id,
 			type: 'location',
 			parentContactID: this.parentContact?.id,
 			location: {
@@ -224,7 +231,7 @@ export class LocationFormComponent implements OnChanges {
 			},
 		};
 		this.isCreating = true;
-		this.contactService.createContact(this.space, request).subscribe({
+		this.contactService.createContact(space, request).subscribe({
 			next: this.onContactCreated,
 			error: (err: unknown) => {
 				this.errorLogger.logError(err, 'Failed to create new contact');

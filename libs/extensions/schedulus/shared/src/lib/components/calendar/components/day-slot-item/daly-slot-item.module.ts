@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { MembersAsBadgesComponent } from '@sneat/components';
+import { ContactsAsBadgesComponent } from '@sneat/components';
 import { MembersSelectorModule } from '@sneat/contactus-shared';
 import {
 	CalendarNavServicesModule,
@@ -24,7 +24,7 @@ import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
 		HappeningSlotModalServiceModule,
 		HappeningSlotParticipantsComponent,
 		TimingBadgeComponent,
-		MembersAsBadgesComponent,
+		ContactsAsBadgesComponent,
 		CalendarNavServicesModule,
 	],
 })

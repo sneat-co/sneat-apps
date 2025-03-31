@@ -11,7 +11,6 @@ import {
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import {
-	IonicModule,
 	IonRouterOutlet,
 	ModalController,
 	NavController,
@@ -30,8 +29,7 @@ import {
 	IonSkeletonText,
 } from '@ionic/angular/standalone';
 import { ContactTitlePipe } from '@sneat/components';
-import { IIdAndBrief, listAddRemoveAnimation } from '@sneat/core';
-import { IContactBrief } from '@sneat/contactus-core';
+import { listAddRemoveAnimation } from '@sneat/core';
 import {
 	ScheduleNavService,
 	ScheduleNavServiceModule,
@@ -42,7 +40,11 @@ import {
 	InviteModalModule,
 } from '@sneat/space-components';
 import { ContactService } from '@sneat/contactus-services';
-import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
+import {
+	IContactusSpaceDboAndID,
+	IContactWithBrief,
+	IContactWithSpace,
+} from '@sneat/contactus-core';
 import { ISpaceContext } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
 import { SneatUserService } from '@sneat/auth-core';
@@ -83,20 +85,20 @@ export class MembersListComponent implements OnChanges {
 	@Input({ required: true }) public space?: ISpaceContext;
 
 	@Input({ required: true })
-	public members?: readonly IIdAndBrief<IContactBrief>[];
+	public members?: readonly IContactWithBrief[];
 
 	@Input() public role?: string;
 
 	@Output() selfRemoved = new EventEmitter<void>();
 	@Input() public contactsByMember: Record<
 		string,
-		readonly IIdAndBrief<IContactBrief>[]
+		readonly IContactWithSpace[]
 	> = {};
 
 	@Input() public hideRoles: readonly string[] = ['member'];
 
 	// Holds filtered entries, use `allMembers` to pass input
-	public membersToDisplay?: readonly IIdAndBrief<IContactBrief>[];
+	public membersToDisplay?: readonly IContactWithBrief[];
 
 	protected contactusSpace?: IContactusSpaceDboAndID;
 
@@ -113,21 +115,21 @@ export class MembersListComponent implements OnChanges {
 		//
 	}
 
-	protected isAgeOptionsVisible(member: IIdAndBrief<IContactBrief>): boolean {
+	protected isAgeOptionsVisible(contact: IContactWithBrief): boolean {
 		const spaceDbo = this.space?.dbo;
 		// console.log('MembersListComponent.isAgeOptionsVisible()', member, teamDto);
 		return (
 			spaceDbo?.type === 'family' &&
-			member.brief?.type === 'person' &&
-			(!member.brief?.ageGroup || member.brief?.ageGroup === 'unknown')
+			contact.brief?.type === 'person' &&
+			(!contact.brief?.ageGroup || contact.brief?.ageGroup === 'unknown')
 		);
 	}
 
-	protected isInviteButtonVisible(member: IIdAndBrief<IContactBrief>): boolean {
-		return member.brief?.type === 'person' && !member.brief?.userID;
+	protected isInviteButtonVisible(contact: IContactWithBrief): boolean {
+		return contact.brief?.type === 'person' && !contact.brief?.userID;
 	}
 
-	public genderIcon(m: IIdAndBrief<IContactBrief>) {
+	public genderIcon(m: IContactWithBrief) {
 		switch (m.brief?.gender) {
 			case 'male':
 				return 'man-outline';
@@ -137,7 +139,7 @@ export class MembersListComponent implements OnChanges {
 		return 'person-outline';
 	}
 
-	public goMember(member?: IIdAndBrief<IContactBrief>): boolean {
+	public goMember(member?: IContactWithBrief): boolean {
 		console.log('MembersListComponent.goMember()', member);
 		if (!this.space) {
 			this.errorLogger.logError(
@@ -176,7 +178,7 @@ export class MembersListComponent implements OnChanges {
 		}
 	}
 
-	public goSchedule(event: Event, contact: IIdAndBrief<IContactBrief>) {
+	public goSchedule(event: Event, contact: IContactWithBrief) {
 		console.log('MembersListComponent.goSchedule()');
 		event.stopPropagation();
 		event.preventDefault();
@@ -192,7 +194,7 @@ export class MembersListComponent implements OnChanges {
 		}
 	}
 
-	public removeMember(event: Event, member: IIdAndBrief<IContactBrief>) {
+	public removeMember(event: Event, member: IContactWithBrief) {
 		// event.preventDefault();
 		event.stopPropagation();
 		if (!this.space) {
@@ -233,8 +235,8 @@ export class MembersListComponent implements OnChanges {
 	// }
 
 	private readonly filterMembers = (
-		members?: readonly IIdAndBrief<IContactBrief>[],
-	): readonly IIdAndBrief<IContactBrief>[] | undefined => {
+		members?: readonly IContactWithBrief[],
+	): readonly IContactWithBrief[] | undefined => {
 		return !this.role
 			? members
 			: members?.filter((m) => m.brief?.roles?.some((r) => r === this.role));
@@ -242,7 +244,7 @@ export class MembersListComponent implements OnChanges {
 
 	async showInviteModal(
 		event: Event,
-		member: IIdAndBrief<IContactBrief>,
+		member: IContactWithBrief,
 	): Promise<void> {
 		console.log('showInviteModal()', event, member);
 		event.stopPropagation();

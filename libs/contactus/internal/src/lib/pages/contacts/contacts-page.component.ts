@@ -13,7 +13,12 @@ import {
 } from '@sneat/contactus-shared';
 import { IIdAndBrief, listItemAnimations } from '@sneat/core';
 import { setHrefQueryParam } from '@sneat/core';
-import { ContactRole, IContactBrief } from '@sneat/contactus-core';
+import {
+	ContactRole,
+	IContactBrief,
+	IContactWithBrief,
+	IContactWithSpace,
+} from '@sneat/contactus-core';
 import {
 	SpaceComponentBaseParams,
 	SpacePageTitleComponent,
@@ -46,7 +51,7 @@ export class ContactsPageComponent
 	implements OnDestroy
 {
 	protected readonly $allContacts = signal<
-		undefined | readonly IIdAndBrief<IContactBrief>[]
+		undefined | readonly IContactWithBrief[]
 	>(undefined);
 
 	// public readonly $filter = signal<string>('');
@@ -61,12 +66,12 @@ export class ContactsPageComponent
 		return 'Contacts';
 	});
 
-	protected readonly $selectedContacts = signal<
-		readonly IIdAndBrief<IContactBrief>[]
-	>([]);
+	protected readonly $selectedContacts = signal<readonly IContactWithSpace[]>(
+		[],
+	);
 
 	protected selectedContactsChanged(
-		contacts: readonly IIdAndBrief<IContactBrief>[],
+		contacts: readonly IContactWithSpace[],
 	): void {
 		this.$selectedContacts.set(contacts);
 	}
@@ -80,8 +85,7 @@ export class ContactsPageComponent
 		if (role) {
 			this.$role.set(role[1] as ContactRole);
 		}
-		const allContacts = window.history.state
-			.contacts as IIdAndBrief<IContactBrief>[];
+		const allContacts = window.history.state.contacts as IContactWithSpace[];
 		this.$allContacts.set(allContacts);
 
 		this.route.queryParamMap.pipe(this.takeUntilDestroyed()).subscribe({
@@ -121,9 +125,7 @@ export class ContactsPageComponent
 		}
 	});
 
-	private readonly setSpaceContacts = (
-		contacts: IIdAndBrief<IContactBrief>[],
-	): void => {
+	private readonly setSpaceContacts = (contacts: IContactWithBrief[]): void => {
 		console.log('ContactsPageComponent.setSpaceContacts()', contacts);
 		this.$allContacts.set(contacts);
 	};

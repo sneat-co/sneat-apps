@@ -9,13 +9,13 @@ import { IQueryArgs, SneatApiService, SneatFirestoreService } from '@sneat/api';
 import {
 	IIdAndBriefAndDbo,
 	IIdAndOptionalBriefAndOptionalDbo,
+	ISpaceItemWithBriefAndDbo,
+	ISpaceRef,
 } from '@sneat/core';
 import { ISpaceDbo } from '@sneat/dto';
 import {
 	ISpaceContext,
 	ISpaceItemNavContext,
-	ISpaceItemWithBriefAndDbo,
-	ISpaceRef,
 	SpaceRequest,
 } from '@sneat/space-models';
 import { Observable } from 'rxjs';
@@ -56,6 +56,9 @@ abstract class SpaceItemBaseService<Brief, Dbo extends Brief> {
 		console.log(
 			`SpaceItemBaseService.watchTeamItemByIdWithTeamRef(space=${space.id}, itemID=${itemID}), collectionName=${this.collectionName}`,
 		);
+		if (!space.id) {
+			throw new Error('spaceID is required');
+		}
 		let collectionRef: CollectionReference<Dbo2>;
 		if (this._collectionRef?.id == space.id) {
 			collectionRef = this._collectionRef as CollectionReference<Dbo2>;
@@ -115,7 +118,7 @@ abstract class SpaceItemBaseService<Brief, Dbo extends Brief> {
 
 	public createSpaceItem<Brief, Dbo extends Brief>(
 		endpoint: string,
-		space: ISpaceContext,
+		spaceRef: ISpaceRef,
 		request: SpaceRequest,
 	): Observable<ISpaceItemWithBriefAndDbo<Brief, Dbo>> {
 		console.log(`SpaceItemBaseService.createTeamItem()`, request);
@@ -130,7 +133,7 @@ abstract class SpaceItemBaseService<Brief, Dbo extends Brief> {
 						throw new Error('create team item response have no ID');
 					}
 					const item: ISpaceItemWithBriefAndDbo<Brief, Dbo> = {
-						space,
+						space: spaceRef,
 						id: response.id,
 						dbo: response.dbo,
 						brief: { id: response.id, ...response.dbo } as unknown as Brief,

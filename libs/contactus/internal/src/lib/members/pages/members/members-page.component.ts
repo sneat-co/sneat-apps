@@ -12,7 +12,7 @@ import {
 import {
 	ContactComponentBaseParams,
 	FamilyMembersComponent,
-	MembersGroup,
+	MemberGroup,
 } from '@sneat/contactus-shared';
 import { IMemberGroupContext } from '@sneat/contactus-core';
 import { isSpaceSupportsMemberGroups } from '@sneat/dto';
@@ -61,7 +61,7 @@ export class MembersPageComponent extends MembersBasePage {
 		}).catch(this.logErrorHandler('failed to navigate to members group page'));
 	}
 
-	protected goNewMemberPage(group?: MembersGroup): void {
+	protected goNewMemberPage(group?: MemberGroup): void {
 		const queryParams: Params | undefined = group
 			? { group: group.id }
 			: undefined;

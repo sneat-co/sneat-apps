@@ -1,7 +1,7 @@
 import { Component, Input, input, computed } from '@angular/core';
 import { IonicModule, PopoverController, PopoverOptions } from '@ionic/angular';
 import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
-import { MembersSelectorModule } from '@sneat/contactus-shared';
+import { ContactsSelectorModule } from '@sneat/contactus-shared';
 import {
 	CalendarNavService,
 	CalendarNavServicesModule,
@@ -19,7 +19,7 @@ import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
 	imports: [
 		IonicModule,
 		HappeningServiceModule,
-		MembersSelectorModule,
+		ContactsSelectorModule,
 		HappeningSlotModalServiceModule,
 		HappeningSlotParticipantsComponent,
 		TimingBadgeComponent,

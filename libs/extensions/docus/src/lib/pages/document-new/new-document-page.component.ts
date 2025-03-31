@@ -1,15 +1,23 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	computed,
+	Input,
+	OnChanges,
+	signal,
+	SimpleChanges,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { ContactsSelectorInputComponent } from '@sneat/contactus-shared';
 import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import { CountrySelectorComponent } from '@sneat/components';
 import {
-	IContactBrief,
+	addSpace,
 	IContactContext,
 	IContactusSpaceDboAndID,
+	IContactWithBrief,
+	IContactWithSpace,
 } from '@sneat/contactus-core';
-import { MembersSelectorModule } from '@sneat/contactus-shared';
-import { IIdAndBrief } from '@sneat/core';
 import {
 	IDocTypeStandardFields,
 	AssetDocumentType,
@@ -26,7 +34,6 @@ import {
 import { SpaceComponentBaseParams } from '@sneat/space-components';
 import {
 	ContactService,
-	contactContextFromBrief,
 	ContactusServicesModule,
 } from '@sneat/contactus-services';
 import { zipMapBriefsWithIDs } from '@sneat/space-models';
@@ -43,9 +50,9 @@ import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 		CountrySelectorComponent,
 		SpaceServiceModule,
 		SelectFromListComponent,
-		MembersSelectorModule,
 		AssetusServicesModule,
 		ContactusServicesModule,
+		ContactsSelectorInputComponent,
 	],
 })
 export class NewDocumentPageComponent
@@ -69,9 +76,17 @@ export class NewDocumentPageComponent
 
 	private readonly memberChanged = new Subject<void>();
 
-	protected members?: readonly IIdAndBrief<IContactBrief>[];
+	protected readonly $contacts = signal<
+		readonly IContactWithBrief[] | undefined
+	>(undefined);
 
-	protected selectedMembers?: readonly IIdAndBrief<IContactBrief>[];
+	protected readonly $selectedContacts = signal<readonly IContactWithSpace[]>(
+		[],
+	);
+
+	protected readonly $hasSelectedContacts = computed<boolean>(
+		() => !!this.$selectedContacts().length,
+	);
 
 	constructor(
 		private readonly contactService: ContactService,
@@ -113,8 +128,10 @@ export class NewDocumentPageComponent
 			const space = this.space;
 			if (space) {
 				const contactusTeam = this.contactusSpace;
-				this.members = zipMapBriefsWithIDs(contactusTeam?.dbo?.contacts).map(
-					(contact) => contactContextFromBrief(contact, space),
+				this.$contacts.set(
+					zipMapBriefsWithIDs(contactusTeam?.dbo?.contacts).map(
+						addSpace(space),
+					),
 				);
 			}
 		}

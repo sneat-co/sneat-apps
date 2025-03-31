@@ -13,7 +13,7 @@ import {
 } from '@sneat/auth-core';
 import { IUserSpaceBrief } from '@sneat/auth-models';
 import { IJoinSpaceInfoResponse } from '@sneat/contactus-core';
-import { IIdAndBrief } from '@sneat/core';
+import { IIdAndBrief, ISpaceRef } from '@sneat/core';
 import { IRecord } from '@sneat/data';
 import { ISpaceBrief, ISpaceDbo, ISpaceMetric } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -21,7 +21,6 @@ import {
 	ICreateSpaceRequest,
 	ICreateSpaceResponse,
 	ISpaceContext,
-	ISpaceRef,
 	zipMapBriefsWithIDs,
 } from '@sneat/space-models';
 import { ISneatUserState, SneatUserService } from '@sneat/auth-core';
