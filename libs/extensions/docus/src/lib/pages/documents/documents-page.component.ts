@@ -10,7 +10,6 @@ import {
 	AssetusServicesModule,
 } from '@sneat/extensions-assetus-components';
 import {
-	SpaceBaseComponent,
 	SpaceComponentBaseParams,
 	SpaceItemsBaseComponent,
 	SpacePageTitleComponent,
