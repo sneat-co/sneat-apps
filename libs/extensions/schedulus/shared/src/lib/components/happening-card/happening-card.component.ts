@@ -13,8 +13,7 @@ import {
 	ContactsAsBadgesComponent,
 	SelectedContactsPipe,
 } from '@sneat/components';
-import { IContactBrief, IContactWithBrief } from '@sneat/contactus-core';
-import { IIdAndBrief } from '@sneat/core';
+import { IContactWithBrief } from '@sneat/contactus-core';
 import { getRelatedItemIDs } from '@sneat/dto';
 import { WdToWeekdayPipe } from '@sneat/mod-schedulus-core';
 import {

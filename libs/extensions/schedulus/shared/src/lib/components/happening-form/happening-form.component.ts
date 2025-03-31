@@ -8,10 +8,8 @@ import {
 	EventEmitter,
 	input,
 	Input,
-	OnChanges,
 	Output,
 	signal,
-	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
 import {
@@ -62,7 +60,7 @@ import {
 })
 export class HappeningFormComponent
 	extends SneatBaseComponent
-	implements OnChanges, AfterViewInit
+	implements AfterViewInit
 {
 	public readonly $happening = input.required<IHappeningContext>();
 	@Input() public wd?: WeekdayCode2;
@@ -133,12 +131,6 @@ export class HappeningFormComponent
 			}
 			// this.changeDetectorRef.markForCheck();
 		});
-	}
-
-	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['happening']) {
-			const happening = this.$happening();
-		}
 	}
 
 	ngAfterViewInit(): void /* Intentionally not ngOnInit*/ {

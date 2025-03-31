@@ -12,12 +12,10 @@ import { IonicModule } from '@ionic/angular';
 import { PersonNamesPipe } from '@sneat/components';
 import {
 	ContactType,
-	IContactBrief,
 	IContactWithBrief,
 	IContactWithSpace,
 } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
-import { IIdAndBrief, IIdAndOptionalBrief } from '@sneat/core';
 import { getRelatedItems } from '@sneat/dto';
 import { ISlotUIContext } from '@sneat/mod-schedulus-core';
 import { ISpaceRef } from '@sneat/core';
