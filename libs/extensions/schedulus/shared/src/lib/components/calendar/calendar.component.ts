@@ -24,7 +24,6 @@ import {
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SpaceComponentBaseParams } from '@sneat/space-components';
-import { ISpaceContext } from '@sneat/space-models';
 import { takeUntil } from 'rxjs';
 import {
 	CalendarDayService,

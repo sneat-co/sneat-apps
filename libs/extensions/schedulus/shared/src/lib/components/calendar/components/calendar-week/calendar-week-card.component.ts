@@ -1,4 +1,4 @@
-import { Component, Inject, input, Input } from '@angular/core';
+import { Component, input, Input } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { virtualSliderAnimations } from '@sneat/components';
 import { ISpaceContext } from '@sneat/space-models';

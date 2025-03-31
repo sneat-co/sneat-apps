@@ -25,7 +25,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
 import { SneatBaseComponent } from '@sneat/ui';
-import { from, NEVER, Observable } from 'rxjs';
+import { NEVER, Observable } from 'rxjs';
 import {
 	HappeningService,
 	IHappeningContactRequest,
