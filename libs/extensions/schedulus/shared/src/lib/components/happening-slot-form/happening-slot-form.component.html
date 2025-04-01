@@ -27,8 +27,6 @@
 <!--	</ion-segment>-->
 <!--</ion-item-divider>-->
 
-happeningType: {{ $happeningType() }}
-
 @if ($happeningType() === "recurring") {
 	@if (repeats()) {
 		<ion-grid class="ion-grid-layout">

@@ -16,6 +16,8 @@ export interface IConsole {
 	warn(...data: unknown[]): void;
 
 	trace(...data: unknown[]): void;
+
+	error(...data: unknown[]): void;
 }
 
 export const ClassName = new InjectionToken<string>('className');
@@ -40,9 +42,13 @@ export abstract class SneatBaseComponent implements OnDestroy {
 	protected readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
 
 	protected constructor(@Inject(ClassName) public readonly className: string) {
-		this.console.log(`${this.className}.SneatBaseComponent.constructor()`);
+		this.log(`${this.className}.SneatBaseComponent.constructor()`);
 		// this.logError = this.errorLogger.logError;
 		// this.logErrorHandler = this.errorLogger.logErrorHandler;
+	}
+
+	protected log(msg: string, ...data: unknown[]): void {
+		this.console.log(msg, ...data);
 	}
 
 	protected takeUntilDestroyed<T>(): MonoTypeOperatorFunction<T> {
@@ -50,17 +56,17 @@ export abstract class SneatBaseComponent implements OnDestroy {
 	}
 
 	public ngOnDestroy(): void {
-		console.log(`${this.className}.SneatBaseComponent.ngOnDestroy()`);
+		this.log(`${this.className}.SneatBaseComponent.ngOnDestroy()`);
 		this.unsubscribe(`${this.className}.SneatBaseComponent.ngOnDestroy()`);
 		// this.destroyed$?.pipe(take(1)).subscribe(() => {
-		// 	console.log(`${this.className}.SneatBaseComponent => destroyed$!`);
+		// 	this.log(`${this.className}.SneatBaseComponent => destroyed$!`);
 		// });
 		this.destroyed?.next();
 		this.destroyed?.complete();
 	}
 
 	protected unsubscribe(reason?: string): void {
-		this.console.log(
+		this.log(
 			`${this.className}.SneatBaseComponent.unsubscribe(reason: ${reason})`,
 		);
 		this.subs.unsubscribe();

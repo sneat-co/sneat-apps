@@ -36,9 +36,7 @@ export interface AddSlotParams {
 	selector: 'sneat-happening-slots',
 	templateUrl: './happening-slots.component.html',
 	imports: [
-		CommonModule,
 		IonicModule,
-
 		HappeningSlotModalServiceModule,
 		WdToWeekdayPipe,
 		Numeral2Pipe,

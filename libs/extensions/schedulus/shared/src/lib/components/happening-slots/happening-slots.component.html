@@ -11,30 +11,39 @@
 		</ion-button>
 	</ion-buttons>
 </ion-item-divider>
-<ion-item *ngIf="slots() && !slots()?.length">
-	<ion-label><i>No slots have been added yet.</i></ion-label>
-</ion-item>
-@for (slot of slots(); track slot.id) {
+@if (slots() && !slots()?.length) {
+	<ion-item>
+		<ion-label><i>No slots have been added yet.</i></ion-label>
+	</ion-item>
+}
+@for (slot of slots(); track slot.id; let last = $last) {
 	<ion-item
 		button="button"
 		class="with-buttons"
+		[lines]="last ? 'full' : 'inset'"
 		(click)="selectSlot($event, slot)"
 	>
 		@if (slot.start || slot.end) {
 			<ion-buttons slot="start">
+				<!-- TODO(help-wanted): align to the top -->
 				<div style="text-align: center">
 					@if (slot.start) {
 						<ion-badge style="display: block" color="light">
-							<b *ngIf="slot.start.date">{{ slot.start.date }}</b>
+							@if (slot.start.date) {
+								<b>{{ slot.start.date }}</b>
+							}
+
 							&#64; {{ slot.start.time }}
 						</ion-badge>
 					}
-					<ion-text
-						*ngIf="slot.durationMinutes"
-						color="medium"
-						style="display: block; font-size: small; margin-top: 0.75em"
-						>{{ slot.durationMinutes }} mins
-					</ion-text>
+					@if (slot.durationMinutes) {
+						<ion-text
+							color="medium"
+							style="display: block; font-size: small; margin-top: 0.75em"
+						>
+							{{ slot.durationMinutes }} mins
+						</ion-text>
+					}
 				</div>
 			</ion-buttons>
 		}
@@ -90,31 +99,31 @@
 			</p>
 		</ion-label>
 		<ion-buttons slot="end">
-			<ion-button
-				*ngIf="!deletingSlotIDs().includes(slot.id)"
-				title="Edit"
-				color="medium"
-				(click)="showEditSlot($event, slot)"
-			>
-				<ion-icon name="create-outline" />
-			</ion-button>
-			<ion-button
-				[disabled]="deletingSlotIDs().includes(slot.id)"
-				*ngIf="!happening?.id || (slots()?.length || 0) > 1"
-				(click)="removeSlot($event, slot)"
-				color="medium"
-			>
-				@if (deletingSlotIDs().includes(slot.id)) {
-					<ion-spinner
-						slot="end"
-						name="lines-small"
-						*ngIf="deletingSlotIDs().includes(slot.id)"
-					></ion-spinner>
-					<ion-label style="text-transform: none"> Deleting... </ion-label>
-				} @else {
-					<ion-icon name="close" />
-				}
-			</ion-button>
+			@if (!deletingSlotIDs().includes(slot.id)) {
+				<ion-button
+					title="Edit"
+					color="medium"
+					(click)="showEditSlot($event, slot)"
+				>
+					<ion-icon name="create-outline" />
+				</ion-button>
+			}
+			@if (!happening?.id || (slots()?.length || 0) > 1) {
+				<ion-button
+					[disabled]="deletingSlotIDs().includes(slot.id)"
+					(click)="removeSlot($event, slot)"
+					color="medium"
+				>
+					@if (deletingSlotIDs().includes(slot.id)) {
+						@if (deletingSlotIDs().includes(slot.id)) {
+							<ion-spinner name="lines-small" slot="end" />
+						}
+						<ion-label style="text-transform: none">Deleting...</ion-label>
+					} @else {
+						<ion-icon name="close" />
+					}
+				</ion-button>
+			}
 		</ion-buttons>
 	</ion-item>
 }

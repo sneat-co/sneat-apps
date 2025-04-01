@@ -19,7 +19,13 @@ import {
 } from '@sneat/space-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { ClassName, SneatBaseComponent } from '@sneat/ui';
-import { distinctUntilChanged, Observable, shareReplay, Subject } from 'rxjs';
+import {
+	distinctUntilChanged,
+	map,
+	Observable,
+	shareReplay,
+	Subject,
+} from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SpaceComponentBaseParams } from './space-component-base-params.service';
 
@@ -153,7 +159,6 @@ export abstract class SpaceBaseComponent
 	// }
 
 	protected onUserIdChanged(): void {
-		console.log();
 		if (!this.currentUserId) {
 			this.subs.unsubscribe();
 			if (this.space && this.space.dbo) {
@@ -181,13 +186,13 @@ export abstract class SpaceBaseComponent
 	}
 
 	protected onSpaceIdChanged(): void {
-		this.console.log(
+		this.log(
 			`${this.className}:SpaceBaseComponent.onSpaceIdChanged() spaceID=${this.space?.id}`,
 		);
 	}
 
 	protected onSpaceDboChanged(): void {
-		// this.console.log(
+		// this.log(
 		// 	`${this.className}:SpaceBaseComponent.onSpaceDboChanged(): ` +
 		// 		JSON.stringify(this.space.dbo),
 		// );
@@ -206,11 +211,11 @@ export abstract class SpaceBaseComponent
 	private trackSpaceIdFromRouteParams(paramMap$: Observable<ParamMap>): void {
 		trackSpaceIdAndTypeFromRouteParameter(paramMap$)
 			// .pipe(
-			// 	tap((v) => console.log('trackSpaceIdFromRouteParams 1', v)),
+			// 	tap((v) => this.log('trackSpaceIdFromRouteParams 1', v)),
 			// 	distinctUntilChanged(
 			// 		(previous, current) => previous?.id === current?.id,
 			// 	),
-			// 	tap((v) => console.log('trackSpaceIdFromRouteParams 3', v)),
+			// 	tap((v) => this.log('trackSpaceIdFromRouteParams 3', v)),
 			// )
 			.subscribe({
 				next: this.onSpaceIdChangedInUrl,
@@ -220,7 +225,7 @@ export abstract class SpaceBaseComponent
 
 	private readonly onSpaceIdChangedInUrl = (space?: ISpaceContext): void => {
 		const prevSpace = this.$space();
-		console.log(
+		this.log(
 			`${this.className}:SpaceBaseComponent.onSpaceIdChangedInUrl(): prevSpace.id: ${prevSpace?.id} => ${space?.id}`,
 		);
 		if (
@@ -236,14 +241,19 @@ export abstract class SpaceBaseComponent
 	};
 
 	private subscribeForSpaceChanges(): void {
+		const spaceType = this.$spaceType();
 		this.spaceService
 			.watchSpace(this.$spaceID())
-			.pipe(takeUntil(this.spaceIDChanged$), this.takeUntilDestroyed())
+			.pipe(
+				takeUntil(this.spaceIDChanged$),
+				this.takeUntilDestroyed(),
+				map((space) => ({ ...space, type: spaceType })),
+			)
 			.subscribe({
 				next: this.onSpaceContextChanged,
 				error: (err) => {
 					if (err.code === 'permission-denied') {
-						console.log(
+						this.log(
 							'subscribeForSpaceChanges() => permission denied to read space record',
 						);
 						this.noPermissions = true;
@@ -256,7 +266,7 @@ export abstract class SpaceBaseComponent
 
 	private getSpaceContextFromRouteState(): void {
 		const space = history.state?.team as ISpaceContext;
-		this.console.log(
+		this.log(
 			`${this.className}:SpaceBaseComponent.getSpaceContextFromRouteState()`,
 			space,
 		);
@@ -296,20 +306,27 @@ export abstract class SpaceBaseComponent
 	// }
 
 	private setNewSpaceContext(spaceContext?: ISpaceContext): void {
-		this.console.log(
+		this.log(
 			`${this.className}:SpaceBaseComponent.setNewSpaceContext(id=${spaceContext?.id}), previous id=${this.$space()?.id}`,
 			spaceContext,
 		);
 		const prevSpace = this.$space();
-		if (!spaceContext?.type && prevSpace?.type) {
-			throw new Error('!spaceContext?.type && this.spaceContext?.type');
-		}
 		if (prevSpace == spaceContext) {
-			console.warn(
+			this.console.warn(
 				'Duplicate call to SpaceBaseComponent.setNewSpaceContext() with same spaceContext:',
 				spaceContext,
 			);
-			// return;
+			return;
+		}
+		if (!spaceContext?.type && prevSpace.type) {
+			this.console.error(
+				'!spaceContext?.type && prevSpace.type',
+				'prevSpace:',
+				prevSpace,
+				'newSpace:',
+				spaceContext,
+			);
+			return;
 		}
 		const idChanged = prevSpace?.id != spaceContext?.id;
 		const briefChanged = equalSpaceBriefs(
@@ -317,7 +334,7 @@ export abstract class SpaceBaseComponent
 			spaceContext?.brief,
 		);
 		const dboChanged = prevSpace?.dbo != spaceContext?.dbo;
-		this.console.log(
+		this.log(
 			`${this.className}:SpaceBaseComponent.setNewSpaceContext(id=${spaceContext?.id}) => idChanged=${idChanged}, briefChanged=${briefChanged}, dtoChanged=${dboChanged}`,
 		);
 		this.$space.set(spaceContext || { id: '' });
@@ -340,7 +357,7 @@ export abstract class SpaceBaseComponent
 
 	private readonly onSpaceContextChanged = (space: ISpaceContext): void => {
 		const dtoChanged = space.dbo !== this.$space()?.dbo;
-		// this.console.log(
+		// this.log(
 		// 	`${this.className}:SpaceBaseComponent.onSpaceContextChanged() => dtoChanged=${dtoChanged}, space:`,
 		// 	space,
 		// );
@@ -357,7 +374,7 @@ export abstract class SpaceBaseComponent
 		if (dtoChanged) {
 			this.onSpaceDboChanged();
 		}
-		// this.console.log(`${this.className} => loaded team record:`, newTeam);
+		// this.log(`${this.className} => loaded team record:`, newTeam);
 		// if (newSpace.id === this.spaceContext?.id) {
 		// 	this.setNewSpaceContext({ ...this.spaceContext, ...newSpace });
 		// 	// this.spaceContext = ;
