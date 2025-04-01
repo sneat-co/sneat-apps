@@ -107,18 +107,25 @@ export abstract class SpaceBaseComponent
 		return this.userService.currentUserID;
 	}
 
-	protected get defaultBackUrl(): string {
+	protected readonly $defaultBackUrlSpacePath = signal('');
+
+	// Intentionally not readonly, but might reconsider
+	protected $defaultBackUrl = computed(() => {
 		const space = this.$space();
-		const url = space ? `/space/${space.type}/${space.id}` : '';
-		return url && this.defaultBackPage ? url + '/' + this.defaultBackPage : url;
-	}
+		const path = this.$defaultBackUrlSpacePath();
+		let url = space ? `/space/${space.type}/${space.id}` : '';
+		url = url && this.defaultBackPage ? url + '/' + this.defaultBackPage : url;
+		if (path) {
+			url = url + '/' + path;
+		}
+		return url;
+	});
 
 	protected readonly route = inject(ActivatedRoute);
 	protected readonly spaceParams = inject(SpaceComponentBaseParams);
 
 	protected constructor(@Inject(ClassName) className: string) {
 		super(className);
-		const spaceParams = this.spaceParams;
 		console.log(`${className}.SpaceBaseComponent.constructor()`);
 
 		effect(() => {
@@ -132,9 +139,9 @@ export abstract class SpaceBaseComponent
 
 		try {
 			// this.navController = spaceParams.navController;
-			this.spaceService = spaceParams.spaceService;
-			this.userService = spaceParams.userService;
-			this.logger = spaceParams.loggerFactory.getLogger(this.className);
+			this.spaceService = this.spaceParams.spaceService;
+			this.userService = this.spaceParams.userService;
+			this.logger = this.spaceParams.loggerFactory.getLogger(this.className);
 			this.getSpaceContextFromRouteState();
 			this.cleanupOnUserLogout();
 		} catch (e) {

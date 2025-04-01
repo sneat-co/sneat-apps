@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -31,13 +32,16 @@ import {
 @Component({
 	selector: 'sneat-happening-participants',
 	templateUrl: 'happening-participants.component.html',
-	imports: [IonicModule, ContactsChecklistComponent, ContactsSelectorModule],
+	imports: [
+		IonicModule,
+		ContactsChecklistComponent,
+		ContactsSelectorModule,
+		JsonPipe,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HappeningParticipantsComponent {
-	// @Input({ required: true }) space?: ISpaceContext;
 	public readonly $happening = input.required<IHappeningContext>();
-	// @Input({ required: true }) happening?: IHappeningContext;
 
 	public readonly $space = computed(() => this.$happening().space);
 	protected readonly $membersTabLabel = computed(() =>
@@ -46,7 +50,7 @@ export class HappeningParticipantsComponent {
 
 	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
 
-	protected readonly $relatedContactIDs = computed<readonly string[]>(() => {
+	protected readonly $relatedContactIDs = computed(() => {
 		const happening = this.$happening();
 		return getRelatedItemIDs(
 			happening.dbo?.related || happening.brief?.related,
@@ -155,7 +159,7 @@ export class HappeningParticipantsComponent {
 					return new Promise((resolve, reject) => {
 						const existingContactIDs = this.$relatedContactIDs();
 						const contactsToAdd = selectedContacts?.filter(
-							(c) => !existingContactIDs.includes(c.id),
+							(c) => !existingContactIDs?.includes(c.id),
 						);
 						if (contactsToAdd?.length) {
 							const request: IHappeningContactsRequest = {

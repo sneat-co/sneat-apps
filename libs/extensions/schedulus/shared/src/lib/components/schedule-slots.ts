@@ -16,15 +16,9 @@ export function hasContact(
 		'contacts',
 		spaceID,
 	);
-	console.log(
-		'hasContact() related=',
-		related,
-		'relatedContactIDs:',
-		relatedContactIDs,
-	);
 	return (
-		(!relatedContactIDs.length && contactIDs.includes('')) ||
-		relatedContactIDs.some((id) => contactIDs.includes(id))
+		(!relatedContactIDs?.length && contactIDs.includes('')) || // TODO: check for '' does it make sense?
+		!!relatedContactIDs?.some((id) => contactIDs.includes(id))
 	);
 }
 

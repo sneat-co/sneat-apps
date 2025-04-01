@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal, ViewChild } from '@angular/core';
+import { Component, effect, signal, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, IonInput } from '@ionic/angular';
 import {
@@ -46,14 +46,9 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
 
 	protected readonly $member = signal<IMemberPerson>(emptyMemberPerson);
 
-	public override get defaultBackUrl(): string {
-		const t = this.space;
-		const url = t ? `/space/${t.type}/${t.id}/members` : '';
-		return url && this.defaultBackPage ? url + '/' + this.defaultBackPage : url;
-	}
-
 	constructor(params: ContactComponentBaseParams) {
 		super('NewMemberPageComponent');
+		this.$defaultBackUrlSpacePath.set('members');
 		const contactusSpaceContextService = new ContactusSpaceContextService(
 			params.errorLogger,
 			this.destroyed$,

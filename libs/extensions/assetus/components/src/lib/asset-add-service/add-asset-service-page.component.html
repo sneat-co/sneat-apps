@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar color="primary" class="with-back-button">
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="defaultBackUrl" />
+			<ion-back-button [defaultHref]="$defaultBackUrl()" />
 		</ion-buttons>
 		<ion-title>Add {{ serviceType }}</ion-title>
 	</ion-toolbar>
@@ -12,11 +12,8 @@
 		<ion-item-divider>
 			<ion-label>Please select provider</ion-label>
 		</ion-item-divider>
-		@for (serviceProvider of serviceProviders; track: serviceProvider.id) {
-			<ion-item
-				tappable
-				(click)="selectProvider(serviceProvider)"
-			>
+		@for (serviceProvider of serviceProviders; track serviceProvider.id) {
+			<ion-item tappable (click)="selectProvider(serviceProvider)">
 				<ion-label>{{ serviceProvider.title }}</ion-label>
 			</ion-item>
 		}

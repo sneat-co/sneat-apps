@@ -197,7 +197,7 @@ This operation can NOT be undone.`)
 							'contactus',
 							'contacts',
 							space.id,
-						).includes(m.id),
+						)?.includes(m.id),
 					) || [],
 				items: signal(teamContacts), // TODO: provide proper observable
 				onAdded: this.onMemberAdded,

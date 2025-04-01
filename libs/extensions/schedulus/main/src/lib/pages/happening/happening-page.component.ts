@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ContactusServicesModule } from '@sneat/contactus-services';
@@ -16,7 +15,6 @@ import {
 	selector: 'sneat-happening-page',
 	templateUrl: './happening-page.component.html',
 	imports: [
-		CommonModule,
 		FormsModule,
 		IonicModule,
 		HappeningServiceModule,
@@ -25,6 +23,7 @@ import {
 		HappeningComponentBaseParamsModule,
 		SpaceServiceModule,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HappeningPageComponent extends HappeningBasePage {
 	constructor(params: HappeningComponentBaseParams) {

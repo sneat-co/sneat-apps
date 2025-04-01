@@ -1,9 +1,6 @@
 <ion-header>
 	<ion-toolbar>
-		<ion-back-button
-			slot="start"
-			[defaultHref]="defaultBackUrl"
-		/>
+		<ion-back-button slot="start" [defaultHref]="$defaultBackUrl()" />
 		<ion-title>
 			Retrospective
 			<ng-container *ngIf="space"

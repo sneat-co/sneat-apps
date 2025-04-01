@@ -106,7 +106,7 @@ export class ScrumPageComponent
 			: 'Next scrum';
 	}
 
-	public override get defaultBackUrl(): string {
+	public override get $defaultBackUrl(): string {
 		return this.space?.id ? `team?id=${this.space.id}` : 'spaces';
 	}
 

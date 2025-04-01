@@ -35,7 +35,7 @@ export function isMatchingScheduleFilter(
 					'contactus',
 					'contacts',
 					h.space.id,
-				).length,
+				)?.length,
 		)
 	);
 }

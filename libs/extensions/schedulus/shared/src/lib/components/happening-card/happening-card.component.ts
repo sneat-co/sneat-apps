@@ -57,8 +57,8 @@ export class HappeningCardComponent extends HappeningBaseComponent {
 		);
 	});
 
-	protected readonly $hasRelatedContacts = computed(
-		() => this.$relatedContactIDs().length > 0,
+	protected readonly $hasRelatedContacts = computed<boolean>(
+		() => !!this.$relatedContactIDs()?.length,
 	);
 
 	constructor(

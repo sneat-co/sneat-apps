@@ -1,24 +1,22 @@
-@for (contact of $contactsToDisplay(); track contact.id; let last = $last) {
-	<ion-item [lines]="last ? $lastItemLine() : undefined">
-		<ion-checkbox
-			labelPlacement="end"
-			justify="start"
-			[value]="contact.id"
-			[checked]="contact.isChecked"
-			[disabled]="isDisabled(contact.id)"
-			(ionChange)="onCheckboxChange($event, contact)"
-		>
-			{{ personName(contact.brief.names) }}
-			<!--TODO: use pipe-->
-		</ion-checkbox>
-		@if (isDisabled(contact.id)) {
-			<ion-spinner name="lines-small" slot="end" color="medium" />
-		}
-	</ion-item>
+@for (
+	contact of $contactsToDisplay() || [];
+	track contact.id;
+	let last = $last
+) {
+	<sneat-contacts-checklist-item
+		[$contact]="contact"
+		[$isLast]="last"
+		[$lastItemLine]="$lastItemLine()"
+		[$checkedInProgress]="$checkedInProgress()"
+		[$uncheckedInProgress]="$uncheckedInProgress()"
+		(checkboxChange)="onCheckboxChange($event.event, $event.item)"
+	/>
 } @empty {
 	<ion-item>
 		@if ($spaceContacts()) {
-			<ion-label>{{ noContactsMessage || "No contacts" }}</ion-label>
+			<ion-label color="medium">{{
+				noContactsMessage || "No contacts"
+			}}</ion-label>
 		} @else {
 			<ion-label>Loading...</ion-label>
 		}

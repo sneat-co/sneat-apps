@@ -10,6 +10,7 @@ import {
 	signal,
 	computed,
 	SimpleChanges,
+	effect,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { personName } from '@sneat/components';
@@ -27,6 +28,7 @@ import {
 } from '@sneat/space-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { Subscription } from 'rxjs';
+import { ContactsChecklistItemComponent } from './contacts-checklist-item.component';
 
 export interface ICheckChangedArgs {
 	event: Event;
@@ -39,13 +41,10 @@ export interface ICheckChangedArgs {
 @Component({
 	selector: 'sneat-contacts-checklist',
 	templateUrl: './contacts-checklist.component.html',
-	imports: [IonicModule],
+	imports: [IonicModule, ContactsChecklistItemComponent],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ContactsChecklistComponent
-	extends SneatBaseComponent
-	implements OnChanges
-{
+export class ContactsChecklistComponent extends SneatBaseComponent {
 	public readonly $lastItemLine = input<
 		undefined | 'full' | 'none' | 'inset'
 	>();
@@ -53,7 +52,9 @@ export class ContactsChecklistComponent
 	public readonly $spaceRoles = input<readonly string[]>(['member']);
 	public readonly $spaceRolesToExclude = input<undefined | readonly string[]>();
 	public readonly $onlySelected = input<boolean>(false);
-	public readonly $checkedContactIDs = input.required<readonly string[]>();
+	public readonly $checkedContactIDs = input.required<
+		readonly string[] | undefined
+	>();
 
 	public readonly $space = input.required<ISpaceContext>();
 	protected readonly $spaceRef = computeSpaceRefFromSpaceContext(this.$space);
@@ -85,7 +86,7 @@ export class ContactsChecklistComponent
 
 		const isSelected = (contactID: string) =>
 			!uncheckedInProgress.includes(contactID) &&
-			(checkedContactIDs.includes(contactID) ||
+			(checkedContactIDs?.includes(contactID) ||
 				checkedInProgress.includes(contactID));
 
 		const hasIncludedRole = roles.length
@@ -129,6 +130,13 @@ export class ContactsChecklistComponent
 		private readonly contactusSpaceService: ContactusSpaceService,
 	) {
 		super('ContactsChecklistComponent');
+		effect(() => {
+			const spaceID = this.$spaceID();
+			this.contactusSpaceSubscription?.unsubscribe();
+			if (spaceID) {
+				this.subscribeForContactBriefs(this.$spaceID());
+			}
+		});
 	}
 
 	private subscribeForContactBriefs(spaceID: string): void {
@@ -145,30 +153,10 @@ export class ContactsChecklistComponent
 			});
 	}
 
-	public ngOnChanges(changes: SimpleChanges): void {
-		console.log('ContactsChecklistComponent.ngOnChanges()', changes);
-		if (changes['space']) {
-			const spaceChanges = changes['space'];
-			const previousSpace = spaceChanges.previousValue as ISpaceContext;
-
-			if (previousSpace?.id !== this.space?.id) {
-				this.contactusSpaceSubscription?.unsubscribe();
-				if (this.$spaceID()) {
-					this.subscribeForContactBriefs(this.$spaceID());
-				}
-			}
-		}
-	}
-
-	protected isDisabled(contactID: string): boolean {
-		return (
-			this.$checkedInProgress().includes(contactID) ||
-			this.$uncheckedInProgress().includes(contactID)
-		);
-	}
-
 	protected readonly $checkedInProgress = signal<readonly string[]>([]);
 	protected readonly $uncheckedInProgress = signal<readonly string[]>([]);
+
+	protected readonly personName = personName;
 
 	protected onCheckboxChange(event: Event, contact: IContactWithBrief): void {
 		const ce = event as CustomEvent;
@@ -210,6 +198,4 @@ export class ContactsChecklistComponent
 				setTimeout(clearInProgress, 500);
 			});
 	}
-
-	protected readonly personName = personName;
 }

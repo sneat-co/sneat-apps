@@ -49,7 +49,7 @@
 			@if (!$hasRelatedContacts()) {
 				<sneat-contacts-as-badges
 					[members]="
-						$relatedContactIDs()
+						$relatedContactIDs() || []
 							| selectedContacts: contactusSpace?.dbo?.contacts
 					"
 					(deleteMember)="removeMember($event)"

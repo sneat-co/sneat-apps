@@ -3,34 +3,40 @@
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="spacePageUrl('members')" />
 		</ion-buttons>
-		<ng-container [ngSwitch]="space.type">
-			<ion-title *ngSwitchCase="'family'">
-				@if (contact) {
-					Family member: {{ contact | personTitle }}
-				} @else {
-					Family member
+		<ion-title>
+			@switch (space.type) {
+				@case ("family") {
+					@if (contact) {
+						Family member: {{ contact | personTitle }}
+					} @else {
+						Family member
+					}
 				}
-			</ion-title>
-			<ion-title *ngSwitchCase="'cohabit'">Housemate</ion-title>
-			<ion-title *ngSwitchCase="'work'">Worker</ion-title>
-			<ion-title *ngSwitchDefault>Member : {{ defaultBackUrl }}</ion-title>
-		</ng-container>
+				@case ("cohabit") {
+					Housemates
+				}
+				@default {
+					<ion-title>Member</ion-title>
+				}
+			}
+		</ion-title>
 		<!--<ion-title *ngIf="member else titleNoMember">{{member.title}}</ion-title>-->
 		<!--<ng-template #titleNoMember>-->
 		<!--<ion-title>Member</ion-title>-->
 		<!--</ng-template>-->
 		<ion-buttons slot="end">
-			<ion-button
-				*ngIf="member"
-				[title]="
-					member.brief?.userID === spaceParams.userService.currentUserID
-						? 'Leave team'
-						: 'Remove team member'
-				"
-				(click)="removeMember()"
-			>
-				<ion-icon name="trash" />
-			</ion-button>
+			@if (member) {
+				<ion-button
+					[title]="
+						member.brief?.userID === spaceParams.userService.currentUserID
+							? 'Leave team'
+							: 'Remove team member'
+					"
+					(click)="removeMember()"
+				>
+					<ion-icon name="trash" />
+				</ion-button>
+			}
 			<ion-menu-button menu="mainMenu" />
 		</ion-buttons>
 	</ion-toolbar>

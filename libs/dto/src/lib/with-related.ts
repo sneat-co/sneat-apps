@@ -128,14 +128,13 @@ export const getRelatedItemIDs = (
 	console.log('getRelatedItemIDs', module, collection, spaceID, related);
 	const collectionRelated = (related || {})[module] || {};
 	const relatedItems = collectionRelated[collection];
-	const itemIDs = relatedItems
+	return relatedItems
 		?.map((i) =>
 			i.keys
 				.filter((k) => !spaceID || k.spaceID === spaceID)
 				.map((k) => k.itemID),
 		)
 		?.flat();
-	return itemIDs || [];
 };
 
 export const hasRelated = (
