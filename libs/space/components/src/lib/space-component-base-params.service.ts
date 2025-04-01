@@ -19,7 +19,7 @@ export class SpaceComponentBaseParams {
 		@Inject(LOGGER_FACTORY) public readonly loggerFactory: ILoggerFactory,
 		@Inject(APP_INFO) protected readonly appService: IAppInfo, // Check if used anywhere
 		// public readonly changeDetectorRef: ChangeDetectorRef,
-		public readonly navController: NavController,
+		// public readonly navController: NavController,
 		public readonly userService: SneatUserService,
 		public readonly spaceService: SpaceService,
 		public readonly spaceNavService: SpaceNavService,

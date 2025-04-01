@@ -8,7 +8,7 @@ import {
 @Injectable()
 export class ContactComponentBaseParams {
 	public readonly errorLogger = this.spaceParams.errorLogger;
-	public readonly navController = this.spaceParams.navController;
+	// public readonly navController = this.spaceParams.navController;
 	public readonly userService = this.spaceParams.userService;
 	public readonly spaceNavService = this.spaceParams.spaceNavService;
 

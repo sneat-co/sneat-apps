@@ -1,43 +1,32 @@
 <form [formGroup]="addMemberForm" (ngSubmit)="submit()">
 	<sneat-person-form-wizard
-		[space]="space"
-		[disabled]="isSubmitting"
-		[newPerson]="member"
+		[space]="$space()"
+		[disabled]="$isSubmitting()"
+		[newPerson]="$member()"
 		[requires]="personRequirements"
 		[fields]="{ contactType: { hide: true } }"
 		(newPersonChange)="onRelatedPersonChanged($event)"
 	/>
 
-	<ion-card *ngIf="addMemberForm.errors">
-		<ion-card-header color="danger">
-			<ion-card-title>Errors</ion-card-title>
-		</ion-card-header>
-		<ion-card-content>
-			{{ addMemberForm.errors | json }}
-		</ion-card-content>
-	</ion-card>
+	@if (addMemberForm.errors) {
+		<ion-card>
+			<ion-card-header color="danger">
+				<ion-card-title>Errors</ion-card-title>
+			</ion-card-header>
+			<ion-card-content>
+				{{ addMemberForm.errors | json }}
+			</ion-card-content>
+		</ion-card>
+	}
 
-	<div class="ion-padding" *ngIf="canSubmit">
-		<ion-button
-			size="large"
-			(click)="submit()"
-			[disabled]="
-				!space || addMemberForm.disabled || !addMemberForm.valid || isSubmitting
-			"
-		>
-			<ion-spinner
-				name="lines-small"
-				*ngIf="isSubmitting"
-				slot="start"
-				class="ion-margin-end"
-			/>
-			<ion-label>Add member</ion-label>
-		</ion-button>
-	</div>
-
-	<!--	canSubmit: {{canSubmit}}-->
-
-	<!--	Member: {{member|json}}-->
-	<!--	<hr>-->
-	<!--	personRequirements: {{personRequirements|json}}-->
+	@if ($canSubmit()) {
+		<div class="ion-padding">
+			<ion-button size="large" (click)="submit()" [disabled]="!$canSubmit()">
+				@if ($isSubmitting()) {
+					<ion-spinner name="lines-small" slot="start" class="ion-margin-end" />
+				}
+				<ion-label>Add member</ion-label>
+			</ion-button>
+		</div>
+	}
 </form>

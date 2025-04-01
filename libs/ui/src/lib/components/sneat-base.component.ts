@@ -43,14 +43,14 @@ export abstract class SneatBaseComponent implements OnDestroy {
 
 	protected constructor(@Inject(ClassName) public readonly className: string) {
 		this.log(`${this.className}.SneatBaseComponent.constructor()`);
-		// this.logError = this.errorLogger.logError;
-		// this.logErrorHandler = this.errorLogger.logErrorHandler;
 	}
 
 	protected log(msg: string, ...data: unknown[]): void {
 		this.console.log(msg, ...data);
 	}
 
+	// protected readonly takeUntilDestroyed = <T>() =>
+	// 	takeUntil<T>(this.destroyed$);
 	protected takeUntilDestroyed<T>(): MonoTypeOperatorFunction<T> {
 		return takeUntil(this.destroyed$);
 	}
@@ -58,9 +58,6 @@ export abstract class SneatBaseComponent implements OnDestroy {
 	public ngOnDestroy(): void {
 		this.log(`${this.className}.SneatBaseComponent.ngOnDestroy()`);
 		this.unsubscribe(`${this.className}.SneatBaseComponent.ngOnDestroy()`);
-		// this.destroyed$?.pipe(take(1)).subscribe(() => {
-		// 	this.log(`${this.className}.SneatBaseComponent => destroyed$!`);
-		// });
 		this.destroyed?.next();
 		this.destroyed?.complete();
 	}

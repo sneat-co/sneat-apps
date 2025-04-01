@@ -1,7 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	inject,
+	Input,
+	OnChanges,
+	SimpleChanges,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 import { IUserSpaceBrief } from '@sneat/auth-models';
 import { ContactTitlePipe } from '@sneat/components';
 import { IUpdateContactRequest } from '@sneat/contactus-services';
@@ -54,6 +60,8 @@ export class ContactDetailsComponent implements OnChanges {
 		type: '' as SpaceType,
 	};
 	@Input({ required: true }) public contact?: IContactContext;
+
+	private readonly navController = inject(NavController);
 
 	protected relatedContactsOfCurrentSpace?: readonly IIdAndBrief<IRelatedItem>[];
 
@@ -195,7 +203,7 @@ export class ContactDetailsComponent implements OnChanges {
 		if (!space) {
 			throw new Error('Can not navigate to member without team context');
 		}
-		this.params.spaceNavService.navigateToMember(this.params.navController, {
+		this.params.spaceNavService.navigateToMember(this.navController, {
 			id,
 			space,
 		});
@@ -210,7 +218,7 @@ export class ContactDetailsComponent implements OnChanges {
 		if (!this.contact) {
 			throw new Error('this.contact');
 		}
-		this.params.navController
+		this.navController
 			.navigateForward([page], {
 				queryParams: { id: this.contact.id },
 				state: { contact: this.contact, space: this.space },

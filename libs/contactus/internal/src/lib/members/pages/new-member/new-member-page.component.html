@@ -5,10 +5,10 @@
 		</ion-buttons>
 		<ion-title>
 			@if (space.brief || space.type) {
-				@if (member.type === "animal") {
+				@if ($member().type === "animal") {
 					New pet
 				} @else {
-					@switch (member.ageGroup) {
+					@switch ($member().ageGroup) {
 						@case ("child") {
 							New child
 						}
@@ -20,7 +20,7 @@
 						}
 					}
 				}
-				&#64; {{ space.brief?.title || space.type }}
+				&#64; {{ $space().brief?.title || space.type }}
 			} @else {
 				New member
 			}
@@ -29,32 +29,39 @@
 </ion-header>
 
 <ion-content class="cardy">
-	<ion-segment [(ngModel)]="tab" *ngIf="space.id && space.type !== 'family'">
-		<ion-segment-button value="mass">
-			Mass invite [{{ space.id }} - {{ space.type }}]
-		</ion-segment-button>
-		<ion-segment-button value="personal">Personal invite</ion-segment-button>
-	</ion-segment>
+	@if (space.id && space.type !== "family") {
+		<ion-segment [value]="$tab()" (ionChange)="onTabChanged($event)">
+			<ion-segment-button value="mass">
+				Mass invite [{{ space.id }} - {{ space.type }}]
+			</ion-segment-button>
+			<ion-segment-button value="personal">Personal invite</ion-segment-button>
+		</ion-segment>
+	}
 
-	<sneat-new-member-form
-		*ngIf="tab === 'personal'"
-		[space]="space"
-		[(member)]="member"
-	/>
+	@switch ($tab()) {
+		@case ("personal") {
+			<sneat-new-member-form
+				[$space]="$space()"
+				[$member]="$member()"
+				(memberChange)="$member.set($event)"
+			/>
+		}
+		@case ("mass") {
+			<ion-card>
+				<ion-card-content>
+					<sneat-invite-links [contactusSpace]="contactusSpace" />
 
-	<ion-card *ngIf="tab === 'mass'">
-		<ion-card-content>
-			<sneat-invite-links [contactusSpace]="contactusSpace" />
-
-			<p>
-				<b>Or</b> you can send
-				<a href="" (click)="tab = 'personal'; $event.preventDefault()"
-					>personal invite</a
-				>
-				by email.
-			</p>
-		</ion-card-content>
-	</ion-card>
+					<p>
+						<b>Or</b> you can send
+						<a href="" (click)="$tab.set('personal'); $event.preventDefault()"
+							>personal invite</a
+						>
+						by email.
+					</p>
+				</ion-card-content>
+			</ion-card>
+		}
+	}
 
 	<ion-card>
 		<ion-card-header>

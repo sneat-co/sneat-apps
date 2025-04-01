@@ -1,10 +1,14 @@
-import { CommonModule } from '@angular/common';
+import { JsonPipe } from '@angular/common';
 import {
 	Component,
+	computed,
 	EventEmitter,
+	inject,
+	input,
 	Input,
 	OnChanges,
 	Output,
+	signal,
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
@@ -13,7 +17,7 @@ import {
 	ReactiveFormsModule,
 	UntypedFormGroup,
 } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 import { PersonWizardComponent } from '@sneat/contactus-shared';
 import { formNexInAnimation } from '@sneat/core';
 import { personName } from '@sneat/components';
@@ -36,11 +40,11 @@ import { MemberComponentBaseParams } from '../../member-component-base-params';
 	animations: [formNexInAnimation],
 	providers: [MemberComponentBaseParams],
 	imports: [
-		CommonModule,
 		IonicModule,
 		FormsModule,
 		ReactiveFormsModule,
 		PersonWizardComponent,
+		JsonPipe,
 	],
 })
 export class NewMemberFormComponent implements OnChanges {
@@ -49,16 +53,31 @@ export class NewMemberFormComponent implements OnChanges {
 		// gender: { required: true },
 	};
 
+	private readonly navController = inject(NavController);
+
 	private readonly hasNavHistory: boolean;
-	public isSubmitting = false;
+	protected readonly $isSubmitting = signal(false);
 
-	protected canSubmit = false;
+	protected readonly $canSubmit = computed(
+		() =>
+			this.$space().id &&
+			!this.$isSubmitting() &&
+			this.$isRelatedPersonReady() &&
+			!this.addMemberForm.disabled && //TODO(check) Could be a problem with Push detection strategy?
+			this.addMemberForm.valid,
+	);
 
-	@Input({ required: true }) space?: ISpaceContext;
+	public readonly $space = input.required<ISpaceContext>();
 
 	protected contactusSpace?: IContactusSpaceDboAndID;
 
-	@Input() member: IMemberPerson = emptyMemberPerson;
+	public readonly $member = input.required<IMemberPerson>();
+
+	private readonly $isRelatedPersonReady = computed(() => {
+		const member = this.$member();
+		return member && isRelatedPersonReady(member, this.personRequirements);
+	});
+
 	@Output() readonly memberChange = new EventEmitter<IMemberPerson>();
 
 	@ViewChild(PersonWizardComponent, { static: false })
@@ -99,19 +118,21 @@ export class NewMemberFormComponent implements OnChanges {
 	}
 
 	private setPersonRequirements(): void {
+		const space = this.$space();
+		const member = this.$member();
 		this.personRequirements = {
 			// TODO: Should we move it inside person form wizard?
 			...this.personRequirements,
 			ageGroup:
-				this.space?.type === 'family' && this.member.type !== 'animal'
+				space.type === 'family' && member?.type !== 'animal'
 					? { required: true }
 					: { hide: true },
 			roles:
-				this.space?.type === 'family' && this.member.type !== 'animal'
+				space.type === 'family' && member?.type !== 'animal'
 					? { hide: true }
 					: { required: true },
 			relatedAs:
-				this.space?.type === 'family' && this.member.type !== 'animal'
+				space.type === 'family' && member?.type !== 'animal'
 					? { required: true }
 					: { hide: true },
 		};
@@ -130,20 +151,25 @@ export class NewMemberFormComponent implements OnChanges {
 		if (!this.personFormComponent) {
 			throw '!this.personFormComponent';
 		}
-		const space = this.space;
+		const space = this.$space();
+		const member = this.$member();
 		if (!space) {
 			this.params.errorLogger.logError(
 				'not able to add new member without team context',
 			);
 			return;
 		}
-		if (this.personRequirements.ageGroup?.required && !this.member.ageGroup) {
+		if (!member) {
+			this.params.errorLogger.logError('member field is undefined');
+			return;
+		}
+		if (this.personRequirements.ageGroup?.required && !member.ageGroup) {
 			throw new Error('Age group is a required field');
 		}
-		if (this.personRequirements.gender?.required && !this.member.gender) {
+		if (this.personRequirements.gender?.required && !member.gender) {
 			throw new Error('Gender is a required field');
 		}
-		const displayName = personName(this.member.names);
+		const displayName = personName(member.names);
 		const duplicateMember = zipMapBriefsWithIDs(
 			this.contactusSpace?.dbo?.contacts,
 		)?.find((m) => personName(m.brief.names) === displayName);
@@ -153,20 +179,20 @@ export class NewMemberFormComponent implements OnChanges {
 		}
 
 		const request: ICreateSpaceMemberRequest = {
-			...this.member,
+			...member,
 			status: 'active',
 			countryID: space.dbo?.countryID || '--',
 			roles: ['contributor'],
 			spaceID: space.id,
 		};
 
-		this.isSubmitting = true;
+		this.$isSubmitting.set(true);
 		this.addMemberForm.disable();
 		this.params.memberService.createMember(request).subscribe({
 			next: (member) => {
 				console.log('member created:', member);
 				if (this.hasNavHistory) {
-					this.params.navController
+					this.navController
 						.pop()
 						.catch(
 							this.params.errorLogger.logErrorHandler(
@@ -187,7 +213,7 @@ export class NewMemberFormComponent implements OnChanges {
 				this.params.errorLogger.logError(err, 'Failed to create a new member');
 				this.addMemberForm.enable();
 				setTimeout(() => {
-					this.isSubmitting = false;
+					this.$isSubmitting.set(false);
 				}, 1000);
 			},
 		});
@@ -227,12 +253,9 @@ export class NewMemberFormComponent implements OnChanges {
 			'NewMemberFormComponent.onRelatedPersonChanged()',
 			relatedPerson,
 		);
-		this.member = relatedPerson as IMemberPerson;
+		// this.$member.set(relatedPerson as IMemberPerson);
+		const member = relatedPerson as IMemberPerson;
 		this.setPersonRequirements();
-		this.memberChange.emit(this.member);
-		this.canSubmit = isRelatedPersonReady(
-			relatedPerson,
-			this.personRequirements,
-		);
+		this.memberChange.emit(member);
 	}
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, IonInput } from '@ionic/angular';
 import {
@@ -22,6 +22,8 @@ import { QRCodeComponent } from 'angularx-qrcode';
 import { filter, first, takeUntil } from 'rxjs';
 import { NewMemberFormComponent } from './new-member-form.component';
 
+type Tab = 'personal' | 'mass';
+
 @Component({
 	selector: 'sneat-new-member-page',
 	templateUrl: './new-member-page.component.html',
@@ -40,9 +42,9 @@ import { NewMemberFormComponent } from './new-member-form.component';
 export class NewMemberPageComponent extends SpacePageBaseComponent {
 	@ViewChild('nameInput', { static: false }) nameInput?: IonInput;
 
-	public tab: 'personal' | 'mass' = 'mass';
+	protected readonly $tab = signal<Tab>('mass');
 
-	member: IMemberPerson = emptyMemberPerson;
+	protected readonly $member = signal<IMemberPerson>(emptyMemberPerson);
 
 	public override get defaultBackUrl(): string {
 		const t = this.space;
@@ -65,21 +67,32 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
 			console.log('group', group);
 			switch (group) {
 				case 'adults':
-					this.member = { ...this.member, type: 'person', ageGroup: 'adult' };
+					this.$member.update((member) => ({
+						...member,
+						type: 'person',
+						ageGroup: 'adult',
+					}));
 					break;
 				case 'kids':
-					this.member = { ...this.member, type: 'person', ageGroup: 'child' };
+					this.$member.update((member) => ({
+						...member,
+						type: 'person',
+						ageGroup: 'child',
+					}));
 					break;
 				case 'pets':
-					this.member = { ...this.member, type: 'animal' };
+					this.$member.update((member) => ({ ...member, type: 'animal' }));
 					break;
 				default:
-					this.member = { ...this.member, type: 'person' };
+					this.$member.update((member) => ({ ...member, type: 'person' }));
 					break;
 			}
 			const roles = params['roles'] || '';
 			if (roles) {
-				this.member = { ...this.member, roles: roles.split(',') };
+				this.$member.update((member) => ({
+					...member,
+					roles: roles.split(','),
+				}));
 			}
 		});
 
@@ -109,8 +122,8 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
 							'NewMemberPageComponent: spaceTypeChanged$ =>',
 							spaceType,
 						);
-						if (spaceType === 'family' && this.tab === 'mass') {
-							this.tab = 'personal';
+						if (spaceType === 'family' && this.$tab() === 'mass') {
+							this.$tab.set('personal');
 						}
 					},
 					error: this.logErrorHandler('failed to process space type changes'),
@@ -119,4 +132,8 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
 			this.logError(e, 'failed to subscribe for first space type change');
 		}
 	};
+
+	protected onTabChanged(event: CustomEvent): void {
+		this.$tab.set(event.detail.value as Tab);
+	}
 }

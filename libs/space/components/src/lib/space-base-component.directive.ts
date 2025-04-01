@@ -57,7 +57,7 @@ export abstract class SpaceBaseComponent
 		.asObservable()
 		.pipe(this.takeUntilDestroyed());
 
-	protected readonly navController: NavController;
+	protected readonly navController = inject(NavController);
 	// protected readonly activeCommuneService: IActiveCommuneService;
 	protected readonly userService: SneatUserService;
 	// protected readonly communeService: ICommuneService;
@@ -131,7 +131,7 @@ export abstract class SpaceBaseComponent
 		});
 
 		try {
-			this.navController = spaceParams.navController;
+			// this.navController = spaceParams.navController;
 			this.spaceService = spaceParams.spaceService;
 			this.userService = spaceParams.userService;
 			this.logger = spaceParams.loggerFactory.getLogger(this.className);

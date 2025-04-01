@@ -6,6 +6,7 @@ import {
 	computed,
 	effect,
 	EventEmitter,
+	inject,
 	input,
 	Input,
 	Output,
@@ -19,7 +20,7 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from '@angular/forms';
-import { IonicModule, IonInput } from '@ionic/angular';
+import { IonicModule, IonInput, NavController } from '@ionic/angular';
 import { RoutingState } from '@sneat/core';
 import {
 	HappeningType,
@@ -66,6 +67,8 @@ export class HappeningFormComponent
 	@Input() public wd?: WeekdayCode2;
 	@Input() public date?: string;
 	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
+
+	private readonly navController = inject(NavController);
 
 	// @Input({ required: true }) public space?: ISpaceContext;
 
@@ -334,7 +337,7 @@ export class HappeningFormComponent
 					next: () => {
 						console.log('new happening created');
 						if (this.hasNavHistory) {
-							this.params.navController
+							this.navController
 								.pop()
 								.catch(
 									this.errorLogger.logErrorHandler(
