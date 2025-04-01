@@ -4,10 +4,9 @@
 			<!--			<ion-menu-button></ion-menu-button>-->
 			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
-		<ion-title *ngIf="member; else communeHeaderTitle">
-			📅 {{ member.brief?.title }}
-		</ion-title>
-		<ng-template #communeHeaderTitle>
+		@if ($member(); as member) {
+			<ion-title>📅 {{ member.brief?.title }}</ion-title>
+		} @else {
 			<sneat-space-page-title
 				[space]="space"
 				generalTitle="Schedule"
@@ -17,7 +16,7 @@
 					personal: 'Personal calendar',
 				}"
 			/>
-		</ng-template>
+		}
 		<ion-buttons slot="end">
 			<ion-button
 				class="sneat-hide-if-width-less-638"
@@ -49,43 +48,8 @@
 <ion-content class="cardy">
 	<sneat-calendar
 		[space]="space"
-		[tab]="tab"
+		[tab]="$tab()"
 		(tabChanged)="onTabChanged($event)"
 		(dateChanged)="onDateChanged($event)"
 	/>
 </ion-content>
-
-<!--<ion-footer>-->
-<!--	<ion-toolbar>-->
-<!--		<ion-grid class="grid-layout" *ngIf="tab === 'day' || tab === 'week'">-->
-<!--			<ion-row>-->
-<!--				<ion-col size="6">-->
-<!--					<ion-button size="small" expand="full" color="light" (click)="goNew({type: 'regular'})">-->
-<!--						<ion-icon name="add" slot="start"></ion-icon>-->
-<!--						Add repeatable-->
-<!--						<ion-icon name="repeat" slot="end"></ion-icon>-->
-<!--					</ion-button>-->
-<!--				</ion-col>-->
-<!--				<ion-col size="6">-->
-<!--					<ion-button size="small" expand="full" color="light" (click)="goNew({type: 'single'})">-->
-<!--						<ion-icon name="add" slot="start"></ion-icon>-->
-<!--						Add 1-timer-->
-<!--						<ion-icon name="calendar" slot="end"></ion-icon>-->
-<!--					</ion-button>-->
-<!--				</ion-col>-->
-<!--			</ion-row>-->
-<!--		</ion-grid>-->
-
-<!--		<ion-button *ngIf="tab === 'regular'" expand="full" color="light" (click)="goNew({type: 'regular'})">-->
-<!--			<ion-icon name="add" slot="start"></ion-icon>-->
-<!--			Add regular activity-->
-<!--			<ion-icon name="repeat" slot="end"></ion-icon>-->
-<!--		</ion-button>-->
-
-<!--		<ion-button *ngIf="tab === 'events'" expand="full" color="light" (click)="goNew({type: 'single'})">-->
-<!--			<ion-icon name="add" slot="start"></ion-icon>-->
-<!--			Add one time event-->
-<!--			<ion-icon name="calendar" slot="end"></ion-icon>-->
-<!--		</ion-button>-->
-<!--	</ion-toolbar>-->
-<!--</ion-footer>-->

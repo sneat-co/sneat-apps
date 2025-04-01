@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ParamMap } from '@angular/router';
 import {
 	IonBackButton,
@@ -14,7 +13,6 @@ import {
 	IonToolbar,
 } from '@ionic/angular/standalone';
 import { virtualSliderAnimations } from '@sneat/components';
-import { ContactusServicesModule } from '@sneat/contactus-services';
 import {
 	HappeningType,
 	NewHappeningParams,
@@ -29,11 +27,7 @@ import {
 import { IMemberContext } from '@sneat/contactus-core';
 import {
 	CalendarComponent,
-	CalendariumServicesModule,
 	CalendarTab,
-	// CalendarFilterService,
-	// emptyCalendarFilter,
-	// ICalendarFilter,
 } from '@sneat/extensions-schedulus-shared';
 import { SpaceServiceModule } from '@sneat/space-services';
 
@@ -44,10 +38,7 @@ import { SpaceServiceModule } from '@sneat/space-services';
 	providers: [SpaceComponentBaseParams],
 	animations: virtualSliderAnimations,
 	imports: [
-		CommonModule,
 		SpacePageTitleComponent,
-		// ContactusServicesModule,
-		// CalendariumServicesModule,
 		ScheduleNavServiceModule,
 		IonHeader,
 		IonToolbar,
@@ -62,11 +53,12 @@ import { SpaceServiceModule } from '@sneat/space-services';
 		SpaceServiceModule,
 		CalendarComponent,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarPageComponent extends SpaceBaseComponent {
-	protected tab: CalendarTab = 'day';
-	protected date = '';
-	protected member?: IMemberContext;
+	protected readonly $tab = signal<CalendarTab>('day');
+	protected readonly $date = signal('');
+	protected readonly $member = signal<IMemberContext | undefined>(undefined);
 
 	constructor(
 		// private filterService: CalendarFilterService,
@@ -95,7 +87,7 @@ export class CalendarPageComponent extends SpaceBaseComponent {
 				case 'week':
 				case 'recurrings':
 				case 'singles':
-					this.tab = tab;
+					this.$tab.set(tab);
 					break;
 				default:
 					// history.replaceState(history.state, document.title, `${location.href}?tab=${this.tab}`);
@@ -104,7 +96,7 @@ export class CalendarPageComponent extends SpaceBaseComponent {
 		}
 		const date = queryParams.get('date');
 		if (date && date.match(/^\d{4}-\d{2}-\d{2}$/)) {
-			this.date = date;
+			this.$date.set(date);
 			// this.activeDay.date = isoStringsToDate(date);
 		}
 		const memberID = queryParams.get('member');
@@ -114,17 +106,17 @@ export class CalendarPageComponent extends SpaceBaseComponent {
 	};
 
 	protected onTabChanged(tab: CalendarTab): void {
-		this.tab = tab;
+		this.$tab.set(tab);
 		let { href } = location;
 		if (!href.includes('?')) {
 			href += '?tab=';
 		}
-		href = href.replace(/tab=\w*/, `tab=${this.tab}`);
+		href = href.replace(/tab=.*?(&|$)/, `tab=${tab}`);
 		history.replaceState(history.state, document.title, href);
 	}
 
 	protected onDateChanged(date: string): void {
-		this.date = date;
+		this.$date.set(date);
 	}
 
 	protected goNew(type: HappeningType): void {
