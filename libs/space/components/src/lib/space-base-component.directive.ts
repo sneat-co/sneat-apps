@@ -1,6 +1,7 @@
 import {
 	computed,
 	Directive,
+	effect,
 	inject,
 	Inject,
 	OnInit,
@@ -29,9 +30,10 @@ export abstract class SpaceBaseComponent
 {
 	protected readonly $space = signal<ISpaceContext>({ id: '' });
 	protected readonly $spaceID = computed(() => this.$space()?.id);
+	protected readonly $spaceType = computed(() => this.$space()?.type);
 
-	protected readonly spaceIDChanged = new Subject<string | undefined>();
-	protected readonly spaceTypeChanged = new Subject<SpaceType | undefined>();
+	private readonly spaceIDChanged = new Subject<string | undefined>();
+	private readonly spaceTypeChanged = new Subject<SpaceType | undefined>();
 
 	protected noPermissions = false;
 
@@ -112,6 +114,16 @@ export abstract class SpaceBaseComponent
 		super(className);
 		const spaceParams = this.spaceParams;
 		console.log(`${className}.SpaceBaseComponent.constructor()`);
+
+		effect(() => {
+			const spaceID = this.$spaceID();
+			this.spaceIDChanged.next(spaceID);
+			setTimeout(() => this.subscribeForSpaceChanges(), 1);
+		});
+		effect(() => {
+			this.spaceTypeChanged.next(this.$spaceType());
+		});
+
 		try {
 			this.navController = spaceParams.navController;
 			this.spaceService = spaceParams.spaceService;
@@ -223,13 +235,9 @@ export abstract class SpaceBaseComponent
 		this.setNewSpaceContext(space);
 	};
 
-	private subscribeForSpaceChanges(space: ISpaceContext): void {
-		this.console.log(
-			`${this.className}:SpaceBaseComponent.subscribeForSpaceChanges()`,
-			space,
-		);
+	private subscribeForSpaceChanges(): void {
 		this.spaceService
-			.watchSpace(space)
+			.watchSpace(this.$spaceID())
 			.pipe(takeUntil(this.spaceIDChanged$), this.takeUntilDestroyed())
 			.subscribe({
 				next: this.onSpaceContextChanged,
@@ -304,94 +312,30 @@ export abstract class SpaceBaseComponent
 			// return;
 		}
 		const idChanged = prevSpace?.id != spaceContext?.id;
-		const spaceTypeChanged = prevSpace?.type != spaceContext?.type;
 		const briefChanged = equalSpaceBriefs(
 			prevSpace?.brief,
 			spaceContext?.brief,
 		);
 		const dboChanged = prevSpace?.dbo != spaceContext?.dbo;
 		this.console.log(
-			`${this.className}:SpaceBaseComponent.setNewSpaceContext(id=${spaceContext?.id}) => idChanged=${idChanged}, spaceTypeChanged=${spaceTypeChanged}, briefChanged=${briefChanged}, dtoChanged=${dboChanged}`,
+			`${this.className}:SpaceBaseComponent.setNewSpaceContext(id=${spaceContext?.id}) => idChanged=${idChanged}, briefChanged=${briefChanged}, dtoChanged=${dboChanged}`,
 		);
 		this.$space.set(spaceContext || { id: '' });
+		if (briefChanged) {
+			this.spaceBriefChanged.next(spaceContext?.brief);
+		}
+		if (dboChanged) {
+			this.spaceDboChanged.next(spaceContext?.dbo);
+		}
 		if (idChanged) {
-			this.spaceIDChanged.next(spaceContext?.id);
-			this.onSpaceIdChanged();
-			if (spaceContext) {
-				setTimeout(() => this.subscribeForSpaceChanges(spaceContext), 1);
-				// setTimeout(() => this.subscribeForContactusSpaceChanges(spaceContext), 1);
-				// }
-			}
-			if (spaceTypeChanged && spaceContext?.type) {
-				// console.log('emitting spaceTypeChanged$', spaceContext.type);
-				this.spaceTypeChanged.next(spaceContext.type);
-			}
-			if (briefChanged) {
-				this.spaceBriefChanged.next(spaceContext?.brief);
-			}
-			if (dboChanged) {
-				this.spaceDboChanged.next(spaceContext?.dbo);
-			}
 			if (!spaceContext) {
-				this.unsubscribe('no team context');
+				this.unsubscribe('no space context');
 				return;
 			}
-			const { id } = spaceContext;
-			if (!id) {
-				this.logError(
-					'setNewSpaceContext() is called with team context without ID',
-				);
-				return;
-			}
-			// this.subs.add(
-			// 	this.userService.userChanged
-			// 		.pipe(
-			// 			first(), // TODO: Cancel if user signed out
-			// 			mergeMap(() => {
-			// 				return this.teamService.watchTeam(id).pipe(
-			// 					this.takeUntilNeeded(),
-			// 				);
-			// 			}),
-			// 			tap(newTeam => {
-			// 				if (newTeam && spaceContext.type && spaceContext.type != newTeam.type) {
-			// 					throw new Error(`loaded space=${id} with type=${newSpace.type} while expected to have type=${spaceContext.type}`);
-			// 				}
-			// 			}),
-			// 		)
-			// 		.subscribe({
-			// 			next: this.onSpaceLoaded,
-			// 			error: this.logErrorHandler(`failed to load space by id=${id}`),
-			// 		}),
-			// );
 			if (spaceContext) {
 				this.spaceChanged.next(spaceContext);
 			}
 		}
-
-		// private setSpaceContext = (spaceContext?: ISpaceContext | null): void => {
-		// 	console.log('setSpaceContext()', spaceContext);
-		// 	try {
-		// 		if (spaceContext?.id) {
-		// 			if (this.spaceContext?.id !== spaceContext.id) {
-		// 				this.setNewSpaceContext(spaceContext);
-		// 			} else {
-		// 				this.updateExistingSpaceContext(spaceContext);
-		// 			}
-		// 		} else if (this.spaceContext) {
-		// 			const hadData = !!this.spaceContext.dto;
-		// 			const hadId = !!this.spaceContext.id;
-		// 			this.spaceContext = undefined;
-		// 			if (hadId) {
-		// 				this.onSpaceIdChanged();
-		// 			}
-		// 			if (hadData) {
-		// 				this.onSpaceDtoChanged();
-		// 			}
-		// 		}
-		//
-		// 	} catch (e) {
-		// 		this.logError(e, 'Failed to set space id');
-		// 	}
 	}
 
 	private readonly onSpaceContextChanged = (space: ISpaceContext): void => {

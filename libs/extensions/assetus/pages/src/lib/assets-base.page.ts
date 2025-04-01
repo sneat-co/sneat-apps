@@ -4,7 +4,6 @@ import {
 	IAssetBrief,
 	IAssetusSpaceContext,
 } from '@sneat/mod-assetus-core';
-import { AssetService } from '@sneat/extensions-assetus-components';
 import { SpaceBaseComponent } from '@sneat/space-components';
 
 export abstract class AssetsBasePage extends SpaceBaseComponent {
@@ -12,10 +11,7 @@ export abstract class AssetsBasePage extends SpaceBaseComponent {
 
 	protected assetusSpace?: IAssetusSpaceContext;
 
-	protected constructor(
-		className: string,
-		protected readonly assetService: AssetService,
-	) {
+	protected constructor(className: string) {
 		super(className);
 	}
 

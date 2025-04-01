@@ -36,7 +36,7 @@ export class ScrumsHistoryPageComponent {
 			const id = route.snapshot.queryParamMap.get('space');
 			if (id) {
 				this.space = { id };
-				this.spaceService.watchSpace(this.space).subscribe((team) => {
+				this.spaceService.watchSpace(this.space.id).subscribe((team) => {
 					this.space = team;
 				});
 			}

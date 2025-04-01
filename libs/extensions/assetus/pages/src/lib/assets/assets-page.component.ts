@@ -7,7 +7,6 @@ import { ContactusServicesModule } from '@sneat/contactus-services';
 import { IIdAndBrief } from '@sneat/core';
 import { IAssetBrief, IAssetCategory } from '@sneat/mod-assetus-core';
 import {
-	AssetService,
 	AssetsListComponentModule,
 	AssetusServicesModule,
 	AssetusSpaceService,
@@ -49,10 +48,9 @@ export class AssetsPageComponent extends AssetsBasePage implements OnInit {
 
 	constructor(
 		private readonly assetusSpaceService: AssetusSpaceService,
-		assetService: AssetService,
 		private readonly alertCtrl: AlertController,
 	) {
-		super('AssetsPageComponent', assetService);
+		super('AssetsPageComponent');
 	}
 
 	override ngOnInit(): void {
@@ -114,6 +112,7 @@ export class AssetsPageComponent extends AssetsBasePage implements OnInit {
 	}
 
 	private watchSpaceAssets(): void {
+		console.log('AssetsPageComponent.watchSpaceAssets() started');
 		if (this.space?.id) {
 			this.assetusSpaceService
 				.watchAssetBriefs(this.space)

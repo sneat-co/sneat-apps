@@ -49,7 +49,7 @@ export class TrackerComponent extends SneatBaseComponent {
 
 		let contactusSpaceSub: Subscription | undefined = undefined;
 
-		const contactusSpaceEffect = effect(() => {
+		effect(() => {
 			contactusSpaceSub?.unsubscribe();
 			const spaceID = this.$spaceID();
 			if (!spaceID) {
@@ -65,11 +65,6 @@ export class TrackerComponent extends SneatBaseComponent {
 						this.$contactusSpace.set(contactusSpace?.dbo || undefined);
 					},
 				});
-		});
-
-		this.destroyed$.subscribe(() => {
-			contactusSpaceSub?.unsubscribe();
-			contactusSpaceEffect?.destroy();
 		});
 	}
 

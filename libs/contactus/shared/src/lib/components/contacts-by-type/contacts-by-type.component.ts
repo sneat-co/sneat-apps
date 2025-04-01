@@ -1,7 +1,5 @@
-import { group } from '@angular/animations';
 import {
 	Component,
-	computed,
 	effect,
 	EventEmitter,
 	input,
@@ -13,10 +11,9 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { eq, IIdAndBrief, IIdAndDbo, listItemAnimations } from '@sneat/core';
+import { eq, IIdAndDbo, listItemAnimations } from '@sneat/core';
 import {
 	ContactRole,
-	IContactBrief,
 	IContactGroupDbo,
 	IContactWithBrief,
 	IContactWithCheck,
@@ -77,11 +74,8 @@ export class ContactsByTypeComponent
 
 	constructor(private readonly contactNavService: ContactNavService) {
 		super('ContactsByTypeComponent');
-		const effectRef = effect(() => {
+		effect(() => {
 			this.setContactGroups();
-		});
-		this.destroyed$.subscribe(() => {
-			effectRef.destroy();
 		});
 	}
 

@@ -94,12 +94,9 @@ export class HappeningSlotParticipantsComponent extends SneatBaseComponent {
 		private readonly contactusService: ContactusSpaceService,
 	) {
 		super('HappeningSlotParticipantsComponent');
-		const effectRef = effect(() => {
+		effect(() => {
 			const spaceID = this.$spaceID();
 			this.onSpaceIDChanged(spaceID);
-		});
-		this.destroyed$.subscribe(() => {
-			effectRef.destroy();
 		});
 	}
 

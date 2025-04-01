@@ -118,12 +118,11 @@ export class SpaceService {
 	// 	return this.watchSpace(ref).pipe(first());
 	// }
 
-	public watchSpace(ref: ISpaceRef): Observable<ISpaceContext> {
-		console.log(`SpaceService.watchSpace(ref=${JSON.stringify(ref)})`);
-		if (!ref) {
-			throw new Error('space ref is a required parameter');
+	public watchSpace(id: string): Observable<ISpaceContext> {
+		console.log(`SpaceService.watchSpace(id=${id})`);
+		if (!id) {
+			throw new Error('space id is a required parameter');
 		}
-		const { id } = ref;
 		if (id === 'contacts') {
 			throw new Error('watchSpace({i}d===contacts})');
 		}
@@ -131,7 +130,7 @@ export class SpaceService {
 		if (subj) {
 			return subj.asObservable();
 		}
-		let spaceContext: ISpaceContext = ref;
+		let spaceContext: ISpaceContext = { id };
 		if (this.currentUserSpaces) {
 			const userTeamInfo = this.currentUserSpaces[id];
 			if (userTeamInfo) {
