@@ -1,4 +1,3 @@
-import { JsonPipe } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -32,12 +31,7 @@ import {
 @Component({
 	selector: 'sneat-happening-participants',
 	templateUrl: 'happening-participants.component.html',
-	imports: [
-		IonicModule,
-		ContactsChecklistComponent,
-		ContactsSelectorModule,
-		JsonPipe,
-	],
+	imports: [IonicModule, ContactsChecklistComponent, ContactsSelectorModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HappeningParticipantsComponent {
