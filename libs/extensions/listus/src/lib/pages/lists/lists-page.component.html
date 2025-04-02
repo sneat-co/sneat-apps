@@ -1,11 +1,11 @@
 <ion-header>
 	<ion-toolbar color="light" class="with-end-buttons">
 		@if (appId === "listus") {
+			<ion-title>📜 Listus.app</ion-title>
+		} @else {
 			<ion-buttons slot="start">
 				<ion-back-button [text]="null" [defaultHref]="$defaultBackUrl()" />
 			</ion-buttons>
-			<ion-title>📜 Listus.app</ion-title>
-		} @else {
 			<ion-title
 				>📜 Lists
 				@if (space.brief?.title) {
