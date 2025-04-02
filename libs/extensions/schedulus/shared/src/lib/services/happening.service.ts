@@ -195,8 +195,17 @@ export class HappeningService {
 
 	public readonly removeParticipant = (
 		request: IHappeningContactRequest,
+	): Observable<void> => {
+		return this.removeParticipants({
+			spaceID: request.spaceID,
+			happeningID: request.happeningID,
+			contacts: [request.contact],
+		});
+	};
+	public readonly removeParticipants = (
+		request: IHappeningContactsRequest,
 	): Observable<void> =>
-		this.sneatApiService.post('happenings/remove_participant', request);
+		this.sneatApiService.post('happenings/remove_participants', request);
 
 	public readonly addParticipant = (
 		request: IHappeningContactRequest,

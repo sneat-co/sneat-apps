@@ -21,7 +21,6 @@ import {
 	removeRelatedItem,
 } from '@sneat/dto';
 import { IHappeningContext, IHappeningBase } from '@sneat/mod-schedulus-core';
-import { delay } from 'rxjs';
 import {
 	HappeningService,
 	IHappeningContactRequest,
@@ -163,27 +162,24 @@ export class HappeningParticipantsComponent {
 									id: c.id,
 								})),
 							};
-							this.happeningService
-								.addParticipants(request)
-								.pipe(delay(3000))
-								.subscribe({
-									error: (err) => reject(err),
-									next: () => {
-										console.log(
-											`${contactsToAdd.length} contacts added as participants (api call completed)`,
-										);
-										const args: readonly ICheckChangedArgs[] =
-											request.contacts.map((c) => ({
-												event,
-												id: c.id,
-												checked: true,
-												resolve,
-												reject,
-											}));
-										this.addRemoveRelated(args);
-										resolve();
-									},
-								});
+							this.happeningService.addParticipants(request).subscribe({
+								error: (err) => reject(err),
+								next: () => {
+									console.log(
+										`${contactsToAdd.length} contacts added as participants (api call completed)`,
+									);
+									const args: readonly ICheckChangedArgs[] =
+										request.contacts.map((c) => ({
+											event,
+											id: c.id,
+											checked: true,
+											resolve,
+											reject,
+										}));
+									this.addRemoveRelated(args);
+									resolve();
+								},
+							});
 						} else {
 							console.log('selected contacts already added as participants');
 						}
