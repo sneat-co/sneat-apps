@@ -1,3 +1,4 @@
+import { computed, signal } from '@angular/core';
 import { SneatApiService } from '@sneat/api';
 import { dateToIso, INavContext } from '@sneat/core';
 import { hasRelated } from '@sneat/dto';
@@ -165,6 +166,10 @@ export class SpaceDaysProvider {
 	private readonly recurringByWd: RecurringsByWeekday =
 		emptyRecurringsByWeekday();
 
+	private readonly $space = signal<ISpaceContext | undefined>(undefined);
+
+	private readonly $spaceID = computed(() => this.$space()?.id || '');
+
 	private readonly space$ = new BehaviorSubject<ISpaceContext | undefined>(
 		undefined,
 	);
@@ -172,11 +177,6 @@ export class SpaceDaysProvider {
 	private readonly schedulusSpace$ = new BehaviorSubject<
 		ISchedulusSpaceContext | undefined
 	>(undefined);
-
-	private readonly spaceID$ = this.space$.asObservable().pipe(
-		map((team) => team?.id),
-		distinctUntilChanged(),
-	);
 
 	private readonly days: Record<string, SpaceDay> = {};
 
@@ -193,8 +193,6 @@ export class SpaceDaysProvider {
 
 	// private teamId?: string;
 	private memberId?: string;
-
-	private _space?: ISpaceContext;
 
 	constructor(
 		private readonly errorLogger: IErrorLogger,
@@ -226,7 +224,7 @@ export class SpaceDaysProvider {
 		let day = this.days[id];
 		if (!day) {
 			day = new SpaceDay(
-				this.space$,
+				this.$spaceID(),
 				date,
 				this.recurrings$,
 				this.errorLogger,
@@ -240,8 +238,7 @@ export class SpaceDaysProvider {
 
 	public setSpace(space: ISpaceContext): void {
 		console.log('SpaceDaysProvider.setSpace()', space);
-		this._space = space;
-		this.space$.next(space);
+		this.$space.set(space);
 		// this.processRecurringBriefs();
 		// return this.loadRecurring();
 	}
@@ -349,13 +346,14 @@ export class SpaceDaysProvider {
 		if (!this.schedulusSpace$.value?.dbo?.recurringHappenings) {
 			return;
 		}
+		const space = this.$space();
 		zipMapBriefsWithIDs(
 			this.schedulusSpace$.value?.dbo?.recurringHappenings,
 		).forEach((rh) => {
 			this.processRecurring({
 				id: rh.id,
 				brief: rh.brief,
-				space: this._space || { id: '' },
+				space: space || { id: '' },
 			});
 		});
 	}
@@ -379,7 +377,8 @@ export class SpaceDaysProvider {
 	private processRecurring(
 		recurring: ISpaceItemNavContext<IHappeningBrief, IHappeningDbo>,
 	): void {
-		if (!this._space?.id) {
+		const spaceID = this.$spaceID();
+		if (!spaceID) {
 			return;
 		}
 		if (
@@ -388,7 +387,7 @@ export class SpaceDaysProvider {
 				recurring.dbo?.related || recurring?.brief?.related,
 				'contactus',
 				'contacts',
-				{ spaceID: this._space.id, itemID: this.memberId },
+				{ spaceID, itemID: this.memberId },
 			)
 		) {
 			return;

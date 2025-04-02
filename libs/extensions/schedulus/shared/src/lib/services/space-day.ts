@@ -4,15 +4,12 @@ import { IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
 import {
 	BehaviorSubject,
-	distinctUntilChanged,
-	map,
 	Observable,
 	shareReplay,
 	Subject,
 	Subscription,
 	takeUntil,
 } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import {
 	getWd2,
 	ISlotUIContext,
@@ -31,12 +28,8 @@ export class SpaceDay {
 	private readonly destroyed = new Subject<void>();
 	private readonly destroyed$ = this.destroyed.asObservable();
 
-	private readonly _slots = new BehaviorSubject<ISlotUIContext[] | undefined>(
-		undefined,
-	);
 	private recurringSlots?: RecurringSlots;
 	private singles?: ISlotUIContext[];
-	// private singles?: ISlotItem[];
 
 	private _spaces: ISpaceContext[] = [];
 
@@ -44,23 +37,26 @@ export class SpaceDay {
 		return this._spaces;
 	}
 
-	private spaceID?: string;
 	public readonly date: Date;
 	public readonly dateID: string;
 	public readonly wd: WeekdayCode2;
 	public readonly wdLongTitle: string;
 
 	private readonly _isLoading = signal(true);
-	public readonly isLoading = this._isLoading.asReadonly();
 
-	public readonly loadingEvents?: boolean;
-	// readonly eventsLoaded?: boolean;
+	public readonly $isLoading = this._isLoading.asReadonly();
+
+	private readonly $slots = signal<ISlotUIContext[] | undefined>(undefined);
+
+	private readonly _slots = new BehaviorSubject<ISlotUIContext[] | undefined>(
+		undefined,
+	);
 
 	public readonly slots$ = this._slots.asObservable().pipe(
 		shareReplay(1),
 		takeUntil(this.destroyed$),
-		tap((slots) => console.log(`SpaceDay[${this.dateID}].slots$ =>`, slots)),
-		map((slots) => slots?.sort(sortSlotItems)),
+		// tap((slots) => console.log(`SpaceDay[${this.dateID}].slots$ =>`, slots)),
+		// map((slots) => slots?.sort(sortSlotItems)),
 	);
 
 	private calendarDayDbo?: ICalendarDayDbo | null;
@@ -69,14 +65,12 @@ export class SpaceDay {
 		return this._slots.value;
 	}
 
-	private readonly space$: Observable<ISpaceContext | undefined>;
-	private readonly spaceID$: Observable<string | undefined>;
-
-	private subscriptions: Subscription[] = [];
+	private readonly subscriptions: Subscription[] = [];
 
 	constructor(
-		// TODO: Instead of Observable<string | undefined> we should use Observable<ISpaceContext | undefined>
-		space$: Observable<ISpaceContext | undefined>, // do not declare it as member as we apply takeUntil(this.destroyed$) & distinctUntilChanged() to it
+		// Do we use observable as we might want to use space settings?
+		private readonly spaceID: string,
+		// space$: Observable<ISpaceContext | undefined>, // do not declare it as member as we apply takeUntil(this.destroyed$) & distinctUntilChanged() to it
 		date: Date, // intentionally not marking as public here to have public fields in 1 place
 		recurrings$: Observable<RecurringSlots>,
 		private readonly errorLogger: IErrorLogger,
@@ -86,24 +80,15 @@ export class SpaceDay {
 		if (!date) {
 			throw new Error('missing required parameter: date');
 		}
-		this.date = date;
 		this.dateID = dateToIso(date);
 		if (this.dateID === '1970-01-01') {
 			throw new Error('an attempt to set an empty date 1970-01-01');
 		}
+		this.date = date;
 		console.log('SpaceDay.constructor()', this.dateID, this.date);
-		this.space$ = space$;
-		space$ = space$.pipe(takeUntil(this.destroyed$));
-		this.spaceID$ = space$.pipe(
-			map((space) => space?.id),
-			distinctUntilChanged(),
-		);
 		this.wd = getWd2(date);
 		this.wdLongTitle = wdCodeToWeekdayLongName(this.wd);
-		this.spaceID$.subscribe({
-			next: this.processSpaceID,
-			error: (err) => console.error('SpaceDay.spaceID$.subscribe.error', err),
-		});
+		this.processSpaceID(spaceID);
 		this.subscribeForRecurrings(recurrings$);
 	}
 
@@ -113,28 +98,25 @@ export class SpaceDay {
 	}
 
 	private readonly processSpaceID = (spaceID: string | undefined) => {
-		if (spaceID === this.spaceID) {
-			return;
-		}
 		console.log(`SpaceDay[${this.dateID}].processSpaceID(spaceID=${spaceID})`);
-		this.spaceID = spaceID;
 		this.singles = undefined;
-		if (!this.spaceID) {
+		if (!spaceID) {
 			this.recurringSlots = undefined;
 		}
 		this.subscriptions.forEach((s) => s.unsubscribe());
-		this.subscriptions = [];
+		this.subscriptions.length = 0;
 		this.subscribeForSingles();
 		this.subscribeForCalendarDay();
 	};
 
 	private readonly subscribeForCalendarDay = (): void => {
-		if (!this.spaceID) {
+		const spaceID = this.spaceID;
+		if (!spaceID) {
 			return;
 		}
 		this.subscriptions.push(
 			this.calendarDayService
-				.watchSpaceDay({ id: this.spaceID }, this.dateID)
+				.watchSpaceDay({ id: spaceID }, this.dateID)
 				.pipe(takeUntil(this.destroyed$))
 				.subscribe({
 					next: (calendarDay) => {
@@ -157,7 +139,8 @@ export class SpaceDay {
 	};
 
 	private readonly subscribeForSingles = (): void => {
-		if (!this.spaceID) {
+		const spaceID = this.spaceID;
+		if (!spaceID) {
 			console.error('Tried to subscribe for single happenings without spaceID');
 			return;
 		}
@@ -166,7 +149,6 @@ export class SpaceDay {
 			return;
 		}
 		try {
-			const spaceID = this.spaceID;
 			const date = this.dateID;
 			console.log(
 				`SpaceDay[${this.dateID}].subscribeForSingles(), spaceID=${spaceID}, date=${date}`,
@@ -249,7 +231,7 @@ export class SpaceDay {
 
 	private joinRecurringsWithSinglesAndEmit(): void {
 		console.log('joinRecurringsWithSinglesAndEmit() day=', this.dateID);
-		const slots: ISlotUIContext[] = [];
+		let slots: ISlotUIContext[] = [];
 
 		const weekdaySlots = this.recurringSlots?.byWeekday[this.wd]?.map(
 			(wdSlot) => {
@@ -283,8 +265,13 @@ export class SpaceDay {
 		// 	`${weekdaySlots?.length || 0} recurrings:`, weekdaySlots,
 		// 	`${this.singles?.length || 0} singles:`, weekdaySlots,
 		// 	`=> ${slots.length} slots:`, slots);
+
+		slots = slots.sort(sortSlotItems);
 		this._slots.next(slots);
+		this.$slots.set(slots);
+
 		this._isLoading.set(false);
+
 		console.log(
 			'SpaceDay[${this.dateID}].joinRecurringsWithSinglesAndEmit() _isLoading=false',
 		);

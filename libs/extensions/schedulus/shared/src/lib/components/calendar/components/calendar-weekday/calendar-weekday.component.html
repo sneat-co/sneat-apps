@@ -10,7 +10,7 @@
 			{{ day?.date?.getMonth() | shortMonthName }}
 		}
 	</ion-label>
-	@if (day?.loadingEvents) {
+	@if (day?.$isLoading()) {
 		<ion-spinner style="opacity: 0.2" name="lines-small" slot="end" />
 	}
 	<ion-buttons slot="end">
@@ -22,11 +22,11 @@
 		</ion-button>
 	</ion-buttons>
 </ion-item-divider>
-@if (!day || day.isLoading()) {
+@if (!day || day.$isLoading()) {
 	<ion-item>
 		<ion-label color="medium" style="font-style: italic"
 			>Loading data for {{ weekday?.longTitle }} isLoading={{
-				day?.isLoading()
+				day?.$isLoading()
 			}}... weekday.day.id: {{ weekday?.day?.dateID }}
 		</ion-label>
 		<ion-spinner name="lines-small" slot="end" color="medium" />
