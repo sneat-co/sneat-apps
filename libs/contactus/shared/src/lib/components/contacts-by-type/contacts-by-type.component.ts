@@ -17,6 +17,7 @@ import {
 	IContactGroupDbo,
 	IContactWithBrief,
 	IContactWithCheck,
+	isContactPassFilter,
 } from '@sneat/contactus-core';
 import { ContactNavService } from '@sneat/contactus-services';
 import { ISpaceContext } from '@sneat/space-models';
@@ -61,7 +62,7 @@ export class ContactsByTypeComponent
 	>([]);
 
 	//
-	@Input() filter = '';
+	public readonly $filter = input.required<string>();
 	// @Input() contacts?: readonly IContactWithSpace[];
 	@Input() goContact: (contact?: IContactWithBrief) => void = () => void 0;
 	@Input() goMember: (id: string, event: Event) => boolean = () => false;
@@ -109,7 +110,7 @@ export class ContactsByTypeComponent
 
 	private setContactGroups(): void {
 		this.$contactGroups.set([]);
-		const filter = this.filter;
+		const filter = this.$filter();
 		const contacts = this.$contacts();
 		const selectedContactIDsByRole = this.$selectedContactIDsByRole();
 		const noContactRoles = this.$space().dbo?.noContactRoles;
@@ -127,6 +128,7 @@ export class ContactsByTypeComponent
 				const roleWithContacts: IContactRoleWithContacts = {
 					...role,
 					contacts: contacts
+						// We do not filter by text here as we want to show all contacts if role title contains the text
 						.filter((c) => c.brief?.roles?.includes(role.id))
 						.map((c) => ({
 							...c,
@@ -134,7 +136,8 @@ export class ContactsByTypeComponent
 						})),
 				};
 				if (filter && role.title.toLowerCase().includes(filter)) {
-					rolesWithContacts.push(roleWithContacts); // Show all contacts in role that filtered by title
+					// Show all contacts in role that filtered by title
+					rolesWithContacts.push(roleWithContacts);
 					return;
 				}
 				if (roleWithContacts.contacts) {
@@ -143,7 +146,7 @@ export class ContactsByTypeComponent
 					});
 					if (roleWithContacts.contacts.length && filter) {
 						roleWithContacts.contacts = roleWithContacts.contacts.filter((c) =>
-							c?.brief?.title?.toLowerCase().includes(filter),
+							isContactPassFilter(c, filter, role.id),
 						);
 						if (roleWithContacts.contacts.length) {
 							rolesWithContacts.push(roleWithContacts);

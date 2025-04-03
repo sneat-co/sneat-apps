@@ -8,6 +8,7 @@ import {
 import { ISpaceModuleItemRef, IWithRelatedAndRelatedIDs } from '@sneat/dto';
 import { ISpaceRef } from '@sneat/core';
 import { IContactBase } from './contact-base';
+import { ContactRole } from './contact-roles';
 import { IContact2Asset } from './contact2item';
 import { IPersonRecord } from './person';
 
@@ -30,6 +31,38 @@ export interface IContactBrief extends IContactBase {
 }
 
 export type IContactWithBrief = IIdAndBrief<IContactBrief>;
+
+export function filterContactsByTextAndRole( // TODO(help-wanted): add test
+	contacts: readonly IContactWithBrief[] | undefined,
+	text: string,
+	role?: ContactRole,
+): readonly IContactWithBrief[] | undefined {
+	return !text && !role
+		? contacts
+		: contacts?.filter((c) => {
+				return isContactPassFilter(c, text, role);
+			});
+}
+
+export function isContactPassFilter(
+	c: IContactWithBrief,
+	text: string,
+	role?: ContactRole,
+): boolean {
+	const { brief } = c;
+	const names = brief?.names;
+	return (
+		(!role || (!!c.brief?.roles && c?.brief.roles.includes(role))) &&
+		(!text ||
+			brief?.title?.toLowerCase().includes(text) ||
+			(!!names &&
+				(!!names.firstName?.toLowerCase().includes(text) ||
+					!!names.lastName?.toLowerCase().includes(text) ||
+					!!names.nickName?.toLowerCase().includes(text) ||
+					!!names.middleName?.toLowerCase().includes(text) ||
+					!!names.fullName?.toLowerCase().includes(text))))
+	);
+}
 
 export interface IContactWithSpace extends IContactWithBrief {
 	readonly space: ISpaceRef;

@@ -16,6 +16,7 @@ import { FilterItemComponent } from '@sneat/components';
 import {
 	addSpace,
 	ContactRole,
+	filterContactsByTextAndRole,
 	IContactWithBrief,
 	IContactWithCheck,
 	IContactWithSpace,
@@ -154,29 +155,16 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 
 	protected $contacts = computed(() => {
 		const allContacts = this.$allContacts(),
-			role = this.$role();
-
-		const filter = this.$filter().trim().toLowerCase();
+			role = this.$role(),
+			filter = this.$filter().trim().toLowerCase();
 
 		console.log('$contacts - started', allContacts?.length);
 
 		const space = this.$space();
 
-		const contacts =
-			!filter && !role
-				? allContacts
-				: allContacts?.filter(
-						(c) =>
-							(!filter ||
-								c.brief?.title?.toLowerCase().includes(filter) ||
-								c.brief?.names?.firstName?.toLowerCase().includes(filter) ||
-								c.brief?.names?.lastName?.toLowerCase().includes(filter) ||
-								c.brief?.names?.nickName?.toLowerCase().includes(filter) ||
-								c.brief?.names?.middleName?.toLowerCase().includes(filter) ||
-								c.brief?.names?.fullName?.toLowerCase().includes(filter)) &&
-							(!role || (c.brief?.roles && c?.brief.roles.includes(role))),
-					);
-		return contacts?.map(addSpace(space));
+		return filterContactsByTextAndRole(allContacts, filter, role)?.map(
+			addSpace(space),
+		);
 	});
 
 	protected readonly goContact = (contact?: IContactWithBrief): void => {

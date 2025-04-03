@@ -1,6 +1,5 @@
 @let space = $space();
 @let role = $role();
-@let filter = $filter();
 
 @if (space.type === "company") {
 	<ion-segment [value]="role" (ionChange)="onRoleChanged($event)">
@@ -30,7 +29,7 @@
 		<ion-row>
 			<ion-col size="12" size-sm="5">
 				<sneat-filter-item
-					[$filter]="filter"
+					[$filter]="$filter()"
 					(changed)="onFilterChanged($event)"
 				/>
 			</ion-col>
@@ -89,7 +88,7 @@
 					[$contacts]="$contactsWithSpace()"
 					[$contactGroupDefinitions]="familyGroupDefinitions"
 					[$space]="space"
-					[filter]="filter"
+					[$filter]="$filter()"
 					[goContact]="goContact"
 					[goMember]="goMember"
 					[command]="command"
