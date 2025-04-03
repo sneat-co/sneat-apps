@@ -14,6 +14,7 @@ import {
 	ContactsSelectorService,
 	ContactsSelectorModule,
 	ICheckChangedArgs,
+	IContactSelectorProps,
 } from '@sneat/contactus-shared';
 import { AnalyticsService } from '@sneat/core';
 import {
@@ -142,13 +143,14 @@ export class HappeningParticipantsComponent {
 		}
 		this.$isAddingContact.set(true);
 		const happeningID = this.$happening().id;
+		const componentProps: IContactSelectorProps = {
+			space: this.$space(),
+		};
 		this.contactSelectorService
 			.selectMultipleInModal({
 				title: 'Add participants',
 				selectedItems: [],
-				componentProps: {
-					space: this.$space(),
-				},
+				componentProps: componentProps,
 				onSelected: (selectedContacts): Promise<void> => {
 					console.log(
 						`${selectedContacts?.length || 0} contacts select by user to be added as participants`,

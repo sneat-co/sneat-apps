@@ -1,22 +1,28 @@
 import { TitleCasePipe } from '@angular/common';
 import {
+	ChangeDetectionStrategy,
 	Component,
 	computed,
 	effect,
+	EffectRef,
 	Inject,
-	input,
+	Injector,
 	Input,
+	OnChanges,
+	OnDestroy,
+	OnInit,
 	signal,
+	SimpleChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { CONTACT_ROLES_BY_TYPE, ContactRolesByType } from '@sneat/app';
 import { getFullName } from '@sneat/auth-models';
 import { countryFlagEmoji } from '@sneat/components';
 import {
 	ISelectItem,
 	SelectFromListComponent,
-	SelectorBaseComponent,
+	SelectorModalComponent,
 } from '@sneat/ui';
 import {
 	ContactRole,
@@ -31,7 +37,7 @@ import {
 	computeSpaceRefFromSpaceContext,
 	ISpaceContext,
 } from '@sneat/space-models';
-import { BehaviorSubject, map, Subject, Subscription, takeUntil } from 'rxjs';
+import { map, Subject, Subscription, takeUntil } from 'rxjs';
 import { BasicContactFormModule } from '../basic-contact-form';
 import { ContactsComponent } from '../contacts-component/contacts.component';
 import { LocationFormComponent } from '../location-form';
@@ -52,22 +58,56 @@ import { IContactSelectorOptions } from './contacts-selector.interfaces';
 		TitleCasePipe,
 		ContactsComponent,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactsSelectorComponent
-	extends SelectorBaseComponent<IContactWithSpace>
-	implements IContactSelectorOptions
+	extends SelectorModalComponent<IContactWithSpace>
+	implements IContactSelectorOptions, OnInit, OnChanges, OnDestroy
 {
 	private readonly parentChanged = new Subject<void>();
 
 	parentTab: 'existing' | 'new' = 'existing';
 	contactTab: 'existing' | 'new' = 'existing';
 
-	public readonly $space = input.required<ISpaceContext>();
-	protected readonly $spaceRef = computeSpaceRefFromSpaceContext(this.$space);
-	protected readonly $spaceID = computed(() => this.$spaceRef().id);
+	private spaceIDChangesCount = 0;
 
-	// We use it to cancel requests if space ID changed.
-	protected readonly spaceID$ = new BehaviorSubject<string>('');
+	@Input({ required: true }) space?: ISpaceContext;
+
+	private effects?: readonly EffectRef[];
+
+	// we can't yet use `$space = input.required` for modal component yet
+	protected readonly $space = signal<ISpaceContext>({ id: '' });
+	protected readonly $spaceRef = computeSpaceRefFromSpaceContext(this.$space);
+	protected readonly $spaceID = computed(() => {
+		const spaceID = this.$spaceRef().id;
+		console.log(
+			`ContactsSelectorComponent.$spaceID(spaceID=${spaceID})`,
+			this.spaceIDChangesCount,
+		);
+		if (spaceID && !this.spaceIDChangesCount) {
+			this.spaceIDChangesCount += 1;
+			// this.setupEffects();
+		}
+		return spaceID;
+	});
+
+	private setupEffects(): void {
+		console.log('ContactsSelectorComponent.setupEffects()');
+		this.destroyEffects();
+		this.effects = [effect(() => this.onSpaceIDChanged())];
+		// runInInjectionContext(this.injector, () => {
+		// 	this.effects = [effect(() => this.onSpaceIDChanged())];
+		// });
+	}
+
+	private onSpaceIDChanged(): void {
+		const spaceID = this.$spaceID();
+		this.spaceID$.next(spaceID);
+		this.watchContactBriefs();
+	}
+
+	// We use it to cancel request to ContactusSpace if space ID changed.
+	protected readonly spaceID$ = new Subject<string>();
 
 	@Input() parentIcon = 'business-outline';
 	@Input() contactIcon = 'business-outline';
@@ -123,30 +163,51 @@ export class ContactsSelectorComponent
 	}
 
 	constructor(
-		modalController: ModalController,
+		private readonly injector: Injector,
+		// modalController: ModalController, // we can not inject in parent as parent takes either modal or popup
 		@Inject(CONTACT_ROLES_BY_TYPE)
 		private readonly contactRolesByType: ContactRolesByType,
-		// private readonly contactService: ContactService,
 		private readonly contactusSpaceService: ContactusSpaceService,
 	) {
-		super('ContactSelectorComponent', modalController);
-		effect(() => this.spaceID$.next(this.$spaceID()));
-		effect(() => {
-			this.subscribeForData();
-		});
+		super('ContactSelectorComponent');
+		this.setupEffects();
 	}
 
-	private subscribeForData(): void {
-		console.log(`ContactSelectorComponent.subscribeForData()`);
-		this.contactBriefsSub?.unsubscribe();
-		this.watchContactBriefs();
+	public ngOnInit(): void {
+		console.log('ContactsSelectorComponent.ngOnInit', this.space);
+		if (this.space) {
+			// When dynamically creating the component in modal ngOnChanges are not called.
+			this.$space.set(this.space);
+			// we need to call this as effects would not be set without something consumers
+			// this.onSpaceIDChanged();
+		}
+	}
+
+	override ngOnDestroy(): void {
+		super.ngOnDestroy();
+		this.destroyEffects();
+	}
+
+	private destroyEffects(): void {
+		this.effects?.forEach((effect) => effect.destroy());
+		this.effects = undefined;
+	}
+
+	public ngOnChanges(changes: SimpleChanges): void {
+		console.log('ContactsSelectorComponent.ngOnChanges', this.space);
+		if (changes['space']) {
+			this.$space.set(this.space || { id: '' });
+		}
 	}
 
 	private watchContactBriefs(): void {
+		console.log('ContactsSelectorComponent.watchContactBriefs()');
 		const spaceID = this.$spaceID();
+		this.contactBriefsSub?.unsubscribe();
 		this.contactBriefsSub = this.contactusSpaceService
 			.watchContactBriefs(spaceID)
 			.pipe(
+				this.takeUntilDestroyed(),
 				takeUntil(this.spaceID$),
 				map((contacts) => {
 					const space = this.$space();
@@ -221,9 +282,9 @@ export class ContactsSelectorComponent
 				this.parentTab = 'new';
 			}
 		}
-		if (this.$contacts && !this.$contacts.length) {
-			this.contactTab = 'new';
-		}
+		// if (this.$contacts && !this.$contacts.length) {
+		// 	this.contactTab = 'new';
+		// }
 		console.log(
 			'setContacts',
 			this.allContacts,

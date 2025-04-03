@@ -85,8 +85,11 @@ export class ContactsPageComponent
 		if (role) {
 			this.$role.set(role[1] as ContactRole);
 		}
-		const allContacts = window.history.state.contacts as IContactWithSpace[];
-		this.$allContacts.set(allContacts);
+
+		// const allContacts = window.history.state.contacts as IContactWithSpace[];
+		// if (allContacts) {
+		// 	this.$allContacts.set(allContacts);
+		// }
 
 		this.route.queryParamMap.pipe(this.takeUntilDestroyed()).subscribe({
 			next: (q) => {
@@ -96,6 +99,7 @@ export class ContactsPageComponent
 	}
 
 	protected override onSpaceIdChanged() {
+		console.log('ContactsPage.onSpaceIdChanged()');
 		super.onSpaceIdChanged();
 		this.contactsSubscription?.unsubscribe();
 		if (this.contactsSubscription) {

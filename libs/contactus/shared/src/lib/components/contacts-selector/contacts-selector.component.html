@@ -62,80 +62,82 @@
 	}
 
 	@if (!parentRole || selectedParent) {
-		<ion-card>
-			<!--		<ion-item>-->
-			<!--			<ion-label>Select dispatch location</ion-label>-->
-			<!--			<ion-buttons slot="end">-->
-			<!--				<ion-button>-->
-			<!--					<ion-icon name="add-outline" slot="start"></ion-icon>-->
-			<!--					<ion-label>Add</ion-label>-->
-			<!--				</ion-button>-->
-			<!--			</ion-buttons>-->
-			<!--		</ion-item>-->
-			@if (parentTab) {
-				<ion-segment [(ngModel)]="contactTab">
-					<ion-segment-button value="existing">Existing</ion-segment-button>
-					<ion-segment-button value="new">New</ion-segment-button>
-				</ion-segment>
-			}
+		<!--		<ion-item>-->
+		<!--			<ion-label>Select dispatch location</ion-label>-->
+		<!--			<ion-buttons slot="end">-->
+		<!--				<ion-button>-->
+		<!--					<ion-icon name="add-outline" slot="start"></ion-icon>-->
+		<!--					<ion-label>Add</ion-label>-->
+		<!--				</ion-button>-->
+		<!--			</ion-buttons>-->
+		<!--		</ion-item>-->
+		@if (parentTab) {
+			<!-- TODO(help-wanted: ion-margin-end is not applied properly -->
+			<ion-segment
+				[(ngModel)]="contactTab"
+				class="ion-margin-start ion-margin-end"
+			>
+				<ion-segment-button value="existing">Existing</ion-segment-button>
+				<ion-segment-button value="new">New</ion-segment-button>
+			</ion-segment>
+		}
 
-			@switch (contactTab) {
-				@case ("existing") {
-					@if ($contacts(); as contacts) {
-						@if (selectedParent && !contacts.length) {
-							<ion-text color="medium" class="ion-padding">
-								<p>No locations for selected contact</p>
-							</ion-text>
-						}
+		@switch (contactTab) {
+			@case ("existing") {
+				@if ($contacts(); as contacts) {
+					@if (selectedParent && !contacts.length) {
+						<ion-text color="medium" class="ion-padding">
+							<p>No locations for selected contact</p>
+						</ion-text>
 					}
-					<sneat-contacts [$space]="$space()" [$allContacts]="$contacts()" />
-					<!--					<sneat-select-from-list-->
-					<!--						[selectMode]="'multiple'"-->
-					<!--						label=""-->
-					<!--						labelPlacement="start"-->
-					<!--						[items]="contactItems"-->
-					<!--						[(ngModel)]="selectedSubContactID"-->
-					<!--						(ngModelChange)="onContactSelected($event)"-->
-					<!--						[isFilterable]="true"-->
-					<!--					/>-->
 				}
-				@case ("new") {
-					@switch (contactType) {
-						@case ("location") {
-							<sneat-location-form
-								contactType="location"
-								[contactRole]="contactRole"
-								[$space]="$space()"
-								[parentContact]="selectedParent"
-								(locationCreated)="onLocationCreated($event)"
-							/>
-						}
-						@case ("company") {
-							<sneat-new-company-form
-								[$space]="$space()"
-								[contactRoles]="contactRoles"
-								[contactRole]="contactRole"
-								[hideRole]="true"
-								[parentContact]="selectedParent"
-								(contactCreated)="onContactCreated($event)"
-							/>
-						}
-						@default {
-							<ion-item-divider>
-								<ion-label>{{ contactRole || "" | titlecase }}</ion-label>
-							</ion-item-divider>
-							<sneat-basic-contact-form
-								[space]="$space()"
-								[contactType]="contactType"
-								[contactRoles]="contactRole ? [contactRole] : undefined"
-								[parentContact]="selectedParent"
-								(contactCreated)="onSubContactCreated($event)"
-							/>
-						}
+				<sneat-contacts [$space]="$space()" [$allContacts]="$contacts()" />
+				<!--					<sneat-select-from-list-->
+				<!--						[selectMode]="'multiple'"-->
+				<!--						label=""-->
+				<!--						labelPlacement="start"-->
+				<!--						[items]="contactItems"-->
+				<!--						[(ngModel)]="selectedSubContactID"-->
+				<!--						(ngModelChange)="onContactSelected($event)"-->
+				<!--						[isFilterable]="true"-->
+				<!--					/>-->
+			}
+			@case ("new") {
+				@switch (contactType) {
+					@case ("location") {
+						<sneat-location-form
+							contactType="location"
+							[contactRole]="contactRole"
+							[$space]="$space()"
+							[parentContact]="selectedParent"
+							(locationCreated)="onLocationCreated($event)"
+						/>
+					}
+					@case ("company") {
+						<sneat-new-company-form
+							[$space]="$space()"
+							[contactRoles]="contactRoles"
+							[contactRole]="contactRole"
+							[hideRole]="true"
+							[parentContact]="selectedParent"
+							(contactCreated)="onContactCreated($event)"
+						/>
+					}
+					@default {
+						<ion-item-divider>
+							<ion-label>{{ contactRole || "" | titlecase }}</ion-label>
+						</ion-item-divider>
+						<sneat-basic-contact-form
+							[space]="$space()"
+							[contactType]="contactType"
+							[contactRoles]="contactRole ? [contactRole] : undefined"
+							[parentContact]="selectedParent"
+							(contactCreated)="onSubContactCreated($event)"
+						/>
 					}
 				}
 			}
-		</ion-card>
+		}
 	}
 
 	@if (selectMode === "multiple") {

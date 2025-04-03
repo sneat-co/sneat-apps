@@ -2,6 +2,8 @@
 @let role = $role();
 @let filter = $filter();
 
+space: {{ space.id }}
+
 @if (space.type === "company") {
 	<ion-segment [value]="role" (ionChange)="onRoleChanged($event)">
 		<!--		<ion-segment-button>All</ion-segment-button>-->
@@ -45,14 +47,15 @@
 								<ion-label>By type</ion-label>
 							</ion-segment-button>
 						</ion-segment>
-						@if (segment === "groups") {
-							<ion-buttons slot="end">
-								<ion-button color="tertiary" (click)="addGroup($event)">
-									<ion-icon name="add-outline" slot="start" />
-									<ion-label>Add group</ion-label>
-								</ion-button>
-							</ion-buttons>
-						}
+						<!--						Make it to work in a modal - too narrow at the moment.-->
+						<!--						@if (segment === "groups") {-->
+						<!--							<ion-buttons slot="end">-->
+						<!--								<ion-button color="tertiary" (click)="addGroup($event)">-->
+						<!--									<ion-icon name="add-outline" slot="start" />-->
+						<!--									<ion-label>Add group</ion-label>-->
+						<!--								</ion-button>-->
+						<!--							</ion-buttons>-->
+						<!--						}-->
 					</ion-item>
 				</ion-col>
 			}

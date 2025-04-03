@@ -1,12 +1,9 @@
 import {
 	ContactRole,
 	ContactType,
-	IContactBrief,
 	IContactContext,
-	IContactWithBrief,
 	IContactWithSpace,
 } from '@sneat/contactus-core';
-import { IIdAndBrief } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import { ISelectorOptions } from '@sneat/ui';
 

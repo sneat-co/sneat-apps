@@ -1,4 +1,4 @@
-import { computed } from '@angular/core';
+import { computed, Signal } from '@angular/core';
 import {
 	IIdAndBrief,
 	IIdAndBriefWithSpaceRef,
@@ -32,10 +32,14 @@ export interface ISpaceContext
 	// readonly contacts?: IContactContext[]; // TODO: this should not be here
 }
 
-export function computeSpaceRefFromSpaceContext($space: () => ISpaceContext) {
+export function computeSpaceRefFromSpaceContext(
+	$space: Signal<ISpaceContext | undefined>,
+) {
 	return computed<ISpaceRef>(() => {
 		const space = $space();
-		return space.type ? { type: space.type, id: space.id } : { id: space.id };
+		return space?.type
+			? { type: space?.type, id: space.id }
+			: { id: space?.id || '' };
 	});
 }
 

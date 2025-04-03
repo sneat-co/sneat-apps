@@ -6,6 +6,7 @@ import {
 	Input,
 	OnChanges,
 	Output,
+	signal,
 	SimpleChanges,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -142,7 +143,7 @@ export class ContactInputComponent implements OnChanges {
 		}
 		const selectorOptions: IContactSelectorOptions = {
 			componentProps: {
-				space: this.space,
+				space: this.space, // TODO: switch to this.$space
 				parentType: this.parentType,
 				parentRole: this.parentRole,
 				contactRole: this.contactRole,
