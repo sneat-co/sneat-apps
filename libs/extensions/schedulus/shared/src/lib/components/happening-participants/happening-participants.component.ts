@@ -6,6 +6,7 @@ import {
 	inject,
 	input,
 	Output,
+	signal,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import {
@@ -131,12 +132,15 @@ export class HappeningParticipantsComponent {
 		this.emitHappeningChange(happening);
 	}
 
+	protected $isAddingContact = signal(false);
+
 	protected addContact(event: Event, source: string): void {
 		this.analytics.logEvent('happening/participants/add_contact', { source });
 		const spaceID = this.$space().id;
 		if (!spaceID) {
 			return;
 		}
+		this.$isAddingContact.set(true);
 		const happeningID = this.$happening().id;
 		this.contactSelectorService
 			.selectMultipleInModal({
@@ -187,13 +191,17 @@ export class HappeningParticipantsComponent {
 				},
 			})
 			.then((selectedContacts) => {
+				this.$isAddingContact.set(false);
 				console.log(
 					`${selectedContacts?.length || 0} contacts added added as participants`,
 				);
-				alert(
-					`${selectedContacts?.length || 0} contacts added added as participants`,
-				);
+				// alert(
+				// 	`${selectedContacts?.length || 0} contacts added added as participants`,
+				// );
 			})
-			.catch((err) => alert(err));
+			.catch((err) => {
+				this.$isAddingContact.set(false);
+				alert(err);
+			});
 	}
 }

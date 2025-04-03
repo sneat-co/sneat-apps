@@ -15,8 +15,8 @@ import { SelectorBaseComponent } from '../selector-base.component';
 	templateUrl: './multi-selector.component.html',
 	imports: [IonicModule],
 })
-export class MultiSelectorComponent
-	extends SelectorBaseComponent
+export class MultiSelectorComponent<T = ISelectItem>
+	extends SelectorBaseComponent<T>
 	implements OnChanges
 {
 	@Input() title = 'Select';

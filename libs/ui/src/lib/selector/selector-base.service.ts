@@ -11,59 +11,62 @@ export abstract class SelectorBaseService<T = ISelectItem> {
 
 	protected constructor(private readonly component: ComponentRef) {}
 
-	public selectSingleInModal(options: ISelectorOptions<T>): Promise<T | null> {
+	public async selectSingleInModal(
+		options: ISelectorOptions<T>,
+	): Promise<T | null> {
 		console.log('selectSingleInModal(), options:', options);
-		return new Promise<T | null>((resolve, reject) => {
-			this.selectMultipleInModal(options)
-				.then((items) => resolve(items?.length ? items[0] : null))
-				.catch(reject);
-		});
+		const result = await this.selectMultipleInModal(options);
+		return result ? result[0] : null;
 	}
 
-	public selectMultipleInModal(
+	public async selectMultipleInModal(
 		options: ISelectorOptions<T>,
 	): Promise<T[] | null> {
 		console.log('selectMultipleInModal(), options:', options);
 
-		return new Promise<T[] | null>((resolve, reject) => {
-			if (!options.onSelected) {
-				options = {
-					...options,
-					onSelected: (items: T[] | null): Promise<void> => {
-						return new Promise((resolve2, reject2) => {
-							this.modalController.dismiss(items).catch((err) => {
-								this.errorLogger.logError(err, 'Failed to dismiss modal');
-								reject2(err);
-								reject(err);
-							});
-							resolve2();
-							resolve(items);
+		let result: readonly T[] | null = null;
+		let error: unknown;
+
+		if (!options.onSelected) {
+			options = {
+				...options,
+				onSelected: (items: T[] | null): Promise<void> => {
+					return new Promise((resolve2, reject2) => {
+						this.modalController.dismiss(items).catch((err) => {
+							this.errorLogger.logError(err, 'Failed to dismiss modal');
+							reject2(err);
+							error = err;
 						});
-					},
-				};
-			}
-			let componentProps: ComponentProps<unknown> = {
-				...options.componentProps,
-				selectMode: 'multiple',
-				onSelected: options.onSelected,
-				mode: 'modal',
+						resolve2();
+						result = items;
+					});
+				},
 			};
-			if (options.title) {
-				componentProps = { ...componentProps, title: options.title };
-			}
-			const modalOptions: ModalOptions = {
-				component: this.component,
-				componentProps: componentProps,
-				keyboardClose: true,
-			};
-			this.modalController
-				.create(modalOptions)
-				.then((modal) =>
-					modal
-						.present()
-						.catch(this.errorLogger.logErrorHandler('Failed to present modal')),
-				)
-				.catch(this.errorLogger.logErrorHandler('Failed to create modal'));
-		});
+		}
+		let componentProps: ComponentProps<unknown> = {
+			...options.componentProps,
+			selectMode: 'multiple',
+			onSelected: options.onSelected,
+			mode: 'modal',
+		};
+		if (options.title) {
+			componentProps = { ...componentProps, title: options.title };
+		}
+		const modalOptions: ModalOptions = {
+			component: this.component,
+			componentProps: componentProps,
+			keyboardClose: true,
+		};
+		const modal = await this.modalController.create(modalOptions);
+		await modal.present();
+
+		// 🔹 Track when the modal is dismissed
+		const { role, data } = await modal.onDidDismiss();
+		console.log('Modal closed with role:', role, 'data:', data);
+
+		if (error) {
+			throw error;
+		}
+		return result;
 	}
 }

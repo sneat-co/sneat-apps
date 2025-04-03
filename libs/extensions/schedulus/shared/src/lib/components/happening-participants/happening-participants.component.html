@@ -2,7 +2,9 @@
 	<ion-item lines="full">
 		<ion-card-title>Participants</ion-card-title>
 		<ion-buttons slot="end">
-			<ion-button color="primary" (click)="addContact($event, 'participants')">
+			<ion-button color="primary"
+									[disabled]="$isAddingContact()"
+									(click)="addContact($event, 'participants')">
 				<ion-icon name="add" />
 				<ion-label>Add participant</ion-label>
 			</ion-button>
@@ -25,6 +27,7 @@
 			<ion-label>Contacts</ion-label>
 			<ion-buttons slot="end">
 				<ion-button
+					[disabled]="$isAddingContact()"
 					color="primary"
 					(click)="addContact($event, 'contacts')"
 					title="Add contact"

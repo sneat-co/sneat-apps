@@ -1,13 +1,12 @@
 import { TitleCasePipe } from '@angular/common';
 import {
 	Component,
+	computed,
+	effect,
 	Inject,
 	input,
 	Input,
-	OnChanges,
-	OnInit,
 	signal,
-	SimpleChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
@@ -32,7 +31,7 @@ import {
 	computeSpaceRefFromSpaceContext,
 	ISpaceContext,
 } from '@sneat/space-models';
-import { map, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, map, Subject, Subscription, takeUntil } from 'rxjs';
 import { BasicContactFormModule } from '../basic-contact-form';
 import { ContactsComponent } from '../contacts-component/contacts.component';
 import { LocationFormComponent } from '../location-form';
@@ -55,8 +54,8 @@ import { IContactSelectorOptions } from './contacts-selector.interfaces';
 	],
 })
 export class ContactsSelectorComponent
-	extends SelectorBaseComponent
-	implements IContactSelectorOptions, OnInit, OnChanges
+	extends SelectorBaseComponent<IContactWithSpace>
+	implements IContactSelectorOptions
 {
 	private readonly parentChanged = new Subject<void>();
 
@@ -64,7 +63,11 @@ export class ContactsSelectorComponent
 	contactTab: 'existing' | 'new' = 'existing';
 
 	public readonly $space = input.required<ISpaceContext>();
-	public readonly $spaceRef = computeSpaceRefFromSpaceContext(this.$space);
+	protected readonly $spaceRef = computeSpaceRefFromSpaceContext(this.$space);
+	protected readonly $spaceID = computed(() => this.$spaceRef().id);
+
+	// We use it to cancel requests if space ID changed.
+	protected readonly spaceID$ = new BehaviorSubject<string>('');
 
 	@Input() parentIcon = 'business-outline';
 	@Input() contactIcon = 'business-outline';
@@ -127,33 +130,29 @@ export class ContactsSelectorComponent
 		private readonly contactusSpaceService: ContactusSpaceService,
 	) {
 		super('ContactSelectorComponent', modalController);
+		effect(() => this.spaceID$.next(this.$spaceID()));
+		effect(() => {
+			this.subscribeForData();
+		});
 	}
 
-	ngOnInit(): void {
-		console.log('ContactSelectComponent.ngOnInit()');
-		this.subscribeForData('ngOnInit');
-	}
-
-	ngOnChanges(changes: SimpleChanges): void {
-		console.log('ContactSelectorComponent.ngOnChanges()', changes);
-		if (changes['space']) {
-			this.subscribeForData('ngOnChanges');
-		}
-	}
-
-	private subscribeForData(calledFrom: 'ngOnInit' | 'ngOnChanges'): void {
-		console.log(
-			`ContactSelectorComponent.subscribeForData(calledFrom=${calledFrom})`,
-		);
+	private subscribeForData(): void {
+		console.log(`ContactSelectorComponent.subscribeForData()`);
 		this.contactBriefsSub?.unsubscribe();
 		this.watchContactBriefs();
 	}
 
 	private watchContactBriefs(): void {
-		const space = this.$spaceRef();
+		const spaceID = this.$spaceID();
 		this.contactBriefsSub = this.contactusSpaceService
-			.watchContactBriefs(space.id)
-			.pipe(map((contacts) => contacts.map((c) => ({ ...c, space }))))
+			.watchContactBriefs(spaceID)
+			.pipe(
+				takeUntil(this.spaceID$),
+				map((contacts) => {
+					const space = this.$space();
+					return contacts.map((c) => ({ ...c, space }));
+				}),
+			)
 			.subscribe((contacts) => {
 				this.allContacts = contacts;
 				console.log(
