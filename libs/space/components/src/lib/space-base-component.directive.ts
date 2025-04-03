@@ -22,6 +22,7 @@ import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import {
 	distinctUntilChanged,
 	map,
+	MonoTypeOperatorFunction,
 	Observable,
 	shareReplay,
 	Subject,
@@ -40,6 +41,10 @@ export abstract class SpaceBaseComponent
 
 	private readonly spaceIDChanged = new Subject<string | undefined>();
 	private readonly spaceTypeChanged = new Subject<SpaceType | undefined>();
+
+	protected takeUntilSpaceIdChanged<T>(): MonoTypeOperatorFunction<T> {
+		return takeUntil(this.spaceIDChanged);
+	}
 
 	protected noPermissions = false;
 
@@ -131,6 +136,7 @@ export abstract class SpaceBaseComponent
 		effect(() => {
 			const spaceID = this.$spaceID();
 			this.spaceIDChanged.next(spaceID);
+			this.onSpaceIdChanged();
 			setTimeout(() => this.subscribeForSpaceChanges(), 1);
 		});
 		effect(() => {

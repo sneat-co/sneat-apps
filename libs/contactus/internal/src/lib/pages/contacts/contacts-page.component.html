@@ -30,7 +30,6 @@
 </ion-header>
 
 <ion-content class="cardy">
-	$allContacts.length: {{ $allContacts()?.length }}
 	<sneat-contacts
 		[$space]="space"
 		[$role]="$role()"
@@ -46,7 +45,7 @@
 	<ion-footer>
 		<ion-toolbar color="light">
 			<ion-buttons slot="start">
-				<ion-button title="Reset" (click)="command.next('reset_selected')">
+				<ion-button title="Reset" (click)="sendCommand('reset_selected')">
 					<ion-icon name="close-circle-outline"></ion-icon>
 				</ion-button>
 			</ion-buttons>

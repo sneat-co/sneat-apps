@@ -11,11 +11,10 @@ import {
 	ContactsComponent,
 	ContactsComponentCommand,
 } from '@sneat/contactus-shared';
-import { IIdAndBrief, listItemAnimations } from '@sneat/core';
+import { listItemAnimations } from '@sneat/core';
 import { setHrefQueryParam } from '@sneat/core';
 import {
 	ContactRole,
-	IContactBrief,
 	IContactWithBrief,
 	IContactWithSpace,
 } from '@sneat/contactus-core';
@@ -29,7 +28,7 @@ import {
 	ContactusSpaceService,
 } from '@sneat/contactus-services';
 import { SpaceServiceModule } from '@sneat/space-services';
-import { Subject, Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Component({
 	selector: 'sneat-contacts-page',
@@ -56,7 +55,6 @@ export class ContactsPageComponent
 
 	// public readonly $filter = signal<string>('');
 	public readonly $role = signal<ContactRole | undefined>(undefined);
-	private contactsSubscription?: Subscription;
 
 	protected $pageTitle = computed(() => {
 		const role = this.$role();
@@ -99,21 +97,19 @@ export class ContactsPageComponent
 	}
 
 	protected override onSpaceIdChanged() {
-		console.log('ContactsPage.onSpaceIdChanged()');
+		console.log('ContactsPage.onSpaceIdChanged()', this.space);
 		super.onSpaceIdChanged();
-		this.contactsSubscription?.unsubscribe();
-		if (this.contactsSubscription) {
-			this.contactsSubscription.unsubscribe();
-		}
 		if (!this.space) {
 			return;
 		}
-
-		this.contactusSpaceService.watchContactBriefs(this.space.id).subscribe({
-			next: (contacts) => {
-				this.setSpaceContacts(contacts || []);
-			},
-		});
+		this.contactusSpaceService
+			.watchContactBriefs(this.space.id)
+			.pipe(this.takeUntilDestroyed(), this.takeUntilSpaceIdChanged())
+			.subscribe({
+				next: (contacts) => {
+					this.setSpaceContacts(contacts || []);
+				},
+			});
 	}
 
 	protected $titleIcon = computed(() => {
@@ -141,6 +137,10 @@ export class ContactsPageComponent
 	}
 
 	protected readonly command = new Subject<ContactsComponentCommand>();
+
+	protected sendCommand(command: ContactsComponentCommand): void {
+		this.command.next(command);
+	}
 
 	public override ngOnDestroy(): void {
 		this.command.complete();

@@ -2,8 +2,6 @@
 @let role = $role();
 @let filter = $filter();
 
-space: {{ space.id }}
-
 @if (space.type === "company") {
 	<ion-segment [value]="role" (ionChange)="onRoleChanged($event)">
 		<!--		<ion-segment-button>All</ion-segment-button>-->
