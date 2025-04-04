@@ -7,9 +7,12 @@
 		<ion-item color="light" lines="full" class="sneat-tiny-end-padding">
 			<ion-label>{{ contactGroup.title }}</ion-label>
 			<ion-buttons slot="end">
-				<ion-button color="tertiary" (click)="addSubGroup($event)">
+				<ion-button
+					color="tertiary"
+					(click)="addContact($event, contactGroup.id)"
+				>
 					<ion-icon name="add" slot="start" />
-					<ion-label>Add sub-group</ion-label>
+					<ion-label>Add contact</ion-label>
 				</ion-button>
 			</ion-buttons>
 		</ion-item>

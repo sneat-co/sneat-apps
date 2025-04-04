@@ -192,12 +192,6 @@ export class ContactsByTypeComponent
 		this.contactNavService.goNewContactPage(this.$space(), { group, role });
 	}
 
-	protected addSubGroup(event: Event): void {
-		event.preventDefault();
-		event.stopPropagation();
-		alert('Not implemented yet');
-	}
-
 	// private readonly $checkedContactIDs = signal<readonly string[]>([]);
 
 	protected checkChanged(args: ICheckChangedArgs, role: ContactRole): void {

@@ -149,7 +149,7 @@ export class NewContactPageComponent
 		}
 		const contactRole = params.get('role');
 
-		if (contactRole && !this.$contactRole) {
+		if (contactRole && !this.$contactRole()) {
 			this.contactRoleService
 				.getContactRoleByID(contactRole)
 				.pipe(first(), this.takeUntilDestroyed())
