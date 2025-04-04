@@ -6,10 +6,23 @@ import {
 	signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonButton,
+	IonButtons,
+	IonContent,
+	IonFooter,
+	IonHeader,
+	IonIcon,
+	IonLabel,
+	IonMenuButton,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import {
 	ContactsComponent,
 	ContactsComponentCommand,
+	ContactsComponentCommandName,
 } from '@sneat/contactus-shared';
 import { listItemAnimations } from '@sneat/core';
 import { setHrefQueryParam } from '@sneat/core';
@@ -28,6 +41,7 @@ import {
 	ContactusSpaceService,
 } from '@sneat/contactus-services';
 import { SpaceServiceModule } from '@sneat/space-services';
+import { send } from 'ionicons/icons';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -37,11 +51,23 @@ import { Subject } from 'rxjs';
 	animations: [listItemAnimations],
 	imports: [
 		FormsModule,
-		IonicModule,
 		SpacePageTitleComponent,
 		ContactusServicesModule,
 		SpaceServiceModule,
 		ContactsComponent,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonButtons,
+		IonButton,
+		IonBackButton,
+		IonTitle,
+		IonIcon,
+		IonFooter,
+		IonLabel,
+		IonContent,
+		IonMenuButton,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -138,8 +164,11 @@ export class ContactsPageComponent
 
 	protected readonly command = new Subject<ContactsComponentCommand>();
 
-	protected sendCommand(command: ContactsComponentCommand): void {
-		this.command.next(command);
+	protected sendCommand(
+		event: Event,
+		name: ContactsComponentCommandName,
+	): void {
+		this.command.next({ name, event });
 	}
 
 	public override ngOnDestroy(): void {

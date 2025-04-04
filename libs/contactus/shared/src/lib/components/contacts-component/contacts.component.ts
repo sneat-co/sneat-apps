@@ -30,7 +30,10 @@ import { ISelectItem, SneatBaseComponent } from '@sneat/ui';
 import { Observable } from 'rxjs';
 import { ContactsByTypeComponent } from '../contacts-by-type';
 import { ICheckChangedArgs } from '../contacts-checklist';
-import { ContactsComponentCommand } from '../contacts-component.commands';
+import {
+	ContactsComponentCommand,
+	ContactsComponentCommandName,
+} from '../contacts-component.commands';
 import { ContactsListItemComponent } from '../contacts-list-item/contacts-list-item.component';
 
 @Component({
@@ -97,7 +100,14 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 		console.log('ContactsComponent.ngOnInit()');
 		this.command?.pipe(this.takeUntilDestroyed()).subscribe((command) => {
 			console.log('ContactsComponent.ngOnInit() command=' + command);
-			switch (command) {
+			switch (command.name) {
+				case 'new_contact':
+					this.goNewContact(command.event).catch(
+						this.errorLogger.logErrorHandler(
+							'failed to navigate to new contact page',
+						),
+					);
+					break;
 				case 'reset_selected':
 					this.$selectedContactIDs.set([]);
 					this.selectedContactsChange.emit(this.$selectedContacts());
@@ -186,31 +196,21 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 			);
 	};
 
-	protected readonly goNewContact = (): void => {
+	protected readonly goNewContact = async (event: Event): Promise<void> => {
+		event.stopPropagation();
 		const space = this.$space();
 		if (!space.id && !space.type) {
 			return;
 		}
-		let navResult: Promise<boolean>;
-
-		if (space.type === 'family') {
-			navResult = this.spaceNavService.navigateForwardToSpacePage(
+		try {
+			await this.spaceNavService.navigateForwardToSpacePage(
 				space,
 				'new-contact',
+				{ queryParams: this.$role() ? { role: this.$role() } : undefined },
 			);
-		} else {
-			navResult = this.spaceNavService.navigateForwardToSpacePage(
-				space,
-				'new-company',
-				{ queryParams: this.$role ? { role: this.$role } : undefined },
-			);
+		} catch (err) {
+			this.errorLogger.logError(err, 'failed to navigate to new contact page');
 		}
-
-		navResult.catch(
-			this.errorLogger.logErrorHandler(
-				'failed to navigate to contact creation page',
-			),
-		);
 	};
 
 	private readonly $selectedContactIDs = signal<readonly string[]>([]);

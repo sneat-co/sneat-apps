@@ -12,19 +12,23 @@
 				family: 'Family contacts',
 			}"
 		/>
+		<ion-buttons slot="end">
+			<ion-button
+				color="primary"
+				size="small"
+				(click)="sendCommand($event, 'new_contact')"
+				[title]="'Add contact'"
+			>
+				<ion-icon name="add" slot="start" />
+				<ion-label>Add contact</ion-label>
+			</ion-button>
+			<ion-menu-button />
+		</ion-buttons>
 		<!--		<ion-buttons slot="end">-->
-		<!--			@if ($canAdd()) {-->
-		<!--				<ion-button-->
-		<!--					color="primary"-->
-		<!--					size="small"-->
-		<!--					(click)="goNewContact()"-->
-		<!--					[title]="'Add contact'"-->
-		<!--				>-->
-		<!--					<ion-icon name="add" />-->
-		<!--					Add-->
-		<!--				</ion-button>-->
-		<!--			}-->
-		<!--			<ion-menu-button />-->
+		<!--			<ion-button>-->
+		<!--				<ion-icon name="add" slot="start"></ion-icon>-->
+		<!--				<ion-label>Add contact</ion-label>-->
+		<!--			</ion-button>-->
 		<!--		</ion-buttons>-->
 	</ion-toolbar>
 </ion-header>
@@ -45,7 +49,10 @@
 	<ion-footer>
 		<ion-toolbar color="light">
 			<ion-buttons slot="start">
-				<ion-button title="Reset" (click)="sendCommand('reset_selected')">
+				<ion-button
+					title="Reset"
+					(click)="sendCommand($event, 'reset_selected')"
+				>
 					<ion-icon name="close-circle-outline"></ion-icon>
 				</ion-button>
 			</ion-buttons>

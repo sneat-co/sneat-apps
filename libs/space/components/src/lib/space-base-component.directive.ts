@@ -43,7 +43,7 @@ export abstract class SpaceBaseComponent
 	private readonly spaceTypeChanged = new Subject<SpaceType | undefined>();
 
 	protected takeUntilSpaceIdChanged<T>(): MonoTypeOperatorFunction<T> {
-		return takeUntil(this.spaceIDChanged);
+		return takeUntil(this.spaceIDChanged$);
 	}
 
 	protected noPermissions = false;
@@ -133,12 +133,17 @@ export abstract class SpaceBaseComponent
 		super(className);
 		console.log(`${className}.SpaceBaseComponent.constructor()`);
 
-		effect(() => {
-			const spaceID = this.$spaceID();
-			this.spaceIDChanged.next(spaceID);
-			this.onSpaceIdChanged();
-			setTimeout(() => this.subscribeForSpaceChanges(), 1);
-		});
+		this.spaceIDChanged$
+			.pipe(this.takeUntilDestroyed())
+			.subscribe((spaceID) => {
+				if (spaceID) {
+					this.onSpaceIdChanged();
+
+					// !!! Be careful to migrate this to signal effect - can cause dead cycles!
+					setTimeout(() => this.subscribeForSpaceChanges(), 1);
+				}
+			});
+
 		effect(() => {
 			this.spaceTypeChanged.next(this.$spaceType());
 		});
@@ -175,7 +180,7 @@ export abstract class SpaceBaseComponent
 		if (!this.currentUserId) {
 			this.subs.unsubscribe();
 			if (this.space && this.space.dbo) {
-				this.setNewSpaceContext({
+				this.setSpaceContext({
 					...this.space,
 					brief: undefined,
 					dbo: undefined,
@@ -250,17 +255,16 @@ export abstract class SpaceBaseComponent
 		if (space && prevSpace?.id === space?.id) {
 			space = { ...prevSpace, ...space };
 		}
-		this.setNewSpaceContext(space);
+		this.setSpaceContext(space);
 	};
 
 	private subscribeForSpaceChanges(): void {
-		const spaceType = this.$spaceType();
 		this.spaceService
 			.watchSpace(this.$spaceID())
 			.pipe(
-				takeUntil(this.spaceIDChanged$),
 				this.takeUntilDestroyed(),
-				map((space) => ({ ...space, type: spaceType })),
+				takeUntil(this.spaceIDChanged$),
+				map((space) => ({ ...space, type: space.dbo?.type })),
 			)
 			.subscribe({
 				next: this.onSpaceContextChanged,
@@ -287,7 +291,7 @@ export abstract class SpaceBaseComponent
 			return;
 		}
 		// TODO: document why not to set team context immediately
-		setTimeout(() => this.setNewSpaceContext(space), 1);
+		setTimeout(() => this.setSpaceContext(space), 1);
 	}
 
 	private cleanupOnUserLogout(): void {
@@ -296,7 +300,7 @@ export abstract class SpaceBaseComponent
 				next: (uid) => {
 					if (!uid) {
 						this.unsubscribe('user signed out');
-						this.$space.set({ id: '' });
+						this.setSpaceContext(undefined);
 					}
 					this.onUserIdChanged();
 				},
@@ -318,7 +322,7 @@ export abstract class SpaceBaseComponent
 	// 	}
 	// }
 
-	private setNewSpaceContext(spaceContext?: ISpaceContext): void {
+	private setSpaceContext(spaceContext?: ISpaceContext): void {
 		this.log(
 			`${this.className}:SpaceBaseComponent.setNewSpaceContext(id=${spaceContext?.id}), previous id=${this.$space()?.id}`,
 			spaceContext,
@@ -382,8 +386,7 @@ export abstract class SpaceBaseComponent
 				space = { ...space, type: space.brief.type };
 			}
 		}
-		this.setNewSpaceContext(space);
-		this.$space.set(space);
+		this.setSpaceContext(space);
 		if (dtoChanged) {
 			this.onSpaceDboChanged();
 		}

@@ -214,7 +214,7 @@ export class ContactsByTypeComponent
 	public ngOnInit(): void {
 		this.command?.pipe(this.takeUntilDestroyed()).subscribe((command) => {
 			// console.log('ContactsByTypeComponent: command$ =>', command);
-			switch (command) {
+			switch (command.name) {
 				case 'reset_selected': {
 					this.$selectedContactIDsByRole.set({});
 					this.setContactGroups();
@@ -222,7 +222,6 @@ export class ContactsByTypeComponent
 				}
 				case 'select_all': {
 					throw new Error('Not implemented yet');
-					break;
 				}
 			}
 		});
