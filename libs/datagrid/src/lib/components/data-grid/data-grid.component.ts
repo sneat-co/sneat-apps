@@ -243,7 +243,7 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 			// tooltipsHeader: true, // enable header tooltips
 			// tooltipGenerationMode: 'hover',
 			rowContextMenu: this.rowContextMenu,
-			selectable: this.selectable,
+			selectableRows: this.selectable,
 			data: this.data,
 			// reactiveData: true, // enable data reactivity
 			columns: this.columns?.map((c) => {
