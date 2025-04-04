@@ -88,11 +88,11 @@ export class ContactsListItemComponent extends SneatBaseComponent {
 		super('ContactsListItemComponent');
 	}
 
-	@Input() goContact = (contact?: IContactWithBrief): void => {
-		if (!contact) {
-			this.errorLogger.logError('no contact');
-			return;
-		}
+	@Input() contactClicked = (
+		event: Event,
+		contact: IContactWithBrief,
+	): void => {
+		event.stopPropagation();
 		this.spaceNavService
 			.navigateForwardToSpacePage(this.$space(), `contact/${contact.id}`, {
 				state: { contact },

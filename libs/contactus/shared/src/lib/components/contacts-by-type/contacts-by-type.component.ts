@@ -64,7 +64,8 @@ export class ContactsByTypeComponent
 	//
 	public readonly $filter = input.required<string>();
 	// @Input() contacts?: readonly IContactWithSpace[];
-	@Input() goContact: (contact?: IContactWithBrief) => void = () => void 0;
+	@Input() contactClicked: (event: Event, contact?: IContactWithBrief) => void =
+		() => void 0;
 	@Input() goMember: (id: string, event: Event) => boolean = () => false;
 
 	@Input() command?: Observable<ContactsComponentCommand>;

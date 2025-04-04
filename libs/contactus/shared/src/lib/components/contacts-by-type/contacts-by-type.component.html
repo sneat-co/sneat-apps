@@ -61,7 +61,7 @@
 					<sneat-contacts-list-item
 						[$space]="$space()"
 						[$contact]="contact"
-						[goContact]="goContact"
+						[contactClicked]="contactClicked"
 						[goMember]="goMember"
 						[showBorder]="lastContact ? 'full' : 'inset'"
 						(checkChange)="checkChanged($event, role.id)"
@@ -82,7 +82,7 @@
 				<sneat-contacts-list-item
 					[$space]="$space()"
 					[$contact]="contact"
-					[goContact]="goContact"
+					[contactClicked]="contactClicked"
 					[goMember]="goMember"
 				/>
 			</ion-item-sliding>

@@ -4,7 +4,7 @@
 	tappable
 	class="with-buttons"
 	[lines]="showBorder"
-	(click)="goContact(contact)"
+	(click)="contactClicked($event, contact)"
 >
 	<ion-icon slot="start" [name]="contact.brief.gender | genderIconName" />
 	<ion-label class="sneat-badges">

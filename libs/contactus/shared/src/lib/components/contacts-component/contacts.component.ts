@@ -167,16 +167,16 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 		);
 	});
 
-	protected readonly goContact = (contact?: IContactWithBrief): void => {
+	protected readonly goContact = (
+		event: Event,
+		contact?: IContactWithBrief,
+	): void => {
+		event.stopPropagation();
 		if (!contact) {
 			this.errorLogger.logError('no contact');
 			return;
 		}
 		const space = this.$space();
-		if (!space) {
-			this.errorLogger.logError('no team');
-			return;
-		}
 		this.spaceNavService
 			.navigateForwardToSpacePage(space, `contact/${contact.id}`, {
 				state: { contact },
