@@ -473,8 +473,8 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 	}
 
 	protected goGroceries(): void {
-		if (!this.space) {
-			this.errorLogger.logError('no team context');
+		if (!this.space.id) {
+			this.errorLogger.logError('no space context');
 			return;
 		}
 		this.errorLogger.logError('not implemented yet');

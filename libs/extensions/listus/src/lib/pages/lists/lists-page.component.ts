@@ -348,13 +348,32 @@ export class ListsPageComponent extends SpaceBaseComponent {
 					{
 						id: 'buy',
 						type: 'buy',
-						title: 'To buy',
+						title: 'To Buy',
 						lists: [
 							{
 								id: 'groceries',
 								type: 'buy',
 								emoji: '🛒',
 								title: 'Groceries',
+							},
+							{
+								id: 'wholesale',
+								type: 'buy',
+								emoji: '🛒',
+								title: 'Wholesale',
+							},
+						],
+					},
+					{
+						id: 'to-do',
+						type: 'do',
+						title: 'To Do',
+						lists: [
+							{
+								id: 'chores',
+								type: 'do',
+								emoji: '🧹',
+								title: 'Chores',
 							},
 						],
 					},
