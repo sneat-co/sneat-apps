@@ -169,7 +169,7 @@ export class ContactGroupService {
 
 	getContactGroupByID(
 		id: string,
-		space: ISpaceContext,
+		space: ISpaceRef,
 	): Observable<IIdAndDbo<IContactGroupDbo>> {
 		const cg = defaultFamilyContactGroups.find((cg) => cg.id === id);
 		if (!cg) {

@@ -2,12 +2,9 @@ import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import {
 	ContactRole,
 	ContactType,
-	IContactBrief,
-	IContactContext,
 	IContactWithBrief,
 	ICreateContactBasicRequest,
 } from '@sneat/contactus-core';
-import { IIdAndBrief } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
 import { ISpaceContext } from '@sneat/space-models';

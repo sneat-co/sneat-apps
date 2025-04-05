@@ -5,7 +5,6 @@ import {
 	EventEmitter,
 	input,
 	Output,
-	signal,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { personName } from '@sneat/components';

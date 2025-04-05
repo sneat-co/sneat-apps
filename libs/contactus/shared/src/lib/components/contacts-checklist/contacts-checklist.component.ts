@@ -5,11 +5,9 @@ import {
 	EventEmitter,
 	input,
 	Input,
-	OnChanges,
 	Output,
 	signal,
 	computed,
-	SimpleChanges,
 	effect,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
@@ -20,7 +18,6 @@ import {
 	IContactWithBrief,
 	IContactWithCheck,
 } from '@sneat/contactus-core';
-import { ISpaceRef } from '@sneat/core';
 import {
 	computeSpaceIdFromSpaceRef,
 	computeSpaceRefFromSpaceContext,

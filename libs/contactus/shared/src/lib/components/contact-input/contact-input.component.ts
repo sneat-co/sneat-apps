@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -6,7 +5,6 @@ import {
 	Input,
 	OnChanges,
 	Output,
-	signal,
 	SimpleChanges,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';

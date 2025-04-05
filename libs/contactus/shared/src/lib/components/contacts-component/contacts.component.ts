@@ -30,10 +30,7 @@ import { ISelectItem, SneatBaseComponent } from '@sneat/ui';
 import { Observable } from 'rxjs';
 import { ContactsByTypeComponent } from '../contacts-by-type';
 import { ICheckChangedArgs } from '../contacts-checklist';
-import {
-	ContactsComponentCommand,
-	ContactsComponentCommandName,
-} from '../contacts-component.commands';
+import { ContactsComponentCommand } from '../contacts-component.commands';
 import { ContactsListItemComponent } from '../contacts-list-item/contacts-list-item.component';
 
 @Component({

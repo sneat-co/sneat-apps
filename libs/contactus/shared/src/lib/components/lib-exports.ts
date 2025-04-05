@@ -22,3 +22,4 @@ export * from './shared-with';
 export * from './person-form';
 export * from './contacts-component/contacts.component';
 export * from './contacts-selector/lib-exports';
+export * from './new-contact-form/new-contact-form.component';

@@ -13,3 +13,4 @@ export * from './teams-list';
 export * from './teams-card';
 export * from './space-module-base.component';
 export * from './space-base-component.directive';
+export * from './space-base-input-component.directive';

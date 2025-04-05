@@ -13,7 +13,6 @@ import {
 	IContactDbo,
 	IContactusSpaceDbo,
 	IContactWithBrief,
-	IContactWithSpace,
 	MemberGroupType,
 	MemberGroupTypeAdults,
 	MemberGroupTypeKids,
@@ -22,11 +21,7 @@ import {
 } from '@sneat/contactus-core';
 import { MembersByRoleComponent } from '../members-by-role/members-by-role.component';
 import { MemberGroup } from '../members-by-role/member-group';
-import {
-	emptySpaceRef,
-	IIdAndBrief,
-	IIdAndBriefAndOptionalDbo,
-} from '@sneat/core';
+import { emptySpaceRef, IIdAndBriefAndOptionalDbo } from '@sneat/core';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/space-models';
 
 @Component({

@@ -36,7 +36,6 @@ import {
 	IContactBrief,
 	IContactDbo,
 	ICreateContactRequest,
-	IContactWithBrief,
 	IContactWithOptionalDbo,
 	IContactWithDboAndSpace,
 	IContactContext,

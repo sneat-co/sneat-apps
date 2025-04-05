@@ -115,7 +115,7 @@ export abstract class SpaceBaseComponent
 	protected readonly $defaultBackUrlSpacePath = signal('');
 
 	// Intentionally not readonly, but might reconsider
-	protected $defaultBackUrl = computed(() => {
+	protected $defaultBackUrl = computed<string>(() => {
 		const space = this.$space();
 		const path = this.$defaultBackUrlSpacePath();
 		let url = space ? `/space/${space.type}/${space.id}` : '';

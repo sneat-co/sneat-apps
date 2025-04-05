@@ -3,7 +3,6 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	EventEmitter,
-	Inject,
 	input,
 	Input,
 	Output,
@@ -18,7 +17,6 @@ import {
 import { IIdAndBrief } from '@sneat/core';
 import {
 	ContactRole,
-	IContactBrief,
 	IContactWithBrief,
 	IContactWithCheck,
 } from '@sneat/contactus-core';

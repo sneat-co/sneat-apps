@@ -1,4 +1,4 @@
-import { CommonModule, JsonPipe } from '@angular/common';
+import { JsonPipe } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -35,7 +35,6 @@ import {
 	validateAddress,
 	IContactContext,
 	ICreateContactCompanyRequest,
-	IContactWithBrief,
 	IContactWithOptionalDbo,
 	IContactWithDboAndSpace,
 } from '@sneat/contactus-core';
