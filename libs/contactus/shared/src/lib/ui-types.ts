@@ -1,14 +1,15 @@
 import {
 	IContactGroupBrief,
-	IContactRoleBriefWithID,
+	IContactRoleWithIdAndBrief,
 	IContactWithCheck,
 } from '@sneat/contactus-core';
 
-export interface IContactRoleWithContacts extends IContactRoleBriefWithID {
+export interface IContactRoleWithContacts extends IContactRoleWithIdAndBrief {
 	contacts: readonly IContactWithCheck[];
 }
 
-export interface IContactGroupWithContacts extends IContactGroupBrief {
-	id: string;
+export interface IContactGroupWithContacts {
+	readonly id: string;
+	readonly brief: IContactGroupBrief;
 	roles: IContactRoleWithContacts[];
 }

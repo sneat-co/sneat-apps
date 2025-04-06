@@ -11,7 +11,7 @@ export * from './person';
 export * from './pet-kind';
 export * from './term';
 export * from './contact2item';
-export { IContactGroupBrief } from './contact-group-brief';
+export * from './contact-group-brief';
 export { MemberContactType } from './contact-types';
 export { ContactType } from './contact-types';
 export { IPersonRequirements } from './contact-types';

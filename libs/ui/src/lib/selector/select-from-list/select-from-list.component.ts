@@ -143,23 +143,29 @@ export class SelectFromListComponent
 	}
 
 	protected select(item: ISelectItem): void {
-		console.log('SelectFromListComponent.select()', item);
+		console.log(
+			`SelectFromListComponent.select(), selectMode=${this.selectMode}`,
+			item,
+		);
 		switch (this.selectMode) {
 			case 'multiple':
 				return;
 			case 'single':
-				this.value = item.id;
-				this.onChange(this.value);
+				this.$selectedItem.set(item);
+				this.onChange(item.id);
 				this.clearFilter();
 		}
 	}
+
+	protected readonly $selectedItem = signal<ISelectItem | undefined>(undefined);
 
 	protected onRadioChanged(event: Event): void {
 		if (this.selectMode !== 'single') {
 			return;
 		}
-		this.value = (event as CustomEvent).detail['value'] as string;
-		this.onChange(this.value);
+		const value = (event as CustomEvent).detail['value'] as string;
+		this.value = value;
+		this.onChange(value);
 		this.clearFilter();
 	}
 
@@ -169,9 +175,13 @@ export class SelectFromListComponent
 		this.onChange(this.value);
 	}
 
-	protected onChange = (v: unknown) => {
-		console.log('SelectFromListComponent.onChange()', v);
-		this.value = v as string;
+	protected onChange = (id: string) => {
+		console.log('SelectFromListComponent.onChange()', id);
+		this.value = id;
+		if (this.$selectedItem()?.id !== id) {
+			const selectedItem = this.items?.find((item) => item.id === id);
+			this.$selectedItem.set(selectedItem);
+		}
 		this.valueChange.emit(this.value);
 	};
 

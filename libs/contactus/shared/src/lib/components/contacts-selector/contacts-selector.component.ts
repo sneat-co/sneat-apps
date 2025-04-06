@@ -6,7 +6,6 @@ import {
 	effect,
 	EffectRef,
 	Inject,
-	Injector,
 	Input,
 	OnChanges,
 	OnDestroy,
@@ -15,7 +14,25 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardHeader,
+	IonCardSubtitle,
+	IonContent,
+	IonFooter,
+	IonHeader,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonSegment,
+	IonSegmentButton,
+	IonSpinner,
+	IonText,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { CONTACT_ROLES_BY_TYPE, ContactRolesByType } from '@sneat/app';
 import { getFullName } from '@sneat/auth-models';
 import { countryFlagEmoji } from '@sneat/components';
@@ -37,18 +54,22 @@ import {
 	computeSpaceRefFromSpaceContext,
 	ISpaceContext,
 } from '@sneat/space-models';
-import { map, Subject, Subscription, takeUntil } from 'rxjs';
+import { BehaviorSubject, map, Subject, Subscription, takeUntil } from 'rxjs';
 import { BasicContactFormModule } from '../basic-contact-form';
+import { IContactAddEventArgs } from '../contact-events';
 import { ContactsComponent } from '../contacts-component/contacts.component';
 import { LocationFormComponent } from '../location-form';
 import { NewCompanyFormComponent } from '../new-company-form';
+import {
+	NewContactFormCommand,
+	NewContactFormComponent,
+} from '../new-contact-form/new-contact-form.component';
 import { IContactSelectorOptions } from './contacts-selector.interfaces';
 
 @Component({
 	selector: 'sneat-contacts-selector',
 	templateUrl: './contacts-selector.component.html',
 	imports: [
-		IonicModule,
 		FormsModule,
 		SelectFromListComponent,
 		LocationFormComponent,
@@ -57,6 +78,23 @@ import { IContactSelectorOptions } from './contacts-selector.interfaces';
 		TitleCasePipe,
 		TitleCasePipe,
 		ContactsComponent,
+		NewContactFormComponent,
+		IonButton,
+		IonLabel,
+		IonSpinner,
+		IonIcon,
+		IonButtons,
+		IonFooter,
+		IonToolbar,
+		IonContent,
+		IonCard,
+		IonSegment,
+		IonSegmentButton,
+		IonCardSubtitle,
+		IonCardHeader,
+		IonText,
+		IonItemDivider,
+		IonHeader,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -66,8 +104,21 @@ export class ContactsSelectorComponent
 {
 	private readonly parentChanged = new Subject<void>();
 
-	parentTab: 'existing' | 'new' = 'existing';
-	contactTab: 'existing' | 'new' = 'existing';
+	protected readonly $parentTab = signal<'existing' | 'new'>('existing');
+
+	protected onParentTabChanged = (event: CustomEvent) => {
+		this.$parentTab.set(event.detail.value);
+	};
+
+	protected readonly $contactTab = signal<'existing' | 'new'>('existing');
+
+	protected onContactTabChanged = (event: CustomEvent) => {
+		this.$contactTab.set(event.detail.value);
+		if (this.$contactTab() === 'existing') {
+			this.selectGroupAndRole$.next({ event });
+			// this.newContactCommand$.next('reset');
+		}
+	};
 
 	private spaceIDChangesCount = 0;
 
@@ -113,7 +164,7 @@ export class ContactsSelectorComponent
 	@Input() contactIcon = 'business-outline';
 
 	@Input() title = 'Contacts selector';
-	@Input() contactRole?: ContactRole;
+	@Input() contactRoleID?: ContactRole;
 	@Input() parentType?: ContactType;
 	@Input() parentRole?: ContactRole;
 	@Input() contactType?: ContactType;
@@ -157,14 +208,15 @@ export class ContactsSelectorComponent
 
 	protected contactItems?: ISelectItem[];
 
+	protected readonly newContactCommand$ = new Subject<NewContactFormCommand>();
+	protected readonly $isNewContactCreating = signal(false);
+
 	get label(): string {
-		const r = this.contactRole;
+		const r = this.contactRoleID;
 		return r ? r[0].toUpperCase() + r.substr(1) : 'Contact';
 	}
 
 	constructor(
-		private readonly injector: Injector,
-		// modalController: ModalController, // we can not inject in parent as parent takes either modal or popup
 		@Inject(CONTACT_ROLES_BY_TYPE)
 		private readonly contactRolesByType: ContactRolesByType,
 		private readonly contactusSpaceService: ContactusSpaceService,
@@ -257,7 +309,7 @@ export class ContactsSelectorComponent
 			allContactBriefs?.filter(
 				filterByTypeRoleAndParentID(
 					this.contactType,
-					this.contactRole,
+					this.contactRoleID,
 					this.parentContactID,
 				),
 			),
@@ -279,7 +331,7 @@ export class ContactsSelectorComponent
 				this.parentContacts &&
 				!this.parentContacts.length
 			) {
-				this.parentTab = 'new';
+				this.$parentTab.set('new');
 			}
 		}
 		// if (this.$contacts && !this.$contacts.length) {
@@ -288,7 +340,7 @@ export class ContactsSelectorComponent
 		console.log(
 			'setContacts',
 			this.allContacts,
-			this.contactRole,
+			this.contactRoleID,
 			this.contactType,
 			this.$contacts,
 			this.parentType,
@@ -364,7 +416,7 @@ export class ContactsSelectorComponent
 
 	private onParentContactChanged(contact?: IContactWithSpace): void {
 		console.log('ContactSelectComponent.onParentContactChanged()', contact);
-		this.parentTab = 'existing';
+		this.$parentTab.set('existing');
 		this.selectedParent = contact || undefined;
 		this.parentContactID = contact?.id;
 		this.setContacts();
@@ -434,5 +486,29 @@ export class ContactsSelectorComponent
 				'instance ContactSelectorComponent has unset `onSelected` input callback.',
 			);
 		}
+	}
+
+	protected cancel(event: Event): void {
+		event.stopPropagation();
+		event.preventDefault();
+		this.modalController
+			.dismiss()
+			.catch(
+				this.errorLogger.logErrorHandler(
+					'Failed to close contacts selector modal',
+				),
+			);
+	}
+
+	protected readonly selectGroupAndRole$ = new BehaviorSubject<
+		IContactAddEventArgs | undefined
+	>(undefined);
+
+	protected switchToNewContact(args: IContactAddEventArgs): void {
+		console.log('switchToNewContact', args);
+		args.event.stopPropagation();
+		args.event.preventDefault();
+		this.$contactTab.set('new');
+		this.selectGroupAndRole$.next(args);
 	}
 }

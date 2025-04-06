@@ -88,7 +88,7 @@ export class ContactsSelectorInputComponent {
 			max: this.$max(),
 		};
 		this.contactsSelectorService
-			.selectMultipleInModal(options)
+			.selectMultipleContacts(options)
 			.then((selectedContacts) => {
 				// this.$selectedContacts.set( selectedContacts || []);
 				this.selectedContactsChange.emit(selectedContacts || []);

@@ -1,5 +1,5 @@
 import { IContactGroupBrief } from './contact-group-brief';
-import { IContactRoleBriefWithID } from './contact-roles';
+import { IContactRoleWithIdAndBrief } from './contact-roles';
 
 import { MembersVisibility } from './member-types';
 import { DtoGroupTerms } from './term';
@@ -15,5 +15,5 @@ export interface IContactGroupDbo extends IContactGroupBrief {
 	readonly membersVisibility?: MembersVisibility;
 	readonly numberOf?: IContactGroupDtoCounts;
 	readonly terms?: DtoGroupTerms;
-	readonly roles?: readonly IContactRoleBriefWithID[];
+	readonly roles?: readonly IContactRoleWithIdAndBrief[];
 }

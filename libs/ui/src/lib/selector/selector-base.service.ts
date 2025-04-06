@@ -19,7 +19,8 @@ export abstract class SelectorBaseService<T = ISelectItem> {
 		return result ? result[0] : null;
 	}
 
-	public async selectMultipleInModal(
+	// We make it protected so each service must override it for easiness of navigation
+	protected async selectMultipleInModal(
 		options: ISelectorOptions<T>,
 	): Promise<T[] | null> {
 		console.log('selectMultipleInModal(), options:', options);

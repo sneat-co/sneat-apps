@@ -16,13 +16,13 @@
 }
 
 <sneat-contact-role-form
-	[contactGroupID]="$contactGroupID()"
+	[$contactGroupID]="$selectedContactGroupID()"
 	(contactGroupChange)="onContactGroupChanged($event)"
-	[contactRoleID]="$contactRole()?.id"
+	[$contactRoleID]="$selectedContactRoleID()"
 	(contactRoleIDChange)="onContactRoleIDChanged($event)"
 />
 
-@if ($contactRole()) {
+@if ($selectedContactRole()) {
 	<sneat-person-form-wizard
 		[space]="$space()"
 		[hideRelationship]="true"
@@ -56,12 +56,14 @@
 
 <!--	<div class="ion-padding" *ngIf="!isContactNotReady">-->
 
-<div class="ion-padding">
-	<ion-button
-		expand="full"
-		[disabled]="$creating || isContactNotReady"
-		(click)="submit()"
-	>
-		<ion-label>Create contact</ion-label>
-	</ion-button>
-</div>
+@if (!isInModal) {
+	<div class="ion-padding">
+		<ion-button
+			expand="full"
+			[disabled]="$creating || isContactNotReady"
+			(click)="submit()"
+		>
+			<ion-label>Create contact</ion-label>
+		</ion-button>
+	</div>
+}

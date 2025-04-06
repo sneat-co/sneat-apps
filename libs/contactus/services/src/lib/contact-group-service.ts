@@ -5,82 +5,103 @@ import { IIdAndDbo, ISpaceRef } from '@sneat/core';
 import {
 	IContactGroupBrief,
 	IContactGroupDbo,
-	IContactRoleBriefWithID,
+	IContactRoleWithIdAndBrief,
 } from '@sneat/contactus-core';
-import { ISpaceContext } from '@sneat/space-models';
 import { ModuleSpaceItemService } from '@sneat/space-services';
 import { Observable, of } from 'rxjs';
 
-const contactTypeFamilyMember: IContactRoleBriefWithID = {
+const contactTypeFamilyMember: IContactRoleWithIdAndBrief = {
 		id: 'member',
-		title: 'Family member',
-		titlePlural: 'Members',
-		emoji: '👪',
+		brief: {
+			title: 'Family member',
+			titlePlural: 'Members',
+			emoji: '👪',
+		},
 	},
-	contactTypeRelative: IContactRoleBriefWithID = {
+	contactTypeRelative: IContactRoleWithIdAndBrief = {
 		id: 'relative',
-		title: 'Relative',
-		titlePlural: 'Relatives',
-		emoji: '👪',
+		brief: {
+			title: 'Relative',
+			titlePlural: 'Relatives',
+			emoji: '👪',
+		},
 	},
-	contactTypeTeacher: IContactRoleBriefWithID = {
+	contactTypeTeacher: IContactRoleWithIdAndBrief = {
 		id: 'teacher',
-		title: 'Teacher',
-		titlePlural: 'Teachers',
-		emoji: '👩‍🏫',
+		brief: {
+			title: 'Teacher',
+			titlePlural: 'Teachers',
+			emoji: '👩‍🏫',
+		},
 	},
-	contactTypeBabysitter: IContactRoleBriefWithID = {
+	contactTypeBabysitter: IContactRoleWithIdAndBrief = {
 		id: 'babysitter',
-		title: 'Babysitter',
-		titlePlural: 'Babysitters',
-		emoji: '👧',
-		finder: 'babysitters.express',
+		brief: {
+			title: 'Babysitter',
+			titlePlural: 'Babysitters',
+			emoji: '👧',
+			finder: 'babysitters.express',
+		},
 	},
-	contactTypeFriendOfKid: IContactRoleBriefWithID = {
+	contactTypeFriendOfKid: IContactRoleWithIdAndBrief = {
 		id: 'friend',
-		title: 'Friend',
-		titlePlural: 'Friends',
-		emoji: '🚸',
+		brief: {
+			title: 'Friend',
+			titlePlural: 'Friends',
+			emoji: '🚸',
+		},
 	},
 	// contactTypeGP: IContactRoleBrief = { id: 'gp', title: 'Family doctor', emoji: '👩‍⚕️', finder: 'gpconnect.app' },
-	contactTypePlumber: IContactRoleBriefWithID = {
+	contactTypePlumber: IContactRoleWithIdAndBrief = {
 		id: 'plumber',
-		title: 'Plumber',
-		titlePlural: 'Plumbers',
-		emoji: '🚽',
-		finder: 'plumbers.express',
+		brief: {
+			title: 'Plumber',
+			titlePlural: 'Plumbers',
+			emoji: '🚽',
+			finder: 'plumbers.express',
+		},
 	},
-	contactTypeElectrician: IContactRoleBriefWithID = {
+	contactTypeElectrician: IContactRoleWithIdAndBrief = {
 		id: 'electrician',
-		title: 'Electrician',
-		titlePlural: 'Electricians',
-		emoji: '🔌',
-		finder: 'electricians.express',
+		brief: {
+			title: 'Electrician',
+			titlePlural: 'Electricians',
+			emoji: '🔌',
+			finder: 'electricians.express',
+		},
 	},
-	contactTypeHandyman: IContactRoleBriefWithID = {
+	contactTypeHandyman: IContactRoleWithIdAndBrief = {
 		id: 'handyman',
-		title: 'Handyman',
-		titlePlural: 'Handymen',
-		emoji: '🔨',
+		brief: {
+			title: 'Handyman',
+			titlePlural: 'Handymen',
+			emoji: '🔨',
+		},
 	},
-	contactTypeGardener: IContactRoleBriefWithID = {
+	contactTypeGardener: IContactRoleWithIdAndBrief = {
 		id: 'gardener',
-		title: 'Gardener',
-		titlePlural: 'Gardeners',
-		emoji: '👨‍🌾',
-		finder: 'gardeners.express',
+		brief: {
+			title: 'Gardener',
+			titlePlural: 'Gardeners',
+			emoji: '👨‍🌾',
+			finder: 'gardeners.express',
+		},
 	},
-	contactTypeInsurer: IContactRoleBriefWithID = {
+	contactTypeInsurer: IContactRoleWithIdAndBrief = {
 		id: 'insurer',
-		title: 'Insurer',
-		titlePlural: 'Insurers',
-		emoji: '🧾',
+		brief: {
+			title: 'Insurer',
+			titlePlural: 'Insurers',
+			emoji: '🧾',
+		},
 	},
-	contactTypeMechanic: IContactRoleBriefWithID = {
+	contactTypeMechanic: IContactRoleWithIdAndBrief = {
 		id: 'mechanic',
-		title: 'Mechanic',
-		titlePlural: 'Mechanics',
-		emoji: '👨‍🔧',
+		brief: {
+			title: 'Mechanic',
+			titlePlural: 'Mechanics',
+			emoji: '👨‍🔧',
+		},
 	};
 
 export const defaultFamilyContactGroupDTOs: readonly IIdAndDbo<IContactGroupDbo>[] =
@@ -129,8 +150,11 @@ export const defaultFamilyContactGroupDTOs: readonly IIdAndDbo<IContactGroupDbo>
 				emoji: '⚕️',
 				title: 'Medical',
 				roles: [
-					{ id: 'gp', title: 'GP / Family doctor', emoji: '🩺' },
-					{ id: 'med_specialist', title: 'Medical specialist', emoji: '🥼' },
+					{ id: 'gp', brief: { title: 'GP / Family doctor', emoji: '🩺' } },
+					{
+						id: 'med_specialist',
+						brief: { title: 'Medical specialist', emoji: '🥼' },
+					},
 				],
 			},
 		},

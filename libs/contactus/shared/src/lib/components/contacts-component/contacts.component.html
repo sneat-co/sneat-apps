@@ -1,5 +1,5 @@
 @let space = $space();
-@let role = $role();
+@let role = $roleID();
 
 @if (space.type === "company") {
 	<ion-segment [value]="role" (ionChange)="onRoleChanged($event)">
@@ -68,12 +68,12 @@
 						[$contact]="contact"
 						[contactClicked]="goContact"
 						[goMember]="goMember"
-						[excludeRole]="$role()"
+						[excludeRole]="$roleID()"
 					/>
 				</ion-item-sliding>
 			}
 			@if ($canAdd()) {
-				<ion-item button (click)="goNewContact($event)">
+				<ion-item button (click)="addNewContact($event)">
 					<ion-icon name="add" color="primary" />
 					<ion-label color="primary">Add contact</ion-label>
 				</ion-item>
@@ -92,7 +92,9 @@
 					[contactClicked]="goContact"
 					[goMember]="goMember"
 					[command]="command"
+					[goToNewContactPage]="goToNewContactPage"
 					(contactSelectionChange)="contactSelectionChanged($event)"
+					(addContactClick)="addContactClick.emit($event)"
 				/>
 			}
 			@if (groups) {

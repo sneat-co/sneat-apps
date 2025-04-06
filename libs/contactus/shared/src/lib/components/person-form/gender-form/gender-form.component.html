@@ -1,5 +1,5 @@
 <ion-card>
-	<ion-item-group *ngIf="!genderID" @radioOut>
+	@if (!genderID) {
 		<ion-item-divider [color]="!genderID ? 'primary' : 'medium'">
 			<ion-label><b>Gender</b></ion-label>
 			<ion-buttons slot="end">
@@ -9,47 +9,10 @@
 				</ion-button>
 			</ion-buttons>
 		</ion-item-divider>
-		<ion-radio-group
-			[(ngModel)]="genderID"
-			[disabled]="disabled"
-			(ionChange)="onGenderChanged()"
-		>
-			<ion-item *ngFor="let gender of genders">
-				<ion-icon
-					*ngIf="gender.icon"
-					[name]="gender.id | genderIconName"
-					[color]="gender.id | genderColor"
-					slot="start"
-				/>
-				<!--				<ion-label [color]="gender.id|genderColor">{{gender.title}}</ion-label>-->
-				<ion-radio
-					justify="start"
-					[value]="gender.id"
-					[disabled]="disabled"
-					labelPlacement="end"
-					>{{ gender.title }}</ion-radio
-				>
-			</ion-item>
-		</ion-radio-group>
-	</ion-item-group>
-	<ion-item *ngIf="genderID" @selectIn>
-		<ion-icon
-			[color]="genderID | genderColor"
-			[name]="gender.icon"
-			*ngIf="gender"
-			slot="start"
-		/>
-		<ion-select
-			[(ngModel)]="genderID"
-			[disabled]="disabled"
-			interface="popover"
-			label="Gender"
-			labelPlacement="stacked"
-			(ionChange)="onGenderChanged()"
-		>
-			<ion-select-option *ngFor="let g of genders" [value]="g.id">
-				{{ g.title }}
-			</ion-select-option>
-		</ion-select>
-	</ion-item>
+	}
+	<sneat-select-from-list
+		label="Gender"
+		[(ngModel)]="genderID"
+		[items]="genderOptions"
+	/>
 </ion-card>

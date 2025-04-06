@@ -1,44 +1,56 @@
 import {
 	Component,
+	computed,
 	effect,
 	EventEmitter,
 	inject,
+	Input,
 	input,
 	OnInit,
 	Output,
 	signal,
 } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
-import { IonItemDivider, IonLabel } from '@ionic/angular/standalone';
+import { IonButton, IonItemDivider, IonLabel } from '@ionic/angular/standalone';
 import {
+	IContactRoleWithIdAndBrief,
 	ContactToAssetRelation,
 	emptyContactBase,
 	IContact2Asset,
 	IContactContext,
 	IContactGroupDbo,
-	IContactRoleBrief,
 	ICreateContactRequest,
 	IPersonRequirements,
 	IRelatedPerson,
 	isRelatedPersonNotReady,
+	ContactRole,
+	IContactRoleWithIdAndOptionalBrief,
 } from '@sneat/contactus-core';
 import {
 	ContactGroupService,
 	ContactRoleService,
 	ContactService,
 } from '@sneat/contactus-services';
-import { IIdAndBrief, IIdAndDbo, IIdAndOptionalDbo } from '@sneat/core';
-import { AssetService } from '@sneat/extensions-assetus-components';
+import { IIdAndDbo, IIdAndOptionalDbo } from '@sneat/core';
+import {
+	AssetService,
+	AssetusServicesModule,
+} from '@sneat/extensions-assetus-components';
 import { IAssetContext } from '@sneat/mod-assetus-core';
 import { WithSpaceInput } from '@sneat/space-components';
-import { first, Subject, takeUntil } from 'rxjs';
+import { first, Observable, Subject, takeUntil } from 'rxjs';
+import { IContactAddEventArgs } from '../contact-events';
 import { ContactRoleFormComponent } from '../contact-role-form';
 import { PersonWizardComponent } from '../person-form';
 
-export type ContactRoleIdAndBrief = IIdAndBrief<IContactRoleBrief> | undefined;
-export type ContactGroupIdAndBrief =
+export type OptionalContactRoleIdAndBrief =
+	| IContactRoleWithIdAndBrief
+	| undefined;
+
+export type OptionalContactGroupIdAndBrief =
 	| IIdAndOptionalDbo<IContactGroupDbo>
 	| undefined;
+
+export type NewContactFormCommand = 'create' | 'reset';
 
 @Component({
 	selector: 'sneat-new-contact-form',
@@ -47,16 +59,26 @@ export type ContactGroupIdAndBrief =
 		IonItemDivider,
 		IonLabel,
 		ContactRoleFormComponent,
-		IonicModule,
 		PersonWizardComponent,
+		IonButton,
+		AssetusServicesModule,
 	],
 })
 export class NewContactFormComponent extends WithSpaceInput implements OnInit {
-	public readonly $contact = input.required<IContactContext | undefined>();
+	@Input() public isInModal = false;
+	public readonly $contact = input<IContactContext>();
 	@Output() public readonly contactChange = new EventEmitter<IContactContext>();
+	@Output() public readonly creatingChange = new EventEmitter<boolean>();
 
-	public readonly $contactGroupID = input<string>();
-	public readonly $contactRoleID = input<string>();
+	@Input() command?: Observable<NewContactFormCommand>;
+	@Input() selectGroupAndRole$?: Observable<IContactAddEventArgs | undefined>;
+
+	// If set user can't change this.
+	public readonly $fixedGroupID = input<string>();
+
+	// If set user can't change role.
+	public readonly $fixedRoleID = input<ContactRole>();
+
 	public readonly $assetID = input<string>();
 
 	private readonly assetID$ = new Subject<string | undefined>();
@@ -64,8 +86,22 @@ export class NewContactFormComponent extends WithSpaceInput implements OnInit {
 	public readonly $asset = signal<IAssetContext | undefined>(undefined);
 
 	protected relatedPerson: IRelatedPerson = emptyContactBase;
-	protected readonly $contactGroup = signal<ContactGroupIdAndBrief>(undefined);
-	protected readonly $contactRole = signal<ContactRoleIdAndBrief>(undefined);
+
+	protected readonly $selectedContactGroup = signal<
+		OptionalContactGroupIdAndBrief | undefined
+	>(undefined);
+
+	protected readonly $selectedContactGroupID = computed(
+		() => this.$selectedContactGroup()?.id,
+	);
+
+	protected readonly $selectedContactRole = signal<
+		IContactRoleWithIdAndOptionalBrief | undefined
+	>(undefined);
+
+	protected readonly $selectedContactRoleID = computed(
+		() => this.$selectedContactRole()?.id,
+	);
 
 	public readonly $parentContactID = input<string>();
 	private readonly parentContactID$ = new Subject<string | undefined>();
@@ -80,10 +116,10 @@ export class NewContactFormComponent extends WithSpaceInput implements OnInit {
 	};
 
 	@Output() readonly contactRoleChange =
-		new EventEmitter<ContactRoleIdAndBrief>();
+		new EventEmitter<OptionalContactRoleIdAndBrief>();
 
 	@Output() readonly contactGroupChange =
-		new EventEmitter<ContactGroupIdAndBrief>();
+		new EventEmitter<OptionalContactGroupIdAndBrief>();
 
 	protected assetRelation?: ContactToAssetRelation;
 	protected readonly $personFormIsReadyToSubmit = signal(false);
@@ -96,36 +132,82 @@ export class NewContactFormComponent extends WithSpaceInput implements OnInit {
 
 	public constructor() {
 		super('NewContactFormComponent');
+		this.setupEffects();
 	}
 
-	public ngOnInit() {
+	public ngOnInit(): void {
+		this.command?.pipe(this.takeUntilDestroyed()).subscribe((command) => {
+			switch (command) {
+				case 'create': {
+					this.submit();
+					break;
+				}
+				case 'reset': {
+					this.$selectedContactRole.set(undefined);
+					this.$selectedContactGroup.set(undefined);
+					break;
+				}
+				default:
+					this.errorLogger.logError(
+						'NewContactPageComponent received unknown command: ' + command,
+					);
+					break;
+			}
+		});
+		this.selectGroupAndRole$
+			?.pipe(this.takeUntilDestroyed())
+			.subscribe((args) => {
+				console.log('selectedGroupAndRole:', args);
+				if (args?.group?.id && args.group.id !== this.$fixedGroupID()) {
+					this.$selectedContactGroup.set({ id: args.group.id });
+				}
+				if (args?.role?.id) {
+					this.$selectedContactRole.set({ id: args?.role?.id });
+				}
+			});
+	}
+
+	private setupEffects(): void {
+		console.log('NewContactFormComponent.setupEffects()');
 		effect(() => {
-			const contactGroupID = this.$contactGroupID();
-			const spaceRef = this.$spaceRef();
+			this.creatingChange.emit(this.$creating());
+		});
+		effect(() => {
+			const contactGroupID = this.$selectedContactGroupID();
+			console.log('effect for $selectedContactGroupID', contactGroupID);
 			if (!contactGroupID) {
 				return;
 			}
+			const spaceRef = this.$spaceRef();
 			this.contactGroupService
 				.getContactGroupByID(contactGroupID, spaceRef)
 				.pipe(first(), this.takeUntilDestroyed())
 				.subscribe({
 					next: (contactGroup) => {
-						this.$contactGroup.set(contactGroup);
+						console.log(
+							'effect for $selectedContactGroupID loaded contactGroup:',
+							contactGroup,
+						);
+						this.$selectedContactGroup.set(contactGroup);
 					},
 					error: this.logErrorHandler('Failed to get contact group by ID'),
 				});
 		});
 		effect(() => {
-			const contactRoleID = this.$contactRoleID();
+			const contactRoleID = this.$fixedRoleID();
 			if (!contactRoleID) {
 				return;
 			}
+			this.$selectedContactRole.set({ id: contactRoleID });
 			this.contactRoleService
 				.getContactRoleByID(contactRoleID)
 				.pipe(first(), this.takeUntilDestroyed())
 				.subscribe({
 					next: (contactRole) => {
-						this.$contactRole.set(contactRole);
+						this.$selectedContactRole.set({
+							id: contactRole.id as ContactRole,
+							brief: contactRole.brief,
+						});
 					},
 					error: this.logErrorHandler('Failed to get contact role by ID'),
 				});
@@ -170,15 +252,19 @@ export class NewContactFormComponent extends WithSpaceInput implements OnInit {
 		contactGroup?: IIdAndDbo<IContactGroupDbo>,
 	): void {
 		console.log('onContactGroupChanged()', contactGroup);
-		this.$contactGroup.set(contactGroup);
+		this.$selectedContactGroup.set(contactGroup);
 	}
 
 	protected onContactRoleIDChanged(contactRoleID?: string): void {
-		const brief = this.$contactGroup()?.dbo?.roles?.find(
+		const contactRole = this.$selectedContactGroup()?.dbo?.roles?.find(
 			(r) => r.id === contactRoleID,
 		);
-		this.$contactRole.set(brief && { id: brief.id, brief });
-		console.log('onContactRoleIDChanged()', contactRoleID, this.$contactRole);
+		this.$selectedContactRole.set(contactRole);
+		console.log(
+			'onContactRoleIDChanged()',
+			contactRoleID,
+			this.$selectedContactRole,
+		);
 	}
 
 	public onRelatedPersonChange(myPerson: IRelatedPerson): void {
@@ -190,6 +276,7 @@ export class NewContactFormComponent extends WithSpaceInput implements OnInit {
 	}
 
 	protected submit(): void {
+		this.console.log('NewContactFormComponent.submit()');
 		const space = this.$space();
 		if (!space) {
 			throw new Error('Space is not defined');
@@ -226,7 +313,7 @@ export class NewContactFormComponent extends WithSpaceInput implements OnInit {
 			};
 			request.relatedToAssets = [contact2Asset];
 		}
-		const roleID = this.$contactRole()?.id;
+		const roleID = this.$selectedContactRoleID();
 		if (roleID) {
 			if (request.person && !request.person.roles) {
 				request = {

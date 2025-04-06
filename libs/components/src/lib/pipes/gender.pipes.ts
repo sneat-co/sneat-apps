@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Gender } from '@sneat/contactus-core';
+import { IonicColor } from '@sneat/ui';
 
 @Pipe({ name: 'genderIconName' })
 export class GenderIconNamePipe implements PipeTransform {
@@ -33,23 +34,33 @@ export class GenderEmojiPipe implements PipeTransform {
 	}
 }
 
+export type GenderColor =
+	| 'primary'
+	| 'secondary'
+	| 'tertiary'
+	| 'success'
+	| 'warning'
+	| 'danger'
+	| 'dark'
+	| 'medium';
+
+export function genderColor(gender?: Gender): GenderColor {
+	switch (gender) {
+		case 'male':
+			return 'primary';
+		case 'female':
+			return 'danger';
+		case 'other':
+			return 'warning';
+		case 'unknown':
+			return 'medium';
+		case 'undisclosed':
+			return 'medium';
+	}
+	return 'dark';
+}
+
 @Pipe({ name: 'genderColor' })
 export class GenderColorPipe implements PipeTransform {
-	transform(
-		gender?: Gender,
-	): 'medium' | 'warning' | 'dark' | 'danger' | 'primary' {
-		switch (gender) {
-			case 'male':
-				return 'primary';
-			case 'female':
-				return 'danger';
-			case 'other':
-				return 'warning';
-			case 'unknown':
-				return 'medium';
-			case 'undisclosed':
-				return 'medium';
-		}
-		return 'dark';
-	}
+	readonly transform = genderColor;
 }

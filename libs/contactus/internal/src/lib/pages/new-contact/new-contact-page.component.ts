@@ -11,40 +11,28 @@ import { FormsModule } from '@angular/forms';
 import { ParamMap } from '@angular/router';
 import { IonicModule, IonInput } from '@ionic/angular';
 import {
-	ContactGroupIdAndBrief,
-	ContactRoleFormComponent,
-	ContactRoleIdAndBrief,
+	OptionalContactGroupIdAndBrief,
+	OptionalContactRoleIdAndBrief,
 	NewContactFormComponent,
 } from '@sneat/contactus-shared';
 import {
+	ContactRole,
 	ContactToContactRelation,
 	Gender,
-	IPersonRequirements,
 	IContactContext,
 } from '@sneat/contactus-core';
-import { AssetusServicesModule } from '@sneat/extensions-assetus-components';
 import {
 	SpaceBaseComponent,
 	SpaceComponentBaseParams,
 } from '@sneat/space-components';
 import { IAssetContext } from '@sneat/mod-assetus-core';
-import { SpaceServiceModule } from '@sneat/space-services';
-import { first } from 'rxjs';
-import { ContactusServicesModule } from '@sneat/contactus-services';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Component({
 	selector: 'sneat-new-contact-page',
 	templateUrl: './new-contact-page.component.html',
 	providers: [SpaceComponentBaseParams],
-	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
-		ContactusServicesModule,
-		AssetusServicesModule,
-		SpaceServiceModule,
-		NewContactFormComponent,
-	],
+	imports: [CommonModule, FormsModule, IonicModule, NewContactFormComponent],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewContactPageComponent
@@ -72,11 +60,15 @@ export class NewContactPageComponent
 	public readonly $contact = signal<IContactContext | undefined>(undefined);
 
 	protected readonly $contactGroupID = signal<string>('');
-	protected readonly $contactRoleID = signal<string>('');
+	protected readonly $contactRoleID = signal<ContactRole | undefined>(
+		undefined,
+	);
 	protected readonly $assetID = signal<string>('');
 
-	protected readonly $contactRole = signal<ContactRoleIdAndBrief>(undefined);
-	protected readonly $contactGroup = signal<ContactGroupIdAndBrief>(undefined);
+	protected readonly $contactRole =
+		signal<OptionalContactRoleIdAndBrief>(undefined);
+	protected readonly $contactGroup =
+		signal<OptionalContactGroupIdAndBrief>(undefined);
 
 	protected readonly $parentContactID = signal<string>('');
 
@@ -118,7 +110,7 @@ export class NewContactPageComponent
 		const contactRole = params.get('role');
 
 		if (contactRole && !this.$contactRole()) {
-			this.$contactRoleID.set(contactRole);
+			this.$contactRoleID.set(contactRole as ContactRole);
 		}
 
 		const space = this.space;

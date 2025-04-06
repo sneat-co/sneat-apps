@@ -33,6 +33,10 @@ export abstract class SelectorModalComponent<
 	T,
 > extends SelectorBaseComponent<T> {
 	protected constructor(className: string) {
+		// we can not inject ModalController in parent as parent takes either modal or popup, use this.overlayController
 		super(className, inject(ModalController));
 	}
+
+	protected readonly modalController = this
+		.overlayController as ModalController;
 }

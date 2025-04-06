@@ -1,9 +1,19 @@
 @if (value) {
+	$selectedItem.iconName: {{ $selectedItem()?.iconName }}
 	<ion-item [class]="{ 'sneat-tiny-end-padding': !isReadonly }">
+		@if ($selectedItem()?.iconName) {
+			<ion-icon
+				slot="start"
+				[name]="$selectedItem()?.iconName"
+				[color]="
+					$selectedItem()?.iconColor || $selectedItem()?.labelColor || 'medium'
+				"
+			/>
+		}
 		<ion-select
 			#selectInput
 			interface="popover"
-			[label]="label"
+			[label]="label + 'suxx'"
 			[(ngModel)]="value"
 			(ionChange)="onSelectChanged($event)"
 			[disabled]="isReadonly"
@@ -157,7 +167,7 @@
 						<ion-icon
 							slot="start"
 							[name]="item.iconName"
-							[color]="item.labelColor || 'medium'"
+							[color]="item.iconColor || item.labelColor || 'medium'"
 						/>
 					}
 					@if (!labelPlacement) {

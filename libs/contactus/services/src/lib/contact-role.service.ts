@@ -11,7 +11,7 @@ export class ContactRoleService {
 			for (let j = 0; j < (cg?.dbo?.roles?.length || 0); j++) {
 				const role = cg.dbo?.roles && cg.dbo.roles[j];
 				if (role?.id === id) {
-					return of({ id, brief: role });
+					return of({ id, brief: role.brief });
 				}
 			}
 		}

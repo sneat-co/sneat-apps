@@ -113,7 +113,7 @@ export class SlotContextMenuComponent {
 		};
 		this.popoverController.dismiss().catch(console.error);
 		this.contactsSelectorService
-			.selectMultipleInModal(options)
+			.selectMultipleContacts(options)
 			.then((selectedContacts) => {
 				console.log('selected contacts:', selectedContacts);
 			});

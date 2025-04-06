@@ -42,6 +42,7 @@ export type ContactRoleLogistSubContact =
 	| typeof ContactRoleShip
 	| typeof ContactRoleLocation;
 export type ContactRoleLogistParentContact = 'shipper' | 'dispatcher';
+import { IIdAndBrief } from '@sneat/core';
 import { MemberRole, RoleSpaceMember } from './member-types';
 
 export type LogistOrderContactRole =
@@ -78,12 +79,18 @@ export type ContactRole =
 	| 'applicant';
 
 export interface IContactRoleBrief {
-	title: string;
-	titlePlural?: string;
-	emoji?: string;
-	finder?: string;
+	readonly title: string;
+	readonly titlePlural?: string;
+	readonly emoji?: string;
+	readonly finder?: string;
 }
 
-export interface IContactRoleBriefWithID extends IContactRoleBrief {
-	id: ContactRole;
+export interface IContactRoleWithIdAndBrief {
+	readonly id: ContactRole;
+	readonly brief: IContactRoleBrief;
+}
+
+export interface IContactRoleWithIdAndOptionalBrief {
+	readonly id: ContactRole;
+	readonly brief?: IContactRoleBrief;
 }

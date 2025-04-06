@@ -189,7 +189,7 @@ This operation can NOT be undone.`)
 		)?.map(addSpace(space));
 
 		this.contactsSelectorService
-			.selectMultipleInModal({
+			.selectMultipleContacts({
 				selectedItems:
 					teamContacts?.filter((m) =>
 						getRelatedItemIDs(

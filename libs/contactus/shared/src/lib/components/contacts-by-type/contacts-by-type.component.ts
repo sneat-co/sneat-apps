@@ -13,7 +13,9 @@ import {
 import { IonicModule } from '@ionic/angular';
 import { eq, IIdAndDbo, listItemAnimations } from '@sneat/core';
 import {
+	ContactGroupWithIdAndBrief,
 	ContactRole,
+	IContactRoleWithIdAndBrief,
 	IContactGroupDbo,
 	IContactWithBrief,
 	IContactWithCheck,
@@ -23,6 +25,7 @@ import { ContactNavService } from '@sneat/contactus-services';
 import { ISpaceContext } from '@sneat/space-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { Observable } from 'rxjs';
+import { IContactAddEventArgs } from '../contact-events';
 import { ICheckChangedArgs } from '../contacts-checklist';
 import { ContactsComponentCommand } from '../contacts-component.commands';
 import { ContactsListItemComponent } from '../contacts-list';
@@ -73,6 +76,9 @@ export class ContactsByTypeComponent
 	@Output()
 	public readonly contactSelectionChange =
 		new EventEmitter<IRoleContactCheckChangedArgs>();
+
+	@Input() goToNewContactPage = true;
+	@Output() readonly addContactClick = new EventEmitter<IContactAddEventArgs>();
 
 	constructor(private readonly contactNavService: ContactNavService) {
 		super('ContactsByTypeComponent');
@@ -136,7 +142,7 @@ export class ContactsByTypeComponent
 							isChecked: selectedContactIDs?.includes(c.id),
 						})),
 				};
-				if (filter && role.title.toLowerCase().includes(filter)) {
+				if (filter && role.brief.title.toLowerCase().includes(filter)) {
 					// Show all contacts in role that filtered by title
 					rolesWithContacts.push(roleWithContacts);
 					return;
@@ -162,7 +168,9 @@ export class ContactsByTypeComponent
 			const groupWithContacts: IContactGroupWithContacts = {
 				...group.dbo,
 				id: group.id,
-				title: group.dbo?.title || '',
+				brief: {
+					title: group.dbo?.title || '',
+				},
 				roles: rolesWithContacts,
 			};
 
@@ -184,12 +192,27 @@ export class ContactsByTypeComponent
 		// );
 	}
 
-	protected addContact(event: Event, group: string, role?: ContactRole): void {
+	protected addContact(
+		event: Event,
+		group: ContactGroupWithIdAndBrief,
+		role?: IContactRoleWithIdAndBrief,
+	): void {
 		event.stopPropagation();
+		if (!this.goToNewContactPage) {
+			this.addContactClick.emit({
+				event,
+				role: role,
+				group: group,
+			});
+			return;
+		}
 		if (!this.$space().id) {
 			return;
 		}
-		this.contactNavService.goNewContactPage(this.$space(), { group, role });
+		this.contactNavService.goNewContactPage(this.$space(), {
+			group: group.id,
+			role: role?.id,
+		});
 	}
 
 	// private readonly $checkedContactIDs = signal<readonly string[]>([]);

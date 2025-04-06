@@ -1,59 +1,14 @@
-<ion-card @formNextIn *ngIf="!ageGroup">
-	<ion-item-divider color="primary">
-		<ion-label *ngIf="hidePetOption && hideCompanyOption"
-			><b>Adult or child?</b></ion-label
-		>
-		<ion-label *ngIf="!hidePetOption && hideCompanyOption"
-			><b>Adult/child or pet?</b></ion-label
-		>
-		<ion-label *ngIf="hidePetOption && !hideCompanyOption"
-			><b>Adult/child or company?</b></ion-label
-		>
-		<ion-label *ngIf="!hidePetOption && !hideCompanyOption"
-			><b>Adult/child/pet or company?</b></ion-label
-		>
-	</ion-item-divider>
-	<ion-radio-group
-		[(ngModel)]="ageGroup"
-		(ionChange)="onAgeGroupChanged($event)"
-	>
-		<ion-item>
-			<ion-label>Adult</ion-label>
-			<ion-radio slot="start" value="adult" [disabled]="disabled" />
-		</ion-item>
-		<ion-item>
-			<ion-label>Child</ion-label>
-			<ion-radio slot="start" value="child" [disabled]="disabled" />
-		</ion-item>
-		<ion-item *ngIf="!hideUndisclosedOption">
-			<ion-label>Person (undisclosed age)</ion-label>
-			<ion-radio slot="start" value="company" [disabled]="true" />
-		</ion-item>
-		<ion-item *ngIf="!hidePetOption">
-			<ion-label>Pet</ion-label>
-			<ion-radio slot="start" value="pet" [disabled]="disabled" />
-		</ion-item>
-		<ion-item *ngIf="!hideCompanyOption">
-			<ion-label>Company (not implemented yet)</ion-label>
-			<ion-radio slot="start" value="company" [disabled]="true" />
-		</ion-item>
-	</ion-radio-group>
-</ion-card>
-<ion-card *ngIf="ageGroup">
-	<ion-item>
-		<ion-icon name="text-outline" slot="start" color="medium" />
-		<ion-label color="medium" position="stacked">Age group</ion-label>
-		<ion-select
-			[disabled]="disabled"
-			[(ngModel)]="ageGroup"
-			interface="popover"
-			(ionChange)="onAgeGroupChanged($event)"
-		>
-			<ion-select-option value="adult">Adult</ion-select-option>
-			<ion-select-option value="child">Child</ion-select-option>
-			<ion-select-option *ngIf="spaceType === 'family'" value="pet"
-				>Pet</ion-select-option
-			>
-		</ion-select>
-	</ion-item>
+<ion-card @formNextIn>
+	@if (!$ageGroup()) {
+		<ion-item-divider color="primary">
+			{{ $ageGroupLabel() }}
+		</ion-item-divider>
+	}
+	<sneat-select-from-list
+		label="Age group"
+		[labelPlacement]="'start'"
+		[value]="$ageGroup() || ''"
+		(valueChange)="onAgeGroupChanged($event)"
+		[items]="$ageGroupOptions()"
+	/>
 </ion-card>

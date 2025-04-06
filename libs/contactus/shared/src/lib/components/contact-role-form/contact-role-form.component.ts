@@ -1,44 +1,40 @@
-import { TitleCasePipe } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
-	ChangeDetectorRef,
 	Component,
+	computed,
 	EventEmitter,
-	inject,
-	Input,
-	OnChanges,
+	input,
 	Output,
-	SimpleChanges,
+	signal,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
+import { SelectFromListComponent } from '@sneat/ui';
+import { ContactGroupService } from '@sneat/contactus-services';
+import { IIdAndDbo } from '@sneat/core';
 import {
-	ContactGroupService,
-	defaultFamilyContactGroups,
-} from '@sneat/contactus-services';
-import { IIdAndBrief, IIdAndDbo } from '@sneat/core';
-import {
+	ContactRole,
 	IContactGroupDbo,
-	IContactRoleBriefWithID,
+	IContactRoleWithIdAndBrief,
 } from '@sneat/contactus-core';
 import { SneatBaseComponent } from '@sneat/ui';
 
 @Component({
 	selector: 'sneat-contact-role-form',
 	templateUrl: './contact-role-form.component.html',
-	imports: [IonicModule, SelectFromListComponent, TitleCasePipe],
+	imports: [IonicModule, SelectFromListComponent],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ContactRoleFormComponent
-	extends SneatBaseComponent
-	implements OnChanges
-{
-	private readonly changeDetectorRef = inject(ChangeDetectorRef);
+export class ContactRoleFormComponent extends SneatBaseComponent {
+	public $contactGroupID = input.required<string | undefined>();
 
-	protected contactGroup?: IIdAndDbo<IContactGroupDbo> | null;
-
-	@Input({ required: true }) contactGroupID?: string =
-		defaultFamilyContactGroups[0].id;
+	protected $contactGroup = computed(() => {
+		const id = this.$contactGroupID();
+		const groups = this.$groups();
+		console.log(`ContactRoleFormComponent.$contactGroup(id=${id})`, groups);
+		const group = groups?.find((g) => g.id === id);
+		this.contactGroupChange.emit(group);
+		return group;
+	});
 
 	@Output() readonly contactGroupIDChange = new EventEmitter<
 		string | undefined
@@ -48,29 +44,45 @@ export class ContactRoleFormComponent
 		IIdAndDbo<IContactGroupDbo> | undefined
 	>();
 
-	@Input({ required: true }) public contactRoleID?: string;
+	public readonly $contactRoleID = input.required<ContactRole | undefined>();
 
 	@Output() readonly contactRoleIDChange = new EventEmitter<
-		string | undefined
+		ContactRole | undefined
 	>();
 
 	@Output() readonly contactRoleChange = new EventEmitter<
-		IIdAndBrief<IContactRoleBriefWithID> | undefined
+		IContactRoleWithIdAndBrief | undefined
 	>();
 
-	protected groups?: readonly IIdAndDbo<IContactGroupDbo>[];
+	protected readonly $groups = signal<
+		readonly IIdAndDbo<IContactGroupDbo>[] | undefined
+	>(undefined);
 
-	protected get groupItems(): readonly ISelectItem[] {
+	protected readonly $groupItems = computed(() => {
+		const groups = this.$groups();
 		return (
-			this.groups?.map((g) => ({
+			groups?.map((g) => ({
 				id: g.id,
 				title: g.dbo.title,
 				emoji: g.dbo.emoji,
 			})) || []
 		);
-	}
+	});
 
-	protected readonly roleBriefID = (o: IContactRoleBriefWithID) => o.id;
+	protected readonly $roleItems = computed(() => {
+		const group = this.$contactGroup();
+		if (!group) {
+			return [];
+		}
+		const roles = group.dbo?.roles?.map((r) => ({
+			id: r.id,
+			title: r.brief.title,
+			emoji: r.brief.emoji,
+		}));
+		return roles;
+	});
+
+	protected readonly roleBriefID = (o: IContactRoleWithIdAndBrief) => o.id;
 	protected readonly groupID = (_: number, o: IIdAndDbo<IContactGroupDbo>) =>
 		o.id;
 
@@ -81,44 +93,28 @@ export class ContactRoleFormComponent
 			.pipe(this.takeUntilDestroyed())
 			.subscribe({
 				next: (groups) => {
-					this.groups = groups;
-					this.setContactGroup();
+					console.log('ContactRoleFormComponent loaded groups:', groups);
+					this.$groups.set(groups);
 				},
 			});
 	}
 
 	protected onContactGroupIDChanged(contactGroupID: string): void {
 		// event.stopPropagation();
-		this.contactGroupID = contactGroupID;
+		this.contactGroupIDChange.emit(contactGroupID);
+		const group = this.$groups()?.find((g) => g.id === contactGroupID);
+		this.contactGroupChange.emit(group);
 		this.clearContactType();
-		this.contactGroupIDChange.emit(this.contactGroupID);
-		this.contactGroup = this.groups?.find((g) => g.id === this.contactGroupID);
-		this.contactGroupChange.emit(this.contactGroup || undefined);
 	}
 
-	protected onContactRoleIDChanged(event: CustomEvent): void {
-		event.stopPropagation();
-		this.contactRoleID = event.detail.value as string;
-		this.contactRoleIDChange.emit(this.contactRoleID);
-		this.changeDetectorRef.markForCheck();
+	protected onContactRoleIDChanged(contactRoleID: string): void {
+		this.contactRoleIDChange.emit(contactRoleID as ContactRole);
+		const group = this.$contactGroup();
+		const role = group?.dbo?.roles?.find((r) => r.id == contactRoleID);
+		this.contactRoleChange.emit(role);
 	}
 
 	protected clearContactType(): void {
-		this.contactRoleID = undefined;
-		this.contactRoleIDChange.emit(this.contactRoleID);
-		this.changeDetectorRef.markForCheck();
-	}
-
-	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['contactGroupID']) {
-			this.setContactGroup();
-		}
-	}
-
-	private setContactGroup(): void {
-		const contactGroupID = this.contactGroupID;
-		this.contactGroup = this.groups?.find((g) => g.id === contactGroupID);
-		this.changeDetectorRef.markForCheck();
-		// console.log(`setContactGroup(): contactGroupID=${contactGroupID}`);
+		this.contactRoleIDChange.emit(undefined);
 	}
 }

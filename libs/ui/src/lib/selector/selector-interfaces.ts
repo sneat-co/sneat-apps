@@ -1,3 +1,14 @@
+export type IonicColor =
+	| 'danger'
+	| 'success'
+	| 'warning'
+	| 'primary'
+	| 'secondary'
+	| 'tertiary'
+	| 'dark'
+	| 'medium'
+	| 'light';
+
 export interface ISelectItem {
 	readonly id: string;
 	readonly title: string;
@@ -7,16 +18,8 @@ export interface ISelectItem {
 	readonly description2?: string;
 	readonly emoji?: string;
 	readonly iconName?: string;
-	readonly labelColor?:
-		| 'medium'
-		| 'danger'
-		| 'success'
-		| 'warning'
-		| 'primary'
-		| 'secondary'
-		| 'tertiary'
-		| 'dark'
-		| 'light';
+	readonly iconColor?: IonicColor;
+	readonly labelColor?: IonicColor;
 }
 
 export interface ISelectItemEvent {

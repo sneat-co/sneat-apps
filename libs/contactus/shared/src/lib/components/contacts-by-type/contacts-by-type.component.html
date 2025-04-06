@@ -5,12 +5,9 @@
 ) {
 	<ion-item-group @listItem>
 		<ion-item color="light" lines="full" class="sneat-tiny-end-padding">
-			<ion-label>{{ contactGroup.title }}</ion-label>
+			<ion-label>{{ contactGroup.brief.title }}</ion-label>
 			<ion-buttons slot="end">
-				<ion-button
-					color="tertiary"
-					(click)="addContact($event, contactGroup.id)"
-				>
+				<ion-button color="tertiary" (click)="addContact($event, contactGroup)">
 					<ion-icon name="add" slot="start" />
 					<ion-label>Add contact</ion-label>
 				</ion-button>
@@ -22,8 +19,10 @@
 				[lines]="lastRole && isLastContactGroup ? 'none' : 'full'"
 			>
 				<ion-label color="medium">
-					<span class="ion-margin-end">{{ role.emoji }}</span>
-					<b class="ion-margin-end">{{ role.titlePlural || role.title }}</b>
+					<span class="ion-margin-end">{{ role.brief.emoji }}</span>
+					<b class="ion-margin-end">{{
+						role.brief.titlePlural || role.brief.title
+					}}</b>
 					&mdash;
 					<i class="ion-margin-start">
 						@switch (role.contacts.length) {
@@ -37,18 +36,18 @@
 					</i>
 				</ion-label>
 				<ion-buttons slot="end">
-					@if (role.finder) {
+					@if (role.brief.finder) {
 						<ion-button
 							target="_blank"
 							color="primary"
-							[href]="'https:' + role.finder"
-							[title]="'Find at https://' + role.finder"
+							[href]="'https:' + role.brief.finder"
+							[title]="'Find at https://' + role.brief.finder"
 							>Find
 						</ion-button>
 					}
 					<ion-button
 						color="tertiary"
-						(click)="addContact($event, contactGroup.id, role.id)"
+						(click)="addContact($event, contactGroup, role)"
 					>
 						<ion-icon name="add-outline" slot="start" />
 						<ion-label>Add</ion-label>

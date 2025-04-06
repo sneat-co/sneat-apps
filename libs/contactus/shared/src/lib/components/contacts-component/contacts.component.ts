@@ -28,10 +28,12 @@ import { ISpaceContext } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
 import { ISelectItem, SneatBaseComponent } from '@sneat/ui';
 import { Observable } from 'rxjs';
+import { IContactAddEventArgs } from '../contact-events';
 import { ContactsByTypeComponent } from '../contacts-by-type';
 import { ICheckChangedArgs } from '../contacts-checklist';
 import { ContactsComponentCommand } from '../contacts-component.commands';
 import { ContactsListItemComponent } from '../contacts-list-item/contacts-list-item.component';
+import { OptionalContactRoleIdAndBrief } from '../new-contact-form/new-contact-form.component';
 
 @Component({
 	selector: 'sneat-contacts',
@@ -49,7 +51,8 @@ import { ContactsListItemComponent } from '../contacts-list-item/contacts-list-i
 export class ContactsComponent extends SneatBaseComponent implements OnInit {
 	public readonly $space = input.required<ISpaceContext>();
 
-	public readonly $role = input<ContactRole | undefined>();
+	public readonly $roleID = input<ContactRole | undefined>();
+	protected readonly $role = signal<OptionalContactRoleIdAndBrief>(undefined);
 
 	@Input() command?: Observable<ContactsComponentCommand>;
 
@@ -59,8 +62,11 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 		readonly IContactWithSpace[]
 	>();
 
+	@Input() goToNewContactPage = true;
+	@Output() readonly onAddContact = new EventEmitter<IContactAddEventArgs>();
+
 	protected readonly $showTabs = computed(
-		() => !this.$role() && this.$space().type === 'family',
+		() => !this.$roleID() && this.$space().type === 'family',
 	);
 
 	constructor() {
@@ -99,7 +105,7 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 			console.log('ContactsComponent.ngOnInit() command=' + command);
 			switch (command.name) {
 				case 'new_contact':
-					this.goNewContact(command.event).catch(
+					this.addNewContact(command.event).catch(
 						this.errorLogger.logErrorHandler(
 							'failed to navigate to new contact page',
 						),
@@ -150,7 +156,7 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 	];
 
 	protected $canAdd = computed<boolean>(() => {
-		const role = this.$role();
+		const role = this.$roleID();
 		return role !== 'tenant' && role !== 'landlord';
 	});
 
@@ -162,7 +168,7 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 
 	protected $contacts = computed(() => {
 		const allContacts = this.$allContacts(),
-			role = this.$role(),
+			role = this.$roleID(),
 			filter = this.$filter().trim().toLowerCase();
 
 		console.log('$contacts - started', allContacts?.length);
@@ -193,8 +199,18 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 			);
 	};
 
-	protected readonly goNewContact = async (event: Event): Promise<void> => {
+	@Output() readonly addContactClick = new EventEmitter<IContactAddEventArgs>();
+
+	protected readonly addNewContact = async (event: Event): Promise<void> => {
 		event.stopPropagation();
+		event.preventDefault();
+		if (!this.goToNewContactPage) {
+			const role = this.$role();
+			this.addContactClick.emit({
+				event,
+				role,
+			});
+		}
 		const space = this.$space();
 		if (!space.id && !space.type) {
 			return;
@@ -203,7 +219,7 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 			await this.spaceNavService.navigateForwardToSpacePage(
 				space,
 				'new-contact',
-				{ queryParams: this.$role() ? { role: this.$role() } : undefined },
+				{ queryParams: this.$roleID() ? { role: this.$roleID() } : undefined },
 			);
 		} catch (err) {
 			this.errorLogger.logError(err, 'failed to navigate to new contact page');

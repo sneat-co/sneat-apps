@@ -147,7 +147,7 @@ export class HappeningParticipantsComponent {
 			space: this.$space(),
 		};
 		this.contactSelectorService
-			.selectMultipleInModal({
+			.selectMultipleContacts({
 				title: 'Add participants',
 				selectedItems: [],
 				componentProps: componentProps,

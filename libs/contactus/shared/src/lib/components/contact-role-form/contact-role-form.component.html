@@ -1,49 +1,26 @@
 <ion-card>
-	@if (contactRoleID) {
-		<ion-item>
-			<ion-label position="stacked">Contact type/role</ion-label>
-			<ion-select
-				interface="popover"
-				[value]="contactRoleID"
-				(ionChange)="onContactRoleIDChanged($event)"
-			>
-				@for (r of contactGroup?.dbo?.roles || []; track roleBriefID(r)) {
-					<ion-select-option [value]="r.id"
-						>{{ r.emoji }} {{ r.title || r.id }}</ion-select-option
-					>
-				}
-			</ion-select>
-		</ion-item>
-	} @else {
+	@if (!$contactGroupID()) {
 		<ion-item-divider color="primary">
-			<ion-label>
-				@if (contactGroupID) {
-					Please select primary contact role
-				} @else {
-					Please select contact type
-				}
-			</ion-label>
+			Please select contact group
 		</ion-item-divider>
-		<sneat-select-from-list
-			label="Contact group"
-			[items]="groupItems"
-			[value]="contactGroupID || ''"
-			(valueChange)="onContactGroupIDChanged($event)"
-		/>
-		@if (contactGroup) {
-			<ion-radio-group
-				[value]="contactRoleID"
-				(ionChange)="onContactRoleIDChanged($event)"
-			>
-				@for (r of contactGroup.dbo.roles || []; track roleBriefID(r)) {
-					<ion-item>
-						<ion-radio slot="start" [value]="r.id" />
-						<ion-label
-							>{{ r.emoji }} {{ r.title || r.id | titlecase }}</ion-label
-						>
-					</ion-item>
-				}
-			</ion-radio-group>
+	}
+	<sneat-select-from-list
+		label="Contact group"
+		[items]="$groupItems()"
+		[value]="$contactGroupID() || ''"
+		(valueChange)="onContactGroupIDChanged($event)"
+	/>
+	@if ($contactGroupID()) {
+		@if (!$contactRoleID()) {
+			<ion-item-divider color="primary">
+				Please select contact role
+			</ion-item-divider>
 		}
+		<sneat-select-from-list
+			label="Contact role"
+			[items]="$roleItems()"
+			[value]="$contactRoleID() || ''"
+			(valueChange)="onContactRoleIDChanged($event)"
+		/>
 	}
 </ion-card>
