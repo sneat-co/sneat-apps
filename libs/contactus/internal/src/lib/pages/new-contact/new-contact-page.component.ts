@@ -9,7 +9,17 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ParamMap } from '@angular/router';
-import { IonicModule, IonInput } from '@ionic/angular';
+import { IonInput } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonButtons,
+	IonContent,
+	IonHeader,
+	IonNav,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
+import { ContactusServicesModule } from '@sneat/contactus-services';
 import {
 	OptionalContactGroupIdAndBrief,
 	OptionalContactRoleIdAndBrief,
@@ -26,13 +36,27 @@ import {
 	SpaceComponentBaseParams,
 } from '@sneat/space-components';
 import { IAssetContext } from '@sneat/mod-assetus-core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { SpaceServiceModule } from '@sneat/space-services';
 
 @Component({
 	selector: 'sneat-new-contact-page',
 	templateUrl: './new-contact-page.component.html',
 	providers: [SpaceComponentBaseParams],
-	imports: [CommonModule, FormsModule, IonicModule, NewContactFormComponent],
+	imports: [
+		CommonModule,
+		FormsModule,
+		NewContactFormComponent,
+		SpaceServiceModule,
+		ContactusServicesModule,
+		IonNav,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		IonContent,
+		// TODO: move into components?
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewContactPageComponent
@@ -79,7 +103,7 @@ export class NewContactPageComponent
 			: 'New contact';
 	});
 
-	protected $asset = signal<IAssetContext | undefined>(undefined);
+	protected readonly $asset = signal<IAssetContext | undefined>(undefined);
 
 	constructor() {
 		super('NewContactPageComponent');

@@ -32,14 +32,14 @@
 		[$space]="space"
 		[$roleID]="$role()"
 		[$allContacts]="$allContacts()"
-		(roleChange)="onRoleChanged($event)"
-		(selectedContactsChange)="selectedContactsChanged($event)"
 		[command]="command.asObservable()"
+		(contactsChange)="$allContacts.set($event)"
+		(roleChange)="onRoleChanged($event)"
 	/>
 	<div style="height: 30px"></div>
 </ion-content>
 
-@if ($selectedContacts().length; as numberOfSelectedContacts) {
+@if ($selectedContacts()?.length; as numberOfSelectedContacts) {
 	<ion-footer>
 		<ion-toolbar color="light">
 			<ion-buttons slot="start">

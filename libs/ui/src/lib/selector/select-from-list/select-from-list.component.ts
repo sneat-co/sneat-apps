@@ -153,7 +153,9 @@ export class SelectFromListComponent
 			case 'single':
 				this.$selectedItem.set(item);
 				this.onChange(item.id);
-				this.clearFilter();
+				if (this.$filter()) {
+					this.clearFilter();
+				}
 		}
 	}
 

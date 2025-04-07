@@ -3,7 +3,7 @@ import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
 import { getContactTitle } from '@sneat/components';
 import {
-	IContactWithSpace,
+	IContactWithBriefAndSpace,
 	ICreatePersonalInviteRequest,
 	ICreatePersonalInviteResponse,
 	InviteChannel,
@@ -27,7 +27,7 @@ export class EncodeSmsText implements PipeTransform {
 })
 export class InviteModalComponent {
 	@Input({ required: true }) space?: ISpaceContext;
-	@Input() member?: IContactWithSpace;
+	@Input() member?: IContactWithBriefAndSpace;
 
 	tab: InviteChannel = 'email';
 	link?: string;

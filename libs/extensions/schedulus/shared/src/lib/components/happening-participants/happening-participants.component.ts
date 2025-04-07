@@ -145,6 +145,7 @@ export class HappeningParticipantsComponent {
 		const happeningID = this.$happening().id;
 		const componentProps: IContactSelectorProps = {
 			space: this.$space(),
+			okButtonLabel: 'Add',
 		};
 		this.contactSelectorService
 			.selectMultipleContacts({

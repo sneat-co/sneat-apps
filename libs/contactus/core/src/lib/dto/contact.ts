@@ -33,10 +33,10 @@ export interface IContactBrief extends IContactBase {
 export type IContactWithBrief = IIdAndBrief<IContactBrief>;
 
 export function filterContactsByTextAndRole( // TODO(help-wanted): add test
-	contacts: readonly IContactWithBrief[] | undefined,
+	contacts: readonly IContactWithCheck[] | undefined,
 	text: string,
 	role?: ContactRole,
-): readonly IContactWithBrief[] | undefined {
+): readonly IContactWithCheck[] | undefined {
 	return !text && !role
 		? contacts
 		: contacts?.filter((c) => {
@@ -64,7 +64,7 @@ export function isContactPassFilter(
 	);
 }
 
-export interface IContactWithSpace extends IContactWithBrief {
+export interface IContactWithBriefAndSpace extends IContactWithBrief {
 	readonly space: ISpaceRef;
 }
 
@@ -94,11 +94,11 @@ export interface IContactsBrief {
 
 export interface IContactWithDboAndSpace
 	extends IContactWithDbo,
-		IContactWithSpace {}
+		IContactWithBriefAndSpace {}
 
 export interface IContactWithOptionalDboAndSpace
 	extends IContactWithOptionalDbo,
-		IContactWithSpace {}
+		IContactWithBriefAndSpace {}
 
 export interface IContactWithCheck extends IContactWithOptionalDboAndSpace {
 	readonly isChecked?: boolean;

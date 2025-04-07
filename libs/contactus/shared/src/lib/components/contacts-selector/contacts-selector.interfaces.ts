@@ -2,7 +2,7 @@ import {
 	ContactRole,
 	ContactType,
 	IContactContext,
-	IContactWithSpace,
+	IContactWithBriefAndSpace,
 } from '@sneat/contactus-core';
 import { ISpaceContext } from '@sneat/space-models';
 import { ISelectorOptions } from '@sneat/ui';
@@ -17,10 +17,11 @@ export interface IContactSelectorProps {
 	readonly subType?: ContactRole;
 	readonly subRoleRequired?: boolean;
 	readonly excludeContacts?: readonly IContactContext[];
+	readonly okButtonLabel?: string;
 }
 
 export interface IContactSelectorOptions
-	extends ISelectorOptions<IContactWithSpace> {
+	extends ISelectorOptions<IContactWithBriefAndSpace> {
 	readonly componentProps?: IContactSelectorProps;
 }
 

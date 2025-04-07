@@ -13,7 +13,7 @@ import {
 	addSpace,
 	IContactusSpaceDboAndID,
 	IContactWithBrief,
-	IContactWithSpace,
+	IContactWithBriefAndSpace,
 } from '@sneat/contactus-core';
 import { ContactsListComponent } from '../contacts-list';
 import { IContactSelectorOptions } from './contacts-selector.interfaces';
@@ -46,7 +46,7 @@ export class ContactsSelectorInputComponent {
 		return this.$contacts()?.map(addSpace(space));
 	});
 	public readonly $selectedContacts =
-		input.required<readonly IContactWithSpace[]>();
+		input.required<readonly IContactWithBriefAndSpace[]>();
 
 	public readonly $hasSelectedContacts = computed(
 		() => !!this.$selectedContacts().length,
@@ -55,7 +55,7 @@ export class ContactsSelectorInputComponent {
 	public readonly $max = input<number | undefined>(undefined);
 
 	@Output() readonly selectedContactsChange = new EventEmitter<
-		readonly IContactWithSpace[]
+		readonly IContactWithBriefAndSpace[]
 	>();
 
 	@Output() readonly removeMember = new EventEmitter<IContactWithBrief>();
@@ -102,7 +102,9 @@ export class ContactsSelectorInputComponent {
 		this.removeMember.emit(member);
 	}
 
-	onSelectedMembersChanged(members: readonly IContactWithSpace[]): void {
+	onSelectedMembersChanged(
+		members: readonly IContactWithBriefAndSpace[],
+	): void {
 		console.log('onSelectedMembersChanged()', members);
 		this.selectedContactsChange.emit(members);
 	}

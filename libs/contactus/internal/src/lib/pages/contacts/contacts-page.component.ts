@@ -27,9 +27,11 @@ import {
 import { listItemAnimations } from '@sneat/core';
 import { setHrefQueryParam } from '@sneat/core';
 import {
+	addSpace,
 	ContactRole,
 	IContactWithBrief,
-	IContactWithSpace,
+	IContactWithBriefAndSpace,
+	IContactWithCheck,
 } from '@sneat/contactus-core';
 import {
 	SpaceComponentBaseParams,
@@ -76,7 +78,7 @@ export class ContactsPageComponent
 	implements OnDestroy
 {
 	protected readonly $allContacts = signal<
-		undefined | readonly IContactWithBrief[]
+		undefined | readonly IContactWithCheck[]
 	>(undefined);
 
 	// public readonly $filter = signal<string>('');
@@ -90,15 +92,9 @@ export class ContactsPageComponent
 		return 'Contacts';
 	});
 
-	protected readonly $selectedContacts = signal<readonly IContactWithSpace[]>(
-		[],
+	protected readonly $selectedContacts = computed(() =>
+		this.$allContacts()?.filter((c) => c.isChecked),
 	);
-
-	protected selectedContactsChanged(
-		contacts: readonly IContactWithSpace[],
-	): void {
-		this.$selectedContacts.set(contacts);
-	}
 
 	constructor(
 		// private readonly contactService: ContactService,
@@ -125,7 +121,8 @@ export class ContactsPageComponent
 	protected override onSpaceIdChanged() {
 		console.log('ContactsPage.onSpaceIdChanged()', this.space);
 		super.onSpaceIdChanged();
-		if (!this.space) {
+		const space = this.space;
+		if (!space) {
 			return;
 		}
 		this.contactusSpaceService
@@ -133,7 +130,7 @@ export class ContactsPageComponent
 			.pipe(this.takeUntilDestroyed(), this.takeUntilSpaceIdChanged())
 			.subscribe({
 				next: (contacts) => {
-					this.setSpaceContacts(contacts || []);
+					this.setSpaceContacts(contacts.map(addSpace(space)) || []);
 				},
 			});
 	}
@@ -151,7 +148,7 @@ export class ContactsPageComponent
 		}
 	});
 
-	private readonly setSpaceContacts = (contacts: IContactWithBrief[]): void => {
+	private readonly setSpaceContacts = (contacts: IContactWithCheck[]): void => {
 		console.log('ContactsPageComponent.setSpaceContacts()', contacts);
 		this.$allContacts.set(contacts);
 	};

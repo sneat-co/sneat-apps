@@ -16,7 +16,7 @@ import {
 	IContactContext,
 	IContactusSpaceDboAndID,
 	IContactWithBrief,
-	IContactWithSpace,
+	IContactWithBriefAndSpace,
 } from '@sneat/contactus-core';
 import {
 	IDocTypeStandardFields,
@@ -80,9 +80,9 @@ export class NewDocumentPageComponent
 		readonly IContactWithBrief[] | undefined
 	>(undefined);
 
-	protected readonly $selectedContacts = signal<readonly IContactWithSpace[]>(
-		[],
-	);
+	protected readonly $selectedContacts = signal<
+		readonly IContactWithBriefAndSpace[]
+	>([]);
 
 	protected readonly $hasSelectedContacts = computed<boolean>(
 		() => !!this.$selectedContacts().length,

@@ -12,7 +12,8 @@
 	}
 	<sneat-select-from-list
 		label="Gender"
-		[(ngModel)]="genderID"
+		[value]="genderID || ''"
+		(valueChange)="onGenderIDChanged($event)"
 		[items]="genderOptions"
 	/>
 </ion-card>

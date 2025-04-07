@@ -11,16 +11,16 @@ import { IonicModule } from '@ionic/angular';
 import {
 	CountryFlagPipe,
 	CountryTitle,
+	GenderColorPipe,
 	GenderIconNamePipe,
 	PersonTitle,
 } from '@sneat/components';
-import { IIdAndBrief } from '@sneat/core';
 import {
 	ContactRole,
 	IContactWithBrief,
 	IContactWithCheck,
 } from '@sneat/contactus-core';
-import { IRelatedItem, IRelationshipRoles } from '@sneat/dto';
+import { IRelationshipRoles } from '@sneat/dto';
 import { ContactService } from '@sneat/contactus-services';
 import { ISpaceContext } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
@@ -38,6 +38,7 @@ import { ICheckChangedArgs } from '../contacts-checklist';
 		GenderIconNamePipe,
 		PersonTitle,
 		TitleCasePipe,
+		GenderColorPipe,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -56,6 +57,11 @@ export class ContactsListItemComponent extends SneatBaseComponent {
 		'space_member',
 	];
 
+	@Input() showRelatedItems?: boolean;
+	// protected get relatedContacts(): readonly IIdAndBrief<IRelatedItem>[] {
+	// 	return []; // zipMapBriefsWithIDs(this.contact?.dto?.related);
+	// }
+
 	@Output() public readonly checkChange = new EventEmitter<ICheckChangedArgs>();
 
 	protected checkboxChanged(event: CustomEvent): void {
@@ -71,10 +77,6 @@ export class ContactsListItemComponent extends SneatBaseComponent {
 		this.checkChange.emit(args);
 	}
 
-	protected get relatedContacts(): readonly IIdAndBrief<IRelatedItem>[] {
-		return []; // zipMapBriefsWithIDs(this.contact?.dto?.related);
-	}
-
 	hideRole(role: string): boolean {
 		return this.hideRoles.includes(role) || role == this.excludeRole;
 	}
@@ -86,11 +88,17 @@ export class ContactsListItemComponent extends SneatBaseComponent {
 		super('ContactsListItemComponent');
 	}
 
+	// @Input() clicked: (contactID: string, event: Event) => void = () => void 0;
+
 	@Input() contactClicked = (
 		event: Event,
 		contact: IContactWithBrief,
 	): void => {
+		this.console.log(
+			`ContactsListItemComponent.contactClicked(contact{id=${contact.id})`,
+		);
 		event.stopPropagation();
+		event.preventDefault();
 		this.spaceNavService
 			.navigateForwardToSpacePage(this.$space(), `contact/${contact.id}`, {
 				state: { contact },
@@ -99,8 +107,6 @@ export class ContactsListItemComponent extends SneatBaseComponent {
 				this.errorLogger.logErrorHandler('failed to navigate to contact page'),
 			);
 	};
-
-	@Input() goMember: (memberId: string, event: Event) => void = () => void 0;
 
 	protected firstRelated(contactRelationships?: IRelationshipRoles): string {
 		if (!contactRelationships) {

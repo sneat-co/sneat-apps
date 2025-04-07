@@ -43,7 +43,7 @@ import { ContactService } from '@sneat/contactus-services';
 import {
 	IContactusSpaceDboAndID,
 	IContactWithBrief,
-	IContactWithSpace,
+	IContactWithBriefAndSpace,
 } from '@sneat/contactus-core';
 import { ISpaceContext } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
@@ -92,7 +92,7 @@ export class MembersListComponent implements OnChanges {
 	@Output() selfRemoved = new EventEmitter<void>();
 	@Input() public contactsByMember: Record<
 		string,
-		readonly IContactWithSpace[]
+		readonly IContactWithBriefAndSpace[]
 	> = {};
 
 	@Input() public hideRoles: readonly string[] = ['member'];

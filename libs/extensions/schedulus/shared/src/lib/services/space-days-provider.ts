@@ -23,7 +23,6 @@ import {
 import { ModuleSpaceItemService } from '@sneat/space-services';
 import {
 	BehaviorSubject,
-	distinctUntilChanged,
 	EMPTY,
 	filter,
 	map,

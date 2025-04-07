@@ -6,30 +6,34 @@
 	[lines]="showBorder"
 	(click)="contactClicked($event, contact)"
 >
-	<ion-icon slot="start" [name]="contact.brief.gender | genderIconName" />
+	<ion-icon
+		slot="start"
+		[name]="contact.brief.gender | genderIconName"
+		[color]="contact.brief.gender | genderColor"
+	/>
+
 	<ion-label class="sneat-badges">
 		{{ contact | personTitle }}
 		@if (contact.brief.roles?.length) {
 			@for (role of contact.brief.roles || []; track role) {
 				@if (!hideRole(role)) {
 					<ion-badge color="light">
-						<ion-text color="medium">{{ role | titlecase }} </ion-text>
+						<ion-text color="medium">{{ role | titlecase }}</ion-text>
 					</ion-badge>
 				}
 			}
 		}
 
-		@for (relatedContact of relatedContacts; track relatedContact.id) {
-			@if (firstRelated(relatedContact.brief.rolesOfItem)) {
-				<ion-badge>
-					firstRelated(relatedContact.brief.relatedAs) &#125;&#125; of
-					<a
-						[href]="relatedContact.id"
-						(click)="goMember(relatedContact.id, $event)"
-						>{{ relatedContact.id }} (TODO: lookup contact by ID);</a
-					>
-				</ion-badge>
-			}
+		@if (showRelatedItems) {
+			<!--		@for (relatedContact of relatedContacts; track relatedContact.id) {-->
+			<!--			@if (firstRelated(relatedContact.brief.rolesOfItem)) {-->
+			<!--				<ion-badge>-->
+			<!--					<a [href]="relatedContact.id" (click)="clicked(relatedContact.id, $event)">-->
+			<!--						{{ relatedContact.id }} (TODO: lookup contact by ID);-->
+			<!--					</a>-->
+			<!--				</ion-badge>-->
+			<!--			}-->
+			<!--		}-->
 		}
 
 		@if (contact.brief.countryID && contact.brief.countryID !== "--") {

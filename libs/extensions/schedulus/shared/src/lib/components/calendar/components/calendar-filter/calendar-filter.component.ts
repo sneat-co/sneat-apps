@@ -2,7 +2,7 @@ import { Component, Input, ViewChild } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IonAccordionGroup, IonicModule } from '@ionic/angular';
 import { ContactTitlePipe } from '@sneat/components';
-import { IContactWithSpace } from '@sneat/contactus-core';
+import { IContactWithBriefAndSpace } from '@sneat/contactus-core';
 import { WeekdayCode2 } from '@sneat/mod-schedulus-core';
 import { ISpaceContext } from '@sneat/space-models';
 import {
@@ -37,8 +37,8 @@ export class CalendarFilterComponent extends WeekdaysFormBase {
 	repeats: readonly string[] = [];
 
 	contactID = '';
-	selectedContacts: IContactWithSpace[] = [];
-	contacts?: IContactWithSpace[];
+	selectedContacts: IContactWithBriefAndSpace[] = [];
+	contacts?: IContactWithBriefAndSpace[];
 
 	readonly repeatWeekly = new FormControl<boolean>(false);
 	readonly repeatMonthly = new FormControl<boolean>(false);

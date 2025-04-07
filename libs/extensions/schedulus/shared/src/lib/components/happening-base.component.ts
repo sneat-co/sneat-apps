@@ -14,7 +14,7 @@ import {
 	addSpace,
 	IContactusSpaceDboAndID,
 	IContactWithBrief,
-	IContactWithSpace,
+	IContactWithBriefAndSpace,
 } from '@sneat/contactus-core';
 import { ContactsSelectorService } from '@sneat/contactus-shared';
 import { isoStringsToDate } from '@sneat/core';
@@ -184,9 +184,10 @@ This operation can NOT be undone.`)
 		if (!spaceID) {
 			return;
 		}
-		const teamContacts: IContactWithSpace[] | undefined = zipMapBriefsWithIDs(
-			this.contactusSpace?.dbo?.contacts,
-		)?.map(addSpace(space));
+		const teamContacts: IContactWithBriefAndSpace[] | undefined =
+			zipMapBriefsWithIDs(this.contactusSpace?.dbo?.contacts)?.map(
+				addSpace(space),
+			);
 
 		this.contactsSelectorService
 			.selectMultipleContacts({

@@ -3,11 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import {
-	genderColor,
-	GenderColorPipe,
-	GenderIconNamePipe,
-} from '@sneat/components';
+import { genderColor } from '@sneat/components';
 import {
 	Gender,
 	GenderFemale,
@@ -22,10 +18,10 @@ import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
 const animationTimings = '150ms';
 
 interface GenderOption {
-	id: Gender;
-	title: string;
-	iconName: string;
-	emoji?: string;
+	readonly id: Gender;
+	readonly title: string;
+	readonly iconName: string;
+	readonly emoji?: string;
 }
 
 const genders: readonly GenderOption[] = [
@@ -81,13 +77,13 @@ export class GenderFormComponent {
 		this.onGenderChanged();
 	}
 
-	onGenderChanged(): void {
+	private onGenderChanged(): void {
 		this.gender = this.genders.find((gender) => gender.id === this.genderID);
 		this.genderChange.emit(this.genderID);
 	}
 
-	// private readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
-	// ngAfterViewInit(): void { // TODO: Find a way to set focus to a radio group
-	// 	this.setFocusToInput(this.radioGroup, 100);
-	// }
+	protected onGenderIDChanged(genderID: string): void {
+		this.genderID = genderID as Gender;
+		this.onGenderChanged();
+	}
 }

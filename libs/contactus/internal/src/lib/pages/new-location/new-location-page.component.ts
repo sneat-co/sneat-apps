@@ -6,10 +6,7 @@ import {
 	ContactComponentBaseParams,
 	LocationFormComponent,
 } from '@sneat/contactus-shared';
-import {
-	IContactContext,
-	IContactWithOptionalDbo,
-} from '@sneat/contactus-core';
+import { IContactWithOptionalDbo } from '@sneat/contactus-core';
 import { ContactBasePage } from '../contact-base-page';
 
 @Component({

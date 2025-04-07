@@ -5,7 +5,6 @@ import {
 	EventEmitter,
 	inject,
 	input,
-	Input,
 	OnChanges,
 	Output,
 	signal,
@@ -23,7 +22,6 @@ import { formNexInAnimation } from '@sneat/core';
 import { personName } from '@sneat/components';
 import { RoutingState } from '@sneat/core';
 import {
-	emptyMemberPerson,
 	IContactusSpaceDboAndID,
 	ICreateSpaceMemberRequest,
 	IMemberPerson,

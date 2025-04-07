@@ -229,6 +229,7 @@ export class PersonWizardComponent implements OnChanges {
 	}
 
 	protected onGenderChanged(gender?: Gender): void {
+		console.log('PersonFormComponent.onGenderChanged()', gender);
 		this.setRelatedPerson(
 			{ ...this.newPerson, gender },
 			{ name: 'gender', hasValue: !!gender },
@@ -259,7 +260,7 @@ export class PersonWizardComponent implements OnChanges {
 	}
 
 	protected onAgeGroupChanged(ageGroup?: AgeGroupID): void {
-		console.log('onAgeGroupChanged()', ageGroup);
+		console.log('PersonWizardComponent.onAgeGroupChanged()', ageGroup);
 		if (ageGroup) {
 			this.show = { ...this.show, ageGroup: this.displayAgeGroupValue };
 		}

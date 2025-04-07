@@ -1,15 +1,20 @@
 @if (weekday) {
 	@if (!weekday.day?.slots?.length) {
 		<ion-item [lines]="hideLastBorder ? 'none' : 'full'">
-			<ion-label color="medium">
-				@if ($isToday()) {
-					Nothing scheduled for today.
-				} @else if ($isTomorrow()) {
-					Nothing scheduled for tomorrow.
-				} @else {
-					Nothing scheduled for this day.
-				}
-			</ion-label>
+			@if (!weekday.day || weekday.day.$isLoading()) {
+				<ion-spinner name="lines-small" color="medium" slot="start" />
+				<ion-label color="medium">Loading...</ion-label>
+			} @else {
+				<ion-label color="medium">
+					@if ($isToday()) {
+						Nothing scheduled for today.
+					} @else if ($isTomorrow()) {
+						Nothing scheduled for tomorrow.
+					} @else {
+						Nothing scheduled for this day.
+					}
+				</ion-label>
+			}
 		</ion-item>
 	} @else {
 		@if (slotsHiddenByFilter) {

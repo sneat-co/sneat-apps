@@ -13,7 +13,7 @@ import { PersonNamesPipe } from '@sneat/components';
 import {
 	ContactType,
 	IContactWithBrief,
-	IContactWithSpace,
+	IContactWithBriefAndSpace,
 } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import { getRelatedItems } from '@sneat/dto';
@@ -28,7 +28,7 @@ import { SneatBaseComponent } from '@sneat/ui';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HappeningSlotParticipantsComponent extends SneatBaseComponent {
-	protected contacts?: readonly IContactWithSpace[];
+	protected contacts?: readonly IContactWithBriefAndSpace[];
 	protected readonly $spaceContacts = signal<
 		readonly IContactWithBrief[] | undefined
 	>(undefined);
@@ -54,8 +54,8 @@ export class HappeningSlotParticipantsComponent extends SneatBaseComponent {
 		const relatedItems = this.$relatedItems();
 		const spaceContacts = this.$spaceContacts();
 		const space: ISpaceRef = { id: spaceID };
-		const contacts: readonly IContactWithSpace[] = relatedItems.map(
-			(relatedItem): IContactWithSpace => {
+		const contacts: readonly IContactWithBriefAndSpace[] = relatedItems.map(
+			(relatedItem): IContactWithBriefAndSpace => {
 				const keys = relatedItem.keys.filter(
 					(k) => !k.spaceID || k.spaceID == spaceID,
 				);
@@ -100,7 +100,7 @@ export class HappeningSlotParticipantsComponent extends SneatBaseComponent {
 		});
 	}
 
-	protected isUniqueFirstName(contact: IContactWithSpace): boolean {
+	protected isUniqueFirstName(contact: IContactWithBriefAndSpace): boolean {
 		const firstName = contact.brief?.names?.firstName;
 		if (!firstName) {
 			return false;

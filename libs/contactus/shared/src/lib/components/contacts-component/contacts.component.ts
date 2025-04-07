@@ -19,7 +19,7 @@ import {
 	filterContactsByTextAndRole,
 	IContactWithBrief,
 	IContactWithCheck,
-	IContactWithSpace,
+	IContactWithBriefAndSpace,
 	IMemberGroupContext,
 } from '@sneat/contactus-core';
 import { defaultFamilyContactGroups } from '@sneat/contactus-services';
@@ -58,12 +58,12 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 
 	@Output() readonly roleChange = new EventEmitter<undefined | ContactRole>();
 
-	@Output() public readonly selectedContactsChange = new EventEmitter<
-		readonly IContactWithSpace[]
+	@Output() public readonly contactsChange = new EventEmitter<
+		readonly IContactWithCheck[]
 	>();
 
 	@Input() goToNewContactPage = true;
-	@Output() readonly onAddContact = new EventEmitter<IContactAddEventArgs>();
+	@Output() readonly addContactEvent = new EventEmitter<IContactAddEventArgs>();
 
 	protected readonly $showTabs = computed(
 		() => !this.$roleID() && this.$space().type === 'family',
@@ -82,11 +82,11 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 	private readonly spaceNavService = inject(SpaceNavService);
 
 	public readonly $allContacts = input.required<
-		readonly IContactWithBrief[] | undefined
+		readonly IContactWithCheck[] | undefined
 	>();
 
 	protected readonly $contactsWithSpace = computed<
-		readonly IContactWithSpace[]
+		readonly IContactWithBriefAndSpace[]
 	>(() => {
 		const contacts = this.$contacts();
 		const space = this.$space();
@@ -112,8 +112,9 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 					);
 					break;
 				case 'reset_selected':
-					this.$selectedContactIDs.set([]);
-					this.selectedContactsChange.emit(this.$selectedContacts());
+					this.contactsChange.emit(
+						this.$allContacts()?.map((c) => ({ ...c, isChecked: false })),
+					);
 					break;
 				case 'select_all':
 					break;
@@ -126,7 +127,7 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 	>(() => {
 		console.log('$contactsByRole - started');
 		const contacts = this.$allContacts() || [];
-		const contactsByRole: Record<string, IContactWithSpace[]> = {
+		const contactsByRole: Record<string, IContactWithBriefAndSpace[]> = {
 			'': [],
 		};
 		const space = this.$space();
@@ -171,7 +172,7 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 			role = this.$roleID(),
 			filter = this.$filter().trim().toLowerCase();
 
-		console.log('$contacts - started', allContacts?.length);
+		console.log('$contacts - started', allContacts);
 
 		const space = this.$space();
 
@@ -180,15 +181,15 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 		);
 	});
 
-	protected readonly goContact = (
+	@Input() public contactClicked = (
 		event: Event,
-		contact?: IContactWithBrief,
+		contact: IContactWithBrief,
 	): void => {
+		this.console.log(
+			`ContactsComponent.contactClicked(contact{id=${contact.id})`,
+		);
 		event.stopPropagation();
-		if (!contact) {
-			this.errorLogger.logError('no contact');
-			return;
-		}
+		event.preventDefault();
 		const space = this.$space();
 		this.spaceNavService
 			.navigateForwardToSpacePage(space, `contact/${contact.id}`, {
@@ -226,49 +227,13 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 		}
 	};
 
-	private readonly $selectedContactIDs = signal<readonly string[]>([]);
-
-	private readonly $selectedContacts = computed<readonly IContactWithSpace[]>(
-		() => {
-			const contacts = this.$contacts();
-			if (!contacts) {
-				return [];
-			}
-			const selectedContactIDs = this.$selectedContactIDs();
-			const space = this.$space();
-			return (
-				contacts
-					.filter((c) => selectedContactIDs.includes(c.id))
-					.map(addSpace(space)) || []
-			);
-		},
-	);
-
 	protected contactSelectionChanged(args: ICheckChangedArgs) {
-		this.$selectedContactIDs.update((v) => {
-			if (args.checked) {
-				return [...v, args.id];
-			}
-			return v.filter((id) => id !== args.id);
-		});
-		this.selectedContactsChange.emit(this.$selectedContacts());
-	}
-
-	protected goMember(id: string, event: Event): boolean {
-		event.stopPropagation();
-		const space = this.$space();
-		this.spaceNavService
-			.navigateForwardToSpacePage(space, `member/${id}`, {
-				state: {
-					member: { id },
-				},
-			})
-			.catch(
-				this.errorLogger.logErrorHandler(
-					'failed to navigate to contact creation page',
-				),
-			);
-		return false;
+		this.contactsChange.emit(
+			this.$allContacts()?.map((c) => ({
+				...c,
+				isChecked: c.id === args.id ? args.checked : c.isChecked,
+			})),
+		);
 	}
 
 	protected goGroup(group: IMemberGroupContext): void {

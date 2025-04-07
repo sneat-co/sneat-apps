@@ -6,7 +6,7 @@ import {
 	Output,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { IContactWithSpace } from '@sneat/contactus-core';
+import { IContactWithBriefAndSpace } from '@sneat/contactus-core';
 import { ISpaceContext } from '@sneat/space-models';
 import { MembersListComponent } from '../members-list';
 import { MemberGroup } from './member-group';
@@ -22,5 +22,8 @@ export class MembersByRoleComponent {
 	@Input({ required: true }) public memberGroups?: readonly MemberGroup[];
 	@Output() public readonly addMember = new EventEmitter<MemberGroup>();
 
-	public contactsByMember: Record<string, readonly IContactWithSpace[]> = {};
+	public contactsByMember: Record<
+		string,
+		readonly IContactWithBriefAndSpace[]
+	> = {};
 }

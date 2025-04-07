@@ -1,4 +1,7 @@
-import { IContactWithSpace, MemberGroupType } from '@sneat/contactus-core';
+import {
+	IContactWithBriefAndSpace,
+	MemberGroupType,
+} from '@sneat/contactus-core';
 
 export interface MemberGroup {
 	readonly id: MemberGroupType;
@@ -6,5 +9,5 @@ export interface MemberGroup {
 	readonly emoji: string;
 	readonly plural: string;
 	readonly addLabel: string;
-	readonly contacts?: readonly IContactWithSpace[];
+	readonly contacts?: readonly IContactWithBriefAndSpace[];
 }

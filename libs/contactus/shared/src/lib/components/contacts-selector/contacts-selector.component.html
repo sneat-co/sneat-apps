@@ -117,8 +117,10 @@
 				<sneat-contacts
 					[$space]="$space()"
 					[$allContacts]="$contacts()"
+					(contactsChange)="$contacts.set($event)"
 					(addContactClick)="switchToNewContact($event)"
 					[goToNewContactPage]="false"
+					[contactClicked]="contactClicked"
 				/>
 				<!--					<sneat-select-from-list-->
 				<!--						[selectMode]="'multiple'"-->
@@ -138,7 +140,7 @@
 							[contactRole]="contactRoleID"
 							[$space]="$space()"
 							[parentContact]="selectedParent"
-							(locationCreated)="onLocationCreated($event)"
+							(locationCreated)="onContactCreated($event)"
 						/>
 					}
 					@case ("company") {
@@ -180,18 +182,32 @@
 @if (selectMode === "multiple") {
 	<ion-footer>
 		<ion-toolbar color="light">
-			<ion-buttons slot="start">
-				<ion-button (click)="cancel($event)" color="medium">
-					<ion-icon name="close-outline" slot="start"></ion-icon>
-					<ion-label>Cancel</ion-label>
-				</ion-button>
-			</ion-buttons>
+			@if ($selectedContactsCount(); as selectedContactsCount) {
+				<ion-label class="ion-margin-start ion-margin-end">
+					@if (selectedContactsCount === 1) {
+						{{ selectedContactsCount }} contact selected
+					} @else {
+						{{ selectedContactsCount }} contacts selected
+					}
+				</ion-label>
+			}
+			<!--			<ion-buttons slot="start">-->
+			<!--				<ion-button (click)="cancel($event)" color="medium">-->
+			<!--					<ion-icon name="close-outline" slot="start"></ion-icon>-->
+			<!--					<ion-label>Cancel</ion-label>-->
+			<!--				</ion-button>-->
+			<!--			</ion-buttons>-->
 			<ion-buttons slot="end">
 				@switch ($contactTab()) {
 					@case ("existing") {
-						<ion-button fill="solid" (click)="save($event)" color="primary">
+						<ion-button
+							fill="solid"
+							(click)="ok($event)"
+							color="primary"
+							[disabled]="!$selectedContactsCount()"
+						>
 							<ion-icon name="save-outline" slot="start"></ion-icon>
-							<ion-label>Save</ion-label>
+							<ion-label>{{ okButtonLabel }}</ion-label>
 						</ion-button>
 					}
 					@case ("new") {

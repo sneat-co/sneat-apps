@@ -85,6 +85,7 @@ export class AgeGroupFormComponent {
 	});
 
 	protected onAgeGroupChanged(ageGroup: string): void {
+		console.log('AgeGroupFormComponent.onAgeGroupChanged', ageGroup);
 		this.ageGroupChange.emit(ageGroup as AgeGroupID);
 	}
 }

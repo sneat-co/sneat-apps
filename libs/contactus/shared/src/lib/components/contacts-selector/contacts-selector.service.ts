@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { SelectorBaseService } from '@sneat/ui';
-import { IContactWithSpace } from '@sneat/contactus-core';
+import { IContactWithBriefAndSpace } from '@sneat/contactus-core';
 import { ContactsSelectorComponent } from './contacts-selector.component';
 import { IContactSelectorOptions } from './contacts-selector.interfaces';
 
 @Injectable()
-export class ContactsSelectorService extends SelectorBaseService<IContactWithSpace> {
+export class ContactsSelectorService extends SelectorBaseService<IContactWithBriefAndSpace> {
 	constructor() {
 		super(ContactsSelectorComponent);
 	}

@@ -66,8 +66,7 @@
 					<sneat-contacts-list-item
 						[$space]="$space()"
 						[$contact]="contact"
-						[contactClicked]="goContact"
-						[goMember]="goMember"
+						[contactClicked]="contactClicked"
 						[excludeRole]="$roleID()"
 					/>
 				</ion-item-sliding>
@@ -89,8 +88,7 @@
 					[$contactGroupDefinitions]="familyGroupDefinitions"
 					[$space]="space"
 					[$filter]="$filter()"
-					[contactClicked]="goContact"
-					[goMember]="goMember"
+					[contactClicked]="contactClicked"
 					[command]="command"
 					[goToNewContactPage]="goToNewContactPage"
 					(contactSelectionChange)="contactSelectionChanged($event)"

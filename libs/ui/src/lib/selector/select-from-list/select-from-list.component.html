@@ -1,5 +1,4 @@
 @if (value) {
-	$selectedItem.iconName: {{ $selectedItem()?.iconName }}
 	<ion-item [class]="{ 'sneat-tiny-end-padding': !isReadonly }">
 		@if ($selectedItem()?.iconName) {
 			<ion-icon
@@ -13,7 +12,7 @@
 		<ion-select
 			#selectInput
 			interface="popover"
-			[label]="label + 'suxx'"
+			[label]="label"
 			[(ngModel)]="value"
 			(ionChange)="onSelectChanged($event)"
 			[disabled]="isReadonly"

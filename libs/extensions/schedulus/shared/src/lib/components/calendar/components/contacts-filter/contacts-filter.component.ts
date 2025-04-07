@@ -16,7 +16,7 @@ import {
 	addSpace,
 	ContactType,
 	IContactusSpaceDbo,
-	IContactWithSpace,
+	IContactWithBriefAndSpace,
 } from '@sneat/contactus-core';
 import {
 	ContactusSpaceContextService,
@@ -41,10 +41,10 @@ export class ContactsFilterComponent
 	@Input({ required: true }) contactIDs: readonly string[] = [];
 
 	contactID = '';
-	protected readonly $selectedContacts = signal<readonly IContactWithSpace[]>(
-		[],
-	);
-	contacts?: IContactWithSpace[];
+	protected readonly $selectedContacts = signal<
+		readonly IContactWithBriefAndSpace[]
+	>([]);
+	contacts?: IContactWithBriefAndSpace[];
 
 	constructor(
 		spaceParams: SpaceComponentBaseParams,

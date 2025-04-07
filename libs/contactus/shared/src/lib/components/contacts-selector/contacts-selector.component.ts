@@ -24,7 +24,6 @@ import {
 	IonFooter,
 	IonHeader,
 	IonIcon,
-	IonItem,
 	IonItemDivider,
 	IonLabel,
 	IonSegment,
@@ -47,7 +46,7 @@ import {
 	IContactContext,
 	IContactWithBrief,
 	IContactWithCheck,
-	IContactWithSpace,
+	IContactWithBriefAndSpace,
 } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import {
@@ -99,7 +98,7 @@ import { IContactSelectorOptions } from './contacts-selector.interfaces';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactsSelectorComponent
-	extends SelectorModalComponent<IContactWithSpace>
+	extends SelectorModalComponent<IContactWithBriefAndSpace>
 	implements IContactSelectorOptions, OnInit, OnChanges, OnDestroy
 {
 	private readonly parentChanged = new Subject<void>();
@@ -123,6 +122,8 @@ export class ContactsSelectorComponent
 	private spaceIDChangesCount = 0;
 
 	@Input({ required: true }) space?: ISpaceContext;
+
+	@Input() okButtonLabel = 'OK';
 
 	private effects?: readonly EffectRef[];
 
@@ -172,7 +173,7 @@ export class ContactsSelectorComponent
 	@Input() excludeParentIDs?: string[];
 
 	@Input() onSelected?: (
-		items: readonly IContactWithSpace[] | null,
+		items: readonly IContactWithBriefAndSpace[] | null,
 	) => Promise<void>;
 
 	readonly contactRoles: ISelectItem[] = [
@@ -187,19 +188,25 @@ export class ContactsSelectorComponent
 
 	private contactBriefsSub?: Subscription;
 
-	private allContacts?: IContactWithSpace[];
+	private allContacts?: IContactWithBriefAndSpace[];
 	//
-	protected parentContacts?: readonly IContactWithSpace[];
+	protected parentContacts?: readonly IContactWithBriefAndSpace[];
 
 	protected readonly $contacts = signal<
 		readonly IContactWithCheck[] | undefined
 	>(undefined);
 
-	protected selectedParent?: IContactWithSpace;
-	protected selectedContact?: IContactWithSpace;
+	protected readonly $selectedContacts = computed(() =>
+		this.$contacts()?.filter((c) => c.isChecked),
+	);
+	protected readonly $selectedContactsCount = computed(
+		() => this.$selectedContacts()?.length || 0,
+	);
+
+	protected selectedParent?: IContactWithBriefAndSpace;
+	protected selectedContact?: IContactWithCheck;
 
 	protected parentContactID?: string;
-	protected selectedSubContactID?: string;
 
 	// private readonly items$ = new Subject<readonly IContactWithSpace[]>();
 	// public readonly items = this.items$.asObservable();
@@ -248,6 +255,7 @@ export class ContactsSelectorComponent
 	public ngOnChanges(changes: SimpleChanges): void {
 		console.log('ContactsSelectorComponent.ngOnChanges', this.space);
 		if (changes['space']) {
+			// we use @Input() due to modal not able to set signal property
 			this.$space.set(this.space || { id: '' });
 		}
 	}
@@ -320,7 +328,7 @@ export class ContactsSelectorComponent
 		this.contactItems = this.$contacts()
 			?.filter(removeExcluded(this.excludeContactIDs))
 			.map(this.getChildItem);
-		console.log('ContactSelectComponent.contactItems:', this.contactItems);
+		console.log('ContactsSelectorComponent.contactItems:', this.contactItems);
 		this.parentItems = this.parentContacts
 			?.filter(removeExcluded(this.excludeParentIDs))
 			.map(this.getChildItem);
@@ -371,18 +379,11 @@ export class ContactsSelectorComponent
 		};
 	};
 
-	protected onLocationCreated(contact: IContactWithBrief): void {
-		// contact = {
-		// 	...contact,
-		// 	parentContact: this.selectedParent,
-		// };
-		// const c = { ...contact, brief: contact.brief };
-		this.emitOnSelected({ ...contact, space: this.$spaceRef() });
-		this.close(undefined);
-	}
-
 	protected onParentContactIDChanged(contactID: string): void {
-		console.log('ContactSelectComponent.onParentContactSelected()', contactID);
+		console.log(
+			'ContactsSelectorComponent.onParentContactSelected()',
+			contactID,
+		);
 		const parentContact = this.parentContacts?.find((c) => c.id === contactID);
 		this.onParentContactChanged(parentContact);
 	}
@@ -394,28 +395,16 @@ export class ContactsSelectorComponent
 	}
 
 	protected onContactCreated(contact: IContactWithBrief): void {
-		// contact = {
-		// 	...contact,
-		// 	parentContact: this.selectedContact,
-		// };
-		// this.selectedSubContactID = contact?.id
-		this.selectedContact = { ...contact, space: this.$spaceRef() };
+		this.selectedContact = {
+			...contact,
+			space: this.$spaceRef(),
+			isChecked: true,
+		};
 		this.emitOnSelected(this.selectedContact);
 	}
 
-	protected onSubContactCreated(contact: IContactWithBrief): void {
-		console.log('ContactSelectComponent.onSubContactCreated()', contact);
-		this.selectedSubContactID = contact.id;
-		const selectedContact: IContactWithSpace = {
-			...contact,
-			space: this.$spaceRef(),
-		};
-		this.selectedContact = selectedContact;
-		this.emitOnSelected(selectedContact);
-	}
-
-	private onParentContactChanged(contact?: IContactWithSpace): void {
-		console.log('ContactSelectComponent.onParentContactChanged()', contact);
+	private onParentContactChanged(contact?: IContactWithBriefAndSpace): void {
+		console.log('ContactsSelectorComponent.onParentContactChanged()', contact);
 		this.$parentTab.set('existing');
 		this.selectedParent = contact || undefined;
 		this.parentContactID = contact?.id;
@@ -424,8 +413,7 @@ export class ContactsSelectorComponent
 	}
 
 	protected onContactSelected(contactID: string): void {
-		console.log('ContactSelectComponent.onContactSelected()', contactID);
-		this.selectedSubContactID = contactID;
+		console.log('ContactsSelectorComponent.onContactSelected()', contactID);
 		const selectedContact = this.$contacts()?.find((c) => c.id === contactID);
 		if (!selectedContact) {
 			console.error('contact not found by ID', contactID, this.$contacts);
@@ -445,8 +433,10 @@ export class ContactsSelectorComponent
 		this.close(undefined);
 	}
 
-	protected save(event: Event): void {
-		console.log('ContactSelectComponent.save(event)', event);
+	protected ok(event: Event): void {
+		console.log('ContactsSelectorComponent.ok()');
+		event.stopPropagation();
+		event.preventDefault();
 	}
 
 	// protected onContactSelected2(contactID: string): void {
@@ -475,7 +465,7 @@ export class ContactsSelectorComponent
 	// 	};
 	// }
 
-	protected emitOnSelected(contact?: IContactWithSpace): void {
+	protected emitOnSelected(contact?: IContactWithBriefAndSpace): void {
 		console.log('ContactSelectorComponent.emitOnSelected()', contact);
 		if (this.onSelected) {
 			this.onSelected(contact ? [contact] : null).catch(
@@ -511,4 +501,22 @@ export class ContactsSelectorComponent
 		this.$contactTab.set('new');
 		this.selectGroupAndRole$.next(args);
 	}
+
+	protected readonly contactClicked = (
+		event: Event,
+		contact: IContactWithBrief,
+	): void => {
+		console.log('ContactsSelectorComponent.contactClicked()', contact);
+		event.preventDefault();
+		event.stopPropagation();
+		this.$contacts.update((contacts) =>
+			contacts?.map((c) =>
+				c.id === contact.id ? { ...c, isChecked: !c.isChecked } : c,
+			),
+		);
+		console.log(
+			'ContactsSelectorComponent.contactClicked() => $selectedContacts:',
+			this.$selectedContacts(),
+		);
+	};
 }

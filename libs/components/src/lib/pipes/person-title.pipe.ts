@@ -20,7 +20,7 @@ export class PersonTitle implements PipeTransform {
 		p?: IIdAndOptionalBriefAndOptionalDbo<IPersonBrief, IPerson>,
 		shortTitle?: string,
 	): string {
-		console.log('PersonTitle.transform()', { ...p }, shortTitle);
+		// console.log('PersonTitle.transform()', { ...p }, shortTitle);
 		return (
 			shortTitle ||
 			p?.dbo?.title ||

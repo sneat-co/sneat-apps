@@ -5,7 +5,7 @@ import {
 	IMemberBrief,
 	IAcceptPersonalInviteRequest,
 	IPersonalInvite,
-	IContactWithSpace,
+	IContactWithBriefAndSpace,
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { NavController } from '@ionic/angular';
@@ -40,7 +40,7 @@ export class InvitePersonalPageComponent implements OnInit {
 	public rejecting = false;
 
 	public invite?: IPersonalInvite;
-	public members?: readonly IContactWithSpace[];
+	public members?: readonly IContactWithBriefAndSpace[];
 
 	private inviteId = '';
 	private spaceID = '';

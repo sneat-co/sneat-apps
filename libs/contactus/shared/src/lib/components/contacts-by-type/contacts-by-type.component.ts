@@ -54,10 +54,7 @@ export class ContactsByTypeComponent
 		input.required<readonly IIdAndDbo<IContactGroupDbo>[]>();
 
 	public readonly $contacts = input.required<readonly IContactWithCheck[]>();
-
-	private readonly $selectedContactIDsByRole = signal<
-		Readonly<Record<string, readonly string[]>>
-	>({});
+	@Output() readonly contactsChange = new EventEmitter<IContactWithCheck[]>();
 
 	protected readonly $otherContacts = signal<readonly IContactWithBrief[]>([]);
 	protected readonly $contactGroups = signal<
@@ -67,9 +64,14 @@ export class ContactsByTypeComponent
 	//
 	public readonly $filter = input.required<string>();
 	// @Input() contacts?: readonly IContactWithSpace[];
-	@Input() contactClicked: (event: Event, contact?: IContactWithBrief) => void =
-		() => void 0;
-	@Input() goMember: (id: string, event: Event) => boolean = () => false;
+	@Input() contactClicked: (event: Event, contact: IContactWithBrief) => void =
+		(event: Event, contact: IContactWithBrief) => {
+			this.console.log(
+				`ContactsByTypeComponent.contactClicked(contact{id=${contact.id}})`,
+			);
+			event.preventDefault();
+			event.stopPropagation();
+		};
 
 	@Input() command?: Observable<ContactsComponentCommand>;
 
@@ -119,7 +121,6 @@ export class ContactsByTypeComponent
 		this.$contactGroups.set([]);
 		const filter = this.$filter();
 		const contacts = this.$contacts();
-		const selectedContactIDsByRole = this.$selectedContactIDsByRole();
 		const noContactRoles = this.$space().dbo?.noContactRoles;
 		let otherContacts = !filter
 			? contacts
@@ -131,16 +132,11 @@ export class ContactsByTypeComponent
 		contactGroupDefinitions.forEach((group) => {
 			const rolesWithContacts: IContactRoleWithContacts[] = [];
 			group.dbo?.roles?.forEach((role) => {
-				const selectedContactIDs = selectedContactIDsByRole[role.id];
-				const roleWithContacts: IContactRoleWithContacts = {
+				let roleWithContacts: IContactRoleWithContacts = {
 					...role,
 					contacts: contacts
 						// We do not filter by text here as we want to show all contacts if role title contains the text
-						.filter((c) => c.brief?.roles?.includes(role.id))
-						.map((c) => ({
-							...c,
-							isChecked: selectedContactIDs?.includes(c.id),
-						})),
+						.filter((c) => c.brief?.roles?.includes(role.id)),
 				};
 				if (filter && role.brief.title.toLowerCase().includes(filter)) {
 					// Show all contacts in role that filtered by title
@@ -152,9 +148,12 @@ export class ContactsByTypeComponent
 						otherContacts = otherContacts.filter((oc) => !eq(oc.id, c.id));
 					});
 					if (roleWithContacts.contacts.length && filter) {
-						roleWithContacts.contacts = roleWithContacts.contacts.filter((c) =>
-							isContactPassFilter(c, filter, role.id),
-						);
+						roleWithContacts = {
+							...roleWithContacts,
+							contacts: roleWithContacts.contacts.filter((c) =>
+								isContactPassFilter(c, filter, role.id),
+							),
+						};
 						if (roleWithContacts.contacts.length) {
 							rolesWithContacts.push(roleWithContacts);
 						}
@@ -218,13 +217,11 @@ export class ContactsByTypeComponent
 	// private readonly $checkedContactIDs = signal<readonly string[]>([]);
 
 	protected checkChanged(args: ICheckChangedArgs, role: ContactRole): void {
-		this.$selectedContactIDsByRole.update((v) => {
-			const ids = v[role] || [];
-			if (args.checked) {
-				return { ...v, [role]: [...ids, args.id] };
-			}
-			return { ...v, [role]: ids.filter((id) => id !== args.id) };
-		});
+		this.contactsChange.emit(
+			this.$contacts()?.map((c) =>
+				c.id === args.id ? { ...c, isChecked: args.checked } : c,
+			),
+		);
 		this.contactSelectionChange.emit({ ...args, role });
 	}
 
@@ -233,7 +230,11 @@ export class ContactsByTypeComponent
 			// console.log('ContactsByTypeComponent: command$ =>', command);
 			switch (command.name) {
 				case 'reset_selected': {
-					this.$selectedContactIDsByRole.set({});
+					this.contactsChange.emit(
+						this.$contacts()?.map((c) =>
+							c.isChecked ? { ...c, isChecked: false } : c,
+						),
+					);
 					this.setContactGroups();
 					break;
 				}

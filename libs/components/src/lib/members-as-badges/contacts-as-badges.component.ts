@@ -7,7 +7,10 @@ import {
 	Output,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { IContactWithBrief, IContactWithSpace } from '@sneat/contactus-core';
+import {
+	IContactWithBrief,
+	IContactWithBriefAndSpace,
+} from '@sneat/contactus-core';
 import { PersonTitle } from '../pipes';
 
 @Component({
@@ -35,7 +38,7 @@ export class ContactsAsBadgesComponent {
 	private readonly deletingMemberIDs: string[] = [];
 
 	@Input({ required: true })
-	public members?: readonly IContactWithSpace[];
+	public members?: readonly IContactWithBriefAndSpace[];
 	@Input() color:
 		| 'primary'
 		| 'light'
