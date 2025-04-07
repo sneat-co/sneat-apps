@@ -29,8 +29,6 @@ import { setHrefQueryParam } from '@sneat/core';
 import {
 	addSpace,
 	ContactRole,
-	IContactWithBrief,
-	IContactWithBriefAndSpace,
 	IContactWithCheck,
 } from '@sneat/contactus-core';
 import {
@@ -43,7 +41,6 @@ import {
 	ContactusSpaceService,
 } from '@sneat/contactus-services';
 import { SpaceServiceModule } from '@sneat/space-services';
-import { send } from 'ionicons/icons';
 import { Subject } from 'rxjs';
 
 @Component({
