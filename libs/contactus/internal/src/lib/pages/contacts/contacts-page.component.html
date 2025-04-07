@@ -4,7 +4,7 @@
 			<ion-back-button [defaultHref]="$defaultBackUrl()" />
 		</ion-buttons>
 		<sneat-space-page-title
-			[space]="$role() ? undefined : space"
+			[space]="$role() ? undefined : $space()"
 			[generalTitle]="$pageTitle()"
 			[icon]="$titleIcon()"
 			[titlesBySpaceType]="{
@@ -29,7 +29,7 @@
 
 <ion-content class="cardy">
 	<sneat-contacts
-		[$space]="space"
+		[$space]="$space()"
 		[$roleID]="$role()"
 		[$allContacts]="$allContacts()"
 		[command]="command.asObservable()"

@@ -3,7 +3,6 @@ import {
 	Directive,
 	effect,
 	inject,
-	Inject,
 	OnInit,
 	signal,
 } from '@angular/core';
@@ -129,9 +128,14 @@ export abstract class SpaceBaseComponent
 	protected readonly route = inject(ActivatedRoute);
 	protected readonly spaceParams = inject(SpaceComponentBaseParams);
 
-	protected constructor(@Inject(ClassName) className: string) {
+	protected constructor(className: string) {
 		super(className);
 		console.log(`${className}.SpaceBaseComponent.constructor()`);
+
+		effect(() => {
+			const spaceID = this.$spaceID();
+			this.spaceIDChanged.next(spaceID);
+		});
 
 		this.spaceIDChanged$
 			.pipe(this.takeUntilDestroyed())

@@ -5,7 +5,7 @@ import {
 } from '@sneat/contactus-core';
 
 export interface IContactRoleWithContacts extends IContactRoleWithIdAndBrief {
-	readonly contacts: readonly IContactWithCheck[];
+	readonly contacts: readonly IContactWithCheck[] | undefined;
 }
 
 export interface IContactGroupWithContacts {

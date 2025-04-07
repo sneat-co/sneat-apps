@@ -53,10 +53,15 @@ export class ContactsByTypeComponent
 	public readonly $contactGroupDefinitions =
 		input.required<readonly IIdAndDbo<IContactGroupDbo>[]>();
 
-	public readonly $contacts = input.required<readonly IContactWithCheck[]>();
+	public readonly $contacts = input.required<
+		readonly IContactWithCheck[] | undefined
+	>();
+
 	@Output() readonly contactsChange = new EventEmitter<IContactWithCheck[]>();
 
-	protected readonly $otherContacts = signal<readonly IContactWithBrief[]>([]);
+	protected readonly $otherContacts = signal<
+		readonly IContactWithBrief[] | undefined
+	>(undefined);
 	protected readonly $contactGroups = signal<
 		readonly IContactGroupWithContacts[]
 	>([]);
@@ -134,9 +139,8 @@ export class ContactsByTypeComponent
 			group.dbo?.roles?.forEach((role) => {
 				let roleWithContacts: IContactRoleWithContacts = {
 					...role,
-					contacts: contacts
-						// We do not filter by text here as we want to show all contacts if role title contains the text
-						.filter((c) => c.brief?.roles?.includes(role.id)),
+					// We do not filter by text here as we want to show all contacts if role title contains the text
+					contacts: contacts?.filter((c) => c.brief?.roles?.includes(role.id)),
 				};
 				if (filter && role.brief.title.toLowerCase().includes(filter)) {
 					// Show all contacts in role that filtered by title
@@ -145,7 +149,7 @@ export class ContactsByTypeComponent
 				}
 				if (roleWithContacts.contacts) {
 					roleWithContacts.contacts.forEach((c) => {
-						otherContacts = otherContacts.filter((oc) => !eq(oc.id, c.id));
+						otherContacts = otherContacts?.filter((oc) => !eq(oc.id, c.id));
 					});
 					if (roleWithContacts.contacts.length && filter) {
 						roleWithContacts = {
@@ -154,7 +158,7 @@ export class ContactsByTypeComponent
 								isContactPassFilter(c, filter, role.id),
 							),
 						};
-						if (roleWithContacts.contacts.length) {
+						if (roleWithContacts.contacts?.length) {
 							rolesWithContacts.push(roleWithContacts);
 						}
 					}
@@ -177,7 +181,7 @@ export class ContactsByTypeComponent
 				this.$contactGroups.update((v) => [...v, groupWithContacts]);
 			}
 		});
-		if (otherContacts.length || this.$otherContacts().length) {
+		if (otherContacts?.length || this.$otherContacts()?.length) {
 			this.$otherContacts.set(otherContacts);
 		}
 		// console.log(

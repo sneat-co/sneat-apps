@@ -22,28 +22,28 @@ export abstract class SelectorBaseService<T = ISelectItem> {
 	// We make it protected so each service must override it for easiness of navigation
 	protected async selectMultipleInModal(
 		options: ISelectorOptions<T>,
-	): Promise<T[] | null> {
+	): Promise<T[] | undefined> {
 		console.log('selectMultipleInModal(), options:', options);
 
-		let result: readonly T[] | null = null;
+		let result: readonly T[] | undefined = undefined;
 		let error: unknown;
 
-		if (!options.onSelected) {
-			options = {
-				...options,
-				onSelected: (items: T[] | null): Promise<void> => {
-					return new Promise((resolve2, reject2) => {
-						this.modalController.dismiss(items).catch((err) => {
-							this.errorLogger.logError(err, 'Failed to dismiss modal');
-							reject2(err);
-							error = err;
-						});
-						resolve2();
-						result = items;
-					});
-				},
-			};
-		}
+		const onSelected = options.onSelected;
+
+		options = {
+			...options,
+			onSelected: async (items?: T[]): Promise<void> => {
+				console.log(
+					'SelectorBaseService.selectMultipleInModal().onSelected =>',
+					items,
+				);
+				if (onSelected) {
+					await onSelected(items);
+				}
+				await this.modalController.dismiss(items);
+				result = items;
+			},
+		};
 		let componentProps: ComponentProps<unknown> = {
 			...options.componentProps,
 			selectMode: 'multiple',

@@ -173,7 +173,7 @@ export class ContactsSelectorComponent
 	@Input() excludeParentIDs?: string[];
 
 	@Input() onSelected?: (
-		items: readonly IContactWithBriefAndSpace[] | null,
+		items?: readonly IContactWithBriefAndSpace[],
 	) => Promise<void>;
 
 	readonly contactRoles: ISelectItem[] = [
@@ -433,10 +433,25 @@ export class ContactsSelectorComponent
 		this.close(undefined);
 	}
 
-	protected ok(event: Event): void {
+	protected readonly $isSubmitting = signal(false);
+
+	protected async submitSelected(event: Event): Promise<void> {
 		console.log('ContactsSelectorComponent.ok()');
+
 		event.stopPropagation();
 		event.preventDefault();
+		const selectedContacts = this.$selectedContacts();
+		if (this.onSelected) {
+			this.$isSubmitting.set(true);
+			try {
+				await this.onSelected(selectedContacts);
+			} catch (e) {
+				this.errorLogger.logError(e, 'failed to call onSelected callback');
+				this.$isSubmitting.set(false);
+			}
+		} else {
+			console.error('onSelected is not set');
+		}
 	}
 
 	// protected onContactSelected2(contactID: string): void {
@@ -468,7 +483,7 @@ export class ContactsSelectorComponent
 	protected emitOnSelected(contact?: IContactWithBriefAndSpace): void {
 		console.log('ContactSelectorComponent.emitOnSelected()', contact);
 		if (this.onSelected) {
-			this.onSelected(contact ? [contact] : null).catch(
+			this.onSelected(contact ? [contact] : undefined).catch(
 				this.errorLogger.logErrorHandler('Failed to call onSelected callback'),
 			);
 		} else {

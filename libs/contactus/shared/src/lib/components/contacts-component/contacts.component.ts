@@ -86,11 +86,14 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 	>();
 
 	protected readonly $contactsWithSpace = computed<
-		readonly IContactWithBriefAndSpace[]
+		readonly IContactWithBriefAndSpace[] | undefined
 	>(() => {
 		const contacts = this.$contacts();
+		if (!contacts) {
+			return undefined;
+		}
 		const space = this.$space();
-		return contacts?.map(addSpace(space)) || [];
+		return contacts?.map(addSpace(space));
 	});
 
 	protected readonly familyGroupDefinitions = defaultFamilyContactGroups;
@@ -168,8 +171,11 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 	}
 
 	protected $contacts = computed(() => {
-		const allContacts = this.$allContacts(),
-			role = this.$roleID(),
+		const allContacts = this.$allContacts();
+		if (!allContacts) {
+			return undefined;
+		}
+		const role = this.$roleID(),
 			filter = this.$filter().trim().toLowerCase();
 
 		console.log('$contacts - started', allContacts);

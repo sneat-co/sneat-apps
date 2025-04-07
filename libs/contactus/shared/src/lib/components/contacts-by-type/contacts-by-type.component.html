@@ -25,16 +25,23 @@
 					}}</b>
 					&mdash;
 					<i class="ion-margin-start">
-						@switch (role.contacts.length) {
-							@case (0) {
-								not added yet
-							}
-							@default {
-								{{ role.contacts.length }}
+						@if (!role.contacts) {
+							loading...
+						} @else {
+							@switch (role.contacts.length) {
+								@case (0) {
+									not added yet 22
+								}
+								@default {
+									{{ role.contacts.length }}
+								}
 							}
 						}
 					</i>
 				</ion-label>
+				@if (!role.contacts) {
+					<ion-spinner name="lines-small" color="medium" slot="end" />
+				}
 				<ion-buttons slot="end">
 					@if (role.brief.finder) {
 						<ion-button
@@ -73,7 +80,7 @@
 	</ion-item-group>
 }
 
-@if ($otherContacts().length) {
+@if ($otherContacts()?.length) {
 	<ion-item-group @listItem>
 		<ion-item-divider color="light">
 			<ion-label>Other</ion-label>
