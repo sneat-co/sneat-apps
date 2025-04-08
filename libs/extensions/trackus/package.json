@@ -11,7 +11,16 @@
 		"@sneat/api": "workspace:*",
 		"@sneat/auth-core": "workspace:*",
 		"@sneat/contactus-core": "workspace:*",
-		"@sneat/contactus-services": "workspace:*"
+		"@sneat/contactus-services": "workspace:*",
+		"@angular/core": "19.2.5",
+		"@angular/forms": "19.2.5",
+		"@ionic/angular": "8.5.3",
+		"rxjs": "7.8.2",
+		"@angular/common": "19.2.5",
+		"@firebase/firestore": "4.7.10",
+		"@angular/router": "19.2.5",
+		"@angular/fire": "19.0.0",
+		"jest-preset-angular": "14.5.4"
 	},
 	"sideEffects": false
 }
