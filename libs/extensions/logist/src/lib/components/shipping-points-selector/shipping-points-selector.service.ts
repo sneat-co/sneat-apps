@@ -16,7 +16,7 @@ export class ShippingPointsSelectorService extends SelectorBaseService<IOrderShi
 	public selectShippingPointsInModal(
 		order: ILogistOrderContext,
 		container: IOrderContainer,
-	): Promise<IOrderShippingPoint[] | null> {
+	): Promise<IOrderShippingPoint[] | undefined> {
 		const options: ISelectorOptions<IOrderShippingPoint> = {
 			// selectedItems: [...(order.dto?.shippingPoints || [])],
 			componentProps: { order, container },

@@ -12,7 +12,7 @@ export class OrderContainersSelectorService extends SelectorBaseService<IContain
 
 	public selectOrderContainersInModal(
 		order?: ILogistOrderContext,
-	): Promise<IContainer[] | null> {
+	): Promise<IContainer[] | undefined> {
 		const options: ISelectorOptions<IContainer> = {
 			componentProps: {
 				order,
