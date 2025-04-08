@@ -30,28 +30,19 @@ export class AgeGroupFormComponent {
 	@Input() disabled = false;
 
 	public readonly hidePetOption = input<boolean>();
-	public readonly hideCompanyOption = input<boolean>();
 	public readonly hideUndisclosedOption = input<boolean>();
 
 	protected $ageGroupLabel = computed(() => {
-		const hidePetOptions = this.hidePetOption(),
-			hideCompanyOption = this.hideCompanyOption();
+		const hidePetOptions = this.hidePetOption();
 
-		if (hidePetOptions && hideCompanyOption) {
+		if (hidePetOptions) {
 			return 'Adult or child?';
 		}
-		if (!hidePetOptions && hideCompanyOption) {
-			return 'Adult/child or pet?';
-		}
-		if (hidePetOptions && !hideCompanyOption) {
-			return 'Adult/child or company?';
-		}
-		return 'Adult/child/pet or company?';
+		return 'Adult/child or pet?';
 	});
 
 	protected readonly $ageGroupOptions = computed<readonly ISelectItem[]>(() => {
-		const hidePetOptions = this.hidePetOption(),
-			hideCompanyOption = this.hideCompanyOption();
+		const hidePetOptions = this.hidePetOption();
 
 		const items: ISelectItem[] = [
 			{
@@ -67,12 +58,6 @@ export class AgeGroupFormComponent {
 			items.push({
 				id: 'pet',
 				title: 'Pet',
-			});
-		}
-		if (!hideCompanyOption) {
-			items.push({
-				id: 'company',
-				title: 'Company',
 			});
 		}
 		if (!this.hideUndisclosedOption) {

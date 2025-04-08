@@ -75,6 +75,7 @@
 				}
 				@case ("new") {
 					<sneat-new-company-form
+						[$contactType]="contactType"
 						[$space]="$space()"
 						[contactRoles]="contactRoles"
 						[contactRole]="contactRoleID"
@@ -133,47 +134,20 @@
 				<!--					/>-->
 			}
 			@case ("new") {
-				@switch (contactType) {
-					@case ("location") {
-						<sneat-location-form
-							contactType="location"
-							[contactRole]="contactRoleID"
-							[$space]="$space()"
-							[parentContact]="selectedParent"
-							(locationCreated)="onContactCreated($event)"
-						/>
-					}
-					@case ("company") {
-						<sneat-new-company-form
-							[$space]="$space()"
-							[contactRoles]="contactRoles"
-							[contactRole]="contactRoleID"
-							[hideRole]="true"
-							[parentContact]="selectedParent"
-							(contactCreated)="onContactCreated($event)"
-						/>
-					}
-					@default {
-						<ion-item-divider>
-							<ion-label>{{ contactRoleID || "" | titlecase }}</ion-label>
-						</ion-item-divider>
-						<sneat-new-contact-form
-							[isInModal]="true"
-							[$space]="$space()"
-							[command]="newContactCommand$"
-							[selectGroupAndRole$]="selectGroupAndRole$"
-							(creatingChange)="$isNewContactCreating.set($event)"
-						/>
-
-						<!--						<sneat-basic-contact-form-->
-						<!--							[space]="$space()"-->
-						<!--							[contactType]="contactType"-->
-						<!--							[contactRoles]="contactRole ? [contactRole] : undefined"-->
-						<!--							[parentContact]="selectedParent"-->
-						<!--							(contactCreated)="onSubContactCreated($event)"-->
-						<!--						/>-->
-					}
+				@if (contactRoleID) {
+					<!-- TODO: Not clear what it is for - needs a comment or removal or move to sneat-new-contact-form -->
+					<ion-item-divider>
+						<ion-label>{{ contactRoleID || "" | titlecase }}</ion-label>
+					</ion-item-divider>
 				}
+
+				<sneat-new-contact-form
+					[$contactType]="contactType"
+					[$space]="$space()"
+					[command]="newContactCommand$"
+					[selectGroupAndRole$]="selectGroupAndRole$"
+					(creatingChange)="$isNewContactCreating.set($event)"
+				/>
 			}
 		}
 	}

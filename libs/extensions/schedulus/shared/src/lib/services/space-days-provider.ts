@@ -161,7 +161,7 @@ export class SpaceDaysProvider {
 		IHappeningBrief,
 		IHappeningDbo
 	>;
-	private readonly singlesByDate: Record<string, ISlotUIContext[]> = {};
+	// private readonly singlesByDate: Record<string, ISlotUIContext[]> = {};
 	private readonly recurringByWd: RecurringsByWeekday =
 		emptyRecurringsByWeekday();
 

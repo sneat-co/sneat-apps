@@ -77,6 +77,9 @@ export class SpaceDay {
 		private readonly happeningService: HappeningService,
 		private readonly calendarDayService: CalendarDayService,
 	) {
+		if (!spaceID) {
+			throw new Error('missing required parameter: spaceID');
+		}
 		if (!date) {
 			throw new Error('missing required parameter: date');
 		}
@@ -105,8 +108,10 @@ export class SpaceDay {
 		}
 		this.subscriptions.forEach((s) => s.unsubscribe());
 		this.subscriptions.length = 0;
-		this.subscribeForSingles();
-		this.subscribeForCalendarDay();
+		if (spaceID) {
+			this.subscribeForSingles();
+			this.subscribeForCalendarDay();
+		}
 	};
 
 	private readonly subscribeForCalendarDay = (): void => {

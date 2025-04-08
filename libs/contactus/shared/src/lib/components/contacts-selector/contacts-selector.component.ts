@@ -56,13 +56,12 @@ import {
 import { BehaviorSubject, map, Subject, Subscription, takeUntil } from 'rxjs';
 import { BasicContactFormModule } from '../basic-contact-form';
 import { IContactAddEventArgs } from '../contact-events';
+import { NewContactFormComponent } from '../contact-forms/new-contact';
 import { ContactsComponent } from '../contacts-component/contacts.component';
-import { LocationFormComponent } from '../location-form';
-import { NewCompanyFormComponent } from '../new-company-form';
 import {
+	NewCompanyFormComponent,
 	NewContactFormCommand,
-	NewContactFormComponent,
-} from '../new-contact-form/new-contact-form.component';
+} from '../contact-forms/new-contact';
 import { IContactSelectorOptions } from './contacts-selector.interfaces';
 
 @Component({
@@ -71,13 +70,11 @@ import { IContactSelectorOptions } from './contacts-selector.interfaces';
 	imports: [
 		FormsModule,
 		SelectFromListComponent,
-		LocationFormComponent,
 		BasicContactFormModule,
 		NewCompanyFormComponent,
 		TitleCasePipe,
 		TitleCasePipe,
 		ContactsComponent,
-		NewContactFormComponent,
 		IonButton,
 		IonLabel,
 		IonSpinner,
@@ -94,6 +91,7 @@ import { IContactSelectorOptions } from './contacts-selector.interfaces';
 		IonText,
 		IonItemDivider,
 		IonHeader,
+		NewContactFormComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

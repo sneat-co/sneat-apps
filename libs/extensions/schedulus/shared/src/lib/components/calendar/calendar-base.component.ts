@@ -1,33 +1,26 @@
-import {
-	Directive,
-	Inject,
-	Input,
-	OnChanges,
-	OnDestroy,
-	SimpleChanges,
-} from '@angular/core';
+import { Directive, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { SneatApiService } from '@sneat/api';
 import { dateToIso } from '@sneat/core';
+import { WithSpaceInput } from '@sneat/space-components';
 import { CalendarDayService } from '../../services/calendar-day.service';
 import { CalendariumSpaceService } from '../../services/calendarium-space.service';
 import { HappeningService } from '../../services/happening.service';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	ICalendariumSpaceDbo,
 	IHappeningWithUiState,
 } from '@sneat/mod-schedulus-core';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/space-models';
-import { Subject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { SpaceDaysProvider } from '../../services/space-days-provider';
 
 @Directive()
-export abstract class CalendarBaseComponent implements OnChanges, OnDestroy {
-	@Input() space?: ISpaceContext;
-
-	protected readonly destroyed = new Subject<void>();
+export abstract class CalendarBaseComponent
+	extends WithSpaceInput
+	implements OnChanges, OnDestroy
+{
 	protected date = new Date();
 
-	public readonly spaceDaysProvider: SpaceDaysProvider;
+	protected readonly spaceDaysProvider: SpaceDaysProvider;
 
 	private schedulusSpaceDbo?: ICalendariumSpaceDbo | null;
 
@@ -36,13 +29,13 @@ export abstract class CalendarBaseComponent implements OnChanges, OnDestroy {
 	protected allRecurrings?: readonly IHappeningWithUiState[];
 
 	protected constructor(
-		private className: string,
-		@Inject(ErrorLogger) protected readonly errorLogger: IErrorLogger,
+		className: string,
 		private readonly calendariumSpaceService: CalendariumSpaceService,
 		happeningService: HappeningService,
 		calendarDayService: CalendarDayService,
 		sneatApiService: SneatApiService,
 	) {
+		super(className);
 		console.log(`${className}:CalendarBaseComponent.constructor()`);
 		this.spaceDaysProvider = new SpaceDaysProvider(
 			this.errorLogger,
@@ -52,9 +45,8 @@ export abstract class CalendarBaseComponent implements OnChanges, OnDestroy {
 		);
 	}
 
-	ngOnDestroy(): void {
-		this.destroyed.next();
-		this.destroyed.complete();
+	override ngOnDestroy(): void {
+		super.ngOnDestroy();
 		this.spaceDaysProvider.destroy();
 	}
 
@@ -84,7 +76,7 @@ export abstract class CalendarBaseComponent implements OnChanges, OnDestroy {
 					id,
 					brief: rh.brief,
 					state: prev?.state || {},
-					space: this.space || { id: '' },
+					space: this.$space(),
 				};
 				return result;
 			}) || [];
@@ -133,8 +125,9 @@ export abstract class CalendarBaseComponent implements OnChanges, OnDestroy {
 	}
 
 	private onSpaceContextChanged(): void {
-		if (this.space) {
-			this.spaceDaysProvider.setSpace(this.space);
+		const space = this.$space();
+		if (space) {
+			this.spaceDaysProvider.setSpace(space);
 		}
 	}
 

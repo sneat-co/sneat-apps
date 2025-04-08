@@ -33,7 +33,10 @@ import { ContactDobComponent } from '../contact-dob';
 import { ContactLocationsComponent } from '../contact-locations';
 import { ContactModulesMenuComponent } from '../contact-modules-menu';
 import { ContactRolesInputModule } from '../contact-roles-input';
-import { GenderFormComponent, RelationshipFormComponent } from '../person-form';
+import {
+	GenderFormComponent,
+	RelationshipFormComponent,
+} from '../contact-forms';
 import { RelatedContactComponent } from './related-contact.component';
 
 @Component({

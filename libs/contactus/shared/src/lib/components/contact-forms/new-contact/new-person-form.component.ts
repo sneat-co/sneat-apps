@@ -30,17 +30,17 @@ import {
 	ContactRoleService,
 	ContactService,
 } from '@sneat/contactus-services';
+import { PersonWizardComponent } from '../pesson-wizard';
+import { IContactAddEventArgs } from '../../contact-events';
+import { ContactRoleFormComponent } from '../role-form';
 import { IIdAndDbo, IIdAndOptionalDbo } from '@sneat/core';
 import {
 	AssetService,
 	AssetusServicesModule,
 } from '@sneat/extensions-assetus-components';
 import { IAssetContext } from '@sneat/mod-assetus-core';
-import { WithSpaceInput } from '@sneat/space-components';
 import { first, Observable, Subject, takeUntil } from 'rxjs';
-import { IContactAddEventArgs } from '../contact-events';
-import { ContactRoleFormComponent } from '../contact-role-form';
-import { PersonWizardComponent } from '../person-form';
+import { NewContactBaseFormComponent } from './new-contact-base-form-component';
 
 export type OptionalContactRoleIdAndBrief =
 	| IContactRoleWithIdAndBrief
@@ -53,8 +53,8 @@ export type OptionalContactGroupIdAndBrief =
 export type NewContactFormCommand = 'create' | 'reset';
 
 @Component({
-	selector: 'sneat-new-contact-form',
-	templateUrl: './new-contact-form.component.html',
+	selector: 'sneat-new-person-form',
+	templateUrl: './new-person-form.component.html',
 	imports: [
 		IonItemDivider,
 		IonLabel,
@@ -64,9 +64,11 @@ export type NewContactFormCommand = 'create' | 'reset';
 		AssetusServicesModule,
 	],
 })
-export class NewContactFormComponent extends WithSpaceInput implements OnInit {
+export class NewPersonFormComponent
+	extends NewContactBaseFormComponent
+	implements OnInit
+{
 	@Input() public isInModal = false;
-	public readonly $contact = input<IContactContext>();
 	@Output() public readonly contactChange = new EventEmitter<IContactContext>();
 	@Output() public readonly creatingChange = new EventEmitter<boolean>();
 

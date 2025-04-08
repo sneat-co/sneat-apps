@@ -33,10 +33,13 @@ import {
 	ISpaceModuleItemRef,
 } from '@sneat/dto';
 import { ISpaceContext } from '@sneat/space-models';
-import { AgeGroupFormComponent } from '../age-group';
+import { AgeGroupFormComponent } from '../person-forms/age-group';
 import { EmailsFormComponent } from '../emails-form';
-import { GenderFormComponent } from '../gender-form';
-import { INamesFormFields, NamesFormComponent } from '../names-form';
+import { GenderFormComponent } from '../person-forms/gender-form';
+import {
+	INamesFormFields,
+	NamesFormComponent,
+} from '../person-forms/names-form';
 import { PetKindInputComponent } from '../pet-kind';
 import { PhonesFormComponent } from '../phones-form';
 import { RelationshipFormComponent } from '../relationship-form';

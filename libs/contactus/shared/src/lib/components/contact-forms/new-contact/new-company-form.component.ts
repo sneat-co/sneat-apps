@@ -46,6 +46,7 @@ import {
 	ISpaceContext,
 } from '@sneat/space-models';
 import { LocationFormComponent } from '../location-form';
+import { NewContactBaseFormComponent } from './new-contact-base-form-component';
 
 @Component({
 	selector: 'sneat-new-company-form',
@@ -65,11 +66,10 @@ import { LocationFormComponent } from '../location-form';
 		LocationFormComponent,
 	],
 })
-export class NewCompanyFormComponent implements OnChanges {
-	public readonly $space = input.required<ISpaceContext>();
-	protected readonly $spaceRef = computeSpaceRefFromSpaceContext(this.$space);
-	protected readonly $spaceID = computeSpaceIdFromSpaceRef(this.$spaceRef);
-
+export class NewCompanyFormComponent
+	extends NewContactBaseFormComponent
+	implements OnChanges
+{
 	@Input() contactRoles?: ISelectItem[];
 	@Input() contactRole?: ContactRole = undefined;
 	@Input() hideRole = false;
@@ -92,10 +92,11 @@ export class NewCompanyFormComponent implements OnChanges {
 	});
 
 	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly contactService: ContactService,
 		private readonly route: ActivatedRoute,
-	) {}
+	) {
+		super('NewCompanyFormComponent');
+	}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['$space'] && this.$space()) {

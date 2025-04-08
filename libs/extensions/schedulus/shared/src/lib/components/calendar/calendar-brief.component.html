@@ -3,7 +3,7 @@
 		<ion-icon name="calendar-outline" slot="start"></ion-icon>
 		<ion-label style="font-weight: bold" color="primary">Calendar</ion-label>
 		<sneat-calendar-add-buttons
-			[space]="space"
+			[space]="$space()"
 			[dateID]="undefined"
 			[weekdayID]="undefined"
 		/>
@@ -11,33 +11,33 @@
 
 	<ion-item color="light" lines="full" class="sneat-tiny-end-padding">
 		<ion-label color="medium">
-			<sneat-calendar-day-title [weekday]="today" />
+			<sneat-calendar-day-title [weekday]="$today()" />
 		</ion-label>
 		<sneat-calendar-add-buttons
-			[space]="space"
-			[dateID]="today?.day?.dateID"
-			[weekdayID]="today?.id"
+			[space]="$space()"
+			[dateID]="$today()?.day?.dateID"
+			[weekdayID]="$today()?.id"
 		/>
 	</ion-item>
 	<sneat-calendar-day
-		[space]="space"
-		[weekday]="today"
+		[space]="$space()"
+		[weekday]="$today()"
 		[hideAddButtons]="true"
 	/>
 	<ion-item color="light" lines="full" class="sneat-tiny-end-padding">
 		<ion-label color="medium">
-			<sneat-calendar-day-title [weekday]="tomorrow" />
+			<sneat-calendar-day-title [weekday]="$tomorrow()" />
 		</ion-label>
 		<sneat-calendar-add-buttons
-			[space]="space"
-			[dateID]="tomorrow?.day?.dateID"
-			[weekdayID]="tomorrow?.id"
+			[space]="$space()"
+			[dateID]="$tomorrow()?.day?.dateID"
+			[weekdayID]="$tomorrow()?.id"
 		/>
 	</ion-item>
-	<!--	<sneat-calendar-day-->
-	<!--		[space]="space"-->
-	<!--		[weekday]="tomorrow"-->
-	<!--		[hideAddButtons]="true"-->
-	<!--		[hideLastBorder]="true"-->
-	<!--	/>-->
+	<sneat-calendar-day
+		[space]="$space()"
+		[weekday]="$tomorrow()"
+		[hideAddButtons]="true"
+		[hideLastBorder]="true"
+	/>
 </ion-card>

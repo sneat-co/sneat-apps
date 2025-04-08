@@ -2,7 +2,6 @@ import {
 	AfterViewInit,
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	OnChanges,
 	OnDestroy,
@@ -22,7 +21,6 @@ import {
 	WeekdayCode2,
 	IHappeningWithUiState,
 } from '@sneat/mod-schedulus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { SpaceComponentBaseParams } from '@sneat/space-components';
 import { takeUntil } from 'rxjs';
 import {
@@ -98,7 +96,6 @@ export class CalendarComponent
 	protected recurrings?: readonly IHappeningWithUiState[];
 
 	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		private readonly params: SpaceComponentBaseParams,
 		filterService: CalendarFilterService,
 		calendarStateService: CalendarStateService,
@@ -109,14 +106,13 @@ export class CalendarComponent
 	) {
 		super(
 			'CalendarComponent',
-			errorLogger,
 			calendariumSpaceService,
 			happeningService,
 			calendarDayService,
 			sneatApiService,
 		);
 
-		filterService.filter.pipe(takeUntil(this.destroyed)).subscribe({
+		filterService.filter.pipe(takeUntil(this.destroyed$)).subscribe({
 			next: (filter) => {
 				this.filter = filter;
 				this.recurrings = this.filterRecurrings(filter);
@@ -241,7 +237,7 @@ export class CalendarComponent
 	private filterRecurrings(
 		filter: ICalendarFilter,
 	): IHappeningWithUiState[] | undefined {
-		const spaceID = this.space?.id;
+		const spaceID = this.$spaceID();
 		if (!spaceID) {
 			return;
 		}

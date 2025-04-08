@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { Inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
@@ -36,13 +36,13 @@ import { Weekday } from './weekday';
 		CalendarDayComponent,
 	],
 	providers: [CalendarFilterService],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarBriefComponent extends CalendarBaseComponent {
-	protected today?: Weekday;
-	protected tomorrow?: Weekday;
+	protected readonly $today = signal<Weekday | undefined>(undefined);
+	protected readonly $tomorrow = signal<Weekday | undefined>(undefined);
 
 	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
 		sneatApiService: SneatApiService,
 		calendarDayService: CalendarDayService,
 		happeningService: HappeningService,
@@ -50,7 +50,6 @@ export class CalendarBriefComponent extends CalendarBaseComponent {
 	) {
 		super(
 			'CalendarBriefComponent',
-			errorLogger,
 			calendariumSpaceService,
 			happeningService,
 			calendarDayService,
@@ -58,11 +57,13 @@ export class CalendarBriefComponent extends CalendarBaseComponent {
 		);
 
 		const todayDate = new Date();
-		this.today = createWeekday(todayDate, this.spaceDaysProvider);
+		const today = createWeekday(todayDate, this.spaceDaysProvider);
+		this.$today.set(today);
 
 		const tomorrowDate = new Date();
 		tomorrowDate.setDate(todayDate.getDate() + 1);
-		this.tomorrow = createWeekday(tomorrowDate, this.spaceDaysProvider);
+		const tomorrow = createWeekday(tomorrowDate, this.spaceDaysProvider);
+		this.$tomorrow.set(tomorrow);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars

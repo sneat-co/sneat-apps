@@ -23,6 +23,7 @@ import { ContactusServicesModule } from '@sneat/contactus-services';
 import {
 	OptionalContactGroupIdAndBrief,
 	OptionalContactRoleIdAndBrief,
+	NewPersonFormComponent,
 	NewContactFormComponent,
 } from '@sneat/contactus-shared';
 import {
@@ -44,7 +45,6 @@ import { SpaceServiceModule } from '@sneat/space-services';
 	imports: [
 		CommonModule,
 		FormsModule,
-		NewContactFormComponent,
 		SpaceServiceModule,
 		ContactusServicesModule,
 		IonNav,
@@ -54,6 +54,7 @@ import { SpaceServiceModule } from '@sneat/space-services';
 		IonBackButton,
 		IonTitle,
 		IonContent,
+		NewContactFormComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

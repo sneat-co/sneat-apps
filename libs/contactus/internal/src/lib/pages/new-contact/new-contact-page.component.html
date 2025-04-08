@@ -12,12 +12,15 @@
 <ion-content>
 	<sneat-new-contact-form
 		[$space]="$space()"
+		[$contactType]="undefined"
 		[$contact]="$contact()"
-		[$fixedGroupID]="$contactGroupID()"
-		[$fixedRoleID]="$contactRoleID()"
-		[$parentContactID]="$parentContactID()"
-		(contactRoleChange)="$contactRole.set($event)"
-		(contactGroupChange)="$contactGroup.set($event)"
-		(contactChange)="$contact.set($event)"
 	/>
+	<!--	<sneat-new-person-form-->
+	<!--		[$fixedGroupID]="$contactGroupID()"-->
+	<!--		[$fixedRoleID]="$contactRoleID()"-->
+	<!--		[$parentContactID]="$parentContactID()"-->
+	<!--		(contactRoleChange)="$contactRole.set($event)"-->
+	<!--		(contactGroupChange)="$contactGroup.set($event)"-->
+	<!--		(contactChange)="$contact.set($event)"-->
+	<!--	/>-->
 </ion-content>

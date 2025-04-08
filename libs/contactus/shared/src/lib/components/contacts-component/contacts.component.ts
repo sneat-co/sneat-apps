@@ -33,7 +33,7 @@ import { ContactsByTypeComponent } from '../contacts-by-type';
 import { ICheckChangedArgs } from '../contacts-checklist';
 import { ContactsComponentCommand } from '../contacts-component.commands';
 import { ContactsListItemComponent } from '../contacts-list-item/contacts-list-item.component';
-import { OptionalContactRoleIdAndBrief } from '../new-contact-form/new-contact-form.component';
+import { OptionalContactRoleIdAndBrief } from '../contact-forms/new-contact';
 
 @Component({
 	selector: 'sneat-contacts',
