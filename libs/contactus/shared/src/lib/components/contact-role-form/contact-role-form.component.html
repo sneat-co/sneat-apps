@@ -18,6 +18,7 @@
 		}
 		<sneat-select-from-list
 			label="Contact role"
+			sortBy="title"
 			[items]="$roleItems()"
 			[value]="$contactRoleID() || ''"
 			(valueChange)="onContactRoleIDChanged($event)"

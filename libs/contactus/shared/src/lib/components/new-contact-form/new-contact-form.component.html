@@ -60,7 +60,7 @@
 	<div class="ion-padding">
 		<ion-button
 			expand="full"
-			[disabled]="$creating || isContactNotReady"
+			[disabled]="$creating() || isContactNotReady"
 			(click)="submit()"
 		>
 			<ion-label>Create contact</ion-label>

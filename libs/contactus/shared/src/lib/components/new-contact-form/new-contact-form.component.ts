@@ -136,36 +136,42 @@ export class NewContactFormComponent extends WithSpaceInput implements OnInit {
 	}
 
 	public ngOnInit(): void {
-		this.command?.pipe(this.takeUntilDestroyed()).subscribe((command) => {
-			switch (command) {
-				case 'create': {
-					this.submit();
-					break;
-				}
-				case 'reset': {
-					this.$selectedContactRole.set(undefined);
-					this.$selectedContactGroup.set(undefined);
-					break;
-				}
-				default:
-					this.errorLogger.logError(
-						'NewContactPageComponent received unknown command: ' + command,
-					);
-					break;
-			}
-		});
+		this.command?.pipe(this.takeUntilDestroyed()).subscribe(this.onCommand);
 		this.selectGroupAndRole$
 			?.pipe(this.takeUntilDestroyed())
-			.subscribe((args) => {
-				console.log('selectedGroupAndRole:', args);
-				if (args?.group?.id && args.group.id !== this.$fixedGroupID()) {
-					this.$selectedContactGroup.set({ id: args.group.id });
-				}
-				if (args?.role?.id) {
-					this.$selectedContactRole.set({ id: args?.role?.id });
-				}
-			});
+			.subscribe(this.onSelectGroupAndRole);
 	}
+
+	private readonly onSelectGroupAndRole = (
+		args: IContactAddEventArgs | undefined,
+	) => {
+		console.log('selectedGroupAndRole:', args);
+		if (args?.group?.id && args.group.id !== this.$fixedGroupID()) {
+			this.$selectedContactGroup.set({ id: args.group.id });
+		}
+		if (args?.role?.id) {
+			this.$selectedContactRole.set({ id: args?.role?.id });
+		}
+	};
+
+	private readonly onCommand = (command: NewContactFormCommand): void => {
+		switch (command) {
+			case 'create': {
+				this.submit();
+				break;
+			}
+			case 'reset': {
+				this.$selectedContactRole.set(undefined);
+				this.$selectedContactGroup.set(undefined);
+				break;
+			}
+			default:
+				this.errorLogger.logError(
+					'NewContactPageComponent received unknown command: ' + command,
+				);
+				break;
+		}
+	};
 
 	private setupEffects(): void {
 		console.log('NewContactFormComponent.setupEffects()');
@@ -192,6 +198,12 @@ export class NewContactFormComponent extends WithSpaceInput implements OnInit {
 					},
 					error: this.logErrorHandler('Failed to get contact group by ID'),
 				});
+		});
+		effect(() => {
+			const fixedGroupID = this.$fixedGroupID();
+			if (fixedGroupID && this.$selectedContactGroupID() !== fixedGroupID) {
+				this.$selectedContactGroup.set({ id: fixedGroupID });
+			}
 		});
 		effect(() => {
 			const contactRoleID = this.$fixedRoleID();

@@ -28,7 +28,6 @@ import {
 import {
 	ContactRole,
 	ContactToContactRelation,
-	Gender,
 	IContactContext,
 } from '@sneat/contactus-core';
 import {
@@ -55,7 +54,6 @@ import { SpaceServiceModule } from '@sneat/space-services';
 		IonBackButton,
 		IonTitle,
 		IonContent,
-		// TODO: move into components?
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -65,21 +63,8 @@ export class NewContactPageComponent
 {
 	@ViewChild('nameInput', { static: true }) nameInput?: IonInput;
 
-	protected relation?: ContactToContactRelation;
-	protected name = '';
-	protected gender?: Gender;
-	protected email = '';
-	protected phone = '';
-
-	// public readonly relations: { id: string; title: string }[] = [
-	// 	{ id: 'mother', title: 'Mother' },
-	// 	{ id: 'father', title: 'Father' },
-	// 	{ id: 'parent', title: 'Parent' },
-	// 	{ id: 'grandparent', title: 'Grand-parent' },
-	// 	{ id: 'sibling', title: 'Sibling' },
-	// 	{ id: 'child', title: 'Child' },
-	// 	{ id: 'gp', title: 'GP - Family Doctor' },
-	// ];
+	// TODO: relationship is not implemented yet
+	protected $relation = signal<ContactToContactRelation | undefined>(undefined);
 
 	public readonly $contact = signal<IContactContext | undefined>(undefined);
 
@@ -125,7 +110,7 @@ export class NewContactPageComponent
 	private readonly onUrlParamsChanged = (params: ParamMap): void => {
 		const relation = params.get('relation');
 		if (relation) {
-			this.relation = relation as ContactToContactRelation; // TODO: verify
+			this.$relation.set(relation as ContactToContactRelation);
 		}
 		const contactGroupID = params.get('group');
 		if (contactGroupID && contactGroupID !== this.$contactGroupID()) {

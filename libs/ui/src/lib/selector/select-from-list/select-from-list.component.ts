@@ -71,6 +71,8 @@ export class SelectFromListComponent
 
 	@Input() isReadonly = false;
 
+	@Input() sortBy?: 'title' | 'id';
+
 	// @Input() ngModel?: string;
 	// @Output() readonly ngModelChange = new EventEmitter<string>();
 
@@ -130,16 +132,29 @@ export class SelectFromListComponent
 		const f = this.$filter().trim().toLowerCase();
 		// console.log('SelectFromListComponent.applyFilter', f);
 		const items = this.$items();
-		this.$displayItems.set(
-			f
-				? items?.filter(
-						(v) =>
-							v.title.toLowerCase().includes(f) ||
-							v.longTitle?.toLowerCase().includes(f) ||
-							(this.filterItem && this.filterItem(v, f)),
-					)
-				: items,
-		);
+		let displayItems = f
+			? items?.filter(
+					(v) =>
+						v.title.toLowerCase().includes(f) ||
+						v.longTitle?.toLowerCase().includes(f) ||
+						(this.filterItem && this.filterItem(v, f)),
+				)
+			: items;
+		if (displayItems && this.sortBy) {
+			switch (this.sortBy) {
+				case 'title':
+					displayItems = [...displayItems].sort((a, b) =>
+						a.title.localeCompare(b.title),
+					);
+					break;
+				case 'id':
+					displayItems = [...displayItems].sort((a, b) =>
+						a.id.localeCompare(b.id),
+					);
+					break;
+			}
+		}
+		this.$displayItems.set(displayItems);
 	}
 
 	protected select(item: ISelectItem): void {

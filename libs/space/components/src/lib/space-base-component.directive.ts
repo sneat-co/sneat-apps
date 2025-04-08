@@ -35,8 +35,8 @@ export abstract class SpaceBaseComponent
 	implements OnInit
 {
 	protected readonly $space = signal<ISpaceContext>({ id: '' });
-	protected readonly $spaceID = computed(() => this.$space()?.id);
-	protected readonly $spaceType = computed(() => this.$space()?.type);
+	protected readonly $spaceID = computed(() => this.$space().id);
+	protected readonly $spaceType = computed(() => this.$space().type);
 
 	private readonly spaceIDChanged = new Subject<string | undefined>();
 	private readonly spaceTypeChanged = new Subject<SpaceType | undefined>();
@@ -132,9 +132,21 @@ export abstract class SpaceBaseComponent
 		super(className);
 		console.log(`${className}.SpaceBaseComponent.constructor()`);
 
+		let prevSpaceID: string | undefined;
 		effect(() => {
+			this.log(
+				`${className}.SpaceBaseComponent.constructor() => effect($spaceID=${this.$spaceID()})`,
+			);
 			const spaceID = this.$spaceID();
-			this.spaceIDChanged.next(spaceID);
+			if (spaceID == prevSpaceID) {
+				// This seems to be a bag in Angular signals?
+				console.warn(
+					`${className}.SpaceBaseComponent.constructor() => effect($spaceID=${spaceID}) => called for the same spaceID!`,
+				);
+			} else {
+				this.spaceIDChanged.next(spaceID);
+			}
+			prevSpaceID = spaceID;
 		});
 
 		this.spaceIDChanged$
@@ -327,14 +339,14 @@ export abstract class SpaceBaseComponent
 	// }
 
 	private setSpaceContext(spaceContext?: ISpaceContext): void {
+		const prevSpace = this.$space();
 		this.log(
-			`${this.className}:SpaceBaseComponent.setNewSpaceContext(id=${spaceContext?.id}), previous id=${this.$space()?.id}`,
+			`${this.className}:SpaceBaseComponent.setSpaceContext(id=${spaceContext?.id}), previous id=${prevSpace.id}`,
 			spaceContext,
 		);
-		const prevSpace = this.$space();
 		if (prevSpace == spaceContext) {
 			this.console.warn(
-				'Duplicate call to SpaceBaseComponent.setNewSpaceContext() with same spaceContext:',
+				'Duplicate call to SpaceBaseComponent.setSpaceContext() with same spaceContext:',
 				spaceContext,
 			);
 			return;
@@ -356,7 +368,7 @@ export abstract class SpaceBaseComponent
 		);
 		const dboChanged = prevSpace?.dbo != spaceContext?.dbo;
 		this.log(
-			`${this.className}:SpaceBaseComponent.setNewSpaceContext(id=${spaceContext?.id}) => idChanged=${idChanged}, briefChanged=${briefChanged}, dtoChanged=${dboChanged}`,
+			`${this.className}:SpaceBaseComponent.setSpaceContext(id=${spaceContext?.id}) => idChanged=${idChanged}, briefChanged=${briefChanged}, dtoChanged=${dboChanged}`,
 		);
 		this.$space.set(spaceContext || { id: '' });
 		if (briefChanged) {
@@ -366,10 +378,14 @@ export abstract class SpaceBaseComponent
 			this.spaceDboChanged.next(spaceContext?.dbo);
 		}
 		if (idChanged) {
+			this.console.log('');
 			if (!spaceContext) {
 				this.unsubscribe('no space context');
 				return;
 			}
+			// if (idChanged) {
+			// 	this.spaceIDChanged.next(spaceContext?.id);
+			// }
 			if (spaceContext) {
 				this.spaceChanged.next(spaceContext);
 			}
