@@ -1,5 +1,14 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
+import {
+	IonBackButton,
+	IonButtons,
+	IonContent,
+	IonHeader,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { CONTACT_ROLES_BY_TYPE, IContactRole } from '@sneat/app';
+import { NewCompanyFormComponent } from '@sneat/contactus-shared';
 import { ISelectItem } from '@sneat/ui';
 import { ContactRole } from '@sneat/contactus-core';
 import { SpaceBaseComponent } from '@sneat/space-components';
@@ -9,7 +18,15 @@ import { first } from 'rxjs';
 @Component({
 	selector: 'sneat-new-logist-company-page',
 	templateUrl: 'new-logist-company-page.component.html',
-	standalone: false,
+	imports: [
+		NewCompanyFormComponent,
+		IonContent,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+	],
 })
 export class NewLogistCompanyPageComponent
 	extends SpaceBaseComponent

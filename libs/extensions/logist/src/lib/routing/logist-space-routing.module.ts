@@ -71,9 +71,9 @@ export const logistRoutes: Routes = [
 	},
 	{
 		path: 'new-company',
-		loadChildren: () =>
-			import('../pages/new-company/new-logist-company-page.module').then(
-				(m) => m.NewLogistCompanyPageModule,
+		loadComponent: () =>
+			import('../pages/new-company/new-logist-company-page.component').then(
+				(m) => m.NewLogistCompanyPageComponent,
 			),
 	},
 	{
