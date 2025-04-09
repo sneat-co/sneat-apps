@@ -2,7 +2,7 @@ import { Component, input, Input } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { virtualSliderAnimations } from '@sneat/components';
 import { ISpaceContext } from '@sneat/space-models';
-import { SpaceDaysProvider } from '../../../../services/space-days-provider';
+import { CalendarDaysProvider } from '../../../../services/calendar-days-provider';
 import { getToday, CalendarStateService } from '../../calendar-state.service';
 import { SwipeableBaseComponent } from '../../../swipeable-base.component';
 import { SwipeableWeek, swipeableWeek } from '../../../swipeable-ui';
@@ -18,7 +18,7 @@ import { CalendarWeekComponent } from './calendar-week.component';
 // implements OnInit
 export class CalendarWeekCardComponent extends SwipeableBaseComponent {
 	public readonly $space = input.required<ISpaceContext | undefined>();
-	@Input({ required: true }) spaceDaysProvider?: SpaceDaysProvider;
+	@Input({ required: true }) spaceDaysProvider?: CalendarDaysProvider;
 
 	get oddWeek(): SwipeableWeek {
 		return this.oddSlide as SwipeableWeek;

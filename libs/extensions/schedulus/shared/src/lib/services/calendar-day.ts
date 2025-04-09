@@ -1,4 +1,4 @@
-import { signal } from '@angular/core';
+import { effect, Signal, signal } from '@angular/core';
 import { dateToIso } from '@sneat/core';
 import { IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
@@ -24,20 +24,23 @@ import {
 import { HappeningService } from './happening.service';
 import { CalendarDayService } from './calendar-day.service';
 
-export class SpaceDay {
-	private readonly destroyed = new Subject<void>();
-	private readonly destroyed$ = this.destroyed.asObservable();
+export interface ICalendarDayInput {
+	readonly spaceID: string; // Should we use observable on ISpaceContext as we might want to use space settings?
+	readonly recurrings$: Observable<RecurringSlots>;
+}
+
+export class CalendarDay {
+	private readonly destroyed$ = new Subject<void>();
 
 	private recurringSlots?: RecurringSlots;
 	private singles?: ISlotUIContext[];
 
-	private _spaces: ISpaceContext[] = [];
+	private _spaces: readonly ISpaceContext[] = [];
 
-	public get spaces(): ISpaceContext[] {
+	public get spaces(): readonly ISpaceContext[] {
 		return this._spaces;
 	}
 
-	public readonly date: Date;
 	public readonly dateID: string;
 	public readonly wd: WeekdayCode2;
 	public readonly wdLongTitle: string;
@@ -68,18 +71,13 @@ export class SpaceDay {
 	private readonly subscriptions: Subscription[] = [];
 
 	constructor(
-		// Do we use observable as we might want to use space settings?
-		private readonly spaceID: string,
-		// space$: Observable<ISpaceContext | undefined>, // do not declare it as member as we apply takeUntil(this.destroyed$) & distinctUntilChanged() to it
-		date: Date, // intentionally not marking as public here to have public fields in 1 place
-		recurrings$: Observable<RecurringSlots>,
+		public readonly date: Date,
+		$input: Signal<readonly ICalendarDayInput[]>,
 		private readonly errorLogger: IErrorLogger,
+		// TODO: document why we need both HappeningService & CalendarDayService
 		private readonly happeningService: HappeningService,
 		private readonly calendarDayService: CalendarDayService,
 	) {
-		if (!spaceID) {
-			throw new Error('missing required parameter: spaceID');
-		}
 		if (!date) {
 			throw new Error('missing required parameter: date');
 		}
@@ -91,13 +89,19 @@ export class SpaceDay {
 		console.log('SpaceDay.constructor()', this.dateID, this.date);
 		this.wd = getWd2(date);
 		this.wdLongTitle = wdCodeToWeekdayLongName(this.wd);
-		this.processSpaceID(spaceID);
-		this.subscribeForRecurrings(recurrings$);
+
+		effect(() => {
+			const inputs = $input();
+			inputs.forEach((input) => {
+				this.processSpaceID(input.spaceID);
+				this.subscribeForRecurrings(input.recurrings$);
+			});
+		});
 	}
 
 	public destroy(): void {
-		this.destroyed.next();
-		this.destroyed.complete();
+		this.destroyed$.next();
+		this.destroyed$.complete();
 	}
 
 	private readonly processSpaceID = (spaceID: string | undefined) => {
@@ -109,16 +113,12 @@ export class SpaceDay {
 		this.subscriptions.forEach((s) => s.unsubscribe());
 		this.subscriptions.length = 0;
 		if (spaceID) {
-			this.subscribeForSingles();
-			this.subscribeForCalendarDay();
+			this.subscribeForSingles(spaceID);
+			this.subscribeForCalendarDay(spaceID);
 		}
 	};
 
-	private readonly subscribeForCalendarDay = (): void => {
-		const spaceID = this.spaceID;
-		if (!spaceID) {
-			return;
-		}
+	private readonly subscribeForCalendarDay = (spaceID: string): void => {
 		this.subscriptions.push(
 			this.calendarDayService
 				.watchSpaceDay({ id: spaceID }, this.dateID)
@@ -143,12 +143,7 @@ export class SpaceDay {
 		);
 	};
 
-	private readonly subscribeForSingles = (): void => {
-		const spaceID = this.spaceID;
-		if (!spaceID) {
-			console.error('Tried to subscribe for single happenings without spaceID');
-			return;
-		}
+	private readonly subscribeForSingles = (spaceID: string): void => {
 		if (!this.dateID) {
 			console.error('Tried to subscribe for single happenings without dateID');
 			return;

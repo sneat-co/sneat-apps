@@ -1,4 +1,10 @@
-import { Directive, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import {
+	Directive,
+	effect,
+	OnChanges,
+	OnDestroy,
+	SimpleChanges,
+} from '@angular/core';
 import { SneatApiService } from '@sneat/api';
 import { dateToIso } from '@sneat/core';
 import { WithSpaceInput } from '@sneat/space-components';
@@ -11,7 +17,7 @@ import {
 } from '@sneat/mod-schedulus-core';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/space-models';
 import { Subscription } from 'rxjs';
-import { SpaceDaysProvider } from '../../services/space-days-provider';
+import { CalendarDaysProvider } from '../../services/calendar-days-provider';
 
 @Directive()
 export abstract class CalendarBaseComponent
@@ -20,7 +26,7 @@ export abstract class CalendarBaseComponent
 {
 	protected date = new Date();
 
-	protected readonly spaceDaysProvider: SpaceDaysProvider;
+	protected readonly spaceDaysProvider: CalendarDaysProvider;
 
 	private schedulusSpaceDbo?: ICalendariumSpaceDbo | null;
 
@@ -37,12 +43,16 @@ export abstract class CalendarBaseComponent
 	) {
 		super(className);
 		console.log(`${className}:CalendarBaseComponent.constructor()`);
-		this.spaceDaysProvider = new SpaceDaysProvider(
+		this.spaceDaysProvider = new CalendarDaysProvider(
 			this.errorLogger,
 			happeningService,
 			calendarDayService,
 			sneatApiService,
 		);
+		effect(() => {
+			const spaceID = this.$spaceID();
+			this.spaceDaysProvider.addSpaceID(spaceID);
+		});
 	}
 
 	override ngOnDestroy(): void {
@@ -93,6 +103,9 @@ export abstract class CalendarBaseComponent
 		}
 		this.populateRecurrings();
 		this.setDay('onSpaceIdChanged', this.date);
+		if (space.id) {
+			this.spaceDaysProvider.addSpaceID(space.id);
+		}
 		this.schedulusSpaceSubscription = this.calendariumSpaceService
 			.watchSpaceModuleRecord(space.id)
 			.subscribe({
@@ -102,11 +115,11 @@ export abstract class CalendarBaseComponent
 					// 	calendariumSpace,
 					// );
 					this.schedulusSpaceDbo = calendariumSpace?.dbo;
-					this.spaceDaysProvider.setSchedulusSpace({
-						space,
-						...calendariumSpace,
-					});
-					this.populateRecurrings();
+					// this.spaceDaysProvider.addSpaceID({
+					// 	space,
+					// 	// ...calendariumSpace,
+					// });
+					this.populateRecurrings(); // TODO subscribe to recurrings from spaceDaysProvider
 				},
 			});
 		// this.slotsProvider.setCommuneId(this.team.id)
@@ -126,8 +139,8 @@ export abstract class CalendarBaseComponent
 
 	private onSpaceContextChanged(): void {
 		const space = this.$space();
-		if (space) {
-			this.spaceDaysProvider.setSpace(space);
+		if (space.id) {
+			this.spaceDaysProvider.addSpaceID(space.id);
 		}
 	}
 

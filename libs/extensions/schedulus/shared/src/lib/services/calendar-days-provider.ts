@@ -1,4 +1,4 @@
-import { computed, signal } from '@angular/core';
+import { computed, Signal, signal } from '@angular/core';
 import { SneatApiService } from '@sneat/api';
 import { dateToIso, INavContext } from '@sneat/core';
 import { hasRelated } from '@sneat/dto';
@@ -33,7 +33,7 @@ import {
 	takeUntil,
 } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { SpaceDay } from './space-day';
+import { CalendarDay, ICalendarDayInput } from './calendar-day';
 import { HappeningService } from './happening.service';
 import { CalendarDayService } from './calendar-day.service';
 
@@ -148,8 +148,165 @@ const groupRecurringSlotsByWeekday = (
 	return slots;
 };
 
-// @Injectable()
-export class SpaceDaysProvider {
+class CalendarSpace {
+	private readonly destroyed = new Subject<void>();
+
+	public destroy(): void {
+		this.destroyed.next();
+		this.destroyed.complete();
+	}
+
+	private readonly recurringByWd: RecurringsByWeekday =
+		emptyRecurringsByWeekday();
+
+	private readonly schedulusSpace$ = new BehaviorSubject<
+		ISchedulusSpaceContext | undefined
+	>(undefined);
+
+	public readonly recurrings$: Observable<RecurringSlots> =
+		this.schedulusSpace$.pipe(
+			skip(1), // We are not interested in processing the first 'undefined' value of BehaviorSubject
+			filter((schedulusSpace) => !!schedulusSpace), // Not sure if we need this.
+			// TODO: Instead of providing all slots we can provide observables of slots for a specific day
+			// That would minimize number of handlers to be called on watching components
+			map((schedulusSpace) => groupRecurringSlotsByWeekday(schedulusSpace)),
+			tap((slots) => console.log('SpaceDaysProvider.recurrings$ =>', slots)),
+			shareReplay(1),
+		);
+
+	constructor(
+		public readonly spaceID: string,
+		private readonly recurringsSpaceItemService: ModuleSpaceItemService<
+			IHappeningBrief,
+			IHappeningDbo
+		>,
+		private readonly contactID?: string,
+	) {}
+
+	public setSchedulusSpace(
+		schedulusSpace: ISpaceItemWithOptionalDbo<ICalendariumSpaceDbo>,
+	): void {
+		console.log('SpaceDaysProvider.setSchedulusSpace()', schedulusSpace);
+		// if (schedulusTeam.id !== this._team?.id) {
+		//   throw new Error(
+		//     `schedulusTeam.id=${schedulusTeam.id} !== this._team?.id=${this._team?.id}`,
+		//   );
+		// }
+		this.schedulusSpace$.next(schedulusSpace);
+		this.processRecurringBriefs();
+	}
+
+	private watchRecurringsBySpaceID(
+		spaceID: string,
+	): Observable<INavContext<IHappeningBrief, IHappeningDbo>[]> {
+		console.log('SpaceDaysProvider.loadRegulars()');
+		const $recurrings = this.recurringsSpaceItemService
+			.watchModuleSpaceItemsWithSpaceRef({ id: spaceID })
+			// const $regulars = this.regularService.watchByCommuneId(this.communeId)
+			.pipe(
+				takeUntil(this.destroyed),
+				tap((recurrings) => {
+					recurrings.forEach((recurring) => this.processRecurring(recurring));
+				}),
+			);
+		return $recurrings;
+	}
+
+	private processRecurringBriefs(): void {
+		console.log(
+			'SpaceDaysProvider.processRecurringBriefs()',
+			this.schedulusSpace$.value,
+		);
+		if (!this.schedulusSpace$.value?.dbo?.recurringHappenings) {
+			return;
+		}
+		const spaceID = this.spaceID;
+		zipMapBriefsWithIDs(
+			this.schedulusSpace$.value?.dbo?.recurringHappenings,
+		).forEach((rh) => {
+			this.processRecurring({
+				id: rh.id,
+				brief: rh.brief,
+				space: { id: spaceID },
+			});
+		});
+	}
+
+	private processRecurring(
+		recurring: ISpaceItemNavContext<IHappeningBrief, IHappeningDbo>,
+	): void {
+		if (
+			this.contactID &&
+			hasRelated(
+				recurring.dbo?.related || recurring?.brief?.related,
+				'contactus',
+				'contacts',
+				{ spaceID: this.spaceID, itemID: this.contactID },
+			)
+		) {
+			return;
+		}
+		console.log('SpaceDaysProvider.processRecurring()', recurring);
+		const recurringByWd = this.recurringByWd;
+		Object.keys(recurringByWd).forEach((wd) => {
+			recurringByWd[wd as WeekdayCode2] = [];
+		});
+		const { brief } = recurring;
+		if (!brief) {
+			throw new Error('recurring context has no brief');
+		}
+		if (!brief.title) {
+			throw new Error(`!brief.title`);
+		}
+		if (brief.slots) {
+			Object.entries(brief.slots).forEach(([slotID, slot]) => {
+				slot.weekdays?.forEach((wd) => {
+					if (slot.repeats === 'weekly' && !wd) {
+						throw new Error(`slot.repeats === 'weekly' && !wd=${wd}`);
+					}
+					const slotItem: ISlotUIContext = {
+						slot: { ...slot, id: slotID },
+						wd: wd,
+						happening: recurring,
+						title: brief.title,
+						repeats: slot.repeats,
+						timing: { start: slot.start, end: slot.end },
+						location: slot.location,
+						levels: brief.levels,
+						// participants: dto.participants,
+					};
+					const wdRecurrings = recurringByWd[wd];
+					if (wdRecurrings) {
+						wdRecurrings.push(slotItem);
+					}
+				});
+			});
+		}
+	}
+
+	private addRecurringsToSlotsGroup(weekday: CalendarDay): void {
+		const recurrings = this.recurringByWd[weekday.wd];
+		if (!recurrings) {
+			return;
+		}
+		const wdRecurrings =
+			weekday.slots &&
+			weekday.slots.filter((r) => r.happening.brief?.type === 'recurring');
+		if (wdRecurrings && wdRecurrings.length === recurrings.length) {
+			return;
+		}
+		if (recurrings.length) {
+			// weekday.slots = weekday.slots ? [
+			// 	...recurrings,
+			// 	...weekday.slots.filter(r => r.type !== 'recurring'),
+			// ] : [...recurrings];
+		} else {
+			// weekday.slots = weekday.slots ? weekday.slots.filter(r => !r.recurring) : [];
+		}
+	}
+}
+
+export class CalendarDaysProvider {
 	/*implements OnDestroy - this is not a component, do not implement ngOnDestroy(), instead call destroy() */
 	/*extends ISlotsProvider*/
 	// At the moment tracks schedule of a single team
@@ -162,8 +319,6 @@ export class SpaceDaysProvider {
 		IHappeningDbo
 	>;
 	// private readonly singlesByDate: Record<string, ISlotUIContext[]> = {};
-	private readonly recurringByWd: RecurringsByWeekday =
-		emptyRecurringsByWeekday();
 
 	private readonly $space = signal<ISpaceContext | undefined>(undefined);
 
@@ -173,25 +328,9 @@ export class SpaceDaysProvider {
 		undefined,
 	);
 
-	private readonly schedulusSpace$ = new BehaviorSubject<
-		ISchedulusSpaceContext | undefined
-	>(undefined);
+	private readonly days: Record<string, CalendarDay> = {};
 
-	private readonly days: Record<string, SpaceDay> = {};
-
-	private readonly recurrings$: Observable<RecurringSlots> =
-		this.schedulusSpace$.pipe(
-			skip(1), // We are not interested in processing the first 'undefined' value of BehaviorSubject
-			filter((schedulusSpace) => !!schedulusSpace), // Not sure if we need this.
-			// TODO: Instead of providing all slots we can provide observables of slots for a specific day
-			// That would minimize number of handlers to be called on watching components
-			map((schedulusSpace) => groupRecurringSlotsByWeekday(schedulusSpace)),
-			tap((slots) => console.log('SpaceDaysProvider.recurrings$ =>', slots)),
-			shareReplay(1),
-		);
-
-	// private teamId?: string;
-	private memberId?: string;
+	private contactID?: string; // TODO: should be {readonly spaceID: string; readonly contactID: string}
 
 	constructor(
 		private readonly errorLogger: IErrorLogger,
@@ -218,14 +357,37 @@ export class SpaceDaysProvider {
 		});
 	}
 
-	public getSpaceDay(date: Date): SpaceDay {
+	private $spaces = signal<readonly CalendarSpace[]>([]);
+
+	public readonly $spaceIDs = computed(() =>
+		this.$spaces().map((input) => input.spaceID),
+	);
+
+	private readonly $inputs = computed<readonly ICalendarDayInput[]>(() => {
+		return this.$spaces().map((space) => ({
+			spaceID: space.spaceID,
+			recurrings$: space.recurrings$,
+		}));
+	});
+
+	public addSpaceID(spaceID: string): void {
+		this.$spaces.update((spaces) => [
+			...spaces,
+			new CalendarSpace(
+				spaceID,
+				this.recurringsSpaceItemService,
+				this.contactID,
+			),
+		]);
+	}
+
+	public getCalendarDay(date: Date): CalendarDay {
 		const id = dateToIso(date);
 		let day = this.days[id];
 		if (!day) {
-			day = new SpaceDay(
-				this.$spaceID(),
+			day = new CalendarDay(
 				date,
-				this.recurrings$,
+				this.$inputs,
 				this.errorLogger,
 				this.happeningService,
 				this.calendarDayService,
@@ -235,31 +397,11 @@ export class SpaceDaysProvider {
 		return day;
 	}
 
-	public setSpace(space: ISpaceContext): void {
-		console.log('SpaceDaysProvider.setSpace()', space);
-		this.$space.set(space);
-		// this.processRecurringBriefs();
-		// return this.loadRecurring();
-	}
-
-	public setSchedulusSpace(
-		schedulusSpace: ISpaceItemWithOptionalDbo<ICalendariumSpaceDbo>,
-	): void {
-		console.log('SpaceDaysProvider.setSchedulusSpace()', schedulusSpace);
-		// if (schedulusTeam.id !== this._team?.id) {
-		//   throw new Error(
-		//     `schedulusTeam.id=${schedulusTeam.id} !== this._team?.id=${this._team?.id}`,
-		//   );
-		// }
-		this.schedulusSpace$.next(schedulusSpace);
-		this.processRecurringBriefs();
-	}
-
 	public setMemberId(memberId: string): void {
-		this.memberId = memberId;
+		this.contactID = memberId;
 	}
 
-	public preloadEvents(...dates: Date[]): Observable<SpaceDay> {
+	public preloadEvents(...dates: Date[]): Observable<CalendarDay> {
 		console.warn('not implemented: Preload events for:', dates);
 		return EMPTY;
 		// const dateKeys = dates.filter(d => !!d)
@@ -272,7 +414,7 @@ export class SpaceDaysProvider {
 		// 	.pipe(ignoreElements());
 	}
 
-	public getDays(...weekdays: SpaceDay[]): Observable<SpaceDay> {
+	public getDays(...weekdays: CalendarDay[]): Observable<CalendarDay> {
 		console.log('SpaceDaysProvider.getDays()', weekdays);
 		return EMPTY;
 		// if (!weekdays?.length) {
@@ -337,98 +479,6 @@ export class SpaceDaysProvider {
 		console.log('SpaceDaysProvider.loadForWeek()', d);
 	}
 
-	private processRecurringBriefs(): void {
-		console.log(
-			'SpaceDaysProvider.processRecurringBriefs()',
-			this.schedulusSpace$.value,
-		);
-		if (!this.schedulusSpace$.value?.dbo?.recurringHappenings) {
-			return;
-		}
-		const space = this.$space();
-		zipMapBriefsWithIDs(
-			this.schedulusSpace$.value?.dbo?.recurringHappenings,
-		).forEach((rh) => {
-			this.processRecurring({
-				id: rh.id,
-				brief: rh.brief,
-				space: space || { id: '' },
-			});
-		});
-	}
-
-	private watchRecurringsBySpaceID(
-		space: ISpaceContext,
-	): Observable<INavContext<IHappeningBrief, IHappeningDbo>[]> {
-		console.log('SpaceDaysProvider.loadRegulars()');
-		const $recurrings = this.recurringsSpaceItemService
-			.watchModuleSpaceItemsWithSpaceRef(space)
-			// const $regulars = this.regularService.watchByCommuneId(this.communeId)
-			.pipe(
-				takeUntil(this.destroyed),
-				tap((recurrings) => {
-					recurrings.forEach((recurring) => this.processRecurring(recurring));
-				}),
-			);
-		return $recurrings;
-	}
-
-	private processRecurring(
-		recurring: ISpaceItemNavContext<IHappeningBrief, IHappeningDbo>,
-	): void {
-		const spaceID = this.$spaceID();
-		if (!spaceID) {
-			return;
-		}
-		if (
-			this.memberId &&
-			hasRelated(
-				recurring.dbo?.related || recurring?.brief?.related,
-				'contactus',
-				'contacts',
-				{ spaceID, itemID: this.memberId },
-			)
-		) {
-			return;
-		}
-		console.log('SpaceDaysProvider.processRecurring()', recurring);
-		const { recurringByWd } = this;
-		Object.keys(recurringByWd).forEach((wd) => {
-			recurringByWd[wd as WeekdayCode2] = [];
-		});
-		const { brief } = recurring;
-		if (!brief) {
-			throw new Error('recurring context has no brief');
-		}
-		if (!brief.title) {
-			throw new Error(`!brief.title`);
-		}
-		if (brief.slots) {
-			Object.entries(brief.slots).forEach(([slotID, slot]) => {
-				slot.weekdays?.forEach((wd) => {
-					if (slot.repeats === 'weekly' && !wd) {
-						throw new Error(`slot.repeats === 'weekly' && !wd=${wd}`);
-					}
-					const slotItem: ISlotUIContext = {
-						slot: { ...slot, id: slotID },
-						wd: wd,
-						happening: recurring,
-						title: brief.title,
-						repeats: slot.repeats,
-						timing: { start: slot.start, end: slot.end },
-						location: slot.location,
-						levels: brief.levels,
-						// participants: dto.participants,
-					};
-					const wdRecurrings = recurringByWd[wd];
-					if (wdRecurrings) {
-						wdRecurrings.push(slotItem);
-					}
-				});
-			});
-		}
-	}
-
 	// private addEventsToSlotsGroup(weekday: SlotsGroup, date:)
 
 	// public loadTodayAndFutureEvents(): Observable<DtoSingleActivity[]> {
@@ -462,27 +512,6 @@ export class SpaceDaysProvider {
 	// 			}),
 	// 		);
 	// }
-
-	private addRecurringsToSlotsGroup(weekday: SpaceDay): void {
-		const recurrings = this.recurringByWd[weekday.wd];
-		if (!recurrings) {
-			return;
-		}
-		const wdRecurrings =
-			weekday.slots &&
-			weekday.slots.filter((r) => r.happening.brief?.type === 'recurring');
-		if (wdRecurrings && wdRecurrings.length === recurrings.length) {
-			return;
-		}
-		if (recurrings.length) {
-			// weekday.slots = weekday.slots ? [
-			// 	...recurrings,
-			// 	...weekday.slots.filter(r => r.type !== 'recurring'),
-			// ] : [...recurrings];
-		} else {
-			// weekday.slots = weekday.slots ? weekday.slots.filter(r => !r.recurring) : [];
-		}
-	}
 
 	private loadEvents(
 		...dates: Date[]

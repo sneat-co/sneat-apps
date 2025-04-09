@@ -3,7 +3,7 @@ import { IonicModule, PopoverController } from '@ionic/angular';
 import { dateToIso, isoStringsToDate } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import { Subject, takeUntil } from 'rxjs';
-import { SpaceDaysProvider } from '../../../../services/space-days-provider';
+import { CalendarDaysProvider } from '../../../../services/calendar-days-provider';
 import { addDays, CalendarStateService } from '../../calendar-state.service';
 import { CalendarDayCardComponent } from './calendar-day-card.component';
 
@@ -22,7 +22,7 @@ export class CalendarDayTabComponent implements OnDestroy {
 	}
 
 	@Input({ required: true }) space?: ISpaceContext;
-	@Input({ required: true }) spaceDaysProvider?: SpaceDaysProvider;
+	@Input({ required: true }) spaceDaysProvider?: CalendarDaysProvider;
 
 	constructor(
 		private readonly scheduleSateService: CalendarStateService,

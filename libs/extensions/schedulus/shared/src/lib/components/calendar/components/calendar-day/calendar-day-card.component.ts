@@ -4,7 +4,7 @@ import { virtualSliderAnimations } from '@sneat/components';
 import { CalendarDayComponent } from './calendar-day.component';
 import { CalendarDayTitleComponent } from './calendar-day-title.component';
 import { ISpaceContext } from '@sneat/space-models';
-import { SpaceDaysProvider } from '../../../../services/space-days-provider';
+import { CalendarDaysProvider } from '../../../../services/calendar-days-provider';
 import { NewHappeningParams } from '@sneat/mod-schedulus-core';
 import { getToday, CalendarStateService } from '../../calendar-state.service';
 import { swipeableDay } from '../../../swipeable-ui';
@@ -30,7 +30,7 @@ export class CalendarDayCardComponent
 	implements OnInit
 {
 	@Input({ required: true }) space?: ISpaceContext;
-	@Input({ required: true }) spaceDaysProvider?: SpaceDaysProvider;
+	@Input({ required: true }) spaceDaysProvider?: CalendarDaysProvider;
 
 	@Output() readonly goNew = new EventEmitter<NewHappeningParams>();
 

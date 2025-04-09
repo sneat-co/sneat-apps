@@ -2,8 +2,6 @@ import { JsonPipe } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
-	Inject,
-	input,
 	Input,
 	OnChanges,
 	Output,
@@ -38,13 +36,7 @@ import {
 	IContactWithOptionalDbo,
 	IContactWithDboAndSpace,
 } from '@sneat/contactus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ContactService } from '@sneat/contactus-services';
-import {
-	computeSpaceIdFromSpaceRef,
-	computeSpaceRefFromSpaceContext,
-	ISpaceContext,
-} from '@sneat/space-models';
 import { LocationFormComponent } from '../location-form';
 import { NewContactBaseFormComponent } from './new-contact-base-form-component';
 
