@@ -24,8 +24,8 @@ importers:
         specifier: 19.2.5
         version: 19.2.5(rxjs@7.8.2)(zone.js@0.15.0)
       '@angular/fire':
-        specifier: 19.0.0
-        version: 19.0.0(01723c5fe7e600a3269c3263342d4000)
+        specifier: 19.1.0
+        version: 19.1.0(01723c5fe7e600a3269c3263342d4000)
       '@angular/forms':
         specifier: 19.2.5
         version: 19.2.5(@angular/common@19.2.5(@angular/core@19.2.5(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@19.2.5(rxjs@7.8.2)(zone.js@0.15.0))(@angular/platform-browser@19.2.5(@angular/animations@19.2.5(@angular/common@19.2.5(@angular/core@19.2.5(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@19.2.5(rxjs@7.8.2)(zone.js@0.15.0)))(@angular/common@19.2.5(@angular/core@19.2.5(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@19.2.5(rxjs@7.8.2)(zone.js@0.15.0)))(rxjs@7.8.2)
@@ -486,8 +486,8 @@ packages:
       rxjs: ^6.5.3 || ^7.4.0
       zone.js: ~0.15.0
 
-  '@angular/fire@19.0.0':
-    resolution: {integrity: sha512-dVU9IdL9sGKe1fV7g2iGgkjUQIYrbnljHtHUgNpZaskyW+Vy6ndtsEbSUoRd6sLP8WpThWH7WvITKhu/8a6qfQ==}
+  '@angular/fire@19.1.0':
+    resolution: {integrity: sha512-yyELJQLxF56EoGW8HUxfATBUeX5rzNpt/PjNAhSlmWdQ12jXVkgGeWyWsl5gvUlxhpFKIt+EVp3nYvwIlzey6Q==}
     peerDependencies:
       '@angular/common': ^19.0.0
       '@angular/core': ^19.0.0
@@ -10166,7 +10166,7 @@ snapshots:
       tslib: 2.8.1
       zone.js: 0.15.0
 
-  '@angular/fire@19.0.0(01723c5fe7e600a3269c3263342d4000)':
+  '@angular/fire@19.1.0(01723c5fe7e600a3269c3263342d4000)':
     dependencies:
       '@angular-devkit/schematics': 19.2.6(chokidar@4.0.3)
       '@angular/common': 19.2.5(@angular/core@19.2.5(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2)
