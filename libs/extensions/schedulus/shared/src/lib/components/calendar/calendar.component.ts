@@ -28,12 +28,12 @@ import {
 } from '../../services/calendar-day.service';
 import { CalendariumSpaceService } from '../../services/calendarium-space.service';
 import { HappeningService } from '../../services/happening.service';
-import { isToday } from '../schedule-core';
+import { isToday } from '../calendar-core';
 import {
 	emptyCalendarFilter,
 	CalendarFilterService,
 } from '../calendar-filter.service';
-import { hasContact } from '../schedule-slots';
+import { hasContact } from '../calendar-slots';
 import { CalendarBaseComponent } from './calendar-base.component';
 import { CalendarTab } from './calendar-component-types';
 import { CalendarDayTabComponent } from './components/calendar-day/calendar-day-tab.component';

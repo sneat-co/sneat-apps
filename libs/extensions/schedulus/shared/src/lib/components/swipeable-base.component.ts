@@ -5,7 +5,7 @@ import {
 } from '@sneat/components';
 import { dateToIso } from '@sneat/core';
 import { SneatBaseComponent } from '@sneat/ui';
-import { animationState, areSameDates } from './schedule-core';
+import { animationState, areSameDates } from './calendar-core';
 import {
 	addDays,
 	getToday,

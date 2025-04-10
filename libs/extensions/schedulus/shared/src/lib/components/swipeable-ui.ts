@@ -6,7 +6,7 @@ import {
 import { dateToIso, getWeekdayDate } from '@sneat/core';
 import { Weekday } from './calendar/weekday';
 import { Observable } from 'rxjs';
-import { CalendarDaysProvider } from '../services/calendar-days-provider';
+import { CalendarDataProvider } from '../services/calendar-data-provider';
 import { IDateChanged } from './calendar/calendar-state.service';
 import { Week } from './week';
 import { createWeekday } from './weekday-functions';
@@ -33,7 +33,7 @@ function initialAnimationState(parity: Parity): VirtualSlideAnimationsStates {
 export function swipeableDay(
 	parity: Parity,
 	date: Date,
-	spaceDaysProvider: CalendarDaysProvider,
+	spaceDaysProvider: CalendarDataProvider,
 	destroyed: Observable<void>,
 ): SwipeableDay {
 	// console.log(`swipeableDay(parity=${parity}, date=${dateToIso(date)})`);
@@ -71,7 +71,7 @@ export function swipeableDay(
 export interface SwipeableDay extends Swipeable {
 	// private readonly dayChanged = new Subject<void>();
 	weekday: Weekday;
-	spaceDaysProvider: CalendarDaysProvider;
+	spaceDaysProvider: CalendarDataProvider;
 	// public animationState: VirtualSlideAnimationsStates;
 
 	// constructor(

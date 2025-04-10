@@ -25,9 +25,9 @@ import {
 	emptyCalendarFilter,
 	CalendarFilterService,
 } from '../../../calendar-filter.service';
-import { isSlotVisible } from '../../../schedule-slots';
+import { isSlotVisible } from '../../../calendar-slots';
 import { Weekday } from '../../weekday';
-import { isToday, isTomorrow } from '../../../schedule-core';
+import { isToday, isTomorrow } from '../../../calendar-core';
 // import { DaySlotItemModule } from '../day-slot-item/daly-slot-item.module';
 import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
 

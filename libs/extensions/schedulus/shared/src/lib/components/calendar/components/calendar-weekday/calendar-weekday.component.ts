@@ -20,7 +20,7 @@ import {
 	emptyCalendarFilter,
 	CalendarFilterService,
 } from '../../../calendar-filter.service';
-import { isSlotVisible } from '../../../schedule-slots';
+import { isSlotVisible } from '../../../calendar-slots';
 import { Weekday } from '../../weekday';
 import { CalendarDay } from '../../../../services/calendar-day';
 import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';

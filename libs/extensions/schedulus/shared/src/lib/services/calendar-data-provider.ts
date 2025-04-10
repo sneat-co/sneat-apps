@@ -1,10 +1,13 @@
-import { computed, Signal, signal } from '@angular/core';
+import { computed, Signal, signal, effect } from '@angular/core';
 import { dateToIso } from '@sneat/core';
 import { CalendariumSpaceService } from '../services/calendarium-space.service';
 import {
+	CalendarHappeningBriefsBySpaceID,
+	ICalendarHappeningBrief,
 	IHappeningBrief,
 	IHappeningDbo,
 	ISlotUIContext,
+	WeekdayCode2,
 } from '@sneat/mod-schedulus-core';
 import { IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
@@ -12,6 +15,10 @@ import { ModuleSpaceItemService } from '@sneat/space-services';
 import { EMPTY, Observable, Subject } from 'rxjs';
 import { CalendarDay, ICalendarDayInput } from './calendar-day';
 import { CalendarSpace } from './calendar-space';
+import {
+	emptyRecurringsByWeekday,
+	RecurringsByWeekday,
+} from './calendar-types';
 import { HappeningService } from './happening.service';
 import { CalendarDayService } from './calendar-day.service';
 
@@ -58,7 +65,7 @@ import { CalendarDayService } from './calendar-day.service';
 // 	// public abstract loadTodayAndFutureEvents(): Observable<DtoSingleActivity[]>;
 // }
 
-export class CalendarDaysProvider {
+export class CalendarDataProvider {
 	/*implements OnDestroy - this is not a component, do not implement ngOnDestroy(), instead call destroy() */
 	/*extends ISlotsProvider*/
 	// At the moment tracks schedule of a single team
@@ -119,6 +126,36 @@ export class CalendarDaysProvider {
 		return primarySpace ? [primarySpace] : [];
 	});
 
+	public readonly $recurringByWd = computed<Readonly<RecurringsByWeekday>>(
+		() => {
+			const recurringsByWd: RecurringsByWeekday = emptyRecurringsByWeekday();
+			const spaces = this.$spaces();
+			spaces.forEach((space) => {
+				const spaceRecurringsByWd = space.$recurringByWd();
+				Object.entries(spaceRecurringsByWd).forEach(([wd, slots]) => {
+					recurringsByWd[wd as WeekdayCode2] = [
+						...recurringsByWd[wd as WeekdayCode2].filter(
+							(slot) => slot.happening.space.id !== space.spaceID,
+						),
+						...slots,
+					];
+				});
+			});
+			return recurringsByWd;
+		},
+	);
+
+	public readonly $recurringsBySpaceID = computed<
+		Readonly<CalendarHappeningBriefsBySpaceID>
+	>(() => {
+		const spaces = this.$spaces();
+		const result: CalendarHappeningBriefsBySpaceID = {};
+		spaces.forEach((space) => {
+			result[space.spaceID] = space.$recurrings()?.recurringHappenings || {};
+		});
+		return result;
+	});
+
 	public destroy(): void {
 		this.destroyed.next();
 		Object.values(this.days).forEach((day) => {
@@ -126,10 +163,6 @@ export class CalendarDaysProvider {
 		});
 		this.$spaces().forEach((space) => space.destroy());
 	}
-
-	public readonly $spaceIDs = computed(() =>
-		this.$spaces().map((input) => input.spaceID),
-	);
 
 	private readonly $inputs = computed<readonly ICalendarDayInput[]>(() =>
 		this.$spaces().map((space) => ({

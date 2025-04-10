@@ -1,10 +1,10 @@
 import { getWd2, wdCodeToWeekdayLongName } from '@sneat/mod-schedulus-core';
-import { CalendarDaysProvider } from '../services/calendar-days-provider';
+import { CalendarDataProvider } from '../services/calendar-data-provider';
 import { Weekday } from './calendar/weekday';
 
 export function createWeekday(
 	date: Date,
-	spaceDaysProvider: CalendarDaysProvider,
+	spaceDaysProvider: CalendarDataProvider,
 ): Weekday {
 	const id = getWd2(date);
 	const day = spaceDaysProvider.getCalendarDay(date);

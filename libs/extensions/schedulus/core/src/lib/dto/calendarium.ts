@@ -7,11 +7,19 @@ export interface ICalendarHappeningBrief
 	extends IHappeningBrief,
 		IWithRelatedOnly {}
 
+export type CalendarHappeningBriefsByID = Record<
+	string,
+	ICalendarHappeningBrief
+>;
+
 export interface ICalendariumSpaceDbo {
-	readonly recurringHappenings?: Readonly<
-		Record<string, ICalendarHappeningBrief>
-	>;
+	readonly recurringHappenings?: Readonly<CalendarHappeningBriefsByID>;
 }
+
+export type CalendarHappeningBriefsBySpaceID = Record<
+	string,
+	CalendarHappeningBriefsByID
+>;
 
 export type ICalendariumSpaceDboWithID = IIdAndDbo<ICalendariumSpaceDbo>;
 

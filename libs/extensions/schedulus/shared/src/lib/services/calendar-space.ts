@@ -1,7 +1,5 @@
 import { signal } from '@angular/core';
-import { INavContext } from '@sneat/core';
 import { hasRelated } from '@sneat/dto';
-import { ModuleSpaceItemService } from '@sneat/space-services';
 import { CalendariumSpaceService } from '../services/calendarium-space.service';
 import {
 	ICalendariumSpaceDbo,
@@ -62,6 +60,7 @@ export class CalendarSpace {
 			map((schedulusSpace) => groupRecurringSlotsByWeekday(schedulusSpace)),
 			tap((slots) => console.log('SpaceDaysProvider.recurrings$ =>', slots)),
 			shareReplay(1),
+			takeUntil(this.destroyed),
 		);
 
 	constructor(

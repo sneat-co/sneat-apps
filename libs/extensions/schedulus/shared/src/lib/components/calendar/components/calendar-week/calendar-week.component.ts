@@ -11,11 +11,11 @@ import {
 import { IonicModule } from '@ionic/angular';
 import { dateToIso } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
-import { CalendarDaysProvider } from '../../../../services/calendar-days-provider';
+import { CalendarDataProvider } from '../../../../services/calendar-data-provider';
 import { NewHappeningParams } from '@sneat/mod-schedulus-core';
 import { Week } from '../../../week';
 import { ICalendarFilter } from '../calendar-filter/calendar-filter';
-import { createWeekdays } from '../../../schedule-core';
+import { createWeekdays } from '../../../calendar-core';
 import { Weekday } from '../../weekday';
 import { CalendarWeekdayComponent } from '../calendar-weekday/calendar-weekday.component';
 
@@ -28,7 +28,7 @@ export class CalendarWeekComponent implements OnChanges {
 	public readonly $space = input.required<ISpaceContext | undefined>();
 
 	@Input({ required: true }) week?: Week;
-	@Input({ required: true }) spaceDaysProvider?: CalendarDaysProvider;
+	@Input({ required: true }) spaceDaysProvider?: CalendarDataProvider;
 	@Input() filter?: ICalendarFilter;
 
 	@Output() readonly goNew = new EventEmitter<NewHappeningParams>();

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ISpaceContext } from '@sneat/space-models';
-import { CalendarDaysProvider } from '../../../../services/calendar-days-provider';
+import { CalendarDataProvider } from '../../../../services/calendar-data-provider';
 import { CalendarWeekCardComponent } from './calendar-week-card.component';
 
 @Component({
@@ -10,5 +10,5 @@ import { CalendarWeekCardComponent } from './calendar-week-card.component';
 })
 export class CalendarWeekTabComponent {
 	@Input({ required: true }) space?: ISpaceContext;
-	@Input({ required: true }) spaceDaysProvider?: CalendarDaysProvider;
+	@Input({ required: true }) spaceDaysProvider?: CalendarDataProvider;
 }

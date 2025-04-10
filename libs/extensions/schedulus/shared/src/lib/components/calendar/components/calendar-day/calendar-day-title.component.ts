@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { LongMonthNamePipe } from '@sneat/components';
 import { WdToWeekdayPipe } from '@sneat/mod-schedulus-core';
-import { isToday, isTomorrow } from '../../../schedule-core';
+import { isToday, isTomorrow } from '../../../calendar-core';
 import { Weekday } from '../../weekday';
 
 @Component({

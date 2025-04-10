@@ -9,7 +9,7 @@ import {
 	IHappeningWithUiState,
 } from '@sneat/mod-schedulus-core';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/space-models';
-import { CalendarDaysProvider } from '../../services/calendar-days-provider';
+import { CalendarDataProvider } from '../../services/calendar-data-provider';
 
 @Directive()
 export abstract class CalendarBaseComponent
@@ -18,7 +18,7 @@ export abstract class CalendarBaseComponent
 {
 	protected date = new Date();
 
-	protected readonly spaceDaysProvider: CalendarDaysProvider;
+	protected readonly spaceDaysProvider: CalendarDataProvider;
 
 	private schedulusSpaceDbo?: ICalendariumSpaceDbo | null;
 
@@ -32,7 +32,7 @@ export abstract class CalendarBaseComponent
 	) {
 		super(className);
 		console.log(`${className}:CalendarBaseComponent.constructor()`);
-		this.spaceDaysProvider = new CalendarDaysProvider(
+		this.spaceDaysProvider = new CalendarDataProvider(
 			this.$spaceID,
 			this.errorLogger,
 			happeningService,

@@ -18,7 +18,7 @@ export type RecurringsByWeekday = {
 	[wd in WeekdayCode2]: ISlotUIContext[];
 };
 
-export const emptyRecurringsByWeekday = () =>
+export const emptyRecurringsByWeekday = (): RecurringsByWeekday =>
 	(['mo', 'tu', 'we', 'th', 'fr', 'sa', 'su'] as WeekdayCode2[]).reduce(
 		(o, wd) => {
 			o[wd] = [];
