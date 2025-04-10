@@ -5,14 +5,13 @@ import { SneatBaseComponent } from '@sneat/ui';
 
 @Directive()
 export abstract class WithSpaceInput extends SneatBaseComponent {
+	protected readonly spaceNavService = inject(SpaceNavService);
+
 	public readonly $space = input.required<ISpaceContext>();
 	protected readonly $spaceID = computed(() => this.$space().id);
 	protected readonly $spaceType = computed(() => this.$space().type);
-	protected readonly $spaceRef = computed(() => {
-		const id = this.$spaceID();
-		const type = this.$spaceType();
-		return { id, type };
-	});
-
-	protected readonly spaceNavService = inject(SpaceNavService);
+	protected readonly $spaceRef = computed(() => ({
+		id: this.$spaceID(),
+		type: this.$spaceType(),
+	}));
 }

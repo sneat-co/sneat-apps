@@ -12,7 +12,6 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { SneatApiService } from '@sneat/api';
 import { IMemberContext } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import { dateToIso, localDateToIso } from '@sneat/core';
@@ -84,7 +83,7 @@ export class CalendarComponent
 	// 	this._space = space;
 	// }
 
-	@Input() member?: IMemberContext;
+	@Input() member?: IMemberContext; // TODO: rename to contact?
 	@Input() public tab: CalendarTab = 'day';
 	@Input() public dateID = '';
 	@Output() readonly tabChanged = new EventEmitter<CalendarTab>();
@@ -101,7 +100,6 @@ export class CalendarComponent
 		calendarStateService: CalendarStateService,
 		happeningService: HappeningService,
 		calendarDayService: CalendarDayService,
-		sneatApiService: SneatApiService,
 		calendariumSpaceService: CalendariumSpaceService,
 	) {
 		super(
@@ -109,7 +107,6 @@ export class CalendarComponent
 			calendariumSpaceService,
 			happeningService,
 			calendarDayService,
-			sneatApiService,
 		);
 
 		filterService.filter.pipe(takeUntil(this.destroyed$)).subscribe({
@@ -221,8 +218,7 @@ export class CalendarComponent
 
 	// noinspection JSMethodCanBqw2se3333eStatic
 
-	override ngOnChanges(changes: SimpleChanges): void {
-		super.ngOnChanges(changes);
+	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['tab'] && this.tab === 'week') {
 			this.isWeekTabActivated = true;
 		}

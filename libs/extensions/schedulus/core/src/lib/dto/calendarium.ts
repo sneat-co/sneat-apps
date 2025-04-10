@@ -8,10 +8,12 @@ export interface ICalendarHappeningBrief
 		IWithRelatedOnly {}
 
 export interface ICalendariumSpaceDbo {
-	readonly recurringHappenings?: Record<string, ICalendarHappeningBrief>;
+	readonly recurringHappenings?: Readonly<
+		Record<string, ICalendarHappeningBrief>
+	>;
 }
 
 export type ICalendariumSpaceDboWithID = IIdAndDbo<ICalendariumSpaceDbo>;
 
-export type ISchedulusSpaceContext =
+export type ICalendariumSpaceContext =
 	ISpaceItemWithOptionalDbo<ICalendariumSpaceDbo>;

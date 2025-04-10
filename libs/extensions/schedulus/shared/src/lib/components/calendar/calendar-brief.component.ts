@@ -1,9 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { Inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { SneatApiService } from '@sneat/api';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	CalendarDayService,
 	CalendarDayServiceModule,
@@ -43,7 +40,6 @@ export class CalendarBriefComponent extends CalendarBaseComponent {
 	protected readonly $tomorrow = signal<Weekday | undefined>(undefined);
 
 	constructor(
-		sneatApiService: SneatApiService,
 		calendarDayService: CalendarDayService,
 		happeningService: HappeningService,
 		calendariumSpaceService: CalendariumSpaceService,
@@ -53,7 +49,6 @@ export class CalendarBriefComponent extends CalendarBaseComponent {
 			calendariumSpaceService,
 			happeningService,
 			calendarDayService,
-			sneatApiService,
 		);
 
 		const todayDate = new Date();
