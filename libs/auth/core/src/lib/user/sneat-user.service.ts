@@ -1,4 +1,10 @@
-import { Inject, Injectable } from '@angular/core';
+import {
+	Inject,
+	Injectable,
+	inject,
+	Injector,
+	runInInjectionContext,
+} from '@angular/core';
 import {
 	// Action,
 	Firestore as AngularFirestore,
@@ -33,8 +39,10 @@ const UsersCollection = 'users';
 @Injectable({ providedIn: 'root' }) // TODO: lazy loading
 export class SneatUserService {
 	// private userDocSubscription?: Subscription;
+	private readonly injector = inject(Injector);
 	private readonly userCollection: CollectionReference<IUserRecord>;
-	private readonly userDocRef = (uid: string) => doc(this.userCollection, uid);
+	private readonly userDocRef = (uid: string) =>
+		runInInjectionContext(this.injector, () => doc(this.userCollection, uid));
 
 	private uid?: string;
 	private $userTitle?: string;
@@ -128,22 +136,26 @@ export class SneatUserService {
 		setTimeout(() => {
 			try {
 				const userDocRef = this.userDocRef(uid);
-				this._unsubscribeFromUserDoc = onSnapshot(userDocRef, {
-					next: (userDocSnapshot) => {
-						console.log(
-							`SneatUserService.watchUserRecord(uid=${uid}) => userDocSnapshot:`,
-							userDocSnapshot,
-						);
-						this.onAuthStateChanged(authState);
-						this.userDocChanged(userDocSnapshot, authState);
-					},
-					error: (err) => {
-						console.error(
-							`SneatUserService.watchUserRecord(uid=${uid}) => failed:`,
-							err,
-						);
-					},
-				});
+				this._unsubscribeFromUserDoc = runInInjectionContext(
+					this.injector,
+					() =>
+						onSnapshot(userDocRef, {
+							next: (userDocSnapshot) => {
+								console.log(
+									`SneatUserService.watchUserRecord(uid=${uid}) => userDocSnapshot:`,
+									userDocSnapshot,
+								);
+								this.onAuthStateChanged(authState);
+								this.userDocChanged(userDocSnapshot, authState);
+							},
+							error: (err) => {
+								console.error(
+									`SneatUserService.watchUserRecord(uid=${uid}) => failed:`,
+									err,
+								);
+							},
+						}),
+				);
 			} catch (err) {
 				console.error(
 					`SneatUserService.watchUserRecord(uid=${uid}) => Failed to setup watcher for user record::`,

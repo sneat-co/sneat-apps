@@ -5,6 +5,14 @@ export interface ISpaceRef {
 	readonly type?: SpaceType;
 }
 
+export function equalSpaceRefs(
+	v1?: ISpaceRef | null,
+	v2?: ISpaceRef | null,
+): boolean {
+	if (v1 === v2) return true;
+	return v1?.id === v2?.id && v1?.type === v2?.type;
+}
+
 export const emptySpaceRef: ISpaceRef = { id: '' };
 
 export interface IIdAndBrief<Brief> {

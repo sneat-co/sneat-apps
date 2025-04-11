@@ -1,3 +1,4 @@
+import { inject, Injector, runInInjectionContext } from '@angular/core';
 import {
 	collection,
 	CollectionReference,
@@ -5,7 +6,7 @@ import {
 } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { IIdAndBrief, IIdAndOptionalDbo } from '@sneat/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ModuleSpaceItemService } from './space-item.service';
 
@@ -17,7 +18,6 @@ export abstract class SpaceModuleService<Dbo> extends ModuleSpaceItemService<
 	Dbo
 > {
 	// protected readonly sfs: SneatFirestoreService<Brief, Dto>;
-
 	protected constructor(moduleID: string, afs: AngularFirestore) {
 		// this.sfs = new SneatFirestoreService<Brief, Dto>(collectionName, afs);
 		super(moduleID, 'modules', afs, undefined as unknown as SneatApiService);
@@ -26,19 +26,21 @@ export abstract class SpaceModuleService<Dbo> extends ModuleSpaceItemService<
 	watchSpaceModuleRecord(spaceID: string): Observable<IIdAndOptionalDbo<Dbo>> {
 		const logPrefix = `SpaceModuleService.watchSpaceModuleRecord(spaceID=${spaceID}, moduleID=${this.moduleID})`;
 		console.log(logPrefix);
-		const collectionRef = collection(
-			this.spacesCollection,
-			spaceID,
-			'modules',
-		) as CollectionReference<Dbo>;
-		// if (this.moduleID === 'trackus') {
-		// 	return throwError(() => new Error('test error'));
-		// }
-		return this.sfs
-			.watchByID<Dbo>(collectionRef, this.moduleID)
-			.pipe
-			// tap((o) => console.log(`${logPrefix} =>`, o)),
-			();
+		return runInInjectionContext(this.injector, () => {
+			const collectionRef = collection(
+				this.spacesCollection,
+				spaceID,
+				'modules',
+			) as CollectionReference<Dbo>;
+			// if (this.moduleID === 'trackus') {
+			// 	return throwError(() => new Error('test error'));
+			// }
+			return this.sfs
+				.watchByID<Dbo>(collectionRef, this.moduleID)
+				.pipe
+				// tap((o) => console.log(`${logPrefix} =>`, o)),
+				();
+		});
 	}
 
 	watchBriefs<ItemBrief>(

@@ -22,11 +22,11 @@ export class ScrumsHistoryPageComponent {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly route: ActivatedRoute,
 		private readonly spaceService: SpaceService,
-		private readonly scrumService: ScrumService,
-		private readonly afAuth: AngularFireAuth,
-		private readonly navService: NavService,
+		route: ActivatedRoute,
+		// private readonly scrumService: ScrumService,
+		// private readonly afAuth: AngularFireAuth,
+		// private readonly navService: NavService,
 	) {
 		const space = history.state?.team as IRecord<ISpaceDbo>;
 		console.log('space', space);

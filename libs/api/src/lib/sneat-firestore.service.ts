@@ -1,3 +1,4 @@
+import { Injector, runInInjectionContext } from '@angular/core';
 import {
 	doc,
 	getDoc,
@@ -29,6 +30,7 @@ export interface IQueryArgs {
 
 export class SneatFirestoreService<Brief, Dbo extends Brief> {
 	constructor(
+		private readonly injector: Injector,
 		// private readonly afs: AngularFirestore,
 		private readonly dto2brief: (id: string, dto: Dbo) => Brief = (
 			id: string,
@@ -48,33 +50,38 @@ export class SneatFirestoreService<Brief, Dbo extends Brief> {
 		collection: CollectionReference<Dbo2>,
 		id: string,
 	): Observable<IIdAndOptionalBriefAndOptionalDbo<Brief, Dbo2>> {
-		return this.watchByDocRef(doc(collection, id));
+		const docRef = runInInjectionContext(this.injector, () =>
+			doc(collection, id),
+		);
+		return this.watchByDocRef(docRef);
 	}
 
 	watchByDocRef<Dbo2 extends Dbo>(
 		docRef: DocumentReference<Dbo2>,
 	): Observable<IIdAndOptionalBriefAndOptionalDbo<Brief, Dbo2>> {
 		console.log(`SneatFirestoreService.watchByDocRef(${docRef.path})`);
-		const subj = new Subject<DocumentSnapshot<Dbo2>>();
-		// const snapshots = docSnapshots<Dbo2>(docRef);
-		onSnapshot(
-			docRef,
-			(snapshot) => subj.next(snapshot),
-			(err) => subj.error(err),
-			() => subj.complete(),
-		);
-		// const snapshots = from(getDoc<Dbo2>(docRef));
-		return subj.asObservable().pipe(
-			// tap((snapshot) =>
-			// 	console.log(
-			// 		`SneatFirestoreService.watchByDocRef(${docRef.path}): snapshot:`,
-			// 		snapshot,
-			// 	),
-			// ),
-			map((changes) =>
-				docSnapshotToDto<Brief, Dbo2>(docRef.id, this.dto2brief, changes),
-			),
-		);
+		return runInInjectionContext(this.injector, () => {
+			const subj = new Subject<DocumentSnapshot<Dbo2>>();
+			// const snapshots = docSnapshots<Dbo2>(docRef);
+			onSnapshot(
+				docRef,
+				(snapshot) => subj.next(snapshot),
+				(err) => subj.error(err),
+				() => subj.complete(),
+			);
+			// const snapshots = from(getDoc<Dbo2>(docRef));
+			return subj.asObservable().pipe(
+				// tap((snapshot) =>
+				// 	console.log(
+				// 		`SneatFirestoreService.watchByDocRef(${docRef.path}): snapshot:`,
+				// 		snapshot,
+				// 	),
+				// ),
+				map((changes) =>
+					docSnapshotToDto<Brief, Dbo2>(docRef.id, this.dto2brief, changes),
+				),
+			);
+		});
 	}
 
 	getByDocRef<Dbo2 extends Dbo>(

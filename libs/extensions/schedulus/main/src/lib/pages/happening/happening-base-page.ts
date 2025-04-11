@@ -92,8 +92,8 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 			happening = { ...happening, brief: prevHappening.brief };
 		}
 		this.$happening.set(happening);
-		if (!this.space?.id && happening.space) {
-			this.$space.set(happening.space);
+		if (!this.$spaceID() && happening.space) {
+			this.setSpaceRef(happening.space);
 		}
 	};
 

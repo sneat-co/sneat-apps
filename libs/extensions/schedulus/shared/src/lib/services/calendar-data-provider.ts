@@ -1,9 +1,8 @@
-import { computed, Signal, signal, effect } from '@angular/core';
+import { computed, Signal, signal, Injector } from '@angular/core';
 import { dateToIso } from '@sneat/core';
 import { CalendariumSpaceService } from '../services/calendarium-space.service';
 import {
 	CalendarHappeningBriefsBySpaceID,
-	ICalendarHappeningBrief,
 	IHappeningBrief,
 	IHappeningDbo,
 	ISlotUIContext,
@@ -86,6 +85,7 @@ export class CalendarDataProvider {
 	private contactID?: string; // TODO: should be {readonly spaceID: string; readonly contactID: string}
 
 	constructor(
+		private readonly injector: Injector,
 		private readonly $primarySpaceID: Signal<string | undefined>,
 		private readonly errorLogger: IErrorLogger,
 		private readonly happeningService: HappeningService,
@@ -177,6 +177,7 @@ export class CalendarDataProvider {
 		if (!day) {
 			day = new CalendarDay(
 				date,
+				this.injector,
 				this.$inputs,
 				this.errorLogger,
 				this.happeningService,

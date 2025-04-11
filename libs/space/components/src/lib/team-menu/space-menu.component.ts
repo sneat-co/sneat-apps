@@ -112,7 +112,7 @@ export class SpaceMenuComponent extends SpaceBaseComponent {
 		}
 		const space = this.$spaces()?.find((t) => t.id === spaceID);
 		if (space) {
-			this.$space.set(space);
+			this.setSpaceRef(space);
 			this.spaceNav
 				.navigateToSpace(space)
 				.catch(

@@ -8,8 +8,8 @@ export interface ISpaceBrief {
 }
 
 export const equalSpaceBriefs = (
-	v1?: ISpaceBrief | null,
-	v2?: ISpaceBrief | null,
+	v1?: ISpaceBrief | null | undefined,
+	v2?: ISpaceBrief | null | undefined,
 ): boolean => {
 	if (v1 === v2) return true;
 	return v1?.parentSpaceID === v2?.parentSpaceID && v1?.title === v2?.title;

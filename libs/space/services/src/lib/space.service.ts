@@ -1,9 +1,15 @@
 import { HttpParams } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import {
+	Inject,
+	Injectable,
+	Injector,
+	inject,
+	runInInjectionContext,
+} from '@angular/core';
 import {
 	Firestore as AngularFirestore,
-	collection,
 	CollectionReference,
+	collection,
 } from '@angular/fire/firestore';
 import { SneatApiService, SneatFirestoreService } from '@sneat/api';
 import {
@@ -13,7 +19,7 @@ import {
 } from '@sneat/auth-core';
 import { IUserSpaceBrief } from '@sneat/auth-models';
 import { IJoinSpaceInfoResponse } from '@sneat/contactus-core';
-import { IIdAndBrief, ISpaceRef } from '@sneat/core';
+import { IIdAndBrief } from '@sneat/core';
 import { IRecord } from '@sneat/data';
 import { ISpaceBrief, ISpaceDbo, ISpaceMetric } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -24,7 +30,13 @@ import {
 	zipMapBriefsWithIDs,
 } from '@sneat/space-models';
 import { ISneatUserState, SneatUserService } from '@sneat/auth-core';
-import { BehaviorSubject, Observable, Subscription, throwError } from 'rxjs';
+import {
+	BehaviorSubject,
+	Observable,
+	Subject,
+	Subscription,
+	throwError,
+} from 'rxjs';
 import { filter, first, map, tap } from 'rxjs/operators';
 
 const spaceBriefFromUserSpaceInfo = (v: IUserSpaceBrief): ISpaceBrief => ({
@@ -47,10 +59,13 @@ export class SpaceService {
 
 	private currentUserSpaces?: Record<string, IUserSpaceBrief>;
 
-	private spaces$: Record<string, BehaviorSubject<ISpaceContext>> = {};
+	private spaces$: Record<string, BehaviorSubject<ISpaceContext | undefined>> =
+		{};
 	private subscriptions: Subscription[] = [];
 
 	private readonly sfs: SneatFirestoreService<ISpaceBrief, ISpaceDbo>;
+
+	private readonly injector = inject(Injector);
 
 	constructor(
 		readonly sneatAuthStateService: SneatAuthStateService,
@@ -60,10 +75,13 @@ export class SpaceService {
 		private readonly sneatApiService: SneatApiService,
 	) {
 		// console.log('SpaceService.constructor()');
-		this.sfs = new SneatFirestoreService<ISpaceBrief, ISpaceDbo>((id, dto) => ({
-			id,
-			...dto,
-		}));
+		this.sfs = new SneatFirestoreService<ISpaceBrief, ISpaceDbo>(
+			this.injector,
+			(id, dto) => ({
+				id,
+				...dto,
+			}),
+		);
 		const onAuthStatusChanged = (status: AuthStatus): void => {
 			if (status === 'notAuthenticated') {
 				this.unsubscribe('signed out');
@@ -128,23 +146,23 @@ export class SpaceService {
 		}
 		let subj = this.spaces$[id];
 		if (subj) {
-			return subj.asObservable();
+			return subj.asObservable().pipe(filter((s) => !!s));
 		}
-		let spaceContext: ISpaceContext = { id };
+		let spaceContext: ISpaceContext | undefined = undefined;
 		if (this.currentUserSpaces) {
-			const userTeamInfo = this.currentUserSpaces[id];
-			if (userTeamInfo) {
+			const userSpaceInfo = this.currentUserSpaces[id];
+			if (userSpaceInfo) {
 				spaceContext = {
 					id,
-					type: userTeamInfo.type,
-					brief: spaceBriefFromUserSpaceInfo(userTeamInfo),
+					type: userSpaceInfo.type,
+					brief: spaceBriefFromUserSpaceInfo(userSpaceInfo),
 				};
 			}
 		}
-		subj = new BehaviorSubject<ISpaceContext>(spaceContext);
+		subj = new BehaviorSubject<ISpaceContext | undefined>(spaceContext);
 		this.spaces$[id] = subj;
 		if (this.userService.currentUserID) {
-			this.subscribeForSpaceChanges(subj);
+			this.subscribeForSpaceChanges(id, subj);
 		} else {
 			this.userService.userState
 				.pipe(
@@ -152,10 +170,10 @@ export class SpaceService {
 					first(),
 				)
 				.subscribe({
-					next: () => this.subscribeForSpaceChanges(subj),
+					next: () => this.subscribeForSpaceChanges(id, subj),
 				});
 		}
-		return subj.asObservable();
+		return subj.asObservable().pipe(filter((s) => !!s));
 	}
 
 	public onSpaceUpdated(space: ISpaceContext): void {
@@ -168,9 +186,9 @@ export class SpaceService {
 			const prevTeam = team$.value;
 			space = { ...prevTeam, ...space };
 		} else {
-			this.spaces$[space.id] = team$ = new BehaviorSubject<ISpaceContext>(
-				space,
-			);
+			this.spaces$[space.id] = team$ = new BehaviorSubject<
+				ISpaceContext | undefined
+			>(space);
 		}
 		team$.next(space);
 	}
@@ -224,14 +242,14 @@ export class SpaceService {
 		);
 		let subj = this.spaces$[userSpaceBrief.id];
 		if (subj) {
-			let team = subj.value;
-			if (!team.type) {
-				team = {
-					...team,
+			let space = subj.value;
+			if (space && !space?.type) {
+				space = {
+					...space,
 					type: userSpaceBrief.brief?.type,
 					brief: spaceBriefFromUserSpaceInfo(userSpaceBrief.brief),
 				};
-				subj.next(team);
+				subj.next(space);
 			}
 			return;
 		}
@@ -241,24 +259,25 @@ export class SpaceService {
 			type: userSpaceBrief.brief.type,
 			brief: spaceBriefFromUserSpaceInfo(userSpaceBrief.brief),
 		};
-		this.spaces$[userSpaceBrief.id] = subj = new BehaviorSubject<ISpaceContext>(
-			space,
-		);
-		this.subscribeForSpaceChanges(subj);
+		this.spaces$[space.id] = subj = new BehaviorSubject<
+			ISpaceContext | undefined
+		>(space);
+		this.subscribeForSpaceChanges(space.id, subj);
 	};
 
-	private subscribeForSpaceChanges(subj: BehaviorSubject<ISpaceContext>): void {
-		const t = subj.value;
-		console.log(`SpaceService.subscribeForSpaceChanges(${t.id})`);
-		const { id } = t;
+	private subscribeForSpaceChanges(
+		id: string,
+		subj: Subject<ISpaceContext | undefined>,
+	): void {
+		console.log(`SpaceService.subscribeForSpaceChanges(${id})`);
 		if (id === 'contacts') {
 			console.log('subscribeForSpaceChanges() => contacts');
 			throw new Error('subscribeForSpaceChanges(id===contacts)');
 		}
-		const spacesCollection = collection(
-			this.afs,
-			'spaces',
-		) as CollectionReference<ISpaceDbo>;
+		const spacesCollection = runInInjectionContext(
+			this.injector,
+			() => collection(this.afs, 'spaces') as CollectionReference<ISpaceDbo>,
+		);
 		const o: Observable<ISpaceContext> = this.sfs
 			.watchByID(spacesCollection, id)
 			.pipe(

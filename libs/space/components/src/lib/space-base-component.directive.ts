@@ -9,7 +9,7 @@ import {
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
-import { ILogger, SpaceType } from '@sneat/core';
+import { equalSpaceRefs, ILogger, ISpaceRef, SpaceType } from '@sneat/core';
 import { equalSpaceBriefs, ISpaceBrief, ISpaceDbo } from '@sneat/dto';
 import { ISpaceContext } from '@sneat/space-models';
 import {
@@ -17,7 +17,7 @@ import {
 	trackSpaceIdAndTypeFromRouteParameter,
 } from '@sneat/space-services';
 import { SneatUserService } from '@sneat/auth-core';
-import { ClassName, SneatBaseComponent } from '@sneat/ui';
+import { SneatBaseComponent } from '@sneat/ui';
 import {
 	distinctUntilChanged,
 	map,
@@ -34,9 +34,27 @@ export abstract class SpaceBaseComponent
 	extends SneatBaseComponent
 	implements OnInit
 {
-	protected readonly $space = signal<ISpaceContext>({ id: '' });
-	protected readonly $spaceID = computed(() => this.$space().id);
-	protected readonly $spaceType = computed(() => this.$space().type);
+	protected readonly $spaceRef = signal<ISpaceRef | undefined | null>(
+		undefined,
+	);
+	private readonly $spaceBrief = signal<ISpaceBrief | undefined | null>(
+		undefined,
+	);
+	private readonly $spaceDbo = signal<ISpaceDbo | undefined | null>(undefined);
+
+	private readonly $_spaceID = signal<string | undefined>(undefined);
+	protected readonly $spaceID = this.$_spaceID.asReadonly();
+
+	private readonly $_spaceType = signal<SpaceType | undefined>(undefined);
+	protected readonly $spaceType = this.$_spaceType.asReadonly();
+
+	protected readonly $space = computed<ISpaceContext>(() => {
+		return {
+			...(this.$spaceRef() || { id: '' }),
+			brief: this.$spaceBrief(),
+			dbo: this.$spaceDbo(),
+		};
+	});
 
 	private readonly spaceIDChanged = new Subject<string | undefined>();
 	private readonly spaceTypeChanged = new Subject<SpaceType | undefined>();
@@ -133,32 +151,37 @@ export abstract class SpaceBaseComponent
 		console.log(`${className}.SpaceBaseComponent.constructor()`);
 
 		let prevSpaceID: string | undefined;
+
 		effect(() => {
-			this.log(
-				`${className}.SpaceBaseComponent.constructor() => effect($spaceID=${this.$spaceID()})`,
-			);
 			const spaceID = this.$spaceID();
-			if (spaceID == prevSpaceID) {
-				// This seems to be a bag in Angular signals?
-				console.warn(
-					`${className}.SpaceBaseComponent.constructor() => effect($spaceID=${spaceID}) => called for the same spaceID!`,
+			if (spaceID === prevSpaceID) {
+				// This seems to be a bag or a strange feature in Angular signals?
+				// this happens if we call this.spaceIDChanged.next(spaceID);
+				console.log(
+					// Giving up for now so not logging as a warning
+					`${className}.SpaceBaseComponent.constructor() => effect() => called for the same $spaceID=${spaceID})`,
 				);
 			} else {
+				console.log(
+					`${className}.SpaceBaseComponent.constructor() => effect($spaceID=${spaceID})`,
+				);
+				prevSpaceID = spaceID;
+				this.onSpaceIdChanged();
+				if (spaceID) {
+					setTimeout(() => this.subscribeForSpaceChanges(spaceID), 1);
+				}
 				this.spaceIDChanged.next(spaceID);
 			}
-			prevSpaceID = spaceID;
 		});
 
-		this.spaceIDChanged$
-			.pipe(this.takeUntilDestroyed())
-			.subscribe((spaceID) => {
-				if (spaceID) {
-					this.onSpaceIdChanged();
-
-					// !!! Be careful to migrate this to signal effect - can cause dead cycles!
-					setTimeout(() => this.subscribeForSpaceChanges(), 1);
-				}
-			});
+		// this.spaceIDChanged$
+		// 	.pipe(this.takeUntilDestroyed(), distinctUntilChanged())
+		// 	.subscribe((spaceID) => {
+		// 		if (spaceID) {
+		// 			// !!! Be careful to migrate this to signal effect - can cause dead cycles!
+		// 			setTimeout(() => this.subscribeForSpaceChanges(spaceID), 1);
+		// 		}
+		// 	});
 
 		effect(() => {
 			this.spaceTypeChanged.next(this.$spaceType());
@@ -274,13 +297,15 @@ export abstract class SpaceBaseComponent
 		this.setSpaceContext(space);
 	};
 
-	private subscribeForSpaceChanges(): void {
+	private subscribeForSpaceChanges(spaceID: string): void {
 		this.spaceService
-			.watchSpace(this.$spaceID())
+			.watchSpace(spaceID)
 			.pipe(
 				this.takeUntilDestroyed(),
 				takeUntil(this.spaceIDChanged$),
-				map((space) => ({ ...space, type: space.dbo?.type })),
+				map((space) => {
+					return { ...space, type: space.dbo?.type };
+				}),
 			)
 			.subscribe({
 				next: this.onSpaceContextChanged,
@@ -338,12 +363,53 @@ export abstract class SpaceBaseComponent
 	// 	}
 	// }
 
+	protected setSpaceRef(spaceRef?: ISpaceRef): void {
+		let idChanged = false;
+		let typeChanged = false;
+		this.$spaceRef.update((prev) => {
+			idChanged = prev?.id !== spaceRef?.id;
+			typeChanged = prev?.type !== spaceRef?.type;
+			if (!spaceRef) {
+				return undefined;
+			}
+			if (equalSpaceRefs(spaceRef, prev)) {
+				return prev;
+			}
+			if (!idChanged && !spaceRef.type && prev?.type) {
+				this.console.error(`!spaceRef?.type && prevSpace.type=${prev.type}`);
+			}
+			const keys = Object.keys(spaceRef || {});
+			return (keys.length === 1 && keys[0] === 'id') ||
+				(keys.length === 2 && keys.includes('id') && keys.includes('type'))
+				? spaceRef
+				: spaceRef.type || (prev?.type && prev.id !== spaceRef.id)
+					? { id: spaceRef.id, type: spaceRef.type || prev?.type }
+					: { id: spaceRef.id };
+		});
+		if (idChanged) {
+			this.unsubscribe('spaceRef.id changed');
+			this.$_spaceID.set(spaceRef?.id);
+			this.$_spaceType.set(spaceRef?.type);
+			if (this.$spaceBrief()) {
+				this.$spaceBrief.set(undefined);
+			}
+			if (this.$spaceDbo()) {
+				this.$spaceDbo.set(undefined);
+			}
+		} else if (typeChanged) {
+			this.$_spaceType.set(spaceRef?.type);
+		}
+	}
+
 	private setSpaceContext(spaceContext?: ISpaceContext): void {
 		const prevSpace = this.$space();
 		this.log(
 			`${this.className}:SpaceBaseComponent.setSpaceContext(id=${spaceContext?.id}), previous id=${prevSpace.id}`,
 			spaceContext,
 		);
+		if (!equalSpaceRefs(spaceContext, this.$spaceRef())) {
+			this.setSpaceRef(spaceContext);
+		}
 		if (prevSpace == spaceContext) {
 			this.console.warn(
 				'Duplicate call to SpaceBaseComponent.setSpaceContext() with same spaceContext:',
@@ -351,18 +417,8 @@ export abstract class SpaceBaseComponent
 			);
 			return;
 		}
-		if (!spaceContext?.type && prevSpace.type) {
-			this.console.error(
-				'!spaceContext?.type && prevSpace.type',
-				'prevSpace:',
-				prevSpace,
-				'newSpace:',
-				spaceContext,
-			);
-			return;
-		}
 		const idChanged = prevSpace?.id != spaceContext?.id;
-		const briefChanged = equalSpaceBriefs(
+		const briefChanged = !equalSpaceBriefs(
 			prevSpace?.brief,
 			spaceContext?.brief,
 		);
@@ -370,30 +426,21 @@ export abstract class SpaceBaseComponent
 		this.log(
 			`${this.className}:SpaceBaseComponent.setSpaceContext(id=${spaceContext?.id}) => idChanged=${idChanged}, briefChanged=${briefChanged}, dtoChanged=${dboChanged}`,
 		);
-		this.$space.set(spaceContext || { id: '' });
 		if (briefChanged) {
+			this.$spaceBrief.set(spaceContext?.brief);
 			this.spaceBriefChanged.next(spaceContext?.brief);
 		}
 		if (dboChanged) {
+			this.$spaceDbo.set(spaceContext?.dbo);
 			this.spaceDboChanged.next(spaceContext?.dbo);
 		}
-		if (idChanged) {
-			this.console.log('');
-			if (!spaceContext) {
-				this.unsubscribe('no space context');
-				return;
-			}
-			// if (idChanged) {
-			// 	this.spaceIDChanged.next(spaceContext?.id);
-			// }
-			if (spaceContext) {
-				this.spaceChanged.next(spaceContext);
-			}
+		if (spaceContext) {
+			this.spaceChanged.next(spaceContext);
 		}
 	}
 
 	private readonly onSpaceContextChanged = (space: ISpaceContext): void => {
-		const dtoChanged = space.dbo !== this.$space()?.dbo;
+		const isDboChanged = space.dbo !== this.$space()?.dbo;
 		// this.log(
 		// 	`${this.className}:SpaceBaseComponent.onSpaceContextChanged() => dtoChanged=${dtoChanged}, space:`,
 		// 	space,
@@ -407,7 +454,7 @@ export abstract class SpaceBaseComponent
 			}
 		}
 		this.setSpaceContext(space);
-		if (dtoChanged) {
+		if (isDboChanged) {
 			this.onSpaceDboChanged();
 		}
 		// this.log(`${this.className} => loaded team record:`, newTeam);

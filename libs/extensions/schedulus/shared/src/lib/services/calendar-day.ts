@@ -23,6 +23,7 @@ import {
 } from '@sneat/mod-schedulus-core';
 import { HappeningService } from './happening.service';
 import { CalendarDayService } from './calendar-day.service';
+import { runInInjectionContext, Injector, EffectRef } from '@angular/core';
 
 export interface ICalendarDayInput {
 	readonly spaceID: string; // Should we use observable on ISpaceContext as we might want to use space settings?
@@ -70,8 +71,11 @@ export class CalendarDay {
 
 	private readonly subscriptions: Subscription[] = [];
 
+	private effectRef?: EffectRef;
+
 	constructor(
 		public readonly date: Date,
+		private readonly injector: Injector,
 		$input: Signal<readonly ICalendarDayInput[]>,
 		private readonly errorLogger: IErrorLogger,
 		// TODO: document why we need both HappeningService & CalendarDayService
@@ -90,16 +94,19 @@ export class CalendarDay {
 		this.wd = getWd2(date);
 		this.wdLongTitle = wdCodeToWeekdayLongName(this.wd);
 
-		effect(() => {
-			const inputs = $input();
-			inputs.forEach((input) => {
-				this.processSpaceID(input.spaceID);
-				this.subscribeForRecurrings(input.recurrings$);
+		runInInjectionContext(injector, () => {
+			this.effectRef = effect(() => {
+				const inputs = $input();
+				inputs.forEach((input) => {
+					this.processSpaceID(input.spaceID);
+					this.subscribeForRecurrings(input.recurrings$);
+				});
 			});
 		});
 	}
 
 	public destroy(): void {
+		this.effectRef?.destroy();
 		this.destroyed$.next();
 		this.destroyed$.complete();
 	}

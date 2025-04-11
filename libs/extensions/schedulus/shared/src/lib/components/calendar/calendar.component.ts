@@ -20,7 +20,7 @@ import {
 	WeekdayCode2,
 	IHappeningWithUiState,
 } from '@sneat/mod-schedulus-core';
-import { SpaceComponentBaseParams } from '@sneat/space-components';
+// import { SpaceComponentBaseParams } from '@sneat/space-components';
 import { takeUntil } from 'rxjs';
 import {
 	CalendarDayService,
@@ -95,9 +95,9 @@ export class CalendarComponent
 	protected recurrings?: readonly IHappeningWithUiState[];
 
 	constructor(
-		private readonly params: SpaceComponentBaseParams,
-		filterService: CalendarFilterService,
-		calendarStateService: CalendarStateService,
+		// private readonly params: SpaceComponentBaseParams,
+		private readonly filterService: CalendarFilterService,
+		private readonly calendarStateService: CalendarStateService,
 		happeningService: HappeningService,
 		calendarDayService: CalendarDayService,
 		calendariumSpaceService: CalendariumSpaceService,
@@ -109,7 +109,14 @@ export class CalendarComponent
 			calendarDayService,
 		);
 
-		filterService.filter.pipe(takeUntil(this.destroyed$)).subscribe({
+		// setTimeout(() => {
+		// 	// TODO: Fix this dirty workaround for initial animations
+		// 	this.setToday();
+		// }, 10);
+	}
+
+	public ngOnInit(): void {
+		this.filterService.filter.pipe(takeUntil(this.destroyed$)).subscribe({
 			next: (filter) => {
 				this.filter = filter;
 				this.recurrings = this.filterRecurrings(filter);
@@ -117,18 +124,14 @@ export class CalendarComponent
 			error: this.errorLogger.logErrorHandler('failed to get calendar filter'),
 		});
 
-		calendarStateService.dateChanged.subscribe({
+		this.calendarStateService.dateChanged.subscribe({
 			next: (changed) => {
 				const { date } = changed;
 				this.date = date;
 				this.dateID = dateToIso(date);
 			},
 		});
-
-		// setTimeout(() => {
-		// 	// TODO: Fix this dirty workaround for initial animations
-		// 	this.setToday();
-		// }, 10);
+		setTimeout(() => (this.isWeekTabActivated = true), 500);
 	}
 
 	ngAfterViewInit(): void /* TODO: check and document if it can't be ngOnInit */ {
@@ -389,9 +392,5 @@ export class CalendarComponent
 				);
 			}
 		}
-	}
-
-	public ngOnInit(): void {
-		setTimeout(() => (this.isWeekTabActivated = true), 500);
 	}
 }

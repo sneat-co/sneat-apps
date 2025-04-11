@@ -1,5 +1,5 @@
-import { SpaceType } from '@sneat/core';
 import { ITotalsHolder } from './dto-models';
+import { ISpaceBrief } from './dto-team-brief';
 import { ISpaceMetric } from './dto-team-metric';
 
 // export interface ITeamMeetings {
@@ -7,10 +7,8 @@ import { ISpaceMetric } from './dto-team-metric';
 // 	retrospective?: IMeetingInfo;
 // }
 
-export interface ISpaceDbo extends ITotalsHolder {
-	readonly type: SpaceType;
+export interface ISpaceDbo extends ISpaceBrief, ITotalsHolder {
 	readonly countryID: string;
-	readonly title: string;
 	readonly userIDs: string[];
 	// readonly members?: IMemberBrief[];
 	// readonly assets?: IAssetBrief[];

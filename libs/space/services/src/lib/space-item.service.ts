@@ -1,4 +1,10 @@
 import {
+	inject,
+	Injector,
+	Injectable,
+	runInInjectionContext,
+} from '@angular/core';
+import {
 	Firestore as AngularFirestore,
 	doc,
 	collection,
@@ -13,11 +19,7 @@ import {
 	ISpaceRef,
 } from '@sneat/core';
 import { ISpaceDbo } from '@sneat/dto';
-import {
-	ISpaceContext,
-	ISpaceItemNavContext,
-	SpaceRequest,
-} from '@sneat/space-models';
+import { ISpaceItemNavContext, SpaceRequest } from '@sneat/space-models';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -26,7 +28,9 @@ type ICreateSpaceItemResponse<
 	Dbo extends Brief,
 > = ISpaceItemWithBriefAndDbo<Brief, Dbo>;
 
+@Injectable()
 abstract class SpaceItemBaseService<Brief, Dbo extends Brief> {
+	protected readonly injector = inject(Injector);
 	protected readonly sfs: SneatFirestoreService<Brief, Dbo>;
 
 	protected constructor(
@@ -40,7 +44,7 @@ abstract class SpaceItemBaseService<Brief, Dbo extends Brief> {
 		console.log(
 			`SpaceItemBaseService.constructor() collectionName=${this.collectionName}`,
 		);
-		this.sfs = new SneatFirestoreService<Brief, Dbo>();
+		this.sfs = new SneatFirestoreService<Brief, Dbo>(this.injector);
 	}
 
 	private _collectionRef?: CollectionReference<Dbo>;
@@ -54,8 +58,9 @@ abstract class SpaceItemBaseService<Brief, Dbo extends Brief> {
 		itemID: string,
 	): Observable<ISpaceItemNavContext<Brief, Dbo2>> {
 		console.log(
-			`SpaceItemBaseService.watchTeamItemByIdWithTeamRef(space=${space.id}, itemID=${itemID}), collectionName=${this.collectionName}`,
+			`SpaceItemBaseService.watchSpaceItemByIdWithSpaceRef(space=${space.id}, itemID=${itemID}), collectionName=${this.collectionName}`,
 		);
+
 		if (!space.id) {
 			throw new Error('spaceID is required');
 		}
@@ -66,18 +71,10 @@ abstract class SpaceItemBaseService<Brief, Dbo extends Brief> {
 			collectionRef = this.collectionRef<Dbo2>(space.id);
 			this._collectionRef = collectionRef;
 		}
-		return this.sfs.watchByID(collectionRef, itemID).pipe(
-			map((o) => ({ space, ...o })),
-			// tap((o) =>
-			//   console.log(
-			//     'watchTeamItemByID()',
-			//     team.id,
-			//     this.collectionName,
-			//     itemID,
-			//     ' =>',
-			//     o,
-			//   ),
-			// ),
+		return runInInjectionContext(this.injector, () =>
+			this.sfs
+				.watchByID(collectionRef, itemID)
+				.pipe(map((o) => ({ space, ...o }))),
 		);
 	}
 
@@ -160,10 +157,11 @@ export class GlobalSpaceItemService<
 	protected override collectionRef<
 		Dbo2 extends Dbo,
 	>(): CollectionReference<Dbo2> {
-		return collection(
-			this.afs,
-			this.collectionName,
-		) as CollectionReference<Dbo2>;
+		return runInInjectionContext(
+			this.injector,
+			() =>
+				collection(this.afs, this.collectionName) as CollectionReference<Dbo2>,
+		);
 	}
 
 	public watchGlobalItems<Dbo2 extends Dbo>(
@@ -235,13 +233,17 @@ export class ModuleSpaceItemService<
 		if (!spaceID) {
 			throw new Error('spaceID is required');
 		}
-		return collection(
-			this.spacesCollection,
-			spaceID,
-			'modules',
-			this.moduleID,
-			this.collectionName,
-		) as CollectionReference<Dbo2>;
+		return runInInjectionContext(
+			this.injector,
+			() =>
+				collection(
+					this.spacesCollection,
+					spaceID,
+					'modules',
+					this.moduleID,
+					this.collectionName,
+				) as CollectionReference<Dbo2>,
+		);
 	}
 
 	private readonly spaceRef = (id: string) => doc(this.spacesCollection, id);
@@ -272,8 +274,10 @@ export class ModuleSpaceItemService<
 		// 	...(filter || []),
 		// 	// { field: 'spaceIDs', operator: '==', value: spaceID },
 		// ];
-		const collectionRef = this.collectionRef<Dbo2>(spaceID);
-		return this.queryItems<Dbo2>(collectionRef, queryArgs);
+		return runInInjectionContext(this.injector, () => {
+			const collectionRef = this.collectionRef<Dbo2>(spaceID);
+			return this.queryItems<Dbo2>(collectionRef, queryArgs);
+		});
 	}
 
 	// private readonly mapItemTeamItemContext = <

@@ -1,4 +1,4 @@
-import { Directive, OnDestroy } from '@angular/core';
+import { Directive, OnDestroy, Injector, inject } from '@angular/core';
 import { dateToIso } from '@sneat/core';
 import { WithSpaceInput } from '@sneat/space-components';
 import { CalendarDayService } from '../../services/calendar-day.service';
@@ -24,6 +24,8 @@ export abstract class CalendarBaseComponent
 
 	protected allRecurrings?: readonly IHappeningWithUiState[];
 
+	protected readonly injector = inject(Injector);
+
 	protected constructor(
 		className: string,
 		private readonly calendariumSpaceService: CalendariumSpaceService,
@@ -33,6 +35,7 @@ export abstract class CalendarBaseComponent
 		super(className);
 		console.log(`${className}:CalendarBaseComponent.constructor()`);
 		this.spaceDaysProvider = new CalendarDataProvider(
+			this.injector,
 			this.$spaceID,
 			this.errorLogger,
 			happeningService,
