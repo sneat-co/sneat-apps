@@ -1,4 +1,4 @@
-import { Injectable, NgModule } from '@angular/core';
+import { Injectable, NgModule, Injector } from '@angular/core';
 import {
 	Firestore as AngularFirestore,
 	CollectionReference,
@@ -29,8 +29,10 @@ export class LogistSpaceService {
 	constructor(
 		private readonly sneatApiService: SneatApiService,
 		private readonly afs: AngularFirestore,
+		injector: Injector,
 	) {
 		this.sfs = new SneatFirestoreService<ILogistSpaceBrief, ILogistSpaceDbo>(
+			injector,
 			briefFromDto,
 		);
 	}
