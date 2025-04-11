@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { SneatUserService } from '@sneat/auth-core';
 import { ContactTitlePipe } from '@sneat/components';
 import {
 	addSpace,
@@ -24,7 +23,6 @@ import {
 } from '@sneat/contactus-services';
 import { ContactusModuleBaseComponent } from '@sneat/contactus-shared';
 import { IIdAndOptionalDbo } from '@sneat/core';
-import { SpaceComponentBaseParams } from '@sneat/space-components';
 import { zipMapBriefsWithIDs } from '@sneat/space-models';
 
 @Component({
@@ -46,18 +44,11 @@ export class ContactsFilterComponent
 	>([]);
 	contacts?: IContactWithBriefAndSpace[];
 
-	constructor(
-		spaceParams: SpaceComponentBaseParams,
-		userService: SneatUserService,
-		contactusSpaceService: ContactusSpaceService,
-	) {
+	constructor(contactusSpaceService: ContactusSpaceService) {
 		super('ContactsFilterComponent', contactusSpaceService);
 		const contactusSpaceContextService = new ContactusSpaceContextService(
-			spaceParams.errorLogger,
 			this.destroyed$,
 			this.spaceIDChanged$,
-			contactusSpaceService,
-			userService,
 		);
 		contactusSpaceContextService.contactusSpaceContext$
 			.pipe(this.takeUntilDestroyed())

@@ -12,6 +12,7 @@ import { SneatUserService } from '@sneat/auth-core';
 
 @Injectable()
 export class SpaceComponentBaseParams {
+	// TODO: obsolete?
 	// TODO: verify it should be declared in providers attribute for each page or can be just on app level?
 	constructor(
 		@Inject(ErrorLogger) public readonly errorLogger: IErrorLogger,

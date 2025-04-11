@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, signal, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, IonInput } from '@ionic/angular';
 import {
@@ -14,7 +14,6 @@ import {
 } from '@sneat/contactus-core';
 import {
 	SpacePageBaseComponent,
-	SpaceComponentBaseParams,
 	InviteLinksComponent,
 } from '@sneat/space-components';
 import { SpaceServiceModule } from '@sneat/space-services';
@@ -27,7 +26,7 @@ type Tab = 'personal' | 'mass';
 @Component({
 	selector: 'sneat-new-member-page',
 	templateUrl: './new-member-page.component.html',
-	providers: [SpaceComponentBaseParams, ContactComponentBaseParams],
+	providers: [ContactComponentBaseParams],
 	imports: [
 		CommonModule,
 		IonicModule,
@@ -46,15 +45,12 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
 
 	protected readonly $member = signal<IMemberPerson>(emptyMemberPerson);
 
-	constructor(params: ContactComponentBaseParams) {
+	constructor() {
 		super('NewMemberPageComponent');
 		this.$defaultBackUrlSpacePath.set('members');
 		const contactusSpaceContextService = new ContactusSpaceContextService(
-			params.errorLogger,
 			this.destroyed$,
 			this.spaceIDChanged$,
-			params.contactusSpaceService,
-			this.userService,
 		);
 		this.trackFirstSpaceTypeChanged();
 		this.route.queryParams.subscribe((params) => {

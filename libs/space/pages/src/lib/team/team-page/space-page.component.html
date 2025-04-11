@@ -55,13 +55,13 @@
 				<ion-col>
 					<sneat-members-short-list
 						role="member"
-						[space]="space"
-						[contactusSpaceDbo]="contactusSpace?.dbo"
+						[$space]="$space()"
+						[$contactusSpaceDbo]="$contactusSpace()?.dbo"
 					/>
 				</ion-col>
 			}
 			<ion-col>
-				<sneat-calendar-brief [$space]="space" />
+				<sneat-calendar-brief [$space]="$space()" />
 				<!--				<sneat-calendar-brief [space]="space" />-->
 			</ion-col>
 		</ion-row>

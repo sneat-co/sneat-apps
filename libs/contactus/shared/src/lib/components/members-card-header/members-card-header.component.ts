@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { IContactusSpaceDbo } from '@sneat/contactus-core';
@@ -7,25 +7,28 @@ import { ISpaceContext } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
 
 @Component({
+	imports: [IonicModule, RouterLink],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-members-card-header',
 	templateUrl: './members-card-header.component.html',
-	imports: [IonicModule, RouterLink],
 })
 export class MembersCardHeaderComponent {
-	@Input({ required: true }) public space?: ISpaceContext;
-	@Input({ required: true })
-	public contactusSpace?: IIdAndOptionalDbo<IContactusSpaceDbo>;
+	public readonly $space = input.required<ISpaceContext>();
+
+	public readonly $contactusSpace =
+		input.required<IIdAndOptionalDbo<IContactusSpaceDbo>>();
 
 	constructor(protected readonly spaceNavService: SpaceNavService) {}
 
 	protected goMembers(event: Event): void {
 		event.stopPropagation();
 		event.preventDefault();
-		if (this.space) {
+		const space = this.$space();
+		if (space) {
 			this.spaceNavService
-				.navigateForwardToSpacePage(this.space, 'members', {
+				.navigateForwardToSpacePage(space, 'members', {
 					state: {
-						contactusSpace: this.contactusSpace,
+						contactusSpace: this.$contactusSpace(),
 					},
 				})
 				.catch(console.error);
