@@ -83,7 +83,7 @@ export abstract class SpaceBaseComponent
 	// protected readonly activeCommuneService: IActiveCommuneService;
 	protected readonly userService: SneatUserService;
 	// protected readonly communeService: ICommuneService;
-	protected readonly spaceService: SpaceService;
+	protected readonly spaceService = inject(SpaceService);
 	// protected readonly authStateService: IAuthStateService;
 	protected readonly logger: ILogger;
 	// protected readonly willLeave = new Subject<void>();
@@ -189,7 +189,6 @@ export abstract class SpaceBaseComponent
 
 		try {
 			// this.navController = spaceParams.navController;
-			this.spaceService = this.spaceParams.spaceService;
 			this.userService = this.spaceParams.userService;
 			this.logger = this.spaceParams.loggerFactory.getLogger(this.className);
 			this.getSpaceContextFromRouteState();
