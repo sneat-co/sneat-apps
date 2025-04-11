@@ -8,6 +8,7 @@ export abstract class WithSpaceInput extends SneatBaseComponent {
 	protected readonly spaceNavService = inject(SpaceNavService);
 
 	public readonly $space = input.required<ISpaceContext>();
+
 	protected readonly $spaceID = computed(() => this.$space().id);
 	protected readonly $spaceType = computed(() => this.$space().type);
 	protected readonly $spaceRef = computed(() => ({

@@ -1,7 +1,8 @@
+import { inject } from '@angular/core';
 import { SneatUserService } from '@sneat/auth-core';
 import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { ContactusSpaceService } from './contactus-space.service';
-import { IErrorLogger } from '@sneat/logging';
+import { ErrorLogger } from '@sneat/logging';
 import { Observable, Subject, Subscription, takeUntil } from 'rxjs';
 
 // TODO: ContactusSpaceContextService can be abstracted and reused by other entities
@@ -17,12 +18,13 @@ export class ContactusSpaceContextService {
 	private spaceID?: string;
 	private spaceModuleRecordSub?: Subscription;
 
+	private readonly errorLogger = inject(ErrorLogger);
+	private readonly userService = inject(SneatUserService);
+	private readonly contactusSpaceService = inject(ContactusSpaceService);
+
 	constructor(
-		private readonly errorLogger: IErrorLogger,
 		private readonly destroyed$: Observable<void>,
 		private readonly spaceID$: Observable<string | undefined>,
-		private readonly contactusSpaceService: ContactusSpaceService,
-		private readonly userService: SneatUserService,
 	) {
 		destroyed$.subscribe({
 			next: () => {

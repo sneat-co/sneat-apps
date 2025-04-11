@@ -3,7 +3,8 @@ import {
 	Component,
 	Input,
 	OnChanges,
-	SimpleChanges,
+	input,
+	computed,
 } from '@angular/core';
 import { IonCard } from '@ionic/angular/standalone';
 import { IContactusSpaceDbo, IContactWithBrief } from '@sneat/contactus-core';
@@ -16,38 +17,33 @@ import { MembersListComponent } from '../members-list';
 	template: `
 		<ion-card>
 			<sneat-members-card-header
-				[space]="space"
-				[contactusSpace]="{
-					id: space?.id || '',
-					dbo: contactusSpaceDbo || null,
+				[$space]="$space()"
+				[$contactusSpace]="{
+					id: $space().id || '',
+					dbo: $contactusSpaceDbo() || null,
 				}"
 			/>
 			<sneat-members-list
-				[space]="space"
-				[members]="spaceContacts"
+				[space]="$space()"
+				[members]="$spaceContacts()"
 			></sneat-members-list>
 		</ion-card>
 	`,
 	imports: [IonCard, MembersListComponent, MembersCardHeaderComponent],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MembersShortListCardComponent implements OnChanges {
-	@Input({ required: true }) public space?: ISpaceContext;
+export class MembersShortListCardComponent {
+	public readonly $space = input.required<ISpaceContext>();
 
-	@Input({ required: true })
-	public contactusSpaceDbo?: IContactusSpaceDbo | null;
+	public readonly $contactusSpaceDbo = input.required<
+		IContactusSpaceDbo | null | undefined
+	>();
+
+	protected readonly $spaceContacts = computed(() =>
+		zipMapBriefsWithIDs(this.$contactusSpaceDbo()?.contacts),
+	);
 
 	@Input() public role?: string;
-
-	protected spaceContacts?: readonly IContactWithBrief[];
-
-	public ngOnChanges(changes: SimpleChanges): void {
-		if (changes['contactusSpaceDbo'] || changes['role']) {
-			this.spaceContacts = zipMapBriefsWithIDs(
-				this.contactusSpaceDbo?.contacts,
-			);
-		}
-	}
 
 	private readonly filterMembers = (
 		contacts?: readonly IContactWithBrief[],
