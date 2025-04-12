@@ -23,7 +23,6 @@ import { ContactusServicesModule } from '@sneat/contactus-services';
 import {
 	OptionalContactGroupIdAndBrief,
 	OptionalContactRoleIdAndBrief,
-	NewPersonFormComponent,
 	NewContactFormComponent,
 } from '@sneat/contactus-shared';
 import {

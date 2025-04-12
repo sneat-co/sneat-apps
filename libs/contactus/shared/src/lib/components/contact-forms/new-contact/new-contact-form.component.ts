@@ -1,15 +1,15 @@
 import {
 	ChangeDetectionStrategy,
 	Component,
+	computed,
 	effect,
 	EventEmitter,
-	input,
 	Input,
 	Output,
 	signal,
 } from '@angular/core';
 import { IonSegment, IonSegmentButton } from '@ionic/angular/standalone';
-import { ContactType } from '@sneat/contactus-core';
+import { ContactRolePet, RoleSpaceMember } from '@sneat/contactus-core';
 import { Observable } from 'rxjs';
 import { IContactAddEventArgs } from '../../contact-events';
 import { NewCompanyFormComponent } from './new-company-form.component';
@@ -19,26 +19,28 @@ import {
 	NewPersonFormComponent,
 } from './new-person-form.component';
 
-type NewContactFormTab = 'person' | 'company' | 'location';
+import { ContactTypeAnimal } from '@sneat/contactus-core';
+import { NewPetFormComponent } from './new-pet-form.component';
+
+type NewContactFormTab = 'person' | 'pet' | 'company' | 'location';
 
 @Component({
-	selector: 'sneat-new-contact-form',
-	templateUrl: './new-contact-form.component.html',
 	imports: [
 		IonSegment,
 		IonSegmentButton,
 		NewPersonFormComponent,
 		NewCompanyFormComponent,
+		NewPetFormComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-new-contact-form',
+	templateUrl: './new-contact-form.component.html',
 })
 export class NewContactFormComponent extends NewContactBaseFormComponent {
-	protected $tab = signal<NewContactFormTab | undefined>(undefined);
+	protected readonly $tab = signal<NewContactFormTab | undefined>(undefined);
 
 	@Input() command?: Observable<NewContactFormCommand>;
 	@Input() selectGroupAndRole$?: Observable<IContactAddEventArgs | undefined>;
-
-	@Output() public readonly creatingChange = new EventEmitter<boolean>();
 
 	constructor() {
 		super('NewContactFormComponent');
@@ -57,7 +59,29 @@ export class NewContactFormComponent extends NewContactBaseFormComponent {
 	}
 
 	protected onTabChange(event: CustomEvent): void {
-		const tab = event.detail.value as 'person' | 'company';
+		const tab = event.detail.value as NewContactFormTab;
+		if (tab === 'pet') {
+			let contact = this.$contact();
+			if (!contact?.dbo) {
+				contact = {
+					...(contact || { id: '', space: this.$spaceRef() }),
+					dbo: {
+						type: ContactTypeAnimal,
+						roles: [RoleSpaceMember, ContactRolePet],
+					},
+				};
+			} else {
+				contact = {
+					...contact,
+					dbo: {
+						...(contact.dbo || {}),
+						type: ContactTypeAnimal,
+						roles: [RoleSpaceMember, ContactRolePet],
+					},
+				};
+			}
+			this.contactChange.emit(contact);
+		}
 		this.$tab.set(tab);
 	}
 }

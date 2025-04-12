@@ -1,6 +1,7 @@
 export const ContactRoleEmployee = 'employee';
 export const ContactRoleInsurer = 'insurer';
 
+export const ContactRolePet = 'pet';
 export const ContactRoleFriend = 'friend';
 export const ContactRoleRelative = 'relative';
 
@@ -26,6 +27,8 @@ export type ContactRoleVehicle =
 	| typeof ContactRoleDriver;
 export type ContactRoleMedRelated = 'GP' | 'med_specialist';
 export type ContactRoleFamilyRelated =
+	| typeof RoleSpaceMember
+	| typeof ContactRolePet
 	| typeof ContactRoleFriend
 	| typeof ContactRoleRelative;
 export type ContactRoleWorkRelated =
@@ -42,7 +45,6 @@ export type ContactRoleLogistSubContact =
 	| typeof ContactRoleShip
 	| typeof ContactRoleLocation;
 export type ContactRoleLogistParentContact = 'shipper' | 'dispatcher';
-import { IIdAndBrief } from '@sneat/core';
 import { MemberRole, RoleSpaceMember } from './member-types';
 
 export type LogistOrderContactRole =

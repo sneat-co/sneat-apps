@@ -41,8 +41,6 @@ import { LocationFormComponent } from '../location-form';
 import { NewContactBaseFormComponent } from './new-contact-base-form-component';
 
 @Component({
-	selector: 'sneat-new-company-form',
-	templateUrl: './new-company-form.component.html',
 	imports: [
 		SelectFromListComponent,
 		FormsModule,
@@ -57,6 +55,8 @@ import { NewContactBaseFormComponent } from './new-contact-base-form-component';
 		IonSpinner,
 		LocationFormComponent,
 	],
+	selector: 'sneat-new-company-form',
+	templateUrl: './new-company-form.component.html',
 })
 export class NewCompanyFormComponent
 	extends NewContactBaseFormComponent

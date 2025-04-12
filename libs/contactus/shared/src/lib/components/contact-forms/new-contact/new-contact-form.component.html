@@ -1,5 +1,6 @@
 <ion-segment [value]="$tab()" (ionChange)="onTabChange($event)">
 	<ion-segment-button value="person">Person</ion-segment-button>
+	<ion-segment-button value="pet">Pet</ion-segment-button>
 	<ion-segment-button value="company">Company</ion-segment-button>
 </ion-segment>
 
@@ -13,6 +14,13 @@
 			[command]="command"
 			[selectGroupAndRole$]="selectGroupAndRole$"
 			(creatingChange)="creatingChange.emit($event)"
+		/>
+	}
+	@case ("pet") {
+		<sneat-new-pet-form
+			[$space]="$space()"
+			[$contactType]="$contactType()"
+			[$hideRole]="$hideRole()"
 		/>
 	}
 	@case ("company") {

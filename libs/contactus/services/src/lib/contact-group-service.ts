@@ -18,6 +18,14 @@ const contactTypeFamilyMember: IContactRoleWithIdAndBrief = {
 			emoji: '👪',
 		},
 	},
+	contactTypePet: IContactRoleWithIdAndBrief = {
+		id: 'pet',
+		brief: {
+			title: 'Family Pet',
+			titlePlural: 'Pets',
+			emoji: '👪',
+		},
+	},
 	contactTypeRelative: IContactRoleWithIdAndBrief = {
 		id: 'relative',
 		brief: {
@@ -113,6 +121,7 @@ export const defaultFamilyContactGroupDTOs: readonly IIdAndDbo<IContactGroupDbo>
 				title: 'Family',
 				roles: [
 					contactTypeFamilyMember,
+					contactTypePet,
 					contactTypeRelative,
 					contactTypeFriendOfKid,
 				],

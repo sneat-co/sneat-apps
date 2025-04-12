@@ -69,8 +69,6 @@ export class NewPersonFormComponent
 	implements OnInit
 {
 	@Input() public isInModal = false;
-	@Output() public readonly contactChange = new EventEmitter<IContactContext>();
-	@Output() public readonly creatingChange = new EventEmitter<boolean>();
 
 	@Input() command?: Observable<NewContactFormCommand>;
 	@Input() selectGroupAndRole$?: Observable<IContactAddEventArgs | undefined>;

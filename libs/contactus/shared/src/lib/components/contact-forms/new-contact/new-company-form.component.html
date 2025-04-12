@@ -1,5 +1,7 @@
 <ion-card>
+	contactRole: {{ contactRole }} contactRoles: {{ contactRoles?.length }}
 	@if (!contactRole || !hideRole) {
+		aaa
 		<sneat-select-from-list
 			label="Role"
 			[disabled]="isCreating"

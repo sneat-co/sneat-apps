@@ -1,4 +1,4 @@
-import { Directive, input } from '@angular/core';
+import { Directive, EventEmitter, input, Output } from '@angular/core';
 import { ContactType, IContactContext } from '@sneat/contactus-core';
 import { WithSpaceInput } from '@sneat/space-components';
 
@@ -12,4 +12,6 @@ export class NewContactBaseFormComponent extends WithSpaceInput {
 
 	// In the $contact we accumulate all the data we need to create a new contact
 	public readonly $contact = input<IContactContext>();
+	@Output() readonly contactChange = new EventEmitter<IContactContext>();
+	@Output() public readonly creatingChange = new EventEmitter<boolean>();
 }
