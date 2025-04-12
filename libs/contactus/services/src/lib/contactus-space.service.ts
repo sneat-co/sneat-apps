@@ -9,6 +9,11 @@ export class ContactusSpaceService extends SpaceModuleService<IContactusSpaceDbo
 		super('contactus', afs);
 	}
 
-	public readonly watchContactBriefs = (spaceID: string) =>
-		this.watchBriefs<IContactBrief>(spaceID, (dto) => dto?.contacts || {});
+	public readonly watchContactBriefs = (spaceID: string) => {
+		console.log(`ContactusSpaceService.watchContactBriefs(${spaceID})`);
+		return this.watchBriefs<IContactBrief>(
+			spaceID,
+			(dto) => dto?.contacts || {},
+		);
+	};
 }

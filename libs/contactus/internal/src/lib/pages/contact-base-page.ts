@@ -63,7 +63,7 @@ export abstract class ContactBasePage extends SpaceItemPageBaseComponent<
 		// this.watchContact();
 	}
 
-	override onSpaceIdChanged(): void {
+	protected override onSpaceIdChanged(): void {
 		super.onSpaceIdChanged();
 		this.watchSpaceContactusEntry();
 	}

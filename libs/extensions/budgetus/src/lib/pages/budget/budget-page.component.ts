@@ -62,7 +62,7 @@ export class BudgetPageComponent extends SpaceBaseComponent {
 
 	protected calendariumSpaceDbo?: ICalendariumSpaceDbo;
 
-	override onSpaceIdChanged(): void {
+	protected override onSpaceIdChanged(): void {
 		if (!this.space.id) {
 			return;
 		}

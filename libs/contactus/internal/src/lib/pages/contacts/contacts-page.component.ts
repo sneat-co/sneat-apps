@@ -5,7 +5,6 @@ import {
 	OnDestroy,
 	signal,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import {
 	IonBackButton,
 	IonButton,
@@ -49,7 +48,6 @@ import { Subject } from 'rxjs';
 	providers: [SpaceComponentBaseParams],
 	animations: [listItemAnimations],
 	imports: [
-		FormsModule,
 		SpacePageTitleComponent,
 		ContactusServicesModule,
 		SpaceServiceModule,
@@ -113,23 +111,25 @@ export class ContactsPageComponent
 				this.$role.set((q.get('role') as ContactRole) || undefined);
 			},
 		});
-	}
-
-	protected override onSpaceIdChanged() {
-		console.log('ContactsPage.onSpaceIdChanged()', this.space);
-		super.onSpaceIdChanged();
-		const space = this.space;
-		if (!space) {
-			return;
-		}
-		this.contactusSpaceService
-			.watchContactBriefs(this.space.id)
-			.pipe(this.takeUntilDestroyed(), this.takeUntilSpaceIdChanged())
-			.subscribe({
-				next: (contacts) => {
-					this.setSpaceContacts(contacts.map(addSpace(space)) || []);
-				},
-			});
+		this.spaceIDChanged$.subscribe({
+			next: (spaceID) => {
+				if (!spaceID) {
+					return;
+				}
+				this.contactusSpaceService
+					.watchContactBriefs(this.space.id)
+					.pipe(this.takeUntilDestroyed(), this.takeUntilSpaceIdChanged())
+					.subscribe({
+						next: (contacts) => {
+							const space = this.$space();
+							if (space.id !== spaceID) {
+								return;
+							}
+							this.setSpaceContacts(contacts.map(addSpace(space)) || []);
+						},
+					});
+			},
+		});
 	}
 
 	protected $titleIcon = computed(() => {

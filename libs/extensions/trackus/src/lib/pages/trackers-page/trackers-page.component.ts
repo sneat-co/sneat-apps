@@ -42,10 +42,6 @@ export class TrackersPageComponent extends SpaceBaseComponent {
 		super('TrackersPageComponent');
 	}
 
-	override onSpaceIdChanged(): void {
-		super.onSpaceIdChanged();
-	}
-
 	protected goNewTracker(category?: string): void {
 		console.log('goNewTracker', category);
 		this.navController

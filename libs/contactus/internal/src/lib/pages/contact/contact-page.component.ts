@@ -50,12 +50,12 @@ export class ContactPageComponent extends ContactBasePage {
 		this.defaultBackPage = 'contacts';
 	}
 
-	override onContactIdChanged(contactID: string): void {
+	protected override onContactIdChanged(contactID: string): void {
 		super.onContactIdChanged(contactID);
 		this.watchChildContacts();
 	}
 
-	watchChildContacts(): void {
+	private watchChildContacts(): void {
 		if (!this.contact?.id) {
 			return;
 		}
@@ -76,6 +76,7 @@ export class ContactPageComponent extends ContactBasePage {
 
 	protected saveAddress(save: ISaveEvent<IAddress>): void {
 		console.log('ContactPageComponent.saveAddress()', save);
+
 		const spaceID = this.space?.id,
 			contactID = this.contact?.id,
 			address = save.object;
@@ -90,13 +91,12 @@ export class ContactPageComponent extends ContactBasePage {
 			contactID,
 			address,
 		};
+
 		this.contactService.updateContact(request).subscribe({
 			next: () => save.success(),
 			error: save.error,
 		});
 	}
-
-	protected readonly length = length;
 
 	protected deleteContact(): void {
 		const contact = this.contact;

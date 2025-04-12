@@ -57,7 +57,7 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 		});
 	}
 
-	override onSpaceIdChanged(): void {
+	protected override onSpaceIdChanged(): void {
 		super.onSpaceIdChanged();
 		this.calendariumSpaceSub?.unsubscribe();
 		this.calendariumSpaceSub = this.params.calendariumSpaceService

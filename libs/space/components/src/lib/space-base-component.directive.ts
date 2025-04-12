@@ -166,11 +166,11 @@ export abstract class SpaceBaseComponent
 					`${className}.SpaceBaseComponent.constructor() => effect($spaceID=${spaceID})`,
 				);
 				prevSpaceID = spaceID;
-				this.onSpaceIdChanged();
+				this.spaceIDChanged.next(spaceID); // This should be BEFORE onSpaceIdChanged()!
+				this.onSpaceIdChanged(); // This should be AFTER spaceIDChanged.next()!
 				if (spaceID) {
 					setTimeout(() => this.subscribeForSpaceChanges(spaceID), 1);
 				}
-				this.spaceIDChanged.next(spaceID);
 			}
 		});
 
@@ -241,6 +241,8 @@ export abstract class SpaceBaseComponent
 		);
 	}
 
+	// Consider removing this method as it is fragile
+	// and easy go get it wrong and server similar purpose as contactIDChanged$.
 	protected onSpaceIdChanged(): void {
 		this.log(
 			`${this.className}:SpaceBaseComponent.onSpaceIdChanged() spaceID=${this.space?.id}`,
