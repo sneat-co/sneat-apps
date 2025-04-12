@@ -1,6 +1,6 @@
 <form [formGroup]="addMemberForm" (ngSubmit)="submit()">
 	<sneat-person-form-wizard
-		[space]="$space()"
+		[$contact]="$contact()"
 		[disabled]="$isSubmitting()"
 		[newPerson]="$member()"
 		[requires]="personRequirements"

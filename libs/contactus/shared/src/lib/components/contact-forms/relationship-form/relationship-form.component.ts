@@ -27,7 +27,6 @@ import {
 	ITitledRecord,
 	IWithCreatedShort,
 } from '@sneat/dto';
-import { ISpaceContext } from '@sneat/space-models';
 import { SpaceRelatedFormComponent } from '../space-related-form.component';
 
 const getRelOptions = (r: FamilyMemberRelation[]): ITitledRecord[] => [
@@ -50,7 +49,6 @@ export class RelationshipFormComponent
 	extends SpaceRelatedFormComponent
 	implements OnChanges
 {
-	@Input({ required: true }) public space?: ISpaceContext;
 	@Input({ required: true }) public ageGroup?: AgeGroupID;
 
 	@Input({ required: true }) public relatedTo?: ISpaceModuleItemRef;
@@ -67,7 +65,7 @@ export class RelationshipFormComponent
 	protected readonly relatedAsSingle = new FormControl<string>('');
 
 	constructor(private readonly userService: SneatUserService) {
-		super();
+		super('RelationshipFormComponent');
 	}
 
 	// Defined here as it is used in the template twice
@@ -131,7 +129,7 @@ export class RelationshipFormComponent
 	// }
 
 	private setRelationships(): void {
-		switch (this.space?.type) {
+		switch (this.$spaceType()) {
 			case 'family': {
 				this.relationshipOptions = getRelOptions(
 					this.ageGroup === 'child'
@@ -159,7 +157,7 @@ export class RelationshipFormComponent
 		}
 		console.log(
 			'RelationshipFormComponent.setRelationships()',
-			this.space,
+			this.$spaceRef(),
 			this.relationshipOptions,
 		);
 	}

@@ -80,7 +80,8 @@
 
 	<sneat-person-form-wizard
 		#personFormWizardComponent
-		[space]="space"
+		[$contact]="$contact()"
+		(contactChange)="onContactChanged($event)"
 		[(newPerson)]="newPerson"
 		[nameFields]="nameFields"
 		[fields]="wizardFields"

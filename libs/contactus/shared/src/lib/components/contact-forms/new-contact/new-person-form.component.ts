@@ -30,6 +30,7 @@ import {
 	ContactRoleService,
 	ContactService,
 } from '@sneat/contactus-services';
+import { SpaceNavService } from '@sneat/space-services';
 import { PersonWizardComponent } from '../pesson-wizard';
 import { IContactAddEventArgs } from '../../contact-events';
 import { ContactRoleFormComponent } from '../role-form';
@@ -40,7 +41,7 @@ import {
 } from '@sneat/extensions-assetus-components';
 import { IAssetContext } from '@sneat/mod-assetus-core';
 import { first, Observable, Subject, takeUntil } from 'rxjs';
-import { NewContactBaseFormComponent } from './new-contact-base-form-component';
+import { NewContactFormBaseComponent } from './new-contact-form-base.component';
 
 export type OptionalContactRoleIdAndBrief =
 	| IContactRoleWithIdAndBrief
@@ -53,8 +54,6 @@ export type OptionalContactGroupIdAndBrief =
 export type NewContactFormCommand = 'create' | 'reset';
 
 @Component({
-	selector: 'sneat-new-person-form',
-	templateUrl: './new-person-form.component.html',
 	imports: [
 		IonItemDivider,
 		IonLabel,
@@ -63,9 +62,11 @@ export type NewContactFormCommand = 'create' | 'reset';
 		IonButton,
 		AssetusServicesModule,
 	],
+	selector: 'sneat-new-person-form',
+	templateUrl: './new-person-form.component.html',
 })
 export class NewPersonFormComponent
-	extends NewContactBaseFormComponent
+	extends NewContactFormBaseComponent
 	implements OnInit
 {
 	@Input() public isInModal = false;
@@ -130,7 +131,7 @@ export class NewPersonFormComponent
 	private readonly contactService = inject(ContactService);
 	private readonly contactRoleService = inject(ContactRoleService);
 
-	public constructor() {
+	public constructor(private readonly spaceNavService: SpaceNavService) {
 		super('NewContactFormComponent');
 		this.setupEffects();
 	}
@@ -184,7 +185,7 @@ export class NewPersonFormComponent
 			if (!contactGroupID) {
 				return;
 			}
-			const spaceRef = this.$spaceRef();
+			const spaceRef = this.$contact().space;
 			this.contactGroupService
 				.getContactGroupByID(contactGroupID, spaceRef)
 				.pipe(first(), this.takeUntilDestroyed())
@@ -230,7 +231,7 @@ export class NewPersonFormComponent
 			if (!id) {
 				return;
 			}
-			const space = this.$space();
+			const space = this.$contact().space;
 			if (this.$asset()?.id !== id) {
 				this.$asset.set({ id, space });
 			}
@@ -250,7 +251,7 @@ export class NewPersonFormComponent
 			if (!id) {
 				return;
 			}
-			const space = this.$spaceRef();
+			const space = this.$contact().space;
 			this.contactService
 				.watchContactById(space, id)
 				.pipe(this.takeUntilDestroyed(), takeUntil(this.parentContactID$))
@@ -289,7 +290,7 @@ export class NewPersonFormComponent
 
 	protected submit(): void {
 		this.console.log('NewContactFormComponent.submit()');
-		const space = this.$space();
+		const space = this.$contact().space;
 		if (!space) {
 			throw new Error('Space is not defined');
 		}
@@ -344,7 +345,7 @@ export class NewPersonFormComponent
 		}
 		this.contactService.createContact(space, request).subscribe({
 			next: (contact) => {
-				const space = this.$space();
+				const space = this.$contact().space;
 				this.spaceNavService
 					.navigateForwardToSpacePage(space, `contact/${contact.id}`, {
 						replaceUrl: true,

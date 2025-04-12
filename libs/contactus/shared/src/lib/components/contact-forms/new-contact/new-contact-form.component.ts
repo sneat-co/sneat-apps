@@ -3,17 +3,19 @@ import {
 	Component,
 	computed,
 	effect,
-	EventEmitter,
 	Input,
-	Output,
 	signal,
 } from '@angular/core';
 import { IonSegment, IonSegmentButton } from '@ionic/angular/standalone';
-import { ContactRolePet, RoleSpaceMember } from '@sneat/contactus-core';
+import {
+	ContactRolePet,
+	IContactContext,
+	RoleSpaceMember,
+} from '@sneat/contactus-core';
 import { Observable } from 'rxjs';
 import { IContactAddEventArgs } from '../../contact-events';
 import { NewCompanyFormComponent } from './new-company-form.component';
-import { NewContactBaseFormComponent } from './new-contact-base-form-component';
+import { NewContactFormBaseComponent } from './new-contact-form-base.component';
 import {
 	NewContactFormCommand,
 	NewPersonFormComponent,
@@ -36,11 +38,13 @@ type NewContactFormTab = 'person' | 'pet' | 'company' | 'location';
 	selector: 'sneat-new-contact-form',
 	templateUrl: './new-contact-form.component.html',
 })
-export class NewContactFormComponent extends NewContactBaseFormComponent {
+export class NewContactFormComponent extends NewContactFormBaseComponent {
 	protected readonly $tab = signal<NewContactFormTab | undefined>(undefined);
 
 	@Input() command?: Observable<NewContactFormCommand>;
 	@Input() selectGroupAndRole$?: Observable<IContactAddEventArgs | undefined>;
+
+	private readonly $contactType = computed(() => this.$contact()?.dbo?.type);
 
 	constructor() {
 		super('NewContactFormComponent');
@@ -64,7 +68,7 @@ export class NewContactFormComponent extends NewContactBaseFormComponent {
 			let contact = this.$contact();
 			if (!contact?.dbo) {
 				contact = {
-					...(contact || { id: '', space: this.$spaceRef() }),
+					...contact,
 					dbo: {
 						type: ContactTypeAnimal,
 						roles: [RoleSpaceMember, ContactRolePet],
@@ -83,5 +87,10 @@ export class NewContactFormComponent extends NewContactBaseFormComponent {
 			this.contactChange.emit(contact);
 		}
 		this.$tab.set(tab);
+	}
+
+	protected onContactChanged(contact: IContactContext): void {
+		console.log('onContactChanged', contact);
+		this.contactChange.emit(contact);
 	}
 }

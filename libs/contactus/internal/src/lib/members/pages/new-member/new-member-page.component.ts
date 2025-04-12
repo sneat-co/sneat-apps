@@ -9,6 +9,7 @@ import {
 import { ContactComponentBaseParams } from '@sneat/contactus-shared';
 import {
 	emptyMemberPerson,
+	IContactContext,
 	IContactusSpaceDboAndID,
 	IMemberPerson,
 } from '@sneat/contactus-core';
@@ -44,6 +45,7 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
 	protected readonly $tab = signal<Tab>('mass');
 
 	protected readonly $member = signal<IMemberPerson>(emptyMemberPerson);
+	protected readonly $contact = signal<IContactContext>({} as IContactContext);
 
 	constructor() {
 		super('NewMemberPageComponent');

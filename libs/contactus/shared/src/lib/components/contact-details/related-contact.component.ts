@@ -1,46 +1,42 @@
 import { JsonPipe } from '@angular/common';
-import {
-	Component,
-	Input,
-	OnChanges,
-	OnDestroy,
-	SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { GenderIconNamePipe } from '@sneat/components';
 import { IContactBrief, IContactWithBrief } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import { IIdAndBrief } from '@sneat/core';
 import { IRelatedItem } from '@sneat/dto';
+import { WithSpaceInput } from '@sneat/space-components';
 import { ISpaceContext } from '@sneat/space-models';
-import { Subject, takeUntil } from 'rxjs';
 
 @Component({
 	selector: 'sneat-relate-contact',
 	templateUrl: './related-contact.component.html',
 	imports: [JsonPipe, IonicModule, GenderIconNamePipe],
 })
-export class RelatedContactComponent implements OnChanges, OnDestroy {
-	@Input({ required: true }) public space?: ISpaceContext;
+export class RelatedContactComponent
+	extends WithSpaceInput
+	implements OnChanges
+{
 	@Input({ required: true }) public relatedItem?: IIdAndBrief<IRelatedItem>;
-
-	private readonly destroyed = new Subject<void>();
 
 	protected spaceContacts?: IContactWithBrief[];
 	protected contactBrief?: IContactBrief;
 
-	constructor(private readonly contactusSpaceService: ContactusSpaceService) {}
+	constructor(private readonly contactusSpaceService: ContactusSpaceService) {
+		super('RelatedContactComponent');
+	}
 
 	public ngOnChanges(changes: SimpleChanges): void {
-		if (changes['space']) {
-			const spaceChanges = changes['space'];
+		const spaceChanges = changes['$space'];
+		if (spaceChanges) {
 			const prevSpace = spaceChanges.previousValue as ISpaceContext | undefined;
 			const newSpace = spaceChanges.currentValue as ISpaceContext | undefined;
 			if (newSpace && prevSpace?.id !== newSpace?.id) {
 				console.log('Space changed');
 				this.contactusSpaceService
 					.watchContactBriefs(newSpace.id)
-					.pipe(takeUntil(this.destroyed))
+					.pipe(this.takeUntilDestroyed())
 					.subscribe((briefs) => {
 						this.spaceContacts = briefs;
 						this.setContactBrief();
@@ -51,11 +47,6 @@ export class RelatedContactComponent implements OnChanges, OnDestroy {
 		if (changes['relatedItem']) {
 			this.setContactBrief();
 		}
-	}
-
-	public ngOnDestroy(): void {
-		this.destroyed.next();
-		this.destroyed.complete();
 	}
 
 	private setContactBrief(): void {

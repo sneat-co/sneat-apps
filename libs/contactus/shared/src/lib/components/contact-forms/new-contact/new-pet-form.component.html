@@ -1,24 +1,9 @@
-@let petKind = $contact()?.dbo?.petKind;
-<ion-card>
-	<ion-item color="primary">
-		<ion-label>What kind of an animal is your pet?</ion-label>
-	</ion-item>
-	<sneat-select-from-list
-		label="Pet kind"
-		[value]="petKind"
-		[items]="petKinds"
-		(valueChange)="onPetKindChanged($event)"
-	/>
+<sneat-pet-kind-and-breed-form
+	[$contact]="$contact()"
+	(contactChange)="onContactChanged($event)"
+/>
 
-	@if (petKind === "dog") {
-		<ion-item color="primary">
-			<ion-label>What breed is your {{ petKind }}?</ion-label>
-		</ion-item>
-		<sneat-select-from-list label="Breed" [value]="" [items]="breeds" />
-	}
-</ion-card>
-
-@if (petKind) {
+@if ($contact().dbo?.petBreed) {
 	<ion-card>
 		<ion-item>
 			<ion-input label="Nickname" />
@@ -28,4 +13,7 @@
 			<ion-input label="Full name" />
 		</ion-item>
 	</ion-card>
+	<ion-button>
+		<ion-label>Create</ion-label>
+	</ion-button>
 }

@@ -15,7 +15,7 @@
 	<sneat-location-form
 		contactType="company"
 		label="Company details"
-		[$space]="$space()"
+		[$space]="$contact().space"
 		[parentContact]="parentContact"
 		[location]="contact"
 		(locationChange)="onContactChanged($event)"

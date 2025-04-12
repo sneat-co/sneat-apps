@@ -4,13 +4,17 @@ import {
 	SimpleChange,
 	SimpleChanges,
 } from '@angular/core';
+import { WithSpaceInput } from '@sneat/space-components';
 import { ISpaceContext } from '@sneat/space-models';
 
 @Component({
 	template: '',
 	standalone: false,
 })
-export abstract class SpaceRelatedFormComponent implements OnChanges {
+export abstract class SpaceRelatedFormComponent
+	extends WithSpaceInput
+	implements OnChanges
+{
 	// TODO: Needs to be in other place
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -29,6 +33,7 @@ export abstract class SpaceRelatedFormComponent implements OnChanges {
 	}
 
 	protected onSpaceTypeChanged(team?: ISpaceContext): void {
+		// TODO: remove in favor of $spaceType?
 		console.log('SpaceRelatedFormComponent.onSpaceTypeChanged()', team);
 	}
 }

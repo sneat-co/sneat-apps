@@ -5,20 +5,22 @@
 <!--<p>show: {{show | json}};</p>-->
 <!--<p>newPerson: {{newPerson | json}}</p>-->
 
-<sneat-age-group-form
-	*ngIf="show.ageGroup"
-	[spaceType]="space?.type"
-	[hidePetOption]="hidePetOption"
-	[disabled]="disabled"
-	[$ageGroup]="newPerson.ageGroup"
-	(ageGroupChange)="onAgeGroupChanged($event)"
-/>
+@if (show.ageGroup) {
+	<sneat-age-group-form
+		[spaceType]="$contact().space.type"
+		[hidePetOption]="hidePetOption"
+		[disabled]="disabled"
+		[$ageGroup]="newPerson.ageGroup"
+		(ageGroupChange)="onAgeGroupChanged($event)"
+	/>
+}
 
-<sneat-pet-kind
-	*ngIf="show.petKind"
-	[petKind]="newPerson.petKind"
-	(petKindChange)="onPetKindChanged($event)"
-/>
+@if (show.petKind) {
+	<sneat-pet-kind-and-breed-form
+		[$contact]="$contact()"
+		(contactChange)="onContactChanged($event)"
+	/>
+}
 
 <sneat-gender-form
 	*ngIf="show.gender"
@@ -27,35 +29,38 @@
 	(genderChange)="onGenderChanged($event)"
 />
 
-<sneat-relationship-form
-	*ngIf="!requires.relatedAs?.hide && show.relatedAs"
-	[isActive]="wizardStep === 'relatedAs'"
-	[disabled]="disabled"
-	[space]="space"
-	[relatedTo]="relatedToUser"
-	[relatedItems]="newPerson.related"
-	[ageGroup]="newPerson.ageGroup"
-	(relatedAsChange)="onRelatedAsChanged($event)"
-/>
-<!--[relatedAs]="newPerson.related?.relatedAs?.length === 1 ? newPerson.relatedTo?.relatedAs?.[0] : undefined"-->
+@if (!requires.relatedAs?.hide && show.relatedAs) {
+	<sneat-relationship-form
+		[isActive]="wizardStep === 'relatedAs'"
+		[disabled]="disabled"
+		[$space]="$contact().space"
+		[relatedTo]="relatedToUser"
+		[relatedItems]="newPerson.related"
+		[ageGroup]="newPerson.ageGroup"
+		(relatedAsChange)="onRelatedAsChanged($event)"
+	/>
+	<!--[relatedAs]="newPerson.related?.relatedAs?.length === 1 ? newPerson.relatedTo?.relatedAs?.[0] : undefined"-->
+}
 
-<sneat-names-form
-	*ngIf="show.name"
-	[name]="newPerson.names"
-	[isActive]="wizardStep === 'name'"
-	[showNextButton]="false"
-	[fields]="nameFields"
-	(namesChanged)="onNameChanged($event)"
-	[disabled]="disabled"
-	(next)="nextFromName($event)"
-/>
+@if (show.name) {
+	<sneat-names-form
+		[name]="newPerson.names"
+		[isActive]="wizardStep === 'name'"
+		[showNextButton]="false"
+		[fields]="nameFields"
+		(namesChanged)="onNameChanged($event)"
+		[disabled]="disabled"
+		(next)="nextFromName($event)"
+	/>
+}
 
-<sneat-roles-form
-	*ngIf="!requires.roles?.hide && show.roles"
-	[isActive]="wizardStep === 'roles'"
-	[disabled]="disabled"
-	[space]="space"
-/>
+@if (!requires.roles?.hide && show.roles) {
+	<sneat-roles-form
+		[$space]="$contact().space"
+		[isActive]="wizardStep === 'roles'"
+		[disabled]="disabled"
+	/>
+}
 
 @if (show.communicationChannels) {
 	<ion-segment [(ngModel)]="tab">

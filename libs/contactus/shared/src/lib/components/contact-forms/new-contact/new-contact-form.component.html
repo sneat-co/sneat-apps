@@ -7,27 +7,25 @@
 @switch ($tab()) {
 	@case ("person") {
 		<sneat-new-person-form
-			[$contactType]="$contactType()"
 			[isInModal]="true"
-			[$space]="$space()"
 			[$contact]="$contact()"
 			[command]="command"
 			[selectGroupAndRole$]="selectGroupAndRole$"
+			(contactChange)="onContactChanged($event)"
 			(creatingChange)="creatingChange.emit($event)"
 		/>
 	}
 	@case ("pet") {
 		<sneat-new-pet-form
-			[$space]="$space()"
-			[$contactType]="$contactType()"
 			[$hideRole]="$hideRole()"
-			(contactChange)="contactChange.emit($event)"
+			[$contact]="$contact()"
+			(contactChange)="onContactChanged($event)"
 		/>
 	}
 	@case ("company") {
 		<sneat-new-company-form
-			[$space]="$space()"
-			[$contactType]="$contactType()"
+			[$contact]="$contact()"
+			(contactChange)="onContactChanged($event)"
 			[$hideRole]="$hideRole()"
 		/>
 	}

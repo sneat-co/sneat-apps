@@ -38,8 +38,6 @@ import { IAssetContext } from '@sneat/mod-assetus-core';
 import { SpaceServiceModule } from '@sneat/space-services';
 
 @Component({
-	selector: 'sneat-new-contact-page',
-	templateUrl: './new-contact-page.component.html',
 	providers: [SpaceComponentBaseParams],
 	imports: [
 		CommonModule,
@@ -56,6 +54,8 @@ import { SpaceServiceModule } from '@sneat/space-services';
 		NewContactFormComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-new-contact-page',
+	templateUrl: './new-contact-page.component.html',
 })
 export class NewContactPageComponent
 	extends SpaceBaseComponent
@@ -66,7 +66,7 @@ export class NewContactPageComponent
 	// TODO: relationship is not implemented yet
 	protected $relation = signal<ContactToContactRelation | undefined>(undefined);
 
-	public readonly $contact = signal<IContactContext | undefined>(undefined);
+	public readonly $contact = signal<IContactContext>({} as IContactContext);
 
 	protected readonly $contactGroupID = signal<string>('');
 	protected readonly $contactRoleID = signal<ContactRole | undefined>(
@@ -136,4 +136,9 @@ export class NewContactPageComponent
 			this.$parentContactID.set(parentContactID);
 		}
 	};
+
+	protected onContactChanged(contact: IContactContext): void {
+		console.log('onContactChanged', contact);
+		this.$contact.set(contact);
+	}
 }

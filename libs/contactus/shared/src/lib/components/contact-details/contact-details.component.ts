@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import {
 	Component,
+	computed,
 	inject,
-	Input,
+	input,
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
@@ -11,7 +12,7 @@ import { IonicModule, NavController } from '@ionic/angular';
 import { IUserSpaceBrief } from '@sneat/auth-models';
 import { ContactTitlePipe } from '@sneat/components';
 import { IUpdateContactRequest } from '@sneat/contactus-services';
-import { IIdAndBrief, IIdAndBriefAndOptionalDbo, SpaceType } from '@sneat/core';
+import { IIdAndBrief, IIdAndBriefAndOptionalDbo } from '@sneat/core';
 import {
 	ContactType,
 	Gender,
@@ -25,7 +26,7 @@ import {
 	IRelationshipRoles,
 	ISpaceModuleItemRef,
 } from '@sneat/dto';
-import { ISpaceRef } from '@sneat/core';
+import { SneatBaseComponent } from '@sneat/ui';
 import { MemberPages } from '../../constants';
 import { ContactComponentBaseParams } from '../../contact-component-base-params';
 import { ContactContactsComponent } from '../contact-contacts';
@@ -40,8 +41,6 @@ import {
 import { RelatedContactComponent } from './related-contact.component';
 
 @Component({
-	selector: 'sneat-contact-details',
-	templateUrl: './contact-details.component.html',
 	imports: [
 		CommonModule,
 		IonicModule,
@@ -56,13 +55,23 @@ import { RelatedContactComponent } from './related-contact.component';
 		RelatedContactComponent,
 		ContactTitlePipe,
 	],
+	selector: 'sneat-contact-details',
+	templateUrl: './contact-details.component.html',
 })
-export class ContactDetailsComponent implements OnChanges {
-	@Input({ required: true }) public space: ISpaceRef = {
-		id: '',
-		type: '' as SpaceType,
-	};
-	@Input({ required: true }) public contact?: IContactContext;
+export class ContactDetailsComponent
+	extends SneatBaseComponent
+	implements OnChanges
+{
+	public readonly $contact = input.required<IContactContext | undefined>();
+	protected readonly $space = computed(
+		() => this.$contact()?.space || { id: '' },
+	);
+	protected readonly $spaceID = computed(() => this.$space()?.id);
+
+	public get contact(): IContactContext | undefined {
+		// TODO: remove and replace with direct use of $contact()!
+		return this.$contact();
+	}
 
 	private readonly navController = inject(NavController);
 
@@ -89,6 +98,7 @@ export class ContactDetailsComponent implements OnChanges {
 	protected relatedToContactOfCurrentUser?: ISpaceModuleItemRef;
 
 	constructor(private readonly params: ContactComponentBaseParams) {
+		super('ContactDetailsComponent');
 		params.userService.userState.subscribe({
 			next: (userState) => {
 				this.userSpaceBriefs = userState?.record?.spaces;
@@ -106,7 +116,7 @@ export class ContactDetailsComponent implements OnChanges {
 	private setRelatedToCurrentUser(): void {
 		this.relatedToContactOfCurrentUser = this.userContactID
 			? {
-					space: this.space?.id || '',
+					space: this.$spaceID() || '',
 					module: 'contactus',
 					collection: 'contacts',
 					itemID: this.userContactID,
@@ -142,7 +152,7 @@ export class ContactDetailsComponent implements OnChanges {
 
 	private setUserContactID(): void {
 		const userContactID =
-			this.userSpaceBriefs?.[this.space?.id || '']?.userContactID;
+			this.userSpaceBriefs?.[this.$spaceID() || '']?.userContactID;
 		if (userContactID != this.userContactID) {
 			this.userContactID = userContactID;
 			this.onUserContactIDChanged();
@@ -151,8 +161,9 @@ export class ContactDetailsComponent implements OnChanges {
 
 	private onUserContactIDChanged(): void {
 		this.setRelatedToCurrentUser();
-		if (this.userContactID && this.space?.id) {
-			this.setRelatedAs(this.space.id, this.userContactID);
+		const spaceID = this.$spaceID();
+		if (this.userContactID && spaceID) {
+			this.setRelatedAs(spaceID, this.userContactID);
 		}
 	}
 
@@ -202,7 +213,7 @@ export class ContactDetailsComponent implements OnChanges {
 	}
 
 	protected goMember(id: string): void {
-		const space = this.space;
+		const space = this.$space();
 		if (!space) {
 			throw new Error('Can not navigate to member without team context');
 		}
@@ -224,7 +235,7 @@ export class ContactDetailsComponent implements OnChanges {
 		this.navController
 			.navigateForward([page], {
 				queryParams: { id: this.contact.id },
-				state: { contact: this.contact, space: this.space },
+				state: { contact: this.contact, space: this.$space() },
 			})
 			.catch(this.params.errorLogger.logError);
 	}
@@ -244,7 +255,7 @@ export class ContactDetailsComponent implements OnChanges {
 			related: [
 				{
 					itemRef: {
-						space: this.space?.id || '',
+						space: this.$spaceID() || '',
 						module: 'contactus',
 						collection: 'contacts',
 						itemID: userContactID,
@@ -267,7 +278,7 @@ export class ContactDetailsComponent implements OnChanges {
 
 	private newUpdateContactRequest(): IUpdateContactRequest {
 		const contactID = this.contact?.id;
-		const spaceID = this.space?.id;
+		const spaceID = this.$spaceID();
 		if (!contactID || !spaceID) {
 			throw new Error(
 				'ContactDetailsComponent.newUpdateContactRequest() - contactID or spaceID is not set',

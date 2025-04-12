@@ -22,13 +22,17 @@ interface Role {
 export class RolesFormComponent extends SpaceRelatedFormComponent {
 	@Input() isActive = false;
 	@Input() disabled = false;
-	@Input({ required: true }) space?: ISpaceContext;
 	roles?: Role[];
 
 	@Output() readonly rolesChange = new EventEmitter<string[]>();
 
-	override onSpaceTypeChanged(team?: ISpaceContext): void {
-		switch (team?.type) {
+	public constructor() {
+		super('RolesFormComponent');
+	}
+
+	protected override onSpaceTypeChanged(space?: ISpaceContext): void {
+		super.onSpaceTypeChanged(space);
+		switch (space?.type) {
 			case 'educator':
 				if (location.pathname.includes('staff')) {
 					this.roles = [

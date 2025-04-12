@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -9,7 +8,7 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonSegment, IonSegmentButton } from '@ionic/angular/standalone';
 import { SneatUserService } from '@sneat/auth-core';
 import { IPersonNames, isNameEmpty } from '@sneat/auth-models';
 import { excludeUndefined, formNexInAnimation, SpaceType } from '@sneat/core';
@@ -18,6 +17,7 @@ import {
 	AgeGroupID,
 	emptyContactBase,
 	Gender,
+	IContactContext,
 	IEmail,
 	IPersonRequirements,
 	IPhone,
@@ -32,7 +32,7 @@ import {
 	IRelationshipRoles,
 	ISpaceModuleItemRef,
 } from '@sneat/dto';
-import { ISpaceContext } from '@sneat/space-models';
+import { NewContactFormBaseComponent } from '../new-contact/new-contact-form-base.component';
 import { AgeGroupFormComponent } from '../person-forms/age-group';
 import { EmailsFormComponent } from '../emails-form';
 import { GenderFormComponent } from '../person-forms/gender-form';
@@ -40,7 +40,7 @@ import {
 	INamesFormFields,
 	NamesFormComponent,
 } from '../person-forms/names-form';
-import { PetKindInputComponent } from '../pet-kind';
+import { PetKindAndBreedFormComponent } from '../pet-kind-and-breed-form';
 import { PhonesFormComponent } from '../phones-form';
 import { RelationshipFormComponent } from '../relationship-form';
 import { RolesFormComponent } from '../roles-form';
@@ -81,14 +81,10 @@ export type IPersonFormWizardFields = {
 };
 
 @Component({
-	selector: 'sneat-person-form-wizard',
-	templateUrl: './person-wizard.component.html',
 	animations: [formNexInAnimation],
 	imports: [
-		CommonModule,
-		IonicModule,
 		AgeGroupFormComponent,
-		PetKindInputComponent,
+		PetKindAndBreedFormComponent,
 		GenderFormComponent,
 		RelationshipFormComponent,
 		NamesFormComponent,
@@ -96,11 +92,16 @@ export type IPersonFormWizardFields = {
 		FormsModule,
 		PhonesFormComponent,
 		EmailsFormComponent,
+		IonSegment,
+		IonSegmentButton,
 	],
+	selector: 'sneat-person-form-wizard',
+	templateUrl: './person-wizard.component.html',
 })
-export class PersonWizardComponent implements OnChanges {
-	@Input({ required: true }) space?: ISpaceContext;
-
+export class PersonWizardComponent
+	extends NewContactFormBaseComponent
+	implements OnChanges
+{
 	@Input() requires: IPersonRequirements = {};
 	@Input() disabled = false;
 	@Input() hideRelationship = false;
@@ -136,6 +137,7 @@ export class PersonWizardComponent implements OnChanges {
 	protected relatedToUser?: ISpaceModuleItemRef;
 
 	constructor(readonly userService: SneatUserService) {
+		super('PersonWizardComponent');
 		userService.userChanged.subscribe(() => this.setRelatedToUser());
 	}
 
@@ -143,7 +145,7 @@ export class PersonWizardComponent implements OnChanges {
 		const itemID = this.userService.currentUserID;
 		this.relatedToUser = itemID
 			? {
-					space: this.space?.id || '',
+					space: this.$contact().space.id,
 					module: 'contactus',
 					collection: 'contacts',
 					itemID,
@@ -223,12 +225,12 @@ export class PersonWizardComponent implements OnChanges {
 		);
 	}
 
-	protected onPetKindChanged(petKind?: PetKind): void {
-		console.log('onPetKindChanged()', petKind);
-		this.setRelatedPerson(
-			{ ...this.newPerson, petKind },
-			{ name: 'petKind', hasValue: !!petKind },
-		);
+	protected onContactChanged(contact: IContactContext): void {
+		console.log('onContactChanged()', contact);
+		// this.setRelatedPerson(
+		// 	{ ...this.newPerson, petKind },
+		// 	{ name: 'petKind', hasValue: !!petKind },
+		// );
 	}
 
 	protected onGenderChanged(gender?: Gender): void {
@@ -321,7 +323,7 @@ export class PersonWizardComponent implements OnChanges {
 
 
  */
-		const spaceID = this.space?.id || '';
+		const spaceID = this.$contact().space.id;
 		const userID = this.relatedToUser?.itemID || '';
 
 		const userRelatedItem: IRelatedItem = {
@@ -396,6 +398,7 @@ export class PersonWizardComponent implements OnChanges {
 		if (!step.filter || (!step.filter.hideFor && !step.filter.showFor)) {
 			return false;
 		}
+		const space = this.$contact().space;
 		if (this.newPerson.type) {
 			if (
 				step.filter.hideFor?.contactTypes?.includes(
@@ -413,13 +416,13 @@ export class PersonWizardComponent implements OnChanges {
 				return true;
 			}
 		}
-		if (this.space?.type) {
-			if (step.filter.hideFor?.spaceTypes?.includes(this.space.type)) {
+		if (space?.type) {
+			if (step.filter.hideFor?.spaceTypes?.includes(space.type)) {
 				return true;
 			}
 			if (
 				step.filter.showFor?.spaceTypes?.length &&
-				!step.filter.showFor.spaceTypes.includes(this.space.type)
+				!step.filter.showFor.spaceTypes.includes(space.type)
 			) {
 				return true;
 			}
@@ -483,8 +486,12 @@ export class PersonWizardComponent implements OnChanges {
 				return !!p.gender;
 			case 'relatedAs':
 				return (
-					getRelatedItemIDs(p.related, 'contactus', 'contacts', this.space?.id)
-						.length > 0
+					getRelatedItemIDs(
+						p.related,
+						'contactus',
+						'contacts',
+						this.$contact().space.id,
+					).length > 0
 				);
 			case 'roles':
 				return !!p.roles?.length;

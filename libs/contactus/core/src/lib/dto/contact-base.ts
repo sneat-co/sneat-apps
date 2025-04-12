@@ -6,6 +6,7 @@ import { ContactType } from './contact-types';
 import { Gender } from './gender';
 import { AgeGroupID } from './age-group';
 import { PetKind } from './pet-kind';
+
 // import { AgeGroupID, ContactType, PetKind, Gender, IAddress } from '.';
 
 export interface IContactBase extends IWithRelatedOnly {
@@ -18,6 +19,7 @@ export interface IContactBase extends IWithRelatedOnly {
 	readonly gender?: Gender;
 	readonly ageGroup?: AgeGroupID;
 	readonly petKind?: PetKind;
+	readonly petBreed?: string;
 	readonly address?: IAddress;
 	readonly avatar?: IAvatar;
 	readonly roles?: readonly string[];

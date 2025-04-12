@@ -1,0 +1,29 @@
+@let petKind = $contact().dbo?.petKind;
+
+<ion-card>
+	@if (!petKind) {
+		<ion-item-divider color="primary">
+			<ion-label>What kind of an animal is your pet?</ion-label>
+		</ion-item-divider>
+	}
+	<sneat-select-from-list
+		label="Pet kind"
+		[value]="petKind"
+		[items]="petKinds"
+		(valueChange)="onPetKindChanged($event)"
+	/>
+
+	@if (petKind === "dog") {
+		@if (!$contact().dbo?.petBreed) {
+			<ion-item-divider color="primary">
+				<ion-label>What breed is your dog?</ion-label>
+			</ion-item-divider>
+		}
+		<sneat-select-from-list
+			label="Breed"
+			[value]=""
+			[items]="breeds"
+			(valueChange)="onPetBreedChanged($event)"
+		/>
+	}
+</ion-card>

@@ -29,7 +29,6 @@ import { excludeEmpty } from '@sneat/core';
 import {
 	ContactRole,
 	ContactType,
-	IContactBrief,
 	validateAddress,
 	IContactContext,
 	ICreateContactCompanyRequest,
@@ -38,7 +37,7 @@ import {
 } from '@sneat/contactus-core';
 import { ContactService } from '@sneat/contactus-services';
 import { LocationFormComponent } from '../location-form';
-import { NewContactBaseFormComponent } from './new-contact-base-form-component';
+import { NewContactFormBaseComponent } from './new-contact-form-base.component';
 
 @Component({
 	imports: [
@@ -59,7 +58,7 @@ import { NewContactBaseFormComponent } from './new-contact-base-form-component';
 	templateUrl: './new-company-form.component.html',
 })
 export class NewCompanyFormComponent
-	extends NewContactBaseFormComponent
+	extends NewContactFormBaseComponent
 	implements OnChanges
 {
 	@Input() contactRoles?: ISelectItem[];
@@ -91,14 +90,6 @@ export class NewCompanyFormComponent
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['$space'] && this.$space()) {
-			if (!this.contact) {
-				const brief: IContactBrief = { type: 'company' };
-				this.contact = { id: '', brief: brief, dbo: brief };
-				// } else {
-				// 	this.contact = { ...this.contact, team: this.team };
-			}
-		}
 		if (changes['contactRole']) {
 			this.form.patchValue({ role: this.contactRole });
 		}
@@ -132,6 +123,7 @@ export class NewCompanyFormComponent
 			alert('Contact role is a required field');
 			return;
 		}
+		const spaceRef = this.$contact().space;
 		try {
 			const address = validateAddress(this.contact.dbo?.address);
 			const request: ICreateContactCompanyRequest = excludeEmpty({
@@ -143,10 +135,10 @@ export class NewCompanyFormComponent
 					roles: [this.contactRole],
 				}),
 				roles: [this.contactRole],
-				spaceID: this.$spaceID(),
+				spaceID: spaceRef.id,
 			});
 			this.isCreating = true;
-			this.contactService.createContact(this.$space(), request).subscribe({
+			this.contactService.createContact(spaceRef, request).subscribe({
 				next: (contact) => {
 					console.log('created contact:', contact);
 					this.contactCreated.emit(contact);

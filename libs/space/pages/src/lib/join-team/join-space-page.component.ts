@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
@@ -17,7 +17,9 @@ import {
 	emptyContactBase,
 	IRelatedPerson,
 	IJoinSpaceInfoResponse,
+	IContactContext,
 } from '@sneat/contactus-core';
+import { WithSpaceInput } from '@sneat/space-components';
 import {
 	IRejectPersonalInviteRequest,
 	ISpaceContext,
@@ -27,7 +29,6 @@ import {
 	SpaceNavService,
 	SpaceService,
 } from '@sneat/space-services';
-import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs/operators';
 
 export const getPinFromUrl: () => string = () => {
@@ -40,14 +41,14 @@ export const getPinFromUrl: () => string = () => {
 	templateUrl: './join-space-page.component.html',
 	imports: [CommonModule, FormsModule, IonicModule, PersonWizardComponent],
 })
-export class JoinSpacePageComponent extends SneatBaseComponent {
-	@Input({ required: true }) space?: ISpaceContext;
-
+export class JoinSpacePageComponent extends WithSpaceInput {
 	private readonly id?: string;
 	public inviteInfo?: IJoinSpaceInfoResponse;
 	public newPerson: IRelatedPerson = emptyContactBase;
 	public pin?: string;
 	public userID?: string;
+
+	protected readonly $contact = signal<IContactContext>({} as IContactContext);
 
 	readonly nameFields: INamesFormFields = {
 		lastName: { required: true },
@@ -285,5 +286,8 @@ export class JoinSpacePageComponent extends SneatBaseComponent {
 					});
 				break;
 		}
+	}
+	protected onContactChanged(contact: IContactContext): void {
+		this.$contact.set(contact);
 	}
 }

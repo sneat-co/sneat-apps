@@ -22,6 +22,7 @@ import { formNexInAnimation } from '@sneat/core';
 import { personName } from '@sneat/components';
 import { RoutingState } from '@sneat/core';
 import {
+	IContactContext,
 	IContactusSpaceDboAndID,
 	ICreateSpaceMemberRequest,
 	IMemberPerson,
@@ -70,6 +71,7 @@ export class NewMemberFormComponent implements OnChanges {
 	protected contactusSpace?: IContactusSpaceDboAndID;
 
 	public readonly $member = input.required<IMemberPerson>();
+	public readonly $contact = input.required<IContactContext>();
 
 	private readonly $isRelatedPersonReady = computed(() => {
 		const member = this.$member();

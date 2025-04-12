@@ -65,8 +65,6 @@ import {
 import { IContactSelectorOptions } from './contacts-selector.interfaces';
 
 @Component({
-	selector: 'sneat-contacts-selector',
-	templateUrl: './contacts-selector.component.html',
 	imports: [
 		FormsModule,
 		SelectFromListComponent,
@@ -94,6 +92,8 @@ import { IContactSelectorOptions } from './contacts-selector.interfaces';
 		NewContactFormComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-contacts-selector',
+	templateUrl: './contacts-selector.component.html',
 })
 export class ContactsSelectorComponent
 	extends SelectorModalComponent<IContactWithBriefAndSpace>
@@ -170,6 +170,8 @@ export class ContactsSelectorComponent
 	@Input() excludeContactIDs?: string[];
 	@Input() excludeParentIDs?: string[];
 
+	protected readonly $contact = signal<IContactContext>({} as IContactContext);
+
 	@Input() onSelected?: (
 		items?: readonly IContactWithBriefAndSpace[],
 	) => Promise<void>;
@@ -237,6 +239,13 @@ export class ContactsSelectorComponent
 			this.$space.set(this.space);
 			// we need to call this as effects would not be set without something consumers
 			// this.onSpaceIDChanged();
+		}
+		if (this.contactType) {
+			this.$contact.set({
+				id: '',
+				space: this.$spaceRef(),
+				dbo: { type: this.contactType },
+			});
 		}
 	}
 
@@ -390,6 +399,10 @@ export class ContactsSelectorComponent
 		const parentContact = { ...contact, space: this.$spaceRef() };
 		this.parentItems?.push(this.getParentItem(parentContact));
 		this.onParentContactChanged(parentContact);
+	}
+
+	protected onContactChanged(contact: IContactContext): void {
+		this.$contact.set(contact);
 	}
 
 	protected onContactCreated(contact: IContactWithBrief): void {

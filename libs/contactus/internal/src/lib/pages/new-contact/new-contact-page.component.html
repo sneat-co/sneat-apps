@@ -11,9 +11,8 @@
 
 <ion-content>
 	<sneat-new-contact-form
-		[$space]="$space()"
-		[$contactType]="undefined"
 		[$contact]="$contact()"
+		(contactChange)="onContactChanged($event)"
 	/>
 	<!--	<sneat-new-person-form-->
 	<!--		[$fixedGroupID]="$contactGroupID()"-->

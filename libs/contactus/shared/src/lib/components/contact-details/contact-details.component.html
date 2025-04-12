@@ -64,23 +64,24 @@
 
 			<sneat-gender-form [genderID]="contact?.brief?.gender" />
 
-			<sneat-relationship-form
-				*ngIf="
-					contact?.brief?.roles?.includes('member') &&
-					contact?.brief?.userID !== currentUserID
-				"
-				[space]="space"
-				[relatedTo]="relatedToContactOfCurrentUser"
-				[relatedItems]="contact?.dbo?.related || contact?.brief?.related"
-				[ageGroup]="contact?.brief?.ageGroup"
-				(relatedAsChange)="onRelatedAsChanged($event)"
-			/>
+			@if (
+				contact?.brief?.roles?.includes("member") &&
+				contact?.brief?.userID !== currentUserID
+			) {
+				<sneat-relationship-form
+					[$space]="$space()"
+					[relatedTo]="relatedToContactOfCurrentUser"
+					[relatedItems]="contact?.dbo?.related || contact?.brief?.related"
+					[ageGroup]="contact?.brief?.ageGroup"
+					(relatedAsChange)="onRelatedAsChanged($event)"
+				/>
+			}
 		</ion-col>
 		<ion-col>
 			<ion-card>
 				<ion-list>
 					<sneat-contact-modules-menu
-						[space]="space"
+						[$space]="$space()"
 						[contact]="contactWithBriefAndOptionalDto"
 					/>
 				</ion-list>
@@ -105,34 +106,39 @@
 	</ion-segment-button>
 </ion-segment>
 
-<sneat-contact-contacts
-	*ngIf="tab === 'communicationChannels'"
-	[contact]="contactWithBriefAndOptionalDto"
-/>
-
-<ion-card *ngIf="tab === 'peers'">
-	<ion-item color="light">
-		<ion-label>Related contacts</ion-label>
-	</ion-item>
-	<ion-item *ngIf="!relatedContacts?.length">
-		<ion-label color="medium">No related contacts</ion-label>
-	</ion-item>
-	@for (
-		relatedContact of relatedContactsOfCurrentSpace;
-		track relatedContact.id
-	) {
-		<sneat-relate-contact [space]="space" [relatedItem]="relatedContact" />
+@switch (tab) {
+	@case ("communicationChannels") {
+		<sneat-contact-contacts [contact]="contactWithBriefAndOptionalDto" />
 	}
-</ion-card>
-
-<sneat-contact-locations
-	*ngIf="tab === 'locations'"
-	[$space]="space"
-	[contact]="contactWithBriefAndOptionalDto"
-/>
-
-<sneat-contact-roles-input
-	*ngIf="tab === 'roles'"
-	[space]="space"
-	[contact]="contactWithBriefAndOptionalDto"
-/>
+	@case ("peers") {
+		<ion-card>
+			<ion-item color="light">
+				<ion-label>Related contacts</ion-label>
+			</ion-item>
+			<ion-item *ngIf="!relatedContacts?.length">
+				<ion-label color="medium">No related contacts</ion-label>
+			</ion-item>
+			@for (
+				relatedContact of relatedContactsOfCurrentSpace;
+				track relatedContact.id
+			) {
+				<sneat-relate-contact
+					[$space]="$space()"
+					[relatedItem]="relatedContact"
+				/>
+			}
+		</ion-card>
+	}
+	@case ("locations") {
+		<sneat-contact-locations
+			[$space]="$space()"
+			[contact]="contactWithBriefAndOptionalDto"
+		/>
+	}
+	@case ("roles") {
+		<sneat-contact-roles-input
+			[space]="$space()"
+			[contact]="contactWithBriefAndOptionalDto"
+		/>
+	}
+}

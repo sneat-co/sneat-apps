@@ -7,10 +7,10 @@
 	</ion-item-divider>
 }
 
-@if ($contact()?.id) {
+@if ($contact().id) {
 	<ion-item-divider color="light">
 		<ion-label color="medium"
-			>{{ $contact()?.brief?.title || $contact()?.id }}
+			>{{ $contact().brief?.title || $contact().id }}
 		</ion-label>
 	</ion-item-divider>
 }
@@ -24,7 +24,7 @@
 
 @if ($selectedContactRole()) {
 	<sneat-person-form-wizard
-		[space]="$space()"
+		[$contact]="$contact()"
 		[hideRelationship]="true"
 		[hidePetOption]="true"
 		[fields]="{ contactType: { hide: true }, relatedAs: { hide: true } }"
