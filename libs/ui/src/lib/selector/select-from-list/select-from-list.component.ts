@@ -40,7 +40,7 @@ import { ISelectItem } from '../selector-interfaces';
 export class SelectFromListComponent
 	implements ControlValueAccessor, OnChanges, OnDestroy
 {
-	@Input() value = '';
+	@Input() value: string | undefined = '';
 	@Output() readonly valueChange = new EventEmitter<string>();
 
 	@Input() filterLabel = 'Find';
@@ -56,6 +56,7 @@ export class SelectFromListComponent
 	@Input() isLoading?: boolean;
 	@Input() items?: readonly ISelectItem[];
 	@Input() items$: Observable<ISelectItem[]> = NEVER;
+
 	private $items = signal<undefined | readonly ISelectItem[]>(undefined);
 
 	@Input() labelPlacement?: 'start' | 'end' | 'fixed' | 'stacked';
@@ -188,7 +189,7 @@ export class SelectFromListComponent
 	protected onSelectChanged(event: Event): void {
 		console.log('SelectFromListComponent.onSelectChanged()', event);
 		// this.value = (event as CustomEvent).detail['value'] as string;
-		this.onChange(this.value);
+		this.onChange(this.value || '');
 	}
 
 	protected onChange = (id: string) => {

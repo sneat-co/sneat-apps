@@ -21,6 +21,7 @@
 			[$space]="$space()"
 			[$contactType]="$contactType()"
 			[$hideRole]="$hideRole()"
+			(contactChange)="contactChange.emit($event)"
 		/>
 	}
 	@case ("company") {
