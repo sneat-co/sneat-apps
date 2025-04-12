@@ -17,6 +17,7 @@ import {
 	UntypedFormGroup,
 } from '@angular/forms';
 import { IonicModule, NavController } from '@ionic/angular';
+import { MemberService } from '@sneat/contactus-services';
 import { PersonWizardComponent } from '@sneat/contactus-shared';
 import { formNexInAnimation } from '@sneat/core';
 import { personName } from '@sneat/components';
@@ -31,13 +32,13 @@ import {
 	isRelatedPersonReady,
 } from '@sneat/contactus-core';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/space-models';
-import { MemberComponentBaseParams } from '../../member-component-base-params';
+import { SpaceNavService } from '@sneat/space-services';
+import { SneatBaseComponent } from '@sneat/ui';
 
 @Component({
 	selector: 'sneat-new-member-form',
 	templateUrl: 'new-member-form.component.html',
 	animations: [formNexInAnimation],
-	providers: [MemberComponentBaseParams],
 	imports: [
 		IonicModule,
 		FormsModule,
@@ -46,7 +47,10 @@ import { MemberComponentBaseParams } from '../../member-component-base-params';
 		JsonPipe,
 	],
 })
-export class NewMemberFormComponent implements OnChanges {
+export class NewMemberFormComponent
+	extends SneatBaseComponent
+	implements OnChanges
+{
 	public personRequirements: IPersonRequirements = {
 		// ageGroup: { required: false },
 		// gender: { required: true },
@@ -104,10 +108,11 @@ export class NewMemberFormComponent implements OnChanges {
 		// relationship: this.relationship,
 	});
 
-	constructor(
-		private readonly params: MemberComponentBaseParams,
-		routingState: RoutingState,
-	) {
+	private readonly memberService = inject(MemberService);
+	private readonly spaceNavService = inject(SpaceNavService);
+
+	public constructor(routingState: RoutingState) {
+		super('NewMemberFormComponent');
 		this.hasNavHistory = routingState.hasHistory();
 	}
 
@@ -154,13 +159,13 @@ export class NewMemberFormComponent implements OnChanges {
 		const space = this.$space();
 		const member = this.$member();
 		if (!space) {
-			this.params.errorLogger.logError(
+			this.errorLogger.logError(
 				'not able to add new member without team context',
 			);
 			return;
 		}
 		if (!member) {
-			this.params.errorLogger.logError('member field is undefined');
+			this.errorLogger.logError('member field is undefined');
 			return;
 		}
 		if (this.personRequirements.ageGroup?.required && !member.ageGroup) {
@@ -188,29 +193,29 @@ export class NewMemberFormComponent implements OnChanges {
 
 		this.$isSubmitting.set(true);
 		this.addMemberForm.disable();
-		this.params.memberService.createMember(request).subscribe({
+		this.memberService.createMember(request).subscribe({
 			next: (member) => {
 				console.log('member created:', member);
 				if (this.hasNavHistory) {
 					this.navController
 						.pop()
 						.catch(
-							this.params.errorLogger.logErrorHandler(
+							this.errorLogger.logErrorHandler(
 								'failed to navigate to prev page',
 							),
 						);
 				} else {
-					this.params.spaceNavService
+					this.spaceNavService
 						.navigateBackToSpacePage(space, 'members')
 						.catch(
-							this.params.errorLogger.logErrorHandler(
+							this.errorLogger.logErrorHandler(
 								'failed to navigate back to members page',
 							),
 						);
 				}
 			},
 			error: (err) => {
-				this.params.errorLogger.logError(err, 'Failed to create a new member');
+				this.errorLogger.logError(err, 'Failed to create a new member');
 				this.addMemberForm.enable();
 				setTimeout(() => {
 					this.$isSubmitting.set(false);

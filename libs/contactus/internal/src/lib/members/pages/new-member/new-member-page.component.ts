@@ -1,13 +1,27 @@
-import { CommonModule } from '@angular/common';
-import { Component, signal, ViewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { IonicModule, IonInput } from '@ionic/angular';
+import { Component, computed, effect, signal, ViewChild } from '@angular/core';
+import { IonInput } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonButtons,
+	IonCard,
+	IonCardContent,
+	IonCardHeader,
+	IonCardSubtitle,
+	IonCardTitle,
+	IonContent,
+	IonHeader,
+	IonSegment,
+	IonSegmentButton,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import {
 	ContactusServicesModule,
 	ContactusSpaceContextService,
 } from '@sneat/contactus-services';
-import { ContactComponentBaseParams } from '@sneat/contactus-shared';
+import { NewPetFormComponent } from '@sneat/contactus-shared';
 import {
+	ContactType,
 	emptyMemberPerson,
 	IContactContext,
 	IContactusSpaceDboAndID,
@@ -25,27 +39,52 @@ import { NewMemberFormComponent } from './new-member-form.component';
 type Tab = 'personal' | 'mass';
 
 @Component({
-	selector: 'sneat-new-member-page',
-	templateUrl: './new-member-page.component.html',
-	providers: [ContactComponentBaseParams],
 	imports: [
-		CommonModule,
-		IonicModule,
-		FormsModule,
 		ContactusServicesModule,
 		NewMemberFormComponent,
 		InviteLinksComponent,
 		SpaceServiceModule,
 		QRCodeComponent,
+		IonContent,
+		IonSegment,
+		IonSegmentButton,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		IonCard,
+		IonCardHeader,
+		IonCardTitle,
+		IonCardSubtitle,
+		IonCardContent,
+		NewPetFormComponent,
 	],
+	selector: 'sneat-new-member-page',
+	templateUrl: './new-member-page.component.html',
 })
 export class NewMemberPageComponent extends SpacePageBaseComponent {
 	@ViewChild('nameInput', { static: false }) nameInput?: IonInput;
 
+	protected onContactTypeChanged(event: CustomEvent): void {
+		this.$contact.update((contact) => ({
+			...contact,
+			dbo: {
+				...contact.dbo,
+				type: event.detail.value as ContactType,
+			},
+		}));
+	}
+
 	protected readonly $tab = signal<Tab>('mass');
 
 	protected readonly $member = signal<IMemberPerson>(emptyMemberPerson);
-	protected readonly $contact = signal<IContactContext>({} as IContactContext);
+	protected readonly $contact = signal<IContactContext>({
+		id: '',
+		dbo: { type: 'person' },
+	} as IContactContext);
+
+	protected readonly $contactType = computed(() => this.$contact().dbo?.type);
 
 	constructor() {
 		super('NewMemberPageComponent');
@@ -54,6 +93,12 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
 			this.destroyed$,
 			this.spaceIDChanged$,
 		);
+		effect(() => {
+			this.$contact.update((contact) => ({
+				...contact,
+				space: this.$spaceRef() || { id: '' },
+			}));
+		});
 		this.trackFirstSpaceTypeChanged();
 		this.route.queryParams.subscribe((params) => {
 			const group = params['group'];

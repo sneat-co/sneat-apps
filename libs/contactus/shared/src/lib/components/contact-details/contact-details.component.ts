@@ -9,9 +9,13 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController } from '@ionic/angular';
+import { SneatUserService } from '@sneat/auth-core';
 import { IUserSpaceBrief } from '@sneat/auth-models';
 import { ContactTitlePipe } from '@sneat/components';
-import { IUpdateContactRequest } from '@sneat/contactus-services';
+import {
+	ContactService,
+	IUpdateContactRequest,
+} from '@sneat/contactus-services';
 import { IIdAndBrief, IIdAndBriefAndOptionalDbo } from '@sneat/core';
 import {
 	ContactType,
@@ -26,9 +30,9 @@ import {
 	IRelationshipRoles,
 	ISpaceModuleItemRef,
 } from '@sneat/dto';
+import { SpaceNavService } from '@sneat/space-services';
 import { SneatBaseComponent } from '@sneat/ui';
 import { MemberPages } from '../../constants';
-import { ContactComponentBaseParams } from '../../contact-component-base-params';
 import { ContactContactsComponent } from '../contact-contacts';
 import { ContactDobComponent } from '../contact-dob';
 import { ContactLocationsComponent } from '../contact-locations';
@@ -97,15 +101,19 @@ export class ContactDetailsComponent
 
 	protected relatedToContactOfCurrentUser?: ISpaceModuleItemRef;
 
-	constructor(private readonly params: ContactComponentBaseParams) {
+	private readonly userService = inject(SneatUserService);
+	private readonly spaceNavService = inject(SpaceNavService);
+	private readonly contactService = inject(ContactService);
+
+	constructor() {
 		super('ContactDetailsComponent');
-		params.userService.userState.subscribe({
+		this.userService.userState.subscribe({
 			next: (userState) => {
 				this.userSpaceBriefs = userState?.record?.spaces;
 				this.setUserContactID();
 			},
 		});
-		params.userService.userState.subscribe({
+		this.userService.userState.subscribe({
 			next: (state) => {
 				this.userSpaceBriefs = state?.record?.spaces;
 				this.setUserContactID();
@@ -194,7 +202,7 @@ export class ContactDetailsComponent
 	// }
 
 	protected get currentUserID() {
-		return this.params.userService.currentUserID;
+		return this.userService.currentUserID;
 	}
 
 	protected hideForContactTypes(contactTypes: ContactType[]): boolean {
@@ -205,7 +213,7 @@ export class ContactDetailsComponent
 	}
 
 	protected get currentUserId() {
-		return this.params.userService.currentUserID;
+		return this.userService.currentUserID;
 	}
 
 	protected get relatedContacts(): readonly IIdAndBrief<IRelatedItem>[] {
@@ -217,7 +225,7 @@ export class ContactDetailsComponent
 		if (!space) {
 			throw new Error('Can not navigate to member without team context');
 		}
-		this.params.spaceNavService.navigateToMember(this.navController, {
+		this.spaceNavService.navigateToMember(this.navController, {
 			id,
 			space,
 		});
@@ -237,7 +245,7 @@ export class ContactDetailsComponent
 				queryParams: { id: this.contact.id },
 				state: { contact: this.contact, space: this.$space() },
 			})
-			.catch(this.params.errorLogger.logError);
+			.catch(this.errorLogger.logError);
 	}
 
 	protected onRelatedAsChanged(relatedAs: IRelationshipRoles): void {
@@ -266,13 +274,11 @@ export class ContactDetailsComponent
 				},
 			],
 		};
-		this.params.contactService.updateContact(request).subscribe({
+		this.contactService.updateContact(request).subscribe({
 			next: () => {
 				console.log('onRelatedAsChanged() - contact updated');
 			},
-			error: this.params.errorLogger.logErrorHandler(
-				'Failed to update contact',
-			),
+			error: this.errorLogger.logErrorHandler('Failed to update contact'),
 		});
 	}
 

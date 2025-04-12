@@ -28,56 +28,78 @@
 	</ion-toolbar>
 </ion-header>
 
+<ion-segment
+	[value]="$contactType()"
+	(ionChange)="onContactTypeChanged($event)"
+>
+	<ion-segment-button value="person">Person</ion-segment-button>
+	<ion-segment-button value="animal">Pet</ion-segment-button>
+</ion-segment>
+
 <ion-content class="cardy">
-	@if (space.id && space.type !== "family") {
-		<ion-segment [value]="$tab()" (ionChange)="onTabChanged($event)">
-			<ion-segment-button value="mass">
-				Mass invite [{{ space.id }} - {{ space.type }}]
-			</ion-segment-button>
-			<ion-segment-button value="personal">Personal invite</ion-segment-button>
-		</ion-segment>
-	}
+	@switch ($contactType()) {
+		@case ("person") {
+			@if (space.id && space.type !== "family") {
+				<ion-segment [value]="$tab()" (ionChange)="onTabChanged($event)">
+					<ion-segment-button value="mass">
+						Mass invite [{{ space.id }} - {{ space.type }}]
+					</ion-segment-button>
+					<ion-segment-button value="personal"
+						>Personal invite</ion-segment-button
+					>
+				</ion-segment>
+			}
 
-	@switch ($tab()) {
-		@case ("personal") {
-			<sneat-new-member-form
-				[$space]="$space()"
-				[$member]="$member()"
-				[$contact]="$contact()"
-				(memberChange)="$member.set($event)"
-			/>
-		}
-		@case ("mass") {
+			@switch ($tab()) {
+				@case ("personal") {
+					<sneat-new-member-form
+						[$space]="$space()"
+						[$member]="$member()"
+						[$contact]="$contact()"
+						(memberChange)="$member.set($event)"
+					/>
+				}
+				@case ("mass") {
+					<ion-card>
+						<ion-card-content>
+							<sneat-invite-links [contactusSpace]="contactusSpace" />
+
+							<p>
+								<b>Or</b> you can send
+								<a
+									href=""
+									(click)="$tab.set('personal'); $event.preventDefault()"
+									>personal invite</a
+								>
+								by email.
+							</p>
+						</ion-card-content>
+					</ion-card>
+				}
+			}
+
 			<ion-card>
+				<ion-card-header>
+					<ion-card-title>Self-add</ion-card-title>
+					<ion-card-subtitle>
+						Ask the new member to scan this QR code and fill the form to join
+						this space.
+					</ion-card-subtitle>
+				</ion-card-header>
 				<ion-card-content>
-					<sneat-invite-links [contactusSpace]="contactusSpace" />
-
-					<p>
-						<b>Or</b> you can send
-						<a href="" (click)="$tab.set('personal'); $event.preventDefault()"
-							>personal invite</a
-						>
-						by email.
-					</p>
+					<qrcode
+						[qrdata]="'https://sneat.app/join?family=abc'"
+						[width]="256"
+						errorCorrectionLevel="M"
+					></qrcode>
 				</ion-card-content>
 			</ion-card>
 		}
+		@case ("animal") {
+			<sneat-new-pet-form
+				[$contact]="$contact()"
+				(contactChange)="$contact.set($event)"
+			/>
+		}
 	}
-
-	<ion-card>
-		<ion-card-header>
-			<ion-card-title>Self-add</ion-card-title>
-			<ion-card-subtitle>
-				Ask the new member to scan this QR code and fill the form to join this
-				space.
-			</ion-card-subtitle>
-		</ion-card-header>
-		<ion-card-content>
-			<qrcode
-				[qrdata]="'https://sneat.app/join?family=abc'"
-				[width]="256"
-				errorCorrectionLevel="M"
-			></qrcode>
-		</ion-card-content>
-	</ion-card>
 </ion-content>
