@@ -1,4 +1,10 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Inject,
+	OnDestroy,
+	signal,
+} from '@angular/core';
 import {
 	IonBackButton,
 	IonButtons,
@@ -27,6 +33,7 @@ import { first } from 'rxjs';
 		IonBackButton,
 		IonTitle,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewLogistCompanyPageComponent
 	extends SpaceBaseComponent
@@ -41,6 +48,12 @@ export class NewLogistCompanyPageComponent
 	];
 
 	protected contactRole?: ContactRole;
+
+	protected $contact = signal<IContactContext>({
+		id: '',
+		space: { id: '' },
+		dbo: { type: 'company' },
+	});
 
 	constructor(
 		@Inject(CONTACT_ROLES_BY_TYPE)
