@@ -16,7 +16,10 @@ import {
 import { CONTACT_ROLES_BY_TYPE, IContactRole } from '@sneat/app';
 import { NewCompanyFormComponent } from '@sneat/contactus-shared';
 import { ISelectItem } from '@sneat/ui';
-import { ContactRole } from '@sneat/contactus-core';
+import {
+	ContactRole,
+	NewContactBaseDboAndSpaceRef,
+} from '@sneat/contactus-core';
 import { SpaceBaseComponent } from '@sneat/space-components';
 import { IContactContext } from '@sneat/contactus-core';
 import { first } from 'rxjs';
@@ -49,8 +52,7 @@ export class NewLogistCompanyPageComponent
 
 	protected contactRole?: ContactRole;
 
-	protected $contact = signal<IContactContext>({
-		id: '',
+	protected $contact = signal<NewContactBaseDboAndSpaceRef>({
 		space: { id: '' },
 		dbo: { type: 'company' },
 	});
