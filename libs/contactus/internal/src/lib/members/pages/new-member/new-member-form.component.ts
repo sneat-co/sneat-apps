@@ -1,12 +1,8 @@
-import { JsonPipe } from '@angular/common';
 import {
 	Component,
 	computed,
-	EventEmitter,
 	inject,
-	input,
 	OnChanges,
-	Output,
 	signal,
 	SimpleChanges,
 	ViewChild,
@@ -16,19 +12,29 @@ import {
 	ReactiveFormsModule,
 	UntypedFormGroup,
 } from '@angular/forms';
-import { IonicModule, NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
+import {
+	IonButton,
+	IonCard,
+	IonCardContent,
+	IonCardHeader,
+	IonCardSubtitle,
+	IonCardTitle,
+	IonCol,
+	IonGrid,
+	IonLabel,
+	IonRow,
+	IonSpinner,
+} from '@ionic/angular/standalone';
 import { MemberService } from '@sneat/contactus-services';
 import { PersonWizardComponent } from '@sneat/contactus-shared';
 import { formNexInAnimation } from '@sneat/core';
 import { personName } from '@sneat/components';
 import { RoutingState } from '@sneat/core';
 import {
-	IContactContext,
 	IContactusSpaceDboAndID,
 	ICreateSpaceMemberRequest,
-	IMemberPerson,
 	IPersonRequirements,
-	IRelatedPerson,
 	isRelatedPersonReady,
 	MemberContactType,
 	NewContactBaseDboAndSpaceRef,
@@ -36,18 +42,28 @@ import {
 } from '@sneat/contactus-core';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
-import { SneatBaseComponent } from '@sneat/ui';
+import { QRCodeComponent } from 'angularx-qrcode';
 
 @Component({
 	selector: 'sneat-new-member-form',
 	templateUrl: 'new-member-form.component.html',
 	animations: [formNexInAnimation],
 	imports: [
-		IonicModule,
 		FormsModule,
 		ReactiveFormsModule,
 		PersonWizardComponent,
-		JsonPipe,
+		IonCard,
+		IonCardContent,
+		IonCardHeader,
+		IonCardTitle,
+		IonCardSubtitle,
+		QRCodeComponent,
+		IonButton,
+		IonSpinner,
+		IonLabel,
+		IonRow,
+		IonGrid,
+		IonCol,
 	],
 })
 export class NewMemberFormComponent
@@ -55,8 +71,8 @@ export class NewMemberFormComponent
 	implements OnChanges
 {
 	public personRequirements: IPersonRequirements = {
-		// ageGroup: { required: false },
-		// gender: { required: true },
+		ageGroup: { required: true },
+		gender: { required: true },
 	};
 
 	private readonly navController = inject(NavController);

@@ -1,9 +1,10 @@
 <!--<h2>Person wizard</h2>-->
+<!--<p>wizardStep: {{ wizardStep }}</p>-->
+<!--<p>fields: {{ fields | json }}</p>-->
+<!--<p>nameFields: {{ nameFields | json }}</p>-->
+<!--<p>show: {{ show | json }};</p>-->
+<!--<p>contact: {{ $contact() | json }}</p>-->
 <!--<p>wizardStep: {{wizardStep}}</p>-->
-<!--<p>fields: {{fields | json}}</p>-->
-<!--<p>nameFields: {{nameFields | json}}</p>-->
-<!--<p>show: {{show | json}};</p>-->
-<!--<p>newPerson: {{newPerson | json}}</p>-->
 
 @if (show.ageGroup) {
 	<sneat-age-group-form
@@ -15,19 +16,13 @@
 	/>
 }
 
-@if (show.petKind) {
-	<sneat-pet-kind-and-breed-form
-		[$contact]="$contact()"
-		(contactChange)="onContactChanged($event)"
+@if (show.gender) {
+	<sneat-gender-form
+		[disabled]="disabled"
+		[genderID]="$contact().dbo.gender"
+		(genderChange)="onGenderChanged($event)"
 	/>
 }
-
-<sneat-gender-form
-	*ngIf="show.gender"
-	[disabled]="disabled"
-	[genderID]="$contact().dbo.gender"
-	(genderChange)="onGenderChanged($event)"
-/>
 
 @if (!requires.relatedAs?.hide && show.relatedAs) {
 	<sneat-relationship-form
@@ -67,29 +62,30 @@
 		<ion-segment-button value="emails">Emails</ion-segment-button>
 		<ion-segment-button value="phones">Phones</ion-segment-button>
 	</ion-segment>
-	<sneat-emails-form
-		*ngIf="tab === 'emails' && !requires.email?.hide"
-		[hideHeader]="true"
-		[emails]="$contact().dbo.emails"
-		(emailsChange)="onEmailsChanged($event)"
-	/>
-
-	<sneat-phones-form
-		*ngIf="tab === 'phones' && !requires.phone?.hide"
-		[hideHeader]="true"
-		[phones]="$contact().dbo.phones"
-		(phonesChange)="onPhoneChanged($event)"
-	/>
+	@if (tab === "emails" && !requires.email?.hide) {
+		<sneat-emails-form
+			[hideHeader]="true"
+			[emails]="$contact().dbo.emails"
+			(emailsChange)="onEmailsChanged($event)"
+		/>
+	}
+	@if (tab === "phones" && !requires.phone?.hide) {
+		<sneat-phones-form
+			[hideHeader]="true"
+			[phones]="$contact().dbo.phones"
+			(phonesChange)="onPhoneChanged($event)"
+		/>
+	}
 }
 
-<!--<ion-button *ngIf="wizardStep === 'emails' || wizardStep === 'phones'"-->
-<!--						class="ion-margin"-->
-<!--						size="medium"-->
-<!--						[color]="show.nameNext ? 'primary' : 'medium'"-->
-<!--						(click)="openNext(wizardStep)"-->
-<!--&gt;-->
-<!--	<ion-label>Next</ion-label>-->
-<!--	<ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>-->
-<!--</ion-button>-->
-
-<!--wizardStep: {{wizardStep}}-->
+<!--@if (wizardStep === 'emails' || wizardStep === 'phones') {-->
+<!--	<ion-button-->
+<!--		class="ion-margin"-->
+<!--		size="medium"-->
+<!--		[color]="show.nameNext ? 'primary' : 'medium'"-->
+<!--		(click)="openNext(wizardStep)"-->
+<!--	>-->
+<!--		<ion-label>Next</ion-label>-->
+<!--		<ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>-->
+<!--	</ion-button>-->
+<!--}-->

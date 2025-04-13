@@ -1,10 +1,11 @@
 <form [formGroup]="addMemberForm" (ngSubmit)="submit()">
 	<sneat-person-form-wizard
 		[$contact]="$contact()"
+		(contactChange)="onContactChanged($event)"
+		[displayAgeGroupValue]="true"
 		[disabled]="$isSubmitting()"
 		[requires]="personRequirements"
 		[fields]="{ contactType: { hide: true } }"
-		(contactChange)="onContactChanged($event)"
 	/>
 
 	@if (addMemberForm.errors) {
@@ -12,20 +13,47 @@
 			<ion-card-header color="danger">
 				<ion-card-title>Errors</ion-card-title>
 			</ion-card-header>
-			<ion-card-content>
-				{{ addMemberForm.errors | json }}
-			</ion-card-content>
+			<ion-card-content> Errors: {{ addMemberForm.errors }} </ion-card-content>
 		</ion-card>
 	}
 
-	@if ($canSubmit()) {
-		<div class="ion-padding">
-			<ion-button size="large" (click)="submit()" [disabled]="!$canSubmit()">
-				@if ($isSubmitting()) {
-					<ion-spinner name="lines-small" slot="start" class="ion-margin-end" />
+	<ion-card>
+		<ion-grid>
+			<ion-row>
+				<ion-col>
+					<ion-button
+						size="large"
+						(click)="submit()"
+						[disabled]="!$canSubmit()"
+					>
+						@if ($isSubmitting()) {
+							<ion-spinner
+								name="lines-small"
+								slot="start"
+								class="ion-margin-end"
+							/>
+						}
+						<ion-label>Add member</ion-label>
+					</ion-button>
+				</ion-col>
+				@if (!$canSubmit()) {
+					<ion-col>
+						<qrcode
+							style="float: left"
+							[qrdata]="'https://sneat.app/join?family=' + $contact().space.id"
+							[width]="120"
+							errorCorrectionLevel="M"
+						></qrcode>
+						<ion-card-header>
+							<ion-card-title>Self-add</ion-card-title>
+							<ion-card-subtitle>
+								Ask the new member to scan this QR code and fill the form to
+								join this space.
+							</ion-card-subtitle>
+						</ion-card-header>
+					</ion-col>
 				}
-				<ion-label>Add member</ion-label>
-			</ion-button>
-		</div>
-	}
+			</ion-row>
+		</ion-grid>
+	</ion-card>
 </form>

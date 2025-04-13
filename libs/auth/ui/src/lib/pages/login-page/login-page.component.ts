@@ -55,7 +55,6 @@ type Action = 'join' | 'refuse'; // TODO: inject provider for action description
 	selector: 'sneat-login',
 	templateUrl: './login-page.component.html',
 	imports: [
-		CommonModule,
 		FormsModule,
 		LoginWithTelegramComponent,
 		EmailLoginFormComponent,

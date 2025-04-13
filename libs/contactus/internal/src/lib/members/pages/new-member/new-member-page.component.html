@@ -75,23 +75,6 @@
 					</ion-card>
 				}
 			}
-
-			<ion-card>
-				<ion-card-header>
-					<ion-card-title>Self-add</ion-card-title>
-					<ion-card-subtitle>
-						Ask the new member to scan this QR code and fill the form to join
-						this space.
-					</ion-card-subtitle>
-				</ion-card-header>
-				<ion-card-content>
-					<qrcode
-						[qrdata]="'https://sneat.app/join?family=abc'"
-						[width]="256"
-						errorCorrectionLevel="M"
-					></qrcode>
-				</ion-card-content>
-			</ion-card>
 		}
 		@case ("animal") {
 			<sneat-new-pet-form

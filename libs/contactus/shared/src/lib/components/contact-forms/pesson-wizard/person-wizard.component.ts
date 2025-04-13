@@ -15,17 +15,14 @@ import { excludeUndefined, formNexInAnimation, SpaceType } from '@sneat/core';
 import { IFormField } from '@sneat/core';
 import {
 	AgeGroupID,
-	emptyContactBase,
 	Gender,
 	IContactBase,
-	IContactContext,
 	IEmail,
 	IPersonRequirements,
 	IPhone,
 	IRelatedPerson,
 	MemberContactType,
 	NewContactBaseDboAndSpaceRef,
-	PetKind,
 } from '@sneat/contactus-core';
 import {
 	getRelatedItemIDs,
@@ -42,7 +39,6 @@ import {
 	INamesFormFields,
 	NamesFormComponent,
 } from '../person-forms/names-form';
-import { PetKindAndBreedFormComponent } from '../pet-kind-and-breed-form';
 import { PhonesFormComponent } from '../phones-form';
 import { RelationshipFormComponent } from '../relationship-form';
 import { RolesFormComponent } from '../roles-form';
@@ -51,7 +47,6 @@ export interface PersonWizardState {
 	// wizard state
 	readonly contactType?: boolean;
 	readonly ageGroup?: boolean;
-	readonly petKind?: PetKind;
 	readonly name?: boolean;
 	readonly nameNext?: boolean;
 	readonly gender?: boolean;
@@ -64,8 +59,9 @@ export interface PersonWizardState {
 type WizardStepID = keyof PersonWizardState;
 
 interface WizardStepCondition {
-	readonly contactTypes: MemberContactType[];
-	readonly spaceTypes?: SpaceType[];
+	readonly contactTypes: readonly MemberContactType[];
+	readonly contactRoles?: readonly string[];
+	readonly spaceTypes?: readonly SpaceType[];
 }
 
 interface WizardStepFilter {
@@ -86,7 +82,6 @@ export type IPersonFormWizardFields = {
 	animations: [formNexInAnimation],
 	imports: [
 		AgeGroupFormComponent,
-		PetKindAndBreedFormComponent,
 		GenderFormComponent,
 		RelationshipFormComponent,
 		NamesFormComponent,
@@ -155,10 +150,14 @@ export class PersonWizardComponent
 	private readonly formOrder: readonly WizardStepDef[] = [
 		{ id: 'contactType' },
 		{ id: 'ageGroup' },
-		{ id: 'petKind', filter: { showFor: { contactTypes: ['animal'] } } },
 		{ id: 'gender' },
 		// relatedAs to current user or a specific contact
-		{ id: 'relatedAs', filter: { hideFor: { contactTypes: ['animal'] } } },
+		{
+			id: 'relatedAs',
+			filter: {
+				hideFor: { contactTypes: ['animal'], contactRoles: ['member'] },
+			},
+		},
 		{ id: 'name' },
 		{
 			id: 'roles',
@@ -402,10 +401,10 @@ export class PersonWizardComponent
 		}
 		const { space, dbo } = this.$contact();
 		if (dbo.type) {
+			const hideFor = step.filter.hideFor;
 			if (
-				step.filter.hideFor?.contactTypes?.includes(
-					dbo.type as MemberContactType,
-				)
+				hideFor?.contactTypes?.includes(dbo.type as MemberContactType) ||
+				hideFor?.contactRoles?.some((role) => dbo.roles?.includes(role))
 			) {
 				return true;
 			}

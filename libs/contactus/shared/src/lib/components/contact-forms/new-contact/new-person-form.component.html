@@ -1,4 +1,5 @@
 @if ($asset()?.id) {
+	<!-- Replace with related items -->
 	<ion-item-divider color="light">
 		@let asset = $asset();
 		<ion-label color="medium"
@@ -6,6 +7,9 @@
 		</ion-label>
 	</ion-item-divider>
 }
+
+$selectedContactGroupID: {{ $selectedContactGroupID() }} $selectedContactRoleID:
+{{ $selectedContactRoleID() }}
 
 <sneat-contact-role-form
 	[$contactGroupID]="$selectedContactGroupID()"

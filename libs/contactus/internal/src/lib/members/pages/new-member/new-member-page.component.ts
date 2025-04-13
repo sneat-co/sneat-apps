@@ -22,14 +22,11 @@ import {
 import { NewPetFormComponent } from '@sneat/contactus-shared';
 import {
 	AgeGroupID,
-	ContactIdAndDboWithSpaceRef,
 	ContactType,
-	IContactContext,
-	IContactDbo,
 	IContactusSpaceDboAndID,
 	NewContactBaseDboAndSpaceRef,
+	RoleSpaceMember,
 } from '@sneat/contactus-core';
-import { IIdAndDboWithSpaceRef } from '@sneat/core';
 import {
 	SpacePageBaseComponent,
 	InviteLinksComponent,
@@ -47,7 +44,6 @@ type InviteType = 'personal' | 'mass';
 		NewMemberFormComponent,
 		InviteLinksComponent,
 		SpaceServiceModule,
-		QRCodeComponent,
 		IonContent,
 		IonSegment,
 		IonSegmentButton,
@@ -57,9 +53,6 @@ type InviteType = 'personal' | 'mass';
 		IonBackButton,
 		IonTitle,
 		IonCard,
-		IonCardHeader,
-		IonCardTitle,
-		IonCardSubtitle,
 		IonCardContent,
 		NewPetFormComponent,
 	],
@@ -82,9 +75,9 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
 	protected readonly $inviteType = signal<InviteType>('mass');
 
 	protected readonly $contact = signal<NewContactBaseDboAndSpaceRef>({
-		id: '',
-		dbo: { type: 'person' },
-	} as ContactIdAndDboWithSpaceRef);
+		space: { id: '' },
+		dbo: { type: 'person', roles: [RoleSpaceMember] },
+	});
 
 	protected readonly $contactType = computed(() => this.$contact().dbo?.type);
 
@@ -143,7 +136,10 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
 			if (roles) {
 				this.$contact.update((contact) => ({
 					...contact,
-					dbo: { ...contact.dbo, roles: roles.split(',') },
+					dbo: {
+						...contact.dbo,
+						roles: roles.split(',').map((s: string) => s.trim()),
+					},
 				}));
 			}
 		});

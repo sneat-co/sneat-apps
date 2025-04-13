@@ -1,13 +1,12 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonCard, IonCardContent, IonText } from '@ionic/angular/standalone';
 import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth-core';
 
 @Component({
 	selector: 'sneat-login-required',
 	templateUrl: './login-required.component.html',
-	imports: [IonicModule, CommonModule, RouterModule],
+	imports: [RouterModule, IonCard, IonCardContent, IonText],
 })
 export class LoginRequiredComponent {
 	public authState?: ISneatAuthState;

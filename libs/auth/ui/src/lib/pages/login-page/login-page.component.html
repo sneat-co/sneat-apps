@@ -8,21 +8,13 @@
 </ion-header>
 
 <ion-content id="main-content">
-	<ion-card *ngIf="to" color="tertiary">
-		<ion-card-content>
-			<p>Please sign in to join a team</p>
-		</ion-card-content>
-	</ion-card>
-
-	<!--	<ion-card *ngIf="to" [ngSwitch]="to" color="tertiary">-->
-	<!--		<ion-card-content *ngSwitchCase="'join-team'">-->
-	<!--			<p>Please sign in to join a team</p>-->
-	<!--			<p *ngIf="action === 'join'">Please sign in to join team</p>-->
-	<!--			<p *ngIf="action === 'refuse'">-->
-	<!--				Please sign in to send refusal to join team to the inviter.-->
-	<!--			</p>-->
-	<!--		</ion-card-content>-->
-	<!--	</ion-card>-->
+	@if (to) {
+		<ion-card color="tertiary">
+			<ion-card-content>
+				<p>Please sign in to join a team</p>
+			</ion-card-content>
+		</ion-card>
+	}
 
 	<p style="text-align: center; font-size: smaller">
 		<ion-text color="medium">
