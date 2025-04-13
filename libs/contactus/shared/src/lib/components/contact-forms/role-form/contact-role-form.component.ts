@@ -74,12 +74,13 @@ export class ContactRoleFormComponent extends SneatBaseComponent {
 		if (!group) {
 			return [];
 		}
-		const roles = group.dbo?.roles?.map((r) => ({
-			id: r.id,
-			title: r.brief.title,
-			emoji: r.brief.emoji,
-		}));
-		return roles;
+		return group.dbo?.roles
+			?.filter((r) => r.id !== 'pet')
+			?.map((r) => ({
+				id: r.id,
+				title: r.brief.title,
+				emoji: r.brief.emoji,
+			}));
 	});
 
 	protected readonly roleBriefID = (o: IContactRoleWithIdAndBrief) => o.id;

@@ -90,6 +90,7 @@ export interface IContactRoleBrief {
 export interface IContactRoleWithIdAndBrief {
 	readonly id: ContactRole;
 	readonly brief: IContactRoleBrief;
+	readonly hideInNewContactForm?: boolean;
 }
 
 export interface IContactRoleWithIdAndOptionalBrief {

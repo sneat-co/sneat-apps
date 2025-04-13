@@ -20,6 +20,7 @@ const contactTypeFamilyMember: IContactRoleWithIdAndBrief = {
 	},
 	contactTypePet: IContactRoleWithIdAndBrief = {
 		id: 'pet',
+		hideInNewContactForm: true,
 		brief: {
 			title: 'Family Pet',
 			titlePlural: 'Pets',
