@@ -17,12 +17,14 @@ import {
 	AgeGroupID,
 	emptyContactBase,
 	Gender,
+	IContactBase,
 	IContactContext,
 	IEmail,
 	IPersonRequirements,
 	IPhone,
 	IRelatedPerson,
 	MemberContactType,
+	NewContactBaseDboAndSpaceRef,
 	PetKind,
 } from '@sneat/contactus-core';
 import {
@@ -119,9 +121,6 @@ export class PersonWizardComponent
 
 	@Input({ required: true }) fields: IPersonFormWizardFields = {};
 
-	@Input() newPerson: IRelatedPerson = emptyContactBase;
-	@Output() readonly newPersonChange = new EventEmitter<IRelatedPerson>();
-
 	public isReadyToSubmit = false;
 	@Output() readonly isReadyToSubmitChange = new EventEmitter<boolean>();
 
@@ -177,18 +176,19 @@ export class PersonWizardComponent
 		if (changes['space']) {
 			this.setRelatedToUser();
 		}
-		if (changes['relatedPerson']) {
+		if (changes['$contact']) {
+			const contact = this.$contact();
 			if (this.wizardStep === 'contactType') {
-				if (this.newPerson.type) {
+				if (contact.dbo.type) {
 					this.onContactTypeChanged();
-					this.setRelatedPerson(this.newPerson, {
+					this.setContactDbo(contact.dbo, {
 						name: 'contactType',
 						hasValue: true,
 					});
 				}
-				if (this.newPerson.ageGroup || this.newPerson.type === 'animal') {
+				if (contact.dbo.ageGroup || contact.dbo.type === 'animal') {
 					this.show = { ...this.show, ageGroup: this.displayAgeGroupValue };
-					this.setRelatedPerson(this.newPerson, {
+					this.setContactDbo(contact.dbo, {
 						name: 'ageGroup',
 						hasValue: true,
 					});
@@ -200,15 +200,14 @@ export class PersonWizardComponent
 		}
 	}
 
-	private setRelatedPerson(
-		relatedPerson: IRelatedPerson,
+	private setContactDbo(
+		dbo: IContactBase,
 		changedProp: {
 			name: WizardStepID;
 			hasValue: boolean;
 		},
 	): void {
-		this.newPerson = relatedPerson;
-		this.newPersonChange.emit(relatedPerson);
+		this.contactChange.emit({ ...this.$contact(), dbo });
 		if (changedProp.hasValue) {
 			this.openNext(changedProp.name);
 		}
@@ -219,13 +218,13 @@ export class PersonWizardComponent
 		if (!this.show.nameNext && !isNameEmpty(name)) {
 			this.show = { ...this.show, nameNext: true };
 		}
-		this.setRelatedPerson(
-			{ ...this.newPerson, names: name },
+		this.setContactDbo(
+			{ ...this.$contact().dbo, names: name },
 			{ name: 'name', hasValue: false },
 		);
 	}
 
-	protected onContactChanged(contact: IContactContext): void {
+	protected onContactChanged(contact: NewContactBaseDboAndSpaceRef): void {
 		console.log('onContactChanged()', contact);
 		// this.setRelatedPerson(
 		// 	{ ...this.newPerson, petKind },
@@ -235,14 +234,14 @@ export class PersonWizardComponent
 
 	protected onGenderChanged(gender?: Gender): void {
 		console.log('PersonFormComponent.onGenderChanged()', gender);
-		this.setRelatedPerson(
-			{ ...this.newPerson, gender },
+		this.setContactDbo(
+			{ ...this.$contact().dbo, gender },
 			{ name: 'gender', hasValue: !!gender },
 		);
 	}
 
 	private onContactTypeChanged(): void {
-		switch (this.newPerson.type) {
+		switch (this.$contact().dbo.type) {
 			case 'animal':
 				this.nameFields = {
 					...this.nameFields,
@@ -269,40 +268,43 @@ export class PersonWizardComponent
 		if (ageGroup) {
 			this.show = { ...this.show, ageGroup: this.displayAgeGroupValue };
 		}
-		if (ageGroup === 'pet') {
-			this.newPerson = { ...this.newPerson, type: 'animal' };
-			this.onContactTypeChanged();
-		} else if (this.newPerson.type !== 'person') {
-			this.newPerson = { ...this.newPerson, type: 'person' };
+		if (this.$contact().dbo.type !== 'person') {
+			this.setContactDbo(
+				{ ...this.$contact().dbo, type: 'person' },
+				{
+					name: 'contactType',
+					hasValue: true,
+				},
+			);
 			this.onContactTypeChanged();
 		}
 		const relatedPerson: IRelatedPerson = excludeUndefined({
-			...this.newPerson,
+			...this.$contact().dbo,
 			ageGroup: ageGroup === 'pet' ? undefined : ageGroup,
 			type: ageGroup === 'pet' ? 'animal' : 'person',
 		});
-		this.setRelatedPerson(relatedPerson, {
+		this.setContactDbo(relatedPerson, {
 			name: 'ageGroup',
-			hasValue: !!ageGroup || this.newPerson.type === 'animal',
+			hasValue: !!ageGroup || this.$contact().dbo.type === 'animal',
 		});
 	}
 
 	protected onEmailsChanged(emails: IEmail[]): void {
-		this.setRelatedPerson(
-			{ ...this.newPerson, emails },
+		this.setContactDbo(
+			{ ...this.$contact().dbo, emails },
 			{
 				name: 'communicationChannels',
-				hasValue: !!emails?.length || !!this.newPerson.phones?.length,
+				hasValue: !!emails?.length || !!this.$contact().dbo.phones?.length,
 			},
 		);
 	}
 
 	protected onPhoneChanged(phones: IPhone[]): void {
-		this.setRelatedPerson(
-			{ ...this.newPerson, phones },
+		this.setContactDbo(
+			{ ...this.$contact().dbo, phones },
 			{
 				name: 'communicationChannels',
-				hasValue: !!phones?.length || !!this.newPerson.emails?.length,
+				hasValue: !!phones?.length || !!this.$contact().dbo.emails?.length,
 			},
 		);
 	}
@@ -337,14 +339,14 @@ export class PersonWizardComponent
 			},
 		};
 
-		this.setRelatedPerson(
+		this.setContactDbo(
 			{
-				...this.newPerson,
+				...this.$contact().dbo,
 				related,
 			},
 			{ name: 'relatedAs', hasValue: !!rolesOfItem },
 		);
-		if (!this.newPerson.ageGroup) {
+		if (!this.$contact().dbo.ageGroup) {
 			const relationship = Object.keys(rolesOfItem || []).length
 				? Object.keys(rolesOfItem)[0]
 				: undefined;
@@ -354,13 +356,13 @@ export class PersonWizardComponent
 				relationship === 'partner' ||
 				relationship === 'grandparent'
 			) {
-				this.setRelatedPerson(
-					{ ...this.newPerson, ageGroup: 'adult' },
+				this.setContactDbo(
+					{ ...this.$contact().dbo, ageGroup: 'adult' },
 					{ name: 'relatedAs', hasValue: true },
 				);
 			} else if (relationship === 'child') {
-				this.setRelatedPerson(
-					{ ...this.newPerson, ageGroup: 'child' },
+				this.setContactDbo(
+					{ ...this.$contact().dbo, ageGroup: 'child' },
 					{ name: 'relatedAs', hasValue: true },
 				);
 			}
@@ -398,11 +400,11 @@ export class PersonWizardComponent
 		if (!step.filter || (!step.filter.hideFor && !step.filter.showFor)) {
 			return false;
 		}
-		const space = this.$contact().space;
-		if (this.newPerson.type) {
+		const { space, dbo } = this.$contact();
+		if (dbo.type) {
 			if (
 				step.filter.hideFor?.contactTypes?.includes(
-					this.newPerson.type as MemberContactType,
+					dbo.type as MemberContactType,
 				)
 			) {
 				return true;
@@ -410,7 +412,7 @@ export class PersonWizardComponent
 			if (
 				step.filter.showFor?.contactTypes?.length &&
 				!step.filter.showFor.contactTypes.includes(
-					this.newPerson.type as MemberContactType,
+					dbo.type as MemberContactType,
 				)
 			) {
 				return true;
@@ -476,7 +478,7 @@ export class PersonWizardComponent
 	}
 
 	private stepHasValue(name: WizardStepID): boolean | undefined {
-		const p = this.newPerson;
+		const p = this.$contact().dbo;
 		switch (name) {
 			case 'name':
 				return !!p.names && Object.values(p.names).some((v) => !!v);

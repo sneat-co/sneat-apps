@@ -2,10 +2,9 @@
 	<sneat-person-form-wizard
 		[$contact]="$contact()"
 		[disabled]="$isSubmitting()"
-		[newPerson]="$member()"
 		[requires]="personRequirements"
 		[fields]="{ contactType: { hide: true } }"
-		(newPersonChange)="onRelatedPersonChanged($event)"
+		(contactChange)="onContactChanged($event)"
 	/>
 
 	@if (addMemberForm.errors) {

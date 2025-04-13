@@ -5,10 +5,10 @@
 		</ion-buttons>
 		<ion-title>
 			@if (space.brief || space.type) {
-				@if ($member().type === "animal") {
+				@if ($contact().dbo.type === "animal") {
 					New pet
 				} @else {
-					@switch ($member().ageGroup) {
+					@switch ($contact().dbo.ageGroup) {
 						@case ("child") {
 							New child
 						}
@@ -40,7 +40,7 @@
 	@switch ($contactType()) {
 		@case ("person") {
 			@if (space.id && space.type !== "family") {
-				<ion-segment [value]="$tab()" (ionChange)="onTabChanged($event)">
+				<ion-segment [value]="$inviteType()" (ionChange)="onTabChanged($event)">
 					<ion-segment-button value="mass">
 						Mass invite [{{ space.id }} - {{ space.type }}]
 					</ion-segment-button>
@@ -50,13 +50,11 @@
 				</ion-segment>
 			}
 
-			@switch ($tab()) {
+			@switch ($inviteType()) {
 				@case ("personal") {
 					<sneat-new-member-form
-						[$space]="$space()"
-						[$member]="$member()"
 						[$contact]="$contact()"
-						(memberChange)="$member.set($event)"
+						(contactChange)="$contact.set($event)"
 					/>
 				}
 				@case ("mass") {
@@ -68,7 +66,7 @@
 								<b>Or</b> you can send
 								<a
 									href=""
-									(click)="$tab.set('personal'); $event.preventDefault()"
+									(click)="$inviteType.set('personal'); $event.preventDefault()"
 									>personal invite</a
 								>
 								by email.

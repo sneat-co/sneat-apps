@@ -4,9 +4,7 @@ import { IWithRelatedOnly, IWithSpaceIDs } from '@sneat/dto';
 import { IContactBase } from './contact-base';
 import {
 	ContactType,
-	IEmail,
 	IPersonRequirements,
-	IPhone,
 	MemberContactType,
 } from './contact-types';
 
@@ -14,13 +12,7 @@ import { MemberRole } from './member-types';
 
 export type IPersonBrief = IContactBase;
 
-export interface IPerson extends IContactBase {
-	readonly email?: string; // TODO: Document how email is different from emails
-	readonly emails?: IEmail[];
-	readonly phone?: string; // TODO: Document how phone is different from phones
-	readonly phones?: IPhone[];
-	readonly website?: string;
-}
+export type IPerson = IContactBase;
 
 export interface ISpaceMemberInfo extends IPerson {
 	readonly id?: string;
@@ -94,7 +86,7 @@ export interface IPersonRecord extends IWithSpaceIDs, IPerson {
 }
 
 export const emptyContactBase: IContactBase = {
-	type: '' as ContactType,
-	names: {},
+	type: undefined as unknown as ContactType,
 };
+
 export const emptyMemberPerson = emptyContactBase as IMemberPerson;

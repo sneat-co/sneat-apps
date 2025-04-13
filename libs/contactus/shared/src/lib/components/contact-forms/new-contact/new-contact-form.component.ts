@@ -8,8 +8,10 @@ import {
 } from '@angular/core';
 import { IonSegment, IonSegmentButton } from '@ionic/angular/standalone';
 import {
+	ContactIdAndDboWithSpaceRef,
 	ContactRolePet,
 	IContactContext,
+	NewContactBaseDboAndSpaceRef,
 	RoleSpaceMember,
 } from '@sneat/contactus-core';
 import { Observable } from 'rxjs';
@@ -89,8 +91,8 @@ export class NewContactFormComponent extends NewContactFormBaseComponent {
 		this.$tab.set(tab);
 	}
 
-	protected onContactChanged(contact: IContactContext): void {
+	protected onContactChanged(contact: NewContactBaseDboAndSpaceRef): void {
 		console.log('onContactChanged', contact);
-		this.contactChange.emit(contact);
+		this.contactChange.emit(contact as ContactIdAndDboWithSpaceRef);
 	}
 }

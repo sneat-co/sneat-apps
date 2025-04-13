@@ -21,12 +21,15 @@ import {
 } from '@sneat/contactus-services';
 import { NewPetFormComponent } from '@sneat/contactus-shared';
 import {
+	AgeGroupID,
+	ContactIdAndDboWithSpaceRef,
 	ContactType,
-	emptyMemberPerson,
 	IContactContext,
+	IContactDbo,
 	IContactusSpaceDboAndID,
-	IMemberPerson,
+	NewContactBaseDboAndSpaceRef,
 } from '@sneat/contactus-core';
+import { IIdAndDboWithSpaceRef } from '@sneat/core';
 import {
 	SpacePageBaseComponent,
 	InviteLinksComponent,
@@ -36,7 +39,7 @@ import { QRCodeComponent } from 'angularx-qrcode';
 import { filter, first, takeUntil } from 'rxjs';
 import { NewMemberFormComponent } from './new-member-form.component';
 
-type Tab = 'personal' | 'mass';
+type InviteType = 'personal' | 'mass';
 
 @Component({
 	imports: [
@@ -76,13 +79,12 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
 		}));
 	}
 
-	protected readonly $tab = signal<Tab>('mass');
+	protected readonly $inviteType = signal<InviteType>('mass');
 
-	protected readonly $member = signal<IMemberPerson>(emptyMemberPerson);
-	protected readonly $contact = signal<IContactContext>({
+	protected readonly $contact = signal<NewContactBaseDboAndSpaceRef>({
 		id: '',
 		dbo: { type: 'person' },
-	} as IContactContext);
+	} as ContactIdAndDboWithSpaceRef);
 
 	protected readonly $contactType = computed(() => this.$contact().dbo?.type);
 
@@ -103,33 +105,45 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
 		this.route.queryParams.subscribe((params) => {
 			const group = params['group'];
 			console.log('group', group);
+			const setContactTypeAndAgeGroup = (
+				contact: NewContactBaseDboAndSpaceRef,
+				contactType: ContactType,
+				ageGroup?: AgeGroupID,
+			) => ({
+				...contact,
+				dbo: {
+					...contact.dbo,
+					type: contactType,
+					ageGroup,
+				},
+			});
 			switch (group) {
 				case 'adults':
-					this.$member.update((member) => ({
-						...member,
-						type: 'person',
-						ageGroup: 'adult',
-					}));
+					this.$contact.update((contact) =>
+						setContactTypeAndAgeGroup(contact, 'person', 'adult'),
+					);
 					break;
 				case 'kids':
-					this.$member.update((member) => ({
-						...member,
-						type: 'person',
-						ageGroup: 'child',
-					}));
+					this.$contact.update((contact) =>
+						setContactTypeAndAgeGroup(contact, 'person', 'child'),
+					);
 					break;
 				case 'pets':
-					this.$member.update((member) => ({ ...member, type: 'animal' }));
+					this.$contact.update((contact) =>
+						setContactTypeAndAgeGroup(contact, 'animal'),
+					);
 					break;
 				default:
-					this.$member.update((member) => ({ ...member, type: 'person' }));
+					this.$contact.update((contact) =>
+						setContactTypeAndAgeGroup(contact, 'person'),
+					);
 					break;
 			}
 			const roles = params['roles'] || '';
 			if (roles) {
-				this.$member.update((member) => ({
-					...member,
-					roles: roles.split(','),
+				this.$contact.update((contact) => ({
+					...contact,
+					dbo: { ...contact.dbo, roles: roles.split(',') },
 				}));
 			}
 		});
@@ -160,8 +174,8 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
 							'NewMemberPageComponent: spaceTypeChanged$ =>',
 							spaceType,
 						);
-						if (spaceType === 'family' && this.$tab() === 'mass') {
-							this.$tab.set('personal');
+						if (spaceType === 'family' && this.$inviteType() === 'mass') {
+							this.$inviteType.set('personal');
 						}
 					},
 					error: this.logErrorHandler('failed to process space type changes'),
@@ -172,6 +186,6 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
 	};
 
 	protected onTabChanged(event: CustomEvent): void {
-		this.$tab.set(event.detail.value as Tab);
+		this.$inviteType.set(event.detail.value as InviteType);
 	}
 }

@@ -10,7 +10,7 @@
 		[spaceType]="$contact().space.type"
 		[hidePetOption]="hidePetOption"
 		[disabled]="disabled"
-		[$ageGroup]="newPerson.ageGroup"
+		[$ageGroup]="$contact().dbo.ageGroup"
 		(ageGroupChange)="onAgeGroupChanged($event)"
 	/>
 }
@@ -25,7 +25,7 @@
 <sneat-gender-form
 	*ngIf="show.gender"
 	[disabled]="disabled"
-	[genderID]="newPerson.gender"
+	[genderID]="$contact().dbo.gender"
 	(genderChange)="onGenderChanged($event)"
 />
 
@@ -35,8 +35,8 @@
 		[disabled]="disabled"
 		[$space]="$contact().space"
 		[relatedTo]="relatedToUser"
-		[relatedItems]="newPerson.related"
-		[ageGroup]="newPerson.ageGroup"
+		[relatedItems]="$contact().dbo.related"
+		[ageGroup]="$contact().dbo.ageGroup"
 		(relatedAsChange)="onRelatedAsChanged($event)"
 	/>
 	<!--[relatedAs]="newPerson.related?.relatedAs?.length === 1 ? newPerson.relatedTo?.relatedAs?.[0] : undefined"-->
@@ -44,7 +44,7 @@
 
 @if (show.name) {
 	<sneat-names-form
-		[name]="newPerson.names"
+		[name]="$contact().dbo.names"
 		[isActive]="wizardStep === 'name'"
 		[showNextButton]="false"
 		[fields]="nameFields"
@@ -70,14 +70,14 @@
 	<sneat-emails-form
 		*ngIf="tab === 'emails' && !requires.email?.hide"
 		[hideHeader]="true"
-		[emails]="newPerson.emails"
+		[emails]="$contact().dbo.emails"
 		(emailsChange)="onEmailsChanged($event)"
 	/>
 
 	<sneat-phones-form
 		*ngIf="tab === 'phones' && !requires.phone?.hide"
 		[hideHeader]="true"
-		[phones]="newPerson.phones"
+		[phones]="$contact().dbo.phones"
 		(phonesChange)="onPhoneChanged($event)"
 	/>
 }

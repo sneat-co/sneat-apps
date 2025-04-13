@@ -24,6 +24,7 @@ import {
 	isRelatedPersonNotReady,
 	ContactRole,
 	IContactRoleWithIdAndOptionalBrief,
+	NewContactBaseDboAndSpaceRef,
 } from '@sneat/contactus-core';
 import {
 	ContactGroupService,
@@ -85,8 +86,6 @@ export class NewPersonFormComponent
 	private readonly assetID$ = new Subject<string | undefined>();
 
 	public readonly $asset = signal<IAssetContext | undefined>(undefined);
-
-	protected relatedPerson: IRelatedPerson = emptyContactBase;
 
 	protected readonly $selectedContactGroup = signal<
 		OptionalContactGroupIdAndBrief | undefined
@@ -280,8 +279,8 @@ export class NewPersonFormComponent
 		);
 	}
 
-	public onRelatedPersonChange(myPerson: IRelatedPerson): void {
-		this.relatedPerson = myPerson;
+	public onContactChanged(contact: NewContactBaseDboAndSpaceRef): void {
+		this.contactChange.emit(contact);
 	}
 
 	public onPersonFormIsReadyToSubmit(): void {
@@ -295,15 +294,16 @@ export class NewPersonFormComponent
 			throw new Error('Space is not defined');
 		}
 		this.$creating.set(true);
+		const contactDbo = this.$contact().dbo;
 		let request: ICreateContactRequest = {
 			status: 'active',
 			type: 'person',
 			spaceID: space.id,
 			person: {
-				...this.relatedPerson,
+				...contactDbo,
 				status: 'active',
 				type: 'person',
-				ageGroup: this.relatedPerson.ageGroup || 'unknown',
+				ageGroup: contactDbo.ageGroup || 'unknown',
 			},
 		};
 
@@ -374,7 +374,7 @@ export class NewPersonFormComponent
 	// 		100);
 	// }
 
-	public get isContactNotReady(): boolean {
-		return isRelatedPersonNotReady(this.relatedPerson, {});
-	}
+	protected readonly $isContactNotReady = computed(() =>
+		isRelatedPersonNotReady(this.$contact().dbo, {}),
+	);
 }

@@ -47,6 +47,9 @@ import {
 	IContactWithBrief,
 	IContactWithCheck,
 	IContactWithBriefAndSpace,
+	ContactIdAndDboWithSpaceRef,
+	IContactDbo,
+	NewContactBaseDboAndSpaceRef,
 } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import {
@@ -171,6 +174,21 @@ export class ContactsSelectorComponent
 	@Input() excludeParentIDs?: string[];
 
 	protected readonly $contact = signal<IContactContext>({} as IContactContext);
+	protected readonly $contactWithDbo = computed<ContactIdAndDboWithSpaceRef>(
+		() => {
+			const contact = this.$contact();
+			let contactWithDbo: ContactIdAndDboWithSpaceRef | undefined;
+			if (contact.dbo) {
+				// Applying cast to ContactIdAndDboWithSpaceRef as seems to be a bug in TS
+				contactWithDbo = contact as ContactIdAndDboWithSpaceRef;
+			} else if (contact.brief) {
+				contactWithDbo = { ...contact, dbo: contact.brief };
+			} else {
+				contactWithDbo = { ...contact, dbo: {} as IContactDbo };
+			}
+			return contactWithDbo;
+		},
+	);
 
 	@Input() onSelected?: (
 		items?: readonly IContactWithBriefAndSpace[],
@@ -395,10 +413,17 @@ export class ContactsSelectorComponent
 		this.onParentContactChanged(parentContact);
 	}
 
-	protected onParentContactCreated(contact: IContactWithBrief): void {
-		const parentContact = { ...contact, space: this.$spaceRef() };
+	protected onParentContactCreated(contact: ContactIdAndDboWithSpaceRef): void {
+		const parentContact: IContactWithBriefAndSpace = {
+			...contact,
+			brief: contact.dbo,
+		};
 		this.parentItems?.push(this.getParentItem(parentContact));
 		this.onParentContactChanged(parentContact);
+	}
+
+	protected onNewContactChanged(contact: NewContactBaseDboAndSpaceRef): void {
+		this.$contact.set(contact as IContactContext);
 	}
 
 	protected onContactChanged(contact: IContactContext): void {

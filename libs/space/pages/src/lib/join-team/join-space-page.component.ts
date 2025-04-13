@@ -18,6 +18,8 @@ import {
 	IRelatedPerson,
 	IJoinSpaceInfoResponse,
 	IContactContext,
+	ContactIdAndDboWithSpaceRef,
+	NewContactBaseDboAndSpaceRef,
 } from '@sneat/contactus-core';
 import { WithSpaceInput } from '@sneat/space-components';
 import {
@@ -44,11 +46,12 @@ export const getPinFromUrl: () => string = () => {
 export class JoinSpacePageComponent extends WithSpaceInput {
 	private readonly id?: string;
 	public inviteInfo?: IJoinSpaceInfoResponse;
-	public newPerson: IRelatedPerson = emptyContactBase;
 	public pin?: string;
 	public userID?: string;
 
-	protected readonly $contact = signal<IContactContext>({} as IContactContext);
+	protected readonly $contact = signal<ContactIdAndDboWithSpaceRef>(
+		{} as ContactIdAndDboWithSpaceRef,
+	);
 
 	readonly nameFields: INamesFormFields = {
 		lastName: { required: true },
@@ -95,10 +98,14 @@ export class JoinSpacePageComponent extends WithSpaceInput {
 					}
 					this.inviteInfo = response;
 					if (response.member) {
-						this.newPerson = {
-							...response.member,
-							roles: undefined,
-						};
+						this.$contact.update((contact) => ({
+							...contact,
+							dbo: {
+								...contact.dbo,
+								...response.member,
+								roles: undefined,
+							},
+						}));
 					}
 					// this.relatedPerson = {
 					// 	gender: this.invite.to.
@@ -228,13 +235,14 @@ export class JoinSpacePageComponent extends WithSpaceInput {
 		if (!this.inviteInfo) {
 			return;
 		}
+		const contact = this.$contact();
 		const inviteInfo: IJoinSpaceInfoResponse = {
 			...this.inviteInfo,
 			member: {
 				...this.inviteInfo.member,
-				names: this.newPerson.names,
-				gender: this.newPerson.gender,
-				ageGroup: this.newPerson.ageGroup,
+				names: contact.dbo.names,
+				gender: contact.dbo.gender,
+				ageGroup: contact.dbo.ageGroup,
 			},
 		};
 		if (!inviteInfo) {
@@ -287,7 +295,7 @@ export class JoinSpacePageComponent extends WithSpaceInput {
 				break;
 		}
 	}
-	protected onContactChanged(contact: IContactContext): void {
-		this.$contact.set(contact);
+	protected onContactChanged(contact: NewContactBaseDboAndSpaceRef): void {
+		this.$contact.set(contact as ContactIdAndDboWithSpaceRef);
 	}
 }

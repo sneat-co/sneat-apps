@@ -75,12 +75,12 @@
 				}
 				@case ("new") {
 					<sneat-new-company-form
-						[$contact]="$contact()"
+						[$contact]="$contactWithDbo()"
 						[contactRoles]="contactRoles"
 						[contactRole]="contactRoleID"
 						[hideRole]="true"
 						(contactCreated)="onParentContactCreated($event)"
-						(contactChange)="onContactChanged($event)"
+						(contactChange)="onNewContactChanged($event)"
 					/>
 				}
 			}
@@ -142,7 +142,7 @@
 				}
 
 				<sneat-new-contact-form
-					[$contact]="$contact()"
+					[$contact]="$contactWithDbo()"
 					[command]="newContactCommand$"
 					[selectGroupAndRole$]="selectGroupAndRole$"
 					(creatingChange)="$isNewContactCreating.set($event)"

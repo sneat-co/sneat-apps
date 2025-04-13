@@ -30,6 +30,9 @@ import {
 	IPersonRequirements,
 	IRelatedPerson,
 	isRelatedPersonReady,
+	MemberContactType,
+	NewContactBaseDboAndSpaceRef,
+	WithNewContactInput,
 } from '@sneat/contactus-core';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
@@ -48,7 +51,7 @@ import { SneatBaseComponent } from '@sneat/ui';
 	],
 })
 export class NewMemberFormComponent
-	extends SneatBaseComponent
+	extends WithNewContactInput
 	implements OnChanges
 {
 	public personRequirements: IPersonRequirements = {
@@ -63,26 +66,25 @@ export class NewMemberFormComponent
 
 	protected readonly $canSubmit = computed(
 		() =>
-			this.$space().id &&
+			this.$spaceRef().id &&
 			!this.$isSubmitting() &&
 			this.$isRelatedPersonReady() &&
 			!this.addMemberForm.disabled && //TODO(check) Could be a problem with Push detection strategy?
 			this.addMemberForm.valid,
 	);
 
-	public readonly $space = input.required<ISpaceContext>();
+	protected readonly $spaceRef = computed(() => this.$contact().space);
+
+	public readonly $space = signal<ISpaceContext>({ id: '' });
 
 	protected contactusSpace?: IContactusSpaceDboAndID;
 
-	public readonly $member = input.required<IMemberPerson>();
-	public readonly $contact = input.required<IContactContext>();
-
 	private readonly $isRelatedPersonReady = computed(() => {
-		const member = this.$member();
-		return member && isRelatedPersonReady(member, this.personRequirements);
+		const contact = this.$contact();
+		return (
+			contact && isRelatedPersonReady(contact.dbo, this.personRequirements)
+		);
 	});
-
-	@Output() readonly memberChange = new EventEmitter<IMemberPerson>();
 
 	@ViewChild(PersonWizardComponent, { static: false })
 	personFormComponent?: PersonWizardComponent;
@@ -117,27 +119,26 @@ export class NewMemberFormComponent
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['space']) {
-			this.setPersonRequirements();
+		if (changes['$space']) {
+			this.setPersonRequirements(this.$contact());
 		}
 	}
 
-	private setPersonRequirements(): void {
+	private setPersonRequirements(contact: NewContactBaseDboAndSpaceRef): void {
 		const space = this.$space();
-		const member = this.$member();
 		this.personRequirements = {
 			// TODO: Should we move it inside person form wizard?
 			...this.personRequirements,
 			ageGroup:
-				space.type === 'family' && member?.type !== 'animal'
+				space.type === 'family' && contact.dbo.type !== 'animal'
 					? { required: true }
 					: { hide: true },
 			roles:
-				space.type === 'family' && member?.type !== 'animal'
+				space.type === 'family' && contact.dbo.type !== 'animal'
 					? { hide: true }
 					: { required: true },
 			relatedAs:
-				space.type === 'family' && member?.type !== 'animal'
+				space.type === 'family' && contact.dbo.type !== 'animal'
 					? { required: true }
 					: { hide: true },
 		};
@@ -157,24 +158,24 @@ export class NewMemberFormComponent
 			throw '!this.personFormComponent';
 		}
 		const space = this.$space();
-		const member = this.$member();
+		const contact = this.$contact();
 		if (!space) {
 			this.errorLogger.logError(
 				'not able to add new member without team context',
 			);
 			return;
 		}
-		if (!member) {
+		if (!contact) {
 			this.errorLogger.logError('member field is undefined');
 			return;
 		}
-		if (this.personRequirements.ageGroup?.required && !member.ageGroup) {
+		if (this.personRequirements.ageGroup?.required && !contact.dbo.ageGroup) {
 			throw new Error('Age group is a required field');
 		}
-		if (this.personRequirements.gender?.required && !member.gender) {
+		if (this.personRequirements.gender?.required && !contact.dbo.gender) {
 			throw new Error('Gender is a required field');
 		}
-		const displayName = personName(member.names);
+		const displayName = personName(contact.dbo.names);
 		const duplicateMember = zipMapBriefsWithIDs(
 			this.contactusSpace?.dbo?.contacts,
 		)?.find((m) => personName(m.brief.names) === displayName);
@@ -184,7 +185,8 @@ export class NewMemberFormComponent
 		}
 
 		const request: ICreateSpaceMemberRequest = {
-			...member,
+			...contact.dbo,
+			type: contact.dbo.type as MemberContactType,
 			status: 'active',
 			countryID: space.dbo?.countryID || '--',
 			roles: ['contributor'],
@@ -253,14 +255,9 @@ export class NewMemberFormComponent
 		// 	);
 	}
 
-	onRelatedPersonChanged(relatedPerson: IRelatedPerson): void {
-		console.log(
-			'NewMemberFormComponent.onRelatedPersonChanged()',
-			relatedPerson,
-		);
-		// this.$member.set(relatedPerson as IMemberPerson);
-		const member = relatedPerson as IMemberPerson;
-		this.setPersonRequirements();
-		this.memberChange.emit(member);
+	onContactChanged(contact: NewContactBaseDboAndSpaceRef): void {
+		console.log('NewMemberFormComponent.onContactChanged()', contact);
+		this.setPersonRequirements(contact);
+		this.contactChange.emit(contact);
 	}
 }

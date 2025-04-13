@@ -26,9 +26,11 @@ import {
 	NewContactFormComponent,
 } from '@sneat/contactus-shared';
 import {
+	ContactIdAndDboWithSpaceRef,
 	ContactRole,
 	ContactToContactRelation,
 	IContactContext,
+	NewContactBaseDboAndSpaceRef,
 } from '@sneat/contactus-core';
 import {
 	SpaceBaseComponent,
@@ -66,7 +68,9 @@ export class NewContactPageComponent
 	// TODO: relationship is not implemented yet
 	protected $relation = signal<ContactToContactRelation | undefined>(undefined);
 
-	public readonly $contact = signal<IContactContext>({} as IContactContext);
+	public readonly $contact = signal<NewContactBaseDboAndSpaceRef>(
+		{} as ContactIdAndDboWithSpaceRef,
+	);
 
 	protected readonly $contactGroupID = signal<string>('');
 	protected readonly $contactRoleID = signal<ContactRole | undefined>(
@@ -137,7 +141,7 @@ export class NewContactPageComponent
 		}
 	};
 
-	protected onContactChanged(contact: IContactContext): void {
+	protected onContactChanged(contact: NewContactBaseDboAndSpaceRef): void {
 		console.log('onContactChanged', contact);
 		this.$contact.set(contact);
 	}

@@ -9,7 +9,9 @@ export function equalSpaceRefs(
 	v1?: ISpaceRef | null,
 	v2?: ISpaceRef | null,
 ): boolean {
-	if (v1 === v2) return true;
+	if (v1 === v2) {
+		return true;
+	}
 	return v1?.id === v2?.id && v1?.type === v2?.type;
 }
 
@@ -74,4 +76,8 @@ export function spaceItemBriefWithSpaceRefFromBrief<Brief>(
 	brief: Brief,
 ): ISpaceItemBriefWithSpace<Brief> {
 	return { id, brief, space };
+}
+
+export interface IIdAndDboWithSpaceRef<Dbo> extends IIdAndDbo<Dbo> {
+	space: ISpaceRef;
 }

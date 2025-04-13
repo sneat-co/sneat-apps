@@ -34,6 +34,7 @@ import {
 	ICreateContactCompanyRequest,
 	IContactWithOptionalDbo,
 	IContactWithDboAndSpace,
+	NewContactBaseDboAndSpaceRef,
 } from '@sneat/contactus-core';
 import { ContactService } from '@sneat/contactus-services';
 import { LocationFormComponent } from '../location-form';
@@ -65,8 +66,6 @@ export class NewCompanyFormComponent
 	@Input() contactRole?: ContactRole = undefined;
 	@Input() hideRole = false;
 	@Input() parentContact?: IContactContext;
-
-	@Output() contactCreated = new EventEmitter<IContactWithDboAndSpace>();
 
 	protected readonly Object = Object;
 

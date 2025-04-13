@@ -1,4 +1,4 @@
-@let petKind = $contact().dbo?.petKind;
+@let petKind = $contact().dbo.petKind;
 
 <ion-card>
 	@if (!petKind) {
@@ -14,7 +14,7 @@
 	/>
 
 	@if (petKind === "dog") {
-		@if (!$contact().dbo?.petBreed) {
+		@if (!$contact().dbo.petBreed) {
 			<ion-item-divider color="primary">
 				<ion-label>What breed is your dog?</ion-label>
 			</ion-item-divider>

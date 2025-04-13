@@ -6,7 +6,12 @@ import {
 	IonItem,
 	IonLabel,
 } from '@ionic/angular/standalone';
-import { IContactContext } from '@sneat/contactus-core';
+import {
+	ContactDboWithSpaceRef,
+	ContactIdAndDboWithSpaceRef,
+	IContactContext,
+	NewContactBaseDboAndSpaceRef,
+} from '@sneat/contactus-core';
 import { PetKindAndBreedFormComponent } from '../pet-kind-and-breed-form/pet-kind-and-breed-form.component';
 import { NewContactFormBaseComponent } from './new-contact-form-base.component';
 
@@ -28,7 +33,7 @@ export class NewPetFormComponent extends NewContactFormBaseComponent {
 		super('NewPetFormComponent');
 	}
 
-	protected onContactChanged(contact: IContactContext): void {
+	protected onContactChanged(contact: NewContactBaseDboAndSpaceRef): void {
 		this.contactChange.emit(contact);
 	}
 }

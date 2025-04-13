@@ -1,7 +1,19 @@
-import { Directive, EventEmitter, Output } from '@angular/core';
+import { Directive, EventEmitter, input, Output } from '@angular/core';
+import {
+	ContactIdAndDboWithSpaceRef,
+	NewContactBaseDboAndSpaceRef,
+} from '@sneat/contactus-core';
 import { ContactFormBaseComponent } from '../contact-form-base.component';
 
 @Directive()
 export abstract class NewContactFormBaseComponent extends ContactFormBaseComponent {
+	// In the $contact we accumulate all the data we need to create a new contact
+	public readonly $contact = input.required<NewContactBaseDboAndSpaceRef>();
+
+	@Output() readonly contactChange =
+		new EventEmitter<NewContactBaseDboAndSpaceRef>();
+
 	@Output() public readonly creatingChange = new EventEmitter<boolean>();
+	@Output() public readonly contactCreated =
+		new EventEmitter<ContactIdAndDboWithSpaceRef>();
 }

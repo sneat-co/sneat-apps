@@ -7,14 +7,6 @@
 	</ion-item-divider>
 }
 
-@if ($contact().id) {
-	<ion-item-divider color="light">
-		<ion-label color="medium"
-			>{{ $contact().brief?.title || $contact().id }}
-		</ion-label>
-	</ion-item-divider>
-}
-
 <sneat-contact-role-form
 	[$contactGroupID]="$selectedContactGroupID()"
 	(contactGroupChange)="onContactGroupChanged($event)"
@@ -25,12 +17,12 @@
 @if ($selectedContactRole()) {
 	<sneat-person-form-wizard
 		[$contact]="$contact()"
+		(contactChange)="onContactChanged($event)"
 		[hideRelationship]="true"
 		[hidePetOption]="true"
 		[fields]="{ contactType: { hide: true }, relatedAs: { hide: true } }"
 		[displayAgeGroupValue]="true"
 		[requires]="personRequires"
-		(newPersonChange)="onRelatedPersonChange($event)"
 		(isReadyToSubmitChange)="onPersonFormIsReadyToSubmit()"
 	/>
 }
@@ -60,7 +52,7 @@
 	<div class="ion-padding">
 		<ion-button
 			expand="full"
-			[disabled]="$creating() || isContactNotReady"
+			[disabled]="$creating() || $isContactNotReady()"
 			(click)="submit()"
 		>
 			<ion-label>Create contact</ion-label>
