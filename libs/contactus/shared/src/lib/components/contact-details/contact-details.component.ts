@@ -1,14 +1,29 @@
-import { CommonModule } from '@angular/common';
 import {
 	Component,
 	computed,
 	inject,
 	input,
 	OnChanges,
+	OnInit,
 	SimpleChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCol,
+	IonGrid,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonList,
+	IonRow,
+	IonSegment,
+	IonSegmentButton,
+} from '@ionic/angular/standalone';
 import { SneatUserService } from '@sneat/auth-core';
 import { IUserSpaceBrief } from '@sneat/auth-models';
 import { ContactTitlePipe } from '@sneat/components';
@@ -46,9 +61,6 @@ import { RelatedContactComponent } from './related-contact.component';
 
 @Component({
 	imports: [
-		CommonModule,
-		IonicModule,
-		FormsModule,
 		ContactDobComponent,
 		ContactModulesMenuComponent,
 		ContactContactsComponent,
@@ -58,13 +70,27 @@ import { RelatedContactComponent } from './related-contact.component';
 		GenderFormComponent,
 		RelatedContactComponent,
 		ContactTitlePipe,
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonCard,
+		IonItem,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonItemDivider,
+		IonList,
+		IonSegment,
+		IonSegmentButton,
+		FormsModule,
 	],
 	selector: 'sneat-contact-details',
 	templateUrl: './contact-details.component.html',
 })
 export class ContactDetailsComponent
 	extends SneatBaseComponent
-	implements OnChanges
+	implements OnChanges, OnInit
 {
 	public readonly $contact = input.required<IContactContext | undefined>();
 	protected readonly $space = computed(
@@ -72,10 +98,9 @@ export class ContactDetailsComponent
 	);
 	protected readonly $spaceID = computed(() => this.$space()?.id);
 
-	public get contact(): IContactContext | undefined {
-		// TODO: remove and replace with direct use of $contact()!
-		return this.$contact();
-	}
+	protected readonly $isMember = computed(
+		() => !!this.$contact()?.brief?.roles?.includes('member'),
+	);
 
 	private readonly navController = inject(NavController);
 
@@ -87,8 +112,9 @@ export class ContactDetailsComponent
 	protected get contactWithBriefAndOptionalDto():
 		| IIdAndBriefAndOptionalDbo<IContactBrief, IContactDbo>
 		| undefined {
-		return this.contact?.brief
-			? (this.contact as IIdAndBriefAndOptionalDbo<IContactBrief, IContactDbo>)
+		const contact = this.$contact();
+		return contact?.brief
+			? (contact as IIdAndBriefAndOptionalDbo<IContactBrief, IContactDbo>)
 			: undefined;
 	}
 
@@ -107,6 +133,9 @@ export class ContactDetailsComponent
 
 	constructor() {
 		super('ContactDetailsComponent');
+	}
+
+	public ngOnInit(): void {
 		this.userService.userState.subscribe({
 			next: (userState) => {
 				this.userSpaceBriefs = userState?.record?.spaces;
@@ -176,8 +205,9 @@ export class ContactDetailsComponent
 	}
 
 	private setRelatedAs(spaceID: string, userContactID: string): void {
+		const contact = this.$contact();
 		const relatedContact = getRelatedItemByKey(
-			this.contact?.dbo?.related,
+			contact?.dbo?.related,
 			'contactus',
 			'contacts',
 			spaceID,
@@ -193,7 +223,7 @@ export class ContactDetailsComponent
 			'rolesOfItem',
 			this.rolesOfItem,
 			'contact',
-			this.contact,
+			contact,
 		);
 	}
 
@@ -206,10 +236,8 @@ export class ContactDetailsComponent
 	}
 
 	protected hideForContactTypes(contactTypes: ContactType[]): boolean {
-		return (
-			!!this.contact?.brief?.type &&
-			!contactTypes.includes(this.contact.brief.type)
-		);
+		const contact = this.$contact();
+		return !!contact?.brief?.type && !contactTypes.includes(contact.brief.type);
 	}
 
 	protected get currentUserId() {
@@ -237,13 +265,14 @@ export class ContactDetailsComponent
 	}
 
 	protected goMemberPage(page: MemberPages): void {
-		if (!this.contact) {
-			throw new Error('this.contact');
+		const contact = this.$contact();
+		if (!contact) {
+			throw new Error('this.$contact() is not set');
 		}
 		this.navController
 			.navigateForward([page], {
-				queryParams: { id: this.contact.id },
-				state: { contact: this.contact, space: this.$space() },
+				queryParams: { id: contact.id },
+				state: { contact, space: this.$space() },
 			})
 			.catch(this.errorLogger.logError);
 	}
@@ -283,7 +312,7 @@ export class ContactDetailsComponent
 	}
 
 	private newUpdateContactRequest(): IUpdateContactRequest {
-		const contactID = this.contact?.id;
+		const contactID = this.$contact()?.id;
 		const spaceID = this.$spaceID();
 		if (!contactID || !spaceID) {
 			throw new Error(

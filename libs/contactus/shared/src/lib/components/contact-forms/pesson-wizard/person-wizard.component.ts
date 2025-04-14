@@ -155,7 +155,7 @@ export class PersonWizardComponent
 		{
 			id: 'relatedAs',
 			filter: {
-				hideFor: { contactTypes: ['animal'], contactRoles: ['member'] },
+				hideFor: { contactTypes: ['animal'] },
 			},
 		},
 		{ id: 'name' },
@@ -310,20 +310,7 @@ export class PersonWizardComponent
 
 	protected onRelatedAsChanged(rolesOfItem: IRelationshipRoles): void {
 		console.log('onRelationshipChanged()', rolesOfItem, typeof rolesOfItem);
-		// if ((typeof relatedAs as unknown) === 'string') {
-		// 	console.error('onRelationshipChanged() relatedAs is string:', relatedAs);
-		// 	return;
-		// }
 
-		// const relationshipIDs = Object.keys(relatedAs);
-		/*
-      moduleID: 'contactus',
-      collection: 'contacts',
-      itemID: '',
-      relatedAs: relationshipIDs,
-
-
- */
 		const spaceID = this.$contact().space.id;
 		const userID = this.relatedToUser?.itemID || '';
 

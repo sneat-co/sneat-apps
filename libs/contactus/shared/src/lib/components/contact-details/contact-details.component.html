@@ -1,3 +1,5 @@
+@let contact = $contact();
+
 <ion-grid class="ion-grid-layout">
 	<ion-row>
 		<ion-col>
@@ -5,11 +7,19 @@
 				<ion-item class="sneat-no-end-padding">
 					<ion-label style="font-weight: bold">
 						@if (contact?.brief?.gender) {
-							<ng-container [ngSwitch]="contact?.brief?.gender">
-								<span *ngSwitchCase="'male'" class="ion-margin-end">🧑</span>
-								<span *ngSwitchCase="'female'" class="ion-margin-end">👩</span>
-								<ion-icon name="person" *ngSwitchDefault />
-							</ng-container>
+							<span class="ion-margin-end">
+								@switch (contact?.brief?.gender) {
+									@case ("male") {
+										🧑
+									}
+									@case ("female") {
+										👩
+									}
+									@default {
+										<ion-icon name="person" />
+									}
+								}
+							</span>
 							{{
 								(contact | contactTitle) ||
 									contact?.brief?.shortTitle ||
@@ -29,50 +39,43 @@
 						</ion-button>
 					</ion-buttons>
 				</ion-item>
-				<ion-item-divider
-					mode="md"
-					*ngIf="contact?.brief?.gender && rolesOfItem"
-				>
-					<ion-label
-						*ngIf="
-							contact?.brief?.gender === 'male' && firstRelatedAs === 'child'
-						"
-						>My son
-					</ion-label>
-					<ion-label
-						*ngIf="
-							contact?.brief?.gender === 'female' && firstRelatedAs === 'child'
-						"
-						>My daughter
-					</ion-label>
-					<ion-label
-						*ngIf="
-							contact?.brief?.gender === 'male' && firstRelatedAs === 'spouse'
-						"
-						>My husband
-					</ion-label>
-					<ion-label
-						*ngIf="
-							contact?.brief?.gender === 'female' && firstRelatedAs === 'spouse'
-						"
-						>My wife
-					</ion-label>
-				</ion-item-divider>
-
+				@if (contact?.brief?.gender && rolesOfItem) {
+					<ion-item-divider mode="md">
+						@switch (firstRelatedAs) {
+							@case ("child") {
+								@switch (contact?.brief?.gender) {
+									@case ("male") {
+										<ion-label>My son</ion-label>
+									}
+									@case ("female") {
+										<ion-label>My daughter</ion-label>
+									}
+								}
+							}
+							@case ("spouse") {
+								@switch (contact?.brief?.gender) {
+									@case ("male") {
+										<ion-label>My husband</ion-label>
+									}
+									@case ("female") {
+										<ion-label>My wife</ion-label>
+									}
+								}
+							}
+						}
+					</ion-item-divider>
+				}
 				<sneat-contact-dob [contact]="contactWithBriefAndOptionalDto" />
 			</ion-card>
 
 			<sneat-gender-form [genderID]="contact?.brief?.gender" />
 
-			@if (
-				contact?.brief?.roles?.includes("member") &&
-				contact?.brief?.userID !== currentUserID
-			) {
+			@if ($isMember() && contact?.brief?.userID !== currentUserID) {
 				<sneat-relationship-form
 					[$space]="$space()"
-					[relatedTo]="relatedToContactOfCurrentUser"
-					[relatedItems]="contact?.dbo?.related || contact?.brief?.related"
-					[ageGroup]="contact?.brief?.ageGroup"
+					[$relatedTo]="relatedToContactOfCurrentUser"
+					[$relatedItems]="contact?.dbo?.related || contact?.brief?.related"
+					[$ageGroup]="contact?.brief?.ageGroup"
 					(relatedAsChange)="onRelatedAsChanged($event)"
 				/>
 			}
@@ -92,18 +95,13 @@
 
 <ion-segment class="ion-margin-horizontal" color="primary" [(ngModel)]="tab">
 	<ion-segment-button value="peers"> Peers</ion-segment-button>
-	<ion-segment-button
-		value="communicationChannels"
-		*ngIf="hideForContactTypes(['pet'])"
-	>
-		Email/Phone
-	</ion-segment-button>
-	<ion-segment-button value="roles" *ngIf="hideForContactTypes(['pet'])">
-		Roles
-	</ion-segment-button>
-	<ion-segment-button value="locations" *ngIf="hideForContactTypes(['pet'])">
-		Locations
-	</ion-segment-button>
+	@if (hideForContactTypes(["pet"])) {
+		<ion-segment-button value="communicationChannels">
+			Email/Phone
+		</ion-segment-button>
+		<ion-segment-button value="roles"> Roles </ion-segment-button>
+		<ion-segment-button value="locations"> Locations </ion-segment-button>
+	}
 </ion-segment>
 
 @switch (tab) {
@@ -115,9 +113,11 @@
 			<ion-item color="light">
 				<ion-label>Related contacts</ion-label>
 			</ion-item>
-			<ion-item *ngIf="!relatedContacts?.length">
-				<ion-label color="medium">No related contacts</ion-label>
-			</ion-item>
+			@if (!relatedContacts.length) {
+				<ion-item>
+					<ion-label color="medium">No related contacts</ion-label>
+				</ion-item>
+			}
 			@for (
 				relatedContact of relatedContactsOfCurrentSpace;
 				track relatedContact.id

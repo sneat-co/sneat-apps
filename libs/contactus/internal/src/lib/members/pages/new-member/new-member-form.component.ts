@@ -26,6 +26,7 @@ import {
 	IonRow,
 	IonSpinner,
 } from '@ionic/angular/standalone';
+import { namesToUrlParams } from '@sneat/auth-models';
 import { MemberService } from '@sneat/contactus-services';
 import { PersonWizardComponent } from '@sneat/contactus-shared';
 import { formNexInAnimation } from '@sneat/core';
@@ -40,13 +41,11 @@ import {
 	NewContactBaseDboAndSpaceRef,
 	WithNewContactInput,
 } from '@sneat/contactus-core';
-import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/space-models';
+import { zipMapBriefsWithIDs } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
 import { QRCodeComponent } from 'angularx-qrcode';
 
 @Component({
-	selector: 'sneat-new-member-form',
-	templateUrl: 'new-member-form.component.html',
 	animations: [formNexInAnimation],
 	imports: [
 		FormsModule,
@@ -65,6 +64,8 @@ import { QRCodeComponent } from 'angularx-qrcode';
 		IonGrid,
 		IonCol,
 	],
+	selector: 'sneat-new-member-form',
+	templateUrl: 'new-member-form.component.html',
 })
 export class NewMemberFormComponent
 	extends WithNewContactInput
@@ -84,18 +85,36 @@ export class NewMemberFormComponent
 		() =>
 			this.$spaceRef().id &&
 			!this.$isSubmitting() &&
-			this.$isRelatedPersonReady() &&
+			this.$isContactReady() &&
 			!this.addMemberForm.disabled && //TODO(check) Could be a problem with Push detection strategy?
 			this.addMemberForm.valid,
 	);
 
 	protected readonly $spaceRef = computed(() => this.$contact().space);
 
-	public readonly $space = signal<ISpaceContext>({ id: '' });
+	protected readonly $qrData = computed(() => {
+		const contact = this.$contact();
+		let url = `https://sneat.app/join?family=${contact.space.id}`;
+		const { gender, ageGroup } = contact.dbo;
+		if (
+			gender &&
+			gender !== 'unknown' &&
+			gender !== 'undisclosed' &&
+			gender !== 'other'
+		) {
+			url += '&gender=' + gender;
+		}
+		if (ageGroup) {
+			url += '&ageGroup=' + ageGroup;
+		}
+		url += namesToUrlParams(contact.dbo.names);
+		url += '&utm_source=sneat.app&utm_medium=qr_code&utm_campaign=new_member';
+		return url;
+	});
 
 	protected contactusSpace?: IContactusSpaceDboAndID;
 
-	private readonly $isRelatedPersonReady = computed(() => {
+	protected readonly $isContactReady = computed(() => {
 		const contact = this.$contact();
 		return (
 			contact && isRelatedPersonReady(contact.dbo, this.personRequirements)
@@ -141,20 +160,20 @@ export class NewMemberFormComponent
 	}
 
 	private setPersonRequirements(contact: NewContactBaseDboAndSpaceRef): void {
-		const space = this.$space();
+		const spaceRef = this.$spaceRef();
 		this.personRequirements = {
 			// TODO: Should we move it inside person form wizard?
 			...this.personRequirements,
 			ageGroup:
-				space.type === 'family' && contact.dbo.type !== 'animal'
+				spaceRef.type === 'family' && contact.dbo.type !== 'animal'
 					? { required: true }
 					: { hide: true },
 			roles:
-				space.type === 'family' && contact.dbo.type !== 'animal'
+				spaceRef.type === 'family' && contact.dbo.type !== 'animal'
 					? { hide: true }
 					: { required: true },
 			relatedAs:
-				space.type === 'family' && contact.dbo.type !== 'animal'
+				spaceRef.type === 'family' && contact.dbo.type !== 'animal'
 					? { required: true }
 					: { hide: true },
 		};
@@ -173,11 +192,11 @@ export class NewMemberFormComponent
 		if (!this.personFormComponent) {
 			throw '!this.personFormComponent';
 		}
-		const space = this.$space();
+		const spaceRef = this.$spaceRef();
 		const contact = this.$contact();
-		if (!space) {
+		if (!spaceRef?.id) {
 			this.errorLogger.logError(
-				'not able to add new member without team context',
+				'not able to add new member without space context',
 			);
 			return;
 		}
@@ -204,9 +223,9 @@ export class NewMemberFormComponent
 			...contact.dbo,
 			type: contact.dbo.type as MemberContactType,
 			status: 'active',
-			countryID: space.dbo?.countryID || '--',
+			countryID: '--',
 			roles: ['contributor'],
-			spaceID: space.id,
+			spaceID: spaceRef.id,
 		};
 
 		this.$isSubmitting.set(true);
@@ -224,7 +243,7 @@ export class NewMemberFormComponent
 						);
 				} else {
 					this.spaceNavService
-						.navigateBackToSpacePage(space, 'members')
+						.navigateBackToSpacePage(spaceRef, 'members')
 						.catch(
 							this.errorLogger.logErrorHandler(
 								'failed to navigate back to members page',

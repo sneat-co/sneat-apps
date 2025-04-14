@@ -20,8 +20,11 @@
 	<ion-card>
 		<ion-grid>
 			<ion-row>
-				<ion-col>
+				<ion-col size="5">
+					<!--					personRequirements: {{personRequirements|json}}-->
+					<!--					$isContactReady: {{$isContactReady()}}-->
 					<ion-button
+						expand="full"
 						size="large"
 						(click)="submit()"
 						[disabled]="!$canSubmit()"
@@ -36,12 +39,15 @@
 						<ion-label>Add member</ion-label>
 					</ion-button>
 				</ion-col>
-				@if (!$canSubmit()) {
-					<ion-col>
+				<ion-col size="1" style="text-align: center">
+					<p>or</p>
+				</ion-col>
+				@if (!$isSubmitting()) {
+					<ion-col size="6">
 						<qrcode
 							style="float: left"
-							[qrdata]="'https://sneat.app/join?family=' + $contact().space.id"
-							[width]="120"
+							[qrdata]="$qrData()"
+							[width]="140"
 							errorCorrectionLevel="M"
 						></qrcode>
 						<ion-card-header>

@@ -29,9 +29,9 @@
 		[isActive]="wizardStep === 'relatedAs'"
 		[disabled]="disabled"
 		[$space]="$contact().space"
-		[relatedTo]="relatedToUser"
-		[relatedItems]="$contact().dbo.related"
-		[ageGroup]="$contact().dbo.ageGroup"
+		[$relatedTo]="relatedToUser"
+		[$relatedItems]="$contact().dbo.related"
+		[$ageGroup]="$contact().dbo.ageGroup"
 		(relatedAsChange)="onRelatedAsChanged($event)"
 	/>
 	<!--[relatedAs]="newPerson.related?.relatedAs?.length === 1 ? newPerson.relatedTo?.relatedAs?.[0] : undefined"-->

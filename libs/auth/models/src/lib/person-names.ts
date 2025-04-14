@@ -8,6 +8,30 @@ export interface IPersonNames {
 	readonly fullName?: string;
 }
 
+export function namesToUrlParams(names?: IPersonNames): string {
+	if (!names) {
+		return '';
+	}
+	const { firstName, lastName, middleName, nickName, fullName } = names;
+	const params: string[] = [];
+	if (firstName) {
+		params.push(`firstName=${encodeURIComponent(firstName)}`);
+	}
+	if (lastName) {
+		params.push(`lastName=${encodeURIComponent(lastName)}`);
+	}
+	if (middleName) {
+		params.push(`middleName=${encodeURIComponent(middleName)}`);
+	}
+	if (nickName) {
+		params.push(`nickName=${encodeURIComponent(nickName)}`);
+	}
+	if (fullName && fullName !== `${firstName} ${lastName}`) {
+		params.push(`fullName=${encodeURIComponent(fullName)}`);
+	}
+	return params.join('&');
+}
+
 export function isNameEmpty(n?: IPersonNames): boolean {
 	// noinspection UnnecessaryLocalVariableJS
 	const result =

@@ -5,9 +5,6 @@ import {
 	IonButtons,
 	IonCard,
 	IonCardContent,
-	IonCardHeader,
-	IonCardSubtitle,
-	IonCardTitle,
 	IonContent,
 	IonHeader,
 	IonSegment,
@@ -32,7 +29,6 @@ import {
 	InviteLinksComponent,
 } from '@sneat/space-components';
 import { SpaceServiceModule } from '@sneat/space-services';
-import { QRCodeComponent } from 'angularx-qrcode';
 import { filter, first, takeUntil } from 'rxjs';
 import { NewMemberFormComponent } from './new-member-form.component';
 
@@ -89,9 +85,10 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
 			this.spaceIDChanged$,
 		);
 		effect(() => {
+			const space = this.$spaceRef();
 			this.$contact.update((contact) => ({
 				...contact,
-				space: this.$spaceRef() || { id: '' },
+				space: space || { id: '' },
 			}));
 		});
 		this.trackFirstSpaceTypeChanged();

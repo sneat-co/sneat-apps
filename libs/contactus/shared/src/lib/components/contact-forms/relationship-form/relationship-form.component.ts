@@ -1,14 +1,27 @@
-import { CommonModule } from '@angular/common';
 import {
+	ChangeDetectionStrategy,
 	Component,
 	EventEmitter,
+	input,
 	Input,
 	OnChanges,
 	Output,
 	SimpleChanges,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBadge,
+	IonCard,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonItemGroup,
+	IonLabel,
+	IonRadio,
+	IonRadioGroup,
+	IonSelect,
+	IonSelectOption,
+} from '@ionic/angular/standalone';
 import { SneatUserService } from '@sneat/auth-core';
 import { formNexInAnimation } from '@sneat/core';
 import {
@@ -40,20 +53,39 @@ interface IRelationshipWithID extends IRelationshipRole {
 }
 
 @Component({
+	animations: [formNexInAnimation],
+	imports: [
+		FormsModule,
+		ReactiveFormsModule,
+		IonCard,
+		IonItem,
+		IonIcon,
+		IonSelect,
+		IonSelectOption,
+		IonItemGroup,
+		IonItemDivider,
+		IonLabel,
+		IonRadioGroup,
+		IonRadio,
+		IonBadge,
+	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-relationship-form',
 	templateUrl: 'relationship-form.component.html',
-	animations: [formNexInAnimation],
-	imports: [CommonModule, IonicModule, FormsModule, ReactiveFormsModule],
 })
 export class RelationshipFormComponent
 	extends SpaceRelatedFormComponent
 	implements OnChanges
 {
-	@Input({ required: true }) public ageGroup?: AgeGroupID;
+	public readonly $ageGroup = input.required<AgeGroupID | undefined>();
 
-	@Input({ required: true }) public relatedTo?: ISpaceModuleItemRef;
+	public readonly $relatedTo = input.required<
+		ISpaceModuleItemRef | undefined
+	>();
 
-	@Input({ required: true }) public relatedItems?: IRelatedItemsByModule;
+	public readonly $relatedItems = input.required<
+		IRelatedItemsByModule | undefined
+	>();
 
 	protected rolesOfItem?: readonly IRelationshipWithID[];
 
@@ -84,42 +116,48 @@ export class RelationshipFormComponent
 	}
 
 	private onRelatedChanged(): void {
+		const relatedTo = this.$relatedTo();
+		const relatedItems = this.$relatedItems();
 		console.log(
 			'RelationshipFormComponent.onRelatedToChanged()',
 			'relatedTo:',
-			this.relatedTo,
+			relatedTo,
 			'relatedItems:',
-			this.relatedItems,
+			relatedItems,
 		);
-		if (this.relatedTo && this.relatedItems) {
-			if (!this.relatedTo.space) {
-				console.error(
-					'onRelatedChanged(): relatedTo.spaceID is not set',
-					this.relatedTo,
-				);
-			}
-			const relatedItem = getRelatedItemByKey(
-				this.relatedItems,
-				this.relatedTo.module,
-				this.relatedTo.collection,
-				this.relatedTo.space,
-				this.relatedTo.itemID,
-			);
-			if (relatedItem) {
-				const rolesOfItem: IRelationshipWithID[] = [];
-				Object.entries(relatedItem.rolesOfItem || {}).forEach(([id, rel]) => {
-					const roleOfItem: IRelationshipWithID = {
-						id,
-						...rel,
-					};
-					rolesOfItem.push(roleOfItem);
-				});
-				this.rolesOfItem = rolesOfItem;
-				return;
-			}
+		if (!relatedTo || !relatedItems) {
+			this.relatedAsSingle.setValue('');
+			this.rolesOfItem = undefined;
+			return;
 		}
-		this.relatedAsSingle.setValue('');
-		this.rolesOfItem = undefined;
+		if (!relatedTo.space) {
+			console.error(
+				'onRelatedChanged(): relatedTo.spaceID is not set',
+				relatedTo,
+			);
+			return;
+		}
+		const relatedItem = relatedTo
+			? getRelatedItemByKey(
+					this.$relatedItems(),
+					relatedTo.module,
+					relatedTo.collection,
+					relatedTo.space,
+					relatedTo.itemID,
+				)
+			: undefined;
+		if (relatedItem) {
+			const rolesOfItem: IRelationshipWithID[] = [];
+			Object.entries(relatedItem.rolesOfItem || {}).forEach(([id, rel]) => {
+				const roleOfItem: IRelationshipWithID = {
+					id,
+					...rel,
+				};
+				rolesOfItem.push(roleOfItem);
+			});
+			this.rolesOfItem = rolesOfItem;
+			return;
+		}
 	}
 
 	//
@@ -132,7 +170,7 @@ export class RelationshipFormComponent
 		switch (this.$spaceType()) {
 			case 'family': {
 				this.relationshipOptions = getRelOptions(
-					this.ageGroup === 'child'
+					this.$ageGroup() === 'child'
 						? ([
 								FamilyMemberRelation.child,
 								FamilyMemberRelation.sibling,
