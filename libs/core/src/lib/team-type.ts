@@ -1,3 +1,5 @@
+export const SpaceTypeFamily = 'family';
+
 export type SpaceType =
 	| 'family'
 	| 'private'

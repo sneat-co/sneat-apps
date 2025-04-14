@@ -45,10 +45,10 @@
 	<!--		></sneat-members-list>-->
 	<!--	</ion-list>-->
 
-	@if (segment === "all" && spaceType === "family") {
+	@if (segment === "all" && $spaceType() === "family") {
 		<ion-card>
 			<sneat-family-members
-				[space]="space"
+				[$space]="$space()"
 				[contactusSpaceDbo]="spaceModuleDbo$ | async"
 				(addMember)="goNewMemberPage($event)"
 			/>
@@ -56,7 +56,7 @@
 	}
 
 	@if (segment === "groups") {
-		@if (spaceType === "cohabit") {
+		@if ($spaceType() === "cohabit") {
 			@if (memberGroups) {
 				@for (group of memberGroups; track group.id) {
 					<ion-item-group>

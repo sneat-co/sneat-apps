@@ -2,7 +2,6 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	Input,
-	OnChanges,
 	input,
 	computed,
 } from '@angular/core';
@@ -24,8 +23,8 @@ import { MembersListComponent } from '../members-list';
 				}"
 			/>
 			<sneat-members-list
-				[space]="$space()"
-				[members]="$spaceContacts()"
+				[$space]="$space()"
+				[$members]="$spaceContacts()"
 			></sneat-members-list>
 		</ion-card>
 	`,

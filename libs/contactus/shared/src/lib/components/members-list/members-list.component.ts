@@ -1,14 +1,12 @@
-import { CommonModule } from '@angular/common';
 import {
 	Component,
+	computed,
 	EventEmitter,
-	Inject,
+	input,
 	Input,
-	OnChanges,
 	Output,
-	SimpleChanges,
+	signal,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import {
 	IonRouterOutlet,
@@ -29,23 +27,21 @@ import {
 	IonSkeletonText,
 } from '@ionic/angular/standalone';
 import { ContactTitlePipe } from '@sneat/components';
-import { listAddRemoveAnimation } from '@sneat/core';
+import { listAddRemoveAnimation, SpaceTypeFamily } from '@sneat/core';
 import {
 	ScheduleNavService,
 	ScheduleNavServiceModule,
 } from '@sneat/mod-schedulus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	InviteModalComponent,
 	InviteModalModule,
+	WithSpaceInput,
 } from '@sneat/space-components';
 import { ContactService } from '@sneat/contactus-services';
 import {
-	IContactusSpaceDboAndID,
 	IContactWithBrief,
 	IContactWithBriefAndSpace,
 } from '@sneat/contactus-core';
-import { ISpaceContext } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { ContactRoleBadgesComponent } from '../contact-role-badges/contact-role-badges.component';
@@ -75,18 +71,17 @@ import { InlistAgeGroupComponent } from '../inlist-options/inlist-age-group.comp
 		ContactTitlePipe,
 	],
 })
-// TODO: Is it deprecated and should we migrated to Contacts list?
-export class MembersListComponent implements OnChanges {
-	private selfRemove?: boolean;
+// TODO: Is it deprecated and should we migrated to Contacts list? Document reason if not.
+export class MembersListComponent extends WithSpaceInput {
+	private $selfRemove = signal(false);
 
-	@Input({ required: true }) public space?: ISpaceContext;
+	public readonly $members = input.required<readonly IContactWithBrief[]>();
 
-	@Input({ required: true })
-	public members?: readonly IContactWithBrief[];
+	public $role = input<string>();
 
-	@Input() public role?: string;
+	@Output() readonly selfRemoved = new EventEmitter<void>();
 
-	@Output() selfRemoved = new EventEmitter<void>();
+	// TODO: document what is contactsByMember.
 	@Input() public contactsByMember: Record<
 		string,
 		readonly IContactWithBriefAndSpace[]
@@ -95,9 +90,15 @@ export class MembersListComponent implements OnChanges {
 	@Input() public hideRoles: readonly string[] = ['member'];
 
 	// Holds filtered entries, use `allMembers` to pass input
-	public membersToDisplay?: readonly IContactWithBrief[];
-
-	protected contactusSpace?: IContactusSpaceDboAndID;
+	public readonly $membersToDisplay = computed<readonly IContactWithBrief[]>(
+		() => {
+			const role = this.$role();
+			const members = this.$members();
+			return role
+				? members?.filter((m) => m.brief?.roles?.some((r) => r === role))
+				: members;
+		},
+	);
 
 	constructor(
 		private readonly navService: SpaceNavService,
@@ -105,18 +106,20 @@ export class MembersListComponent implements OnChanges {
 		private readonly userService: SneatUserService,
 		private readonly contactService: ContactService,
 		private readonly scheduleNavService: ScheduleNavService,
-		@Inject(ErrorLogger) private errorLogger: IErrorLogger,
 		private readonly modalController: ModalController,
 		public readonly routerOutlet: IonRouterOutlet,
 	) {
-		//
+		super('MembersListComponent');
 	}
 
+	private readonly $isFamilySpace = computed(
+		() => this.$spaceType() === SpaceTypeFamily,
+	);
+
 	protected isAgeOptionsVisible(contact: IContactWithBrief): boolean {
-		const spaceDbo = this.space?.dbo;
 		// console.log('MembersListComponent.isAgeOptionsVisible()', member, teamDto);
 		return (
-			spaceDbo?.type === 'family' &&
+			this.$isFamilySpace() &&
 			contact.brief?.type === 'person' &&
 			(!contact.brief?.ageGroup || contact.brief?.ageGroup === 'unknown')
 		);
@@ -138,7 +141,7 @@ export class MembersListComponent implements OnChanges {
 
 	public goMember(member?: IContactWithBrief): boolean {
 		console.log('MembersListComponent.goMember()', member);
-		if (!this.space) {
+		if (!this.$space()) {
 			this.errorLogger.logError(
 				'Can not navigate to space member without space context',
 			);
@@ -149,37 +152,16 @@ export class MembersListComponent implements OnChanges {
 		}
 		this.navService.navigateToMember(this.navController, {
 			...member,
-			space: this.space,
+			space: this.$space(),
 		});
 		return false;
-	}
-
-	public ngOnChanges(changes: SimpleChanges): void {
-		if (changes['members'] || changes['role']) {
-			this.membersToDisplay = this.filterMembers(this.members);
-			console.log(
-				'MembersListComponent.ngOnChanges(): members or role changed:',
-				'role:',
-				this.role,
-				'members:',
-				this.members,
-				'membersToDisplay:',
-				this.membersToDisplay,
-			);
-			console.log(
-				'MembersListComponent.ngOnChanges(): membersToDisplay:',
-				this.membersToDisplay,
-			);
-		} else if (Object.keys(changes).length) {
-			console.log('MembersListComponent.ngOnChanges()', changes);
-		}
 	}
 
 	public goSchedule(event: Event, contact: IContactWithBrief) {
 		console.log('MembersListComponent.goSchedule()');
 		event.stopPropagation();
 		event.preventDefault();
-		const space = this.space;
+		const space = this.$space();
 		if (space) {
 			this.scheduleNavService
 				.goCalendar(space, { member: contact.id })
@@ -194,21 +176,23 @@ export class MembersListComponent implements OnChanges {
 	public removeMember(event: Event, member: IContactWithBrief) {
 		// event.preventDefault();
 		event.stopPropagation();
-		if (!this.space) {
+		const space = this.$space();
+		if (!space) {
 			return;
 		}
-		this.selfRemove = member.brief?.userID === this.userService.currentUserID;
-		const spaceID = this.space.id;
+		this.$selfRemove.set(
+			member.brief?.userID === this.userService.currentUserID,
+		);
+		const spaceID = space.id;
 		this.contactService
 			.removeSpaceMember({ spaceID: spaceID, contactID: member.id })
 			.subscribe({
 				next: (space) => {
-					if (spaceID !== this.space?.id) {
+					if (spaceID !== space?.id) {
 						return;
 					}
-					this.space = space;
 					console.log('updated space:', space);
-					if (this.selfRemove) {
+					if (this.$selfRemove()) {
 						this.selfRemoved.emit();
 					}
 					if (
@@ -221,25 +205,13 @@ export class MembersListComponent implements OnChanges {
 					}
 				},
 				error: (err: unknown) => {
-					this.selfRemove = undefined;
+					this.$selfRemove.set(false);
 					this.errorLogger.logError(err, 'Failed to remove member from team');
 				},
 			});
 	}
 
-	// public goAddMember(): void {
-	// 	this.navService.navigateToAddMember(this.navController, this.team);
-	// }
-
-	private readonly filterMembers = (
-		members?: readonly IContactWithBrief[],
-	): readonly IContactWithBrief[] | undefined => {
-		return !this.role
-			? members
-			: members?.filter((m) => m.brief?.roles?.some((r) => r === this.role));
-	};
-
-	async showInviteModal(
+	protected async showInviteModal(
 		event: Event,
 		member: IContactWithBrief,
 	): Promise<void> {
@@ -251,7 +223,7 @@ export class MembersListComponent implements OnChanges {
 			// swipeToClose: true,
 			presentingElement: this.routerOutlet.nativeEl,
 			componentProps: {
-				space: this.space,
+				space: this.$space(),
 				member,
 			},
 		});

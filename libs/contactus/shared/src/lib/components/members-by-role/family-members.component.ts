@@ -19,25 +19,27 @@ import {
 	MemberGroupTypeOther,
 	MemberGroupTypePets,
 } from '@sneat/contactus-core';
+import { WithSpaceInput } from '@sneat/space-components';
 import { MembersByRoleComponent } from '../members-by-role/members-by-role.component';
 import { MemberGroup } from '../members-by-role/member-group';
-import { emptySpaceRef, IIdAndBriefAndOptionalDbo } from '@sneat/core';
-import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/space-models';
+import { IIdAndBriefAndOptionalDbo } from '@sneat/core';
+import { zipMapBriefsWithIDs } from '@sneat/space-models';
 
 @Component({
 	selector: 'sneat-family-members',
 	template: `
 		<sneat-members-by-role
-			[space]="space"
+			[$space]="$space()"
 			[memberGroups]="predefinedMemberGroups"
 			(addMember)="addMember.emit($event)"
 		/>
 	`,
 	imports: [MembersByRoleComponent],
 })
-export class FamilyMembersComponent implements OnChanges {
-	@Input({ required: true }) public space?: ISpaceContext;
-
+export class FamilyMembersComponent
+	extends WithSpaceInput
+	implements OnChanges
+{
 	@Input({ required: true })
 	public contactusSpaceDbo?: IContactusSpaceDbo | null;
 
@@ -84,6 +86,10 @@ export class FamilyMembersComponent implements OnChanges {
 		this.other,
 	];
 
+	public constructor() {
+		super('FamilyMembersComponent');
+	}
+
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['contactusSpaceDbo']) {
 			this.processContactusSpaceDbo(this.contactusSpaceDbo);
@@ -97,7 +103,7 @@ export class FamilyMembersComponent implements OnChanges {
 			'MembersPageComponent.processContactusSpaceDbo()',
 			contactusSpaceDbo,
 		);
-		const space = this.space;
+		const space = this.$space();
 		this.members = zipMapBriefsWithIDs(contactusSpaceDbo?.contacts).map(
 			(m) => ({
 				...m,
@@ -109,6 +115,10 @@ export class FamilyMembersComponent implements OnChanges {
 
 	private processMembers(): void {
 		console.log('MembersPageComponent.processMembers()', this.members);
+		const space = this.$space();
+		if (!space) {
+			throw new Error('!this.$space()');
+		}
 		const adults: IContactWithBrief[] = [];
 		const children: IContactWithBrief[] = [];
 		const pets: IContactWithBrief[] = [];
@@ -137,9 +147,6 @@ export class FamilyMembersComponent implements OnChanges {
 				if (c.dbo?.type === SpaceMemberTypeEnum.pet) {
 					addedToGroup = true;
 					pets.push(c);
-				}
-				if (!this.space) {
-					throw new Error('!this.team');
 				}
 				if (c.brief?.groupIDs?.length) {
 					c.brief.groupIDs.forEach((groupID) => {
@@ -186,7 +193,6 @@ export class FamilyMembersComponent implements OnChanges {
 					other.push(c);
 				}
 			});
-		const space = this.space || emptySpaceRef;
 		this.adults = { ...this.adults, contacts: adults.map(addSpace(space)) };
 		this.children = {
 			...this.children,

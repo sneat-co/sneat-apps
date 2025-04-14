@@ -56,10 +56,6 @@ export abstract class MembersBasePage extends ContactusModuleBaseComponent {
 		);
 	}
 
-	public get spaceType(): SpaceType | undefined {
-		return this.space?.brief?.type;
-	}
-
 	// protected setPageCommuneIds(source: string, communeIds: ICommuneIds, communeDto?: ICommuneDto): void {
 	// 	super.setPageCommuneIds(source, communeIds, communeDto);
 	// 	if (this.communeRealId) {

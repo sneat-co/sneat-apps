@@ -1,11 +1,10 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AgeGroupID } from '@sneat/contactus-core';
 import {
 	ContactService,
 	IUpdateContactRequest,
 } from '@sneat/contactus-services';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISpaceContext } from '@sneat/space-models';
+import { WithSpaceInput } from '@sneat/space-components';
 import {
 	OptionEvent,
 	Option,
@@ -18,15 +17,13 @@ import {
 		'<sneat-inlist-options [options]="ageOptions" [selectedOption]="selectedOption" (optionSelected)="onAgeGroupSelected($event)"/>',
 	imports: [InlistOptionsComponent],
 })
-export class InlistAgeGroupComponent {
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly contactService: ContactService,
-	) {}
+export class InlistAgeGroupComponent extends WithSpaceInput {
+	constructor(private readonly contactService: ContactService) {
+		super('InlistAgeGroupComponent');
+	}
 
 	protected selectedOption?: Option;
 
-	@Input({ required: true }) public space?: ISpaceContext;
 	@Input({ required: true }) public contactID = '';
 
 	protected readonly ageOptions: readonly Option[] = [
@@ -43,7 +40,7 @@ export class InlistAgeGroupComponent {
 		optionEvent.uiEvent.preventDefault();
 		optionEvent.uiEvent.stopPropagation();
 		this.selectedOption = optionEvent.option;
-		const spaceID = this.space?.id;
+		const spaceID = this.$spaceID();
 		if (!spaceID) {
 			return;
 		}

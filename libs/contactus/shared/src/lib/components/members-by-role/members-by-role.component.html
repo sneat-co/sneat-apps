@@ -25,8 +25,8 @@
 
 			<!--			<ion-item>group.members: {{ group.members|json }}</ion-item>-->
 			<sneat-members-list
-				[space]="space"
-				[members]="group.contacts"
+				[$space]="$space()"
+				[$members]="group.contacts || []"
 				[contactsByMember]="contactsByMember"
 				[hideRoles]="[group.role, 'member']"
 			/>
