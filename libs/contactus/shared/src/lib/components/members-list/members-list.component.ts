@@ -56,10 +56,7 @@ import { InlistAgeGroupComponent } from '../inlist-options/inlist-age-group.comp
 	templateUrl: './members-list.component.html',
 	animations: listAddRemoveAnimation,
 	imports: [
-		CommonModule,
-		FormsModule,
 		ScheduleNavServiceModule,
-
 		InviteModalModule,
 		RouterModule,
 		ContactRoleBadgesComponent,
