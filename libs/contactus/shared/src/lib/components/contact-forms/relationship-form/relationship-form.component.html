@@ -1,47 +1,42 @@
 <ion-card @formNextIn>
+	<!--	@if (rolesOfItem) {-->
+	<!--		<ion-item>-->
+	<!--			<ion-icon name="people-outline" slot="start" />-->
+	<!--			<ion-select-->
+	<!--				[formControl]="relatedAsSingle"-->
+	<!--				interface="popover"-->
+	<!--				[disabled]="disabled"-->
+	<!--				(ionChange)="onRelationshipChanged($event)"-->
+	<!--				[label]="label"-->
+	<!--			>-->
+	<!--				@for (rel of $relationshipOptions(); track rel.id) {-->
+	<!--					<ion-select-option [value]="rel.id">{{-->
+	<!--							rel.title-->
+	<!--						}}-->
+	<!--					</ion-select-option>-->
+	<!--				}-->
+	<!--			</ion-select>-->
+	<!--		</ion-item>-->
+	<!--	} @else {-->
+	<!--		<ion-item-group>-->
+	@if (!$relatedTo()) {
+		<ion-item-divider [color]="isActive ? 'primary' : 'light'">
+			<ion-label>
+				<b>{{ label }}</b
+				>:
+			</ion-label>
+		</ion-item-divider>
+	}
+	<sneat-select-from-list
+		[items]="$relationshipOptions()"
+		[label]="label"
+		(valueChange)="onRelationshipChanged($event)"
+	/>
 	@if (rolesOfItem) {
 		<ion-item>
-			<ion-icon name="people-outline" slot="start" />
-			<ion-select
-				[formControl]="relatedAsSingle"
-				interface="popover"
-				[disabled]="disabled"
-				(ionChange)="onRelationshipChanged($event)"
-				[label]="label"
-			>
-				@for (rel of relationshipOptions || []; track rel.id) {
-					<ion-select-option [value]="rel.id">{{
-						rel.title
-					}}</ion-select-option>
-				}
-			</ion-select>
+			@for (rel of rolesOfItem; track rel.id) {
+				<ion-badge>{{ rel.id }}</ion-badge>
+			}
 		</ion-item>
-	} @else {
-		<ion-item-group>
-			<ion-item-divider [color]="isActive ? 'primary' : 'light'">
-				<ion-label
-					><b>{{ label }}</b
-					>:</ion-label
-				>
-			</ion-item-divider>
-			<ion-radio-group (ionChange)="onRelationshipChanged($event)">
-				@for (rel of relationshipOptions || []; track rel.id) {
-					<ion-item>
-						<ion-radio
-							[value]="rel.id"
-							[disabled]="disabled"
-							justify="start"
-							labelPlacement="end"
-							>{{ rel.title }}
-						</ion-radio>
-					</ion-item>
-				}
-			</ion-radio-group>
-		</ion-item-group>
 	}
-	<ion-item>
-		@for (rel of rolesOfItem; track rel.id) {
-			<ion-badge>{{ rel.id }}</ion-badge>
-		}
-	</ion-item>
 </ion-card>
