@@ -13,7 +13,7 @@
 			<ion-card-header color="danger">
 				<ion-card-title>Errors</ion-card-title>
 			</ion-card-header>
-			<ion-card-content> Errors: {{ addMemberForm.errors }} </ion-card-content>
+			<ion-card-content> Errors: {{ addMemberForm.errors }}</ion-card-content>
 		</ion-card>
 	}
 
@@ -49,12 +49,13 @@
 							[qrdata]="$qrData()"
 							[width]="140"
 							errorCorrectionLevel="M"
-						></qrcode>
+						/>
 						<ion-card-header>
 							<ion-card-title>Self-add</ion-card-title>
 							<ion-card-subtitle>
 								Ask the new member to scan this QR code and fill the form to
-								join this space.
+								join this space. Or send them this
+								<a target="_blank" [href]="$qrData()">link</a>.
 							</ion-card-subtitle>
 						</ion-card-header>
 					</ion-col>

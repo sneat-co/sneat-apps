@@ -94,7 +94,7 @@ export class NewMemberFormComponent
 
 	protected readonly $qrData = computed(() => {
 		const contact = this.$contact();
-		let url = `https://sneat.app/join?family=${contact.space.id}`;
+		let url = `https://sneat.app/pwa/join?family=${contact.space.id}`;
 		const { gender, ageGroup } = contact.dbo;
 		if (
 			gender &&
