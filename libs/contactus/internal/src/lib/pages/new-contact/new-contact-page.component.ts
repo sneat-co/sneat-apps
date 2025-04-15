@@ -32,6 +32,7 @@ import {
 	IContactContext,
 	NewContactBaseDboAndSpaceRef,
 } from '@sneat/contactus-core';
+import { emptySpaceRef } from '@sneat/core';
 import {
 	SpaceBaseComponent,
 	SpaceComponentBaseParams,
@@ -68,9 +69,10 @@ export class NewContactPageComponent
 	// TODO: relationship is not implemented yet
 	protected $relation = signal<ContactToContactRelation | undefined>(undefined);
 
-	public readonly $contact = signal<NewContactBaseDboAndSpaceRef>(
-		{} as ContactIdAndDboWithSpaceRef,
-	);
+	public readonly $contact = signal<NewContactBaseDboAndSpaceRef>({
+		space: emptySpaceRef,
+		dbo: { type: 'person' },
+	} as ContactIdAndDboWithSpaceRef);
 
 	protected readonly $contactGroupID = signal<string>('');
 	protected readonly $contactRoleID = signal<ContactRole | undefined>(

@@ -57,7 +57,7 @@ export class JoinSpacePageComponent extends WithSpaceInput {
 		lastName: { required: true },
 	};
 
-	readonly wizardFields: IPersonFormWizardFields = {
+	readonly wizardFields: Readonly<IPersonFormWizardFields> = {
 		relatedAs: { hide: true },
 	};
 

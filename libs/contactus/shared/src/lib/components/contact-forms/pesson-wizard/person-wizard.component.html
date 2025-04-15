@@ -26,10 +26,10 @@
 
 @if (!requires.relatedAs?.hide && show.relatedAs) {
 	<sneat-relationship-form
-		[isActive]="wizardStep === 'relatedAs'"
+		[isActive]="$wizardStep() === 'relatedAs'"
 		[disabled]="disabled"
 		[$space]="$contact().space"
-		[$relatedTo]="relatedToUser"
+		[$relatedTo]="$relatedToUser()"
 		[$relatedItems]="$contact().dbo.related"
 		[$ageGroup]="$contact().dbo.ageGroup"
 		(relatedAsChange)="onRelatedAsChanged($event)"
@@ -40,7 +40,7 @@
 @if (show.name) {
 	<sneat-names-form
 		[name]="$contact().dbo.names"
-		[isActive]="wizardStep === 'name'"
+		[isActive]="$wizardStep() === 'name'"
 		[showNextButton]="false"
 		[fields]="nameFields"
 		(namesChanged)="onNameChanged($event)"
@@ -52,7 +52,7 @@
 @if (!requires.roles?.hide && show.roles) {
 	<sneat-roles-form
 		[$space]="$contact().space"
-		[isActive]="wizardStep === 'roles'"
+		[isActive]="$wizardStep() === 'roles'"
 		[disabled]="disabled"
 	/>
 }

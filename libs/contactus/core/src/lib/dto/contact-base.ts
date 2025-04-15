@@ -1,13 +1,10 @@
 import { IAvatar, IPersonNames } from '@sneat/auth-models';
 import { IWithRelatedOnly } from '@sneat/dto';
 import { IAddress } from './address';
-
 import { ContactType, IEmail, IPhone } from './contact-types';
 import { Gender } from './gender';
 import { AgeGroupID } from './age-group';
 import { PetKind } from './pet-kind';
-
-// import { AgeGroupID, ContactType, PetKind, Gender, IAddress } from '.';
 
 // Originally was in IPerson but also required by company
 // and also if in IPerson troubles with Person Wizard component
@@ -19,6 +16,9 @@ export interface IContactChannels {
 	readonly website?: string;
 }
 
+// This is used to pass to create_contact API endpoint
+// as IContactDbo have required fields
+// that are not needed at client side at time of creation.
 export interface IContactBase extends IWithRelatedOnly, IContactChannels {
 	readonly type: ContactType;
 	readonly title?: string;
@@ -34,7 +34,6 @@ export interface IContactBase extends IWithRelatedOnly, IContactChannels {
 	readonly avatar?: IAvatar;
 	readonly roles?: readonly string[];
 	readonly groupIDs?: readonly string[];
-	// readonly relatedAs?: string;
 	readonly invitesCount?: string;
 	readonly dob?: string; // Date of birth
 }

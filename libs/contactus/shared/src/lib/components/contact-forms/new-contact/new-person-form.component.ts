@@ -14,17 +14,15 @@ import { IonButton, IonItemDivider, IonLabel } from '@ionic/angular/standalone';
 import {
 	IContactRoleWithIdAndBrief,
 	ContactToAssetRelation,
-	emptyContactBase,
 	IContact2Asset,
 	IContactContext,
 	IContactGroupDbo,
-	ICreateContactRequest,
 	IPersonRequirements,
-	IRelatedPerson,
 	isRelatedPersonNotReady,
 	ContactRole,
 	IContactRoleWithIdAndOptionalBrief,
 	NewContactBaseDboAndSpaceRef,
+	ICreateContactPersonRequest,
 } from '@sneat/contactus-core';
 import {
 	ContactGroupService,
@@ -295,7 +293,7 @@ export class NewPersonFormComponent
 		}
 		this.$creating.set(true);
 		const contactDbo = this.$contact().dbo;
-		let request: ICreateContactRequest = {
+		let request: ICreateContactPersonRequest = {
 			status: 'active',
 			type: 'person',
 			spaceID: space.id,
@@ -324,7 +322,10 @@ export class NewPersonFormComponent
 				title: asset.brief.title,
 				relation: this.assetRelation,
 			};
-			request.relatedToAssets = [contact2Asset];
+			request = {
+				...request,
+				relatedToAssets: [contact2Asset],
+			};
 		}
 		const roleID = this.$selectedContactRoleID();
 		if (roleID) {
@@ -337,9 +338,12 @@ export class NewPersonFormComponent
 				request.person &&
 				request.person.roles?.some((r) => r === roleID)
 			) {
-				request.person = {
-					...request.person,
-					roles: [...request.person.roles, roleID],
+				request = {
+					...request,
+					person: {
+						...request.person,
+						roles: [...request.person.roles, roleID],
+					},
 				};
 			}
 		}

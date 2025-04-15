@@ -44,6 +44,38 @@ export interface IWithRelatedOnly {
 	readonly related?: IRelatedItemsByModule;
 }
 
+export function validateRelated(related?: IRelatedItemsByModule): void {
+	if (!related) {
+		return;
+	}
+	Object.entries(related).forEach(([module, collections]) => {
+		Object.entries(collections).forEach(([collection, items]) => {
+			if (!items) {
+				return;
+			}
+			items.forEach((item) => {
+				if (!item.keys) {
+					throw new Error(
+						`Related item ${module}/${collection} must have keys, got: ${JSON.stringify(related)}`,
+					);
+				}
+				if (item.keys.length === 0) {
+					throw new Error(
+						`Related item ${module}/${collection} must have at least one key, got: ${JSON.stringify(related)}`,
+					);
+				}
+				item.keys.forEach((key) => {
+					if (!key.itemID) {
+						throw new Error(
+							`Related item ${module}/${collection} must have itemID, got: ${JSON.stringify(related)}`,
+						);
+					}
+				});
+			});
+		});
+	});
+}
+
 export interface IWithRelatedAndRelatedIDs extends IWithRelatedOnly {
 	readonly relatedIDs?: readonly string[];
 }

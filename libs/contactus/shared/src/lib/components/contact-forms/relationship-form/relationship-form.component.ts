@@ -7,21 +7,16 @@ import {
 	Input,
 	OnChanges,
 	Output,
+	signal,
 	SimpleChanges,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
 	IonBadge,
 	IonCard,
-	IonIcon,
 	IonItem,
 	IonItemDivider,
-	IonItemGroup,
 	IonLabel,
-	IonRadio,
-	IonRadioGroup,
-	IonSelect,
-	IonSelectOption,
 } from '@ionic/angular/standalone';
 import { SneatUserService } from '@sneat/auth-core';
 import { formNexInAnimation } from '@sneat/core';
@@ -38,7 +33,6 @@ import {
 	IRelationshipRole,
 	IRelationshipRoles,
 	ISpaceModuleItemRef,
-	ITitledRecord,
 	IWithCreatedShort,
 } from '@sneat/dto';
 import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
@@ -80,11 +74,14 @@ export class RelationshipFormComponent
 		ISpaceModuleItemRef | undefined
 	>();
 
+	// TODO: Needs documentation on what it is
 	public readonly $relatedItems = input.required<
 		IRelatedItemsByModule | undefined
 	>();
 
-	protected rolesOfItem?: readonly IRelationshipWithID[];
+	protected readonly $rolesOfItem = signal<
+		readonly IRelationshipWithID[] | undefined
+	>(undefined);
 
 	@Output() readonly relatedAsChange = new EventEmitter<IRelationshipRoles>();
 
@@ -147,7 +144,7 @@ export class RelationshipFormComponent
 		);
 		if (!relatedTo || !relatedItems) {
 			this.relatedAsSingle.setValue('');
-			this.rolesOfItem = undefined;
+			this.$rolesOfItem.set(undefined);
 			return;
 		}
 		if (!relatedTo.space) {
@@ -175,7 +172,7 @@ export class RelationshipFormComponent
 				};
 				rolesOfItem.push(roleOfItem);
 			});
-			this.rolesOfItem = rolesOfItem;
+			this.$rolesOfItem.set(rolesOfItem);
 			return;
 		}
 	}

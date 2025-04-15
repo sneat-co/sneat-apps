@@ -28,11 +28,11 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IFormField } from '@sneat/core';
 
 export interface INamesFormFields {
-	firstName?: IFormField;
-	middleName?: IFormField;
-	lastName?: IFormField;
-	nickName?: IFormField;
-	fullName?: IFormField;
+	readonly firstName?: IFormField;
+	readonly middleName?: IFormField;
+	readonly lastName?: IFormField;
+	readonly nickName?: IFormField;
+	readonly fullName?: IFormField;
 }
 
 const maxNameLenValidator = Validators.maxLength(50);

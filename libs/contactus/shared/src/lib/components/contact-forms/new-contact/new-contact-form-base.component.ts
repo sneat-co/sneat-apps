@@ -1,4 +1,12 @@
-import { Directive, EventEmitter, input, Output } from '@angular/core';
+import {
+	computed,
+	Directive,
+	effect,
+	EventEmitter,
+	input,
+	OnInit,
+	Output,
+} from '@angular/core';
 import {
 	ContactIdAndDboWithSpaceRef,
 	NewContactBaseDboAndSpaceRef,
@@ -9,6 +17,9 @@ import { ContactFormBaseComponent } from '../contact-form-base.component';
 export abstract class NewContactFormBaseComponent extends ContactFormBaseComponent {
 	// In the $contact we accumulate all the data we need to create a new contact
 	public readonly $contact = input.required<NewContactBaseDboAndSpaceRef>();
+	protected readonly $contactType = computed(() => this.$contact().dbo.type);
+	protected readonly $spaceRef = computed(() => this.$contact().space);
+	protected readonly $spaceID = computed(() => this.$spaceRef().id);
 
 	@Output() readonly contactChange =
 		new EventEmitter<NewContactBaseDboAndSpaceRef>();

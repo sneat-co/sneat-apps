@@ -5,7 +5,7 @@
 		[displayAgeGroupValue]="true"
 		[disabled]="$isSubmitting()"
 		[requires]="personRequirements"
-		[fields]="{ contactType: { hide: true } }"
+		[$fields]="{ contactType: { hide: true } }"
 	/>
 
 	@if (addMemberForm.errors) {

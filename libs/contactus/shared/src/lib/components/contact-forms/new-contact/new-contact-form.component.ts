@@ -1,10 +1,13 @@
 import {
 	ChangeDetectionStrategy,
 	Component,
-	computed,
+	inject,
 	effect,
 	Input,
 	signal,
+	OnInit,
+	runInInjectionContext,
+	Injector,
 } from '@angular/core';
 import { IonSegment, IonSegmentButton } from '@ionic/angular/standalone';
 import {
@@ -40,27 +43,35 @@ type NewContactFormTab = 'person' | 'pet' | 'company' | 'location';
 	selector: 'sneat-new-contact-form',
 	templateUrl: './new-contact-form.component.html',
 })
-export class NewContactFormComponent extends NewContactFormBaseComponent {
+export class NewContactFormComponent
+	extends NewContactFormBaseComponent
+	implements OnInit
+{
 	protected readonly $tab = signal<NewContactFormTab | undefined>(undefined);
 
 	@Input() command?: Observable<NewContactFormCommand>;
 	@Input() selectGroupAndRole$?: Observable<IContactAddEventArgs | undefined>;
 
-	private readonly $contactType = computed(() => this.$contact()?.dbo?.type);
+	private readonly injector = inject(Injector);
 
 	constructor() {
 		super('NewContactFormComponent');
-		effect(() => {
-			const contactType = this.$contactType();
-			switch (contactType) {
-				case 'person':
-				case 'company':
-				case 'location':
-					this.$tab.set(contactType);
-					break;
-				case undefined:
-					this.$tab.set('person');
-			}
+	}
+
+	public ngOnInit(): void {
+		runInInjectionContext(this.injector, () => {
+			effect(() => {
+				const contactType = this.$contactType();
+				switch (contactType) {
+					case 'person':
+					case 'company':
+					case 'location':
+						this.$tab.set(contactType);
+						break;
+					case undefined:
+						this.$tab.set('person');
+				}
+			});
 		});
 	}
 

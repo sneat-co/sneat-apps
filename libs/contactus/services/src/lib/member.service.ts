@@ -8,6 +8,7 @@ import {
 	IAcceptPersonalInviteRequest,
 	IAddSpaceMemberResponse,
 	ICreateSpaceMemberRequest,
+	validateCreateSpaceMemberRequest,
 } from '@sneat/contactus-core';
 import { ContactService } from './contact-service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -44,6 +45,7 @@ export class MemberService extends ContactService {
 		if (request.names) {
 			request = { ...request, names: trimNames(request.names) };
 		}
+		validateCreateSpaceMemberRequest(request);
 		return this.sneatApiService.post<IAddSpaceMemberResponse>(
 			'contactus/create_member',
 			request,

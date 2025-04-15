@@ -1,3 +1,5 @@
+import { mustHaveAtLeastOneName } from '@sneat/auth-models';
+import { validateRelated } from '@sneat/dto';
 import {
 	ContactType,
 	IAddress,
@@ -14,50 +16,58 @@ import { SpaceRequest, SpaceMemberStatus } from '@sneat/space-models';
 export interface ICreateSpaceMemberRequest
 	extends SpaceRequest,
 		IRelatedPerson {
-	type: MemberContactType;
-	status: SpaceMemberStatus;
-	countryID: string;
-	roles: string[];
-	// memberType: MemberType;
-	message?: string;
+	readonly type: MemberContactType;
+	readonly status: SpaceMemberStatus;
+	readonly countryID: string;
+	readonly roles: readonly string[];
+	readonly message?: string;
+}
+
+export function validateCreateSpaceMemberRequest(
+	request: ICreateSpaceMemberRequest,
+): void {
+	mustHaveAtLeastOneName(request.names);
+	validateRelated(request.related);
 }
 
 export interface ICreateContactBaseRequest extends SpaceRequest {
-	status: 'active' | 'draft';
-	type: ContactType;
+	readonly status: 'active' | 'draft';
+	readonly type: ContactType;
 	// countryID: string;
-	parentContactID?: string;
-	roles?: string[];
-	relatedToAssets?: IContact2Asset[];
-	relatedToContacts?: Record<string, IContact2ContactInRequest>;
+	readonly parentContactID?: string;
+	readonly roles?: readonly string[];
+	readonly relatedToAssets?: readonly IContact2Asset[];
+	readonly relatedToContacts?: Readonly<
+		Record<string, IContact2ContactInRequest>
+	>;
 }
 
 export interface ICreateContactPersonRequest extends ICreateContactBaseRequest {
-	type: 'person';
-	person?: ICreatePeronRequest;
+	readonly type: 'person';
+	readonly person?: ICreatePeronRequest;
 }
 
 export interface ICreateContactLocationRequest
 	extends ICreateContactBaseRequest {
-	type: 'location';
-	location?: ICreateLocationRequest;
+	readonly type: 'location';
+	readonly location?: ICreateLocationRequest;
 }
 
 export interface IBasicContactRequest {
 	// type: ContactType;
 	// relationship?: string;
 	// message?: string;
-	title: string;
+	readonly title: string;
 	// parentContactID?: string;
 }
 
 export interface ICreateContactBasicRequest extends ICreateContactBaseRequest {
-	basic: IBasicContactRequest;
+	readonly basic: IBasicContactRequest;
 }
 
 export interface ICreateLocationBaseRequest {
-	title: string;
-	address: IAddress;
+	readonly title: string;
+	readonly address: IAddress;
 }
 
 export type ICreateLocationRequest = ICreateLocationBaseRequest;
@@ -75,50 +85,50 @@ export type ICreateContactRequest =
 	| ICreateContactBasicRequest;
 
 export interface IBy {
-	memberID?: string;
-	userID?: string;
-	title: string;
+	readonly memberID?: string;
+	readonly userID?: string;
+	readonly title: string;
 }
 
 interface IInvite {
-	message?: string;
+	readonly message?: string;
 }
 
 export interface IInviteFromContact {
-	memberID: string;
-	userID?: string;
-	title?: string;
+	readonly memberID: string;
+	readonly userID?: string;
+	readonly title?: string;
 }
 
 export type InviteChannel = 'email' | 'sms' | 'link';
 
 export interface IInviteToContact {
-	channel: InviteChannel;
-	address?: string;
-	memberID?: string;
-	title?: string;
+	readonly channel: InviteChannel;
+	readonly address?: string;
+	readonly memberID?: string;
+	readonly title?: string;
 }
 
 export interface IPersonalInvite extends IInvite {
-	space: { id: string; title: string };
-	memberID: string;
-	from: IInviteFromContact;
-	to: IInviteToContact;
+	readonly space: { readonly id: string; readonly title: string };
+	readonly memberID: string;
+	readonly from: IInviteFromContact;
+	readonly to: IInviteToContact;
 }
 
 export interface IAddSpaceMemberResponse {
-	member: IMemberContext;
+	readonly member: IMemberContext;
 }
 
 export interface IAcceptPersonalInviteRequest extends SpaceRequest {
-	inviteID: string;
-	pin: string; // Do not make number as we can lose leading 0's
-	member?: IMemberBrief;
+	readonly inviteID: string;
+	readonly pin: string; // Do not make number as we can lose leading 0's
+	readonly member?: IMemberBrief;
 	// fullName?: string;
 	// email?: string;
 }
 
 export interface ICreatePersonalInviteRequest extends SpaceRequest {
-	to: IInviteToContact;
-	message: string;
+	readonly to: IInviteToContact;
+	readonly message: string;
 }

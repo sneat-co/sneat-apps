@@ -32,9 +32,10 @@
 		[label]="label"
 		(valueChange)="onRelationshipChanged($event)"
 	/>
-	@if (rolesOfItem) {
+
+	@if ($rolesOfItem()) {
 		<ion-item>
-			@for (rel of rolesOfItem; track rel.id) {
+			@for (rel of $rolesOfItem(); track rel.id) {
 				<ion-badge>{{ rel.id }}</ion-badge>
 			}
 		</ion-item>

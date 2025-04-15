@@ -1,8 +1,10 @@
-<ion-segment [value]="$tab()" (ionChange)="onTabChange($event)">
-	<ion-segment-button value="person">Person</ion-segment-button>
-	<ion-segment-button value="pet">Pet</ion-segment-button>
-	<ion-segment-button value="company">Company</ion-segment-button>
-</ion-segment>
+<div class="ion-padding-horizontal">
+	<ion-segment [value]="$tab()" (ionChange)="onTabChange($event)">
+		<ion-segment-button value="person">Person</ion-segment-button>
+		<ion-segment-button value="pet">Pet</ion-segment-button>
+		<ion-segment-button value="company">Company</ion-segment-button>
+	</ion-segment>
+</div>
 
 @switch ($tab()) {
 	@case ("person") {

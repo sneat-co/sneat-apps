@@ -8,9 +8,6 @@
 	</ion-item-divider>
 }
 
-$selectedContactGroupID: {{ $selectedContactGroupID() }} $selectedContactRoleID:
-{{ $selectedContactRoleID() }}
-
 <sneat-contact-role-form
 	[$contactGroupID]="$selectedContactGroupID()"
 	(contactGroupChange)="onContactGroupChanged($event)"
@@ -24,7 +21,7 @@ $selectedContactGroupID: {{ $selectedContactGroupID() }} $selectedContactRoleID:
 		(contactChange)="onContactChanged($event)"
 		[hideRelationship]="true"
 		[hidePetOption]="true"
-		[fields]="{ contactType: { hide: true }, relatedAs: { hide: true } }"
+		[$fields]="{ contactType: { hide: true }, relatedAs: { hide: true } }"
 		[displayAgeGroupValue]="true"
 		[requires]="personRequires"
 		(isReadyToSubmitChange)="onPersonFormIsReadyToSubmit()"

@@ -8,6 +8,21 @@ export interface IPersonNames {
 	readonly fullName?: string;
 }
 
+export function mustHaveAtLeastOneName(names?: IPersonNames): void {
+	if (!names) {
+		throw new Error('Names are required');
+	}
+	if (
+		!names.firstName &&
+		!names.lastName &&
+		!names.middleName &&
+		!names.nickName &&
+		!names.fullName
+	) {
+		throw new Error('At least one name is required');
+	}
+}
+
 export function namesToUrlParams(names?: IPersonNames): string {
 	if (!names) {
 		return '';
