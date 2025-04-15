@@ -31,6 +31,8 @@
 			"@sneat/core": ["libs/core/src/index.ts"],
 			"@sneat/data": ["libs/data/src/index.ts"],
 			"@sneat/datagrid": ["libs/datagrid/src/index.ts"],
+			"@sneat/datetime": ["libs/datetime/src/index.ts"],
+			"@sneat/dto": ["libs/dto/src/index.ts"],
 			"@sneat/ext-datatug-board-core": ["libs/datatug/board/core/src/index.ts"],
 			"@sneat/ext-datatug-board-ui": ["libs/datatug/board/ui/src/index.ts"],
 			"@sneat/ext-datatug-components-dbmeta": [
@@ -53,7 +55,9 @@
 			"@sneat/ext-datatug-dto": ["libs/datatug/dto/src/index.ts"],
 			"@sneat/ext-datatug-editor": ["libs/datatug/editor/src/index.ts"],
 			"@sneat/ext-datatug-executor": ["libs/datatug/executor/src/index.ts"],
-			"@sneat/ext-datatug-folders-core": ["libs/datatug/folders/core/src/index.ts"],
+			"@sneat/ext-datatug-folders-core": [
+				"libs/datatug/folders/core/src/index.ts"
+			],
 			"@sneat/ext-datatug-folders-ui": ["libs/datatug/folders/ui/src/index.ts"],
 			"@sneat/ext-datatug-models": ["libs/datatug/models/src/index.ts"],
 			"@sneat/ext-datatug-nav": ["libs/datatug/nav/src/index.ts"],
@@ -65,7 +69,9 @@
 			"@sneat/ext-datatug-services-base": [
 				"libs/datatug/services/base/src/index.ts"
 			],
-			"@sneat/ext-datatug-services-nav": ["libs/datatug/services/nav/src/index.ts"],
+			"@sneat/ext-datatug-services-nav": [
+				"libs/datatug/services/nav/src/index.ts"
+			],
 			"@sneat/ext-datatug-services-project": [
 				"libs/datatug/services/project/src/index.ts"
 			],
@@ -75,10 +81,22 @@
 			"@sneat/ext-datatug-services-unsorted": [
 				"libs/datatug/services/unsorted/src/index.ts"
 			],
-			"@sneat/datetime": ["libs/datetime/src/index.ts"],
-			"@sneat/ext-debtus-internal": ["libs/extensions/debtus/internal/src/index.ts"],
-			"@sneat/ext-debtus-shared": ["libs/extensions/debtus/shared/src/index.ts"],
-			"@sneat/dto": ["libs/dto/src/index.ts"],
+			"@sneat/ext-debtus-internal": [
+				"libs/extensions/debtus/internal/src/index.ts"
+			],
+			"@sneat/ext-debtus-shared": [
+				"libs/extensions/debtus/shared/src/index.ts"
+			],
+			"@sneat/ext-meeting": ["libs/meeting/src/index.ts"],
+			"@sneat/ext-scrumspace-dailyscrum": [
+				"libs/scrumspace/dailyscrum/src/index.ts"
+			],
+			"@sneat/ext-scrumspace-retrospectives": [
+				"libs/scrumspace/retrospectives/src/index.ts"
+			],
+			"@sneat/ext-scrumspace-scrummodels": [
+				"libs/scrumspace/scrummodels/src/index.ts"
+			],
 			"@sneat/extensions-assetus-components": [
 				"libs/extensions/assetus/components/src/index.ts"
 			],
@@ -98,19 +116,9 @@
 			"@sneat/extensions-trackus": ["libs/extensions/trackus/src/index.ts"],
 			"@sneat/grid": ["libs/grid/src/index.ts"],
 			"@sneat/logging": ["libs/logging/src/index.ts"],
-			"@sneat/ext-meeting": ["libs/meeting/src/index.ts"],
 			"@sneat/mod-assetus-core": ["libs/extensions/assetus/core/src/index.ts"],
 			"@sneat/mod-schedulus-core": [
 				"libs/extensions/schedulus/core/src/index.ts"
-			],
-			"@sneat/ext-scrumspace-dailyscrum": [
-				"libs/scrumspace/dailyscrum/src/index.ts"
-			],
-			"@sneat/ext-scrumspace-retrospectives": [
-				"libs/scrumspace/retrospectives/src/index.ts"
-			],
-			"@sneat/ext-scrumspace-scrummodels": [
-				"libs/scrumspace/scrummodels/src/index.ts"
 			],
 			"@sneat/space-components": ["libs/space/components/src/index.ts"],
 			"@sneat/space-models": ["libs/space/models/src/index.ts"],
