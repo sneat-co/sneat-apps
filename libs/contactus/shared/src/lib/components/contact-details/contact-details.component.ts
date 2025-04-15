@@ -1,12 +1,4 @@
-import {
-	Component,
-	computed,
-	inject,
-	input,
-	OnChanges,
-	OnInit,
-	SimpleChanges,
-} from '@angular/core';
+import { Component, computed, inject, input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import {
@@ -25,7 +17,6 @@ import {
 	IonSegmentButton,
 } from '@ionic/angular/standalone';
 import { SneatUserService } from '@sneat/auth-core';
-import { IUserSpaceBrief } from '@sneat/auth-models';
 import { ContactTitlePipe } from '@sneat/components';
 import {
 	ContactService,
@@ -34,7 +25,6 @@ import {
 import { IIdAndBrief, IIdAndBriefAndOptionalDbo } from '@sneat/core';
 import {
 	ContactType,
-	Gender,
 	IContactBrief,
 	IContactDbo,
 	IContactContext,
@@ -45,7 +35,6 @@ import {
 	IRelationshipRoles,
 	ISpaceModuleItemRef,
 } from '@sneat/dto';
-import { SpaceNavService } from '@sneat/space-services';
 import { SneatBaseComponent } from '@sneat/ui';
 import { MemberPages } from '../../constants';
 import { UserSpaceBriefProvider } from '../../providers/user-space-brief.provider';
@@ -120,7 +109,7 @@ export class ContactDetailsComponent
 		'peers';
 
 	private readonly userService = inject(SneatUserService);
-	private readonly spaceNavService = inject(SpaceNavService);
+	// private readonly spaceNavService = inject(SpaceNavService);
 	private readonly contactService = inject(ContactService);
 
 	constructor() {
@@ -192,21 +181,21 @@ export class ContactDetailsComponent
 		return []; //zipMapBriefsWithIDs(this.contact?.dto?.related);
 	}
 
-	protected goMember(id: string): void {
-		const space = this.$space();
-		if (!space) {
-			throw new Error('Can not navigate to member without team context');
-		}
-		this.spaceNavService.navigateToMember(this.navController, {
-			id,
-			space,
-		});
-	}
+	// protected goMember(id: string): void {
+	// 	const space = this.$space();
+	// 	if (!space) {
+	// 		throw new Error('Can not navigate to member without team context');
+	// 	}
+	// 	this.spaceNavService.navigateToMember(this.navController, {
+	// 		id,
+	// 		space,
+	// 	});
+	// }
 
-	protected addRelatedContact(event: Event): void {
-		event.stopPropagation();
-		alert('Not implemented yet');
-	}
+	// protected addRelatedContact(event: Event): void {
+	// 	event.stopPropagation();
+	// 	alert('Not implemented yet');
+	// }
 
 	protected goMemberPage(page: MemberPages): void {
 		const contact = this.$contact();
@@ -266,18 +255,18 @@ export class ContactDetailsComponent
 		return { spaceID, contactID };
 	}
 
-	changeGender(event: Event): void {
-		const gender = (event as CustomEvent).detail.value as Gender;
-		console.debug(`CommuneMemberPageComponent.changeGender(${gender})`);
-
-		// this.startCommuneReadwriteTx([CommuneKind, MemberKind], (tx, communeDto) =>
-		// 	this.membersService.changeMemberPrimaryField(tx, this.memberId, { name: 'gender', value: gender }, communeDto))
-		// 	.subscribe({
-		// 		next: memberDto => {
-		// 			this.setMemberInfo(newCommuneMemberInfo(memberDto));
-		// 			this.setMemberDto(memberDto);
-		// 		},
-		// 		error: this.params.errorLogger.logErrorHandler('Failed to set member gender'),
-		// 	});
-	}
+	// changeGender(event: Event): void {
+	// 	const gender = (event as CustomEvent).detail.value as Gender;
+	// 	console.debug(`CommuneMemberPageComponent.changeGender(${gender})`);
+	//
+	// 	// this.startCommuneReadwriteTx([CommuneKind, MemberKind], (tx, communeDto) =>
+	// 	// 	this.membersService.changeMemberPrimaryField(tx, this.memberId, { name: 'gender', value: gender }, communeDto))
+	// 	// 	.subscribe({
+	// 	// 		next: memberDto => {
+	// 	// 			this.setMemberInfo(newCommuneMemberInfo(memberDto));
+	// 	// 			this.setMemberDto(memberDto);
+	// 	// 		},
+	// 	// 		error: this.params.errorLogger.logErrorHandler('Failed to set member gender'),
+	// 	// 	});
+	// }
 }
