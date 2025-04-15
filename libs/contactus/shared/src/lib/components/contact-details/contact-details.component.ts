@@ -48,6 +48,7 @@ import {
 import { SpaceNavService } from '@sneat/space-services';
 import { SneatBaseComponent } from '@sneat/ui';
 import { MemberPages } from '../../constants';
+import { UserSpaceBriefProvider } from '../../providers/user-space-brief.provider';
 import { ContactContactsComponent } from '../contact-contacts';
 import { ContactDobComponent } from '../contact-dob';
 import { ContactLocationsComponent } from '../contact-locations';
@@ -90,7 +91,7 @@ import { RelatedContactComponent } from './related-contact.component';
 })
 export class ContactDetailsComponent
 	extends SneatBaseComponent
-	implements OnChanges, OnInit
+	implements OnInit
 {
 	public readonly $contact = input.required<IContactContext | undefined>();
 	protected readonly $space = computed(
@@ -106,9 +107,6 @@ export class ContactDetailsComponent
 
 	protected relatedContactsOfCurrentSpace?: readonly IIdAndBrief<IRelatedItem>[];
 
-	private userSpaceBriefs?: Record<string, IUserSpaceBrief>;
-	private userContactID?: string;
-
 	protected get contactWithBriefAndOptionalDto():
 		| IIdAndBriefAndOptionalDbo<IContactBrief, IContactDbo>
 		| undefined {
@@ -118,14 +116,8 @@ export class ContactDetailsComponent
 			: undefined;
 	}
 
-	protected rolesOfItem?: IRelationshipRoles;
-
-	protected firstRelatedAs?: string;
-
 	protected tab: 'communicationChannels' | 'roles' | 'peers' | 'locations' =
 		'peers';
-
-	protected relatedToContactOfCurrentUser?: ISpaceModuleItemRef;
 
 	private readonly userService = inject(SneatUserService);
 	private readonly spaceNavService = inject(SpaceNavService);
@@ -135,101 +127,53 @@ export class ContactDetailsComponent
 		super('ContactDetailsComponent');
 	}
 
-	public ngOnInit(): void {
-		this.userService.userState.subscribe({
-			next: (userState) => {
-				this.userSpaceBriefs = userState?.record?.spaces;
-				this.setUserContactID();
-			},
-		});
-		this.userService.userState.subscribe({
-			next: (state) => {
-				this.userSpaceBriefs = state?.record?.spaces;
-				this.setUserContactID();
-			},
-		});
-	}
+	// this.setRelatedToCurrentUser();
+	// this.setRelatedAs(spaceID, this.userContactID);
+	private readonly userSpaceBrief = new UserSpaceBriefProvider(
+		this.destroyed$,
+		this.$spaceID,
+		this.userService,
+	);
 
-	private setRelatedToCurrentUser(): void {
-		this.relatedToContactOfCurrentUser = this.userContactID
+	protected readonly $relatedToContactOfCurrentUser = computed<
+		ISpaceModuleItemRef | undefined
+	>(() => {
+		const userContactID = this.userSpaceBrief.$userContactID();
+		return userContactID
 			? {
 					space: this.$spaceID() || '',
 					module: 'contactus',
 					collection: 'contacts',
-					itemID: this.userContactID,
+					itemID: userContactID,
 				}
 			: undefined;
+	});
+
+	public ngOnInit(): void {
+		console.log('ContactDetailsComponent ngOnInit');
 	}
 
-	public ngOnChanges(changes: SimpleChanges): void {
-		if (changes['space']) {
-			this.setUserContactID();
-			this.setRelatedToCurrentUser();
-		}
-		// if (changes['contact']) {
-		// 	console.log(
-		// 		'ContactDetailsComponent.ngOnChanges(): contact changed:',
-		// 		changes['contact'],
-		// 	);
-		// 	const spaceID = this.team?.id;
-		// 	if (spaceID && this.contact?.dbo?.related) {
-		// 		const contactus = this.contact.dbo.related['contactus'];
-		// 		if (!contactus) {
-		// 			return;
-		// 		}
-		// 		const contacts = contactus['contacts'];
-		// 		if (!contacts) {
-		// 			return;
-		// 		}
-		// 		// throw new Error('Not implemented yet');
-		// 		// this.relatedContactsOfCurrentTeam = zipMapBriefsWithIDs(contacts);
-		// 	}
-		// }
-	}
-
-	private setUserContactID(): void {
-		const userContactID =
-			this.userSpaceBriefs?.[this.$spaceID() || '']?.userContactID;
-		if (userContactID != this.userContactID) {
-			this.userContactID = userContactID;
-			this.onUserContactIDChanged();
-		}
-	}
-
-	private onUserContactIDChanged(): void {
-		this.setRelatedToCurrentUser();
+	protected readonly $rolesOfItem = computed(() => {
 		const spaceID = this.$spaceID();
-		if (this.userContactID && spaceID) {
-			this.setRelatedAs(spaceID, this.userContactID);
-		}
-	}
-
-	private setRelatedAs(spaceID: string, userContactID: string): void {
 		const contact = this.$contact();
+		const userContactID = this.userSpaceBrief.$userContactID();
+		if (!contact || !userContactID || !spaceID) {
+			return undefined;
+		}
 		const relatedContact = getRelatedItemByKey(
-			contact?.dbo?.related,
+			contact.dbo?.related,
 			'contactus',
 			'contacts',
 			spaceID,
 			userContactID,
 		);
-		this.rolesOfItem = relatedContact?.rolesOfItem;
-		const relationshipIDs = Object.keys(this.rolesOfItem || {});
-		this.firstRelatedAs =
-			relationshipIDs.length > 0 ? relationshipIDs[0] : undefined;
-		console.log(
-			'userContactID',
-			userContactID,
-			'rolesOfItem',
-			this.rolesOfItem,
-			'contact',
-			contact,
-		);
-	}
+		return relatedContact?.rolesOfItem;
+	});
 
-	// private setRelatedAs(): void {
-	// 	console.log('setRelatedAs() - not implemented yet');
-	// }
+	protected readonly $firstRelatedAs = computed<string | undefined>(() => {
+		const relationshipIDs = Object.keys(this.$rolesOfItem() || {});
+		return relationshipIDs.length > 0 ? relationshipIDs[0] : undefined;
+	});
 
 	protected get currentUserID() {
 		return this.userService.currentUserID;
@@ -280,7 +224,7 @@ export class ContactDetailsComponent
 	protected onRelatedAsChanged(relatedAs: IRelationshipRoles): void {
 		console.log('onRelatedAsChanged()', relatedAs);
 
-		const userContactID = this.userContactID;
+		const userContactID = this.userSpaceBrief.$userContactID();
 		if (!userContactID) {
 			throw new Error('onRelatedAsChanged() - userContactID is not set');
 		}
