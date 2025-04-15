@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import { Component, computed, inject, input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NavController } from '@ionic/angular';
@@ -22,7 +23,7 @@ import {
 	ContactService,
 	IUpdateContactRequest,
 } from '@sneat/contactus-services';
-import { IIdAndBrief, IIdAndBriefAndOptionalDbo } from '@sneat/core';
+import { IIdAndBriefAndOptionalDbo } from '@sneat/core';
 import {
 	ContactType,
 	IContactBrief,
@@ -48,6 +49,7 @@ import {
 	RelationshipFormComponent,
 } from '../contact-forms';
 import { RelatedContactComponent } from './related-contact.component';
+import { RelatedContactsComponent } from './related-contacts.component';
 
 @Component({
 	imports: [
@@ -58,7 +60,6 @@ import { RelatedContactComponent } from './related-contact.component';
 		ContactLocationsComponent,
 		RelationshipFormComponent,
 		GenderFormComponent,
-		RelatedContactComponent,
 		ContactTitlePipe,
 		IonGrid,
 		IonRow,
@@ -74,6 +75,7 @@ import { RelatedContactComponent } from './related-contact.component';
 		IonSegment,
 		IonSegmentButton,
 		FormsModule,
+		RelatedContactsComponent,
 	],
 	selector: 'sneat-contact-details',
 	templateUrl: './contact-details.component.html',
@@ -93,8 +95,6 @@ export class ContactDetailsComponent
 	);
 
 	private readonly navController = inject(NavController);
-
-	protected relatedContactsOfCurrentSpace?: readonly IIdAndBrief<IRelatedItem>[];
 
 	protected get contactWithBriefAndOptionalDto():
 		| IIdAndBriefAndOptionalDbo<IContactBrief, IContactDbo>
@@ -159,9 +159,18 @@ export class ContactDetailsComponent
 		return relatedContact?.rolesOfItem;
 	});
 
-	protected readonly $firstRelatedAs = computed<string | undefined>(() => {
+	protected readonly $relatedToUserAs = computed(() => {
 		const relationshipIDs = Object.keys(this.$rolesOfItem() || {});
-		return relationshipIDs.length > 0 ? relationshipIDs[0] : undefined;
+		if (relationshipIDs.length === 0) {
+			return undefined;
+		}
+		if (relationshipIDs.includes('child')) {
+			return 'child';
+		}
+		if (relationshipIDs.includes('spouse')) {
+			return 'spouse';
+		}
+		return undefined;
 	});
 
 	protected get currentUserID() {
@@ -175,10 +184,6 @@ export class ContactDetailsComponent
 
 	protected get currentUserId() {
 		return this.userService.currentUserID;
-	}
-
-	protected get relatedContacts(): readonly IIdAndBrief<IRelatedItem>[] {
-		return []; //zipMapBriefsWithIDs(this.contact?.dto?.related);
 	}
 
 	// protected goMember(id: string): void {

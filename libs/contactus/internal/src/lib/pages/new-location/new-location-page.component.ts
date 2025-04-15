@@ -2,10 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { PersonTitle } from '@sneat/components';
-import {
-	ContactComponentBaseParams,
-	LocationFormComponent,
-} from '@sneat/contactus-shared';
+import { ContactService } from '@sneat/contactus-services';
+import { LocationFormComponent } from '@sneat/contactus-shared';
 import { IContactWithOptionalDbo } from '@sneat/contactus-core';
 import { ContactBasePage } from '../contact-base-page';
 
@@ -22,11 +20,10 @@ export class NewLocationPageComponent extends ContactBasePage {
 	};
 
 	constructor(
-		params: ContactComponentBaseParams,
+		contactService: ContactService,
 		// private readonly contactService: ContactService,
 	) {
-		super('ContactPageComponent', params);
-		this.defaultBackPage = 'contacts';
+		super('ContactPageComponent', contactService);
 	}
 
 	protected override onSpaceDboChanged() {
@@ -46,7 +43,7 @@ export class NewLocationPageComponent extends ContactBasePage {
 		if (!space) {
 			throw new Error('Space is not defined');
 		}
-		const url = this.spacePageUrl(`contact/${this.contact?.id}`);
+		const url = this.spacePageUrl(`contact/${this.$contactID()}`);
 		if (url) {
 			this.navController
 				.navigateBack(url)

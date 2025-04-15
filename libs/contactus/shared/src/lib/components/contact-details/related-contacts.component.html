@@ -1,0 +1,24 @@
+<ion-card>
+	<ion-item color="light">
+		<ion-label>Related contacts</ion-label>
+	</ion-item>
+	@if ($relatedContacts(); as relatedContacts) {
+		@for (
+			relatedContact of $relatedContacts();
+			track relatedContact.keys[0].itemID
+		) {
+			<sneat-related-contact
+				[$space]="$space()"
+				[$relatedItem]="relatedContact"
+			/>
+		} @empty {
+			<ion-item>
+				<ion-label color="medium">No related contacts</ion-label>
+			</ion-item>
+		}
+	} @else {
+		<ion-item>
+			<ion-label color="medium">Loading related contacts...</ion-label>
+		</ion-item>
+	}
+</ion-card>

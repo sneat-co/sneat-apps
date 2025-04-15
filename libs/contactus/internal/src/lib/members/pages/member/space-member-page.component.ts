@@ -3,26 +3,23 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { PersonTitle } from '@sneat/components';
-import { ContactusServicesModule } from '@sneat/contactus-services';
 import {
-	ContactComponentBaseParamsModule,
-	ContactDetailsComponent,
-} from '@sneat/contactus-shared';
+	ContactService,
+	ContactusServicesModule,
+} from '@sneat/contactus-services';
+import { ContactDetailsComponent } from '@sneat/contactus-shared';
 import { MemberRelationship } from '@sneat/contactus-core';
 import { SpaceServiceModule } from '@sneat/space-services';
-import { MemberComponentBaseParams } from '../../member-component-base-params';
 import { MemberBasePage } from '../member-base-page';
 
 @Component({
 	selector: 'sneat-space-member-page',
 	templateUrl: './space-member-page.component.html',
-	providers: [MemberComponentBaseParams],
 	imports: [
 		CommonModule,
 		FormsModule,
 		IonicModule,
 		ContactDetailsComponent,
-		ContactComponentBaseParamsModule,
 		ContactusServicesModule,
 		PersonTitle,
 		SpaceServiceModule,
@@ -31,8 +28,8 @@ import { MemberBasePage } from '../member-base-page';
 export class SpaceMemberPageComponent extends MemberBasePage {
 	public relatedAs?: MemberRelationship;
 
-	constructor(params: MemberComponentBaseParams) {
-		super('SpaceMemberPageComponent', params);
+	constructor(contactService: ContactService) {
+		super('SpaceMemberPageComponent', contactService);
 	}
 
 	// protected setMemberId(memberId: string): void {

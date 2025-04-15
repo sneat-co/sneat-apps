@@ -5,8 +5,6 @@ import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ISaveEvent, PersonTitle } from '@sneat/components';
 import {
-	ContactComponentBaseParams,
-	ContactComponentBaseParamsModule,
 	ContactDetailsComponent,
 	ContactRolesInputModule,
 } from '@sneat/contactus-shared';
@@ -32,21 +30,19 @@ import { ContactBasePage } from '../contact-base-page';
 		ContactRolesInputModule,
 		ContactDetailsComponent,
 		ContactusServicesModule,
-		ContactComponentBaseParamsModule,
 		PersonTitle,
 		SpaceServiceModule,
 	],
-	providers: [ContactComponentBaseParams],
 })
 export class ContactPageComponent extends ContactBasePage {
 	protected segment: 'contact' | 'members' | 'assets' = 'contact';
 
 	constructor(
-		params: ContactComponentBaseParams,
+		contactService: ContactService,
 		private readonly contactsService: ContactService,
 		private readonly sneatNavService: SneatNavService,
 	) {
-		super('ContactPageComponent', params);
+		super('ContactPageComponent', contactService);
 		this.defaultBackPage = 'contacts';
 	}
 
@@ -56,7 +52,8 @@ export class ContactPageComponent extends ContactBasePage {
 	}
 
 	private watchChildContacts(): void {
-		if (!this.contact?.id) {
+		const contactID = this.$contactID();
+		if (!contactID) {
 			return;
 		}
 		const space = this.space;
@@ -64,7 +61,7 @@ export class ContactPageComponent extends ContactBasePage {
 			return;
 		}
 		this.contactsService
-			.watchChildContacts(space, this.contact?.id)
+			.watchChildContacts(space, contactID)
 			.pipe(this.takeUntilDestroyed())
 			.subscribe({
 				next: (children) => {
@@ -78,7 +75,7 @@ export class ContactPageComponent extends ContactBasePage {
 		console.log('ContactPageComponent.saveAddress()', save);
 
 		const spaceID = this.space?.id,
-			contactID = this.contact?.id,
+			contactID = this.$contactID(),
 			address = save.object;
 
 		if (!spaceID || !contactID || !address) {
@@ -99,7 +96,7 @@ export class ContactPageComponent extends ContactBasePage {
 	}
 
 	protected deleteContact(): void {
-		const contact = this.contact;
+		const contact = this.$contact();
 		if (!contact) {
 			return;
 		}

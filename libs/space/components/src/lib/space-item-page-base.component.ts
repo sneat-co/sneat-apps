@@ -1,9 +1,11 @@
 import { computed, signal } from '@angular/core';
 import { ParamMap } from '@angular/router';
 import { INavContext, SpaceItem } from '@sneat/core';
+import { ISpaceItemNavContext } from '@sneat/space-models';
 import { ModuleSpaceItemService } from '@sneat/space-services';
 import {
 	distinctUntilChanged,
+	filter,
 	map,
 	Observable,
 	Subject,
@@ -21,9 +23,10 @@ export abstract class SpaceItemPageBaseComponent<
 	Dbo extends Brief,
 > extends SpacePageBaseComponent {
 	// protected item?: INavContext<Brief, Dbo>;
-	protected readonly $item = signal<INavContext<Brief, Dbo> | undefined>(
-		undefined,
-	);
+	protected readonly $item = signal<
+		ISpaceItemNavContext<Brief, Dbo> | undefined
+	>(undefined);
+
 	protected readonly $itemID = computed(() => this.$item()?.id);
 
 	protected constructor(
@@ -34,24 +37,28 @@ export abstract class SpaceItemPageBaseComponent<
 	) {
 		super(className);
 		this.defaultBackPage = defaultBackPage;
-		const item = window.history.state[itemName] as INavContext<Brief, Dbo>;
+		const item = window.history.state[itemName] as ISpaceItemNavContext<
+			Brief,
+			Dbo
+		>;
 		if (item) {
 			this.setItemContext(item);
 		}
 	}
 
-	protected setItemContext(item?: INavContext<Brief, Dbo>): void {
-		// console.log(
-		// 	`SpaceItemBaseComponent.${this.className}.setItemContext()`,
-		// 	item,
-		// 	{
-		// 		...this.$item(),
-		// 	},
-		// );
+	protected setItemContext(item?: ISpaceItemNavContext<Brief, Dbo>): void {
+		console.log(
+			`${this.className}.SpaceItemBaseComponent.setItemContext(itemID=${item?.id})`,
+			item,
+			{
+				...this.$item(),
+			},
+		);
 		const prevItem = this.$item();
 		if (item && prevItem?.id === item?.id && item !== prevItem) {
 			item = {
 				id: item.id,
+				space: this.$space() || { id: '' },
 				brief: item.brief || item.dbo || prevItem.brief,
 				dbo: item.dbo || prevItem.dbo,
 			};
@@ -90,17 +97,21 @@ export abstract class SpaceItemPageBaseComponent<
 		// Direct call like that does not work as are unsubscribing from observable once item ID changed
 		// this.trackItem(this.getItemID$(paramMap$).pipe(distinctUntilChanged()));
 		const itemID$ = new Subject<string>();
-		this.trackItem(
-			// This need to be BEFORE call to this.getItemID$()
-			itemID$
-				.asObservable()
-				.pipe(tap((itemID) => console.log('itemID$ changed', itemID))),
-		);
+		itemID$
+			.asObservable()
+			.pipe(
+				tap((itemID) => console.log(`itemID$ changed to "${itemID}"`)),
+				this.takeUntilDestroyed(),
+			)
+			.subscribe({
+				next: (itemID) => this.onItemIDChanged(itemID, itemID$),
+				error: (err) => this.logError(err, 'failed to get paramMap'),
+			});
 		this.getItemID$(paramMap$)
 			.pipe(
-				tap((itemID) => console.log('itemID$ pre-distinct:', itemID)),
+				// tap((itemID) => console.log('itemID$ pre-distinct:', itemID)),
 				distinctUntilChanged(),
-				tap((itemID) => console.log('itemID$ post-distinct:', itemID)),
+				// tap((itemID) => console.log('itemID$ post-distinct:', itemID)),
 			)
 			.subscribe(itemID$);
 	}
@@ -111,15 +122,6 @@ export abstract class SpaceItemPageBaseComponent<
 		);
 	}
 
-	// Do not make it protected as itemID$ needs to be carefully wrapped by a Subject
-	private trackItem(itemID$: Observable<string>): void {
-		console.log('trackItem(), itemID$:', this.itemName, itemID$);
-		itemID$.subscribe({
-			next: (itemID) => this.onItemIDChanged(itemID, itemID$),
-			error: (err) => this.logError(err, 'failed to get paramMap'),
-		});
-	}
-
 	private onItemIDChanged(itemID: string, itemID$: Observable<string>): void {
 		console.log('SpaceItemBaseComponent.onItemIDChanged()', itemID);
 		if (!itemID) {
@@ -127,8 +129,10 @@ export abstract class SpaceItemPageBaseComponent<
 			return;
 		}
 		const item = this.$item();
+
 		if (item?.id !== itemID || !this.itemSubscription) {
-			this.setItemContext({ ...item, id: itemID });
+			const space = this.$space();
+			this.setItemContext({ ...item, id: itemID, space });
 			this.setBriefFromSpace(itemID);
 			this.itemSubscription?.unsubscribe();
 			this.itemSubscription = this.watchItemChanges()
@@ -136,10 +140,11 @@ export abstract class SpaceItemPageBaseComponent<
 					this.takeUntilDestroyed(),
 					takeUntil(
 						this.spaceIDChanged$.pipe(
+							// TODO: the below filter is a workaround for a bug in our implementation
+							filter((spaceID) => spaceID !== space.id),
 							tap((spaceID) =>
 								console.log(
-									'cancelling item subscription as spaceID changed to:',
-									spaceID,
+									`cancelling item subscription as spaceID changed to "${spaceID}"`,
 								),
 							),
 						),
@@ -148,8 +153,7 @@ export abstract class SpaceItemPageBaseComponent<
 						itemID$.pipe(
 							tap((itemID) =>
 								console.log(
-									'cancelling item subscription as itemID changed to:',
-									itemID,
+									`cancelling item subscription as itemID changed to "${itemID}"`,
 								),
 							),
 						),
@@ -158,7 +162,13 @@ export abstract class SpaceItemPageBaseComponent<
 				)
 				.subscribe({
 					next: (item) => {
-						this.setItemContext(item);
+						const currentSpaceRef = this.$spaceRef();
+						if (currentSpaceRef?.id == space.id) {
+							this.setItemContext({
+								...item,
+								space: currentSpaceRef.type ? currentSpaceRef : space,
+							});
+						}
 					},
 					error: (err) => this.logError(err, 'failed to get item by ID'),
 				});

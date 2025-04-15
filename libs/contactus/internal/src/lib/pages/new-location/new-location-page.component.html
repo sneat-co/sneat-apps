@@ -4,17 +4,20 @@
 			slot="start"
 			[defaultHref]="spacePageUrl('contact/{{contact?.id}}')"
 		/>
-		<ion-title *ngIf="!contact">New location</ion-title>
-		<ion-title *ngIf="contact"
-			>New location &#64; {{ contact | personTitle }}</ion-title
-		>
+		<ion-title>
+			@if ($contact(); as contact) {
+				New location &#64; {{ contact | personTitle }}
+			} @else {
+				New location
+			}
+		</ion-title>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content>
 	<sneat-location-form
 		[$space]="$space()"
-		[parentContact]="contact"
+		[parentContact]="$contact()"
 		[location]="newLocation"
 		(locationChange)="onLocationChanged($event)"
 		(locationCreated)="onContactCreated($event)"

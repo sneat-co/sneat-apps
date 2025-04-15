@@ -1,64 +1,58 @@
-import { JsonPipe } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, computed, effect, input, signal } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
+import { IonIcon, IonItem, IonLabel } from '@ionic/angular/standalone';
 import { GenderIconNamePipe } from '@sneat/components';
 import { IContactBrief, IContactWithBrief } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
-import { IIdAndBrief } from '@sneat/core';
 import { IRelatedItem } from '@sneat/dto';
 import { WithSpaceInput } from '@sneat/space-components';
-import { ISpaceContext } from '@sneat/space-models';
+import { Subscription } from 'rxjs';
 
 @Component({
-	selector: 'sneat-relate-contact',
+	selector: 'sneat-related-contact',
 	templateUrl: './related-contact.component.html',
-	imports: [JsonPipe, IonicModule, GenderIconNamePipe],
+	imports: [GenderIconNamePipe, IonItem, IonIcon, IonLabel],
 })
-export class RelatedContactComponent
-	extends WithSpaceInput
-	implements OnChanges
-{
-	@Input({ required: true }) public relatedItem?: IIdAndBrief<IRelatedItem>;
+export class RelatedContactComponent extends WithSpaceInput {
+	public $relatedItem = input.required<IRelatedItem | undefined>();
 
-	protected spaceContacts?: IContactWithBrief[];
-	protected contactBrief?: IContactBrief;
+	private subscription?: Subscription;
+
+	protected readonly $spaceContacts = signal<IContactWithBrief[] | undefined>(
+		undefined,
+	);
 
 	constructor(private readonly contactusSpaceService: ContactusSpaceService) {
 		super('RelatedContactComponent');
-	}
-
-	public ngOnChanges(changes: SimpleChanges): void {
-		const spaceChanges = changes['$space'];
-		if (spaceChanges) {
-			const prevSpace = spaceChanges.previousValue as ISpaceContext | undefined;
-			const newSpace = spaceChanges.currentValue as ISpaceContext | undefined;
-			if (newSpace && prevSpace?.id !== newSpace?.id) {
-				console.log('Space changed');
-				this.contactusSpaceService
-					.watchContactBriefs(newSpace.id)
-					.pipe(this.takeUntilDestroyed())
-					.subscribe((briefs) => {
-						this.spaceContacts = briefs;
-						this.setContactBrief();
-					});
+		let prevSpaceID: string;
+		effect(() => {
+			const spaceID = this.$spaceID();
+			if (spaceID !== prevSpaceID) {
+				this.subscription?.unsubscribe();
+				prevSpaceID = spaceID;
 			}
-		}
-
-		if (changes['relatedItem']) {
-			this.setContactBrief();
-		}
+			if (!spaceID) {
+				return;
+			}
+			this.subscription = this.contactusSpaceService
+				.watchContactBriefs(spaceID)
+				.pipe(this.takeUntilDestroyed())
+				.subscribe((briefs) => {
+					this.$spaceContacts.set(briefs);
+				});
+		});
 	}
 
-	private setContactBrief(): void {
-		const relatedItemID = this.relatedItem?.id;
+	protected readonly $contactBrief = computed<IContactBrief | undefined>(() => {
+		const relatedItem = this.$relatedItem();
+		const relatedItemID = relatedItem?.keys[0]?.itemID;
 		if (relatedItemID) {
-			this.contactBrief = this.spaceContacts?.find(
-				(c) => c.id === relatedItemID,
-			)?.brief;
+			return this.$spaceContacts()?.find((c) => c.id === relatedItemID)?.brief;
 		}
-	}
+		return undefined;
+	});
 
 	protected goContact(): void {
-		console.log('goContact', this.relatedItem);
+		console.log('goContact', this.$relatedItem);
 	}
 }

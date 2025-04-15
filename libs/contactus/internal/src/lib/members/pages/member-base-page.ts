@@ -1,6 +1,6 @@
 import { IContactContext } from '@sneat/contactus-core';
+import { ContactService } from '@sneat/contactus-services';
 import { ContactBasePage } from '../../pages/contact-base-page';
-import { MemberComponentBaseParams } from '../member-component-base-params';
 
 export abstract class MemberBasePage extends ContactBasePage {
 	public segment: 'friends' | 'other' | 'summary' = 'summary';
@@ -10,9 +10,8 @@ export abstract class MemberBasePage extends ContactBasePage {
 	// protected currentUserDto: IUserDto | undefined;
 	private memberContext?: IContactContext;
 
-	protected constructor(className: string, params: MemberComponentBaseParams) {
-		super(className, params);
-		this.defaultBackPage = 'members';
+	protected constructor(className: string, contactService: ContactService) {
+		super(className, contactService, 'members');
 	}
 
 	public get member(): IContactContext | undefined {

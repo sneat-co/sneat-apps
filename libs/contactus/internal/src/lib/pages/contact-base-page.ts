@@ -1,8 +1,8 @@
+import { inject } from '@angular/core';
 import {
 	ContactService,
 	ContactusSpaceService,
 } from '@sneat/contactus-services';
-import { ContactComponentBaseParams } from '@sneat/contactus-shared';
 import {
 	IContactBrief,
 	IContactDbo,
@@ -15,23 +15,21 @@ export abstract class ContactBasePage extends SpaceItemPageBaseComponent<
 	IContactBrief,
 	IContactDbo
 > {
-	public get contact(): IContactContext {
-		return (this.$item() as IContactContext) || { id: '' };
+	protected readonly $contact = this.$item.asReadonly();
+	protected readonly $contactID = this.$itemID;
+
+	public get contact() {
+		return this.$contact();
 	}
 
-	protected readonly contactusSpaceService: ContactusSpaceService;
-	protected readonly contactService: ContactService;
+	protected readonly contactusSpaceService = inject(ContactusSpaceService);
 
 	protected constructor(
 		className: string,
-		params: ContactComponentBaseParams,
-		// protected preloader: NgModulePreloaderService,
+		protected readonly contactService: ContactService,
+		defaultBackPage: 'contacts' | 'members' = 'contacts',
 	) {
-		super(className, 'contacts', 'contact', params.contactService);
-		this.contactusSpaceService = params.contactusSpaceService;
-		this.contactService = params.contactService;
-		this.defaultBackPage = 'contacts';
-		// this.trackContactId();
+		super(className, defaultBackPage, 'contact', contactService);
 	}
 
 	protected override watchItemChanges(): Observable<IContactContext> {

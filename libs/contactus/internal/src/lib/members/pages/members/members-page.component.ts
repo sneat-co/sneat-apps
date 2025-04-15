@@ -9,11 +9,7 @@ import {
 	MemberGroupService,
 	MemberService,
 } from '@sneat/contactus-services';
-import {
-	ContactComponentBaseParams,
-	FamilyMembersComponent,
-	MemberGroup,
-} from '@sneat/contactus-shared';
+import { FamilyMembersComponent, MemberGroup } from '@sneat/contactus-shared';
 import { IMemberGroupContext } from '@sneat/contactus-core';
 import { isSpaceSupportsMemberGroups } from '@sneat/dto';
 import {
@@ -27,7 +23,7 @@ import { Component } from '@angular/core';
 @Component({
 	selector: 'sneat-members-page',
 	templateUrl: 'members-page.component.html',
-	providers: [SpaceComponentBaseParams, ContactComponentBaseParams],
+	providers: [SpaceComponentBaseParams],
 	imports: [
 		IonicModule,
 		CommonModule,

@@ -1,5 +1,9 @@
 @let contact = $contact();
 
+<!--<p>$contact().dbo: {{ $contact()?.dbo|json }}</p>-->
+
+<!--<p>$relatedToContactOfCurrentUser: {{ $relatedToContactOfCurrentUser()|json }};</p>-->
+
 <ion-grid class="ion-grid-layout">
 	<ion-row>
 		<ion-col>
@@ -39,9 +43,9 @@
 						</ion-button>
 					</ion-buttons>
 				</ion-item>
-				@if (contact?.brief?.gender && $rolesOfItem()) {
+				@if (contact?.brief?.gender && $relatedToUserAs(); as relatedToUserAs) {
 					<ion-item-divider mode="md">
-						@switch ($firstRelatedAs()) {
+						@switch (relatedToUserAs) {
 							@case ("child") {
 								@switch (contact?.brief?.gender) {
 									@case ("male") {
@@ -109,25 +113,10 @@
 		<sneat-contact-contacts [contact]="contactWithBriefAndOptionalDto" />
 	}
 	@case ("peers") {
-		<ion-card>
-			<ion-item color="light">
-				<ion-label>Related contacts</ion-label>
-			</ion-item>
-			@if (!relatedContacts.length) {
-				<ion-item>
-					<ion-label color="medium">No related contacts</ion-label>
-				</ion-item>
-			}
-			@for (
-				relatedContact of relatedContactsOfCurrentSpace;
-				track relatedContact.id
-			) {
-				<sneat-relate-contact
-					[$space]="$space()"
-					[relatedItem]="relatedContact"
-				/>
-			}
-		</ion-card>
+		<sneat-related-contacts
+			[$space]="$space()"
+			[$related]="$contact()?.dbo?.related"
+		/>
 	}
 	@case ("locations") {
 		<sneat-contact-locations
