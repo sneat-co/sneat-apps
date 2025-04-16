@@ -1,4 +1,3 @@
-import { JsonPipe } from '@angular/common';
 import { Component, computed, inject, input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NavController } from '@ionic/angular';
@@ -32,7 +31,6 @@ import {
 } from '@sneat/contactus-core';
 import {
 	getRelatedItemByKey,
-	IRelatedItem,
 	IRelationshipRoles,
 	ISpaceModuleItemRef,
 } from '@sneat/dto';
@@ -48,7 +46,6 @@ import {
 	GenderFormComponent,
 	RelationshipFormComponent,
 } from '../contact-forms';
-import { RelatedContactComponent } from './related-contact.component';
 import { RelatedContactsComponent } from './related-contacts.component';
 
 @Component({

@@ -8,7 +8,6 @@ import {
 import { IonicModule } from '@ionic/angular';
 import { IContactWithBriefAndSpace } from '@sneat/contactus-core';
 import { WithSpaceInput } from '@sneat/space-components';
-import { ISpaceContext } from '@sneat/space-models';
 import { MembersListComponent } from '../members-list';
 import { MemberGroup } from './member-group';
 

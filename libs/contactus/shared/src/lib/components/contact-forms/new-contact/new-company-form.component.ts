@@ -1,19 +1,11 @@
 import { JsonPipe } from '@angular/common';
-import {
-	Component,
-	EventEmitter,
-	Input,
-	OnChanges,
-	Output,
-	SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import {
 	FormControl,
 	FormGroup,
 	FormsModule,
 	Validators,
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import {
 	IonButton,
 	IonCard,
@@ -33,8 +25,6 @@ import {
 	IContactContext,
 	ICreateContactCompanyRequest,
 	IContactWithOptionalDbo,
-	IContactWithDboAndSpace,
-	NewContactBaseDboAndSpaceRef,
 } from '@sneat/contactus-core';
 import { ContactService } from '@sneat/contactus-services';
 import { LocationFormComponent } from '../location-form';
@@ -81,10 +71,7 @@ export class NewCompanyFormComponent
 		title: new FormControl<string>('', Validators.required),
 	});
 
-	constructor(
-		private readonly contactService: ContactService,
-		private readonly route: ActivatedRoute,
-	) {
+	constructor(private readonly contactService: ContactService) {
 		super('NewCompanyFormComponent');
 	}
 

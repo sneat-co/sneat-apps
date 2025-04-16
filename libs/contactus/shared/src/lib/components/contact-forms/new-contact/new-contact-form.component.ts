@@ -13,7 +13,6 @@ import { IonSegment, IonSegmentButton } from '@ionic/angular/standalone';
 import {
 	ContactIdAndDboWithSpaceRef,
 	ContactRolePet,
-	IContactContext,
 	NewContactBaseDboAndSpaceRef,
 	RoleSpaceMember,
 } from '@sneat/contactus-core';

@@ -2,8 +2,6 @@ import {
 	Component,
 	computed,
 	EventEmitter,
-	inject,
-	Injector,
 	input,
 	Input,
 	OnChanges,
@@ -16,7 +14,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { IonSegment, IonSegmentButton } from '@ionic/angular/standalone';
 import { SneatUserService } from '@sneat/auth-core';
-import { IPersonNames, isNameEmpty, IUserSpaceBrief } from '@sneat/auth-models';
+import { IPersonNames, isNameEmpty } from '@sneat/auth-models';
 import { excludeUndefined, formNexInAnimation, SpaceType } from '@sneat/core';
 import { IFormField } from '@sneat/core';
 import {
@@ -37,7 +35,6 @@ import {
 	IRelationshipRoles,
 	ISpaceModuleItemRef,
 } from '@sneat/dto';
-import { filter, map } from 'rxjs';
 import { UserSpaceBriefProvider } from '../../../providers/user-space-brief.provider';
 import { NewContactFormBaseComponent } from '../new-contact/new-contact-form-base.component';
 import { AgeGroupFormComponent } from '../person-forms/age-group';
@@ -150,17 +147,15 @@ export class PersonWizardComponent
 		},
 	);
 
-	private readonly $userSpaces = signal<
-		Readonly<Record<string, IUserSpaceBrief>> | undefined
-	>(undefined);
+	// private readonly $userSpaces = signal<
+	// 	Readonly<Record<string, IUserSpaceBrief>> | undefined
+	// >(undefined);
 
 	protected readonly userSpaceBrief = new UserSpaceBriefProvider(
 		this.destroyed$,
 		this.$spaceID,
 		this.userService,
 	);
-
-	private readonly injector = inject(Injector);
 
 	constructor(private readonly userService: SneatUserService) {
 		super('PersonWizardComponent');
