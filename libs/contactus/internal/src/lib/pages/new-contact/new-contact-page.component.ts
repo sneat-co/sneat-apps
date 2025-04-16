@@ -71,7 +71,10 @@ export class NewContactPageComponent
 
 	public readonly $contact = signal<NewContactBaseDboAndSpaceRef>({
 		space: emptySpaceRef,
-		dbo: { type: 'person' },
+		dbo: {
+			type: 'person',
+			gender: 'unknown', // Undefined would indicate "loading" and gender form would be disabled.
+		},
 	} as ContactIdAndDboWithSpaceRef);
 
 	protected readonly $contactGroupID = signal<string>('');

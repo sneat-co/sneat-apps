@@ -72,7 +72,11 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
 
 	protected readonly $contact = signal<NewContactBaseDboAndSpaceRef>({
 		space: { id: '' },
-		dbo: { type: 'person', roles: [RoleSpaceMember] },
+		dbo: {
+			type: 'person',
+			gender: 'unknown', // Undefined would indicate "loading" and gender form would be disabled.
+			roles: [RoleSpaceMember],
+		},
 	});
 
 	protected readonly $contactType = computed(() => this.$contact().dbo?.type);
