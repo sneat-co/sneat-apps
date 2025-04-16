@@ -23,7 +23,6 @@ import {
 	ContactsComponentCommand,
 	ContactsComponentCommandName,
 } from '@sneat/contactus-shared';
-import { listItemAnimations } from '@sneat/core';
 import { setHrefQueryParam } from '@sneat/core';
 import {
 	addSpace,
@@ -31,7 +30,6 @@ import {
 	IContactWithCheck,
 } from '@sneat/contactus-core';
 import {
-	SpaceComponentBaseParams,
 	SpacePageTitleComponent,
 	SpaceItemsBaseComponent,
 } from '@sneat/space-components';
@@ -43,10 +41,6 @@ import { SpaceServiceModule } from '@sneat/space-services';
 import { Subject } from 'rxjs';
 
 @Component({
-	selector: 'sneat-contacts-page',
-	templateUrl: './contacts-page.component.html',
-	providers: [SpaceComponentBaseParams],
-	animations: [listItemAnimations],
 	imports: [
 		SpacePageTitleComponent,
 		ContactusServicesModule,
@@ -67,6 +61,8 @@ import { Subject } from 'rxjs';
 		IonMenuButton,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-contacts-page',
+	templateUrl: './contacts-page.component.html',
 })
 export class ContactsPageComponent
 	extends SpaceItemsBaseComponent

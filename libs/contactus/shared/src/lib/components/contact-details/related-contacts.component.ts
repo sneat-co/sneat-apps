@@ -1,7 +1,10 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, effect, input, signal } from '@angular/core';
 import { IonCard, IonItem, IonLabel } from '@ionic/angular/standalone';
+import { IContactWithBrief } from '@sneat/contactus-core';
+import { ContactusSpaceService } from '@sneat/contactus-services';
 import { IRelatedItem, IRelatedItemsByModule } from '@sneat/dto';
 import { WithSpaceInput } from '@sneat/space-components';
+import { Subscription } from 'rxjs';
 import { RelatedContactComponent } from './related-contact.component';
 
 @Component({
@@ -14,6 +17,10 @@ export class RelatedContactsComponent extends WithSpaceInput {
 		IRelatedItemsByModule | undefined
 	>();
 
+	protected readonly $spaceContacts = signal<IContactWithBrief[] | undefined>(
+		undefined,
+	);
+
 	protected readonly $relatedContacts = computed<
 		readonly IRelatedItem[] | undefined
 	>(() => {
@@ -22,7 +29,26 @@ export class RelatedContactsComponent extends WithSpaceInput {
 		return (contactus && contactus['contacts']) || [];
 	});
 
-	constructor() {
+	private subscription?: Subscription;
+
+	constructor(private readonly contactusSpaceService: ContactusSpaceService) {
 		super('RelatedContactsComponent');
+		let prevSpaceID: string;
+		effect(() => {
+			const spaceID = this.$spaceID();
+			if (spaceID !== prevSpaceID) {
+				this.subscription?.unsubscribe();
+				prevSpaceID = spaceID;
+			}
+			if (!spaceID) {
+				return;
+			}
+			this.subscription = this.contactusSpaceService
+				.watchContactBriefs(spaceID)
+				.pipe(this.takeUntilDestroyed())
+				.subscribe((briefs) => {
+					this.$spaceContacts.set(briefs);
+				});
+		});
 	}
 }

@@ -2,9 +2,6 @@
 	<ion-icon slot="start" [name]="$contactBrief()?.gender | genderIconName" />
 	<ion-label>
 		{{ $contactBrief()?.names?.firstName }}
-		{{ $contactBrief()?.names?.lastName }} <br /><br />
-		<!--		<br>-->
-		<!--		<br>-->
-		<!--		<b>related:</b> {{ relatedItem|json }}-->
+		{{ $contactBrief()?.names?.lastName }}
 	</ion-label>
 </ion-item>
