@@ -1,19 +1,34 @@
-<ion-card>
-	@if (!genderID) {
-		<ion-item-divider [color]="!genderID ? 'primary' : 'medium'">
+@let genderID = $genderID();
+
+<!--contactID={{ $contactID() }};-->
+<!--genderID={{ genderID }};-->
+<!--$updatingToGender={{ $updatingToGender() }}-->
+
+@if (genderID) {
+	@if (genderID === "unknown" && !$updatingToGender()) {
+		<ion-item-divider [color]="!genderID ? 'primary' : 'light'">
 			<ion-label><b>Gender</b></ion-label>
-			<ion-buttons slot="end">
-				<ion-button color="light" (click)="skip()">
-					<ion-label>Skip</ion-label>
-					<ion-icon name="close-circle-outline" slot="end" />
-				</ion-button>
-			</ion-buttons>
+			@if (!hideSkipButton) {
+				<ion-buttons slot="end">
+					<ion-button color="light" (click)="skip()">
+						<ion-label>Skip</ion-label>
+						<ion-icon name="close-circle-outline" slot="end" />
+					</ion-button>
+				</ion-buttons>
+			}
 		</ion-item-divider>
 	}
 	<sneat-select-from-list
 		label="Gender"
-		[value]="genderID || ''"
+		[lastItemLines]="lastItemLines"
+		[$isProcessing]="!!$updatingToGender()"
+		[value]="$updatingToGender() || (genderID === 'unknown' ? '' : genderID)"
 		(valueChange)="onGenderIDChanged($event)"
 		[items]="genderOptions"
 	/>
-</ion-card>
+} @else {
+	<ion-item>
+		<ion-label>Gender</ion-label>
+		<ion-spinner name="lines-small" color="medium" slot="end" />
+	</ion-item>
+}

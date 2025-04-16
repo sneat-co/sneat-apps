@@ -45,12 +45,6 @@ export abstract class ContactBasePage extends SpaceItemPageBaseComponent<
 		// .pipe(this.takeUntilNeeded(), takeUntil(this.spaceIDChanged$))
 	}
 
-	override setItemContext(item: IContactContext): void {
-		super.setItemContext(item);
-		this.console.log('ContactBasePage.setItemContext()', item);
-		// this.contact = item;
-	}
-
 	protected override briefs(): Record<string, IContactBrief> | undefined {
 		return undefined;
 		// throw new Error('Method not implemented.'); // return this.contactusTeam?.dto?.contacts;
@@ -83,6 +77,10 @@ export abstract class ContactBasePage extends SpaceItemPageBaseComponent<
 							const contactID = this.contact.id;
 							const contact = contacts.find((c) => c.id === contactID);
 							if (contact) {
+								console.log(
+									'setItemContext from contact space brief',
+									contact.brief,
+								);
 								this.setItemContext({ ...this.contact, brief: contact.brief });
 								// this.contact = { brief: contact.brief, ...this.contact };
 								// this.teamParams.changeDetectorRef.detectChanges();

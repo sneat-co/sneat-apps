@@ -1,5 +1,8 @@
 @if (value) {
-	<ion-item [class]="{ 'sneat-tiny-end-padding': !isReadonly }">
+	<ion-item
+		[lines]="lastItemLines"
+		[class]="{ 'sneat-tiny-end-padding': !isReadonly }"
+	>
 		@if ($selectedItem()?.iconName) {
 			<ion-icon
 				slot="start"
@@ -15,7 +18,7 @@
 			[label]="label"
 			[(ngModel)]="value"
 			(ionChange)="onSelectChanged($event)"
-			[disabled]="isReadonly"
+			[disabled]="isReadonly || !!$isProcessing()"
 		>
 			@for (item of items; track item.id) {
 				<ion-select-option [value]="item.id">
@@ -29,7 +32,9 @@
 			}
 			<!--		<ion-select-option value="other">OTHER</ion-select-option>-->
 		</ion-select>
-		@if (!isReadonly) {
+		@if ($isProcessing()) {
+			<ion-spinner name="lines-small" color="medium" slot="end" />
+		} @else if (!isReadonly) {
 			<ion-buttons slot="end" class="ion-no-margin">
 				<ion-button color="medium" title="Deselect" (click)="deselect()">
 					<ion-icon name="close-outline" />
@@ -156,9 +161,9 @@
 		</ion-radio-group>
 	} @else {
 		<ion-item-group>
-			@for (item of $displayItems(); track item.id) {
+			@for (item of $displayItems(); track item.id; let last = $last) {
 				<ion-item
-					[lines]="item.description1 ? 'inset' : 'full'"
+					[lines]="item.description1 ? 'inset' : last ? lastItemLines : 'full'"
 					button
 					(click)="select(item)"
 				>
@@ -177,14 +182,14 @@
 					}
 				</ion-item>
 				@if (item.description1) {
-					<ion-item-divider>
-						<ion-label>
+					<ion-item [lines]="last ? lastItemLines : 'full'">
+						<ion-label color="medium">
 							{{ item.description1 }}
 							@if (item.description2) {
 								<i>{{ item.description2 }}</i>
 							}
 						</ion-label>
-					</ion-item-divider>
+					</ion-item>
 				}
 			}
 		</ion-item-group>

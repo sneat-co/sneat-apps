@@ -8,7 +8,7 @@ import {
 	ContactDetailsComponent,
 	ContactRolesInputModule,
 } from '@sneat/contactus-shared';
-import { SneatNavService } from '@sneat/core';
+import { listItemAnimations, SneatNavService } from '@sneat/core';
 import { IAddress } from '@sneat/contactus-core';
 import {
 	ContactService,

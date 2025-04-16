@@ -8,16 +8,16 @@ import {
 } from '@ionic/angular/standalone';
 import { addSpace, IContactWithCheck } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
+import { listItemAnimations } from '@sneat/core';
 import { ContactsListItemComponent } from '../contacts-list-item/contacts-list-item.component';
-import { ContactsComponent } from '../contacts-component/contacts.component';
 import { IRelatedItem, IRelatedItemsByModule } from '@sneat/dto';
 import { WithSpaceInput } from '@sneat/space-components';
 import { Subscription } from 'rxjs';
-import { RelatedContactComponent } from './related-contact.component';
 
 @Component({
 	selector: 'sneat-related-contacts',
 	templateUrl: './related-contacts.component.html',
+	animations: [listItemAnimations],
 	imports: [
 		IonCard,
 		IonItem,

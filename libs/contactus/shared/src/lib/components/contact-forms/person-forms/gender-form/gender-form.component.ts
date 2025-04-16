@@ -1,8 +1,23 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	EventEmitter,
+	inject,
+	input,
+	Input,
+	Output,
+	signal,
+} from '@angular/core';
+import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonSpinner,
+} from '@ionic/angular/standalone';
 import { genderColor } from '@sneat/components';
 import {
 	Gender,
@@ -10,10 +25,13 @@ import {
 	GenderMale,
 	GenderOther,
 	GenderUndisclosed,
-	GenderUnknown,
 } from '@sneat/contactus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
+import { ContactService } from '@sneat/contactus-services';
+import {
+	ISelectItem,
+	SelectFromListComponent,
+	SneatBaseComponent,
+} from '@sneat/ui';
 
 const animationTimings = '150ms';
 
@@ -28,14 +46,21 @@ const genders: readonly GenderOption[] = [
 	{ id: GenderMale, title: 'Male', iconName: 'man-outline', emoji: '👨' },
 	{ id: GenderFemale, title: 'Female', iconName: 'woman-outline', emoji: '👩' },
 	{ id: GenderOther, title: 'Other', iconName: 'person-outline' },
-	{ id: GenderUnknown, title: 'Unknown', iconName: 'person-circle-outline' },
+	// { id: GenderUnknown, title: 'Unknown', iconName: 'person-circle-outline' },
 	{ id: GenderUndisclosed, title: 'Undisclosed', iconName: 'person' },
 ];
 
 @Component({
-	selector: 'sneat-gender-form',
-	templateUrl: './gender-form.component.html',
-	imports: [CommonModule, IonicModule, FormsModule, SelectFromListComponent],
+	imports: [
+		SelectFromListComponent,
+		IonItemDivider,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonSpinner,
+		IonItem,
+	],
 	animations: [
 		trigger('radioOut', [
 			transition(':leave', [animate(animationTimings, style({ height: 0 }))]),
@@ -47,9 +72,15 @@ const genders: readonly GenderOption[] = [
 			]),
 		]),
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-gender-form',
+	templateUrl: './gender-form.component.html',
 })
-export class GenderFormComponent {
-	protected readonly genders = genders;
+export class GenderFormComponent extends SneatBaseComponent {
+	constructor() {
+		super('GenderFormComponent');
+	}
+
 	protected readonly genderOptions: readonly ISelectItem[] = genders.map(
 		(g) => ({
 			id: g.id,
@@ -60,30 +91,60 @@ export class GenderFormComponent {
 		}),
 	);
 
+	@Input() lastItemLines?: 'none' | 'inset' | 'full';
+
+	@Input() hideSkipButton = false;
+
 	@Input() disabled = false;
-	@Input({ required: true }) genderID?: Gender;
+
+	public readonly $spaceID = input.required<string>();
+	public readonly $contactID = input.required<string | undefined>();
+	public readonly $genderID = input.required<Gender | undefined>();
+
+	protected readonly $updatingToGender = signal<Gender | undefined>(undefined);
+
 	@Output() genderChange = new EventEmitter<Gender>();
+
+	private contactService = inject(ContactService);
 
 	// @ViewChild(IonRadioGroup, { static: true }) radioGroup?: IonRadioGroup;
 
-	protected gender?: GenderOption; // we need it to show icon when gender selected
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger, // private readonly elemRef: ElementRef,
-	) {}
-
 	protected skip(): void {
-		this.genderID = 'undisclosed';
-		this.onGenderChanged();
+		this.onGenderChanged('undisclosed');
 	}
 
-	private onGenderChanged(): void {
-		this.gender = this.genders.find((gender) => gender.id === this.genderID);
-		this.genderChange.emit(this.genderID);
+	protected readonly $isChanging = signal(false);
+
+	private onGenderChanged(gender: Gender): void {
+		const contactID = this.$contactID();
+		if (!gender) {
+			gender = 'unknown';
+		}
+		if (!contactID || gender == this.$genderID()) {
+			return;
+		}
+		this.$updatingToGender.set(gender);
+		this.contactService
+			.updateContact({
+				gender: gender,
+				spaceID: this.$spaceID(),
+				contactID: contactID,
+			})
+			.subscribe({
+				next: () => {
+					this.$updatingToGender.set(undefined);
+				},
+				error: (err) => {
+					this.errorLogger.logError(
+						err,
+						'Failed to change gender of a contact',
+					);
+					this.$updatingToGender.set(undefined);
+				},
+			});
 	}
 
 	protected onGenderIDChanged(genderID: string): void {
-		this.genderID = genderID as Gender;
-		this.onGenderChanged();
+		this.onGenderChanged(genderID as Gender);
 	}
 }

@@ -4,6 +4,7 @@ import { INavContext, SpaceItem } from '@sneat/core';
 import { ISpaceItemNavContext } from '@sneat/space-models';
 import { ModuleSpaceItemService } from '@sneat/space-services';
 import {
+	delay,
 	distinctUntilChanged,
 	filter,
 	map,
@@ -182,6 +183,7 @@ export abstract class SpaceItemPageBaseComponent<
 			if (briefs) {
 				const brief = briefs[id];
 				if (brief) {
+					console.log('setItemContext from brief', brief);
 					this.setItemContext({ ...item, brief });
 				}
 			}

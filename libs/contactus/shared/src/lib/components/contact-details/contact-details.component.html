@@ -44,35 +44,50 @@
 					</ion-buttons>
 				</ion-item>
 				@if (contact?.brief?.gender && $relatedToUserAs(); as relatedToUserAs) {
-					<ion-item-divider mode="md">
-						@switch (relatedToUserAs) {
-							@case ("child") {
-								@switch (contact?.brief?.gender) {
-									@case ("male") {
+					@switch (relatedToUserAs) {
+						@case ("child") {
+							@switch (contact?.brief?.gender) {
+								@case ("male") {
+									<ion-item-divider mode="md">
 										<ion-label>My son</ion-label>
-									}
-									@case ("female") {
-										<ion-label>My daughter</ion-label>
-									}
+									</ion-item-divider>
 								}
-							}
-							@case ("spouse") {
-								@switch (contact?.brief?.gender) {
-									@case ("male") {
-										<ion-label>My husband</ion-label>
-									}
-									@case ("female") {
-										<ion-label>My wife</ion-label>
-									}
+								@case ("female") {
+									<ion-item-divider mode="md">
+										<ion-label>My daughter</ion-label>
+									</ion-item-divider>
 								}
 							}
 						}
-					</ion-item-divider>
+						@case ("spouse") {
+							@switch (contact?.brief?.gender) {
+								@case ("male") {
+									<ion-item-divider mode="md">
+										<ion-label>My husband</ion-label>
+									</ion-item-divider>
+								}
+								@case ("female") {
+									<ion-item-divider mode="md">
+										<ion-label>My wife</ion-label>
+									</ion-item-divider>
+								}
+							}
+						}
+					}
 				}
 				<sneat-contact-dob [contact]="contactWithBriefAndOptionalDto" />
 			</ion-card>
 
-			<sneat-gender-form [genderID]="contact?.brief?.gender" />
+			<ion-card>
+				<sneat-gender-form
+					lastItemLines="none"
+					[hideSkipButton]="false"
+					[$spaceID]="$spaceID()"
+					[$contactID]="$contact()?.id"
+					[$genderID]="contact?.dbo?.gender"
+					(genderChange)="onGenderChanged($event)"
+				/>
+			</ion-card>
 
 			@if ($isMember() && contact?.brief?.userID !== currentUserID) {
 				<sneat-relationship-form

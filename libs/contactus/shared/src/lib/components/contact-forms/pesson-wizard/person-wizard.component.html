@@ -19,7 +19,9 @@
 @if (show.gender) {
 	<sneat-gender-form
 		[disabled]="disabled"
-		[genderID]="$contact().dbo.gender"
+		[$spaceID]="$spaceID()"
+		[$contactID]="undefined"
+		[$genderID]="$contact().dbo.gender"
 		(genderChange)="onGenderChanged($event)"
 	/>
 }

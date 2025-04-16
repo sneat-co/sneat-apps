@@ -26,7 +26,7 @@ export interface IContactBase extends IWithRelatedOnly, IContactChannels {
 	readonly names?: IPersonNames;
 	readonly countryID?: string;
 	readonly userID?: string;
-	readonly gender?: Gender;
+	readonly gender?: Gender; // is required for contact "person" and "animal" type, for others it should be `undefined`
 	readonly ageGroup?: AgeGroupID;
 	readonly petKind?: PetKind;
 	readonly petBreed?: string;

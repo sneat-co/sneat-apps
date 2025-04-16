@@ -5,6 +5,7 @@ import {
 	EventEmitter,
 	forwardRef,
 	Inject,
+	input,
 	Input,
 	OnChanges,
 	OnDestroy,
@@ -20,13 +21,27 @@ import {
 } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule, IonInput, IonSelect } from '@ionic/angular';
+// import {
+// 	IonButton,
+// 	IonButtons,
+// 	IonCheckbox,
+// 	IonIcon,
+// 	IonInput,
+// 	IonItem,
+// 	IonItemDivider,
+// 	IonItemGroup,
+// 	IonLabel,
+// 	IonList,
+// 	IonRadio,
+// 	IonRadioGroup,
+// 	IonSelect,
+// 	IonSelectOption,
+// } from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { NEVER, Observable, Subject, takeUntil } from 'rxjs';
 import { ISelectItem } from '../selector-interfaces';
 
 @Component({
-	selector: 'sneat-select-from-list',
-	templateUrl: './select-from-list.component.html',
 	providers: [
 		{
 			provide: NG_VALUE_ACCESSOR,
@@ -34,8 +49,28 @@ import { ISelectItem } from '../selector-interfaces';
 			multi: true,
 		},
 	],
-	imports: [IonicModule, FormsModule, RouterModule],
+	imports: [
+		IonicModule, //TODO(help-wanted): seems because of @ViewChild standalone imports does not work here
+		FormsModule,
+		RouterModule,
+		// IonItem,
+		// IonIcon,
+		// IonSelect,
+		// IonSelectOption,
+		// IonButtons,
+		// IonButton,
+		// IonInput,
+		// IonItemDivider,
+		// IonRadioGroup,
+		// IonList,
+		// IonLabel,
+		// IonCheckbox,
+		// IonRadio,
+		// IonItemGroup,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-select-from-list',
+	templateUrl: './select-from-list.component.html',
 })
 export class SelectFromListComponent
 	implements ControlValueAccessor, OnChanges, OnDestroy
@@ -59,6 +94,7 @@ export class SelectFromListComponent
 
 	private $items = signal<undefined | readonly ISelectItem[]>(undefined);
 
+	@Input() lastItemLines?: 'none' | 'inset' | 'full';
 	@Input() labelPlacement?: 'start' | 'end' | 'fixed' | 'stacked';
 	@Input() justify?: 'start' | 'end' | 'space-between';
 	@Input() other: 'top' | 'bottom' | 'none' = 'none';
@@ -70,6 +106,8 @@ export class SelectFromListComponent
 	@Input() selectMode: 'single' | 'multiple' = 'single';
 
 	@Input() isReadonly = false;
+
+	public $isProcessing = input<boolean>();
 
 	@Input() sortBy?: 'title' | 'id';
 

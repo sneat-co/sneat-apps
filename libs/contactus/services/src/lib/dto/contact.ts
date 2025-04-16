@@ -1,4 +1,4 @@
-import { AgeGroupID, IRelatedToRequest } from '@sneat/contactus-core';
+import { AgeGroupID, Gender, IRelatedToRequest } from '@sneat/contactus-core';
 import { IAddress } from '@sneat/contactus-core';
 import { SpaceRequest } from '@sneat/space-models';
 
@@ -24,6 +24,7 @@ export interface IUpdateContactRequest extends IContactRequest {
 	readonly ageGroup?: AgeGroupID;
 	readonly roles?: ISetContactRolesRequest;
 	readonly related?: IRelatedToRequest[];
+	readonly gender?: Gender;
 }
 
 export interface ISetContactRolesRequest {

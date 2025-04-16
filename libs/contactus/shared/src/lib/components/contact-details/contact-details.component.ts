@@ -1,4 +1,12 @@
-import { Component, computed, inject, input, OnInit } from '@angular/core';
+import {
+	Component,
+	computed,
+	EventEmitter,
+	inject,
+	input,
+	OnInit,
+	Output,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import {
@@ -28,6 +36,7 @@ import {
 	IContactBrief,
 	IContactDbo,
 	IContactContext,
+	Gender,
 } from '@sneat/contactus-core';
 import {
 	getRelatedItemByKey,
@@ -82,6 +91,10 @@ export class ContactDetailsComponent
 	implements OnInit
 {
 	public readonly $contact = input.required<IContactContext | undefined>();
+	@Output() readonly contactChange = new EventEmitter<
+		IContactContext | undefined
+	>();
+
 	protected readonly $space = computed(
 		() => this.$contact()?.space || { id: '' },
 	);
@@ -255,6 +268,14 @@ export class ContactDetailsComponent
 			);
 		}
 		return { spaceID, contactID };
+	}
+
+	protected onGenderChanged(gender: Gender): void {
+		const contact = this.$contact();
+		if (!contact) {
+			throw new Error('Contact is not set');
+		}
+		console.log('onGenderChanged(', gender);
 	}
 
 	// changeGender(event: Event): void {
