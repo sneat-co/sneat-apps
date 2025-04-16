@@ -132,6 +132,7 @@ export class GenderFormComponent extends SneatBaseComponent {
 			})
 			.subscribe({
 				next: () => {
+					this.genderChange.emit(gender);
 					this.$updatingToGender.set(undefined);
 				},
 				error: (err) => {

@@ -275,7 +275,12 @@ export class ContactDetailsComponent
 		if (!contact) {
 			throw new Error('Contact is not set');
 		}
-		console.log('onGenderChanged(', gender);
+		if (contact.dbo) {
+			this.contactChange.emit({
+				...contact,
+				dbo: { ...contact.dbo, gender },
+			});
+		}
 	}
 
 	// changeGender(event: Event): void {
