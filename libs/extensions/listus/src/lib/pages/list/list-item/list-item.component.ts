@@ -1,11 +1,33 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IonicModule, IonItemSliding, ToastController } from '@ionic/angular';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	computed,
+	EventEmitter,
+	input,
+	Input,
+	Output,
+	signal,
+} from '@angular/core';
+import { ToastController } from '@ionic/angular';
+import {
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonCheckbox,
+	IonIcon,
+	IonItem,
+	IonItemOption,
+	IonItemOptions,
+	IonItemSliding,
+	IonLabel,
+	IonReorder,
+	IonSpinner,
+	IonText,
+} from '@ionic/angular/standalone';
 import { ToastOptions } from '@ionic/core/dist/types/components/toast/toast-interface';
 import { listItemAnimations } from '@sneat/core';
 import { IListItemBrief } from '../../../dto';
 import { IListContext } from '../../../contexts';
-import { ISpaceContext } from '@sneat/space-models';
 import { ListusComponentBaseParams } from '../../../listus-component-base-params';
 import {
 	IListItemIDsRequest,
@@ -17,40 +39,55 @@ import { IListItemWithUiState } from '../list-item-with-ui-state';
 
 @Component({
 	selector: 'sneat-list-item',
-	imports: [CommonModule, IonicModule],
+	imports: [
+		IonItemSliding,
+		IonItem,
+		IonCheckbox,
+		IonLabel,
+		IonText,
+		IonBadge,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonSpinner,
+		IonReorder,
+		IonItemOptions,
+		IonItemOption,
+	],
 	templateUrl: './list-item.component.html',
 	styleUrls: ['./list-item.component.scss'],
 	animations: [listItemAnimations],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListItemComponent {
 	@Input()
-	public listItems?: IListItemWithUiState[];
-
-	@Input() isLastItem = false;
-
-	@Input()
 	public showDoneCheckbox = false;
 
-	@Input()
-	public doneFilter: 'all' | 'active' | 'completed' = 'all';
+	public readonly $doneFilter = input.required<
+		'all' | 'active' | 'completed'
+	>();
 
-	@Input()
-	public listMode: 'reorder' | 'swipe' = 'reorder';
+	public readonly $listMode = input.required<'reorder' | 'swipe'>();
+	protected readonly $isReorderMode = computed(
+		() => this.$listMode() === 'reorder',
+	);
 
-	@Input({ required: true })
-	public listItemWithUiState?: IListItemWithUiState;
-	@Input() public space?: ISpaceContext; // TODO: remove?
-	@Input() list?: IListContext;
+	readonly $listItemWithUiState = input.required<IListItemWithUiState>();
+	public readonly $list = input.required<IListContext | undefined>();
+
+	protected readonly $isSettingIsDone = signal(false);
+
 	@Output()
 	public readonly itemClicked = new EventEmitter<IListItemBrief>();
+
 	@Output()
 	public readonly itemChanged = new EventEmitter<{
 		old: IListItemWithUiState;
 		new: IListItemWithUiState;
 	}>();
+
 	@Output()
 	public readonly listChanged = new EventEmitter<IListContext>();
-	public isSettingIsDone = false;
 
 	constructor(
 		private readonly params: ListusComponentBaseParams,
@@ -58,9 +95,9 @@ export class ListItemComponent {
 		private readonly toastCtrl: ToastController,
 	) {}
 
-	public get listItem(): IListItemBrief | undefined {
-		return this.listItemWithUiState?.brief;
-	}
+	protected readonly $listItem = computed(
+		() => this.$listItemWithUiState().brief,
+	);
 
 	private get listService(): ListService {
 		return this.params.listService;
@@ -71,22 +108,26 @@ export class ListItemComponent {
 	}
 
 	protected isSpinning(): boolean {
-		if (!this.listItemWithUiState) {
+		if (!this.$listItemWithUiState) {
 			return false;
 		}
-		const { state } = this.listItemWithUiState;
+		const { state } = this.$listItemWithUiState();
 		return (
 			!!state.isReordering || !!state.isDeleting || !!state.isChangingIsDone
 		);
 	}
 
 	protected goListItem(): void {
-		const listItem = this.listItem;
+		const listItem = this.$listItem();
 		console.log(
 			`goListItem(${listItem?.id}), subListId=${listItem?.subListId}`,
 		);
 		this.itemClicked.emit(listItem);
 	}
+
+	protected $isDone = computed(
+		() => !!this.$listItemWithUiState().brief.isDone,
+	);
 
 	protected isDone(item?: IListItemWithUiState): boolean {
 		return !!item?.brief.isDone;
@@ -95,28 +136,22 @@ export class ListItemComponent {
 	protected onIsDoneCheckboxChanged(event: Event): void {
 		event.stopPropagation();
 		event.preventDefault();
-		if (!this.listItemWithUiState) {
+		if (!this.$listItemWithUiState) {
 			return;
 		}
 		const { checked } = (event as CustomEvent).detail;
 		if (checked === undefined) {
 			return;
 		}
-		console.log('onIsDoneCheckboxChanged()', checked, this.doneFilter);
+		console.log('onIsDoneCheckboxChanged()', checked, this.$doneFilter());
 		const isDone = !!checked;
-		this.setIsDone(this.listItemWithUiState, isDone);
+		this.setIsDone(isDone);
 	}
 
-	protected setIsDone(
-		item?: IListItemWithUiState,
-		isDone?: boolean,
-		ionSliding?: IonItemSliding,
-	): void {
-		if (!item) {
-			return;
-		}
+	protected setIsDone(isDone?: boolean, ionSliding?: IonItemSliding): void {
+		const item = this.$listItemWithUiState();
 		if (isDone === undefined) {
-			isDone = !this.isDone(item);
+			isDone = !this.$isDone();
 		}
 		const newItem: IListItemWithUiState = {
 			brief: { ...item.brief, status: isDone ? 'done' : undefined },
@@ -128,13 +163,16 @@ export class ListItemComponent {
 				new: newItem,
 			});
 
-			this.isSettingIsDone = true;
-			if (!this.space || !this.list || !this.list.brief) {
+			this.$isSettingIsDone.set(true);
+
+			const list = this.$list();
+			if (!list?.brief) {
 				return;
 			}
+
 			const request: ISetListItemsIsComplete = {
-				spaceID: this.space.id,
-				listID: this.list.id,
+				spaceID: list.space.id,
+				listID: list.id,
 				itemIDs: [item.brief.id],
 				isDone: isDone,
 			};
@@ -179,7 +217,7 @@ export class ListItemComponent {
 					'failed to mark list item as completed',
 				),
 				complete: () => {
-					this.isSettingIsDone = false;
+					this.$isSettingIsDone.set(false);
 				},
 			});
 		};
@@ -202,18 +240,13 @@ export class ListItemComponent {
 		if (!item.id) {
 			return;
 		}
-		if (!this.list?.id) {
-			return;
-		}
-		if (!this.space?.id) {
-			return;
-		}
-		if (!this.list?.brief?.type) {
+		const list = this.$list();
+		if (!list?.id || !list?.brief) {
 			return;
 		}
 		const request: IListItemIDsRequest = {
-			spaceID: this.space?.id,
-			listID: this.list?.id,
+			spaceID: list.space.id,
+			listID: list.id,
 			// listType: this.list?.brief?.type,
 			itemIDs: [item.id],
 		};

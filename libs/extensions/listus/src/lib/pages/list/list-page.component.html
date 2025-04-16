@@ -123,12 +123,10 @@
 					<ion-reorder>
 						<sneat-list-item
 							[showDoneCheckbox]="doneFilter !== 'all'"
-							[doneFilter]="doneFilter || 'all'"
-							[listMode]="doneFilter === 'all' ? listMode : 'swipe'"
-							[listItemWithUiState]="item"
-							[listItems]="listItems"
-							[space]="space"
-							[list]="list"
+							[$doneFilter]="doneFilter || 'all'"
+							[$listMode]="doneFilter === 'all' ? listMode : 'swipe'"
+							[$listItemWithUiState]="item"
+							[$list]="list"
 							(itemClicked)="goListItem($event)"
 							(itemChanged)="itemChanged($event)"
 							(listChanged)="setList($event)"

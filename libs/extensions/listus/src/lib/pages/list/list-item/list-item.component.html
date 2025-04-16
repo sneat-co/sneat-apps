@@ -2,23 +2,25 @@
 <!--	<ion-label color="medium">Loading...</ion-label>-->
 <!--	<ion-spinner color="medium" name="lines-small"></ion-spinner>-->
 <!--</ion-item>-->
-<ion-item-sliding #ionSliding @listItem *ngIf="listItem">
+@let listItem = $listItem();
+
+<ion-item-sliding #ionSliding @listItem>
 	<!--	<ion-item button (click)="goListItem(listItem)">-->
 	<ion-item>
-		<ion-checkbox
-			*ngIf="listMode !== 'reorder'"
-			color="light"
-			slot="start"
-			labelPlacement="end"
-			justify="start"
-			[checked]="listItem.status === 'done'"
-			[disabled]="isSettingIsDone"
-			[value]="listItem.status === 'done'"
-			(ionChange)="onIsDoneCheckboxChanged($event)"
-		>
-		</ion-checkbox>
+		@if (!$isReorderMode()) {
+			<ion-checkbox
+				color="light"
+				slot="start"
+				labelPlacement="end"
+				justify="start"
+				[checked]="listItem.status === 'done'"
+				[disabled]="$isSettingIsDone()"
+				[value]="listItem.status === 'done'"
+				(ionChange)="onIsDoneCheckboxChanged($event)"
+			/>
+		}
 		<ion-label
-			[class.done]="doneFilter !== 'completed' && isDone(listItemWithUiState)"
+			[class.done]="$doneFilter() !== 'completed' && $isDone()"
 			class="ion-text-wrap"
 			(click)="goListItem()"
 		>
@@ -32,57 +34,52 @@
 				&nbsp;&nbsp;&nbsp;&nbsp;
 			}
 			{{ listItem.title }}
-			<ion-text
-				*ngIf="listItem.quantity"
-				color="medium"
-				style="font-style: italic"
-			>
-				&mdash; {{ listItem.quantity.value
-				}}{{ listItem.quantity.unit }}</ion-text
-			>
+			@if (listItem.quantity) {
+				<ion-text color="medium" style="font-style: italic">
+					&mdash; {{ listItem.quantity.value }}{{ listItem.quantity.unit }}
+				</ion-text>
+			}
 		</ion-label>
-		<ion-badge
-			*ngIf="listItem.category"
-			slot="end"
-			color="light"
-			style="font-weight: normal"
-			>{{ listItem.category }}</ion-badge
-		>
+		@if (listItem.category) {
+			<ion-badge slot="end" color="light" style="font-weight: normal">
+				{{ listItem.category }}
+			</ion-badge>
+		}
+
 		<ion-buttons slot="end">
 			<!--					<ion-button *ngIf="listType === 'to-cook'" (click)="openCopyListItemDialog(listItem, $event)">🛒</ion-button>-->
-			<ion-button
-				*ngIf="listMode !== 'reorder'"
-				(click)="deleteFromList(listItem)"
-				color="medium"
-			>
-				<ion-icon name="close-outline" />
-			</ion-button>
+			@if ($isReorderMode()) {
+				<ion-button (click)="deleteFromList(listItem)" color="medium">
+					<ion-icon name="close-outline" />
+				</ion-button>
+			}
 		</ion-buttons>
 		<!--		<ion-reorder slot="end"></ion-reorder>-->
-		<ion-spinner color="medium" *ngIf="isSpinning()" />
+		@if (isSpinning()) {
+			<ion-spinner color="medium" />
+		}
+
 		<ion-reorder slot="end"></ion-reorder>
 	</ion-item>
-	<ion-item-options
-		side="start"
-		(ionSwipe)="setIsDone(listItemWithUiState, false, ionSliding)"
-	>
-		<ion-item-option
-			*ngIf="!isDone(listItemWithUiState)"
-			expandable="true"
-			color="success"
-			(click)="setIsDone(listItemWithUiState, true, ionSliding)"
-		>
-			<ion-icon class="with-label" name="checkmark" />
-			Done
-		</ion-item-option>
-		<ion-item-option
-			*ngIf="isDone(listItemWithUiState)"
-			expandable="true"
-			color="primary"
-			(click)="setIsDone(listItemWithUiState, false, ionSliding)"
-		>
-			Not done
-		</ion-item-option>
+	<ion-item-options side="start" (ionSwipe)="setIsDone(false, ionSliding)">
+		@if ($isDone()) {
+			<ion-item-option
+				expandable="true"
+				color="primary"
+				(click)="setIsDone(false, ionSliding)"
+			>
+				Not done
+			</ion-item-option>
+		} @else {
+			<ion-item-option
+				expandable="true"
+				color="success"
+				(click)="setIsDone(true, ionSliding)"
+			>
+				<ion-icon class="with-label" name="checkmark" />
+				Done
+			</ion-item-option>
+		}
 	</ion-item-options>
 	<!--suppress AngularUndefinedBinding -->
 	<ion-item-options
