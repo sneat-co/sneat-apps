@@ -3,18 +3,14 @@
 		<ion-label>Related contacts</ion-label>
 	</ion-item>
 	@if ($relatedContacts(); as relatedContacts) {
-		@for (
-			relatedContact of $relatedContacts();
-			track relatedContact.keys[0].itemID
-		) {
-			<sneat-related-contact
-				[$spaceContacts]="$spaceContacts()"
-				[$relatedItem]="relatedContact"
-			/>
-		} @empty {
-			<ion-item>
-				<ion-label color="medium">No related contacts</ion-label>
-			</ion-item>
+		@for (contact of relatedContacts; track contact.id) {
+			<ion-item-sliding @listItem>
+				<sneat-contacts-list-item
+					[hideCheckbox]="true"
+					[$space]="$space()"
+					[$contact]="contact"
+				/>
+			</ion-item-sliding>
 		}
 	} @else {
 		<ion-item>

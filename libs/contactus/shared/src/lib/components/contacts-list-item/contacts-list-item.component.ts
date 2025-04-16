@@ -46,6 +46,7 @@ export class ContactsListItemComponent extends SneatBaseComponent {
 	public readonly $contact = input.required<IContactWithCheck>();
 	public readonly $space = input.required<ISpaceContext>();
 
+	@Input() hideCheckbox = false;
 	@Input() excludeRole?: ContactRole;
 	@Input() showAddress = false;
 	@Input() showBorder: undefined | 'full' | 'inset' | 'none' = undefined;

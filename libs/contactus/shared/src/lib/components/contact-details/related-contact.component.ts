@@ -12,7 +12,9 @@ import { IRelatedItem } from '@sneat/dto';
 export class RelatedContactComponent {
 	readonly $relatedItem = input.required<IRelatedItem | undefined>();
 
-	readonly $spaceContacts = input.required<IContactWithBrief[] | undefined>();
+	readonly $spaceContacts = input.required<
+		readonly IContactWithBrief[] | undefined
+	>();
 
 	protected readonly $contactBrief = computed<IContactBrief | undefined>(() => {
 		const relatedItem = this.$relatedItem();

@@ -76,12 +76,14 @@
 			</ion-button>
 		}
 	</ion-buttons>
-	<ion-checkbox
-		slot="end"
-		[checked]="$contact().isChecked"
-		(ionChange)="checkboxChanged($event)"
-		(click)="$event.stopPropagation()"
-	/>
+	@if (!hideCheckbox) {
+		<ion-checkbox
+			slot="end"
+			[checked]="$contact().isChecked"
+			(ionChange)="checkboxChanged($event)"
+			(click)="$event.stopPropagation()"
+		/>
+	}
 </ion-item>
 
 @if (showAddress && contact.dbo?.address) {
