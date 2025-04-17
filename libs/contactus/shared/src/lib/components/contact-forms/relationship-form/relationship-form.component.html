@@ -1,46 +1,38 @@
 <ion-card @formNextIn>
-	<!--	<p>$relatedTo: {{ $relatedTo()|json }}</p>-->
+	<!--	<p>$relatedTo: {{ $relatedToTarget()|json }}</p>-->
 	<!--	<p>$relatedItems: {{ $relatedItems()|json }};</p>-->
+	<!--	<p>$relatedToTargetAs: {{ $relatedToTargetAs()|json }}</p>-->
+	<!--	<p>$rolesOfItem: {{ $rolesOfItemRelatedToTarget()|json }}</p>-->
 
-	<!--	@if (rolesOfItem) {-->
-	<!--		<ion-item>-->
-	<!--			<ion-icon name="people-outline" slot="start" />-->
-	<!--			<ion-select-->
-	<!--				[formControl]="relatedAsSingle"-->
-	<!--				interface="popover"-->
-	<!--				[disabled]="disabled"-->
-	<!--				(ionChange)="onRelationshipChanged($event)"-->
-	<!--				[label]="label"-->
-	<!--			>-->
-	<!--				@for (rel of $relationshipOptions(); track rel.id) {-->
-	<!--					<ion-select-option [value]="rel.id">{{-->
-	<!--							rel.title-->
-	<!--						}}-->
-	<!--					</ion-select-option>-->
-	<!--				}-->
-	<!--			</ion-select>-->
-	<!--		</ion-item>-->
-	<!--	} @else {-->
-	<!--		<ion-item-group>-->
-	@if (!$relatedTo()) {
-		<ion-item-divider [color]="isActive ? 'primary' : 'light'">
-			<ion-label>
-				<b>{{ label }}</b
-				>:
-			</ion-label>
-		</ion-item-divider>
-	}
-	<sneat-select-from-list
-		[items]="$relationshipOptions()"
-		[label]="label"
-		(valueChange)="onRelationshipChanged($event)"
-	/>
+	<ion-item-divider [color]="isActive ? 'primary' : 'light'">
+		<ion-label>
+			<b>{{ label }}</b>
+		</ion-label>
+	</ion-item-divider>
 
-	@if ($rolesOfItem()) {
+	<!-- we do not use select even if a single role selected as it requires a "replace" implementation that is quite complex without big benefits to UX -->
+	@if ($rolesOfItemRelatedToTarget(); as rolesOfItemRelatedToTarget) {
+		@for (rel of $rolesOfItemRelatedToTarget(); track rel.id) {
+			<ion-item class="sneat-tiny-end-padding">
+				<ion-label>{{ rel.id }}</ion-label>
+				<ion-buttons slot="end">
+					<ion-button color="medium" title="Remove relationship">
+						<ion-icon name="close" />
+					</ion-button>
+				</ion-buttons>
+			</ion-item>
+		} @empty {
+			<!-- we do use select from list when no roles selected for great UX -->
+			<sneat-select-from-list
+				[items]="$relationshipOptions()"
+				[label]="label"
+				(valueChange)="onRelationshipChanged($event)"
+			/>
+		}
+	} @else {
 		<ion-item>
-			@for (rel of $rolesOfItem(); track rel.id) {
-				<ion-badge>{{ rel.id }}</ion-badge>
-			}
+			<ion-spinner name="lines-small" slot="end" />
+			<ion-label color="medium">Loading...</ion-label>
 		</ion-item>
 	}
 </ion-card>

@@ -32,6 +32,13 @@
 										: "(no title)")
 							}}
 						}
+						@if ($relatedToUserAsBadgeText(); as text) {
+							<ion-badge color="light" class="ion-margin-start">
+								<ion-text color="medium" style="font-weight: normal">{{
+									text
+								}}</ion-text>
+							</ion-badge>
+						}
 					</ion-label>
 					<ion-buttons slot="end">
 						<ion-button
@@ -43,38 +50,6 @@
 						</ion-button>
 					</ion-buttons>
 				</ion-item>
-				@if (contact?.brief?.gender && $relatedToUserAs(); as relatedToUserAs) {
-					@switch (relatedToUserAs) {
-						@case ("child") {
-							@switch (contact?.brief?.gender) {
-								@case ("male") {
-									<ion-item-divider mode="md">
-										<ion-label>My son</ion-label>
-									</ion-item-divider>
-								}
-								@case ("female") {
-									<ion-item-divider mode="md">
-										<ion-label>My daughter</ion-label>
-									</ion-item-divider>
-								}
-							}
-						}
-						@case ("spouse") {
-							@switch (contact?.brief?.gender) {
-								@case ("male") {
-									<ion-item-divider mode="md">
-										<ion-label>My husband</ion-label>
-									</ion-item-divider>
-								}
-								@case ("female") {
-									<ion-item-divider mode="md">
-										<ion-label>My wife</ion-label>
-									</ion-item-divider>
-								}
-							}
-						}
-					}
-				}
 				<sneat-contact-dob [contact]="contactWithBriefAndOptionalDto" />
 			</ion-card>
 
@@ -92,7 +67,7 @@
 			@if ($isMember() && contact?.brief?.userID !== currentUserID) {
 				<sneat-relationship-form
 					[$space]="$space()"
-					[$relatedTo]="$relatedToContactOfCurrentUser()"
+					[$relatedToTarget]="$relatedToContactOfCurrentUser()"
 					[$relatedItems]="contact?.dbo?.related || contact?.brief?.related"
 					[$ageGroup]="contact?.brief?.ageGroup"
 					(relatedAsChange)="onRelatedAsChanged($event)"
@@ -112,16 +87,18 @@
 	</ion-row>
 </ion-grid>
 
-<ion-segment class="ion-margin-horizontal" color="primary" [(ngModel)]="tab">
-	<ion-segment-button value="peers"> Peers</ion-segment-button>
-	@if (hideForContactTypes(["pet"])) {
-		<ion-segment-button value="communicationChannels">
-			Email/Phone
-		</ion-segment-button>
-		<ion-segment-button value="roles"> Roles</ion-segment-button>
-		<ion-segment-button value="locations"> Locations</ion-segment-button>
-	}
-</ion-segment>
+<div class="ion-padding-horizontal">
+	<ion-segment color="primary" [(ngModel)]="tab">
+		<ion-segment-button value="peers"> Peers</ion-segment-button>
+		@if (hideForContactTypes(["pet"])) {
+			<ion-segment-button value="communicationChannels">
+				Email/Phone
+			</ion-segment-button>
+			<ion-segment-button value="roles"> Roles</ion-segment-button>
+			<ion-segment-button value="locations"> Locations</ion-segment-button>
+		}
+	</ion-segment>
+</div>
 
 @switch (tab) {
 	@case ("communicationChannels") {

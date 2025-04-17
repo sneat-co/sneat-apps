@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -13,10 +14,14 @@ import {
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
 	IonBadge,
+	IonButton,
+	IonButtons,
 	IonCard,
+	IonIcon,
 	IonItem,
 	IonItemDivider,
 	IonLabel,
+	IonSpinner,
 } from '@ionic/angular/standalone';
 import { SneatUserService } from '@sneat/auth-core';
 import { formNexInAnimation } from '@sneat/core';
@@ -57,20 +62,20 @@ interface IRelationshipWithID extends IRelationshipRole {
 		IonItem,
 		IonItemDivider,
 		IonLabel,
-		IonBadge,
 		SelectFromListComponent,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonSpinner,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-relationship-form',
 	templateUrl: 'relationship-form.component.html',
 })
-export class RelationshipFormComponent
-	extends SpaceRelatedFormComponent
-	implements OnChanges
-{
+export class RelationshipFormComponent extends SpaceRelatedFormComponent {
 	public readonly $ageGroup = input.required<AgeGroupID | undefined>();
 
-	public readonly $relatedTo = input.required<
+	public readonly $relatedToTarget = input.required<
 		ISpaceModuleItemRef | undefined
 	>();
 
@@ -79,9 +84,46 @@ export class RelationshipFormComponent
 		IRelatedItemsByModule | undefined
 	>();
 
-	protected readonly $rolesOfItem = signal<
+	protected readonly $relatedToTargetAs = computed(() => {
+		const relatedTo = this.$relatedToTarget();
+		if (!relatedTo) {
+			return undefined;
+		}
+		const relatedItems = this.$relatedItems();
+		if (!relatedItems) {
+			return undefined;
+		}
+		return getRelatedItemByKey(
+			relatedItems,
+			relatedTo.module,
+			relatedTo.collection,
+			relatedTo.space,
+			relatedTo.itemID,
+		);
+	});
+
+	protected readonly $rolesOfItemRelatedToTarget = computed<
 		readonly IRelationshipWithID[] | undefined
-	>(undefined);
+	>(() => {
+		const relatedItem = this.$relatedToTargetAs();
+		if (!relatedItem) {
+			return undefined;
+		}
+		const rolesOfItem: IRelationshipWithID[] = [];
+		Object.entries(relatedItem.rolesOfItem || {}).forEach(([id, rel]) => {
+			const roleOfItem: IRelationshipWithID = {
+				id,
+				...rel,
+			};
+			rolesOfItem.push(roleOfItem);
+		});
+		return rolesOfItem;
+	});
+
+	protected readonly $useSelect = computed(() => {
+		const n = this.$rolesOfItemRelatedToTarget()?.length;
+		return n === 0 || n === 1;
+	});
 
 	@Output() readonly relatedAsChange = new EventEmitter<IRelationshipRoles>();
 
@@ -124,58 +166,6 @@ export class RelationshipFormComponent
 				return [];
 		}
 	});
-
-	override ngOnChanges(changes: SimpleChanges): void {
-		console.log('RelationshipFormComponent.ngOnChanges()', changes);
-		if (changes['$relatedTo'] || changes['$relatedItems']) {
-			this.onRelatedChanged();
-		}
-	}
-
-	private onRelatedChanged(): void {
-		const relatedTo = this.$relatedTo();
-		const relatedItems = this.$relatedItems();
-		console.log(
-			'RelationshipFormComponent.onRelatedToChanged()',
-			'relatedTo:',
-			relatedTo,
-			'relatedItems:',
-			relatedItems,
-		);
-		if (!relatedTo || !relatedItems) {
-			this.relatedAsSingle.setValue('');
-			this.$rolesOfItem.set(undefined);
-			return;
-		}
-		if (!relatedTo.space) {
-			console.error(
-				'onRelatedChanged(): relatedTo.spaceID is not set',
-				relatedTo,
-			);
-			return;
-		}
-		const relatedItem = relatedTo
-			? getRelatedItemByKey(
-					this.$relatedItems(),
-					relatedTo.module,
-					relatedTo.collection,
-					relatedTo.space,
-					relatedTo.itemID,
-				)
-			: undefined;
-		if (relatedItem) {
-			const rolesOfItem: IRelationshipWithID[] = [];
-			Object.entries(relatedItem.rolesOfItem || {}).forEach(([id, rel]) => {
-				const roleOfItem: IRelationshipWithID = {
-					id,
-					...rel,
-				};
-				rolesOfItem.push(roleOfItem);
-			});
-			this.$rolesOfItem.set(rolesOfItem);
-			return;
-		}
-	}
 
 	protected onRelationshipChanged(value: string): void {
 		console.log('onRelationshipChanged()', value);

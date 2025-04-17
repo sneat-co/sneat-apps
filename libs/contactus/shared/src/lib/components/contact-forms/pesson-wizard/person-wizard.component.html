@@ -31,7 +31,7 @@
 		[isActive]="$wizardStep() === 'relatedAs'"
 		[disabled]="disabled"
 		[$space]="$contact().space"
-		[$relatedTo]="$relatedToUser()"
+		[$relatedToTarget]="$relatedToUser()"
 		[$relatedItems]="$contact().dbo.related"
 		[$ageGroup]="$contact().dbo.ageGroup"
 		(relatedAsChange)="onRelatedAsChanged($event)"

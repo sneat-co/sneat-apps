@@ -4,7 +4,7 @@
 @for (ext of extensions; track ext.id; let last = $last) {
 	<ion-item
 		[lines]="last ? 'none' : undefined"
-		class="with-buttons"
+		class="sneat-tiny-end-padding"
 		tappable
 		[routerLink]="ext.id"
 		(click)="goExt(ext)"

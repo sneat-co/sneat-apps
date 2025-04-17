@@ -10,6 +10,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import {
+	IonBadge,
 	IonButton,
 	IonButtons,
 	IonCard,
@@ -17,12 +18,12 @@ import {
 	IonGrid,
 	IonIcon,
 	IonItem,
-	IonItemDivider,
 	IonLabel,
 	IonList,
 	IonRow,
 	IonSegment,
 	IonSegmentButton,
+	IonText,
 } from '@ionic/angular/standalone';
 import { SneatUserService } from '@sneat/auth-core';
 import { ContactTitlePipe } from '@sneat/components';
@@ -76,12 +77,13 @@ import { RelatedContactsComponent } from './related-contacts.component';
 		IonButtons,
 		IonButton,
 		IonIcon,
-		IonItemDivider,
 		IonList,
 		IonSegment,
 		IonSegmentButton,
 		FormsModule,
 		RelatedContactsComponent,
+		IonBadge,
+		IonText,
 	],
 	selector: 'sneat-contact-details',
 	templateUrl: './contact-details.component.html',
@@ -179,6 +181,32 @@ export class ContactDetailsComponent
 		}
 		if (relationshipIDs.includes('spouse')) {
 			return 'spouse';
+		}
+		return undefined;
+	});
+
+	protected readonly $relatedToUserAsBadgeText = computed(() => {
+		const contact = this.$contact();
+		const relatedToUserAs = this.$relatedToUserAs();
+		if (contact?.brief?.gender && relatedToUserAs) {
+			switch (relatedToUserAs) {
+				case 'child':
+					switch (contact.brief.gender) {
+						case 'male':
+							return 'My son';
+						case 'female':
+							return 'My daughter';
+					}
+					break;
+				case 'spouse':
+					switch (contact.brief.gender) {
+						case 'male':
+							return 'My husband';
+						case 'female':
+							return 'My wife';
+					}
+					break;
+			}
 		}
 		return undefined;
 	});
