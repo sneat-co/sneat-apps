@@ -2,6 +2,7 @@ import { TitleCasePipe } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
+	computed,
 	EventEmitter,
 	input,
 	Input,
@@ -20,12 +21,13 @@ import {
 	IContactWithBrief,
 	IContactWithCheck,
 } from '@sneat/contactus-core';
-import { IRelationshipRoles } from '@sneat/dto';
 import { ContactService } from '@sneat/contactus-services';
+import { IRelatedTo } from '@sneat/dto';
 import { ISpaceContext } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
 import { SneatBaseComponent } from '@sneat/ui';
 import { ICheckChangedArgs } from '../contacts-checklist';
+import { RelatedAsComponent } from './related-as.component';
 
 @Component({
 	selector: 'sneat-contacts-list-item',
@@ -39,11 +41,13 @@ import { ICheckChangedArgs } from '../contacts-checklist';
 		PersonTitle,
 		TitleCasePipe,
 		GenderColorPipe,
+		RelatedAsComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactsListItemComponent extends SneatBaseComponent {
 	public readonly $contact = input.required<IContactWithCheck>();
+	public readonly $contactID = computed(() => this.$contact().id);
 	public readonly $space = input.required<ISpaceContext>();
 
 	@Input() hideCheckbox = false;
@@ -57,6 +61,8 @@ export class ContactsListItemComponent extends SneatBaseComponent {
 		'owner',
 		'space_member',
 	];
+
+	@Input() relatedTo?: IRelatedTo;
 
 	@Input() showRelatedItems?: boolean;
 	// protected get relatedContacts(): readonly IIdAndBrief<IRelatedItem>[] {
@@ -108,14 +114,6 @@ export class ContactsListItemComponent extends SneatBaseComponent {
 				this.errorLogger.logErrorHandler('failed to navigate to contact page'),
 			);
 	};
-
-	protected firstRelated(contactRelationships?: IRelationshipRoles): string {
-		if (!contactRelationships) {
-			return '';
-		}
-		const keys = Object.keys(contactRelationships);
-		return keys.length ? keys[0] : '';
-	}
 
 	archiveContact(): void {
 		console.log('ContactListItemComponent.removeContact()');

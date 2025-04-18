@@ -41,6 +41,7 @@ import {
 } from '@sneat/contactus-core';
 import {
 	getRelatedItemByKey,
+	IRelatedTo,
 	IRelationshipRoles,
 	ISpaceModuleItemRef,
 } from '@sneat/dto';
@@ -93,9 +94,27 @@ export class ContactDetailsComponent
 	implements OnInit
 {
 	public readonly $contact = input.required<IContactContext | undefined>();
+
 	@Output() readonly contactChange = new EventEmitter<
 		IContactContext | undefined
 	>();
+
+	protected readonly $relatedTo = computed<IRelatedTo | undefined>(() => {
+		const contact = this.$contact();
+		if (!contact?.dbo) {
+			return undefined;
+		}
+		return {
+			key: {
+				space: this.$spaceID(),
+				module: 'contactus',
+				collection: 'contacts',
+				itemID: contact.id,
+			},
+			related: contact.dbo.related,
+			title: '', // pass empty string as we don't want to display name of the contact twice
+		};
+	});
 
 	protected readonly $space = computed(
 		() => this.$contact()?.space || { id: '' },

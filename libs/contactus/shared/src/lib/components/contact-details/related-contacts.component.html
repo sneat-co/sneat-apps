@@ -1,20 +1,45 @@
 <ion-card>
-	<ion-item color="light">
-		<ion-label>Related contacts</ion-label>
-	</ion-item>
-	@if ($relatedContacts(); as relatedContacts) {
-		@for (contact of relatedContacts; track contact.id) {
-			<ion-item-sliding @listItem>
-				<sneat-contacts-list-item
-					[hideCheckbox]="true"
-					[$space]="$space()"
-					[$contact]="contact"
-				/>
-			</ion-item-sliding>
-		}
-	} @else {
-		<ion-item>
-			<ion-label color="medium">Loading related contacts...</ion-label>
+	@for (relatedGroup of $relatedGroups(); track relatedGroup.relatedAs) {
+		<ion-item lines="full" color="light" class="sneat-tiny-end-padding">
+			<ion-label>{{ relatedGroup.title }}</ion-label>
+			<ion-buttons slot="end">
+				<ion-button>
+					<ion-icon name="add" slot="start" />
+					<ion-label>Add</ion-label>
+				</ion-button>
+			</ion-buttons>
 		</ion-item>
+		@if (relatedGroup.contacts) {
+			@for (
+				contact of relatedGroup.contacts;
+				track contact.id;
+				let last = $last
+			) {
+				<ion-item-sliding @listItem>
+					<sneat-contacts-list-item
+						[hideCheckbox]="true"
+						[showBorder]="last ? 'full' : 'inset'"
+						[$space]="$space()"
+						[$contact]="contact"
+						[relatedTo]="$relatedTo()"
+					/>
+				</ion-item-sliding>
+			} @empty {
+				<ion-item-divider>
+					<ion-label>
+						@if (relatedGroup.relatedAs === "other") {
+							No other contacts add yet.
+						} @else {
+							No {{ relatedGroup.title | lowercase }} add yet.
+						}
+					</ion-label>
+				</ion-item-divider>
+			}
+		} @else {
+			<ion-item lines="full">
+				<ion-label color="medium">Loading...</ion-label>
+				<ion-spinner name="lines-small" slot="end" color="medium" />
+			</ion-item>
+		}
 	}
 </ion-card>

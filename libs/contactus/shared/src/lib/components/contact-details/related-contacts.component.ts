@@ -1,18 +1,59 @@
+import { LowerCasePipe } from '@angular/common';
 import { Component, computed, effect, input, signal } from '@angular/core';
 import {
+	IonButton,
+	IonButtons,
 	IonCard,
+	IonIcon,
 	IonItem,
+	IonItemDivider,
 	IonItemSliding,
 	IonLabel,
-	IonList,
+	IonSpinner,
 } from '@ionic/angular/standalone';
 import { addSpace, IContactWithCheck } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import { listItemAnimations } from '@sneat/core';
 import { ContactsListItemComponent } from '../contacts-list-item/contacts-list-item.component';
-import { IRelatedItem, IRelatedItemsByModule } from '@sneat/dto';
+import {
+	getRelatedItems,
+	IRelatedItem,
+	IRelatedItemsByModule,
+	IRelatedTo,
+} from '@sneat/dto';
 import { WithSpaceInput } from '@sneat/space-components';
 import { Subscription } from 'rxjs';
+
+interface IRelatedGroup {
+	readonly title: string;
+	readonly maxCount?: number;
+	readonly relatedAs: string;
+	readonly contacts?: readonly IContactWithCheck[];
+}
+
+const emptyRelatedGroups: readonly IRelatedGroup[] = [
+	{
+		title: 'Parents',
+		relatedAs: 'parent',
+	},
+	{
+		title: 'Children',
+		relatedAs: 'child',
+	},
+	{
+		title: 'Siblings',
+		relatedAs: 'sibling',
+	},
+	{
+		title: 'Friends',
+		relatedAs: 'friend',
+	},
+	{
+		title: 'Other',
+		relatedAs: 'other',
+		maxCount: 1,
+	},
+];
 
 @Component({
 	selector: 'sneat-related-contacts',
@@ -24,12 +65,20 @@ import { Subscription } from 'rxjs';
 		IonLabel,
 		ContactsListItemComponent,
 		IonItemSliding,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonItemDivider,
+		LowerCasePipe,
+		IonSpinner,
 	],
 })
 export class RelatedContactsComponent extends WithSpaceInput {
-	public readonly $related = input.required<
-		IRelatedItemsByModule | undefined
-	>();
+	public readonly $relatedTo = input.required<IRelatedTo | undefined>();
+
+	public readonly $related = computed<IRelatedItemsByModule | undefined>(
+		() => this.$relatedTo()?.related,
+	);
 
 	protected readonly $spaceContacts = signal<
 		readonly IContactWithCheck[] | undefined
@@ -63,6 +112,30 @@ export class RelatedContactsComponent extends WithSpaceInput {
 	});
 
 	private subscription?: Subscription;
+
+	protected $relatedGroups = computed<readonly IRelatedGroup[]>(() => {
+		const relatedContacts = this.$relatedContacts();
+		const related = this.$related();
+		if (!related || !relatedContacts) {
+			return emptyRelatedGroups;
+		}
+		const relatedItems = getRelatedItems('contactus', 'contacts', related);
+
+		return emptyRelatedGroups.map((g) => ({
+			...g,
+			contacts:
+				relatedContacts?.filter((c) =>
+					relatedItems.some(
+						(ri) =>
+							ri.keys.some(
+								(k) => k.itemID === c.id && k.spaceID === c.space.id,
+							) &&
+							ri.rolesToItem &&
+							ri.rolesToItem[g.relatedAs],
+					),
+				) || [],
+		}));
+	});
 
 	constructor(private readonly contactusSpaceService: ContactusSpaceService) {
 		super('RelatedContactsComponent');

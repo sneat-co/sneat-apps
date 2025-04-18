@@ -120,6 +120,10 @@ export class RelationshipFormComponent extends SpaceRelatedFormComponent {
 		return rolesOfItem;
 	});
 
+	protected readonly $hasRelationships = computed(
+		() => !!this.$rolesOfItemRelatedToTarget()?.length,
+	);
+
 	protected readonly $useSelect = computed(() => {
 		const n = this.$rolesOfItemRelatedToTarget()?.length;
 		return n === 0 || n === 1;

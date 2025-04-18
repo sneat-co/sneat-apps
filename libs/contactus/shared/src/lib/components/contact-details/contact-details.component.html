@@ -34,9 +34,9 @@
 						}
 						@if ($relatedToUserAsBadgeText(); as text) {
 							<ion-badge color="light" class="ion-margin-start">
-								<ion-text color="medium" style="font-weight: normal">{{
-									text
-								}}</ion-text>
+								<ion-text color="medium" style="font-weight: normal"
+									>{{ text }}
+								</ion-text>
 							</ion-badge>
 						}
 					</ion-label>
@@ -105,10 +105,7 @@
 		<sneat-contact-contacts [contact]="contactWithBriefAndOptionalDto" />
 	}
 	@case ("peers") {
-		<sneat-related-contacts
-			[$space]="$space()"
-			[$related]="$contact()?.dbo?.related"
-		/>
+		<sneat-related-contacts [$space]="$space()" [$relatedTo]="$relatedTo()" />
 	}
 	@case ("locations") {
 		<sneat-contact-locations

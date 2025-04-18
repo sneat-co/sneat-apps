@@ -24,6 +24,15 @@
 			}
 		}
 
+		@if (relatedTo) {
+			<sneat-related-as
+				[$moduleID]="'contactus'"
+				[$collectionID]="'contacts'"
+				[$spaceRef]="$space()"
+				[$itemID]="$contactID()"
+				[$relatedTo]="relatedTo"
+			/>
+		}
 		@if (showRelatedItems) {
 			<!--		@for (relatedContact of relatedContacts; track relatedContact.id) {-->
 			<!--			@if (firstRelated(relatedContact.brief.rolesOfItem)) {-->

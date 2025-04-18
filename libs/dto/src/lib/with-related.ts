@@ -32,6 +32,11 @@ export type IRelatedItemsByModule = Readonly<
 	Record<string, IRelatedItemsByCollection>
 >;
 
+export interface IRelatedTo extends IWithRelatedOnly {
+	readonly key: ISpaceModuleItemRef;
+	readonly title: string; // pass empty string if you don't want to display name
+}
+
 export function getRelatedItems(
 	moduleId: string,
 	collectionId: string,
