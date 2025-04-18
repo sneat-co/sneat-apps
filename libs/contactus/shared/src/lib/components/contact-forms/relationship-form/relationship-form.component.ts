@@ -180,4 +180,17 @@ export class RelationshipFormComponent extends SpaceRelatedFormComponent {
 		// this.relatedAsRelationships = [value];
 		this.relatedAsChange.emit({ [value]: { created } });
 	}
+
+	protected openAddRelationship(event: Event): void {
+		event.preventDefault();
+		event.stopPropagation();
+		alert('Not implemented yet');
+	}
+
+	protected removeRelationship(event: Event): void {
+		event.preventDefault();
+		event.stopPropagation();
+		console.log('removeRelationship()', event);
+		alert('Not implemented yet');
+	}
 }

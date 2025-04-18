@@ -55,6 +55,10 @@ const emptyRelatedGroups: readonly IRelatedGroup[] = [
 	},
 ];
 
+const emptyRelatedGroupRoles = emptyRelatedGroups
+	.map((g) => g.relatedAs)
+	.filter((id) => id !== 'other');
+
 @Component({
 	selector: 'sneat-related-contacts',
 	templateUrl: './related-contacts.component.html',
@@ -131,7 +135,11 @@ export class RelatedContactsComponent extends WithSpaceInput {
 								(k) => k.itemID === c.id && k.spaceID === c.space.id,
 							) &&
 							ri.rolesToItem &&
-							ri.rolesToItem[g.relatedAs],
+							(g.relatedAs === 'other'
+								? !emptyRelatedGroupRoles.some(
+										(r) => ri.rolesToItem && ri.rolesToItem[r],
+									)
+								: ri.rolesToItem[g.relatedAs]),
 					),
 				) || [],
 		}));
