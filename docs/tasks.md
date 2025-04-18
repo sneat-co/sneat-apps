@@ -22,7 +22,7 @@ This document contains a prioritized list of actionable improvement tasks for th
 
 ### Testing
 
-- [ ] Increase unit test coverage to at least 80%
+- [ ] [Increase unit test coverage to at least 80%](https://github.com/sneat-co/sneat-apps/issues/2661)
 - [ ] Implement comprehensive e2e testing strategy
 - [ ] Set up visual regression testing
 - [ ] Implement automated accessibility testing
