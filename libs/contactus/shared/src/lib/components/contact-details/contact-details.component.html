@@ -65,11 +65,12 @@
 			</ion-card>
 
 			@if ($isMember() && contact?.brief?.userID !== currentUserID) {
-				<sneat-relationship-form
+				<sneat-contact-relationship-form
+					[$contactID]="$contactID()"
+					[$userSpaceContactID]="$userSpaceContactID()"
 					[$space]="$space()"
 					[$relatedTo]="$relatedTo()"
 					[$ageGroup]="contact?.brief?.ageGroup"
-					(relatedAsChange)="onRelatedAsChanged($event)"
 				/>
 			}
 		</ion-col>

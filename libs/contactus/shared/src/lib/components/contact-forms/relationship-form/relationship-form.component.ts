@@ -20,28 +20,15 @@ import {
 } from '@ionic/angular/standalone';
 import { SneatUserService } from '@sneat/auth-core';
 import { formNexInAnimation } from '@sneat/core';
-import {
-	AgeGroupID,
-	FamilyMemberRelation,
-	MemberRelationshipOther,
-	MemberRelationshipUndisclosed,
-	relationshipTitle,
-} from '@sneat/contactus-core';
+import { IRelatedChange } from '@sneat/contactus-core';
 import {
 	getRelatedItemByKey,
 	IRelatedTo,
 	IRelationshipRole,
-	IRelationshipRoles,
-	IWithCreatedShort,
+	ISpaceModuleItemRef,
 } from '@sneat/dto';
 import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import { SpaceRelatedFormComponent } from '../space-related-form.component';
-
-const getRelOptions = (r: FamilyMemberRelation[]): ISelectItem[] => [
-	...r.map((id) => ({ id, title: relationshipTitle(id) })),
-	{ id: MemberRelationshipOther, title: 'Other' },
-	{ id: MemberRelationshipUndisclosed, title: 'Undisclosed' },
-];
 
 interface IRelationshipWithID extends IRelationshipRole {
 	readonly id: string;
@@ -67,9 +54,13 @@ interface IRelationshipWithID extends IRelationshipRole {
 	templateUrl: 'relationship-form.component.html',
 })
 export class RelationshipFormComponent extends SpaceRelatedFormComponent {
-	public readonly $ageGroup = input.required<AgeGroupID | undefined>();
-
 	public readonly $relatedTo = input.required<IRelatedTo | undefined>();
+
+	public readonly $relationshipOptions = input.required<
+		readonly ISelectItem[] | undefined
+	>();
+
+	public readonly $isProcessing = input<boolean>();
 
 	protected readonly $rolesOfItemRelatedToTarget = computed<
 		readonly IRelationshipWithID[] | undefined
@@ -79,18 +70,19 @@ export class RelationshipFormComponent extends SpaceRelatedFormComponent {
 			return undefined;
 		}
 		const relatedItem = getRelatedItemByKey(relatedTo.related, relatedTo.key);
+		console.log('$rolesOfItemRelatedToTarget', relatedTo, relatedItem);
 		if (!relatedItem) {
 			return []; // if we return undefined, the "loading..." spinner will be shown
 		}
-		const rolesOfItem: IRelationshipWithID[] = [];
-		Object.entries(relatedItem.rolesOfItem || {}).forEach(([id, rel]) => {
+		const rolesToItem: IRelationshipWithID[] = [];
+		Object.entries(relatedItem.rolesToItem || {}).forEach(([id, rel]) => {
 			const roleOfItem: IRelationshipWithID = {
 				id,
 				...rel,
 			};
-			rolesOfItem.push(roleOfItem);
+			rolesToItem.push(roleOfItem);
 		});
-		return rolesOfItem;
+		return rolesToItem;
 	});
 
 	protected readonly $hasRelationships = computed(
@@ -102,7 +94,7 @@ export class RelationshipFormComponent extends SpaceRelatedFormComponent {
 		return n === 0 || n === 1;
 	});
 
-	@Output() readonly relatedAsChange = new EventEmitter<IRelationshipRoles>();
+	@Output() readonly relatedAsChange = new EventEmitter<IRelatedChange>();
 
 	@Input() public isActive = false;
 	@Input() public disabled = false;
@@ -116,42 +108,10 @@ export class RelationshipFormComponent extends SpaceRelatedFormComponent {
 	// Defined here as it is used in the template twice
 	protected readonly label = 'Related to me as';
 
-	protected $relationshipOptions = computed(() => {
-		switch (this.$spaceType()) {
-			case 'family': {
-				return getRelOptions(
-					this.$ageGroup() === 'child'
-						? ([
-								FamilyMemberRelation.child,
-								FamilyMemberRelation.sibling,
-								FamilyMemberRelation.cousin,
-							] as FamilyMemberRelation[])
-						: ([
-								FamilyMemberRelation.spouse,
-								FamilyMemberRelation.partner,
-								FamilyMemberRelation.child,
-								FamilyMemberRelation.sibling,
-								FamilyMemberRelation.cousin,
-								FamilyMemberRelation.parent,
-								FamilyMemberRelation.parentInLaw,
-								FamilyMemberRelation.grandparent,
-								FamilyMemberRelation.grandparentInLaw,
-							] as FamilyMemberRelation[]),
-				);
-			}
-			default:
-				return [];
-		}
-	});
-
 	protected onRelationshipChanged(value: string): void {
 		console.log('onRelationshipChanged()', value);
-		const created: IWithCreatedShort = {
-			at: new Date().toISOString().substring(0, 10),
-			by: this.userService.currentUserID as unknown as string,
-		};
 		// this.relatedAsRelationships = [value];
-		this.relatedAsChange.emit({ [value]: { created } });
+		this.relatedAsChange.emit({ add: { rolesToItem: [value] } });
 	}
 
 	protected openAddRelationship(event: Event): void {

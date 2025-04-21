@@ -50,6 +50,7 @@ import { MemberPages } from '../../constants';
 import { UserSpaceBriefProvider } from '../../providers/user-space-brief.provider';
 import { ContactContactsComponent } from '../contact-contacts';
 import { ContactDobComponent } from '../contact-dob';
+import { ContactRelationshipFormComponent } from '../contact-forms/relationship-form/contact-relationship-form.component';
 import { ContactLocationsComponent } from '../contact-locations';
 import { ContactModulesMenuComponent } from '../contact-modules-menu';
 import { ContactRolesInputModule } from '../contact-roles-input';
@@ -66,7 +67,6 @@ import { RelatedContactsComponent } from './related-contacts.component';
 		ContactContactsComponent,
 		ContactRolesInputModule,
 		ContactLocationsComponent,
-		RelationshipFormComponent,
 		GenderFormComponent,
 		ContactTitlePipe,
 		IonGrid,
@@ -85,6 +85,7 @@ import { RelatedContactsComponent } from './related-contacts.component';
 		RelatedContactsComponent,
 		IonBadge,
 		IonText,
+		ContactRelationshipFormComponent,
 	],
 	selector: 'sneat-contact-details',
 	templateUrl: './contact-details.component.html',
@@ -94,6 +95,7 @@ export class ContactDetailsComponent
 	implements OnInit
 {
 	public readonly $contact = input.required<IContactContext | undefined>();
+	protected readonly $contactID = computed(() => this.$contact()?.id);
 
 	@Output() readonly contactChange = new EventEmitter<
 		IContactContext | undefined
@@ -114,7 +116,8 @@ export class ContactDetailsComponent
 
 	protected readonly $relatedTo = computed<IRelatedTo | undefined>(() => {
 		const contact = this.$contact();
-		if (!contact?.dbo) {
+		const userSpaceContactID = this.$userSpaceContactID();
+		if (!contact?.id || !userSpaceContactID) {
 			return undefined;
 		}
 		return {
@@ -122,9 +125,9 @@ export class ContactDetailsComponent
 				space: this.$spaceID(),
 				module: 'contactus',
 				collection: 'contacts',
-				itemID: contact.id,
+				itemID: userSpaceContactID,
 			},
-			related: contact.dbo.related,
+			related: contact.dbo ? contact.dbo.related || {} : undefined,
 			title: '', // pass empty string as we don't want to display name of the contact twice
 		};
 	});
@@ -167,6 +170,8 @@ export class ContactDetailsComponent
 		this.$spaceID,
 		this.userService,
 	);
+
+	protected $userSpaceContactID = this.userSpaceBrief.$userContactID;
 
 	protected readonly $relatedToContactOfCurrentUser = computed<
 		ISpaceModuleItemRef | undefined
@@ -282,40 +287,6 @@ export class ContactDetailsComponent
 				state: { contact, space: this.$space() },
 			})
 			.catch(this.errorLogger.logError);
-	}
-
-	protected onRelatedAsChanged(relatedAs: IRelationshipRoles): void {
-		console.log('onRelatedAsChanged()', relatedAs);
-
-		const userContactID = this.userSpaceBrief.$userContactID();
-		if (!userContactID) {
-			throw new Error('onRelatedAsChanged() - userContactID is not set');
-		}
-
-		const relationshipIDs = Object.keys(relatedAs);
-
-		const request: IUpdateContactRequest = {
-			...this.newUpdateContactRequest(),
-			related: [
-				{
-					itemRef: {
-						space: this.$spaceID() || '',
-						module: 'contactus',
-						collection: 'contacts',
-						itemID: userContactID,
-					},
-					add: {
-						rolesOfItem: relationshipIDs,
-					},
-				},
-			],
-		};
-		this.contactService.updateContact(request).subscribe({
-			next: () => {
-				console.log('onRelatedAsChanged() - contact updated');
-			},
-			error: this.errorLogger.logErrorHandler('Failed to update contact'),
-		});
 	}
 
 	private newUpdateContactRequest(): IUpdateContactRequest {

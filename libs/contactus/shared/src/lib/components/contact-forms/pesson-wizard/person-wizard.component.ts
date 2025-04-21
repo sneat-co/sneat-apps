@@ -52,6 +52,7 @@ import {
 } from '../person-forms/names-form';
 import { PhonesFormComponent } from '../phones-form';
 import { RelationshipFormComponent } from '../relationship-form';
+import { ContactRelationshipFormComponent } from '../relationship-form/contact-relationship-form.component';
 import { RolesFormComponent } from '../roles-form';
 
 export interface PersonWizardState {
@@ -94,7 +95,6 @@ export type IPersonFormWizardFields = {
 	imports: [
 		AgeGroupFormComponent,
 		GenderFormComponent,
-		RelationshipFormComponent,
 		NamesFormComponent,
 		RolesFormComponent,
 		FormsModule,
@@ -104,6 +104,7 @@ export type IPersonFormWizardFields = {
 		IonSegmentButton,
 		IonCard,
 		JsonPipe,
+		ContactRelationshipFormComponent,
 	],
 	selector: 'sneat-person-form-wizard',
 	templateUrl: './person-wizard.component.html',

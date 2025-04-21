@@ -3,7 +3,6 @@ import {
 	IIdAndBriefAndDbo,
 	IIdAndBriefAndOptionalDbo,
 	ISpaceItemBriefWithSpace,
-	ISpaceItemWithBriefAndDbo,
 } from '@sneat/core';
 import { ISpaceModuleItemRef, IWithRelatedAndRelatedIDs } from '@sneat/dto';
 import { ISpaceRef } from '@sneat/core';
@@ -17,10 +16,13 @@ export interface IRelatedRolesRequest {
 	readonly rolesToItem?: string[];
 }
 
-export interface IRelatedToRequest {
-	readonly itemRef: ISpaceModuleItemRef;
+export interface IRelatedChange {
 	readonly add?: IRelatedRolesRequest;
 	readonly remove?: IRelatedRolesRequest;
+}
+
+export interface IRelatedItemChange extends IRelatedChange {
+	readonly itemRef: ISpaceModuleItemRef;
 }
 
 // // Default value: 'optional'

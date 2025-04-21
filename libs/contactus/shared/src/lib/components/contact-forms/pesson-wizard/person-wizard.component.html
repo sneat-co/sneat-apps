@@ -31,7 +31,9 @@
 <p>show: {{ show | json }}</p>
 
 @if (!requires.relatedAs?.hide && show.relatedAs) {
-	<sneat-relationship-form
+	<sneat-contact-relationship-form
+		[$contactID]=""
+		[$userSpaceContactID]="null"
 		[isActive]="$wizardStep() === 'relatedAs'"
 		[disabled]="disabled"
 		[$space]="$contact().space"

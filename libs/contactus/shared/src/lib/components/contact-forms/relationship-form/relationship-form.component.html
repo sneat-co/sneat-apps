@@ -1,13 +1,8 @@
 <ion-card @formNextIn>
 	<!--	<p>$relatedTo: {{ $relatedTo() | json }}</p>-->
-
 	<!--	<p>$spaceType: {{ $spaceType() }}</p>-->
-
+	<!--	<p>$rolesOfItemRelatedToTarget(): {{ $rolesOfItemRelatedToTarget() | json }}</p>-->
 	<!--	<p>$relationshipOptions: {{ $relationshipOptions()|json }}</p>-->
-
-	<!--	<p>-->
-	<!--		$rolesOfItemRelatedToTarget(): {{ $rolesOfItemRelatedToTarget() | json }}-->
-	<!--	</p>-->
 
 	<ion-item-divider
 		[color]="isActive ? 'primary' : 'light'"
@@ -16,14 +11,14 @@
 		<ion-label>
 			<b>{{ label }}</b>
 		</ion-label>
-		@if ($hasRelationships()) {
-			<ion-buttons slot="end">
-				<ion-button (click)="openAddRelationship($event)">
-					<ion-icon name="add" slot="start" />
-					<ion-label>Add</ion-label>
-				</ion-button>
-			</ion-buttons>
-		}
+		<!--		@if ($hasRelationships()) {-->
+		<!--			<ion-buttons slot="end">-->
+		<!--				<ion-button (click)="openAddRelationship($event)">-->
+		<!--					<ion-icon name="add" slot="start" />-->
+		<!--					<ion-label>Add</ion-label>-->
+		<!--				</ion-button>-->
+		<!--			</ion-buttons>-->
+		<!--		}-->
 	</ion-item-divider>
 
 	<!-- we do not use select even if a single role selected as it requires a "replace" implementation that is quite complex without big benefits to UX -->
@@ -47,6 +42,7 @@
 			<sneat-select-from-list
 				[items]="$relationshipOptions()"
 				[label]="label"
+				[$isProcessing]="$isProcessing()"
 				(valueChange)="onRelationshipChanged($event)"
 			/>
 		}
