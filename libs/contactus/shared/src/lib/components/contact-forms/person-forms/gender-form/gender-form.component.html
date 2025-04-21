@@ -20,6 +20,7 @@
 	}
 	<sneat-select-from-list
 		label="Gender"
+		labelPlacement="end"
 		[lastItemLines]="lastItemLines"
 		[$isProcessing]="!!$updatingToGender()"
 		[value]="$updatingToGender() || (genderID === 'unknown' ? '' : genderID)"

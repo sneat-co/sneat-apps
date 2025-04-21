@@ -12,7 +12,11 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonSegment, IonSegmentButton } from '@ionic/angular/standalone';
+import {
+	IonCard,
+	IonSegment,
+	IonSegmentButton,
+} from '@ionic/angular/standalone';
 import { SneatUserService } from '@sneat/auth-core';
 import { IPersonNames, isNameEmpty } from '@sneat/auth-models';
 import { excludeUndefined, formNexInAnimation, SpaceType } from '@sneat/core';
@@ -96,6 +100,7 @@ export type IPersonFormWizardFields = {
 		EmailsFormComponent,
 		IonSegment,
 		IonSegmentButton,
+		IonCard,
 	],
 	selector: 'sneat-person-form-wizard',
 	templateUrl: './person-wizard.component.html',

@@ -17,13 +17,15 @@
 }
 
 @if (show.gender) {
-	<sneat-gender-form
-		[disabled]="disabled"
-		[$spaceID]="$spaceID()"
-		[$contactID]="undefined"
-		[$genderID]="$contact().dbo.gender"
-		(genderChange)="onGenderChanged($event)"
-	/>
+	<ion-card>
+		<sneat-gender-form
+			[disabled]="disabled"
+			[$spaceID]="$spaceID()"
+			[$contactID]="undefined"
+			[$genderID]="$contact().dbo.gender"
+			(genderChange)="onGenderChanged($event)"
+		/>
+	</ion-card>
 }
 
 @if (!requires.relatedAs?.hide && show.relatedAs) {
@@ -32,7 +34,7 @@
 		[disabled]="disabled"
 		[$space]="$contact().space"
 		[$relatedToTarget]="$relatedToUser()"
-		[$relatedItems]="$contact().dbo.related"
+		[$relatedOfTarget]="$contact().dbo.related || {}"
 		[$ageGroup]="$contact().dbo.ageGroup"
 		(relatedAsChange)="onRelatedAsChanged($event)"
 	/>

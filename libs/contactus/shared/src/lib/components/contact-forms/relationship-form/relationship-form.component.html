@@ -1,8 +1,8 @@
 <ion-card @formNextIn>
-	<!--	<p>$relatedTo: {{ $relatedToTarget()|json }}</p>-->
-	<!--	<p>$relatedItems: {{ $relatedItems()|json }};</p>-->
-	<!--	<p>$relatedToTargetAs: {{ $relatedToTargetAs()|json }}</p>-->
-	<!--	<p>$rolesOfItem: {{ $rolesOfItemRelatedToTarget()|json }}</p>-->
+	<p>$relatedTo: {{ $relatedTo() | json }}</p>
+	<p>
+		$rolesOfItemRelatedToTarget(): {{ $rolesOfItemRelatedToTarget() | json }}
+	</p>
 
 	<ion-item-divider
 		[color]="isActive ? 'primary' : 'light'"
@@ -22,8 +22,9 @@
 	</ion-item-divider>
 
 	<!-- we do not use select even if a single role selected as it requires a "replace" implementation that is quite complex without big benefits to UX -->
+
 	@if ($rolesOfItemRelatedToTarget(); as rolesOfItemRelatedToTarget) {
-		@for (rel of $rolesOfItemRelatedToTarget(); track rel.id) {
+		@for (rel of rolesOfItemRelatedToTarget; track rel.id) {
 			<ion-item class="sneat-tiny-end-padding">
 				<ion-label>{{ rel.id }}</ion-label>
 				<ion-buttons slot="end">
@@ -46,8 +47,8 @@
 		}
 	} @else {
 		<ion-item>
-			<ion-spinner name="lines-small" slot="end" />
 			<ion-label color="medium">Loading...</ion-label>
+			<ion-spinner name="lines-small" slot="end" />
 		</ion-item>
 	}
 </ion-card>

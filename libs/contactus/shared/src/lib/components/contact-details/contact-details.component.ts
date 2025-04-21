@@ -180,13 +180,12 @@ export class ContactDetailsComponent
 		if (!contact || !userContactID || !spaceID) {
 			return undefined;
 		}
-		const relatedContact = getRelatedItemByKey(
-			contact.dbo?.related,
-			'contactus',
-			'contacts',
-			spaceID,
-			userContactID,
-		);
+		const relatedContact = getRelatedItemByKey(contact.dbo?.related, {
+			module: 'contactus',
+			collection: 'contacts',
+			space: spaceID,
+			itemID: userContactID,
+		});
 		return relatedContact?.rolesOfItem;
 	});
 

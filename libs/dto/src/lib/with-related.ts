@@ -138,18 +138,15 @@ export const removeRelatedItem = (
 
 export const getRelatedItemByKey = (
 	related: IRelatedItemsByModule | undefined,
-	module: string,
-	collection: string,
-	spaceID: string,
-	itemID: string,
+	key: ISpaceModuleItemRef,
 ): IRelatedItem | undefined => {
 	if (!related) {
 		return undefined;
 	}
-	const collectionRelated = (related || {})[module] || {};
-	const relatedItems = collectionRelated[collection];
+	const collectionRelated = (related || {})[key.module] || {};
+	const relatedItems = collectionRelated[key.collection];
 	return relatedItems.find((i) =>
-		i.keys.some((k) => k.spaceID === spaceID && k.itemID === itemID),
+		i.keys.some((k) => k.spaceID === key.space && k.itemID === key.itemID),
 	);
 };
 

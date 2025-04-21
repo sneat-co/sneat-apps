@@ -26,13 +26,12 @@ export class RelatedAsComponent {
 	public $relatedItemsOfRelatedItem = computed(() => this.$relatedTo().related);
 
 	protected readonly $relatedAsRoles = computed(() => {
-		const relatedItem = getRelatedItemByKey(
-			this.$relatedItemsOfRelatedItem(),
-			this.$moduleID(),
-			this.$collectionID(),
-			this.$spaceRef().id,
-			this.$itemID(),
-		);
+		const relatedItem = getRelatedItemByKey(this.$relatedItemsOfRelatedItem(), {
+			module: this.$moduleID(),
+			collection: this.$collectionID(),
+			space: this.$spaceRef().id,
+			itemID: this.$itemID(),
+		});
 		return relatedItem?.rolesToItem
 			? Object.keys(relatedItem.rolesToItem)
 			: undefined;

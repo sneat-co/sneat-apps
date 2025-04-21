@@ -6,7 +6,7 @@
 	}
 	<sneat-select-from-list
 		label="Age group"
-		[labelPlacement]="'start'"
+		labelPlacement="end"
 		[value]="$ageGroup() || ''"
 		(valueChange)="onAgeGroupChanged($event)"
 		[items]="$ageGroupOptions()"

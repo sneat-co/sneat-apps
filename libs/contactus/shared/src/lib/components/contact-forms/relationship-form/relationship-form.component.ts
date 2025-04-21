@@ -6,14 +6,10 @@ import {
 	EventEmitter,
 	input,
 	Input,
-	OnChanges,
 	Output,
-	signal,
-	SimpleChanges,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
-	IonBadge,
 	IonButton,
 	IonButtons,
 	IonCard,
@@ -35,6 +31,7 @@ import {
 import {
 	getRelatedItemByKey,
 	IRelatedItemsByModule,
+	IRelatedTo,
 	IRelationshipRole,
 	IRelationshipRoles,
 	ISpaceModuleItemRef,
@@ -67,6 +64,7 @@ interface IRelationshipWithID extends IRelationshipRole {
 		IonButton,
 		IonIcon,
 		IonSpinner,
+		JsonPipe,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-relationship-form',
@@ -75,31 +73,14 @@ interface IRelationshipWithID extends IRelationshipRole {
 export class RelationshipFormComponent extends SpaceRelatedFormComponent {
 	public readonly $ageGroup = input.required<AgeGroupID | undefined>();
 
-	public readonly $relatedToTarget = input.required<
-		ISpaceModuleItemRef | undefined
-	>();
-
-	// TODO: Needs documentation on what it is
-	public readonly $relatedItems = input.required<
-		IRelatedItemsByModule | undefined
-	>();
+	public readonly $relatedTo = input.required<IRelatedTo | undefined>();
 
 	protected readonly $relatedToTargetAs = computed(() => {
-		const relatedTo = this.$relatedToTarget();
-		if (!relatedTo) {
+		const relatedTo = this.$relatedTo();
+		if (!relatedTo?.related) {
 			return undefined;
 		}
-		const relatedItems = this.$relatedItems();
-		if (!relatedItems) {
-			return undefined;
-		}
-		return getRelatedItemByKey(
-			relatedItems,
-			relatedTo.module,
-			relatedTo.collection,
-			relatedTo.space,
-			relatedTo.itemID,
-		);
+		return getRelatedItemByKey(relatedTo.related, relatedTo.key);
 	});
 
 	protected readonly $rolesOfItemRelatedToTarget = computed<
