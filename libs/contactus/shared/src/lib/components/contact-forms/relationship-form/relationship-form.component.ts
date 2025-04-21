@@ -3,6 +3,7 @@ import {
 	Component,
 	computed,
 	EventEmitter,
+	inject,
 	input,
 	Input,
 	Output,
@@ -20,13 +21,14 @@ import {
 } from '@ionic/angular/standalone';
 import { SneatUserService } from '@sneat/auth-core';
 import { formNexInAnimation } from '@sneat/core';
-import { IRelatedChange } from '@sneat/contactus-core';
 import {
 	getRelatedItemByKey,
 	IRelatedTo,
 	IRelationshipRole,
 	ISpaceModuleItemRef,
 } from '@sneat/dto';
+import { IRelatedChange, IUpdateRelatedRequest } from '@sneat/space-models';
+import { SpaceService } from '@sneat/space-services';
 import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import { SpaceRelatedFormComponent } from '../space-related-form.component';
 
@@ -54,6 +56,8 @@ interface IRelationshipWithID extends IRelationshipRole {
 	templateUrl: 'relationship-form.component.html',
 })
 export class RelationshipFormComponent extends SpaceRelatedFormComponent {
+	public readonly $itemRef = input.required<ISpaceModuleItemRef | undefined>();
+
 	public readonly $relatedTo = input.required<IRelatedTo | undefined>();
 
 	public readonly $relationshipOptions = input.required<
@@ -105,6 +109,8 @@ export class RelationshipFormComponent extends SpaceRelatedFormComponent {
 		super('RelationshipFormComponent');
 	}
 
+	private readonly spaceService = inject(SpaceService);
+
 	// Defined here as it is used in the template twice
 	protected readonly label = 'Related to me as';
 
@@ -120,10 +126,39 @@ export class RelationshipFormComponent extends SpaceRelatedFormComponent {
 		alert('Not implemented yet');
 	}
 
-	protected removeRelationship(event: Event): void {
+	protected removeRelationship(event: Event, id: string): void {
 		event.preventDefault();
 		event.stopPropagation();
 		console.log('removeRelationship()', event);
-		alert('Not implemented yet');
+		const itemRef = this.$itemRef();
+		if (!itemRef) {
+			throw new Error('itemRef is not set');
+		}
+		const relatedToKey = this.$relatedTo()?.key;
+		if (!relatedToKey) {
+			throw new Error('relatedToKey is not set');
+		}
+		const request: IUpdateRelatedRequest = {
+			spaceID: itemRef.space,
+			moduleID: itemRef.module,
+			collection: itemRef?.collection,
+			id: itemRef.itemID,
+			related: [
+				{
+					itemRef: relatedToKey,
+					remove: {
+						rolesOfItem: [id],
+					},
+				},
+			],
+		};
+		this.spaceService.updateRelated(request).subscribe({
+			next: () => {
+				this.relatedAsChange.emit({ remove: { rolesToItem: [id] } });
+			},
+			error: (err) => {
+				console.error('Error removing relationship', err);
+			},
+		});
 	}
 }

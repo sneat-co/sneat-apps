@@ -11,7 +11,6 @@ import {
 import {
 	AgeGroupID,
 	FamilyMemberRelation,
-	IRelatedChange,
 	MemberRelationshipOther,
 	MemberRelationshipUndisclosed,
 	relationshipTitle,
@@ -21,9 +20,14 @@ import {
 	IUpdateContactRequest,
 } from '@sneat/contactus-services';
 import { WithSpaceInput } from '@sneat/space-components';
+import { IRelatedChange } from '@sneat/space-models';
 import { ISelectItem } from '@sneat/ui';
 import { RelationshipFormComponent } from './relationship-form.component';
-import { IRelatedTo, IRelationshipRoles } from '@sneat/dto';
+import {
+	IRelatedTo,
+	IRelationshipRoles,
+	ISpaceModuleItemRef,
+} from '@sneat/dto';
 
 const getRelOptions = (r: FamilyMemberRelation[]): ISelectItem[] => [
 	...r.map((id) => ({ id, title: relationshipTitle(id) })),
@@ -36,6 +40,7 @@ const getRelOptions = (r: FamilyMemberRelation[]): ISelectItem[] => [
 	template: `
 		<sneat-relationship-form
 			[$space]="$space()"
+			[$itemRef]="$itemRef()"
 			[$relatedTo]="$relatedTo()"
 			[$relationshipOptions]="$relationshipOptions()"
 			[$isProcessing]="$isProcessing()"
@@ -48,6 +53,15 @@ const getRelOptions = (r: FamilyMemberRelation[]): ISelectItem[] => [
 })
 export class ContactRelationshipFormComponent extends WithSpaceInput {
 	public readonly $contactID = input.required<string | undefined>();
+
+	protected readonly $itemRef = computed<ISpaceModuleItemRef>(() => {
+		return {
+			space: this.$spaceID() || '',
+			module: 'contactus',
+			collection: 'contacts',
+			itemID: this.$contactID() || '',
+		};
+	});
 
 	public readonly $ageGroup = input.required<AgeGroupID | undefined>();
 

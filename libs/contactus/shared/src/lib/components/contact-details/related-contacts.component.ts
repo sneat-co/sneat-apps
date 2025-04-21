@@ -134,12 +134,12 @@ export class RelatedContactsComponent extends WithSpaceInput {
 							ri.keys.some(
 								(k) => k.itemID === c.id && k.spaceID === c.space.id,
 							) &&
-							ri.rolesToItem &&
+							ri.rolesOfItem &&
 							(g.relatedAs === 'other'
 								? !emptyRelatedGroupRoles.some(
-										(r) => ri.rolesToItem && ri.rolesToItem[r],
+										(r) => ri.rolesOfItem && ri.rolesOfItem[r],
 									)
-								: ri.rolesToItem[g.relatedAs]),
+								: ri.rolesOfItem[g.relatedAs]),
 					),
 				) || [],
 		}));

@@ -4,26 +4,12 @@ import {
 	IIdAndBriefAndOptionalDbo,
 	ISpaceItemBriefWithSpace,
 } from '@sneat/core';
-import { ISpaceModuleItemRef, IWithRelatedAndRelatedIDs } from '@sneat/dto';
+import { IWithRelatedAndRelatedIDs } from '@sneat/dto';
 import { ISpaceRef } from '@sneat/core';
 import { IContactBase } from './contact-base';
 import { ContactRole } from './contact-roles';
 import { IContact2Asset } from './contact2item';
 import { IPersonRecord } from './person';
-
-export interface IRelatedRolesRequest {
-	readonly rolesOfItem?: string[];
-	readonly rolesToItem?: string[];
-}
-
-export interface IRelatedChange {
-	readonly add?: IRelatedRolesRequest;
-	readonly remove?: IRelatedRolesRequest;
-}
-
-export interface IRelatedItemChange extends IRelatedChange {
-	readonly itemRef: ISpaceModuleItemRef;
-}
 
 // // Default value: 'optional'
 export type RequirementOption = 'required' | 'optional' | 'excluded';

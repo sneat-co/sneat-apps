@@ -27,6 +27,7 @@ import {
 	ICreateSpaceRequest,
 	ICreateSpaceResponse,
 	ISpaceContext,
+	IUpdateRelatedRequest,
 	zipMapBriefsWithIDs,
 } from '@sneat/space-models';
 import { ISneatUserState, SneatUserService } from '@sneat/auth-core';
@@ -212,6 +213,10 @@ export class SpaceService {
 					},
 				})),
 			);
+	}
+
+	public updateRelated(request: IUpdateRelatedRequest): Observable<void> {
+		return this.sneatApiService.post('space/update_related', request);
 	}
 
 	// TODO: move to separate module

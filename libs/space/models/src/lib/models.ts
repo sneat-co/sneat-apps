@@ -1,7 +1,12 @@
 import { SpaceType } from '@sneat/core';
+import { ISpaceModuleItemRef } from '@sneat/dto';
 
 export interface SpaceRequest {
 	readonly spaceID: string;
+}
+
+export interface ISpaceItemRequest extends SpaceRequest {
+	readonly id: string;
 }
 
 export interface ISpaceMemberRequest extends SpaceRequest {
@@ -36,4 +41,29 @@ export interface IReorderTaskRequest extends ITaskRequest {
 	readonly to: number;
 	readonly after?: string;
 	readonly before?: string;
+}
+
+export interface IModuleCollectionRef {
+	readonly moduleID: string;
+	readonly collection: string;
+}
+
+export interface IRelatedRolesRequest {
+	readonly rolesOfItem?: string[];
+	readonly rolesToItem?: string[];
+}
+
+export interface IRelatedChange {
+	readonly add?: IRelatedRolesRequest;
+	readonly remove?: IRelatedRolesRequest;
+}
+
+export interface IRelatedItemChange extends IRelatedChange {
+	readonly itemRef: ISpaceModuleItemRef;
+}
+
+export interface IUpdateRelatedRequest
+	extends ISpaceItemRequest,
+		IModuleCollectionRef {
+	readonly related?: IRelatedItemChange[];
 }
