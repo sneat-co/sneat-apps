@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import {
 	Component,
 	computed,
@@ -36,6 +37,7 @@ import {
 	getRelatedItemIDs,
 	IRelatedItem,
 	IRelatedItemsByModule,
+	IRelatedTo,
 	IRelationshipRoles,
 	ISpaceModuleItemRef,
 } from '@sneat/dto';
@@ -101,6 +103,7 @@ export type IPersonFormWizardFields = {
 		IonSegment,
 		IonSegmentButton,
 		IonCard,
+		JsonPipe,
 	],
 	selector: 'sneat-person-form-wizard',
 	templateUrl: './person-wizard.component.html',
@@ -151,6 +154,17 @@ export class PersonWizardComponent
 				: undefined;
 		},
 	);
+	protected readonly $relatedTo = computed<IRelatedTo | undefined>(() => {
+		const key = this.$relatedToUser();
+		if (!key) {
+			return undefined;
+		}
+		return {
+			key,
+			title: '', // getContactTitle({ id: '', ...this.$contact() }),
+			related: this.$contact().dbo.related || {},
+		};
+	});
 
 	// private readonly $userSpaces = signal<
 	// 	Readonly<Record<string, IUserSpaceBrief>> | undefined
@@ -214,7 +228,7 @@ export class PersonWizardComponent
 	];
 
 	public ngOnChanges(changes: SimpleChanges): void {
-		console.log('PersonFormComponent.ngOnChanges()', changes);
+		console.log('PersonWizardState.ngOnChanges()', changes);
 		if (changes['fields']) {
 			this.openNext('contactType');
 		}
@@ -227,6 +241,7 @@ export class PersonWizardComponent
 			readonly hasValue: boolean;
 		}>,
 	): void {
+		console.log('setContactData()', changedProp);
 		this.contactChange.emit({ ...this.$contact(), dbo });
 		if (changedProp.hasValue) {
 			this.openNext(changedProp.name);
@@ -234,7 +249,7 @@ export class PersonWizardComponent
 	}
 
 	protected onNameChanged(name: IPersonNames): void {
-		console.log('PersonFormComponent.onNameChanged()', name);
+		console.log('PersonWizardState.onNameChanged()', name);
 		if (!this.show.nameNext && !isNameEmpty(name)) {
 			this.show = { ...this.show, nameNext: true };
 		}
@@ -245,7 +260,7 @@ export class PersonWizardComponent
 	}
 
 	protected onContactChanged(contact: NewContactBaseDboAndSpaceRef): void {
-		console.log('onContactChanged()', contact);
+		console.log('PersonWizardState.onContactChanged()', contact);
 		// this.setRelatedPerson(
 		// 	{ ...this.newPerson, petKind },
 		// 	{ name: 'petKind', hasValue: !!petKind },
@@ -253,7 +268,7 @@ export class PersonWizardComponent
 	}
 
 	protected onGenderChanged(gender?: Gender): void {
-		console.log('PersonFormComponent.onGenderChanged()', gender);
+		console.log('PersonWizardState.onGenderChanged()', gender);
 		this.setContactData(
 			{ ...this.$contact().dbo, gender },
 			{ name: 'gender', hasValue: !!gender },
@@ -330,7 +345,11 @@ export class PersonWizardComponent
 	}
 
 	protected onRelatedAsChanged(rolesOfItem: IRelationshipRoles): void {
-		console.log('onRelationshipChanged()', rolesOfItem, typeof rolesOfItem);
+		console.log(
+			'PersonWizardState.onRelationshipChanged()',
+			rolesOfItem,
+			typeof rolesOfItem,
+		);
 
 		const itemID = this.userSpaceBrief.$userContactID();
 		if (!itemID) {
@@ -490,7 +509,7 @@ export class PersonWizardComponent
 			case 'ageGroup':
 				return !!p.ageGroup;
 			case 'gender':
-				return !!p.gender;
+				return !!p.gender && p.gender !== 'unknown';
 			case 'relatedAs':
 				return (
 					getRelatedItemIDs(

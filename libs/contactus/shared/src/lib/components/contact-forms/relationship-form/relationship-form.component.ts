@@ -1,4 +1,3 @@
-import { JsonPipe } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -30,11 +29,9 @@ import {
 } from '@sneat/contactus-core';
 import {
 	getRelatedItemByKey,
-	IRelatedItemsByModule,
 	IRelatedTo,
 	IRelationshipRole,
 	IRelationshipRoles,
-	ISpaceModuleItemRef,
 	IWithCreatedShort,
 } from '@sneat/dto';
 import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
@@ -64,7 +61,6 @@ interface IRelationshipWithID extends IRelationshipRole {
 		IonButton,
 		IonIcon,
 		IonSpinner,
-		JsonPipe,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-relationship-form',
@@ -75,20 +71,16 @@ export class RelationshipFormComponent extends SpaceRelatedFormComponent {
 
 	public readonly $relatedTo = input.required<IRelatedTo | undefined>();
 
-	protected readonly $relatedToTargetAs = computed(() => {
+	protected readonly $rolesOfItemRelatedToTarget = computed<
+		readonly IRelationshipWithID[] | undefined
+	>(() => {
 		const relatedTo = this.$relatedTo();
 		if (!relatedTo?.related) {
 			return undefined;
 		}
-		return getRelatedItemByKey(relatedTo.related, relatedTo.key);
-	});
-
-	protected readonly $rolesOfItemRelatedToTarget = computed<
-		readonly IRelationshipWithID[] | undefined
-	>(() => {
-		const relatedItem = this.$relatedToTargetAs();
+		const relatedItem = getRelatedItemByKey(relatedTo.related, relatedTo.key);
 		if (!relatedItem) {
-			return undefined;
+			return []; // if we return undefined, the "loading..." spinner will be shown
 		}
 		const rolesOfItem: IRelationshipWithID[] = [];
 		Object.entries(relatedItem.rolesOfItem || {}).forEach(([id, rel]) => {

@@ -103,9 +103,9 @@ export class GenderFormComponent extends SneatBaseComponent {
 
 	protected readonly $updatingToGender = signal<Gender | undefined>(undefined);
 
-	@Output() genderChange = new EventEmitter<Gender>();
+	@Output() readonly genderChange = new EventEmitter<Gender>();
 
-	private contactService = inject(ContactService);
+	private readonly contactService = inject(ContactService);
 
 	// @ViewChild(IonRadioGroup, { static: true }) radioGroup?: IonRadioGroup;
 
@@ -120,7 +120,11 @@ export class GenderFormComponent extends SneatBaseComponent {
 		if (!gender) {
 			gender = 'unknown';
 		}
-		if (!contactID || gender == this.$genderID()) {
+		if (gender == this.$genderID()) {
+			return;
+		}
+		if (!contactID) {
+			this.genderChange.emit(gender);
 			return;
 		}
 		this.$updatingToGender.set(gender);

@@ -144,8 +144,9 @@ export const getRelatedItemByKey = (
 		return undefined;
 	}
 	const collectionRelated = (related || {})[key.module] || {};
-	const relatedItems = collectionRelated[key.collection];
-	return relatedItems.find((i) =>
+	const relatedItems: readonly IRelatedItem[] | undefined =
+		collectionRelated[key.collection];
+	return relatedItems?.find((i) =>
 		i.keys.some((k) => k.spaceID === key.space && k.itemID === key.itemID),
 	);
 };

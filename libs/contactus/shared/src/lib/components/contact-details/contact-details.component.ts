@@ -99,6 +99,19 @@ export class ContactDetailsComponent
 		IContactContext | undefined
 	>();
 
+	// protected readonly $relatedTo = computed<IRelatedTo | undefined>(() => {
+	// 	const key = this.$relatedToContactOfCurrentUser(),
+	// 		contact = this.$contact();
+	// 	if (!key || !contact?.dbo) {
+	// 		return undefined;
+	// 	}
+	// 	return {
+	// 		key,
+	// 		title: '',
+	// 		related: contact.dbo.related || {},
+	// 	};
+	// });
+
 	protected readonly $relatedTo = computed<IRelatedTo | undefined>(() => {
 		const contact = this.$contact();
 		if (!contact?.dbo) {
