@@ -1,12 +1,15 @@
 <ion-card>
-	<ion-item class="sneat-small-end-padding sneat-small-start-padding">
+	<ion-item
+		class="sneat-small-end-padding sneat-small-start-padding"
+		lines="full"
+	>
 		<ion-buttons
 			slot="start"
 			class="sneat-tiny-end-margin sneat-no-horizontal-margins"
 		>
 			<ion-button
-				[disabled]="isDefaultDate()"
-				[color]="isDefaultDate() ? 'medium' : 'primary'"
+				[disabled]="$isDefaultDate()"
+				[color]="$isDefaultDate() ? 'medium' : 'primary'"
 				[title]="'Jump to current week'"
 				(click)="setToday()"
 			>
@@ -53,7 +56,7 @@
 				[$space]="$space()"
 				class="virtual-slide"
 				[@virtualSlide]="oddSlide?.animationState || 'show'"
-				[week]="oddWeek"
+				[$week]="oddWeek"
 				[spaceDaysProvider]="spaceDaysProvider"
 			/>
 			@if (isEvenSlideActivated) {
@@ -61,7 +64,7 @@
 					class="virtual-slide"
 					[$space]="$space()"
 					[@virtualSlide]="evenSlide?.animationState || 'hide'"
-					[week]="evenWeek"
+					[$week]="evenWeek"
 					[spaceDaysProvider]="spaceDaysProvider"
 				/>
 			}

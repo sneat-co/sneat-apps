@@ -1,3 +1,4 @@
+import { computed, signal } from '@angular/core';
 import {
 	hideVirtualSlide,
 	showVirtualSlide,
@@ -18,20 +19,22 @@ import { Parity, Swipeable } from './swipeable-ui';
 export abstract class SwipeableBaseComponent extends SneatBaseComponent {
 	public shiftDays = 0;
 
-	public parity: Parity = 'odd';
-	public date = getToday();
+	public readonly $parity = signal<Parity>('odd');
+
+	public readonly $date = signal(getToday());
 
 	public get dateAsIsoString(): string {
-		return dateToIso(this.date);
+		return dateToIso(this.$date());
 	}
 
 	public animationState?: VirtualSliderAnimationStates;
 	protected isEvenSlideActivated = false;
-	public oddSlide?: Swipeable;
-	public evenSlide?: Swipeable;
+
+	protected oddSlide?: Swipeable;
+	protected evenSlide?: Swipeable;
 
 	public get activeSlide(): Swipeable | undefined {
-		return this.parity === 'odd' ? this.oddSlide : this.evenSlide;
+		return this.$parity() === 'odd' ? this.oddSlide : this.evenSlide;
 	}
 
 	// public get passiveSlide(): Swipeable | undefined {
@@ -54,10 +57,10 @@ export abstract class SwipeableBaseComponent extends SneatBaseComponent {
 	// 	return isToday(this.date);
 	// }
 
-	protected isDefaultDate(): boolean {
+	protected readonly $isDefaultDate = computed(() => {
 		const defaultDate = addDays(new Date(), this.shiftDays);
-		return areSameDates(this.date, defaultDate);
-	}
+		return areSameDates(this.$date(), defaultDate);
+	});
 
 	protected swipeLeft(): void {
 		this.swipeNext();
@@ -108,13 +111,13 @@ export abstract class SwipeableBaseComponent extends SneatBaseComponent {
 		if (!this.oddSlide || !this.evenSlide) {
 			return;
 		}
-		this.date = changed.date;
+		this.$date.set(changed.date);
 		if (!changed.shiftDirection) {
 			const passive: IDateChanged = {
 				...changed,
 				date: addDays(changed.date, this.stepDays),
 			};
-			switch (this.parity) {
+			switch (this.$parity()) {
 				case 'odd':
 					this.oddSlide = this.oddSlide.setDate(changed, 'show');
 					this.evenSlide = this.evenSlide.setDate(passive, 'hide');
@@ -126,11 +129,11 @@ export abstract class SwipeableBaseComponent extends SneatBaseComponent {
 			}
 			return;
 		}
-		switch (this.parity) {
+		switch (this.$parity()) {
 			case 'odd':
 				this.oddSlide = { ...this.oddSlide, animationState: hideVirtualSlide };
 				this.evenSlide = this.evenSlide.setDate(changed, showVirtualSlide);
-				this.parity = 'even';
+				this.$parity.set('even');
 				break;
 			case 'even':
 				this.evenSlide = {
@@ -138,11 +141,14 @@ export abstract class SwipeableBaseComponent extends SneatBaseComponent {
 					animationState: hideVirtualSlide,
 				};
 				this.oddSlide = this.oddSlide.setDate(changed, showVirtualSlide);
-				this.parity = 'odd';
+				this.$parity.set('odd');
 				break;
 		}
 		console.log('oddSlide', this.oddSlide);
 		console.log('evenSlide', this.evenSlide);
-		this.animationState = animationState(this.parity, changed.shiftDirection);
+		this.animationState = animationState(
+			this.$parity(),
+			changed.shiftDirection,
+		);
 	}
 }

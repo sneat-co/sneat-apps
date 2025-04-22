@@ -62,9 +62,9 @@ export class CalendarDayCardComponent
 		if (this.activeDayPlus) {
 			current.setDate(current.getDate() + this.activeDayPlus);
 		}
-		this.date = current;
+		this.$date.set(current);
 		const next = new Date();
-		next.setDate(this.date.getDate() + 1);
+		next.setDate(current.getDate() + 1);
 		this.oddSlide = swipeableDay(
 			'odd',
 			current,

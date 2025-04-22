@@ -1,6 +1,23 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, computed, Input, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { IonAccordionGroup, IonicModule } from '@ionic/angular';
+import {
+	IonAccordion,
+	IonAccordionGroup,
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCheckbox,
+	IonCol,
+	IonGrid,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonItemGroup,
+	IonLabel,
+	IonRow,
+} from '@ionic/angular/standalone';
 import { ContactTitlePipe } from '@sneat/components';
 import { IContactWithBriefAndSpace } from '@sneat/contactus-core';
 import { WeekdayCode2 } from '@sneat/mod-schedulus-core';
@@ -10,51 +27,68 @@ import {
 	CalendarFilterService,
 } from '../../../calendar-filter.service';
 import { WeekdaysFormBase } from '../../../weekdays/weekdays-form-base';
-import { ContactsFilterComponent } from '../contacts-filter/contacts-filter.component';
+import { ContactsFilterComponent } from './contacts-filter.component';
 import { ICalendarFilter } from './calendar-filter';
 
 @Component({
 	selector: 'sneat-calendar-filter',
 	templateUrl: 'calendar-filter.component.html',
 	imports: [
-		IonicModule,
 		ContactTitlePipe,
 		ContactsFilterComponent,
 		ReactiveFormsModule,
+		IonCard,
+		IonAccordionGroup,
+		IonItem,
+		IonIcon,
+		IonInput,
+		IonButtons,
+		IonButton,
+		IonItemGroup,
+		IonItemDivider,
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonCheckbox,
+		IonAccordion,
+		IonBadge,
+		IonLabel,
 	],
 })
 export class CalendarFilterComponent extends WeekdaysFormBase {
-	@ViewChild(IonAccordionGroup) accordionGroup?: IonAccordionGroup;
-	public expanded = false;
+	protected readonly $expanded = signal(false);
 	public accordionValue?: string;
 	private resetting = false;
 
 	@Input({ required: true }) space?: ISpaceContext;
 	@Input() showWeekdays = false;
 	@Input() showRepeats = false;
+
 	readonly text = new FormControl<string>('');
-	weekdays: readonly WeekdayCode2[] = [];
-	repeats: readonly string[] = [];
+
+	// protected readonly $weekdays = computed(() => this.$filter().weekdays);
+	protected readonly $repeats = computed(() => this.$filter().repeats);
 
 	contactID = '';
 	selectedContacts: IContactWithBriefAndSpace[] = [];
 	contacts?: IContactWithBriefAndSpace[];
 
-	readonly repeatWeekly = new FormControl<boolean>(false);
-	readonly repeatMonthly = new FormControl<boolean>(false);
-	readonly repeatQuarterly = new FormControl<boolean>(false);
-	readonly repeatYearly = new FormControl<boolean>(false);
+	protected readonly repeatWeekly = new FormControl<boolean>(false);
+	protected readonly repeatMonthly = new FormControl<boolean>(false);
+	protected readonly repeatQuarterly = new FormControl<boolean>(false);
+	protected readonly repeatYearly = new FormControl<boolean>(false);
 
-	public get hasFilter(): boolean {
+	protected readonly $filter = signal<ICalendarFilter>(emptyCalendarFilter);
+
+	protected readonly $hasFilter = computed(() => {
+		const filter = this.$filter();
 		return (
-			!!this.text.value?.trim() ||
-			!!this.weekdays?.length ||
-			!!this.filter.contactIDs.length ||
-			!!this.repeats?.length
+			!!filter.text.trim() ||
+			!!filter.weekdays.length ||
+			!!filter.contactIDs.length ||
+			!!filter.repeats?.length
 		);
-	}
-
-	protected filter: ICalendarFilter = emptyCalendarFilter;
+	});
 
 	constructor(private readonly filterService: CalendarFilterService) {
 		super('ScheduleFilterComponent', false);
@@ -68,26 +102,24 @@ export class CalendarFilterComponent extends WeekdaysFormBase {
 			'ScheduleFilterComponent.onSelectedContactsChanged()',
 			contactIDs,
 		);
-		this.onFilterChanged({ ...this.filter, contactIDs: [...contactIDs] });
+		this.onFilterChanged({ ...this.$filter(), contactIDs: [...contactIDs] });
 	}
 
 	private readonly onFilterChanged = (filter: ICalendarFilter): void => {
-		if (this.filter === filter) {
+		if (this.$filter() === filter) {
 			return;
 		}
 		console.log('ScheduleFilterComponent.onFilterChanged()', filter);
-		this.filter = filter;
+		this.$filter.set(filter);
 		this.text.setValue(filter.text || '');
 		const { contactIDs } = filter;
 		if (contactIDs) {
-			if (this.filter.contactIDs.length === 1) {
+			if (filter.contactIDs.length === 1) {
 				this.contactID = contactIDs[0];
 				this.accordionValue = 'filter';
-				this.expanded = true;
+				this.$expanded.set(true);
 			}
 		}
-		this.weekdays = filter.weekdays || [];
-		this.repeats = filter.repeats || [];
 		// TODO: reset weekday & repeats controls
 		this.emitChanged();
 	};
@@ -96,12 +128,12 @@ export class CalendarFilterComponent extends WeekdaysFormBase {
 		event?.stopPropagation();
 		this.resetting = true;
 		try {
-			this.filter = {
-				...this.filter,
+			this.$filter.update((f) => ({
+				...f,
 				contactIDs: [],
-			};
-			this.repeats = [];
-			this.weekdays = [];
+				repeats: [],
+				weekdays: [],
+			}));
 			this.contactID = '';
 
 			const resetFormControlOptions = {
@@ -126,7 +158,7 @@ export class CalendarFilterComponent extends WeekdaysFormBase {
 	public accordionChanged(event: Event): void {
 		console.log('accordionChanged', event);
 		event.stopPropagation();
-		this.expanded = !!(event as CustomEvent).detail.value;
+		this.$expanded.set(!!(event as CustomEvent).detail.value);
 	}
 
 	// repeatChecked(id: string): boolean {
@@ -136,13 +168,16 @@ export class CalendarFilterComponent extends WeekdaysFormBase {
 	public repeatChanged(event: Event): void {
 		const ce = event as CustomEvent;
 		const { checked, value } = ce.detail;
-		const found = this.repeats.includes(value);
+		const found = this.$repeats().includes(value);
 		if (checked) {
 			if (!found) {
-				this.repeats = [...this.repeats, value];
+				this.$filter.update((f) => ({ ...f, repeats: [...f.repeats, value] }));
 			}
 		} else if (found) {
-			this.repeats = this.repeats.filter((r) => r !== value);
+			this.$filter.update((f) => ({
+				...f,
+				repeats: f.repeats.filter((r) => r !== value),
+			}));
 		}
 		// console.log('repeatChanged()', checked, value, 'repeats', this.repeats);
 		this.emitChanged();
@@ -164,20 +199,13 @@ export class CalendarFilterComponent extends WeekdaysFormBase {
 		if (this.resetting) {
 			return;
 		}
-		let filter: ICalendarFilter = {
-			...this.filter,
+		this.$filter.update((filter) => ({
+			...filter,
 			text: this.text.value || '',
 			showRecurrings: true,
 			showSingles: true,
-		};
-		this.weekdays = this.selectedWeekdayCodes();
-		if (this.weekdays.length) {
-			filter = { ...filter, weekdays: this.weekdays };
-		}
-		if (this.repeats.length) {
-			filter = { ...filter, repeats: [...this.repeats] };
-		}
-		this.filter = filter;
-		this.filterService.next(filter);
+			weekdays: this.selectedWeekdayCodes(),
+		}));
+		this.filterService.next(this.$filter());
 	}
 }

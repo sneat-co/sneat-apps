@@ -1,12 +1,22 @@
 import {
+	ChangeDetectionStrategy,
 	Component,
+	computed,
 	EventEmitter,
+	inject,
 	input,
-	Input,
-	OnDestroy,
 	Output,
+	signal,
 } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonSpinner,
+} from '@ionic/angular/standalone';
 import { ShortMonthNamePipe } from '@sneat/components';
 import { HappeningType } from '@sneat/mod-schedulus-core';
 import {
@@ -15,69 +25,70 @@ import {
 	ScheduleNavService,
 } from '@sneat/mod-schedulus-core';
 import { ISpaceContext } from '@sneat/space-models';
-import { takeUntil } from 'rxjs';
+import { SneatBaseComponent } from '@sneat/ui';
+import { CalendarDay } from '../../../../services/calendar-day';
 import {
 	emptyCalendarFilter,
 	CalendarFilterService,
 } from '../../../calendar-filter.service';
 import { isSlotVisible } from '../../../calendar-slots';
 import { Weekday } from '../../weekday';
-import { CalendarDay } from '../../../../services/calendar-day';
+import { ICalendarFilter } from '../calendar-filter/calendar-filter';
 import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
-// import { DaySlotItemModule } from '../day-slot-item/daly-slot-item.module';
 
 @Component({
+	imports: [
+		DaySlotItemComponent,
+		ShortMonthNamePipe,
+		IonItemDivider,
+		IonLabel,
+		IonSpinner,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonItem,
+	],
 	selector: 'sneat-calendar-weekday',
 	templateUrl: './calendar-weekday.component.html',
-	imports: [IonicModule, DaySlotItemComponent, ShortMonthNamePipe],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CalendarWeekdayComponent implements OnDestroy {
+export class CalendarWeekdayComponent extends SneatBaseComponent {
 	public readonly $space = input.required<ISpaceContext | undefined>();
-	private readonly destroyed = new EventEmitter<void>();
-	private filter = emptyCalendarFilter;
 
-	@Input({ required: true }) weekday?: Weekday;
+	public readonly $weekday = input.required<Weekday>();
+	protected readonly $day = computed(() => this.$weekday().day);
 
-	@Output() dateSelected = new EventEmitter<Date>();
+	@Output() readonly dateSelected = new EventEmitter<Date>();
 
-	protected get day(): CalendarDay | undefined {
-		return this.weekday?.day;
+	protected readonly $filter = signal(emptyCalendarFilter);
+
+	private readonly scheduleNavService = inject(ScheduleNavService);
+
+	constructor(filterService: CalendarFilterService) {
+		super('CalendarWeekdayComponent');
+		filterService.filter
+			.pipe(this.takeUntilDestroyed())
+			.subscribe(this.$filter.set);
 	}
 
-	constructor(
-		filterService: CalendarFilterService,
-		private readonly scheduleNavService: ScheduleNavService,
-	) {
-		filterService.filter.pipe(takeUntil(this.destroyed)).subscribe({
-			next: (filter) => {
-				this.filter = filter;
-			},
-		});
-	}
-
-	ngOnDestroy(): void {
-		this.destroyed.next();
-		this.destroyed.complete();
-	}
-
-	protected showSlot(slot: ISlotUIContext): boolean {
-		return (
-			!!this.weekday?.day &&
-			isSlotVisible(slot, this.filter || emptyCalendarFilter)
-		);
+	// we pass day and filter to let the template know about the dependencies.
+	protected showSlot(
+		slot: ISlotUIContext,
+		day: CalendarDay | undefined,
+		filter: ICalendarFilter,
+	): boolean {
+		return !!day && isSlotVisible(slot, filter);
 	}
 
 	protected onDateSelected(): void {
 		// console.log('onDateSelected', event);
-		if (this.weekday?.day?.date) {
-			this.dateSelected.next(this.weekday?.day?.date);
+		const day = this.$weekday().day;
+		if (day?.date) {
+			this.dateSelected.next(day.date);
 		}
 	}
 
 	protected goNewHappening(type: HappeningType): void {
-		// const space = this.weekday?.day?.spaces?.length
-		// 	? this.weekday.day.spaces[0]
-		// 	: undefined;
 		const space = this.$space();
 		console.log(
 			`ScheduleWeekdayComponent.goNewHappening() type=${type}, space=${JSON.stringify(space)}`,
@@ -87,8 +98,8 @@ export class CalendarWeekdayComponent implements OnDestroy {
 		}
 		const params: NewHappeningParams = {
 			type,
-			wd: this.weekday?.id,
-			date: this.weekday?.day?.dateID,
+			wd: this.$weekday().id,
+			date: this.$weekday().day?.dateID,
 		};
 		this.scheduleNavService.goNewHappening(space, params);
 	}

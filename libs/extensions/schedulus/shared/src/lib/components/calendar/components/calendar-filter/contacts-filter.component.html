@@ -1,38 +1,37 @@
-<!--<ion-segment>-->
-<!--	<ion-segment-button>Members</ion-segment-button>-->
-<!--	<ion-segment-button>Contacts</ion-segment-button>-->
-<!--</ion-segment>-->
-
+@let contacts = $contacts();
 @if (contacts && contacts.length <= 7) {
 	<ion-item-divider color="light">
-		<ion-label>Members & Contacts</ion-label>
+		<ion-label>Participants</ion-label>
 		<ion-buttons slot="end">
 			<ion-button title="Choose members and contacts" color="medium">
 				<ion-icon slot="start" name="add-circle-outline" />
 				<ion-label>Choose</ion-label>
 			</ion-button>
-			<ion-button
-				*ngIf="contactIDs.length"
-				title="Clear members filter"
-				color="medium"
-				(click)="clearMembers()"
-			>
-				<ion-icon name="close" />
-			</ion-button>
+			@if (contactIDs.length) {
+				<ion-button
+					title="Clear members filter"
+					color="medium"
+					(click)="clearMembers()"
+				>
+					<ion-icon name="close" />
+				</ion-button>
+			}
 		</ion-buttons>
 	</ion-item-divider>
-	@for (member of contacts; track member.id) {
+	@for (contact of contacts; track contact.id) {
 		<ion-item>
 			<ion-checkbox
 				justify="start"
 				labelPlacement="end"
-				[value]="member.id"
-				[checked]="contactIDs.includes(member.id)"
+				[value]="contact.id"
+				[checked]="contactIDs.includes(contact.id)"
 				(ionChange)="onContactCheckChanged($event)"
-				>{{ member | contactTitle }}</ion-checkbox
-			>
+				>{{ contact | contactTitle }}
+			</ion-checkbox>
 			<ion-buttons slot="end">
-				<ion-button><ion-icon name="person-circle-outline" /></ion-button>
+				<ion-button>
+					<ion-icon name="person-circle-outline" />
+				</ion-button>
 			</ion-buttons>
 		</ion-item>
 	}
@@ -54,17 +53,17 @@
 	<!--					</ion-segment>-->
 } @else {
 	<ion-item>
-		<ion-label color="medium">Member</ion-label>
 		<ion-select
 			interface="popover"
 			[(ngModel)]="contactID"
 			(ionChange)="onContactCheckChanged($event)"
+			label="Participants"
 		>
 			<ion-select-option value="">* Anyone</ion-select-option>
-			<ion-select-option value="UNASSIGNED">- Unassigned </ion-select-option>
-			@for (member of contacts; track member.id) {
-				<ion-select-option [value]="member.id">
-					{{ member | contactTitle }}
+			<ion-select-option value="UNASSIGNED">- Unassigned</ion-select-option>
+			@for (contact of contacts; track contact.id) {
+				<ion-select-option [value]="contact.id">
+					{{ contact | contactTitle }}
 				</ion-select-option>
 			}
 		</ion-select>

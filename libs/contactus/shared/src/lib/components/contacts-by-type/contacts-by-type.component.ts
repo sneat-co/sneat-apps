@@ -195,6 +195,12 @@ export class ContactsByTypeComponent
 		// );
 	}
 
+	protected find(event: Event): void {
+		event.stopPropagation();
+		event.preventDefault();
+		alert('Not implemented yet');
+	}
+
 	protected addContact(
 		event: Event,
 		group: ContactGroupWithIdAndBrief,

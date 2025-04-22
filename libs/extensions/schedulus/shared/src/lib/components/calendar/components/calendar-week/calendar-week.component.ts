@@ -1,14 +1,16 @@
 import {
+	ChangeDetectionStrategy,
 	Component,
 	EventEmitter,
 	input,
 	Input,
 	OnChanges,
 	Output,
+	signal,
 	SimpleChange,
 	SimpleChanges,
 } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonItemGroup } from '@ionic/angular/standalone';
 import { dateToIso } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import { CalendarDataProvider } from '../../../../services/calendar-data-provider';
@@ -16,34 +18,34 @@ import { NewHappeningParams } from '@sneat/mod-schedulus-core';
 import { Week } from '../../../week';
 import { ICalendarFilter } from '../calendar-filter/calendar-filter';
 import { createWeekdays } from '../../../calendar-core';
-import { Weekday } from '../../weekday';
 import { CalendarWeekdayComponent } from '../calendar-weekday/calendar-weekday.component';
 
 @Component({
 	selector: 'sneat-calendar-week',
 	templateUrl: './calendar-week.component.html',
-	imports: [IonicModule, CalendarWeekdayComponent],
+	imports: [CalendarWeekdayComponent, IonItemGroup],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarWeekComponent implements OnChanges {
 	public readonly $space = input.required<ISpaceContext | undefined>();
+	public readonly $week = input.required<Week>();
 
-	@Input({ required: true }) week?: Week;
 	@Input({ required: true }) spaceDaysProvider?: CalendarDataProvider;
 	@Input() filter?: ICalendarFilter;
 
 	@Output() readonly goNew = new EventEmitter<NewHappeningParams>();
 	@Output() readonly dateSelected = new EventEmitter<Date>();
 
-	protected weekdays: readonly Weekday[] = createWeekdays();
+	protected readonly $weekdays = signal(createWeekdays());
 
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log(
 			'CalendarWeekComponent.ngOnChanges()',
-			this.week?.startDate,
+			this.$week().startDate,
 			changes,
 		);
-		if (changes['week']) {
-			this.onWeekInputChanged(changes['week']);
+		if (changes['$week']) {
+			this.onWeekInputChanged(changes['$week']);
 		}
 		if (changes['spaceDaysProvider']) {
 			this.onSpaceChanged();
@@ -51,8 +53,9 @@ export class CalendarWeekComponent implements OnChanges {
 	}
 
 	private onSpaceChanged(): void {
-		if (this.week?.startDate) {
-			this.recreateWeekdays(this.week.startDate);
+		const week = this.$week();
+		if (week.startDate) {
+			this.recreateWeekdays(week.startDate);
 		}
 	}
 
@@ -64,14 +67,15 @@ export class CalendarWeekComponent implements OnChanges {
 			return;
 		}
 		const startDateN = startDate.getDate();
-		this.weekdays = this.weekdays.map((wd, i) => {
-			let date = new Date();
-			date = new Date(date.setDate(startDateN + i));
-			return {
-				...this.weekdays[i],
-				day: spaceDaysProvider.getCalendarDay(date),
-			};
-		});
+		this.$weekdays.update((weekdays) =>
+			weekdays.map((wd, i) => {
+				const date = new Date(new Date().setDate(startDateN + i));
+				return {
+					...wd,
+					day: spaceDaysProvider.getCalendarDay(date),
+				};
+			}),
+		);
 	}
 
 	private onWeekInputChanged(weekChange: SimpleChange): void {

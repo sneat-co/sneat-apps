@@ -9,8 +9,8 @@
 			class="sneat-hide-if-width-less-638 sneat-tiny-end-margin sneat-no-horizontal-margins"
 		>
 			<ion-button
-				[disabled]="isDefaultDate()"
-				[color]="isDefaultDate() ? 'medium' : 'primary'"
+				[disabled]="$isDefaultDate()"
+				[color]="$isDefaultDate() ? 'medium' : 'primary'"
 				[title]="shiftDays === 0 ? 'Jump to today' : 'Jump to tomorrow'"
 				(click)="setToday()"
 			>

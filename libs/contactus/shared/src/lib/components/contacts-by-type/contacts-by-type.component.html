@@ -30,7 +30,7 @@
 						} @else {
 							@switch (role.contacts.length) {
 								@case (0) {
-									not added yet 22
+									not added yet
 								}
 								@default {
 									{{ role.contacts.length }}
@@ -46,10 +46,12 @@
 					@if (role.brief.finder) {
 						<ion-button
 							target="_blank"
-							color="primary"
+							color="medium"
 							[href]="'https:' + role.brief.finder"
 							[title]="'Find at https://' + role.brief.finder"
-							>Find
+							(click)="find($event)"
+						>
+							Find
 						</ion-button>
 					}
 					<ion-button

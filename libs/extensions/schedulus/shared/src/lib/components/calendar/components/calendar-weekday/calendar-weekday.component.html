@@ -1,9 +1,12 @@
+@let weekday = $weekday();
+@let day = $day();
+
 <ion-item-divider color="light">
 	<ion-label slot="start" (click)="onDateSelected()" tappable>
 		@if (day?.slots?.length) {
-			<b>{{ weekday?.longTitle }}</b>
+			<b>{{ weekday.longTitle }}</b>
 		} @else if (!day?.slots?.length) {
-			{{ weekday?.longTitle }}
+			{{ weekday.longTitle }}
 		}
 		@if (day?.date) {
 			, {{ day?.date?.getDate() }}
@@ -25,15 +28,15 @@
 @if (!day || day.$isLoading()) {
 	<ion-item>
 		<ion-label color="medium" style="font-style: italic"
-			>Loading data for {{ weekday?.longTitle }} isLoading={{
+			>Loading data for {{ weekday.longTitle }} isLoading={{
 				day?.$isLoading()
-			}}... weekday.day.id: {{ weekday?.day?.dateID }}
+			}}... weekday.day.id: {{ weekday.day?.dateID }}
 		</ion-label>
 		<ion-spinner name="lines-small" slot="end" color="medium" />
 	</ion-item>
 } @else if (day) {
 	@for (slot of day.slots; track slot.slot.id) {
-		@if (showSlot(slot)) {
+		@if (showSlot(slot, $day(), $filter())) {
 			<sneat-day-slot-item
 				[space]="slot.happening.space"
 				[dateID]="day.dateID"
@@ -41,9 +44,9 @@
 			/>
 		}
 	} @empty {
-		<ion-item>
+		<ion-item lines="full">
 			<ion-label color="medium" style="font-style: italic"
-				>Nothing scheduled yet for {{ weekday?.longTitle }}.
+				>Nothing scheduled yet for {{ weekday.longTitle }}.
 			</ion-label>
 		</ion-item>
 	}

@@ -4,7 +4,7 @@
 		(ionChange)="accordionChanged($event)"
 	>
 		<ion-accordion value="filter">
-			<ion-item slot="header">
+			<ion-item slot="header" [color]="$expanded() ? 'light' : undefined">
 				<ion-icon name="search-outline" slot="start" />
 				<!--				<ion-label color="medium" position="floating">Filter</ion-label>-->
 				<ion-input
@@ -14,7 +14,7 @@
 					(click)="$event.stopPropagation()"
 					placeholder="text to search"
 				/>
-				@if (hasFilter) {
+				@if ($hasFilter()) {
 					<ion-buttons slot="end">
 						<ion-button (click)="clearFilter($event)" title="Clear filter">
 							<ion-icon name="close-outline" color="medium" />
@@ -27,7 +27,7 @@
 				<!--					<ion-checkbox (ionChange)="emitChanged()" slot="start" labelPlacement="end">Myself</ion-checkbox>-->
 				<!--				</ion-item>-->
 				@if (showWeekdays) {
-					<ion-item-divider color="light">Weekdays </ion-item-divider>
+					<ion-item-divider color="light">Weekdays</ion-item-divider>
 					<ion-grid class="ion-grid-layout">
 						<ion-row>
 							<ion-col>
@@ -118,7 +118,7 @@
 					</ion-grid>
 				}
 				@if (showRepeats) {
-					<ion-item-divider color="light">Repeats </ion-item-divider>
+					<ion-item-divider color="light">Repeats</ion-item-divider>
 					<ion-grid class="ion-grid-layout">
 						<ion-row>
 							<ion-col>
@@ -178,13 +178,13 @@
 				}
 
 				<sneat-contacts-filter
-					[contactIDs]="filter.contactIDs"
+					[contactIDs]="$filter().contactIDs"
 					(contactIDsChange)="onSelectedContactsChanged($event)"
 				/>
 			</ion-item-group>
 		</ion-accordion>
 	</ion-accordion-group>
-	@if (!expanded && filter.contactIDs.length) {
+	@if (!$expanded() && $filter().contactIDs.length) {
 		<ion-item>
 			<ion-label>
 				@if (selectedContacts.length === 1) {
@@ -193,14 +193,14 @@
 				@if (selectedContacts.length > 1) {
 					Members:
 				}
-				@for (member of selectedContacts; track member.id) {
-					<ion-badge style="margin: 0 0.5em" color="light"
-						>{{ member | contactTitle }}
+				@for (contact of selectedContacts; track contact.id) {
+					<ion-badge style="margin: 0 0.5em" color="light">
+						{{ contact | contactTitle }}
 					</ion-badge>
 				}
 			</ion-label>
 			<ion-buttons slot="end">
-				<ion-button title="Clear members filter" color="medium">
+				<ion-button title="Clear participants" color="medium">
 					<!-- (click)="clearMembers()" -->
 					<ion-icon name="close" />
 				</ion-button>

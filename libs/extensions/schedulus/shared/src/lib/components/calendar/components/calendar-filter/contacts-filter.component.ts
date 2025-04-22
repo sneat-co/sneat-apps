@@ -1,5 +1,5 @@
-import { NgIf } from '@angular/common';
 import {
+	ChangeDetectionStrategy,
 	Component,
 	EventEmitter,
 	Input,
@@ -9,7 +9,17 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCheckbox,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonSelect,
+	IonSelectOption,
+} from '@ionic/angular/standalone';
 import { ContactTitlePipe } from '@sneat/components';
 import {
 	addSpace,
@@ -28,7 +38,20 @@ import { zipMapBriefsWithIDs } from '@sneat/space-models';
 @Component({
 	selector: 'sneat-contacts-filter',
 	templateUrl: 'contacts-filter.component.html',
-	imports: [IonicModule, NgIf, FormsModule, ContactTitlePipe],
+	imports: [
+		FormsModule,
+		ContactTitlePipe,
+		IonItemDivider,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonItem,
+		IonCheckbox,
+		IonSelect,
+		IonSelectOption,
+	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactsFilterComponent
 	extends ContactusModuleBaseComponent
@@ -42,7 +65,10 @@ export class ContactsFilterComponent
 	protected readonly $selectedContacts = signal<
 		readonly IContactWithBriefAndSpace[]
 	>([]);
-	contacts?: IContactWithBriefAndSpace[];
+
+	protected readonly $contacts = signal<
+		readonly IContactWithBriefAndSpace[] | undefined
+	>(undefined);
 
 	constructor(contactusSpaceService: ContactusSpaceService) {
 		super('ContactsFilterComponent', contactusSpaceService);
@@ -66,8 +92,8 @@ export class ContactsFilterComponent
 			...m,
 			space: this.space || { id: '' },
 		}));
-		this.contacts = contactBriefs.filter((c) =>
-			c.brief.roles?.includes('member'),
+		this.$contacts.set(
+			contactBriefs.filter((c) => c.brief.roles?.includes('member')),
 		);
 	}
 
@@ -102,7 +128,7 @@ export class ContactsFilterComponent
 
 	private setSelectedMembers(): void {
 		const space = this.$space();
-		const contacts = this.contacts || [];
+		const contacts = this.$contacts() || [];
 		const selectedContacts = this.contactIDs.map((id) => {
 			let contact = contacts.find((m) => m.id == id);
 			if (!contact) {
