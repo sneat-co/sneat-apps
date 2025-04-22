@@ -1,46 +1,54 @@
-@let contacts = $contacts();
-@if (contacts && contacts.length <= 7) {
-	<ion-item-divider color="light">
-		<ion-label>Participants</ion-label>
+@let members = $members();
+@if (members && members.length <= 7) {
+	<ion-item-divider color="light" class="sneat-tiny-end-padding">
+		<!--		<ion-label color="medium" class="ion-margin-end">Participants</ion-label>-->
+		<ion-segment [value]="$tab()" (ionChange)="onTabChanged($event)">
+			<ion-segment-button value="members">Members</ion-segment-button>
+			<ion-segment-button value="contacts">Contacts</ion-segment-button>
+		</ion-segment>
 		<ion-buttons slot="end">
-			<ion-button title="Choose members and contacts" color="medium">
-				<ion-icon slot="start" name="add-circle-outline" />
-				<ion-label>Choose</ion-label>
-			</ion-button>
-			@if (contactIDs.length) {
+			@if ($tab() === "contacts") {
+				<ion-button title="Choose members and contacts" color="medium">
+					<ion-icon slot="start" name="add-circle-outline" />
+					<ion-label>Choose</ion-label>
+				</ion-button>
+			}
+			@if ($hasContactIDs()) {
 				<ion-button
-					title="Clear members filter"
+					title="Clear participants filter"
 					color="medium"
-					(click)="clearMembers()"
+					(click)="clearSelectedContacts()"
 				>
 					<ion-icon name="close" />
 				</ion-button>
 			}
 		</ion-buttons>
 	</ion-item-divider>
-	@for (contact of contacts; track contact.id) {
-		<ion-item>
-			<ion-checkbox
-				justify="start"
-				labelPlacement="end"
-				[value]="contact.id"
-				[checked]="contactIDs.includes(contact.id)"
-				(ionChange)="onContactCheckChanged($event)"
-				>{{ contact | contactTitle }}
-			</ion-checkbox>
-			<ion-buttons slot="end">
-				<ion-button>
-					<ion-icon name="person-circle-outline" />
-				</ion-button>
-			</ion-buttons>
-		</ion-item>
+	@if ($tab() === "members") {
+		@for (contact of members; track contact.id) {
+			<ion-item>
+				<ion-checkbox
+					justify="start"
+					labelPlacement="end"
+					[value]="contact.id"
+					[checked]="$contactIDs().includes(contact.id)"
+					(ionChange)="onContactCheckChanged($event)"
+					>{{ contact | contactTitle }}
+				</ion-checkbox>
+				<ion-buttons slot="end">
+					<ion-button>
+						<ion-icon name="person-circle-outline" />
+					</ion-button>
+				</ion-buttons>
+			</ion-item>
+		}
 	}
 	<ion-item>
 		<ion-checkbox
 			value=""
 			labelPlacement="end"
 			justify="start"
-			[checked]="contactIDs.includes('')"
+			[checked]="$contactIDs().includes('')"
 			(ionChange)="onContactCheckChanged($event)"
 			><small>Unassigned only</small>
 		</ion-checkbox>
@@ -61,7 +69,7 @@
 		>
 			<ion-select-option value="">* Anyone</ion-select-option>
 			<ion-select-option value="UNASSIGNED">- Unassigned</ion-select-option>
-			@for (contact of contacts; track contact.id) {
+			@for (contact of members; track contact.id) {
 				<ion-select-option [value]="contact.id">
 					{{ contact | contactTitle }}
 				</ion-select-option>

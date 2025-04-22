@@ -73,12 +73,22 @@ export class CalendarFilterComponent extends WeekdaysFormBase {
 	selectedContacts: IContactWithBriefAndSpace[] = [];
 	contacts?: IContactWithBriefAndSpace[];
 
-	protected readonly repeatWeekly = new FormControl<boolean>(false);
-	protected readonly repeatMonthly = new FormControl<boolean>(false);
-	protected readonly repeatQuarterly = new FormControl<boolean>(false);
-	protected readonly repeatYearly = new FormControl<boolean>(false);
+	protected readonly $repeatsWeekly = computed(() =>
+		this.$repeats().includes('weekly'),
+	);
+	protected readonly $repeatsMonthly = computed(() =>
+		this.$repeats().includes('monthly'),
+	);
+	protected readonly $repeatsQuarterly = computed(() =>
+		this.$repeats().includes('quarterly'),
+	);
+	protected readonly $repeatsYearly = computed(() =>
+		this.$repeats().includes('yearly'),
+	);
 
 	protected readonly $filter = signal<ICalendarFilter>(emptyCalendarFilter);
+
+	protected readonly $contactIDs = computed(() => this.$filter().contactIDs);
 
 	protected readonly $hasFilter = computed(() => {
 		const filter = this.$filter();
@@ -124,7 +134,7 @@ export class CalendarFilterComponent extends WeekdaysFormBase {
 		this.emitChanged();
 	};
 
-	clearFilter(event?: Event): void {
+	protected clearFilter(event?: Event): void {
 		event?.stopPropagation();
 		this.resetting = true;
 		try {
@@ -144,10 +154,6 @@ export class CalendarFilterComponent extends WeekdaysFormBase {
 			};
 			this.text.setValue('', resetFormControlOptions);
 			Object.values(this.weekdayById).forEach((wd) => wd.set(false));
-			this.repeatWeekly.setValue(false);
-			this.repeatMonthly.setValue(false);
-			this.repeatQuarterly.setValue(false);
-			this.repeatYearly.setValue(false);
 		} catch (e) {
 			console.error(e);
 		}
@@ -155,31 +161,26 @@ export class CalendarFilterComponent extends WeekdaysFormBase {
 		this.emitChanged();
 	}
 
-	public accordionChanged(event: Event): void {
+	protected accordionChanged(event: Event): void {
 		console.log('accordionChanged', event);
 		event.stopPropagation();
 		this.$expanded.set(!!(event as CustomEvent).detail.value);
 	}
 
-	// repeatChecked(id: string): boolean {
-	// 	return this.repeats.includes(id);
-	// }
-
-	public repeatChanged(event: Event): void {
+	protected repeatChanged(event: Event): void {
 		const ce = event as CustomEvent;
 		const { checked, value } = ce.detail;
-		const found = this.$repeats().includes(value);
-		if (checked) {
-			if (!found) {
-				this.$filter.update((f) => ({ ...f, repeats: [...f.repeats, value] }));
+		this.$filter.update((filter) => {
+			const repeats = filter.repeats;
+			const found = repeats.includes(value);
+			if (checked && !found) {
+				return { ...filter, repeats: [...repeats, value] };
 			}
-		} else if (found) {
-			this.$filter.update((f) => ({
-				...f,
-				repeats: f.repeats.filter((r) => r !== value),
-			}));
-		}
-		// console.log('repeatChanged()', checked, value, 'repeats', this.repeats);
+			if (!checked && found) {
+				return { ...filter, repeats: repeats.filter((r) => r !== value) };
+			}
+			return filter;
+		});
 		this.emitChanged();
 	}
 

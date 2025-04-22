@@ -1,14 +1,15 @@
-import { Directive, OnDestroy, Injector, inject } from '@angular/core';
+import { Directive, OnDestroy, Injector, inject, signal } from '@angular/core';
 import { dateToIso } from '@sneat/core';
 import { WithSpaceInput } from '@sneat/space-components';
 import { CalendarDayService } from '../../services/calendar-day.service';
 import { CalendariumSpaceService } from '../../services/calendarium-space.service';
 import { HappeningService } from '../../services/happening.service';
 import {
+	CalendarHappeningBriefsByID,
 	ICalendariumSpaceDbo,
 	IHappeningWithUiState,
 } from '@sneat/mod-schedulus-core';
-import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/space-models';
+import { zipMapBriefsWithIDs } from '@sneat/space-models';
 import { CalendarDataProvider } from '../../services/calendar-data-provider';
 
 @Directive()
@@ -20,15 +21,19 @@ export abstract class CalendarBaseComponent
 
 	protected readonly spaceDaysProvider: CalendarDataProvider;
 
-	private schedulusSpaceDbo?: ICalendariumSpaceDbo | null;
+	private readonly $calendariumSpaceDbo = signal<
+		ICalendariumSpaceDbo | null | undefined
+	>(undefined);
 
-	protected allRecurrings?: readonly IHappeningWithUiState[];
+	protected readonly $allRecurrings = signal<
+		readonly IHappeningWithUiState[] | undefined
+	>(undefined);
 
 	protected readonly injector = inject(Injector);
 
 	protected constructor(
 		className: string,
-		private readonly calendariumSpaceService: CalendariumSpaceService,
+		calendariumSpaceService: CalendariumSpaceService,
 		happeningService: HappeningService,
 		calendarDayService: CalendarDayService,
 	) {
@@ -49,47 +54,39 @@ export abstract class CalendarBaseComponent
 		this.spaceDaysProvider.destroy();
 	}
 
-	protected populateRecurrings(): void {
-		const prevAll = this.allRecurrings;
-		this.allRecurrings =
-			zipMapBriefsWithIDs(
-				this.schedulusSpaceDbo?.recurringHappenings || {},
-			)?.map((rh) => {
-				const { id } = rh;
-				const prev = prevAll?.find((p) => p.id === id);
-				const result: IHappeningWithUiState = {
-					id,
-					brief: rh.brief,
-					state: prev?.state || {},
-					space: this.$space(),
-				};
-				return result;
-			}) || [];
+	protected populateRecurrings(
+		recurringBriefs?: CalendarHappeningBriefsByID,
+	): void {
+		console.log('populateRecurrings', recurringBriefs);
+		this.$allRecurrings.update(
+			(prevAll) =>
+				zipMapBriefsWithIDs(recurringBriefs || {})?.map((rh) => {
+					const { id } = rh;
+					const prev = prevAll?.find((p) => p.id === id);
+					const result: IHappeningWithUiState = {
+						id,
+						brief: rh.brief,
+						state: prev?.state || {},
+						space: this.$space(),
+					};
+					return result;
+				}) || [],
+		);
 		this.onRecurringsLoaded();
 	}
 
 	protected abstract onRecurringsLoaded(): void;
 
-	private onSpaceIdChanged(space: ISpaceContext): void {
+	protected override onSpaceIdChanged(spaceID: string): void {
+		super.onSpaceIdChanged(spaceID);
 		// console.log('ScheduleComponent.onSpaceIdChanged()', this.space?.id);
-		if (!space) {
+		if (!spaceID) {
 			return;
 		}
-		this.populateRecurrings();
 		this.setDay('onSpaceIdChanged', this.date);
-		// this.slotsProvider.setCommuneId(this.team.id)
-		// 	.subscribe(
-		// 		(regulars) => {
-		// 			console.log('Loaded regulars:', regulars);
-		// 			this.allRegulars = regulars;
-		// 			this.regulars = this.filterRegulars();
-		// 		},
-		// 		this.errorLogger.logError,
-		// 		() => {
-		// 			// this.activeWeek.weekdays = [...this.activeWeek.weekdays];
-		// 			this.setDay('onCommuneIdChanged', this.activeDay.date || new Date());
-		// 		},
-		// 	);
+		this.populateRecurrings(
+			this.spaceDaysProvider.$recurringsBySpaceID()[spaceID],
+		);
 	}
 
 	protected setDay(source: string, d: Date): void {

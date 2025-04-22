@@ -7,6 +7,7 @@ import {
 	OnDestroy,
 	OnInit,
 	Output,
+	signal,
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
@@ -20,7 +21,6 @@ import {
 	WeekdayCode2,
 	IHappeningWithUiState,
 } from '@sneat/mod-schedulus-core';
-// import { SpaceComponentBaseParams } from '@sneat/space-components';
 import { takeUntil } from 'rxjs';
 import {
 	CalendarDayService,
@@ -39,7 +39,6 @@ import { CalendarTab } from './calendar-component-types';
 import { CalendarDayTabComponent } from './components/calendar-day/calendar-day-tab.component';
 import { ICalendarFilter } from './components/calendar-filter/calendar-filter';
 import { CalendarFilterComponent } from './components/calendar-filter/calendar-filter.component';
-
 import { CalendarStateService } from './calendar-state.service';
 import { CalendarWeekTabComponent } from './components/calendar-week/calendar-week-tab.component';
 import { RecurringsTabComponent } from './components/recurrings-tab/recurrings-tab.component';
@@ -77,12 +76,6 @@ export class CalendarComponent
 	@ViewChild('calendarFilterComponent')
 	public calendarFilterComponent?: CalendarFilterComponent;
 
-	// @Input()
-	// set space(space: ISpaceContext) {
-	// 	console.log('CalendarComponent.space=', space);
-	// 	this._space = space;
-	// }
-
 	@Input() member?: IMemberContext; // TODO: rename to contact?
 	@Input() public tab: CalendarTab = 'day';
 	@Input() public dateID = '';
@@ -91,11 +84,11 @@ export class CalendarComponent
 
 	protected isWeekTabActivated = false;
 
-	// private date: Date;
-	protected recurrings?: readonly IHappeningWithUiState[];
+	protected readonly $recurrings = signal<
+		readonly IHappeningWithUiState[] | undefined
+	>(undefined);
 
 	constructor(
-		// private readonly params: SpaceComponentBaseParams,
 		private readonly filterService: CalendarFilterService,
 		private readonly calendarStateService: CalendarStateService,
 		happeningService: HappeningService,
@@ -119,7 +112,7 @@ export class CalendarComponent
 		this.filterService.filter.pipe(takeUntil(this.destroyed$)).subscribe({
 			next: (filter) => {
 				this.filter = filter;
-				this.recurrings = this.filterRecurrings(filter);
+				this.$recurrings.set(this.filterRecurrings(filter));
 			},
 			error: this.errorLogger.logErrorHandler('failed to get calendar filter'),
 		});
@@ -228,8 +221,12 @@ export class CalendarComponent
 	}
 
 	override onRecurringsLoaded(): void {
-		this.recurrings = this.filterRecurrings(this.filter);
-		console.log('onRecurringsLoaded()', this.allRecurrings, this.recurrings);
+		this.$recurrings.set(this.filterRecurrings(this.filter));
+		console.log(
+			'onRecurringsLoaded()',
+			this.$allRecurrings(),
+			this.$recurrings(),
+		);
 	}
 
 	// We filter recurring at calendar level, so we can share it across different components?
@@ -242,7 +239,7 @@ export class CalendarComponent
 		}
 		const text = filter.text.toLowerCase();
 
-		const filtered = this.allRecurrings?.filter((r) => {
+		const filtered = this.$allRecurrings()?.filter((r) => {
 			const title = r.brief?.title || r.dbo?.title;
 			let hide = '';
 
@@ -273,7 +270,7 @@ export class CalendarComponent
 		console.log(
 			`CalendarComponent.filterRecurrings()`,
 			filter,
-			this.allRecurrings,
+			this.$allRecurrings(),
 			' => ',
 			filtered,
 		);

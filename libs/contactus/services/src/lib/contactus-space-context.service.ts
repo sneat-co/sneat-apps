@@ -75,7 +75,10 @@ export class ContactusSpaceContextService {
 	private readonly onContactusSpaceChanged = (
 		contactusSpace: IContactusSpaceDboAndID,
 	): void => {
-		console.log('onContactusSpaceChanged()', contactusSpace);
+		console.log(
+			'ContactusSpaceContextService.onContactusSpaceChanged()',
+			contactusSpace,
+		);
 		this.contactusSpaceContext.next(contactusSpace);
 	};
 }

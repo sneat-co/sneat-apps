@@ -54,8 +54,8 @@ This is probably due to the fact that we open 14 listeners (1 for each day of 2 
 	@case ("recurrings") {
 		<sneat-recurrings-tab
 			[$space]="$space()"
-			[$recurrings]="recurrings"
-			[$allRecurrings]="allRecurrings"
+			[$recurrings]="$recurrings()"
+			[$allRecurrings]="$allRecurrings()"
 		/>
 	}
 	@case ("singles") {
