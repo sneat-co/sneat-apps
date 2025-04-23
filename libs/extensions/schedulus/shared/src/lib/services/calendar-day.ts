@@ -27,7 +27,10 @@ import { runInInjectionContext, Injector, EffectRef } from '@angular/core';
 
 export interface ICalendarDayInput {
 	readonly spaceID: string; // Should we use observable on ISpaceContext as we might want to use space settings?
-	readonly recurrings$: Observable<RecurringSlots>;
+	readonly $recurringSlots: Signal<RecurringSlots | undefined>;
+
+	// Obsolete - to be replaced with `$recurringSlots`
+	readonly recurringSlots$: Observable<RecurringSlots>;
 }
 
 export class CalendarDay {
@@ -102,7 +105,7 @@ export class CalendarDay {
 					this.subscriptions.forEach((s) => s.unsubscribe());
 					this.subscriptions.length = 0;
 					this.processSpaceID(input.spaceID);
-					this.subscribeForRecurrings(input.recurrings$);
+					this.subscribeForRecurrings(input.recurringSlots$);
 				});
 			});
 		});

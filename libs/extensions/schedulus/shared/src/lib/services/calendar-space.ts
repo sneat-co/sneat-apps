@@ -1,4 +1,4 @@
-import { signal } from '@angular/core';
+import { computed, signal } from '@angular/core';
 import { hasRelated } from '@sneat/dto';
 import { CalendariumSpaceService } from '../services/calendarium-space.service';
 import {
@@ -47,11 +47,20 @@ export class CalendarSpace {
 		emptyRecurringsByWeekday(),
 	);
 
+	private readonly $calendariumSpace = signal<
+		ICalendariumSpaceContext | undefined
+	>(undefined);
+
+	public readonly $recurringSlots = signal<RecurringSlots | undefined>(
+		undefined,
+	);
+
 	private readonly calendariumSpace$ = new BehaviorSubject<
 		ICalendariumSpaceContext | undefined
 	>(undefined);
 
-	public readonly recurrings$: Observable<RecurringSlots> =
+	// TODO: consider switching to a computed $recurringSlots signal
+	public readonly recurringSlots$: Observable<RecurringSlots> =
 		this.calendariumSpace$.pipe(
 			tap((calendariumSpace) =>
 				console.log('SpaceDaysProvider.calendariumSpace$ =>', calendariumSpace),
@@ -61,7 +70,10 @@ export class CalendarSpace {
 			// TODO: Instead of providing all slots we can provide observables of slots for a specific day
 			// That would minimize number of handlers to be called on watching components
 			map((schedulusSpace) => groupRecurringSlotsByWeekday(schedulusSpace)),
-			tap((slots) => console.log('SpaceDaysProvider.recurrings$ =>', slots)),
+			tap((recurringSlots) => {
+				console.log('SpaceDaysProvider.recurrings$ =>', recurringSlots);
+				this.$recurringSlots.set(recurringSlots);
+			}),
 			shareReplay(1),
 			takeUntil(this.destroyed),
 		);
@@ -107,6 +119,7 @@ export class CalendarSpace {
 		calendariumSpace: ISpaceItemWithOptionalDbo<ICalendariumSpaceDbo>,
 	): void {
 		console.log('SpaceDaysProvider.setSchedulusSpace()', calendariumSpace);
+		this.$calendariumSpace.set(calendariumSpace);
 		this.calendariumSpace$.next(calendariumSpace);
 		this.processRecurringBriefs();
 	}

@@ -28,36 +28,42 @@ export const emptyRecurringsByWeekday = (): RecurringsByWeekday =>
 	);
 
 export const groupRecurringSlotsByWeekday = (
-	schedulusTeam?: ICalendariumSpaceContext,
+	calendariumSpace?: ICalendariumSpaceContext,
 ): RecurringSlots => {
-	const logPrefix = `teamRecurringSlotsByWeekday(team?.id=${schedulusTeam?.id})`;
+	const logPrefix = `groupRecurringSlotsByWeekday(spaceID=${calendariumSpace?.id})`;
 	const slots: RecurringSlots = {
 		byWeekday: {},
 	};
-	if (!schedulusTeam?.dbo?.recurringHappenings) {
-		console.log(logPrefix + ', no slots for team:', schedulusTeam);
+	if (!calendariumSpace?.dbo?.recurringHappenings) {
+		console.log(logPrefix + ', no slots for team:', calendariumSpace);
 		return slots;
 	}
-	zipMapBriefsWithIDs(schedulusTeam.dbo.recurringHappenings).forEach((rh) => {
-		Object.entries(rh.brief.slots || {})?.forEach(([slotID, rs]) => {
-			const happening: IHappeningContext = {
-				id: rh.id,
-				brief: rh.brief,
-				space: schedulusTeam.space,
-			};
-			const slotItems = slotUIContextsFromRecurringSlot(happening, slotID, rs);
-			slotItems.forEach((si) => {
-				if (si.wd) {
-					let weekday = slots.byWeekday[si.wd];
-					if (!weekday) {
-						weekday = [];
-						slots.byWeekday[si.wd] = weekday;
+	zipMapBriefsWithIDs(calendariumSpace.dbo.recurringHappenings).forEach(
+		(rh) => {
+			Object.entries(rh.brief.slots || {})?.forEach(([slotID, rs]) => {
+				const happening: IHappeningContext = {
+					id: rh.id,
+					brief: rh.brief,
+					space: calendariumSpace.space,
+				};
+				const slotItems = slotUIContextsFromRecurringSlot(
+					happening,
+					slotID,
+					rs,
+				);
+				slotItems.forEach((si) => {
+					if (si.wd) {
+						let weekday = slots.byWeekday[si.wd];
+						if (!weekday) {
+							weekday = [];
+							slots.byWeekday[si.wd] = weekday;
+						}
+						weekday.push(si);
 					}
-					weekday.push(si);
-				}
+				});
 			});
-		});
-	});
+		},
+	);
 	console.log(logPrefix + ', slots:', slots);
 	return slots;
 };

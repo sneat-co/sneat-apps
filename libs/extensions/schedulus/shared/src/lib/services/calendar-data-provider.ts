@@ -3,14 +3,11 @@ import { dateToIso } from '@sneat/core';
 import { CalendariumSpaceService } from '../services/calendarium-space.service';
 import {
 	CalendarHappeningBriefsBySpaceID,
-	IHappeningBrief,
-	IHappeningDbo,
 	ISlotUIContext,
 	WeekdayCode2,
 } from '@sneat/mod-schedulus-core';
 import { IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
-import { ModuleSpaceItemService } from '@sneat/space-services';
 import { EMPTY, Observable, Subject } from 'rxjs';
 import { CalendarDay, ICalendarDayInput } from './calendar-day';
 import { CalendarSpace } from './calendar-space';
@@ -72,17 +69,20 @@ export class CalendarDataProvider {
 
 	private readonly destroyed = new Subject<void>();
 
-	private readonly recurringsSpaceItemService?: ModuleSpaceItemService<
-		IHappeningBrief,
-		IHappeningDbo
-	>;
+	// private readonly recurringsSpaceItemService?: ModuleSpaceItemService<
+	// 	IHappeningBrief,
+	// 	IHappeningDbo
+	// >;
 	// private readonly singlesByDate: Record<string, ISlotUIContext[]> = {};
 
 	private readonly $space = signal<ISpaceContext | undefined>(undefined);
 
 	private readonly days: Record<string, CalendarDay> = {};
 
-	private contactID?: string; // TODO: should be {readonly spaceID: string; readonly contactID: string}
+	// private contactID?: string; // TODO: should be {readonly spaceID: string; readonly contactID: string}
+	// public setContactId(contactID: string): void {
+	// 	this.contactID = contactID;
+	// }
 
 	constructor(
 		private readonly injector: Injector,
@@ -166,10 +166,13 @@ export class CalendarDataProvider {
 	}
 
 	private readonly $inputs = computed<readonly ICalendarDayInput[]>(() =>
-		this.$spaces().map((space) => ({
-			spaceID: space.spaceID,
-			recurrings$: space.recurrings$,
-		})),
+		this.$spaces().map(
+			(space): ICalendarDayInput => ({
+				spaceID: space.spaceID,
+				$recurringSlots: space.$recurringSlots.asReadonly(),
+				recurringSlots$: space.recurringSlots$,
+			}),
+		),
 	);
 
 	public getCalendarDay(date: Date): CalendarDay {
@@ -187,10 +190,6 @@ export class CalendarDataProvider {
 			this.days[id] = day;
 		}
 		return day;
-	}
-
-	public setMemberId(memberId: string): void {
-		this.contactID = memberId;
 	}
 
 	public preloadEvents(...dates: Date[]): Observable<CalendarDay> {
