@@ -1,5 +1,6 @@
 import { ApplicationConfig } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { SneatAppComponent } from './app/sneat-app.component';
 import { appConfig } from './app/sneat-app.config';
 import { RouteReuseStrategy } from '@angular/router';
@@ -21,6 +22,7 @@ const standaloneAppConfig: ApplicationConfig = {
 		...getProviders(),
 		{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
 		provideIonicAngular(),
+		provideAnimationsAsync(),
 	],
 };
 
