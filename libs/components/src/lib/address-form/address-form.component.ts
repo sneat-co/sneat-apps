@@ -7,6 +7,7 @@ import {
 	OnChanges,
 	OnInit,
 	Output,
+	signal,
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
@@ -17,7 +18,18 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from '@angular/forms';
-import { IonicModule, IonInput } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonSpinner,
+	IonTextarea,
+} from '@ionic/angular/standalone';
 import { excludeUndefined } from '@sneat/core';
 import { IAddress } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -49,8 +61,17 @@ export interface AddressRequiredFields {
 		ReactiveFormsModule,
 		FormsModule,
 		CommonModule,
-		IonicModule,
 		CountrySelectorComponent,
+		IonCard,
+		IonItemDivider,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonSpinner,
+		IonIcon,
+		IonItem,
+		IonInput,
+		IonTextarea,
 	],
 })
 export class AddressFormComponent implements OnChanges, OnInit {
@@ -66,7 +87,7 @@ export class AddressFormComponent implements OnChanges, OnInit {
 
 	public readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
 
-	protected saving = false;
+	protected readonly $saving = signal(false);
 
 	protected readonly countryID = new FormControl('', [Validators.required]);
 	protected readonly zip = new FormControl('', [
@@ -198,14 +219,14 @@ export class AddressFormComponent implements OnChanges, OnInit {
 	protected saveChanges(): void {
 		console.log('AddressFormComponent.saveChanges()');
 		const success = (): void => {
-			this.saving = false;
+			this.$saving.set(false);
 			this.form.markAsPristine();
 		};
 		const error = (e: unknown): void => {
-			this.saving = false;
+			this.$saving.set(false);
 			this.errorLogger.logError(e, 'Failed to save address');
 		};
-		this.saving = true;
+		this.$saving.set(true);
 		const countryID = this.countryID.value;
 		if (this.form.dirty && countryID) {
 			const object: IAddress = excludeUndefined({

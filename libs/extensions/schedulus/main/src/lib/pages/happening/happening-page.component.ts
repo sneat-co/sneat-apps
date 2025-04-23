@@ -1,6 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonButtons,
+	IonContent,
+	IonHeader,
+	IonMenuButton,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { SpaceServiceModule } from '@sneat/space-services';
 import { HappeningBasePage } from './happening-base-page';
@@ -15,13 +22,18 @@ import {
 	selector: 'sneat-happening-page',
 	templateUrl: './happening-page.component.html',
 	imports: [
-		FormsModule,
-		IonicModule,
 		HappeningServiceModule,
 		HappeningFormComponent,
 		ContactusServicesModule,
 		HappeningComponentBaseParamsModule,
 		SpaceServiceModule,
+		IonHeader,
+		IonButtons,
+		IonToolbar,
+		IonMenuButton,
+		IonBackButton,
+		IonTitle,
+		IonContent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

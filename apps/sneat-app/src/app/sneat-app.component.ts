@@ -1,6 +1,18 @@
 import { Component, Inject, inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import {
+	IonApp,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonMenu,
+	IonRouterOutlet,
+	IonSplitPane,
+	IonText,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { TelegramAuthService } from '@sneat/auth-core';
 import {
 	AnalyticsService,
@@ -16,9 +28,21 @@ function capitalizeFirstLetter(text: string): string {
 @Component({
 	selector: 'sneat-app-root',
 	templateUrl: 'sneat-app.component.html',
-	standalone: false,
+	standalone: true,
 	// imports: [IonicModule],
 	providers: [TelegramAuthService],
+	imports: [
+		IonApp,
+		IonSplitPane,
+		IonMenu,
+		IonHeader,
+		IonToolbar,
+		IonTitle,
+		IonIcon,
+		IonText,
+		IonContent,
+		IonRouterOutlet,
+	],
 })
 export class SneatAppComponent {
 	// private analyticsService = inject(AnalyticsService);

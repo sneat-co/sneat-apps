@@ -6,7 +6,16 @@ import {
 	inject,
 	input,
 } from '@angular/core';
-import { IonicModule, IonInput } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonText,
+} from '@ionic/angular/standalone';
 import { SneatAuthStateService } from '@sneat/auth-core';
 import { SneatBaseComponent } from '@sneat/ui';
 import { distinctUntilChanged, map } from 'rxjs';
@@ -19,7 +28,16 @@ import {
 @Component({
 	selector: 'sneat-tracker-form',
 	templateUrl: './tracker-form.component.html',
-	imports: [IonicModule],
+	imports: [
+		IonCard,
+		IonItem,
+		IonLabel,
+		IonText,
+		IonInput,
+		IonButtons,
+		IonButton,
+		IonIcon,
+	],
 })
 export class TrackerFormComponent
 	extends SneatBaseComponent

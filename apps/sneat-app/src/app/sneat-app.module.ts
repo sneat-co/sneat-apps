@@ -1,6 +1,17 @@
 import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import {
+	IonApp,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonMenu,
+	IonRouterOutlet,
+	IonSplitPane,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
+import {
 	getStandardSneatImports,
 	getStandardSneatProviders,
 	provideAppInfo,
@@ -30,6 +41,15 @@ console.log('sneatAppEnvironmentConfig:', sneatAppEnvironmentConfig);
 		IonicModule.forRoot(),
 		SpacesMenuComponent,
 		SneatAppRoutingModule,
+		IonRouterOutlet,
+		IonContent,
+		IonMenu,
+		IonSplitPane,
+		IonApp,
+		IonHeader,
+		IonToolbar,
+		IonTitle,
+		IonIcon,
 		// HttpClientModule, // This is needed so we can define HTTP_INTERCEPTORS
 	],
 	providers: [

@@ -29,4 +29,4 @@ export interface IAppInfo {
 	readonly requiredSpaceType?: SpaceType;
 }
 
-export const APP_INFO = new InjectionToken<IAppInfo>('app');
+export const APP_INFO = new InjectionToken<IAppInfo>('app_info');

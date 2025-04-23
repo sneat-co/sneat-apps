@@ -1,4 +1,4 @@
-import { IonInput, IonTextarea } from '@ionic/angular';
+import { IonInput, IonTextarea } from '@ionic/angular/standalone';
 import { IErrorLogger } from '@sneat/logging';
 
 export function createSetFocusToInput(errorLogger: IErrorLogger) {

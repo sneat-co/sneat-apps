@@ -20,7 +20,15 @@ import {
 	ValidationErrors,
 	Validators,
 } from '@angular/forms';
-import { IonicModule, IonInput } from '@ionic/angular';
+import {
+	IonButton,
+	IonCard,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+} from '@ionic/angular/standalone';
 import { createSetFocusToInput } from '@sneat/ui';
 import { excludeEmpty } from '@sneat/core';
 import { IPersonNames, isNameEmpty } from '@sneat/auth-models';
@@ -40,7 +48,18 @@ const maxNameLenValidator = Validators.maxLength(50);
 @Component({
 	selector: 'sneat-names-form',
 	templateUrl: './names-form.component.html',
-	imports: [CommonModule, IonicModule, FormsModule, ReactiveFormsModule],
+	imports: [
+		CommonModule,
+		FormsModule,
+		ReactiveFormsModule,
+		IonCard,
+		IonItemDivider,
+		IonItem,
+		IonInput,
+		IonLabel,
+		IonButton,
+		IonIcon,
+	],
 })
 export class NamesFormComponent implements OnChanges, AfterViewInit {
 	@Input({ required: true }) name?: IPersonNames = {};
