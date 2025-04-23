@@ -29,6 +29,9 @@
 					(ionChange)="onTitleChanged($event)"
 					type="text"
 				/>
+				@if (!$happening().dbo) {
+					<ion-spinner name="lines-small" slot="start" title="Loading..." />
+				}
 			</ion-item>
 			@if (!happeningTitle.value) {
 				<ion-item>

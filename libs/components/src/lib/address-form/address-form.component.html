@@ -2,27 +2,28 @@
 	<ion-item-divider color="light">
 		<ion-label color="medium">
 			{{ title }}
-			<span *ngIf="!countryID.value">&mdash; please select country</span>
+			@if (!countryID.value) {
+				<span>&mdash; please select country</span>
+			}
 		</ion-label>
 		<ion-buttons slot="end" *ngIf="mode === 'edit' && form.dirty">
-			<ion-button
-				color="primary"
-				fill="solid"
-				[disabled]="saving"
-				(click)="saveChanges()"
-				*ngIf="countryID.value"
-			>
-				<ion-spinner
-					slot="start"
-					color="light"
-					name="lines-small"
-					*ngIf="saving"
-				/>
-				<ion-icon slot="start" name="save-outline" *ngIf="!saving" />
-				<ion-label *ngIf="!saving">Save changes</ion-label>
-				<ion-label *ngIf="saving">Saving...</ion-label>
-			</ion-button>
-			<ion-button (click)="cancelChanges()" *ngIf="!saving">
+			@if (countryID.value) {
+				<ion-button
+					color="primary"
+					fill="solid"
+					[disabled]="$saving()"
+					(click)="saveChanges()"
+				>
+					@if ($saving()) {
+						<ion-spinner slot="start" color="light" name="lines-small" />
+					}
+					<ion-icon slot="start" name="save-outline" *ngIf="!$saving()" />
+					<ion-label *ngIf="!$saving()">Save changes</ion-label>
+					<ion-label *ngIf="$saving()">Saving...</ion-label>
+				</ion-button>
+			}
+
+			<ion-button (click)="cancelChanges()" *ngIf="!$saving()">
 				<ion-label>Cancel</ion-label>
 			</ion-button>
 		</ion-buttons>
@@ -30,7 +31,7 @@
 
 	<sneat-country-selector
 		[countryID]="countryID.value || undefined"
-		[disabled]="saving"
+		[disabled]="$saving()"
 		(countryIDChange)="onCountryChanged($event)"
 	/>
 
@@ -42,7 +43,7 @@
 				#zipInput
 				maxlength="10"
 				[formControl]="zip"
-				[disabled]="saving"
+				[disabled]="$saving()"
 				(ionChange)="onZipChanged()"
 			/>
 		</ion-item>
@@ -72,7 +73,7 @@
 			<ion-textarea
 				[formControl]="lines"
 				auto-grow="true"
-				[disabled]="saving"
+				[disabled]="$saving()"
 				(ionChange)="onLinesChanged()"
 			/>
 		</ion-item>

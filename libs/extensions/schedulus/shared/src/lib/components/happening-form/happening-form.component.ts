@@ -16,11 +16,26 @@ import {
 import {
 	FormControl,
 	FormGroup,
-	FormsModule,
 	ReactiveFormsModule,
 	Validators,
 } from '@angular/forms';
-import { IonicModule, IonInput, NavController } from '@ionic/angular';
+import {
+	NavController,
+	IonButton,
+	IonCard,
+	IonCardContent,
+	IonCardHeader,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemGroup,
+	IonLabel,
+	IonList,
+	IonSegment,
+	IonSegmentButton,
+	IonSpinner,
+	IonCardSubtitle,
+} from '@ionic/angular/standalone';
 import { RoutingState } from '@sneat/core';
 import {
 	HappeningType,
@@ -48,14 +63,26 @@ import {
 	selector: 'sneat-happening-form',
 	templateUrl: 'happening-form.component.html',
 	imports: [
-		IonicModule,
-		FormsModule,
 		ReactiveFormsModule,
 		HappeningServiceModule,
 		HappeningParticipantsComponent,
 		HappeningPricesComponent,
 		HappeningSlotFormComponent,
 		HappeningSlotsComponent,
+		IonSegment,
+		IonSegmentButton,
+		IonCard,
+		IonList,
+		IonItem,
+		IonLabel,
+		IonInput,
+		IonItemGroup,
+		IonButton,
+		IonCardHeader,
+		IonCardContent,
+		IonIcon,
+		IonSpinner,
+		IonCardSubtitle,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
