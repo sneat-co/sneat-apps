@@ -171,12 +171,8 @@ export abstract class SpaceBaseComponent
 			this.spaceIDChanged.next(spaceID); // This should be BEFORE onSpaceIdChanged()!
 			this.onSpaceIdChanged(); // This should be AFTER spaceIDChanged.next()!
 			this.unsubscribe('$spaceID() changed');
-			if (this.$spaceBrief()) {
-				this.$spaceBrief.set(undefined);
-			}
-			if (this.$spaceDbo()) {
-				this.$spaceDbo.set(undefined);
-			}
+			this.$spaceBrief.set(undefined);
+			this.$spaceDbo.set(undefined);
 			if (spaceID) {
 				setTimeout(() => this.subscribeForSpaceChanges(spaceID), 1);
 			}
