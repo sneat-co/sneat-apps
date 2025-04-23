@@ -1,14 +1,18 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
-import { ISaveEvent, PersonTitle } from '@sneat/components';
 import {
-	ContactDetailsComponent,
-	ContactRolesInputModule,
-} from '@sneat/contactus-shared';
-import { listItemAnimations, SneatNavService } from '@sneat/core';
+	IonBackButton,
+	IonButton,
+	IonButtons,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonMenuButton,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
+import { ISaveEvent, PersonTitle } from '@sneat/components';
+import { ContactDetailsComponent } from '@sneat/contactus-shared';
+import { SneatNavService } from '@sneat/core';
 import { IAddress } from '@sneat/contactus-core';
 import {
 	ContactService,
@@ -23,15 +27,19 @@ import { ContactBasePage } from '../contact-base-page';
 	selector: 'sneat-contact-page',
 	templateUrl: './contact-page.component.html',
 	imports: [
-		CommonModule,
-		FormsModule,
-		RouterModule,
-		IonicModule,
-		ContactRolesInputModule,
 		ContactDetailsComponent,
 		ContactusServicesModule,
-		PersonTitle,
 		SpaceServiceModule,
+		PersonTitle,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		IonButton,
+		IonIcon,
+		IonMenuButton,
+		IonContent,
 	],
 })
 export class ContactPageComponent extends ContactBasePage {
@@ -46,11 +54,7 @@ export class ContactPageComponent extends ContactBasePage {
 		this.defaultBackPage = 'contacts';
 	}
 
-	protected override onContactIdChanged(contactID: string): void {
-		super.onContactIdChanged(contactID);
-		this.watchChildContacts();
-	}
-
+	// TODO: use or remove
 	private watchChildContacts(): void {
 		const contactID = this.$contactID();
 		if (!contactID) {
@@ -71,6 +75,7 @@ export class ContactPageComponent extends ContactBasePage {
 			});
 	}
 
+	// TODO: use or remove
 	protected saveAddress(save: ISaveEvent<IAddress>): void {
 		console.log('ContactPageComponent.saveAddress()', save);
 

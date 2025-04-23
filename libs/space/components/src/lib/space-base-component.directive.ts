@@ -245,12 +245,12 @@ export abstract class SpaceBaseComponent
 		);
 	}
 
-	// Consider removing this method as it is fragile
-	// and easy go get it wrong and server similar purpose as contactIDChanged$.
+	// TODO: Consider removing this method as it is fragile.
+	// It is easy go get it wrong and server similar purpose as spaceIDChanged$.
 	protected onSpaceIdChanged(): void {
-		this.log(
-			`${this.className}:SpaceBaseComponent.onSpaceIdChanged() spaceID=${this.space?.id}`,
-		);
+		// this.log(
+		// 	`${this.className}:SpaceBaseComponent.onSpaceIdChanged() spaceID=${this.space?.id}`,
+		// );
 	}
 
 	protected onSpaceDboChanged(): void {

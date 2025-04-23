@@ -50,11 +50,6 @@ export abstract class ContactBasePage extends SpaceItemPageBaseComponent<
 		// throw new Error('Method not implemented.'); // return this.contactusTeam?.dto?.contacts;
 	}
 
-	protected onContactIdChanged(contactID: string): void {
-		console.log('ContactBasePage.onContactIdChanged()', contactID);
-		// this.watchContact();
-	}
-
 	protected override onSpaceIdChanged(): void {
 		super.onSpaceIdChanged();
 		this.watchSpaceContactusEntry();
