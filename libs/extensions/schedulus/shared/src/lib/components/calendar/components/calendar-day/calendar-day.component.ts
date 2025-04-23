@@ -8,7 +8,18 @@ import {
 	signal,
 	SimpleChanges,
 } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCol,
+	IonGrid,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonRow,
+	IonSpinner,
+} from '@ionic/angular/standalone';
 import { dateToIso } from '@sneat/core';
 import {
 	ISlotUIContext,
@@ -28,7 +39,6 @@ import {
 import { isSlotVisible } from '../../../calendar-slots';
 import { Weekday } from '../../weekday';
 import { isToday, isTomorrow } from '../../../calendar-core';
-// import { DaySlotItemModule } from '../day-slot-item/daly-slot-item.module';
 import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
 
 @Component({
@@ -36,11 +46,18 @@ import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
 	templateUrl: './calendar-day.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
-		IonicModule,
-		// DaySlotItemComponent,
 		ScheduleNavServiceModule,
-		// DaySlotItemModule,
 		DaySlotItemComponent,
+		IonItem,
+		IonSpinner,
+		IonLabel,
+		IonItemDivider,
+		IonButtons,
+		IonIcon,
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonButton,
 	],
 })
 export class CalendarDayComponent implements OnChanges, OnDestroy {

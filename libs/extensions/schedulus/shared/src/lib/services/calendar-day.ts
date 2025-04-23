@@ -75,7 +75,7 @@ export class CalendarDay {
 
 	constructor(
 		public readonly date: Date,
-		private readonly injector: Injector,
+		injector: Injector,
 		$input: Signal<readonly ICalendarDayInput[]>,
 		private readonly errorLogger: IErrorLogger,
 		// TODO: document why we need both HappeningService & CalendarDayService
@@ -97,7 +97,10 @@ export class CalendarDay {
 		runInInjectionContext(injector, () => {
 			this.effectRef = effect(() => {
 				const inputs = $input();
+				console.log('CalendarDay.effect($input) =>', this.dateID, inputs);
 				inputs.forEach((input) => {
+					this.subscriptions.forEach((s) => s.unsubscribe());
+					this.subscriptions.length = 0;
 					this.processSpaceID(input.spaceID);
 					this.subscribeForRecurrings(input.recurrings$);
 				});
@@ -117,8 +120,6 @@ export class CalendarDay {
 		if (!spaceID) {
 			this.recurringSlots = undefined;
 		}
-		this.subscriptions.forEach((s) => s.unsubscribe());
-		this.subscriptions.length = 0;
 		if (spaceID) {
 			this.subscribeForSingles(spaceID);
 			this.subscribeForCalendarDay(spaceID);
@@ -281,6 +282,7 @@ export class CalendarDay {
 
 		console.log(
 			'SpaceDay[${this.dateID}].joinRecurringsWithSinglesAndEmit() _isLoading=false',
+			slots,
 		);
 	}
 }
