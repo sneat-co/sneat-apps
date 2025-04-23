@@ -261,8 +261,12 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		}>;
 		if (this.allListItems) {
 			// temp mock
-			const movingItem = this.allListItems[event.detail.from];
-			movingItem.state.isReordering = true;
+			let movingItem = this.allListItems[event.detail.from];
+			movingItem = {
+				...movingItem,
+				state: { ...movingItem.state, isReordering: true },
+			};
+			this.allListItems[event.detail.from] = movingItem;
 			event.detail.complete(this.allListItems);
 			this.applyFilter();
 			if (!this.space || !this.list?.brief) {
@@ -277,7 +281,13 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			};
 			this.listService.reorderListItems(request).subscribe({
 				complete: () => {
-					movingItem.state.isReordering = false;
+					movingItem = {
+						...movingItem,
+						state: { ...movingItem.state, isReordering: true },
+					};
+					if (this.allListItems) {
+						this.allListItems[event.detail.from] = movingItem;
+					}
 					this.isReordering = false;
 				},
 				error: this.errorLogger.logErrorHandler('failed to reorder list items'),
@@ -411,8 +421,8 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		}
 		const deletingItems: IListItemWithUiState[] = [];
 		items.forEach((li) => {
+			li = { ...li, state: { ...li.state, isDeleting: true } };
 			deletingItems.push(li);
-			li.state.isDeleting = true;
 		});
 		if (!items.length) {
 			alert('Nothing to delete');
@@ -429,7 +439,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			error: this.errorLogger.logErrorHandler('failed to delete list items'),
 			complete: () => {
 				deletingItems.forEach((li) => {
-					li.state.isDeleting = false;
+					li = { ...li, state: { ...li.state, isDeleting: false } };
 				});
 			},
 		});

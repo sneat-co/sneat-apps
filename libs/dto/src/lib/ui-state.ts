@@ -1,5 +1,5 @@
 export interface UiState {
-	isAdding?: boolean;
-	isDeleting?: boolean;
-	isReordering?: boolean;
+	readonly isAdding?: boolean;
+	readonly isDeleting?: boolean;
+	readonly isReordering?: boolean;
 }

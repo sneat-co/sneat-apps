@@ -74,16 +74,21 @@ export class CalendarSpace {
 	) {
 		this.calendariumSpaceService.watchSpaceModuleRecord(spaceID).subscribe({
 			next: (calendariumSpace) => {
+				console.log('calendariumSpace loaded', calendariumSpace);
 				const newRH = calendariumSpace.dbo?.recurringHappenings || {};
 				this.$recurrings.update((r) =>
 					Object.keys(newRH).length === 0 &&
 					Object.keys(r?.recurringHappenings || {}).length === 0
-						? r
+						? r || { spaceID, recurringHappenings: {} }
 						: {
 								spaceID,
 								recurringHappenings:
 									calendariumSpace.dbo?.recurringHappenings || {},
 							},
+				);
+				console.log(
+					'recurring update from calendariumSpace:',
+					this.$recurrings(),
 				);
 			},
 		});

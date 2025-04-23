@@ -1,6 +1,7 @@
 import {
 	AfterViewInit,
 	Component,
+	computed,
 	EventEmitter,
 	Input,
 	OnChanges,
@@ -69,7 +70,7 @@ export class CalendarComponent
 	extends CalendarBaseComponent
 	implements OnInit, AfterViewInit, OnChanges, OnDestroy
 {
-	private filter = emptyCalendarFilter;
+	private readonly $filter = signal(emptyCalendarFilter);
 
 	// prevWeekdays: SlotsGroup[];
 
@@ -84,9 +85,9 @@ export class CalendarComponent
 
 	protected isWeekTabActivated = false;
 
-	protected readonly $recurrings = signal<
+	protected readonly $recurrings = computed<
 		readonly IHappeningWithUiState[] | undefined
-	>(undefined);
+	>(() => this.filterRecurrings(this.$filter(), this.$allRecurrings()));
 
 	constructor(
 		private readonly filterService: CalendarFilterService,
@@ -111,8 +112,7 @@ export class CalendarComponent
 	public ngOnInit(): void {
 		this.filterService.filter.pipe(takeUntil(this.destroyed$)).subscribe({
 			next: (filter) => {
-				this.filter = filter;
-				this.$recurrings.set(this.filterRecurrings(filter));
+				this.$filter.set(filter);
 			},
 			error: this.errorLogger.logErrorHandler('failed to get calendar filter'),
 		});
@@ -220,26 +220,14 @@ export class CalendarComponent
 		}
 	}
 
-	override onRecurringsLoaded(): void {
-		this.$recurrings.set(this.filterRecurrings(this.filter));
-		console.log(
-			'onRecurringsLoaded()',
-			this.$allRecurrings(),
-			this.$recurrings(),
-		);
-	}
-
 	// We filter recurring at calendar level, so we can share it across different components?
 	private filterRecurrings(
 		filter: ICalendarFilter,
-	): IHappeningWithUiState[] | undefined {
-		const spaceID = this.$spaceID();
-		if (!spaceID) {
-			return;
-		}
+		allRecurring?: readonly IHappeningWithUiState[],
+	): readonly IHappeningWithUiState[] | undefined {
 		const text = filter.text.toLowerCase();
 
-		const filtered = this.$allRecurrings()?.filter((r) => {
+		const filtered = allRecurring?.filter((r) => {
 			const title = r.brief?.title || r.dbo?.title;
 			let hide = '';
 
@@ -250,7 +238,7 @@ export class CalendarComponent
 				!hide &&
 				(!r.brief ||
 					!hasContact(
-						spaceID,
+						r.space.id,
 						filter.contactIDs,
 						r.brief.related || r.brief.related,
 					))

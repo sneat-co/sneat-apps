@@ -153,6 +153,7 @@ export class CalendarDataProvider {
 		spaces.forEach((space) => {
 			result[space.spaceID] = space.$recurrings()?.recurringHappenings || {};
 		});
+		console.log('$recurringsBySpaceID():', result);
 		return result;
 	});
 

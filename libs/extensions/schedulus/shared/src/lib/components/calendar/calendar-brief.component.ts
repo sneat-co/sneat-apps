@@ -65,8 +65,4 @@ export class CalendarBriefComponent extends CalendarBaseComponent {
 	protected onDayChanged(d: Date): void {
 		// do nothing
 	}
-
-	override onRecurringsLoaded(): void {
-		// do nothing
-	}
 }
