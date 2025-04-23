@@ -91,10 +91,10 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 		if (!happening.dbo && prevHappening.brief) {
 			happening = { ...happening, brief: prevHappening.brief };
 		}
-		this.$happening.set(happening);
 		if (!this.$spaceID() && happening.space) {
-			this.setSpaceRef(happening.space);
+			this.setSpaceRef(happening.space); // we probably should never hit this case
 		}
+		this.$happening.set(happening);
 	};
 
 	private readonly onHappeningIDChanged = (id?: string): void => {

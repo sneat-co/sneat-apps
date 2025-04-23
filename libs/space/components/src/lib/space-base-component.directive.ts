@@ -42,11 +42,13 @@ export abstract class SpaceBaseComponent
 	);
 	private readonly $spaceDbo = signal<ISpaceDbo | undefined | null>(undefined);
 
-	private readonly $_spaceID = signal<string | undefined>(undefined);
-	protected readonly $spaceID = this.$_spaceID.asReadonly();
+	// private readonly $_spaceID = signal<string | undefined>(undefined);
+	// protected readonly $spaceID = this.$_spaceID.asReadonly();
+	protected readonly $spaceID = computed(() => this.$spaceRef()?.id);
 
-	private readonly $_spaceType = signal<SpaceType | undefined>(undefined);
-	protected readonly $spaceType = this.$_spaceType.asReadonly();
+	// private readonly $_spaceType = signal<SpaceType | undefined>(undefined);
+	// protected readonly $spaceType = this.$_spaceType.asReadonly();
+	protected readonly $spaceType = computed(() => this.$spaceRef()?.type);
 
 	protected readonly $space = computed<ISpaceContext>(() => {
 		return {
@@ -154,23 +156,29 @@ export abstract class SpaceBaseComponent
 
 		effect(() => {
 			const spaceID = this.$spaceID();
+			const logMsgPrefix = `${className}.SpaceBaseComponent.constructor() => effect($spaceID=${spaceID})`;
+
 			if (spaceID === prevSpaceID) {
 				// This seems to be a bag or a strange feature in Angular signals?
 				// this happens if we call this.spaceIDChanged.next(spaceID);
-				console.log(
-					// Giving up for now so not logging as a warning
-					`${className}.SpaceBaseComponent.constructor() => effect() => called for the same $spaceID=${spaceID})`,
-				);
-			} else {
-				console.log(
-					`${className}.SpaceBaseComponent.constructor() => effect($spaceID=${spaceID})`,
-				);
-				prevSpaceID = spaceID;
-				this.spaceIDChanged.next(spaceID); // This should be BEFORE onSpaceIdChanged()!
-				this.onSpaceIdChanged(); // This should be AFTER spaceIDChanged.next()!
-				if (spaceID) {
-					setTimeout(() => this.subscribeForSpaceChanges(spaceID), 1);
-				}
+				// Giving up for now so not logging as a warning
+				console.log(logMsgPrefix + ` - called for the same id`);
+				return;
+			}
+
+			console.log(logMsgPrefix);
+			prevSpaceID = spaceID;
+			this.spaceIDChanged.next(spaceID); // This should be BEFORE onSpaceIdChanged()!
+			this.onSpaceIdChanged(); // This should be AFTER spaceIDChanged.next()!
+			this.unsubscribe('$spaceID() changed');
+			if (this.$spaceBrief()) {
+				this.$spaceBrief.set(undefined);
+			}
+			if (this.$spaceDbo()) {
+				this.$spaceDbo.set(undefined);
+			}
+			if (spaceID) {
+				setTimeout(() => this.subscribeForSpaceChanges(spaceID), 1);
 			}
 		});
 
@@ -368,16 +376,19 @@ export abstract class SpaceBaseComponent
 		let idChanged = false;
 		let typeChanged = false;
 		this.$spaceRef.update((prev) => {
+			if (prev === spaceRef) {
+				return prev;
+			}
 			idChanged = prev?.id !== spaceRef?.id;
 			typeChanged = prev?.type !== spaceRef?.type;
+			if (!idChanged && !typeChanged) {
+				return prev;
+			}
 			if (!spaceRef) {
 				return undefined;
 			}
 			if (equalSpaceRefs(spaceRef, prev)) {
 				return prev;
-			}
-			if (!idChanged && !spaceRef.type && prev?.type) {
-				this.console.error(`!spaceRef?.type && prevSpace.type=${prev.type}`);
 			}
 			const keys = Object.keys(spaceRef || {});
 			return (keys.length === 1 && keys[0] === 'id') ||
@@ -387,19 +398,6 @@ export abstract class SpaceBaseComponent
 					? { id: spaceRef.id, type: spaceRef.type || prev?.type }
 					: { id: spaceRef.id };
 		});
-		if (idChanged) {
-			this.unsubscribe('spaceRef.id changed');
-			this.$_spaceID.set(spaceRef?.id);
-			this.$_spaceType.set(spaceRef?.type);
-			if (this.$spaceBrief()) {
-				this.$spaceBrief.set(undefined);
-			}
-			if (this.$spaceDbo()) {
-				this.$spaceDbo.set(undefined);
-			}
-		} else if (typeChanged) {
-			this.$_spaceType.set(spaceRef?.type);
-		}
 	}
 
 	private setSpaceContext(spaceContext?: ISpaceContext): void {
