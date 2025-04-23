@@ -11,13 +11,7 @@ import {
 	IonTitle,
 	IonToolbar,
 } from '@ionic/angular/standalone';
-import {
-	getStandardSneatImports,
-	getStandardSneatProviders,
-	provideAppInfo,
-	provideRolesByType,
-} from '@sneat/app';
-import { provideSentryAppInitializer } from '@sneat/logging';
+import { getStandardSneatImports } from '@sneat/app';
 import { SpacesMenuComponent } from '@sneat/space-components';
 import { sneatAppEnvironmentConfig } from '../environments/environment';
 import { getProviders } from '../main-providers';
