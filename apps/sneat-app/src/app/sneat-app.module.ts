@@ -20,6 +20,7 @@ import {
 import { provideSentryAppInitializer } from '@sneat/logging';
 import { SpacesMenuComponent } from '@sneat/space-components';
 import { sneatAppEnvironmentConfig } from '../environments/environment';
+import { getProviders } from '../main-providers';
 import { SneatAppRoutingModule } from './sneat-app-routing.module';
 import { SneatAppComponent } from './sneat-app.component';
 import posthog from 'posthog-js';
@@ -52,17 +53,7 @@ console.log('sneatAppEnvironmentConfig:', sneatAppEnvironmentConfig);
 		IonIcon,
 		// HttpClientModule, // This is needed so we can define HTTP_INTERCEPTORS
 	],
-	providers: [
-		...getStandardSneatProviders(sneatAppEnvironmentConfig),
-		// {
-		// 	provide: HTTP_INTERCEPTORS,
-		// 	useClass: CapacitorHttpInterceptor,
-		// 	multi: true,
-		// },
-		provideSentryAppInitializer(),
-		provideAppInfo({ appId: 'sneat', appTitle: 'sneat.app' }),
-		provideRolesByType(undefined),
-	],
+	providers: [...getProviders()],
 	bootstrap: [SneatAppComponent],
 })
 export class SneatAppModule {

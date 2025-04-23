@@ -1,6 +1,6 @@
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { getAngularFireProviders, getStandardSneatProviders } from '@sneat/app';
+import { getStandardSneatProviders } from '@sneat/app';
 import { authRoutes } from '@sneat/auth-ui';
 import { TopMenuService } from '@sneat/core';
 import { sneatAppEnvironmentConfig } from '../environments/environment';
@@ -13,8 +13,6 @@ export const appConfig: ApplicationConfig = {
 	providers: [
 		...getStandardSneatProviders(sneatAppEnvironmentConfig),
 		provideRouter([...routes, ...authRoutes]), // Add routes later
-		...getAngularFireProviders(sneatAppEnvironmentConfig.firebaseConfig),
-
 		TopMenuService,
 	],
 };

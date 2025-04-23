@@ -9,11 +9,6 @@ import {
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
-	IonRouterOutlet,
-	ModalController,
-	NavController,
-} from '@ionic/angular';
-import {
 	IonAvatar,
 	IonButton,
 	IonButtons,
@@ -25,6 +20,9 @@ import {
 	IonItemSliding,
 	IonLabel,
 	IonSkeletonText,
+	IonRouterOutlet,
+	ModalController,
+	NavController,
 } from '@ionic/angular/standalone';
 import { ContactTitlePipe } from '@sneat/components';
 import { listAddRemoveAnimation, SpaceTypeFamily } from '@sneat/core';
