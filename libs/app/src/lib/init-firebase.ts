@@ -25,6 +25,7 @@ export function provideFireApp(firebaseConfig: IFirebaseConfig) {
 export function getAngularFireProviders(
 	firebaseConfig: IFirebaseConfig,
 ): EnvironmentProviders[] {
+	console.log('getAngularFireProviders()');
 	const providers = [
 		provideFirebaseApp(() => initFirebase(firebaseConfig)),
 		provideFirestore((injector) => {
