@@ -9,7 +9,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ContactusServicesModule } from '@sneat/contactus-services';
-import { SharedWithModule } from '@sneat/contactus-shared';
+import { SharedWithComponent } from '@sneat/contactus-shared';
 import { RandomIdService } from '@sneat/random';
 import { SpaceServiceModule } from '@sneat/space-services';
 import { ListusCoreServicesModule } from '../../services';
@@ -25,7 +25,6 @@ import {
 } from '../../services';
 import { IListusAppStateService } from '../../services';
 import { BaseListPage } from '../base-list-page';
-import { CopyListItemsPageModule } from '../dialogs/copy-list-items/copy-list-items.module';
 import { ListDialogsService } from '../dialogs/ListDialogs.service';
 import { IListItemWithUiState } from './list-item-with-ui-state';
 import { ListItemComponent } from './list-item/list-item.component';
@@ -44,14 +43,13 @@ type ListPagePerforming =
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		CopyListItemsPageModule,
-		SharedWithModule,
 		ListusCoreServicesModule,
 		NgOptimizedImage,
 		ContactusServicesModule,
 		ListItemComponent,
 		NewListItemComponent,
 		SpaceServiceModule,
+		SharedWithComponent,
 	],
 	styleUrls: ['./list-page.component.scss'],
 	providers: [

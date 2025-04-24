@@ -23,7 +23,6 @@ import {
 	ListusCoreServicesModule,
 } from '../../services';
 import { NewListDialogComponent } from './new-list-dialog.component';
-import { NewListDialogModule } from './new-list-dialog.module';
 
 @Component({
 	selector: 'sneat-lists-page',
@@ -33,7 +32,6 @@ import { NewListDialogModule } from './new-list-dialog.module';
 		FormsModule,
 		IonicModule,
 		ListusCoreServicesModule,
-		NewListDialogModule,
 		ContactusServicesModule,
 		SpaceServiceModule,
 	],

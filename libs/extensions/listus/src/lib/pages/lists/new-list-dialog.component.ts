@@ -6,7 +6,6 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonInput, ModalController } from '@ionic/angular';
 import {
 	IonButton,
 	IonCol,
@@ -23,6 +22,7 @@ import {
 	IonRow,
 	IonTitle,
 	IonToolbar,
+	ModalController,
 } from '@ionic/angular/standalone';
 import { IListInfo, ListType } from '../../dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';

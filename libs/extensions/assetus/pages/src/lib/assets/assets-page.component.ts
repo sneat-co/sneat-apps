@@ -7,7 +7,7 @@ import { ContactusServicesModule } from '@sneat/contactus-services';
 import { IIdAndBrief } from '@sneat/core';
 import { IAssetBrief, IAssetCategory } from '@sneat/mod-assetus-core';
 import {
-	AssetsListComponentModule,
+	AssetsListComponent,
 	AssetusServicesModule,
 	AssetusSpaceService,
 } from '@sneat/extensions-assetus-components';
@@ -29,11 +29,11 @@ import { AssetsBasePage } from '../assets-base.page';
 		FormsModule,
 		IonicModule,
 		RouterModule,
-		AssetsListComponentModule,
 		SpacePageTitleComponent,
 		ContactusServicesModule,
 		AssetusServicesModule,
 		SpaceServiceModule,
+		AssetsListComponent,
 	],
 }) /*implements AfterViewInit*/
 export class AssetsPageComponent extends AssetsBasePage implements OnInit {

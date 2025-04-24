@@ -57,7 +57,6 @@ import {
 	ISpaceContext,
 } from '@sneat/space-models';
 import { BehaviorSubject, map, Subject, Subscription, takeUntil } from 'rxjs';
-import { BasicContactFormModule } from '../basic-contact-form';
 import { IContactAddEventArgs } from '../contact-events';
 import { NewContactFormComponent } from '../contact-forms/new-contact';
 import { ContactsComponent } from '../contacts-component/contacts.component';
@@ -71,7 +70,6 @@ import { IContactSelectorOptions } from './contacts-selector.interfaces';
 	imports: [
 		FormsModule,
 		SelectFromListComponent,
-		BasicContactFormModule,
 		NewCompanyFormComponent,
 		TitleCasePipe,
 		TitleCasePipe,

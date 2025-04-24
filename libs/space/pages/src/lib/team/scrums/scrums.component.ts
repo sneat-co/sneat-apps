@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	Component,
 	Inject,
@@ -19,7 +18,7 @@ import {
 	NavController,
 } from '@ionic/angular/standalone';
 import { ISpaceDbo } from '@sneat/dto';
-import { ScrumService } from '@sneat/ext-scrumspace-dailyscrum';
+// import { ScrumService } from '@sneat/ext-scrumspace-dailyscrum';
 import { Subject } from 'rxjs';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { getMeetingIdFromDate, getToday } from '@sneat/ext-meeting';
@@ -53,7 +52,7 @@ export class ScrumsComponent implements OnChanges, OnDestroy {
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly scrumService: ScrumService,
+		// private readonly scrumService: ScrumService,
 		private readonly navController: NavController,
 		public readonly navService: SpaceNavService,
 	) {}

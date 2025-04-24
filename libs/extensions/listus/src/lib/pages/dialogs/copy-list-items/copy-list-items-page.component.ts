@@ -1,3 +1,4 @@
+import { NgForOf } from '@angular/common';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import {
@@ -36,6 +37,7 @@ import { ListService } from '../../../services/list.service';
 		IonRow,
 		IonCol,
 		IonButton,
+		NgForOf,
 	],
 })
 export class CopyListItemsPageComponent implements OnInit {

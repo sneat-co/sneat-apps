@@ -8,7 +8,6 @@ import {
 	AssetBasePage,
 	AssetComponentBaseParams,
 	AssetusServicesModule,
-	ModuleAssetRealEstate,
 	VehicleCardComponent,
 } from '@sneat/extensions-assetus-components';
 import { SpaceComponentBaseParams } from '@sneat/space-components';
@@ -26,7 +25,6 @@ interface LiabilityServiceBrief {
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		ModuleAssetRealEstate,
 		VehicleCardComponent,
 		IonicModule,
 		ContactusServicesModule,
