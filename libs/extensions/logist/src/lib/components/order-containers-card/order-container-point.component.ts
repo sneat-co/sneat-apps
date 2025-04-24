@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import {
 	ChangeDetectorRef,
 	Component,
@@ -6,7 +7,21 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+	IonButton,
+	IonButtons,
+	IonCol,
+	IonGrid,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonRow,
+	IonSegment,
+	IonSegmentButton,
+	IonSpinner,
+} from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
 import {
@@ -21,7 +36,23 @@ import { LogistOrderService } from '../../services';
 @Component({
 	selector: 'sneat-order-container-point',
 	templateUrl: './order-container-point.component.html',
-	standalone: false,
+	imports: [
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonItem,
+		IonLabel,
+		IonInput,
+		ReactiveFormsModule,
+		IonButtons,
+		IonButton,
+		NgIf,
+		IonIcon,
+		IonSegmentButton,
+		IonSegment,
+		FormsModule,
+		IonSpinner,
+	],
 })
 export class OrderContainerPointComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;

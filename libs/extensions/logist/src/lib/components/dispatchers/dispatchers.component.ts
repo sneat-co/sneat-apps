@@ -1,3 +1,4 @@
+import { NgForOf, NgIf } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -6,12 +7,14 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
+import { IonCard, IonItemDivider } from '@ionic/angular/standalone';
 import { ILogistOrderContext, IOrderCounterparty } from '../../dto';
+import { DispatcherComponent } from './dispatcher.component';
 
 @Component({
 	selector: 'sneat-dispatchers',
 	templateUrl: './dispatchers.component.html',
-	standalone: false,
+	imports: [NgForOf, IonItemDivider, DispatcherComponent, NgIf, IonCard],
 })
 export class DispatchersComponent implements OnChanges {
 	@Input() order?: ILogistOrderContext;

@@ -1,3 +1,4 @@
+import { NgForOf, NgIf } from '@angular/common';
 import {
 	Component,
 	Inject,
@@ -8,8 +9,27 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+	FormControl,
+	FormGroup,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
 import { IonInput } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonList,
+	IonSegment,
+	IonSegmentButton,
+	IonSpinner,
+} from '@ionic/angular/standalone';
 import { Subscription } from 'rxjs';
 
 import {
@@ -32,7 +52,23 @@ import { IUserRecord } from '@sneat/auth-models';
 @Component({
 	selector: 'sneat-my-retro-items',
 	templateUrl: './my-retro-items.component.html',
-	standalone: false,
+	imports: [
+		IonCard,
+		IonList,
+		IonItemDivider,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		ReactiveFormsModule,
+		IonSegment,
+		IonSegmentButton,
+		NgForOf,
+		IonItem,
+		IonSpinner,
+		IonInput,
+		NgIf,
+	],
 })
 export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 	@ViewChild(IonInput, { static: false }) titleInput?: IonInput; // TODO: IonInput;

@@ -1,9 +1,29 @@
+import { NgSwitch, NgSwitchCase } from '@angular/common';
 import { Component, OnDestroy } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
 	ModalController,
 	PopoverController,
 	ToastController,
 } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonCol,
+	IonContent,
+	IonGrid,
+	IonHeader,
+	IonIcon,
+	IonLabel,
+	IonRow,
+	IonSegment,
+	IonSegmentButton,
+	IonText,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { first } from 'rxjs';
 import { NewContainerComponent } from '../../components/new-container/new-container.component';
 import { NewSegmentService } from '../../components/new-segment/new-segment.service';
@@ -12,6 +32,13 @@ import {
 	NewShippingPointService,
 } from '../../components/new-shipping-point/new-shipping-point.service';
 import { OrderPrintMenuComponent } from '../../components/order-card/order-print-menu.component';
+import {
+	OrderContainersComponent,
+	OrderContainersModule,
+} from '../../components/order-containers-card';
+import { OrderFormModule } from '../../components/order-form.module';
+import { OrderSegmentsComponent } from '../../components/order-segments/order-segments.component';
+import { OrderTruckersComponent } from '../../components/order-truckers/order-truckers.component';
 import { LogistOrderService } from '../../services';
 import { OrderPageBaseComponent } from '../order-page-base.component';
 
@@ -25,7 +52,32 @@ type OrderDetailsTab =
 @Component({
 	selector: 'sneat-order-page',
 	templateUrl: './logist-order-page.component.html',
-	standalone: false,
+	imports: [
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		IonButton,
+		IonIcon,
+		IonLabel,
+		OrderFormModule,
+		IonContent,
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonSegment,
+		FormsModule,
+		IonSegmentButton,
+		IonBadge,
+		IonText,
+		NgSwitchCase,
+		NgSwitch,
+		OrderContainersModule,
+		OrderSegmentsComponent,
+		OrderTruckersComponent,
+		OrderContainersComponent,
+	],
 })
 export class LogistOrderPageComponent
 	extends OrderPageBaseComponent

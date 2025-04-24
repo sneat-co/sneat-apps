@@ -1,16 +1,45 @@
+import { NgIf } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
+import {
+	IonBackButton,
+	IonButton,
+	IonButtons,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonLabel,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { excludeEmpty } from '@sneat/core';
 import { SpaceBaseComponent } from '@sneat/space-components';
 import { Subscription, takeUntil } from 'rxjs';
+import { OrdersGridModule } from '../../components/orders-grid/orders-grid.module';
+import { OrdersListModule } from '../../components/orders-list/orders-list.module';
 import { ILogistOrderContext, IOrdersFilter } from '../../dto';
 import { LogistOrderService } from '../../services';
+import { OrdersFilterComponent } from './orders-filter/orders-filter.component';
 
 const defaultFilter: IOrdersFilter = { status: 'active' };
 
 @Component({
 	selector: 'sneat-logist-orders-page',
 	templateUrl: 'logist-orders-page.component.html',
-	standalone: false,
+	imports: [
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		IonButton,
+		IonIcon,
+		IonLabel,
+		IonContent,
+		OrdersFilterComponent,
+		OrdersGridModule,
+		OrdersListModule,
+		NgIf,
+	],
 })
 export class LogistOrdersPageComponent extends SpaceBaseComponent {
 	orders?: ILogistOrderContext[];

@@ -2,6 +2,29 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController, NavController } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardContent,
+	IonCardHeader,
+	IonCheckbox,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonList,
+	IonMenuButton,
+	IonSegment,
+	IonSegmentButton,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IDbServer, IProjDbServerSummary } from '@sneat/ext-datatug-models';
@@ -9,10 +32,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { DbServerService } from '@sneat/ext-datatug-services-unsorted';
 import { IProjectRef } from '@sneat/ext-datatug-core';
 import { ProjectContextService } from '@sneat/ext-datatug-services-project';
-import {
-	AddDbServerComponent,
-	DatatugDbModalsAddDbServerModule,
-} from '@sneat/ext-datatug-db';
+import { AddDbServerComponent } from '@sneat/ext-datatug-db';
 
 @Component({
 	selector: 'sneat-datatug-servers',
@@ -20,8 +40,27 @@ import {
 	imports: [
 		CommonModule,
 		FormsModule,
-		IonicModule,
-		DatatugDbModalsAddDbServerModule,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		IonContent,
+		IonCard,
+		IonItemDivider,
+		IonItem,
+		IonCheckbox,
+		IonLabel,
+		IonInput,
+		IonCardHeader,
+		IonSegment,
+		IonSegmentButton,
+		IonList,
+		IonIcon,
+		IonCardContent,
+		IonButton,
+		IonBadge,
+		IonMenuButton,
 	],
 })
 export class ServersPageComponent implements OnDestroy {

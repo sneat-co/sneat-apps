@@ -1,4 +1,7 @@
+import { NgIf } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { IonItemDivider, IonLabel } from '@ionic/angular/standalone';
+import { DataGridComponent } from '@sneat/datagrid';
 import { IGridColumn } from '@sneat/grid';
 import {
 	IContainerSegment,
@@ -6,6 +9,7 @@ import {
 	IOrderContainer,
 	IOrderShippingPoint,
 } from '../../dto';
+import { ContainerSegmentComponent } from './container-segment.component';
 
 interface IContainerRouteRow {
 	i: number;
@@ -17,7 +21,13 @@ interface IContainerRouteRow {
 @Component({
 	selector: 'sneat-container-segments',
 	templateUrl: './container-segments.component.html',
-	standalone: false,
+	imports: [
+		IonItemDivider,
+		IonLabel,
+		DataGridComponent,
+		NgIf,
+		ContainerSegmentComponent,
+	],
 })
 export class ContainerSegmentsComponent implements OnChanges {
 	@Input() container?: IOrderContainer;

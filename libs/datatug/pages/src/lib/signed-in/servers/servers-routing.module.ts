@@ -14,8 +14,10 @@ const routes: Routes = [
 	},
 	{
 		path: `db/:${routingParamDriver}/:${routingParamDbServerId}`,
-		loadChildren: () =>
-			import('../dbserver/dbserver.module').then((m) => m.DbserverPageModule),
+		loadComponent: () =>
+			import('../dbserver/dbserver-page.component').then(
+				(m) => m.DbserverPageComponent,
+			),
 	},
 ];
 

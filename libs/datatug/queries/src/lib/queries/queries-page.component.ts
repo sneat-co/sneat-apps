@@ -1,9 +1,31 @@
+import { NgIf } from '@angular/common';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import {
+	IonBackButton,
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardContent,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonSegment,
+	IonSegmentButton,
+	IonSelect,
+	IonSelectOption,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ViewDidEnter, ViewDidLeave, ViewWillEnter } from '@ionic/angular';
 import { getStoreId, IProjectContext } from '@sneat/ext-datatug-nav';
+import { QueriesTabComponent } from './queries-tab.component';
 
 // const paramTab = 'tab';
 const tabs = ['active', 'bookmarked', 'personal', 'shared'] as const;
@@ -17,7 +39,28 @@ type OrderBy = (typeof orderBys)[number];
 	selector: 'sneat-datatug-sql-queries',
 	templateUrl: './queries-page.component.html',
 	styleUrls: ['./queries-page.component.scss'],
-	standalone: false,
+	imports: [
+		IonButtons,
+		IonHeader,
+		IonToolbar,
+		IonBackButton,
+		IonTitle,
+		IonButton,
+		IonIcon,
+		IonSegmentButton,
+		FormsModule,
+		IonLabel,
+		IonCard,
+		IonCardContent,
+		QueriesTabComponent,
+		NgIf,
+		IonItem,
+		IonSelect,
+		IonSelectOption,
+		IonBadge,
+		IonSegment,
+		IonContent,
+	],
 })
 export class QueriesPageComponent
 	implements OnInit, ViewWillEnter, ViewDidEnter, ViewDidLeave

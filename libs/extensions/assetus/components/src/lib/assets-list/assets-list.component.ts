@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import {
 	Component,
 	Inject,
@@ -5,6 +6,15 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
+import {
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonSpinner,
+} from '@ionic/angular/standalone';
 import { IIdAndBrief } from '@sneat/core';
 import { AssetCategory, IAssetBrief } from '@sneat/mod-assetus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -17,7 +27,16 @@ import { ModalController } from '@ionic/angular';
 @Component({
 	selector: 'sneat-assets-list',
 	templateUrl: './assets-list.component.html',
-	standalone: false,
+	imports: [
+		IonItem,
+		IonSpinner,
+		IonLabel,
+		NgIf,
+		IonButton,
+		IonIcon,
+		IonBadge,
+		IonButtons,
+	],
 })
 export class AssetsListComponent implements OnChanges {
 	protected assets?: IIdAndBrief<IAssetBrief>[];

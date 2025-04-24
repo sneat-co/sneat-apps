@@ -1,4 +1,13 @@
+import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import {
+	IonButton,
+	IonCheckbox,
+	IonItem,
+	IonLabel,
+	IonText,
+} from '@ionic/angular/standalone';
+import { ContactInputComponent } from '@sneat/contactus-shared';
 import { excludeUndefined } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext } from '@sneat/contactus-core';
@@ -10,11 +19,21 @@ import {
 } from '../../dto';
 import { LogistOrderService } from '../../services';
 import { IContainer } from '../order-containers-selector/condainer-interface';
+import { OrderContainersSelectorModule } from '../order-containers-selector/order-containers-selector.module';
 
 @Component({
 	selector: 'sneat-new-shipping-point-form',
 	templateUrl: './new-shipping-point-form.component.html',
-	standalone: false,
+	imports: [
+		ContactInputComponent,
+		IonText,
+		IonItem,
+		IonCheckbox,
+		IonLabel,
+		OrderContainersSelectorModule,
+		NgIf,
+		IonButton,
+	],
 })
 export class NewShippingPointFormComponent {
 	@Input() order?: ILogistOrderContext;

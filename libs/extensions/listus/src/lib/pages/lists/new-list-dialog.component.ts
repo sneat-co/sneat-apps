@@ -5,14 +5,49 @@ import {
 	Input,
 	ViewChild,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { IonInput, ModalController } from '@ionic/angular';
+import {
+	IonButton,
+	IonCol,
+	IonContent,
+	IonFooter,
+	IonGrid,
+	IonHeader,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonRadio,
+	IonRadioGroup,
+	IonRow,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { IListInfo, ListType } from '../../dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({
 	selector: 'sneat-new-list-popover',
 	templateUrl: 'new-list-dialog.component.html',
-	standalone: false,
+	imports: [
+		IonHeader,
+		IonContent,
+		IonList,
+		IonItem,
+		IonInput,
+		FormsModule,
+		IonTitle,
+		IonToolbar,
+		IonRadioGroup,
+		IonRadio,
+		IonLabel,
+		IonFooter,
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonButton,
+	],
 })
 export class NewListDialogComponent implements AfterViewInit {
 	@ViewChild('listNameInput', { static: false }) listNameInput?: IonInput;

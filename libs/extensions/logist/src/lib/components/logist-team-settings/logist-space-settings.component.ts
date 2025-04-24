@@ -33,7 +33,6 @@ type LogistSpaceSettingsForm = FormGroup<ILogistSpaceSettingsFormControls>;
 @Component({
 	selector: 'sneat-logist-space-settings',
 	templateUrl: './logist-space-settings.component.html',
-	standalone: false,
 })
 export class LogistSpaceSettingsComponent
 	implements OnChanges, OnDestroy, AfterViewInit

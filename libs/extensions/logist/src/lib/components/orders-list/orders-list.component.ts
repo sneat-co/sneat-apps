@@ -1,11 +1,14 @@
+import { NgForOf } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { IonCard, IonCardContent } from '@ionic/angular/standalone';
 import { ISpaceContext } from '@sneat/space-models';
 import { ILogistOrderContext } from '../../dto/order-dto';
+import { OrderCardComponent } from '../order-card/order-card.component';
 
 @Component({
 	selector: 'sneat-logist-orders-list',
 	templateUrl: './orders-list.component.html',
-	standalone: false,
+	imports: [OrderCardComponent, NgForOf, IonCard, IonCardContent],
 })
 export class OrdersListComponent {
 	@Input({ required: true }) space?: ISpaceContext;

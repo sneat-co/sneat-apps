@@ -1,3 +1,4 @@
+import { NgForOf } from '@angular/common';
 import {
 	Component,
 	Inject,
@@ -17,11 +18,12 @@ import {
 	OrderPrintService,
 } from '../../prints/order-print.service';
 import { LogistOrderService } from '../../services';
+import { SegmentContainerComponent } from './segment-container.component';
 
 @Component({
 	selector: 'sneat-trucker-segment',
 	templateUrl: './trucker-segment.component.html',
-	standalone: false,
+	imports: [SegmentContainerComponent, NgForOf],
 })
 export class TruckerSegmentComponent implements OnChanges {
 	@Input() order?: ILogistOrderContext;

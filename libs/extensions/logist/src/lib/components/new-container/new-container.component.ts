@@ -1,6 +1,23 @@
 import { Component, Inject, Input, ViewChild } from '@angular/core';
-import { IonInput, ModalController } from '@ionic/angular/standalone';
-import { createSetFocusToInput, ISelectItem } from '@sneat/ui';
+import { FormsModule } from '@angular/forms';
+import {
+	IonButton,
+	IonContent,
+	IonFooter,
+	IonHeader,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonSpinner,
+	ModalController,
+} from '@ionic/angular/standalone';
+import { DialogHeaderComponent } from '@sneat/components';
+import {
+	createSetFocusToInput,
+	ISelectItem,
+	SelectFromListComponent,
+} from '@sneat/ui';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
 import {
@@ -10,12 +27,29 @@ import {
 	INewContainerPoint,
 } from '../../dto';
 import { LogistOrderService } from '../../services';
-import { TasksByID } from '../shipping-points-selector';
+import {
+	ShippingPointsSelectorModule,
+	TasksByID,
+} from '../shipping-points-selector';
 
 @Component({
 	selector: 'sneat-new-container',
 	templateUrl: './new-container.component.html',
-	standalone: false,
+	imports: [
+		IonHeader,
+		DialogHeaderComponent,
+		IonContent,
+		SelectFromListComponent,
+		FormsModule,
+		IonItem,
+		IonLabel,
+		IonInput,
+		ShippingPointsSelectorModule,
+		IonFooter,
+		IonButton,
+		IonIcon,
+		IonSpinner,
+	],
 })
 export class NewContainerComponent {
 	@Input() order?: ILogistOrderContext;

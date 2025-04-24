@@ -1,6 +1,21 @@
 import { Component, Inject, Input, ViewChild } from '@angular/core';
-import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+	FormControl,
+	ReactiveFormsModule,
+	UntypedFormGroup,
+	Validators,
+} from '@angular/forms';
 import { IonInput } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonSpinner,
+} from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRetroItem, RetroItemType } from '@sneat/ext-scrumspace-scrummodels';
 import {
@@ -12,7 +27,17 @@ import {
 @Component({
 	selector: 'sneat-retro-my-items',
 	templateUrl: './retro-my-items.component.html',
-	standalone: false,
+	imports: [
+		IonList,
+		IonItem,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		ReactiveFormsModule,
+		IonInput,
+		IonIcon,
+		IonSpinner,
+	],
 })
 export class RetroMyItemsComponent {
 	@ViewChild(IonInput, { static: true }) titleInput?: IonInput; // TODO: strong typing : IonInput;

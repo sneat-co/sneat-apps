@@ -1,3 +1,4 @@
+import { CommonModule, TitleCasePipe } from '@angular/common';
 import {
 	Component,
 	Inject,
@@ -6,6 +7,17 @@ import {
 	OnDestroy,
 	SimpleChanges,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import {
+	IonBadge,
+	IonCard,
+	IonCardContent,
+	IonLabel,
+	IonSegment,
+	IonSegmentButton,
+	IonText,
+} from '@ionic/angular/standalone';
+import { SneatCardListComponent } from '@sneat/components';
 import { Observable, Subject, throwError } from 'rxjs';
 import { IProjectRef } from '@sneat/ext-datatug-core';
 import { takeUntil, tap } from 'rxjs/operators';
@@ -32,7 +44,19 @@ import { DatatugBoardService } from '@sneat/ext-datatug-board-core';
 @Component({
 	selector: 'sneat-datatug-folder',
 	templateUrl: 'datatug-folder.component.html',
-	standalone: false,
+	imports: [
+		CommonModule,
+		TitleCasePipe,
+		IonSegment,
+		IonSegmentButton,
+		IonLabel,
+		IonBadge,
+		IonText,
+		IonCard,
+		IonCardContent,
+		SneatCardListComponent,
+		FormsModule,
+	],
 })
 export class DatatugFolderComponent implements OnChanges, OnDestroy {
 	readonly Environment: ProjectItemType = ProjectItem.environment as const;

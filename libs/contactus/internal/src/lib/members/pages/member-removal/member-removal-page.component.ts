@@ -11,7 +11,6 @@ import { NgModulePreloaderService } from 'sneat-shared/services/ng-module-preloa
 	selector: 'sneat-member-removal',
 	templateUrl: './member-removal-page.component.html',
 	providers: [CommuneBasePageParams],
-	standalone: false,
 })
 export class MemberRemovalPageComponent extends MemberBasePage {
 	constructor(

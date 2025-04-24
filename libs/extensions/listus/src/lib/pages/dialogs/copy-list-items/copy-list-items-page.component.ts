@@ -1,5 +1,20 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
+import {
+	IonButton,
+	IonCheckbox,
+	IonCol,
+	IonContent,
+	IonFooter,
+	IonGrid,
+	IonHeader,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonRow,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { IListInfo, IListItemBrief, ListType } from '../../..';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ListService } from '../../../services/list.service';
@@ -7,7 +22,21 @@ import { ListService } from '../../../services/list.service';
 @Component({
 	selector: 'sneat-copy-list-items',
 	templateUrl: './copy-list-items-page.component.html',
-	standalone: false,
+	imports: [
+		IonHeader,
+		IonToolbar,
+		IonTitle,
+		IonContent,
+		IonList,
+		IonItem,
+		IonLabel,
+		IonCheckbox,
+		IonFooter,
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonButton,
+	],
 })
 export class CopyListItemsPageComponent implements OnInit {
 	@Input() modal?: ModalController;

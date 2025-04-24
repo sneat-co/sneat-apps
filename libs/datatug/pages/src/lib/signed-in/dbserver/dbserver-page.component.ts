@@ -1,5 +1,26 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import {
+	IonBackButton,
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonList,
+	IonMenuButton,
+	IonSegment,
+	IonSegmentButton,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -15,7 +36,27 @@ import { DbServerService } from '@sneat/ext-datatug-services-unsorted';
 @Component({
 	selector: 'sneat-datatug-dbserver',
 	templateUrl: './dbserver-page.component.html',
-	standalone: false,
+	imports: [
+		CommonModule,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonMenuButton,
+		IonTitle,
+		IonContent,
+		IonCard,
+		IonItemDivider,
+		IonIcon,
+		IonLabel,
+		IonItem,
+		IonInput,
+		IonSegment,
+		IonSegmentButton,
+		IonBadge,
+		IonList,
+		IonButton,
+	],
 })
 export class DbserverPageComponent implements OnDestroy {
 	tab: 'known' | 'unknown' = 'known';

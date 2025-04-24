@@ -1,4 +1,28 @@
+import { NgIf } from '@angular/common';
 import { Component, Inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import {
+	IonBackButton,
+	IonButton,
+	IonCol,
+	IonContent,
+	IonGrid,
+	IonHeader,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonRadio,
+	IonRadioGroup,
+	IonRow,
+	IonSegment,
+	IonSegmentButton,
+	IonSelect,
+	IonSelectOption,
+	IonTitle,
+	IonToggle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import {
 	IRecord,
 	ITeam,
@@ -13,7 +37,30 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
 	selector: 'sneat-add-metric',
 	templateUrl: './add-metric-page.component.html',
-	standalone: false,
+	imports: [
+		IonHeader,
+		IonToolbar,
+		IonTitle,
+		IonContent,
+		IonList,
+		IonRadioGroup,
+		IonItem,
+		IonRadio,
+		IonLabel,
+		NgIf,
+		IonInput,
+		IonSegment,
+		IonSegmentButton,
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonSelect,
+		IonSelectOption,
+		FormsModule,
+		IonToggle,
+		IonButton,
+		IonBackButton,
+	],
 })
 export class AddMetricPageComponent {
 	public space: ITeam;

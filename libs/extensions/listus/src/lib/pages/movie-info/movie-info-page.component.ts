@@ -1,6 +1,27 @@
+import { NgForOf, NgIf, NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardContent,
+	IonCardHeader,
+	IonCardTitle,
+	IonCol,
+	IonContent,
+	IonGrid,
+	IonHeader,
+	IonIcon,
+	IonItem,
+	IonRow,
+	IonText,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import {
 	SpaceComponentBaseParams,
 	SpacePageBaseComponent,
@@ -24,7 +45,29 @@ import { BaseListItemPage } from '../base-list-item-page';
 	selector: 'sneat-movie-info',
 	templateUrl: './movie-info-page.component.html',
 	providers: [SpaceComponentBaseParams],
-	standalone: false,
+	imports: [
+		IonHeader,
+		IonToolbar,
+		IonTitle,
+		IonButtons,
+		IonBackButton,
+		IonContent,
+		IonCard,
+		NgIf,
+		IonButton,
+		IonIcon,
+		NgOptimizedImage,
+		IonCardHeader,
+		IonCardTitle,
+		IonCardContent,
+		IonItem,
+		IonCol,
+		IonText,
+		NgForOf,
+		IonGrid,
+		IonBadge,
+		IonRow,
+	],
 })
 export class MovieInfoPageComponent
 	extends BaseListItemPage

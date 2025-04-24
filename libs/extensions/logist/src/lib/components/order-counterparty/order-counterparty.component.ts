@@ -8,6 +8,17 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { ToastController } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCol,
+	IonGrid,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonRow,
+	IonSpinner,
+} from '@ionic/angular/standalone';
 import { LogistOrderContactRole, ContactType } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
@@ -18,11 +29,23 @@ import {
 	ISetOrderCounterpartiesRequest,
 } from '../../dto/order-dto';
 import { LogistOrderService } from '../../services';
+import { OrderCounterpartyInputComponent } from '../order-counterparty-input/order-counterparty-input.component';
 
 @Component({
 	selector: 'sneat-logist-order-counterparty',
 	templateUrl: './order-counterparty.component.html',
-	standalone: false,
+	imports: [
+		IonGrid,
+		IonRow,
+		IonCol,
+		OrderCounterpartyInputComponent,
+		IonButtons,
+		IonButton,
+		IonInput,
+		IonItem,
+		IonIcon,
+		IonSpinner,
+	],
 })
 export class OrderCounterpartyComponent implements OnChanges {
 	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';

@@ -114,8 +114,8 @@ export const datatugProjectRoutes: Routes = [
 	},
 	{
 		path: 'queries',
-		loadChildren: () =>
-			import('@sneat/ext-datatug-queries').then((m) => m.QueriesPageModule),
+		loadComponent: () =>
+			import('@sneat/ext-datatug-queries').then((m) => m.QueriesPageComponent),
 	},
 	{
 		path: 'servers',

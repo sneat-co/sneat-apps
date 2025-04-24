@@ -1,3 +1,4 @@
+import { NgForOf } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -7,7 +8,19 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonSpinner,
+} from '@ionic/angular/standalone';
+import { CountryFlagPipe } from '@sneat/components';
 import { excludeUndefined } from '@sneat/core';
 import {
 	ContactsSelectorService,
@@ -22,11 +35,26 @@ import {
 	ISetOrderCounterpartiesRequest,
 } from '../../dto';
 import { LogistOrderService } from '../../services';
+import { DispatchPointComponent } from './dispatch-point.component';
 
 @Component({
 	selector: 'sneat-order-dispatcher',
 	templateUrl: './dispatcher.component.html',
-	standalone: false,
+	imports: [
+		DispatchPointComponent,
+		NgForOf,
+		IonItem,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonSpinner,
+		IonInput,
+		ReactiveFormsModule,
+		IonItemDivider,
+		CountryFlagPipe,
+		IonCard,
+	],
 })
 export class DispatcherComponent implements OnChanges {
 	@Input() order?: ILogistOrderContext;

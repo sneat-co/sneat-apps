@@ -1,20 +1,44 @@
+import { NgIf } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Auth as AngularFireAuth } from '@angular/fire/auth';
+import {
+	IonBackButton,
+	IonButton,
+	IonButtons,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonSpinner,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { IRecord } from '@sneat/data';
-import { NavService } from '@sneat/ext-datatug-core';
 import { ISpaceDbo } from '@sneat/dto';
 import { IScrumDbo } from '@sneat/ext-scrumspace-scrummodels';
 import { ISpaceContext } from '@sneat/space-models';
 import { SpaceService } from '@sneat/space-services';
-import { ScrumService } from '../services/scrum.service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({
 	selector: 'sneat-scrums-history',
 	templateUrl: './scrums-history.page.html',
 	styleUrls: ['./scrums-history.page.scss'],
-	standalone: false,
+	imports: [
+		IonToolbar,
+		IonHeader,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		IonContent,
+		IonItem,
+		IonSpinner,
+		IonLabel,
+		IonIcon,
+		IonButton,
+		NgIf,
+	],
 })
 export class ScrumsHistoryPageComponent {
 	public space?: ISpaceContext;

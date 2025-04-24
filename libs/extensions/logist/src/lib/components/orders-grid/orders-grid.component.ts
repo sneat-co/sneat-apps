@@ -7,6 +7,8 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { IonCard, IonCardContent } from '@ionic/angular/standalone';
+import { DataGridComponent } from '@sneat/datagrid';
 import { IGridColumn } from '@sneat/grid';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
@@ -28,7 +30,7 @@ interface OrderRow {
 @Component({
 	selector: 'sneat-logist-orders-grid',
 	templateUrl: './orders-grid.component.html',
-	standalone: false,
+	imports: [IonCard, IonCardContent, DataGridComponent],
 })
 export class OrdersGridComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;

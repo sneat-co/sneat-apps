@@ -1,5 +1,22 @@
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import {
+	IonBackButton,
+	IonButton,
+	IonButtons,
+	IonCheckbox,
+	IonContent,
+	IonFooter,
+	IonHeader,
+	IonInput,
+	IonItem,
+	IonList,
+	IonText,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { IMovie } from '../../../../models/movie-models';
+import { MovieCardComponent } from '../../movie-card';
 import { IListService } from '../../services/interfaces';
 import { CommuneBasePage } from '../../../../pages/commune-base-page';
 import { CommuneBasePageParams } from '../../../../services/params';
@@ -12,7 +29,23 @@ import { BaseListPage } from '../base-list-page';
 	selector: 'sneat-add-to-watch-page',
 	templateUrl: './add-to-watch-page.component.html',
 	providers: [CommuneBasePageParams],
-	standalone: false,
+	imports: [
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		IonContent,
+		IonItem,
+		IonInput,
+		IonList,
+		IonButton,
+		MovieCardComponent,
+		IonFooter,
+		IonCheckbox,
+		IonText,
+		FormsModule,
+	],
 })
 export class AddToWatchPageComponent
 	extends BaseListPage

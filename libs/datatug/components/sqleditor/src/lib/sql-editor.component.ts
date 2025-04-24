@@ -10,7 +10,8 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
+import { FormsModule } from '@angular/forms';
+import { CodemirrorComponent, CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 // import { javascript, sql } from '@codemirror/lang-javascript';
@@ -21,7 +22,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	selector: 'sneat-datatug-sql',
 	templateUrl: './sql-editor.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	standalone: false,
+	imports: [FormsModule, CodemirrorModule],
 })
 export class SqlEditorComponent implements AfterViewInit, OnChanges {
 	@Input() sql?: string;

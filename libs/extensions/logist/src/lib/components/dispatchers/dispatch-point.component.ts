@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import {
 	Component,
 	Inject,
@@ -5,7 +6,21 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCol,
+	IonGrid,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonRow,
+	IonText,
+	IonTextarea,
+} from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	IAddContainerPointsRequest,
@@ -20,11 +35,28 @@ import {
 } from '../../dto';
 import { LogistOrderService } from '../../services';
 import { OrderContainersSelectorService } from '../order-containers-selector/order-containers-selector.service';
+import { DispatchPointContainersGridComponent } from './dispatch-point-containers-grid.component';
 
 @Component({
 	selector: 'sneat-dispatch-point',
 	templateUrl: './dispatch-point.component.html',
-	standalone: false,
+	imports: [
+		DispatchPointContainersGridComponent,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonLabel,
+		IonItem,
+		IonCol,
+		ReactiveFormsModule,
+		IonTextarea,
+		IonRow,
+		IonGrid,
+		IonItemDivider,
+		IonCard,
+		IonText,
+		NgIf,
+	],
 })
 export class DispatchPointComponent implements OnChanges {
 	@Input() dispatchPoint?: IOrderCounterparty;

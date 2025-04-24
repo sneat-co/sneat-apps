@@ -1,11 +1,17 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonItem,
+	IonLabel,
+} from '@ionic/angular/standalone';
 
 @Component({
 	selector: 'sneat-dialog-header',
 	templateUrl: './dialog-header.component.html',
-	imports: [CommonModule, IonicModule],
+	imports: [IonItem, IonLabel, IonButtons, IonButton, IonIcon],
 })
 export class DialogHeaderComponent {
 	@Input() dialogTitle = 'Dialog'; // Do not use just `title` as it conflicts with the HTML attribute.

@@ -6,7 +6,16 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+	IonCheckbox,
+	IonCol,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonRow,
+	IonSpinner,
+} from '@ionic/angular/standalone';
 import { excludeEmpty } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
@@ -35,7 +44,17 @@ function debounce<T>(o: Subject<T>): Observable<T> {
 @Component({
 	selector: 'sneat-container-point-load-form',
 	templateUrl: 'container-point-load-form.component.html',
-	standalone: false,
+	imports: [
+		IonRow,
+		IonCol,
+		IonItem,
+		IonCheckbox,
+		FormsModule,
+		IonLabel,
+		IonInput,
+		ReactiveFormsModule,
+		IonSpinner,
+	],
 })
 export class ContainerPointLoadFormComponent implements OnChanges {
 	@Input() order?: ILogistOrderContext;

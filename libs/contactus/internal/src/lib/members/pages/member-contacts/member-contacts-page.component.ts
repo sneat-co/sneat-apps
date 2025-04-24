@@ -1,4 +1,16 @@
+import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
+import {
+	IonBackButton,
+	IonButtons,
+	IonContent,
+	IonHeader,
+	IonLabel,
+	IonSegment,
+	IonSegmentButton,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { CommuneBasePageParams } from 'sneat-shared/services/params';
 import { MemberBasePage } from '../member-base-page';
 import {
@@ -11,7 +23,18 @@ import { NgModulePreloaderService } from 'sneat-shared/services/ng-module-preloa
 	selector: 'sneat-member-contacts',
 	templateUrl: './member-contacts-page.component.html',
 	providers: [CommuneBasePageParams],
-	standalone: false,
+	imports: [
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		NgIf,
+		IonContent,
+		IonSegment,
+		IonSegmentButton,
+		IonLabel,
+	],
 })
 export class MemberContactsPageComponent extends MemberBasePage {
 	public override segment: 'friends' | 'other' = 'friends';

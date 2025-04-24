@@ -7,8 +7,8 @@ const routes: Routes = [
 	{
 		path: '',
 		loadChildren: () =>
-			import('./communes-page/communes-page.module').then(
-				(m) => m.CommunesPageModule,
+			import('./communes-page/communes-page.component').then(
+				(m) => m.CommunesPageComponent,
 			),
 	},
 	{

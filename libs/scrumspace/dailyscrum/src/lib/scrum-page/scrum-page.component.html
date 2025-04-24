@@ -140,10 +140,10 @@
 
 	<ng-container [ngSwitch]="tab">
 		<ng-container *ngSwitchCase="'my'">
-			<app-scrum-tasks
+			<sneat-scrum-tasks
 				*ngFor="let taskType of taskTypes"
 				[currentMemberId]="userMemberId"
-				[team]="space"
+				[space]="space"
 				[scrumId]="scrumID"
 				[member]="memberStatus?.member"
 				[taskType]="taskType"

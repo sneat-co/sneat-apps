@@ -1,11 +1,20 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+	IonCheckbox,
+	IonCol,
+	IonGrid,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonRow,
+} from '@ionic/angular/standalone';
 import { ShippingPointTask } from '../../dto';
 import { IContainer } from './condainer-interface';
 
 @Component({
 	selector: 'sneat-order-container-form',
 	templateUrl: 'order-container-form.component.html',
-	standalone: false,
+	imports: [IonGrid, IonRow, IonCol, IonItem, IonLabel, IonInput, IonCheckbox],
 })
 export class OrderContainerFormComponent {
 	@Input() container: IContainer = { id: '', type: 'unknown' };

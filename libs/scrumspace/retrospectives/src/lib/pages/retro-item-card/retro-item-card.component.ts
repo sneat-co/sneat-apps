@@ -1,4 +1,14 @@
+import { NgIf } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonText,
+} from '@ionic/angular/standalone';
 import { IRetroItem } from '../../../models/interfaces';
 import { ITreeNode } from '@angular-dnd/tree';
 
@@ -6,7 +16,16 @@ import { ITreeNode } from '@angular-dnd/tree';
 	selector: 'sneat-retro-item-card',
 	templateUrl: './retro-item-card.component.html',
 	styleUrls: ['./retro-item-card.component.scss'],
-	standalone: false,
+	imports: [
+		IonCard,
+		NgIf,
+		IonItem,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonLabel,
+		IonText,
+	],
 })
 export class RetroItemCardComponent implements OnChanges {
 	@Input() treeNode: ITreeNode<IRetroItem>;

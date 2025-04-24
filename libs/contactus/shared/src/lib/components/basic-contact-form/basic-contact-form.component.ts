@@ -1,4 +1,13 @@
+import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import {
+	IonButton,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonSpinner,
+} from '@ionic/angular/standalone';
 import {
 	ContactRole,
 	ContactType,
@@ -12,7 +21,15 @@ import { ISpaceContext } from '@sneat/space-models';
 @Component({
 	selector: 'sneat-basic-contact-form',
 	templateUrl: './basic-contact-form.component.html',
-	standalone: false,
+	imports: [
+		IonItem,
+		IonInput,
+		FormsModule,
+		IonButton,
+		IonLabel,
+		IonSpinner,
+		NgIf,
+	],
 })
 export class BasicContactFormComponent {
 	@Input() parentContact?: IContactWithBrief;

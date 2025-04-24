@@ -1,3 +1,4 @@
+import { NgForOf, NgIf } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -6,6 +7,18 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import {
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonText,
+} from '@ionic/angular/standalone';
 import {
 	IParameter,
 	IParameterDef,
@@ -16,7 +29,20 @@ import {
 @Component({
 	selector: 'sneat-datatug-input-parameters',
 	templateUrl: './input-parameters.component.html',
-	standalone: false,
+	imports: [
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonItem,
+		IonInput,
+		IonBadge,
+		NgForOf,
+		NgIf,
+		FormsModule,
+		IonItemDivider,
+		IonText,
+	],
 })
 export class InputParametersComponent implements OnChanges {
 	@Input()

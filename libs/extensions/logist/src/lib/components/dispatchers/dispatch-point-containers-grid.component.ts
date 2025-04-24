@@ -1,4 +1,6 @@
+import { NgIf } from '@angular/common';
 import { Component, Input, OnChanges } from '@angular/core';
+import { DataGridComponent } from '@sneat/datagrid';
 import { IGridColumn } from '@sneat/grid';
 import {
 	ContainerType,
@@ -23,7 +25,7 @@ interface IDispatchPointContainerRow {
 @Component({
 	selector: 'sneat-dispatch-point-containers-grid',
 	templateUrl: './dispatch-point-containers-grid.component.html',
-	standalone: false,
+	imports: [DataGridComponent, NgIf],
 })
 export class DispatchPointContainersGridComponent implements OnChanges {
 	@Input() order?: ILogistOrderContext;

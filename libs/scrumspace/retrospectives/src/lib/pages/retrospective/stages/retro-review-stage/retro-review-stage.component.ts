@@ -6,7 +6,6 @@ import { ISpaceContext } from '@sneat/space-models';
 @Component({
 	selector: 'sneat-retro-review-stage',
 	templateUrl: './retro-review-stage.component.html',
-	standalone: false,
 })
 export class RetroReviewStageComponent {
 	@Input({ required: true }) space: ISpaceContext = { id: '' };

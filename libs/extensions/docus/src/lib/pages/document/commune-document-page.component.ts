@@ -1,16 +1,72 @@
+import {
+	NgForOf,
+	NgIf,
+	NgSwitch,
+	NgSwitchCase,
+	NgSwitchDefault,
+	TitleCasePipe,
+} from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonDatetime, IonInput, ToastController } from '@ionic/angular';
-import { AssetKind, CommuneKind } from 'sneat-shared/models/kinds';
-import { CommuneBasePage } from 'sneat-shared/pages/commune-base-page';
-import { IAssetDto, IDocument } from 'sneat-shared/models/dto/dto-asset';
-import { eq, IAssetService } from 'sneat-shared/services/interfaces';
-import { CommuneBasePageParams } from 'sneat-shared/services/params';
+import { FormsModule } from '@angular/forms';
+import {
+	IonBackButton,
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonCol,
+	IonContent,
+	IonDatetime,
+	IonGrid,
+	IonHeader,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonItemGroup,
+	IonLabel,
+	IonList,
+	IonRow,
+	IonTitle,
+	IonToolbar,
+	ToastController,
+} from '@ionic/angular/standalone';
+import { CommuneBasePage } from '@sneat/shared/pages/commune-base-page';
+import { IAssetDto, IDocument } from '@sneat/shared/models/dto/dto-asset';
+import { eq, IAssetService } from '@sneat/shared/services/interfaces';
+import { CommuneBasePageParams } from '@sneat/shared/services/params';
 
 @Component({
 	selector: 'sneat-commune-document',
 	templateUrl: './commune-document-page.component.html',
 	providers: [CommuneBasePageParams],
-	standalone: false,
+	imports: [
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		NgIf,
+		TitleCasePipe,
+		IonContent,
+		IonList,
+		IonItemDivider,
+		IonLabel,
+		IonItem,
+		IonInput,
+		FormsModule,
+		IonButton,
+		IonIcon,
+		IonDatetime,
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonItemGroup,
+		NgSwitchCase,
+		NgSwitch,
+		NgSwitchDefault,
+		NgForOf,
+		IonBadge,
+	],
 })
 export class CommuneDocumentPageComponent
 	extends CommuneBasePage

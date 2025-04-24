@@ -1,3 +1,4 @@
+import { NgForOf, NgIf } from '@angular/common';
 import {
 	Component,
 	Inject,
@@ -5,6 +6,17 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonSpinner,
+} from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
 import {
@@ -20,11 +32,25 @@ import {
 } from '../../prints/order-print.service';
 import { LogistOrderService } from '../../services';
 import { NewSegmentService } from '../new-segment/new-segment.service';
+import { TruckerSegmentComponent } from './trucker-segment.component';
 
 @Component({
 	selector: 'sneat-order-trucker',
 	templateUrl: './order-trucker.component.html',
-	standalone: false,
+	imports: [
+		IonCard,
+		IonItem,
+		IonLabel,
+		IonInput,
+		IonButtons,
+		IonButton,
+		NgIf,
+		IonIcon,
+		IonSpinner,
+		IonItemDivider,
+		TruckerSegmentComponent,
+		NgForOf,
+	],
 })
 export class OrderTruckerComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;

@@ -1,5 +1,16 @@
 import { Component } from '@angular/core';
 import {
+	IonCard,
+	IonCardContent,
+	IonCol,
+	IonGrid,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonRow,
+} from '@ionic/angular/standalone';
+import {
 	IContainerSegment,
 	IFreightLoad,
 	ILogistOrderContext,
@@ -21,7 +32,17 @@ interface IContainerInfo {
 @Component({
 	selector: 'sneat-print-order-trucker-summary',
 	templateUrl: './order-trucker-summary.component.html',
-	standalone: false,
+	imports: [
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonCard,
+		IonCardContent,
+		IonItem,
+		IonLabel,
+		IonInput,
+		IonItemDivider,
+	],
 })
 export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 	truckerID?: string;

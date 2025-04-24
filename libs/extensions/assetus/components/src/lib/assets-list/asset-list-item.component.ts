@@ -7,7 +7,6 @@ import { ISpaceContext } from '@sneat/space-models';
 @Component({
 	selector: 'sneat-asset-list-item',
 	template: ``,
-	standalone: false,
 })
 export class AssetListItemComponent {
 	@Input({ required: true }) space?: ISpaceContext;

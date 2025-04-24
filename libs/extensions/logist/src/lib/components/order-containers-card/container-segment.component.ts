@@ -24,7 +24,6 @@ import { FreightLoadForm } from '../freight-load-form/freight-load-form.componen
 @Component({
 	selector: 'sneat-container-segment',
 	templateUrl: './container-segment.component.html',
-	standalone: false,
 })
 export class ContainerSegmentComponent implements OnChanges {
 	@Input() order?: ILogistOrderContext;

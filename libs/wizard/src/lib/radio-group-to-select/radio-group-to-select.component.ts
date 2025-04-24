@@ -26,7 +26,6 @@ import {
 			multi: true,
 		},
 	],
-	standalone: true,
 	imports: [
 		IonItem,
 		IonSelect,

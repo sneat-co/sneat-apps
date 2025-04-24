@@ -1,4 +1,4 @@
-import { Location } from '@angular/common';
+import { Location, NgForOf, NgIf } from '@angular/common';
 import {
 	ChangeDetectorRef,
 	Component,
@@ -7,11 +7,28 @@ import {
 	OnInit,
 } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import {
+	IonBackButton,
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonList,
+	IonSegmentButton,
+	IonSpinner,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { ISpaceMemberInfo } from '@sneat/contactus-core';
 import { AnalyticsService, IAnalyticsService } from '@sneat/core';
 import { IRecord } from '@sneat/data';
 import { secondsToStr } from '@sneat/datetime';
-// import { ITeamMemberInfo, MemberRoleSpectator } from '@sneat/dto';
 import {
 	getMeetingIdFromDate,
 	getToday,
@@ -19,6 +36,8 @@ import {
 	Timer,
 	TimerFactory,
 } from '@sneat/ext-meeting';
+import { MetricsComponent } from '../components/metrics/metrics.component';
+import { ScrumTasksComponent } from '../components/scrum-tasks/scrum-tasks.component';
 import { ScrumService } from '../services/scrum.service';
 import {
 	IScrumDbo,
@@ -39,7 +58,28 @@ import { IMetric } from '../interfaces';
 	templateUrl: './scrum-page.component.html',
 	styleUrls: ['./scrum-page.component.scss'],
 	providers: [SpaceComponentBaseParams],
-	standalone: false,
+	imports: [
+		IonHeader,
+		IonToolbar,
+		IonTitle,
+		NgIf,
+		IonButtons,
+		IonBackButton,
+		IonContent,
+		IonList,
+		IonItem,
+		IonButton,
+		IonIcon,
+		IonLabel,
+		IonSpinner,
+		IonSegmentButton,
+		IonBadge,
+		ScrumTasksComponent,
+		NgForOf,
+		MetricsComponent,
+		IonItemDivider,
+		IonCard,
+	],
 })
 export class ScrumPageComponent
 	extends SpaceBaseComponent

@@ -48,9 +48,9 @@
 				</ion-buttons>
 			</ion-label>
 			<ion-buttons slot="end">
-				<app-timer-member-button
+				<sneat-timer-member-button
 					[timer]="timer"
-					[teamId]="space?.id"
+					[spaceID]="space?.id"
 					[scrumId]="scrumId"
 					[scrum]="scrum"
 					[memberId]="status.member?.id"
@@ -70,10 +70,10 @@
 	</ion-list>
 </ion-card-header>
 <ion-list *ngIf="isExpanded">
-	<app-scrum-tasks
+	<sneat-scrum-tasks
 		*ngIf="viewMode === 'single' && isExpanded"
 		[currentMemberId]="currentMemberId"
-		[team]="space"
+		[space]="space"
 		[scrumId]="scrumId"
 		[member]="status?.member"
 		[taskType]="taskType"
@@ -83,10 +83,10 @@
 
 	<ng-container *ngIf="viewMode !== 'single'">
 		<ng-container *ngFor="let taskType of taskTypes">
-			<app-scrum-tasks
+			<sneat-scrum-tasks
 				[cardMode]="'by-person'"
 				*ngIf="taskType !== 'kudos' || count('kudos')"
-				[team]="space"
+				[space]="space"
 				[currentMemberId]="currentMemberId"
 				[scrumId]="scrumId"
 				[member]="status.member"

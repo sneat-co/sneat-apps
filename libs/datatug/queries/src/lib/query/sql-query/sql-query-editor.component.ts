@@ -31,8 +31,8 @@ import {
 	IonToolbar,
 } from '@ionic/angular/standalone';
 import { GridWidgetComponent } from '@sneat/ext-datatug-board-ui';
-import { DatatugComponentsParametersModule } from '@sneat/ext-datatug-components-parameters';
-import { DatatugComponentsSqlEditorModule } from '@sneat/ext-datatug-components-sqleditor';
+import { InputParametersComponent } from '@sneat/ext-datatug-components-parameters';
+import { SqlEditorComponent } from '@sneat/ext-datatug-components-sqleditor';
 import {
 	IEnvDbServer,
 	IParameter,
@@ -106,12 +106,10 @@ import { JoinsComponent } from './query-builder/joins.component';
 		FormsModule,
 		IonSegmentButton,
 		IonCard,
-		DatatugComponentsSqlEditorModule,
 		IonCardContent,
 		IonList,
 		IonCheckbox,
 		IonText,
-		DatatugComponentsParametersModule,
 		IonBadge,
 		IonSpinner,
 		GridWidgetComponent,
@@ -119,6 +117,8 @@ import { JoinsComponent } from './query-builder/joins.component';
 		IonSelectOption,
 		JoinsComponent,
 		ColumnsComponent,
+		SqlEditorComponent,
+		InputParametersComponent,
 	],
 })
 export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {

@@ -1,4 +1,6 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
+import { DataGridComponent } from '@sneat/datagrid';
+import { SqlEditorComponent } from '@sneat/ext-datatug-components-sqleditor';
 import { Observable, Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ModalController } from '@ionic/angular';
@@ -21,7 +23,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 @Component({
 	selector: 'sneat-datatug-parameter-lookup',
 	templateUrl: './parameter-lookup.component.html',
-	standalone: false,
+	imports: [DataGridComponent, SqlEditorComponent],
 })
 export class ParameterLookupComponent implements OnInit {
 	@Input() parameter?: IParameterDef;

@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -8,14 +9,34 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import {
+	IonCard,
+	IonCol,
+	IonGrid,
+	IonItemDivider,
+	IonLabel,
+	IonRow,
+} from '@ionic/angular/standalone';
 import { ISpaceContext } from '@sneat/space-models';
 import { ILogistOrderContext, IOrderContainer } from '../../dto';
+import { OrderContainersGridModule } from '../order-containers-grid/order-containers-grid.module';
+import { OrderContainerComponent } from './order-container.component';
 
 @Component({
 	selector: 'sneat-order-containers-card',
 	templateUrl: './order-containers.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	standalone: false,
+	imports: [
+		IonGrid,
+		IonRow,
+		IonCol,
+		OrderContainersGridModule,
+		IonCard,
+		NgIf,
+		OrderContainerComponent,
+		IonItemDivider,
+		IonLabel,
+	],
 })
 export class OrderContainersComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;

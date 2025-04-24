@@ -1,4 +1,13 @@
+import { AsyncPipe, NgForOf } from '@angular/common';
 import { Component, Inject, OnDestroy } from '@angular/core';
+import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonSpinner,
+} from '@ionic/angular/standalone';
 import {
 	DatatugNavContextService,
 	DatatugNavService,
@@ -22,7 +31,16 @@ interface IProjectTopLevelPage {
 @Component({
 	selector: 'sneat-datatug-project-menu-top',
 	templateUrl: './project-menu-top.component.html',
-	standalone: false,
+	imports: [
+		IonItem,
+		NgForOf,
+		AsyncPipe,
+		IonIcon,
+		IonLabel,
+		IonSpinner,
+		IonButtons,
+		IonButton,
+	],
 })
 export class ProjectMenuTopComponent implements OnDestroy {
 	public readonly projTopLevelPages: IProjectTopLevelPage[] = [

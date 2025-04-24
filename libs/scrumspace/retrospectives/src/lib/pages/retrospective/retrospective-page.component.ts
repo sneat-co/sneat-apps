@@ -2,6 +2,15 @@ import { ChangeDetectorRef, Component, Inject, OnDestroy } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonButtons,
+	IonContent,
+	IonHeader,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
+import { RetroTimerComponent } from '@sneat/timer';
 import { filter, first, mergeMap, takeUntil } from 'rxjs/operators';
 import { RetrospectiveService } from '../../retrospective.service';
 import { Subscription } from 'rxjs';
@@ -19,7 +28,15 @@ import { getMeetingIdFromDate } from '@sneat/ext-meeting';
 @Component({
 	selector: 'sneat-retrospective',
 	templateUrl: './retrospective-page.component.html',
-	standalone: false,
+	imports: [
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		IonContent,
+		RetroTimerComponent,
+	],
 })
 export class RetrospectivePageComponent
 	extends SpaceBaseComponent

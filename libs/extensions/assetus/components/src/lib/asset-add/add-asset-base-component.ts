@@ -1,10 +1,4 @@
-import {
-	Component,
-	inject,
-	Inject,
-	InjectionToken,
-	Input,
-} from '@angular/core';
+import { Component, inject, Inject, InjectionToken } from '@angular/core';
 import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { AssetExtraType, IAssetExtra } from '@sneat/mod-assetus-core';
@@ -14,7 +8,6 @@ import { AssetService, ICreateAssetRequest } from '../services';
 
 @Component({
 	template: '',
-	standalone: false,
 })
 export abstract class AddAssetBaseComponent extends SpaceBaseComponent {
 	public static readonly metadata = {

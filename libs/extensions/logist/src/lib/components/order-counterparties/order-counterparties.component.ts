@@ -1,3 +1,4 @@
+import { LowerCasePipe, NgForOf, NgIf } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -7,6 +8,14 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
+import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+} from '@ionic/angular/standalone';
 import {
 	ContactRole,
 	ContactType,
@@ -35,7 +44,17 @@ interface ICounterparty extends IOrderCounterparty {
 @Component({
 	selector: 'sneat-logist-order-counterparties',
 	templateUrl: './order-counterparties.component.html',
-	standalone: false,
+	imports: [
+		IonItemDivider,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		LowerCasePipe,
+		IonItem,
+		NgForOf,
+		NgIf,
+	],
 })
 export class OrderCounterpartiesComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;

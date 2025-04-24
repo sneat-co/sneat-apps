@@ -7,6 +7,19 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
+import {
+	IonButton,
+	IonButtons,
+	IonCheckbox,
+	IonCol,
+	IonGrid,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonItemGroup,
+	IonLabel,
+	IonRow,
+} from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext } from '@sneat/contactus-core';
 import {
@@ -27,7 +40,19 @@ export type TasksByID = Record<string, selected | undefined>;
 @Component({
 	selector: 'sneat-shipping-points-selector',
 	templateUrl: './shipping-points-selector.component.html',
-	standalone: false,
+	imports: [
+		IonItemDivider,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonItemGroup,
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonItem,
+		IonCheckbox,
+	],
 })
 export class ShippingPointsSelectorComponent implements OnChanges {
 	@Input() order?: ILogistOrderContext;

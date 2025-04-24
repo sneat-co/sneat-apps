@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import {
 	Component,
 	Inject,
@@ -5,6 +6,20 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import {
+	IonBadge,
+	IonButton,
+	IonCard,
+	IonCardContent,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonSegment,
+	IonSegmentButton,
+	IonText,
+} from '@ionic/angular/standalone';
 import { IMeetingMember } from '@sneat/ext-meeting';
 import { IRecord } from '@sneat/data';
 import { ISpaceContext } from '@sneat/space-models';
@@ -24,7 +39,21 @@ interface IMeetingMemberWithCounts extends IMeetingMember {
 @Component({
 	selector: 'sneat-retro-members',
 	templateUrl: './retro-members.component.html',
-	standalone: false,
+	imports: [
+		IonCard,
+		IonSegment,
+		IonSegmentButton,
+		IonLabel,
+		IonBadge,
+		IonText,
+		IonList,
+		IonItem,
+		NgIf,
+		IonCardContent,
+		IonButton,
+		IonIcon,
+		FormsModule,
+	],
 })
 export class RetroMembersComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;

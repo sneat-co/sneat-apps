@@ -1,3 +1,4 @@
+import { NgForOf, NgIf } from '@angular/common';
 import {
 	ChangeDetectorRef,
 	Component,
@@ -25,11 +26,12 @@ import {
 	NewShippingPointService,
 } from '../new-shipping-point/new-shipping-point.service';
 import { ShippingPointsSelectorService } from '../shipping-points-selector/shipping-points-selector.service';
+import { ContainerSegmentsComponent } from './container-segments.component';
 
 @Component({
 	selector: 'sneat-order-container',
 	templateUrl: './order-container.component.html',
-	standalone: false,
+	imports: [ContainerSegmentsComponent, NgIf, NgForOf],
 })
 export class OrderContainerComponent implements OnChanges {
 	@Input() container?: IOrderContainer;

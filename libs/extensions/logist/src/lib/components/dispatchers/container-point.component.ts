@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import {
 	Component,
 	Inject,
@@ -5,7 +6,20 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCol,
+	IonGrid,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonRow,
+	IonSpinner,
+} from '@ionic/angular/standalone';
 import { ContactsSelectorService } from '@sneat/contactus-shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
@@ -22,11 +36,27 @@ import {
 } from '../../dto';
 import { LogistOrderService } from '../../services';
 import { FreightLoadForm } from '../freight-load-form/freight-load-form.component';
+import { FreightLoadFormModule } from '../freight-load-form/freight-load-form.module';
 
 @Component({
 	selector: 'sneat-container-point',
 	templateUrl: './container-point.component.html',
-	standalone: false,
+	imports: [
+		IonCard,
+		ReactiveFormsModule,
+		IonItem,
+		IonLabel,
+		IonInput,
+		IonButtons,
+		IonButton,
+		IonSpinner,
+		IonIcon,
+		IonGrid,
+		IonRow,
+		IonCol,
+		NgIf,
+		FreightLoadFormModule,
+	],
 })
 export class ContainerPointComponent implements OnChanges {
 	@Input() order?: ILogistOrderContext;

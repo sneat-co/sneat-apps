@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import {
 	Attribute,
 	Component,
@@ -6,19 +7,47 @@ import {
 	Output,
 } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import {
+	IonAvatar,
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonCardHeader,
+	IonIcon,
+	IonImg,
+	IonItem,
+	IonLabel,
+	IonList,
+} from '@ionic/angular/standalone';
 import { IRecord } from '@sneat/data';
 import { NavService } from '@sneat/ext-datatug-core';
 import { IMemberBrief, ISpaceDbo } from '@sneat/dto';
 import { Timer } from '@sneat/ext-meeting';
 import { IScrumDbo, IStatus, ITask } from '@sneat/ext-scrumspace-scrummodels';
+import { TimerMemberButtonComponent } from '@sneat/timer';
 import { Md5 } from 'ts-md5/dist/md5';
 import { TaskType } from '@sneat/ext-scrumspace-scrummodels';
+import { ScrumPageModule } from '../../scrum.module';
 
 @Component({
 	selector: 'sneat-scrum-card',
 	templateUrl: './scrum-card.component.html',
 	styleUrls: ['./scrum-card.component.scss'],
-	standalone: false,
+	imports: [
+		IonCardHeader,
+		NgIf,
+		IonList,
+		IonItem,
+		IonAvatar,
+		IonImg,
+		IonIcon,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonBadge,
+		TimerMemberButtonComponent,
+		ScrumPageModule,
+	],
 })
 export class ScrumCardComponent {
 	@Input() space?: IRecord<ISpaceDbo>;

@@ -1,4 +1,15 @@
+import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
+import {
+	IonCard,
+	IonCardContent,
+	IonContent,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonText,
+	IonTextarea,
+} from '@ionic/angular/standalone';
 import { IAddress } from '@sneat/contactus-core';
 import {
 	IContainerPoint,
@@ -21,7 +32,17 @@ interface IPoint {
 @Component({
 	selector: 'sneat-container-print-doc',
 	templateUrl: './container-print-doc.component.html',
-	standalone: false,
+	imports: [
+		IonContent,
+		IonCard,
+		IonItemDivider,
+		NgIf,
+		IonLabel,
+		IonItem,
+		IonText,
+		IonCardContent,
+		IonTextarea,
+	],
 })
 export class ContainerPrintDocComponent extends OrderPrintPageBaseComponent {
 	protected containerID?: string | null;

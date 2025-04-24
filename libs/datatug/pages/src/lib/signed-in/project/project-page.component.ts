@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DatatugComponentsProjectModule } from '@sneat/ext-datatug-components-project';
-import { DatatugFoldersUiModule } from '@sneat/ext-datatug-folders-ui';
+import { DatatugFolderComponent } from '@sneat/ext-datatug-folders-ui';
 import { DatatugServicesStoreModule } from '@sneat/ext-datatug-services-repo';
 import { WormholeModule } from '@sneat/wormhole';
 import { race, Subject } from 'rxjs';
@@ -54,15 +53,13 @@ import { parseStoreRef } from '@sneat/core';
 		CommonModule,
 		FormsModule,
 		IonicModule,
-		//
-		DatatugComponentsProjectModule,
 		DatatugCoreModule,
 		DatatugServicesNavModule,
 		DatatugServicesProjectModule,
 		DatatugServicesStoreModule,
 		DatatugServicesUnsortedModule,
 		WormholeModule,
-		DatatugFoldersUiModule,
+		DatatugFolderComponent,
 	],
 })
 export class ProjectPageComponent

@@ -1,12 +1,27 @@
 import { Component, Inject, Input } from '@angular/core';
+import {
+	IonButton,
+	IonContent,
+	IonHeader,
+	IonLabel,
+} from '@ionic/angular/standalone';
+import { DialogHeaderComponent } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ILogistOrderContext } from '../../dto';
 import { IContainer } from './condainer-interface';
+import { OrderContainersSelectorComponent } from './order-containers-selector.component';
 
 @Component({
 	selector: 'sneat-order-containers-selector-dialog',
 	templateUrl: './order-containers-selector-dialog.component.html',
-	standalone: false,
+	imports: [
+		IonHeader,
+		DialogHeaderComponent,
+		IonContent,
+		OrderContainersSelectorComponent,
+		IonButton,
+		IonLabel,
+	],
 })
 export class OrderContainersSelectorDialogComponent {
 	@Input() title = 'Select containers';

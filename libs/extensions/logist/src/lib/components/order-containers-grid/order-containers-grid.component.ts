@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -6,6 +7,8 @@ import {
 	OnChanges,
 	Output,
 } from '@angular/core';
+import { IonCard, IonCardContent } from '@ionic/angular/standalone';
+import { DataGridComponent } from '@sneat/datagrid';
 import { IGridColumn } from '@sneat/grid';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { RowComponent, RowContextMenuSignature } from 'tabulator-tables';
@@ -23,7 +26,7 @@ interface IOrderContainerWithIndex extends IOrderContainer {
 @Component({
 	selector: 'sneat-order-containers-grid',
 	templateUrl: './order-containers-grid.component.html',
-	standalone: false,
+	imports: [IonCard, IonCardContent, DataGridComponent, NgIf],
 })
 export class OrderContainersGridComponent implements OnChanges {
 	protected containers?: IOrderContainer[];

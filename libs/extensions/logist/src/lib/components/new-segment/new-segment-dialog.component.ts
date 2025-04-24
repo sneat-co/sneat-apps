@@ -1,5 +1,7 @@
 import { Component, Inject, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { IonContent, IonHeader } from '@ionic/angular/standalone';
+import { DialogHeaderComponent } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ILogistOrderContext, IOrderContainer } from '../../dto';
 import { OrderNavService } from '../../services';
@@ -7,7 +9,7 @@ import { OrderNavService } from '../../services';
 @Component({
 	selector: 'sneat-new-segment-dialog',
 	templateUrl: 'new-segment-dialog.component.html',
-	standalone: false,
+	imports: [IonHeader, DialogHeaderComponent, IonContent],
 })
 export class NewSegmentDialogComponent {
 	@Input() order?: ILogistOrderContext;

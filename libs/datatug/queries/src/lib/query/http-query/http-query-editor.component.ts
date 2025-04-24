@@ -3,7 +3,30 @@ import { Component } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { DatatugComponentsJsontugModule } from '@sneat/ext-datatug-components-jsontug';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardContent,
+	IonCardHeader,
+	IonCardTitle,
+	IonCheckbox,
+	IonCol,
+	IonGrid,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonListHeader,
+	IonRow,
+	IonSegment,
+	IonSegmentButton,
+	IonSelect,
+	IonSelectOption,
+	IonTextarea,
+} from '@ionic/angular/standalone';
+import { JsonTableComponent } from '@sneat/ext-datatug-components-jsontug';
 import { currencyFlag, LookupPipe } from '@sneat/ext-datatug-plugins';
 
 export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT' | 'PATCH';
@@ -25,8 +48,28 @@ export interface IHttpApiEndpoint {
 	imports: [
 		CommonModule,
 		FormsModule,
-		IonicModule,
-		DatatugComponentsJsontugModule,
+		IonCard,
+		IonItem,
+		IonSelectOption,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonLabel,
+		IonInput,
+		IonSegmentButton,
+		IonCol,
+		IonSegment,
+		IonRow,
+		IonGrid,
+		IonCardContent,
+		IonTextarea,
+		IonSelect,
+		IonCheckbox,
+		JsonTableComponent,
+		IonList,
+		IonListHeader,
+		IonCardHeader,
+		IonCardTitle,
 	],
 })
 export class HttpQueryEditorComponent {

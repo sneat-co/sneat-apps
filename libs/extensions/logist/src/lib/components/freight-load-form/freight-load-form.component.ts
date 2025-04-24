@@ -6,7 +6,13 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonTextarea,
+} from '@ionic/angular/standalone';
 import { undefinedIfEmpty } from '@sneat/core';
 import { IFreightLoad } from '../../dto';
 
@@ -27,7 +33,7 @@ export class FreightLoadForm {
 @Component({
 	selector: 'sneat-freight-load-form',
 	templateUrl: './freight-load-form.component.html',
-	standalone: false,
+	imports: [IonItem, IonLabel, IonInput, ReactiveFormsModule, IonTextarea],
 })
 export class FreightLoadFormComponent implements OnChanges {
 	label = 'TO BE SET';

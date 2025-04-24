@@ -1,10 +1,25 @@
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import {
+	IonBackButton,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardContent,
+	IonContent,
+	IonHeader,
+	IonItemDivider,
+	IonLabel,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { ContactService } from '@sneat/contactus-services';
 import { excludeUndefined } from '@sneat/core';
 import { IContactContext } from '@sneat/contactus-core';
 import { first, takeUntil } from 'rxjs';
-import { ISelectItem } from '@sneat/ui';
+import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import { SpaceBaseComponent } from '@sneat/space-components';
+import { OrderFormModule } from '../../components/order-form.module';
 import {
 	CounterpartyRole,
 	IOrderCounterparty,
@@ -15,11 +30,28 @@ import {
 	ILogistOrderContext,
 } from '../../dto/order-dto';
 import { LogistOrderService, LogistSpaceService } from '../../services';
+import { NewOrderContainersFormComponent } from './new-order-containers-form.component';
 
 @Component({
 	selector: 'sneat-new-logist-order-page',
 	templateUrl: 'new-logist-order-page.component.html',
-	standalone: false,
+	imports: [
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		IonContent,
+		IonCard,
+		SelectFromListComponent,
+		FormsModule,
+		IonItemDivider,
+		IonLabel,
+		OrderFormModule,
+		NewOrderContainersFormComponent,
+		IonCardContent,
+		IonButton,
+	],
 })
 export class NewLogistOrderPageComponent extends SpaceBaseComponent {
 	public order: ILogistOrderContext = {

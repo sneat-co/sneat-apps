@@ -1,4 +1,23 @@
+import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCol,
+	IonGrid,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonRow,
+	IonSegment,
+	IonSegmentButton,
+	IonText,
+} from '@ionic/angular/standalone';
+import { CountryInputComponent } from '@sneat/components';
+import { ContactInputComponent } from '@sneat/contactus-shared';
 import { excludeEmpty } from '@sneat/core';
 import { IContactContext, ContactRole } from '@sneat/contactus-core';
 import { ISpaceContext } from '@sneat/space-models';
@@ -7,7 +26,25 @@ import { IOrdersFilter, OrderDirection } from '../../../dto';
 @Component({
 	selector: 'sneat-orders-filter',
 	templateUrl: 'orders-filter.component.html',
-	standalone: false,
+	imports: [
+		IonSegment,
+		IonSegmentButton,
+		IonCard,
+		IonItem,
+		IonLabel,
+		IonText,
+		IonInput,
+		FormsModule,
+		IonButtons,
+		IonButton,
+		NgIf,
+		ContactInputComponent,
+		CountryInputComponent,
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonIcon,
+	],
 })
 export class OrdersFilterComponent {
 	@Input({ required: true }) space?: ISpaceContext;

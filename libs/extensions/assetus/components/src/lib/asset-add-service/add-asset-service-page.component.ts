@@ -1,11 +1,36 @@
 import { Component } from '@angular/core';
+import {
+	IonBackButton,
+	IonButtons,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonItemGroup,
+	IonLabel,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { AssetBasePage, AssetComponentBaseParams } from '../asset-base-page';
 
 @Component({
 	selector: 'sneat-add-asset-service-page',
 	templateUrl: './add-asset-service-page.component.html',
 	providers: [AssetComponentBaseParams],
-	standalone: false,
+	imports: [
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		IonContent,
+		IonItemGroup,
+		IonItemDivider,
+		IonLabel,
+		IonItem,
+		IonIcon,
+	],
 })
 export class AddAssetServicePageComponent extends AssetBasePage {
 	// serviceProviders: DtoServiceProvider[];

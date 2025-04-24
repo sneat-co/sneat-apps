@@ -2,6 +2,17 @@ import { ChangeDetectorRef, Component, Inject } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonCard,
+	IonCol,
+	IonContent,
+	IonHeader,
+	IonRow,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
+import { AddRetroItemComponent } from '../../components/add-retro-item/add-retro-item.component';
 import { RetrospectiveService } from '../../retrospective.service';
 import { takeUntil } from 'rxjs/operators';
 import { SpaceBaseComponent } from '@sneat/space-components';
@@ -19,7 +30,17 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	selector: 'sneat-retro-tree',
 	templateUrl: './retro-tree-page.component.html',
 	styleUrls: ['./retro-tree-page.component.scss'],
-	standalone: false,
+	imports: [
+		IonHeader,
+		IonToolbar,
+		IonBackButton,
+		IonTitle,
+		IonContent,
+		IonRow,
+		IonCol,
+		IonCard,
+		AddRetroItemComponent,
+	],
 })
 export class RetroTreePageComponent extends SpaceBaseComponent {
 	public meetingId: string;

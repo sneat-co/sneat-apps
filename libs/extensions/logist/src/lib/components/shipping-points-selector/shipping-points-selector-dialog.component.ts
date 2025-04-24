@@ -1,5 +1,13 @@
+import { NgIf } from '@angular/common';
 import { Component, Inject, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import {
+	IonButton,
+	IonContent,
+	IonHeader,
+	IonLabel,
+} from '@ionic/angular/standalone';
+import { DialogHeaderComponent } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	IAddContainerPointsRequest,
@@ -7,12 +15,23 @@ import {
 	IOrderContainer,
 } from '../../dto';
 import { LogistOrderService } from '../../services';
-import { TasksByID } from './shipping-points-selector.component';
+import {
+	ShippingPointsSelectorComponent,
+	TasksByID,
+} from './shipping-points-selector.component';
 
 @Component({
 	selector: 'sneat-shipping-pints-selector-dialog',
 	templateUrl: './shipping-points-selector-dialog.component.html',
-	standalone: false,
+	imports: [
+		IonHeader,
+		DialogHeaderComponent,
+		IonContent,
+		ShippingPointsSelectorComponent,
+		IonButton,
+		IonLabel,
+		NgIf,
+	],
 })
 export class ShippingPointsSelectorDialogComponent {
 	@Input() title = 'Select shipping points for container';

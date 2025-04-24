@@ -12,6 +12,7 @@ import {
 	LogistOrderContactRole,
 	ContactType,
 } from '@sneat/contactus-core';
+import { ContactInputComponent } from '@sneat/contactus-shared';
 import { LogistOrderService } from '../../services';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
@@ -27,7 +28,7 @@ import {
 @Component({
 	selector: 'sneat-logist-order-counterparty-input',
 	templateUrl: './order-counterparty-input.component.html',
-	standalone: false,
+	imports: [ContactInputComponent],
 })
 export class OrderCounterpartyInputComponent implements OnChanges {
 	@Input() label?: string = undefined;

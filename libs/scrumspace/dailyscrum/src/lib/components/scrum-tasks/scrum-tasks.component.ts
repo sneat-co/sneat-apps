@@ -1,3 +1,4 @@
+import { NgForOf, NgIf } from '@angular/common';
 import {
 	Component,
 	Inject,
@@ -9,6 +10,18 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { IonInput, ModalController } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCardContent,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonReorderGroup,
+	IonSpinner,
+} from '@ionic/angular/standalone';
 import { IMemberBrief } from '@sneat/contactus-core';
 import { listAddRemoveAnimation } from '@sneat/core';
 import { IRecord } from '@sneat/data';
@@ -28,7 +41,20 @@ import { ScrumTaskComponent } from '../scrum-task/scrum-task.component';
 	selector: 'sneat-scrum-tasks',
 	templateUrl: './scrum-tasks.component.html',
 	animations: listAddRemoveAnimation,
-	standalone: false,
+	imports: [
+		IonItemDivider,
+		NgIf,
+		IonIcon,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonCardContent,
+		IonItem,
+		IonReorderGroup,
+		IonSpinner,
+		NgForOf,
+		IonInput,
+	],
 })
 export class ScrumTasksComponent implements OnDestroy, OnChanges {
 	@Input() space?: IRecord<ISpaceDbo>;

@@ -5,7 +5,6 @@ import { ILogistOrderContext, IOrderCounterparty } from '../../dto';
 @Component({
 	selector: 'sneat-order-truckers',
 	templateUrl: './order-truckers.component.html',
-	standalone: false,
 })
 export class OrderTruckersComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;

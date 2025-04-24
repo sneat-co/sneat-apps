@@ -1,5 +1,19 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonSelect,
+	IonSelectOption,
+} from '@ionic/angular/standalone';
 import { Subject } from 'rxjs';
 import { IDbServer } from '@sneat/ext-datatug-models';
 import { DbServerService } from '@sneat/ext-datatug-services-unsorted';
@@ -8,7 +22,20 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 @Component({
 	selector: 'sneat-datatug-add-db-serve',
 	templateUrl: './add-db-server.component.html',
-	standalone: false,
+	imports: [
+		IonHeader,
+		IonButtons,
+		IonButton,
+		IonContent,
+		IonList,
+		IonItem,
+		IonLabel,
+		IonSelect,
+		IonSelectOption,
+		IonInput,
+		FormsModule,
+		IonIcon,
+	],
 })
 export class AddDbServerComponent implements OnDestroy {
 	readonly dbServer: IDbServer = {

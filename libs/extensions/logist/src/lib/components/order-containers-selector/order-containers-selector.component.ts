@@ -9,11 +9,12 @@ import {
 } from '@angular/core';
 import { ILogistOrderContext } from '../../dto/order-dto';
 import { IContainer } from './condainer-interface';
+import { OrderContainerFormComponent } from './order-container-form.component';
 
 @Component({
 	selector: 'sneat-order-containers-selector',
 	templateUrl: './order-containers-selector.component.html',
-	standalone: false,
+	imports: [OrderContainerFormComponent],
 })
 export class OrderContainersSelectorComponent implements OnChanges, OnInit {
 	@Input({ required: true }) order?: ILogistOrderContext;

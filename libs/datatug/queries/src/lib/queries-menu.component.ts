@@ -1,4 +1,16 @@
+import { NgIf } from '@angular/common';
 import { Component, Inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonSegment,
+	IonSegmentButton,
+} from '@ionic/angular/standalone';
 import { QueryEditorStateService } from './query-editor-state-service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IQueryState } from '@sneat/ext-datatug-editor';
@@ -8,7 +20,18 @@ import { ProjectContextService } from '@sneat/ext-datatug-services-project';
 @Component({
 	selector: 'sneat-datatug-queries-menu',
 	templateUrl: './queries-menu.component.html',
-	standalone: false,
+	imports: [
+		IonSegment,
+		IonSegmentButton,
+		IonItem,
+		IonIcon,
+		IonInput,
+		IonButtons,
+		IonButton,
+		IonLabel,
+		FormsModule,
+		NgIf,
+	],
 })
 export class QueriesMenuComponent {
 	tab: 'active' | 'all' | 'bookmarked' = 'all';
@@ -16,8 +39,6 @@ export class QueriesMenuComponent {
 	currentQueryId?: string;
 
 	queries?: ReadonlyArray<IQueryState>;
-
-	public trackByID = (i: number, item: IQueryState) => item.id;
 
 	constructor(
 		@Inject(ErrorLogger) readonly errorLogger: IErrorLogger,

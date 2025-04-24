@@ -1,10 +1,32 @@
+import { NgForOf, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import {
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonRange,
+	IonText,
+	IonToggle,
+} from '@ionic/angular/standalone';
 import { IMetric } from '../../interfaces';
 
 @Component({
 	selector: 'sneat-metrics',
 	templateUrl: './metrics.component.html',
-	standalone: false,
+	imports: [
+		NgIf,
+		NgForOf,
+		NgSwitch,
+		NgSwitchCase,
+		IonLabel,
+		IonText,
+		FormsModule,
+		IonRange,
+		IonInput,
+		IonItem,
+		IonToggle,
+	],
 })
 export class MetricsComponent {
 	@Input() public metrics?: IMetric[];

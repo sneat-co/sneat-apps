@@ -1,5 +1,18 @@
 import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { IonInput, ModalController } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonSegment,
+	IonSegmentButton,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { SneatUserService } from '@sneat/auth-core';
 import { IRecord } from '@sneat/data';
 import { IUserDbo } from '@sneat/dto';
@@ -10,7 +23,19 @@ import { ITask, TaskType } from '@sneat/ext-scrumspace-scrummodels';
 @Component({
 	selector: 'sneat-scrum-task',
 	templateUrl: './scrum-task.component.html',
-	standalone: false,
+	imports: [
+		IonHeader,
+		IonToolbar,
+		IonTitle,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonContent,
+		IonSegment,
+		IonSegmentButton,
+		IonLabel,
+		IonItem,
+	],
 })
 export class ScrumTaskComponent implements OnInit {
 	@Input() spaceID?: string;

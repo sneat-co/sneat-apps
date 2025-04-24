@@ -1,6 +1,18 @@
 import { Component, Inject, Input } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonContent,
+	IonInput,
+	IonItem,
+	IonList,
+	IonSelect,
+	IonSelectOption,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { IIdAndBrief } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
@@ -19,7 +31,19 @@ import { ISpaceBrief } from '@sneat/dto';
 	selector: 'sneat-mileage-dialog',
 	templateUrl: './mileage-dialog.component.html',
 	styleUrls: ['./mileage-dialog.component.scss'],
-	standalone: false,
+	imports: [
+		IonTitle,
+		IonContent,
+		IonList,
+		IonItem,
+		IonInput,
+		IonSelect,
+		ReactiveFormsModule,
+		IonSelectOption,
+		IonToolbar,
+		IonButtons,
+		IonButton,
+	],
 })
 export class MileAgeDialogComponent {
 	@Input() space?: IIdAndBrief<ISpaceBrief>;

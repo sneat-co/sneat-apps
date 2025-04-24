@@ -1,6 +1,25 @@
+import { NgForOf } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import {
+	IonBackButton,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardHeader,
+	IonCardTitle,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonList,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { getMeetingIdFromDate } from '@sneat/ext-meeting';
+import { RetroTimerComponent } from '@sneat/timer';
 
 export interface IRetroQuestion {
 	id: string;
@@ -11,7 +30,25 @@ export interface IRetroQuestion {
 	selector: 'sneat-retro-my-feedback',
 	templateUrl: './retro-my-feedback.page.html',
 	styleUrls: ['./retro-my-feedback.page.scss'],
-	standalone: false,
+	imports: [
+		IonToolbar,
+		IonHeader,
+		IonBackButton,
+		IonTitle,
+		IonContent,
+		RetroTimerComponent,
+		IonCard,
+		NgForOf,
+		IonCardHeader,
+		IonCardTitle,
+		IonButton,
+		IonLabel,
+		IonIcon,
+		IonList,
+		IonItemDivider,
+		IonItem,
+		IonButtons,
+	],
 })
 export class RetroMyFeedbackPageComponent {
 	spaceID: string;

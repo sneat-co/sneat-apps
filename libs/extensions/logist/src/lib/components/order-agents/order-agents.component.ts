@@ -1,3 +1,4 @@
+import { NgForOf } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -8,6 +9,15 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonItemGroup,
+	IonLabel,
+} from '@ionic/angular/standalone';
 import {
 	ContactsSelectorService,
 	IContactSelectorOptions,
@@ -23,7 +33,15 @@ import {
 @Component({
 	selector: 'sneat-order-agents',
 	templateUrl: './order-agents.component.html',
-	standalone: false,
+	imports: [
+		IonItemGroup,
+		IonItemDivider,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		NgForOf,
+	],
 })
 export class OrderAgentsComponent implements OnChanges {
 	@Input() public readonly = false;
@@ -76,14 +94,14 @@ export class OrderAgentsComponent implements OnChanges {
 				</ion-button>
 			</ion-buttons>
 		</ion-item-divider>
-		<ion-item button (click)="openContactSelector($event, 'dispatch_agent')">
+		<ion-item tappable (click)="openContactSelector($event, 'dispatch_agent')">
 			<ion-label>Dispatch freight agent</ion-label>
 		</ion-item>
-		<ion-item button (click)="openContactSelector($event, 'receive_agent')">
+		<ion-item tappable (click)="openContactSelector($event, 'receive_agent')">
 			<ion-label>Receive freight agent</ion-label>
 		</ion-item>
 	`,
-	standalone: false,
+	imports: [IonItemDivider, IonLabel, IonButtons, IonButton, IonIcon, IonItem],
 })
 export class AgentRoleMenuComponent {
 	@Input({ required: true }) space?: ISpaceContext;

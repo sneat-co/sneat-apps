@@ -9,7 +9,6 @@ import { ISpaceContext } from '@sneat/space-models';
 
 @Component({
 	template: '',
-	standalone: false,
 })
 export abstract class SpaceRelatedFormComponent
 	extends WithSpaceInput

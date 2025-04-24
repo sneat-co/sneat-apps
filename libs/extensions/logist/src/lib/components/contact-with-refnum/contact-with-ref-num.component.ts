@@ -1,15 +1,32 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import {
+	IonCol,
+	IonGrid,
+	IonInput,
+	IonItem,
+	IonRow,
+} from '@ionic/angular/standalone';
 import {
 	ContactRole,
 	ContactType,
 	IContactContext,
 } from '@sneat/contactus-core';
+import { ContactInputComponent } from '@sneat/contactus-shared';
 import { ILogistOrderContext } from '../../dto';
 
 @Component({
 	selector: 'sneat-contact-with-ref-num',
 	templateUrl: './contact-with-ref-num.component.html',
-	standalone: false,
+	imports: [
+		IonGrid,
+		IonRow,
+		IonCol,
+		ContactInputComponent,
+		IonItem,
+		IonInput,
+		FormsModule,
+	],
 })
 export class ContactWithRefNumComponent {
 	@Input() readonly = false;

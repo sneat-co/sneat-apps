@@ -1,10 +1,33 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCol,
+	IonGrid,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonRow,
+} from '@ionic/angular/standalone';
 import { ILogistOrderContext, ITransitPoint } from '../../dto';
+import { TransitPointItemComponent } from './transit-point-item.component';
 
 @Component({
 	selector: 'sneat-order-route-card',
 	templateUrl: './order-route-card.component.html',
-	standalone: false,
+	imports: [
+		IonCard,
+		IonItem,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonGrid,
+		IonRow,
+		IonCol,
+		TransitPointItemComponent,
+	],
 })
 export class OrderRouteCardComponent {
 	@Input() order: ILogistOrderContext = { id: '', space: { id: '' } };

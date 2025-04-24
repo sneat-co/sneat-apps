@@ -17,7 +17,6 @@ import { BaseAppComponent } from '@sneat/app';
 @Component({
 	selector: 'sneat-app-root',
 	templateUrl: 'sneat-app.component.html',
-	standalone: true,
 	imports: [
 		IonApp,
 		IonSplitPane,

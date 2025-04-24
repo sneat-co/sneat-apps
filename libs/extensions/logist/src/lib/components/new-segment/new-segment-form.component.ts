@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -8,6 +9,16 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
+import {
+	IonButton,
+	IonCard,
+	IonCol,
+	IonGrid,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonRow,
+} from '@ionic/angular/standalone';
 import { excludeEmpty } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IContactContext } from '@sneat/contactus-core';
@@ -18,13 +29,31 @@ import {
 	IOrderContainer,
 } from '../../dto';
 import { LogistOrderService } from '../../services';
+import { ContactWithRefNumModule } from '../contact-with-refnum/contact-with-ref-num.module';
 import { IContainer } from '../order-containers-selector/condainer-interface';
-import { SegmentEndpointType } from './segment-counterparty.component';
+import { OrderContainersSelectorModule } from '../order-containers-selector/order-containers-selector.module';
+import {
+	SegmentCounterpartyComponent,
+	SegmentEndpointType,
+} from './segment-counterparty.component';
 
 @Component({
 	selector: 'sneat-new-segment-form',
 	templateUrl: './new-segment-form.component.html',
-	standalone: false,
+	imports: [
+		IonCard,
+		IonItem,
+		IonLabel,
+		IonItemDivider,
+		ContactWithRefNumModule,
+		IonGrid,
+		IonRow,
+		IonCol,
+		SegmentCounterpartyComponent,
+		OrderContainersSelectorModule,
+		NgIf,
+		IonButton,
+	],
 })
 export class NewSegmentFormComponent implements OnInit, OnChanges {
 	@Input() order?: ILogistOrderContext;

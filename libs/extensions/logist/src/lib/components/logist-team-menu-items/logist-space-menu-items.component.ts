@@ -1,12 +1,19 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
+import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonItem,
+	IonLabel,
+} from '@ionic/angular/standalone';
 import { spacePageUrl } from '@sneat/space-components';
 import { ISpaceContext } from '@sneat/space-models';
 
 @Component({
 	selector: 'sneat-logist-space-menu-items',
 	templateUrl: './logist-space-menu-items.component.html',
-	standalone: false,
+	imports: [IonItem, RouterLink, IonIcon, IonLabel, IonButtons, IonButton],
 })
 export class LogistSpaceMenuItemsComponent {
 	@ViewChild(RouterOutlet) outlet?: RouterOutlet;

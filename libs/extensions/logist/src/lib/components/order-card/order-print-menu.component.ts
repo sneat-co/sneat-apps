@@ -1,5 +1,12 @@
 import { Component, Inject, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
+import {
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+} from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
 import { ILogistOrderContext } from '../../dto';
@@ -7,7 +14,7 @@ import { ILogistOrderContext } from '../../dto';
 @Component({
 	selector: 'sneat-logist-order-print-menu',
 	templateUrl: './order-print-menu.component.html',
-	standalone: false,
+	imports: [IonItemDivider, IonIcon, IonLabel, IonItem, RouterLink],
 })
 export class OrderPrintMenuComponent {
 	@Input({ required: true }) space?: ISpaceContext;

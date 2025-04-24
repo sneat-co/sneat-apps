@@ -1,4 +1,18 @@
+import { TitleCasePipe } from '@angular/common';
 import { Component, Inject, Input } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import {
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonText,
+} from '@ionic/angular/standalone';
+import { SqlEditorComponent } from '@sneat/ext-datatug-components-sqleditor';
 import {
 	IProjItemBrief,
 	IQueryDef,
@@ -32,7 +46,20 @@ type QueryType = 'SQL' | 'GraphQL' | 'HTTP';
 @Component({
 	selector: 'sneat-datatug-queries-tab',
 	templateUrl: 'queries-tab.component.html',
-	standalone: false,
+	imports: [
+		SqlEditorComponent,
+		IonItem,
+		IonLabel,
+		IonInput,
+		FormsModule,
+		IonIcon,
+		IonButton,
+		IonButtons,
+		IonItemDivider,
+		IonBadge,
+		IonText,
+		TitleCasePipe,
+	],
 })
 export class QueriesTabComponent {
 	@Input() rootFolder?: 'shared' | 'personal' | 'bookmarked';

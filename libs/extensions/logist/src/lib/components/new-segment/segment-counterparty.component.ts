@@ -1,5 +1,17 @@
+import { NgIf, TitleCasePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import {
+	IonCard,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonSegment,
+	IonSegmentButton,
+} from '@ionic/angular/standalone';
 import { IContactContext } from '@sneat/contactus-core';
+import { ContactInputComponent } from '@sneat/contactus-shared';
 import { ILogistOrderContext } from '../../dto';
 
 export type SegmentEndpointType = 'port' | 'dispatcher';
@@ -7,7 +19,19 @@ export type SegmentEndpointType = 'port' | 'dispatcher';
 @Component({
 	selector: 'sneat-segment-counterparty',
 	templateUrl: './segment-counterparty.component.html',
-	standalone: false,
+	imports: [
+		IonCard,
+		IonItemDivider,
+		IonLabel,
+		IonSegment,
+		TitleCasePipe,
+		FormsModule,
+		IonSegmentButton,
+		ContactInputComponent,
+		IonItem,
+		IonInput,
+		NgIf,
+	],
 })
 export class SegmentCounterpartyComponent {
 	@Input() endpointDirection?: 'from' | 'to';

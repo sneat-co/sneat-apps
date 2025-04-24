@@ -1,16 +1,58 @@
+import { DatePipe, NgIf } from '@angular/common';
 import { Component, Inject, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { PopoverController, ToastController } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCol,
+	IonGrid,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonItemGroup,
+	IonLabel,
+	IonRow,
+	IonSelect,
+	IonSelectOption,
+	IonText,
+} from '@ionic/angular/standalone';
 import { LogistOrderContactRole } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
 import { ILogistOrderContext } from '../../dto';
 import { LogistOrderService } from '../../services';
+import { OrderAgentsComponent } from '../order-agents/order-agents.component';
+import { OrderCounterpartyComponent } from '../order-counterparty/order-counterparty.component';
 import { OrderPrintMenuComponent } from './order-print-menu.component';
 
 @Component({
 	selector: 'sneat-logist-order-card',
 	templateUrl: './order-card.component.html',
-	standalone: false,
+	imports: [
+		IonCard,
+		IonItem,
+		NgIf,
+		RouterLink,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonInput,
+		IonSelect,
+		IonSelectOption,
+		IonText,
+		IonItemGroup,
+		IonItemDivider,
+		OrderCounterpartyComponent,
+		OrderAgentsComponent,
+		DatePipe,
+	],
 })
 export class OrderCardComponent {
 	@Input() public readonly = false;

@@ -3,9 +3,9 @@
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="spacePageUrl('orders') || '..'" />
 		</ion-buttons>
-		<ion-title
-			>Order # {{ order?.id }} - {{ order?.brief?.direction }}</ion-title
-		>
+		<ion-title>
+			Order # {{ order?.id }} - {{ order?.brief?.direction }}
+		</ion-title>
 		<ion-buttons slot="end">
 			<ion-button
 				color="medium"
@@ -43,8 +43,9 @@
 							📦 Containers
 							<ion-badge color="light" *ngIf="order?.dbo?.containers?.length">
 								<ion-text color="medium">{{
-									order?.dbo?.containers?.length
-								}}</ion-text>
+										order?.dbo?.containers?.length
+									}}
+								</ion-text>
 							</ion-badge>
 						</ion-label>
 					</ion-segment-button>
