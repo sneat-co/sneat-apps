@@ -39,8 +39,8 @@ importers:
         specifier: 19.2.8
         version: 19.2.8(@angular/common@19.2.8(@angular/core@19.2.8(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@19.2.8(rxjs@7.8.2)(zone.js@0.15.0))(@angular/platform-browser@19.2.8(@angular/animations@19.2.8(@angular/common@19.2.8(@angular/core@19.2.8(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@19.2.8(rxjs@7.8.2)(zone.js@0.15.0)))(@angular/common@19.2.8(@angular/core@19.2.8(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@19.2.8(rxjs@7.8.2)(zone.js@0.15.0)))(rxjs@7.8.2)
       '@capacitor-firebase/authentication':
-        specifier: 7.1.0
-        version: 7.1.0(@capacitor/core@7.2.0)(firebase@11.6.0)
+        specifier: 7.2.0
+        version: 7.2.0(@capacitor/core@7.2.0)(firebase@11.6.0)
       '@capacitor/android':
         specifier: 7.2.0
         version: 7.2.0(@capacitor/core@7.2.0)
@@ -1166,8 +1166,8 @@ packages:
   '@bufbuild/protobuf@2.2.5':
     resolution: {integrity: sha512-/g5EzJifw5GF8aren8wZ/G5oMuPoGeS6MQD3ca8ddcvdXR5UELUfdTZITCGNhNXynY/AYl3Z4plmxdj/tRl/hQ==}
 
-  '@capacitor-firebase/authentication@7.1.0':
-    resolution: {integrity: sha512-vPcWd3pjiMNF6qEylR9zxko/BnHT1MD9abbsu421r+grkKndqSvnC3THJQ38yXhk9opoZEV+FlvjocvwyiV8iw==}
+  '@capacitor-firebase/authentication@7.2.0':
+    resolution: {integrity: sha512-VI8Ib4DoBFTmvdUQVW0RqxB28mtaMtAogcxff5rGKnfISYMq+HrtMEIP5y9N3fytZvbi5NYvomXCiKy6cr8+6g==}
     peerDependencies:
       '@capacitor/core': '>=7.0.0'
       firebase: ^11.2.0
@@ -11080,7 +11080,7 @@ snapshots:
 
   '@bufbuild/protobuf@2.2.5': {}
 
-  '@capacitor-firebase/authentication@7.1.0(@capacitor/core@7.2.0)(firebase@11.6.0)':
+  '@capacitor-firebase/authentication@7.2.0(@capacitor/core@7.2.0)(firebase@11.6.0)':
     dependencies:
       '@capacitor/core': 7.2.0
     optionalDependencies:
