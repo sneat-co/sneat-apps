@@ -13,6 +13,16 @@ import {
 	RouterLink,
 } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonSelect,
+	IonSelectOption,
+} from '@ionic/angular/standalone';
 import { ISneatUserState } from '@sneat/auth-core';
 import { IUserSpaceBrief } from '@sneat/auth-models';
 import { AuthMenuItemComponent } from '@sneat/components';
@@ -24,19 +34,25 @@ import { filter } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SpaceBaseComponent } from '../space-base-component.directive';
 import { SpaceComponentBaseParams } from '../space-component-base-params.service';
-import { IonicModule } from '@ionic/angular';
 
 @Component({
 	selector: 'sneat-space-menu',
 	templateUrl: './space-menu.component.html',
 	styles: '.currentPage ion-label {font-weight: bold}',
 	imports: [
-		IonicModule,
 		AuthMenuItemComponent,
 		ContactusServicesModule,
 		SpaceServiceModule,
 		TitleCasePipe,
 		RouterLink,
+		IonList,
+		IonItem,
+		IonSelect,
+		IonSelectOption,
+		IonIcon,
+		IonLabel,
+		IonButtons,
+		IonButton,
 	],
 	providers: [SpaceComponentBaseParams],
 	changeDetection: ChangeDetectionStrategy.OnPush,

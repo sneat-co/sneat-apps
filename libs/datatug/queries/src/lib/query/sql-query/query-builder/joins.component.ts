@@ -1,4 +1,19 @@
+import { JsonPipe } from '@angular/common';
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import {
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCheckbox,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonSelect,
+	IonSelectOption,
+	IonText,
+} from '@ionic/angular/standalone';
 import {
 	IAstJoin,
 	IAstQuery,
@@ -14,7 +29,21 @@ import {
 @Component({
 	selector: 'sneat-datatug-qe-joins',
 	templateUrl: 'joins.component.html',
-	standalone: false,
+	imports: [
+		IonCheckbox,
+		IonCard,
+		IonList,
+		IonItem,
+		IonLabel,
+		IonSelect,
+		IonSelectOption,
+		IonBadge,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonText,
+		JsonPipe,
+	],
 })
 export class JoinsComponent {
 	@Input() public sql?: string;
@@ -23,8 +52,6 @@ export class JoinsComponent {
 	@Output() public astChanged = new EventEmitter<ISqlChanged>();
 
 	public suggestedJoins?: ICanJoin[];
-
-	public readonly trackByIndex = (i: number) => i;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,

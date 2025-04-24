@@ -6,14 +6,33 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
-import { IonicModule, ModalController } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonList,
+	ModalController,
+} from '@ionic/angular/standalone';
 import { ISelectItem, ISelectItemEvent } from '../selector-interfaces';
 import { SelectorBaseComponent } from '../selector-base.component';
 
 @Component({
 	selector: 'sneat-multi-selector',
 	templateUrl: './multi-selector.component.html',
-	imports: [IonicModule],
+	imports: [
+		IonCard,
+		IonItemDivider,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonItem,
+		IonIcon,
+		IonList,
+	],
 })
 export class MultiSelectorComponent<T = ISelectItem>
 	extends SelectorBaseComponent<T>

@@ -1,20 +1,24 @@
-import {
-	Provider,
-	inject,
-	provideAppInitializer,
-	ErrorHandler,
-} from '@angular/core';
+import { inject, provideAppInitializer, ErrorHandler } from '@angular/core';
 import { TraceService, init, createErrorHandler } from '@sentry/angular';
 import { Router } from '@angular/router';
+import { BrowserOptions } from '@sentry/browser/build/npm/types/client';
 
-export function initSentry(): void {
+export const provideSentryAppInitializer = (options: BrowserOptions) => {
+	initSentry(options);
+	return [
+		...sentryAppInitializerProviders,
+		provideAppInitializer(() => {
+			inject(TraceService);
+		}),
+	];
+};
+
+function initSentry(options: BrowserOptions): void {
 	console.log('initSentry()');
-	init({
-		dsn: 'https://2cdec43e82bc42e98821becbfe251778@o355000.ingest.sentry.io/6395241',
-	});
+	init(options);
 }
 
-export const sentryAppInitializerProviders: readonly Provider[] = [
+const sentryAppInitializerProviders = [
 	{
 		provide: TraceService,
 		deps: [Router],
@@ -26,9 +30,3 @@ export const sentryAppInitializerProviders: readonly Provider[] = [
 		}),
 	},
 ];
-
-export const provideSentryAppInitializer = () => {
-	return provideAppInitializer(() => {
-		inject(TraceService);
-	});
-};

@@ -1,12 +1,34 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { IonSplitPane } from '@ionic/angular';
+import {
+	IonApp,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonMenu,
+	IonRouterOutlet,
+	IonSplitPane,
+	IonText,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { SneatBaseAppComponent } from '@sneat/app';
 import { TopMenuService } from '@sneat/core';
 
 @Component({
 	selector: 'sneat-root',
 	templateUrl: './logist-app.component.html',
-	standalone: false,
+	imports: [
+		IonApp,
+		IonSplitPane,
+		IonMenu,
+		IonHeader,
+		IonToolbar,
+		IonTitle,
+		IonIcon,
+		IonText,
+		IonContent,
+		IonRouterOutlet,
+	],
 })
 export class LogistAppComponent
 	extends SneatBaseAppComponent

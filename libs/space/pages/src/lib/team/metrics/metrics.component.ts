@@ -1,6 +1,18 @@
-import { CommonModule } from '@angular/common';
 import { Component, Inject, Input } from '@angular/core';
-import { IonicModule, NavController } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardContent,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonList,
+	IonSpinner,
+	IonText,
+	NavController,
+} from '@ionic/angular/standalone';
 import { IBoolMetricVal, ISpaceDbo, ISpaceMetric } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRecord } from '@sneat/data';
@@ -9,7 +21,19 @@ import { SpaceNavService, SpaceService } from '@sneat/space-services';
 @Component({
 	selector: 'sneat-metrics',
 	templateUrl: './metrics.component.html',
-	imports: [CommonModule, IonicModule],
+	imports: [
+		IonList,
+		IonItemDivider,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonItem,
+		IonSpinner,
+		IonCardContent,
+		IonCard,
+		IonText,
+	],
 })
 export class MetricsComponent {
 	@Input() public space?: IRecord<ISpaceDbo>;

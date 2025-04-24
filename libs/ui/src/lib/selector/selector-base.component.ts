@@ -1,5 +1,5 @@
 import { Directive, inject, Input, signal } from '@angular/core';
-import { ModalController, PopoverController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular/standalone';
 import { SneatBaseComponent } from '../components/sneat-base.component';
 
 @Directive()

@@ -5,10 +5,12 @@
 </ion-header>
 <ion-content>
 	<ion-card>
-		<p *ngIf="!emailFromStorage">
-			Welcome to our app! For your safety please re-type your email address to
-			sign-in.
-		</p>
+		@if (!emailFromStorage) {
+			<p>
+				Welcome to our app! For your safety please re-type your email address to
+				sign-in.
+			</p>
+		}
 		<ion-item>
 			<ion-icon name="mail-outline" slot="start" />
 			<ion-input
@@ -21,8 +23,13 @@
 		</ion-item>
 
 		<ion-button [disabled]="isSigning" (click)="signIn()">
-			<ion-label *ngIf="!isSigning">Sign in</ion-label>
-			<ion-label *ngIf="isSigning">Signing in...</ion-label>
+			<ion-label>
+				@if (isSigning) {
+					Signing in...
+				} @else {
+					Sign in
+				}
+			</ion-label>
 		</ion-button>
 	</ion-card>
 </ion-content>

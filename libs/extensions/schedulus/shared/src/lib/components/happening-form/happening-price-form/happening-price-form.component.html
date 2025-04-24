@@ -26,45 +26,52 @@
 				<ion-select-option value="RUB">RUB</ion-select-option>
 			</ion-select>
 		</ion-item>
-		<ion-item *ngIf="termUnit">
-			<ion-input
-				*ngIf="termUnit !== 'single'"
-				label="Per"
-				type="number"
-				style="text-align: right"
-				[formControl]="termLength"
-				(ionChange)="onTermLengthChange()"
-			/>
-			<ion-select
-				[label]="termUnit === 'single' ? 'Per' : undefined"
-				[(ngModel)]="termUnit"
-				interface="popover"
-			>
-				@for (o of termPeriods; track o.value) {
-					<ion-select-option [value]="o.value">{{ o.title }}</ion-select-option>
+		@if (termUnit) {
+			<ion-item>
+				@if (termUnit !== "single") {
+					<ion-input
+						label="Per"
+						type="number"
+						style="text-align: right"
+						[formControl]="termLength"
+						(ionChange)="onTermLengthChange()"
+					/>
 				}
-			</ion-select>
-		</ion-item>
-		<sneat-radio-group-to-select
-			*ngIf="!termUnit"
-			label="Per"
-			[(ngModel)]="termUnit"
-			[selectOptions]="termPeriods"
-		/>
-		<ion-item *ngIf="termUnit">
-			<ion-label *ngIf="!priceValue.value" color="danger"
-				><i>Price amount is required</i></ion-label
-			>
-			<ion-label *ngIf="!termLength.value && priceValue.value" color="danger"
-				><i>Term length is required</i></ion-label
-			>
-			<ion-button
-				slot="end"
-				[disabled]="!priceValue.value || !termLength.value"
-				(click)="addPrice($event)"
-			>
-				<ion-label>Add price</ion-label>
-			</ion-button>
-		</ion-item>
+				<ion-select
+					[label]="termUnit === 'single' ? 'Per' : undefined"
+					[(ngModel)]="termUnit"
+					interface="popover"
+				>
+					@for (o of termPeriods; track o.value) {
+						<ion-select-option [value]="o.value">{{
+							o.title
+						}}</ion-select-option>
+					}
+				</ion-select>
+			</ion-item>
+		} @else {
+			<sneat-radio-group-to-select
+				label="Per"
+				[(ngModel)]="termUnit"
+				[selectOptions]="termPeriods"
+			/>
+		}
+		@if (termUnit) {
+			<ion-item>
+				@if (!priceValue.value) {
+					<ion-label color="danger"><i>Price amount is required</i></ion-label>
+				}
+				@if (!termLength.value && priceValue.value) {
+					<ion-label color="danger"><i>Term length is required</i></ion-label>
+				}
+				<ion-button
+					slot="end"
+					[disabled]="!priceValue.value || !termLength.value"
+					(click)="addPrice($event)"
+				>
+					<ion-label>Add price</ion-label>
+				</ion-button>
+			</ion-item>
+		}
 	</ion-list>
 </ion-content>

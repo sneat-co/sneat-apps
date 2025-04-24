@@ -1,6 +1,22 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
+import {
+	IonButton,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonList,
+	IonSpinner,
+	IonTitle,
+	IonToolbar,
+	NavController,
+} from '@ionic/angular/standalone';
 import {
 	IMemberBrief,
 	IAcceptPersonalInviteRequest,
@@ -8,7 +24,6 @@ import {
 	IContactWithBriefAndSpace,
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { NavController } from '@ionic/angular';
 import {
 	Auth as AngularFireAuth,
 	createUserWithEmailAndPassword,
@@ -26,7 +41,23 @@ import { InviteService } from '@sneat/space-services';
 @Component({
 	selector: 'sneat-invite-personal-page',
 	templateUrl: './invite-personal-page.component.html',
-	standalone: false,
+	imports: [
+		IonItem,
+		IonHeader,
+		IonTitle,
+		IonContent,
+		IonToolbar,
+		IonList,
+		IonLabel,
+		IonItemDivider,
+		IonLabel,
+		IonItem,
+		IonInput,
+		FormsModule,
+		IonButton,
+		IonIcon,
+		IonSpinner,
+	],
 })
 export class InvitePersonalPageComponent implements OnInit {
 	public fullName = '';

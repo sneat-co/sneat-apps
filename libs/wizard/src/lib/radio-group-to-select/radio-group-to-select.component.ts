@@ -1,6 +1,20 @@
 import { Component, forwardRef, Input } from '@angular/core';
+import {
+	IonItem,
+	IonLabel,
+	IonList,
+	IonListHeader,
+	IonRadio,
+	IonRadioGroup,
+	IonSelect,
+	IonSelectOption,
+} from '@ionic/angular/standalone';
 import { SelectOption } from './select-options';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+	ControlValueAccessor,
+	FormsModule,
+	NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 
 @Component({
 	selector: 'sneat-radio-group-to-select',
@@ -12,7 +26,18 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 			multi: true,
 		},
 	],
-	standalone: false,
+	standalone: true,
+	imports: [
+		IonItem,
+		IonSelect,
+		FormsModule,
+		IonSelectOption,
+		IonRadioGroup,
+		IonList,
+		IonLabel,
+		IonListHeader,
+		IonRadio,
+	],
 })
 export class RadioGroupToSelectComponent implements ControlValueAccessor {
 	v?: object;

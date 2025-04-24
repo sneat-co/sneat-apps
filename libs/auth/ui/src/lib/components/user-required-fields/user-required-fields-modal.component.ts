@@ -7,7 +7,21 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from '@angular/forms';
-import { IonicModule, ModalController } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonContent,
+	IonFooter,
+	IonHeader,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonTitle,
+	IonToolbar,
+	ModalController,
+} from '@ionic/angular/standalone';
 import {
 	IInitUserRecordRequest,
 	ISneatUserState,
@@ -24,11 +38,21 @@ import { takeUntil } from 'rxjs';
 	selector: 'sneat-user-required-fields-form',
 	templateUrl: './user-required-fields-modal.component.html',
 	imports: [
-		CommonModule,
-		IonicModule,
 		FormsModule,
 		ReactiveFormsModule,
 		SelectFromListComponent,
+		IonHeader,
+		IonToolbar,
+		IonTitle,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonContent,
+		IonItem,
+		IonInput,
+		IonItemDivider,
+		IonLabel,
+		IonFooter,
 	],
 })
 export class UserRequiredFieldsModalComponent extends SneatBaseComponent {

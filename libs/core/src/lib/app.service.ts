@@ -21,7 +21,8 @@ export type SneatApp =
 	| 'sizechart'
 	| 'splitus'
 	| 'sportclubs'
-	| 'tournament';
+	| 'tournament'
+	| 'datatug';
 
 export interface IAppInfo {
 	readonly appId: SneatApp;

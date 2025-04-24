@@ -1,9 +1,7 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { SneatAuthRoutingModule } from '@sneat/auth-ui';
+import { Routes } from '@angular/router';
 // TODO: fix & remove this eslint hint @nrwl/nx/enforce-module-boundaries
 
-const routes: Routes = [
+export const routes: Routes = [
 	{
 		path: '',
 		pathMatch: 'full',
@@ -32,15 +30,3 @@ const routes: Routes = [
 			),
 	},
 ];
-
-@NgModule({
-	imports: [
-		RouterModule.forRoot(
-			routes /*, { preloadingStrategy: PreloadAllModules }*/,
-		),
-		SneatAuthRoutingModule,
-		// RoutesToCommuneModule,
-	],
-	exports: [RouterModule],
-})
-export class LogistAppRoutingModule {}

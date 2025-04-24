@@ -22,7 +22,7 @@ function getAnalyticsConfig(
 	const firebaseMeasurementId = environmentConfig.firebaseConfig?.measurementId;
 
 	return {
-		addPosthog: useAnalytics && !!environmentConfig.posthog?.posthogKey,
+		addPosthog: useAnalytics && !!environmentConfig.posthog?.token,
 		addFirebaseAnalytics:
 			useAnalytics &&
 			!!firebaseMeasurementId &&

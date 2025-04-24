@@ -1,11 +1,10 @@
 <ion-row class="ion-no-padding">
-	<ion-col
-		class="ion-no-padding"
-		*ngFor="let boarCardDef of boardRowDef?.cards"
-	>
-		<sneat-datatug-board-card
-			[boarCardDef]="boarCardDef"
-			[boardContext]="boardContext"
-		/>
-	</ion-col>
+	@for (boarCardDef of boardRowDef?.cards; track boarCardDef.id) {
+		<ion-col class="ion-no-padding">
+			<sneat-datatug-board-card
+				[boarCardDef]="boarCardDef"
+				[boardContext]="boardContext"
+			/>
+		</ion-col>
+	}
 </ion-row>

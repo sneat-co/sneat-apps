@@ -8,7 +8,12 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonIcon,
+	IonLabel,
+	IonSpinner,
+} from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ITimerState, Timer } from '@sneat/ext-meeting';
 import { IScrumDbo, TimerStatusEnum } from '@sneat/ext-scrumspace-scrummodels';
@@ -17,7 +22,7 @@ import { Subscription } from 'rxjs';
 @Component({
 	selector: 'sneat-timer-member-button',
 	templateUrl: './timer-member-button.component.html',
-	imports: [IonicModule],
+	imports: [IonButton, IonSpinner, IonIcon, IonLabel],
 })
 export class TimerMemberButtonComponent implements OnDestroy, OnChanges {
 	@Input() public scrumID?: string;

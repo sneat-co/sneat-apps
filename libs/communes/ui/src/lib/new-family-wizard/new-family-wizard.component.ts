@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { SelectOption } from '@sneat/wizard';
+import { FormsModule } from '@angular/forms';
+import { RadioGroupToSelectComponent, SelectOption } from '@sneat/wizard';
 
 @Component({
 	selector: 'sneat-new-family-wizard',
 	templateUrl: './new-family-wizard.component.html',
-	standalone: false,
+	imports: [RadioGroupToSelectComponent, FormsModule],
 })
 export class NewFamilyWizardComponent {
 	@Output() ready = new EventEmitter<boolean>();

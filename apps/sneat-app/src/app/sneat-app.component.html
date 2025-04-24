@@ -23,7 +23,7 @@
 		<ion-menu contentId="main" #menu>
 			<ion-header>
 				<ion-toolbar color="light">
-					<ion-title routerLink="/" tappable (click)="menu.close()">
+					<ion-title [routerLink]="'/'" tappable (click)="menu.close()">
 						<span style="margin-right: 0.5em">
 							<ion-icon
 								color="primary"

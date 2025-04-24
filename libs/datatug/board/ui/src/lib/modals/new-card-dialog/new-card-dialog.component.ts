@@ -1,13 +1,35 @@
-import { CommonModule } from '@angular/common';
 import { Component, Inject, ViewChild } from '@angular/core';
-import { IonicModule, IonInput, ModalController } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonContent,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonList,
+	ModalController,
+} from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({
 	selector: 'sneat-datatug-new-card-dialog',
 	templateUrl: './new-card-dialog.component.html',
 	styleUrls: ['./new-card-dialog.component.scss'],
-	imports: [CommonModule, IonicModule],
+	imports: [
+		IonItemDivider,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonItem,
+		IonInput,
+		IonList,
+		IonCard,
+		IonContent,
+	],
 })
 export class NewCardDialogComponent {
 	public cardTitle?: string;

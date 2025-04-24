@@ -5,15 +5,34 @@ import {
 	Input,
 } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import {
+	IonButton,
+	IonCol,
+	IonGrid,
+	IonIcon,
+	IonLabel,
+	IonRow,
+	IonText,
+} from '@ionic/angular/standalone';
 import { NewCardDialogComponent } from '../../modals/new-card-dialog/new-card-dialog.component';
 import { IBoardContext, IBoardDef } from '@sneat/ext-datatug-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { BoardRowComponent } from '../board-row/board-row.component';
 
 @Component({
 	selector: 'sneat-datatug-board',
 	templateUrl: './board.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	standalone: false,
+	imports: [
+		BoardRowComponent,
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonText,
+		IonButton,
+		IonIcon,
+		IonLabel,
+	],
 })
 export class BoardComponent {
 	@Input() boardDef?: IBoardDef;

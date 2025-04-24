@@ -1,5 +1,20 @@
 import { Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import {
+	FormControl,
+	FormsModule,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
+import {
+	IonBackButton,
+	IonContent,
+	IonHeader,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { SneatUserService } from '@sneat/auth-core';
 import { IUserRecord } from '@sneat/auth-models';
 
@@ -7,7 +22,18 @@ import { IUserRecord } from '@sneat/auth-models';
 	selector: 'sneat-user-profile',
 	templateUrl: './user-profile-page.component.html',
 	styleUrls: ['./user-profile-page.component.scss'],
-	standalone: false,
+	imports: [
+		FormsModule,
+		ReactiveFormsModule,
+		IonHeader,
+		IonToolbar,
+		IonTitle,
+		IonContent,
+		IonItem,
+		IonLabel,
+		IonInput,
+		IonBackButton,
+	],
 })
 export class UserProfilePageComponent {
 	public user?: IUserRecord | null;

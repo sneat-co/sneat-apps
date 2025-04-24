@@ -1,7 +1,31 @@
 import { Component, Inject, Input, Pipe, PipeTransform } from '@angular/core';
-import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+	FormControl,
+	FormsModule,
+	ReactiveFormsModule,
+	UntypedFormGroup,
+	Validators,
+} from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
-import { getContactTitle } from '@sneat/components';
+import {
+	IonButton,
+	IonButtons,
+	IonCardContent,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonSegment,
+	IonSegmentButton,
+	IonSpinner,
+	IonText,
+	IonTextarea,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
+import { ContactTitlePipe, getContactTitle } from '@sneat/components';
 import {
 	IContactWithBriefAndSpace,
 	ICreatePersonalInviteRequest,
@@ -23,7 +47,27 @@ export class EncodeSmsText implements PipeTransform {
 @Component({
 	selector: 'sneat-invite-modal',
 	templateUrl: 'invite-modal.component.html',
-	standalone: false,
+	imports: [
+		IonHeader,
+		IonToolbar,
+		IonTitle,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonContent,
+		IonSegment,
+		IonSegmentButton,
+		IonItem,
+		IonInput,
+		ReactiveFormsModule,
+		FormsModule,
+		IonCardContent,
+		IonTextarea,
+		IonLabel,
+		IonText,
+		IonSpinner,
+		ContactTitlePipe,
+	],
 })
 export class InviteModalComponent {
 	@Input({ required: true }) space?: ISpaceContext;

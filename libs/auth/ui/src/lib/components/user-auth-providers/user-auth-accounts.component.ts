@@ -1,7 +1,17 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardContent,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonList,
+	IonText,
+} from '@ionic/angular/standalone';
 import { SneatApiService } from '@sneat/api';
 import { AuthProviderID, SneatUserService } from '@sneat/auth-core';
 import { IUserRecord } from '@sneat/auth-models';
@@ -14,11 +24,19 @@ import { UserAuthAProviderStatusComponent } from './user-auth-provider-status';
 	templateUrl: './user-auth-accounts.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
-		CommonModule,
-		IonicModule,
 		LoginWithTelegramComponent,
 		FormsModule,
 		UserAuthAProviderStatusComponent,
+		IonCard,
+		IonList,
+		IonItemDivider,
+		IonLabel,
+		IonItem,
+		IonIcon,
+		IonText,
+		IonButtons,
+		IonButton,
+		IonCardContent,
 	],
 })
 export class UserAuthAccountsComponent extends SneatBaseComponent {

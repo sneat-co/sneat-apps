@@ -1,8 +1,11 @@
 <ion-header>
 	<ion-toolbar color="primary">
-		<ion-title *ngIf="!member">Invite member to join</ion-title>
-		<ion-title *ngIf="member"
-			>Invite {{ member | contactTitle }} to join
+		<ion-title>
+			@if (member) {
+				Invite {{ member | contactTitle }} to join
+			} @else {
+				Invite member to join
+			}
 		</ion-title>
 		<ion-buttons slot="end">
 			<ion-button (click)="close()">
@@ -19,24 +22,25 @@
 	</ion-segment>
 	<form>
 		<ion-item>
-			<ion-input
-				*ngIf="tab === 'email'"
-				placeholder="email@address"
-				label="To"
-				labelPlacement="stacked"
-				[required]="true"
-				[formControl]="email"
-			/>
-			<ion-input
-				*ngIf="tab === 'sms'"
-				label="Invite link"
-				labelPlacement="stacked"
-				placeholder="phone #"
-				[formControl]="phone"
-			/>
+			@if (tab === "email") {
+				<ion-input
+					placeholder="email@address"
+					label="To"
+					labelPlacement="stacked"
+					[required]="true"
+					[formControl]="email"
+				/>
+			}
+			@if (tab === "sms") {
+				<ion-input
+					label="Invite link"
+					labelPlacement="stacked"
+					placeholder="phone #"
+					[formControl]="phone"
+				/>
+			}
 			@if (tab === "link") {
 				<ion-input
-					*ngIf="tab === 'link'"
 					label="Invite link"
 					labelPlacement="stacked"
 					readonly="readonly"
@@ -45,7 +49,7 @@
 					[color]="link ? 'primary' : 'medium'"
 				/>
 				@if (link) {
-					<ion-buttons *ngIf="link" slot="end">
+					<ion-buttons slot="end">
 						<ion-button color="medium" (click)="copyLinkToClipboard()">
 							<ion-icon name="copy-outline" />
 						</ion-button>
@@ -63,75 +67,87 @@
 				labelPlacement="stacked"
 			/>
 		</ion-item>
-		<ion-card-content *ngIf="tab === 'email'">
-			<p>
-				<ion-text *ngIf="!email.value" color="danger"
-					>Email address is required for sending an invite.
-				</ion-text>
-				<ion-text *ngIf="email.value && !email.valid" color="danger"
-					>A valid email address is required for sending an invite.
-				</ion-text>
-				&nbsp;
-			</p>
-			<ion-button (click)="sendInvite()" [disabled]="!email.valid">
-				<ion-icon name="mail-outline" slot="start" />
-				<ion-label>Send invite</ion-label>
-			</ion-button>
-			<ion-button
-				disabled
-				fill="clear"
-				color="medium"
-				style="text-transform: none"
-				>or
-			</ion-button>
-			<ion-button
-				(click)="composeEmail()"
-				fill="outline"
-				[disabled]="!email.valid"
-			>
-				<ion-icon name="mail-outline" slot="start" />
-				<ion-label>Compose email</ion-label>
-			</ion-button>
-		</ion-card-content>
-		<ion-card-content *ngIf="tab === 'sms'">
-			<ion-button
-				style="text-transform: none"
-				fill="outline"
-				(click)="composeSMS()"
-			>
-				<ion-icon name="phone-portrait-outline" slot="start" />
-				<ion-label>Compose SMS</ion-label>
-				<ion-spinner
-					name="lines-small"
-					color="medium"
-					class="ion-margin-start"
-					slot="end"
-					*ngIf="creatingInvite"
-				/>
-			</ion-button>
-			<p>
-				<ion-text color="medium"
-					>This works on mobiles or if your computer supports sending SMS
-				</ion-text>
-			</p>
-		</ion-card-content>
-		<ion-card-content *ngIf="error">
-			<ion-text class="ion-margin" color="danger">{{ error }}</ion-text>
-		</ion-card-content>
-	</form>
+		@switch (tab) {
+			@case ("email") {
+				<ion-card-content>
+					<p>
+						@if (!email.value) {
+							<ion-text color="danger"
+								>Email address is required for sending an invite.</ion-text
+							>
+						}
+						@if (email.value && !email.valid) {
+							<ion-text color="danger">
+								A valid email address is required for sending an invite.
+							</ion-text>
+						}
+					</p>
+					<ion-button (click)="sendInvite()" [disabled]="!email.valid">
+						<ion-icon name="mail-outline" slot="start" />
+						<ion-label>Send invite</ion-label>
+					</ion-button>
+					<ion-button
+						[disabled]="true"
+						fill="clear"
+						color="medium"
+						style="text-transform: none"
+						>or
+					</ion-button>
+					<ion-button
+						(click)="composeEmail()"
+						fill="outline"
+						[disabled]="!email.valid"
+					>
+						<ion-icon name="mail-outline" slot="start" />
+						<ion-label>Compose email</ion-label>
+					</ion-button>
+				</ion-card-content>
+			}
+			@case ("sms") {
+				<ion-card-content>
+					<ion-button
+						style="text-transform: none"
+						fill="outline"
+						(click)="composeSMS()"
+					>
+						<ion-icon name="phone-portrait-outline" slot="start" />
+						<ion-label>Compose SMS</ion-label>
+						@if (creatingInvite) {
+							<ion-spinner
+								name="lines-small"
+								color="medium"
+								class="ion-margin-start"
+								slot="end"
+							/>
+						}
+					</ion-button>
+					<p>
+						<ion-text color="medium"
+							>This works on mobiles or if your computer supports sending SMS
+						</ion-text>
+					</p>
+				</ion-card-content>
+			}
+			@case ("link") {
+				<ion-card-content>
+					<ion-button
+						fill="outline"
+						(click)="copyLinkWithInviteTextToClipboard()"
+						[disabled]="creatingInvite || !link"
+					>
+						<ion-icon slot="start" name="copy-outline" />
+						<ion-label style="text-transform: none"
+							>Copy invite text with a link
+						</ion-label>
+					</ion-button>
+				</ion-card-content>
+			}
+		}
 
-	@if (tab === "link") {
-		<ion-card-content>
-			<ion-button
-				fill="outline"
-				(click)="copyLinkWithInviteTextToClipboard()"
-				[disabled]="creatingInvite || !link"
-			>
-				<ion-icon slot="start" name="copy-outline" />
-				<ion-label style="text-transform: none"
-					>Copy invite text with a link
-				</ion-label>
-			</ion-button>
-		</ion-card-content>
-	}
+		@if (error) {
+			<ion-card-content>
+				<ion-text class="ion-margin" color="danger">{{ error }}</ion-text>
+			</ion-card-content>
+		}
+	</form>
 </ion-content>

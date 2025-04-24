@@ -1,4 +1,6 @@
 import { InjectionToken } from '@angular/core';
+import { BrowserOptions } from '@sentry/browser';
+import { AutocaptureConfig, PostHogConfig } from 'posthog-js';
 
 export interface IFirebaseEmulatorConfig {
 	authPort: number;
@@ -20,16 +22,25 @@ export interface IFirebaseConfig {
 	storageBucket?: string;
 }
 
-export interface IPosthogConfig {
-	posthogKey: string;
-	posthogHost: string;
-	person_profiles?: 'always' | 'never' | 'identified_only';
+type OnlyValidKeys<T, Shape> = T extends Shape
+	? Exclude<keyof T, keyof Shape> extends never
+		? T
+		: never
+	: never;
+
+export interface IPosthogSettings {
+	readonly token: string;
+	readonly config?: OnlyValidKeys<
+		Partial<PostHogConfig>,
+		Partial<PostHogConfig>
+	>;
 }
 
 export interface IEnvironmentConfig {
 	production: boolean;
 	useNgrok?: boolean;
-	posthog?: IPosthogConfig;
+	posthog?: IPosthogSettings;
+	sentry?: BrowserOptions;
 	agents: Record<string, string>;
 	firebaseConfig: IFirebaseConfig;
 	firebaseBaseUrl?: string;

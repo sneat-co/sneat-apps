@@ -1,4 +1,10 @@
 import { Component, Inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import {
+	IonLabel,
+	IonSegment,
+	IonSegmentButton,
+} from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { DatatugNavContextService } from '@sneat/ext-datatug-services-nav';
 import { IProjEnv } from '@sneat/ext-datatug-models';
@@ -11,7 +17,7 @@ export interface IEnv {
 @Component({
 	selector: 'sneat-datatug-env-selector',
 	templateUrl: './env-selector.component.html',
-	standalone: false,
+	imports: [IonSegment, FormsModule, IonSegmentButton, IonLabel],
 })
 export class EnvSelectorComponent {
 	public currentEnvId?: string;

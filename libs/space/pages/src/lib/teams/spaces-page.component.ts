@@ -1,10 +1,25 @@
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButtons,
+	IonContent,
+	IonHeader,
+	IonMenuButton,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { SpacesCardComponent } from '@sneat/space-components';
 
 @Component({
 	selector: 'sneat-spaces-page',
 	templateUrl: 'spaces-page.component.html',
-	imports: [IonicModule, SpacesCardComponent],
+	imports: [
+		SpacesCardComponent,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonTitle,
+		IonContent,
+		IonMenuButton,
+	],
 })
 export class SpacesPageComponent {}

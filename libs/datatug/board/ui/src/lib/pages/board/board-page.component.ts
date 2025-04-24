@@ -1,9 +1,24 @@
-import { CommonModule } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
-import { DatatugBoardUiModule } from '../../datatug-board-ui.module';
+import {
+	IonBackButton,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCol,
+	IonContent,
+	IonGrid,
+	IonHeader,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonMenuButton,
+	IonRow,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -21,16 +36,33 @@ import {
 import { DatatugNavContextService } from '@sneat/ext-datatug-services-nav';
 import { ParameterLookupService } from '@sneat/ext-datatug-components-parameters';
 import { DatatugBoardService } from '@sneat/ext-datatug-board-core';
+import { BoardComponent } from '../../components/board/board.component';
+import { EnvSelectorComponent } from '../../components/env-selector/env-selector.component';
 
 @Component({
 	selector: 'sneat-datatug-board-page',
 	templateUrl: './board-page.component.html',
 	imports: [
-		CommonModule,
 		FormsModule,
-		IonicModule,
 		// BoardServiceModule,
-		DatatugBoardUiModule,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonMenuButton,
+		IonTitle,
+		IonContent,
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonButton,
+		IonIcon,
+		IonLabel,
+		IonCard,
+		IonItem,
+		IonInput,
+		EnvSelectorComponent,
+		BoardComponent,
 	],
 	providers: [QueryParamsService],
 })

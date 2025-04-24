@@ -1,8 +1,6 @@
-@if (avatar?.external) {
-	<ion-img title="avatar" [src]="avatar?.external?.url" />
-} @else if (avatar?.gravatar) {
-	<ion-img
-		title="avatar"
-		src="//www.gravatar.com/avatar/{{ avatar?.gravatar }}"
-	/>
-}
+<ion-img
+	title="avatar"
+	[src]="
+		avatar?.external ? '' : '//www.gravatar.com/avatar/' + avatar?.gravatar
+	"
+/>
