@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommuneBasePageParams } from 'sneat-shared/services/params';
+import { CommuneBasePageParams } from '@sneat/shared';
 import { ContactType } from 'sneat-shared/models/types';
 import { AssetBasePage } from '../../asset-base.page';
 import { IAssetDto } from 'sneat-shared/models/dto/dto-asset';
@@ -10,15 +10,14 @@ import { IContact2Asset } from 'sneat-shared/models/dto/dto-contact';
 	selector: 'sneat-real-estate',
 	templateUrl: './real-estate-page.component.html',
 	providers: [CommuneBasePageParams],
-	standalone: false,
 })
 export class RealEstatePageComponent extends AssetBasePage {
 	constructor(params: CommuneBasePageParams, assetService: IAssetService) {
 		super('real-estates', params, assetService);
 	}
 
-	landlords: IContact2Asset[];
-	tenants: IContact2Asset[];
+	protected landlords?: IContact2Asset[];
+	protected tenants?: IContact2Asset[];
 
 	protected setAssetDto(assetDto: IAssetDto): void {
 		super.setAssetDto(assetDto);

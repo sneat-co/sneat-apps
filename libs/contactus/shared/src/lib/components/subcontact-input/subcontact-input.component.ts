@@ -1,5 +1,13 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+} from '@ionic/angular/standalone';
+import {
 	ContactRole,
 	ContactType,
 	IContactContext,
@@ -12,7 +20,7 @@ import { IContactSelectorOptions } from '../contacts-selector/contacts-selector.
 @Component({
 	selector: 'sneat-subcontact-input',
 	templateUrl: './subcontact-input.component.html',
-	standalone: false,
+	imports: [IonItem, IonLabel, IonInput, IonButtons, IonButton, IonIcon],
 })
 export class SubcontactInputComponent {
 	@Input() canReset = false;

@@ -11,7 +11,6 @@ export interface ICellButtonWidgetSettings {
 	selector: 'sneat-datatug-cell-button-widget',
 	template:
 		'<button [type]="btnType" [title]="text" (click)="click()">{{text}}</button>',
-	standalone: false,
 })
 export class CellButtonWidgetComponent {
 	@Input() v: unknown;

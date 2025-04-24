@@ -17,11 +17,12 @@ import {
 	IUpdateContactRequest,
 } from '@sneat/contactus-services';
 import { ISpaceContext } from '@sneat/space-models';
+import { MultiSelectorComponent } from '@sneat/ui';
 
 @Component({
 	selector: 'sneat-contact-roles-input',
 	templateUrl: './contact-roles-input.component.html',
-	standalone: false, // TODO: make standalone or document why not
+	imports: [MultiSelectorComponent],
 })
 export class ContactRolesInputComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;

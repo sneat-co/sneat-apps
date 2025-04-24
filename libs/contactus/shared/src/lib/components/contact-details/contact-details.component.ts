@@ -42,7 +42,6 @@ import {
 import {
 	getRelatedItemByKey,
 	IRelatedTo,
-	IRelationshipRoles,
 	ISpaceModuleItemRef,
 } from '@sneat/dto';
 import { SneatBaseComponent } from '@sneat/ui';
@@ -53,11 +52,8 @@ import { ContactDobComponent } from '../contact-dob';
 import { ContactRelationshipFormComponent } from '../contact-forms/relationship-form/contact-relationship-form.component';
 import { ContactLocationsComponent } from '../contact-locations';
 import { ContactModulesMenuComponent } from '../contact-modules-menu';
-import { ContactRolesInputModule } from '../contact-roles-input';
-import {
-	GenderFormComponent,
-	RelationshipFormComponent,
-} from '../contact-forms';
+import { ContactRolesInputComponent } from '../contact-roles-input';
+import { GenderFormComponent } from '../contact-forms';
 import { RelatedContactsComponent } from './related-contacts.component';
 
 @Component({
@@ -65,7 +61,7 @@ import { RelatedContactsComponent } from './related-contacts.component';
 		ContactDobComponent,
 		ContactModulesMenuComponent,
 		ContactContactsComponent,
-		ContactRolesInputModule,
+		ContactRolesInputComponent,
 		ContactLocationsComponent,
 		GenderFormComponent,
 		ContactTitlePipe,

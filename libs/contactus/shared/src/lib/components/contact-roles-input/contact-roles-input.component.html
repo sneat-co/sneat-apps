@@ -1,14 +1,8 @@
-<!--<ion-list>-->
-<!--	<ion-item *ngFor="let role of roles; trackBy: id">-->
-<!--		<ion-checkbox [disabled]="processingRoleIDs.includes(role.id)" slot="start" [value]="role.id" [checked]="contact?.brief?.roles?.includes(role.id)" (ionChange)="onRoleChanged($event, role)"></ion-checkbox>-->
-<!--		<ion-label>{{role.title}}</ion-label>-->
-<!--	</ion-item>-->
-<!--</ion-list>-->
-
 <sneat-multi-selector
 	title="Roles"
 	[allItems]="roles"
 	[selectedIDs]="contact?.brief?.roles"
 />
-
-<div style="height: 100px"></div>
+<div style="height: 100px">
+	<!-- TODO(css): need a proper padding at bottom using CSS-->
+</div>
