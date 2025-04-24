@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
 import { MemberBasePage } from '../member-base-page';
-import { NgModulePreloaderService } from 'sneat-shared/services/ng-module-preloader.service';
-import {
-	IAssetService,
-	IMemberService,
-} from 'sneat-shared/services/interfaces';
+import { IMemberService } from 'sneat-shared/services/interfaces';
 import { CommuneBasePageParams } from 'sneat-shared/services/params';
 
 @Component({
@@ -14,12 +10,7 @@ import { CommuneBasePageParams } from 'sneat-shared/services/params';
 	standalone: false,
 })
 export class MemberBudgetPageComponent extends MemberBasePage {
-	constructor(
-		params: CommuneBasePageParams,
-		membersService: IMemberService,
-		preloader: NgModulePreloaderService,
-		assetService: IAssetService,
-	) {
-		super(params, membersService, preloader, assetService);
+	constructor(params: CommuneBasePageParams, membersService: IMemberService) {
+		super(params, membersService);
 	}
 }

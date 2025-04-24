@@ -5,13 +5,19 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import {
+	IonLabel,
+	IonSegment,
+	IonSegmentButton,
+} from '@ionic/angular/standalone';
 import { IBoardContext, ITabsWidgetSettings } from '@sneat/ext-datatug-models';
 
 @Component({
 	selector: 'sneat-datatug-tabs-widget',
 	templateUrl: './tabs-widget.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	standalone: false,
+	imports: [IonSegment, FormsModule, IonSegmentButton, IonLabel],
 })
 export class TabsWidgetComponent implements OnChanges {
 	public selectedTab?: string;

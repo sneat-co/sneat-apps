@@ -65,7 +65,7 @@ export const routes: Routes = [
 	{
 		path: 'new-family',
 		loadChildren: () =>
-			import('@sneat/communes-ui').then((m) => m.NewCommunePageModule),
+			import('@sneat/communes-ui').then((m) => m.NewCommunePageComponent),
 	},
 ];
 

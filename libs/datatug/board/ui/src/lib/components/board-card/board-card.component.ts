@@ -7,6 +7,17 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonSegment,
+	IonSegmentButton,
+} from '@ionic/angular/standalone';
 import { Subject } from 'rxjs';
 import {
 	IBoardCardDef,
@@ -15,6 +26,7 @@ import {
 	sqlWidgetName,
 	WidgetName,
 } from '@sneat/ext-datatug-models';
+import { BoardWidgetComponent } from '../board-widget/board-widget.component';
 
 @Injectable()
 export class BoardCardTabService {
@@ -37,7 +49,18 @@ export class BoardCardTabService {
 	templateUrl: './board-card.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	providers: [BoardCardTabService],
-	standalone: false,
+	imports: [
+		IonCard,
+		IonItem,
+		IonLabel,
+		IonButtons,
+		IonSegment,
+		FormsModule,
+		IonSegmentButton,
+		IonButton,
+		IonIcon,
+		BoardWidgetComponent,
+	],
 })
 export class BoardCardComponent implements OnChanges {
 	@Input() boarCardDef?: IBoardCardDef;

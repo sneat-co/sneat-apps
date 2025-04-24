@@ -38,18 +38,11 @@ import {
 	QueryEditorStateService,
 } from '../../query-editor-state-service';
 import { HttpQueryEditorComponent } from '../http-query/http-query-editor.component';
-import { SqlQueryComponentModule } from '../sql-query/sql-query.component.module';
 
 @Component({
 	selector: 'sneat-datatug-sql-editor',
 	templateUrl: './query-page.component.html',
-	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
-		HttpQueryEditorComponent,
-		SqlQueryComponentModule,
-	],
+	imports: [CommonModule, FormsModule, IonicModule, HttpQueryEditorComponent],
 })
 export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 	public project?: IProjectContext;

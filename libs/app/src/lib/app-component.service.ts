@@ -5,6 +5,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Injectable()
+// TODO: check if it's used and probably remove
 export class AppComponentService {
 	constructor(
 		private platform: Platform,

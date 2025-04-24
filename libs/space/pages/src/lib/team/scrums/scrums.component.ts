@@ -7,7 +7,17 @@ import {
 	OnDestroy,
 	SimpleChanges,
 } from '@angular/core';
-import { IonicModule, NavController } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonText,
+	NavController,
+} from '@ionic/angular/standalone';
 import { ISpaceDbo } from '@sneat/dto';
 import { ScrumService } from '@sneat/ext-scrumspace-dailyscrum';
 import { Subject } from 'rxjs';
@@ -20,7 +30,16 @@ import { SpaceNavService } from '@sneat/space-services';
 @Component({
 	selector: 'sneat-scrums',
 	templateUrl: './scrums.component.html',
-	imports: [CommonModule, IonicModule],
+	imports: [
+		IonCard,
+		IonItemDivider,
+		IonLabel,
+		IonText,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonItem,
+	],
 })
 export class ScrumsComponent implements OnChanges, OnDestroy {
 	@Input() public space?: IRecord<ISpaceDbo>;

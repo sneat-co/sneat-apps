@@ -3,26 +3,30 @@
 	It's optional but by telling a bit about yourself will help to get you
 	started.
 </p>
-<sneat-radio-group-to-select
-	[(ngModel)]="relationship"
-	radioGroupLabel="#1 of 3: Do you have a spouse or partner?"
-	selectLabel="Relationship status"
-	[selectOptions]="relationshipOptions"
-	(ngModelChange)="onFormChanged()"
-/>
-<sneat-radio-group-to-select
-	*ngIf="!!relationship"
-	[(ngModel)]="numberOfKids"
-	radioGroupLabel="#2 of 3: How many kids is in your household?"
-	label="Number of kids in household"
-	[selectOptions]="rangeOptions0to7"
-	(ngModelChange)="onFormChanged()"
-/>
-<sneat-radio-group-to-select
-	*ngIf="!!numberOfKids"
-	[(ngModel)]="dwelling"
-	radioGroupLabel="#3 of 3: Do you rent or own your own property?"
-	selectLabel="Dwelling"
-	[selectOptions]="dwellingOptions"
-	(ngModelChange)="onFormChanged()"
-/>
+@if (relationship) {
+	<sneat-radio-group-to-select
+		[(ngModel)]="relationship"
+		radioGroupLabel="#1 of 3: Do you have a spouse or partner?"
+		selectLabel="Relationship status"
+		[selectOptions]="relationshipOptions"
+		(ngModelChange)="onFormChanged()"
+	/>
+} @else {
+	<sneat-radio-group-to-select
+		[(ngModel)]="numberOfKids"
+		radioGroupLabel="#2 of 3: How many kids is in your household?"
+		label="Number of kids in household"
+		[selectOptions]="rangeOptions0to7"
+		(ngModelChange)="onFormChanged()"
+	/>
+}
+
+@if (!!numberOfKids) {
+	<sneat-radio-group-to-select
+		[(ngModel)]="dwelling"
+		radioGroupLabel="#3 of 3: Do you rent or own your own property?"
+		selectLabel="Dwelling"
+		[selectOptions]="dwellingOptions"
+		(ngModelChange)="onFormChanged()"
+	/>
+}

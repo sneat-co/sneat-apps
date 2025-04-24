@@ -1,10 +1,30 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardContent,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemGroup,
+	IonLabel,
+	IonList,
+	IonMenuButton,
+	IonSelect,
+	IonSelectOption,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { DataGridComponent } from '@sneat/datagrid';
-import { DatatugBoardUiModule } from '@sneat/ext-datatug-board-ui';
 import { Subject } from 'rxjs';
 import { takeUntil, takeWhile } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
@@ -27,11 +47,28 @@ import { IGridColumn } from '@sneat/grid';
 	selector: 'sneat-datatug-entity',
 	templateUrl: './entity-page.component.html',
 	imports: [
-		CommonModule,
 		FormsModule,
-		IonicModule,
-		DatatugBoardUiModule,
 		DataGridComponent,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonTitle,
+		IonContent,
+		IonCard,
+		IonItem,
+		IonLabel,
+		IonInput,
+		IonButton,
+		IonIcon,
+		IonList,
+		IonItemGroup,
+		IonBadge,
+		IonSelect,
+		IonCardContent,
+		IonSelectOption,
+		JsonPipe,
+		IonMenuButton,
+		IonBackButton,
 	],
 })
 export class EntityPageComponent implements OnDestroy {

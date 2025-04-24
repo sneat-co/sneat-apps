@@ -1,12 +1,11 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonIcon, IonItem, IonLabel } from '@ionic/angular/standalone';
 import { AuthStatus } from '@sneat/auth-core';
 
 @Component({
 	selector: 'sneat-datatug-loading-items',
 	templateUrl: 'loading-items-component.html',
-	imports: [CommonModule, IonicModule],
+	imports: [IonItem, IonIcon, IonLabel],
 })
 export class LoadingItemsComponent {
 	@Input({ required: true }) public authStatus?: AuthStatus;

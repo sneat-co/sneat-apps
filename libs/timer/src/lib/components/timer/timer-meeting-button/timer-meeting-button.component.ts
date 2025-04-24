@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonButton } from '@ionic/angular/standalone';
 import { IScrumDbo } from '@sneat/ext-scrumspace-scrummodels';
 
 @Component({
 	selector: 'sneat-timer-meeting-button',
 	templateUrl: './timer-meeting-button.component.html',
-	imports: [IonicModule],
+	imports: [IonButton],
 })
 export class TimerMeetingButtonComponent {
 	@Input() public scrumID?: string;

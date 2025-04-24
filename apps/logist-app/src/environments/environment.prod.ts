@@ -1,7 +1,7 @@
 import { appSpecificConfig, prodEnvironmentConfig } from '@sneat/app';
 import { IEnvironmentConfig } from '@sneat/core';
 
-export const environment: IEnvironmentConfig = appSpecificConfig(
+export const logistAppEnvironmentConfig: IEnvironmentConfig = appSpecificConfig(
 	prodEnvironmentConfig,
 	// {
 	// 	// firebase: prodEnvironmentConfig.firebaseConfig,

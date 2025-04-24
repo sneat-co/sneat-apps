@@ -8,7 +8,18 @@ import {
 	signal,
 	SimpleChanges,
 } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCol,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonRow,
+	IonSelect,
+	IonSelectOption,
+} from '@ionic/angular/standalone';
 import { ISpaceDbo } from '@sneat/dto';
 import { ITimerState, Timer, TimerFactory } from '@sneat/ext-meeting';
 import {
@@ -27,8 +38,19 @@ import { secondsToStr } from '@sneat/datetime';
 @Component({
 	selector: 'sneat-retro-timer',
 	templateUrl: './retro-timer.component.html',
-	imports: [CommonModule, IonicModule],
 	providers: [TimerFactory],
+	imports: [
+		IonList,
+		IonRow,
+		IonCol,
+		IonItem,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonLabel,
+		IonSelect,
+		IonSelectOption,
+	],
 })
 export class RetroTimerComponent implements OnDestroy, OnChanges {
 	@Input() public space?: IRecord<ISpaceDbo>;

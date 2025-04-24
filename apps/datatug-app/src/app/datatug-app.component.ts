@@ -1,10 +1,33 @@
+import { AsyncPipe, NgComponentOutlet } from '@angular/common';
 import { Component, Injector, Type } from '@angular/core';
-// import { AppComponentService } from '@sneat/app';
+import {
+	IonApp,
+	IonContent,
+	IonHeader,
+	IonMenu,
+	IonRouterOutlet,
+	IonSplitPane,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
+import { WormholeModule } from '@sneat/wormhole';
 
 @Component({
 	selector: 'sneat-datatug-root',
 	templateUrl: 'datatug-app.component.html',
-	standalone: false,
+	imports: [
+		IonApp,
+		IonSplitPane,
+		IonMenu,
+		IonHeader,
+		IonToolbar,
+		IonTitle,
+		IonContent,
+		NgComponentOutlet,
+		IonRouterOutlet,
+		AsyncPipe,
+		WormholeModule,
+	],
 })
 export class DatatugAppComponent {
 	menu?: Promise<Type<unknown>>;

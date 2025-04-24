@@ -1,14 +1,11 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
 import { contactusRoutes } from '@sneat/contactus-internal';
 import { spacePagesRoutes } from '@sneat/ext-debtus-internal';
 import { AssetusRoutingModule } from '@sneat/extensions-assetus-pages';
 import { budgetusRoutes } from '@sneat/extensions-budgetus';
 import { docusRoutes } from '@sneat/extensions-docus';
 import { listusRoutes } from '@sneat/extensions-listus';
-
 import { calendariumRoutes } from '@sneat/extensions-schedulus-main';
 import { trackusSpaceRoutes } from '@sneat/extensions-trackus';
 import {
@@ -42,14 +39,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [
-		RouterModule.forChild(routes),
-		CommonModule,
-		IonicModule,
-		AssetusRoutingModule,
-	],
+	imports: [RouterModule.forChild(routes), AssetusRoutingModule],
 	exports: [RouterModule],
-	declarations: [],
 	providers: [SpaceComponentBaseParams],
 })
 export class SpaceRoutingModule {}

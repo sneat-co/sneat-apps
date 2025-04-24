@@ -1,6 +1,5 @@
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 import { Component, ElementRef, Inject, Input, OnInit } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
 import {
 	ITelegramAuthData,
 	SneatAuthWithTelegramService,
@@ -9,7 +8,6 @@ import {
 let authWithTelegramService: SneatAuthWithTelegramService;
 
 @Component({
-	imports: [CommonModule, IonicModule],
 	providers: [SneatAuthWithTelegramService],
 	selector: 'sneat-login-with-telegram',
 	template: `

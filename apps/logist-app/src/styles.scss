@@ -1,36 +1,27 @@
+@use "sass:meta";
 /* You can add global styles to this file, and also import other style files */
 
 /* Core CSS required for Ionic components to work properly */
-@import '~@ionic/angular/css/core.css';
+@include meta.load-css('@ionic/angular/css/core.css');
+//@import '~@ionic/angular/css/core.css';
 
 /* Basic CSS for apps built with Ionic */
-@import '~@ionic/angular/css/normalize.css';
-@import '~@ionic/angular/css/structure.css';
-@import '~@ionic/angular/css/typography.css';
-@import '~@ionic/angular/css/display.css';
+@include meta.load-css('@ionic/angular/css/normalize.css');
+@include meta.load-css('@ionic/angular/css/structure.css');
+@include meta.load-css('@ionic/angular/css/typography.css');
+@include meta.load-css('@ionic/angular/css/display.css');
 
 /* Optional CSS utils that can be commented out */
-@import '~@ionic/angular/css/padding.css';
-@import '~@ionic/angular/css/float-elements.css';
-@import '~@ionic/angular/css/text-alignment.css';
-@import '~@ionic/angular/css/text-transformation.css';
-@import '~@ionic/angular/css/flex-utils.css';
+@include meta.load-css('@ionic/angular/css/padding.css');
+@include meta.load-css('@ionic/angular/css/float-elements.css');
+@include meta.load-css('@ionic/angular/css/text-alignment.css');
+@include meta.load-css('@ionic/angular/css/text-transformation.css');
+@include meta.load-css('@ionic/angular/css/flex-utils.css');
 
-@import '../../../libs/components/src/sneat-styles.scss';
+@include meta.load-css('../../../libs/components/src/sneat-styles.scss');
 
 // For some reason this one is not importing from common SCSS file.
 // But maybe it's just OK as we need it only in DataTug for now
 //@import '~tabulator-tables/src/scss/tabulator';
 //@import '~tabulator-tables/dist/css/tabulator.css';
 @import '../../../node_modules/tabulator-tables/dist/css/tabulator.min.css';
-
-//.tabulator-selected{
-//  background-color: #37901b !important;
-//}
-
-.modal-wrapper {
-  height: 90%;
-  top: 5%;
-  position: absolute;
-  display: block;
-}

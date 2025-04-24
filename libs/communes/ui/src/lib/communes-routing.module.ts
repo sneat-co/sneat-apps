@@ -13,9 +13,9 @@ const routes: Routes = [
 	},
 	{
 		path: 'new',
-		loadChildren: () =>
-			import('./new-commune-page/new-commune-page.module').then(
-				(m) => m.NewCommunePageModule,
+		loadComponent: () =>
+			import('./new-commune-page/new-commune-page.component').then(
+				(m) => m.NewCommunePageComponent,
 			),
 	},
 ];

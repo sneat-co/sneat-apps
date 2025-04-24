@@ -8,7 +8,14 @@ import {
 	Inject,
 	OnDestroy,
 } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonSpinner,
+} from '@ionic/angular/standalone';
 import {
 	AuthProviderID,
 	ISneatAuthUser,
@@ -38,7 +45,7 @@ interface provider {
 @Component({
 	selector: 'sneat-user-auth-provider-status',
 	templateUrl: './user-auth-provider-status.html',
-	imports: [IonicModule],
+	imports: [IonItem, IonIcon, IonLabel, IonButtons, IonButton, IonSpinner],
 })
 export class UserAuthAProviderStatusComponent implements OnDestroy {
 	private readonly $destroyed = new Subject<void>();

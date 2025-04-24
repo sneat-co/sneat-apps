@@ -7,7 +7,13 @@ import {
 	Output,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBadge,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonSpinner,
+} from '@ionic/angular/standalone';
 import { UserRequiredFieldsService } from '@sneat/auth-ui';
 import { SpaceType } from '@sneat/core';
 import { ICreateSpaceRequest, ISpaceContext } from '@sneat/space-models';
@@ -20,9 +26,13 @@ import { first } from 'rxjs';
 	selector: 'sneat-spaces-list',
 	templateUrl: 'spaces-list.component.html',
 	imports: [
-		IonicModule, // TODO: import standalone Ionic components
 		RouterLink,
 		TitleCasePipe,
+		IonItem,
+		IonIcon,
+		IonLabel,
+		IonBadge,
+		IonSpinner,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

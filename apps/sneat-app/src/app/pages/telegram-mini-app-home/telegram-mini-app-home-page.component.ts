@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonContent, IonItem, IonLabel } from '@ionic/angular/standalone';
 // import { Router } from '@angular/router';
 // import { SneatApiService } from '@sneat/api';
 // import { SneatAuthStateService } from '@sneat/auth-core';
@@ -8,7 +8,7 @@ import { IonicModule } from '@ionic/angular';
 @Component({
 	selector: 'sneat-telegram-menu-page',
 	templateUrl: './telegram-mini-app-home-page.component.html',
-	imports: [IonicModule],
+	imports: [IonContent, IonItem, IonLabel],
 })
 export class TelegramMiniAppHomePageComponent {
 	// constructor() // private readonly authService: SneatAuthStateService, // private readonly sneatApiService: SneatApiService, // @Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,

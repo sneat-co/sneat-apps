@@ -30,9 +30,11 @@
 				[formControl]="lastName"
 			/>
 		</ion-item>
-		<ion-item-divider *ngIf="!gender.value">
-			<ion-label>Gender</ion-label>
-		</ion-item-divider>
+		@if (!gender.value) {
+			<ion-item-divider>
+				<ion-label>Gender</ion-label>
+			</ion-item-divider>
+		}
 		<sneat-select-from-list
 			label="Gender"
 			[items]="genders"
@@ -40,9 +42,11 @@
 		/>
 
 		@if (gender.value || ageGroup.value) {
-			<ion-item-divider *ngIf="!ageGroup.value">
-				<ion-label>Age group</ion-label>
-			</ion-item-divider>
+			@if (!ageGroup.value) {
+				<ion-item-divider>
+					<ion-label>Age group</ion-label>
+				</ion-item-divider>
+			}
 			<sneat-select-from-list
 				label="Age group"
 				[items]="ageGroups"

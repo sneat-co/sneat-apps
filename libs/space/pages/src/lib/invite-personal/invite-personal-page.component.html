@@ -6,11 +6,13 @@
 
 <ion-content>
 	<div class="ion-padding">
-		<p *ngIf="invite">
-			You've been invited by <b>{{ invite.from.title }}</b>
-			<br />
-			to join team: <b>{{ invite.space.title }}</b>
-		</p>
+		@if (invite) {
+			<p>
+				You've been invited by <b>{{ invite.from.title }}</b>
+				<br />
+				to join team: <b>{{ invite.space.title }}</b>
+			</p>
+		}
 		<p>Please verify your details before joining.</p>
 	</div>
 
@@ -32,20 +34,25 @@
 				[(ngModel)]="email"
 			/>
 		</ion-item>
-		<ion-item-divider *ngIf="!hidePin">
-			<ion-label>Secret</ion-label>
-		</ion-item-divider>
-		<ion-item *ngIf="!hidePin">
-			<ion-label>PIN</ion-label>
-			<ion-input [disabled]="working" type="number" [(ngModel)]="pin" />
-		</ion-item>
+		@if (!hidePin) {
+			<ion-item-divider>
+				<ion-label>Secret</ion-label>
+			</ion-item-divider>
+			<ion-item>
+				<ion-label>PIN</ion-label>
+				<ion-input [disabled]="working" type="number" [(ngModel)]="pin" />
+			</ion-item>
+		}
 	</ion-list>
 	<div class="ion-padding">
 		<ion-button [disabled]="working" (click)="join()">
-			<ion-icon name="log-in-outline" slot="start" *ngIf="!accepting" />
-			<ion-spinner name="lines-small" slot="start" *ngIf="accepting" />
-			<ion-label *ngIf="!accepting">Join team</ion-label>
-			<ion-label *ngIf="accepting">Joining team...</ion-label>
+			@if (accepting) {
+				<ion-spinner name="lines-small" slot="start" />
+				<ion-label>Joining team...</ion-label>
+			} @else {
+				<ion-icon name="log-in-outline" slot="start" />
+				<ion-label>Join team</ion-label>
+			}
 		</ion-button>
 		<ion-button
 			[disabled]="working"
@@ -53,19 +60,28 @@
 			fill="outline"
 			(click)="reject()"
 		>
-			<ion-icon name="close-outline" slot="start" *ngIf="!rejecting" />
-			<ion-spinner name="lines-small" slot="start" *ngIf="rejecting" />
-			<ion-label *ngIf="!rejecting">Refuse to join</ion-label>
-			<ion-label *ngIf="rejecting">Rejecting invite...</ion-label>
+			@if (rejecting) {
+				<ion-spinner name="lines-small" slot="start" />
+				<ion-label>Rejecting invite...</ion-label>
+			} @else {
+				<ion-icon name="close-outline" slot="start" />
+				<ion-label>Refuse to join</ion-label>
+			}
 		</ion-button>
-		<!--		<ion-progress-bar *ngIf="accepting" type="indeterminate" color="medium"></ion-progress-bar>-->
+		<!--		@if (accepting) {-->
+		<!--			<ion-progress-bar type="indeterminate" color="medium"></ion-progress-bar>-->
+		<!--		}-->
 	</div>
-	<ion-list *ngIf="members">
-		<ion-item-divider>
-			<ion-label>Team members</ion-label>
-		</ion-item-divider>
-		<ion-item *ngFor="let member of members">
-			<ion-label>{{ member.brief.title }}</ion-label>
-		</ion-item>
-	</ion-list>
+	@if (members) {
+		<ion-list>
+			<ion-item-divider>
+				<ion-label>Team members</ion-label>
+			</ion-item-divider>
+			@for (member of members; track member.id) {
+				<ion-item>
+					<ion-label>{{ member.brief.title }}</ion-label>
+				</ion-item>
+			}
+		</ion-list>
+	}
 </ion-content>

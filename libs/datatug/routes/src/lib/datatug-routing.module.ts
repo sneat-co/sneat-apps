@@ -1,5 +1,4 @@
-import { RouterModule, Routes } from '@angular/router';
-import { NgModule } from '@angular/core';
+import { Routes } from '@angular/router';
 import { routingParamStoreId } from '@sneat/ext-datatug-core';
 import { SNEAT_AUTH_GUARDS } from '@sneat/auth-core';
 
@@ -30,9 +29,3 @@ export const datatugRoutes: Routes = [
 		redirectTo: '/',
 	},
 ];
-
-@NgModule({
-	imports: [RouterModule.forChild(datatugRoutes)],
-	exports: [RouterModule],
-})
-export class DatatugRoutingModule {}

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
@@ -9,7 +8,19 @@ import {
 	Output,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonContent,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonSelect,
+	IonSelectOption,
+} from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	CurrencyCode,
@@ -22,18 +33,26 @@ import {
 	HappeningService,
 	IHappeningPricesRequest,
 } from '../../../services/happening.service';
-import { SelectOption, WizardModule } from '@sneat/wizard';
+import { RadioGroupToSelectComponent, SelectOption } from '@sneat/wizard';
 
 @Component({
 	selector: 'sneat-happening-price-form',
 	templateUrl: 'happening-price-form.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
-		CommonModule,
-		IonicModule,
 		ReactiveFormsModule,
-		WizardModule,
 		FormsModule,
+		IonContent,
+		IonList,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonItem,
+		IonInput,
+		IonSelect,
+		IonSelectOption,
+		RadioGroupToSelectComponent,
 	],
 })
 export class HappeningPriceFormComponent {

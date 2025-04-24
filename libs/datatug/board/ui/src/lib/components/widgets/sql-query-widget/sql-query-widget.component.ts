@@ -7,6 +7,10 @@ import {
 	OnDestroy,
 	SimpleChanges,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { IonSegment, IonSegmentButton } from '@ionic/angular/standalone';
+import { GridWidgetComponent } from '../grid-widget/grid-widget.component';
+import { DatatugComponentsSqlEditorModule } from '@sneat/ext-datatug-components-sqleditor';
 import { BoardCardTabService } from '../../board-card/board-card.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -24,7 +28,13 @@ const reSqlParams = /@(\w+)/;
 @Component({
 	selector: 'sneat-datatug-sql-query-widget',
 	templateUrl: './sql-query-widget.component.html',
-	standalone: false,
+	imports: [
+		IonSegment,
+		IonSegmentButton,
+		DatatugComponentsSqlEditorModule,
+		GridWidgetComponent,
+		FormsModule,
+	],
 })
 export class SqlQueryWidgetComponent implements OnChanges, OnDestroy {
 	@Input() level?: number;

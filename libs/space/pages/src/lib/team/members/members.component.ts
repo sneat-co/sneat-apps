@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	Component,
 	Inject,
@@ -7,7 +6,18 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
+import {
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonIcon,
+	IonItemDivider,
+	IonLabel,
+	IonSegment,
+	IonSegmentButton,
+} from '@ionic/angular/standalone';
 import {
 	MemberRole,
 	MemberRoleContributor,
@@ -22,7 +32,18 @@ import { SpaceNavService, SpaceService } from '@sneat/space-services';
 @Component({
 	selector: 'sneat-members',
 	templateUrl: './members.component.html',
-	imports: [CommonModule, FormsModule, IonicModule],
+	imports: [
+		FormsModule,
+		IonCard,
+		IonItemDivider,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonSegment,
+		IonSegmentButton,
+		IonBadge,
+	],
 }) // TODO: use or delete unused MembersComponent
 export class MembersComponent implements OnChanges {
 	@Input({ required: true }) public contactusSpace?: IContactusSpaceDboAndID;

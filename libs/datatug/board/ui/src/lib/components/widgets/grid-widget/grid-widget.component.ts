@@ -7,6 +7,7 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
+import { DataGridComponent } from '@sneat/datagrid';
 import { IRecordset } from '@sneat/ext-datatug-dto';
 import { IGridDef } from '@sneat/grid';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -16,7 +17,7 @@ import { recordsetToGridDef } from '@sneat/ext-datatug-services-repo';
 	selector: 'sneat-datatug-grid-widget',
 	templateUrl: './grid-widget.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	standalone: false,
+	imports: [DataGridComponent],
 })
 export class GridWidgetComponent implements OnChanges {
 	@Input() recordset?: IRecordset;

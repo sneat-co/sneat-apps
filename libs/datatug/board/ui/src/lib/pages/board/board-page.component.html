@@ -15,52 +15,50 @@
 				<h1>{{ projBoard?.title || "Board title" }}</h1>
 			</ion-col>
 			<ion-col size="2" class="ion-padding-top" style="text-align: right">
-				<ion-button color="success" *ngIf="boardContext.mode !== 'edit'">
-					<ion-icon name="play" slot="start" />
-					<ion-label>Run</ion-label>
-				</ion-button>
-				<ion-button
-					fill="outline"
-					color="medium"
-					(click)="startEditing()"
-					*ngIf="boardContext.mode !== 'edit'"
-				>
-					<ion-icon name="create-outline" slot="start" />
-					<ion-label>Edit</ion-label>
-				</ion-button>
-				<ion-button
-					(click)="saveChanges()"
-					*ngIf="boardContext.mode === 'edit'"
-				>
-					<ion-icon name="save-outline" slot="start" />
-					<ion-label>Save</ion-label>
-				</ion-button>
+				@if (boardContext.mode === "edit") {
+					<ion-button (click)="saveChanges()">
+						<ion-icon name="save-outline" slot="start" />
+						<ion-label>Save</ion-label>
+					</ion-button>
+				} @else {
+					<ion-button color="success">
+						<ion-icon name="play" slot="start" />
+						<ion-label>Run</ion-label>
+					</ion-button>
+					<ion-button fill="outline" color="medium" (click)="startEditing()">
+						<ion-icon name="create-outline" slot="start" />
+						<ion-label>Edit</ion-label>
+					</ion-button>
+				}
 			</ion-col>
 		</ion-row>
 	</ion-grid>
 
-	<ion-card *ngIf="parameters">
-		<ion-item *ngFor="let p of parameters" [title]="'@' + p.def.id">
-			<ion-label color="medium">{{ p.def.title || p.def.id }}</ion-label>
-			<ion-input [placeholder]="p.def.type" [(ngModel)]="p.val" />
-			<ion-buttons slot="end">
-				<ion-button
-					*ngIf="p.def.lookup"
-					color="medium"
-					[title]="p.def.lookup.sql"
-					(click)="lookup(p)"
-				>
-					<ion-icon name="list-outline" />
-				</ion-button>
-			</ion-buttons>
-		</ion-item>
-	</ion-card>
+	@if (parameters) {
+		<ion-card>
+			@for (p of parameters; track p.def.id) {
+				<ion-item [title]="'@' + p.def.id">
+					<ion-label color="medium">{{ p.def.title || p.def.id }}</ion-label>
+					<ion-input [placeholder]="p.def.type" [(ngModel)]="p.val" />
+					<ion-buttons slot="end">
+						@if (p.def.lookup) {
+							<ion-button
+								color="medium"
+								[title]="p.def.lookup.sql"
+								(click)="lookup(p)"
+							>
+								<ion-icon name="list-outline" />
+							</ion-button>
+						}
+					</ion-buttons>
+				</ion-item>
+			}
+		</ion-card>
+	}
 
 	<sneat-datatug-env-selector />
 
-	<sneat-datatug-board
-		*ngIf="boardDef"
-		[boardDef]="boardDef"
-		[boardContext]="boardContext"
-	/>
+	@if (boardDef) {
+		<sneat-datatug-board [boardDef]="boardDef" [boardContext]="boardContext" />
+	}
 </ion-content>

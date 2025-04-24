@@ -22,18 +22,16 @@
 			<ion-label>Start</ion-label>
 		}
 	}
-	<ion-icon
-		name="pause-outline"
-		*ngIf="
-			!timerState?.isToggling &&
-			timerState?.status === 'active' &&
-			timerState?.activeMemberId === memberID
-		"
-	/>
-	<ion-label
-		style="text-transform: none"
-		*ngIf="timerState?.status === 'active' || totalElapsed"
-	>
-		{{ totalElapsed }}
-	</ion-label>
+	@if (
+		!timerState?.isToggling &&
+		timerState?.status === "active" &&
+		timerState?.activeMemberId === memberID
+	) {
+		<ion-icon name="pause-outline" />
+	}
+	@if (timerState?.status === "active" || totalElapsed) {
+		<ion-label style="text-transform: none">
+			{{ totalElapsed }}
+		</ion-label>
+	}
 </ion-button>

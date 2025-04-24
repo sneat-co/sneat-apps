@@ -1,19 +1,20 @@
 @if (value) {
 	<ion-item>
-		<ion-select
-			[label]="selectLabel || label"
-			(ionBlur)="onTouched()"
-			[(ngModel)]="value"
-			*ngIf="!!value"
-			interface="popover"
-			(ionChange)="onValChanged($event)"
-		>
-			@for (o of selectOptions; track o.value) {
-				<ion-select-option [value]="o.value">{{
-					o.title || o.value
-				}}</ion-select-option>
-			}
-		</ion-select>
+		@if (!!value) {
+			<ion-select
+				[label]="selectLabel || label"
+				(ionBlur)="onTouched()"
+				[(ngModel)]="value"
+				interface="popover"
+				(ionChange)="onValChanged($event)"
+			>
+				@for (o of selectOptions; track o.value) {
+					<ion-select-option [value]="o.value"
+						>{{ o.title || o.value }}
+					</ion-select-option>
+				}
+			</ion-select>
+		}
 	</ion-item>
 } @else if (selectOptions) {
 	<ion-radio-group
@@ -24,12 +25,15 @@
 	>
 		<ion-list lines="full">
 			<ion-list-header>
-				<ion-label *ngIf="!disabled" style="font-weight: bold"
-					>{{ radioGroupLabel || label }}
-				</ion-label>
-				<ion-label *ngIf="disabled" color="medium">{{
-					radioGroupLabel || label
-				}}</ion-label>
+				@if (disabled) {
+					<ion-label color="medium">
+						{{ radioGroupLabel || label }}
+					</ion-label>
+				} @else {
+					<ion-label style="font-weight: bold">
+						{{ radioGroupLabel || label }}
+					</ion-label>
+				}
 			</ion-list-header>
 			@for (o of selectOptions; track o.value) {
 				<ion-item>

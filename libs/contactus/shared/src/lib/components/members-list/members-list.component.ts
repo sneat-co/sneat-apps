@@ -30,11 +30,7 @@ import {
 	ScheduleNavService,
 	ScheduleNavServiceModule,
 } from '@sneat/mod-schedulus-core';
-import {
-	InviteModalComponent,
-	InviteModalModule,
-	WithSpaceInput,
-} from '@sneat/space-components';
+import { InviteModalComponent, WithSpaceInput } from '@sneat/space-components';
 import { ContactService } from '@sneat/contactus-services';
 import {
 	IContactWithBrief,
@@ -51,7 +47,6 @@ import { InlistAgeGroupComponent } from '../inlist-options/inlist-age-group.comp
 	animations: listAddRemoveAnimation,
 	imports: [
 		ScheduleNavServiceModule,
-		InviteModalModule,
 		RouterModule,
 		ContactRoleBadgesComponent,
 		InlistAgeGroupComponent,

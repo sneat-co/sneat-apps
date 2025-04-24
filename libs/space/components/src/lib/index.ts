@@ -7,7 +7,6 @@ export * from './space-page-base-component.service';
 export * from './space-component-base-params.service';
 export * from './space-item-page-base.component';
 export * from './space-items-base.component';
-export * from './invite-modal/invite-modal.module';
 export * from './invite-modal/invite-modal.component';
 export * from './teams-list';
 export * from './teams-card';

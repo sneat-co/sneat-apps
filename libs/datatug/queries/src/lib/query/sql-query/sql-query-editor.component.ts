@@ -1,5 +1,38 @@
 import { Component, Inject, Input, OnDestroy } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import {
+	IonBackButton,
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardContent,
+	IonCheckbox,
+	IonCol,
+	IonContent,
+	IonGrid,
+	IonHeader,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonMenuButton,
+	IonProgressBar,
+	IonRow,
+	IonSegment,
+	IonSegmentButton,
+	IonSelect,
+	IonSelectOption,
+	IonSpinner,
+	IonText,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
+import { GridWidgetComponent } from '@sneat/ext-datatug-board-ui';
+import { DatatugComponentsParametersModule } from '@sneat/ext-datatug-components-parameters';
+import { DatatugComponentsSqlEditorModule } from '@sneat/ext-datatug-components-sqleditor';
 import {
 	IEnvDbServer,
 	IParameter,
@@ -45,12 +78,48 @@ import {
 import { QueriesService } from '../../queries.service';
 import { QueryContextSqlService } from '../../query-context-sql.service';
 import { parseStoreRef } from '@sneat/core';
+import { ColumnsComponent } from './query-builder/columns.component';
+import { JoinsComponent } from './query-builder/joins.component';
 
 @Component({
 	selector: 'sneat-datatug-sql-query',
 	templateUrl: './sql-query-editor.component.html',
 	styleUrls: ['./sql-query-editor.component.scss'],
-	standalone: false,
+	imports: [
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonMenuButton,
+		IonBackButton,
+		IonTitle,
+		IonButton,
+		IonIcon,
+		IonLabel,
+		IonContent,
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonItem,
+		IonInput,
+		IonSelect,
+		IonSegment,
+		FormsModule,
+		IonSegmentButton,
+		IonCard,
+		DatatugComponentsSqlEditorModule,
+		IonCardContent,
+		IonList,
+		IonCheckbox,
+		IonText,
+		DatatugComponentsParametersModule,
+		IonBadge,
+		IonSpinner,
+		GridWidgetComponent,
+		IonProgressBar,
+		IonSelectOption,
+		JoinsComponent,
+		ColumnsComponent,
+	],
 })
 export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 	@Input() currentProject?: IProjectContext;
@@ -94,7 +163,6 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 
 	private readonly destroyed = new Subject<void>();
 	public readonly sqlParser = new SqlParser();
-	public readonly trackByIndex = (i: number) => i;
 
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,

@@ -15,68 +15,66 @@
 					Metrics allow you to collect some quantitative measures or flags
 					during your daily stand-up meetings.
 				</p>
-				<p *ngIf="isDemoMetricsOnly">
-					We've created few demo metrics but you can
-					<a href="#" (click)="deleteDemoMetrics($event)">delete them</a>
-					and/or
-					<a
-						href="add-metric?space={{ space?.id }}"
-						(click)="goAddMetric($event)"
-						>add your own</a
-					>.
-				</p>
+				@if (isDemoMetricsOnly) {
+					<p>
+						We've created few demo metrics but you can
+						<a href="#" (click)="deleteDemoMetrics($event)">delete them</a>
+						and/or
+						<a
+							href="add-metric?space={{ space?.id }}"
+							(click)="goAddMetric($event)"
+							>add your own</a
+						>.
+					</p>
+				}
 			</ion-label>
 		</ion-item>
 
 		@if (space?.dbo?.metrics?.length) {
-			<ion-item *ngFor="let metric of space?.dbo?.metrics || []">
-				<ion-spinner
-					slot="start"
-					name="lines-small"
-					color="medium"
-					*ngIf="isDeletingMetric(metric); else metricIcon"
-				/>
-				<ng-template #metricIcon>
-					<ion-icon
-						*ngIf="metric.mode === 'personal'"
-						slot="start"
-						name="person-outline"
-						title="Personal"
-					/>
-					<ion-icon
-						*ngIf="metric.mode === 'team'"
-						slot="start"
-						name="people-outline"
-						title="Team"
-					/>
-				</ng-template>
-				<ion-label>
-					{{ metric.title }}
-					<ng-container>
-						<i style="padding-left: 1em" *ngIf="metric?.type === 'bool'">
-							<ion-text [color]="metricColor(metric.bool?.true)"
-								>{{ metricLabel(metric.bool?.true) }}
-							</ion-text>
+			@for (metric of space?.dbo?.metrics || []; track metric.id) {
+				<ion-item>
+					@if (isDeletingMetric(metric)) {
+						<ion-spinner slot="start" name="lines-small" color="medium" />
+					} @else {
+						@switch (metric.mode) {
+							@case ("personal") {
+								<ion-icon slot="start" name="person-outline" title="Personal" />
+							}
+							@case ("team") {
+								<ion-icon slot="start" name="people-outline" title="Team" />
+							}
+						}
+					}
+					<ion-label>
+						{{ metric.title }}
+						<i style="padding-left: 1em">
+							@if (metric?.type === "bool") {
+								<ion-text [color]="metricColor(metric.bool?.true)">
+									{{ metricLabel(metric.bool?.true) }}
+								</ion-text>
+							}
 							/
 							<ion-text [color]="metricColor(metric.bool?.false)"
 								>{{ metricLabel(metric.bool?.false) }}
 							</ion-text>
 						</i>
-					</ng-container>
-				</ion-label>
-				<ion-buttons slot="end">
-					<ion-button
-						color="medium"
-						(click)="deleteMetric(metric)"
-						[disabled]="isDeletingMetric(metric)"
-					>
-						<ion-icon name="close" />
-					</ion-button>
-				</ion-buttons>
-			</ion-item>
+					</ion-label>
+					<ion-buttons slot="end">
+						<ion-button
+							color="medium"
+							(click)="deleteMetric(metric)"
+							[disabled]="isDeletingMetric(metric)"
+						>
+							<ion-icon name="close" />
+						</ion-button>
+					</ion-buttons>
+				</ion-item>
+			}
 		}
 	</ion-list>
-	<ion-card-content *ngIf="space?.dbo && !space?.dbo?.metrics?.length">
-		<p>No metrics for your team yet.</p>
-	</ion-card-content>
+	@if (space?.dbo && !space?.dbo?.metrics?.length) {
+		<ion-card-content>
+			<p>No metrics for your team yet.</p>
+		</ion-card-content>
+	}
 </ion-card>

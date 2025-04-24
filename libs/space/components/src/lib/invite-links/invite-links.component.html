@@ -1,4 +1,6 @@
-<ion-skeleton-text style="width: 100%" animated *ngIf="!inviteUrlsFor" />
+@if (!inviteUrlsFor) {
+	<ion-skeleton-text style="width: 100%" animated />
+}
 @if (inviteUrlsFor) {
 	<p>Share this links for mass invite:</p>
 	<ul style="list-style: none; padding: 1em">

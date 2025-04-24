@@ -1,9 +1,25 @@
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonCard,
+	IonCardContent,
+	IonCardHeader,
+	IonCardSubtitle,
+	IonCardTitle,
+	IonCol,
+	IonRow,
+} from '@ionic/angular/standalone';
 
 @Component({
 	selector: 'sneat-intro',
 	templateUrl: './intro.component.html',
-	imports: [IonicModule],
+	imports: [
+		IonRow,
+		IonCard,
+		IonCardHeader,
+		IonCardTitle,
+		IonCardSubtitle,
+		IonCardContent,
+		IonCol,
+	],
 })
 export class IntroComponent {}

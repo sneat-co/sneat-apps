@@ -20,8 +20,13 @@
 				(click)="saveChanges()"
 			>
 				<ion-icon name="save-outline" slot="start" />
-				<ion-label *ngIf="!queryState.isSaving">Save</ion-label>
-				<ion-label *ngIf="queryState.isSaving">Saving...</ion-label>
+				<ion-label>
+					@if (queryState.isSaving) {
+						Saving...
+					} @else {
+						Save
+					}
+				</ion-label>
 			</ion-button>
 		</ion-buttons>
 	</ion-toolbar>
@@ -64,12 +69,14 @@
 						[disabled]="!currentProject?.summary?.dbModels?.length"
 						[value]="queryState.targetDbModel?.id"
 					>
-						<ion-select-option
-							*ngFor="let dbModel of currentProject?.summary?.dbModels || []"
-							[value]="dbModel.id"
-						>
-							{{ dbModel.title || dbModel.id }}
-						</ion-select-option>
+						@for (
+							dbModel of currentProject?.summary?.dbModels || [];
+							track dbModel.id
+						) {
+							<ion-select-option [value]="dbModel.id">
+								{{ dbModel.title || dbModel.id }}
+							</ion-select-option>
+						}
 					</ion-select>
 				</ion-item>
 			</ion-col>
@@ -85,25 +92,29 @@
 		<ion-segment-button value="builder">
 			<ion-label>
 				Query builder
-				<ion-badge
-					*ngIf="showQueryBuilder"
-					color="medium"
-					style="font-weight: normal; font-size: x-small"
-					title="Is not implemented yet"
-					>PROTOTYPE
-				</ion-badge>
+				@if (showQueryBuilder) {
+					<ion-badge
+						color="medium"
+						style="font-weight: normal; font-size: x-small"
+						title="Is not implemented yet"
+					>
+						PROTOTYPE
+					</ion-badge>
+				}
 			</ion-label>
 		</ion-segment-button>
 	</ion-segment>
 
-	<ion-card *ngIf="editorTab === 'text'">
-		<sneat-datatug-sql
-			[sql]="sql"
-			(sqlChanged)="onSqlChanged($event)"
-			[lineNumbers]="true"
-			[readonly]="false"
-		/>
-	</ion-card>
+	@if (editorTab === "text") {
+		<ion-card>
+			<sneat-datatug-sql
+				[sql]="sql"
+				(sqlChanged)="onSqlChanged($event)"
+				[lineNumbers]="true"
+				[readonly]="false"
+			/>
+		</ion-card>
+	}
 
 	<!--	<ion-grid [style.display]="queryMode === 'text' ? 'block' : 'none'">-->
 	<ion-grid>
@@ -113,19 +124,21 @@
 	</ion-grid>
 
 	@if (editorTab === "builder") {
-		<ion-card *ngIf="!showQueryBuilder">
-			<ion-card-content>
-				<p>
-					Query builder is not implemented yet.
-					<ion-button
-						color="danger"
-						slot="end"
-						(click)="showQueryBuilder = true"
-						>Show prototype
-					</ion-button>
-				</p>
-			</ion-card-content>
-		</ion-card>
+		@if (!showQueryBuilder) {
+			<ion-card>
+				<ion-card-content>
+					<p>
+						Query builder is not implemented yet.
+						<ion-button
+							color="danger"
+							slot="end"
+							(click)="showQueryBuilder = true"
+							>Show prototype
+						</ion-button>
+					</p>
+				</ion-card-content>
+			</ion-card>
+		}
 		@if (showQueryBuilder) {
 			<div class="hidden-lg-up">
 				<div class="ion-padding-start ion-padding-end">
@@ -249,155 +262,154 @@
 
 	<div class="ion-padding-start ion-padding-end">
 		<ion-segment [value]="activeEnv?.id" (ionChange)="envChanged($event)">
-			<ion-segment-button
-				[value]="env.id"
-				*ngFor="let env of queryState?.environments || []"
-			>
-				<ion-grid>
-					<ion-row>
-						<ion-col style="margin-top: 0.5rem">
-							{{ env.title || env.id }}
-							<ng-container *ngIf="env.recordsets; let envRecordsets">
-								<ion-badge
-									color="light"
-									*ngIf="
+			@for (env of queryState.environments || []; track env.id) {
+				<ion-segment-button [value]="env.id">
+					<ion-grid>
+						<ion-row>
+							<ion-col style="margin-top: 0.5rem">
+								{{ env.title || env.id }}
+								@if (env.recordsets; as envRecordsets) {
+									@if (
 										envRecordsets.length === 1 &&
 										!!envRecordsets[0].result?.rows?.length
-									"
-								>
-									{{ envRecordsets[0].result?.rows?.length }}
-								</ion-badge>
-							</ng-container>
-						</ion-col>
-						<ion-col>
-							<ion-buttons>
-								<ion-button *ngIf="env.isExecuting" disabled>
-									<ion-spinner name="lines-small" slot="end" />
-								</ion-button>
-								<ion-button
-									*ngIf="!env.isExecuting"
-									(click)="executeFromTab($event, env)"
-								>
-									<ion-icon name="play-circle-outline" />
-								</ion-button>
-							</ion-buttons>
-						</ion-col>
-					</ion-row>
-				</ion-grid>
-			</ion-segment-button>
+									) {
+										<ion-badge color="light">
+											{{ envRecordsets[0].result?.rows?.length }}
+										</ion-badge>
+									}
+								}
+							</ion-col>
+							<ion-col>
+								<ion-buttons>
+									@if (env.isExecuting) {
+										<ion-button disabled>
+											<ion-spinner name="lines-small" slot="end" />
+										</ion-button>
+									} @else {
+										<ion-button (click)="executeFromTab($event, env)">
+											<ion-icon name="play-circle-outline" />
+										</ion-button>
+									}
+								</ion-buttons>
+							</ion-col>
+						</ion-row>
+					</ion-grid>
+				</ion-segment-button>
+			}
 		</ion-segment>
 	</div>
 
 	<ion-grid>
-		<ion-row *ngIf="activeEnv?.id !== '=='">
-			<ion-col size="5">
-				<ion-item>
-					<ion-label
-						[color]="activeEnv && !activeEnv.dbServerId ? 'danger' : 'medium'"
-						>&#64; Server
-					</ion-label>
-					<ion-input
-						*ngIf="activeEnv && !activeEnv.summary"
-						readonly
-						style="text-align: right"
-						placeholder="loading..."
-					/>
-					<ng-container *ngIf="activeEnv?.summary">
-						<ng-container
-							*ngIf="!activeEnv?.summary?.dbServers?.length; else hasDbServers"
-						>
+		@if (activeEnv?.id !== "==") {
+			<ion-row>
+				<ion-col size="5">
+					<ion-item>
+						<ion-label
+							[color]="activeEnv && !activeEnv.dbServerId ? 'danger' : 'medium'"
+							>&#64; Server
+						</ion-label>
+						@if (activeEnv && !activeEnv.summary) {
 							<ion-input
 								readonly
-								*ngIf="activeEnv && !activeEnv.catalogId"
-								placeholder="No known catalogs"
+								style="text-align: right"
+								placeholder="loading..."
 							/>
-						</ng-container>
-						<ng-template #hasDbServers>
-							<ion-select
-								interface="popover"
-								[value]="activeEnv?.dbServerId"
-								(ionChange)="serverChanged($event)"
-							>
-								<ion-select-option
-									*ngFor="let dbServer of activeEnv?.summary?.dbServers || []"
-									[value]="getDbServerId(dbServer)"
+						}
+						@if (activeEnv?.summary) {
+							@if (!activeEnv?.summary?.dbServers?.length) {
+								@if (activeEnv && !activeEnv.catalogId) {
+									<ion-input
+										readonly="readonly"
+										placeholder="No known catalogs"
+									/>
+								}
+							} @else {
+								<ion-select
+									interface="popover"
+									[value]="activeEnv?.dbServerId"
+									(ionChange)="serverChanged($event)"
 								>
-									{{ dbServer.driver }} : {{ dbServer.host }}
-								</ion-select-option>
+									@for (
+										dbServer of activeEnv?.summary?.dbServers || [];
+										track dbServer.id
+									) {
+										<ion-select-option [value]="getDbServerId(dbServer)">
+											{{ dbServer.driver }} : {{ dbServer.host }}
+										</ion-select-option>
+									}
+								</ion-select>
+							}
+						}
+					</ion-item>
+				</ion-col>
+				<ion-col size="5">
+					<ion-item>
+						<ion-label
+							[color]="activeEnv && !activeEnv.catalogId ? 'danger' : 'medium'"
+							>DB
+						</ion-label>
+						@if (activeEnv && !activeEnv.summary) {
+							<ion-input
+								readonly
+								style="text-align: right"
+								placeholder="loading..."
+							/>
+						}
+						@if (activeEnv?.dbServer) {
+							<ion-select
+								[value]="activeEnv?.catalogId"
+								interface="popover"
+								(ionChange)="catalogChanged($event)"
+							>
+								@for (
+									catalog of activeEnv?.dbServer?.catalogs || [];
+									track catalog
+								) {
+									<ion-select-option [value]="catalog">
+										{{ catalog }}
+									</ion-select-option>
+								}
 							</ion-select>
-						</ng-template>
-					</ng-container>
-				</ion-item>
-			</ion-col>
-			<ion-col size="5">
-				<ion-item>
-					<ion-label
-						[color]="activeEnv && !activeEnv.catalogId ? 'danger' : 'medium'"
-						>DB
-					</ion-label>
-					<ion-input
-						*ngIf="activeEnv && !activeEnv.summary"
-						readonly
-						style="text-align: right"
-						placeholder="loading..."
-					/>
-					<ion-select
-						[value]="activeEnv?.catalogId"
-						*ngIf="activeEnv?.dbServer"
-						interface="popover"
-						(ionChange)="catalogChanged($event)"
+						}
+					</ion-item>
+				</ion-col>
+				<ion-col size="2">
+					<ion-button
+						expand="full"
+						[disabled]="!activeEnv || activeEnv.isExecuting"
+						(click)="executeQuery()"
+						style="text-transform: none"
 					>
-						<ion-select-option
-							*ngFor="let catalog of activeEnv?.dbServer?.catalogs || []"
-							[value]="catalog"
-						>
-							{{ catalog }}
-						</ion-select-option>
-					</ion-select>
-				</ion-item>
-			</ion-col>
-			<ion-col size="2">
-				<ion-button
-					expand="full"
-					[disabled]="!activeEnv || activeEnv.isExecuting"
-					(click)="executeQuery()"
-					style="text-transform: none"
-				>
-					<ion-icon slot="start" name="play-circle-outline" />
-					<ion-label>Execute</ion-label>
-				</ion-button>
-			</ion-col>
-		</ion-row>
+						<ion-icon slot="start" name="play-circle-outline" />
+						<ion-label>Execute</ion-label>
+					</ion-button>
+				</ion-col>
+			</ion-row>
+		}
 	</ion-grid>
 
-	<div class="ion-padding" *ngIf="envId === '=='">
-		<p>Comparison is not implemented yet</p>
-	</div>
+	@if (envId === "==") {
+		<div class="ion-padding">
+			<p>Comparison is not implemented yet</p>
+		</div>
+	} @else if (!activeEnv?.recordsets && !activeEnv?.isExecuting) {
+		<div class="ion-padding">
+			<ion-text color="medium">Not executed yet</ion-text>
+		</div>
+	}
 
-	<div
-		class="ion-padding"
-		*ngIf="envId !== '==' && !activeEnv?.recordsets && !activeEnv?.isExecuting"
-	>
-		<ion-text color="medium">Not executed yet</ion-text>
-	</div>
+	@if (activeEnv?.isExecuting) {
+		<ion-progress-bar type="indeterminate" color="tertiary" />
+	}
 
-	<ion-progress-bar
-		type="indeterminate"
-		*ngIf="activeEnv?.isExecuting"
-		color="tertiary"
-	/>
-
-	<div
-		class="ion-margin-top"
-		style="margin-left: 0.6rem; margin-right: 0.6rem"
-		*ngIf="activeEnv?.recordsets"
-	>
-		<sneat-datatug-grid-widget
-			*ngFor="
-				let recordset of activeEnv?.recordsets || [];
-				trackBy: trackByIndex
-			"
-			[recordset]="recordset"
-		/>
-	</div>
+	@if (activeEnv?.recordsets) {
+		<div
+			class="ion-margin-top"
+			style="margin-left: 0.6rem; margin-right: 0.6rem"
+		>
+			@for (recordset of activeEnv?.recordsets || []; track $index) {
+				<sneat-datatug-grid-widget [recordset]="recordset" />
+			}
+		</div>
+	}
 </ion-content>

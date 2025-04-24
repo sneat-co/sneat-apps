@@ -13,6 +13,9 @@
 				"index": "apps/logist-app/src/index.html",
 				"main": "apps/logist-app/src/main.ts",
 				"polyfills": ["zone.js"],
+				"allowedCommonJsDependencies": [
+					"qrcode"
+				],
 				"tsConfig": "apps/logist-app/tsconfig.app.json",
 				"inlineStyleLanguage": "scss",
 				"assets": [
@@ -34,8 +37,8 @@
 					"budgets": [
 						{
 							"type": "initial",
-							"maximumWarning": "1mb",
-							"maximumError": "2mb"
+							"maximumWarning": "2.5mb",
+							"maximumError": "3mb"
 						},
 						{
 							"type": "anyComponentStyle",

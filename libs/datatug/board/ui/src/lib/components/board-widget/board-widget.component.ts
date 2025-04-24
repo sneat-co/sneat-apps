@@ -6,12 +6,13 @@ import {
 	QueryType,
 	WidgetDef,
 } from '@sneat/ext-datatug-models';
+import { TabsWidgetComponent } from '../widgets/tabs-widget/tabs-widget.component';
 
 @Component({
 	selector: 'sneat-datatug-board-widget',
 	templateUrl: './board-widget.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	standalone: false,
+	imports: [TabsWidgetComponent],
 })
 export class BoardWidgetComponent {
 	@Input() level?: number;

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { JsonPipe } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -9,20 +9,39 @@ import {
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	MenuController,
+	NavController,
+} from '@ionic/angular/standalone';
+import {
 	ISneatAuthState,
 	ISneatUserState,
 	SneatAuthStateService,
 	SneatUserService,
 } from '@sneat/auth-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { personName, PersonNamesPipe } from '../pipes';
 
 @Component({
 	selector: 'sneat-auth-menu-item',
 	templateUrl: './auth-menu-item.component.html',
-	imports: [IonicModule, CommonModule, RouterModule, PersonNamesPipe],
+	imports: [
+		RouterModule,
+		PersonNamesPipe,
+		IonItemDivider,
+		IonLabel,
+		IonItem,
+		IonIcon,
+		IonButtons,
+		IonButton,
+		JsonPipe,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthMenuItemComponent implements OnDestroy {

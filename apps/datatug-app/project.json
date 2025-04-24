@@ -13,6 +13,9 @@
 				"index": "apps/datatug-app/src/index.html",
 				"main": "apps/datatug-app/src/main.ts",
 				"polyfills": ["zone.js"],
+				"allowedCommonJsDependencies": [
+					"qrcode"
+				],
 				"tsConfig": "apps/datatug-app/tsconfig.app.json",
 				"inlineStyleLanguage": "scss",
 				"assets": [
@@ -32,8 +35,8 @@
 					"budgets": [
 						{
 							"type": "initial",
-							"maximumWarning": "1mb",
-							"maximumError": "2mb"
+							"maximumWarning": "2.5mb",
+							"maximumError": "3mb"
 						},
 						{
 							"type": "anyComponentStyle",

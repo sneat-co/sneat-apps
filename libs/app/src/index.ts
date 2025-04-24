@@ -1,4 +1,5 @@
 export * from './environments';
+export * from './lib/base-app.component';
 export * from './lib/sneat-base-app';
 export * from './lib/get-standard-sneat-imports';
 export * from './lib/app-component.service';
