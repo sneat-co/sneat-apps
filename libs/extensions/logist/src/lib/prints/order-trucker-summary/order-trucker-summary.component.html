@@ -105,23 +105,25 @@
 				<th>Address</th>
 			</thead>
 			<tbody>
-				<tr *ngFor="let point of points || []; index as i">
-					<td>{{ i }}</td>
-					<td>{{ point.container?.type }} - {{ point.container?.number }}</td>
-					<td>{{ point.from?.counterparty?.title }}</td>
-					<td>{{ point.toLoad?.numberOfPallets }}</td>
-					<td>{{ point.toLoad?.grossWeightKg }}</td>
-					<td>{{ point?.dispatcher?.refNumber }}</td>
-					<td>{{ point?.toLoad?.note }}</td>
-					<td>
-						<pre style="margin: 0">{{
-							point.from?.location?.address?.lines
-						}}</pre>
-						<p *ngIf="point.from?.location?.address?.zipCode">
-							{{ point.from?.location?.address?.zipCode }}
-						</p>
-					</td>
-				</tr>
+				@for (point of points || []; track $index; let i = $index) {
+					<tr>
+						<td>{{ i }}</td>
+						<td>{{ point.container?.type }} - {{ point.container?.number }}</td>
+						<td>{{ point.from?.counterparty?.title }}</td>
+						<td>{{ point.toLoad?.numberOfPallets }}</td>
+						<td>{{ point.toLoad?.grossWeightKg }}</td>
+						<td>{{ point?.dispatcher?.refNumber }}</td>
+						<td>{{ point?.toLoad?.note }}</td>
+						<td>
+							<pre style="margin: 0">{{
+								point.from?.location?.address?.lines
+							}}</pre>
+							<p *ngIf="point.from?.location?.address?.zipCode">
+								{{ point.from?.location?.address?.zipCode }}
+							</p>
+						</td>
+					</tr>
+				}
 			</tbody>
 		</table>
 	</ion-card>

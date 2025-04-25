@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import {
 	ChangeDetectorRef,
 	Component,
@@ -6,8 +7,16 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+	IonCol,
+	IonGrid,
+	IonInput,
+	IonItem,
+	IonRow,
+} from '@ionic/angular/standalone';
 import { IContactContext } from '@sneat/contactus-core';
+import { ContactInputComponent } from '@sneat/contactus-shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
 import {
@@ -44,6 +53,16 @@ function debounce<T>(field: string, o: Subject<T>): Observable<T> {
 @Component({
 	selector: 'sneat-container-endpoint',
 	templateUrl: './container-endpoint.component.html',
+	imports: [
+		IonGrid,
+		IonRow,
+		IonCol,
+		ContactInputComponent,
+		IonItem,
+		IonInput,
+		ReactiveFormsModule,
+		NgIf,
+	],
 })
 export class ContainerEndpointComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;

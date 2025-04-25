@@ -1,15 +1,20 @@
-<ng-container *ngIf="orders?.length; else noOrders">
+@if (!orders) {
+	<ion-card>
+		<ion-card-content>
+			<p>Loading...</p>
+		</ion-card-content>
+	</ion-card>
+} @else if (orders.length) {
 	<sneat-logist-order-card
 		*ngFor="let order of orders"
 		[order]="order"
 		[space]="space"
 		[readonly]="true"
 	/>
-</ng-container>
-<ng-template #noOrders>
+} @else {
 	<ion-card>
 		<ion-card-content>
 			<p>No orders found for the current filter.</p>
 		</ion-card-content>
 	</ion-card>
-</ng-template>
+}

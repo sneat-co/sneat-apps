@@ -16,11 +16,14 @@ import {
 	IonIcon,
 	IonInput,
 	IonItem,
+	IonItemDivider,
+	IonItemGroup,
 	IonLabel,
 	IonRow,
 	IonSegment,
 	IonSegmentButton,
 	IonSpinner,
+	IonTextarea,
 } from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
@@ -32,6 +35,8 @@ import {
 	ISetContainerPointFieldsRequest,
 } from '../../dto';
 import { LogistOrderService } from '../../services';
+import { ContainerEndpointComponent } from './container-endpoint.component';
+import { ContainerPointLoadFormComponent } from './container-point-load-form.component';
 
 @Component({
 	selector: 'sneat-order-container-point',
@@ -52,6 +57,11 @@ import { LogistOrderService } from '../../services';
 		IonSegment,
 		FormsModule,
 		IonSpinner,
+		ContainerEndpointComponent,
+		ContainerPointLoadFormComponent,
+		IonItemGroup,
+		IonItemDivider,
+		IonTextarea,
 	],
 })
 export class OrderContainerPointComponent implements OnChanges {

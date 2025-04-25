@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import {
 	ChangeDetectorRef,
 	Component,
@@ -6,7 +7,19 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCol,
+	IonGrid,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonRow,
+} from '@ionic/angular/standalone';
 import { excludeUndefined } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
@@ -19,11 +32,29 @@ import {
 	IUpdateContainerPointRequest,
 } from '../../dto';
 import { LogistOrderService } from '../../services';
-import { FreightLoadForm } from '../freight-load-form/freight-load-form.component';
+import {
+	FreightLoadForm,
+	FreightLoadFormComponent,
+} from '../freight-load-form/freight-load-form.component';
 
 @Component({
 	selector: 'sneat-container-segment',
 	templateUrl: './container-segment.component.html',
+	imports: [
+		FreightLoadFormComponent,
+		IonItem,
+		IonLabel,
+		IonInput,
+		IonCol,
+		ReactiveFormsModule,
+		IonRow,
+		IonIcon,
+		IonButtons,
+		IonButton,
+		IonCard,
+		IonGrid,
+		NgIf,
+	],
 })
 export class ContainerSegmentComponent implements OnChanges {
 	@Input() order?: ILogistOrderContext;

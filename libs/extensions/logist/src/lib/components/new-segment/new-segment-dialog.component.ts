@@ -5,11 +5,17 @@ import { DialogHeaderComponent } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ILogistOrderContext, IOrderContainer } from '../../dto';
 import { OrderNavService } from '../../services';
+import { NewSegmentFormComponent } from './new-segment-form.component';
 
 @Component({
 	selector: 'sneat-new-segment-dialog',
 	templateUrl: 'new-segment-dialog.component.html',
-	imports: [IonHeader, DialogHeaderComponent, IonContent],
+	imports: [
+		IonHeader,
+		DialogHeaderComponent,
+		IonContent,
+		NewSegmentFormComponent,
+	],
 })
 export class NewSegmentDialogComponent {
 	@Input() order?: ILogistOrderContext;

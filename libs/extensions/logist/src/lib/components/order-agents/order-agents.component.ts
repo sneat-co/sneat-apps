@@ -1,4 +1,4 @@
-import { NgForOf } from '@angular/common';
+import { NgForOf, TitleCasePipe } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -29,6 +29,7 @@ import {
 	ILogistOrderContext,
 	IOrderCounterparty,
 } from '../../dto';
+import { OrderCounterpartyComponent } from '../order-counterparty/order-counterparty.component';
 
 @Component({
 	selector: 'sneat-order-agents',
@@ -41,6 +42,8 @@ import {
 		IonButton,
 		IonIcon,
 		NgForOf,
+		OrderCounterpartyComponent,
+		TitleCasePipe,
 	],
 })
 export class OrderAgentsComponent implements OnChanges {

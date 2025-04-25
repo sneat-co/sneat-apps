@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -7,6 +8,7 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
 import {
 	IonButton,
@@ -45,6 +47,8 @@ import { OrderCounterpartyInputComponent } from '../order-counterparty-input/ord
 		IonItem,
 		IonIcon,
 		IonSpinner,
+		FormsModule,
+		NgIf,
 	],
 })
 export class OrderCounterpartyComponent implements OnChanges {

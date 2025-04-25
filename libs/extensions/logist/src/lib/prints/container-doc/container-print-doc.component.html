@@ -63,61 +63,68 @@
 					<th>Address</th>
 				</tr>
 			</thead>
-			<tr *ngFor="let point of points; let i = index">
-				<td class="number">{{ i + 1 }}</td>
-				<td>{{ point.counterparty?.title }}</td>
-				<td>{{ point.containerPoint.refNumber }}</td>
-				<td>
-					<style>
-						table.no-borders td {
-							border: none;
-							padding: 0;
-						}
-					</style>
-					<table class="no-borders" style="width: 100%">
-						<tr
-							*ngIf="
-								point.containerPoint.arrival?.scheduledDate ||
-								point.containerPoint.arrival?.scheduledTime
-							"
-						>
-							<td *ngIf="showArrivalLabel(point.containerPoint)">Arrival</td>
-							<td style="text-align: right">
-								{{ point.containerPoint.arrival?.scheduledDate }}
-								<span *ngIf="point.containerPoint.arrival?.scheduledTime"
-									>&#64; {{ point.containerPoint.arrival?.scheduledTime }}</span
-								>
-							</td>
-						</tr>
-						<tr *ngIf="showDeparture(point.containerPoint)">
-							<td>Departure</td>
-							<td style="text-align: right">
-								<span *ngIf="showDepartureDate(point.containerPoint)">{{
-									point.containerPoint.departure?.scheduledDate
-								}}</span>
-								<span *ngIf="point.containerPoint.departure?.scheduledTime"
-									>&#64;
-									{{ point.containerPoint.departure?.scheduledTime }}</span
-								>
-							</td>
-						</tr>
-					</table>
-				</td>
-				<td class="number">
-					{{ point.containerPoint.toLoad?.numberOfPallets }}
-				</td>
-				<td class="number">{{ point.containerPoint.toLoad?.grossWeightKg }}</td>
-				<td>{{ point.containerPoint.notes }}</td>
-				<td>
-					{{ point.address?.lines }}
-					<ng-container *ngIf="point.address?.city || point.address?.state">
-						<br />
-						{{ point.address?.city }}
-						<span *ngIf="point.address?.city && point.address?.state">, </span>
-						{{ point.address?.state }}
-					</ng-container>
-				</td>
-			</tr>
+			@for (point of points; track $index; let i = $index) {
+				<tr>
+					<td class="number">{{ i + 1 }}</td>
+					<td>{{ point.counterparty?.title }}</td>
+					<td>{{ point.containerPoint.refNumber }}</td>
+					<td>
+						<style>
+							table.no-borders td {
+								border: none;
+								padding: 0;
+							}
+						</style>
+						<table class="no-borders" style="width: 100%">
+							<tr
+								*ngIf="
+									point.containerPoint.arrival?.scheduledDate ||
+									point.containerPoint.arrival?.scheduledTime
+								"
+							>
+								<td *ngIf="showArrivalLabel(point.containerPoint)">Arrival</td>
+								<td style="text-align: right">
+									{{ point.containerPoint.arrival?.scheduledDate }}
+									<span *ngIf="point.containerPoint.arrival?.scheduledTime"
+										>&#64;
+										{{ point.containerPoint.arrival?.scheduledTime }}</span
+									>
+								</td>
+							</tr>
+							<tr *ngIf="showDeparture(point.containerPoint)">
+								<td>Departure</td>
+								<td style="text-align: right">
+									<span *ngIf="showDepartureDate(point.containerPoint)">{{
+										point.containerPoint.departure?.scheduledDate
+									}}</span>
+									<span *ngIf="point.containerPoint.departure?.scheduledTime"
+										>&#64;
+										{{ point.containerPoint.departure?.scheduledTime }}</span
+									>
+								</td>
+							</tr>
+						</table>
+					</td>
+					<td class="number">
+						{{ point.containerPoint.toLoad?.numberOfPallets }}
+					</td>
+					<td class="number">
+						{{ point.containerPoint.toLoad?.grossWeightKg }}
+					</td>
+					<td>{{ point.containerPoint.notes }}</td>
+					<td>
+						{{ point.address?.lines }}
+						<ng-container *ngIf="point.address?.city || point.address?.state">
+							<br />
+							{{ point.address?.city }}
+							<span *ngIf="point.address?.city && point.address?.state"
+								>,
+							</span>
+							{{ point.address?.state }}
+						</ng-container>
+					</td>
+				</tr>
+			}
 			<tfoot>
 				<tr *ngIf="total">
 					<td

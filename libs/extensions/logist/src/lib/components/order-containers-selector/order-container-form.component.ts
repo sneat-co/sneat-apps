@@ -1,3 +1,4 @@
+import { NgIf, UpperCasePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
 	IonCheckbox,
@@ -14,7 +15,17 @@ import { IContainer } from './condainer-interface';
 @Component({
 	selector: 'sneat-order-container-form',
 	templateUrl: 'order-container-form.component.html',
-	imports: [IonGrid, IonRow, IonCol, IonItem, IonLabel, IonInput, IonCheckbox],
+	imports: [
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonItem,
+		IonLabel,
+		IonInput,
+		IonCheckbox,
+		UpperCasePipe,
+		NgIf,
+	],
 })
 export class OrderContainerFormComponent {
 	@Input() container: IContainer = { id: '', type: 'unknown' };

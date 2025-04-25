@@ -29,9 +29,9 @@ import {
 	IOrderContainer,
 } from '../../dto';
 import { LogistOrderService } from '../../services';
-import { ContactWithRefNumModule } from '../contact-with-refnum/contact-with-ref-num.module';
+import { ContactWithRefNumComponent } from '../contact-with-refnum/contact-with-ref-num.component';
 import { IContainer } from '../order-containers-selector/condainer-interface';
-import { OrderContainersSelectorModule } from '../order-containers-selector/order-containers-selector.module';
+import { OrderContainersSelectorComponent } from '../order-containers-selector/order-containers-selector.component';
 import {
 	SegmentCounterpartyComponent,
 	SegmentEndpointType,
@@ -45,14 +45,14 @@ import {
 		IonItem,
 		IonLabel,
 		IonItemDivider,
-		ContactWithRefNumModule,
 		IonGrid,
 		IonRow,
 		IonCol,
 		SegmentCounterpartyComponent,
-		OrderContainersSelectorModule,
 		NgIf,
 		IonButton,
+		ContactWithRefNumComponent,
+		OrderContainersSelectorComponent,
 	],
 })
 export class NewSegmentFormComponent implements OnInit, OnChanges {

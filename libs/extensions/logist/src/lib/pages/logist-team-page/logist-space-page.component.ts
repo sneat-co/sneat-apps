@@ -1,5 +1,6 @@
 import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import {
 	IonButton,
 	IonButtons,
@@ -12,10 +13,11 @@ import {
 	IonLabel,
 	IonSpinner,
 	IonText,
+	IonTitle,
 	IonToolbar,
 } from '@ionic/angular/standalone';
-import { LogistSpaceMenuItemsModule } from '../../components/logist-team-menu-items/logist-space-menu-items.module';
-import { LogistSpaceSettingsModule } from '../../components/logist-team-settings/logist-space-settings.module';
+import { LogistSpaceMenuItemsComponent } from '../../components/logist-team-menu-items/logist-space-menu-items.component';
+import { LogistSpaceSettingsComponent } from '../../components/logist-team-settings/logist-space-settings.component';
 import { LogistSpaceService } from '../../services/logist-space.service';
 import { LogistSpaceBaseComponent } from '../logist-space-base.component';
 
@@ -36,8 +38,10 @@ import { LogistSpaceBaseComponent } from '../logist-space-base.component';
 		IonButtons,
 		IonButton,
 		IonIcon,
-		LogistSpaceMenuItemsModule,
-		LogistSpaceSettingsModule,
+		LogistSpaceSettingsComponent,
+		LogistSpaceMenuItemsComponent,
+		IonTitle,
+		RouterLink,
 	],
 })
 export class LogistSpacePageComponent extends LogistSpaceBaseComponent {

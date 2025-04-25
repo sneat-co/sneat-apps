@@ -1,10 +1,32 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import {
+	IonCard,
+	IonCol,
+	IonGrid,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonRow,
+} from '@ionic/angular/standalone';
 import { excludeZeroValues } from '@sneat/core';
 import { ILogistOrderContext } from '../../dto';
 
 @Component({
 	selector: 'sneat-new-order-containers-form',
 	templateUrl: './new-order-containers-form.component.html',
+	imports: [
+		IonCard,
+		IonItemDivider,
+		IonLabel,
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonItem,
+		IonInput,
+		FormsModule,
+	],
 })
 export class NewOrderContainersFormComponent {
 	@Input() order?: ILogistOrderContext;

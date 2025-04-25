@@ -6,31 +6,31 @@ import { RouterModule } from '@angular/router';
 		RouterModule.forChild([
 			{
 				path: 'container-doc',
-				loadChildren: () =>
-					import('./container-doc/container-print-doc.module').then(
-						(m) => m.ContainerPrintDocModule,
+				loadComponent: () =>
+					import('./container-doc/container-print-doc.component').then(
+						(m) => m.ContainerPrintDocComponent,
 					),
 			},
 			{
 				path: 'shipping-doc',
-				loadChildren: () =>
-					import('./order-shipping-doc/order-shipping-doc.module').then(
-						(m) => m.OrderShippingDocModule,
+				loadComponent: () =>
+					import('./order-shipping-doc/order-shipping-doc.component').then(
+						(m) => m.OrderShippingDocComponent,
 					),
 			},
 			{
 				path: 'expedition-doc',
-				loadChildren: () =>
+				loadComponent: () =>
 					import(
-						'./order-expedition-print-doc/order-expedition-print-doc.module'
-					).then((m) => m.OrderExpeditionPrintDocModule),
+						'./order-expedition-print-doc/order-expedition-print-doc.component'
+					).then((m) => m.OrderExpeditionPrintDocComponent),
 			},
 			{
 				path: 'trucker-summary',
-				loadChildren: () =>
-					import('./order-trucker-summary/order-trucker-summary.module').then(
-						(m) => m.OrderTruckerSummaryModule,
-					),
+				loadComponent: () =>
+					import(
+						'./order-trucker-summary/order-trucker-summary.component'
+					).then((m) => m.OrderTruckerSummaryComponent),
 			},
 		]),
 	],

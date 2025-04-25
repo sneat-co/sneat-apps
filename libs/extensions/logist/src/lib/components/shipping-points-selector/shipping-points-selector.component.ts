@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -52,6 +53,7 @@ export type TasksByID = Record<string, selected | undefined>;
 		IonCol,
 		IonItem,
 		IonCheckbox,
+		NgIf,
 	],
 })
 export class ShippingPointsSelectorComponent implements OnChanges {

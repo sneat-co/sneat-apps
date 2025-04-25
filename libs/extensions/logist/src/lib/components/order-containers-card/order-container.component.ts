@@ -7,7 +7,29 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import {
+	FormControl,
+	FormGroup,
+	FormsModule,
+	ReactiveFormsModule,
+} from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import {
+	IonButton,
+	IonButtons,
+	IonCol,
+	IonGrid,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonItemGroup,
+	IonLabel,
+	IonRow,
+	IonSegment,
+	IonSegmentButton,
+	IonTextarea,
+} from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
 import {
@@ -27,11 +49,34 @@ import {
 } from '../new-shipping-point/new-shipping-point.service';
 import { ShippingPointsSelectorService } from '../shipping-points-selector/shipping-points-selector.service';
 import { ContainerSegmentsComponent } from './container-segments.component';
+import { OrderContainerPointComponent } from './order-container-point.component';
 
 @Component({
 	selector: 'sneat-order-container',
 	templateUrl: './order-container.component.html',
-	imports: [ContainerSegmentsComponent, NgIf, NgForOf],
+	imports: [
+		ContainerSegmentsComponent,
+		NgIf,
+		NgForOf,
+		IonItemGroup,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		RouterLink,
+		IonItemDivider,
+		IonIcon,
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonItem,
+		IonInput,
+		ReactiveFormsModule,
+		IonSegmentButton,
+		IonSegment,
+		OrderContainerPointComponent,
+		FormsModule,
+		IonTextarea,
+	],
 })
 export class OrderContainerComponent implements OnChanges {
 	@Input() container?: IOrderContainer;

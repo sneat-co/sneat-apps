@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import {
 	ChangeDetectorRef,
 	Component,
@@ -54,6 +55,7 @@ function debounce<T>(o: Subject<T>): Observable<T> {
 		IonInput,
 		ReactiveFormsModule,
 		IonSpinner,
+		NgIf,
 	],
 })
 export class ContainerPointLoadFormComponent implements OnChanges {

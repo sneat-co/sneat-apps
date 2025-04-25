@@ -7,7 +7,7 @@ import {
 	IonTitle,
 	IonToolbar,
 } from '@ionic/angular/standalone';
-import { NewSegmentModule } from '../../components/new-segment';
+import { NewSegmentFormComponent } from '../../components/new-segment';
 import { LogistOrderService, OrderNavService } from '../../services';
 import { OrderPageBaseComponent } from '../order-page-base.component';
 
@@ -21,7 +21,7 @@ import { OrderPageBaseComponent } from '../order-page-base.component';
 		IonBackButton,
 		IonTitle,
 		IonContent,
-		NewSegmentModule,
+		NewSegmentFormComponent,
 	],
 })
 export class NewSegmentPageComponent extends OrderPageBaseComponent {

@@ -35,8 +35,10 @@ import {
 	IUpdateContainerPointRequest,
 } from '../../dto';
 import { LogistOrderService } from '../../services';
-import { FreightLoadForm } from '../freight-load-form/freight-load-form.component';
-import { FreightLoadFormModule } from '../freight-load-form/freight-load-form.module';
+import {
+	FreightLoadForm,
+	FreightLoadFormComponent,
+} from '../freight-load-form/freight-load-form.component';
 
 @Component({
 	selector: 'sneat-container-point',
@@ -55,7 +57,7 @@ import { FreightLoadFormModule } from '../freight-load-form/freight-load-form.mo
 		IonRow,
 		IonCol,
 		NgIf,
-		FreightLoadFormModule,
+		FreightLoadFormComponent,
 	],
 })
 export class ContainerPointComponent implements OnChanges {

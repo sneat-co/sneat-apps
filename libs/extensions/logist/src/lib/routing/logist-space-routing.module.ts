@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { contactusRoutes, membersRoutes } from '@sneat/contactus-internal';
@@ -10,30 +9,30 @@ export const logistRoutes: Routes = [
 	{
 		path: '',
 		pathMatch: 'full',
-		loadChildren: () =>
-			import('../pages/logist-team-page/logist-space-page.module').then(
-				(m) => m.LogistSpacePageModule,
+		loadComponent: () =>
+			import('../pages/logist-team-page/logist-space-page.component').then(
+				(m) => m.LogistSpacePageComponent,
 			),
 	},
 	{
 		path: 'settings',
-		loadChildren: () =>
+		loadComponent: () =>
 			import(
-				'../pages/logist-team-settings-page/logist-space-settings-page.module'
-			).then((m) => m.LogistSpaceSettingsPageModule),
+				'../pages/logist-team-settings-page/logist-space-settings-page.component'
+			).then((m) => m.LogistSpaceSettingsPageComponent),
 	},
 	{
 		path: '',
 		outlet: 'menu',
-		// loadChildren: () => import('../components/logist-team-menu/logist-team-menu.module').then(m => m.LogistTeamMenuModule),
+		// loadComponent: () => import('../components/logist-team-menu/logist-team-menu.component').then(m => m.LogistTeamMenuModule),
 		component: LogistSpaceMenuComponent,
 	},
 	{
 		path: 'orders',
 		pathMatch: 'full',
-		loadChildren: () =>
-			import('../pages/orders-page/logist-orders-page.module').then(
-				(m) => m.LogistOrdersPageModule,
+		loadComponent: () =>
+			import('../pages/orders-page/logist-orders-page.component').then(
+				(m) => m.LogistOrdersPageComponent,
 			),
 	},
 	{
@@ -43,24 +42,24 @@ export const logistRoutes: Routes = [
 	},
 	{
 		path: 'order/:orderID',
-		loadChildren: () =>
-			import('../pages/order-page/logist-order-page.module').then(
-				(m) => m.LogistOrderPageModule,
+		loadComponent: () =>
+			import('../pages/order-page/logist-order-page.component').then(
+				(m) => m.LogistOrderPageComponent,
 			),
 	},
 	{
 		path: 'order/:orderID/new-segments',
-		loadChildren: () =>
-			import('../pages/new-segment/new-segment-page.module').then(
-				(m) => m.NewSegmentPageModule,
+		loadComponent: () =>
+			import('../pages/new-segment/new-segment-page.component').then(
+				(m) => m.NewSegmentPageComponent,
 			),
 	},
 	{
 		path: 'order/:orderID/new-shipping-point',
-		loadChildren: () =>
-			import('../pages/new-shipping-point/new-shipping-point-page.module').then(
-				(m) => m.NewShippingPointPageModule,
-			),
+		loadComponent: () =>
+			import(
+				'../pages/new-shipping-point/new-shipping-point-page.component'
+			).then((m) => m.NewShippingPointPageComponent),
 	},
 	{
 		path: 'order/:orderID/print',
@@ -78,9 +77,9 @@ export const logistRoutes: Routes = [
 	},
 	{
 		path: 'new-order',
-		loadChildren: () =>
-			import('../pages/new-order/new-logist-order-page.module').then(
-				(m) => m.NewLogistOrderPageModule,
+		loadComponent: () =>
+			import('../pages/new-order/new-logist-order-page.component').then(
+				(m) => m.NewLogistOrderPageComponent,
 			),
 	},
 	...contactusRoutes,
@@ -90,7 +89,7 @@ export const logistRoutes: Routes = [
 
 @NgModule({
 	imports: [
-		CommonModule,
+		// CommonComponent,
 		RouterModule.forChild(
 			logistRoutes.map((r) => ({ ...r, path: r.path?.replace('logist/', '') })),
 		),

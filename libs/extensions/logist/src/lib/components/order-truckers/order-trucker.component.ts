@@ -17,6 +17,7 @@ import {
 	IonLabel,
 	IonSpinner,
 } from '@ionic/angular/standalone';
+import { CountryFlagPipe } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
 import {
@@ -50,6 +51,7 @@ import { TruckerSegmentComponent } from './trucker-segment.component';
 		IonItemDivider,
 		TruckerSegmentComponent,
 		NgForOf,
+		CountryFlagPipe,
 	],
 })
 export class OrderTruckerComponent implements OnChanges {

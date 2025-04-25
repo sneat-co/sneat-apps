@@ -1,5 +1,6 @@
 import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
 	IonButton,
 	IonCheckbox,
@@ -19,7 +20,7 @@ import {
 } from '../../dto';
 import { LogistOrderService } from '../../services';
 import { IContainer } from '../order-containers-selector/condainer-interface';
-import { OrderContainersSelectorModule } from '../order-containers-selector/order-containers-selector.module';
+import { OrderContainersSelectorComponent } from '../order-containers-selector/order-containers-selector.component';
 
 @Component({
 	selector: 'sneat-new-shipping-point-form',
@@ -30,9 +31,10 @@ import { OrderContainersSelectorModule } from '../order-containers-selector/orde
 		IonItem,
 		IonCheckbox,
 		IonLabel,
-		OrderContainersSelectorModule,
 		NgIf,
 		IonButton,
+		FormsModule,
+		OrderContainersSelectorComponent,
 	],
 })
 export class NewShippingPointFormComponent {

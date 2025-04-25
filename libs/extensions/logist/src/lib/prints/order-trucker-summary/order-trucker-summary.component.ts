@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import {
 	IonCard,
@@ -42,6 +43,7 @@ interface IContainerInfo {
 		IonLabel,
 		IonInput,
 		IonItemDivider,
+		NgIf,
 	],
 })
 export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {

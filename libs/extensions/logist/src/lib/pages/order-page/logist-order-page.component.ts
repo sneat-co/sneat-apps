@@ -1,4 +1,4 @@
-import { NgSwitch, NgSwitchCase } from '@angular/common';
+import { NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { Component, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -25,18 +25,16 @@ import {
 	IonToolbar,
 } from '@ionic/angular/standalone';
 import { first } from 'rxjs';
+import { DispatchersComponent } from '../../components';
 import { NewContainerComponent } from '../../components/new-container/new-container.component';
 import { NewSegmentService } from '../../components/new-segment/new-segment.service';
 import {
 	INewShippingPointParams,
 	NewShippingPointService,
 } from '../../components/new-shipping-point/new-shipping-point.service';
+import { OrderCardComponent } from '../../components/order-card/order-card.component';
 import { OrderPrintMenuComponent } from '../../components/order-card/order-print-menu.component';
-import {
-	OrderContainersComponent,
-	OrderContainersModule,
-} from '../../components/order-containers-card';
-import { OrderFormModule } from '../../components/order-form.module';
+import { OrderContainersComponent } from '../../components/order-containers-card';
 import { OrderSegmentsComponent } from '../../components/order-segments/order-segments.component';
 import { OrderTruckersComponent } from '../../components/order-truckers/order-truckers.component';
 import { LogistOrderService } from '../../services';
@@ -61,7 +59,6 @@ type OrderDetailsTab =
 		IonButton,
 		IonIcon,
 		IonLabel,
-		OrderFormModule,
 		IonContent,
 		IonGrid,
 		IonRow,
@@ -73,10 +70,12 @@ type OrderDetailsTab =
 		IonText,
 		NgSwitchCase,
 		NgSwitch,
-		OrderContainersModule,
 		OrderSegmentsComponent,
 		OrderTruckersComponent,
 		OrderContainersComponent,
+		OrderCardComponent,
+		DispatchersComponent,
+		NgIf,
 	],
 })
 export class LogistOrderPageComponent

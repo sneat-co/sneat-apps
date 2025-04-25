@@ -1,4 +1,4 @@
-import { NgForOf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import {
 	Component,
 	Inject,
@@ -6,6 +6,15 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+} from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	IDeleteSegmentsRequest,
@@ -23,7 +32,18 @@ import { SegmentContainerComponent } from './segment-container.component';
 @Component({
 	selector: 'sneat-trucker-segment',
 	templateUrl: './trucker-segment.component.html',
-	imports: [SegmentContainerComponent, NgForOf],
+	imports: [
+		SegmentContainerComponent,
+		NgForOf,
+		IonItem,
+		IonCard,
+		NgIf,
+		IonLabel,
+		IonInput,
+		IonButtons,
+		IonButton,
+		IonIcon,
+	],
 })
 export class TruckerSegmentComponent implements OnChanges {
 	@Input() order?: ILogistOrderContext;

@@ -7,6 +7,7 @@ import {
 	IonGrid,
 	IonInput,
 	IonItem,
+	IonItemDivider,
 	IonLabel,
 	IonRow,
 } from '@ionic/angular/standalone';
@@ -26,6 +27,7 @@ import { OrderPrintPageBaseComponent } from '../order-print-page-base.component'
 		IonItem,
 		IonLabel,
 		NgForOf,
+		IonItemDivider,
 	],
 })
 export class OrderShippingDocComponent extends OrderPrintPageBaseComponent {

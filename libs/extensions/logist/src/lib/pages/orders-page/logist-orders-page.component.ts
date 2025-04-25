@@ -14,8 +14,8 @@ import {
 import { excludeEmpty } from '@sneat/core';
 import { SpaceBaseComponent } from '@sneat/space-components';
 import { Subscription, takeUntil } from 'rxjs';
-import { OrdersGridModule } from '../../components/orders-grid/orders-grid.module';
-import { OrdersListModule } from '../../components/orders-list/orders-list.module';
+import { OrdersGridComponent } from '../../components/orders-grid/orders-grid.component';
+import { OrdersListComponent } from '../../components/orders-list/orders-list.component';
 import { ILogistOrderContext, IOrdersFilter } from '../../dto';
 import { LogistOrderService } from '../../services';
 import { OrdersFilterComponent } from './orders-filter/orders-filter.component';
@@ -36,9 +36,9 @@ const defaultFilter: IOrdersFilter = { status: 'active' };
 		IonLabel,
 		IonContent,
 		OrdersFilterComponent,
-		OrdersGridModule,
-		OrdersListModule,
 		NgIf,
+		OrdersGridComponent,
+		OrdersListComponent,
 	],
 })
 export class LogistOrdersPageComponent extends SpaceBaseComponent {

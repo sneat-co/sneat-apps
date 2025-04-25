@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import {
 	Component,
 	Inject,
@@ -30,7 +31,7 @@ interface OrderRow {
 @Component({
 	selector: 'sneat-logist-orders-grid',
 	templateUrl: './orders-grid.component.html',
-	imports: [IonCard, IonCardContent, DataGridComponent],
+	imports: [IonCard, IonCardContent, DataGridComponent, NgIf],
 })
 export class OrdersGridComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;

@@ -1,3 +1,4 @@
+import { JsonPipe, NgIf } from '@angular/common';
 import {
 	AfterViewInit,
 	Component,
@@ -8,7 +9,21 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+	FormControl,
+	FormGroup,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
+import {
+	IonButton,
+	IonCard,
+	IonCardContent,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonSpinner,
+} from '@ionic/angular/standalone';
 import {
 	AddressForm,
 	AddressFormComponent,
@@ -22,6 +37,7 @@ import { ISpaceContext } from '@sneat/space-models';
 import { Subject, takeUntil } from 'rxjs';
 import { ILogistSpaceContext, ISetLogistSpaceSettingsRequest } from '../../dto';
 import { LogistSpaceService } from '../../services';
+import { LogistSpaceRolesComponent } from '../logist-team-roles/logist-space-roles.component';
 
 interface ILogistSpaceSettingsFormControls extends IAddressFormControls {
 	vatNumber: FormControl<string | null>;
@@ -33,6 +49,20 @@ type LogistSpaceSettingsForm = FormGroup<ILogistSpaceSettingsFormControls>;
 @Component({
 	selector: 'sneat-logist-space-settings',
 	templateUrl: './logist-space-settings.component.html',
+	imports: [
+		IonCard,
+		IonCardContent,
+		IonSpinner,
+		ReactiveFormsModule,
+		AddressFormComponent,
+		LogistSpaceRolesComponent,
+		NgIf,
+		IonButton,
+		IonItem,
+		IonLabel,
+		IonInput,
+		JsonPipe,
+	],
 })
 export class LogistSpaceSettingsComponent
 	implements OnChanges, OnDestroy, AfterViewInit

@@ -19,7 +19,8 @@ import { IContactContext } from '@sneat/contactus-core';
 import { first, takeUntil } from 'rxjs';
 import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import { SpaceBaseComponent } from '@sneat/space-components';
-import { OrderFormModule } from '../../components/order-form.module';
+import { OrderAgentsComponent } from '../../components/order-agents/order-agents.component';
+import { OrderCounterpartyComponent } from '../../components/order-counterparty/order-counterparty.component';
 import {
 	CounterpartyRole,
 	IOrderCounterparty,
@@ -47,10 +48,11 @@ import { NewOrderContainersFormComponent } from './new-order-containers-form.com
 		FormsModule,
 		IonItemDivider,
 		IonLabel,
-		OrderFormModule,
 		NewOrderContainersFormComponent,
 		IonCardContent,
 		IonButton,
+		OrderCounterpartyComponent,
+		OrderAgentsComponent,
 	],
 })
 export class NewLogistOrderPageComponent extends SpaceBaseComponent {

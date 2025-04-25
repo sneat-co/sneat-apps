@@ -21,6 +21,7 @@ import {
 	IonText,
 	IonTextarea,
 } from '@ionic/angular/standalone';
+import { CountryFlagPipe } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	IAddContainerPointsRequest,
@@ -56,6 +57,7 @@ import { DispatchPointContainersGridComponent } from './dispatch-point-container
 		IonCard,
 		IonText,
 		NgIf,
+		CountryFlagPipe,
 	],
 })
 export class DispatchPointComponent implements OnChanges {

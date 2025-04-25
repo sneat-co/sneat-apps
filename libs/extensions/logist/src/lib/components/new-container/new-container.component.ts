@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import { Component, Inject, Input, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -28,7 +29,7 @@ import {
 } from '../../dto';
 import { LogistOrderService } from '../../services';
 import {
-	ShippingPointsSelectorModule,
+	ShippingPointsSelectorComponent,
 	TasksByID,
 } from '../shipping-points-selector';
 
@@ -44,11 +45,12 @@ import {
 		IonItem,
 		IonLabel,
 		IonInput,
-		ShippingPointsSelectorModule,
 		IonFooter,
 		IonButton,
 		IonIcon,
 		IonSpinner,
+		ShippingPointsSelectorComponent,
+		NgIf,
 	],
 })
 export class NewContainerComponent {

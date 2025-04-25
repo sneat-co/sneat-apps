@@ -19,7 +19,7 @@ import {
 } from '@ionic/angular/standalone';
 import { ISpaceContext } from '@sneat/space-models';
 import { ILogistOrderContext, IOrderContainer } from '../../dto';
-import { OrderContainersGridModule } from '../order-containers-grid/order-containers-grid.module';
+import { OrderContainersGridComponent } from '../order-containers-grid/order-containers-grid.component';
 import { OrderContainerComponent } from './order-container.component';
 
 @Component({
@@ -30,12 +30,12 @@ import { OrderContainerComponent } from './order-container.component';
 		IonGrid,
 		IonRow,
 		IonCol,
-		OrderContainersGridModule,
 		IonCard,
 		NgIf,
 		OrderContainerComponent,
 		IonItemDivider,
 		IonLabel,
+		OrderContainersGridComponent,
 	],
 })
 export class OrderContainersComponent implements OnChanges {

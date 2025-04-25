@@ -9,7 +9,7 @@ import {
 import { IonicModule } from '@ionic/angular';
 import { AuthMenuItemComponent } from '@sneat/components';
 import { SpaceBaseComponent } from '@sneat/space-components';
-import { LogistSpaceMenuItemsModule } from '../logist-team-menu-items/logist-space-menu-items.module';
+import { LogistSpaceMenuItemsComponent } from '../logist-team-menu-items/logist-space-menu-items.component';
 
 @Component({
 	selector: 'sneat-logist-space-menu',
@@ -19,7 +19,7 @@ import { LogistSpaceMenuItemsModule } from '../logist-team-menu-items/logist-spa
 		IonicModule,
 		RouterModule,
 		AuthMenuItemComponent,
-		LogistSpaceMenuItemsModule,
+		LogistSpaceMenuItemsComponent,
 	],
 })
 export class LogistSpaceMenuComponent
