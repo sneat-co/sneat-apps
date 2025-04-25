@@ -89,8 +89,12 @@ export class RelationshipFormComponent extends SpaceRelatedFormComponent {
 		return rolesToItem;
 	});
 
+	protected readonly $relationshipsCount = computed(
+		() => this.$rolesOfItemRelatedToTarget()?.length || 0,
+	);
+
 	protected readonly $hasRelationships = computed(
-		() => !!this.$rolesOfItemRelatedToTarget()?.length,
+		() => !!this.$relationshipsCount(),
 	);
 
 	protected readonly $useSelect = computed(() => {
@@ -119,6 +123,8 @@ export class RelationshipFormComponent extends SpaceRelatedFormComponent {
 		// this.relatedAsRelationships = [value];
 		this.relatedAsChange.emit({ add: { rolesToItem: [value] } });
 	}
+
+	@Input() maxNumberOfRelationships = 2;
 
 	protected openAddRelationship(event: Event): void {
 		event.preventDefault();
