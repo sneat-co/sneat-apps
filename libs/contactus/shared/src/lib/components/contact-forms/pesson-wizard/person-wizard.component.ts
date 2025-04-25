@@ -103,7 +103,6 @@ export type IPersonFormWizardFields = {
 		IonSegment,
 		IonSegmentButton,
 		IonCard,
-		JsonPipe,
 		ContactRelationshipFormComponent,
 	],
 	selector: 'sneat-person-form-wizard',

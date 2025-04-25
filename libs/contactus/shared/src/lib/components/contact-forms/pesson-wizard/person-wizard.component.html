@@ -28,11 +28,9 @@
 	</ion-card>
 }
 
-<p>show: {{ show | json }}</p>
-
-@if (!requires.relatedAs?.hide && show.relatedAs) {
+@if (!requires.relatedAs?.hide && show.relatedAs && $contact().space.id) {
 	<sneat-contact-relationship-form
-		[$contactID]=""
+		[$contactID]="''"
 		[$userSpaceContactID]="null"
 		[isActive]="$wizardStep() === 'relatedAs'"
 		[disabled]="disabled"

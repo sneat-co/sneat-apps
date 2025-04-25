@@ -27,6 +27,7 @@ import {
 	IRelatedTo,
 	IRelationshipRoles,
 	ISpaceModuleItemRef,
+	WritableRelationshipRoles,
 } from '@sneat/dto';
 
 const getRelOptions = (r: FamilyMemberRelation[]): ISelectItem[] => [
@@ -37,31 +38,26 @@ const getRelOptions = (r: FamilyMemberRelation[]): ISelectItem[] => [
 
 @Component({
 	selector: 'sneat-contact-relationship-form',
-	template: `
-		<sneat-relationship-form
-			[$space]="$space()"
-			[$itemRef]="$itemRef()"
-			[$relatedTo]="$relatedTo()"
-			[$relationshipOptions]="$relationshipOptions()"
-			[$isProcessing]="$isProcessing()"
-			[disabled]="disabled"
-			[isActive]="isActive"
-			(relatedAsChange)="onRelatedAsChanged($event)"
-		/>
-	`,
+	templateUrl: './contact-relationship-form.component.html',
 	imports: [RelationshipFormComponent],
 })
 export class ContactRelationshipFormComponent extends WithSpaceInput {
 	public readonly $contactID = input.required<string | undefined>();
 
-	protected readonly $itemRef = computed<ISpaceModuleItemRef>(() => {
-		return {
-			space: this.$spaceID() || '',
-			module: 'contactus',
-			collection: 'contacts',
-			itemID: this.$contactID() || '',
-		};
-	});
+	protected readonly $itemRef = computed<ISpaceModuleItemRef | undefined>(
+		() => {
+			const space = this.$spaceID();
+			const itemID = this.$contactID();
+			return space && itemID
+				? {
+						space,
+						module: 'contactus',
+						collection: 'contacts',
+						itemID,
+					}
+				: undefined;
+		},
+	);
 
 	public readonly $ageGroup = input.required<AgeGroupID | undefined>();
 
@@ -88,7 +84,15 @@ export class ContactRelationshipFormComponent extends WithSpaceInput {
 		const contactID = this.$contactID();
 		const spaceID = this.$spaceID();
 		if (!contactID) {
-			throw new Error('onRelatedAsChanged() - contactID is not set');
+			const relRoles: WritableRelationshipRoles = {};
+			relatedChange.remove?.rolesToItem?.forEach(
+				(role: string) => delete relRoles[role],
+			);
+			relatedChange.add?.rolesToItem?.forEach(
+				(role: string) => (relRoles[role] = { created: { at: '', by: '' } }),
+			);
+			this.relatedAsChange.emit(relRoles);
+			return;
 		}
 		if (!spaceID) {
 			throw new Error('onRelatedAsChanged() - spaceID is not set');

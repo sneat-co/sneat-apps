@@ -5,7 +5,7 @@
 		</ion-label>
 		<ion-buttons slot="end">
 			<ion-button (click)="close()">
-				<ion-icon name="close" />
+				<ion-icon name="close-outline" />
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
@@ -25,10 +25,7 @@
 		</ion-item>
 		<ion-item>
 			<ion-label>Host name</ion-label>
-			<ion-input
-				[disabled]="submitting"
-				[(ngModel)]="dbServer.host"
-			/>
+			<ion-input [disabled]="submitting" [(ngModel)]="dbServer.host" />
 		</ion-item>
 		<ion-item>
 			<ion-label>Port</ion-label>

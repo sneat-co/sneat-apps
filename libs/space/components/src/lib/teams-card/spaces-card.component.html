@@ -20,7 +20,7 @@
 						<ion-label>{{ space.brief.title }}</ion-label>
 						<ion-buttons slot="end">
 							<ion-button color="medium" (click)="leaveSpace(space, $event)">
-								<ion-icon name="close" />
+								<ion-icon name="close-outline" />
 							</ion-button>
 						</ion-buttons>
 					</ion-item>
@@ -69,7 +69,7 @@
 						@if (adding) {
 							<ion-spinner />
 						} @else {
-							<ion-icon name="close" />
+							<ion-icon name="close-outline" />
 						}
 					</ion-button>
 				}

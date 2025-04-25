@@ -11,7 +11,11 @@ export interface IRelationshipRole {
 	readonly created: IWithCreatedShort;
 }
 
-export type IRelationshipRoles = Readonly<Record<string, IRelationshipRole>>;
+export type WritableRelationshipRoles = Record<string, IRelationshipRole>;
+// {
+// 	// -readonly [K in keyof IRelationshipRoles]: IRelationshipRoles[K];
+// };
+export type IRelationshipRoles = Readonly<WritableRelationshipRoles>;
 
 export interface IRelatedItemKey {
 	readonly itemID: string;

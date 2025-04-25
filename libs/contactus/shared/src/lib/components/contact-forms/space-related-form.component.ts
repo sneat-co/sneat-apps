@@ -17,7 +17,7 @@ export abstract class SpaceRelatedFormComponent
 	// TODO: Needs to be in other place
 
 	ngOnChanges(changes: SimpleChanges): void {
-		const spaceChange = changes['space'];
+		const spaceChange = changes['$space'];
 		if (spaceChange) {
 			this.onSpaceChanged(spaceChange);
 		}

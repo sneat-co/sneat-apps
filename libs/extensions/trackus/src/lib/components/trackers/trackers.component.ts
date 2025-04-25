@@ -52,7 +52,7 @@ interface Category {
 	templateUrl: './trackers.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TrackersComponent extends SneatBaseComponent implements OnInit {
+export class TrackersComponent extends SneatBaseComponent {
 	public readonly $space = input.required<ISpaceContext>();
 
 	// This makes sure we react to distinct space ID values only
@@ -120,10 +120,6 @@ export class TrackersComponent extends SneatBaseComponent implements OnInit {
 			this.trackersSub?.unsubscribe();
 			watchTrackusSpaceEffect.destroy();
 		});
-	}
-
-	ngOnInit(): void {
-		console.log('TrackersComponent.ngOnInit()');
 	}
 
 	private readonly processTrackusSpace = (

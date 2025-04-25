@@ -4,6 +4,8 @@ import {
 	Injectable,
 	InjectionToken,
 	OnDestroy,
+	OnInit,
+	signal,
 } from '@angular/core';
 import { createSetFocusToInput } from '../focus';
 import { ErrorLogger } from '@sneat/logging';
@@ -24,6 +26,17 @@ export const ClassName = new InjectionToken<string>('className');
 
 @Injectable()
 export abstract class SneatBaseComponent implements OnDestroy {
+	// protected $isInitialized = signal(false);
+	//
+	// // eslint-disable-next-line @angular-eslint/contextual-lifecycle
+	// public ngOnInit() {
+	// 	console.info(`${this.className}.SneatBaseComponent.ngOnInit()`);
+	// 	// $isInitialized is for workaround for https://angular.dev/errors/NG0950
+	// 	// Required input is accessed before a value is set.
+	// 	// Might be excessive and should be removed if we can find a better way.
+	// 	this.$isInitialized.set(true);
+	// }
+
 	private readonly destroyed = new Subject<void>();
 	// Signals that the component is destroyed and should not be used anymore
 	protected readonly destroyed$ = this.destroyed.asObservable();

@@ -4,7 +4,6 @@ import {
 	EventEmitter,
 	inject,
 	input,
-	OnInit,
 	Output,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -86,10 +85,7 @@ import { RelatedContactsComponent } from './related-contacts.component';
 	selector: 'sneat-contact-details',
 	templateUrl: './contact-details.component.html',
 })
-export class ContactDetailsComponent
-	extends SneatBaseComponent
-	implements OnInit
-{
+export class ContactDetailsComponent extends SneatBaseComponent {
 	public readonly $contact = input.required<IContactContext | undefined>();
 	protected readonly $contactID = computed(() => this.$contact()?.id);
 
@@ -182,10 +178,6 @@ export class ContactDetailsComponent
 				}
 			: undefined;
 	});
-
-	public ngOnInit(): void {
-		console.log('ContactDetailsComponent ngOnInit');
-	}
 
 	protected readonly $rolesOfItem = computed(() => {
 		const spaceID = this.$spaceID();

@@ -102,8 +102,7 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 
 	public groups: readonly IMemberGroupContext[] = [];
 
-	ngOnInit() {
-		console.log('ContactsComponent.ngOnInit()');
+	public ngOnInit() {
 		this.command?.pipe(this.takeUntilDestroyed()).subscribe((command) => {
 			console.log('ContactsComponent.ngOnInit() command=' + command);
 			switch (command.name) {

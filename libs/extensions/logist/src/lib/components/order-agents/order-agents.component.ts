@@ -93,7 +93,7 @@ export class OrderAgentsComponent implements OnChanges {
 			<ion-label>Select role</ion-label>
 			<ion-buttons slot="end">
 				<ion-button (click)="popoverController.dismiss()" color="medium">
-					<ion-icon name="close" />
+					<ion-icon name="close-outline" />
 				</ion-button>
 			</ion-buttons>
 		</ion-item-divider>

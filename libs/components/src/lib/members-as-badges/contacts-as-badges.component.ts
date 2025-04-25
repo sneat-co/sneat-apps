@@ -26,7 +26,7 @@ import { PersonTitle } from '../pipes';
 				</ion-label>
 				<ion-icon
 					*ngIf="showDelete && !isDeleting(member.id)"
-					name="close"
+					name="close-outline"
 					(click)="delete($event, member)"
 				/>
 				<ion-spinner name="lines-sharp-small" *ngIf="isDeleting(member.id)" />

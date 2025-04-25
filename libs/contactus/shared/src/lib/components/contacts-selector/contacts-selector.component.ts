@@ -249,7 +249,6 @@ export class ContactsSelectorComponent
 	}
 
 	public ngOnInit(): void {
-		console.log('ContactsSelectorComponent.ngOnInit', this.space);
 		if (this.space) {
 			// When dynamically creating the component in modal ngOnChanges are not called.
 			this.$space.set(this.space);

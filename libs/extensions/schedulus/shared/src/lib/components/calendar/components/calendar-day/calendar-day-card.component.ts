@@ -46,8 +46,7 @@ export class CalendarDayCardComponent
 		super('ScheduleDayCardComponent', scheduleSateService);
 	}
 
-	ngOnInit(): void {
-		// console.log('ngOnInit(), shiftDays=', this.shiftDays);
+	public ngOnInit(): void {
 		if (this.shiftDays < 0) {
 			throw new Error('shiftDays < 0');
 		}

@@ -13,7 +13,7 @@
 		/>
 		<ion-buttons slot="end">
 			<ion-button *ngIf="filter" (click)="filter = ''" title="Clear filter">
-				<ion-icon name="close" color="medium" />
+				<ion-icon name="close-outline" color="medium" />
 			</ion-button>
 			<ion-button
 				*ngIf="mode !== 'add' && create"
@@ -80,7 +80,7 @@
 						title="Cancel"
 						[disabled]="isAdding"
 					>
-						<ion-icon name="close" />
+						<ion-icon name="close-outline" />
 					</ion-button>
 				</ion-buttons>
 			</ion-item>
