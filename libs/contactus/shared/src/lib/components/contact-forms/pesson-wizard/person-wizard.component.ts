@@ -344,11 +344,10 @@ export class PersonWizardComponent
 		);
 	}
 
-	protected onRelatedAsChanged(rolesOfItem: IRelationshipRoles): void {
+	protected onRelatedAsChanged(rolesToTarget: IRelationshipRoles): void {
 		console.log(
-			'PersonWizardState.onRelationshipChanged()',
-			rolesOfItem,
-			typeof rolesOfItem,
+			'PersonWizardState.onRelatedAsChanged() rolesToTarget=',
+			rolesToTarget,
 		);
 
 		const itemID = this.userSpaceBrief.$userContactID();
@@ -358,7 +357,7 @@ export class PersonWizardComponent
 
 		const userContactRelatedItem: IRelatedItem = {
 			keys: [{ spaceID: this.$contact().space.id, itemID }],
-			rolesOfItem,
+			rolesToItem: rolesToTarget,
 		};
 
 		const related: IRelatedItemsByModule = {
@@ -373,8 +372,8 @@ export class PersonWizardComponent
 		};
 
 		if (!this.$contact().dbo.ageGroup) {
-			const relationship = Object.keys(rolesOfItem || []).length
-				? Object.keys(rolesOfItem)[0]
+			const relationship = Object.keys(rolesToTarget || []).length
+				? Object.keys(rolesToTarget)[0]
 				: undefined;
 			contactDbo = {
 				...this.$contact().dbo,
@@ -389,7 +388,7 @@ export class PersonWizardComponent
 		}
 		this.setContactData(contactDbo, {
 			name: 'relatedAs',
-			hasValue: !!rolesOfItem,
+			hasValue: !!rolesToTarget,
 		});
 	}
 
