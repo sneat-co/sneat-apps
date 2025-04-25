@@ -5,7 +5,6 @@ import {
 	UntypedFormGroup,
 	Validators,
 } from '@angular/forms';
-import { IonInput } from '@ionic/angular';
 import {
 	IonButton,
 	IonButtons,

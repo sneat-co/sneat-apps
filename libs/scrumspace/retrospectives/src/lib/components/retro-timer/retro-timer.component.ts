@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	Component,
 	Inject,
@@ -23,10 +22,6 @@ import {
 import { ISpaceDbo } from '@sneat/dto';
 import { ITimerState, Timer, TimerFactory } from '@sneat/ext-meeting';
 import {
-	IRetrospectiveRequest,
-	RetrospectiveService,
-} from '@sneat/ext-scrumspace-retrospectives';
-import {
 	IRetrospective,
 	RetrospectiveStage,
 } from '@sneat/ext-scrumspace-scrummodels';
@@ -34,6 +29,10 @@ import { Subscription } from 'rxjs';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRecord } from '@sneat/data';
 import { secondsToStr } from '@sneat/datetime';
+import {
+	IRetrospectiveRequest,
+	RetrospectiveService,
+} from '../../retrospective.service';
 
 @Component({
 	selector: 'sneat-retro-timer',
