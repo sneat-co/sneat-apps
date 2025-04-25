@@ -11,8 +11,10 @@
 	/>
 	<ion-label color="primary" style="font-weight: bold">Members</ion-label>
 	<ion-buttons slot="end">
-		<ion-button routerLink="new-member" (click)="$event.stopPropagation()">
-			<ion-icon name="add-outline" />
+		<ion-button routerLink="new-member" color="tertiary"
+								(click)="$event.stopPropagation()">
+			<ion-icon name="add-outline" slot="start" />
+			<ion-label>Add</ion-label>
 		</ion-button>
 	</ion-buttons>
 </ion-item>
