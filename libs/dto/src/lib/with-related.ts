@@ -1,9 +1,14 @@
 import { IWithCreatedShort } from './dto-with-modified';
 
+export interface IRelatedItemKey {
+	readonly itemID: string;
+	readonly spaceID?: string;
+}
+
 export interface ISpaceModuleItemRef {
-	readonly space: string;
 	readonly module: string;
 	readonly collection: string;
+	readonly spaceID: string;
 	readonly itemID: string;
 }
 
@@ -17,24 +22,15 @@ export type WritableRelationshipRoles = Record<string, IRelationshipRole>;
 // };
 export type IRelationshipRoles = Readonly<WritableRelationshipRoles>;
 
-export interface IRelatedItemKey {
-	readonly itemID: string;
-	readonly spaceID?: string;
-}
-
 export interface IRelatedItem {
-	readonly keys: readonly IRelatedItemKey[];
+	// readonly keys: readonly IRelatedItemKey[];
 	readonly rolesOfItem?: IRelationshipRoles; // if related item is a child of the current record, then rolesOfItem = {"child": ...}
 	readonly rolesToItem?: IRelationshipRoles; // if related item is a child of the current contact, then rolesToItem = {"parent": ...}
 }
 
-export type IRelatedItemsByCollection = Readonly<
-	Record<string, IRelatedItem[]>
->;
-
-export type IRelatedItemsByModule = Readonly<
-	Record<string, IRelatedItemsByCollection>
->;
+export type IRelatedItems = Readonly<Record<string, IRelatedItem>>;
+export type IRelatedCollections = Readonly<Record<string, IRelatedItems>>;
+export type IRelatedModules = Readonly<Record<string, IRelatedCollections>>;
 
 export interface IRelatedTo extends IWithRelatedOnly {
 	readonly key: ISpaceModuleItemRef;
@@ -44,16 +40,16 @@ export interface IRelatedTo extends IWithRelatedOnly {
 export function getRelatedItems(
 	moduleId: string,
 	collectionId: string,
-	related?: IRelatedItemsByModule,
-): readonly IRelatedItem[] {
-	return (related && related[moduleId]?.[collectionId]) || [];
+	related?: IRelatedModules,
+): IRelatedItems {
+	return (related && related[moduleId]?.[collectionId]) || {};
 }
 
 export interface IWithRelatedOnly {
-	readonly related?: IRelatedItemsByModule;
+	readonly related?: IRelatedModules;
 }
 
-export function validateRelated(related?: IRelatedItemsByModule): void {
+export function validateRelated(related?: IRelatedModules): void {
 	if (!related) {
 		return;
 	}
@@ -62,24 +58,10 @@ export function validateRelated(related?: IRelatedItemsByModule): void {
 			if (!items) {
 				return;
 			}
-			items.forEach((item) => {
-				if (!item.keys) {
-					throw new Error(
-						`Related item ${module}/${collection} must have keys, got: ${JSON.stringify(related)}`,
-					);
+			Object.entries(items).forEach(([itemID, item]) => {
+				if (!itemID) {
+					throw new Error('ItemID is not set');
 				}
-				if (item.keys.length === 0) {
-					throw new Error(
-						`Related item ${module}/${collection} must have at least one key, got: ${JSON.stringify(related)}`,
-					);
-				}
-				item.keys.forEach((key) => {
-					if (!key.itemID) {
-						throw new Error(
-							`Related item ${module}/${collection} must have itemID, got: ${JSON.stringify(related)}`,
-						);
-					}
-				});
 			});
 		});
 	});
@@ -90,73 +72,61 @@ export interface IWithRelatedAndRelatedIDs extends IWithRelatedOnly {
 }
 
 export const addRelatedItem = (
-	related: IRelatedItemsByModule | undefined,
-	module: string,
-	collection: string,
-	spaceID: string,
-	itemID: string,
+	related: IRelatedModules | undefined,
+	key: ISpaceModuleItemRef,
 ) => {
 	related = related || {};
-	let collectionRelated = related[module] || {};
-	let relatedItems = collectionRelated[collection] || [];
-	if (!hasRelated(related, module, collection, { spaceID, itemID })) {
-		relatedItems = [...(relatedItems || []), { keys: [{ spaceID, itemID }] }];
-		collectionRelated = { ...collectionRelated, [collection]: relatedItems };
-		related = { ...related, [module]: collectionRelated };
+	let collectionRelated = related[key.module] || {};
+	let relatedItems = collectionRelated[key.collection] || {};
+	if (!hasRelated(related, key)) {
+		relatedItems = { ...relatedItems, [key.itemID]: {} };
+		collectionRelated = {
+			...collectionRelated,
+			[key.collection]: relatedItems,
+		};
+		related = { ...related, [key.module]: collectionRelated };
 	}
 	return related;
 };
 
 export const removeRelatedItem = (
-	related: IRelatedItemsByModule | undefined,
-	module: string,
-	collection: string,
-	spaceID: string,
-	itemID: string,
+	related: IRelatedModules | undefined,
+	key: ISpaceModuleItemRef,
 ) => {
 	if (!related) {
 		return related;
 	}
-	let collectionRelated = related[module];
+	let collectionRelated = related[key.module];
 	if (!collectionRelated) {
 		return related;
 	}
-	let relatedItems = collectionRelated[collection];
+	const relatedItems = collectionRelated[key.collection];
 	if (!relatedItems) {
 		return related;
 	}
-	const itemKey: IRelatedItemKey = { spaceID, itemID };
-	if (hasRelated(related, module, collection, itemKey)) {
-		relatedItems = relatedItems.filter(
-			(item) =>
-				!item.keys.some(
-					(key) =>
-						key.itemID === itemKey.itemID && key.spaceID === itemKey.spaceID,
-				),
-		);
-		collectionRelated = { ...collectionRelated, [collection]: relatedItems };
-		related = { ...related, [module]: collectionRelated };
+	if (hasRelated(related, key)) {
+		const collectionItems = { ...relatedItems };
+		delete collectionItems[key.itemID];
+		collectionRelated = {
+			...collectionRelated,
+			[key.collection]: collectionItems,
+		};
+		related = { ...related, [key.module]: collectionRelated };
 	}
 	return related;
 };
 
 export const getRelatedItemByKey = (
-	related: IRelatedItemsByModule | undefined,
+	related: IRelatedModules | undefined,
 	key: ISpaceModuleItemRef,
 ): IRelatedItem | undefined => {
-	if (!related) {
-		return undefined;
-	}
-	const collectionRelated = (related || {})[key.module] || {};
-	const relatedItems: readonly IRelatedItem[] | undefined =
-		collectionRelated[key.collection];
-	return relatedItems?.find((i) =>
-		i.keys.some((k) => k.spaceID === key.space && k.itemID === key.itemID),
-	);
+	const items = related?.[key.module]?.[key.collection];
+	const { itemID, spaceID } = key;
+	return items?.[itemID] || items?.[`${itemID}@${spaceID}`];
 };
 
 export const getRelatedItemIDs = (
-	related: IRelatedItemsByModule | undefined,
+	related: IRelatedModules | undefined,
 	module: string,
 	collection: string,
 	spaceID?: string,
@@ -167,35 +137,25 @@ export const getRelatedItemIDs = (
 	console.log('getRelatedItemIDs', module, collection, spaceID, related);
 	const collectionRelated = (related || {})[module] || {};
 	const relatedItems = collectionRelated[collection];
-	return relatedItems
-		?.map((i) =>
-			i.keys
-				.filter((k) => !spaceID || k.spaceID === spaceID)
-				.map((k) => k.itemID),
-		)
-		?.flat();
+	return Object.keys(relatedItems);
 };
 
 export const hasRelated = (
-	related: IRelatedItemsByModule | undefined,
-	module: string,
-	collection: string,
-	itemKey: IRelatedItemKey,
+	related: IRelatedModules | undefined,
+	key: ISpaceModuleItemRef,
 ): boolean => {
 	if (!related) {
 		return false;
 	}
-	const collectionRelated = (related || {})[module] || {};
-	const relatedItems = collectionRelated[collection];
-	return hasRelatedItem(relatedItems, itemKey);
+	const collectionRelated = (related || {})[key.module] || {};
+	const relatedItems = collectionRelated[key.collection];
+	return hasRelatedItem(relatedItems, key);
 };
 
 const hasRelatedItem = (
-	relatedItems: readonly IRelatedItem[],
+	relatedItems: IRelatedItems,
 	itemKey: IRelatedItemKey,
-) => {
+): boolean => {
 	const { itemID, spaceID } = itemKey;
-	return relatedItems?.some((i) =>
-		i.keys.some((k) => k.itemID === itemID && k.spaceID === spaceID),
-	);
+	return !!relatedItems[itemID] || !!relatedItems[`${itemID}@${spaceID}`];
 };

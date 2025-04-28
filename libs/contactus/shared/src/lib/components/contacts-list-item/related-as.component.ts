@@ -16,6 +16,7 @@ import { getRelatedItemByKey, IRelatedTo } from '@sneat/dto';
 })
 export class RelatedAsComponent {
 	public $spaceRef = input.required<ISpaceRef>();
+	protected $spaceID = computed(() => this.$spaceRef().id);
 	public $itemID = input.required<string>();
 	public $moduleID = input.required<string>();
 	public $collectionID = input.required<string>();
@@ -29,7 +30,7 @@ export class RelatedAsComponent {
 		const relatedItem = getRelatedItemByKey(this.$relatedItemsOfRelatedItem(), {
 			module: this.$moduleID(),
 			collection: this.$collectionID(),
-			space: this.$spaceRef().id,
+			spaceID: this.$spaceID(),
 			itemID: this.$itemID(),
 		});
 		return relatedItem?.rolesToItem

@@ -97,12 +97,12 @@ export class SlotContextMenuComponent {
 		const happening = this.slotContext.happening;
 		const selectedContacts = contacts
 			.filter((m) =>
-				hasRelated(
-					happening?.dbo?.related || happening?.brief?.related,
-					'contactus',
-					'contacts',
-					{ spaceID: space.id || '', itemID: m.id },
-				),
+				hasRelated(happening?.dbo?.related || happening?.brief?.related, {
+					module: 'contactus',
+					collection: 'contacts',
+					spaceID: space.id || '',
+					itemID: m.id,
+				}),
 			)
 			.map(addSpace(space));
 		const options: IContactSelectorOptions = {

@@ -54,23 +54,11 @@ export class HappeningSlotParticipantsComponent extends SneatBaseComponent {
 		const relatedItems = this.$relatedItems();
 		const spaceContacts = this.$spaceContacts();
 		const space: ISpaceRef = { id: spaceID };
-		const contacts: readonly IContactWithBriefAndSpace[] = relatedItems.map(
-			(relatedItem): IContactWithBriefAndSpace => {
-				const keys = relatedItem.keys.filter(
-					(k) => !k.spaceID || k.spaceID == spaceID,
-				);
-				let contact = spaceContacts?.find((tc) =>
-					keys.some((k) => k.itemID === tc.id),
-				);
-				if (!contact) {
-					contact = {
-						id: keys[0].itemID,
-						brief: { type: undefined as unknown as ContactType },
-					};
-				}
-				return { ...contact, space };
-			},
-		);
+		const contacts: readonly IContactWithBriefAndSpace[] =
+			spaceContacts
+				?.filter((c) => relatedItems[c.id])
+				?.map((c) => ({ ...c, space })) || [];
+
 		console.log(
 			`HappeningSlotParticipantsComponent.$contacts(): spaceID=${spaceID}, wd=${happeningSlot.wd}, slotID=${happeningSlot.slot.id}`,
 			'relatedItems:',

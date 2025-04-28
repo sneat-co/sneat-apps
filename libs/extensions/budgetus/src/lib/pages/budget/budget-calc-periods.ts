@@ -104,21 +104,15 @@ function processPrice(
 			const happeningContacts =
 				happeningLiability.happening.brief?.related?.['contactus']?.[
 					'contacts'
-				];
-			happeningContacts?.forEach((relatedContact) => {
-				const contactKey = relatedContact.keys.find(
-					(k) => k.spaceID === happeningLiability.happening.space.id,
-				);
-				if (!contactKey) {
-					return;
-				}
+				] || {};
+			Object.keys(happeningContacts).forEach((itemID) => {
 				let contactLiability = liabilities.contacts.find(
-					(c) => c.contact.id == contactKey.itemID,
+					(c) => c.contact.id == itemID,
 				);
 				if (!contactLiability) {
 					contactLiability = {
 						contact: {
-							id: contactKey.itemID,
+							id: itemID,
 							space: happeningLiability.happening.space,
 						},
 						valuesByCurrency: {},

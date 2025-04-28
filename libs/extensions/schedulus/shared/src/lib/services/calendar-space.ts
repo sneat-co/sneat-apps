@@ -165,12 +165,12 @@ export class CalendarSpace {
 	): void {
 		if (
 			this.contactID &&
-			hasRelated(
-				recurring.dbo?.related || recurring?.brief?.related,
-				'contactus',
-				'contacts',
-				{ spaceID: this.spaceID, itemID: this.contactID },
-			)
+			hasRelated(recurring.dbo?.related || recurring?.brief?.related, {
+				module: 'contactus',
+				collection: 'contacts',
+				spaceID: this.spaceID,
+				itemID: this.contactID,
+			})
 		) {
 			return;
 		}

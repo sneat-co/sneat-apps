@@ -145,7 +145,7 @@ export class RelationshipFormComponent extends SpaceRelatedFormComponent {
 			throw new Error('relatedToKey is not set');
 		}
 		const request: IUpdateRelatedRequest = {
-			spaceID: itemRef.space,
+			spaceID: itemRef.spaceID,
 			moduleID: itemRef.module,
 			collection: itemRef?.collection,
 			id: itemRef.itemID,

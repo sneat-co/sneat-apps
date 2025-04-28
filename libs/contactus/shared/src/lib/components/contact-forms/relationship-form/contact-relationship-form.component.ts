@@ -46,11 +46,11 @@ export class ContactRelationshipFormComponent extends WithSpaceInput {
 
 	protected readonly $itemRef = computed<ISpaceModuleItemRef | undefined>(
 		() => {
-			const space = this.$spaceID();
+			const spaceID = this.$spaceID();
 			const itemID = this.$contactID();
-			return space && itemID
+			return spaceID && itemID
 				? {
-						space,
+						spaceID,
 						module: 'contactus',
 						collection: 'contacts',
 						itemID,
@@ -108,7 +108,7 @@ export class ContactRelationshipFormComponent extends WithSpaceInput {
 			related: [
 				{
 					itemRef: {
-						space: this.$spaceID() || '',
+						spaceID: this.$spaceID() || '',
 						module: 'contactus',
 						collection: 'contacts',
 						itemID: userContactID,

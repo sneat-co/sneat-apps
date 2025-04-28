@@ -17,8 +17,8 @@ import { listItemAnimations } from '@sneat/core';
 import { ContactsListItemComponent } from '../contacts-list-item/contacts-list-item.component';
 import {
 	getRelatedItems,
-	IRelatedItem,
-	IRelatedItemsByModule,
+	IRelatedItems,
+	IRelatedModules,
 	IRelatedTo,
 } from '@sneat/dto';
 import { WithSpaceInput } from '@sneat/space-components';
@@ -80,7 +80,7 @@ const emptyRelatedGroupRoles = emptyRelatedGroups
 export class RelatedContactsComponent extends WithSpaceInput {
 	public readonly $relatedTo = input.required<IRelatedTo | undefined>();
 
-	public readonly $related = computed<IRelatedItemsByModule | undefined>(
+	public readonly $related = computed<IRelatedModules | undefined>(
 		() => this.$relatedTo()?.related,
 	);
 
@@ -88,9 +88,7 @@ export class RelatedContactsComponent extends WithSpaceInput {
 		readonly IContactWithCheck[] | undefined
 	>(undefined);
 
-	protected readonly $relatedItems = computed<
-		readonly IRelatedItem[] | undefined
-	>(() => {
+	protected readonly $relatedItems = computed<IRelatedItems | undefined>(() => {
 		const related = this.$related() || {};
 		const contactus = related['contactus'];
 		return (contactus && contactus['contacts']) || [];
@@ -104,15 +102,7 @@ export class RelatedContactsComponent extends WithSpaceInput {
 			return undefined;
 		}
 		const spaceContacts = this.$spaceContacts();
-		if (!spaceContacts) {
-			return undefined;
-		}
-		return relatedItems
-			.map((relatedItem) => {
-				const relatedItemID = relatedItem.keys[0].itemID;
-				return spaceContacts.find((c) => c.id === relatedItemID);
-			})
-			.filter((c) => !!c);
+		return spaceContacts?.filter((c) => relatedItems[c.id]);
 	});
 
 	private subscription?: Subscription;
@@ -128,20 +118,17 @@ export class RelatedContactsComponent extends WithSpaceInput {
 		return emptyRelatedGroups.map((g) => ({
 			...g,
 			contacts:
-				relatedContacts?.filter((c) =>
-					relatedItems.some(
-						(ri) =>
-							ri.keys.some(
-								(k) => k.itemID === c.id && k.spaceID === c.space.id,
-							) &&
-							ri.rolesOfItem &&
-							(g.relatedAs === 'other'
-								? !emptyRelatedGroupRoles.some(
-										(r) => ri.rolesOfItem && ri.rolesOfItem[r],
-									)
-								: ri.rolesOfItem[g.relatedAs]),
-					),
-				) || [],
+				relatedContacts?.filter((c) => {
+					const ri = relatedItems[c.id];
+					return (
+						ri?.rolesOfItem &&
+						(g.relatedAs === 'other'
+							? !emptyRelatedGroupRoles.some(
+									(r) => ri.rolesOfItem && ri.rolesOfItem[r],
+								)
+							: ri.rolesOfItem[g.relatedAs])
+					);
+				}) || [],
 		}));
 	});
 

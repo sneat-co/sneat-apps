@@ -114,7 +114,7 @@ export class ContactDetailsComponent extends SneatBaseComponent {
 		}
 		return {
 			key: {
-				space: this.$spaceID(),
+				spaceID: this.$spaceID(),
 				module: 'contactus',
 				collection: 'contacts',
 				itemID: userSpaceContactID,
@@ -171,9 +171,9 @@ export class ContactDetailsComponent extends SneatBaseComponent {
 		const userContactID = this.userSpaceBrief.$userContactID();
 		return userContactID
 			? {
-					space: this.$spaceID() || '',
 					module: 'contactus',
 					collection: 'contacts',
+					spaceID: this.$spaceID() || '',
 					itemID: userContactID,
 				}
 			: undefined;
@@ -189,7 +189,7 @@ export class ContactDetailsComponent extends SneatBaseComponent {
 		const relatedContact = getRelatedItemByKey(contact.dbo?.related, {
 			module: 'contactus',
 			collection: 'contacts',
-			space: spaceID,
+			spaceID,
 			itemID: userContactID,
 		});
 		return relatedContact?.rolesOfItem;

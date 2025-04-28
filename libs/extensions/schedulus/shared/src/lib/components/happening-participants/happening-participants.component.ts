@@ -20,6 +20,7 @@ import { AnalyticsService } from '@sneat/core';
 import {
 	addRelatedItem,
 	getRelatedItemIDs,
+	ISpaceModuleItemRef,
 	removeRelatedItem,
 } from '@sneat/dto';
 import { IHappeningContext, IHappeningBase } from '@sneat/mod-schedulus-core';
@@ -106,16 +107,15 @@ export class HappeningParticipantsComponent {
 		};
 		args.forEach((arg) => {
 			const addOrRemove = arg.checked ? addRelatedItem : removeRelatedItem;
-
+			const itemKey: ISpaceModuleItemRef = {
+				module: 'contactus',
+				collection: 'contacts',
+				spaceID: happening.space.id,
+				itemID: arg.id,
+			};
 			happeningBase = {
 				...happeningBase,
-				related: addOrRemove(
-					happeningBase.related,
-					'contactus',
-					'contacts',
-					happening.space.id || '',
-					arg.id,
-				),
+				related: addOrRemove(happeningBase.related, itemKey),
 			};
 		});
 

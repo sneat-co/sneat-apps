@@ -36,7 +36,7 @@ import {
 import {
 	getRelatedItemIDs,
 	IRelatedItem,
-	IRelatedItemsByModule,
+	IRelatedModules,
 	IRelatedTo,
 	IRelationshipRoles,
 	ISpaceModuleItemRef,
@@ -146,7 +146,7 @@ export class PersonWizardComponent
 			const userContactID = this.userSpaceBrief.$userContactID();
 			return userContactID
 				? {
-						space: this.$spaceID(),
+						spaceID: this.$spaceID(),
 						module: 'contactus',
 						collection: 'contacts',
 						itemID: userContactID,
@@ -356,13 +356,12 @@ export class PersonWizardComponent
 		}
 
 		const userContactRelatedItem: IRelatedItem = {
-			keys: [{ spaceID: this.$contact().space.id, itemID }],
 			rolesToItem: rolesToTarget,
 		};
 
-		const related: IRelatedItemsByModule = {
+		const related: IRelatedModules = {
 			contactus: {
-				contacts: [userContactRelatedItem],
+				contacts: { [itemID]: userContactRelatedItem },
 			},
 		};
 

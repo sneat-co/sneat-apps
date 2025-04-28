@@ -1,11 +1,11 @@
-import { getRelatedItemIDs, IRelatedItemsByModule } from '@sneat/dto';
+import { getRelatedItemIDs, IRelatedModules } from '@sneat/dto';
 import { ISlotUIContext } from '@sneat/mod-schedulus-core';
 import { ICalendarFilter } from './calendar/components/calendar-filter/calendar-filter';
 
 export function hasContact(
 	spaceID: string,
 	contactIDs: readonly string[],
-	related?: IRelatedItemsByModule,
+	related?: IRelatedModules,
 ): boolean {
 	if (!contactIDs.length) {
 		return true;
