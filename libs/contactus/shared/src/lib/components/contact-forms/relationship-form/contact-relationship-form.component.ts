@@ -20,7 +20,8 @@ import {
 	IUpdateContactRequest,
 } from '@sneat/contactus-services';
 import { WithSpaceInput } from '@sneat/space-components';
-import { IRelatedChange } from '@sneat/space-models';
+import { IRelatedChange, IUpdateRelatedRequest } from '@sneat/space-models';
+import { SpaceService } from '@sneat/space-services';
 import { ISelectItem } from '@sneat/ui';
 import { RelationshipFormComponent } from './relationship-form.component';
 import {
@@ -73,7 +74,7 @@ export class ContactRelationshipFormComponent extends WithSpaceInput {
 
 	@Output() readonly relatedAsChange = new EventEmitter<IRelationshipRoles>();
 
-	private readonly contactService = inject(ContactService);
+	private readonly spaceService = inject(SpaceService);
 
 	public constructor() {
 		super('ContactRelationshipFormComponent');
@@ -102,9 +103,11 @@ export class ContactRelationshipFormComponent extends WithSpaceInput {
 			throw new Error('onRelatedAsChanged() - userContactID is not set');
 		}
 
-		const request: IUpdateContactRequest = {
-			contactID,
+		const request: IUpdateRelatedRequest = {
 			spaceID,
+			moduleID: 'contactus',
+			collection: 'contacts',
+			id: contactID,
 			related: [
 				{
 					itemRef: {
@@ -118,7 +121,7 @@ export class ContactRelationshipFormComponent extends WithSpaceInput {
 			],
 		};
 		this.$isProcessing.set(true);
-		this.contactService.updateContact(request).subscribe({
+		this.spaceService.updateRelated(request).subscribe({
 			next: () => {
 				console.log('onRelatedAsChanged() - contact updated');
 				this.$isProcessing.set(false);

@@ -153,7 +153,7 @@ export class RelationshipFormComponent extends SpaceRelatedFormComponent {
 				{
 					itemRef: relatedToKey,
 					remove: {
-						rolesOfItem: [id],
+						rolesToItem: [id],
 					},
 				},
 			],

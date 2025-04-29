@@ -22,14 +22,7 @@ export interface IContactRequestWithOptionalMessage extends IContactRequest {
 export interface IUpdateContactRequest extends IContactRequest {
 	readonly address?: IAddress;
 	readonly ageGroup?: AgeGroupID;
-	readonly roles?: ISetContactRolesRequest;
-	readonly related?: IRelatedItemChange[];
 	readonly gender?: Gender;
-}
-
-export interface ISetContactRolesRequest {
-	readonly add?: readonly string[];
-	readonly remove?: readonly string[];
 }
 
 export interface ISetContactsStatusRequest extends SpaceRequest {

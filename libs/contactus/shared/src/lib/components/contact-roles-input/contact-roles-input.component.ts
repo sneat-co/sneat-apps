@@ -52,35 +52,35 @@ export class ContactRolesInputComponent implements OnChanges {
 				: undefined;
 	}
 
-	onRoleChanged(event: Event, role: IContactRole): void {
-		console.log('onRoleChanged', role, event);
-		if (!this.space || !this.contact) {
-			alert('space or contact is not set');
-			return;
-		}
-		const checked = (event.target as HTMLInputElement).checked;
-		const request: IUpdateContactRequest = {
-			contactID: this.contact.id,
-			spaceID: this.space?.id,
-			roles: {
-				add: checked ? [role.id] : undefined,
-				remove: checked ? undefined : [role.id],
-			},
-		};
-		this.processingRoleIDs.push(role.id);
-		const complete = () =>
-			(this.processingRoleIDs = this.processingRoleIDs.filter(
-				(id) => id !== role.id,
-			));
-		this.contactService.updateContact(request).subscribe({
-			error: (err: unknown) => {
-				console.log('setContactRole error', err);
-				this.errorLogger.logError(err, 'failed to set contact role');
-				complete();
-				this.setRoles();
-				event.preventDefault();
-			},
-			complete,
-		});
-	}
+	// onRoleChanged(event: Event, role: IContactRole): void {
+	// 	console.log('onRoleChanged', role, event);
+	// 	if (!this.space || !this.contact) {
+	// 		alert('space or contact is not set');
+	// 		return;
+	// 	}
+	// 	const checked = (event.target as HTMLInputElement).checked;
+	// 	const request: IUpdateContactRequest = {
+	// 		contactID: this.contact.id,
+	// 		spaceID: this.space?.id,
+	// 		roles: {
+	// 			add: checked ? [role.id] : undefined,
+	// 			remove: checked ? undefined : [role.id],
+	// 		},
+	// 	};
+	// 	this.processingRoleIDs.push(role.id);
+	// 	const complete = () =>
+	// 		(this.processingRoleIDs = this.processingRoleIDs.filter(
+	// 			(id) => id !== role.id,
+	// 		));
+	// 	this.contactService.updateContact(request).subscribe({
+	// 		error: (err: unknown) => {
+	// 			console.log('setContactRole error', err);
+	// 			this.errorLogger.logError(err, 'failed to set contact role');
+	// 			complete();
+	// 			this.setRoles();
+	// 			event.preventDefault();
+	// 		},
+	// 		complete,
+	// 	});
+	// }
 }
