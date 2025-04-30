@@ -62,7 +62,12 @@ export class ContactsListItemComponent extends SneatBaseComponent {
 		'space_member',
 	];
 
+	// The `relatedTo` input is not used at the moment
+	// as in related contacts we set showRelatedAs=false
+	// as we are already grouping by related.
+	// TODO: We need to use this in the `/space/contacts` page to show relationship to the current user.
 	@Input() relatedTo?: IRelatedTo;
+	@Input() showRelatedAs = true;
 
 	@Input() showRelatedItems?: boolean;
 	// protected get relatedContacts(): readonly IIdAndBrief<IRelatedItem>[] {

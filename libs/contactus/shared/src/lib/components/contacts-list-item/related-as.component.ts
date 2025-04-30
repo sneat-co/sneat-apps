@@ -33,8 +33,8 @@ export class RelatedAsComponent {
 			spaceID: this.$spaceID(),
 			itemID: this.$itemID(),
 		});
-		return relatedItem?.rolesToItem
-			? Object.keys(relatedItem.rolesToItem)
+		return relatedItem?.rolesOfItem
+			? Object.keys(relatedItem.rolesOfItem)
 			: undefined;
 	});
 }
