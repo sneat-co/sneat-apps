@@ -1,12 +1,8 @@
 <ng-container [formGroup]="namesForm">
 	@if (showHeader) {
 		<ion-item-divider [color]="isActive ? 'primary' : 'light'">
-			<ion-label>
-				@if (isActive) {
-					<b>Names</b>
-				} @else {
-					Names
-				}
+			<ion-label [style.font-weight]="isActive ? 'bold' : undefined">
+				Names
 			</ion-label>
 		</ion-item-divider>
 	}

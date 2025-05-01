@@ -1,5 +1,6 @@
 import {
 	AfterViewInit,
+	ChangeDetectionStrategy,
 	Component,
 	EventEmitter,
 	Inject,
@@ -44,8 +45,6 @@ export interface INamesFormFields {
 const maxNameLenValidator = Validators.maxLength(50);
 
 @Component({
-	selector: 'sneat-names-form',
-	templateUrl: './names-form.component.html',
 	imports: [
 		FormsModule,
 		ReactiveFormsModule,
@@ -56,6 +55,9 @@ const maxNameLenValidator = Validators.maxLength(50);
 		IonButton,
 		IonIcon,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-names-form',
+	templateUrl: './names-form.component.html',
 })
 export class NamesFormComponent implements OnChanges, AfterViewInit {
 	@Input() showHeader = true;
