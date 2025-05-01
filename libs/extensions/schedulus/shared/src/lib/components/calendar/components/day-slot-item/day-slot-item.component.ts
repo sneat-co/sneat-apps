@@ -1,6 +1,16 @@
 import { Component, Input, input, computed } from '@angular/core';
 import { IonicModule, PopoverController, PopoverOptions } from '@ionic/angular';
+import {
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonText,
+} from '@ionic/angular/standalone';
 import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
+import { ContactusSpaceService } from '@sneat/contactus-services';
 import { ContactsSelectorModule } from '@sneat/contactus-shared';
 import {
 	CalendarNavService,
@@ -16,8 +26,8 @@ import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
 @Component({
 	selector: 'sneat-day-slot-item',
 	templateUrl: './day-slot-item.component.html',
+	providers: [ContactusSpaceService],
 	imports: [
-		IonicModule,
 		HappeningServiceModule,
 		ContactsSelectorModule,
 		HappeningSlotModalServiceModule,
@@ -25,6 +35,13 @@ import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
 		TimingBadgeComponent,
 		// MembersAsBadgesComponent,
 		CalendarNavServicesModule,
+		IonItem,
+		IonIcon,
+		IonLabel,
+		IonText,
+		IonBadge,
+		IonButtons,
+		IonButton,
 	],
 	// standalone: false, // circle dependencies DaySlotItemComponent->SlotContextMenuComponent->DaySlotItemComponent
 })
@@ -83,6 +100,10 @@ export class DaySlotItemComponent {
 		// TODO: Verify lazy loading works and try to make DaySlotItemComponent & SlotContextMenuComponent standalone
 		import('./slot-context-menu.component').then(async (m) => {
 			const slotContext = this.$slotContext();
+			console.log(
+				'DaySlotItemComponent.showContextMenu() slotContext:',
+				slotContext,
+			);
 			const popoverOptions: PopoverOptions = {
 				component: m.SlotContextMenuComponent,
 				componentProps: {

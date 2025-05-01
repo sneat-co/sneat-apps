@@ -36,6 +36,7 @@ import {
 	ISlotRefRequest,
 	ISlotRequest,
 } from '../../../../services/happening.service';
+import { DaySlotItemComponent } from './day-slot-item.component';
 
 const notImplemented = 'Sorry, not implemented yet';
 
@@ -48,6 +49,7 @@ const notImplemented = 'Sorry, not implemented yet';
 		ContactsSelectorModule,
 		HappeningSlotModalServiceModule,
 		CalendarNavServicesModule,
+		DaySlotItemComponent,
 	],
 })
 export class SlotContextMenuComponent {

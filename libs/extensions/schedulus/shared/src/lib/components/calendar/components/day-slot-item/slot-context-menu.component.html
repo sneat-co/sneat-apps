@@ -1,10 +1,11 @@
-<b>TODO: resolve circular dependency</b>
-<!--<sneat-day-slot-item TODO: resolve circular dependency -->
-<!--	[space]="space"-->
-<!--	[slotContext]="slotContext"-->
-<!--	color="light"-->
-<!--	mode="brief"-->
-<!--/>-->
+@if (slotContext) {
+	<sneat-day-slot-item
+		[space]="space"
+		[$slotContext]="slotContext"
+		color="light"
+		mode="brief"
+	/>
+}
 
 <ion-item-group>
 	<ion-item-divider>
