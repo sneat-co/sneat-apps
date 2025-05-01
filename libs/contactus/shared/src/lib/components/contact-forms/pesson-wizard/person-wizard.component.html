@@ -43,15 +43,17 @@
 }
 
 @if (show.name) {
-	<sneat-names-form
-		[name]="$contact().dbo.names"
-		[isActive]="$wizardStep() === 'name'"
-		[showNextButton]="false"
-		[fields]="nameFields"
-		(namesChanged)="onNameChanged($event)"
-		[disabled]="disabled"
-		(next)="nextFromName($event)"
-	/>
+	<ion-card>
+		<sneat-names-form
+			[name]="$contact().dbo.names"
+			[isActive]="$wizardStep() === 'name'"
+			[showNextButton]="false"
+			[fields]="nameFields"
+			(namesChanged)="onNameChanged($event)"
+			[disabled]="disabled"
+			(next)="nextFromName($event)"
+		/>
+	</ion-card>
 }
 
 @if (!requires.roles?.hide && show.roles) {

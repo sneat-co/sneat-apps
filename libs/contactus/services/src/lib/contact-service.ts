@@ -25,6 +25,7 @@ import {
 	ISetContactsStatusRequest,
 	IUpdateContactRequest,
 	validateContactRequest,
+	validateUpdateContactRequest,
 } from './dto';
 
 export interface IChangeMemberRoleRequest {
@@ -57,10 +58,12 @@ export class ContactService extends ModuleSpaceItemService<
 	}
 
 	public deleteContact(request: IContactRequest): Observable<void> {
+		validateContactRequest(request);
 		return this.deleteSpaceItem('contactus/delete_contact', request);
 	}
 
 	public updateContact(request: IUpdateContactRequest): Observable<void> {
+		validateUpdateContactRequest(request);
 		return this.sneatApiService.post('contactus/update_contact', request);
 	}
 

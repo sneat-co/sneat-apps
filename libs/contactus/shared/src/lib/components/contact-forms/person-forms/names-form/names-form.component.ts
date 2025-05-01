@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	AfterViewInit,
 	Component,
@@ -22,7 +21,6 @@ import {
 } from '@angular/forms';
 import {
 	IonButton,
-	IonCard,
 	IonIcon,
 	IonInput,
 	IonItem,
@@ -49,10 +47,8 @@ const maxNameLenValidator = Validators.maxLength(50);
 	selector: 'sneat-names-form',
 	templateUrl: './names-form.component.html',
 	imports: [
-		CommonModule,
 		FormsModule,
 		ReactiveFormsModule,
-		IonCard,
 		IonItemDivider,
 		IonItem,
 		IonInput,
@@ -62,6 +58,7 @@ const maxNameLenValidator = Validators.maxLength(50);
 	],
 })
 export class NamesFormComponent implements OnChanges, AfterViewInit {
+	@Input() showHeader = true;
 	@Input({ required: true }) name?: IPersonNames = {};
 	@Input() isActive = true;
 	@Input() disabled = false;
@@ -81,7 +78,7 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 
 	@Output() readonly next = new EventEmitter<Event>();
 
-	private initialNameChange = true;
+	private initialNameChanged = true;
 	private isFullNameChanged = false;
 	private isViewInitiated = false;
 
@@ -137,11 +134,12 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 					visibleNameFields.join(', '),
 			};
 		}
-		if (firstName && lastName && !fullName)
+		if (firstName && lastName && !fullName) {
 			return {
 				fullName:
 					'If first & last names are supplied the full name should be supplied as well',
 			};
+		}
 		return null;
 	};
 
@@ -156,14 +154,14 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 		this.isNamesFormValid,
 	);
 
-	public get hasNames(): boolean {
-		return !!(
-			this.firstName.value ||
-			this.lastName.value ||
-			this.fullName.value ||
-			this.nickName.value
-		);
-	}
+	// public get hasNames(): boolean {
+	// 	return !!(
+	// 		this.firstName.value ||
+	// 		this.lastName.value ||
+	// 		this.fullName.value ||
+	// 		this.nickName.value
+	// 	);
+	// }
 
 	private setFocusToInput(input: IonInput, delay = 333): void {
 		const setFocusTo = createSetFocusToInput(this.errorLogger);
@@ -209,8 +207,8 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 				this.fullName.setValue(name.fullName);
 			}
 		}
-		if (this.initialNameChange) {
-			this.initialNameChange = false;
+		if (this.initialNameChanged) {
+			this.initialNameChanged = false;
 			if (!this.firstName.value) {
 				this.inputToFocus = this.firstNameInput;
 			} else if (!this.lastName.value) {
@@ -312,7 +310,7 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 		return '';
 	}
 
-	onFullNameChanged(event: Event): void {
+	protected onFullNameChanged(event: Event): void {
 		console.log(
 			'onFullNameChanged()',
 			this.firstName.value,
@@ -329,7 +327,7 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 		}
 	}
 
-	public nameKeyupEnter(event: Event): void {
+	protected nameKeyupEnter(event: Event): void {
 		if (this.namesForm?.valid) {
 			this.keyupEnter.emit(event);
 		}
@@ -338,11 +336,11 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 		}
 	}
 
-	public get canGoNext(): boolean {
+	protected get canGoNext(): boolean {
 		return !isNameEmpty(this.name);
 	}
 
-	public onNext(event: Event): void {
+	protected onNext(event: Event): void {
 		this.next.emit(event);
 	}
 }

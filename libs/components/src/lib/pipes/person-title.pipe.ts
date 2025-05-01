@@ -4,14 +4,16 @@ import { IIdAndOptionalBriefAndOptionalDbo } from '@sneat/core';
 import { IPerson, IPersonBrief } from '@sneat/contactus-core';
 
 export function personName(name?: IPersonNames): string | undefined {
-	return (
-		name &&
-		(name.fullName ||
-			name.nickName ||
-			name.firstName ||
-			name.lastName ||
-			name.middleName)
-	);
+	if (!name) {
+		return undefined;
+	}
+	if (name.fullName) {
+		return name.fullName;
+	}
+	if (name.firstName && name.lastName && !name.nickName && !name.middleName) {
+		return `${name.firstName} ${name.lastName}`;
+	}
+	return name.nickName || name.firstName || name.lastName || name.middleName;
 }
 
 @Pipe({ name: 'personTitle' })
@@ -38,7 +40,9 @@ export class PersonNamesPipe implements PipeTransform {
 		if (!names) {
 			return undefined;
 		}
-		if (names.fullName) return names.fullName;
+		if (names.fullName) {
+			return names.fullName;
+		}
 		if (!!names.firstName && !!names.lastName) {
 			return `${names.firstName} ${names.lastName}`;
 		}

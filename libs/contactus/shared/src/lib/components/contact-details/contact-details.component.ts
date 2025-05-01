@@ -23,6 +23,7 @@ import {
 	IonSegment,
 	IonSegmentButton,
 	IonText,
+	ModalController,
 } from '@ionic/angular/standalone';
 import { SneatUserService } from '@sneat/auth-core';
 import { ContactTitlePipe } from '@sneat/components';
@@ -44,7 +45,7 @@ import {
 	ISpaceModuleItemRef,
 } from '@sneat/dto';
 import { SneatBaseComponent } from '@sneat/ui';
-import { MemberPages } from '../../constants';
+import { ContactNamesModalComponent } from '../../modals/contact-names-modal/contact-names-modal.component';
 import { UserSpaceBriefProvider } from '../../providers/user-space-brief.provider';
 import { ContactContactsComponent } from '../contact-contacts';
 import { ContactDobComponent } from '../contact-dob';
@@ -56,6 +57,7 @@ import { GenderFormComponent } from '../contact-forms';
 import { RelatedContactsComponent } from './related-contacts.component';
 
 @Component({
+	providers: [ModalController],
 	imports: [
 		ContactDobComponent,
 		ContactModulesMenuComponent,
@@ -134,6 +136,7 @@ export class ContactDetailsComponent extends SneatBaseComponent {
 	);
 
 	private readonly navController = inject(NavController);
+	private readonly modalController = inject(ModalController);
 
 	protected get contactWithBriefAndOptionalDto():
 		| IIdAndBriefAndOptionalDbo<IContactBrief, IContactDbo>
@@ -264,17 +267,20 @@ export class ContactDetailsComponent extends SneatBaseComponent {
 	// 	alert('Not implemented yet');
 	// }
 
-	protected goMemberPage(page: MemberPages): void {
+	protected async openEditNamesDialog(): Promise<void> {
 		const contact = this.$contact();
 		if (!contact) {
 			throw new Error('this.$contact() is not set');
 		}
-		this.navController
-			.navigateForward([page], {
-				queryParams: { id: contact.id },
-				state: { contact, space: this.$space() },
-			})
-			.catch(this.errorLogger.logError);
+		const modal = await this.modalController.create({
+			component: ContactNamesModalComponent,
+			componentProps: {
+				spaceID: this.$spaceID(),
+				contactID: contact.id,
+				names: contact.dbo?.names,
+			},
+		});
+		await modal.present();
 	}
 
 	private newUpdateContactRequest(): IUpdateContactRequest {
