@@ -1,5 +1,5 @@
 import { Component, Input, input, computed } from '@angular/core';
-import { IonicModule, PopoverController, PopoverOptions } from '@ionic/angular';
+import { PopoverController, PopoverOptions } from '@ionic/angular';
 import {
 	IonBadge,
 	IonButton,
