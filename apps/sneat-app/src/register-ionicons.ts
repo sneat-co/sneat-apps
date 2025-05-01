@@ -42,6 +42,7 @@ import {
 	ticketOutline,
 	todayOutline,
 	trash,
+	trashOutline,
 	womanOutline,
 } from 'ionicons/icons';
 
@@ -89,6 +90,7 @@ export function registerIonicons() {
 		ticketOutline,
 		todayOutline,
 		trash,
+		trashOutline,
 		womanOutline,
 	});
 }

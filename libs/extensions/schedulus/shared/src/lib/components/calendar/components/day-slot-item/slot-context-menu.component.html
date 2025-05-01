@@ -1,6 +1,7 @@
 @if (slotContext) {
 	<sneat-day-slot-item
 		[space]="space"
+		[color]="undefined"
 		[$slotContext]="slotContext"
 		color="light"
 		mode="brief"
@@ -8,7 +9,7 @@
 }
 
 <ion-item-group>
-	<ion-item-divider>
+	<ion-item-divider color="light">
 		<ion-label>Adjust single for {{ dateID }}</ion-label>
 	</ion-item-divider>
 	@if (isCancelled) {
@@ -43,6 +44,7 @@
 
 		<ion-item
 			tappable
+			lines="full"
 			(click)="markCanceled($event, 'slot')"
 			[disabled]="disabled"
 		>
@@ -60,12 +62,12 @@
 	}
 </ion-item-group>
 <ion-item-group>
-	<ion-item-divider>
+	<ion-item-divider color="light">
 		<ion-label>Edit series</ion-label>
 	</ion-item-divider>
 	@if (!isCancelled) {
 		<ion-item tappable (click)="edit($event, 'series')" [disabled]="disabled">
-			<ion-icon slot="start" name="calendar-outline" />
+			<ion-icon name="calendar-outline" slot="start" color="success" />
 			<ion-label>Change date or time</ion-label>
 		</ion-item>
 		<ion-item tappable (click)="assign($event, 'member')" [disabled]="disabled">

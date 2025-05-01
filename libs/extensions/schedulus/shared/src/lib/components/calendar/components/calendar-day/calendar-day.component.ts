@@ -11,13 +11,10 @@ import {
 import {
 	IonButton,
 	IonButtons,
-	IonCol,
-	IonGrid,
 	IonIcon,
 	IonItem,
 	IonItemDivider,
 	IonLabel,
-	IonRow,
 	IonSpinner,
 } from '@ionic/angular/standalone';
 import { dateToIso } from '@sneat/core';
@@ -54,9 +51,6 @@ import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
 		IonItemDivider,
 		IonButtons,
 		IonIcon,
-		IonGrid,
-		IonRow,
-		IonCol,
 		IonButton,
 	],
 })
