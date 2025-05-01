@@ -1,18 +1,22 @@
 <ion-item id="pick-date" lines="full" class="ion-margin-start ion-no-padding">
 	<ion-buttons slot="start">
-		<ion-button title="Previous day" (click)="swipe(-1, $event)">
+		<ion-button
+			title="Previous day"
+			color="tertiary"
+			(click)="swipe(-1, $event)"
+		>
 			<ion-icon name="chevron-back-sharp" slot="start" />
 			<ion-label
 				><span class="sneat-hide-if-width-less-638">Previous</span></ion-label
 			>
 		</ion-button>
 	</ion-buttons>
-	<ion-label style="text-align: center; width: 100%" tappable color="primary"
-		>Pick date</ion-label
-	>
+	<ion-label style="text-align: center; width: 100%" tappable color="tertiary">
+		Pick date
+	</ion-label>
 	<!--	<ion-label style="text-align: center" color="medium">Swipe to change day</ion-label>-->
 	<ion-buttons slot="end">
-		<ion-button title="Next day" (click)="swipe(1, $event)">
+		<ion-button title="Next day" color="tertiary" (click)="swipe(1, $event)">
 			<ion-icon name="chevron-forward-sharp" slot="end" />
 			<ion-label
 				><span class="sneat-hide-if-width-less-638">Next</span></ion-label
