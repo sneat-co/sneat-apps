@@ -3,7 +3,7 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	EventEmitter,
-	Inject,
+	inject,
 	Input,
 	OnChanges,
 	Output,
@@ -31,7 +31,7 @@ import {
 import { createSetFocusToInput } from '@sneat/ui';
 import { excludeEmpty } from '@sneat/core';
 import { IPersonNames, isNameEmpty } from '@sneat/auth-models';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger } from '@sneat/logging';
 import { IFormField } from '@sneat/core';
 
 export interface INamesFormFields {
@@ -86,9 +86,7 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
 
 	private inputToFocus?: IonInput;
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {}
+	private readonly errorLogger = inject(ErrorLogger);
 
 	public readonly fullName = new FormControl<string>('', [
 		// Validators.required, -- not required if user entered only first name for example. In future may require to be an option
