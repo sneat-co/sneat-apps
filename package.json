@@ -147,5 +147,12 @@
 	},
 	"nx": {
 		"includedScripts": []
+	},
+	"madge": {
+		"detectiveOptions": {
+			"ts": {
+				"skipAsyncImports": true
+			}
+		}
 	}
 }
