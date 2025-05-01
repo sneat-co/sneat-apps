@@ -21,6 +21,18 @@ then
 fi
 
 npx madge --circular --extensions ts ./libs
+if [ $? -ne 0 ]; then
+		echo "Madge found circular dependencies in libs. Please fix them before pushing."
+		exit 1
+fi
 npx madge --circular --extensions ts ./apps
+if [ $? -ne 0 ]; then
+		echo "Madge found circular dependencies in apps. Please fix them before pushing."
+		exit 1
+fi
 
 pnpx run-many --target=lint --all
+if [ $? -ne 0 ]; then
+		echo "Lint found issue. Please fix them before pushing."
+		exit 1
+fi
