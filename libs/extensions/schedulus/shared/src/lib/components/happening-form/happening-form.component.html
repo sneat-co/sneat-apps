@@ -19,9 +19,10 @@
 			class="ion-no-padding"
 			[lines]="happeningTitle.value ? 'none' : undefined"
 		>
-			<ion-item>
+			<ion-item class="sneat-tiny-end-padding">
 				<ion-label style="margin-right: 0.5em">Title</ion-label>
 				<ion-input
+					[readonly]="true"
 					style="font-weight: bold"
 					#titleInput
 					[formControl]="happeningTitle"
@@ -31,6 +32,14 @@
 				/>
 				@if (!$happening().dbo) {
 					<ion-spinner name="lines-small" slot="start" title="Loading..." />
+				}
+				@if (this.$happening().id) {
+					<ion-buttons slot="end">
+						<ion-button color="medium" (click)="editTitle($event)">
+							<ion-icon name="create-outline" slot="start" />
+							<ion-label>Edit</ion-label>
+						</ion-button>
+					</ion-buttons>
 				}
 			</ion-item>
 			@if (!happeningTitle.value) {
@@ -175,11 +184,10 @@
 				</ion-button>
 			}
 			<ion-button color="danger" (click)="delete()" [disabled]="$isDeleting()">
-				@if (!$isDeleting()) {
-					<ion-icon name="close-circle-outline" slot="start" />
-				}
 				@if ($isDeleting()) {
 					<ion-spinner name="lines-small" slot="start" />
+				} @else {
+					<ion-icon name="close-circle-outline" slot="start" />
 				}
 				<ion-label>Delete</ion-label>
 			</ion-button>

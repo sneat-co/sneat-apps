@@ -35,6 +35,7 @@ import {
 	IonSegmentButton,
 	IonSpinner,
 	IonCardSubtitle,
+	IonButtons,
 } from '@ionic/angular/standalone';
 import { RoutingState } from '@sneat/core';
 import {
@@ -60,8 +61,6 @@ import {
 } from '../../services/happening.service';
 
 @Component({
-	selector: 'sneat-happening-form',
-	templateUrl: 'happening-form.component.html',
 	imports: [
 		ReactiveFormsModule,
 		HappeningServiceModule,
@@ -83,8 +82,11 @@ import {
 		IonIcon,
 		IonSpinner,
 		IonCardSubtitle,
+		IonButtons,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-happening-form',
+	templateUrl: 'happening-form.component.html',
 })
 export class HappeningFormComponent
 	extends SneatBaseComponent
@@ -127,6 +129,21 @@ export class HappeningFormComponent
 	// 	console.log('onTitleChange()', event);
 	// }
 
+	protected editTitle(event: Event): void {
+		console.log('editTitle()', event);
+		event.preventDefault();
+		event.stopPropagation();
+		// const title = (event as CustomEvent).detail.value;
+		// this.happeningTitle.setValue(title);
+		// const happening = this.$happening();
+		// if (happening.brief) {
+		// 	this.happeningChange.emit({
+		// 		...happening,
+		// 		brief: { ...happening.brief, title },
+		// 	});
+		// }
+	}
+
 	protected readonly happeningType = new FormControl<HappeningType>(
 		'recurring',
 		Validators.required,
@@ -140,6 +157,9 @@ export class HappeningFormComponent
 
 	protected isToDo = false;
 
+	private readonly onHappeningTitleChanged = (): void => {
+		console.log('onHappeningTitleChanged', this.happeningTitle.value);
+	};
 	constructor(
 		routingState: RoutingState,
 		private readonly changeDetectorRef: ChangeDetectorRef,
@@ -147,6 +167,7 @@ export class HappeningFormComponent
 		private readonly params: SpaceComponentBaseParams,
 	) {
 		super('');
+		this.happeningTitle.registerOnChange(this.onHappeningTitleChanged);
 		this.hasNavHistory = routingState.hasHistory();
 		effect(() => {
 			const happening = this.$happening();
@@ -219,12 +240,9 @@ export class HappeningFormComponent
 
 	protected onTitleChanged(event: CustomEvent): void {
 		console.log('onTitleChanged()', event);
-		const happening = this.$happening();
-		if (happening.brief) {
-			this.happeningChange.emit({
-				...happening,
-				brief: { ...happening.brief, title: event.detail.value },
-			});
+
+		if (event.detail.value === this.titleInput?.value) {
+			this.happeningTitle.reset();
 		}
 	}
 
