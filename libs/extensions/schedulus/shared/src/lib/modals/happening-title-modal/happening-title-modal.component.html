@@ -1,0 +1,53 @@
+<ion-header>
+	<ion-toolbar color="light">
+		<ion-title>Edit happening</ion-title>
+		<ion-buttons slot="end">
+			<ion-button (click)="close()">
+				<ion-icon name="close-outline" />
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+<ion-content>
+	<ion-item class="sneat-tiny-end-padding">
+		<ion-input
+			label="Title"
+			placeholder="required field - 150 characters max"
+			#titleInput
+			[formControl]="title"
+			(keyup.enter)="onEnter($event)"
+			type="text"
+		/>
+	</ion-item>
+	<ion-item class="sneat-tiny-end-padding">
+		<ion-input
+			label="Brief"
+			type="text"
+			[formControl]="brief"
+			placeholder="optional - 250 characters max"
+		/>
+	</ion-item>
+
+	<ion-item class="sneat-tiny-end-padding">
+		<ion-textarea
+			label="Description"
+			placeholder="optional"
+			autoGrow="true"
+			[formControl]="description"
+		/>
+	</ion-item>
+</ion-content>
+<ion-footer>
+	<ion-toolbar>
+		<ion-buttons slot="end">
+			<ion-button fill="solid" color="primary">
+				<ion-icon name="save-outline" slot="start" />
+				<ion-label>Save changes</ion-label>
+			</ion-button>
+			<ion-button (click)="close()">
+				<ion-icon name="close-outline" slot="start" />
+				<ion-label>Cancel</ion-label>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-footer>

@@ -13,6 +13,8 @@ import {
 	IonButton,
 	IonButtons,
 	IonContent,
+	IonFooter,
+	IonHeader,
 	IonIcon,
 	IonInput,
 	IonItem,
@@ -20,6 +22,8 @@ import {
 	IonList,
 	IonSelect,
 	IonSelectOption,
+	IonTitle,
+	IonToolbar,
 } from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
@@ -29,6 +33,7 @@ import {
 	IHappeningPrice,
 	TermUnit,
 } from '@sneat/mod-schedulus-core';
+import { SneatBaseModalComponent } from '@sneat/ui';
 import {
 	HappeningService,
 	IHappeningPricesRequest,
@@ -53,9 +58,13 @@ import { RadioGroupToSelectComponent, SelectOption } from '@sneat/wizard';
 		IonSelect,
 		IonSelectOption,
 		RadioGroupToSelectComponent,
+		IonHeader,
+		IonTitle,
+		IonToolbar,
+		IonFooter,
 	],
 })
-export class HappeningPriceFormComponent {
+export class HappeningPriceFormComponent extends SneatBaseModalComponent {
 	@Input({ required: true }) happening?: IHappeningContext;
 
 	@Output() happeningChange = new EventEmitter<IHappeningContext>();
@@ -68,11 +77,10 @@ export class HappeningPriceFormComponent {
 	protected isSubmitting = false;
 
 	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		protected readonly changeDetectorRef: ChangeDetectorRef,
-		protected readonly modalCtrl: ModalController,
 		protected readonly happeningService: HappeningService,
 	) {
+		super('HappeningPriceFormComponent');
 		this.setTermLengths();
 	}
 
@@ -178,7 +186,7 @@ export class HappeningPriceFormComponent {
 	}
 
 	private dismissModal(): void {
-		this.modalCtrl
+		this.modalController
 			.dismiss()
 			.catch(
 				this.errorLogger.logErrorHandler(

@@ -1,13 +1,15 @@
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-title>New price</ion-title>
+		<ion-buttons slot="end">
+			<ion-button (click)="close()">
+				<ion-icon name="close-outline" />
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
 <ion-content>
 	<ion-list lines="full" class="ion-no-padding">
-		<ion-item color="primary" class="sneat-no-end-padding-margin">
-			<ion-label>New price</ion-label>
-			<ion-buttons slot="end">
-				<ion-button (click)="modalCtrl.dismiss()">
-					<ion-icon name="close-outline" slot="icon-only" />
-				</ion-button>
-			</ion-buttons>
-		</ion-item>
 		<ion-item>
 			<ion-label color="medium">
 				<i>Enter price and then choose term period</i>
@@ -43,9 +45,9 @@
 					interface="popover"
 				>
 					@for (o of termPeriods; track o.value) {
-						<ion-select-option [value]="o.value">{{
-							o.title
-						}}</ion-select-option>
+						<ion-select-option [value]="o.value"
+							>{{ o.title }}
+						</ion-select-option>
 					}
 				</ion-select>
 			</ion-item>
@@ -56,22 +58,28 @@
 				[selectOptions]="termPeriods"
 			/>
 		}
+	</ion-list>
+</ion-content>
+<ion-footer>
+	<ion-toolbar>
 		@if (termUnit) {
-			<ion-item>
+			<ion-item lines="none">
 				@if (!priceValue.value) {
 					<ion-label color="danger"><i>Price amount is required</i></ion-label>
 				}
 				@if (!termLength.value && priceValue.value) {
 					<ion-label color="danger"><i>Term length is required</i></ion-label>
 				}
-				<ion-button
-					slot="end"
-					[disabled]="!priceValue.value || !termLength.value"
-					(click)="addPrice($event)"
-				>
-					<ion-label>Add price</ion-label>
-				</ion-button>
 			</ion-item>
 		}
-	</ion-list>
-</ion-content>
+		<ion-buttons slot="end">
+			<ion-button
+				slot="end"
+				[disabled]="!priceValue.value || !termLength.value"
+				(click)="addPrice($event)"
+			>
+				<ion-label>Add price</ion-label>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-footer>

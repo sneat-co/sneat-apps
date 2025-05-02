@@ -19,6 +19,7 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
 import {
 	NavController,
 	IonButton,
@@ -50,6 +51,7 @@ import {
 import { SpaceComponentBaseParams } from '@sneat/space-components';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
+import { HappeningTitleModalComponent } from '../../modals/happening-title-modal/happening-title-modal.component';
 import { HappeningParticipantsComponent } from '../happening-participants/happening-participants.component';
 import { HappeningSlotFormComponent } from '../happening-slot-form/happening-slot-form.component';
 import { HappeningSlotsComponent } from '../happening-slots/happening-slots.component';
@@ -129,10 +131,19 @@ export class HappeningFormComponent
 	// 	console.log('onTitleChange()', event);
 	// }
 
-	protected editTitle(event: Event): void {
+	private readonly modalController = inject(ModalController);
+
+	protected async editTitle(event: Event) {
 		console.log('editTitle()', event);
 		event.preventDefault();
 		event.stopPropagation();
+		const modal = await this.modalController.create({
+			component: HappeningTitleModalComponent,
+			componentProps: {
+				happening: this.$happening(),
+			},
+		});
+		await modal.present();
 		// const title = (event as CustomEvent).detail.value;
 		// this.happeningTitle.setValue(title);
 		// const happening = this.$happening();
@@ -160,6 +171,7 @@ export class HappeningFormComponent
 	private readonly onHappeningTitleChanged = (): void => {
 		console.log('onHappeningTitleChanged', this.happeningTitle.value);
 	};
+
 	constructor(
 		routingState: RoutingState,
 		private readonly changeDetectorRef: ChangeDetectorRef,
