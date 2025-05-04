@@ -37,6 +37,10 @@ import {
 	IonSpinner,
 	IonCardSubtitle,
 	IonButtons,
+	IonTextarea,
+	IonGrid,
+	IonRow,
+	IonCol,
 } from '@ionic/angular/standalone';
 import { RoutingState } from '@sneat/core';
 import {
@@ -85,6 +89,10 @@ import {
 		IonSpinner,
 		IonCardSubtitle,
 		IonButtons,
+		IonTextarea,
+		IonGrid,
+		IonRow,
+		IonCol,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-happening-form',
@@ -95,6 +103,13 @@ export class HappeningFormComponent
 	implements AfterViewInit
 {
 	public readonly $happening = input.required<IHappeningContext>();
+	protected readonly $happeningID = computed(() => this.$happening().id);
+	protected readonly $mode = computed<'edit' | 'create'>(() =>
+		this.$happeningID() ? 'edit' : 'create',
+	);
+	protected readonly $hasDescription = computed(
+		() => this.$happening().dbo?.description,
+	);
 	@Input() public wd?: WeekdayCode2;
 	@Input() public date?: string;
 	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();

@@ -83,13 +83,7 @@ export class ContactNamesModalComponent extends SneatBaseModalComponent {
 		this.contactService.updateContact(request).subscribe({
 			next: () => {
 				this.$saving.set(false);
-				this.modalController
-					.dismiss(names)
-					.catch(
-						this.errorLogger.logErrorHandler(
-							'failed to close ContactNamesModalComponent',
-						),
-					);
+				this.dismissModal(names);
 			},
 			error: (err) => {
 				this.$saving.set(false);

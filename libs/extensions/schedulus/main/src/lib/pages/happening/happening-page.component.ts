@@ -19,8 +19,6 @@ import {
 } from '@sneat/extensions-schedulus-shared';
 
 @Component({
-	selector: 'sneat-happening-page',
-	templateUrl: './happening-page.component.html',
 	imports: [
 		HappeningServiceModule,
 		HappeningFormComponent,
@@ -36,6 +34,8 @@ import {
 		IonContent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-happening-page',
+	templateUrl: './happening-page.component.html',
 })
 export class HappeningPageComponent extends HappeningBasePage {
 	constructor(params: HappeningComponentBaseParams) {

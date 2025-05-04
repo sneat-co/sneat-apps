@@ -4,11 +4,19 @@ import { ModalController } from '@ionic/angular';
 
 @Injectable()
 export abstract class SneatBaseModalComponent extends SneatBaseComponent {
-	protected readonly modalController = inject(ModalController);
+	private readonly modalController = inject(ModalController);
 
 	protected close(): void {
+		this.dismissModal();
+	}
+
+	protected dismissModal(data?: unknown, role?: string, id?: string): void {
 		this.modalController
-			.dismiss()
-			.catch(this.errorLogger.logErrorHandler('Failed to close modal'));
+			.dismiss(data, role, id)
+			.catch(
+				this.errorLogger.logErrorHandler(
+					`Failed to close modal ${this.className}`,
+				),
+			);
 	}
 }

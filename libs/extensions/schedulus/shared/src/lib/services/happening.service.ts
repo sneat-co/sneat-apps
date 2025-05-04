@@ -31,6 +31,12 @@ export interface IHappeningRequest extends SpaceRequest {
 	readonly happeningType?: string;
 }
 
+export interface IUpdateHappeningTextsRequest extends IHappeningRequest {
+	readonly title: string;
+	readonly summary?: string;
+	readonly description?: string;
+}
+
 export interface ISpaceModuleDocShortRef {
 	readonly id: string;
 	readonly spaceID?: string;
@@ -189,6 +195,15 @@ export class HappeningService {
 		return this.sneatApiService.delete(
 			'happenings/delete_slot',
 			undefined,
+			request,
+		);
+	}
+
+	public updateHappeningTexts(
+		request: IUpdateHappeningTextsRequest,
+	): Observable<void> {
+		return this.sneatApiService.post(
+			'happenings/update_happening_texts',
 			request,
 		);
 	}

@@ -50,6 +50,7 @@ export interface IHappeningBase extends IWithRelatedOnly {
 	readonly kind: HappeningKind;
 	readonly activityType?: ActivityType; // TODO: Is it same as HappeningKind?
 	readonly title: string;
+	readonly summary?: string;
 	readonly levels?: Level[];
 	// readonly contactIDs?: readonly string[]; // obsolete
 	readonly slots?: Readonly<Record<string, IHappeningSlot>>;
@@ -67,7 +68,9 @@ export interface IWithSpaceDates extends IWithSpaceIDs, IWithDates {
 	readonly spaceDates?: string[]; // ISO date strings prefixed with spaceID e.g. [`abc123:2019-12-01`, `abc123:2019-12-02`]
 }
 
-export interface IHappeningDbo extends IHappeningBrief, IWithSpaceDates {}
+export interface IHappeningDbo extends IHappeningBrief, IWithSpaceDates {
+	readonly description?: string;
+}
 
 export function validateHappeningDto(dto: IHappeningDbo): void {
 	if (!dto.title) {

@@ -182,17 +182,7 @@ export class HappeningPriceFormComponent extends SneatBaseModalComponent {
 			};
 		}
 		this.happeningChange.emit(this.happening);
-		this.dismissModal();
-	}
-
-	private dismissModal(): void {
-		this.modalController
-			.dismiss()
-			.catch(
-				this.errorLogger.logErrorHandler(
-					'Failed to dismiss new happening price modal',
-				),
-			);
+		this.dismissModal(this.happening);
 	}
 
 	private submitPrice(price: IHappeningPrice): void {

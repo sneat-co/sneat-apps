@@ -1,55 +1,94 @@
 <form [formGroup]="happeningForm" (ngSubmit)="submit()">
-	@if (!$happening().id) {
+	@if ($mode() === "create") {
 		<ion-segment
 			class="ion-padding-horizontal"
 			[formControl]="happeningType"
 			(ionChange)="onHappeningTypeChanged($event)"
 		>
-			<ion-segment-button value="recurring" [disabled]="!!$happening().id"
-				>Recurring
+			<ion-segment-button value="recurring" [disabled]="!!$happening().id">
+				Recurring
 			</ion-segment-button>
-			<ion-segment-button value="single" [disabled]="!!$happening().id"
-				>One-timer
+			<ion-segment-button value="single" [disabled]="!!$happening().id">
+				One-timer
 			</ion-segment-button>
 		</ion-segment>
 	}
 
 	<ion-card>
-		<ion-list
-			class="ion-no-padding"
+		<ion-item
+			class="sneat-tiny-end-padding"
 			[lines]="happeningTitle.value ? 'none' : undefined"
 		>
-			<ion-item class="sneat-tiny-end-padding">
-				<ion-label style="margin-right: 0.5em">Title</ion-label>
-				<ion-input
-					[readonly]="true"
-					style="font-weight: bold"
-					#titleInput
-					[formControl]="happeningTitle"
-					(keyup.enter)="onTitleEnter($event)"
-					(ionChange)="onTitleChanged($event)"
-					type="text"
-				/>
-				@if (!$happening().dbo) {
-					<ion-spinner name="lines-small" slot="start" title="Loading..." />
-				}
-				@if (this.$happening().id) {
+			@switch ($mode()) {
+				@case ("edit") {
+					@if ($happening().dbo) {
+						<ion-label (click)="editTitle($event)" style="font-weight: bold">
+							{{ $happening().dbo?.title }}
+						</ion-label>
+					} @else {
+						<ion-spinner
+							color="medium"
+							name="lines-small"
+							slot="start"
+							title="Loading..."
+						/>
+						<ion-label>Loading...</ion-label>
+					}
 					<ion-buttons slot="end">
-						<ion-button color="medium" (click)="editTitle($event)">
+						<ion-button
+							color="medium"
+							(click)="editTitle($event)"
+							[disabled]="!$happeningID()"
+						>
 							<ion-icon name="create-outline" slot="start" />
 							<ion-label>Edit</ion-label>
 						</ion-button>
 					</ion-buttons>
 				}
-			</ion-item>
-			@if (!happeningTitle.value) {
-				<ion-item>
-					<ion-label color="medium">
-						Enter above the name of the event.
-					</ion-label>
-				</ion-item>
+				@case ("create") {
+					<ion-label style="margin-right: 0.5em">Title</ion-label>
+					<ion-input
+						[readonly]="true"
+						style="font-weight: bold"
+						#titleInput
+						[formControl]="happeningTitle"
+						(keyup.enter)="onTitleEnter($event)"
+						(ionChange)="onTitleChanged($event)"
+						type="text"
+					/>
+				}
 			}
-		</ion-list>
+		</ion-item>
+		@if (!happeningTitle.value) {
+			<ion-item>
+				<ion-label color="medium">
+					Enter above the name of the event.
+				</ion-label>
+			</ion-item>
+		}
+		@if ($mode() === "edit") {
+			<ion-grid class="ion-grid-layout">
+				<ion-row>
+					<ion-col [size]="$hasDescription() ? 12 : 6">
+						<ion-item>
+							<ion-textarea
+								label="Summary"
+								labelPlacement="stacked"
+								placeholder="none"
+								auto-grow="true"
+								readonly="true"
+								[value]="$happening().dbo?.summary"
+							/>
+						</ion-item>
+					</ion-col>
+					<ion-col [size]="$hasDescription() ? 12 : 6">
+						<ion-item lines="none">
+							{{ $happening().dbo?.description }}
+						</ion-item>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		}
 	</ion-card>
 
 	@if (happeningTitle.value) {

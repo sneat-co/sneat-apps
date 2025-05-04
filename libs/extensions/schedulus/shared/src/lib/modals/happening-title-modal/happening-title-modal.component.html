@@ -12,19 +12,23 @@
 	<ion-item class="sneat-tiny-end-padding">
 		<ion-input
 			label="Title"
-			placeholder="required field - 150 characters max"
+			maxlength="100"
+			placeholder="required field - 100 characters max"
 			#titleInput
 			[formControl]="title"
+			[disabled]="$isSubmitting()"
 			(keyup.enter)="onEnter($event)"
 			type="text"
 		/>
 	</ion-item>
 	<ion-item class="sneat-tiny-end-padding">
 		<ion-input
-			label="Brief"
+			label="Summary"
 			type="text"
-			[formControl]="brief"
-			placeholder="optional - 250 characters max"
+			maxlength="200"
+			[formControl]="summary"
+			[disabled]="$isSubmitting()"
+			placeholder="optional - 200 characters max"
 		/>
 	</ion-item>
 
@@ -34,15 +38,21 @@
 			placeholder="optional"
 			autoGrow="true"
 			[formControl]="description"
+			[disabled]="$isSubmitting()"
 		/>
 	</ion-item>
 </ion-content>
 <ion-footer>
 	<ion-toolbar>
 		<ion-buttons slot="end">
-			<ion-button fill="solid" color="primary">
-				<ion-icon name="save-outline" slot="start" />
-				<ion-label>Save changes</ion-label>
+			<ion-button fill="solid" color="primary" (click)="submit()">
+				@if ($isSubmitting()) {
+					<ion-spinner name="lines-small" slot="start" />
+					<ion-label>Saving changes...</ion-label>
+				} @else {
+					<ion-icon name="save-outline" slot="start" />
+					<ion-label>Save changes</ion-label>
+				}
 			</ion-button>
 			<ion-button (click)="close()">
 				<ion-icon name="close-outline" slot="start" />
