@@ -9,6 +9,7 @@ import {
 	signal,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
+import { SneatUserService } from '@sneat/auth-core';
 import {
 	ContactsChecklistComponent,
 	ContactsSelectorService,
@@ -30,6 +31,13 @@ import {
 	IHappeningContactsRequest,
 } from '../../services/happening.service';
 
+function capitalizeFirstChar(str: string): string {
+	if (!str) {
+		return '';
+	}
+	return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 @Component({
 	selector: 'sneat-happening-participants',
 	templateUrl: 'happening-participants.component.html',
@@ -39,9 +47,22 @@ import {
 export class HappeningParticipantsComponent {
 	public readonly $happening = input.required<IHappeningContext>();
 
-	public readonly $space = computed(() => this.$happening().space);
-	protected readonly $membersTabLabel = computed(() =>
-		this.$space().type === 'family' ? 'Family members' : 'Team members',
+	protected readonly $space = computed(() => this.$happening().space);
+	protected readonly $spaceID = computed(() => this.$space().id);
+
+	private readonly userService = inject(SneatUserService);
+
+	protected readonly $membersTabLabel = computed(() => {
+		const spaceType = this.$space().type;
+		return spaceType === 'family'
+			? 'Family members'
+			: spaceType
+				? capitalizeFirstChar(spaceType) + ' members'
+				: 'Members';
+	});
+
+	protected readonly $showMembersList = computed(
+		() => this.$space().type === 'family',
 	);
 
 	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
@@ -66,9 +87,6 @@ export class HappeningParticipantsComponent {
 		this.analytics.logEvent(
 			`happening/participants/${args.checked ? 'checked' : 'unchecked'}`,
 		);
-		// this.populateParticipants();
-
-		const space = this.$space();
 		const happening = this.$happening();
 
 		if (!happening.id) {
@@ -76,8 +94,9 @@ export class HappeningParticipantsComponent {
 			args.resolve();
 			return;
 		}
+
 		const request: IHappeningContactRequest = {
-			spaceID: space.id,
+			spaceID: this.$spaceID(),
 			happeningID: happening?.id,
 			contact: { id: args.id },
 		};
@@ -106,7 +125,6 @@ export class HappeningParticipantsComponent {
 			...(dbo || brief),
 		};
 		args.forEach((arg) => {
-			const addOrRemove = arg.checked ? addRelatedItem : removeRelatedItem;
 			const itemKey: ISpaceModuleItemRef = {
 				module: 'contactus',
 				collection: 'contacts',
@@ -115,7 +133,16 @@ export class HappeningParticipantsComponent {
 			};
 			happeningBase = {
 				...happeningBase,
-				related: addOrRemove(happeningBase.related, itemKey),
+				related: arg.checked
+					? addRelatedItem(happeningBase.related, itemKey, {
+							participant: {
+								created: {
+									at: '' + new Date().toISOString(),
+									by: this.userService.currentUserID || '',
+								},
+							},
+						})
+					: removeRelatedItem(happeningBase.related, itemKey),
 			};
 		});
 
@@ -137,10 +164,7 @@ export class HappeningParticipantsComponent {
 
 	protected addContact(event: Event, source: string): void {
 		this.analytics.logEvent('happening/participants/add_contact', { source });
-		const spaceID = this.$space().id;
-		if (!spaceID) {
-			return;
-		}
+		const spaceID = this.$spaceID();
 		this.$isAddingContact.set(true);
 		const happeningID = this.$happening().id;
 		const componentProps: IContactSelectorProps = {

@@ -74,12 +74,16 @@ export interface IWithRelatedAndRelatedIDs extends IWithRelatedOnly {
 export const addRelatedItem = (
 	related: IRelatedModules | undefined,
 	key: ISpaceModuleItemRef,
+	rolesOfItem?: IRelationshipRoles,
 ) => {
 	related = related || {};
 	let collectionRelated = related[key.module] || {};
 	let relatedItems = collectionRelated[key.collection] || {};
 	if (!hasRelated(related, key)) {
-		relatedItems = { ...relatedItems, [key.itemID]: {} };
+		relatedItems = {
+			...relatedItems,
+			[key.itemID]: { rolesOfItem },
+		};
 		collectionRelated = {
 			...collectionRelated,
 			[key.collection]: relatedItems,
@@ -157,5 +161,5 @@ const hasRelatedItem = (
 	itemKey: IRelatedItemKey,
 ): boolean => {
 	const { itemID, spaceID } = itemKey;
-	return !!relatedItems[itemID] || !!relatedItems[`${itemID}@${spaceID}`];
+	return !!relatedItems?.[itemID] || !!relatedItems?.[`${itemID}@${spaceID}`];
 };

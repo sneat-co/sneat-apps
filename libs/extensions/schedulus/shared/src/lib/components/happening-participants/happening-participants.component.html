@@ -13,7 +13,7 @@
 			</ion-button>
 		</ion-buttons>
 	</ion-item>
-	@if ($space().type === "family") {
+	@if ($showMembersList()) {
 		<ion-item color="light" lines="full">
 			<ion-label>{{ $membersTabLabel() }}</ion-label>
 		</ion-item>
