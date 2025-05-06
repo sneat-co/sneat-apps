@@ -304,9 +304,11 @@ export class HappeningService {
 		space: ISpaceContext,
 		id: string,
 	): Observable<IHappeningContext> {
-		console.log(`watchHappeningByID(team.id=${space.id}, id=${id})`);
+		console.log(
+			`watchHappeningByID(space={id=${space.id}, type=${space.type}, id=${id})`,
+		);
 		return this.spaceItemService.watchSpaceItemByIdWithSpaceRef(space, id).pipe(
-			tap((happening) => console.log('watchHappeningByID() =>', happening)),
+			// tap((happening) => console.log('watchHappeningByID() =>', happening)),
 			map((h) => processHappeningContext(h, space)),
 		);
 	}

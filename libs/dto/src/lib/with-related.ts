@@ -141,7 +141,8 @@ export const getRelatedItemIDs = (
 	console.log('getRelatedItemIDs', module, collection, spaceID, related);
 	const collectionRelated = (related || {})[module] || {};
 	const relatedItems = collectionRelated[collection];
-	return Object.keys(relatedItems);
+	const keys = Object.keys(relatedItems);
+	return spaceID ? keys.filter((k) => k.endsWith(`@${spaceID}`)) : keys;
 };
 
 export const hasRelated = (

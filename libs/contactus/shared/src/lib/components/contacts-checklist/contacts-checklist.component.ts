@@ -53,6 +53,14 @@ export class ContactsChecklistComponent extends SneatBaseComponent {
 		readonly string[] | undefined
 	>();
 
+	protected readonly $checkedContactIDsOfSpace = computed(() => {
+		const suffix = '@' + this.$spaceID();
+		const checkedContactIDs = this.$checkedContactIDs();
+		return checkedContactIDs
+			?.filter((id) => id.endsWith(suffix))
+			.map((id) => id.slice(0, -suffix.length));
+	});
+
 	public readonly $space = input.required<ISpaceContext>();
 	protected readonly $spaceRef = computeSpaceRefFromSpaceContext(this.$space);
 	protected readonly $spaceID = computeSpaceIdFromSpaceRef(this.$spaceRef);
@@ -79,7 +87,7 @@ export class ContactsChecklistComponent extends SneatBaseComponent {
 			onlySelected = this.$onlySelected(),
 			checkedInProgress = this.$checkedInProgress(),
 			uncheckedInProgress = this.$uncheckedInProgress(),
-			checkedContactIDs = this.$checkedContactIDs();
+			checkedContactIDs = this.$checkedContactIDsOfSpace();
 
 		const isSelected = (contactID: string) =>
 			!uncheckedInProgress.includes(contactID) &&

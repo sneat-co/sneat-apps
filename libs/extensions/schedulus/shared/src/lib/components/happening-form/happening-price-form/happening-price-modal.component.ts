@@ -3,12 +3,10 @@ import {
 	ChangeDetectorRef,
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	Output,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
 import {
 	IonButton,
 	IonButtons,
@@ -25,7 +23,6 @@ import {
 	IonTitle,
 	IonToolbar,
 } from '@ionic/angular/standalone';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	CurrencyCode,
 	IHappeningBrief,
@@ -41,9 +38,6 @@ import {
 import { RadioGroupToSelectComponent, SelectOption } from '@sneat/wizard';
 
 @Component({
-	selector: 'sneat-happening-price-form',
-	templateUrl: 'happening-price-form.component.html',
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
 		ReactiveFormsModule,
 		FormsModule,
@@ -63,8 +57,11 @@ import { RadioGroupToSelectComponent, SelectOption } from '@sneat/wizard';
 		IonToolbar,
 		IonFooter,
 	],
+	selector: 'sneat-happening-price-form',
+	templateUrl: 'happening-price-modal.component.html',
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HappeningPriceFormComponent extends SneatBaseModalComponent {
+export class HappeningPriceModalComponent extends SneatBaseModalComponent {
 	@Input({ required: true }) happening?: IHappeningContext;
 
 	@Output() happeningChange = new EventEmitter<IHappeningContext>();

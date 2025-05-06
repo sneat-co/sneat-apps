@@ -97,18 +97,26 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 		this.$happening.set(happening);
 	};
 
+	private prevHappeningID?: string;
 	private readonly onHappeningIDChanged = (id?: string): void => {
 		if (!id) {
 			this.$happening.set(emptyHappeningContext);
 			return;
 		}
-		if (this.$happening().id === id) {
+		if (this.$happeningID() === id) {
 			return;
 		}
 		const space = this.space;
 		if (!space) {
 			console.error('Space is not defined');
 		}
+		if (this.prevHappeningID === id) {
+			console.warn(
+				`onHappeningIDChanged: Happening ID is the same as previous one (${id})`,
+			);
+			return;
+		}
+		this.prevHappeningID = id;
 		this.setHappening({ id, space }, 'url');
 		this.watchHappeningChanges(id);
 	};
@@ -127,7 +135,7 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 					next: (happening) => {
 						// This can be called twice - first for `snapshot.type=added`, then `snapshot.type=modified`
 						console.log(
-							'onHappeningIDChanged => watchHappeningByID => happening:',
+							'watchHappeningChanges() => happeningService.watchHappeningByID() => happening:',
 							happening,
 						);
 						if (happening.id === this.$happeningID()) {

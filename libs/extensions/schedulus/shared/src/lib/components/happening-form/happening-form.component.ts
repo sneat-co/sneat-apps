@@ -51,8 +51,10 @@ import {
 	mergeValuesWithIDs,
 	WeekdayCode2,
 } from '@sneat/mod-schedulus-core';
-import { SpaceComponentBaseParams } from '@sneat/space-components';
-import { SneatBaseComponent } from '@sneat/ui';
+import {
+	SpaceComponentBaseParams,
+	WithSpaceInput,
+} from '@sneat/space-components';
 import { takeUntil } from 'rxjs';
 import { HappeningTitleModalComponent } from '../../modals/happening-title-modal/happening-title-modal.component';
 import { HappeningParticipantsComponent } from '../happening-participants/happening-participants.component';
@@ -97,7 +99,7 @@ import {
 	templateUrl: 'happening-form.component.html',
 })
 export class HappeningFormComponent
-	extends SneatBaseComponent
+	extends WithSpaceInput
 	implements AfterViewInit
 {
 	public readonly $happening = input.required<IHappeningContext>();
@@ -115,8 +117,6 @@ export class HappeningFormComponent
 	private readonly navController = inject(NavController);
 
 	// @Input({ required: true }) public space?: ISpaceContext;
-
-	protected readonly $space = computed(() => this.$happening().space);
 
 	@ViewChild('titleInput', { static: true }) titleInput?: IonInput;
 	@ViewChild('happeningSlotsComponent', { static: false })

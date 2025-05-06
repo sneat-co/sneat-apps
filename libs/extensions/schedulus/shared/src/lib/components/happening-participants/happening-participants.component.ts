@@ -8,7 +8,17 @@ import {
 	Output,
 	signal,
 } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardTitle,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonItemGroup,
+	IonLabel,
+} from '@ionic/angular/standalone';
 import { SneatUserService } from '@sneat/auth-core';
 import {
 	ContactsChecklistComponent,
@@ -25,6 +35,7 @@ import {
 	removeRelatedItem,
 } from '@sneat/dto';
 import { IHappeningContext, IHappeningBase } from '@sneat/mod-schedulus-core';
+import { WithSpaceInput } from '@sneat/space-components';
 import {
 	HappeningService,
 	IHappeningContactRequest,
@@ -39,16 +50,28 @@ function capitalizeFirstChar(str: string): string {
 }
 
 @Component({
+	imports: [
+		ContactsChecklistComponent,
+		ContactsSelectorModule,
+		IonCard,
+		IonItem,
+		IonCardTitle,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonLabel,
+		IonItemGroup,
+		IonItemDivider,
+	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-happening-participants',
 	templateUrl: 'happening-participants.component.html',
-	imports: [IonicModule, ContactsChecklistComponent, ContactsSelectorModule],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HappeningParticipantsComponent {
+export class HappeningParticipantsComponent extends WithSpaceInput {
 	public readonly $happening = input.required<IHappeningContext>();
 
-	protected readonly $space = computed(() => this.$happening().space);
-	protected readonly $spaceID = computed(() => this.$space().id);
+	// protected readonly $space = computed(() => this.$happening().space);
+	// protected readonly $spaceID = computed(() => this.$space().id);
 
 	private readonly userService = inject(SneatUserService);
 
@@ -73,6 +96,7 @@ export class HappeningParticipantsComponent {
 			happening.dbo?.related || happening.brief?.related,
 			'contactus',
 			'contacts',
+			this.$spaceID(),
 		);
 	});
 
@@ -80,7 +104,9 @@ export class HappeningParticipantsComponent {
 
 	private readonly analytics = inject(AnalyticsService);
 
-	constructor(private readonly happeningService: HappeningService) {}
+	constructor(private readonly happeningService: HappeningService) {
+		super('HappeningParticipantsComponent');
+	}
 
 	protected onCheckChanged(args: ICheckChangedArgs): void {
 		console.log('HappeningParticipantsComponent.onCheckChanged()', args);

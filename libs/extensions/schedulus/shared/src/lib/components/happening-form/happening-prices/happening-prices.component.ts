@@ -20,7 +20,7 @@ import {
 	HappeningService,
 	IHappeningPricesRequest,
 } from '../../../services/happening.service';
-import { HappeningPriceFormComponent } from '../happening-price-form/happening-price-form.component';
+import { HappeningPriceModalComponent } from '../happening-price-form/happening-price-modal.component';
 
 @Component({
 	selector: 'sneat-happening-pricing',
@@ -41,7 +41,7 @@ export class HappeningPricesComponent {
 	protected openNewPriceForm(): void {
 		this.modalCtrl
 			.create({
-				component: HappeningPriceFormComponent,
+				component: HappeningPriceModalComponent,
 				componentProps: {
 					happening: this.happening,
 					happeningChange: new EventEmitter<IHappeningContext>(),
