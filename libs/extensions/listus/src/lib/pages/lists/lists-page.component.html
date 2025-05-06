@@ -33,6 +33,15 @@
 					class="with-buttons"
 					tappable
 				>
+					<ion-icon
+						slot="start"
+						color="medium"
+						[name]="
+							isCollapsed(listGroup)
+								? 'chevron-down-outline'
+								: 'chevron-up-outline'
+						"
+					/>
 					<ion-label style="font-weight: bold">
 						@if (listGroup.emoji) {
 							<span style="margin-right: 0.5em">{{ listGroup.emoji }}</span>
@@ -51,13 +60,6 @@
 						@if (listGroup.title !== "Recipes") {
 							<span>{{ listGroup.title }}</span>
 						}
-						<ion-icon
-							style="margin-left: 0.5em"
-							color="medium"
-							[name]="
-								isCollapsed(listGroup) ? 'arrow-dropdown' : 'arrow-dropup'
-							"
-						/>
 					</ion-label>
 					<ion-buttons slot="end">
 						<ion-button color="medium" (click)="addTo($event, listGroup.type)">
@@ -75,7 +77,7 @@
 					>
 						@for (
 							list of listGroup.lists;
-							track trackById;
+							track trackById($index, list);
 							let listIndex = $index
 						) {
 							<ion-item-sliding #ionItemSliding>

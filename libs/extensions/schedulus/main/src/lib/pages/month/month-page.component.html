@@ -128,7 +128,7 @@
 				<ion-item-group *ngIf="asset.dto.id === expandedAssetId">
 					<ion-item-divider tappable (click)="collapse()">
 						<ion-label style="font-weight: bold; color: black">
-							<ion-icon name="arrow-dropdown" />
+							<ion-icon name="chevron-down-outline" />
 							{{ asset.dto.title }} (per week:
 							{{
 								segment === "balance"
@@ -136,7 +136,7 @@
 									: (segment === "expense"
 											? asset.totals.expenses
 											: asset.totals.incomes
-									  ).dto.week
+										).dto.week
 							}}
 							)
 							<span
@@ -156,7 +156,7 @@
 									: (segment === "expense"
 											? asset.totals.expenses
 											: asset.totals.incomes
-									  )
+										)
 											.perMonth()
 											.toLocaleString()
 							}}
