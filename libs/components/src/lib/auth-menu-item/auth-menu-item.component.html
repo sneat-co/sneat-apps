@@ -21,7 +21,12 @@
 	</ion-item>
 }
 @if ($authStatus() === "authenticated") {
-	<ion-item routerLink="/my" routerDirection="forward" (click)="closeMenu()">
+	<ion-item
+		tappable="true"
+		routerLink="/my"
+		routerDirection="forward"
+		(click)="closeMenu()"
+	>
 		<!--    <ion-buttons slot="start" class="ion-no-margin">-->
 		<!--      <ion-button disabled color="medium" >-->
 		<!--        <ion-icon  slot="start" name="person-circle-outline"></ion-icon>-->

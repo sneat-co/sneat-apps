@@ -1,5 +1,6 @@
 @for (space of spaces; track space.id; let last = $last) {
 	<ion-item
+		tappable="true"
 		[disabled]="!space.brief"
 		[lines]="last ? 'full' : 'inset'"
 		routerLink="{{ pathPrefix }}/{{ space.type }}/{{ space.id }}"

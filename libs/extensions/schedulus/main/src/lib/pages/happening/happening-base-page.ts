@@ -1,4 +1,5 @@
 import { computed, signal } from '@angular/core';
+import { ISpaceRef } from '@sneat/core';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
 import {
 	distinctUntilChanged,
@@ -36,7 +37,7 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 			if (happening) {
 				this.happeningID$.next(happening.id);
 				this.setHappening(happening, 'history.state');
-				this.watchHappeningChanges(happening.id);
+				this.watchHappeningChanges(happening.id, happening.space);
 			}
 			this.trackHappeningIDFromUrl();
 		} catch (e) {
@@ -97,7 +98,6 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 		this.$happening.set(happening);
 	};
 
-	private prevHappeningID?: string;
 	private readonly onHappeningIDChanged = (id?: string): void => {
 		if (!id) {
 			this.$happening.set(emptyHappeningContext);
@@ -110,19 +110,14 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 		if (!space) {
 			console.error('Space is not defined');
 		}
-		if (this.prevHappeningID === id) {
-			console.warn(
-				`onHappeningIDChanged: Happening ID is the same as previous one (${id})`,
-			);
-			return;
-		}
-		this.prevHappeningID = id;
 		this.setHappening({ id, space }, 'url');
 		this.watchHappeningChanges(id);
 	};
 
-	private watchHappeningChanges(id: string): void {
-		const space = this.space;
+	private watchHappeningChanges(id: string, space?: ISpaceRef): void {
+		if (!space) {
+			space = this.space;
+		}
 		if (!space?.id) {
 			console.warn('watchHappeningChanges: space is not defined');
 			return;
@@ -167,7 +162,7 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 					if (this.$happeningID() !== happeningID) {
 						this.$happening.set({
 							id: happeningID,
-							space: this.space,
+							space: this.$space(),
 						});
 						this.happeningID$.next(happeningID);
 					}
