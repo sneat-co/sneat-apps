@@ -111,8 +111,8 @@ importers:
         specifier: 11.6.1
         version: 11.6.1
       ionicons:
-        specifier: 7.4.0
-        version: 7.4.0
+        specifier: 8.0.8
+        version: 8.0.8
       posthog-js:
         specifier: 1.239.1
         version: 1.239.1
@@ -3737,6 +3737,11 @@ packages:
     engines: {node: '>=16.0.0', npm: '>=7.10.0'}
     hasBin: true
 
+  '@stencil/core@4.31.0':
+    resolution: {integrity: sha512-Ei9MFJ6LPD9BMFs+klkHylbVOOYhG10Jv4bvoFf3GMH15kA41rSYkEdr4DiX84ZdErQE2qtFV/2SUyWoXh0AhA==}
+    engines: {node: '>=16.0.0', npm: '>=7.10.0'}
+    hasBin: true
+
   '@swc-node/core@1.13.3':
     resolution: {integrity: sha512-OGsvXIid2Go21kiNqeTIn79jcaX4l0G93X2rAnas4LFoDyA9wAwVK7xZdm+QsKoMn5Mus2yFLCc4OtX2dD/PWA==}
     engines: {node: '>= 10'}
@@ -6397,6 +6402,9 @@ packages:
 
   ionicons@7.4.0:
     resolution: {integrity: sha512-ZK94MMqgzMCPPMhmk8Ouu6goyVHFIlw/ACP6oe3FrikcI0N7CX0xcwVaEbUc0G/v3W0shI93vo+9ve/KpvcNhQ==}
+
+  ionicons@8.0.8:
+    resolution: {integrity: sha512-CRHhDQA5vsNxC7raeEPqddgO90iR2F13VZS7hB0Vx7JrxJMM2060E3ddgYbpMQNJjzeBsgpkNwdBeK5qQ7RbLA==}
 
   ip-address@9.0.5:
     resolution: {integrity: sha512-zHtQzGojZXTwZTHQqra+ETKd4Sn3vgi7uBmlPoXVWZqYvuKmtI0l/VZTjqGmJY9x88GGOaZ9+G9ES8hC4T4X8g==}
@@ -14142,6 +14150,17 @@ snapshots:
       '@rollup/rollup-win32-arm64-msvc': 4.34.9
       '@rollup/rollup-win32-x64-msvc': 4.34.9
 
+  '@stencil/core@4.31.0':
+    optionalDependencies:
+      '@rollup/rollup-darwin-arm64': 4.34.9
+      '@rollup/rollup-darwin-x64': 4.34.9
+      '@rollup/rollup-linux-arm64-gnu': 4.34.9
+      '@rollup/rollup-linux-arm64-musl': 4.34.9
+      '@rollup/rollup-linux-x64-gnu': 4.34.9
+      '@rollup/rollup-linux-x64-musl': 4.34.9
+      '@rollup/rollup-win32-arm64-msvc': 4.34.9
+      '@rollup/rollup-win32-x64-msvc': 4.34.9
+
   '@swc-node/core@1.13.3(@swc/core@1.11.24(@swc/helpers@0.5.17))(@swc/types@0.1.21)':
     dependencies:
       '@swc/core': 1.11.24(@swc/helpers@0.5.17)
@@ -17313,6 +17332,10 @@ snapshots:
   ionicons@7.4.0:
     dependencies:
       '@stencil/core': 4.29.1
+
+  ionicons@8.0.8:
+    dependencies:
+      '@stencil/core': 4.31.0
 
   ip-address@9.0.5:
     dependencies:
