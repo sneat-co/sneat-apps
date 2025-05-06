@@ -13,9 +13,7 @@
 				"index": "apps/logist-app/src/index.html",
 				"main": "apps/logist-app/src/main.ts",
 				"polyfills": ["zone.js"],
-				"allowedCommonJsDependencies": [
-					"qrcode"
-				],
+				"allowedCommonJsDependencies": ["qrcode"],
 				"tsConfig": "apps/logist-app/tsconfig.app.json",
 				"inlineStyleLanguage": "scss",
 				"assets": [
@@ -27,9 +25,7 @@
 						"output": "./svg"
 					}
 				],
-				"styles": [
-					"apps/logist-app/src/styles.scss"
-				],
+				"styles": ["apps/logist-app/src/styles.scss"],
 				"scripts": []
 			},
 			"configurations": {
@@ -75,7 +71,8 @@
 					"buildTarget": "logist-app:build:development"
 				}
 			},
-			"defaultConfiguration": "development"
+			"defaultConfiguration": "development",
+			"continuous": true
 		},
 		"extract-i18n": {
 			"executor": "@angular-devkit/build-angular:extract-i18n",

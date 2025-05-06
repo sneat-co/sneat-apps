@@ -7,19 +7,13 @@
 	"targets": {
 		"build": {
 			"executor": "@angular-devkit/build-angular:browser",
-			"outputs": [
-				"{options.outputPath}"
-			],
+			"outputs": ["{options.outputPath}"],
 			"options": {
 				"outputPath": "dist/apps/sneat-app",
 				"index": "apps/sneat-app/src/index.html",
 				"main": "apps/sneat-app/src/main.ts",
-				"polyfills": [
-					"zone.js"
-				],
-				"allowedCommonJsDependencies": [
-					"qrcode"
-				],
+				"polyfills": ["zone.js"],
+				"allowedCommonJsDependencies": ["qrcode"],
 				"tsConfig": "apps/sneat-app/tsconfig.app.json",
 				"inlineStyleLanguage": "scss",
 				"assets": [
@@ -31,9 +25,7 @@
 						"output": "./svg"
 					}
 				],
-				"styles": [
-					"apps/sneat-app/src/styles.scss"
-				],
+				"styles": ["apps/sneat-app/src/styles.scss"],
 				"scripts": []
 			},
 			"configurations": {
@@ -142,7 +134,8 @@
 					"buildTarget": "sneat-app:build:e2e-ci"
 				}
 			},
-			"defaultConfiguration": "development"
+			"defaultConfiguration": "development",
+			"continuous": true
 		},
 		"extract-i18n": {
 			"executor": "@angular-devkit/build-angular:extract-i18n",
@@ -155,9 +148,7 @@
 		},
 		"test": {
 			"executor": "@nx/jest:jest",
-			"outputs": [
-				"{workspaceRoot}/coverage/apps/sneat-app"
-			],
+			"outputs": ["{workspaceRoot}/coverage/apps/sneat-app"],
 			"options": {
 				"jestConfig": "apps/sneat-app/jest.config.ts"
 			}

@@ -6,20 +6,17 @@
 	"projectType": "library",
 	"release": {
 		"version": {
-			"generatorOptions": {
-				"packageRoot": "dist/{projectRoot}",
-				"currentVersionResolver": "git-tag",
-				"fallbackCurrentVersionResolver": "disk"
-			}
+			"currentVersionResolver": "git-tag",
+			"fallbackCurrentVersionResolver": "disk",
+			"preserveLocalDependencyProtocols": false,
+			"manifestRootsToUpdate": ["dist/{projectRoot}"]
 		}
 	},
 	"tags": [],
 	"targets": {
 		"build": {
 			"executor": "@nx/angular:package",
-			"outputs": [
-				"{workspaceRoot}/dist/{projectRoot}"
-			],
+			"outputs": ["{workspaceRoot}/dist/{projectRoot}"],
 			"options": {
 				"project": "libs/extensions/trackus/ng-package.json"
 			},
@@ -40,9 +37,7 @@
 		},
 		"test": {
 			"executor": "@nx/jest:jest",
-			"outputs": [
-				"{workspaceRoot}/coverage/{projectRoot}"
-			],
+			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
 			"options": {
 				"jestConfig": "libs/extensions/trackus/jest.config.ts"
 			}

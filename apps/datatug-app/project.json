@@ -13,9 +13,7 @@
 				"index": "apps/datatug-app/src/index.html",
 				"main": "apps/datatug-app/src/main.ts",
 				"polyfills": ["zone.js"],
-				"allowedCommonJsDependencies": [
-					"qrcode"
-				],
+				"allowedCommonJsDependencies": ["qrcode"],
 				"tsConfig": "apps/datatug-app/tsconfig.app.json",
 				"inlineStyleLanguage": "scss",
 				"assets": [
@@ -73,7 +71,8 @@
 					"buildTarget": "datatug-app:build:development"
 				}
 			},
-			"defaultConfiguration": "development"
+			"defaultConfiguration": "development",
+			"continuous": true
 		},
 		"extract-i18n": {
 			"executor": "@angular-devkit/build-angular:extract-i18n",
