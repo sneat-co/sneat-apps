@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { JsonPipe } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -35,7 +35,6 @@ import { ForWorkComponent } from './for-work.component';
 	selector: 'sneat-sneat-app-home-page',
 	templateUrl: './sneat-app-home-page.component.html',
 	imports: [
-		CommonModule,
 		RouterModule,
 		UserCountryComponent,
 		ForFamiliesComponent,
@@ -57,6 +56,7 @@ import { ForWorkComponent } from './for-work.component';
 		IonGrid,
 		IonRow,
 		IonCol,
+		JsonPipe,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

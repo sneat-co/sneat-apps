@@ -18,17 +18,19 @@
 </ion-header>
 
 <ion-content class="cardy">
-	<div class="segment" *ngIf="supportsMemberGroups">
-		<ion-segment [(ngModel)]="segment">
-			<ion-segment-button value="all">
-				<ion-label>All</ion-label>
-			</ion-segment-button>
-			<ion-segment-button value="groups">
-				<ion-label *ngIf="space.type !== 'cohabit'">By group</ion-label>
-				<ion-label *ngIf="space.type === 'cohabit'">By room</ion-label>
-			</ion-segment-button>
-		</ion-segment>
-	</div>
+	@if (supportsMemberGroups) {
+		<div class="segment">
+			<ion-segment [(ngModel)]="segment">
+				<ion-segment-button value="all">
+					<ion-label>All</ion-label>
+				</ion-segment-button>
+				<ion-segment-button value="groups">
+					<ion-label *ngIf="space.type !== 'cohabit'">By group</ion-label>
+					<ion-label *ngIf="space.type === 'cohabit'">By room</ion-label>
+				</ion-segment-button>
+			</ion-segment>
+		</div>
+	}
 
 	<!--	<div class="segment" *ngIf="spaceType === 'family'">-->
 	<!--		<ion-segment [(ngModel)]="listMode">-->

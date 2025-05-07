@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CurrencyPipe, TitleCasePipe } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -10,7 +10,14 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonAccordion,
+	IonButton,
+	IonButtons,
+	IonItem,
+	IonLabel,
+	IonList,
+} from '@ionic/angular/standalone';
 import { Decimal64p2Pipe } from '@sneat/components';
 import { IAmount, RepeatPeriod, ShowBy } from '@sneat/mod-schedulus-core';
 import {
@@ -24,7 +31,18 @@ import {
 	selector: 'sneat-budget-period',
 	templateUrl: 'budget-period.component.html',
 	styleUrl: './budget-period.component.scss',
-	imports: [CommonModule, IonicModule, FormsModule, Decimal64p2Pipe],
+	imports: [
+		FormsModule,
+		Decimal64p2Pipe,
+		IonAccordion,
+		IonItem,
+		IonLabel,
+		TitleCasePipe,
+		IonButtons,
+		IonButton,
+		CurrencyPipe,
+		IonList,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BudgetPeriodComponent implements OnChanges {

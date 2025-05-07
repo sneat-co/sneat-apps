@@ -10,7 +10,17 @@ import {
 	signal,
 	SimpleChanges,
 } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonItemGroup,
+	IonItemSliding,
+	IonLabel,
+	IonSpinner,
+} from '@ionic/angular/standalone';
 import { eq, IIdAndDbo, listItemAnimations } from '@sneat/core';
 import {
 	ContactGroupWithIdAndBrief,
@@ -39,7 +49,18 @@ export interface IRoleContactCheckChangedArgs extends ICheckChangedArgs {
 }
 
 @Component({
-	imports: [IonicModule, ContactsListItemComponent],
+	imports: [
+		ContactsListItemComponent,
+		IonItemGroup,
+		IonItem,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonItemSliding,
+		IonItemDivider,
+		IonSpinner,
+	],
 	selector: 'sneat-contacts-by-type',
 	templateUrl: './contacts-by-type.component.html',
 	animations: [listItemAnimations],

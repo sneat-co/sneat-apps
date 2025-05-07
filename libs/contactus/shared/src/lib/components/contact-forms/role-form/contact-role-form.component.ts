@@ -7,7 +7,7 @@ import {
 	Output,
 	signal,
 } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonCard, IonItemDivider, IonLabel } from '@ionic/angular/standalone';
 import { SelectFromListComponent } from '@sneat/ui';
 import { ContactGroupService } from '@sneat/contactus-services';
 import { IIdAndDbo } from '@sneat/core';
@@ -21,7 +21,7 @@ import { SneatBaseComponent } from '@sneat/ui';
 @Component({
 	selector: 'sneat-contact-role-form',
 	templateUrl: './contact-role-form.component.html',
-	imports: [IonicModule, SelectFromListComponent],
+	imports: [SelectFromListComponent, IonCard, IonItemDivider, IonLabel],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactRoleFormComponent extends SneatBaseComponent {

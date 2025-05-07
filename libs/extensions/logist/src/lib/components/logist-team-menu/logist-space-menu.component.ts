@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
 	ActivationStart,
@@ -6,7 +5,7 @@ import {
 	RouterModule,
 	RouterOutlet,
 } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonItem, IonLabel, IonList } from '@ionic/angular/standalone';
 import { AuthMenuItemComponent } from '@sneat/components';
 import { SpaceBaseComponent } from '@sneat/space-components';
 import { LogistSpaceMenuItemsComponent } from '../logist-team-menu-items/logist-space-menu-items.component';
@@ -15,11 +14,12 @@ import { LogistSpaceMenuItemsComponent } from '../logist-team-menu-items/logist-
 	selector: 'sneat-logist-space-menu',
 	templateUrl: './logist-space-menu.component.html',
 	imports: [
-		CommonModule,
-		IonicModule,
 		RouterModule,
 		AuthMenuItemComponent,
 		LogistSpaceMenuItemsComponent,
+		IonList,
+		IonItem,
+		IonLabel,
 	],
 })
 export class LogistSpaceMenuComponent

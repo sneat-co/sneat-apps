@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -8,7 +7,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonCard, IonInput, IonItem, IonList } from '@ionic/angular/standalone';
 import { CountrySelectorComponent } from '@sneat/components';
 import { IAssetContext, IAssetDwellingContext } from '@sneat/mod-assetus-core';
 import { ISpaceContext } from '@sneat/space-models';
@@ -18,12 +17,14 @@ import { AssetPossessionCardComponent } from '../asset-possesion-card/asset-poss
 	selector: 'sneat-edit-dwelling-card',
 	templateUrl: './edit-dwelling-card.component.html',
 	imports: [
-		CommonModule,
-		IonicModule,
 		FormsModule,
 		ReactiveFormsModule,
 		CountrySelectorComponent,
 		AssetPossessionCardComponent,
+		IonCard,
+		IonList,
+		IonItem,
+		IonInput,
 	],
 })
 export class AddDwellingCardComponent implements OnChanges {

@@ -6,8 +6,13 @@ import {
 	input,
 	signal,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonItem,
+	IonLabel,
+} from '@ionic/angular/standalone';
 import { IContactusSpaceDbo } from '@sneat/contactus-core';
 import {
 	ContactusServicesModule,
@@ -24,13 +29,16 @@ import { TrackerHistoryComponent } from './tracker-history.component';
 @Component({
 	selector: 'sneat-tracker',
 	imports: [
-		CommonModule,
-		IonicModule,
 		TrackersServiceModule,
 		TrackusApiServiceModule,
 		ContactusServicesModule,
 		TrackerFormComponent,
 		TrackerHistoryComponent,
+		IonItem,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
 	],
 	templateUrl: './tracker.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,

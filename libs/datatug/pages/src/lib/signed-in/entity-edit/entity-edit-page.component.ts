@@ -1,10 +1,28 @@
-import { CommonModule } from '@angular/common';
+import { JsonPipe } from '@angular/common';
 import { Component, Inject, OnDestroy, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SneatErrorCardComponent } from '@sneat/components';
 import { Subject } from 'rxjs';
-import { IonicModule, IonInput, PopoverController } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonMenuButton,
+	IonText,
+	IonTitle,
+	IonToolbar,
+	PopoverController,
+} from '@ionic/angular/standalone';
 import { EntityFieldDialogComponent } from './entity-field-dialog/entity-field-dialog.component';
 import { IEntity, IEntityFieldDef } from '@sneat/ext-datatug-models';
 import { IProjectContext } from '@sneat/ext-datatug-nav';
@@ -18,7 +36,27 @@ import {
 @Component({
 	selector: 'sneat-datatug-entity-edit',
 	templateUrl: './entity-edit-page.component.html',
-	imports: [CommonModule, FormsModule, IonicModule, SneatErrorCardComponent],
+	imports: [
+		FormsModule,
+		SneatErrorCardComponent,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonMenuButton,
+		IonBackButton,
+		IonContent,
+		IonTitle,
+		IonCard,
+		IonItem,
+		IonLabel,
+		IonInput,
+		IonList,
+		IonButton,
+		IonIcon,
+		JsonPipe,
+		IonBadge,
+		IonText,
+	],
 })
 export class EntityEditPageComponent implements OnDestroy {
 	mode?: 'new' | 'edit';

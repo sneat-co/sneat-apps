@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -16,7 +15,25 @@ import {
 	UntypedFormGroup,
 	Validators,
 } from '@angular/forms';
-import { IonicModule, IonInput, ModalController } from '@ionic/angular';
+import {
+	IonAccordion,
+	IonAccordionGroup,
+	IonButton,
+	IonButtons,
+	IonCol,
+	IonDatetime,
+	IonGrid,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonModal,
+	IonPopover,
+	IonRow,
+	IonSelect,
+	IonSelectOption,
+	ModalController,
+} from '@ionic/angular/standalone';
 import {
 	dateToIso,
 	isoStringsToDate,
@@ -35,13 +52,27 @@ import { TimeSelectorComponent } from './time-selector.component';
 	selector: 'sneat-start-end-datetime-form',
 	templateUrl: 'start-end-datetime-form.component.html',
 	imports: [
-		CommonModule,
-		IonicModule,
 		ReactiveFormsModule,
 		FormsModule,
 		TimeSelectorComponent,
 		StartEndDatesRangeFormComponent,
 		SneatSelectAllOnFocusDirective,
+		IonAccordion,
+		IonAccordionGroup,
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonItem,
+		IonInput,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonModal,
+		IonDatetime,
+		IonSelectOption,
+		IonSelect,
+		IonPopover,
 	],
 })
 export class StartEndDatetimeFormComponent implements OnChanges {

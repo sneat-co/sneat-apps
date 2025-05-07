@@ -17,7 +17,22 @@ import {
 	ReactiveFormsModule,
 	UntypedFormGroup,
 } from '@angular/forms';
-import { IonicModule, ModalController } from '@ionic/angular';
+import {
+	IonButton,
+	IonCheckbox,
+	IonCol,
+	IonGrid,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonList,
+	IonRow,
+	IonSelect,
+	IonSelectOption,
+	IonSpinner,
+	ModalController,
+} from '@ionic/angular/standalone';
 import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import {
 	emptyTiming,
@@ -56,11 +71,23 @@ export interface IHappeningSlotFormComponentInputs {
 	selector: 'sneat-happening-slot-form',
 	templateUrl: './happening-slot-form.component.html',
 	imports: [
-		IonicModule,
 		FormsModule,
 		ReactiveFormsModule,
 		SelectFromListComponent,
 		StartEndDatetimeFormComponent,
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonItem,
+		IonSelect,
+		IonSelectOption,
+		IonCheckbox,
+		IonItemDivider,
+		IonList,
+		IonLabel,
+		IonButton,
+		IonSpinner,
+		IonIcon,
 	],
 })
 /*

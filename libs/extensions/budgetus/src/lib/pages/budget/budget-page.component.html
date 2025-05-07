@@ -5,9 +5,9 @@
 		</ion-buttons>
 		<ion-title>
 			⚖️ Budget
-			<ng-container *ngIf="space.brief?.title"
-				>&#64; {{ space.brief?.title }}
-			</ng-container>
+			@if (space.brief?.title) {
+				&#64; {{ space.brief?.title }}
+			}
 		</ion-title>
 		<ion-buttons slot="end">
 			<ion-button [disabled]="!space" (click)="goNew()" title="Add liability">
@@ -61,36 +61,37 @@
 		<!--</ion-row>-->
 		<!--</ion-grid>-->
 		<ion-list>
-			<ion-item *ngIf="total">
-				<ion-label style="font-weight: bold">
-					Total
-					<!--<ng-container *ngIf="showIncomes() && showExpenses()">Total balance</ng-container>-->
-					<!--<ng-container *ngIf="showIncomes() && !showExpenses()">Total incomes</ng-container>-->
-					<!--<ng-container *ngIf="!showIncomes() && showExpenses()">Total expenses</ng-container>-->
-				</ion-label>
-				<ion-select
-					value="monthly"
-					interface="popover"
-					style="font-size: smaller; color: gray"
-				>
-					<ion-select-option>daily</ion-select-option>
-					<ion-select-option>weekly</ion-select-option>
-					<ion-select-option>monthly</ion-select-option>
-					<ion-select-option>quarterly</ion-select-option>
-					<ion-select-option>yearly</ion-select-option>
-				</ion-select>
-				<div slot="end" style="text-align: right">
-					<b class="positive" *ngIf="total > 0"
-						>${{ total.toLocaleString() }}</b
+			@if (total) {
+				<ion-item>
+					<ion-label style="font-weight: bold">
+						Total
+						<!--<ng-container *ngIf="showIncomes() && showExpenses()">Total balance</ng-container>-->
+						<!--<ng-container *ngIf="showIncomes() && !showExpenses()">Total incomes</ng-container>-->
+						<!--<ng-container *ngIf="!showIncomes() && showExpenses()">Total expenses</ng-container>-->
+					</ion-label>
+					<ion-select
+						value="monthly"
+						interface="popover"
+						style="font-size: smaller; color: gray"
 					>
-					<b class="negative" *ngIf="total < 0"
-						>-${{ (-total).toLocaleString() }}</b
-					>
-					<!--<small style="border-top: 1px solid lightgray; display: block; font-style: italic; color: lightgray">-->
-					<!--per {{period}}-->
-					<!--</small>-->
-				</div>
-			</ion-item>
+						<ion-select-option>daily</ion-select-option>
+						<ion-select-option>weekly</ion-select-option>
+						<ion-select-option>monthly</ion-select-option>
+						<ion-select-option>quarterly</ion-select-option>
+						<ion-select-option>yearly</ion-select-option>
+					</ion-select>
+					<div slot="end" style="text-align: right">
+						@if (total > 0) {
+							<b class="positive">${{ total.toLocaleString() }}</b>
+						} @else if (total < 0) {
+							<b class="negative">-${{ (-total).toLocaleString() }}</b>
+						}
+						<!--<small style="border-top: 1px solid lightgray; display: block; font-style: italic; color: lightgray">-->
+						<!--per {{period}}-->
+						<!--</small>-->
+					</div>
+				</ion-item>
+			}
 			<!--			<ng-container *ngIf="members">-->
 			<!--				<ng-container *ngFor="let member of members; trackBy: trackById">-->
 			<!--					<ion-item-->
@@ -206,12 +207,13 @@
 			<!--			</ng-container>-->
 		</ion-list>
 
-		<sneat-budget-periods
-			*ngIf="liabilitiesMode === 'expenses' || liabilitiesMode === 'incomes'"
-			[space]="space"
-			[recurringHappenings]="calendariumSpaceDbo?.recurringHappenings"
-			[(activePeriod)]="activePeriod"
-			[liabilitiesMode]="liabilitiesMode"
-		/>
+		@if (liabilitiesMode === "expenses" || liabilitiesMode === "incomes") {
+			<sneat-budget-periods
+				[space]="space"
+				[recurringHappenings]="calendariumSpaceDbo?.recurringHappenings"
+				[(activePeriod)]="activePeriod"
+				[liabilitiesMode]="liabilitiesMode"
+			/>
+		}
 	</ion-card>
 </ion-content>

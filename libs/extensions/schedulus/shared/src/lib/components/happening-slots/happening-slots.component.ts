@@ -8,7 +8,17 @@ import {
 	signal,
 	SimpleChanges,
 } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonSpinner,
+	IonText,
+} from '@ionic/angular/standalone';
 import { Numeral2Pipe } from '@sneat/components';
 import {
 	IHappeningSlot,
@@ -35,10 +45,18 @@ export interface AddSlotParams {
 	selector: 'sneat-happening-slots',
 	templateUrl: './happening-slots.component.html',
 	imports: [
-		IonicModule,
 		HappeningSlotModalServiceModule,
 		WdToWeekdayPipe,
 		Numeral2Pipe,
+		IonItemDivider,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonItem,
+		IonText,
+		IonBadge,
+		IonSpinner,
 	],
 })
 export class HappeningSlotsComponent implements OnChanges {

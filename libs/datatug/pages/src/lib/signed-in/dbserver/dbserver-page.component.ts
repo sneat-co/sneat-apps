@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, Inject, OnDestroy } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {
 	IonBackButton,
@@ -18,6 +18,7 @@ import {
 	IonMenuButton,
 	IonSegment,
 	IonSegmentButton,
+	IonText,
 	IonTitle,
 	IonToolbar,
 } from '@ionic/angular/standalone';
@@ -37,7 +38,6 @@ import { DbServerService } from '@sneat/ext-datatug-services-unsorted';
 	selector: 'sneat-datatug-dbserver',
 	templateUrl: './dbserver-page.component.html',
 	imports: [
-		CommonModule,
 		IonHeader,
 		IonToolbar,
 		IonButtons,
@@ -56,6 +56,8 @@ import { DbServerService } from '@sneat/ext-datatug-services-unsorted';
 		IonBadge,
 		IonList,
 		IonButton,
+		FormsModule,
+		IonText,
 	],
 })
 export class DbserverPageComponent implements OnDestroy {

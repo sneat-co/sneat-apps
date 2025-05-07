@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -11,7 +10,16 @@ import {
 	SimpleChanges,
 	OnInit,
 } from '@angular/core';
-import { IonicModule, ModalController } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonTitle,
+	IonToolbar,
+	ModalController,
+} from '@ionic/angular/standalone';
 import {
 	emptyHappeningSlot,
 	IHappeningAdjustment,
@@ -32,7 +40,16 @@ import {
 	selector: 'sneat-slot-modal',
 	templateUrl: './happening-slot-modal.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [CommonModule, IonicModule, HappeningSlotFormComponent],
+	imports: [
+		HappeningSlotFormComponent,
+		IonHeader,
+		IonToolbar,
+		IonTitle,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonContent,
+	],
 })
 export class HappeningSlotModalComponent
 	implements OnChanges, OnDestroy, IHappeningSlotFormComponentInputs, OnInit

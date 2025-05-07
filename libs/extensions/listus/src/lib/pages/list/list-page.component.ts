@@ -1,4 +1,4 @@
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import {
 	AfterViewInit,
 	ChangeDetectorRef,
@@ -7,7 +7,33 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardContent,
+	IonCol,
+	IonContent,
+	IonFooter,
+	IonGrid,
+	IonHeader,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonReorder,
+	IonReorderGroup,
+	IonRow,
+	IonSegment,
+	IonSegmentButton,
+	IonSelect,
+	IonSelectOption,
+	IonSpinner,
+	IonText,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { SharedWithComponent } from '@sneat/contactus-shared';
 import { RandomIdService } from '@sneat/random';
@@ -40,9 +66,6 @@ type ListPagePerforming =
 	selector: 'sneat-list',
 	templateUrl: './list-page.component.html',
 	imports: [
-		CommonModule,
-		FormsModule,
-		IonicModule,
 		ListusCoreServicesModule,
 		NgOptimizedImage,
 		ContactusServicesModule,
@@ -50,6 +73,32 @@ type ListPagePerforming =
 		NewListItemComponent,
 		SpaceServiceModule,
 		SharedWithComponent,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		IonButton,
+		IonIcon,
+		IonContent,
+		IonCard,
+		IonSegment,
+		IonSegmentButton,
+		FormsModule,
+		IonItem,
+		IonLabel,
+		IonSelect,
+		IonList,
+		IonReorderGroup,
+		IonCardContent,
+		IonText,
+		IonCol,
+		IonRow,
+		IonGrid,
+		IonReorder,
+		IonSpinner,
+		IonFooter,
+		IonSelectOption,
 	],
 	styleUrls: ['./list-page.component.scss'],
 	providers: [
@@ -99,8 +148,6 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			this.isHideWatched = !appState.showWatched;
 		});
 	}
-
-	public readonly itemId = (i: number, li: IListItemWithUiState) => li.brief.id;
 
 	ngAfterViewInit(): void /* Intentionally not ngOnInit */ {
 		if (this.newListItem) {

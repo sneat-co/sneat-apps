@@ -1,6 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonItem,
+	IonLabel,
+} from '@ionic/angular/standalone';
 import { defaultFamilyMemberExtensions, ISneatExtension } from '@sneat/core';
 import { IContactWithBrief } from '@sneat/contactus-core';
 import { WithSpaceInput } from '@sneat/space-components';
@@ -8,7 +14,7 @@ import { WithSpaceInput } from '@sneat/space-components';
 @Component({
 	selector: 'sneat-contact-modules-menu',
 	templateUrl: 'contact-modules-menu.component.html',
-	imports: [IonicModule, RouterLink],
+	imports: [RouterLink, IonItem, IonLabel, IonButtons, IonButton, IonIcon],
 })
 export class ContactModulesMenuComponent extends WithSpaceInput {
 	@Input({ required: true }) public contact?: IContactWithBrief;

@@ -1,7 +1,6 @@
-import { CommonModule } from '@angular/common';
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ModalController, NavController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import {
 	IonBackButton,
 	IonBadge,
@@ -38,7 +37,6 @@ import { AddDbServerComponent } from '@sneat/ext-datatug-db';
 	selector: 'sneat-datatug-servers',
 	templateUrl: './servers-page.component.html',
 	imports: [
-		CommonModule,
 		FormsModule,
 		IonHeader,
 		IonToolbar,

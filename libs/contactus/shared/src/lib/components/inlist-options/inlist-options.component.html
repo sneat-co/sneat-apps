@@ -1,6 +1,6 @@
 <ion-buttons slot="end">
 	@if (selectedOption) {
-		<ion-button disabled>
+		<ion-button disabled="true">
 			<ion-spinner slot="start" name="lines-small" />
 			<ion-label>{{ selectedOption.title || selectedOption.id }}</ion-label>
 		</ion-button>

@@ -10,7 +10,7 @@ import {
 	computed,
 	effect,
 } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonItem, IonLabel } from '@ionic/angular/standalone';
 import { personName } from '@sneat/components';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import {
@@ -38,7 +38,7 @@ export interface ICheckChangedArgs {
 @Component({
 	selector: 'sneat-contacts-checklist',
 	templateUrl: './contacts-checklist.component.html',
-	imports: [IonicModule, ContactsChecklistItemComponent],
+	imports: [ContactsChecklistItemComponent, IonItem, IonLabel],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactsChecklistComponent extends SneatBaseComponent {

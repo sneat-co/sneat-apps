@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -60,7 +59,6 @@ export interface AddressRequiredFields {
 	imports: [
 		ReactiveFormsModule,
 		FormsModule,
-		CommonModule,
 		CountrySelectorComponent,
 		IonCard,
 		IonItemDivider,

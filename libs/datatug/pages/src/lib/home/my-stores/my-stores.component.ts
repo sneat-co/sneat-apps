@@ -1,5 +1,14 @@
-import { CommonModule } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import {
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonText,
+} from '@ionic/angular/standalone';
 import {
 	allUserStoresAsFlatList,
 	DatatugProjStoreType,
@@ -13,7 +22,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DatatugNavService } from '@sneat/ext-datatug-services-nav';
-import { IonicModule, NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { DatatugUserService } from '@sneat/ext-datatug-services-base';
 import { AuthStatus } from '@sneat/auth-core';
 import { IDatatugStoreContext } from '@sneat/ext-datatug-nav';
@@ -23,7 +32,17 @@ import { LoadingItemsComponent } from '../loading-items-component';
 @Component({
 	selector: 'sneat-datatug-my-stores',
 	templateUrl: './my-stores.component.html',
-	imports: [CommonModule, IonicModule, LoadingItemsComponent],
+	imports: [
+		LoadingItemsComponent,
+		IonCard,
+		IonItem,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonBadge,
+		IonText,
+	],
 })
 export class MyStoresComponent implements OnInit, OnDestroy {
 	public authStatus?: AuthStatus;

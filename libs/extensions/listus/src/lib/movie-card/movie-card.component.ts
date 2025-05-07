@@ -1,4 +1,4 @@
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -7,7 +7,22 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardContent,
+	IonCardHeader,
+	IonCardTitle,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonText,
+	IonThumbnail,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { listItemAnimations } from '@sneat/core';
 import { IMovie, IMovieDbo } from '../dto';
 import { IListContext } from '../contexts';
@@ -20,7 +35,23 @@ import { ITmdbService } from '../watchlist';
 	templateUrl: './movie-card.component.html',
 	styleUrls: ['./movie-card.component.scss'],
 	animations: [listItemAnimations],
-	imports: [IonicModule, CommonModule, NgOptimizedImage],
+	imports: [
+		NgOptimizedImage,
+		IonCard,
+		IonCardHeader,
+		IonToolbar,
+		IonCardTitle,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonThumbnail,
+		IonItem,
+		IonLabel,
+		IonInput,
+		IonBadge,
+		IonCardContent,
+		IonText,
+	],
 })
 export class MovieCardComponent implements OnChanges {
 	@Input()

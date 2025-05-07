@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	Component,
 	computed,
@@ -7,8 +6,7 @@ import {
 	Input,
 	Output,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonCard, IonItemDivider } from '@ionic/angular/standalone';
 import { formNexInAnimation, SpaceType } from '@sneat/core';
 import { AgeGroupID } from '@sneat/contactus-core';
 import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
@@ -17,7 +15,7 @@ import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
 	selector: 'sneat-age-group-form',
 	templateUrl: 'age-group-form.component.html',
 	animations: [formNexInAnimation],
-	imports: [CommonModule, IonicModule, FormsModule, SelectFromListComponent],
+	imports: [SelectFromListComponent, IonCard, IonItemDivider],
 })
 export class AgeGroupFormComponent {
 	@Input({ required: true }) spaceType?: SpaceType;

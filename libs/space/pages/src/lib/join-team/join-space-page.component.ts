@@ -1,8 +1,23 @@
-import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonCard,
+	IonCardContent,
+	IonCardHeader,
+	IonCardTitle,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonSpinner,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import {
 	AuthStatus,
 	AuthStatuses,
@@ -14,10 +29,7 @@ import {
 	PersonWizardComponent,
 } from '@sneat/contactus-shared';
 import {
-	emptyContactBase,
-	IRelatedPerson,
 	IJoinSpaceInfoResponse,
-	IContactContext,
 	ContactIdAndDboWithSpaceRef,
 	NewContactBaseDboAndSpaceRef,
 } from '@sneat/contactus-core';
@@ -41,7 +53,25 @@ export const getPinFromUrl: () => string = () => {
 @Component({
 	selector: 'sneat-join-space',
 	templateUrl: './join-space-page.component.html',
-	imports: [CommonModule, FormsModule, IonicModule, PersonWizardComponent],
+	imports: [
+		FormsModule,
+		PersonWizardComponent,
+		IonHeader,
+		IonToolbar,
+		IonTitle,
+		IonContent,
+		IonCard,
+		IonCardContent,
+		IonItemDivider,
+		IonIcon,
+		IonLabel,
+		IonItem,
+		IonInput,
+		IonCardHeader,
+		IonCardTitle,
+		IonButton,
+		IonSpinner,
+	],
 })
 export class JoinSpacePageComponent extends WithSpaceInput {
 	private readonly id?: string;

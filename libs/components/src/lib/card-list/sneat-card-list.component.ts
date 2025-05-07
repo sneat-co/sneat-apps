@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -9,7 +8,20 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { IonicModule, IonInput } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardContent,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonSegment,
+	IonSegmentButton,
+	IonSkeletonText,
+} from '@ionic/angular/standalone';
 import { IRecord } from '@sneat/data';
 import { IOptionallyTitled, IProjItemBrief } from '@sneat/ext-datatug-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -23,7 +35,22 @@ export interface ICardTab {
 @Component({
 	selector: 'sneat-card-list',
 	templateUrl: './sneat-card-list.component.html',
-	imports: [CommonModule, IonicModule, FormsModule, RouterModule],
+	imports: [
+		RouterModule,
+		IonCard,
+		IonItem,
+		IonIcon,
+		IonLabel,
+		IonInput,
+		IonButtons,
+		IonButton,
+		IonSegment,
+		IonSegmentButton,
+		FormsModule,
+		IonCardContent,
+		IonSkeletonText,
+		IonList,
+	],
 })
 export class SneatCardListComponent {
 	@Input() title?: string;

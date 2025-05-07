@@ -33,14 +33,16 @@
 
 <ion-card>
 	<ion-list>
-		<ion-item *ngIf="dwellingAsset?.dbo?.possession === 'renting'">
-			<ion-input
-				label="Rent price"
-				placeholder="Rent price"
-				[(ngModel)]="this.rent_price_amount"
-				(ngModelChange)="onRentPriceFieldChanged('value', $event)"
-			/>
-		</ion-item>
+		@if (dwellingAsset?.dbo?.possession === "renting") {
+			<ion-item>
+				<ion-input
+					label="Rent price"
+					placeholder="Rent price"
+					[(ngModel)]="this.rent_price_amount"
+					(ngModelChange)="onRentPriceFieldChanged('value', $event)"
+				/>
+			</ion-item>
+		}
 		<ion-item>
 			<ion-input
 				label="Number of bedrooms"

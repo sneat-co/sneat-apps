@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -6,7 +5,12 @@ import {
 	Input,
 	Output,
 } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonChip,
+	IonIcon,
+	IonLabel,
+	IonSpinner,
+} from '@ionic/angular/standalone';
 import {
 	IContactWithBrief,
 	IContactWithBriefAndSpace,
@@ -16,20 +20,20 @@ import { PersonTitle } from '../pipes';
 @Component({
 	selector: 'sneat-contacts-as-badges',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [CommonModule, IonicModule, PersonTitle],
+	imports: [PersonTitle, IonChip, IonLabel, IonIcon, IonSpinner],
 	styles: ['.deleting {text-decoration: line-through}'],
 	template: `
 		@for (member of members || []; track member.id) {
-			<ion-chip outline color="medium">
+			<ion-chip outline="true" color="medium">
 				<ion-label color="medium" [class.deleting]="isDeleting(member.id)">
 					{{ member | personTitle }}
 				</ion-label>
-				<ion-icon
-					*ngIf="showDelete && !isDeleting(member.id)"
-					name="close-outline"
-					(click)="delete($event, member)"
-				/>
-				<ion-spinner name="lines-sharp-small" *ngIf="isDeleting(member.id)" />
+				@if (showDelete && !isDeleting(member.id)) {
+					<ion-icon name="close-outline" (click)="delete($event, member)" />
+				}
+				@if (isDeleting(member.id)) {
+					<ion-spinner name="lines-sharp-small" />
+				}
 			</ion-chip>
 		}
 	`,

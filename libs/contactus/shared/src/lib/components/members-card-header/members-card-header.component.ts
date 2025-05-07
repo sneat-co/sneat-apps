@@ -1,13 +1,19 @@
 import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonItem,
+	IonLabel,
+} from '@ionic/angular/standalone';
 import { IContactusSpaceDbo } from '@sneat/contactus-core';
 import { IIdAndOptionalDbo } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
 
 @Component({
-	imports: [IonicModule, RouterLink],
+	imports: [RouterLink, IonItem, IonIcon, IonLabel, IonButtons, IonButton],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-members-card-header',
 	templateUrl: './members-card-header.component.html',

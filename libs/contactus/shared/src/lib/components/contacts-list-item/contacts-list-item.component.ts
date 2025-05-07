@@ -8,7 +8,19 @@ import {
 	Input,
 	Output,
 } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonCheckbox,
+	IonIcon,
+	IonItem,
+	IonItemOption,
+	IonItemOptions,
+	IonLabel,
+	IonText,
+	IonTextarea,
+} from '@ionic/angular/standalone';
 import {
 	CountryFlagPipe,
 	CountryTitle,
@@ -34,7 +46,6 @@ import { RelatedAsComponent } from './related-as.component';
 	templateUrl: './contacts-list-item.component.html',
 	styleUrls: ['./contacts-list-item.component.scss'],
 	imports: [
-		IonicModule,
 		CountryTitle,
 		CountryFlagPipe,
 		GenderIconNamePipe,
@@ -42,6 +53,17 @@ import { RelatedAsComponent } from './related-as.component';
 		TitleCasePipe,
 		GenderColorPipe,
 		RelatedAsComponent,
+		IonItem,
+		IonIcon,
+		IonLabel,
+		IonBadge,
+		IonText,
+		IonButtons,
+		IonButton,
+		IonCheckbox,
+		IonTextarea,
+		IonItemOptions,
+		IonItemOption,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

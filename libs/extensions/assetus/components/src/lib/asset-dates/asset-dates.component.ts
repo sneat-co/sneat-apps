@@ -1,8 +1,10 @@
-import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { IAssetDboBase, IVehicleAssetDto } from '@sneat/mod-assetus-core';
+import {
+	IAssetDbo,
+	IAssetDboBase,
+	IAssetVehicleExtra,
+} from '@sneat/mod-assetus-core';
 
 interface AssetDate {
 	name: string;
@@ -13,7 +15,7 @@ interface AssetDate {
 @Component({
 	selector: 'sneat-asset-dates',
 	templateUrl: './asset-dates.component.html',
-	imports: [CommonModule, IonicModule, FormsModule],
+	imports: [FormsModule],
 })
 export class AssetDatesComponent {
 	private assetDto?: IAssetDboBase;
@@ -23,22 +25,22 @@ export class AssetDatesComponent {
 		this.assetDto = v;
 		switch (v.category) {
 			case 'vehicle': {
-				const vehicle = v as IVehicleAssetDto;
+				const vehicle = v as IAssetDbo<'vehicle', IAssetVehicleExtra>;
 				this.items = [
 					{
 						name: 'nctExpires',
 						title: 'NCT expires',
-						value: vehicle.nctExpires,
+						value: vehicle.extra?.nctExpires,
 					},
 					{
 						name: 'taxExpires',
 						title: 'Tax expires',
-						value: vehicle.taxExpires,
+						value: vehicle.extra?.taxExpires,
 					},
 					{
 						name: 'nextServiceDue',
 						title: 'Next service due',
-						value: vehicle.nextServiceDue,
+						value: vehicle.extra?.nextServiceDue,
 					},
 				];
 				break;

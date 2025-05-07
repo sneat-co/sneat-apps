@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -8,7 +7,7 @@ import {
 	signal,
 	SimpleChanges,
 } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonAccordionGroup } from '@ionic/angular/standalone';
 import {
 	ICalendarHappeningBrief,
 	RepeatPeriod,
@@ -21,7 +20,7 @@ import { BudgetPeriodComponent } from './budget-period.component';
 @Component({
 	selector: 'sneat-budget-periods',
 	templateUrl: './budget-periods.component.html',
-	imports: [CommonModule, IonicModule, BudgetPeriodComponent],
+	imports: [BudgetPeriodComponent, IonAccordionGroup],
 })
 export class BudgetPeriodsComponent implements OnChanges {
 	@Input({ required: true }) space: ISpaceContext = { id: '' };

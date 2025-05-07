@@ -1,12 +1,22 @@
-import { CommonModule } from '@angular/common';
 import { Component, Inject, Input, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
-	IonicModule,
-	IonInput,
 	PopoverController,
 	ViewDidEnter,
-} from '@ionic/angular';
+	IonButton,
+	IonButtons,
+	IonFooter,
+	IonHeader,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonSelect,
+	IonSelectOption,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	DatatugServicesProjectModule,
@@ -20,10 +30,21 @@ import { parseStoreRef } from '@sneat/core';
 	selector: 'sneat-datatug-new-project-form',
 	templateUrl: 'new-project-form.component.html',
 	imports: [
-		CommonModule,
-		IonicModule,
 		FormsModule,
 		DatatugServicesProjectModule,
+		IonHeader,
+		IonToolbar,
+		IonTitle,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonItem,
+		IonLabel,
+		IonSelect,
+		IonSelectOption,
+		IonItemDivider,
+		IonInput,
+		IonFooter,
 	],
 })
 export class NewProjectFormComponent implements ViewDidEnter {

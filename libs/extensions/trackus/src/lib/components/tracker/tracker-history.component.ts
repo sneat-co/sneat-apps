@@ -1,7 +1,16 @@
 import { DatePipe } from '@angular/common';
 import { Component, computed, inject, input, signal } from '@angular/core';
 import { Timestamp } from '@firebase/firestore';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonChip,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+} from '@ionic/angular/standalone';
 import { IContactusSpaceDbo } from '@sneat/contactus-core';
 import { IIdAndBrief } from '@sneat/core';
 import { SneatBaseComponent } from '@sneat/ui';
@@ -32,7 +41,17 @@ interface ITargetInfo {
 @Component({
 	selector: 'sneat-tracker-history',
 	templateUrl: './tracker-history.component.html',
-	imports: [DatePipe, IonicModule],
+	imports: [
+		DatePipe,
+		IonCard,
+		IonItemDivider,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonItem,
+		IonChip,
+	],
 })
 export class TrackerHistoryComponent extends SneatBaseComponent {
 	public readonly $tracker = input.required<ITracker | undefined>();

@@ -2,10 +2,12 @@
 	<ion-item>
 		<ion-label>Project stores</ion-label>
 		<ion-buttons slot="end">
-			<ion-button *ngIf="stores" color="medium">
-				<ion-icon name="add" slot="start" color="primary" />
-				<ion-label>Add</ion-label>
-			</ion-button>
+			@if (stores) {
+				<ion-button color="medium">
+					<ion-icon name="add" slot="start" color="primary" />
+					<ion-label>Add</ion-label>
+				</ion-button>
+			}
 		</ion-buttons>
 	</ion-item>
 
@@ -22,20 +24,18 @@
 
 	@if (stores) {
 		@if (stores.length) {
-			<ion-item
-				*ngFor="let store of stores || []"
-				tappable
-				(click)="goStore(store)"
-			>
-				<ion-icon [name]="storeIcon(store.type)" slot="start" />
-				{{ store.title }}
-				<ion-badge color="light" slot="end" style="font-weight: normal">
-					<ion-text color="primary">{{ store.url }}</ion-text>
-				</ion-badge>
-				<ion-badge color="light" slot="end" style="font-weight: normal">
-					<ion-text color="medium">{{ store.type }}</ion-text>
-				</ion-badge>
-			</ion-item>
+			@for (store of stores || []; track store.id) {
+				<ion-item tappable (click)="goStore(store)">
+					<ion-icon [name]="storeIcon(store.type)" slot="start" />
+					{{ store.title }}
+					<ion-badge color="light" slot="end" style="font-weight: normal">
+						<ion-text color="primary">{{ store.url }}</ion-text>
+					</ion-badge>
+					<ion-badge color="light" slot="end" style="font-weight: normal">
+						<ion-text color="medium">{{ store.type }}</ion-text>
+					</ion-badge>
+				</ion-item>
+			}
 		} @else {
 			<ion-item>
 				<ion-label color="medium"

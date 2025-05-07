@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, Inject, Input } from '@angular/core';
 import {
 	FormControl,
@@ -6,7 +5,17 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonCard,
+	IonCardHeader,
+	IonCardTitle,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonSelect,
+	IonSelectOption,
+} from '@ionic/angular/standalone';
 import { IContactContext } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
@@ -20,9 +29,16 @@ import {
 	selector: 'sneat-debtus-new-debt-form',
 	templateUrl: './new-debt-form.component.html',
 	imports: [
-		CommonModule,
-		IonicModule,
 		ReactiveFormsModule,
+		IonCard,
+		IonCardHeader,
+		IonCardTitle,
+		IonItem,
+		IonLabel,
+		IonSelect,
+		IonSelectOption,
+		IonInput,
+		IonButton,
 		// ContactInputComponent,
 		// forwardRef(() => ContactInputComponent),
 	],

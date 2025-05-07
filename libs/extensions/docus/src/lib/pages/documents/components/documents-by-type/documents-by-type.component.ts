@@ -1,13 +1,17 @@
-import { CommonModule } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
-	Component,
-	EventEmitter,
-	Inject,
-	OnChanges,
-	Output,
-	SimpleChanges,
-} from '@angular/core';
-import { IonicModule, ToastController } from '@ionic/angular';
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonItem,
+	IonItemOption,
+	IonItemOptions,
+	IonItemSliding,
+	IonLabel,
+	IonList,
+	ToastController,
+} from '@ionic/angular/standalone';
 import { listItemAnimations } from '@sneat/core';
 import { eq } from '@sneat/core';
 import {
@@ -17,6 +21,14 @@ import {
 import { AssetService } from '@sneat/extensions-assetus-components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { DocumentsBaseComponent } from '../documents-base.component';
+import {
+	Component,
+	EventEmitter,
+	Inject,
+	OnChanges,
+	Output,
+	SimpleChanges,
+} from '@angular/core';
 
 interface IDocumentType {
 	id: string;
@@ -28,7 +40,19 @@ interface IDocumentType {
 
 @Component({
 	selector: 'sneat-documents-by-type',
-	imports: [CommonModule, IonicModule],
+	imports: [
+		IonList,
+		IonItem,
+		IonIcon,
+		IonLabel,
+		IonBadge,
+		IonButtons,
+		IonItemSliding,
+		NgClass,
+		IonItemOption,
+		IonItemOptions,
+		IonButton,
+	],
 	templateUrl: './documents-by-type.component.html',
 	styleUrls: ['./documents-by-type.component.scss'],
 	animations: [listItemAnimations],

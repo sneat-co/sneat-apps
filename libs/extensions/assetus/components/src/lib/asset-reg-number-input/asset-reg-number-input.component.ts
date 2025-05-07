@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -10,7 +9,14 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { IonicModule, IonInput } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+} from '@ionic/angular/standalone';
 import { AssetService, IUpdateAssetRequest } from '../services';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
@@ -18,7 +24,15 @@ import { ISpaceContext } from '@sneat/space-models';
 @Component({
 	selector: 'sneat-asset-reg-number',
 	templateUrl: 'asset-reg-number-input.component.html',
-	imports: [CommonModule, IonicModule, ReactiveFormsModule],
+	imports: [
+		ReactiveFormsModule,
+		IonItem,
+		IonInput,
+		IonButtons,
+		IonButton,
+		IonLabel,
+		IonIcon,
+	],
 })
 export class AssetRegNumberInputComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;

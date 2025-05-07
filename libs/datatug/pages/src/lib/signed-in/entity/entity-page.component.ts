@@ -1,8 +1,7 @@
-import { CommonModule, JsonPipe } from '@angular/common';
+import { JsonPipe } from '@angular/common';
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
 import {
 	IonBackButton,
 	IonBadge,

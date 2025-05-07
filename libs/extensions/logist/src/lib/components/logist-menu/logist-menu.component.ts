@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
 	ActivationStart,
@@ -6,7 +5,7 @@ import {
 	RouterModule,
 	RouterOutlet,
 } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonList } from '@ionic/angular/standalone';
 import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth-core';
 import { AppVersionComponent, AuthMenuItemComponent } from '@sneat/components';
 import { SpacesMenuComponent } from '@sneat/space-components';
@@ -15,12 +14,11 @@ import { SpacesMenuComponent } from '@sneat/space-components';
 	selector: 'sneat-logist-menu',
 	templateUrl: './logist-menu.component.html',
 	imports: [
-		CommonModule,
-		IonicModule,
 		RouterModule,
 		AuthMenuItemComponent,
 		SpacesMenuComponent,
 		AppVersionComponent,
+		IonList,
 	],
 })
 export class LogistMenuComponent implements OnInit {

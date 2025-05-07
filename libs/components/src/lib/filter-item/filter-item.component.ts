@@ -5,13 +5,18 @@ import {
 	input,
 	Output,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonInput,
+	IonItem,
+} from '@ionic/angular/standalone';
 
 @Component({
 	selector: 'sneat-filter-item',
 	templateUrl: './filter-item.component.html',
-	imports: [IonicModule, FormsModule],
+	imports: [IonItem, IonIcon, IonInput, IonButtons, IonButton],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilterItemComponent {

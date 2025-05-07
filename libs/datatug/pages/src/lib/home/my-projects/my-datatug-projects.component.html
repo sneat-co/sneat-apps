@@ -38,8 +38,8 @@
 		@case ("notAuthenticated") {
 			<ion-item>
 				<ion-label color="medium"
-					>Please sign in to access your projects</ion-label
-				>
+					>Please sign in to access your projects
+				</ion-label>
 			</ion-item>
 		}
 		@case ("authenticated") {
@@ -48,15 +48,16 @@
 				<!--					<ion-icon name="file-tray-full-outline" slot="start"></ion-icon>-->
 				<!--					<ion-label color="medium">No personal or favorite projects yet</ion-label>-->
 				<!--				</ion-item>-->
-				<ion-item
-					*ngFor="let item of projects || []"
-					tappable
-					(click)="goProject(item)"
-					detail
-				>
-					<ion-icon name="file-tray-full-outline" slot="start" />
-					{{ item.project.title }}
-				</ion-item>
+
+				@for (
+					item of projects || [];
+					track item.ref.projectId + item.ref.storeId
+				) {
+					<ion-item tappable (click)="goProject(item)" detail="true">
+						<ion-icon name="file-tray-full-outline" slot="start" />
+						{{ item.project.title }}
+					</ion-item>
+				}
 			} @else {
 				<sneat-datatug-loading-items
 					[authStatus]="authState?.status"

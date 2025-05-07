@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	AfterViewInit,
 	Component,
@@ -10,7 +9,33 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { CodemirrorComponent, CodemirrorModule } from '@ctrl/ngx-codemirror';
-import { IonicModule, PopoverController } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardContent,
+	IonCardHeader,
+	IonCardTitle,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonList,
+	IonMenuButton,
+	IonSegment,
+	IonSegmentButton,
+	IonSelect,
+	IonSelectOption,
+	IonText,
+	IonTitle,
+	IonToolbar,
+	PopoverController,
+} from '@ionic/angular/standalone';
 import { ProjectService } from '@sneat/ext-datatug-services-project';
 import { AgentService } from '@sneat/ext-datatug-services-repo';
 import { IForeignKey } from '@sneat/ext-datatug-models';
@@ -38,12 +63,34 @@ import { ForeignKeyCardComponent } from './foreign-key-card/foreign-key-card.com
 	templateUrl: './env-db-table.page.html',
 	styleUrls: ['./env-db-table.page.scss'],
 	imports: [
-		CommonModule,
-		IonicModule,
-		FormsModule,
 		ForeignKeyCardComponent,
 		CodemirrorModule,
 		DataGridComponent,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonMenuButton,
+		IonBackButton,
+		IonTitle,
+		IonContent,
+		IonItem,
+		FormsModule,
+		IonButton,
+		IonSegmentButton,
+		IonLabel,
+		IonCard,
+		IonCardHeader,
+		IonCardTitle,
+		IonSelectOption,
+		IonSelect,
+		IonIcon,
+		IonInput,
+		IonSegment,
+		IonItemDivider,
+		IonBadge,
+		IonList,
+		IonCardContent,
+		IonText,
 	],
 })
 export class EnvDbTablePageComponent implements OnDestroy, AfterViewInit {

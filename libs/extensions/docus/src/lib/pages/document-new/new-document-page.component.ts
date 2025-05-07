@@ -7,7 +7,27 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { RouterLink } from '@angular/router';
+import {
+	IonBackButton,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardContent,
+	IonCheckbox,
+	IonCol,
+	IonContent,
+	IonGrid,
+	IonHeader,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonRow,
+	IonText,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { ContactsSelectorInputComponent } from '@sneat/contactus-shared';
 import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import { CountrySelectorComponent } from '@sneat/components';
@@ -46,13 +66,31 @@ import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 	providers: [SpaceComponentBaseParams],
 	imports: [
 		FormsModule,
-		IonicModule,
 		CountrySelectorComponent,
 		SpaceServiceModule,
 		SelectFromListComponent,
 		AssetusServicesModule,
 		ContactusServicesModule,
 		ContactsSelectorInputComponent,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		IonContent,
+		IonText,
+		IonCard,
+		IonItem,
+		IonLabel,
+		IonInput,
+		IonItemDivider,
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonCheckbox,
+		IonCardContent,
+		IonButton,
+		RouterLink,
 	],
 })
 export class NewDocumentPageComponent

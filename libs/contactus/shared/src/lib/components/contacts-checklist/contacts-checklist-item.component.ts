@@ -6,7 +6,7 @@ import {
 	input,
 	Output,
 } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonCheckbox, IonItem, IonSpinner } from '@ionic/angular/standalone';
 import { personName } from '@sneat/components';
 import { IContactWithBrief, IContactWithCheck } from '@sneat/contactus-core';
 
@@ -19,7 +19,7 @@ interface IItemWithEvent<T> {
 	selector: 'sneat-contacts-checklist-item',
 	templateUrl: 'contacts-checklist-item.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [IonicModule],
+	imports: [IonItem, IonCheckbox, IonSpinner],
 })
 export class ContactsChecklistItemComponent {
 	public readonly $contact = input.required<IContactWithCheck>();

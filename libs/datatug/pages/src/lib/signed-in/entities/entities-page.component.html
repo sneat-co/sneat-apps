@@ -49,9 +49,8 @@
 		<!--		</ion-segment>-->
 		<ion-list class="last-child-no-border">
 			@if (entities) {
-				@if (entities.length) {
+				@for (entity of entities; track entity.id) {
 					<ion-item
-						*ngFor="let entity of entities; trackBy: trackById"
 						[routerLink]="entityUrl(entity)"
 						(click)="goEntity(entity)"
 						class="last-child-no-border"
@@ -59,14 +58,12 @@
 						<ion-label [class.deleting-list-item]="entity.state === 'deleting'">
 							{{ entity.dbo?.title || entity.dbo?.id }}
 						</ion-label>
-						<ion-badge
-							*ngIf="entity.dbo?.fields?.length"
-							color="light"
-							class="badge-count"
-						>
-							{{ entity.dbo?.fields?.length }}
-							{{ entity.dbo?.fields?.length === 1 ? "field" : "fields" }}
-						</ion-badge>
+						@if (entity.dbo?.fields?.length) {
+							<ion-badge color="light" class="badge-count">
+								{{ entity.dbo?.fields?.length }}
+								{{ entity.dbo?.fields?.length === 1 ? "field" : "fields" }}
+							</ion-badge>
+						}
 						<ion-buttons>
 							<ion-button
 								title="Delete entity"
@@ -79,7 +76,7 @@
 							</ion-button>
 						</ion-buttons>
 					</ion-item>
-				} @else {
+				} @empty {
 					<ion-item class="last-child-no-border">
 						<ion-label color="medium"
 							>No entities has been created yet.

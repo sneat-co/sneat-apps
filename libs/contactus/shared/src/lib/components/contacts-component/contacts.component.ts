@@ -11,7 +11,20 @@ import {
 	signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBadge,
+	IonCard,
+	IonCol,
+	IonGrid,
+	IonIcon,
+	IonItem,
+	IonItemSliding,
+	IonLabel,
+	IonList,
+	IonRow,
+	IonSegment,
+	IonSegmentButton,
+} from '@ionic/angular/standalone';
 import { FilterItemComponent } from '@sneat/components';
 import {
 	addSpace,
@@ -39,11 +52,22 @@ import { OptionalContactRoleIdAndBrief } from '../contact-forms/new-contact';
 	selector: 'sneat-contacts',
 	templateUrl: './contacts.component.html',
 	imports: [
-		IonicModule,
 		FormsModule,
 		ContactsByTypeComponent,
 		ContactsListItemComponent,
 		FilterItemComponent,
+		IonSegment,
+		IonSegmentButton,
+		IonIcon,
+		IonLabel,
+		IonBadge,
+		IonCard,
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonItem,
+		IonList,
+		IonItemSliding,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	animations: [listItemAnimations],

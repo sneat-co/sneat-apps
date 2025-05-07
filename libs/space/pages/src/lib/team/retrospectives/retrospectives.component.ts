@@ -1,6 +1,14 @@
-import { CommonModule } from '@angular/common';
 import { Component, Inject, Input } from '@angular/core';
-import { IonicModule, NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonText,
+} from '@ionic/angular/standalone';
 import { ISpaceDbo } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IRecord } from '@sneat/data';
@@ -11,7 +19,15 @@ import { RetroItemType } from '@sneat/ext-scrumspace-scrummodels';
 @Component({
 	selector: 'sneat-retrospectives',
 	templateUrl: './retrospectives.component.html',
-	imports: [CommonModule, IonicModule],
+	imports: [
+		IonCard,
+		IonItemDivider,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonItem,
+		IonText,
+	],
 })
 export class RetrospectivesComponent {
 	@Input() public space?: IRecord<ISpaceDbo>;

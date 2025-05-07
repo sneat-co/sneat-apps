@@ -8,7 +8,14 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonIcon,
+	IonItemDivider,
+	IonLabel,
+} from '@ionic/angular/standalone';
 import { IIdAndBriefAndOptionalDbo } from '@sneat/core';
 import {
 	IContactBrief,
@@ -22,7 +29,16 @@ import { ContactsListComponent } from '../contacts-list';
 @Component({
 	selector: 'sneat-contact-locations',
 	templateUrl: './contact-locations.component.html',
-	imports: [IonicModule, ContactsListComponent, RouterLink],
+	imports: [
+		ContactsListComponent,
+		RouterLink,
+		IonCard,
+		IonItemDivider,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactLocationsComponent implements OnChanges {

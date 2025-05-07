@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+} from '@ionic/angular/standalone';
 import { buildInfo } from './build-info';
 
 @Component({
 	selector: 'sneat-app-version',
 	templateUrl: 'app-version.component.html',
-	imports: [CommonModule, IonicModule],
+	imports: [IonItemDivider, IonLabel, IonItem, IonInput],
 })
 export class AppVersionComponent {
 	protected readonly buildInfo = buildInfo;

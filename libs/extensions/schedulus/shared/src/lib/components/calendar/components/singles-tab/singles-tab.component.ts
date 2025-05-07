@@ -9,7 +9,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonSegment, IonSegmentButton } from '@ionic/angular/standalone';
 import { ISlotUIEvent } from '@sneat/mod-schedulus-core';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
 import { ISpaceContext } from '@sneat/space-models';
@@ -21,7 +21,12 @@ import { SingleHappeningsListComponent } from './single-happenings-list.componen
 @Component({
 	selector: 'sneat-singles-tab',
 	templateUrl: 'singles-tab.component.html',
-	imports: [IonicModule, SingleHappeningsListComponent, FormsModule],
+	imports: [
+		SingleHappeningsListComponent,
+		IonSegment,
+		IonSegmentButton,
+		FormsModule,
+	],
 })
 export class SinglesTabComponent
 	extends SneatBaseComponent

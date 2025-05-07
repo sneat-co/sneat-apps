@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonCard, IonIcon, IonItem, IonLabel } from '@ionic/angular/standalone';
 import {
 	CalendarDayService,
 	CalendarDayServiceModule,
@@ -23,7 +23,6 @@ import { Weekday } from './weekday';
 	selector: 'sneat-calendar-brief',
 	templateUrl: './calendar-brief.component.html',
 	imports: [
-		IonicModule,
 		RouterLink,
 		CalendarAddButtonsComponent,
 		CalendariumServicesModule,
@@ -31,6 +30,10 @@ import { Weekday } from './weekday';
 		HappeningServiceModule,
 		CalendarDayServiceModule,
 		CalendarDayComponent,
+		IonCard,
+		IonItem,
+		IonIcon,
+		IonLabel,
 	],
 	providers: [CalendarFilterService],
 	changeDetection: ChangeDetectionStrategy.OnPush,

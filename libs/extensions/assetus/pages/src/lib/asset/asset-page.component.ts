@@ -1,7 +1,25 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardContent,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonItemGroup,
+	IonLabel,
+	IonSegment,
+	IonSegmentButton,
+	IonSelect,
+	IonSelectOption,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { LiabilityServiceType } from '@sneat/mod-assetus-core';
 import {
@@ -22,13 +40,28 @@ interface LiabilityServiceBrief {
 	templateUrl: './asset-page.component.html',
 	providers: [SpaceComponentBaseParams, AssetComponentBaseParams],
 	imports: [
-		CommonModule,
 		FormsModule,
-		IonicModule,
 		VehicleCardComponent,
-		IonicModule,
 		ContactusServicesModule,
 		AssetusServicesModule,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		IonContent,
+		IonCard,
+		IonItem,
+		IonLabel,
+		IonItemDivider,
+		IonSegment,
+		IonSegmentButton,
+		IonIcon,
+		IonCardContent,
+		IonButton,
+		IonSelectOption,
+		IonSelect,
+		IonItemGroup,
 	],
 })
 export class AssetPageComponent extends AssetBasePage {

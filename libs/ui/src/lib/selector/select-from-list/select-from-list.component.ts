@@ -50,7 +50,6 @@ import { ISelectItem } from '../selector-interfaces';
 		},
 	],
 	imports: [
-		// IonicModule, //TODO(help-wanted): seems because of @ViewChild standalone imports does not work here
 		FormsModule,
 		RouterModule,
 		IonItem,

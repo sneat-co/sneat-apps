@@ -4,9 +4,9 @@
 			<ion-menu-button />
 			<ion-back-button />
 		</ion-buttons>
-		<ion-title
-			>DB model: {{ dbModelBrief?.title || dbModelBrief?.id }}</ion-title
-		>
+		<ion-title>
+			DB model: {{ dbModelBrief?.title || dbModelBrief?.id }}
+		</ion-title>
 	</ion-toolbar>
 </ion-header>
 
@@ -24,9 +24,11 @@
 		</ion-card-header>
 
 		<ion-segment [(ngModel)]="envTab">
-			<ion-segment-button *ngFor="let env of envs" [value]="env">
-				<ion-label>{{ env }}</ion-label>
-			</ion-segment-button>
+			@for (env of envs; track env) {
+				<ion-segment-button [value]="env">
+					<ion-label>{{ env }}</ion-label>
+				</ion-segment-button>
+			}
 		</ion-segment>
 		<ion-list>
 			<ion-item>

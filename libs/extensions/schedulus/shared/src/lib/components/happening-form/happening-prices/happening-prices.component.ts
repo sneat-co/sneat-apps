@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -8,7 +8,18 @@ import {
 	Output,
 	signal,
 } from '@angular/core';
-import { IonicModule, ModalController } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCheckbox,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonSpinner,
+	ModalController,
+} from '@ionic/angular/standalone';
 import { Decimal64p2Pipe } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
@@ -26,7 +37,19 @@ import { HappeningPriceModalComponent } from '../happening-price-form/happening-
 	selector: 'sneat-happening-pricing',
 	templateUrl: 'happening-prices.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [CommonModule, IonicModule, Decimal64p2Pipe],
+	imports: [
+		Decimal64p2Pipe,
+		IonCard,
+		IonItemDivider,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonItem,
+		IonSpinner,
+		IonCheckbox,
+		CurrencyPipe,
+	],
 })
 export class HappeningPricesComponent {
 	@Input({ required: true }) happening?: IHappeningContext;

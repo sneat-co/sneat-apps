@@ -1,4 +1,4 @@
-import { CommonModule, TitleCasePipe } from '@angular/common';
+import { TitleCasePipe } from '@angular/common';
 import {
 	Component,
 	Inject,
@@ -45,7 +45,6 @@ import { DatatugBoardService } from '@sneat/ext-datatug-board-core';
 	selector: 'sneat-datatug-folder',
 	templateUrl: 'datatug-folder.component.html',
 	imports: [
-		CommonModule,
 		TitleCasePipe,
 		IonSegment,
 		IonSegmentButton,

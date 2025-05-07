@@ -3,20 +3,20 @@
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="$defaultBackUrl()" />
 		</ion-buttons>
-		<ng-container *ngIf="assetGroup; else titleNoAssetGroup">
-			<ion-title *ngIf="space.brief; else titleWithAssetGroupButNoCommune"
-				>{{ assetGroup.title }} &#64; {{ space.brief.title }}</ion-title
-			>
-			<ng-template #titleWithAssetGroupButNoCommune
-				><ion-title>{{ assetGroup.title }}</ion-title></ng-template
-			>
-		</ng-container>
-		<ng-template #titleNoAssetGroup>
-			<ion-title *ngIf="space.brief"
-				>Loading... &#64; {{ space.brief?.title }}</ion-title
-			>
-			<ion-title *ngIf="!space.brief">Loading...</ion-title>
-		</ng-template>
+		<ion-title>
+			@if (assetGroup) {
+				@if (space.brief) {
+					{{ assetGroup.title }} &#64; {{ space.brief.title }}
+				} @else {
+					{{ assetGroup.title }}
+				}
+			} @else if (space.brief) {
+				Loading... &#64; {{ space.brief?.title }}
+			} @else {
+				Loading...
+			}
+		</ion-title>
+
 		<ion-buttons slot="end">
 			<ion-button>
 				<ion-icon name="add" />
@@ -30,9 +30,9 @@
 	<div class="segment">
 		<sneat-period-segment [period]="period" (changed)="periodChanged($event)" />
 	</div>
-	<ng-container *ngIf="assets">
-		<ng-container *ngFor="let asset of assets">
+	@if (assets) {
+		@for (asset of assets; track asset.id) {
 			<sneat-asset-card [asset]="asset" [period]="period" />
-		</ng-container>
-	</ng-container>
+		}
+	}
 </ion-content>

@@ -1,14 +1,59 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardHeader,
+	IonCardTitle,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonList,
+	IonMenuButton,
+	IonSegment,
+	IonSegmentButton,
+	IonText,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { SneatCardListComponent } from '@sneat/components';
 import { IProjDbModelBrief } from '@sneat/ext-datatug-models';
 
 @Component({
 	selector: 'sneat-datatug-db-schema',
 	templateUrl: './db-model-page.component.html',
-	imports: [CommonModule, FormsModule, IonicModule, SneatCardListComponent],
+	imports: [
+		FormsModule,
+		SneatCardListComponent,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonMenuButton,
+		IonBackButton,
+		IonContent,
+		IonTitle,
+		IonCard,
+		IonCardHeader,
+		IonCardTitle,
+		IonSegment,
+		IonSegmentButton,
+		IonLabel,
+		IonList,
+		IonItem,
+		IonInput,
+		IonBadge,
+		IonItemDivider,
+		IonIcon,
+		IonText,
+		IonButton,
+	],
 })
 export class DbModelPageComponent {
 	public dbModelBrief?: IProjDbModelBrief;

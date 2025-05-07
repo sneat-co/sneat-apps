@@ -1,14 +1,35 @@
-import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, PopoverController } from '@ionic/angular';
+import {
+	IonButton,
+	IonHeader,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonSelect,
+	IonSelectOption,
+	IonTitle,
+	PopoverController,
+} from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { DataType, IEntityFieldDef } from '@sneat/ext-datatug-models';
 
 @Component({
 	selector: 'sneat-datatug-entity-field-dialog',
 	templateUrl: './entity-field-dialog.component.html',
-	imports: [CommonModule, IonicModule, FormsModule],
+	imports: [
+		IonHeader,
+		IonTitle,
+		IonList,
+		IonItem,
+		IonInput,
+		IonLabel,
+		IonSelect,
+		IonSelectOption,
+		FormsModule,
+		IonButton,
+	],
 })
 export class EntityFieldDialogComponent {
 	protected fieldId = '';

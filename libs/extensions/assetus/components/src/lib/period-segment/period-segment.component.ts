@@ -1,12 +1,15 @@
-import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonLabel,
+	IonSegment,
+	IonSegmentButton,
+} from '@ionic/angular/standalone';
 import { Period } from '@sneat/dto';
 
 @Component({
 	selector: 'sneat-period-segment',
 	templateUrl: './period-segment.component.html',
-	imports: [CommonModule, IonicModule],
+	imports: [IonSegment, IonSegmentButton, IonLabel],
 })
 export class PeriodSegmentComponent {
 	@Input()

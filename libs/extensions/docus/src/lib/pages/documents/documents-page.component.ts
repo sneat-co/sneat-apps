@@ -1,7 +1,20 @@
-import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonContent,
+	IonFooter,
+	IonHeader,
+	IonIcon,
+	IonLabel,
+	IonMenuButton,
+	IonSegment,
+	IonSegmentButton,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { FilterItemComponent } from '@sneat/components';
 import { IMemberContext } from '@sneat/contactus-core';
 import { ContactusServicesModule } from '@sneat/contactus-services';
@@ -28,8 +41,6 @@ import { DocumentsListComponent } from './components/documents-list/documents-li
 	templateUrl: './documents-page.component.html',
 	providers: [SpaceComponentBaseParams],
 	imports: [
-		CommonModule,
-		IonicModule,
 		DocumentsListComponent,
 		FilterItemComponent,
 		DocumentsByTypeComponent,
@@ -38,6 +49,19 @@ import { DocumentsListComponent } from './components/documents-list/documents-li
 		ContactusServicesModule,
 		AssetusServicesModule,
 		SpaceServiceModule,
+		IonHeader,
+		IonToolbar,
+		IonBackButton,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonLabel,
+		IonMenuButton,
+		IonSegment,
+		IonSegmentButton,
+		IonContent,
+		IonCard,
+		IonFooter,
 	],
 })
 export class DocumentsPageComponent extends SpaceItemsBaseComponent {

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -8,7 +7,19 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonCard,
+	IonCol,
+	IonGrid,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonRow,
+	IonSelect,
+	IonSelectOption,
+} from '@ionic/angular/standalone';
 import { IEmail } from '@sneat/contactus-core';
 
 type EmailType = 'personal' | 'work';
@@ -31,7 +42,20 @@ const emptyEmails: emailInput[] = [
 @Component({
 	selector: 'sneat-emails-form',
 	templateUrl: './emails-form.component.html',
-	imports: [CommonModule, IonicModule, FormsModule],
+	imports: [
+		FormsModule,
+		IonCard,
+		IonItemDivider,
+		IonLabel,
+		IonIcon,
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonItem,
+		IonSelect,
+		IonSelectOption,
+		IonInput,
+	],
 })
 export class EmailsFormComponent implements OnChanges {
 	readonly types = emailTypes;

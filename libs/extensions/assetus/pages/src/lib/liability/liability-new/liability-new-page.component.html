@@ -1,14 +1,15 @@
 <ion-header>
 	<ion-toolbar color="primary" class="with-back-button">
 		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="defaultBackUrl" />
+			<ion-back-button [defaultHref]="$defaultBackUrl()" />
 		</ion-buttons>
-		<ion-title *ngIf="commune; else titleNoCommune"
-			>New liability &#64; {{ commune.title }}</ion-title
-		>
-		<ng-template #titleNoCommune>
-			<ion-title>New liability</ion-title>
-		</ng-template>
+		<ion-title>
+			@if ($space().brief) {
+				New liability &#64; {{ $space().brief?.title }}
+			} @else {
+				New liability
+			}
+		</ion-title>
 	</ion-toolbar>
 </ion-header>
 
@@ -29,7 +30,7 @@
 		<ion-input />
 	</ion-item>
 	<ion-item>
-		<ion-label> Period </ion-label>
+		<ion-label> Period</ion-label>
 		<ion-select [(ngModel)]="period" interface="action-sheet">
 			<ion-select-option value="weekly">Weekly</ion-select-option>
 			<ion-select-option value="monthly">Monthly</ion-select-option>

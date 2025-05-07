@@ -1,6 +1,12 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonItem,
+	IonLabel,
+} from '@ionic/angular/standalone';
 import {
 	emptyHappeningSlot,
 	IHappeningContext,
@@ -14,10 +20,14 @@ import { HappeningSlotModalService } from '../happening-slot-form/happening-slot
 	templateUrl: 'happening-slot.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
-		CommonModule,
-		IonicModule,
 		// TODO(help-wanted): Can we import just specific pipe?
 		WdToWeekdayPipe,
+		IonItem,
+		IonBadge,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
 	],
 })
 export class HappeningSlotComponent {

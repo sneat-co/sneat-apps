@@ -62,11 +62,15 @@
 	<!--</ion-item>-->
 	<!--</ion-list>-->
 	<!--</ion-card-content>-->
-	<ion-card-content *ngIf="asset?.dbo?.subAssets">
-		<ion-item *ngFor="let subAsset of asset?.dbo?.subAssets || []">
-			<ion-label>
-				<h3>{{ subAsset.title }}</h3>
-			</ion-label>
-		</ion-item>
-	</ion-card-content>
+	@if (asset?.dbo?.subAssets) {
+		<ion-card-content>
+			@for (subAsset of asset?.dbo?.subAssets || []; track subAsset.id) {
+				<ion-item>
+					<ion-label>
+						<h3>{{ subAsset.title }}</h3>
+					</ion-label>
+				</ion-item>
+			}
+		</ion-card-content>
+	}
 </ion-card>

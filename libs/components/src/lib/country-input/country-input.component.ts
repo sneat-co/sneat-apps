@@ -1,13 +1,29 @@
-import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonSelect,
+	IonSelectOption,
+} from '@ionic/angular/standalone';
 import { countries } from '../country-selector';
 
 @Component({
 	selector: 'sneat-country-input',
 	templateUrl: './country-input.component.html',
-	imports: [CommonModule, FormsModule, IonicModule],
+	imports: [
+		FormsModule,
+		IonItem,
+		IonLabel,
+		IonSelect,
+		IonSelectOption,
+		IonButtons,
+		IonButton,
+		IonIcon,
+	],
 })
 export class CountryInputComponent {
 	@Input() canReset = true;

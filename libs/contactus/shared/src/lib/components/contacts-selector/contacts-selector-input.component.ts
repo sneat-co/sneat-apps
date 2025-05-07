@@ -7,7 +7,17 @@ import {
 	Output,
 	signal,
 } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonItemGroup,
+	IonLabel,
+	IonSelect,
+	IonSelectOption,
+} from '@ionic/angular/standalone';
 import { ContactTitlePipe, ContactsAsBadgesComponent } from '@sneat/components';
 import {
 	addSpace,
@@ -25,10 +35,18 @@ import { ContactsSelectorService } from './contacts-selector.service';
 	selector: 'sneat-contacts-selector-input',
 	templateUrl: 'contacts-selector-input.component.html',
 	imports: [
-		IonicModule,
 		ContactsListComponent,
 		ContactTitlePipe,
 		ContactsAsBadgesComponent,
+		IonItemGroup,
+		IonItemDivider,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonLabel,
+		IonItem,
+		IonSelect,
+		IonSelectOption,
 	],
 })
 export class ContactsSelectorInputComponent {

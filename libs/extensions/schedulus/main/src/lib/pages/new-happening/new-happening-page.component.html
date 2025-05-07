@@ -4,15 +4,20 @@
 			<ion-back-button [defaultHref]="$defaultBackUrl()" />
 		</ion-buttons>
 		@if (isToDo) {
-			<ion-title *ngIf="space; else titleNoCommune">
-				New task &#64; {{ space.brief?.title }}
+			<ion-title>
+				New task
+				@if (space) {
+					&#64; {{ space.brief?.title }}
+				}
 			</ion-title>
-			<ng-template #titleNoCommune>New task</ng-template>
 		} @else {
-			<ion-title *ngIf="space; else titleNoCommune">
-				New happening &#64; {{ space.brief?.title }}
+			<ion-title>
+				@if (space) {
+					New happening &#64; {{ space.brief?.title }}
+				} @else {
+					New activity
+				}
 			</ion-title>
-			<ng-template #titleNoCommune>New activity</ng-template>
 		}
 	</ion-toolbar>
 </ion-header>

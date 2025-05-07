@@ -8,7 +8,15 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonSpinner,
+} from '@ionic/angular/standalone';
 import { countryFlagEmoji } from '@sneat/components';
 import { IIdAndOptionalBriefAndOptionalDbo } from '@sneat/core';
 import {
@@ -27,7 +35,17 @@ import { ContactsSelectorService } from '../contacts-selector/contacts-selector.
 @Component({
 	selector: 'sneat-contact-input',
 	templateUrl: './contact-input.component.html',
-	imports: [IonicModule, RouterModule, ContactsSelectorModule],
+	imports: [
+		RouterModule,
+		ContactsSelectorModule,
+		IonInput,
+		IonItem,
+		IonSpinner,
+		IonIcon,
+		IonButton,
+		IonLabel,
+		IonButtons,
+	],
 })
 export class ContactInputComponent implements OnChanges {
 	@Input({ required: true }) space?: ISpaceContext;

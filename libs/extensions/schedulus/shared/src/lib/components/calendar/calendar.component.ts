@@ -13,7 +13,7 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonSegment, IonSegmentButton } from '@ionic/angular/standalone';
 import { IMemberContext } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import { dateToIso, localDateToIso } from '@sneat/core';
@@ -50,7 +50,6 @@ import { SinglesTabComponent } from './components/singles-tab/singles-tab.compon
 	templateUrl: './calendar.component.html',
 	styleUrls: ['./calendar.component.scss'],
 	imports: [
-		IonicModule,
 		SinglesTabComponent,
 		RecurringsTabComponent,
 		CalendarWeekTabComponent,
@@ -58,6 +57,8 @@ import { SinglesTabComponent } from './components/singles-tab/singles-tab.compon
 		CalendarFilterComponent,
 		FormsModule,
 		CalendarDayServiceModule,
+		IonSegment,
+		IonSegmentButton,
 	],
 	providers: [
 		CalendarFilterService,

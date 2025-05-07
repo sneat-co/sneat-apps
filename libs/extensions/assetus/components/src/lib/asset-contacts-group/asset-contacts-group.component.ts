@@ -1,12 +1,29 @@
-import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonItemGroup,
+	IonItemSliding,
+	IonLabel,
+} from '@ionic/angular/standalone';
 import { ContactType, IContact2Asset } from '@sneat/contactus-core';
 
 @Component({
 	selector: 'sneat-asset-contacts-group',
 	templateUrl: './asset-contacts-group.component.html',
-	imports: [CommonModule, IonicModule],
+	imports: [
+		IonItemGroup,
+		IonItemDivider,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonItem,
+		IonItemSliding,
+	],
 })
 export class AssetContactsGroupComponent {
 	@Input() contactRelation?: ContactType;

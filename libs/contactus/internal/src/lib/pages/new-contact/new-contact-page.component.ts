@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -29,7 +28,6 @@ import {
 	ContactIdAndDboWithSpaceRef,
 	ContactRole,
 	ContactToContactRelation,
-	IContactContext,
 	NewContactBaseDboAndSpaceRef,
 } from '@sneat/contactus-core';
 import { emptySpaceRef } from '@sneat/core';
@@ -43,7 +41,6 @@ import { SpaceServiceModule } from '@sneat/space-services';
 @Component({
 	providers: [SpaceComponentBaseParams],
 	imports: [
-		CommonModule,
 		FormsModule,
 		SpaceServiceModule,
 		ContactusServicesModule,

@@ -1,7 +1,18 @@
-import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonButtons,
+	IonCard,
+	IonContent,
+	IonHeader,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonMenuButton,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { SneatCardListComponent } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { DatatugNavContextService } from '@sneat/ext-datatug-services-nav';
@@ -10,7 +21,21 @@ import { IProjectSummary } from '@sneat/ext-datatug-models';
 @Component({
 	selector: 'sneat-datatug-environments',
 	templateUrl: './environments-page.component.html',
-	imports: [CommonModule, FormsModule, IonicModule, SneatCardListComponent],
+	imports: [
+		FormsModule,
+		SneatCardListComponent,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonMenuButton,
+		IonBackButton,
+		IonTitle,
+		IonContent,
+		IonCard,
+		IonItem,
+		IonLabel,
+		IonInput,
+	],
 })
 export class EnvironmentsPageComponent {
 	protected project?: IProjectSummary;

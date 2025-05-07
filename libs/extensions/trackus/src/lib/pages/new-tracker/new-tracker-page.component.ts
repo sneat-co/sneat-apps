@@ -1,12 +1,31 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonButtons,
+	IonCard,
+	IonContent,
+	IonHeader,
+	IonMenuButton,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { SpaceBaseComponent } from '@sneat/space-components';
 import { NewTrackerFormComponent } from '../../components/new-tracker/new-tracker-form.component';
 
 @Component({
 	selector: 'sneat-new-tracker',
 	templateUrl: './new-tracker-page.component.html',
-	imports: [IonicModule, NewTrackerFormComponent],
+	imports: [
+		NewTrackerFormComponent,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		IonMenuButton,
+		IonContent,
+		IonCard,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewTrackerPageComponent extends SpaceBaseComponent {

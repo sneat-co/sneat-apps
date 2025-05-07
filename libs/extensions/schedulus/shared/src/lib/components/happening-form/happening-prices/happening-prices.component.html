@@ -32,15 +32,13 @@
 					}}</b>
 					for {{ price.term.length }} {{ price.term.unit }}
 				</ion-checkbox>
-				<ion-buttons slot="end">
-					<ion-button
-						*ngIf="!updatingPriceIDs().includes(price.id)"
-						color="medium"
-						(click)="deletePrice(price)"
-					>
-						<ion-icon name="close-outline" />
-					</ion-button>
-				</ion-buttons>
+				@if (!updatingPriceIDs().includes(price.id)) {
+					<ion-buttons slot="end">
+						<ion-button color="medium" (click)="deletePrice(price)">
+							<ion-icon name="close-outline" />
+						</ion-button>
+					</ion-buttons>
+				}
 			</ion-item>
 		} @empty {
 			<ion-item>

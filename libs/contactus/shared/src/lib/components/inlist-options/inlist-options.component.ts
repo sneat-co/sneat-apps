@@ -1,6 +1,11 @@
-import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonLabel,
+	IonSpinner,
+} from '@ionic/angular/standalone';
 
 export interface Option {
 	readonly id: string;
@@ -15,7 +20,7 @@ export interface OptionEvent {
 @Component({
 	selector: 'sneat-inlist-options',
 	templateUrl: './inlist-options.component.html',
-	imports: [CommonModule, IonicModule],
+	imports: [IonButtons, IonButton, IonSpinner, IonLabel, IonIcon],
 })
 export class InlistOptionsComponent {
 	@Input() public options?: readonly Option[];

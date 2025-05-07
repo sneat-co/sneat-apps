@@ -20,8 +20,13 @@
 				(click)="saveChanges()"
 			>
 				<ion-icon name="save-outline" slot="start" />
-				<ion-label *ngIf="!queryState.isSaving">Save</ion-label>
-				<ion-label *ngIf="queryState.isSaving">Saving...</ion-label>
+				<ion-label>
+					@if (queryState.isSaving) {
+						Saving...
+					} @else {
+						Save
+					}
+				</ion-label>
 			</ion-button>
 		</ion-buttons>
 	</ion-toolbar>
@@ -53,5 +58,7 @@
 	<!--	<sneat-datatug-sql-query *ngIf="queryState?.queryType === 'SQL'"-->
 	<!--										 [currentProject]="project"-->
 	<!--	></sneat-datatug-sql-query>-->
-	<sneat-datatug-http-query-editor *ngIf="queryState.queryType === 'HTTP'" />
+	@if (queryState.queryType === "HTTP") {
+		<sneat-datatug-http-query-editor />
+	}
 </ion-content>

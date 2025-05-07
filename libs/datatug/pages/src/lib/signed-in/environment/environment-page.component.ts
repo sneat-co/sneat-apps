@@ -1,8 +1,25 @@
-import { CommonModule } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { IonicModule, NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardHeader,
+	IonCardTitle,
+	IonContent,
+	IonHeader,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonMenuButton,
+	IonSkeletonText,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import {
 	IDatatugProjectBriefWithIdAndStoreRef,
 	IEnvDbServer,
@@ -17,7 +34,26 @@ import { IProjectContext } from '@sneat/ext-datatug-nav';
 @Component({
 	selector: 'sneat-datatug-environment',
 	templateUrl: './environment-page.component.html',
-	imports: [CommonModule, FormsModule, IonicModule],
+	imports: [
+		FormsModule,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonMenuButton,
+		IonBackButton,
+		IonTitle,
+		IonContent,
+		IonCard,
+		IonCardHeader,
+		IonCardTitle,
+		IonList,
+		IonItem,
+		IonSkeletonText,
+		IonLabel,
+		NgIf,
+		IonButton,
+		NgForOf,
+	],
 })
 export class EnvironmentPageComponent {
 	projEnv?: IProjEnv;

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 export interface IIdAndBriefDemo<Brief> {
@@ -16,10 +15,11 @@ function items<B>(o: Record<string, B>): readonly IIdAndBriefDemo<B>[] {
 
 @Component({
 	selector: 'sneat-webstorm-type-err-demo',
-	template: ` <ng-container *ngFor="let item of items; trackBy: idFunc">
-		{{ item.brief.title }}
-	</ng-container>`,
-	imports: [CommonModule],
+	template: `
+		@for (item of items; track item.id) {
+			{{ item.brief.title }}
+		}
+	`,
 })
 export class WebstormTypeErrDemoComponent {
 	protected readonly _items: Record<string, Brief> = {
@@ -28,10 +28,6 @@ export class WebstormTypeErrDemoComponent {
 
 	protected get items(): readonly IIdAndBriefDemo<Brief>[] {
 		return items(this._items);
-	}
-
-	protected idFunc(i: number, record: { id: string }): string {
-		return record.id;
 	}
 
 	protected readonly idExpr = (i: number, record: { id: string }): string =>

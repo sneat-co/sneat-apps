@@ -1,14 +1,28 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonCard,
+	IonCardContent,
+	IonCardHeader,
+	IonCardTitle,
+	IonItem,
+	IonLabel,
+} from '@ionic/angular/standalone';
 import { Period } from '@sneat/dto';
 import { IAssetContext } from '@sneat/mod-assetus-core';
 
 @Component({
 	selector: 'sneat-asset-card',
 	templateUrl: './asset-card.component.html',
-	imports: [CommonModule, IonicModule, RouterModule],
+	imports: [
+		RouterModule,
+		IonCard,
+		IonCardHeader,
+		IonCardTitle,
+		IonCardContent,
+		IonItem,
+		IonLabel,
+	],
 })
 export class AssetCardComponent implements OnChanges {
 	@Input() period?: Period;

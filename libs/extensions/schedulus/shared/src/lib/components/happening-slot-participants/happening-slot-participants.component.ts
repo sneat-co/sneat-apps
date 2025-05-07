@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
@@ -8,10 +7,9 @@ import {
 	computed,
 	effect,
 } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonBadge, IonLabel } from '@ionic/angular/standalone';
 import { PersonNamesPipe } from '@sneat/components';
 import {
-	ContactType,
 	IContactWithBrief,
 	IContactWithBriefAndSpace,
 } from '@sneat/contactus-core';
@@ -24,7 +22,7 @@ import { SneatBaseComponent } from '@sneat/ui';
 @Component({
 	selector: 'sneat-happening-slot-participants',
 	templateUrl: 'happening-slot-participants.component.html',
-	imports: [CommonModule, IonicModule, PersonNamesPipe],
+	imports: [PersonNamesPipe, IonBadge, IonLabel],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HappeningSlotParticipantsComponent extends SneatBaseComponent {

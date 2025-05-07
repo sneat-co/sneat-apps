@@ -1,12 +1,17 @@
-import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import {
 	AlertController,
-	IonicModule,
 	ModalController,
 	PopoverController,
 } from '@ionic/angular';
-import { ISelectItem, MultiSelectorComponent } from '@sneat/components';
+import {
+	IonButton,
+	IonButtons,
+	IonIcon,
+	IonItem,
+	IonItemGroup,
+	IonLabel,
+} from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
 	AssetCategory,
@@ -15,6 +20,7 @@ import {
 	IAssetDboBase,
 	LiabilityServiceType,
 } from '@sneat/mod-assetus-core';
+import { ISelectItem, MultiSelectorComponent } from '@sneat/ui';
 import { Observable } from 'rxjs';
 import { AssetService } from '../services';
 
@@ -40,7 +46,7 @@ interface ILiabilityService {
 @Component({
 	selector: 'sneat-asset-liabilities',
 	templateUrl: './asset-liabilities.component.html',
-	imports: [CommonModule, IonicModule],
+	imports: [IonItemGroup, IonItem, IonLabel, IonButtons, IonButton, IonIcon],
 })
 export class AssetLiabilitiesComponent {
 	assetDto: IAssetDboBase | undefined;
@@ -129,13 +135,6 @@ export class AssetLiabilitiesComponent {
 					}
 				});
 		}
-	}
-
-	trackByServiceType(
-		i: number,
-		service: AssetLiabilitiesByServiceType,
-	): LiabilityServiceType {
-		return service.type;
 	}
 
 	markAsNotUsed(service: AssetLiabilitiesByServiceType): void {

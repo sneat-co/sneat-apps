@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	Component,
 	ElementRef,
@@ -9,7 +8,23 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonBadge,
+	IonButtons,
+	IonCard,
+	IonCardContent,
+	IonContent,
+	IonHeader,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonMenuButton,
+	IonSegment,
+	IonSegmentButton,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { GlobalTooltipOption, Options, Tabulator } from 'tabulator-tables';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { getTabulatorCols, IGridColumn } from '@sneat/grid';
@@ -41,7 +56,24 @@ interface IRecordsetInfo {
 @Component({
 	selector: 'sneat-datatug-env-db',
 	templateUrl: './env-db-page.component.html',
-	imports: [CommonModule, FormsModule, IonicModule],
+	imports: [
+		FormsModule,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonMenuButton,
+		IonBackButton,
+		IonTitle,
+		IonContent,
+		IonCard,
+		IonItem,
+		IonInput,
+		IonSegment,
+		IonSegmentButton,
+		IonLabel,
+		IonBadge,
+		IonCardContent,
+	],
 })
 export class EnvDbPageComponent implements OnDestroy, OnInit {
 	@ViewChild('grid', { static: false }) gridElRef?: ElementRef;

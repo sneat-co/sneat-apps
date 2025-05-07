@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DatatugFolderComponent } from '@sneat/ext-datatug-folders-ui';
@@ -9,12 +8,23 @@ import { skip, takeUntil } from 'rxjs/operators';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ActivatedRoute } from '@angular/router';
 import {
-	IonicModule,
+	IonBackButton,
+	IonButtons,
+	IonCard,
+	IonContent,
+	IonHeader,
 	IonInput,
+	IonItem,
+	IonLabel,
+	IonMenuButton,
+	IonSelect,
+	IonSelectOption,
+	IonTitle,
+	IonToolbar,
 	NavController,
 	ViewDidLeave,
 	ViewWillEnter,
-} from '@ionic/angular';
+} from '@ionic/angular/standalone';
 import {
 	IProjBoard,
 	IProjDbModelBrief,
@@ -50,9 +60,7 @@ import { parseStoreRef } from '@sneat/core';
 	selector: 'sneat-datatug-project',
 	templateUrl: './project-page.component.html',
 	imports: [
-		CommonModule,
 		FormsModule,
-		IonicModule,
 		DatatugCoreModule,
 		DatatugServicesNavModule,
 		DatatugServicesProjectModule,
@@ -60,6 +68,19 @@ import { parseStoreRef } from '@sneat/core';
 		DatatugServicesUnsortedModule,
 		WormholeModule,
 		DatatugFolderComponent,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonMenuButton,
+		IonBackButton,
+		IonTitle,
+		IonContent,
+		IonCard,
+		IonItem,
+		IonLabel,
+		IonInput,
+		IonSelect,
+		IonSelectOption,
 	],
 })
 export class ProjectPageComponent

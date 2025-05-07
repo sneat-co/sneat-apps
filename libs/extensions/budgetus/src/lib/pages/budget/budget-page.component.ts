@@ -1,7 +1,23 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonSegment,
+	IonSegmentButton,
+	IonSelect,
+	IonSelectOption,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { Member } from '@sneat/contactus-core';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { AssetGroup } from '@sneat/mod-assetus-core';
@@ -22,12 +38,26 @@ import { CalendariumSpaceService } from '@sneat/extensions-schedulus-shared';
 	selector: 'sneat-budget-page',
 	templateUrl: './budget-page.component.html',
 	imports: [
-		CommonModule,
 		FormsModule,
-		IonicModule,
 		ContactusServicesModule,
 		BudgetPeriodsComponent,
 		SpaceServiceModule,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		IonButton,
+		IonIcon,
+		IonContent,
+		IonCard,
+		IonSegment,
+		IonSegmentButton,
+		IonLabel,
+		IonSelect,
+		IonSelectOption,
+		IonItem,
+		IonList,
 	],
 	providers: [SpaceComponentBaseParams, CalendariumSpaceService],
 })

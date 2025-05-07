@@ -1,5 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonIcon,
+	IonItem,
+	IonLabel,
+} from '@ionic/angular/standalone';
 import { virtualSliderAnimations } from '@sneat/components';
 import { CalendarDayComponent } from './calendar-day.component';
 import { CalendarDayTitleComponent } from './calendar-day-title.component';
@@ -19,10 +26,15 @@ import { CalendarDayBaseComponent } from './calendar-day-base.component';
 	templateUrl: 'calendar-day-card.component.html',
 	animations: virtualSliderAnimations,
 	imports: [
-		IonicModule,
 		CalendarDayComponent,
 		CalendarAddButtonsComponent,
 		CalendarDayTitleComponent,
+		IonCard,
+		IonItem,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonLabel,
 	],
 })
 export class CalendarDayCardComponent

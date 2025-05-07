@@ -1,7 +1,16 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonButton,
+	IonButtons,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonMenuButton,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { PersonTitle } from '@sneat/components';
 import {
 	ContactService,
@@ -16,13 +25,20 @@ import { MemberBasePage } from '../member-base-page';
 	selector: 'sneat-space-member-page',
 	templateUrl: './space-member-page.component.html',
 	imports: [
-		CommonModule,
 		FormsModule,
-		IonicModule,
 		ContactDetailsComponent,
 		ContactusServicesModule,
 		PersonTitle,
 		SpaceServiceModule,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		IonIcon,
+		IonMenuButton,
+		IonContent,
+		IonButton,
 	],
 })
 export class SpaceMemberPageComponent extends MemberBasePage {

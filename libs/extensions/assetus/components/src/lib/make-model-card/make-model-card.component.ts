@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -7,14 +6,14 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonInput, IonItem } from '@ionic/angular/standalone';
 import { SelectFromListComponent } from '@sneat/ui';
 import { AssetType, carMakes, IMake, IModel } from '@sneat/mod-assetus-core';
 
 @Component({
 	selector: 'sneat-make-model-card',
 	templateUrl: './make-model-card.component.html',
-	imports: [CommonModule, IonicModule, SelectFromListComponent, FormsModule],
+	imports: [SelectFromListComponent, FormsModule, IonItem, IonInput],
 })
 export class MakeModelCardComponent {
 	@Input() assetType?: AssetType;

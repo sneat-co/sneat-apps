@@ -1,7 +1,25 @@
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Params } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonContent,
+	IonFooter,
+	IonHeader,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonItemGroup,
+	IonLabel,
+	IonMenuButton,
+	IonSegment,
+	IonSegmentButton,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { SpaceMemberType } from '@sneat/auth-models';
 import {
 	ContactusServicesModule,
@@ -25,13 +43,30 @@ import { Component } from '@angular/core';
 	templateUrl: 'members-page.component.html',
 	providers: [SpaceComponentBaseParams],
 	imports: [
-		IonicModule,
-		CommonModule,
 		FormsModule,
 		SpacePageTitleComponent,
 		ContactusServicesModule,
 		FamilyMembersComponent,
 		SpaceServiceModule,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonMenuButton,
+		IonContent,
+		IonSegment,
+		IonSegmentButton,
+		IonLabel,
+		IonCard,
+		AsyncPipe,
+		IonItemGroup,
+		IonItemDivider,
+		IonIcon,
+		IonBadge,
+		IonItem,
+		IonFooter,
+		IonButton,
+		NgIf,
 	],
 })
 export class MembersPageComponent extends MembersBasePage {

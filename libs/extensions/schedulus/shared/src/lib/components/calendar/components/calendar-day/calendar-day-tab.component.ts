@@ -1,5 +1,14 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
-import { IonicModule, PopoverController } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonDatetime,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonPopover,
+	PopoverController,
+} from '@ionic/angular/standalone';
 import { dateToIso, isoStringsToDate } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import { Subject, takeUntil } from 'rxjs';
@@ -11,7 +20,16 @@ import { CalendarDayCardComponent } from './calendar-day-card.component';
 	selector: 'sneat-day-tab',
 	templateUrl: 'calendar-day-tab.component.html',
 	styleUrls: ['calendar-day-tab.component.scss'],
-	imports: [IonicModule, CalendarDayCardComponent],
+	imports: [
+		CalendarDayCardComponent,
+		IonItem,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonLabel,
+		IonPopover,
+		IonDatetime,
+	],
 })
 export class CalendarDayTabComponent implements OnDestroy {
 	private readonly destroyed = new Subject<void>();

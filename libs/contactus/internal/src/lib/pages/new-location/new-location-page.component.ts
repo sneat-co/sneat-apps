@@ -1,6 +1,11 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonContent,
+	IonHeader,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { PersonTitle } from '@sneat/components';
 import { ContactService } from '@sneat/contactus-services';
 import { LocationFormComponent } from '@sneat/contactus-shared';
@@ -10,7 +15,15 @@ import { ContactBasePage } from '../contact-base-page';
 @Component({
 	selector: 'sneat-new-location-page',
 	templateUrl: './new-location-page.component.html',
-	imports: [CommonModule, IonicModule, LocationFormComponent, PersonTitle],
+	imports: [
+		LocationFormComponent,
+		PersonTitle,
+		IonHeader,
+		IonToolbar,
+		IonBackButton,
+		IonTitle,
+		IonContent,
+	],
 })
 export class NewLocationPageComponent extends ContactBasePage {
 	newLocation: IContactWithOptionalDbo = {

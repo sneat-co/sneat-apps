@@ -5,10 +5,7 @@ import { IAvatar } from '@sneat/auth-models';
 @Component({
 	selector: 'sneat-avatar',
 	templateUrl: './avatar.component.html',
-	imports: [
-		IonImg,
-		// IonicModule, // TODO(help-wanted): For some reason this fails: import { IonImg } from '@ionic/angular/standalone';
-	],
+	imports: [IonImg],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AvatarComponent {

@@ -1,7 +1,19 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardContent,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { CopyrightComponent } from '@sneat/components';
 import { DatatugServicesBaseModule } from '@sneat/ext-datatug-services-base';
 import { DatatugServicesStoreModule } from '@sneat/ext-datatug-services-repo';
@@ -21,9 +33,7 @@ import { MyStoresComponent } from './my-stores';
 	selector: 'sneat-datatug-home',
 	templateUrl: 'datatug-home-page.component.html',
 	imports: [
-		CommonModule,
 		FormsModule,
-		IonicModule,
 		// CoreModule,
 		WormholeModule,
 		DatatugServicesBaseModule,
@@ -33,6 +43,18 @@ import { MyStoresComponent } from './my-stores';
 		CopyrightComponent,
 		MyDatatugProjectsComponent,
 		MyStoresComponent,
+		IonHeader,
+		IonToolbar,
+		IonTitle,
+		IonContent,
+		IonCard,
+		IonCardContent,
+		IonItem,
+		IonLabel,
+		IonInput,
+		IonButtons,
+		IonButton,
+		IonIcon,
 	],
 })
 export class DatatugHomePageComponent {

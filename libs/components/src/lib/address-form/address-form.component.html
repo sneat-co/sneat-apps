@@ -6,27 +6,38 @@
 				<span>&mdash; please select country</span>
 			}
 		</ion-label>
-		<ion-buttons slot="end" *ngIf="mode === 'edit' && form.dirty">
-			@if (countryID.value) {
-				<ion-button
-					color="primary"
-					fill="solid"
-					[disabled]="$saving()"
-					(click)="saveChanges()"
-				>
-					@if ($saving()) {
-						<ion-spinner slot="start" color="light" name="lines-small" />
-					}
-					<ion-icon slot="start" name="save-outline" *ngIf="!$saving()" />
-					<ion-label *ngIf="!$saving()">Save changes</ion-label>
-					<ion-label *ngIf="$saving()">Saving...</ion-label>
-				</ion-button>
-			}
+		@if (mode === "edit" && form.dirty) {
+			<ion-buttons slot="end">
+				@if (countryID.value) {
+					<ion-button
+						color="primary"
+						fill="solid"
+						[disabled]="$saving()"
+						(click)="saveChanges()"
+					>
+						@if ($saving()) {
+							<ion-spinner slot="start" color="light" name="lines-small" />
+						} @else {
+							<ion-icon slot="start" name="save-outline" />
+						}
 
-			<ion-button (click)="cancelChanges()" *ngIf="!$saving()">
-				<ion-label>Cancel</ion-label>
-			</ion-button>
-		</ion-buttons>
+						<ion-label>
+							@if ($saving()) {
+								Saving...
+							} @else {
+								Save changes
+							}
+						</ion-label>
+					</ion-button>
+				}
+
+				@if (!$saving()) {
+					<ion-button (click)="cancelChanges()">
+						<ion-label>Cancel</ion-label>
+					</ion-button>
+				}
+			</ion-buttons>
+		}
 	</ion-item-divider>
 
 	<sneat-country-selector

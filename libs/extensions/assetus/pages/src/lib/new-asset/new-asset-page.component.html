@@ -16,38 +16,39 @@
 </ion-header>
 
 <ion-content class="cardy">
-	<ion-card *ngIf="!category">
-		<ion-item color="light" lines="full">
-			<ion-label>Select asset kind</ion-label>
-		</ion-item>
-		<ion-list *ngIf="!category">
-			@for (c of categories; track c.id; let last = $last) {
-				<ion-item
-					[lines]="last ? 'none' : 'full'"
-					button
-					(click)="selectCategory(c)"
-				>
-					<ion-radio slot="start" labelPlacement="end">
-						{{ c.title }}
-					</ion-radio>
-				</ion-item>
+	@if (!category) {
+		<ion-card>
+			<ion-item color="light" lines="full">
+				<ion-label>Select asset kind</ion-label>
+			</ion-item>
+			<ion-list>
+				@for (c of categories; track c.id; let last = $last) {
+					<ion-item
+						[lines]="last ? 'none' : 'full'"
+						tappable="true"
+						(click)="selectCategory(c)"
+					>
+						<ion-radio slot="start" labelPlacement="end">
+							{{ c.title }}
+						</ion-radio>
+					</ion-item>
+				}
+			</ion-list>
+		</ion-card>
+	} @else {
+		@switch (category.id) {
+			@case ("vehicle") {
+				<sneat-asset-add-vehicle />
 			}
-		</ion-list>
-	</ion-card>
-
-	@switch (category?.id) {
-		@case ("vehicle") {
-			<sneat-asset-add-vehicle />
-		}
-		@case ("dwelling") {
-			<sneat-asset-add-dwelling />
-		}
-		@case ("document") {
-			<sneat-asset-add-document />
-		}
-		@default {
-			unknown category {{ category?.id }}
+			@case ("dwelling") {
+				<sneat-asset-add-dwelling />
+			}
+			@case ("document") {
+				<sneat-asset-add-document />
+			}
+			@default {
+				unknown category {{ category.id }}
+			}
 		}
 	}
-	<ng-container [ngSwitch]="category?.id"> </ng-container>
 </ion-content>

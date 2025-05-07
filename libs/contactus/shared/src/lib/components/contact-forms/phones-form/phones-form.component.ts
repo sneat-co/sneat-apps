@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -8,7 +7,19 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonCard,
+	IonCol,
+	IonGrid,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonRow,
+	IonSelect,
+	IonSelectOption,
+} from '@ionic/angular/standalone';
 import { IPhone } from '@sneat/contactus-core';
 
 type PhoneType = 'personal' | 'mobile' | 'work' | 'fax' | 'landline';
@@ -29,7 +40,20 @@ const emptyPhones: IPhone[] = [
 @Component({
 	selector: 'sneat-phones-form',
 	templateUrl: './phones-form.component.html',
-	imports: [CommonModule, IonicModule, FormsModule],
+	imports: [
+		FormsModule,
+		IonCard,
+		IonItemDivider,
+		IonLabel,
+		IonIcon,
+		IonGrid,
+		IonRow,
+		IonCol,
+		IonItem,
+		IonSelect,
+		IonSelectOption,
+		IonInput,
+	],
 })
 export class PhonesFormComponent implements OnChanges {
 	@Input() disabled = false;

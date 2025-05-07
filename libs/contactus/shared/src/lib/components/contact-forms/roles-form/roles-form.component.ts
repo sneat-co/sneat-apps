@@ -1,7 +1,13 @@
-import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonCard,
+	IonCheckbox,
+	IonItem,
+	IonItemDivider,
+	IonItemGroup,
+	IonLabel,
+} from '@ionic/angular/standalone';
 import { formNexInAnimation } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import { SpaceRelatedFormComponent } from '../space-related-form.component';
@@ -17,7 +23,15 @@ interface Role {
 	selector: 'sneat-roles-form',
 	templateUrl: 'roles-form.component.html',
 	animations: [formNexInAnimation],
-	imports: [CommonModule, IonicModule, FormsModule],
+	imports: [
+		FormsModule,
+		IonCard,
+		IonItemDivider,
+		IonLabel,
+		IonItem,
+		IonItemGroup,
+		IonCheckbox,
+	],
 })
 export class RolesFormComponent extends SpaceRelatedFormComponent {
 	@Input() isActive = false;

@@ -1,5 +1,12 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonCard,
+	IonCardContent,
+	IonLabel,
+	IonSpinner,
+	IonText,
+} from '@ionic/angular/standalone';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
 import { ISpaceContext } from '@sneat/space-models';
 import { SneatBaseComponent } from '@sneat/ui';
@@ -14,7 +21,15 @@ import {
 @Component({
 	selector: 'sneat-single-happenings-list',
 	templateUrl: 'single-happenings-list.component.html',
-	imports: [IonicModule, HappeningCardComponent],
+	imports: [
+		HappeningCardComponent,
+		IonCard,
+		IonCardContent,
+		IonSpinner,
+		IonText,
+		IonButton,
+		IonLabel,
+	],
 })
 export class SingleHappeningsListComponent
 	extends SneatBaseComponent

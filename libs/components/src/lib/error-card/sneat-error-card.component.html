@@ -3,12 +3,14 @@
 		<ion-card-title color="danger">Error</ion-card-title>
 	</ion-card-header>
 	<ion-card-content>
-		<p *ngIf="error?.message">
-			{{ error?.message }}
-		</p>
+		@if (error?.message) {
+			<p>
+				{{ error?.message }}
+			</p>
+		}
 		<ion-item>
 			<ion-textarea
-				readonly
+				readonly="true"
 				[value]="error | json"
 				autoGrow="true"
 				color="medium"

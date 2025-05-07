@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { NgForOf } from '@angular/common';
 import {
 	Component,
 	Inject,
@@ -6,7 +6,16 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBadge,
+	IonCard,
+	IonCardHeader,
+	IonCardTitle,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonText,
+} from '@ionic/angular/standalone';
 import { IForeignKey, ITableFull, ITableRef } from '@sneat/ext-datatug-models';
 import {
 	DatatugNavService,
@@ -22,7 +31,17 @@ import { ICommandResponseWithRecordset } from '@sneat/ext-datatug-dto';
 	selector: 'sneat-datatug-fk-card',
 	templateUrl: './foreign-key-card.component.html',
 	styleUrls: ['./foreign-key-card.component.scss'],
-	imports: [CommonModule, IonicModule],
+	imports: [
+		IonCard,
+		IonCardHeader,
+		IonCardTitle,
+		IonText,
+		IonItem,
+		NgForOf,
+		IonLabel,
+		IonInput,
+		IonBadge,
+	],
 })
 export class ForeignKeyCardComponent implements OnChanges {
 	@Input() fk?: IForeignKey;

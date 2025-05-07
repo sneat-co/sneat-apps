@@ -1,7 +1,15 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonButton,
+	IonButtons,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonLabel,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { Period } from '@sneat/dto';
 import {
 	AssetCardComponent,
@@ -33,10 +41,17 @@ class AssetFactory {
 	templateUrl: './asset-group-page.component.html',
 	providers: [SpaceComponentBaseParams],
 	imports: [
-		CommonModule,
-		IonicModule,
 		PeriodSegmentComponent,
 		AssetCardComponent,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		IonButton,
+		IonIcon,
+		IonLabel,
+		IonContent,
 	],
 })
 export class AssetGroupPageComponent
@@ -48,18 +63,16 @@ export class AssetGroupPageComponent
 	public assets?: IAssetContext[];
 
 	constructor(
-		params: SpaceComponentBaseParams,
-		route: ActivatedRoute,
 		private readonly assetGroupsService: IAssetGroupService,
 		private readonly assetService: IAssetService,
 		private readonly assetFactory: AssetFactory,
 	) {
-		super('AssetGroupPageComponent', route, params);
+		super('AssetGroupPageComponent');
 		this.assetGroup = window.history.state.assetGroupDto as IAssetDtoGroup;
 	}
 
-	ngOnInit(): void {
-		// super.ngOnInit();
+	override ngOnInit(): void {
+		super.ngOnInit();
 		this.route.queryParams.subscribe((params) => {
 			const groupId = params['id'] as string | undefined;
 			console.log('AssetGroupPage(): params=', params, 'groupId:', groupId);

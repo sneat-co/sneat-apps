@@ -1,8 +1,25 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { AlertController, IonicModule } from '@ionic/angular';
+import {
+	AlertController,
+	IonBackButton,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardContent,
+	IonCardHeader,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonItemGroup,
+	IonLabel,
+	IonList,
+	IonMenuButton,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { IIdAndBrief } from '@sneat/core';
 import { IAssetBrief, IAssetCategory } from '@sneat/mod-assetus-core';
@@ -25,15 +42,29 @@ import { AssetsBasePage } from '../assets-base.page';
 	templateUrl: './assets-page.component.html',
 	providers: [SpaceComponentBaseParams],
 	imports: [
-		CommonModule,
 		FormsModule,
-		IonicModule,
 		RouterModule,
 		SpacePageTitleComponent,
 		ContactusServicesModule,
 		AssetusServicesModule,
 		SpaceServiceModule,
 		AssetsListComponent,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonButton,
+		IonIcon,
+		IonLabel,
+		IonMenuButton,
+		IonContent,
+		IonCard,
+		IonCardHeader,
+		IonList,
+		IonItem,
+		IonItemGroup,
+		IonItemDivider,
+		IonCardContent,
 	],
 }) /*implements AfterViewInit*/
 export class AssetsPageComponent extends AssetsBasePage implements OnInit {

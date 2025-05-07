@@ -1,11 +1,25 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonButtons,
+	IonContent,
+	IonHeader,
+	IonMenuButton,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 
 @Component({
 	selector: 'sneat-datatug-db-schemas',
 	templateUrl: './db-models-page.component.html',
-	imports: [CommonModule, FormsModule, IonicModule],
+	imports: [
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonMenuButton,
+		IonBackButton,
+		IonTitle,
+		IonContent,
+	],
 })
 export class DbModelsPageComponent {}

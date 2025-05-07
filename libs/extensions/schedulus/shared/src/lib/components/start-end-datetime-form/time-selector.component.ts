@@ -1,7 +1,18 @@
-import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ModalController } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCol,
+	IonGrid,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonRow,
+	IonSegment,
+	IonSegmentButton,
+	ModalController,
+} from '@ionic/angular/standalone';
 
 const morningHours: string[] = [
 	'00',
@@ -42,7 +53,19 @@ const eveningHours: string[] = [
 @Component({
 	selector: 'sneat-time-selector',
 	templateUrl: './time-selector.component.html',
-	imports: [CommonModule, IonicModule, FormsModule],
+	imports: [
+		FormsModule,
+		IonItem,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonSegment,
+		IonSegmentButton,
+		IonIcon,
+		IonGrid,
+		IonRow,
+		IonCol,
+	],
 })
 export class TimeSelectorComponent {
 	@Input() hideHeader = false;

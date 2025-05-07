@@ -6,13 +6,22 @@ import {
 	EventEmitter,
 	inject,
 	input,
-	OnInit,
 	Output,
 	signal,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonAccordion,
+	IonAccordionGroup,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonSpinner,
+} from '@ionic/angular/standalone';
 import { AnalyticsService, IIdAndBrief, IIdAndOptionalDbo } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import { SneatBaseComponent } from '@sneat/ui';
@@ -43,11 +52,19 @@ interface Category {
 @Component({
 	selector: 'sneat-trackers',
 	imports: [
-		CommonModule,
-		IonicModule,
 		TrackusSpaceServiceModule,
 		RouterLink,
 		TrackusApiServiceModule,
+		IonCard,
+		IonAccordionGroup,
+		IonAccordion,
+		IonItem,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonList,
+		IonSpinner,
 	],
 	templateUrl: './trackers.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,

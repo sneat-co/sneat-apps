@@ -1,8 +1,7 @@
-import { CommonModule } from '@angular/common';
+import { JsonPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
 import {
 	IonButton,
 	IonButtons,
@@ -46,7 +45,6 @@ export interface IHttpApiEndpoint {
 	selector: 'sneat-datatug-http-query-editor',
 	templateUrl: 'http-query-editor.component.html',
 	imports: [
-		CommonModule,
 		FormsModule,
 		IonCard,
 		IonItem,
@@ -70,6 +68,7 @@ export interface IHttpApiEndpoint {
 		IonListHeader,
 		IonCardHeader,
 		IonCardTitle,
+		JsonPipe,
 	],
 })
 export class HttpQueryEditorComponent {

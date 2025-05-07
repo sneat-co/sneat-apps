@@ -1,7 +1,13 @@
-import { CommonModule } from '@angular/common';
 import { Component, signal, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonButtons,
+	IonContent,
+	IonHeader,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import {
 	HappeningType,
@@ -19,13 +25,17 @@ import { HappeningFormComponent } from '@sneat/extensions-schedulus-shared';
 	selector: 'sneat-happening-new',
 	templateUrl: './new-happening-page.component.html',
 	imports: [
-		CommonModule,
 		FormsModule,
-		IonicModule,
 		ReactiveFormsModule,
 		HappeningFormComponent,
 		ContactusServicesModule,
 		SpaceServiceModule,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonTitle,
+		IonContent,
 	],
 	providers: [SpaceComponentBaseParams],
 })

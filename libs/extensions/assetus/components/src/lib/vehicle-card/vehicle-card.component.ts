@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -9,7 +8,12 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonCard,
+	IonItemDivider,
+	IonLabel,
+	IonList,
+} from '@ionic/angular/standalone';
 import { CountrySelectorComponent } from '@sneat/components';
 import {
 	carMakes,
@@ -29,8 +33,6 @@ import { VehicleEngineComponent } from '../vehicle-engine/vehicle-engine.compone
 	selector: 'sneat-vehicle-card',
 	templateUrl: './vehicle-card.component.html',
 	imports: [
-		CommonModule,
-		IonicModule,
 		FormsModule,
 		ReactiveFormsModule,
 		// SelectFromListComponent,
@@ -39,6 +41,10 @@ import { VehicleEngineComponent } from '../vehicle-engine/vehicle-engine.compone
 		AssetPossessionCardComponent,
 		VehicleEngineComponent,
 		AssetRegNumberInputComponent,
+		IonCard,
+		IonList,
+		IonItemDivider,
+		IonLabel,
 	],
 })
 export class VehicleCardComponent implements OnChanges {

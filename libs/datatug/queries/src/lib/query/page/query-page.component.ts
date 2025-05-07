@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IProjectRef } from '@sneat/ext-datatug-core';
@@ -25,7 +24,24 @@ import {
 } from '@sneat/ext-datatug-nav';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { IonicModule, ViewDidEnter } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonMenuButton,
+	IonSelect,
+	IonSelectOption,
+	IonTitle,
+	IonToolbar,
+	ViewDidEnter,
+} from '@ionic/angular/standalone';
 import {
 	IQueryEditorState,
 	IQueryEnvState,
@@ -42,7 +58,25 @@ import { HttpQueryEditorComponent } from '../http-query/http-query-editor.compon
 @Component({
 	selector: 'sneat-datatug-sql-editor',
 	templateUrl: './query-page.component.html',
-	imports: [CommonModule, FormsModule, IonicModule, HttpQueryEditorComponent],
+	imports: [
+		FormsModule,
+		HttpQueryEditorComponent,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonMenuButton,
+		IonBackButton,
+		IonTitle,
+		IonButton,
+		IonContent,
+		IonCard,
+		IonItem,
+		IonInput,
+		IonSelect,
+		IonSelectOption,
+		IonIcon,
+		IonLabel,
+	],
 })
 export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 	public project?: IProjectContext;

@@ -1,7 +1,14 @@
-import { NgIf } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Inject, Input, OnDestroy } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonCard,
+	IonCardContent,
+	IonCardHeader,
+	IonCardTitle,
+	IonIcon,
+	IonLabel,
+} from '@ionic/angular/standalone';
 import { ISneatUserState, SneatUserService } from '@sneat/auth-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { map, race, Subject, takeUntil } from 'rxjs';
@@ -11,7 +18,16 @@ import { countries, ICountry } from '../country-selector';
 @Component({
 	selector: 'sneat-user-country',
 	templateUrl: './user-country.component.html',
-	imports: [IonicModule, NgIf, CountryInputComponent],
+	imports: [
+		CountryInputComponent,
+		IonCardContent,
+		IonCardHeader,
+		IonCardTitle,
+		IonButton,
+		IonIcon,
+		IonLabel,
+		IonCard,
+	],
 })
 export class UserCountryComponent implements OnDestroy {
 	protected ipCountryID?: string;

@@ -1,68 +1,65 @@
 <ion-list>
 	@for (docType of docTypes; track docType.id) {
-		<ng-container>
-			<ion-item tappable class="with-buttons" (click)="selectDocType(docType)">
-				<ion-icon
-					color="medium"
-					[name]="
-						docType.expanded
-							? 'chevron-forward-outline'
-							: 'chevron-forward-outline'
-					"
-				/>
+		<ion-item tappable class="with-buttons" (click)="selectDocType(docType)">
+			<ion-icon
+				color="medium"
+				[name]="
+					docType.expanded
+						? 'chevron-forward-outline'
+						: 'chevron-forward-outline'
+				"
+			/>
 
-				<ion-label color="medium" [ngClass]="{ expanded: docType.expanded }">
-					<span style="padding-right: 0.5em">{{ docType.emoji }}</span>
-					{{ docType.title }}
-				</ion-label>
+			<ion-label color="medium" [ngClass]="{ expanded: docType.expanded }">
+				<span style="padding-right: 0.5em">{{ docType.emoji }}</span>
+				{{ docType.title }}
+			</ion-label>
 
-				@if (docType.documents && docType.documents.length) {
-					<ion-badge color="light" slot="end"
-						>{{ docType.documents.length }}
-					</ion-badge>
-				}
+			@if (docType.documents && docType.documents.length) {
+				<ion-badge color="light" slot="end"
+					>{{ docType.documents.length }}
+				</ion-badge>
+			}
 
-				<ion-buttons slot="end">
-					<ion-button color="medium" (click)="newDoc(docType, $event)">
-						<ion-icon name="add" />
-					</ion-button>
-				</ion-buttons>
-			</ion-item>
-			<ng-container *ngIf="docType.expanded">
-				@for (doc of docType.documents; track doc.id) {
-					<ion-item-sliding #slidingItem>
-						<ion-item button (click)="goDoc.emit(doc)">
-							<ion-badge color="light" *ngIf="doc.dbo?.countryID" slot="start"
-								>{{ doc.dbo?.countryID }}
+			<ion-buttons slot="end">
+				<ion-button color="medium" (click)="newDoc(docType, $event)">
+					<ion-icon name="add" />
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
+		@if (docType.expanded) {
+			@for (doc of docType.documents; track doc.id) {
+				<ion-item-sliding #slidingItem>
+					<ion-item button (click)="goDoc.emit(doc)">
+						@if (doc.dbo?.countryID) {
+							<ion-badge color="light" slot="start">
+								{{ doc.dbo?.countryID }}
 							</ion-badge>
-							<ion-badge
-								*ngIf="!doc.dbo?.countryID"
-								slot="start"
-								style="opacity: 0"
-								>--
-							</ion-badge>
-							<ion-label *ngIf="doc.brief?.title"
-								>{{ doc.brief?.title }}
-							</ion-label>
-							<ion-label *ngIf="doc.dbo?.extra?.number"
-								># {{ doc.dbo?.extra?.number }}
-							</ion-label>
-						</ion-item>
-						<!--                <ion-item-options side="start">-->
-						<!--                    <ion-item-option color="primary" (click)="archiveDocument(doc)">Archive</ion-item-option>-->
-						<!--                </ion-item-options>-->
-						<ion-item-options side="end">
-							<ion-item-option
-								color="danger"
-								(click)="deleteDocument(doc, slidingItem)"
-							>
-								<ion-icon name="trash" />
-								Remove
-							</ion-item-option>
-						</ion-item-options>
-					</ion-item-sliding>
-				}
-			</ng-container>
-		</ng-container>
+						} @else {
+							<ion-badge slot="start" style="opacity: 0">-- </ion-badge>
+						}
+						@if (doc.brief?.title) {
+							<ion-label>{{ doc.brief?.title }}</ion-label>
+						}
+
+						@if (doc.dbo?.extra?.number) {
+							<ion-label> # {{ doc.dbo?.extra?.number }} </ion-label>
+						}
+					</ion-item>
+					<!--                <ion-item-options side="start">-->
+					<!--                    <ion-item-option color="primary" (click)="archiveDocument(doc)">Archive</ion-item-option>-->
+					<!--                </ion-item-options>-->
+					<ion-item-options side="end">
+						<ion-item-option
+							color="danger"
+							(click)="deleteDocument(doc, slidingItem)"
+						>
+							<ion-icon name="trash" />
+							Remove
+						</ion-item-option>
+					</ion-item-options>
+				</ion-item-sliding>
+			}
+		}
 	}
 </ion-list>

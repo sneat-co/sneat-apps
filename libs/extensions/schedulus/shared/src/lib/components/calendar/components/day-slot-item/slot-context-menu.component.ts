@@ -1,5 +1,14 @@
 import { Component, inject, Input, signal } from '@angular/core';
-import { IonicModule, PopoverController } from '@ionic/angular';
+import {
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonItemGroup,
+	IonLabel,
+	IonSpinner,
+	IonText,
+	PopoverController,
+} from '@ionic/angular/standalone';
 import {
 	addSpace,
 	IContactusSpaceDboAndID,
@@ -44,12 +53,18 @@ const notImplemented = 'Sorry, not implemented yet';
 	selector: 'sneat-slot-context-menu',
 	templateUrl: 'slot-context-menu.component.html',
 	imports: [
-		IonicModule,
 		HappeningServiceModule,
 		ContactsSelectorModule,
 		HappeningSlotModalServiceModule,
 		CalendarNavServicesModule,
 		DaySlotItemComponent,
+		IonItemGroup,
+		IonItemDivider,
+		IonLabel,
+		IonItem,
+		IonSpinner,
+		IonText,
+		IonIcon,
 	],
 })
 export class SlotContextMenuComponent {

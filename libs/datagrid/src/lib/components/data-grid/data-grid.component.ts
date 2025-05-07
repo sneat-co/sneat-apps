@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	AfterViewInit,
 	Component,
@@ -11,9 +10,6 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -86,10 +82,6 @@ Tabulator.registerModule([
 		<p class="ion-margin-start">Rows: {{ data?.length }}</p>
 	`,
 	imports: [
-		CommonModule,
-		IonicModule,
-		RouterModule,
-		FormsModule,
 		// CodemirrorModule,
 	],
 })

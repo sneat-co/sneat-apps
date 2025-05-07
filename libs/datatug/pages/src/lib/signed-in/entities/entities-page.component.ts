@@ -1,11 +1,26 @@
-import { CommonModule } from '@angular/common';
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import {
+	IonBackButton,
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonMenuButton,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { WormholeModule } from '@sneat/wormhole';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import {
-	IonicModule,
 	NavController,
 	ToastController,
 	ViewDidEnter,
@@ -27,7 +42,26 @@ type Entities = IRecord<IEntity>[];
 @Component({
 	selector: 'sneat-datatug-entities',
 	templateUrl: './entities-page.component.html',
-	imports: [CommonModule, FormsModule, IonicModule, WormholeModule, RouterLink],
+	imports: [
+		FormsModule,
+		WormholeModule,
+		RouterLink,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonMenuButton,
+		IonBackButton,
+		IonTitle,
+		IonButton,
+		IonIcon,
+		IonLabel,
+		IonContent,
+		IonList,
+		IonItem,
+		IonBadge,
+		IonCard,
+		IonInput,
+	],
 })
 export class EntitiesPageComponent
 	implements OnDestroy, ViewDidEnter, ViewDidLeave
@@ -130,8 +164,6 @@ export class EntitiesPageComponent
 			error: (err) => this.errorLogger.logError(err, 'Failed to delete entity'),
 		});
 	}
-
-	trackById = (i: number, r: IRecord<IEntity>) => r.id || i;
 
 	private loadEntities(): void {
 		if (!this.project) {

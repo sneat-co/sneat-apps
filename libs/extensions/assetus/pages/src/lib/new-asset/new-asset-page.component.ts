@@ -1,7 +1,17 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonButtons,
+	IonCard,
+	IonContent,
+	IonHeader,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonRadio,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { IAssetCategory } from '@sneat/mod-assetus-core';
 import {
@@ -22,9 +32,7 @@ import { SpaceServiceModule } from '@sneat/space-services';
 	templateUrl: './new-asset-page.component.html',
 	providers: [SpaceComponentBaseParams],
 	imports: [
-		CommonModule,
 		FormsModule,
-		IonicModule,
 		SpacePageTitleComponent,
 		ContactusServicesModule,
 		AssetusServicesModule,
@@ -32,6 +40,16 @@ import { SpaceServiceModule } from '@sneat/space-services';
 		AssetAddVehicleComponent,
 		AssetAddDwellingComponent,
 		SpaceServiceModule,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonBackButton,
+		IonContent,
+		IonCard,
+		IonItem,
+		IonLabel,
+		IonList,
+		IonRadio,
 	],
 })
 export class NewAssetPageComponent extends SpaceBaseComponent {

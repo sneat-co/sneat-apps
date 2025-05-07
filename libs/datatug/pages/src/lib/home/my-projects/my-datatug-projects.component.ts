@@ -1,6 +1,14 @@
-import { CommonModule } from '@angular/common';
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { RouterLink } from '@angular/router';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+} from '@ionic/angular/standalone';
 import {
 	allUserProjectsAsFlatList,
 	IDatatugProjectBriefWithIdAndStoreRef,
@@ -23,7 +31,17 @@ import { LoadingItemsComponent } from '../loading-items-component';
 @Component({
 	selector: 'sneat-datatug-my-projects',
 	templateUrl: './my-datatug-projects.component.html',
-	imports: [CommonModule, IonicModule, LoadingItemsComponent],
+	imports: [
+		LoadingItemsComponent,
+		IonCard,
+		IonItem,
+		IonLabel,
+		IonButtons,
+		IonButton,
+		RouterLink,
+		IonIcon,
+		IonItemDivider,
+	],
 })
 export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 	@Input() title?: string;

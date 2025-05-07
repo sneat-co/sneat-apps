@@ -1,7 +1,14 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { Subscription } from 'rxjs';
 // import { Period } from 'sneat-shared/models/types';
 // import { DtoLiability } from 'sneat-shared/models/dto/dto-liability';
@@ -28,7 +35,16 @@ const monthNames = [
 	selector: 'sneat-month',
 	templateUrl: './month-page.component.html',
 	styleUrls: ['./month.page.scss'],
-	imports: [CommonModule, FormsModule, IonicModule],
+	imports: [
+		FormsModule,
+		IonHeader,
+		IonToolbar,
+		IonTitle,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonContent,
+	],
 })
 export class MonthPageComponent {
 	public segment: 'expense' | 'income' | 'balance' = 'expense';
@@ -43,8 +59,8 @@ export class MonthPageComponent {
 	// private allAssets?: Asset[];
 	// public assets?: Asset[];
 
-	constructor() // private errorLogger: IErrorLogger, // assetService: IAssetService,
-	{
+	constructor() {
+		// private errorLogger: IErrorLogger, // assetService: IAssetService,
 		// 	assetService.userAssets().subscribe({
 		// 		next: (assets) => {
 		// 			console.log('MonthPage.assets: ', assets);
@@ -181,8 +197,4 @@ export class MonthPageComponent {
 	collapse(): void {
 		this.expandedAssetId = '';
 	}
-
-	// trackById(i: number, record: IRecord): RxRecordKey | undefined {
-	// 	return record.id;
-	// }
 }

@@ -4,14 +4,10 @@ import { IonTitle } from '@ionic/angular/standalone';
 import { ISpaceContext } from '@sneat/space-models';
 
 @Component({
+	imports: [TitleCasePipe, IonTitle],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-space-page-title',
 	templateUrl: './space-page-title.component.html',
-	imports: [
-		// IonicModule, // TODO(help-wanted): For some reason this fails: import { ... } from '@ionic/angular/standalone';
-		TitleCasePipe,
-		IonTitle,
-	],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpacePageTitleComponent {
 	@Input() icon?: string;

@@ -1,7 +1,25 @@
-import { CommonModule } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { IonicModule, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
+import { ViewDidEnter, ViewDidLeave } from '@ionic/angular';
+import {
+	IonBackButton,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonCardContent,
+	IonCardHeader,
+	IonCardTitle,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonItem,
+	IonItemDivider,
+	IonLabel,
+	IonList,
+	IonMenuButton,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
 import { AuthStatus } from '@sneat/auth-core';
 import { SneatErrorCardComponent } from '@sneat/components';
 import { parseStoreRef } from '@sneat/core';
@@ -28,7 +46,27 @@ import { filter, takeUntil, tap } from 'rxjs/operators';
 @Component({
 	selector: 'sneat-datatug-store-page',
 	templateUrl: './datatug-store-page.component.html',
-	imports: [CommonModule, IonicModule, SneatErrorCardComponent, RouterLink],
+	imports: [
+		SneatErrorCardComponent,
+		RouterLink,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonMenuButton,
+		IonBackButton,
+		IonTitle,
+		IonContent,
+		IonCard,
+		IonList,
+		IonItemDivider,
+		IonLabel,
+		IonButton,
+		IonIcon,
+		IonItem,
+		IonCardHeader,
+		IonCardTitle,
+		IonCardContent,
+	],
 })
 export class DatatugStorePageComponent
 	implements OnInit, OnDestroy, ViewDidLeave, ViewDidEnter

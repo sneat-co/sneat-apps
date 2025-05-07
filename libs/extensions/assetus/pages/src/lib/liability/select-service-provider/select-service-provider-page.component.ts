@@ -1,22 +1,48 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { IRecord } from '@sneat/data';
-import { DtoServiceProvider } from '@sneat/dto';
+import {
+	IonBackButton,
+	IonButtons,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonItemDivider,
+	IonItemGroup,
+	IonLabel,
+	IonTitle,
+	IonToolbar,
+} from '@ionic/angular/standalone';
+import { LiabilityServiceType } from '@sneat/mod-assetus-core';
 import { SpaceComponentBaseParams } from '@sneat/space-components';
+import { AssetBasePage } from '../../asset-base.page';
 
 @Component({
 	selector: 'sneat-select-service-provider',
 	templateUrl: './select-service-provider-page.component.html',
 	providers: [SpaceComponentBaseParams],
-	imports: [CommonModule, FormsModule, IonicModule],
+	imports: [
+		FormsModule,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonTitle,
+		IonContent,
+		IonItemGroup,
+		IonLabel,
+		IonItem,
+		IonIcon,
+		IonItemDivider,
+		IonInput,
+		IonBackButton,
+	],
 })
 export class SelectServiceProviderPageComponent extends AssetBasePage {
-	serviceProviders: DtoServiceProvider[];
-	isOtherSelected: boolean;
-	serviceType: LiabilityServiceType;
-	serviceTypeTitle: string;
+	serviceProviders?: DtoServiceProvider[];
+	isOtherSelected = false;
+	serviceType?: LiabilityServiceType;
+	serviceTypeTitle?: string;
 
 	constructor(
 		// assetService: IAssetService,
@@ -74,6 +100,4 @@ export class SelectServiceProviderPageComponent extends AssetBasePage {
 	other(): void {
 		this.isOtherSelected = true;
 	}
-
-	trackById = (i: number, record: IRecord<unknown>) => record.id;
 }

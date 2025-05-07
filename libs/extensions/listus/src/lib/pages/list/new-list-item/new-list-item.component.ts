@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -8,7 +7,13 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, IonInput, ToastController } from '@ionic/angular';
+import {
+	IonButton,
+	IonIcon,
+	IonInput,
+	IonItem,
+	ToastController,
+} from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { RandomIdService } from '@sneat/random';
 import { ISpaceContext } from '@sneat/space-models';
@@ -22,7 +27,7 @@ import { IListItemWithUiState } from '../list-item-with-ui-state';
 
 @Component({
 	selector: 'sneat-new-list-item',
-	imports: [CommonModule, IonicModule, FormsModule],
+	imports: [FormsModule, IonItem, IonIcon, IonInput, IonButton],
 	templateUrl: './new-list-item.component.html',
 })
 export class NewListItemComponent {

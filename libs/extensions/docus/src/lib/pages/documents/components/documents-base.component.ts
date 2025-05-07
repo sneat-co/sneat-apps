@@ -1,5 +1,5 @@
 import { Directive, Inject, Input } from '@angular/core';
-import { IonItemSliding, ToastController } from '@ionic/angular';
+import { IonItemSliding, ToastController } from '@ionic/angular/standalone';
 import { eq } from '@sneat/core';
 import { IAssetDocumentContext } from '@sneat/mod-assetus-core';
 import { AssetService } from '@sneat/extensions-assetus-components';

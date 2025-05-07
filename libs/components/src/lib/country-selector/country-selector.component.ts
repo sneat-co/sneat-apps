@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
 	Component,
 	computed,
@@ -10,14 +9,14 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonSegment, IonSegmentButton } from '@ionic/angular/standalone';
 import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import { countries, GeoRegion, ICountry, unknownCountry } from './countries';
 
 @Component({
 	selector: 'sneat-country-selector',
 	templateUrl: './country-selector.component.html',
-	imports: [CommonModule, FormsModule, IonicModule, SelectFromListComponent],
+	imports: [FormsModule, SelectFromListComponent, IonSegment, IonSegmentButton],
 })
 export class CountrySelectorComponent implements OnChanges {
 	protected readonly geoRegions: readonly {

@@ -1,5 +1,12 @@
 import { Component, input, Input } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import {
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonIcon,
+	IonItem,
+	IonLabel,
+} from '@ionic/angular/standalone';
 import { virtualSliderAnimations } from '@sneat/components';
 import { ISpaceContext } from '@sneat/space-models';
 import { CalendarDataProvider } from '../../../../services/calendar-data-provider';
@@ -13,7 +20,16 @@ import { CalendarWeekComponent } from './calendar-week.component';
 	selector: 'sneat-week-card',
 	templateUrl: 'calendar-week-card.component.html',
 	animations: virtualSliderAnimations,
-	imports: [IonicModule, CalendarWeekComponent, CalendarWeekTitleComponent],
+	imports: [
+		CalendarWeekComponent,
+		CalendarWeekTitleComponent,
+		IonCard,
+		IonItem,
+		IonButtons,
+		IonButton,
+		IonIcon,
+		IonLabel,
+	],
 })
 // implements OnInit
 export class CalendarWeekCardComponent extends SwipeableBaseComponent {

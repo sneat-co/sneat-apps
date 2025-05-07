@@ -7,35 +7,37 @@
 			label="Country of registration"
 			(countryIDChange)="countryChanged($event)"
 		/>
-		<sneat-asset-reg-number
-			*ngIf="vehicleAsset?.dbo?.countryID"
-			[space]="space"
-			[assetID]="vehicleAsset?.id"
-			[regNumber]="vehicleAsset?.dbo?.extra?.regNumber"
-			[countyID]="vehicleAsset?.dbo?.countryID"
-			[hideSaveButton]="true"
-			[isSkipped]="regNumberSkipped"
-			(isSkippedChange)="onRegNumberSkipped()"
-			(regNumberChange)="onRegNumberChanged($event)"
-		/>
+		@if (vehicleAsset?.dbo?.countryID) {
+			<sneat-asset-reg-number
+				[space]="space"
+				[assetID]="vehicleAsset?.id"
+				[regNumber]="vehicleAsset?.dbo?.extra?.regNumber"
+				[countyID]="vehicleAsset?.dbo?.countryID"
+				[hideSaveButton]="true"
+				[isSkipped]="regNumberSkipped"
+				(isSkippedChange)="onRegNumberSkipped()"
+				(regNumberChange)="onRegNumberChanged($event)"
+			/>
+		}
 	</ion-list>
 </ion-card>
 
 <ion-card>
-	<sneat-make-model-card
-		*ngIf="
-			vehicleAsset?.id ||
-			(vehicleAsset?.dbo?.type &&
-				vehicleAsset?.dbo?.countryID &&
-				(regNumberSkipped || !!vehicleAsset?.dbo?.extra?.regNumber))
-		"
-		[assetType]="vehicleAsset?.dbo?.type"
-		[make]="vehicleAsset?.dbo?.extra?.make"
-		[model]="vehicleAsset?.dbo?.extra?.model"
-		(makeChange)="makeChanged($event)"
-		(modelChange)="modelChanged($event)"
-	/>
-	<ng-container *ngIf="vehicleAsset?.dbo?.extra?.model">
+	@if (
+		vehicleAsset?.id ||
+		(vehicleAsset?.dbo?.type &&
+			vehicleAsset?.dbo?.countryID &&
+			(regNumberSkipped || !!vehicleAsset?.dbo?.extra?.regNumber))
+	) {
+		<sneat-make-model-card
+			[assetType]="vehicleAsset?.dbo?.type"
+			[make]="vehicleAsset?.dbo?.extra?.make"
+			[model]="vehicleAsset?.dbo?.extra?.model"
+			(makeChange)="makeChanged($event)"
+			(modelChange)="modelChanged($event)"
+		/>
+	}
+	@if (vehicleAsset?.dbo?.extra?.model) {
 		<ion-item-divider>
 			<ion-label>Engine</ion-label>
 		</ion-item-divider>
@@ -43,11 +45,12 @@
 			[vehicleAsset]="vehicleAsset"
 			(vehicleAssetChange)="onAssetChanged($event)"
 		/>
-	</ng-container>
+	}
 </ion-card>
 
-<sneat-asset-possession-card
-	*ngIf="vehicleAsset?.dbo?.extra?.model"
-	[asset]="vehicleAsset"
-	(assetChange)="onAssetChanged($event)"
-/>
+@if (vehicleAsset?.dbo?.extra?.model) {
+	<sneat-asset-possession-card
+		[asset]="vehicleAsset"
+		(assetChange)="onAssetChanged($event)"
+	/>
+}

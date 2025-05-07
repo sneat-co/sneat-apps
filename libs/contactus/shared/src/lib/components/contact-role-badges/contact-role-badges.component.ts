@@ -1,6 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonBadge } from '@ionic/angular/standalone';
 
 @Component({
 	selector: 'sneat-contact-role-badges',
@@ -12,9 +11,12 @@ import { IonicModule } from '@ionic/angular';
 			}
 		`,
 	],
-	template:
-		'<ion-badge color="medium" *ngFor="let r of _roles" class="ion-margin-start">{{ r }}</ion-badge>',
-	imports: [CommonModule, IonicModule],
+	template: `
+		@for (r of _roles; track r) {
+			<ion-badge color="medium" class="ion-margin-start">{{ r }}</ion-badge>
+		}
+	`,
+	imports: [IonBadge],
 })
 export class ContactRoleBadgesComponent implements OnChanges {
 	private readonly alwaysHide: readonly string[] = [
