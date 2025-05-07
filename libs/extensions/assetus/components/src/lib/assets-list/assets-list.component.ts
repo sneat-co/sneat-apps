@@ -14,6 +14,7 @@ import {
 	IonItem,
 	IonLabel,
 	IonSpinner,
+	ModalController,
 } from '@ionic/angular/standalone';
 import { IIdAndBrief } from '@sneat/core';
 import { AssetCategory, IAssetBrief } from '@sneat/mod-assetus-core';
@@ -22,11 +23,11 @@ import { ISpaceContext } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
 import { AssetService } from '../services';
 import { MileAgeDialogComponent } from '../mileage-dialog/mileage-dialog.component';
-import { ModalController } from '@ionic/angular';
 
 @Component({
 	selector: 'sneat-assets-list',
 	templateUrl: './assets-list.component.html',
+	providers: [ModalController],
 	imports: [
 		IonItem,
 		IonSpinner,
