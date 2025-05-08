@@ -5,8 +5,6 @@ import {
 	ModalController,
 	PopoverController,
 	ToastController,
-} from '@ionic/angular';
-import {
 	IonBackButton,
 	IonBadge,
 	IonButton,

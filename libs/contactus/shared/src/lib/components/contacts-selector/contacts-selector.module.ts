@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
 import { ContactsSelectorComponent } from './contacts-selector.component';
 import { ContactsSelectorService } from './contacts-selector.service';
 
@@ -11,6 +10,5 @@ import { ContactsSelectorService } from './contacts-selector.service';
 		},
 		ContactsSelectorService,
 	],
-	imports: [IonicModule],
 })
 export class ContactsSelectorModule {}

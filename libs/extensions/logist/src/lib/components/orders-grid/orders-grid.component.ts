@@ -7,8 +7,11 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
-import { NavController } from '@ionic/angular';
-import { IonCard, IonCardContent } from '@ionic/angular/standalone';
+import {
+	IonCard,
+	IonCardContent,
+	NavController,
+} from '@ionic/angular/standalone';
 import { DataGridComponent } from '@sneat/datagrid';
 import { IGridColumn } from '@sneat/grid';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';

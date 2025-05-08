@@ -1,6 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 import {
 	IonBackButton,
 	IonButton,
@@ -19,6 +18,8 @@ import {
 	IonMenuButton,
 	IonTitle,
 	IonToolbar,
+	ViewDidEnter,
+	ViewDidLeave,
 } from '@ionic/angular/standalone';
 import { AuthStatus } from '@sneat/auth-core';
 import { SneatErrorCardComponent } from '@sneat/components';

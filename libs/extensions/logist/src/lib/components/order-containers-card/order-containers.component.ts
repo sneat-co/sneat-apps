@@ -8,8 +8,8 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
-import { ModalController } from '@ionic/angular';
 import {
+	ModalController,
 	IonCard,
 	IonCol,
 	IonGrid,

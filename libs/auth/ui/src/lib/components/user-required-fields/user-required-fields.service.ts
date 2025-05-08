@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/standalone';
 import { UserRequiredFieldsModalComponent } from './user-required-fields-modal.component';
 
 @Injectable()

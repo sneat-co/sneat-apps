@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular/standalone';
 
 @Component({
 	selector: 'sneat-root',

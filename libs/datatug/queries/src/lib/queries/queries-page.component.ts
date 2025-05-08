@@ -23,7 +23,11 @@ import {
 	IonToolbar,
 } from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ViewDidEnter, ViewDidLeave, ViewWillEnter } from '@ionic/angular';
+import {
+	ViewDidEnter,
+	ViewDidLeave,
+	ViewWillEnter,
+} from '@ionic/angular/standalone';
 import { getStoreId, IProjectContext } from '@sneat/ext-datatug-nav';
 import { QueriesTabComponent } from './queries-tab.component';
 

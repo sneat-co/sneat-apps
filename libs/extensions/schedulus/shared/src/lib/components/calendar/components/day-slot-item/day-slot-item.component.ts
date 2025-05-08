@@ -1,6 +1,7 @@
 import { Component, Input, input, computed } from '@angular/core';
-import { PopoverController, PopoverOptions } from '@ionic/angular';
 import {
+	PopoverController,
+	PopoverOptions,
 	IonBadge,
 	IonButton,
 	IonButtons,

@@ -1,7 +1,7 @@
 import { Component, Inject, Input } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
 import {
+	ModalController,
 	IonButton,
 	IonButtons,
 	IonContent,

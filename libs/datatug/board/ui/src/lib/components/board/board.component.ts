@@ -4,7 +4,6 @@ import {
 	Inject,
 	Input,
 } from '@angular/core';
-import { ModalController } from '@ionic/angular';
 import {
 	IonButton,
 	IonCol,
@@ -13,6 +12,7 @@ import {
 	IonLabel,
 	IonRow,
 	IonText,
+	ModalController,
 } from '@ionic/angular/standalone';
 import { NewCardDialogComponent } from '../../modals/new-card-dialog/new-card-dialog.component';
 import { IBoardContext, IBoardDef } from '@sneat/ext-datatug-models';

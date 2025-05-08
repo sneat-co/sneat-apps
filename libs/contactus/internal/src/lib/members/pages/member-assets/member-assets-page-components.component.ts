@@ -7,14 +7,12 @@ import {
 	IonTitle,
 	IonToolbar,
 } from '@ionic/angular/standalone';
+import { ContactService } from '@sneat/contactus-services';
 import { MemberBasePage } from '../member-base-page';
-import { CommuneBasePageParams } from 'sneat-shared/services/params';
-import { IMemberService } from 'sneat-shared/services/interfaces';
 
 @Component({
 	selector: 'sneat-member-assets',
 	templateUrl: './member-assets-page-components.component.html',
-	providers: [CommuneBasePageParams],
 	imports: [
 		IonHeader,
 		IonToolbar,
@@ -25,7 +23,7 @@ import { IMemberService } from 'sneat-shared/services/interfaces';
 	],
 })
 export class MemberAssetsPageComponent extends MemberBasePage {
-	constructor(params: CommuneBasePageParams, membersService: IMemberService) {
-		super(params, membersService);
+	constructor(contactService: ContactService) {
+		super('MemberAssetsPageComponent', contactService);
 	}
 }

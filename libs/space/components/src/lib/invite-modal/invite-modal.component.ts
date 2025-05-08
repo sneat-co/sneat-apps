@@ -6,7 +6,6 @@ import {
 	UntypedFormGroup,
 	Validators,
 } from '@angular/forms';
-import { ModalController, ToastController } from '@ionic/angular';
 import {
 	IonButton,
 	IonButtons,
@@ -24,6 +23,8 @@ import {
 	IonTextarea,
 	IonTitle,
 	IonToolbar,
+	ModalController,
+	ToastController,
 } from '@ionic/angular/standalone';
 import { ContactTitlePipe, getContactTitle } from '@sneat/components';
 import {

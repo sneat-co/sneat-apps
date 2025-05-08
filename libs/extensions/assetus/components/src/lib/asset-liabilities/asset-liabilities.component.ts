@@ -3,8 +3,6 @@ import {
 	AlertController,
 	ModalController,
 	PopoverController,
-} from '@ionic/angular';
-import {
 	IonButton,
 	IonButtons,
 	IonIcon,

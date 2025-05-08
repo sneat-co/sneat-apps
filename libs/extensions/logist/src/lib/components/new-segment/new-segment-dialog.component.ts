@@ -1,6 +1,9 @@
 import { Component, Inject, Input } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { IonContent, IonHeader } from '@ionic/angular/standalone';
+import {
+	IonContent,
+	IonHeader,
+	ModalController,
+} from '@ionic/angular/standalone';
 import { DialogHeaderComponent } from '@sneat/components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ILogistOrderContext, IOrderContainer } from '../../dto';

@@ -8,7 +8,6 @@ import {
 	IonTitle,
 	IonToolbar,
 } from '@ionic/angular/standalone';
-import { DatatugServicesBaseModule } from '@sneat/ext-datatug-services-base';
 import { DatatugServicesStoreModule } from '@sneat/ext-datatug-services-repo';
 
 @Component({
@@ -16,7 +15,6 @@ import { DatatugServicesStoreModule } from '@sneat/ext-datatug-services-repo';
 	templateUrl: './datatug-my-page.component.html',
 	imports: [
 		FormsModule,
-		DatatugServicesBaseModule,
 		DatatugServicesStoreModule,
 		IonHeader,
 		IonToolbar,

@@ -12,7 +12,6 @@ import {
 	ReactiveFormsModule,
 	UntypedFormGroup,
 } from '@angular/forms';
-import { NavController } from '@ionic/angular';
 import {
 	IonButton,
 	IonCard,
@@ -25,6 +24,7 @@ import {
 	IonLabel,
 	IonRow,
 	IonSpinner,
+	NavController,
 } from '@ionic/angular/standalone';
 import { namesToUrlParams } from '@sneat/auth-models';
 import { MemberService } from '@sneat/contactus-services';

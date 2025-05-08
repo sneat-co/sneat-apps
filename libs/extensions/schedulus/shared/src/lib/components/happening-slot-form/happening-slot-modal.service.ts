@@ -1,5 +1,5 @@
 import { Injectable, NgModule } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/standalone';
 import {
 	IHappeningContext,
 	ISlotAdjustment,

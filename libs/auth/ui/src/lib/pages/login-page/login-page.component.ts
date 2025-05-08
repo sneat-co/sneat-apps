@@ -2,8 +2,8 @@ import { Component, Inject, Optional, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
-import { NavController } from '@ionic/angular';
 import {
+	NavController,
 	IonBackButton,
 	IonButtons,
 	IonCard,

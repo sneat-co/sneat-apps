@@ -15,7 +15,6 @@ import {
 	IonToolbar,
 } from '@ionic/angular/standalone';
 import { CopyrightComponent } from '@sneat/components';
-import { DatatugServicesBaseModule } from '@sneat/ext-datatug-services-base';
 import { DatatugServicesStoreModule } from '@sneat/ext-datatug-services-repo';
 import { WormholeModule } from '@sneat/wormhole';
 import { MyDatatugProjectsComponent } from './my-projects';
@@ -36,7 +35,6 @@ import { MyStoresComponent } from './my-stores';
 		FormsModule,
 		// CoreModule,
 		WormholeModule,
-		DatatugServicesBaseModule,
 		DatatugServicesStoreModule,
 		// NewProjectFormComponent,
 		// GuiGridModule,

@@ -9,8 +9,8 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { IonInput, ModalController } from '@ionic/angular';
 import {
+	ModalController,
 	IonButton,
 	IonButtons,
 	IonCardContent,

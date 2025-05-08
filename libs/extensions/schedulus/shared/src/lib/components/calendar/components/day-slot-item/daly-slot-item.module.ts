@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
 import { ContactsAsBadgesComponent } from '@sneat/components';
 import { MembersSelectorModule } from '@sneat/contactus-shared';
 import {
@@ -18,7 +17,6 @@ import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
 	// declarations: [SlotContextMenuComponent],
 	// exports: [DaySlotItemComponent],
 	imports: [
-		IonicModule,
 		HappeningServiceModule,
 		MembersSelectorModule,
 		HappeningSlotModalServiceModule,

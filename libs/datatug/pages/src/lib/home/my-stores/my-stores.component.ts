@@ -22,7 +22,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DatatugNavService } from '@sneat/ext-datatug-services-nav';
-import { NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular/standalone';
 import { DatatugUserService } from '@sneat/ext-datatug-services-base';
 import { AuthStatus } from '@sneat/auth-core';
 import { IDatatugStoreContext } from '@sneat/ext-datatug-nav';

@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { memberRoutes, membersRoutes } from './members';
+import { membersRoutes } from './members';
 
 // import {guardRoute} from '../../utils/guard-route';
 
@@ -33,7 +33,6 @@ export const contactusRoutes: Route[] = [
 			import('./pages').then((m) => m.NewLocationPageComponent),
 		// ...guardRoute,
 	},
-	...memberRoutes,
 	...membersRoutes,
 	// {
 	// 	path: 'applicants',

@@ -8,8 +8,8 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
 import {
+	PopoverController,
 	IonButton,
 	IonButtons,
 	IonIcon,

@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { IonInput, ModalController } from '@ionic/angular';
+import { IonInput, ModalController } from '@ionic/angular/standalone';
 import { share } from 'rxjs/operators';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {

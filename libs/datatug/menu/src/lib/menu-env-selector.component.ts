@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController } from '@ionic/angular/standalone';
 import { IErrorLogger } from '@sneat/logging';
 import {
 	DatatugNavContextService,

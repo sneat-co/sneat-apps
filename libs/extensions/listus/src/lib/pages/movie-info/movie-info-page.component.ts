@@ -1,8 +1,8 @@
 import { NgForOf, NgIf, NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { NavController } from '@ionic/angular';
 import {
+	NavController,
 	IonBackButton,
 	IonBadge,
 	IonButton,

@@ -1,7 +1,7 @@
 import { NgIf } from '@angular/common';
 import { Component, Inject, Input } from '@angular/core';
-import { ModalController } from '@ionic/angular';
 import {
+	ModalController,
 	IonButton,
 	IonContent,
 	IonHeader,

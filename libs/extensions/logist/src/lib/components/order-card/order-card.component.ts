@@ -1,8 +1,9 @@
 import { DatePipe, NgIf } from '@angular/common';
 import { Component, Inject, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { PopoverController, ToastController } from '@ionic/angular';
 import {
+	PopoverController,
+	ToastController,
 	IonButton,
 	IonButtons,
 	IonCard,

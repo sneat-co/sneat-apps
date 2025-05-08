@@ -1,6 +1,5 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ModalController, NavController } from '@ionic/angular';
 import {
 	IonBackButton,
 	IonBadge,
@@ -23,6 +22,8 @@ import {
 	IonSegmentButton,
 	IonTitle,
 	IonToolbar,
+	ModalController,
+	NavController,
 } from '@ionic/angular/standalone';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

@@ -9,8 +9,8 @@ const routes: Routes = [
 	},
 	{
 		path: 'folder/:id',
-		loadChildren: () =>
-			import('./folder/folder.module').then((m) => m.FolderPageModule),
+		loadComponent: () =>
+			import('./folder/folder-page.component').then((m) => m.FolderPageComponent),
 	},
 ];
 
@@ -20,5 +20,6 @@ const routes: Routes = [
 	],
 	exports: [RouterModule],
 })
-export class AppRoutingModule {
+export class AppRoutingModule
+{
 }

@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, Inject } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
 import {
+	NavController,
 	IonBackButton,
 	IonCard,
 	IonCol,

@@ -1,5 +1,5 @@
 import { Component, Inject, Input } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular/standalone';
 import { IAssetContext, AssetCategory } from '@sneat/mod-assetus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';

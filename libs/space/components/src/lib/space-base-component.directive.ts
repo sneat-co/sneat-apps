@@ -7,7 +7,7 @@ import {
 	signal,
 } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular/standalone';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
 import { equalSpaceRefs, ILogger, ISpaceRef, SpaceType } from '@sneat/core';
 import { equalSpaceBriefs, ISpaceBrief, ISpaceDbo } from '@sneat/dto';

@@ -7,8 +7,8 @@ import {
 	Output,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NavController } from '@ionic/angular';
 import {
+	NavController,
 	IonBadge,
 	IonButton,
 	IonButtons,

@@ -2,7 +2,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { EnvironmentProviders, Provider } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { RouteReuseStrategy } from '@angular/router';
-import { IonicRouteStrategy } from '@ionic/angular';
+import { IonicRouteStrategy } from '@ionic/angular/standalone';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { DefaultSneatAppApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
 import { TelegramAuthService } from '@sneat/auth-core';

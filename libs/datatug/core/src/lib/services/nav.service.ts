@@ -1,6 +1,6 @@
 import { Inject, Injectable, NgZone } from '@angular/core';
 import { Params } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular/standalone';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
 import { IMemberBrief } from '@sneat/contactus-core';
 import { AnalyticsService, IAnalyticsService, IIdAndBrief } from '@sneat/core';

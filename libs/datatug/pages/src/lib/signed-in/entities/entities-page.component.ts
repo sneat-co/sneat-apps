@@ -25,7 +25,7 @@ import {
 	ToastController,
 	ViewDidEnter,
 	ViewDidLeave,
-} from '@ionic/angular';
+} from '@ionic/angular/standalone';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { IEntity, IProjEntity } from '@sneat/ext-datatug-models';
 import { IProjectContext } from '@sneat/ext-datatug-nav';

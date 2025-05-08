@@ -1,5 +1,4 @@
 import { Component, Inject, Input } from '@angular/core';
-import { NavController } from '@ionic/angular';
 import {
 	IonButton,
 	IonButtons,
@@ -8,6 +7,7 @@ import {
 	IonItemDivider,
 	IonLabel,
 	IonText,
+	NavController,
 } from '@ionic/angular/standalone';
 import { ISpaceDbo } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';

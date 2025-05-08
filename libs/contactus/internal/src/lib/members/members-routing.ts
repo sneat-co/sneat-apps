@@ -20,8 +20,10 @@ export const membersRoutes: Route[] = [
 	{
 		path: 'member/:contactID',
 		data: { title: 'Member' },
-		loadChildren: () =>
-			import('./pages/member-routing').then((m) => m.MemberRoutingModule),
+		loadComponent: () =>
+			import('./pages/member/space-member-page.component').then(
+				(m) => m.SpaceMemberPageComponent,
+			),
 	},
 
 	// {

@@ -6,8 +6,8 @@ import {
 	Input,
 	Output,
 } from '@angular/core';
-import { NavController } from '@ionic/angular';
 import {
+	NavController,
 	IonAvatar,
 	IonBadge,
 	IonButton,

@@ -9,8 +9,8 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ToastController } from '@ionic/angular';
 import {
+	ToastController,
 	IonButton,
 	IonButtons,
 	IonCol,

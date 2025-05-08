@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular/standalone';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {

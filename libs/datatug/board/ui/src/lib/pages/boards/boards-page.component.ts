@@ -1,5 +1,4 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
 import {
 	IonBackButton,
 	IonButton,
@@ -11,6 +10,7 @@ import {
 	IonMenuButton,
 	IonTitle,
 	IonToolbar,
+	AlertController,
 } from '@ionic/angular/standalone';
 import { SneatCardListComponent } from '@sneat/components';
 import {

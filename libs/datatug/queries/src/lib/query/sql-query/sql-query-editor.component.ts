@@ -69,7 +69,7 @@ import {
 import { IEnvContext, IProjectContext } from '@sneat/ext-datatug-nav';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { ViewDidEnter } from '@ionic/angular';
+import { ViewDidEnter } from '@ionic/angular/standalone';
 import {
 	IQueryEditorState,
 	IQueryEnvState,

@@ -19,8 +19,8 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
 import {
+	ModalController,
 	NavController,
 	IonButton,
 	IonCard,

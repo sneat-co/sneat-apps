@@ -1,4 +1,4 @@
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController } from '@ionic/angular/standalone';
 import { Injectable } from '@angular/core';
 import { QueryType } from '@sneat/ext-datatug-models';
 import { QueryEditorStateService } from './query-editor-state-service';

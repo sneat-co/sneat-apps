@@ -3,7 +3,7 @@ import { DataGridComponent } from '@sneat/datagrid';
 import { SqlEditorComponent } from '@sneat/ext-datatug-components-sqleditor';
 import { Observable, Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/standalone';
 import {
 	IParameterDef,
 	IParameterValueWithoutID,

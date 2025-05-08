@@ -1,6 +1,7 @@
 import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
-import { IonInput, ModalController } from '@ionic/angular';
 import {
+	IonInput,
+	ModalController,
 	IonButton,
 	IonButtons,
 	IonContent,

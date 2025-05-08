@@ -12,7 +12,6 @@ import {
 	Router,
 	RouterLink,
 } from '@angular/router';
-import { MenuController } from '@ionic/angular';
 import {
 	IonButton,
 	IonButtons,
@@ -22,6 +21,7 @@ import {
 	IonList,
 	IonSelect,
 	IonSelectOption,
+	MenuController,
 } from '@ionic/angular/standalone';
 import { ISneatUserState } from '@sneat/auth-core';
 import { IUserSpaceBrief } from '@sneat/auth-models';

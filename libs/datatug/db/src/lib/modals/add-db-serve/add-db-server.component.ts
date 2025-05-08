@@ -1,6 +1,5 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
 import {
 	IonButton,
 	IonButtons,
@@ -13,6 +12,7 @@ import {
 	IonList,
 	IonSelect,
 	IonSelectOption,
+	ModalController,
 } from '@ionic/angular/standalone';
 import { Subject } from 'rxjs';
 import { IDbServer } from '@sneat/ext-datatug-models';

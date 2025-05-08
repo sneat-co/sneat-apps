@@ -8,8 +8,8 @@ import {
 	Output,
 	signal,
 } from '@angular/core';
-import { ToastController } from '@ionic/angular';
 import {
+	ToastController,
 	IonBadge,
 	IonButton,
 	IonButtons,

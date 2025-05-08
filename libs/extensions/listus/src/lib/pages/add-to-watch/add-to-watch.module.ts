@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
-import { IonicModule } from '@ionic/angular';
 import { MovieCardComponent } from '../../movie-card';
 
 import { AddToWatchPageComponent } from './add-to-watch-page.component';
@@ -17,13 +15,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [
-		MovieCardComponent,
-		CommonModule,
-		FormsModule,
-		IonicModule,
-		RouterModule.forChild(routes),
-	],
+	imports: [MovieCardComponent, FormsModule, RouterModule.forChild(routes)],
 	providers: [TmdbService],
 	declarations: [AddToWatchPageComponent],
 })

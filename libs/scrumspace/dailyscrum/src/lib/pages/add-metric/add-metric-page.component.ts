@@ -30,7 +30,7 @@ import {
 	MetricColor,
 } from '../../models/interfaces';
 import { SpaceService } from '../../services/space.service';
-import { NavController, ToastController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat-team/ui-core';
 import { ActivatedRoute } from '@angular/router';
 

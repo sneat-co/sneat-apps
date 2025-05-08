@@ -1,5 +1,5 @@
 import { Inject } from '@angular/core';
-import { ModalController, ModalOptions } from '@ionic/angular';
+import { ModalController, ModalOptions } from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISelectItem } from '../selector-interfaces';
 import { MultiSelectorComponent } from './multi-selector.component';
