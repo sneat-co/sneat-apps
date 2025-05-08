@@ -15,7 +15,7 @@
 	</ion-item>
 }
 @if ($authStatus() === "notAuthenticated") {
-	<ion-item routerLink="/login">
+	<ion-item routerLink="/login" tappable="true">
 		<ion-icon slot="start" name="person-circle-outline" />
 		<ion-label color="primary"> Please sign in</ion-label>
 	</ion-item>
