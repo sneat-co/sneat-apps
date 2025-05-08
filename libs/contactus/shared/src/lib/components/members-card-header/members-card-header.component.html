@@ -1,4 +1,5 @@
 <ion-item
+	tappable="true"
 	routerLink="./members"
 	(click)="goMembers($event)"
 	class="sneat-tiny-end-padding"
@@ -11,8 +12,11 @@
 	/>
 	<ion-label color="primary" style="font-weight: bold">Members</ion-label>
 	<ion-buttons slot="end">
-		<ion-button routerLink="new-member" color="tertiary"
-								(click)="$event.stopPropagation()">
+		<ion-button
+			routerLink="new-member"
+			color="tertiary"
+			(click)="$event.stopPropagation()"
+		>
 			<ion-icon name="add-outline" slot="start" />
 			<ion-label>Add</ion-label>
 		</ion-button>

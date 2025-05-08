@@ -20,8 +20,6 @@ import { CalendarDayComponent } from './components/calendar-day/calendar-day.com
 import { Weekday } from './weekday';
 
 @Component({
-	selector: 'sneat-calendar-brief',
-	templateUrl: './calendar-brief.component.html',
 	imports: [
 		RouterLink,
 		CalendarAddButtonsComponent,
@@ -37,6 +35,8 @@ import { Weekday } from './weekday';
 	],
 	providers: [CalendarFilterService],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-calendar-brief',
+	templateUrl: './calendar-brief.component.html',
 })
 export class CalendarBriefComponent extends CalendarBaseComponent {
 	protected readonly $today = signal<Weekday | undefined>(undefined);
