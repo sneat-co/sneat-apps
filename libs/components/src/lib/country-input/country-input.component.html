@@ -1,9 +1,7 @@
-<ion-item class="sneat-tiny-end-padding">
-	<ion-label color="medium">
-		{{ label }}
-	</ion-label>
+<ion-item class="sneat-tiny-end-padding" lines="none">
 	<ion-select
 		interface="popover"
+		[label]="label"
 		[(ngModel)]="countryID"
 		(ionChange)="onCountryChanged()"
 	>

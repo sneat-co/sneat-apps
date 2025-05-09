@@ -1,9 +1,9 @@
 @let userCountryID = $userCountryID();
 @let userHasCountry = $userHasCountry();
 
-@if ((doNotHide && userHasCountry) || ($ipCountry() && !userHasCountry)) {
+@if (doNotHide || ($ipCountry() && !userHasCountry)) {
 	<ion-card>
-		@if (userHasCountry) {
+		@if (userHasCountry || !$ipCountry()) {
 			<ion-card-content>
 				<sneat-country-input
 					label="Country of residence"

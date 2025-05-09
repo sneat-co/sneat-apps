@@ -5,7 +5,6 @@ import {
 	IonButtons,
 	IonIcon,
 	IonItem,
-	IonLabel,
 	IonSelect,
 	IonSelectOption,
 } from '@ionic/angular/standalone';
@@ -17,7 +16,6 @@ import { countries } from '../country-selector';
 	imports: [
 		FormsModule,
 		IonItem,
-		IonLabel,
 		IonSelect,
 		IonSelectOption,
 		IonButtons,
