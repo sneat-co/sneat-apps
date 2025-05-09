@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	computed,
+	signal,
+} from '@angular/core';
 import {
 	IonBackButton,
 	IonButton,
@@ -35,10 +39,7 @@ import { BudgetPeriodsComponent } from './budget-periods.component';
 import { CalendariumSpaceService } from '@sneat/extensions-schedulus-shared';
 
 @Component({
-	selector: 'sneat-budget-page',
-	templateUrl: './budget-page.component.html',
 	imports: [
-		FormsModule,
 		ContactusServicesModule,
 		BudgetPeriodsComponent,
 		SpaceServiceModule,
@@ -60,17 +61,22 @@ import { CalendariumSpaceService } from '@sneat/extensions-schedulus-shared';
 		IonList,
 	],
 	providers: [SpaceComponentBaseParams, CalendariumSpaceService],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-budget-page',
+	templateUrl: './budget-page.component.html',
 })
 export class BudgetPageComponent extends SpaceBaseComponent {
-	public total?: number;
-	public liabilitiesMode: LiabilitiesMode = 'expenses';
-	public activePeriod: RepeatPeriod = 'weekly';
+	protected readonly $total = signal<number | undefined>(undefined);
+	protected readonly $liabilitiesMode = signal<LiabilitiesMode>('expenses');
+
+	protected $activePeriod = signal<RepeatPeriod>('weekly');
+
 	// public showIncomes: boolean = true;
 	// public showExpenses: boolean = true;
 
-	public assetGroups: AssetGroup[] | undefined;
+	protected assetGroups: AssetGroup[] | undefined;
 
-	public members: Member[] | undefined;
+	protected members: Member[] | undefined;
 
 	public get totals(): Totals | undefined {
 		return undefined;
@@ -78,19 +84,19 @@ export class BudgetPageComponent extends SpaceBaseComponent {
 
 	constructor(
 		private readonly calendariumSpaceService: CalendariumSpaceService,
-		// private readonly assetGroupsService: IAssetGroupService,
-		// private readonly memberService: IMemberService,
 	) {
 		super('BudgetPageComponent');
 		this.route.queryParamMap.subscribe((qp) => {
 			const tab = qp.get('tab');
 			if (tab === 'incomes' || tab === 'expenses') {
-				this.liabilitiesMode = tab as LiabilitiesMode;
+				this.$liabilitiesMode.set(tab);
 			}
 		});
 	}
 
-	protected calendariumSpaceDbo?: ICalendariumSpaceDbo;
+	protected readonly $calendariumSpaceDbo = signal<
+		ICalendariumSpaceDbo | undefined
+	>(undefined);
 
 	protected override onSpaceIdChanged(): void {
 		if (!this.space.id) {
@@ -98,25 +104,23 @@ export class BudgetPageComponent extends SpaceBaseComponent {
 		}
 		this.calendariumSpaceService
 			.watchSpaceModuleRecord(this.space?.id)
-			.pipe(takeUntil(this.spaceIDChanged$))
+			.pipe(this.takeUntilDestroyed(), takeUntil(this.spaceIDChanged$))
 			.subscribe({
-				next: (teamCalendarium) => {
-					this.calendariumSpaceDbo = teamCalendarium.dbo || undefined;
+				next: (spaceCalendarium) => {
+					this.$calendariumSpaceDbo.set(spaceCalendarium.dbo || undefined);
 				},
 			});
 	}
 
-	public showIncomes(): boolean {
-		return (
-			this.liabilitiesMode === 'incomes' || this.liabilitiesMode === 'balance'
-		);
-	}
+	protected $showIncomes = computed(() => {
+		const lm = this.$liabilitiesMode();
+		return lm === 'incomes' || lm === 'balance';
+	});
 
-	public showExpenses(): boolean {
-		return (
-			this.liabilitiesMode === 'expenses' || this.liabilitiesMode === 'balance'
-		);
-	}
+	protected readonly $showExpenses = computed(() => {
+		const lm = this.$liabilitiesMode();
+		return lm === 'expenses' || lm === 'balance';
+	});
 
 	public calcTotal(): void {
 		if (!this.assetGroups) {
@@ -163,14 +167,14 @@ export class BudgetPageComponent extends SpaceBaseComponent {
 			);
 	}
 
-	liabilitiesModeChanged(ev: Event): void {
-		this.liabilitiesMode = (ev as CustomEvent).detail.value;
+	protected liabilitiesModeChanged(ev: Event): void {
+		this.$liabilitiesMode.set((ev as CustomEvent).detail.value);
 		history.replaceState(
 			undefined,
 			document.title,
 			location.href.indexOf('tab=') > 0
-				? location.href.replace(/tab=\w+/, `tab=${this.liabilitiesMode}`)
-				: `${location.href}&tab=${this.liabilitiesMode}`,
+				? location.href.replace(/tab=\w+/, `tab=${this.$liabilitiesMode}`)
+				: `${location.href}&tab=${this.$liabilitiesMode}`,
 		);
 		this.calcTotal();
 	}
@@ -193,9 +197,6 @@ export class BudgetPageComponent extends SpaceBaseComponent {
 				),
 			);
 	}
-
-	readonly trackById = (i: number, item: { id: string } | undefined) =>
-		item?.id;
 
 	// private subscribeForAssetGroups(): void {
 	// 	console.log('subscribeForAssetGroups', communeId);

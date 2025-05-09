@@ -9,9 +9,11 @@ import {
 	IHappeningLiability,
 	LiabilitiesByPeriod,
 	IPeriodLiabilities,
+	LiabilitiesMode,
 } from './budget-component-types';
 
 export function getLiabilitiesByPeriod(
+	liabilitiesMode: LiabilitiesMode,
 	recurringHappenings: Record<string, ICalendarHappeningBrief>,
 	space: ISpaceContext,
 ): LiabilitiesByPeriod {
@@ -19,12 +21,13 @@ export function getLiabilitiesByPeriod(
 
 	Object.entries(recurringHappenings).forEach((entry) => {
 		const [id, brief] = entry;
-		processHappening(space, byPeriod, { id, brief });
+		processHappening(liabilitiesMode, space, byPeriod, { id, brief });
 	});
 	return byPeriod;
 }
 
 function processHappening(
+	liabilitiesMode: LiabilitiesMode,
 	space: ISpaceContext,
 	byPeriod: LiabilitiesByPeriod,
 	happening: IIdAndBrief<ICalendarHappeningBrief>,
@@ -32,12 +35,13 @@ function processHappening(
 	// console.log('budget.processHappening()', happening);
 	Object.entries(happening.brief.slots || {}).forEach(([slotID, slot]) => {
 		if (slot.repeats === 'weekly' || slot.repeats === 'monthly') {
-			processSlot(space, byPeriod, happening, slotID, slot);
+			processSlot(liabilitiesMode, space, byPeriod, happening, slotID, slot);
 		}
 	});
 }
 
 function processSlot(
+	liabilitiesMode: LiabilitiesMode,
 	space: ISpaceContext,
 	byPeriod: LiabilitiesByPeriod,
 	happening: IIdAndBrief<ICalendarHappeningBrief>,
@@ -59,11 +63,21 @@ function processSlot(
 					valuesByCurrency: {},
 				};
 
-	const prices = happening.brief.prices?.filter((p) => p.expenseQuantity) || [];
+	const prices =
+		happening.brief.prices?.filter(
+			(p) =>
+				(liabilitiesMode === 'expenses'
+					? p.amount.value > 0
+					: liabilitiesMode === 'incomes'
+						? p.amount.value < 0
+						: true) &&
+				(p.expenseQuantity || p.term),
+		) || [];
 
 	if (prices.length) {
 		for (let priceIdx = 0; priceIdx < (prices.length || 0); priceIdx++) {
 			const price = prices[priceIdx];
+			hLiability = { ...hLiability, priceAmount: price.amount };
 			hLiability = processPrice(hLiability, slot, price, liabilities);
 		}
 		if (hLiabilityIndex >= 0) {
@@ -90,6 +104,7 @@ function processPrice(
 	liabilities: IPeriodLiabilities,
 ): IHappeningLiability {
 	if (slot.repeats === 'weekly' && slot.weekdays) {
+		happeningLiability = { ...happeningLiability, times: slot.weekdays.length };
 		for (let wdIdx = 0; wdIdx < (slot?.weekdays?.length || 0); wdIdx++) {
 			let amountValue: number =
 				happeningLiability.valuesByCurrency[price.amount.currency] || 0;

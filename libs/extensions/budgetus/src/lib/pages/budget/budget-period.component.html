@@ -1,19 +1,21 @@
-<ion-accordion [value]="period">
+<ion-accordion [value]="$period()">
 	<ion-item slot="header" color="light">
-		<ion-label>{{ period || "" | titlecase }} {{ liabilitiesMode }}</ion-label>
-		@if (activePeriod === period) {
+		<ion-label
+			>{{ $period() || "" | titlecase }} {{ $liabilitiesMode() }}</ion-label
+		>
+		@if (activePeriod === $period()) {
 			<ion-buttons slot="end">
 				<ion-button color="medium" (click)="changeShowBy('event', $event)">
 					<ion-label
-						[class.selected-item-segment]="showBy === 'event'"
-						[class.unselected-item-segment]="showBy !== 'event'"
+						[class.selected-item-segment]="$showBy() === 'event'"
+						[class.unselected-item-segment]="$showBy() !== 'event'"
 						>By event
 					</ion-label>
 				</ion-button>
 				<ion-button color="medium" (click)="changeShowBy('contact', $event)">
 					<ion-label
-						[class.selected-item-segment]="showBy === 'contact'"
-						[class.unselected-item-segment]="showBy !== 'contact'"
+						[class.selected-item-segment]="$showBy() === 'contact'"
+						[class.unselected-item-segment]="$showBy() !== 'contact'"
 						>By person
 					</ion-label>
 				</ion-button>
@@ -35,7 +37,7 @@
 	</ion-item>
 
 	<ion-list slot="content" lines="full">
-		@if (showBy === "contact") {
+		@if ($showBy() === "contact") {
 			@for (
 				liability of periodLiabilities?.contacts;
 				track liability.contact.id
@@ -48,47 +50,66 @@
 				</ion-item>
 			} @empty {
 				<div class="ion-padding">
-					No {{ period }} contact {{ liabilitiesMode }}
+					No {{ $period() }} contact {{ $liabilitiesMode() }}
 				</div>
 			}
-		} @else if (showBy === "event") {
+		} @else if ($showBy() === "event") {
 			@for (
 				liability of periodLiabilities?.happenings;
 				track liability.happening.id
 			) {
-				<ion-item>
-					@for (amount of getAmounts(liability); track amount.currency) {
-						{{ amount.value | decimal64p2 | currency: amount.currency }}
-					}
-					for {{ liability.happening.brief?.title }}
+				<ion-item class="sneat-tiny-end-padding" tappable="true">
+					<ion-text color="primary">{{
+						liability.happening.brief?.title
+					}}</ion-text>
+					<span class="ion-padding-horizontal">&mdash;</span>
+					{{
+						liability.priceAmount?.value
+							| decimal64p2
+							| currency: liability.priceAmount?.currency
+					}}
+					* {{ liability.times }}
+					<ion-buttons slot="end">
+						@for (amount of getAmounts(liability); track amount.currency) {
+							<ion-button disabled="true">{{
+								amount.value | decimal64p2 | currency: amount.currency
+							}}</ion-button>
+						}
+					</ion-buttons>
 				</ion-item>
 			} @empty {
 				<div class="ion-padding">
-					No {{ period }} event {{ liabilitiesMode }}
+					No {{ $period() }} event {{ $liabilitiesMode() }}
 				</div>
 			}
 		}
-		<ion-item>
-			<ion-label slot="start"
-				><b>Total to be paid {{ period }}</b></ion-label
-			>
-			<ion-label slot="end" color="tertiary" style="font-weight: bold">
-				@for (amount of totalToBePaid(); track amount.currency) {
-					{{ amount.value | decimal64p2 | currency: amount.currency }}
-					@if (!$last) {
+		<ion-item class="sneat-tiny-end-padding">
+			<ion-label>
+				<b>Total to be paid {{ $period() }}</b>
+			</ion-label>
+			<ion-buttons slot="end" style="font-weight: bold">
+				@for (
+					amount of totalToBePaid();
+					track amount.currency;
+					let isLast = $last
+				) {
+					<ion-button color="tertiary">
+						<b>{{ amount.value | decimal64p2 | currency: amount.currency }}</b>
+					</ion-button>
+					@if (!isLast) {
 						+
 					}
 				}
-			</ion-label>
+			</ion-buttons>
 		</ion-item>
 		<ion-item>
 			<ion-label slot="start" color="medium">Normalized</ion-label>
-			<ion-label slot="end">Daily: $300</ion-label>
+			<ion-label slot="end" color="medium">$not_implemented_yet</ion-label>
 		</ion-item>
 		<ion-item>
-			<ion-label slot="start"
-				><b>Total</b> (<i>{{ period }} + normalized</i>)</ion-label
-			>
+			<ion-label slot="start">
+				<b>Total</b> (<i>{{ $period() }} + normalized</i>)
+			</ion-label>
 			<ion-label slot="end" color="tertiary">
 				@for (amount of totalToBePaid(); track amount.currency) {
 					{{ amount.value | decimal64p2 | currency: amount.currency }}

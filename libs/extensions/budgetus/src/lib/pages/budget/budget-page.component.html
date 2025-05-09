@@ -5,8 +5,8 @@
 		</ion-buttons>
 		<ion-title>
 			⚖️ Budget
-			@if (space.brief?.title) {
-				&#64; {{ space.brief?.title }}
+			@if ($space().brief?.title; as spaceTitle) {
+				&#64; {{ spaceTitle }}
 			}
 		</ion-title>
 		<ion-buttons slot="end">
@@ -21,7 +21,7 @@
 	<ion-card>
 		<div class="segment">
 			<ion-segment
-				[value]="liabilitiesMode"
+				[value]="$liabilitiesMode()"
 				(ionChange)="liabilitiesModeChanged($event)"
 			>
 				<ion-segment-button value="expenses">
@@ -61,7 +61,7 @@
 		<!--</ion-row>-->
 		<!--</ion-grid>-->
 		<ion-list>
-			@if (total) {
+			@if ($total(); as total) {
 				<ion-item>
 					<ion-label style="font-weight: bold">
 						Total
@@ -207,13 +207,18 @@
 			<!--			</ng-container>-->
 		</ion-list>
 
-		@if (liabilitiesMode === "expenses" || liabilitiesMode === "incomes") {
+		@if (
+			$liabilitiesMode() === "expenses" || $liabilitiesMode() === "incomes"
+		) {
 			<sneat-budget-periods
-				[space]="space"
-				[recurringHappenings]="calendariumSpaceDbo?.recurringHappenings"
-				[(activePeriod)]="activePeriod"
-				[liabilitiesMode]="liabilitiesMode"
+				[$space]="$space()"
+				[$recurringHappenings]="$calendariumSpaceDbo()?.recurringHappenings"
+				[activePeriod]="$activePeriod()"
+				(activePeriodChange)="$activePeriod.set($event)"
+				[$liabilitiesMode]="$liabilitiesMode()"
 			/>
+		} @else {
+			<p class="ion-margin">Not implemented yet</p>
 		}
 	</ion-card>
 </ion-content>

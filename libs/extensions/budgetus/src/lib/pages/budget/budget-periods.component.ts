@@ -1,18 +1,19 @@
 import {
 	Component,
+	computed,
 	EventEmitter,
+	input,
 	Input,
-	OnChanges,
 	Output,
 	signal,
-	SimpleChanges,
 } from '@angular/core';
 import { IonAccordionGroup } from '@ionic/angular/standalone';
 import {
 	ICalendarHappeningBrief,
 	RepeatPeriod,
+	ShowBy,
 } from '@sneat/mod-schedulus-core';
-import { ISpaceContext } from '@sneat/space-models';
+import { WithSpaceInput } from '@sneat/space-components';
 import { getLiabilitiesByPeriod } from './budget-calc-periods';
 import { LiabilitiesByPeriod, LiabilitiesMode } from './budget-component-types';
 import { BudgetPeriodComponent } from './budget-period.component';
@@ -22,13 +23,12 @@ import { BudgetPeriodComponent } from './budget-period.component';
 	templateUrl: './budget-periods.component.html',
 	imports: [BudgetPeriodComponent, IonAccordionGroup],
 })
-export class BudgetPeriodsComponent implements OnChanges {
-	@Input({ required: true }) space: ISpaceContext = { id: '' };
-	@Input({ required: true }) recurringHappenings?: Record<
-		string,
-		ICalendarHappeningBrief
-	>;
-	@Input({ required: true }) liabilitiesMode: LiabilitiesMode = 'balance';
+export class BudgetPeriodsComponent extends WithSpaceInput {
+	public readonly $recurringHappenings = input.required<
+		undefined | Readonly<Record<string, ICalendarHappeningBrief>>
+	>();
+
+	public readonly $liabilitiesMode = input.required<LiabilitiesMode>();
 
 	@Input({ required: true }) activePeriod: RepeatPeriod = 'weekly';
 
@@ -39,33 +39,32 @@ export class BudgetPeriodsComponent implements OnChanges {
 		'yearly',
 	];
 
-	showBy: 'event' | 'contact' = 'event';
+	protected readonly $showBy = signal<ShowBy>('event');
 
 	@Output() readonly activePeriodChange = new EventEmitter<RepeatPeriod>();
+
+	constructor() {
+		super('BudgetPeriodsComponent');
+	}
 
 	protected onPeriodChanged(event: Event): void {
 		this.activePeriod = (event as CustomEvent).detail.value;
 		this.activePeriodChange.emit(this.activePeriod);
 	}
 
-	protected readonly liabilitiesByPeriod = signal<LiabilitiesByPeriod>({});
-
-	public ngOnChanges(changes: SimpleChanges): void {
-		if (changes['recurringHappenings']) {
-			this.updateLiabilitiesByPeriod(this.recurringHappenings);
-		}
-	}
-
-	private updateLiabilitiesByPeriod(
-		recurringHappenings?: Record<string, ICalendarHappeningBrief>,
-	): void {
-		console.log('updateHappeningLiabilitiesByPeriod()');
-		if (!recurringHappenings) {
-			this.liabilitiesByPeriod.set({});
-			return;
-		}
-
-		const result = getLiabilitiesByPeriod(recurringHappenings, this.space);
-		this.liabilitiesByPeriod.set(result);
-	}
+	protected readonly $liabilitiesByPeriod = computed<LiabilitiesByPeriod>(
+		() => {
+			const recurringHappenings = this.$recurringHappenings();
+			if (!recurringHappenings) {
+				return {};
+			}
+			const lbp = getLiabilitiesByPeriod(
+				this.$liabilitiesMode(),
+				recurringHappenings,
+				this.$space(),
+			);
+			console.log('BudgetPeriodsComponent: lbp', lbp);
+			return lbp;
+		},
+	);
 }

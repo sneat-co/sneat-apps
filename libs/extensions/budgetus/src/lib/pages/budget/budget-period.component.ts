@@ -3,6 +3,7 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	EventEmitter,
+	input,
 	Input,
 	OnChanges,
 	Output,
@@ -17,6 +18,7 @@ import {
 	IonItem,
 	IonLabel,
 	IonList,
+	IonText,
 } from '@ionic/angular/standalone';
 import { Decimal64p2Pipe } from '@sneat/components';
 import { IAmount, RepeatPeriod, ShowBy } from '@sneat/mod-schedulus-core';
@@ -28,9 +30,6 @@ import {
 } from './budget-component-types';
 
 @Component({
-	selector: 'sneat-budget-period',
-	templateUrl: 'budget-period.component.html',
-	styleUrl: './budget-period.component.scss',
 	imports: [
 		FormsModule,
 		Decimal64p2Pipe,
@@ -42,16 +41,23 @@ import {
 		IonButton,
 		CurrencyPipe,
 		IonList,
+		IonText,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	styleUrl: './budget-period.component.scss',
+	selector: 'sneat-budget-period',
+	templateUrl: 'budget-period.component.html',
 })
 export class BudgetPeriodComponent implements OnChanges {
 	tab: 'by_event' | 'by_contact' = 'by_event';
 
 	@Input({ required: true }) activePeriod?: RepeatPeriod;
-	@Input({ required: true }) period?: RepeatPeriod;
-	@Input({ required: true }) showBy?: ShowBy = 'event';
-	@Input({ required: true }) liabilitiesMode: LiabilitiesMode = 'balance';
+
+	public readonly $showBy = input.required<ShowBy>();
+
+	public readonly $period = input.required<RepeatPeriod>();
+	public readonly $liabilitiesMode = input.required<LiabilitiesMode>();
+
 	@Input({ required: true }) liabilitiesByPeriod?: LiabilitiesByPeriod;
 
 	@Output() readonly showByChange = new EventEmitter<ShowBy>();
@@ -69,10 +75,10 @@ export class BudgetPeriodComponent implements OnChanges {
 	}
 
 	public ngOnChanges(changes: SimpleChanges): void {
-		console.log('BudgetPeriodComponent.ngOnChanges()', this.period, changes);
+		console.log('BudgetPeriodComponent.ngOnChanges()', this.$period(), changes);
 		if (changes['liabilitiesByPeriod'] || changes['period']) {
-			this.periodLiabilities = this.period
-				? this.liabilitiesByPeriod?.[this.period]
+			this.periodLiabilities = this.$period()
+				? this.liabilitiesByPeriod?.[this.$period()]
 				: undefined;
 			if (this.periodLiabilities) {
 				const total: IAmount[] = [];
@@ -94,8 +100,7 @@ export class BudgetPeriodComponent implements OnChanges {
 	protected changeShowBy(showBy: 'event' | 'contact', event: Event): boolean {
 		event.stopPropagation();
 		event.preventDefault();
-		this.showBy = showBy;
-		// this.showByChange.emit(showBy);
+		this.showByChange.emit(showBy);
 		return false;
 	}
 }

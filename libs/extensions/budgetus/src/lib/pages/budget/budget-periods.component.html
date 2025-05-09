@@ -5,12 +5,12 @@
 >
 	@for (period of periods; track period) {
 		<sneat-budget-period
-			[(showBy)]="showBy"
-			[liabilitiesMode]="liabilitiesMode"
+			[$showBy]="$showBy()"
+			(showByChange)="$showBy.set($event)"
+			[$liabilitiesMode]="$liabilitiesMode()"
 			[activePeriod]="activePeriod"
-			[period]="period"
-			[showBy]="showBy"
-			[liabilitiesByPeriod]="liabilitiesByPeriod()"
+			[$period]="period"
+			[liabilitiesByPeriod]="$liabilitiesByPeriod()"
 		/>
 	}
 </ion-accordion-group>

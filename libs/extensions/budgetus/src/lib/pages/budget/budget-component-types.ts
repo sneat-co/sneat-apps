@@ -1,5 +1,9 @@
 import { IContactContext } from '@sneat/contactus-core';
-import { IHappeningContext, RepeatPeriod } from '@sneat/mod-schedulus-core';
+import {
+	IAmount,
+	IHappeningContext,
+	RepeatPeriod,
+} from '@sneat/mod-schedulus-core';
 
 export type LiabilitiesMode = 'incomes' | 'expenses' | 'balance';
 
@@ -10,6 +14,8 @@ export interface ILiabilityBase {
 }
 
 export interface IHappeningLiability extends ILiabilityBase {
+	priceAmount?: IAmount;
+	times?: number;
 	readonly happening: IHappeningContext;
 }
 
