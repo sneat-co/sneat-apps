@@ -62,6 +62,7 @@ import { ForWorkComponent } from './for-work.component';
 })
 export class SneatAppHomePageComponent extends SneatBaseComponent {
 	protected readonly $authStatus = signal<AuthStatus | undefined>(undefined);
+	protected readonly $isAuthenticating = computed(() => !this.$authStatus());
 	protected readonly $isAuthenticated = computed<boolean>(
 		() => this.$authStatus() === 'authenticated',
 	);

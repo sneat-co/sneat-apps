@@ -4,30 +4,30 @@
 			{{ emptyTitle }}
 		</ion-card-title>
 	</ion-card-header>
-	<ion-card-content>
-		<!-- DO NOT DELETE: This shows content -->
+	<!-- DO NOT DELETE: This shows content -->
 
-		@if (spaces && !spaces.length) {
-			<ion-button
-				routerLink="/new-family"
-				[color]="buttonColor"
-				style="text-transform: none"
-			>
-				<ion-label>{{ newSpaceButtonText }}</ion-label>
-			</ion-button>
-		}
-		@if (spaces?.length === 1) {
-			<ion-button
-				routerLink="/space/{{ spaces && spaces[0].type }}/{{
-					spaces && spaces[0].id
-				}}"
-				[color]="buttonColor"
-				style="text-transform: none"
-			>
-				<ion-label>{{ singleSpaceButtonText }}</ion-label>
-			</ion-button>
-		}
-	</ion-card-content>
+	@if (spaces) {
+		<ion-card-content>
+			@if (!spaces.length) {
+				<ion-button
+					routerLink="/new-family"
+					[color]="buttonColor"
+					style="text-transform: none"
+				>
+					<ion-label>{{ newSpaceButtonText }}</ion-label>
+				</ion-button>
+			} @else if (spaces.length === 1) {
+				<ion-button
+					[color]="buttonColor"
+					routerLink="/space/{{ spaces?.[0]?.type }}/{{ spaces?.[0]?.id }}"
+					style="text-transform: none"
+				>
+					<ion-label>{{ singleSpaceButtonText }}</ion-label>
+				</ion-button>
+			}
+		</ion-card-content>
+	}
+
 	@if (spaces && spaces.length > 1) {
 		<ion-list>
 			<ion-item-divider color="light">{{ itemsTitle }}</ion-item-divider>

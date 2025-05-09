@@ -1,5 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, Inject, Input, OnDestroy } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	computed,
+	effect,
+	Input,
+	OnDestroy,
+	signal,
+} from '@angular/core';
 import {
 	IonButton,
 	IonCard,
@@ -9,15 +17,15 @@ import {
 	IonIcon,
 	IonLabel,
 } from '@ionic/angular/standalone';
-import { ISneatUserState, SneatUserService } from '@sneat/auth-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { map, race, Subject, takeUntil } from 'rxjs';
+import { SneatUserService } from '@sneat/auth-core';
+import { SneatBaseComponent } from '@sneat/ui';
+import { map, race, takeUntil } from 'rxjs';
 import { CountryInputComponent } from '../country-input';
 import { countries, ICountry } from '../country-selector';
 
+let ipCountryCached: string | undefined; // TODO: Should have expiration?
+
 @Component({
-	selector: 'sneat-user-country',
-	templateUrl: './user-country.component.html',
 	imports: [
 		CountryInputComponent,
 		IonCardContent,
@@ -28,37 +36,56 @@ import { countries, ICountry } from '../country-selector';
 		IonLabel,
 		IonCard,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-user-country',
+	templateUrl: './user-country.component.html',
 })
-export class UserCountryComponent implements OnDestroy {
-	protected ipCountryID?: string;
-	protected ipCountry?: ICountry;
-	protected user?: ISneatUserState;
-	protected saving = false;
+export class UserCountryComponent
+	extends SneatBaseComponent
+	implements OnDestroy
+{
+	protected readonly $ipCountryID = signal('');
+	protected readonly $ipCountry = signal<ICountry | undefined>(undefined);
+
+	protected readonly $userCountryID = signal<string>('');
+	protected readonly $userHasCountry = computed(() => {
+		const userCountryID = this.$userCountryID();
+		return !!userCountryID && userCountryID !== '--';
+	});
+
+	protected isCountryDetectionStarted = false;
+	protected readonly $detectingCountry = signal(false);
+	protected readonly $saving = signal(false);
 
 	@Input() public doNotHide = false;
 
-	private readonly destroyed = new Subject<void>();
-
-	ngOnDestroy(): void {
-		this.destroyed.next();
-		this.destroyed.complete();
-	}
-
 	private trackUserRecord(): void {
 		this.userService.userState
-			.pipe(takeUntil(this.destroyed))
+			.pipe(takeUntil(this.destroyed$))
 			.subscribe((user) => {
-				this.user = user;
+				if (user.record) {
+					this.$userCountryID.set(user?.record?.countryID || '--');
+				}
 			});
 	}
 
 	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly httpClient: HttpClient,
 		private readonly userService: SneatUserService,
 	) {
+		super('UserCountryComponent');
 		this.trackUserRecord();
-		this.getIpCountry();
+		// this.getIpCountry();
+		effect(() => {
+			const userCountryID = this.$userCountryID();
+			if (
+				userCountryID === '--' &&
+				// It looks like using signal here can cause an infinite loop
+				!this.isCountryDetectionStarted
+			) {
+				this.getIpCountry();
+			}
+		});
 	}
 
 	protected onCountryOfResidenceChanged(countryID: string): void {
@@ -66,10 +93,18 @@ export class UserCountryComponent implements OnDestroy {
 	}
 
 	private getIpCountry(): void {
+		if (this.isCountryDetectionStarted) {
+			return;
+		}
+		this.isCountryDetectionStarted = true;
+		if (ipCountryCached) {
+			this.$ipCountryID.set(ipCountryCached);
+			this.$ipCountry.set(countries.find((c) => c.id === ipCountryCached));
+			return;
+		}
+		this.$detectingCountry.set(true);
+		console.log('UserCountryComponent: Detecting IP country...');
 		race(
-			// httpClient
-			// 	.get<{ country: string }>('https://api.country.is')
-			// 	.pipe(map((response) => ({ source: '', country: response.country }))),
 			this.httpClient
 				.get<string>('https://ipapi.co/country', {
 					headers: new HttpHeaders({
@@ -80,10 +115,26 @@ export class UserCountryComponent implements OnDestroy {
 				.pipe(
 					map((country) => ({ source: 'https://ipapi.co/country', country })),
 				),
-		).subscribe((response) => {
-			console.log('Got IP country from', response.source);
-			this.ipCountryID = response.country;
-			this.ipCountry = countries.find((c) => c.id === this.ipCountryID);
+		).subscribe({
+			next: (response) => {
+				console.log('UserCountryComponent: Got IP country:', response);
+				const ipCountryID = response.country;
+				ipCountryCached = ipCountryID;
+				this.$ipCountryID.set(ipCountryID);
+				this.$ipCountry.set(countries.find((c) => c.id === ipCountryID));
+				this.$detectingCountry.set(false);
+			},
+			error: (err) => {
+				this.$detectingCountry.set(false);
+				// console.error('UserCountryComponent: Failed to get IP country', err);
+				this.errorLogger.logError(
+					err,
+					'UserCountryComponent: Failed to get IP country',
+					{
+						show: false,
+					},
+				);
+			},
 		});
 	}
 
@@ -91,14 +142,18 @@ export class UserCountryComponent implements OnDestroy {
 		if (!countryID) {
 			return;
 		}
-		this.saving = true;
+		this.$saving.set(true);
 		this.userService.setUserCountry(countryID).subscribe({
 			next: () => {
-				console.log('User country set to', countryID);
+				console.log('UserCountryComponent: User country set to', countryID);
+				this.$userCountryID.set(countryID);
 			},
 			error: (err) => {
-				this.errorLogger.logError('Failed to set user country', err);
-				this.saving = false;
+				this.errorLogger.logError(
+					'UserCountryComponent: Failed to set user country',
+					err,
+				);
+				this.$saving.set(false);
 			},
 		});
 	}

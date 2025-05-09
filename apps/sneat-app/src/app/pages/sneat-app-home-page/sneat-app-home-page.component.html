@@ -22,13 +22,27 @@
 	</ion-toolbar>
 </ion-header>
 
-<ion-content class="cardy">
-	@if ($isAuthenticated()) {
-		<sneat-user-country />
-	} @else {
+<ion-content>
+	<ion-grid class="ion-grid-layout">
+		<ion-row>
+			<ion-col>
+				<sneat-for-families />
+			</ion-col>
+			<ion-col>
+				<sneat-for-educators />
+			</ion-col>
+			<ion-col>
+				<sneat-for-work />
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+
+	@if ($isAuthenticating()) {
 		<ion-card>
 			<ion-card-header>
-				<ion-card-title>Authenticating...</ion-card-title>
+				<ion-card-title>
+					<ion-label color="medium">Authenticating...</ion-label>
+				</ion-card-title>
 			</ion-card-header>
 			<!--			<ion-card-content>-->
 			<!--				<h3>Debug info</h3>-->
@@ -36,7 +50,9 @@
 			<!--				<b>App URL</b>: <a [href]="url" target="_blank">{{ url }}</a>-->
 			<!--			</ion-card-content>-->
 		</ion-card>
-
+	} @else if ($isAuthenticated()) {
+		<sneat-user-country />
+	} @else {
 		<ion-card>
 			<ion-card-content>
 				<ion-button routerLink="login">
@@ -46,20 +62,6 @@
 			</ion-card-content>
 		</ion-card>
 	}
-
-	<ion-grid>
-		<ion-row>
-			<ion-col class="ion-no-padding">
-				<sneat-for-families />
-			</ion-col>
-			<ion-col class="ion-no-padding">
-				<sneat-for-educators />
-			</ion-col>
-			<ion-col class="ion-no-padding">
-				<sneat-for-work />
-			</ion-col>
-		</ion-row>
-	</ion-grid>
 
 	@if ($err(); as err) {
 		<ion-card>

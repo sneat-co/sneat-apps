@@ -1,40 +1,40 @@
-@if (
-	(doNotHide && user?.record?.countryID && user?.record?.countryID !== "--") ||
-	(ipCountry && (!user?.record?.countryID || user?.record?.countryID === "--"))
-) {
+@let userCountryID = $userCountryID();
+@let userHasCountry = $userHasCountry();
+
+@if ((doNotHide && userHasCountry) || ($ipCountry() && !userHasCountry)) {
 	<ion-card>
-		@if (user?.record?.countryID && user?.record?.countryID !== "--") {
+		@if (userHasCountry) {
 			<ion-card-content>
 				<sneat-country-input
 					label="Country of residence"
 					[canReset]="false"
-					[countryID]="user?.record?.countryID || ''"
+					[countryID]="userCountryID || ''"
 					(countryIDChange)="onCountryOfResidenceChanged($event)"
 				/>
 			</ion-card-content>
 		} @else {
 			<ion-card-header>
 				<ion-card-title>
-					Is {{ ipCountry?.emoji }} {{ ipCountry?.title }} your country of
+					Is {{ $ipCountry()?.emoji }} {{ $ipCountry()?.title }} your country of
 					residence?
 				</ion-card-title>
 			</ion-card-header>
 			<ion-card-content>
 				<ion-button
-					[disabled]="saving"
+					[disabled]="$saving()"
 					color="primary"
 					class="ion-padding-end"
-					(click)="setCountry(ipCountryID)"
+					(click)="setCountry($ipCountryID())"
 				>
 					<ion-icon name="checkmark-outline" slot="start" />
 					<ion-label style="text-transform: none"
 						><b
-							>Yes, my primary residence is in {{ ipCountry?.title }}
-							{{ ipCountry?.emoji }}</b
+							>Yes, my primary residence is in {{ $ipCountry()?.title }}
+							{{ $ipCountry()?.emoji }}</b
 						></ion-label
 					>
 				</ion-button>
-				<ion-button color="light" [disabled]="saving">
+				<ion-button color="light" [disabled]="$saving">
 					<ion-icon name="list-outline" slot="start" />
 					<ion-label style="text-transform: none">Choose county</ion-label>
 				</ion-button>
