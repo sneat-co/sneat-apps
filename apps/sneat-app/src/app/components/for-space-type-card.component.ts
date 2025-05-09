@@ -5,6 +5,7 @@ import {
 	Input,
 	OnChanges,
 	OnDestroy,
+	signal,
 	SimpleChanges,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -30,9 +31,6 @@ import { SneatBaseComponent } from '@sneat/ui';
 import { Subscription, takeUntil } from 'rxjs';
 
 @Component({
-	changeDetection: ChangeDetectionStrategy.OnPush,
-	selector: 'sneat-for-space-card',
-	templateUrl: 'for-space-type-card.component.html',
 	imports: [
 		RouterModule,
 		SpacesListComponent,
@@ -45,6 +43,9 @@ import { Subscription, takeUntil } from 'rxjs';
 		IonList,
 		IonItemDivider,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-for-space-card',
+	templateUrl: 'for-space-type-card.component.html',
 })
 export class ForSpaceTypeCardComponent
 	extends SneatBaseComponent
@@ -57,7 +58,7 @@ export class ForSpaceTypeCardComponent
 	@Input() singleSpaceButtonText?: string;
 	@Input() spaceTypes?: SpaceType[];
 
-	protected spaces?: ISpaceContext[];
+	protected readonly $spaces = signal<ISpaceContext[] | undefined>(undefined);
 
 	private subscription?: Subscription;
 
@@ -82,14 +83,18 @@ export class ForSpaceTypeCardComponent
 			.pipe(takeUntil(this.destroyed$))
 			.subscribe({
 				next: (user) => {
-					this.spaces = zipMapBriefsWithIDs(user.record?.spaces)
-						?.filter((t) => this.spaceTypes?.some((tt) => tt === t.brief.type))
-						.map((t) => spaceContextFromBrief(t.id, t.brief));
+					this.$spaces.set(
+						zipMapBriefsWithIDs(user.record?.spaces)
+							?.filter((t) =>
+								this.spaceTypes?.some((tt) => tt === t.brief.type),
+							)
+							.map((t) => spaceContextFromBrief(t.id, t.brief)),
+					);
 					console.log(
 						'ForSpaceTypeCardComponent.watchUserRecord() =>',
 						this.spaceTypes,
 						user.record?.spaces,
-						this.spaces,
+						this.$spaces(),
 					);
 					this.changeDetectorRef.markForCheck();
 				},
