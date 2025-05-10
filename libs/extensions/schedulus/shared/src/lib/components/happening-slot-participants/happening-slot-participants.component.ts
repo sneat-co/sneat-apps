@@ -14,7 +14,11 @@ import {
 	IContactWithBriefAndSpace,
 } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
-import { getRelatedItems } from '@sneat/dto';
+import {
+	getLongRelatedItemID,
+	getRelatedItemByIDs,
+	getRelatedItems,
+} from '@sneat/dto';
 import { ISlotUIContext } from '@sneat/mod-schedulus-core';
 import { ISpaceRef } from '@sneat/core';
 import { SneatBaseComponent } from '@sneat/ui';
@@ -54,7 +58,7 @@ export class HappeningSlotParticipantsComponent extends SneatBaseComponent {
 		const space: ISpaceRef = { id: spaceID };
 		const contacts: readonly IContactWithBriefAndSpace[] =
 			spaceContacts
-				?.filter((c) => relatedItems[c.id])
+				?.filter((c) => !!getRelatedItemByIDs(relatedItems, c.id, spaceID))
 				?.map((c) => ({ ...c, space })) || [];
 
 		console.log(

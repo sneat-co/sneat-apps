@@ -57,8 +57,8 @@ export class ContactsChecklistComponent extends SneatBaseComponent {
 		const suffix = '@' + this.$spaceID();
 		const checkedContactIDs = this.$checkedContactIDs();
 		return checkedContactIDs
-			?.filter((id) => id.endsWith(suffix))
-			.map((id) => id.slice(0, -suffix.length));
+			?.filter((id) => !id.includes('@') || id.endsWith(suffix))
+			.map((id) => (id.includes('@') ? id.slice(0, -suffix.length) : id));
 	});
 
 	public readonly $space = input.required<ISpaceContext>();

@@ -120,13 +120,25 @@ export const removeRelatedItem = (
 	return related;
 };
 
+export const getLongRelatedItemID = (itemID: string, spaceID: string) =>
+	`${itemID}@${spaceID}`;
+
+export const getRelatedItemByIDs = (
+	relatedItems: Readonly<Record<string, IRelatedItem>> | undefined,
+	itemID: string,
+	spaceID?: string,
+) =>
+	relatedItems &&
+	(relatedItems[itemID] ||
+		(spaceID && relatedItems[getLongRelatedItemID(itemID, spaceID)]));
+
 export const getRelatedItemByKey = (
 	related: IRelatedModules | undefined,
 	key: ISpaceModuleItemRef,
 ): IRelatedItem | undefined => {
 	const items = related?.[key.module]?.[key.collection];
 	const { itemID, spaceID } = key;
-	return items?.[itemID] || items?.[`${itemID}@${spaceID}`];
+	return getRelatedItemByIDs(items, itemID, spaceID);
 };
 
 export const getRelatedItemIDs = (
@@ -142,7 +154,9 @@ export const getRelatedItemIDs = (
 	const collectionRelated = (related || {})[module] || {};
 	const relatedItems = collectionRelated[collection];
 	const keys = Object.keys(relatedItems);
-	return spaceID ? keys.filter((k) => k.endsWith(`@${spaceID}`)) : keys;
+	return spaceID
+		? keys.filter((k) => !k.includes('@') || k.endsWith(`@${spaceID}`))
+		: keys;
 };
 
 export const hasRelated = (
@@ -162,5 +176,5 @@ const hasRelatedItem = (
 	itemKey: IRelatedItemKey,
 ): boolean => {
 	const { itemID, spaceID } = itemKey;
-	return !!relatedItems?.[itemID] || !!relatedItems?.[`${itemID}@${spaceID}`];
+	return !!getRelatedItemByIDs(relatedItems, itemID, spaceID);
 };
