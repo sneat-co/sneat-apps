@@ -52,14 +52,14 @@
 	<ion-grid class="ion-grid-layout">
 		<ion-row>
 			@if ($showMembers()) {
-				<ion-col size="12" size-lg="6">
+				<ion-col size="12" size-xl="6">
 					<sneat-members-short-list
 						role="member"
 						[$space]="$space()"
 						[$contactusSpaceDbo]="$contactusSpace()?.dbo"
 					/>
 				</ion-col>
-				<ion-col size="12" size-lg="6">
+				<ion-col size="12" size-xl="6">
 					<sneat-calendar-brief [$space]="$space()" />
 				</ion-col>
 			} @else {
@@ -68,19 +68,19 @@
 				</ion-col>
 			}
 		</ion-row>
-		<ion-row>
-			@if (topMenuService.isTopMenuHidden | async) {
+		@if (topMenuService.isTopMenuHidden | async) {
+			<ion-row>
 				<ion-col>
 					<ion-card class="last-child-no-border">
-						<ion-item-divider color="light">
+						<ion-item color="primary" class="sneat-tiny-end-padding">
 							<ion-label style="font-weight: bold">Extensions</ion-label>
 							<ion-buttons slot="end">
 								<ion-button>
-									<ion-icon name="settings" color="medium" />
+									<ion-icon name="settings" />
 								</ion-button>
 							</ion-buttons>
-						</ion-item-divider>
-						<ion-item routerLink="./assets" tappable detail>
+						</ion-item>
+						<ion-item routerLink="./assets" tappable detail="true">
 							<ion-icon name="car-sport-outline" slot="start" />
 							<ion-label>Assets</ion-label>
 						</ion-item>
@@ -129,7 +129,7 @@
 						</ion-item>
 					</ion-card>
 				</ion-col>
-			}
-		</ion-row>
+			</ion-row>
+		}
 	</ion-grid>
 </ion-content>

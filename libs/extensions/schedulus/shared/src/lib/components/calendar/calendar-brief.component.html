@@ -1,12 +1,13 @@
 <ion-card>
 	<ion-item
+		color="primary"
 		tappable="true"
 		routerLink="./calendar"
 		lines="full"
 		class="sneat-tiny-end-padding"
 	>
 		<ion-icon name="calendar-outline" slot="start"></ion-icon>
-		<ion-label style="font-weight: bold" color="primary">Calendar</ion-label>
+		<ion-label style="font-weight: bold">Calendar</ion-label>
 		<sneat-calendar-add-buttons
 			[space]="$space()"
 			[dateID]="undefined"
