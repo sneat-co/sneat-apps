@@ -57,7 +57,7 @@
 				class="virtual-slide"
 				[@virtualSlide]="oddSlide?.animationState || 'show'"
 				[$week]="oddWeek"
-				[spaceDaysProvider]="spaceDaysProvider"
+				[$spaceDaysProvider]="$spaceDaysProvider()"
 			/>
 			@if (isEvenSlideActivated) {
 				<sneat-calendar-week
@@ -65,7 +65,7 @@
 					[$space]="$space()"
 					[@virtualSlide]="evenSlide?.animationState || 'hide'"
 					[$week]="evenWeek"
-					[spaceDaysProvider]="spaceDaysProvider"
+					[$spaceDaysProvider]="$spaceDaysProvider()"
 				/>
 			}
 		</div>

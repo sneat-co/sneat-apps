@@ -51,9 +51,6 @@ export function getWdDate(
 	);
 }
 
-export const SHIFT_1_DAY = 1,
-	SHIFT_1_WEEK = 7;
-
 export const createWeekdays = (): readonly Weekday[] =>
 	wd2.map((id) => ({
 		id,

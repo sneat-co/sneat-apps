@@ -62,11 +62,11 @@
 	>
 		<div class="virtual-slider-inner" [@virtualSlider]="animationState">
 			<div class="virtual-slide" [@virtualSlide]="oddSlide?.animationState">
-				<sneat-calendar-day [weekday]="oddDay?.weekday" [space]="space" />
+				<sneat-calendar-day [$weekday]="oddDay?.weekday" [$space]="space" />
 				<div class="virtual-slide-overflow-fixer"></div>
 			</div>
 			<div class="virtual-slide" [@virtualSlide]="evenSlide?.animationState">
-				<sneat-calendar-day [weekday]="evenDay?.weekday" [space]="space" />
+				<sneat-calendar-day [$weekday]="evenDay?.weekday" [$space]="space" />
 				<div class="virtual-slide-overflow-fixer"></div>
 			</div>
 		</div>

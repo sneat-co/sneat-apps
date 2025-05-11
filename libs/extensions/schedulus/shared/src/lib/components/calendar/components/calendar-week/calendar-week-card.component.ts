@@ -1,4 +1,9 @@
-import { Component, input, Input } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	input,
+	Input,
+} from '@angular/core';
 import {
 	IonButton,
 	IonButtons,
@@ -17,8 +22,6 @@ import { CalendarWeekTitleComponent } from './calendar-week-title.component';
 import { CalendarWeekComponent } from './calendar-week.component';
 
 @Component({
-	selector: 'sneat-week-card',
-	templateUrl: 'calendar-week-card.component.html',
 	animations: virtualSliderAnimations,
 	imports: [
 		CalendarWeekComponent,
@@ -30,11 +33,14 @@ import { CalendarWeekComponent } from './calendar-week.component';
 		IonIcon,
 		IonLabel,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-week-card',
+	templateUrl: 'calendar-week-card.component.html',
 })
 // implements OnInit
 export class CalendarWeekCardComponent extends SwipeableBaseComponent {
-	public readonly $space = input.required<ISpaceContext | undefined>();
-	@Input({ required: true }) spaceDaysProvider?: CalendarDataProvider;
+	public readonly $space = input.required<ISpaceContext>();
+	public readonly $spaceDaysProvider = input.required<CalendarDataProvider>();
 
 	get oddWeek(): SwipeableWeek {
 		return this.oddSlide as SwipeableWeek;

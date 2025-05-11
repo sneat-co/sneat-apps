@@ -1,4 +1,4 @@
-import { computed, signal } from '@angular/core';
+import { signal } from '@angular/core';
 import { hasRelated } from '@sneat/dto';
 import { CalendariumSpaceService } from '../services/calendarium-space.service';
 import {

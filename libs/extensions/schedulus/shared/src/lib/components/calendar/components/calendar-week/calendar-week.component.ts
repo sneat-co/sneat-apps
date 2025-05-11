@@ -10,7 +10,6 @@ import {
 	SimpleChange,
 	SimpleChanges,
 } from '@angular/core';
-import { IonItemGroup } from '@ionic/angular/standalone';
 import { dateToIso } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import { CalendarDataProvider } from '../../../../services/calendar-data-provider';
@@ -23,19 +22,31 @@ import { CalendarWeekdayComponent } from '../calendar-weekday/calendar-weekday.c
 @Component({
 	selector: 'sneat-calendar-week',
 	templateUrl: './calendar-week.component.html',
-	imports: [CalendarWeekdayComponent, IonItemGroup],
+	imports: [CalendarWeekdayComponent],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarWeekComponent implements OnChanges {
 	public readonly $space = input.required<ISpaceContext | undefined>();
 	public readonly $week = input.required<Week>();
 
-	@Input({ required: true }) spaceDaysProvider?: CalendarDataProvider;
-	@Input() filter?: ICalendarFilter;
+	public readonly $spaceDaysProvider = input.required<CalendarDataProvider>();
+	// @Input() filter?: ICalendarFilter;
 
 	@Output() readonly goNew = new EventEmitter<NewHappeningParams>();
 	@Output() readonly dateSelected = new EventEmitter<Date>();
 
+	/* Having trouble to make it computed due to:
+	ERROR RuntimeError: NG0602: effect() cannot be called from within a reactive context. Call `effect` outside of a reactive context. For example, schedule the effect inside the component constructor. Find more at https://angular.dev/errors/NG0602
+    at assertNotInReactiveContext (core.mjs:8451:15)
+    at effect (core.mjs:39579:9)
+    at calendar-day.ts:101:27
+    at runInInjectionContext (core.mjs:2467:16)
+    at new CalendarDay (calendar-day.ts:100:24)
+    at CalendarDataProvider.getCalendarDay (calendar-data-provider.ts:182:10)
+    at calendar-week.component.ts:54:28
+    at Array.map (<anonymous>)
+    at Object.computation (calendar-week.component.ts:50:19)
+	 */
 	protected readonly $weekdays = signal(createWeekdays());
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -47,7 +58,7 @@ export class CalendarWeekComponent implements OnChanges {
 		if (changes['$week']) {
 			this.onWeekInputChanged(changes['$week']);
 		}
-		if (changes['spaceDaysProvider']) {
+		if (changes['$spaceDaysProvider']) {
 			this.onSpaceChanged();
 		}
 	}
@@ -61,11 +72,7 @@ export class CalendarWeekComponent implements OnChanges {
 
 	private recreateWeekdays(startDate: Date): void {
 		console.log('ScheduleWeekComponent.recreateWeekdays()', startDate);
-		const spaceDaysProvider = this.spaceDaysProvider;
-		if (!spaceDaysProvider) {
-			console.log('WARN: recreateWeekdays(): spaceDaysProvider is not set');
-			return;
-		}
+		const spaceDaysProvider = this.$spaceDaysProvider();
 		const startDateN = startDate.getDate();
 		this.$weekdays.update((weekdays) =>
 			weekdays.map((wd, i) => {

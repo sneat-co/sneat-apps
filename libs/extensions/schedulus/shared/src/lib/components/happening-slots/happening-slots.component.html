@@ -4,19 +4,19 @@
 		<ion-button
 			title="Add slot"
 			(click)="showAddSlot($event)"
-			[color]="slots()?.length ? 'primary' : 'danger'"
+			[color]="$slots()?.length ? 'primary' : 'danger'"
 		>
 			<ion-icon name="add-outline" slot="start" />
 			<ion-label>Add slot</ion-label>
 		</ion-button>
 	</ion-buttons>
 </ion-item-divider>
-@if (slots() && !slots()?.length) {
+@if ($slots() && !$slots()?.length) {
 	<ion-item>
 		<ion-label><i>No slots have been added yet.</i></ion-label>
 	</ion-item>
 }
-@for (slot of slots(); track slot.id; let last = $last) {
+@for (slot of $slots(); track slot.id; let last = $last) {
 	<ion-item
 		button="button"
 		class="with-buttons"
@@ -67,21 +67,15 @@
 				@if (slot.weekdays?.length === 7) {
 					Every day
 				} @else if (
-					slot.weekdays?.length === 5 &&
-					!slot.weekdays?.includes("sa") &&
-					!slot.weekdays?.includes("su")
+					slot.weekdays?.length === 5 && !hasAnyWd(slot, "sa", "su")
 				) {
 					Weekdays
-				} @else if (
-					slot.weekdays?.length === 2 &&
-					slot.weekdays?.includes("sa") &&
-					slot.weekdays?.includes("su")
-				) {
+				} @else if (slot.weekdays?.length === 2 && hasAnyWd(slot, "sa", "su")) {
 					Weekends
 				} @else {
 					@for (wd of slot.weekdays; track wd) {
-						<ion-badge color="light" style="margin-right: 4px"
-							>{{ wd | wdToWeekday }}
+						<ion-badge color="light" style="margin-right: 4px">
+							{{ wd | wdToWeekday }}
 						</ion-badge>
 					}
 				}
@@ -99,7 +93,7 @@
 			</p>
 		</ion-label>
 		<ion-buttons slot="end">
-			@if (!deletingSlotIDs().includes(slot.id)) {
+			@if (!$deletingSlotIDs().includes(slot.id)) {
 				<ion-button
 					title="Edit"
 					color="medium"
@@ -108,14 +102,14 @@
 					<ion-icon name="create-outline" />
 				</ion-button>
 			}
-			@if (!happening?.id || (slots()?.length || 0) > 1) {
+			@if (!happening().id || ($slots()?.length || 0) > 1) {
 				<ion-button
-					[disabled]="deletingSlotIDs().includes(slot.id)"
+					[disabled]="$deletingSlotIDs().includes(slot.id)"
 					(click)="removeSlot($event, slot)"
 					color="medium"
 				>
-					@if (deletingSlotIDs().includes(slot.id)) {
-						@if (deletingSlotIDs().includes(slot.id)) {
+					@if ($deletingSlotIDs().includes(slot.id)) {
+						@if ($deletingSlotIDs().includes(slot.id)) {
 							<ion-spinner name="lines-small" slot="end" />
 						}
 						<ion-label style="text-transform: none">Deleting...</ion-label>

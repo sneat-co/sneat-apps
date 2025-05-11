@@ -1,4 +1,10 @@
-import { Component, Input, input, computed } from '@angular/core';
+import {
+	Component,
+	Input,
+	input,
+	computed,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import {
 	PopoverController,
 	PopoverOptions,
@@ -13,20 +19,18 @@ import {
 import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import { ContactsSelectorModule } from '@sneat/contactus-shared';
+import { WithSpaceInput } from '@sneat/space-components';
 import {
 	CalendarNavService,
 	CalendarNavServicesModule,
 	HappeningServiceModule,
 } from '../../../../services';
 import { ISlotUIContext } from '@sneat/mod-schedulus-core';
-import { ISpaceContext } from '@sneat/space-models';
 import { HappeningSlotModalServiceModule } from '../../../happening-slot-form/happening-slot-modal.service';
 import { HappeningSlotParticipantsComponent } from '../../../happening-slot-participants/happening-slot-participants.component';
 import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
 
 @Component({
-	selector: 'sneat-day-slot-item',
-	templateUrl: './day-slot-item.component.html',
 	providers: [ContactusSpaceService],
 	imports: [
 		HappeningServiceModule,
@@ -44,9 +48,12 @@ import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
 		IonButtons,
 		IonButton,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-day-slot-item',
+	templateUrl: './day-slot-item.component.html',
 	// standalone: false, // circle dependencies DaySlotItemComponent->SlotContextMenuComponent->DaySlotItemComponent
 })
-export class DaySlotItemComponent {
+export class DaySlotItemComponent extends WithSpaceInput {
 	public readonly $slotContext = input.required<ISlotUIContext>();
 
 	@Input() dateID?: string;
@@ -54,7 +61,6 @@ export class DaySlotItemComponent {
 	@Input() mode: 'full' | 'brief' = 'full';
 	@Input() color?: 'light';
 
-	@Input({ required: true }) space?: ISpaceContext;
 	@Input() contactusSpace?: IContactusSpaceDboAndID;
 
 	protected readonly $isCanceled = computed(() => {
@@ -65,7 +71,9 @@ export class DaySlotItemComponent {
 	constructor(
 		private readonly popoverController: PopoverController,
 		private readonly calendarNavService: CalendarNavService,
-	) {}
+	) {
+		super('DaySlotItemComponent');
+	}
 
 	protected onSlotClicked(event: Event): void {
 		console.log('DaySlotItemComponent.onSlotClicked()');
@@ -78,13 +86,6 @@ export class DaySlotItemComponent {
 			slot: slot,
 			event,
 		});
-	}
-
-	protected showRsvp(event: Event): void {
-		console.log('DaySlotItemComponent.showRsvp()');
-		event.stopPropagation();
-		event.preventDefault();
-		alert("🚧 Sorry, the RSVP is not here yet.\n\n🚀 But it's coming soon! ");
 	}
 
 	protected async showContextMenu(
@@ -108,7 +109,7 @@ export class DaySlotItemComponent {
 			const popoverOptions: PopoverOptions = {
 				component: m.SlotContextMenuComponent,
 				componentProps: {
-					space: this.space,
+					$space: this.$space,
 					slotContext,
 					dateID: this.dateID,
 					// state: stateOutput,

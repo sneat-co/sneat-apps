@@ -1,4 +1,9 @@
-import { ChangeDetectorRef, Component, computed } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	computed,
+} from '@angular/core';
 import {
 	IonButton,
 	IonButtons,
@@ -24,8 +29,6 @@ import { IHappeningContactRequest } from '../../services/happening.service';
 import { HappeningSlotsComponent } from '../happening-slots/happening-slots.component';
 
 @Component({
-	selector: 'sneat-happening-card',
-	templateUrl: 'happening-card.component.html',
 	styleUrls: ['happening-card.component.scss'],
 	providers: [...HappeningBaseComponent.providers],
 	...HappeningBaseComponent.metadata,
@@ -43,6 +46,9 @@ import { HappeningSlotsComponent } from '../happening-slots/happening-slots.comp
 		LongMonthNamePipe,
 		SelectedContactsPipe,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-happening-card',
+	templateUrl: 'happening-card.component.html',
 })
 export class HappeningCardComponent extends HappeningBaseComponent {
 	protected readonly $relatedContactIDs = computed(() => {

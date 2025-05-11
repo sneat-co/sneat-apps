@@ -7,16 +7,19 @@
 @switch (tab) {
 	@case ("upcoming") {
 		<sneat-single-happenings-list
-			[space]="space"
+			[$space]="$space()"
 			[happenings]="upcomingSingles"
 		/>
 	}
 	@case ("past") {
-		<sneat-single-happenings-list [space]="space" [happenings]="pastSingles" />
+		<sneat-single-happenings-list
+			[$space]="$space()"
+			[happenings]="pastSingles"
+		/>
 	}
 	@case ("recent") {
 		<sneat-single-happenings-list
-			[space]="space"
+			[$space]="$space()"
 			[happenings]="recentSingles"
 		/>
 	}

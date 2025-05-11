@@ -1,4 +1,5 @@
 import {
+	ChangeDetectionStrategy,
 	ChangeDetectorRef,
 	Component,
 	EventEmitter,
@@ -12,24 +13,24 @@ import { FormsModule } from '@angular/forms';
 import { IonSegment, IonSegmentButton } from '@ionic/angular/standalone';
 import { ISlotUIEvent } from '@sneat/mod-schedulus-core';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
-import { ISpaceContext } from '@sneat/space-models';
+import { WithSpaceInput } from '@sneat/space-components';
 import { HappeningService } from '../../../../services/happening.service';
-import { SneatBaseComponent } from '@sneat/ui';
-import { Observable, Subscription, takeUntil } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { SingleHappeningsListComponent } from './single-happenings-list.component';
 
 @Component({
-	selector: 'sneat-singles-tab',
-	templateUrl: 'singles-tab.component.html',
 	imports: [
 		SingleHappeningsListComponent,
 		IonSegment,
 		IonSegmentButton,
 		FormsModule,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-singles-tab',
+	templateUrl: 'singles-tab.component.html',
 })
 export class SinglesTabComponent
-	extends SneatBaseComponent
+	extends WithSpaceInput
 	implements OnChanges, OnDestroy
 {
 	private upcomingSinglesSubscription?: Subscription;
@@ -42,8 +43,6 @@ export class SinglesTabComponent
 	protected recentSingles?: IHappeningContext[];
 
 	public tab: 'upcoming' | 'past' | 'recent' = 'upcoming';
-
-	@Input({ required: true }) space?: ISpaceContext;
 
 	@Output() readonly slotClicked = new EventEmitter<ISlotUIEvent>();
 
@@ -58,9 +57,9 @@ export class SinglesTabComponent
 
 	public ngOnChanges(changes: SimpleChanges): void {
 		console.log('SinglesTabComponent.ngOnChanges()', changes);
-		const spaceChange = changes['space'];
+		const spaceChange = changes['$space'];
 		if (spaceChange) {
-			if (this.space?.id !== spaceChange.previousValue?.id) {
+			if (this.$spaceID() !== spaceChange.previousValue?.id) {
 				switch (this.tab) {
 					case 'upcoming':
 						this.watchUpcomingSingles();
@@ -95,27 +94,36 @@ export class SinglesTabComponent
 	}
 
 	private watchUpcomingSingles(): void {
-		if (!this.space) return;
+		const space = this.$space();
+		if (!space) {
+			return;
+		}
 		this.upcomingSinglesSubscription = this.watchSingles(
-			this.happeningService.watchUpcomingSingles(this.space),
+			this.happeningService.watchUpcomingSingles(space),
 			this.upcomingSinglesSubscription,
 			(singles) => (this.upcomingSingles = singles),
 		);
 	}
 
 	private watchPastSingles(): void {
-		if (!this.space) return;
+		const space = this.$space();
+		if (!space) {
+			return;
+		}
 		this.pastSinglesSubscription = this.watchSingles(
-			this.happeningService.watchPastSingles(this.space),
+			this.happeningService.watchPastSingles(space),
 			this.pastSinglesSubscription,
 			(singles) => (this.pastSingles = singles),
 		);
 	}
 
 	private watchRecentSingles(): void {
-		if (!this.space) return;
+		const space = this.$space();
+		if (!space) {
+			return;
+		}
 		this.recentSinglesSubscription = this.watchSingles(
-			this.happeningService.watchRecentlyCreatedSingles(this.space),
+			this.happeningService.watchRecentlyCreatedSingles(space),
 			this.recentSinglesSubscription,
 			(singles) => (this.recentSingles = singles),
 		);
@@ -127,11 +135,11 @@ export class SinglesTabComponent
 		processSingles: (singles: IHappeningContext[]) => void,
 	): Subscription | undefined {
 		sub?.unsubscribe();
-		if (!this.space) {
-			return undefined;
+		const space = this.$space();
+		if (!space) {
+			return;
 		}
-
-		return singles$.pipe(takeUntil(this.destroyed$)).subscribe({
+		return singles$.pipe(this.takeUntilDestroyed()).subscribe({
 			next: (singles) => {
 				processSingles(singles);
 				this.changeDetectorRef.detectChanges();

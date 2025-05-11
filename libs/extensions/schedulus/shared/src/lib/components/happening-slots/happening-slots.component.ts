@@ -1,9 +1,10 @@
 import {
+	ChangeDetectionStrategy,
 	Component,
+	computed,
 	EventEmitter,
 	Inject,
-	Input,
-	OnChanges,
+	input,
 	Output,
 	signal,
 	SimpleChanges,
@@ -42,8 +43,6 @@ export interface AddSlotParams {
 }
 
 @Component({
-	selector: 'sneat-happening-slots',
-	templateUrl: './happening-slots.component.html',
 	imports: [
 		HappeningSlotModalServiceModule,
 		WdToWeekdayPipe,
@@ -58,22 +57,29 @@ export interface AddSlotParams {
 		IonBadge,
 		IonSpinner,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-happening-slots',
+	templateUrl: './happening-slots.component.html',
 })
-export class HappeningSlotsComponent implements OnChanges {
-	@Input() happening?: IHappeningContext;
+export class HappeningSlotsComponent {
+	public readonly happening = input.required<IHappeningContext>();
 
-	@Input() wd?: WeekdayCode2;
+	public readonly wd = input<WeekdayCode2 | undefined>();
 
-	@Output() readonly addSlotDismissed = new EventEmitter<void>();
-	@Output() readonly slotAdded = new EventEmitter<IHappeningSlot>();
-	// @Output() readonly slotRemoved = new EventEmitter<
-	// 	readonly IHappeningSlotWithID[]
-	// >();
 	@Output() readonly slotSelected = new EventEmitter<IHappeningSlot>();
+	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
 
-	protected readonly slots = signal<IHappeningSlotWithID[] | undefined>(
-		undefined,
+	protected readonly $slots = computed<IHappeningSlotWithID[] | undefined>(() =>
+		Object.entries(this.happening().brief?.slots || {}).map(([id, slot]) => ({
+			...slot,
+			id,
+		})),
 	);
+
+	protected readonly hasAnyWd = (
+		slot: IHappeningSlotWithID,
+		...wds: readonly WeekdayCode2[]
+	) => wds.some((wd) => !!slot.weekdays?.includes(wd));
 
 	// protected isShowingSlotFormModal = false;
 	//
@@ -88,10 +94,11 @@ export class HappeningSlotsComponent implements OnChanges {
 	protected removeSlot(event: Event, slot: IHappeningSlotWithID): void {
 		event.preventDefault();
 		event.stopPropagation();
-		if (!this.happening?.brief) {
+		const happening = this.happening();
+		if (!happening.brief) {
 			throw new Error('!this.happening?.brief');
 		}
-		if (this.happening.id) {
+		if (happening.id) {
 			this.deleteSlot(slot);
 		} else {
 			this.removeSlotFromHappening(slot);
@@ -99,15 +106,16 @@ export class HappeningSlotsComponent implements OnChanges {
 	}
 
 	private removeSlotFromHappening(slot: IHappeningSlotWithID): void {
-		if (!this.happening?.brief) {
+		const happening = this.happening();
+		if (!happening.brief) {
 			throw new Error('!this.happening');
 		}
 		this.onHappeningChanged({
-			...this.happening,
+			...happening,
 			brief: {
-				...this.happening.brief,
+				...happening.brief,
 				slots: Object.fromEntries(
-					Object.entries(this.happening.brief.slots || {}).filter(
+					Object.entries(happening.brief?.slots || {}).filter(
 						([id]) => id !== slot.id,
 					),
 				),
@@ -116,14 +124,15 @@ export class HappeningSlotsComponent implements OnChanges {
 	}
 
 	private deleteSlot(slot: IHappeningSlotWithID): void {
-		if (!this.happening?.brief) {
+		const happening = this.happening();
+		if (!happening.brief) {
 			throw new Error('!this.happening?.brief');
 		}
-		const happeningID = this.happening.id;
+		const happeningID = happening.id;
 		if (!happeningID) {
 			throw new Error('!happeningID');
 		}
-		const spaceID = this.happening?.space.id;
+		const spaceID = happening.space.id;
 		if (!spaceID) {
 			throw new Error('!spaceID');
 		}
@@ -133,13 +142,13 @@ export class HappeningSlotsComponent implements OnChanges {
 			slotID: slot.id,
 		};
 
-		this.deletingSlotIDs.set([...this.deletingSlotIDs(), slot.id]);
+		this.$deletingSlotIDs.set([...this.$deletingSlotIDs(), slot.id]);
 
 		const removeFromDeletingSlotIDs = (delay: number) =>
 			setTimeout(
 				() =>
-					this.deletingSlotIDs.set(
-						this.deletingSlotIDs().filter((id) => id !== slot.id),
+					this.$deletingSlotIDs.set(
+						this.$deletingSlotIDs().filter((id) => id !== slot.id),
 					),
 				delay,
 			);
@@ -155,22 +164,16 @@ export class HappeningSlotsComponent implements OnChanges {
 		});
 	}
 
-	protected readonly deletingSlotIDs = signal<readonly string[]>([]);
+	protected readonly $deletingSlotIDs = signal<readonly string[]>([]);
 
 	protected selectSlot(event: Event, slot: IHappeningSlotWithID): void {
 		this.slotSelected.emit(slot);
 		this.showEditSlot(event, slot);
 	}
 
-	protected onSlotAdded(slot: IHappeningSlot): void {
-		console.log('HappeningSlotsComponent.onSlotAdded()');
-		// this.isShowingSlotFormModal = false;
-		this.slotAdded.emit(slot);
-	}
-
 	protected onHappeningChanged(happening: IHappeningContext): void {
 		console.log('HappeningSlotsComponent.onHappeningChanged()');
-		this.happening = happening;
+		this.happeningChange.emit(happening);
 	}
 
 	protected editingSlot?: IHappeningSlot;
@@ -178,11 +181,9 @@ export class HappeningSlotsComponent implements OnChanges {
 	protected showEditSlot(event: Event, slot: IHappeningSlotWithID): void {
 		event.stopPropagation();
 		event.preventDefault();
-		if (!this.happening) {
-			return;
-		}
+		const happening = this.happening();
 		this.happeningSlotModalService
-			.editSingleHappeningSlot(event, this.happening, undefined, slot)
+			.editSingleHappeningSlot(event, happening, undefined, slot)
 			.catch(this.errorLogger.logErrorHandler('failed to open edit modal'));
 
 		// this.addSlotParams = undefined;
@@ -192,26 +193,14 @@ export class HappeningSlotsComponent implements OnChanges {
 
 	protected showAddSlot(event: Event, params?: AddSlotParams): void {
 		console.log('RecurringSlotsComponent.showAddSlot(), params:', params);
-		if (!this.happening) {
-			return;
-		}
+		const happening = this.happening();
 		this.happeningSlotModalService
-			.editSingleHappeningSlot(event, this.happening)
+			.editSingleHappeningSlot(event, happening)
 			.catch(this.errorLogger.logErrorHandler('failed to open edit modal'));
 
 		// this.editingSlot = undefined;
 		// this.addSlotParams = params;
 		// this.isShowingSlotFormModal = true;
-	}
-
-	public ngOnChanges(changes: SimpleChanges): void {
-		if (changes['happening']) {
-			this.slots.set(
-				Object.entries(this.happening?.brief?.slots || {}).map(
-					([id, slot]) => ({ ...slot, id }),
-				),
-			);
-		}
 	}
 
 	// onSlotFormModalDismissed(event: Event): void {

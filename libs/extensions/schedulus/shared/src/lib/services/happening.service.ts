@@ -385,7 +385,7 @@ export class HappeningService {
 				limit,
 			})
 			.pipe(
-				tap((happening) => console.log('watchSingles() =>', happening)),
+				tap((happenings) => console.log('watchSingles() =>', happenings)),
 				map((happenings) => {
 					return happenings.map((h) => processHappeningContext(h, space));
 				}),

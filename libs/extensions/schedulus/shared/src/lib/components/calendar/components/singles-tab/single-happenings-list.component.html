@@ -5,10 +5,10 @@
 			<ion-text color="medium">Loading 1-timers...</ion-text>
 		</ion-card-content>
 	</ion-card>
-} @else if (space) {
+} @else if ($spaceID()) {
 	@for (happening of happenings; track happening.id) {
 		<sneat-happening-card
-			[$space]="space"
+			[$space]="$space()"
 			[$happening]="happening"
 			(deleted)="onHappeningRemoved($event)"
 		/>

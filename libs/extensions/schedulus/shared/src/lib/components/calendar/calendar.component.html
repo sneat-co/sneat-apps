@@ -30,7 +30,7 @@ This is just a small performance optimization.
 -->
 <sneat-day-tab
 	[style.display]="tab === 'day' ? 'block' : 'none'"
-	[space]="$space()"
+	[$space]="$space()"
 	[spaceDaysProvider]="spaceDaysProvider"
 />
 
@@ -42,11 +42,11 @@ This is probably due to the fact that we open 14 listeners (1 for each day of 2 
 
 [style.display]="tab === 'week' ? 'block' : 'none'"
 -->
-@if (isWeekTabActivated) {
+@if ($isWeekTabActivated()) {
 	<sneat-week-tab
 		[style.display]="tab === 'week' ? 'block' : 'none'"
-		[space]="$space()"
-		[spaceDaysProvider]="spaceDaysProvider"
+		[$space]="$space()"
+		[$spaceDaysProvider]="spaceDaysProvider"
 	/>
 }
 
@@ -59,6 +59,6 @@ This is probably due to the fact that we open 14 listeners (1 for each day of 2 
 		/>
 	}
 	@case ("singles") {
-		<sneat-singles-tab [space]="$space()" [onDateSelected]="onDateSelected" />
+		<sneat-singles-tab [$space]="$space()" [onDateSelected]="onDateSelected" />
 	}
 }

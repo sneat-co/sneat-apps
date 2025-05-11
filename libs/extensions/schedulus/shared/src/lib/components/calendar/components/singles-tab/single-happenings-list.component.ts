@@ -1,4 +1,9 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Input,
+	OnChanges,
+} from '@angular/core';
 import {
 	IonButton,
 	IonCard,
@@ -8,6 +13,7 @@ import {
 	IonText,
 } from '@ionic/angular/standalone';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
+import { WithSpaceInput } from '@sneat/space-components';
 import { ISpaceContext } from '@sneat/space-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
@@ -19,8 +25,6 @@ import {
 } from '../calendar-filter/calendar-filter';
 
 @Component({
-	selector: 'sneat-single-happenings-list',
-	templateUrl: 'single-happenings-list.component.html',
 	imports: [
 		HappeningCardComponent,
 		IonCard,
@@ -30,12 +34,14 @@ import {
 		IonButton,
 		IonLabel,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-single-happenings-list',
+	templateUrl: 'single-happenings-list.component.html',
 })
 export class SingleHappeningsListComponent
-	extends SneatBaseComponent
+	extends WithSpaceInput
 	implements OnChanges
 {
-	@Input({ required: true }) space?: ISpaceContext;
 	@Input({ required: true }) public happenings?: IHappeningContext[];
 
 	private filter?: ICalendarFilter;

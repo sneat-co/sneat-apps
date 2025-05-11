@@ -1,4 +1,4 @@
-import { effect, Signal, signal } from '@angular/core';
+import { computed, effect, Signal, signal } from '@angular/core';
 import { dateToIso } from '@sneat/core';
 import { IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
@@ -29,14 +29,26 @@ export interface ICalendarDayInput {
 	readonly spaceID: string; // Should we use observable on ISpaceContext as we might want to use space settings?
 	readonly $recurringSlots: Signal<RecurringSlots | undefined>;
 
-	// Obsolete - to be replaced with `$recurringSlots`
+	// Probably can be made obsolete - to be replaced with `$recurringSlots`,
+	// though it's not clear if it's possible.
 	readonly recurringSlots$: Observable<RecurringSlots>;
 }
 
 export class CalendarDay {
 	private readonly destroyed$ = new Subject<void>();
 
-	private recurringSlots?: RecurringSlots;
+	// private recurringSlots?: RecurringSlots;
+
+	private $recurringSlots = computed(() => {
+		const inputs = this.$inputs();
+		const recurringSlots = inputs
+			.map((input) => input.$recurringSlots())
+			.filter((v) => !!v);
+		const result = recurringSlots.length ? recurringSlots[0] : undefined; // TODO: add support for multiple inputs
+		console.log('CalendarDay.$recurringSlots()', this.dateID, inputs, result);
+		return result;
+	});
+
 	private singles?: ISlotUIContext[];
 
 	private _spaces: readonly ISpaceContext[] = [];
@@ -53,7 +65,7 @@ export class CalendarDay {
 
 	public readonly $isLoading = this._isLoading.asReadonly();
 
-	private readonly $slots = signal<ISlotUIContext[] | undefined>(undefined);
+	// private readonly $slots = signal<ISlotUIContext[] | undefined>(undefined);
 
 	private readonly _slots = new BehaviorSubject<ISlotUIContext[] | undefined>(
 		undefined,
@@ -79,7 +91,7 @@ export class CalendarDay {
 	constructor(
 		public readonly date: Date,
 		injector: Injector,
-		$input: Signal<readonly ICalendarDayInput[]>,
+		private readonly $inputs: Signal<readonly ICalendarDayInput[]>,
 		private readonly errorLogger: IErrorLogger,
 		// TODO: document why we need both HappeningService & CalendarDayService
 		private readonly happeningService: HappeningService,
@@ -99,7 +111,7 @@ export class CalendarDay {
 
 		runInInjectionContext(injector, () => {
 			this.effectRef = effect(() => {
-				const inputs = $input();
+				const inputs = $inputs();
 				console.log('CalendarDay.effect($input) =>', this.dateID, inputs);
 				inputs.forEach((input) => {
 					this.subscriptions.forEach((s) => s.unsubscribe());
@@ -120,9 +132,6 @@ export class CalendarDay {
 	private readonly processSpaceID = (spaceID: string | undefined) => {
 		console.log(`SpaceDay[${this.dateID}].processSpaceID(spaceID=${spaceID})`);
 		this.singles = undefined;
-		if (!spaceID) {
-			this.recurringSlots = undefined;
-		}
 		if (spaceID) {
 			this.subscribeForSingles(spaceID);
 			this.subscribeForCalendarDay(spaceID);
@@ -236,7 +245,7 @@ export class CalendarDay {
 			} weekdays with slots:`,
 			slots,
 		);
-		this.recurringSlots = slots;
+		// this.recurringSlots = slots;
 		this.joinRecurringsWithSinglesAndEmit();
 	};
 
@@ -244,25 +253,24 @@ export class CalendarDay {
 		console.log('joinRecurringsWithSinglesAndEmit() day=', this.dateID);
 		let slots: ISlotUIContext[] = [];
 
-		const weekdaySlots = this.recurringSlots?.byWeekday[this.wd]?.map(
-			(wdSlot) => {
-				// console.log(
-				// 	'joinRecurringsWithSinglesAndEmit, wdSlot',
-				// 	this.wd,
-				// 	wdSlot,
-				// 	this.scheduleDayDto,
-				// );
-				if (this.calendarDayDbo) {
-					const adjustment =
-						this.calendarDayDbo?.happeningAdjustments?.[wdSlot.happening.id]
-							?.slots?.[wdSlot.slot.id];
-					if (adjustment) {
-						return { ...wdSlot, adjustment: adjustment };
-					}
+		const recurringSlots = this.$recurringSlots();
+		const weekdaySlots = recurringSlots?.byWeekday[this.wd]?.map((wdSlot) => {
+			// console.log(
+			// 	'joinRecurringsWithSinglesAndEmit, wdSlot',
+			// 	this.wd,
+			// 	wdSlot,
+			// 	this.scheduleDayDto,
+			// );
+			if (this.calendarDayDbo) {
+				const adjustment =
+					this.calendarDayDbo?.happeningAdjustments?.[wdSlot.happening.id]
+						?.slots?.[wdSlot.slot.id];
+				if (adjustment) {
+					return { ...wdSlot, adjustment: adjustment };
 				}
-				return wdSlot;
-			},
-		);
+			}
+			return wdSlot;
+		});
 
 		if (weekdaySlots?.length) {
 			slots.push(...weekdaySlots);
@@ -279,7 +287,7 @@ export class CalendarDay {
 
 		slots = slots.sort(sortSlotItems);
 		this._slots.next(slots);
-		this.$slots.set(slots);
+		// this.$slots.set(slots);
 
 		this._isLoading.set(false);
 

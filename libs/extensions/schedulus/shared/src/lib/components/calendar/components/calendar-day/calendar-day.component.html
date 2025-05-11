@@ -1,4 +1,4 @@
-@if (weekday) {
+@if ($weekday(); as weekday) {
 	@if (!weekday.day?.slots?.length) {
 		<ion-item [lines]="hideLastBorder ? 'none' : 'full'">
 			@if (!weekday.day || weekday.day.$isLoading()) {
@@ -30,7 +30,7 @@
 		}
 		@for (slot of slots; track slot.slot.id) {
 			<sneat-day-slot-item
-				[space]="space"
+				[$space]="$space()"
 				[dateID]="weekday.day?.dateID"
 				[$slotContext]="slot"
 			/>
@@ -45,8 +45,8 @@
 			>
 				<ion-icon name="duplicate-outline" slot="start" />
 				<ion-label color="medium" style="text-transform: none"
-					>Add recurring</ion-label
-				>
+					>Add recurring
+				</ion-label>
 			</ion-button>
 			<ion-button
 				slot="end"
@@ -55,8 +55,8 @@
 			>
 				<ion-icon name="add-circle-outline" color="primary" slot="start" />
 				<ion-label color="medium" style="text-transform: none"
-					>Add one-timer</ion-label
-				>
+					>Add one-timer
+				</ion-label>
 			</ion-button>
 		</ion-item>
 	}

@@ -1,5 +1,6 @@
 import {
 	AfterViewInit,
+	ChangeDetectionStrategy,
 	Component,
 	computed,
 	EventEmitter,
@@ -46,9 +47,6 @@ import { RecurringsTabComponent } from './components/recurrings-tab/recurrings-t
 import { SinglesTabComponent } from './components/singles-tab/singles-tab.component';
 
 @Component({
-	selector: 'sneat-calendar',
-	templateUrl: './calendar.component.html',
-	styleUrls: ['./calendar.component.scss'],
 	imports: [
 		SinglesTabComponent,
 		RecurringsTabComponent,
@@ -66,6 +64,10 @@ import { SinglesTabComponent } from './components/singles-tab/singles-tab.compon
 		CalendariumSpaceService,
 		ContactusSpaceService,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-calendar',
+	templateUrl: './calendar.component.html',
+	styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent
 	extends CalendarBaseComponent
@@ -80,11 +82,11 @@ export class CalendarComponent
 
 	@Input() member?: IMemberContext; // TODO: rename to contact?
 	@Input() public tab: CalendarTab = 'day';
-	@Input() public dateID = '';
+
 	@Output() readonly tabChanged = new EventEmitter<CalendarTab>();
 	@Output() readonly dateChanged = new EventEmitter<string>();
 
-	protected isWeekTabActivated = false;
+	protected readonly $isWeekTabActivated = signal(false);
 
 	protected readonly $recurrings = computed<
 		readonly IHappeningWithUiState[] | undefined
@@ -121,11 +123,10 @@ export class CalendarComponent
 		this.calendarStateService.dateChanged.subscribe({
 			next: (changed) => {
 				const { date } = changed;
-				this.date = date;
-				this.dateID = dateToIso(date);
+				this.$date.set(date);
 			},
 		});
-		setTimeout(() => (this.isWeekTabActivated = true), 500);
+		setTimeout(() => this.$isWeekTabActivated.set(true), 500);
 	}
 
 	ngAfterViewInit(): void /* TODO: check and document if it can't be ngOnInit */ {
@@ -134,7 +135,7 @@ export class CalendarComponent
 
 	protected segmentChanged(event: Event): void {
 		console.log('ScheduleComponent.segmentChanged()', event);
-		this.isWeekTabActivated = true;
+		this.$isWeekTabActivated.set(true);
 		history.replaceState(
 			history.state,
 			document.title,
@@ -217,7 +218,7 @@ export class CalendarComponent
 
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['tab'] && this.tab === 'week') {
-			this.isWeekTabActivated = true;
+			this.$isWeekTabActivated.set(true);
 		}
 	}
 
@@ -356,14 +357,14 @@ export class CalendarComponent
 	}
 
 	private changeBrowserURL(): void {
-		if (isToday(this.date)) {
+		if (this.$isToday()) {
 			history.replaceState(
 				history.state,
 				document.title,
 				window.location.href.replace(/&date=\d{4}-\d{2}-\d{2}/, ''),
 			);
 		} else {
-			const isoDate = `&date=${localDateToIso(this.date)}`;
+			const isoDate = `&date=${localDateToIso(this.$date())}`;
 			if (!window.location.href.includes('&date')) {
 				history.replaceState(
 					history.state,

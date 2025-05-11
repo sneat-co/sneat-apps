@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { ISpaceContext } from '@sneat/space-models';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { WithSpaceInput } from '@sneat/space-components';
 import { CalendarDataProvider } from '../../../../services/calendar-data-provider';
 import { CalendarWeekCardComponent } from './calendar-week-card.component';
 
@@ -7,8 +7,12 @@ import { CalendarWeekCardComponent } from './calendar-week-card.component';
 	selector: 'sneat-week-tab',
 	templateUrl: 'calendar-week-tab.component.html',
 	imports: [CalendarWeekCardComponent],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CalendarWeekTabComponent {
-	@Input({ required: true }) space?: ISpaceContext;
-	@Input({ required: true }) spaceDaysProvider?: CalendarDataProvider;
+export class CalendarWeekTabComponent extends WithSpaceInput {
+	public readonly $spaceDaysProvider = input.required<CalendarDataProvider>();
+
+	constructor() {
+		super('CalendarWeekTabComponent');
+	}
 }

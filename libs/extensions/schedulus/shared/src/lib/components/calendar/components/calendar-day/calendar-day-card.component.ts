@@ -41,7 +41,7 @@ export class CalendarDayCardComponent
 	extends CalendarDayBaseComponent
 	implements OnInit
 {
-	@Input({ required: true }) space?: ISpaceContext;
+	@Input({ required: true }) space: ISpaceContext = { id: '' };
 	@Input({ required: true }) spaceDaysProvider?: CalendarDataProvider;
 
 	@Output() readonly goNew = new EventEmitter<NewHappeningParams>();

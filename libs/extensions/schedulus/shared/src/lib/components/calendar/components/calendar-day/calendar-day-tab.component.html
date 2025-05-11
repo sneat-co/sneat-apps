@@ -62,7 +62,7 @@
 
 <!--Today -->
 <sneat-calendar-day-card
-	[space]="space"
+	[space]="$space()"
 	[spaceDaysProvider]="spaceDaysProvider"
 />
 
@@ -73,6 +73,6 @@
 <!--Tomorrow -->
 <sneat-calendar-day-card
 	[activeDayPlus]="1"
-	[space]="space"
+	[space]="$space()"
 	[spaceDaysProvider]="spaceDaysProvider"
 />

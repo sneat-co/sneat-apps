@@ -13,12 +13,12 @@ import { CalendarDayService } from '../../services/calendar-day.service';
 import { CalendariumSpaceService } from '../../services/calendarium-space.service';
 import { HappeningService } from '../../services/happening.service';
 import {
-	CalendarHappeningBriefsByID,
 	ICalendariumSpaceDbo,
 	IHappeningWithUiState,
 } from '@sneat/mod-schedulus-core';
 import { zipMapBriefsWithIDs } from '@sneat/space-models';
 import { CalendarDataProvider } from '../../services/calendar-data-provider';
+import { isToday } from '../calendar-core';
 
 const emptyUiState: UiState = {};
 
@@ -27,9 +27,8 @@ export abstract class CalendarBaseComponent
 	extends WithSpaceInput
 	implements OnDestroy
 {
-	protected date = new Date();
-
-	protected readonly spaceDaysProvider: CalendarDataProvider;
+	protected $date = signal(new Date());
+	protected readonly $isToday = computed(() => isToday(this.$date()));
 
 	private readonly $calendariumSpaceDbo = signal<
 		ICalendariumSpaceDbo | null | undefined
@@ -69,6 +68,7 @@ export abstract class CalendarBaseComponent
 		return allRecurrings;
 	});
 
+	protected readonly spaceDaysProvider: CalendarDataProvider;
 	protected readonly injector = inject(Injector);
 
 	protected constructor(
@@ -92,15 +92,6 @@ export abstract class CalendarBaseComponent
 	override ngOnDestroy(): void {
 		super.ngOnDestroy();
 		this.spaceDaysProvider.destroy();
-	}
-
-	protected override onSpaceIdChanged(spaceID: string): void {
-		super.onSpaceIdChanged(spaceID);
-		// console.log('ScheduleComponent.onSpaceIdChanged()', this.space?.id);
-		if (!spaceID) {
-			return;
-		}
-		// this.setDay('onSpaceIdChanged', this.date);
 	}
 
 	protected setDay(source: string, d: Date): void {

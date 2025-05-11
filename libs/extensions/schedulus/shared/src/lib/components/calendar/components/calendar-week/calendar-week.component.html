@@ -1,9 +1,9 @@
 @for (weekday of $weekdays(); track weekday.id) {
-	<ion-item-group style="margin-top: -1px">
-		<sneat-calendar-weekday
-			[$space]="$space()"
-			[$weekday]="weekday"
-			(dateSelected)="dateSelected.emit($event)"
-		/>
-	</ion-item-group>
+	<!--	<ion-item-group>-->
+	<sneat-calendar-weekday
+		[$space]="$space()"
+		[$weekday]="weekday"
+		(dateSelected)="dateSelected.emit($event)"
+	/>
+	<!--	</ion-item-group>-->
 }

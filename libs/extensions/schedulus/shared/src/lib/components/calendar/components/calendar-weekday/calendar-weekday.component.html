@@ -1,8 +1,8 @@
 @let weekday = $weekday();
 @let day = $day();
 
-<ion-item-divider color="light">
-	<ion-label slot="start" (click)="onDateSelected()" tappable>
+<ion-item-divider color="light" class="sneat-tiny-end-padding">
+	<ion-label (click)="onDateSelected()" tappable>
 		@if (day?.slots?.length) {
 			<b>{{ weekday.longTitle }}</b>
 		} @else if (!day?.slots?.length) {
@@ -38,7 +38,7 @@
 	@for (slot of day.slots; track slot.slot.id) {
 		@if (showSlot(slot, $day(), $filter())) {
 			<sneat-day-slot-item
-				[space]="slot.happening.space"
+				[$space]="slot.happening.space"
 				[dateID]="day.dateID"
 				[$slotContext]="slot"
 			/>

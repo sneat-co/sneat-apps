@@ -2,6 +2,7 @@ import {
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
 	Component,
+	input,
 	Input,
 	OnChanges,
 	OnDestroy,
@@ -27,8 +28,8 @@ import {
 	sortSlotItems,
 	WeekdayNumber,
 } from '@sneat/mod-schedulus-core';
-import { ISpaceContext } from '@sneat/space-models';
-import { Subject, Subscription, takeUntil } from 'rxjs';
+import { WithSpaceInput } from '@sneat/space-components';
+import { Subscription } from 'rxjs';
 import {
 	emptyCalendarFilter,
 	CalendarFilterService,
@@ -39,9 +40,6 @@ import { isToday, isTomorrow } from '../../../calendar-core';
 import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
 
 @Component({
-	selector: 'sneat-calendar-day',
-	templateUrl: './calendar-day.component.html',
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
 		ScheduleNavServiceModule,
 		DaySlotItemComponent,
@@ -53,17 +51,21 @@ import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
 		IonIcon,
 		IonButton,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-calendar-day',
+	templateUrl: './calendar-day.component.html',
 })
-export class CalendarDayComponent implements OnChanges, OnDestroy {
-	private readonly destroyed = new Subject<void>();
+export class CalendarDayComponent
+	extends WithSpaceInput
+	implements OnChanges, OnDestroy
+{
 	private slotsSubscription?: Subscription;
 	private filter = emptyCalendarFilter;
 	// @Input() filter?: ICalendarFilter;
 	// @Input() showRegulars = true;
 	// @Input() showEvents = true;
 
-	@Input({ required: true }) space?: ISpaceContext;
-	@Input({ required: true }) weekday?: Weekday;
+	public readonly $weekday = input.required<Weekday | undefined>();
 
 	@Input({ required: false }) hideAddButtons = false;
 	@Input() hideLastBorder = false;
@@ -80,7 +82,8 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 		private readonly changeDetectorRef: ChangeDetectorRef,
 		private readonly scheduleNavService: ScheduleNavService,
 	) {
-		filterService.filter.pipe(takeUntil(this.destroyed)).subscribe({
+		super('CalendarDayComponent');
+		filterService.filter.pipe(this.takeUntilDestroyed()).subscribe({
 			next: (filter) => {
 				this.filter = filter;
 				this.applyFilter();
@@ -91,15 +94,10 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 	protected readonly resetFilter = (event: Event) =>
 		this.filterService.resetScheduleFilter(event);
 
-	ngOnDestroy(): void {
-		this.destroyed.next();
-		this.destroyed.complete();
-	}
-
 	ngOnChanges(changes: SimpleChanges): void {
 		const weekdayChange = changes['weekday'];
 		if (weekdayChange) {
-			const date = this.weekday?.day?.date;
+			const date = this.$weekday()?.day?.date;
 			this.$isToday.set(!date || isToday(date));
 			this.$isTomorrow.set(isTomorrow(date));
 			// if (weekdayChange.firstChange && !weekdayChange.currentValue) {
@@ -136,12 +134,13 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 
 	private subscribeForSlots(): void {
 		this.slotsSubscription?.unsubscribe();
-		if (this.weekday?.day) {
+		const weekday = this.$weekday();
+		if (weekday?.day) {
 			console.log(
-				`ScheduleDayComponent[wd=${this.weekday?.id}, dateID=${this.weekday?.day?.dateID}].subscribeForSlots()`,
+				`ScheduleDayComponent[wd=${weekday.id}, dateID=${weekday.day?.dateID}].subscribeForSlots()`,
 			);
-			this.slotsSubscription = this.weekday.day.slots$
-				.pipe(takeUntil(this.destroyed))
+			this.slotsSubscription = weekday.day.slots$
+				.pipe(this.takeUntilDestroyed())
 				.subscribe(this.processSlots);
 		} else {
 			this.slots = undefined;
@@ -156,13 +155,14 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 	};
 
 	private readonly logPrefix = () =>
-		`CalendarDayComponent{dateID=${this.weekday?.day?.dateID}}`;
+		`CalendarDayComponent{dateID=${this.$weekday()?.day?.dateID}}`;
 
 	protected goNewHappening(params: NewHappeningParams): void {
-		if (!this.space) {
+		const space = this.$space();
+		if (!space) {
 			return;
 		}
-		const date = this.weekday?.day?.date;
+		const date = this.$weekday()?.day?.date;
 		if (!date) {
 			return;
 		}
@@ -172,6 +172,6 @@ export class CalendarDayComponent implements OnChanges, OnDestroy {
 			date: dateToIso(date),
 		};
 		console.log('ScheduleDayComponent.goNewHappening()', date, params);
-		this.scheduleNavService.goNewHappening(this.space, params);
+		this.scheduleNavService.goNewHappening(space, params);
 	}
 }

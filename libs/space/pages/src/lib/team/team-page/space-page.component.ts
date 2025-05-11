@@ -3,6 +3,7 @@ import {
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
 	Component,
+	computed,
 	signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -71,6 +72,11 @@ export class SpacePageComponent extends SpacePageBaseComponent {
 	protected readonly $contactusSpace = signal<
 		IIdAndOptionalDbo<IContactusSpaceDbo> | undefined
 	>(undefined);
+
+	protected readonly $showMembers = computed(() => {
+		const spaceType = this.$spaceType();
+		return spaceType === 'family' || spaceType === 'team';
+	});
 
 	constructor(
 		topMenuService: TopMenuService,

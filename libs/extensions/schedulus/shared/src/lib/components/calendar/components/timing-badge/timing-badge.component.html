@@ -1,44 +1,27 @@
-<ion-badge
-	color="light"
-	slot="start"
-	class="sneat-small-end-margin"
-	[class.canceled]="isCanceled"
-	style="font-weight: normal; background-color: white"
->
-	From
-	@if (
-		adjustment?.adjustment?.start?.time &&
-		adjustment?.adjustment?.start?.time !== timing?.start?.time
-	) {
-		<ion-text
-			color="danger"
-			title="Original: {{ timing?.start?.time }}-{{ timing?.end?.time }}"
-			>{{ adjustment?.adjustment?.start?.time }}</ion-text
-		>
-	} @else {
-		{{ timing?.start?.time }}
-	}
+From
+@if ($adjustedStartTime() && $adjustedStartTime() !== $startTime()) {
+	<ion-text color="danger" title="Original: {{ $startTime() }}-{{ $endTime() }}"
+		>{{ $adjustedStartTime() }}
+	</ion-text>
+} @else {
+	{{ $startTime() }}
+}
 
-	@if (adjustment?.adjustment?.end || timing?.end) {
-		<div style="font-size: small; color: #777; text-align: right">
-			<small>ends</small>
-			@if (
-				adjustment?.adjustment?.end?.time &&
-				adjustment?.adjustment?.end?.time !== timing?.end?.time
-			) {
-				<ion-text
-					[color]="
-						adjustment?.adjustment?.start?.time &&
-						adjustment?.adjustment?.start?.time !== timing?.start?.time
-							? 'warning'
-							: 'danger'
-					"
-					title="Original: {{ timing?.start?.time }}-{{ timing?.end?.time }}"
-					>{{ adjustment?.adjustment?.end?.time }}</ion-text
-				>
-			} @else {
-				{{ timing?.end?.time }}
-			}
-		</div>
-	}
-</ion-badge>
+@if ($hasAdjustedEnd() || $hasEnd()) {
+	<div style="font-size: small; color: #777; text-align: right">
+		<small>ends</small>
+		@if ($hasAdjustedEndTime() && $adjustedEndTime() !== $endTime()) {
+			<ion-text
+				[color]="
+					$adjustedStartTime() && $adjustedStartTime() !== $startTime()
+						? 'warning'
+						: 'danger'
+				"
+				title="Original: {{ $startTime() }}-{{ $endTime() }}"
+				>{{ $adjustedEndTime() }}
+			</ion-text>
+		} @else {
+			{{ $endTime() }}
+		}
+	</div>
+}

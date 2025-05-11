@@ -51,19 +51,22 @@
 
 	<ion-grid class="ion-grid-layout">
 		<ion-row>
-			@if (space.type === "family" || space.type === "team") {
-				<ion-col>
+			@if ($showMembers()) {
+				<ion-col size="12" size-lg="6">
 					<sneat-members-short-list
 						role="member"
 						[$space]="$space()"
 						[$contactusSpaceDbo]="$contactusSpace()?.dbo"
 					/>
 				</ion-col>
+				<ion-col size="12" size-lg="6">
+					<sneat-calendar-brief [$space]="$space()" />
+				</ion-col>
+			} @else {
+				<ion-col size="12">
+					<sneat-calendar-brief [$space]="$space()" />
+				</ion-col>
 			}
-			<ion-col>
-				<sneat-calendar-brief [$space]="$space()" />
-				<!--				<sneat-calendar-brief [space]="space" />-->
-			</ion-col>
 		</ion-row>
 		<ion-row>
 			@if (topMenuService.isTopMenuHidden | async) {

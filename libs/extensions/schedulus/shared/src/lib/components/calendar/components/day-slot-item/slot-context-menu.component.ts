@@ -1,4 +1,10 @@
-import { Component, inject, Input, signal } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	inject,
+	Input,
+	signal,
+} from '@angular/core';
 import {
 	IonIcon,
 	IonItem,
@@ -16,6 +22,7 @@ import {
 } from '@sneat/contactus-core';
 import { excludeUndefined } from '@sneat/core';
 import { hasRelated } from '@sneat/dto';
+import { WithSpaceInput } from '@sneat/space-components';
 import { CalendarNavServicesModule } from '../../../../services';
 import {
 	HappeningUIState,
@@ -50,8 +57,6 @@ import { DaySlotItemComponent } from './day-slot-item.component';
 const notImplemented = 'Sorry, not implemented yet';
 
 @Component({
-	selector: 'sneat-slot-context-menu',
-	templateUrl: 'slot-context-menu.component.html',
 	imports: [
 		HappeningServiceModule,
 		ContactsSelectorModule,
@@ -66,9 +71,11 @@ const notImplemented = 'Sorry, not implemented yet';
 		IonText,
 		IonIcon,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-slot-context-menu',
+	templateUrl: 'slot-context-menu.component.html',
 })
-export class SlotContextMenuComponent {
-	@Input({ required: true }) space: ISpaceContext = { id: '' };
+export class SlotContextMenuComponent extends WithSpaceInput {
 	@Input({ required: true }) contactusSpace?: IContactusSpaceDboAndID;
 
 	@Input() dateID?: string;
@@ -91,7 +98,6 @@ export class SlotContextMenuComponent {
 		return !!this.happeningState;
 	}
 
-	private readonly errorLogger = inject(ErrorLogger);
 	private readonly popoverController = inject(PopoverController);
 	private readonly happeningService = inject(HappeningService);
 	private readonly contactsSelectorService = inject(ContactsSelectorService);
@@ -99,11 +105,15 @@ export class SlotContextMenuComponent {
 		HappeningSlotModalService,
 	);
 
-	assign(event: Event, to: 'member' | 'contact'): void {
+	constructor() {
+		super('SlotContextMenuComponent');
+	}
+
+	protected assign(event: Event, to: 'member' | 'contact'): void {
 		console.log(`SlotContextMenuComponent.assign(${to})`);
 		event.stopPropagation();
 		event.preventDefault();
-		const space = this.space;
+		const space = this.$space();
 		if (!space || !this.slotContext) {
 			return;
 		}
@@ -147,7 +157,7 @@ export class SlotContextMenuComponent {
 		if (!happening) {
 			return;
 		}
-		if (!this.space) {
+		if (!this.$space()) {
 			return;
 		}
 		const recurring: EditRecurringSlotParams | undefined = this.dateID
@@ -160,7 +170,7 @@ export class SlotContextMenuComponent {
 		this.happeningSlotModalService
 			.editSingleHappeningSlot(
 				event,
-				{ ...happening, space: this.space },
+				{ ...happening, space: this.$space() },
 				recurring,
 				this.slotContext?.slot,
 			)
@@ -219,8 +229,8 @@ export class SlotContextMenuComponent {
 		happening: IHappeningContext;
 		space: ISpaceContext;
 	} {
-		if (!this.space) {
-			throw new Error('!this.team');
+		if (!this.$space()) {
+			throw new Error('!this.$space()');
 		}
 		if (!this.slotContext) {
 			throw new Error('!this.slot');
@@ -228,7 +238,7 @@ export class SlotContextMenuComponent {
 		event.stopPropagation();
 		event.preventDefault();
 		return {
-			space: this.space,
+			space: this.$space(),
 			slotContext: this.slotContext,
 			happening: this.slotContext.happening,
 		};
@@ -379,7 +389,7 @@ export class SlotContextMenuComponent {
 		if (!this.slotContext) {
 			return NEVER;
 		}
-		if (!this.space) {
+		if (!this.$space()) {
 			return NEVER;
 		}
 		const happeningID = this.slotContext.happening.id;
@@ -387,7 +397,7 @@ export class SlotContextMenuComponent {
 			return NEVER;
 		}
 		const request: IHappeningContactRequest = {
-			spaceID: this.space.id,
+			spaceID: this.$spaceID(),
 			happeningID,
 			contact: { id: contact.id },
 		};
@@ -398,11 +408,11 @@ export class SlotContextMenuComponent {
 		member: IContactWithBrief,
 	): Observable<void> => {
 		console.log('SlotContextMenuComponent.onMemberRemoved()', member);
-		if (!this.slotContext || !this.space) {
+		if (!this.slotContext || !this.$space()) {
 			return NEVER;
 		}
 		const request: IHappeningContactRequest = {
-			spaceID: this.space.id,
+			spaceID: this.$space().id,
 			happeningID: this.slotContext.happening.id,
 			contact: { id: member.id },
 		};

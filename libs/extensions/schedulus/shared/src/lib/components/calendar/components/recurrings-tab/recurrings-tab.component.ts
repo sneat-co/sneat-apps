@@ -23,9 +23,6 @@ import { CalendarFilterService } from '../../../calendar-filter.service';
 import { HappeningCardComponent } from '../../../happening-card/happening-card.component';
 
 @Component({
-	selector: 'sneat-recurrings-tab',
-	changeDetection: ChangeDetectionStrategy.OnPush,
-	templateUrl: 'recurrings-tab.component.html',
 	imports: [
 		IonCard,
 		IonButtons,
@@ -39,6 +36,9 @@ import { HappeningCardComponent } from '../../../happening-card/happening-card.c
 		IonSpinner,
 		HappeningCardComponent,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-recurrings-tab',
+	templateUrl: 'recurrings-tab.component.html',
 })
 export class RecurringsTabComponent {
 	public readonly $space = input.required<ISpaceContext | undefined>();
