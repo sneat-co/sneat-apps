@@ -95,7 +95,7 @@ export class CalendarDayComponent
 		this.filterService.resetScheduleFilter(event);
 
 	ngOnChanges(changes: SimpleChanges): void {
-		const weekdayChange = changes['weekday'];
+		const weekdayChange = changes['$weekday'];
 		if (weekdayChange) {
 			const date = this.$weekday()?.day?.date;
 			this.$isToday.set(!date || isToday(date));

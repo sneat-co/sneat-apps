@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	input,
+	Input,
+} from '@angular/core';
 import { IonButton, IonButtons, IonIcon } from '@ionic/angular/standalone';
 import {
 	HappeningType,
@@ -6,7 +11,7 @@ import {
 	NewHappeningParams,
 	ScheduleNavService,
 } from '@sneat/mod-schedulus-core';
-import { ISpaceContext } from '@sneat/space-models';
+import { WithSpaceInput } from '@sneat/space-components';
 
 @Component({
 	selector: 'sneat-calendar-add-buttons',
@@ -14,45 +19,40 @@ import { ISpaceContext } from '@sneat/space-models';
 	imports: [IonButtons, IonButton, IonIcon],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CalendarAddButtonsComponent {
-	@Input({ required: true }) public space?: ISpaceContext;
+export class CalendarAddButtonsComponent extends WithSpaceInput {
+	public readonly dateID = input.required<string | undefined>();
+	public readonly weekdayID = input.required<WeekdayCode2 | undefined>();
 
-	@Input({ required: true }) dateID?: string;
-	@Input({ required: true }) weekdayID?: WeekdayCode2;
-
-	constructor(private readonly scheduleNavService: ScheduleNavService) {}
+	constructor(private readonly scheduleNavService: ScheduleNavService) {
+		super('CalendarAddButtonsComponent');
+	}
 
 	protected newHappeningUrl(type: HappeningType): string {
 		const params: string[] = [];
-		if (this.weekdayID) {
-			params.push(`wd=${this.weekdayID}`);
+		if (this.weekdayID()) {
+			params.push(`wd=${this.weekdayID()}`);
 		}
-		if (this.dateID) {
-			params.push(`date=${this.dateID}`);
+		const dateID = this.dateID();
+		if (dateID) {
+			params.push(`date=${dateID}`);
 		}
 		return (
-			`space/${this.space?.type}/${this.space?.id}/new-happening?type=${type}` +
+			`space/${this.$spaceType()}/${this.$spaceID()}/new-happening?type=${type}` +
 			(params.length === 0 ? '' : `&${params.join('&')}`)
 		);
 	}
 
 	protected goNewHappening(event: Event, type: HappeningType): boolean {
-		console.log(
-			'CalendarAddButtonsComponent.goNewHappening()',
-			type,
-			this.space,
-		);
+		const space = this.$space();
+		console.log('CalendarAddButtonsComponent.goNewHappening()', type, space);
 		event.preventDefault();
 		event.stopPropagation();
-		if (!this.space) {
-			return false;
-		}
 		const params: NewHappeningParams = {
 			type,
-			wd: this.weekdayID ? this.weekdayID : undefined,
-			date: this.dateID ? this.dateID : undefined,
+			wd: this.weekdayID() ? this.weekdayID() : undefined,
+			date: this.dateID() ? this.dateID() : undefined,
 		};
-		this.scheduleNavService.goNewHappening(this.space, params);
+		this.scheduleNavService.goNewHappening(space, params);
 		return false;
 	}
 }

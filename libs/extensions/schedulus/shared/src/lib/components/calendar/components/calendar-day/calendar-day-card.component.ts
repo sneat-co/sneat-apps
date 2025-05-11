@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	EventEmitter,
+	input,
+	Input,
+	OnInit,
+	Output,
+} from '@angular/core';
 import {
 	IonButton,
 	IonButtons,
@@ -22,8 +30,6 @@ import { CalendarDayBaseComponent } from './calendar-day-base.component';
 // The 1st is the "active day" (e.g. today), and the 2nd is "next day" (e.g. tomorrow).
 // The 2nd should set the [activeDayPlus]="1"
 @Component({
-	selector: 'sneat-calendar-day-card',
-	templateUrl: 'calendar-day-card.component.html',
 	animations: virtualSliderAnimations,
 	imports: [
 		CalendarDayComponent,
@@ -36,13 +42,17 @@ import { CalendarDayBaseComponent } from './calendar-day-base.component';
 		IonIcon,
 		IonLabel,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-calendar-day-card',
+	templateUrl: 'calendar-day-card.component.html',
 })
 export class CalendarDayCardComponent
 	extends CalendarDayBaseComponent
 	implements OnInit
 {
-	@Input({ required: true }) space: ISpaceContext = { id: '' };
-	@Input({ required: true }) spaceDaysProvider?: CalendarDataProvider;
+	public readonly $space = input.required<ISpaceContext>();
+
+	public readonly $spaceDaysProvider = input.required<CalendarDataProvider>();
 
 	@Output() readonly goNew = new EventEmitter<NewHappeningParams>();
 
@@ -66,9 +76,7 @@ export class CalendarDayCardComponent
 	}
 
 	private createSlides(): void {
-		if (!this.spaceDaysProvider) {
-			throw new Error('!this.teamDaysProvider');
-		}
+		const spaceDaysProvider = this.$spaceDaysProvider();
 		const current = getToday();
 		if (this.activeDayPlus) {
 			current.setDate(current.getDate() + this.activeDayPlus);
@@ -79,13 +87,13 @@ export class CalendarDayCardComponent
 		this.oddSlide = swipeableDay(
 			'odd',
 			current,
-			this.spaceDaysProvider,
+			spaceDaysProvider,
 			this.destroyed$,
 		);
 		this.evenSlide = swipeableDay(
 			'even',
 			next,
-			this.spaceDaysProvider,
+			spaceDaysProvider,
 			this.destroyed$,
 		);
 		this.onDateChanged({ date: current, shiftDirection: '' });

@@ -41,7 +41,7 @@
 		</ion-item>
 		<ion-datetime
 			class="sneat-date-picker"
-			[value]="dateAsIsoString"
+			[value]="$dateAsIsoString()"
 			presentation="date"
 			(ionChange)="onPickerDateChanged($event)"
 		/>
@@ -62,8 +62,8 @@
 
 <!--Today -->
 <sneat-calendar-day-card
-	[space]="$space()"
-	[spaceDaysProvider]="spaceDaysProvider"
+	[$space]="$space()"
+	[$spaceDaysProvider]="$spaceDaysProvider()"
 />
 
 <!--<div class="ion-text-center ion-margin">-->
@@ -73,6 +73,6 @@
 <!--Tomorrow -->
 <sneat-calendar-day-card
 	[activeDayPlus]="1"
-	[space]="$space()"
-	[spaceDaysProvider]="spaceDaysProvider"
+	[$space]="$space()"
+	[$spaceDaysProvider]="$spaceDaysProvider()"
 />

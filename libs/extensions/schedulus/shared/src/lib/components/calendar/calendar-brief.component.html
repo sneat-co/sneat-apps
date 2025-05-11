@@ -9,7 +9,7 @@
 		<ion-icon name="calendar-outline" slot="start" color="primary"></ion-icon>
 		<ion-label style="font-weight: bold" color="primary">Calendar</ion-label>
 		<sneat-calendar-add-buttons
-			[space]="$space()"
+			[$space]="$space()"
 			[dateID]="undefined"
 			[weekdayID]="undefined"
 		/>
@@ -20,7 +20,7 @@
 			<sneat-calendar-day-title [weekday]="$today()" />
 		</ion-label>
 		<sneat-calendar-add-buttons
-			[space]="$space()"
+			[$space]="$space()"
 			[dateID]="$today()?.day?.dateID"
 			[weekdayID]="$today()?.id"
 		/>
@@ -35,7 +35,7 @@
 			<sneat-calendar-day-title [weekday]="$tomorrow()" />
 		</ion-label>
 		<sneat-calendar-add-buttons
-			[space]="$space()"
+			[$space]="$space()"
 			[dateID]="$tomorrow()?.day?.dateID"
 			[weekdayID]="$tomorrow()?.id"
 		/>

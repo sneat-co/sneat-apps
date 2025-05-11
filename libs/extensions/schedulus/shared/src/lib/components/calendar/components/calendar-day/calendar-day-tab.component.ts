@@ -1,4 +1,12 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	computed,
+	input,
+	Input,
+	signal,
+} from '@angular/core';
 import {
 	IonButton,
 	IonButtons,
@@ -11,15 +19,11 @@ import {
 } from '@ionic/angular/standalone';
 import { dateToIso, isoStringsToDate } from '@sneat/core';
 import { WithSpaceInput } from '@sneat/space-components';
-import { ISpaceContext } from '@sneat/space-models';
 import { CalendarDataProvider } from '../../../../services/calendar-data-provider';
 import { addDays, CalendarStateService } from '../../calendar-state.service';
 import { CalendarDayCardComponent } from './calendar-day-card.component';
 
 @Component({
-	selector: 'sneat-day-tab',
-	templateUrl: 'calendar-day-tab.component.html',
-	styleUrls: ['calendar-day-tab.component.scss'],
 	imports: [
 		CalendarDayCardComponent,
 		IonItem,
@@ -30,15 +34,20 @@ import { CalendarDayCardComponent } from './calendar-day-card.component';
 		IonPopover,
 		IonDatetime,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-day-tab',
+	templateUrl: 'calendar-day-tab.component.html',
+	styleUrls: ['calendar-day-tab.component.scss'],
 })
 export class CalendarDayTabComponent extends WithSpaceInput {
-	public date?: Date;
+	private readonly $date = signal<Date | undefined>(undefined);
 
-	public get dateAsIsoString(): string | undefined {
-		return this.date && dateToIso(this.date);
-	}
+	protected readonly $dateAsIsoString = computed(() => {
+		const date = this.$date();
+		return date && dateToIso(date);
+	});
 
-	@Input({ required: true }) spaceDaysProvider?: CalendarDataProvider;
+	public readonly $spaceDaysProvider = input.required<CalendarDataProvider>();
 
 	constructor(
 		private readonly scheduleSateService: CalendarStateService,
@@ -49,8 +58,7 @@ export class CalendarDayTabComponent extends WithSpaceInput {
 		scheduleSateService.dateChanged.pipe(this.takeUntilDestroyed()).subscribe({
 			next: (value) => {
 				console.log('ScheduleDayTabComponent => date changed:', value.date);
-				this.date = value.date;
-				this.changeDetectorRef.markForCheck();
+				this.$date.set(value.date);
 			},
 		});
 	}
@@ -61,9 +69,9 @@ export class CalendarDayTabComponent extends WithSpaceInput {
 		event.preventDefault();
 		const value: string = ce.detail.value;
 		console.log('onPickerDateChanged()', value);
-		this.date = isoStringsToDate(value);
-		this.changeDetectorRef.markForCheck();
-		this.scheduleSateService.setActiveDate(this.date);
+		const date = isoStringsToDate(value);
+		this.$date.set(date);
+		this.scheduleSateService.setActiveDate(date);
 		this.popoverController.dismiss().catch(console.error);
 	}
 
@@ -74,14 +82,22 @@ export class CalendarDayTabComponent extends WithSpaceInput {
 	}
 
 	protected goToday(): void {
-		const today = new Date();
-		this.scheduleSateService.setActiveDate(today);
-		this.popoverController.dismiss().catch(console.error);
+		this.goDate(new Date());
 	}
 
 	protected goTomorrow(): void {
 		const tomorrow = addDays(new Date(), 1);
-		this.scheduleSateService.setActiveDate(tomorrow);
-		this.popoverController.dismiss().catch(console.error);
+		this.goDate(tomorrow);
+	}
+
+	private goDate(date: Date): void {
+		this.scheduleSateService.setActiveDate(date);
+		this.popoverController
+			.dismiss()
+			.catch(
+				this.errorLogger.logErrorHandler(
+					'failed to dismiss popover after going to date',
+				),
+			);
 	}
 }

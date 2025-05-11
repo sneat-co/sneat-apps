@@ -17,7 +17,9 @@ export function getToday(): Date {
 }
 
 export function addDays(d: Date, daysToAdd: number): Date {
-	return new Date(d.getFullYear(), d.getMonth(), d.getDate() + daysToAdd);
+	return daysToAdd
+		? new Date(d.getFullYear(), d.getMonth(), d.getDate() + daysToAdd)
+		: d;
 }
 
 export class CalendarStateService {
