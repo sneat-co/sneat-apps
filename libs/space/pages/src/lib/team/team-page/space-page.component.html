@@ -72,14 +72,14 @@
 			@if (topMenuService.isTopMenuHidden | async) {
 				<ion-col>
 					<ion-card class="last-child-no-border">
-						<ion-item>
-							<ion-label style="font-weight: bold">Apps</ion-label>
+						<ion-item-divider color="light">
+							<ion-label style="font-weight: bold">Extensions</ion-label>
 							<ion-buttons slot="end">
 								<ion-button>
 									<ion-icon name="settings" color="medium" />
 								</ion-button>
 							</ion-buttons>
-						</ion-item>
+						</ion-item-divider>
 						<ion-item routerLink="./assets" tappable detail>
 							<ion-icon name="car-sport-outline" slot="start" />
 							<ion-label>Assets</ion-label>

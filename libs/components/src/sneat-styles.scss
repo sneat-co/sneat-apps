@@ -1,4 +1,5 @@
 @use "sass:meta";
+
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
@@ -130,7 +131,7 @@ ion-modal.auto-height {
 	}
 }
 
-@media screen and (max-width: 638px) { // 640=VGA @ https://en.wikipedia.org/wiki/Computer_display_standard
+@media screen and (max-width: 530px) { // 640=VGA @ https://en.wikipedia.org/wiki/Computer_display_standard
 	.sneat-hide-if-width-less-638 {
 		display: none
 	}
@@ -138,6 +139,18 @@ ion-modal.auto-height {
 		font-size: smaller
 	}
 	.sneat-small-if-width-less-638 {
+		font-size: small
+	}
+}
+
+@media screen and (max-width: 530px) {
+	.sneat-hide-if-width-less-530 {
+		display: none
+	}
+	.sneat-smaller-if-width-less-530 {
+		font-size: smaller
+	}
+	.sneat-small-if-width-less-530 {
 		font-size: small
 	}
 }
@@ -198,7 +211,7 @@ ion-item.ion-item-no-border {
 	color: var(--ion-color-medium);
 }
 
-.ion-input.sneat-input-padding-top  {
+.ion-input.sneat-input-padding-top {
 	padding-top: 10px;
 }
 
