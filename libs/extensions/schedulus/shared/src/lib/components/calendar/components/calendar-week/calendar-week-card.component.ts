@@ -61,8 +61,7 @@ export class CalendarWeekCardComponent extends SwipeableBaseComponent {
 
 	private createSlides(): void {
 		const current = getToday();
-		const next = new Date();
-		next.setDate(current.getDate() + 7);
+		const next = new Date(new Date().setDate(current.getDate() + 7));
 		this.oddSlide = swipeableWeek('odd', current, this.destroyed$);
 		this.evenSlide = swipeableWeek('even', next, this.destroyed$);
 	}

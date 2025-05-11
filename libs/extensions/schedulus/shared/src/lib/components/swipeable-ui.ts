@@ -3,7 +3,7 @@ import {
 	showVirtualSlide,
 	VirtualSlideAnimationsStates,
 } from '@sneat/components';
-import { dateToIso, getWeekdayDate } from '@sneat/core';
+import { dateToIso, getWeekStartDate } from '@sneat/core';
 import { Weekday } from './calendar/weekday';
 import { Observable } from 'rxjs';
 import { CalendarDataProvider } from '../services/calendar-data-provider';
@@ -146,12 +146,13 @@ export function swipeableWeek(
 	// spaceDaysProvider: SpaceDaysProvider,
 	destroyed: Observable<void>,
 ): SwipeableWeek {
+	console.log('swipeableWeek', parity, date);
 	const activeDateID = dateToIso(date);
 	const animationState = initialAnimationState(parity);
 	let result: SwipeableWeek = {
 		animationState,
-		startDate: getWeekdayDate(date, 0),
-		endDate: getWeekdayDate(date, 6),
+		startDate: getWeekStartDate(date, 0),
+		endDate: getWeekStartDate(date, 6),
 		parity,
 		activeDateID,
 		destroyed,
@@ -166,8 +167,8 @@ export function swipeableWeek(
 			...result,
 			animationState,
 			activeDateID: dateToIso(date),
-			startDate: getWeekdayDate(date, 0),
-			endDate: getWeekdayDate(date, 6),
+			startDate: getWeekStartDate(date, 0),
+			endDate: getWeekStartDate(date, 6),
 		};
 		return v;
 	};

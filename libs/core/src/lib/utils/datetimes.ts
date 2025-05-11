@@ -38,14 +38,14 @@ export function localDateToIso(d: Date): string {
 	}`;
 }
 
-export function getWeekdayDate(d: Date, day: number): Date {
+export function getWeekStartDate(d: Date, day: number): Date {
 	d = new Date(d.getFullYear(), d.getMonth(), d.getDate());
 	const dateDay = d.getDay();
-	const diff = d.getDate() - dateDay + day + (dateDay === 0 ? -6 : 0) + 1; // adjust when day is sunday
+	const diff = d.getDate() - day + (dateDay === 0 ? -6 : 1 - dateDay); // adjust when day is sunday
 	return new Date(d.setDate(diff));
 }
 
 export function getWeekID(d: Date): number {
-	d = getWeekdayDate(d, 1);
+	d = getWeekStartDate(d, 1);
 	return (d.getFullYear() * 100 + (1 + d.getMonth())) * 100 + d.getDate();
 }
