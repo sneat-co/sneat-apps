@@ -16,7 +16,6 @@ import { SpaceNavService } from '@sneat/space-services';
 @Component({
 	imports: [
 		RouterLink,
-		IonItem,
 		IonIcon,
 		IonLabel,
 		IonButtons,
