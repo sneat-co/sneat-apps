@@ -15,10 +15,15 @@
 			>
 				<ion-icon name="today-outline" />
 			</ion-button>
-			<ion-button title="Previous day" (click)="swipePrev()">
+			<ion-button color="tertiary" title="Previous day" (click)="swipePrev()">
 				<ion-icon name="chevron-back-sharp" />
 			</ion-button>
-			<ion-button title="Next day" (click)="swipeNext()">
+		</ion-buttons>
+		<ion-buttons
+			slot="end"
+			class="sneat-tiny-start-margin sneat-no-horizontal-margins"
+		>
+			<ion-button color="tertiary" title="Next day" (click)="swipeNext()">
 				<ion-icon name="chevron-forward-sharp" />
 			</ion-button>
 		</ion-buttons>
