@@ -1,27 +1,39 @@
 <ion-header>
 	<ion-toolbar color="light">
-		<ion-buttons slot="end">
-			<ion-menu-button />
-		</ion-buttons>
-		@if (space.dbo || space.type) {
-			<ion-title>
-				<ion-icon
-					[name]="
-						space.type === 'family'
+		<ion-item color="light" lines="none" class="sneat-tiny-end-padding">
+			<ion-icon
+				slot="start"
+				[name]="
+					!space.type
+						? 'cube-utline'
+						: space.type === 'family'
 							? 'people-outline'
 							: space.type === 'private'
 								? 'person-circle-outline'
 								: 'people-outline'
-					"
-				/>
-				{{ space.brief?.title || (space.type | titlecase) || space.id }}
+				"
+			/>
+			<ion-label>
+				{{
+					space.brief?.title ||
+						(space.type | titlecase) ||
+						space.id ||
+						"Space: Loading..."
+				}}
 				@if (topMenuService.isTopMenuHidden | async) {
-					<ion-text color="medium">&#64; sneat.app</ion-text>
+					<ion-text color="medium" class="ion-margin">&#64;</ion-text>
+					<a
+						[routerLink]="'/'"
+						[routerDirection]="'root'"
+						style="text-decoration: none"
+						>sneat.app</a
+					>
 				}
-			</ion-title>
-		} @else {
-			<ion-title> Space: loading...</ion-title>
-		}
+			</ion-label>
+			<ion-buttons slot="end">
+				<ion-menu-button />
+			</ion-buttons>
+		</ion-item>
 		<!--		<ion-buttons slot="end">-->
 		<!--			<ion-button>-->
 		<!--				<ion-icon name="settings" slot="start" />-->
@@ -70,7 +82,7 @@
 		</ion-row>
 		@if (topMenuService.isTopMenuHidden | async) {
 			<ion-row>
-				<ion-col>
+				<ion-col class="ion-padding-bottom">
 					<ion-card class="last-child-no-border">
 						<ion-item
 							color="divider"
@@ -78,37 +90,33 @@
 							lines="full"
 						>
 							<ion-label color="medium">Extensions</ion-label>
-							<ion-buttons slot="end">
-								<ion-button>
-									<ion-icon name="settings" />
-								</ion-button>
-							</ion-buttons>
+							<!--							<ion-buttons slot="end">-->
+							<!--								<ion-button>-->
+							<!--									<ion-icon name="settings" />-->
+							<!--								</ion-button>-->
+							<!--							</ion-buttons>-->
 						</ion-item>
-						<ion-item routerLink="./assets" tappable detail="true">
+						<ion-item routerLink="./assets" tappable="true" detail="true">
 							<ion-icon name="car-sport-outline" slot="start" />
 							<ion-label>Assets</ion-label>
 						</ion-item>
-						<!--					<ion-item routerLink="./calendar" detail="">-->
-						<!--						<ion-icon name="calendar-outline" slot="start" />-->
-						<!--						<ion-label>Calendar</ion-label>-->
-						<!--						&lt;!&ndash;						<ion-buttons slot="end">&ndash;&gt;-->
-						<!--						&lt;!&ndash;							<ion-button>&ndash;&gt;-->
-						<!--						&lt;!&ndash;								<ion-label style="text-transform: none" color="primary">Today</ion-label>&ndash;&gt;-->
-						<!--						&lt;!&ndash;							</ion-button>&ndash;&gt;-->
-						<!--						&lt;!&ndash;							<ion-button>&ndash;&gt;-->
-						<!--						&lt;!&ndash;								<ion-label style="text-transform: none" color="primary">Tomorrow</ion-label>&ndash;&gt;-->
-						<!--						&lt;!&ndash;							</ion-button>&ndash;&gt;-->
-						<!--						&lt;!&ndash;						</ion-buttons>&ndash;&gt;-->
-						<!--					</ion-item>-->
-						<ion-item routerLink="./contacts" tappable detail>
+						<ion-item routerLink="./budget" tappable="true" detail="true">
+							<ion-icon name="cash-outline" slot="start" />
+							<ion-label>Budget</ion-label>
+						</ion-item>
+						<ion-item routerLink="./contacts" tappable="true" detail="true">
 							<ion-icon name="people-outline" slot="start" />
 							<ion-label>Contacts</ion-label>
 						</ion-item>
-						<ion-item routerLink="./documents" tappable detail>
+						<ion-item routerLink="./debts" tappable="true" detail="true">
+							<ion-icon name="cash-outline" slot="start" />
+							<ion-label>Debts</ion-label>
+						</ion-item>
+						<ion-item routerLink="./documents" tappable="true" detail="true">
 							<ion-icon name="documents-outline" slot="start" />
 							<ion-label>Documents</ion-label>
 						</ion-item>
-						<ion-item routerLink="./lists" tappable detail>
+						<ion-item routerLink="./lists" tappable="true" detail="true">
 							<ion-icon name="cart-outline" tappable slot="start" />
 							<ion-label>Lists</ion-label>
 							<ion-buttons slot="end">
@@ -127,7 +135,7 @@
 								</ion-button>
 							</ion-buttons>
 						</ion-item>
-						<ion-item routerLink="./trackers" tappable detail>
+						<ion-item routerLink="./trackers" tappable="true" detail="true">
 							<ion-icon name="bar-chart-outline" slot="start" />
 							<ion-label>Trackers</ion-label>
 						</ion-item>
@@ -136,4 +144,6 @@
 			</ion-row>
 		}
 	</ion-grid>
+
+	<div class="ion-padding-bottom">&nbsp;</div>
 </ion-content>

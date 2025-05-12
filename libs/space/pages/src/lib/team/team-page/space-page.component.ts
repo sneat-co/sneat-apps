@@ -20,9 +20,9 @@ import {
 	IonItem,
 	IonLabel,
 	IonMenuButton,
+	IonRouterLinkWithHref,
 	IonRow,
 	IonText,
-	IonTitle,
 	IonToolbar,
 } from '@ionic/angular/standalone';
 import { IContactusSpaceDbo } from '@sneat/contactus-core';
@@ -47,7 +47,6 @@ import { CalendarBriefComponent } from '@sneat/extensions-schedulus-shared';
 		IonToolbar,
 		IonButtons,
 		IonMenuButton,
-		IonTitle,
 		IonIcon,
 		IonText,
 		IonGrid,
@@ -63,6 +62,7 @@ import { CalendarBriefComponent } from '@sneat/extensions-schedulus-shared';
 		RouterLink,
 		TitleCasePipe,
 		SpaceServiceModule,
+		IonRouterLinkWithHref,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-space-page',

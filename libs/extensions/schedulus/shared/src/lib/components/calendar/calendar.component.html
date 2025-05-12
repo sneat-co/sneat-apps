@@ -1,8 +1,4 @@
-<ion-segment
-	class="ion-padding-horizontal"
-	[(ngModel)]="tab"
-	(ionChange)="segmentChanged($event)"
->
+<ion-segment [(ngModel)]="tab" (ionChange)="segmentChanged($event)">
 	<ion-segment-button value="day">
 		<ion-label class="smaller">📅 Day</ion-label>
 	</ion-segment-button>
@@ -10,7 +6,7 @@
 		<ion-label class="smaller">🗓️ Week</ion-label>
 	</ion-segment-button>
 	<ion-segment-button value="recurrings">
-		<ion-label class="smaller">🔁 Recurring</ion-label>
+		<ion-label class="smaller">🔁 Repeats</ion-label>
 	</ion-segment-button>
 	<ion-segment-button value="singles">
 		<ion-label class="smaller">1️⃣-timers</ion-label>
