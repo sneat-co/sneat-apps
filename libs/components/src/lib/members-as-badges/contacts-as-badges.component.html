@@ -1,0 +1,12 @@
+@for (contact of $contactsWithState(); track contact.id) {
+	<ion-chip outline="true">
+		<ion-label color="tertiary" [class.deleting]="contact.isDeleting">
+			{{ contact | personTitle }}
+		</ion-label>
+		@if (contact.isDeleting) {
+			<ion-spinner name="lines-sharp-small" />
+		} @else if (showDelete) {
+			<ion-icon name="close-outline" (click)="delete($event, contact)" />
+		}
+	</ion-chip>
+}

@@ -3,18 +3,18 @@
 	[(ngModel)]="tab"
 	(ionChange)="segmentChanged($event)"
 >
-	<ion-segment-button value="day"
-		><span class="smaller">Day</span></ion-segment-button
-	>
-	<ion-segment-button value="week"
-		><span class="smaller">Week</span></ion-segment-button
-	>
-	<ion-segment-button value="recurrings"
-		><span class="smaller">Recurring</span></ion-segment-button
-	>
-	<ion-segment-button value="singles"
-		><span class="smaller">1-timers</span></ion-segment-button
-	>
+	<ion-segment-button value="day">
+		<ion-label class="smaller">📅 Day</ion-label>
+	</ion-segment-button>
+	<ion-segment-button value="week">
+		<ion-label class="smaller">🗓️ Week</ion-label>
+	</ion-segment-button>
+	<ion-segment-button value="recurrings">
+		<ion-label class="smaller">🔁 Recurring</ion-label>
+	</ion-segment-button>
+	<ion-segment-button value="singles">
+		<ion-label class="smaller">1️⃣-timers</ion-label>
+	</ion-segment-button>
 </ion-segment>
 
 <sneat-calendar-filter
@@ -56,9 +56,14 @@ This is probably due to the fact that we open 14 listeners (1 for each day of 2 
 			[$space]="$space()"
 			[$recurrings]="$recurrings()"
 			[$allRecurrings]="$allRecurrings()"
+			[$contactusSpace]="$contactusSpace()"
 		/>
 	}
 	@case ("singles") {
-		<sneat-singles-tab [$space]="$space()" [onDateSelected]="onDateSelected" />
+		<sneat-singles-tab
+			[$space]="$space()"
+			[onDateSelected]="onDateSelected"
+			[$contactusSpace]="$contactusSpace()"
+		/>
 	}
 }

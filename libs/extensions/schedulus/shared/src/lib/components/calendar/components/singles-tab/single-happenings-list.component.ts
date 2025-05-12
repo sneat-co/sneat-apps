@@ -1,6 +1,7 @@
 import {
 	ChangeDetectionStrategy,
 	Component,
+	input,
 	Input,
 	OnChanges,
 } from '@angular/core';
@@ -12,6 +13,7 @@ import {
 	IonSpinner,
 	IonText,
 } from '@ionic/angular/standalone';
+import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
 import { WithSpaceInput } from '@sneat/space-components';
 import { ISpaceContext } from '@sneat/space-models';
@@ -43,6 +45,10 @@ export class SingleHappeningsListComponent
 	implements OnChanges
 {
 	@Input({ required: true }) public happenings?: IHappeningContext[];
+
+	public readonly $contactusSpace = input.required<
+		IContactusSpaceDboAndID | undefined
+	>();
 
 	private filter?: ICalendarFilter;
 

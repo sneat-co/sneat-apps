@@ -22,6 +22,7 @@ import { getRelatedItemIDs } from '@sneat/dto';
 import { IHappeningContext, WeekdayCode2 } from '@sneat/mod-schedulus-core';
 import { getWd2 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { WithSpaceInput } from '@sneat/space-components';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
 import { SneatBaseComponent } from '@sneat/ui';
@@ -57,7 +58,7 @@ export class HappeningBaseComponentParams {
 	```
  */
 @Directive()
-export abstract class HappeningBaseComponent extends SneatBaseComponent {
+export abstract class HappeningBaseComponent extends WithSpaceInput {
 	static providers = [HappeningBaseComponentParams];
 
 	static metadata = {
@@ -65,12 +66,11 @@ export abstract class HappeningBaseComponent extends SneatBaseComponent {
 		outputs: ['deleted'],
 	};
 
-	public readonly $space = input.required<ISpaceContext>();
 	public readonly $happening = input.required<IHappeningContext>();
 
-	// @Input({ required: true }) space?: ISpaceContext;
-	@Input() contactusSpace?: IContactusSpaceDboAndID;
-	// @Input() happening?: IHappeningContext;
+	public readonly $contactusSpace = input.required<
+		IContactusSpaceDboAndID | undefined
+	>();
 
 	@Output() readonly deleted = new EventEmitter<string>();
 
@@ -95,10 +95,6 @@ export abstract class HappeningBaseComponent extends SneatBaseComponent {
 
 	get contactsSelectorService() {
 		return this.happeningBaseComponentParams.contactsSelectorService;
-	}
-
-	get spaceNavService() {
-		return this.happeningBaseComponentParams.spaceNavService;
 	}
 
 	protected constructor(
@@ -128,7 +124,7 @@ export abstract class HappeningBaseComponent extends SneatBaseComponent {
 		// this.navigateForward('regular-activity', { id: activity.id }, { happeningDto: activity }, { excludeCommuneId: true });
 	}
 
-	delete(event: Event): void {
+	protected delete(event: Event): void {
 		console.log('HappeningCardComponent.delete()');
 		event.stopPropagation();
 		const [space, happening] = this.spaceAndHappening();
@@ -184,15 +180,15 @@ This operation can NOT be undone.`)
 		if (!spaceID) {
 			return;
 		}
-		const teamContacts: IContactWithBriefAndSpace[] | undefined =
-			zipMapBriefsWithIDs(this.contactusSpace?.dbo?.contacts)?.map(
+		const spaceContacts: IContactWithBriefAndSpace[] | undefined =
+			zipMapBriefsWithIDs(this.$contactusSpace()?.dbo?.contacts)?.map(
 				addSpace(space),
 			);
 
 		this.contactsSelectorService
 			.selectMultipleContacts({
 				selectedItems:
-					teamContacts?.filter((m) =>
+					spaceContacts?.filter((m) =>
 						getRelatedItemIDs(
 							happening?.brief?.related,
 							'contactus',
@@ -200,8 +196,8 @@ This operation can NOT be undone.`)
 							space.id,
 						)?.includes(m.id),
 					) || [],
-				items: signal(teamContacts), // TODO: provide proper observable
-				onAdded: this.onMemberAdded,
+				items: signal(spaceContacts), // TODO: provide proper observable
+				onAdded: this.onContactAdded,
 				onRemoved: this.onMemberRemoved,
 			})
 			.catch((err) => {
@@ -209,8 +205,8 @@ This operation can NOT be undone.`)
 			});
 	}
 
-	private readonly onMemberAdded = (
-		member: IContactWithBrief,
+	private readonly onContactAdded = (
+		contact: IContactWithBrief,
 	): Observable<void> => {
 		const [space, happening] = this.spaceAndHappening();
 		if (!space || !happening) {
@@ -219,7 +215,7 @@ This operation can NOT be undone.`)
 		const request: IHappeningContactRequest = {
 			spaceID: space.id,
 			happeningID: happening.id,
-			contact: { id: member.id },
+			contact: { id: contact.id },
 		};
 		return this.happeningService.addParticipant(request);
 	};

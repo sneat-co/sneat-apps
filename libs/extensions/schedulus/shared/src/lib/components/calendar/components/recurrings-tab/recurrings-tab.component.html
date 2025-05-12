@@ -27,7 +27,11 @@
 
 	@if (allRecurrings && space) {
 		@for (recurring of $recurrings() || []; track recurring.id) {
-			<sneat-happening-card [$happening]="recurring" [$space]="space" />
+			<sneat-happening-card
+				[$happening]="recurring"
+				[$space]="space"
+				[$contactusSpace]="$contactusSpace()"
+			/>
 		} @empty {
 			@if ($allRecurrings()) {
 				<ion-item>

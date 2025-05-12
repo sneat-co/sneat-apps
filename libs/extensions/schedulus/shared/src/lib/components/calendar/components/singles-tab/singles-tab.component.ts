@@ -3,6 +3,7 @@ import {
 	ChangeDetectorRef,
 	Component,
 	EventEmitter,
+	input,
 	Input,
 	OnChanges,
 	OnDestroy,
@@ -11,6 +12,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonSegment, IonSegmentButton } from '@ionic/angular/standalone';
+import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { ISlotUIEvent } from '@sneat/mod-schedulus-core';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
 import { WithSpaceInput } from '@sneat/space-components';
@@ -47,6 +49,10 @@ export class SinglesTabComponent
 	@Output() readonly slotClicked = new EventEmitter<ISlotUIEvent>();
 
 	@Input() onDateSelected?: (date: Date) => void;
+
+	public readonly $contactusSpace = input.required<
+		IContactusSpaceDboAndID | undefined
+	>();
 
 	constructor(
 		private readonly happeningService: HappeningService,

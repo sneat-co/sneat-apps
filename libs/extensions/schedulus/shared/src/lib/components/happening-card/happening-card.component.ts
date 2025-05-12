@@ -78,8 +78,8 @@ export class HappeningCardComponent extends HappeningBaseComponent {
 		);
 	}
 
-	protected removeMember(member: IContactWithBrief): void {
-		console.log('removeMember', member);
+	protected removeContact(contact: IContactWithBrief): void {
+		console.log('removeContact()', contact);
 		const [space, happening] = this.spaceAndHappening();
 		if (!space || !happening) {
 			return;
@@ -87,7 +87,7 @@ export class HappeningCardComponent extends HappeningBaseComponent {
 		const request: IHappeningContactRequest = {
 			spaceID: space.id,
 			happeningID: happening.id,
-			contact: { id: member.id },
+			contact: { id: contact.id },
 		};
 		this.happeningService.removeParticipant(request).subscribe({
 			next: () => {

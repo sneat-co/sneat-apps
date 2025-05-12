@@ -1,26 +1,35 @@
-<ion-segment [(ngModel)]="tab" color="dark" (ionChange)="onTabChanged($event)">
-	<ion-segment-button value="upcoming">Upcoming</ion-segment-button>
-	<ion-segment-button value="past">Past</ion-segment-button>
-	<ion-segment-button value="recent">Recently created</ion-segment-button>
-</ion-segment>
+<div class="ion-padding-horizontal">
+	<ion-segment
+		[(ngModel)]="tab"
+		color="dark"
+		(ionChange)="onTabChanged($event)"
+	>
+		<ion-segment-button value="upcoming">Upcoming</ion-segment-button>
+		<ion-segment-button value="past">Past</ion-segment-button>
+		<ion-segment-button value="recent">Recently created</ion-segment-button>
+	</ion-segment>
+</div>
 
 @switch (tab) {
 	@case ("upcoming") {
 		<sneat-single-happenings-list
 			[$space]="$space()"
 			[happenings]="upcomingSingles"
+			[$contactusSpace]="$contactusSpace()"
 		/>
 	}
 	@case ("past") {
 		<sneat-single-happenings-list
 			[$space]="$space()"
 			[happenings]="pastSingles"
+			[$contactusSpace]="$contactusSpace()"
 		/>
 	}
 	@case ("recent") {
 		<sneat-single-happenings-list
 			[$space]="$space()"
 			[happenings]="recentSingles"
+			[$contactusSpace]="$contactusSpace()"
 		/>
 	}
 }

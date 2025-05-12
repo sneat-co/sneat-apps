@@ -1,9 +1,12 @@
 import {
 	ChangeDetectionStrategy,
 	Component,
+	computed,
 	EventEmitter,
+	input,
 	Input,
 	Output,
+	signal,
 } from '@angular/core';
 import {
 	IonChip,
@@ -17,32 +20,39 @@ import {
 } from '@sneat/contactus-core';
 import { PersonTitle } from '../pipes';
 
+interface IContactWithState extends IContactWithBriefAndSpace {
+	readonly isDeleting?: boolean;
+}
+
 @Component({
-	selector: 'sneat-contacts-as-badges',
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [PersonTitle, IonChip, IonLabel, IonIcon, IonSpinner],
 	styles: ['.deleting {text-decoration: line-through}'],
-	template: `
-		@for (member of members || []; track member.id) {
-			<ion-chip outline="true" color="medium">
-				<ion-label color="medium" [class.deleting]="isDeleting(member.id)">
-					{{ member | personTitle }}
-				</ion-label>
-				@if (showDelete && !isDeleting(member.id)) {
-					<ion-icon name="close-outline" (click)="delete($event, member)" />
-				}
-				@if (isDeleting(member.id)) {
-					<ion-spinner name="lines-sharp-small" />
-				}
-			</ion-chip>
-		}
-	`,
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-contacts-as-badges',
+	templateUrl: 'contacts-as-badges.component.html',
 })
 export class ContactsAsBadgesComponent {
-	private readonly deletingMemberIDs: string[] = [];
+	private readonly $deletingContactIDs = signal<readonly string[]>([]);
 
-	@Input({ required: true })
-	public members?: readonly IContactWithBriefAndSpace[];
+	public readonly $contacts =
+		input.required<readonly IContactWithBriefAndSpace[]>();
+
+	protected readonly $contactsWithState = computed<
+		readonly IContactWithState[]
+	>(() => {
+		const deletingContactIDs = this.$deletingContactIDs();
+		const result: readonly IContactWithState[] = this.$contacts().map((c) => ({
+			...c,
+			isDeleting: deletingContactIDs.includes(c.id),
+		}));
+		if (deletingContactIDs.some((id) => result.some((c) => c.id === id))) {
+			this.$deletingContactIDs.update((ids) =>
+				deletingContactIDs.filter((id) => result.some((c) => c.id === id)),
+			);
+		}
+		return result;
+	});
+
 	@Input() color:
 		| 'primary'
 		| 'light'
@@ -50,17 +60,14 @@ export class ContactsAsBadgesComponent {
 		| 'medium'
 		| 'secondary'
 		| 'tertiary' = 'light';
+
 	@Input() showDelete = false;
 
-	@Output() readonly deleteMember = new EventEmitter<IContactWithBrief>();
-
-	public isDeleting(id: string): boolean {
-		return this.deletingMemberIDs.includes(id);
-	}
+	@Output() readonly deleteContact = new EventEmitter<IContactWithBrief>();
 
 	protected delete(event: Event, member: IContactWithBrief): void {
 		event.stopPropagation();
-		this.deletingMemberIDs.push(member.id);
-		this.deleteMember.emit(member);
+		this.$deletingContactIDs.update((ids) => [...ids, member.id]);
+		this.deleteContact.emit(member);
 	}
 }

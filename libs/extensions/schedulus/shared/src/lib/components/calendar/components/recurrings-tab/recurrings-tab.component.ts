@@ -17,6 +17,7 @@ import {
 	IonRouterLink,
 	IonSpinner,
 } from '@ionic/angular/standalone';
+import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { IHappeningWithUiState } from '@sneat/mod-schedulus-core';
 import { ISpaceContext } from '@sneat/space-models';
 import { CalendarFilterService } from '../../../calendar-filter.service';
@@ -45,6 +46,10 @@ export class RecurringsTabComponent {
 
 	public readonly $recurrings = input.required<
 		readonly IHappeningWithUiState[] | undefined
+	>();
+
+	public readonly $contactusSpace = input.required<
+		IContactusSpaceDboAndID | undefined
 	>();
 
 	public readonly $allRecurrings = input.required<

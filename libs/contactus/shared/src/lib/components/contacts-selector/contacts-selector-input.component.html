@@ -39,8 +39,8 @@
 				@if (!$hasSelectedContacts()) {
 					<ion-label color="medium">
 						<sneat-contacts-as-badges
-							[members]="$selectedContacts()"
-							(deleteMember)="onRemoveMember($event)"
+							[$contacts]="$selectedContacts()"
+							(deleteContact)="onRemoveMember($event)"
 						/>
 						@if (!$hasSelectedContacts()) {
 							@if ($contacts()) {

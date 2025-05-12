@@ -5,10 +5,14 @@ import {
 	inject,
 	signal,
 	computed,
+	input,
 } from '@angular/core';
+import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
+import { ContactusSpaceService } from '@sneat/contactus-services';
 import { dateToIso } from '@sneat/core';
 import { UiState } from '@sneat/dto';
 import { WithSpaceInput } from '@sneat/space-components';
+import { takeUntil, filter } from 'rxjs';
 import { CalendarDayService } from '../../services/calendar-day.service';
 import { CalendariumSpaceService } from '../../services/calendarium-space.service';
 import { HappeningService } from '../../services/happening.service';
@@ -30,9 +34,13 @@ export abstract class CalendarBaseComponent
 	protected $date = signal(new Date());
 	protected readonly $isToday = computed(() => isToday(this.$date()));
 
-	private readonly $calendariumSpaceDbo = signal<
-		ICalendariumSpaceDbo | null | undefined
-	>(undefined);
+	// private readonly $calendariumSpaceDbo = signal<
+	// 	ICalendariumSpaceDbo | null | undefined
+	// >(undefined);
+
+	public readonly $contactusSpace = signal<IContactusSpaceDboAndID | undefined>(
+		undefined,
+	);
 
 	protected readonly $recurringStates = signal<
 		Readonly<Record<string, UiState>>
@@ -71,6 +79,8 @@ export abstract class CalendarBaseComponent
 	protected readonly spaceDaysProvider: CalendarDataProvider;
 	protected readonly injector = inject(Injector);
 
+	private readonly contactusSpaceService = inject(ContactusSpaceService);
+
 	protected constructor(
 		className: string,
 		calendariumSpaceService: CalendariumSpaceService,
@@ -87,6 +97,23 @@ export abstract class CalendarBaseComponent
 			calendarDayService,
 			calendariumSpaceService,
 		);
+		this.spaceID$.subscribe({
+			next: (spaceID) => {
+				if (!spaceID) {
+					return;
+				}
+
+				this.contactusSpaceService
+					.watchSpaceModuleRecord(spaceID)
+					.pipe(
+						this.takeUntilDestroyed(),
+						takeUntil(this.spaceID$.pipe(filter((id) => id !== spaceID))),
+					)
+					.subscribe((contactusSpace) => {
+						this.$contactusSpace.set(contactusSpace);
+					});
+			},
+		});
 	}
 
 	override ngOnDestroy(): void {
