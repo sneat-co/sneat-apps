@@ -1,7 +1,6 @@
 <ion-header>
 	<ion-toolbar color="light">
 		<ion-buttons slot="start">
-			<ion-menu-button />
 			<ion-back-button [defaultHref]="$defaultBackUrl()" />
 		</ion-buttons>
 		<ion-title color="medium">
@@ -11,16 +10,19 @@
 						Recurring happening
 					}
 					@case ("single") {
-						One-timer
+						One-time happening
 					}
 					@default {
-						{{ happening.brief?.title }}
+						{{ happening.brief?.title || happening.id }}
 					}
 				}
 			} @else {
 				Loading...
 			}
 		</ion-title>
+		<ion-buttons slot="end">
+			<ion-menu-button />
+		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
 
