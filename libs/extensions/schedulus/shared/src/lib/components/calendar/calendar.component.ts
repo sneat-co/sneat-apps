@@ -15,7 +15,6 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
-	IonIcon,
 	IonLabel,
 	IonSegment,
 	IonSegmentButton,
@@ -62,7 +61,6 @@ import { SinglesTabComponent } from './components/singles-tab/singles-tab.compon
 		CalendarDayServiceModule,
 		IonSegment,
 		IonSegmentButton,
-		IonIcon,
 		IonLabel,
 	],
 	providers: [
