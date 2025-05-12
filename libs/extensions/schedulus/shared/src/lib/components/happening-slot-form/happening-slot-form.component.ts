@@ -68,8 +68,6 @@ export interface IHappeningSlotFormComponentInputs {
 }
 
 @Component({
-	selector: 'sneat-happening-slot-form',
-	templateUrl: './happening-slot-form.component.html',
 	imports: [
 		FormsModule,
 		ReactiveFormsModule,
@@ -89,6 +87,9 @@ export interface IHappeningSlotFormComponentInputs {
 		IonSpinner,
 		IonIcon,
 	],
+	providers: [HappeningService],
+	selector: 'sneat-happening-slot-form',
+	templateUrl: './happening-slot-form.component.html',
 })
 /*
  INTENTIONALLY not decoupling weekdays form (WeekdaysFormBase) into a separate component

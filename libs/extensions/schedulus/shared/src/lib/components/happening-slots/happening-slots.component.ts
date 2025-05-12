@@ -7,7 +7,6 @@ import {
 	input,
 	Output,
 	signal,
-	SimpleChanges,
 } from '@angular/core';
 import {
 	IonBadge,
@@ -15,7 +14,6 @@ import {
 	IonButtons,
 	IonIcon,
 	IonItem,
-	IonItemDivider,
 	IonLabel,
 	IonSpinner,
 	IonText,
@@ -47,7 +45,6 @@ export interface AddSlotParams {
 		HappeningSlotModalServiceModule,
 		WdToWeekdayPipe,
 		Numeral2Pipe,
-		IonItemDivider,
 		IonLabel,
 		IonButtons,
 		IonButton,

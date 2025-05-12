@@ -1,4 +1,4 @@
-<ion-item-divider color="light" class="sneat-tiny-end-padding">
+<ion-item color="light" class="sneat-tiny-end-padding">
 	<ion-label>When</ion-label>
 	<ion-buttons slot="end">
 		<ion-button
@@ -10,7 +10,7 @@
 			<ion-label>Add slot</ion-label>
 		</ion-button>
 	</ion-buttons>
-</ion-item-divider>
+</ion-item>
 @if ($slots() && !$slots()?.length) {
 	<ion-item>
 		<ion-label><i>No slots have been added yet.</i></ion-label>
@@ -19,7 +19,7 @@
 @for (slot of $slots(); track slot.id; let last = $last) {
 	<ion-item
 		button="button"
-		class="with-buttons"
+		class="with-buttons sneat-tiny-end-padding"
 		[lines]="last ? 'full' : 'inset'"
 		(click)="selectSlot($event, slot)"
 	>

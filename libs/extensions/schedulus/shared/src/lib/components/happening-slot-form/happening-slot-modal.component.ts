@@ -29,7 +29,7 @@ import {
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
-import { HappeningService } from '../../services/happening.service';
+// import { HappeningService } from '../../services/happening.service';
 import { Subject } from 'rxjs';
 import {
 	HappeningSlotFormComponent,
@@ -40,6 +40,7 @@ import {
 	selector: 'sneat-slot-modal',
 	templateUrl: './happening-slot-modal.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	// providers: [HappeningService],
 	imports: [
 		HappeningSlotFormComponent,
 		IonHeader,
@@ -72,7 +73,7 @@ export class HappeningSlotModalComponent
 	constructor(
 		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
 		private readonly modalController: ModalController,
-		private readonly happeningService: HappeningService,
+		// private readonly happeningService: HappeningService,
 	) {
 		console.log('SingleSlotFormComponent.constructor()');
 	}
