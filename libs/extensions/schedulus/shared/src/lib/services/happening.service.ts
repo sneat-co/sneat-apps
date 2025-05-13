@@ -68,6 +68,11 @@ export interface IHappeningSlotDateRequest extends IHappeningSlotRequest {
 	readonly date?: string;
 }
 
+export interface IHappeningDateSlotIDRequest extends IHappeningRequest {
+	readonly slotID: string;
+	readonly date: string;
+}
+
 export interface ISlotsRefRequest extends IHappeningRequest {
 	readonly slotIDs?: readonly string[];
 	readonly date?: string;
@@ -294,6 +299,21 @@ export class HappeningService {
 			date,
 		};
 		return this.sneatApiService.post('happenings/adjust_slot', request);
+	}
+
+	public cancelAdjustment(
+		spaceID: string,
+		happeningID: string,
+		slotID: string,
+		date: string,
+	): Observable<void> {
+		const request: IHappeningDateSlotIDRequest = {
+			spaceID,
+			happeningID,
+			slotID,
+			date,
+		};
+		return this.sneatApiService.post('happenings/cancel_adjustment', request);
 	}
 
 	// watchByTeam(space: ISpaceContext): Observable<IHappeningContext[]> {

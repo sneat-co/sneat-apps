@@ -37,8 +37,10 @@ export function newEmptyHappeningContext(
 export type CancelOperationState =
 	| 'cancelling-single'
 	| 'cancelling-series'
+	| 'cancelling-adjustment'
 	| 'canceled'
 	| undefined;
+
 export type RevokeCancellationOperationState =
 	| 'revoking-cancellation'
 	| undefined;

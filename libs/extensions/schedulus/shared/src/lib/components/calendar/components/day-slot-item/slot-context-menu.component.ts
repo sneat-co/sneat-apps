@@ -1,6 +1,7 @@
 import {
 	ChangeDetectionStrategy,
 	Component,
+	computed,
 	inject,
 	Input,
 	signal,
@@ -30,7 +31,6 @@ import {
 	HappeningStatus,
 } from '@sneat/mod-schedulus-core';
 import { ISlotUIContext } from '@sneat/mod-schedulus-core';
-import { ErrorLogger } from '@sneat/logging';
 import {
 	ContactsSelectorModule,
 	ContactsSelectorService,
@@ -81,11 +81,13 @@ export class SlotContextMenuComponent extends WithSpaceInput {
 	@Input() dateID?: string;
 	@Input() public slotContext?: ISlotUIContext;
 
-	protected readonly happening = signal<IHappeningContext | undefined>(
+	// protected readonly happening = signal<IHappeningContext | undefined>(
+	// 	undefined,
+	// );
+
+	protected readonly $happeningState = signal<HappeningUIState | undefined>(
 		undefined,
 	);
-
-	protected happeningState?: HappeningUIState;
 
 	public get isCancelled(): boolean {
 		return (
@@ -94,9 +96,7 @@ export class SlotContextMenuComponent extends WithSpaceInput {
 		);
 	}
 
-	public get disabled(): boolean {
-		return !!this.happeningState;
-	}
+	protected readonly $disabled = computed(() => !!this.$happeningState());
 
 	private readonly popoverController = inject(PopoverController);
 	private readonly happeningService = inject(HappeningService);
@@ -146,12 +146,43 @@ export class SlotContextMenuComponent extends WithSpaceInput {
 			});
 	}
 
-	move(): void {
+	protected move(): void {
 		console.log(`SlotContextMenuComponent.move()`);
 		this.notImplemented();
 	}
 
-	edit(event: Event, editMode: 'series' | 'single'): void {
+	protected cancelAdjustment(event: Event): void {
+		event.stopPropagation();
+		event.preventDefault();
+		const dateID = this.dateID;
+		if (!dateID) {
+			return;
+		}
+		const slot = this.slotContext?.slot;
+		if (!slot) {
+			return;
+		}
+		const happeningID = this.slotContext?.happening?.id;
+		if (!happeningID) {
+			return;
+		}
+
+		this.$happeningState.set('cancelling-adjustment');
+		this.happeningService
+			.cancelAdjustment(this.$spaceID(), happeningID, slot.id, dateID)
+			.subscribe({
+				next: () => this.dismissPopover(),
+				error: (err) => {
+					this.errorLogger.logError(
+						err,
+						'Failed to cancel happening slot adjustment',
+					);
+					this.$happeningState.set(undefined);
+				},
+			});
+	}
+
+	protected edit(event: Event, editMode: 'series' | 'single'): void {
 		console.log(`SlotContextMenuComponent.edit()`);
 		const happening = this.slotContext?.happening;
 		if (!happening) {
@@ -192,15 +223,15 @@ export class SlotContextMenuComponent extends WithSpaceInput {
 			throw new Error('this.slot?.repeats === "weekly" && !slot.wd');
 		}
 		const request = this.createDeleteSlotRequest(event);
-		this.happeningState = 'deleting';
+		this.$happeningState.set('deleting');
 		this.happeningService.deleteSlot(request).subscribe({
 			next: () => {
-				this.happeningState = 'deleted';
+				this.$happeningState.set('deleted');
 				this.dismissPopover();
 			},
 			error: (err) => {
 				setTimeout(() => {
-					this.happeningState = undefined;
+					this.$happeningState.set(undefined);
 					this.errorLogger.logError(
 						err,
 						'Failed to delete happening from context menu',
@@ -308,7 +339,7 @@ export class SlotContextMenuComponent extends WithSpaceInput {
 
 	revokeCancellation(event: Event): void {
 		console.log(`SlotContextMenuComponent.revokeCancellation()`);
-		this.happeningState = 'revoking-cancellation';
+		this.$happeningState.set('revoking-cancellation');
 		if (!this.slotContext) {
 			return;
 		}
@@ -319,13 +350,13 @@ export class SlotContextMenuComponent extends WithSpaceInput {
 		const request = this.createCancellationRequest(event, mode);
 		this.happeningService.revokeHappeningCancellation(request).subscribe({
 			next: () => {
-				this.happeningState = undefined;
+				this.$happeningState.set(undefined);
 				this.setHappeningStatus('active');
 				this.dismissPopover();
 			},
 			error: (err) => {
 				setTimeout(() => {
-					this.happeningState = undefined;
+					this.$happeningState.set(undefined);
 					this.errorLogger.logError(
 						err,
 						'Failed to delete happening from context menu',
@@ -337,18 +368,19 @@ export class SlotContextMenuComponent extends WithSpaceInput {
 
 	markCanceled(event: Event, mode: 'whole' | 'slot'): void {
 		console.log(`SlotContextMenuComponent.markCanceled(mode=${mode})`);
-		this.happeningState =
-			mode == 'slot' ? 'cancelling-single' : 'cancelling-series';
+		this.$happeningState.set(
+			mode == 'slot' ? 'cancelling-single' : 'cancelling-series',
+		);
 		const request = this.createCancellationRequest(event, mode);
 		this.happeningService.cancelHappening(request).subscribe({
 			next: () => {
-				this.happeningState = 'canceled';
+				this.$happeningState.set('canceled');
 				this.setHappeningStatus('canceled');
 				this.dismissPopover();
 			},
 			error: (err) => {
 				setTimeout(() => {
-					this.happeningState = undefined;
+					this.$happeningState.set(undefined);
 					this.errorLogger.logError(
 						err,
 						'Failed to delete happening from context menu',

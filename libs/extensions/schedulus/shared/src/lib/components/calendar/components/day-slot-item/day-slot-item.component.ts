@@ -51,7 +51,6 @@ import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-day-slot-item',
 	templateUrl: './day-slot-item.component.html',
-	// standalone: false, // circle dependencies DaySlotItemComponent->SlotContextMenuComponent->DaySlotItemComponent
 })
 export class DaySlotItemComponent extends WithSpaceInput {
 	public readonly $slotContext = input.required<ISlotUIContext>();
@@ -99,7 +98,7 @@ export class DaySlotItemComponent extends WithSpaceInput {
 		event?.preventDefault();
 		event?.stopPropagation();
 
-		// TODO: Verify lazy loading works and try to make DaySlotItemComponent & SlotContextMenuComponent standalone
+		// Need to import dynamically due to circular depndency with DaySlotItemComponent
 		import('./slot-context-menu.component').then(async (m) => {
 			const slotContext = this.$slotContext();
 			console.log(
