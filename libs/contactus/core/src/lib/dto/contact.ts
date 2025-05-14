@@ -76,10 +76,6 @@ export type IContactWithOptionalDbo = IIdAndBriefAndOptionalDbo<
 	IContactDbo
 >;
 
-export interface IContactsBrief {
-	readonly contacts?: readonly IContactBrief[];
-}
-
 export interface IContactWithDboAndSpace
 	extends IContactWithDbo,
 		IContactWithBriefAndSpace {}

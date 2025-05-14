@@ -50,7 +50,7 @@
 						</ion-button>
 					</ion-buttons>
 				</ion-item>
-				<sneat-contact-dob [contact]="contactWithBriefAndOptionalDto" />
+				<sneat-contact-dob [$contact]="$contact()" />
 			</ion-card>
 
 			<ion-card>
@@ -79,7 +79,7 @@
 				<ion-list>
 					<sneat-contact-modules-menu
 						[$space]="$space()"
-						[contact]="contactWithBriefAndOptionalDto"
+						[contact]="$contactWithBriefAndOptionalDbo()"
 					/>
 				</ion-list>
 			</ion-card>
@@ -94,7 +94,9 @@
 			<ion-segment-button value="communicationChannels">
 				Email/Phone
 			</ion-segment-button>
-			<ion-segment-button value="roles"> Roles</ion-segment-button>
+			@if ($showRolesTab()) {
+				<ion-segment-button value="roles"> Roles</ion-segment-button>
+			}
 			<ion-segment-button value="locations"> Locations</ion-segment-button>
 		}
 	</ion-segment>
@@ -102,7 +104,7 @@
 
 @switch (tab) {
 	@case ("communicationChannels") {
-		<sneat-contact-contacts [contact]="contactWithBriefAndOptionalDto" />
+		<sneat-contact-contacts [contact]="$contactWithBriefAndOptionalDbo()" />
 	}
 	@case ("peers") {
 		<sneat-related-contacts [$space]="$space()" [$relatedTo]="$relatedTo()" />
@@ -110,13 +112,13 @@
 	@case ("locations") {
 		<sneat-contact-locations
 			[$space]="$space()"
-			[contact]="contactWithBriefAndOptionalDto"
+			[contact]="$contactWithBriefAndOptionalDbo()"
 		/>
 	}
 	@case ("roles") {
 		<sneat-contact-roles-input
 			[space]="$space()"
-			[contact]="contactWithBriefAndOptionalDto"
+			[contact]="$contactWithBriefAndOptionalDbo()"
 		/>
 	}
 }

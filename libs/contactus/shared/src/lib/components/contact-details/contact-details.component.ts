@@ -38,12 +38,14 @@ import {
 	IContactDbo,
 	IContactContext,
 	Gender,
+	IContactWithOptionalDbo,
 } from '@sneat/contactus-core';
 import {
 	getRelatedItemByKey,
 	IRelatedTo,
 	ISpaceModuleItemRef,
 } from '@sneat/dto';
+import { WithSpaceInput } from '@sneat/space-components';
 import { SneatBaseComponent } from '@sneat/ui';
 import { ContactNamesModalComponent } from '../../modals/contact-names-modal/contact-names-modal.component';
 import { UserSpaceBriefProvider } from '../../providers/user-space-brief.provider';
@@ -87,7 +89,7 @@ import { RelatedContactsComponent } from './related-contacts.component';
 	selector: 'sneat-contact-details',
 	templateUrl: './contact-details.component.html',
 })
-export class ContactDetailsComponent extends SneatBaseComponent {
+export class ContactDetailsComponent extends WithSpaceInput {
 	public readonly $contact = input.required<IContactContext | undefined>();
 	protected readonly $contactID = computed(() => this.$contact()?.id);
 
@@ -126,33 +128,29 @@ export class ContactDetailsComponent extends SneatBaseComponent {
 		};
 	});
 
-	protected readonly $space = computed(
-		() => this.$contact()?.space || { id: '' },
+	protected readonly $showRolesTab = computed(
+		() => this.$spaceType() !== 'family',
 	);
-	protected readonly $spaceID = computed(() => this.$space()?.id);
 
 	protected readonly $isMember = computed(
 		() => !!this.$contact()?.brief?.roles?.includes('member'),
 	);
 
-	private readonly navController = inject(NavController);
 	private readonly modalController = inject(ModalController);
 
-	protected get contactWithBriefAndOptionalDto():
-		| IIdAndBriefAndOptionalDbo<IContactBrief, IContactDbo>
-		| undefined {
+	protected readonly $contactWithBriefAndOptionalDbo = computed<
+		IContactWithOptionalDbo | undefined
+	>(() => {
 		const contact = this.$contact();
 		return contact?.brief
 			? (contact as IIdAndBriefAndOptionalDbo<IContactBrief, IContactDbo>)
 			: undefined;
-	}
+	});
 
 	protected tab: 'communicationChannels' | 'roles' | 'peers' | 'locations' =
 		'peers';
 
 	private readonly userService = inject(SneatUserService);
-	// private readonly spaceNavService = inject(SpaceNavService);
-	private readonly contactService = inject(ContactService);
 
 	constructor() {
 		super('ContactDetailsComponent');

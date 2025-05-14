@@ -1,16 +1,7 @@
-<ion-item>
-	<ion-input
-		label="Date of birth"
-		[readonly]="true"
-		type="date"
-		placeholder="missing"
-		[value]="contact?.dbo?.dob"
-	/>
-	<ion-buttons slot="end">
-		<ion-button>
-			<ion-label style="text-transform: none" color="medium"
-				>Next in 4 days</ion-label
-			>
-		</ion-button>
-	</ion-buttons>
-</ion-item>
+<sneat-date-input
+	[$label]="'Date of birth'"
+	[$value]="$dob()"
+	[$updating]="$updating()"
+	[$max]="today"
+	(valueChange)="onDobChanged($event)"
+/>

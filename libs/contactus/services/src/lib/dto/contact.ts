@@ -26,6 +26,7 @@ export interface IUpdateContactRequest extends IContactRequest {
 	readonly gender?: Gender;
 	readonly names?: IPersonNames;
 	readonly vatNumber?: string;
+	readonly dateOfBirth?: string;
 }
 
 export function validateUpdateContactRequest(
@@ -34,13 +35,14 @@ export function validateUpdateContactRequest(
 	validateContactRequest(request);
 	if (
 		!request.address &&
-		!request.ageGroup &&
-		!request.gender &&
 		!request.names &&
-		!request.vatNumber
+		request.ageGroup === undefined &&
+		request.gender === undefined &&
+		request.vatNumber === undefined &&
+		request.dateOfBirth === undefined
 	) {
 		throw new Error(
-			'At least one of the following is required: address, ageGroup, gender, names',
+			'At least one of the following is required: address, ageGroup, gender, dateOfBirth, names',
 		);
 	}
 }

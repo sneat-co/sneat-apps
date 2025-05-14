@@ -1,22 +1,66 @@
-import { Component, Input } from '@angular/core';
 import {
-	IonButton,
-	IonButtons,
-	IonInput,
-	IonItem,
-	IonLabel,
-} from '@ionic/angular/standalone';
-import { IIdAndBriefAndOptionalDbo } from '@sneat/core';
-import { IContactBrief, IContactDbo } from '@sneat/contactus-core';
+	Component,
+	ChangeDetectionStrategy,
+	input,
+	computed,
+	inject,
+	signal,
+} from '@angular/core';
+import { DateInputComponent } from '@sneat/components';
+import { IContactContext } from '@sneat/contactus-core';
+import {
+	ContactService,
+	IUpdateContactRequest,
+} from '@sneat/contactus-services';
+import { SneatBaseComponent } from '@sneat/ui';
 
 @Component({
 	selector: 'sneat-contact-dob',
 	templateUrl: './contact-dob.component.html',
-	imports: [IonItem, IonInput, IonButtons, IonButton, IonLabel],
+	imports: [DateInputComponent],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ContactDobComponent {
-	@Input({ required: true }) public contact?: IIdAndBriefAndOptionalDbo<
-		IContactBrief,
-		IContactDbo
-	>;
+export class ContactDobComponent extends SneatBaseComponent {
+	constructor() {
+		super('ContactDobComponent');
+	}
+
+	public readonly $contact = input.required<IContactContext | undefined>();
+	public readonly $updating = signal(false);
+
+	protected readonly $dob = computed(() => {
+		const contact = this.$contact();
+		return contact?.dbo ? contact.dbo.dob || '' : undefined;
+	});
+
+	protected readonly today = new Date().toISOString().slice(0, 10);
+
+	private readonly contactService = inject(ContactService);
+
+	protected onDobChanged(dateOfBirth: string | undefined): void {
+		const contact = this.$contact();
+		if (!contact) {
+			return;
+		}
+		const spaceID = contact.space.id;
+
+		const request: IUpdateContactRequest = {
+			spaceID,
+			contactID: contact.id,
+			dateOfBirth,
+		};
+		this.$updating.set(true);
+		this.contactService.updateContact(request).subscribe({
+			next: (): void => {
+				this.$updating.set(false);
+			},
+			error: (err) => {
+				this.$updating.set(false);
+				this.errorLogger.logError(
+					err,
+					'failed to update contact date of birth',
+				);
+			},
+		});
+	}
 }
