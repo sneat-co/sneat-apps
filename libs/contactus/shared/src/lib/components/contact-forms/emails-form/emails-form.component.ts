@@ -66,8 +66,8 @@ export class EmailsFormComponent implements OnChanges {
 
 	emailInputs: readonly emailInput[] = emptyEmails;
 
-	@Input() emails?: IEmail[];
-	@Output() readonly emailsChange = new EventEmitter<IEmail[]>();
+	@Input() emails?: readonly IEmail[];
+	@Output() readonly emailsChange = new EventEmitter<readonly IEmail[]>();
 
 	ngOnChanges(changes: SimpleChanges): void {
 		const emailsChange = changes['emails'];

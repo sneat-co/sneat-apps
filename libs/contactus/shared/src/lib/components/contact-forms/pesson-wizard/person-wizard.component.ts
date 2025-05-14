@@ -324,22 +324,26 @@ export class PersonWizardComponent
 		});
 	}
 
-	protected onEmailsChanged(emails: IEmail[]): void {
+	protected onEmailsChanged(emails: readonly IEmail[]): void {
 		this.setContactData(
-			{ ...this.$contact().dbo, emails },
+			{ ...this.$contact().dbo, emails: {} },
 			{
 				name: 'communicationChannels',
-				hasValue: !!emails?.length || !!this.$contact().dbo.phones?.length,
+				hasValue:
+					!!Object.keys(emails || {})?.length ||
+					!!Object.keys(this.$contact().dbo.phones || {})?.length,
 			},
 		);
 	}
 
-	protected onPhoneChanged(phones: IPhone[]): void {
+	protected onPhoneChanged(phones: readonly IPhone[]): void {
 		this.setContactData(
-			{ ...this.$contact().dbo, phones },
+			{ ...this.$contact().dbo, phones: {} },
 			{
 				name: 'communicationChannels',
-				hasValue: !!phones?.length || !!this.$contact().dbo.emails?.length,
+				hasValue:
+					!!Object.keys(phones || {})?.length ||
+					!!Object.keys(this.$contact().dbo.emails || {})?.length,
 			},
 		);
 	}

@@ -1,0 +1,26 @@
+<ion-card>
+	<ion-item color="light" lines="full">
+		<ion-label>Phone Numbers</ion-label>
+	</ion-item>
+
+	@if ($contact()?.dbo) {
+		@for (phone of $phones(); track phone.number) {
+			<ion-item>
+				<ion-label>{{ phone.number }}</ion-label>
+			</ion-item>
+		} @empty {
+			<ion-item lines="none">
+				<ion-label
+					color="medium"
+					style="font-style: italic; font-size: smaller"
+				>
+					No phone numbers added for the contact yet.
+				</ion-label>
+			</ion-item>
+		}
+	} @else {
+		<ion-item>
+			<ion-label>Loading...</ion-label>
+		</ion-item>
+	}
+</ion-card>

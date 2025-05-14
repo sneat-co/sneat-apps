@@ -72,14 +72,14 @@
 	@if (tab === "emails" && !requires.email?.hide) {
 		<sneat-emails-form
 			[hideHeader]="true"
-			[emails]="$contact().dbo.emails"
+			[emails]="$emails()"
 			(emailsChange)="onEmailsChanged($event)"
 		/>
 	}
 	@if (tab === "phones" && !requires.phone?.hide) {
 		<sneat-phones-form
 			[hideHeader]="true"
-			[phones]="$contact().dbo.phones"
+			[phones]="$phones()"
 			(phonesChange)="onPhoneChanged($event)"
 		/>
 	}

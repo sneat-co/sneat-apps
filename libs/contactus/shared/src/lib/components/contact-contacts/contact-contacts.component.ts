@@ -1,34 +1,14 @@
-import { JsonPipe } from '@angular/common';
-import { Component, Input } from '@angular/core';
-import {
-	IonButton,
-	IonCard,
-	IonIcon,
-	IonInput,
-	IonItem,
-	IonItemDivider,
-	IonLabel,
-} from '@ionic/angular/standalone';
-import { IIdAndBriefAndOptionalDbo } from '@sneat/core';
-import { IContactBrief } from '@sneat/contactus-core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
+import { IContactContext } from '@sneat/contactus-core';
+import { ContactEmailsComponent } from './contact-emails.component';
+import { ContactPhonesComponent } from './contact-phones.component';
 
 @Component({
+	imports: [ContactEmailsComponent, ContactPhonesComponent],
 	selector: 'sneat-contact-contacts',
 	templateUrl: 'contact-contacts.component.html',
-	imports: [
-		IonCard,
-		IonItemDivider,
-		IonLabel,
-		IonItem,
-		IonInput,
-		IonButton,
-		IonIcon,
-		JsonPipe,
-	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactContactsComponent {
-	@Input({ required: true }) public contact?: IIdAndBriefAndOptionalDbo<
-		IContactBrief,
-		IContactBrief
-	>;
+	public readonly $contact = input.required<IContactContext | undefined>();
 }

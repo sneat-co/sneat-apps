@@ -7,6 +7,8 @@ import {
 } from '@angular/core';
 import {
 	ContactIdAndDboWithSpaceRef,
+	IEmail,
+	IPhone,
 	NewContactBaseDboAndSpaceRef,
 } from '@sneat/contactus-core';
 import { ContactFormBaseComponent } from '../contact-form-base.component';
@@ -18,6 +20,22 @@ export abstract class NewContactFormBaseComponent extends ContactFormBaseCompone
 	protected readonly $contactType = computed(() => this.$contact().dbo.type);
 	protected readonly $spaceRef = computed(() => this.$contact().space);
 	protected readonly $spaceID = computed(() => this.$spaceRef().id);
+
+	protected readonly $emails = computed<IEmail[]>(() => {
+		const emails = this.$contact().dbo.emails;
+		return Object.entries(emails || {}).map(([address, props]) => ({
+			address,
+			...props,
+		}));
+	});
+
+	protected readonly $phones = computed<IPhone[]>(() => {
+		const phones = this.$contact().dbo.phones;
+		return Object.entries(phones || {}).map(([number, props]) => ({
+			number,
+			...props,
+		}));
+	});
 
 	@Output() readonly contactChange =
 		new EventEmitter<NewContactBaseDboAndSpaceRef>();
