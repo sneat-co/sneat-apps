@@ -5,10 +5,10 @@ import { ContactPhonesComponent } from './contact-phones.component';
 
 @Component({
 	imports: [ContactEmailsComponent, ContactPhonesComponent],
-	selector: 'sneat-contact-contacts',
-	templateUrl: 'contact-contacts.component.html',
+	selector: 'sneat-contact-comm-channels',
+	templateUrl: 'contact-comm-channels.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ContactContactsComponent {
+export class ContactCommChannelsComponent {
 	public readonly $contact = input.required<IContactContext | undefined>();
 }

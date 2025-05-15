@@ -1,0 +1,67 @@
+<ion-card>
+	<ion-item color="light" lines="full" class="sneat-tiny-end-padding">
+		<ion-label color="medium" style="font-weight: bold">{{
+			$title()
+		}}</ion-label>
+		<ion-buttons slot="end">
+			@if ($contact()?.dbo && !$showAddForm()) {
+				<ion-button color="tertiary" (click)="$showAddForm.set(true)">
+					<ion-icon name="add-outline" slot="start" />
+					<ion-label>New</ion-label>
+				</ion-button>
+			}
+		</ion-buttons>
+	</ion-item>
+
+	@if ($contact()?.dbo) {
+		@for (channel of $channels(); track channel.id) {
+			<sneat-comm-channel-item [$isLast]="$last" [$channel]="channel" />
+		} @empty {
+			@if (!$showAddForm()) {
+				<ion-item lines="none">
+					<ion-label
+						color="medium"
+						style="font-style: italic; font-size: smaller"
+					>
+						Nothing added yet.
+					</ion-label>
+					<ion-buttons slot="start">
+						<ion-button
+							fill="outline"
+							color="tertiary"
+							class="ion-margin-start"
+							(click)="$showAddForm.set(true)"
+							>Add the 1st one
+						</ion-button>
+					</ion-buttons>
+				</ion-item>
+			}
+		}
+	} @else {
+		<ion-item>
+			<ion-label>Loading...</ion-label>
+		</ion-item>
+	}
+	@if ($showAddForm()) {
+		<ion-item class="sneat-tiny-end-padding" lines="none">
+			<ion-select
+				placeholder="Choose type"
+				interface="popover"
+				slot="start"
+				style="min-width: 120px"
+			>
+				<ion-select-option value="work">Work</ion-select-option>
+				<ion-select-option value="personal">Personal</ion-select-option>
+			</ion-select>
+			<ion-input [placeholder]="$placeholder()" />
+			<ion-buttons>
+				<ion-button fill="solid" color="primary">
+					<ion-label>Add</ion-label>
+				</ion-button>
+				<ion-button (click)="$showAddForm.set(false)">
+					<ion-icon name="close-outline" />
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
+	}
+</ion-card>

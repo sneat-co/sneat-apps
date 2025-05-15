@@ -69,19 +69,21 @@
 		<ion-segment-button value="emails">Emails</ion-segment-button>
 		<ion-segment-button value="phones">Phones</ion-segment-button>
 	</ion-segment>
-	@if (tab === "emails" && !requires.email?.hide) {
-		<sneat-emails-form
-			[hideHeader]="true"
-			[emails]="$emails()"
-			(emailsChange)="onEmailsChanged($event)"
-		/>
-	}
-	@if (tab === "phones" && !requires.phone?.hide) {
-		<sneat-phones-form
-			[hideHeader]="true"
-			[phones]="$phones()"
-			(phonesChange)="onPhoneChanged($event)"
-		/>
+	@switch (tab) {
+		@case ("emails") {
+			<sneat-emails-form
+				[hideHeader]="true"
+				[emails]="$emails()"
+				(emailsChange)="onEmailsChanged($event)"
+			/>
+		}
+		@case ("phones") {
+			<sneat-phones-form
+				[hideHeader]="true"
+				[phones]="$phones()"
+				(phonesChange)="onPhoneChanged($event)"
+			/>
+		}
 	}
 }
 

@@ -49,7 +49,7 @@ import { WithSpaceInput } from '@sneat/space-components';
 import { SneatBaseComponent } from '@sneat/ui';
 import { ContactNamesModalComponent } from '../../modals/contact-names-modal/contact-names-modal.component';
 import { UserSpaceBriefProvider } from '../../providers/user-space-brief.provider';
-import { ContactContactsComponent } from '../contact-contacts';
+import { ContactCommChannelsComponent } from '../contact-comm-channels';
 import { ContactDobComponent } from '../contact-dob';
 import { ContactRelationshipFormComponent } from '../contact-forms/relationship-form/contact-relationship-form.component';
 import { ContactLocationsComponent } from '../contact-locations';
@@ -63,7 +63,7 @@ import { RelatedContactsComponent } from './related-contacts.component';
 	imports: [
 		ContactDobComponent,
 		ContactModulesMenuComponent,
-		ContactContactsComponent,
+		ContactCommChannelsComponent,
 		ContactRolesInputComponent,
 		ContactLocationsComponent,
 		GenderFormComponent,

@@ -1,5 +1,4 @@
 export * from './basic-contact-form';
-export * from './contact-contacts';
 export * from './contact-details';
 export * from './contact-dob';
 export * from './contact-forms';

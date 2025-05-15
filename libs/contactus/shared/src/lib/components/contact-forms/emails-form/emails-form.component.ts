@@ -40,8 +40,6 @@ const emptyEmails: emailInput[] = [
 ];
 
 @Component({
-	selector: 'sneat-emails-form',
-	templateUrl: './emails-form.component.html',
 	imports: [
 		FormsModule,
 		IonCard,
@@ -56,6 +54,8 @@ const emptyEmails: emailInput[] = [
 		IonSelectOption,
 		IonInput,
 	],
+	selector: 'sneat-emails-form',
+	templateUrl: './emails-form.component.html',
 })
 export class EmailsFormComponent implements OnChanges {
 	readonly types = emailTypes;
