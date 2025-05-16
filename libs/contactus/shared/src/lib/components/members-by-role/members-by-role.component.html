@@ -1,7 +1,7 @@
 @for (group of memberGroups; track group.id) {
 	<ion-item-group>
 		@if (group.addLabel || group.contacts?.length) {
-			<ion-item-divider color="light">
+			<ion-item color="light" class="sneat-tiny-end-padding" lines="full">
 				<ion-label>{{ group.emoji }}&nbsp;&nbsp;{{ group.plural }}</ion-label>
 				@if (group.addLabel) {
 					<ion-buttons slot="end">
@@ -14,7 +14,7 @@
 						</ion-button>
 					</ion-buttons>
 				}
-			</ion-item-divider>
+			</ion-item>
 
 			@if (group.contacts === undefined) {
 				<ion-item>

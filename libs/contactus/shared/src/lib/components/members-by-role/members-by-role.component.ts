@@ -10,7 +10,6 @@ import {
 	IonButtons,
 	IonIcon,
 	IonItem,
-	IonItemDivider,
 	IonItemGroup,
 	IonLabel,
 	IonSpinner,
@@ -26,7 +25,6 @@ import { MemberGroup } from './member-group';
 	imports: [
 		MembersListComponent,
 		IonItemGroup,
-		IonItemDivider,
 		IonLabel,
 		IonButtons,
 		IonButton,
