@@ -20,9 +20,12 @@ import { ModuleSpaceItemService } from '@sneat/space-services';
 import { ContactusSpaceService } from './contactus-space.service';
 import { map, Observable, tap, throwError } from 'rxjs';
 import {
+	IAddContactCommChannelRequest,
+	IContactCommChannelRequest,
 	IContactRequest,
 	IContactRequestWithOptionalMessage,
 	ISetContactsStatusRequest,
+	IUpdateContactCommChannelRequest,
 	IUpdateContactRequest,
 	validateContactRequest,
 	validateUpdateContactRequest,
@@ -65,6 +68,33 @@ export class ContactService extends ModuleSpaceItemService<
 	public updateContact(request: IUpdateContactRequest): Observable<void> {
 		validateUpdateContactRequest(request);
 		return this.sneatApiService.post('contactus/update_contact', request);
+	}
+
+	public addContactCommChannel(
+		request: IAddContactCommChannelRequest,
+	): Observable<void> {
+		return this.sneatApiService.post(
+			'contactus/add_contact_comm_channel',
+			request,
+		);
+	}
+
+	public updateContactCommChannel(
+		request: IUpdateContactCommChannelRequest,
+	): Observable<void> {
+		return this.sneatApiService.post(
+			'contactus/update_contact_comm_channel',
+			request,
+		);
+	}
+
+	public deleteContactCommChannel(
+		request: IContactCommChannelRequest,
+	): Observable<void> {
+		return this.sneatApiService.post(
+			'contactus/delete_contact_comm_channel',
+			request,
+		);
 	}
 
 	public setContactsStatus(

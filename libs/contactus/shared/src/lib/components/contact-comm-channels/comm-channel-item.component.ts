@@ -2,8 +2,9 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	effect,
-	Input,
+	signal,
 	input,
+	inject,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -16,9 +17,18 @@ import {
 	IonSelect,
 	IonSelectOption,
 } from '@ionic/angular/standalone';
-import { ICommunicationChannelProps } from '@sneat/contactus-core';
+import {
+	ContactCommChannelType,
+	IContactCommChannelProps,
+} from '@sneat/contactus-core';
+import {
+	ContactService,
+	IContactCommChannelRequest,
+	IUpdateContactCommChannelRequest,
+} from '@sneat/contactus-services';
+import { SneatBaseComponent } from '@sneat/ui';
 
-export interface ICommChannelListItem extends ICommunicationChannelProps {
+export interface ICommChannelListItem extends IContactCommChannelProps {
 	readonly id: string;
 }
 
@@ -38,17 +48,105 @@ export interface ICommChannelListItem extends ICommunicationChannelProps {
 	selector: 'sneat-comm-channel-item',
 	templateUrl: 'comm-channel-item.component.html',
 })
-export class CommChannelItemComponent {
-	protected readonly value = new FormControl();
-	public readonly $isLast = input.required<boolean>();
+export class CommChannelItemComponent extends SneatBaseComponent {
+	public readonly $channelType = input.required<ContactCommChannelType>();
 	public $channel = input.required<ICommChannelListItem>();
+	public $contactID = input.required<string>();
+	public $spaceID = input.required<string>();
+
+	protected readonly channelID = new FormControl();
+	public readonly $lines = input.required<'none' | 'full' | undefined>();
+	protected readonly $saving = signal(false);
+
+	protected readonly contactService = inject(ContactService);
 
 	constructor() {
+		super('CommChannelItemComponent');
 		effect(() => {
 			const channel = this.$channel();
-			if (!this.value.dirty) {
-				this.value.setValue(channel.id);
+			if (!this.channelID.dirty) {
+				this.channelID.setValue(channel.id);
 			}
 		});
+	}
+
+	protected deleteChannel(event: Event): void {
+		console.log('deleteChannel', event);
+		this.$saving.set(true);
+		const request: IContactCommChannelRequest = {
+			spaceID: this.$spaceID(),
+			contactID: this.$contactID(),
+			channelType: this.$channelType(),
+			channelID: this.$channel().id,
+		};
+		this.contactService
+			.deleteContactCommChannel(request)
+			.pipe(this.takeUntilDestroyed())
+			.subscribe({
+				next: () => this.$saving.set(false),
+				error: (err) => {
+					this.$saving.set(false);
+					this.errorLogger.logError(
+						err,
+						'Failed to delete contact ' + this.$channelType(),
+					);
+				},
+			});
+	}
+
+	protected saveChanges(event: Event): void {
+		console.log('saveChanges', event);
+		const channelID = (this.channelID.value || '').trim();
+		if (!channelID) {
+			this.channelID.markAsTouched();
+			this.channelID.setErrors({ required: true });
+			return;
+		}
+		this.$saving.set(true);
+		const request: IUpdateContactCommChannelRequest = {
+			spaceID: this.$spaceID(),
+			contactID: this.$contactID(),
+			channelID: this.$channel().id,
+			channelType: this.$channelType(),
+			newChannelID: channelID,
+		};
+		this.contactService
+			.updateContactCommChannel(request)
+			.pipe(this.takeUntilDestroyed())
+			.subscribe({
+				next: () => this.$saving.set(false),
+				error: (err) => {
+					this.errorLogger.logError(
+						err,
+						'Failed to update contact' + this.$channelType(),
+					);
+				},
+			});
+	}
+
+	protected onTypeChanged(event: CustomEvent): void {
+		console.log('onTypeChanged', event);
+		const type = event.detail.value as 'private' | 'work';
+		this.$saving.set(true);
+		const request: IUpdateContactCommChannelRequest = {
+			spaceID: this.$spaceID(),
+			contactID: this.$contactID(),
+			channelID: this.$channel().id,
+			channelType: this.$channelType(),
+			type,
+		};
+		this.contactService
+			.updateContactCommChannel(request)
+			.pipe(this.takeUntilDestroyed())
+			.subscribe({
+				next: () => this.$saving.set(false),
+				error: (err) => {
+					this.$saving.set(false);
+					this.errorLogger.logError(
+						err,
+						'Failed to update type of contact ' + this.$channelType(),
+					);
+				},
+			});
 	}
 }

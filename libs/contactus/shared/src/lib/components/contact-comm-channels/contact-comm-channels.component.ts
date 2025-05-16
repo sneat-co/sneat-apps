@@ -10,5 +10,5 @@ import { ContactPhonesComponent } from './contact-phones.component';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactCommChannelsComponent {
-	public readonly $contact = input.required<IContactContext | undefined>();
+	public readonly $contact = input.required<IContactContext>();
 }

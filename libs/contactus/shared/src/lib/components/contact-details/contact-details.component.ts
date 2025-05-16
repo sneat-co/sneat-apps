@@ -90,7 +90,7 @@ import { RelatedContactsComponent } from './related-contacts.component';
 	templateUrl: './contact-details.component.html',
 })
 export class ContactDetailsComponent extends WithSpaceInput {
-	public readonly $contact = input.required<IContactContext | undefined>();
+	public readonly $contact = input.required<IContactContext>();
 	protected readonly $contactID = computed(() => this.$contact()?.id);
 
 	@Output() readonly contactChange = new EventEmitter<

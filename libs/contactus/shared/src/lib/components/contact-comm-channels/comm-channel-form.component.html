@@ -1,0 +1,40 @@
+<ion-item class="sneat-tiny-end-padding">
+	@if ($type()) {
+		<ion-select
+			[value]="$type()"
+			placeholder="Choose type"
+			interface="popover"
+			slot="start"
+			style="min-width: 120px"
+			(ionChange)="onTypeChanged($event.detail.value)"
+		>
+			<ion-select-option value="work">Work</ion-select-option>
+			<ion-select-option value="personal">Personal</ion-select-option>
+		</ion-select>
+	}
+	<ion-input
+		[formControl]="channelID"
+		[placeholder]="$placeholder()"
+		(keyup.enter)="addNewChannel($event)"
+	/>
+
+	<ion-buttons>
+		<ion-button fill="solid" color="primary" (click)="addNewChannel($event)">
+			<ion-label>Add</ion-label>
+		</ion-button>
+		<ion-button (click)="closeForm.emit()">
+			<ion-icon name="close-outline" />
+		</ion-button>
+	</ion-buttons>
+</ion-item>
+
+@if (!$type()) {
+	<sneat-select-from-list
+		[items]="types"
+		(valueChange)="onTypeChanged($event)"
+	/>
+}
+
+<ion-item lines="none">
+	<ion-textarea label="Note" labelPlacement="stacked" />
+</ion-item>

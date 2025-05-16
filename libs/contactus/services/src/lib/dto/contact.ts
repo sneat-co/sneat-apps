@@ -1,5 +1,9 @@
 import { IPersonNames } from '@sneat/auth-models';
-import { AgeGroupID, Gender } from '@sneat/contactus-core';
+import {
+	AgeGroupID,
+	ContactCommChannelType,
+	Gender,
+} from '@sneat/contactus-core';
 import { IAddress } from '@sneat/contactus-core';
 import { SpaceRequest } from '@sneat/space-models';
 
@@ -48,8 +52,30 @@ export function validateUpdateContactRequest(
 }
 
 export interface ISetContactsStatusRequest extends SpaceRequest {
-	status: 'archived' | 'active';
-	contactIDs: readonly string[];
+	readonly status: 'archived' | 'active';
+	readonly contactIDs: readonly string[];
+}
+
+export interface IContactCommChannelRequest extends IContactRequest {
+	readonly channelType: ContactCommChannelType;
+	readonly channelID: string;
+}
+
+export interface IUpdateContactCommChannelTypeRequest
+	extends IContactCommChannelRequest {
+	readonly title: 'private' | 'work' | string;
+}
+
+export interface IAddContactCommChannelRequest
+	extends IContactCommChannelRequest {
+	readonly type: 'private' | 'work';
+	readonly note?: string;
+}
+
+export interface IUpdateContactCommChannelRequest
+	extends IContactCommChannelRequest {
+	readonly newChannelID?: string;
+	readonly type?: 'private' | 'work';
 }
 
 export function validateSetContactsRequest(

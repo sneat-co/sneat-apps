@@ -23,6 +23,6 @@ export class ContactPhonesComponent extends CommChannelsListComponent {
 				// }));
 			},
 		);
-		super('ContactPhonesComponent', 'Phones', 'Phone #', $channels);
+		super('ContactPhonesComponent', 'phone', 'Phones', 'Phone #', $channels);
 	}
 }

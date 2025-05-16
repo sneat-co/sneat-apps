@@ -24,9 +24,10 @@ export abstract class SpaceItemPageBaseComponent<
 	Dbo extends Brief,
 > extends SpacePageBaseComponent {
 	// protected item?: INavContext<Brief, Dbo>;
-	protected readonly $item = signal<
-		ISpaceItemNavContext<Brief, Dbo> | undefined
-	>(undefined);
+	protected readonly $item = signal<ISpaceItemNavContext<Brief, Dbo>>({
+		id: '',
+		space: { id: '' },
+	});
 
 	protected readonly $itemID = computed(() => this.$item()?.id);
 
@@ -64,7 +65,7 @@ export abstract class SpaceItemPageBaseComponent<
 				dbo: item.dbo || prevItem.dbo,
 			};
 		}
-		this.$item.set(item);
+		this.$item.set(item || { id: '', space: { id: '' } });
 	}
 
 	protected abstract briefs(): Readonly<Record<string, Brief>> | undefined;

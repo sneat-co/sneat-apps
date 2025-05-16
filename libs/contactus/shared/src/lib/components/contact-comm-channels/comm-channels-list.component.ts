@@ -1,4 +1,4 @@
-import { Directive, input, signal, Signal } from '@angular/core';
+import { Directive, inject, input, signal, Signal } from '@angular/core';
 import {
 	IonButton,
 	IonButtons,
@@ -9,32 +9,34 @@ import {
 	IonLabel,
 	IonSelect,
 	IonSelectOption,
+	IonTextarea,
 } from '@ionic/angular/standalone';
-import { IContactContext } from '@sneat/contactus-core';
+import { ContactCommChannelType, IContactContext } from '@sneat/contactus-core';
+import { ContactService } from '@sneat/contactus-services';
 import { SneatBaseComponent } from '@sneat/ui';
+import { CommChannelFormComponent } from './comm-channel-form.component';
 import {
 	CommChannelItemComponent,
 	ICommChannelListItem,
 } from './comm-channel-item.component';
 
 export const importsForChannelsListComponent = [
+	IonItem,
 	IonCard,
 	IonLabel,
-	IonItem,
-	IonSelect,
-	IonSelectOption,
 	IonButtons,
 	IonButton,
 	IonIcon,
 	IonInput,
 	CommChannelItemComponent,
+	CommChannelFormComponent,
 ];
 
 @Directive({})
 export abstract class CommChannelsListComponent extends SneatBaseComponent {
 	protected $showAddForm = signal(false);
 
-	public readonly $contact = input.required<IContactContext | undefined>();
+	public readonly $contact = input.required<IContactContext>();
 
 	protected readonly $channels: Signal<
 		readonly ICommChannelListItem[] | undefined
@@ -43,8 +45,11 @@ export abstract class CommChannelsListComponent extends SneatBaseComponent {
 	protected readonly $title = signal('');
 	protected readonly $placeholder = signal('');
 
+	protected readonly contactService = inject(ContactService);
+
 	protected constructor(
 		className: 'ContactEmailsComponent' | 'ContactPhonesComponent',
+		protected readonly channelType: ContactCommChannelType,
 		title: string,
 		placeholder: string,
 		$channels: Signal<readonly ICommChannelListItem[] | undefined>,

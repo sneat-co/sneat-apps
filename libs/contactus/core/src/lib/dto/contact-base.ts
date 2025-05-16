@@ -6,7 +6,9 @@ import { Gender } from './gender';
 import { AgeGroupID } from './age-group';
 import { PetKind } from './pet-kind';
 
-export interface ICommunicationChannelProps {
+export type ContactCommChannelType = 'email' | 'phone';
+
+export interface IContactCommChannelProps {
 	type: 'work' | 'personal';
 	isPrimary?: boolean;
 	isVerified?: boolean;
@@ -17,10 +19,10 @@ export interface ICommunicationChannelProps {
 // and also if in IPerson troubles with Person Wizard component
 export interface IContactChannels {
 	readonly email?: string; // TODO: Document how email is different from emails
-	readonly emails?: Readonly<Record<string, ICommunicationChannelProps>>;
+	readonly emails?: Readonly<Record<string, IContactCommChannelProps>>;
 
 	readonly phone?: string; // TODO: Document how phone is different from phones
-	readonly phones?: Readonly<Record<string, ICommunicationChannelProps>>;
+	readonly phones?: Readonly<Record<string, IContactCommChannelProps>>;
 }
 
 // This is used to pass to create_contact API endpoint

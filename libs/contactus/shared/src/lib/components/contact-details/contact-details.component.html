@@ -58,8 +58,8 @@
 					lastItemLines="none"
 					[hideSkipButton]="false"
 					[$spaceID]="$spaceID()"
-					[$contactID]="$contact()?.id"
-					[$genderID]="contact?.dbo?.gender"
+					[$contactID]="contact.id"
+					[$genderID]="contact.dbo?.gender"
 					(genderChange)="onGenderChanged($event)"
 				/>
 			</ion-card>
