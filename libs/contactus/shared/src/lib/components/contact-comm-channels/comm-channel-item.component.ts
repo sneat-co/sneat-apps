@@ -72,12 +72,19 @@ export class CommChannelItemComponent extends SneatBaseComponent {
 
 	protected deleteChannel(event: Event): void {
 		console.log('deleteChannel', event);
+		const channelID = this.$channel().id;
+		if (!channelID) {
+			throw new Error('Unable to delete channel without ID');
+		}
+		if (!confirm(`Are you sure you want to delete ${channelID}?`)) {
+			return;
+		}
 		this.$saving.set(true);
 		const request: IContactCommChannelRequest = {
 			spaceID: this.$spaceID(),
 			contactID: this.$contactID(),
 			channelType: this.$channelType(),
-			channelID: this.$channel().id,
+			channelID,
 		};
 		this.contactService
 			.deleteContactCommChannel(request)
