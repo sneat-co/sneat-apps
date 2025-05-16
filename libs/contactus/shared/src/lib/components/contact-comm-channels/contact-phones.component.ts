@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
-import { ICommChannelListItem } from './comm-channel-item.component';
 import {
 	CommChannelsListComponent,
 	importsForChannelsListComponent,
@@ -13,16 +12,12 @@ import {
 })
 export class ContactPhonesComponent extends CommChannelsListComponent {
 	constructor() {
-		const $channels = computed<readonly ICommChannelListItem[] | undefined>(
-			() => {
-				return [];
-				// const phones = this.$contact()?.dbo?.phones;
-				// return Object.entries(phones || {}).map(([number, props]) => ({
-				// 	number,
-				// 	...props,
-				// }));
-			},
+		super(
+			'ContactPhonesComponent',
+			'phone',
+			'Phones',
+			'Phone #',
+			computed(() => this.$contact().dbo?.phones),
 		);
-		super('ContactPhonesComponent', 'phone', 'Phones', 'Phone #', $channels);
 	}
 }
