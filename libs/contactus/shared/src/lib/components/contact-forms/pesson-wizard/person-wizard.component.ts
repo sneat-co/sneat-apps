@@ -105,7 +105,7 @@ export type IPersonFormWizardFields = {
 		IonCard,
 		ContactRelationshipFormComponent,
 	],
-	selector: 'sneat-person-form-wizard',
+	selector: 'sneat-person-wizard',
 	templateUrl: './person-wizard.component.html',
 })
 export class PersonWizardComponent

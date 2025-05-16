@@ -1,5 +1,5 @@
 <form [formGroup]="addMemberForm" (ngSubmit)="submit()">
-	<sneat-person-form-wizard
+	<sneat-person-wizard
 		[$contact]="$contact()"
 		(contactChange)="onContactChanged($event)"
 		[displayAgeGroupValue]="true"
