@@ -6,7 +6,7 @@ import {
 	RouterOutlet,
 } from '@angular/router';
 import { IonItem, IonLabel, IonList } from '@ionic/angular/standalone';
-import { AuthMenuItemComponent } from '@sneat/components';
+import { AuthMenuItemComponent } from '@sneat/auth-ui';
 import { SpaceBaseComponent } from '@sneat/space-components';
 import { LogistSpaceMenuItemsComponent } from '../logist-team-menu-items/logist-space-menu-items.component';
 

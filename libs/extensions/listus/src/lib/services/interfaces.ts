@@ -7,7 +7,7 @@ import {
 	IListItemDbo,
 } from '../dto';
 import { IListContext } from '../contexts';
-import { ISpaceContext, SpaceRequest } from '@sneat/space-models';
+import { ISpaceContext, ISpaceRequest } from '@sneat/space-models';
 
 export interface GetOrCreateCommuneItemIds {
 	id?: string;
@@ -81,9 +81,9 @@ export type ReorderListItemsWorker = (listDto: IListDbo) => void;
 // 	return { shortCommuneId: id.substr(0, i) as CommuneType, shortListId: id.substr(i + 1) as ListType };
 // }
 
-export interface ICreateListRequest extends SpaceRequest, IListBrief {}
+export interface ICreateListRequest extends ISpaceRequest, IListBrief {}
 
-export interface IListRequest extends SpaceRequest {
+export interface IListRequest extends ISpaceRequest {
 	readonly listID: string;
 	// readonly listType: ListType;
 }

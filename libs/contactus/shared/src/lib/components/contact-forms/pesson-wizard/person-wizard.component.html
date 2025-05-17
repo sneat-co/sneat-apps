@@ -6,6 +6,8 @@
 <!--<p>contact: {{ $contact() | json }}</p>-->
 <!--<p>wizardStep: {{wizardStep}}</p>-->
 
+<p>$wizardStep: {{ $wizardStep() }}</p>
+
 @if (show.ageGroup) {
 	<sneat-age-group-form
 		[spaceType]="$contact().space.type"
@@ -87,14 +89,14 @@
 	}
 }
 
-<!--@if (wizardStep === 'emails' || wizardStep === 'phones') {-->
-<!--	<ion-button-->
-<!--		class="ion-margin"-->
-<!--		size="medium"-->
-<!--		[color]="show.nameNext ? 'primary' : 'medium'"-->
-<!--		(click)="openNext(wizardStep)"-->
-<!--	>-->
-<!--		<ion-label>Next</ion-label>-->
-<!--		<ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>-->
-<!--	</ion-button>-->
-<!--}-->
+@if ($wizardStep() === "communicationChannels") {
+	<ion-button
+		class="ion-margin"
+		size="medium"
+		[color]="show.nameNext ? 'primary' : 'medium'"
+		(click)="openNext($wizardStep())"
+	>
+		<ion-label>Next</ion-label>
+		<ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>
+	</ion-button>
+}

@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { AgeGroupID } from '@sneat/contactus-core';
 import {
 	ContactService,
 	IUpdateContactRequest,
 } from '@sneat/contactus-services';
-import { WithSpaceInput } from '@sneat/space-components';
+import { AgeGroupID } from '@sneat/core';
+import { WithSpaceInput } from '@sneat/space-services';
 import {
 	OptionEvent,
 	Option,

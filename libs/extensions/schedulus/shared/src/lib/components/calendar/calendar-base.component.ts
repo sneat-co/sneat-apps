@@ -11,15 +11,12 @@ import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import { dateToIso } from '@sneat/core';
 import { UiState } from '@sneat/dto';
-import { WithSpaceInput } from '@sneat/space-components';
+import { WithSpaceInput } from '@sneat/space-services';
 import { takeUntil, filter } from 'rxjs';
 import { CalendarDayService } from '../../services/calendar-day.service';
 import { CalendariumSpaceService } from '../../services/calendarium-space.service';
 import { HappeningService } from '../../services/happening.service';
-import {
-	ICalendariumSpaceDbo,
-	IHappeningWithUiState,
-} from '@sneat/mod-schedulus-core';
+import { IHappeningWithUiState } from '@sneat/mod-schedulus-core';
 import { zipMapBriefsWithIDs } from '@sneat/space-models';
 import { CalendarDataProvider } from '../../services/calendar-data-provider';
 import { isToday } from '../calendar-core';

@@ -27,7 +27,7 @@ import {
 	AssetComponentBaseParams,
 	AssetusServicesModule,
 	VehicleCardComponent,
-} from '@sneat/extensions-assetus-components';
+} from '@sneat/ext-assetus-components';
 import { SpaceComponentBaseParams } from '@sneat/space-components';
 
 interface LiabilityServiceBrief {

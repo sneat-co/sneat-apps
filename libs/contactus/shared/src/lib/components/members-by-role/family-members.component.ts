@@ -19,7 +19,7 @@ import {
 	MemberGroupTypeOther,
 	MemberGroupTypePets,
 } from '@sneat/contactus-core';
-import { WithSpaceInput } from '@sneat/space-components';
+import { WithSpaceInput } from '@sneat/space-services';
 import { MembersByRoleComponent } from '../members-by-role/members-by-role.component';
 import { MemberGroup } from '../members-by-role/member-group';
 import { IIdAndBriefAndOptionalDbo } from '@sneat/core';

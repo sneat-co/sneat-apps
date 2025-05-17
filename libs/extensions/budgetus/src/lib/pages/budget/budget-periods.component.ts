@@ -13,7 +13,7 @@ import {
 	RepeatPeriod,
 	ShowBy,
 } from '@sneat/mod-schedulus-core';
-import { WithSpaceInput } from '@sneat/space-components';
+import { WithSpaceInput } from '@sneat/space-services';
 import { getLiabilitiesByPeriod } from './budget-calc-periods';
 import { LiabilitiesByPeriod, LiabilitiesMode } from './budget-component-types';
 import { BudgetPeriodComponent } from './budget-period.component';

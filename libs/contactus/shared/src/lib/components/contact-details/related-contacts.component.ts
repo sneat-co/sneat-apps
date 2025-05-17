@@ -21,7 +21,7 @@ import {
 	IRelatedModules,
 	IRelatedTo,
 } from '@sneat/dto';
-import { WithSpaceInput } from '@sneat/space-components';
+import { WithSpaceInput } from '@sneat/space-services';
 import { Subscription } from 'rxjs';
 
 interface IRelatedGroup {

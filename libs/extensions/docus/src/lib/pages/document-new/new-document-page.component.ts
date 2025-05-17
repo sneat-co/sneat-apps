@@ -50,7 +50,7 @@ import {
 	AddAssetBaseComponent,
 	AssetusServicesModule,
 	ICreateAssetRequest,
-} from '@sneat/extensions-assetus-components';
+} from '@sneat/ext-assetus-components';
 import { SpaceComponentBaseParams } from '@sneat/space-components';
 import {
 	ContactService,

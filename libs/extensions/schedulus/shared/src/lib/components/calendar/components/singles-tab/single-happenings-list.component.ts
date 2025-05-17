@@ -15,9 +15,7 @@ import {
 } from '@ionic/angular/standalone';
 import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
-import { WithSpaceInput } from '@sneat/space-components';
-import { ISpaceContext } from '@sneat/space-models';
-import { SneatBaseComponent } from '@sneat/ui';
+import { WithSpaceInput } from '@sneat/space-services';
 import { takeUntil } from 'rxjs';
 import { CalendarFilterService } from '../../../calendar-filter.service';
 import { HappeningCardComponent } from '../../../happening-card/happening-card.component';

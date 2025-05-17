@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonList, ModalController } from '@ionic/angular/standalone';
 import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth-core';
-import { AppVersionComponent, AuthMenuItemComponent } from '@sneat/components';
+import { AuthMenuItemComponent } from '@sneat/auth-ui';
+import { AppVersionComponent } from '@sneat/components';
 import { SpacesMenuComponent } from '@sneat/space-components';
 import { SpaceServiceModule } from '@sneat/space-services';
 

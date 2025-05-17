@@ -7,7 +7,7 @@ import {
 	Output,
 } from '@angular/core';
 import { IonCheckbox, IonItem, IonSpinner } from '@ionic/angular/standalone';
-import { personName } from '@sneat/components';
+import { PersonNamesPipe } from '@sneat/auth-ui';
 import { IContactWithBrief, IContactWithCheck } from '@sneat/contactus-core';
 
 interface IItemWithEvent<T> {
@@ -19,7 +19,7 @@ interface IItemWithEvent<T> {
 	selector: 'sneat-contacts-checklist-item',
 	templateUrl: 'contacts-checklist-item.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [IonItem, IonCheckbox, IonSpinner],
+	imports: [IonItem, IonCheckbox, IonSpinner, PersonNamesPipe],
 })
 export class ContactsChecklistItemComponent {
 	public readonly $contact = input.required<IContactWithCheck>();
@@ -47,5 +47,4 @@ export class ContactsChecklistItemComponent {
 			this.$uncheckedInProgress().includes(contactID)
 		);
 	});
-	protected readonly personName = personName;
 }

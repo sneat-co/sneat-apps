@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { WithSpaceInput } from '@sneat/space-components';
+import { WithSpaceInput } from '@sneat/space-services';
 import { CalendarDataProvider } from '../../../../services/calendar-data-provider';
 import { CalendarWeekCardComponent } from './calendar-week-card.component';
 

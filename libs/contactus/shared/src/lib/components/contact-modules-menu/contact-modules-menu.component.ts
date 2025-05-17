@@ -9,7 +9,7 @@ import {
 } from '@ionic/angular/standalone';
 import { defaultFamilyMemberExtensions, ISneatExtension } from '@sneat/core';
 import { IContactWithBrief } from '@sneat/contactus-core';
-import { WithSpaceInput } from '@sneat/space-components';
+import { WithSpaceInput } from '@sneat/space-services';
 
 @Component({
 	selector: 'sneat-contact-modules-menu',

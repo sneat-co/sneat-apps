@@ -81,7 +81,6 @@ export class NavService {
 	}
 
 	public navigateToMember(
-		navController: NavController,
 		space: ISpaceContext,
 		memberInfo: IIdAndBrief<IMemberBrief>,
 	): void {
@@ -90,7 +89,7 @@ export class NavService {
 		);
 		const id = `${space.id}:${memberInfo.id}`;
 		this.navForward(
-			navController,
+			this.navController,
 			'member',
 			{
 				queryParams: { id },

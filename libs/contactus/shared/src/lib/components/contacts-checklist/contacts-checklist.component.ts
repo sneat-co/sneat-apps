@@ -11,7 +11,6 @@ import {
 	effect,
 } from '@angular/core';
 import { IonItem, IonLabel } from '@ionic/angular/standalone';
-import { personName } from '@sneat/components';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import {
 	addSpace,
@@ -160,8 +159,6 @@ export class ContactsChecklistComponent extends SneatBaseComponent {
 
 	protected readonly $checkedInProgress = signal<readonly string[]>([]);
 	protected readonly $uncheckedInProgress = signal<readonly string[]>([]);
-
-	protected readonly personName = personName;
 
 	protected onCheckboxChange(event: Event, contact: IContactWithBrief): void {
 		const ce = event as CustomEvent;

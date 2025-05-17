@@ -4,17 +4,17 @@ import {
 	IAssetExtra,
 } from '@sneat/mod-assetus-core';
 import { CurrencyCode } from '@sneat/mod-schedulus-core';
-import { SpaceRequest } from '@sneat/space-models';
+import { ISpaceRequest } from '@sneat/space-models';
 
 export interface ICreateAssetRequest<
 	ExtraType extends AssetExtraType,
 	Extra extends IAssetExtra,
-> extends SpaceRequest {
+> extends ISpaceRequest {
 	readonly asset: IAssetDboBase<ExtraType, Extra>;
 	readonly memberID?: string;
 }
 
-export interface IAssetRequest extends SpaceRequest {
+export interface IAssetRequest extends ISpaceRequest {
 	assetID: string;
 	assetCategory: string;
 }
@@ -23,7 +23,7 @@ export interface IUpdateAssetRequest extends IAssetRequest {
 	regNumber?: string;
 }
 
-export interface IAddVehicleRecordRequest extends SpaceRequest {
+export interface IAddVehicleRecordRequest extends ISpaceRequest {
 	readonly assetID: string;
 	readonly fuelVolume?: number;
 	readonly fuelVolumeUnit?: 'l' | 'g';

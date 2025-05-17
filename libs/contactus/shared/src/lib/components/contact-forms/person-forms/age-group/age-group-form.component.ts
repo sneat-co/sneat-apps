@@ -7,8 +7,7 @@ import {
 	Output,
 } from '@angular/core';
 import { IonCard, IonItemDivider } from '@ionic/angular/standalone';
-import { formNexInAnimation, SpaceType } from '@sneat/core';
-import { AgeGroupID } from '@sneat/contactus-core';
+import { AgeGroupID, formNexInAnimation, SpaceType } from '@sneat/core';
 import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
 
 @Component({

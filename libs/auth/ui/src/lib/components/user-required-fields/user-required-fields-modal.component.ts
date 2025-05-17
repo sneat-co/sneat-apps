@@ -27,8 +27,8 @@ import {
 	SneatUserService,
 	UserRecordService,
 } from '@sneat/auth-core';
+import { AgeGroupID, Gender } from '@sneat/core';
 import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
-import { AgeGroupID, Gender } from '@sneat/contactus-core';
 import { ISpaceContext } from '@sneat/space-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';

@@ -2,6 +2,7 @@ import {
 	Component,
 	computed,
 	EventEmitter,
+	inject,
 	input,
 	Input,
 	Output,
@@ -24,20 +25,21 @@ import {
 	ModalController,
 	NavController,
 } from '@ionic/angular/standalone';
-import { ContactTitlePipe } from '@sneat/components';
 import { listAddRemoveAnimation, SpaceTypeFamily } from '@sneat/core';
 import {
 	ScheduleNavService,
 	ScheduleNavServiceModule,
 } from '@sneat/mod-schedulus-core';
-import { InviteModalComponent, WithSpaceInput } from '@sneat/space-components';
-import { ContactService } from '@sneat/contactus-services';
+import { WithSpaceInput } from '@sneat/space-services';
+import { ContactService, ContactusNavService } from '@sneat/contactus-services';
 import {
 	IContactWithBrief,
 	IContactWithBriefAndSpace,
 } from '@sneat/contactus-core';
 import { SpaceNavService } from '@sneat/space-services';
 import { SneatUserService } from '@sneat/auth-core';
+import { InviteModalComponent } from '../../modals/invite-modal';
+import { ContactTitlePipe } from '../../pipes';
 import { ContactRoleBadgesComponent } from '../contact-role-badges/contact-role-badges.component';
 import { InlistAgeGroupComponent } from '../inlist-options/inlist-age-group.component';
 
@@ -93,6 +95,8 @@ export class MembersListComponent extends WithSpaceInput {
 		},
 	);
 
+	private readonly contactusNavService = inject(ContactusNavService);
+
 	constructor(
 		private readonly navService: SpaceNavService,
 		private readonly navController: NavController,
@@ -143,7 +147,7 @@ export class MembersListComponent extends WithSpaceInput {
 		if (!member?.id) {
 			throw new Error('!member?.id');
 		}
-		this.navService.navigateToMember(this.navController, {
+		this.contactusNavService.navigateToMember({
 			...member,
 			space: this.$space(),
 		});

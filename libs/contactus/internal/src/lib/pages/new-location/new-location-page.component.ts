@@ -6,7 +6,7 @@ import {
 	IonTitle,
 	IonToolbar,
 } from '@ionic/angular/standalone';
-import { PersonTitle } from '@sneat/components';
+import { PersonTitle } from '@sneat/contactus-shared';
 import { ContactService } from '@sneat/contactus-services';
 import { LocationFormComponent } from '@sneat/contactus-shared';
 import { IContactWithOptionalDbo } from '@sneat/contactus-core';

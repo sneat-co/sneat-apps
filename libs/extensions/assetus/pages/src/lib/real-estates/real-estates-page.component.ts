@@ -13,7 +13,7 @@ import {
 	IonTitle,
 	IonToolbar,
 } from '@ionic/angular/standalone';
-import { AssetsListComponentModule } from '@sneat/extensions-assetus-components';
+import { AssetsListComponentModule } from '@sneat/ext-assetus-components';
 import { AssetsBasePage } from '../../assets-base.page';
 import { IAssetDto } from 'sneat-shared/models/dto/dto-asset';
 import { IAssetService } from 'sneat-shared/services/interfaces';

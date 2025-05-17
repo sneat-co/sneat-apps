@@ -23,7 +23,7 @@ import {
 } from '@sneat/contactus-core';
 import { excludeUndefined } from '@sneat/core';
 import { hasRelated } from '@sneat/dto';
-import { WithSpaceInput } from '@sneat/space-components';
+import { WithSpaceInput } from '@sneat/space-services';
 import { CalendarNavServicesModule } from '../../../../services';
 import {
 	HappeningUIState,

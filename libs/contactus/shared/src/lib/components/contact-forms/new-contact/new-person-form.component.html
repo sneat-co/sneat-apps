@@ -17,6 +17,7 @@
 
 @if ($selectedContactRole()) {
 	<sneat-person-wizard
+		[$space]="$space()"
 		[$contact]="$contact()"
 		(contactChange)="onContactChanged($event)"
 		[hideRelationship]="true"

@@ -9,17 +9,13 @@ import {
 	signal,
 } from '@angular/core';
 import {
-	AgeGroupID,
 	FamilyMemberRelation,
 	MemberRelationshipOther,
 	MemberRelationshipUndisclosed,
 	relationshipTitle,
 } from '@sneat/contactus-core';
-import {
-	ContactService,
-	IUpdateContactRequest,
-} from '@sneat/contactus-services';
-import { WithSpaceInput } from '@sneat/space-components';
+import { AgeGroupID } from '@sneat/core';
+import { WithSpaceInput } from '@sneat/space-services';
 import { IRelatedChange, IUpdateRelatedRequest } from '@sneat/space-models';
 import { SpaceService } from '@sneat/space-services';
 import { ISelectItem } from '@sneat/ui';

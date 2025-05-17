@@ -19,7 +19,7 @@ import {
 import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import { ContactsSelectorModule } from '@sneat/contactus-shared';
-import { WithSpaceInput } from '@sneat/space-components';
+import { WithSpaceInput } from '@sneat/space-services';
 import {
 	CalendarNavService,
 	CalendarNavServicesModule,

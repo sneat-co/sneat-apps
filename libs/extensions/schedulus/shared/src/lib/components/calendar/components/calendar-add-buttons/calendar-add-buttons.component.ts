@@ -11,7 +11,7 @@ import {
 	NewHappeningParams,
 	ScheduleNavService,
 } from '@sneat/mod-schedulus-core';
-import { WithSpaceInput } from '@sneat/space-components';
+import { WithSpaceInput } from '@sneat/space-services';
 
 @Component({
 	selector: 'sneat-calendar-add-buttons',

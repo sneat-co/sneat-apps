@@ -10,8 +10,8 @@ import {
 	IonTitle,
 	IonToolbar,
 } from '@ionic/angular/standalone';
-import { ISaveEvent, PersonTitle } from '@sneat/components';
-import { ContactDetailsComponent } from '@sneat/contactus-shared';
+import { ISaveEvent } from '@sneat/components';
+import { ContactDetailsComponent, PersonTitle } from '@sneat/contactus-shared';
 import { SneatNavService } from '@sneat/core';
 import { IAddress } from '@sneat/contactus-core';
 import {

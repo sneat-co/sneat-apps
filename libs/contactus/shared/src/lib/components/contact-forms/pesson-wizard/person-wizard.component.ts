@@ -1,4 +1,3 @@
-import { JsonPipe } from '@angular/common';
 import {
 	Component,
 	computed,
@@ -14,17 +13,25 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
+	IonButton,
 	IonCard,
+	IonIcon,
+	IonLabel,
 	IonSegment,
 	IonSegmentButton,
 } from '@ionic/angular/standalone';
 import { SneatUserService } from '@sneat/auth-core';
 import { IPersonNames, isNameEmpty } from '@sneat/auth-models';
-import { excludeUndefined, formNexInAnimation, SpaceType } from '@sneat/core';
-import { IFormField } from '@sneat/core';
 import {
 	AgeGroupID,
+	excludeUndefined,
+	formNexInAnimation,
 	Gender,
+	SpaceType,
+} from '@sneat/core';
+import { IFormField } from '@sneat/core';
+import {
+	ContactType,
 	IContactBase,
 	IEmail,
 	IPersonRequirements,
@@ -51,7 +58,6 @@ import {
 	NamesFormComponent,
 } from '../person-forms/names-form';
 import { PhonesFormComponent } from '../phones-form';
-import { RelationshipFormComponent } from '../relationship-form';
 import { ContactRelationshipFormComponent } from '../relationship-form/contact-relationship-form.component';
 import { RolesFormComponent } from '../roles-form';
 
@@ -70,20 +76,30 @@ export interface PersonWizardState {
 
 type WizardStepID = keyof PersonWizardState;
 
-interface WizardStepCondition {
-	readonly contactTypes: readonly MemberContactType[];
-	readonly contactRoles?: readonly string[];
-	readonly spaceTypes?: readonly SpaceType[];
+// interface WizardStepCondition {
+// 	readonly contactTypes: readonly MemberContactType[];
+// 	readonly contactRoles?: readonly string[];
+// 	readonly spaceTypes?: readonly SpaceType[];
+// 	readonly isRelatedToSpaceItem?: boolean;
+// 	readonly isMember?: boolean;
+// }
+
+interface IWizardFilterArgs {
+	readonly contactType: ContactType;
+	readonly spaceType: SpaceType;
+	readonly dbo?: IContactBase;
 }
 
-interface WizardStepFilter {
-	readonly hideFor?: WizardStepCondition;
-	readonly showFor?: WizardStepCondition;
-}
+type StepFilterFunc = (args: IWizardFilterArgs) => boolean;
+
+// interface WizardStepFilter {
+// 	readonly hideFor?: WizardStepCondition;
+// 	readonly showFor?: WizardStepCondition;
+// }
 
 interface WizardStepDef {
 	readonly id: WizardStepID;
-	readonly filter?: WizardStepFilter;
+	readonly filter?: StepFilterFunc;
 }
 
 export type IPersonFormWizardFields = {
@@ -104,6 +120,9 @@ export type IPersonFormWizardFields = {
 		IonSegmentButton,
 		IonCard,
 		ContactRelationshipFormComponent,
+		IonButton,
+		IonLabel,
+		IonIcon,
 	],
 	selector: 'sneat-person-wizard',
 	templateUrl: './person-wizard.component.html',
@@ -211,18 +230,16 @@ export class PersonWizardComponent
 		// relatedAs to current user or a specific contact
 		{
 			id: 'relatedAs',
-			filter: {
-				hideFor: { contactTypes: ['animal'] },
-			},
+			filter: (a) => a.contactType === 'person',
 		},
 		{ id: 'name' },
 		{
 			id: 'roles',
-			filter: { hideFor: { contactTypes: ['animal'], spaceTypes: ['family'] } },
+			filter: (a) => a.contactType !== 'animal' && a.spaceType !== 'family',
 		},
 		{
 			id: 'communicationChannels',
-			filter: { hideFor: { contactTypes: ['animal'] } },
+			filter: (a) => a.contactType !== 'animal',
 		},
 		{ id: 'submitButton' },
 	];
@@ -423,43 +440,30 @@ export class PersonWizardComponent
 	}
 
 	private skipStep(step: WizardStepDef): boolean {
-		if (!step.filter || (!step.filter.hideFor && !step.filter.showFor)) {
+		if (!step.filter) {
 			return false;
 		}
-		const { space, dbo } = this.$contact();
-		if (dbo.type) {
-			const hideFor = step.filter.hideFor;
-			if (
-				hideFor?.contactTypes?.includes(dbo.type as MemberContactType) ||
-				hideFor?.contactRoles?.some((role) => dbo.roles?.includes(role))
-			) {
-				return true;
-			}
-			if (
-				step.filter.showFor?.contactTypes?.length &&
-				!step.filter.showFor.contactTypes.includes(
-					dbo.type as MemberContactType,
-				)
-			) {
-				return true;
-			}
+
+		const { dbo } = this.$contact();
+		const spaceType = this.$spaceType(),
+			contactType = this.$contactType();
+		if (!spaceType || !contactType) {
+			return false;
 		}
-		if (space?.type) {
-			if (step.filter.hideFor?.spaceTypes?.includes(space.type)) {
-				return true;
-			}
-			if (
-				step.filter.showFor?.spaceTypes?.length &&
-				!step.filter.showFor.spaceTypes.includes(space.type)
-			) {
-				return true;
-			}
+		if (
+			!step?.filter({
+				spaceType: spaceType,
+				contactType: contactType,
+				dbo: dbo,
+			})
+		) {
+			return false;
 		}
 
 		return false;
 	}
 
-	private openNext(currentStepID: keyof PersonWizardState): void {
+	protected openNext(currentStepID: keyof PersonWizardState): void {
 		for (;;) {
 			console.log('openNext()', currentStepID);
 			const i = this.formOrder.findIndex((step) => step.id === currentStepID);

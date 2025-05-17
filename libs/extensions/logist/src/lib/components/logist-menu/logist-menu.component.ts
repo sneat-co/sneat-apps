@@ -7,8 +7,9 @@ import {
 } from '@angular/router';
 import { IonList } from '@ionic/angular/standalone';
 import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth-core';
-import { AppVersionComponent, AuthMenuItemComponent } from '@sneat/components';
+import { AppVersionComponent } from '@sneat/components';
 import { SpacesMenuComponent } from '@sneat/space-components';
+import { AuthMenuItemComponent } from '@sneat/auth-ui';
 
 @Component({
 	selector: 'sneat-logist-menu',

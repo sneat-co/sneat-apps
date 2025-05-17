@@ -16,18 +16,18 @@ import {
 	ContactusServicesModule,
 	ContactusSpaceContextService,
 } from '@sneat/contactus-services';
-import { NewPetFormComponent } from '@sneat/contactus-shared';
 import {
-	AgeGroupID,
+	InviteLinksComponent,
+	NewPetFormComponent,
+} from '@sneat/contactus-shared';
+import {
 	ContactType,
 	IContactusSpaceDboAndID,
 	NewContactBaseDboAndSpaceRef,
 	RoleSpaceMember,
 } from '@sneat/contactus-core';
-import {
-	SpacePageBaseComponent,
-	InviteLinksComponent,
-} from '@sneat/space-components';
+import { AgeGroupID } from '@sneat/core';
+import { SpacePageBaseComponent } from '@sneat/space-components';
 import { SpaceServiceModule } from '@sneat/space-services';
 import { filter, first, takeUntil } from 'rxjs';
 import { NewMemberFormComponent } from './new-member-form.component';

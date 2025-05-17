@@ -9,6 +9,7 @@
 @switch ($tab()) {
 	@case ("person") {
 		<sneat-new-person-form
+			[$space]="$space()"
 			[isInModal]="true"
 			[$contact]="$contact()"
 			[command]="command"
@@ -19,6 +20,7 @@
 	}
 	@case ("pet") {
 		<sneat-new-pet-form
+			[$space]="$space()"
 			[$hideRole]="$hideRole()"
 			[$contact]="$contact()"
 			(contactChange)="onContactChanged($event)"
@@ -26,6 +28,7 @@
 	}
 	@case ("company") {
 		<sneat-new-company-form
+			[$space]="$space()"
 			[$contact]="$contact()"
 			(contactChange)="onContactChanged($event)"
 			[$hideRole]="$hideRole()"

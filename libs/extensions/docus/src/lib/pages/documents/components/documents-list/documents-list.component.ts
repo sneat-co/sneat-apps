@@ -17,7 +17,7 @@ import {
 	IonList,
 	ToastController,
 } from '@ionic/angular/standalone';
-import { AssetService } from '@sneat/extensions-assetus-components';
+import { AssetService } from '@sneat/ext-assetus-components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IAssetDocumentContext } from '@sneat/mod-assetus-core';
 import { DocumentsBaseComponent } from '../documents-base.component';

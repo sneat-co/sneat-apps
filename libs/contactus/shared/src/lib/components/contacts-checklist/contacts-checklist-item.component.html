@@ -9,7 +9,7 @@
 		[disabled]="$isDisabled()"
 		(ionChange)="onCheckboxChange($event, contact)"
 	>
-		{{ personName(contact.brief.names) }}
+		{{ contact.brief.names | personNames }}
 		<!--TODO: use pipe-->
 	</ion-checkbox>
 	@if ($isDisabled()) {

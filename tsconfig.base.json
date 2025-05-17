@@ -97,7 +97,7 @@
 			"@sneat/ext-scrumspace-scrummodels": [
 				"libs/scrumspace/scrummodels/src/index.ts"
 			],
-			"@sneat/extensions-assetus-components": [
+			"@sneat/ext-assetus-components": [
 				"libs/extensions/assetus/components/src/index.ts"
 			],
 			"@sneat/extensions-assetus-pages": [

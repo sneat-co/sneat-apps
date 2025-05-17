@@ -18,7 +18,7 @@ import {
 	IonLabel,
 	IonRow,
 } from '@ionic/angular/standalone';
-import { ContactTitlePipe } from '@sneat/components';
+import { ContactTitlePipe } from '@sneat/contactus-shared';
 import { IContactWithBriefAndSpace } from '@sneat/contactus-core';
 import { WeekdayCode2 } from '@sneat/mod-schedulus-core';
 import { ISpaceContext } from '@sneat/space-models';

@@ -7,4 +7,6 @@ export * from './contactus-space-context.service';
 export * from './contactus-services.module';
 export * from './member.service';
 export * from './member-group.service';
+export * from './invite.service';
+export * from './contactus-nav.service';
 export { ContactRoleService } from './contact-role.service';

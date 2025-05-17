@@ -75,6 +75,7 @@
 				}
 				@case ("new") {
 					<sneat-new-company-form
+						[$space]="$space()"
 						[$contact]="$contactWithDbo()"
 						[contactRoles]="contactRoles"
 						[contactRole]="contactRoleID"
@@ -142,6 +143,7 @@
 				}
 
 				<sneat-new-contact-form
+					[$space]="$space()"
 					[$contact]="$contactWithDbo()"
 					[command]="newContactCommand$"
 					[selectGroupAndRole$]="selectGroupAndRole$"

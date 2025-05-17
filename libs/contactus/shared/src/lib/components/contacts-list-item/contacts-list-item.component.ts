@@ -26,7 +26,6 @@ import {
 	CountryTitle,
 	GenderColorPipe,
 	GenderIconNamePipe,
-	PersonTitle,
 } from '@sneat/components';
 import {
 	ContactRole,
@@ -38,6 +37,7 @@ import { IRelatedTo } from '@sneat/dto';
 import { ISpaceContext } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
 import { SneatBaseComponent } from '@sneat/ui';
+import { PersonTitle } from '../../pipes';
 import { ICheckChangedArgs } from '../contacts-checklist';
 import { RelatedAsComponent } from './related-as.component';
 

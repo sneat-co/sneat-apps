@@ -1,6 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Gender } from '@sneat/contactus-core';
-import { IonicColor } from '@sneat/ui';
+import { Gender } from '@sneat/core';
 
 @Pipe({ name: 'genderIconName' })
 export class GenderIconNamePipe implements PipeTransform {

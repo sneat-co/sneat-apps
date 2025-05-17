@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -33,17 +33,14 @@ import {
 	ContactIdAndDboWithSpaceRef,
 	NewContactBaseDboAndSpaceRef,
 } from '@sneat/contactus-core';
-import { WithSpaceInput } from '@sneat/space-components';
+import { WithSpaceInput } from '@sneat/space-services';
 import {
 	IRejectPersonalInviteRequest,
 	ISpaceContext,
 } from '@sneat/space-models';
-import {
-	InviteService,
-	SpaceNavService,
-	SpaceService,
-} from '@sneat/space-services';
+import { SpaceNavService, SpaceService } from '@sneat/space-services';
 import { takeUntil } from 'rxjs/operators';
+import { InviteService } from '@sneat/contactus-services';
 
 export const getPinFromUrl: () => string = () => {
 	const m = location.hash.match(/[#&]pin=(\d+)($|&)/);
@@ -51,8 +48,6 @@ export const getPinFromUrl: () => string = () => {
 };
 
 @Component({
-	selector: 'sneat-join-space',
-	templateUrl: './join-space-page.component.html',
 	imports: [
 		FormsModule,
 		PersonWizardComponent,
@@ -72,6 +67,10 @@ export const getPinFromUrl: () => string = () => {
 		IonButton,
 		IonSpinner,
 	],
+	providers: [InviteService],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-join-space',
+	templateUrl: './join-space-page.component.html',
 })
 export class JoinSpacePageComponent extends WithSpaceInput {
 	private readonly id?: string;
@@ -105,7 +104,6 @@ export class JoinSpacePageComponent extends WithSpaceInput {
 	constructor(
 		protected readonly route: ActivatedRoute,
 		private readonly navService: SpaceNavService,
-		private readonly spaceService: SpaceService,
 		private readonly inviteService: InviteService,
 		private readonly authStateService: SneatAuthStateService,
 	) {
@@ -119,7 +117,7 @@ export class JoinSpacePageComponent extends WithSpaceInput {
 		}
 		if (this.id && this.pin) {
 			const errMsg = 'Failed to get team information';
-			this.spaceService.getSpaceJoinInfo(this.id, this.pin).subscribe({
+			this.inviteService.getSpaceJoinInfo(this.id, this.pin).subscribe({
 				next: (response) => {
 					console.log('join_team:', response);
 					if (!response) {
@@ -325,6 +323,7 @@ export class JoinSpacePageComponent extends WithSpaceInput {
 				break;
 		}
 	}
+
 	protected onContactChanged(contact: NewContactBaseDboAndSpaceRef): void {
 		this.$contact.set(contact as ContactIdAndDboWithSpaceRef);
 	}

@@ -15,7 +15,7 @@ import { IonSegment, IonSegmentButton } from '@ionic/angular/standalone';
 import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { ISlotUIEvent } from '@sneat/mod-schedulus-core';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
-import { WithSpaceInput } from '@sneat/space-components';
+import { WithSpaceInput } from '@sneat/space-services';
 import { HappeningService } from '../../../../services/happening.service';
 import { Observable, Subscription } from 'rxjs';
 import { SingleHappeningsListComponent } from './single-happenings-list.component';

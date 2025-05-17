@@ -26,18 +26,13 @@ import {
 	ModalController,
 } from '@ionic/angular/standalone';
 import { SneatUserService } from '@sneat/auth-core';
-import { ContactTitlePipe } from '@sneat/components';
-import {
-	ContactService,
-	IUpdateContactRequest,
-} from '@sneat/contactus-services';
-import { IIdAndBriefAndOptionalDbo } from '@sneat/core';
+import { IUpdateContactRequest } from '@sneat/contactus-services';
+import { Gender, IIdAndBriefAndOptionalDbo } from '@sneat/core';
 import {
 	ContactType,
 	IContactBrief,
 	IContactDbo,
 	IContactContext,
-	Gender,
 	IContactWithOptionalDbo,
 } from '@sneat/contactus-core';
 import {
@@ -45,9 +40,10 @@ import {
 	IRelatedTo,
 	ISpaceModuleItemRef,
 } from '@sneat/dto';
-import { WithSpaceInput } from '@sneat/space-components';
+import { WithSpaceInput } from '@sneat/space-services';
 import { SneatBaseComponent } from '@sneat/ui';
 import { ContactNamesModalComponent } from '../../modals/contact-names-modal/contact-names-modal.component';
+import { ContactTitlePipe } from '../../pipes';
 import { UserSpaceBriefProvider } from '../../providers/user-space-brief.provider';
 import { ContactCommChannelsComponent } from '../contact-comm-channels';
 import { ContactDobComponent } from '../contact-dob';

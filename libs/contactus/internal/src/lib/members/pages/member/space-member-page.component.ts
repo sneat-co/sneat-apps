@@ -11,7 +11,7 @@ import {
 	IonTitle,
 	IonToolbar,
 } from '@ionic/angular/standalone';
-import { PersonTitle } from '@sneat/components';
+import { PersonTitle } from '@sneat/contactus-shared';
 import {
 	ContactService,
 	ContactusServicesModule,

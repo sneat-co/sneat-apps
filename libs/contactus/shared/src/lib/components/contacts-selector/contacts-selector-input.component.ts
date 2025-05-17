@@ -18,14 +18,15 @@ import {
 	IonSelect,
 	IonSelectOption,
 } from '@ionic/angular/standalone';
-import { ContactTitlePipe, ContactsAsBadgesComponent } from '@sneat/components';
 import {
 	addSpace,
 	IContactusSpaceDboAndID,
 	IContactWithBrief,
 	IContactWithBriefAndSpace,
 } from '@sneat/contactus-core';
+import { ContactTitlePipe } from '../../pipes';
 import { ContactsListComponent } from '../contacts-list';
+import { ContactsAsBadgesComponent } from '../members-as-badges';
 import { IContactSelectorOptions } from './contacts-selector.interfaces';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';

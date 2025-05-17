@@ -35,7 +35,7 @@ import {
 	removeRelatedItem,
 } from '@sneat/dto';
 import { IHappeningContext, IHappeningBase } from '@sneat/mod-schedulus-core';
-import { WithSpaceInput } from '@sneat/space-components';
+import { WithSpaceInput } from '@sneat/space-services';
 import {
 	HappeningService,
 	IHappeningContactRequest,

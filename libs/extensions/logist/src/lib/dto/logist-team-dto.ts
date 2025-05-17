@@ -1,6 +1,6 @@
 import { INavContext } from '@sneat/core';
 import { IAddress } from '@sneat/contactus-core';
-import { SpaceRequest } from '@sneat/space-models';
+import { ISpaceRequest } from '@sneat/space-models';
 
 export type CounterpartyRole =
 	| 'buyer'
@@ -54,7 +54,7 @@ export type ILogistSpaceContext = INavContext<
 	ILogistSpaceDbo
 >;
 
-export interface ISetLogistSpaceSettingsRequest extends SpaceRequest {
+export interface ISetLogistSpaceSettingsRequest extends ISpaceRequest {
 	roles: readonly string[];
 	address: IAddress;
 	vatNumber?: string;

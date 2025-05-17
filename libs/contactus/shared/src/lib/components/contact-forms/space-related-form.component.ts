@@ -4,7 +4,7 @@ import {
 	SimpleChange,
 	SimpleChanges,
 } from '@angular/core';
-import { WithSpaceInput } from '@sneat/space-components';
+import { WithSpaceInput } from '@sneat/space-services';
 import { ISpaceContext } from '@sneat/space-models';
 
 @Component({

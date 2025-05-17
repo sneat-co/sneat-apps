@@ -29,7 +29,6 @@ import {
 	ContactRoleService,
 	ContactService,
 } from '@sneat/contactus-services';
-import { SpaceNavService } from '@sneat/space-services';
 import { PersonWizardComponent } from '../pesson-wizard';
 import { IContactAddEventArgs } from '../../contact-events';
 import { ContactRoleFormComponent } from '../role-form';
@@ -37,7 +36,7 @@ import { IIdAndDbo, IIdAndOptionalDbo } from '@sneat/core';
 import {
 	AssetService,
 	AssetusServicesModule,
-} from '@sneat/extensions-assetus-components';
+} from '@sneat/ext-assetus-components';
 import { IAssetContext } from '@sneat/mod-assetus-core';
 import { first, Observable, Subject, takeUntil } from 'rxjs';
 import { NewContactFormBaseComponent } from './new-contact-form-base.component';
@@ -128,7 +127,7 @@ export class NewPersonFormComponent
 	private readonly contactService = inject(ContactService);
 	private readonly contactRoleService = inject(ContactRoleService);
 
-	public constructor(private readonly spaceNavService: SpaceNavService) {
+	public constructor() {
 		super('NewContactFormComponent');
 		this.setupEffects();
 	}

@@ -1,5 +1,5 @@
-import { SpaceRequest } from '@sneat/space-models';
+import { ISpaceRequest } from '@sneat/space-models';
 
-export interface IMeetingRequest extends SpaceRequest {
+export interface IMeetingRequest extends ISpaceRequest {
 	meeting: string;
 }

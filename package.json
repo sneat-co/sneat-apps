@@ -142,7 +142,7 @@
 		"verdaccio": "^6.0.5"
 	},
 	"lint-staged": {
-		"*.{html,ts,js}": "eslint --cache --fix",
+		"*.{html,ts,js}": "eslint --no-cache --fix",
 		"*.{html,ts,js,css,md}": "prettier --write"
 	},
 	"nx": {

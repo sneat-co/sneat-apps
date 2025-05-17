@@ -36,11 +36,9 @@ import {
 } from '@sneat/space-models';
 import { SneatApiService } from '@sneat/api';
 import { RandomIdService } from '@sneat/random';
-import { InviteService } from '@sneat/space-services';
+import { InviteService } from '@sneat/contactus-services';
 
 @Component({
-	selector: 'sneat-invite-personal-page',
-	templateUrl: './invite-personal-page.component.html',
 	imports: [
 		IonItem,
 		IonHeader,
@@ -58,6 +56,9 @@ import { InviteService } from '@sneat/space-services';
 		IonIcon,
 		IonSpinner,
 	],
+	providers: [InviteService],
+	selector: 'sneat-invite-personal-page',
+	templateUrl: './invite-personal-page.component.html',
 })
 export class InvitePersonalPageComponent implements OnInit {
 	public fullName = '';

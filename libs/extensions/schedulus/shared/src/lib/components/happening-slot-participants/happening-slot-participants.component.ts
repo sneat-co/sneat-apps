@@ -8,17 +8,13 @@ import {
 	effect,
 } from '@angular/core';
 import { IonBadge, IonLabel } from '@ionic/angular/standalone';
-import { PersonNamesPipe } from '@sneat/components';
+import { PersonNamesPipe } from '@sneat/auth-ui';
 import {
 	IContactWithBrief,
 	IContactWithBriefAndSpace,
 } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
-import {
-	getLongRelatedItemID,
-	getRelatedItemByIDs,
-	getRelatedItems,
-} from '@sneat/dto';
+import { getRelatedItemByIDs, getRelatedItems } from '@sneat/dto';
 import { ISlotUIContext } from '@sneat/mod-schedulus-core';
 import { ISpaceRef } from '@sneat/core';
 import { SneatBaseComponent } from '@sneat/ui';

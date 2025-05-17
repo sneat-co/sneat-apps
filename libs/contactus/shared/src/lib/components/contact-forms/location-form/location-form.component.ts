@@ -27,7 +27,6 @@ import {
 	IonLabel,
 	IonSpinner,
 } from '@ionic/angular/standalone';
-import { AddressFormComponent } from '@sneat/components';
 import { createSetFocusToInput } from '@sneat/ui';
 import {
 	ContactRole,
@@ -46,6 +45,7 @@ import {
 	computeSpaceRefFromSpaceContext,
 	ISpaceContext,
 } from '@sneat/space-models';
+import { AddressFormComponent } from '../../address-form';
 
 @Component({
 	selector: 'sneat-location-form',

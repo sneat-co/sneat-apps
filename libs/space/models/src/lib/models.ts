@@ -1,16 +1,20 @@
 import { SpaceType } from '@sneat/core';
 import { ISpaceModuleItemRef } from '@sneat/dto';
 
-export interface SpaceRequest {
+export interface ISpaceRequest {
 	readonly spaceID: string;
 }
 
-export interface ISpaceItemRequest extends SpaceRequest {
+export interface ISpaceItemRequest extends ISpaceRequest {
 	readonly id: string;
 }
 
-export interface ISpaceMemberRequest extends SpaceRequest {
+export interface ISpaceMemberRequest extends ISpaceRequest {
 	readonly memberID: string;
+}
+
+export interface ILeaveSpaceRequest extends ISpaceRequest {
+	readonly message?: string;
 }
 
 export interface IAcceptInviteResponse {
@@ -23,7 +27,7 @@ export interface IInviteSpace {
 	readonly title: string;
 }
 
-export interface IRejectPersonalInviteRequest extends SpaceRequest {
+export interface IRejectPersonalInviteRequest extends ISpaceRequest {
 	readonly inviteID: string;
 	readonly pin: string;
 }

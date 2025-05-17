@@ -27,7 +27,7 @@ import {
 	AssetsListComponent,
 	AssetusServicesModule,
 	AssetusSpaceService,
-} from '@sneat/extensions-assetus-components';
+} from '@sneat/ext-assetus-components';
 import {
 	SpaceComponentBaseParams,
 	SpacePageTitleComponent,

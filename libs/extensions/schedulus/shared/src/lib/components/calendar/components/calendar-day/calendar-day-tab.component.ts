@@ -4,7 +4,6 @@ import {
 	Component,
 	computed,
 	input,
-	Input,
 	signal,
 } from '@angular/core';
 import {
@@ -18,7 +17,7 @@ import {
 	PopoverController,
 } from '@ionic/angular/standalone';
 import { dateToIso, isoStringsToDate } from '@sneat/core';
-import { WithSpaceInput } from '@sneat/space-components';
+import { WithSpaceInput } from '@sneat/space-services';
 import { CalendarDataProvider } from '../../../../services/calendar-data-provider';
 import { addDays, CalendarStateService } from '../../calendar-state.service';
 import { CalendarDayCardComponent } from './calendar-day-card.component';

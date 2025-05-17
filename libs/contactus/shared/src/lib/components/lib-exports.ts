@@ -1,3 +1,5 @@
+// TODO: always export from './folder/file'
+export * from './with-new-contact-input';
 export * from './basic-contact-form';
 export * from './contact-details';
 export * from './contact-dob';
@@ -21,3 +23,6 @@ export * from './members-card-header/members-card-header.component';
 export * from './members-list';
 export * from './members-short-list-card/members-short-list-card.component';
 export * from './shared-with';
+export * from './invite-links/invite-links.component';
+export * from './members-as-badges';
+export * from './address-form';

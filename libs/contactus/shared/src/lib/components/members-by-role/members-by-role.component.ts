@@ -15,7 +15,7 @@ import {
 	IonSpinner,
 } from '@ionic/angular/standalone';
 import { IContactWithBriefAndSpace } from '@sneat/contactus-core';
-import { WithSpaceInput } from '@sneat/space-components';
+import { WithSpaceInput } from '@sneat/space-services';
 import { MembersListComponent } from '../members-list';
 import { MemberGroup } from './member-group';
 

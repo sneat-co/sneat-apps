@@ -19,7 +19,7 @@ import {
 	AssetAddDwellingComponent,
 	AssetAddVehicleComponent,
 	AssetusServicesModule,
-} from '@sneat/extensions-assetus-components';
+} from '@sneat/ext-assetus-components';
 import {
 	SpaceBaseComponent,
 	SpaceComponentBaseParams,

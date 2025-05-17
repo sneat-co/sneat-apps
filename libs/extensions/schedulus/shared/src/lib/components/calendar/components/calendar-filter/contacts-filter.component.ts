@@ -21,10 +21,8 @@ import {
 	IonSelect,
 	IonSelectOption,
 } from '@ionic/angular/standalone';
-import { ContactTitlePipe } from '@sneat/components';
+import { ContactTitlePipe } from '@sneat/contactus-shared';
 import {
-	addSpace,
-	ContactType,
 	IContactusSpaceDbo,
 	IContactWithBriefAndSpace,
 } from '@sneat/contactus-core';

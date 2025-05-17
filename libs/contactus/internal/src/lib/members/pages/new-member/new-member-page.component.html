@@ -53,6 +53,7 @@
 			@switch ($inviteType()) {
 				@case ("personal") {
 					<sneat-new-member-form
+						[$space]="$space()"
 						[$contact]="$contact()"
 						(contactChange)="$contact.set($event)"
 					/>
@@ -78,6 +79,7 @@
 		}
 		@case ("animal") {
 			<sneat-new-pet-form
+				[$space]="$space()"
 				[$contact]="$contact()"
 				(contactChange)="$contact.set($event)"
 			/>

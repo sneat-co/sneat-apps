@@ -11,10 +11,10 @@ import {
 	MemberContactType,
 } from '../dto';
 import { IMemberContext } from '../contexts';
-import { SpaceRequest, SpaceMemberStatus } from '@sneat/space-models';
+import { ISpaceRequest, SpaceMemberStatus } from '@sneat/space-models';
 
 export interface ICreateSpaceMemberRequest
-	extends SpaceRequest,
+	extends ISpaceRequest,
 		IRelatedPerson {
 	readonly type: MemberContactType;
 	readonly status: SpaceMemberStatus;
@@ -30,7 +30,7 @@ export function validateCreateSpaceMemberRequest(
 	validateRelated(request.related);
 }
 
-export interface ICreateContactBaseRequest extends SpaceRequest {
+export interface ICreateContactBaseRequest extends ISpaceRequest {
 	readonly status: 'active' | 'draft';
 	readonly type: ContactType;
 	// countryID: string;
@@ -120,7 +120,7 @@ export interface IAddSpaceMemberResponse {
 	readonly member: IMemberContext;
 }
 
-export interface IAcceptPersonalInviteRequest extends SpaceRequest {
+export interface IAcceptPersonalInviteRequest extends ISpaceRequest {
 	readonly inviteID: string;
 	readonly pin: string; // Do not make number as we can lose leading 0's
 	readonly member?: IMemberBrief;
@@ -128,7 +128,7 @@ export interface IAcceptPersonalInviteRequest extends SpaceRequest {
 	// email?: string;
 }
 
-export interface ICreatePersonalInviteRequest extends SpaceRequest {
+export interface ICreatePersonalInviteRequest extends ISpaceRequest {
 	readonly to: IInviteToContact;
 	readonly message: string;
 }

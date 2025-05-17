@@ -1,4 +1,5 @@
 import {
+	ChangeDetectionStrategy,
 	Component,
 	computed,
 	inject,
@@ -30,7 +31,7 @@ import { namesToUrlParams } from '@sneat/auth-models';
 import { MemberService } from '@sneat/contactus-services';
 import { PersonWizardComponent } from '@sneat/contactus-shared';
 import { formNexInAnimation } from '@sneat/core';
-import { personName } from '@sneat/components';
+import { personNames } from '@sneat/auth-ui';
 import { RoutingState } from '@sneat/core';
 import {
 	IContactusSpaceDboAndID,
@@ -39,11 +40,10 @@ import {
 	isRelatedPersonReady,
 	MemberContactType,
 	NewContactBaseDboAndSpaceRef,
-	WithNewContactInput,
 } from '@sneat/contactus-core';
 import { zipMapBriefsWithIDs } from '@sneat/space-models';
-import { SpaceNavService } from '@sneat/space-services';
 import { QRCodeComponent } from 'angularx-qrcode';
+import { WithNewContactInput } from '@sneat/contactus-shared';
 
 @Component({
 	animations: [formNexInAnimation],
@@ -64,6 +64,7 @@ import { QRCodeComponent } from 'angularx-qrcode';
 		IonGrid,
 		IonCol,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-new-member-form',
 	templateUrl: 'new-member-form.component.html',
 })
@@ -89,8 +90,6 @@ export class NewMemberFormComponent
 			!this.addMemberForm.disabled && //TODO(check) Could be a problem with Push detection strategy?
 			this.addMemberForm.valid,
 	);
-
-	protected readonly $spaceRef = computed(() => this.$contact().space);
 
 	protected readonly $qrData = computed(() => {
 		const contact = this.$contact();
@@ -146,7 +145,6 @@ export class NewMemberFormComponent
 	});
 
 	private readonly memberService = inject(MemberService);
-	private readonly spaceNavService = inject(SpaceNavService);
 
 	public constructor(routingState: RoutingState) {
 		super('NewMemberFormComponent');
@@ -210,10 +208,10 @@ export class NewMemberFormComponent
 		if (this.personRequirements.gender?.required && !contact.dbo.gender) {
 			throw new Error('Gender is a required field');
 		}
-		const displayName = personName(contact.dbo.names);
+		const displayName = personNames(contact.dbo.names);
 		const duplicateMember = zipMapBriefsWithIDs(
 			this.contactusSpace?.dbo?.contacts,
-		)?.find((m) => personName(m.brief.names) === displayName);
+		)?.find((m) => personNames(m.brief.names) === displayName);
 		if (duplicateMember) {
 			alert('There is already a member with same name: ' + displayName);
 			return;

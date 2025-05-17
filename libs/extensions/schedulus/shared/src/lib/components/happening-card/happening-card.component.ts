@@ -13,12 +13,9 @@ import {
 	IonLabel,
 	IonText,
 } from '@ionic/angular/standalone';
-import {
-	LongMonthNamePipe,
-	ContactsAsBadgesComponent,
-	SelectedContactsPipe,
-} from '@sneat/components';
+import { LongMonthNamePipe } from '@sneat/components';
 import { IContactWithBrief } from '@sneat/contactus-core';
+import { SelectedContactsPipe } from '@sneat/contactus-shared';
 import { getRelatedItemIDs } from '@sneat/dto';
 import { WdToWeekdayPipe } from '@sneat/mod-schedulus-core';
 import {
@@ -27,6 +24,7 @@ import {
 } from '../happening-base.component';
 import { IHappeningContactRequest } from '../../services/happening.service';
 import { HappeningSlotsComponent } from '../happening-slots/happening-slots.component';
+import { ContactsAsBadgesComponent } from '@sneat/contactus-shared';
 
 @Component({
 	styleUrls: ['happening-card.component.scss'],
@@ -44,6 +42,7 @@ import { HappeningSlotsComponent } from '../happening-slots/happening-slots.comp
 		HappeningSlotsComponent,
 		ContactsAsBadgesComponent,
 		LongMonthNamePipe,
+		SelectedContactsPipe,
 		SelectedContactsPipe,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,

@@ -16,7 +16,7 @@ import {
 	IHappeningSlotWithID,
 } from '@sneat/mod-schedulus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import { ISpaceContext, SpaceRequest } from '@sneat/space-models';
+import { ISpaceContext, ISpaceRequest } from '@sneat/space-models';
 import { QueryOrderByConstraint } from 'firebase/firestore';
 import { map, Observable, tap, throwError } from 'rxjs';
 import { ModuleSpaceItemService } from '@sneat/space-services';
@@ -26,7 +26,7 @@ export interface ICreateHappeningRequest {
 	readonly happening: IHappeningDbo;
 }
 
-export interface IHappeningRequest extends SpaceRequest {
+export interface IHappeningRequest extends ISpaceRequest {
 	readonly happeningID: string;
 	readonly happeningType?: string;
 }
@@ -42,12 +42,12 @@ export interface ISpaceModuleDocShortRef {
 	readonly spaceID?: string;
 }
 
-export interface IHappeningContactRequest extends SpaceRequest {
+export interface IHappeningContactRequest extends ISpaceRequest {
 	readonly happeningID: string;
 	readonly contact: ISpaceModuleDocShortRef;
 }
 
-export interface IHappeningContactsRequest extends SpaceRequest {
+export interface IHappeningContactsRequest extends ISpaceRequest {
 	readonly happeningID: string;
 	readonly contacts: readonly ISpaceModuleDocShortRef[];
 }

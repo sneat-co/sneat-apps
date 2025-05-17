@@ -28,7 +28,7 @@ import {
 	sortSlotItems,
 	WeekdayNumber,
 } from '@sneat/mod-schedulus-core';
-import { WithSpaceInput } from '@sneat/space-components';
+import { WithSpaceInput } from '@sneat/space-services';
 import { Subscription } from 'rxjs';
 import {
 	emptyCalendarFilter,

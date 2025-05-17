@@ -51,10 +51,7 @@ import {
 	mergeValuesWithIDs,
 	WeekdayCode2,
 } from '@sneat/mod-schedulus-core';
-import {
-	SpaceComponentBaseParams,
-	WithSpaceInput,
-} from '@sneat/space-components';
+import { SpaceComponentBaseParams } from '@sneat/space-components';
 import { takeUntil } from 'rxjs';
 import { HappeningTitleModalComponent } from '../../modals/happening-title-modal/happening-title-modal.component';
 import { HappeningParticipantsComponent } from '../happening-participants/happening-participants.component';
@@ -66,6 +63,7 @@ import {
 	HappeningServiceModule,
 	ICancelHappeningRequest,
 } from '../../services/happening.service';
+import { WithSpaceInput } from '@sneat/space-services';
 
 @Component({
 	imports: [

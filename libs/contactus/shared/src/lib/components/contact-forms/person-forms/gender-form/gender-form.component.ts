@@ -19,14 +19,14 @@ import {
 	IonSpinner,
 } from '@ionic/angular/standalone';
 import { genderColor } from '@sneat/components';
+import { ContactService } from '@sneat/contactus-services';
 import {
 	Gender,
 	GenderFemale,
 	GenderMale,
 	GenderOther,
 	GenderUndisclosed,
-} from '@sneat/contactus-core';
-import { ContactService } from '@sneat/contactus-services';
+} from '@sneat/core';
 import {
 	ISelectItem,
 	SelectFromListComponent,
