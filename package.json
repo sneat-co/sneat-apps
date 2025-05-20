@@ -48,7 +48,7 @@
 		"@angular/common": "19.2.11",
 		"@angular/compiler": "19.2.11",
 		"@angular/core": "19.2.11",
-		"@angular/fire": "19.1.0",
+		"@angular/fire": "19.2.0",
 		"@angular/forms": "19.2.11",
 		"@angular/platform-browser": "19.2.11",
 		"@angular/platform-browser-dynamic": "19.2.11",
