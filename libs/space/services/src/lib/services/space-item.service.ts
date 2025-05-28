@@ -239,7 +239,7 @@ export class ModuleSpaceItemService<
 				collection(
 					this.spacesCollection,
 					spaceID,
-					'modules',
+					'ext',
 					this.moduleID,
 					this.collectionName,
 				) as CollectionReference<Dbo2>,

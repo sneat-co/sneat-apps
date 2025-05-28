@@ -20,7 +20,7 @@ export abstract class SpaceModuleService<Dbo> extends ModuleSpaceItemService<
 	// protected readonly sfs: SneatFirestoreService<Brief, Dto>;
 	protected constructor(moduleID: string, afs: AngularFirestore) {
 		// this.sfs = new SneatFirestoreService<Brief, Dto>(collectionName, afs);
-		super(moduleID, 'modules', afs, undefined as unknown as SneatApiService);
+		super(moduleID, 'ext', afs, undefined as unknown as SneatApiService);
 	}
 
 	watchSpaceModuleRecord(spaceID: string): Observable<IIdAndOptionalDbo<Dbo>> {
@@ -30,7 +30,7 @@ export abstract class SpaceModuleService<Dbo> extends ModuleSpaceItemService<
 			const collectionRef = collection(
 				this.spacesCollection,
 				spaceID,
-				'modules',
+				'ext',
 			) as CollectionReference<Dbo>;
 			// if (this.moduleID === 'trackus') {
 			// 	return throwError(() => new Error('test error'));

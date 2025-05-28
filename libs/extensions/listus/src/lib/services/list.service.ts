@@ -142,7 +142,7 @@ export class ListService extends ModuleSpaceItemService<IListBrief, IListDbo> {
 			this.afs,
 			'spaces',
 			spaceID,
-			'modules',
+			'ext',
 			'listus',
 			'lists',
 		);

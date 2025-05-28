@@ -59,7 +59,7 @@ function logistSpaceDocRef(
 ): DocumentReference<ILogistSpaceDbo> {
 	const spacesCollection = collection(afs, 'spaces');
 	const spaceRef = doc(spacesCollection, spaceID);
-	const modulesCollection = collection(spaceRef, 'modules');
+	const modulesCollection = collection(spaceRef, 'ext');
 	return doc(
 		modulesCollection as CollectionReference<ILogistSpaceDbo>,
 		'logistus',
