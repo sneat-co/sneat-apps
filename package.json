@@ -131,7 +131,7 @@
 		"madge": "^8.0.0",
 		"ng-packagr": "19.2.2",
 		"nx": "21.1.2",
-		"postcss": "8.5.3",
+		"postcss": "8.5.4",
 		"postcss-import": "16.1.0",
 		"postcss-preset-env": "10.2.0",
 		"postcss-url": "10.1.3",
