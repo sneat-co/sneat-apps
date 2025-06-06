@@ -7,6 +7,7 @@ import {
 	input,
 	Input,
 	Output,
+	inject,
 } from '@angular/core';
 import {
 	IonBadge,
@@ -68,6 +69,9 @@ import { RelatedAsComponent } from './related-as.component';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactsListItemComponent extends SneatBaseComponent {
+	private readonly spaceNavService = inject(SpaceNavService);
+	private readonly contactService = inject(ContactService);
+
 	public readonly $contact = input.required<IContactWithCheck>();
 	public readonly $contactID = computed(() => this.$contact().id);
 	public readonly $space = input.required<ISpaceContext>();
@@ -115,10 +119,7 @@ export class ContactsListItemComponent extends SneatBaseComponent {
 		return this.hideRoles.includes(role) || role == this.excludeRole;
 	}
 
-	constructor(
-		private readonly spaceNavService: SpaceNavService,
-		private readonly contactService: ContactService,
-	) {
+	constructor() {
 		super('ContactsListItemComponent');
 	}
 

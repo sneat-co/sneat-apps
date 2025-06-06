@@ -56,6 +56,8 @@ interface IRelationshipWithID extends IRelationshipRole {
 	templateUrl: 'relationship-form.component.html',
 })
 export class RelationshipFormComponent extends SpaceRelatedFormComponent {
+	private readonly userService = inject(SneatUserService);
+
 	public readonly $itemRef = input.required<ISpaceModuleItemRef | undefined>();
 
 	public readonly $relatedTo = input.required<IRelatedTo | undefined>();
@@ -109,7 +111,7 @@ export class RelationshipFormComponent extends SpaceRelatedFormComponent {
 
 	protected readonly relatedAsSingle = new FormControl<string>('');
 
-	constructor(private readonly userService: SneatUserService) {
+	constructor() {
 		super('RelationshipFormComponent');
 	}
 

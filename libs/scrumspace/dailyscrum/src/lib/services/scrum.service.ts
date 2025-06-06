@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { IMemberBrief } from '@sneat/contactus-core';
 import { ISpaceDbo } from '@sneat/dto';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
@@ -57,16 +57,20 @@ export interface ITaskWithUiStatus extends ITask {
 
 @Injectable()
 export class ScrumService extends BaseMeetingService {
-	constructor(
-		override readonly sneatApiService: SneatApiService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly randomIdService: RandomIdService,
-		private readonly userService: SneatUserService,
-		private readonly afs: AngularFirestore,
-		@Inject(AnalyticsService)
-		private readonly analyticsService: IAnalyticsService,
-	) {
+	override readonly sneatApiService: SneatApiService;
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly randomIdService = inject(RandomIdService);
+	private readonly userService = inject(SneatUserService);
+	private readonly afs = inject(AngularFirestore);
+	private readonly analyticsService =
+		inject<IAnalyticsService>(AnalyticsService);
+
+	constructor() {
+		const sneatApiService = inject(SneatApiService);
+
 		super('scrum', sneatApiService);
+
+		this.sneatApiService = sneatApiService;
 	}
 
 	public getScrums(

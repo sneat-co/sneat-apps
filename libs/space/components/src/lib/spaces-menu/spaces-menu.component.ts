@@ -4,6 +4,7 @@ import {
 	computed,
 	Input,
 	signal,
+	inject,
 } from '@angular/core';
 import {
 	IonIcon,
@@ -31,6 +32,10 @@ import { SpacesListComponent } from '../spaces-list';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpacesMenuComponent extends SneatBaseComponent {
+	readonly userService = inject(SneatUserService);
+	private readonly navController = inject(NavController);
+	private readonly menuController = inject(MenuController);
+
 	@Input() spacesLabel = 'Spaces';
 	@Input() pathPrefix = '/space';
 
@@ -107,13 +112,10 @@ export class SpacesMenuComponent extends SneatBaseComponent {
 		undefined,
 	);
 
-	constructor(
-		readonly userService: SneatUserService,
-		// private readonly spaceNavService: SpaceNavService,
-		private readonly navController: NavController,
-		private readonly menuController: MenuController,
-	) {
+	constructor() {
 		super('SpacesMenuComponent');
+		const userService = this.userService;
+
 		userService.userState.pipe(this.takeUntilDestroyed()).subscribe({
 			next: this.onUserStateChanged,
 		});

@@ -54,7 +54,9 @@ export class TrackerFormComponent
 
 	private readonly trackusApiService = inject(TrackusApiService);
 
-	constructor(userService: SneatAuthStateService) {
+	constructor() {
+		const userService = inject(SneatAuthStateService);
+
 		super('TrackerFormComponent');
 		userService.authState
 			.pipe(

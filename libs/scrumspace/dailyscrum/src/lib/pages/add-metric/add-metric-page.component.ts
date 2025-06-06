@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonBackButton,
@@ -63,6 +63,12 @@ import { ActivatedRoute } from '@angular/router';
 	],
 })
 export class AddMetricPageComponent {
+	readonly route = inject(ActivatedRoute);
+	private readonly navController = inject(NavController);
+	private readonly spaceService = inject(SpaceService);
+	private readonly toastController = inject(ToastController);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+
 	public space: ITeam;
 	public spaceID?: string | null;
 
@@ -76,13 +82,9 @@ export class AddMetricPageComponent {
 	public min?: number;
 	public max?: number;
 
-	constructor(
-		readonly route: ActivatedRoute,
-		private readonly navController: NavController,
-		private readonly spaceService: SpaceService,
-		private readonly toastController: ToastController,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {
+	constructor() {
+		const route = this.route;
+
 		this.min = 0;
 		const space = window?.history?.state?.space as IRecord<ITeam>;
 		if (space) {

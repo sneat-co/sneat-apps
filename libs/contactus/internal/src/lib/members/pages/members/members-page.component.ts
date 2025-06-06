@@ -36,7 +36,7 @@ import {
 } from '@sneat/space-components';
 import { SpaceServiceModule } from '@sneat/space-services';
 import { MembersBasePage } from '../../members-base-page';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 @Component({
 	selector: 'sneat-members-page',
@@ -70,6 +70,8 @@ import { Component } from '@angular/core';
 	],
 })
 export class MembersPageComponent extends MembersBasePage {
+	private readonly memberGroupService = inject(MemberGroupService);
+
 	public memberGroups?: readonly IMemberGroupContext[];
 	// public loadingStubs?: number[];
 	public segment: 'all' | 'groups' = 'all';
@@ -78,11 +80,10 @@ export class MembersPageComponent extends MembersBasePage {
 
 	readonly memberType: SpaceMemberType = 'member';
 
-	constructor(
-		memberService: MemberService,
-		contactusTeamService: ContactusSpaceService,
-		private readonly memberGroupService: MemberGroupService,
-	) {
+	constructor() {
+		const memberService = inject(MemberService);
+		const contactusTeamService = inject(ContactusSpaceService);
+
 		super('MembersPageComponent', contactusTeamService, memberService);
 	}
 

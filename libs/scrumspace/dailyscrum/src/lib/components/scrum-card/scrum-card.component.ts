@@ -1,10 +1,11 @@
 import { NgIf } from '@angular/common';
 import {
-	Attribute,
 	Component,
 	EventEmitter,
 	Input,
 	Output,
+	HostAttributeToken,
+	inject,
 } from '@angular/core';
 import {
 	NavController,
@@ -50,6 +51,11 @@ import { ScrumPageModule } from '../../scrum.module';
 	],
 })
 export class ScrumCardComponent {
+	showMember = inject(new HostAttributeToken('showMember'), { optional: true });
+	viewMode = inject(new HostAttributeToken('viewMode'), { optional: true });
+	private readonly navController = inject(NavController);
+	private readonly navService = inject(NavService);
+
 	@Input() space?: IRecord<ISpaceDbo>;
 	@Input() currentMemberId?: string;
 	@Input() public scrumId?: string;
@@ -73,13 +79,6 @@ export class ScrumCardComponent {
 		'qna',
 		'kudos',
 	];
-
-	constructor(
-		@Attribute('showMember') public showMember: boolean,
-		@Attribute('viewMode') public viewMode: 'single' | 'team',
-		private readonly navController: NavController,
-		private readonly navService: NavService,
-	) {}
 
 	expandCollapseMember(event: Event): void {
 		if (event) {

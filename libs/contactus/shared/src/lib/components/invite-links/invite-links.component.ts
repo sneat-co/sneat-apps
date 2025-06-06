@@ -1,11 +1,4 @@
-import {
-	Component,
-	inject,
-	Inject,
-	Input,
-	OnChanges,
-	OnDestroy,
-} from '@angular/core';
+import { Component, inject, Input, OnChanges, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonButton,
@@ -44,6 +37,11 @@ export const stringHash = (s: string): number => {
 	imports: [FormsModule, IonSkeletonText, IonButton, IonIcon, IonLabel],
 })
 export class InviteLinksComponent implements OnChanges, OnDestroy {
+	readonly userService = inject(SneatUserService);
+	private readonly navService = inject(SpaceNavService);
+	private readonly navController = inject(NavController);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+
 	@Input() public contactusSpace?: IIdAndOptionalDbo<IContactusSpaceDbo>;
 
 	public inviteUrlsFor?: {
@@ -56,12 +54,9 @@ export class InviteLinksComponent implements OnChanges, OnDestroy {
 
 	private readonly contactusNavService = inject(ContactusNavService);
 
-	constructor(
-		readonly userService: SneatUserService,
-		private readonly navService: SpaceNavService,
-		private readonly navController: NavController,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {
+	constructor() {
+		const userService = this.userService;
+
 		this.subscription = userService.userChanged.subscribe((uid) => {
 			this.currentUserId = uid;
 			this.setPins();

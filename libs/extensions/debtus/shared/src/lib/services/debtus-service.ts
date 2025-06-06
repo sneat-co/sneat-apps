@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { SneatApiService } from '@sneat/api';
 import { Observable } from 'rxjs';
 
@@ -13,7 +13,7 @@ export interface ICreateDebtRecordRequest {
 
 @Injectable()
 export class DebtusService {
-	constructor(private readonly sneatApiService: SneatApiService) {}
+	private readonly sneatApiService = inject(SneatApiService);
 
 	public createDebtRecord(
 		request: ICreateDebtRecordRequest,

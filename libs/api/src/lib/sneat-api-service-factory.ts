@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ISneatApiService } from './sneat-api-service.interface';
 import { HttpClient } from '@angular/common/http';
 import { Auth as AngularFireAuth } from '@angular/fire/auth';
@@ -32,14 +32,11 @@ export const getStoreUrl = (storeId: string): string => {
 export class SneatApiServiceFactory {
 	private services: Record<string, ISneatApiService> = {};
 
-	constructor(
-		private readonly httpClient: HttpClient,
-		readonly afAuth: AngularFireAuth,
-	) {
+	constructor() {
 		console.log('SneatApiServiceFactory.constructor()');
 	}
 
-	getSneatApiService(storeId: string): ISneatApiService {
+	public getSneatApiService(storeId: string): ISneatApiService {
 		if (!storeId) {
 			throw new Error(
 				'storeRef is a required parameter, got empty: ' + typeof storeId,
@@ -57,14 +54,11 @@ export class SneatApiServiceFactory {
 		if (service) {
 			return service;
 		}
-		const baseUrl = getStoreUrl(storeRefToId(storeRef));
+		// const baseUrl = getStoreUrl(storeRefToId(storeRef));
 		switch (storeRef.type) {
 			case 'firestore':
-				this.services[id] = service = new SneatApiService(
-					this.httpClient,
-					this.afAuth,
-					baseUrl,
-				);
+				inject(SneatApiService);
+				this.services[id] = service = new SneatApiService(/*baseUrl*/);
 				return service;
 			default:
 				throw new Error('unknown store type: ' + storeRef.type);

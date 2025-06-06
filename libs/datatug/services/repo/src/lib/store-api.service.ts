@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
@@ -9,10 +9,8 @@ import {
 
 @Injectable()
 export class StoreApiService {
-	constructor(
-		private readonly sneatApiServiceFactory: SneatApiServiceFactory,
-		private readonly httpClient: HttpClient,
-	) {}
+	private readonly sneatApiServiceFactory = inject(SneatApiServiceFactory);
+	private readonly httpClient = inject(HttpClient);
 
 	private static getUrl(repo: string, path: string): string {
 		const repoUrl = getStoreUrl(repo);

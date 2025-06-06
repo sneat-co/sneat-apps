@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 
@@ -16,10 +16,9 @@ import { IonButtons, IonContent, IonHeader, IonMenuButton, IonTitle, IonToolbar 
 	],
 })
 export class FolderPageComponent implements OnInit {
-	public folder?: string | null;
+	private readonly activatedRoute = inject(ActivatedRoute);
 
-	constructor(private readonly activatedRoute: ActivatedRoute) {
-	}
+	public folder?: string | null;
 
 	ngOnInit() {
 		this.folder = this.activatedRoute.snapshot.paramMap.get('id');

@@ -3,12 +3,12 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	OnChanges,
 	Output,
 	SimpleChanges,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CodemirrorComponent, CodemirrorModule } from '@ctrl/ngx-codemirror';
@@ -25,6 +25,8 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	imports: [FormsModule, CodemirrorModule],
 })
 export class SqlEditorComponent implements AfterViewInit, OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+
 	@Input() sql?: string;
 	@Input() lineNumbers = false;
 	@Input() readonly = true;
@@ -40,10 +42,6 @@ export class SqlEditorComponent implements AfterViewInit, OnChanges {
 		viewportMargin: Infinity,
 		style: { height: 'auto' },
 	};
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {}
 
 	public onSqlChanged(event: Event): void {
 		event.stopPropagation();

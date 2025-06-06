@@ -6,6 +6,7 @@ import {
 	input,
 	Output,
 	signal,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -95,7 +96,9 @@ export class ContactsFilterComponent extends ContactusModuleBaseComponent {
 		readonly IContactWithBriefAndSpace[] | undefined
 	>(undefined);
 
-	constructor(contactusSpaceService: ContactusSpaceService) {
+	constructor() {
+		const contactusSpaceService = inject(ContactusSpaceService);
+
 		super('ContactsFilterComponent', contactusSpaceService);
 		const contactusSpaceContextService = new ContactusSpaceContextService(
 			this.destroyed$,

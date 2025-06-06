@@ -5,6 +5,7 @@ import {
 	OnChanges,
 	signal,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -97,6 +98,9 @@ export class NewDocumentPageComponent
 	extends AddAssetBaseComponent
 	implements OnChanges
 {
+	private readonly contactService = inject(ContactService);
+	private readonly spaceNavService = inject(SpaceNavService);
+
 	// @Input() public override space?: ISpaceContext;
 	@Input() public override contactusSpace?: IContactusSpaceDboAndID;
 
@@ -126,10 +130,7 @@ export class NewDocumentPageComponent
 		() => !!this.$selectedContacts().length,
 	);
 
-	constructor(
-		private readonly contactService: ContactService,
-		private readonly spaceNavService: SpaceNavService,
-	) {
+	constructor() {
 		super('NewDocumentPageComponent');
 		this.trackUrl();
 	}

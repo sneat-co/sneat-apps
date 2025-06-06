@@ -6,6 +6,7 @@ import {
 	signal,
 	computed,
 	effect,
+	inject,
 } from '@angular/core';
 import { IonBadge, IonLabel } from '@ionic/angular/standalone';
 import { PersonNamesPipe } from '@sneat/auth-ui';
@@ -26,6 +27,9 @@ import { SneatBaseComponent } from '@sneat/ui';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HappeningSlotParticipantsComponent extends SneatBaseComponent {
+	private readonly changedDetectorRef = inject(ChangeDetectorRef);
+	private readonly contactusService = inject(ContactusSpaceService);
+
 	protected contacts?: readonly IContactWithBriefAndSpace[];
 	protected readonly $spaceContacts = signal<
 		readonly IContactWithBrief[] | undefined
@@ -75,10 +79,7 @@ export class HappeningSlotParticipantsComponent extends SneatBaseComponent {
 
 	// private readonly spaceID$ = new Subject<string>();
 
-	constructor(
-		private readonly changedDetectorRef: ChangeDetectorRef,
-		private readonly contactusService: ContactusSpaceService,
-	) {
+	constructor() {
 		super('HappeningSlotParticipantsComponent');
 		effect(() => {
 			const spaceID = this.$spaceID();

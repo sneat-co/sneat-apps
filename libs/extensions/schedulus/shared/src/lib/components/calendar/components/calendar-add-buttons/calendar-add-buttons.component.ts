@@ -3,6 +3,7 @@ import {
 	Component,
 	input,
 	Input,
+	inject,
 } from '@angular/core';
 import { IonButton, IonButtons, IonIcon } from '@ionic/angular/standalone';
 import {
@@ -20,10 +21,12 @@ import { WithSpaceInput } from '@sneat/space-services';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarAddButtonsComponent extends WithSpaceInput {
+	private readonly scheduleNavService = inject(ScheduleNavService);
+
 	public readonly dateID = input.required<string | undefined>();
 	public readonly weekdayID = input.required<WeekdayCode2 | undefined>();
 
-	constructor(private readonly scheduleNavService: ScheduleNavService) {
+	constructor() {
 		super('CalendarAddButtonsComponent');
 	}
 

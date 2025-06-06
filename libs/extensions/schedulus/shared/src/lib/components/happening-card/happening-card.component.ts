@@ -3,6 +3,7 @@ import {
 	ChangeDetectorRef,
 	Component,
 	computed,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -66,10 +67,10 @@ export class HappeningCardComponent extends HappeningBaseComponent {
 		() => !!this.$relatedContactIDs()?.length,
 	);
 
-	constructor(
-		happeningBaseComponentParams: HappeningBaseComponentParams,
-		changeDetectorRef: ChangeDetectorRef,
-	) {
+	constructor() {
+		const happeningBaseComponentParams = inject(HappeningBaseComponentParams);
+		const changeDetectorRef = inject(ChangeDetectorRef);
+
 		super(
 			'HappeningCardComponent',
 			happeningBaseComponentParams,

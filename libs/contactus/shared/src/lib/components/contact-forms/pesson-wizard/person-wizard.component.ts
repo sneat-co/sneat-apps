@@ -10,6 +10,7 @@ import {
 	signal,
 	SimpleChanges,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -131,6 +132,8 @@ export class PersonWizardComponent
 	extends NewContactFormBaseComponent
 	implements OnInit, OnChanges
 {
+	private readonly userService = inject(SneatUserService);
+
 	@Input() requires: IPersonRequirements = {};
 	@Input() disabled = false;
 	@Input() hideRelationship = false;
@@ -195,7 +198,7 @@ export class PersonWizardComponent
 		this.userService,
 	);
 
-	constructor(private readonly userService: SneatUserService) {
+	constructor() {
 		super('PersonWizardComponent');
 	}
 

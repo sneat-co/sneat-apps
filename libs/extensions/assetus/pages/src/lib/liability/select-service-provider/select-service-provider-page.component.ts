@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonBackButton,
@@ -44,11 +44,9 @@ export class SelectServiceProviderPageComponent extends AssetBasePage {
 	serviceType?: LiabilityServiceType;
 	serviceTypeTitle?: string;
 
-	constructor(
-		// assetService: IAssetService,
-		// private serviceProviderService: IServiceProviderService,
-		params: SpaceComponentBaseParams,
-	) {
+	constructor() {
+		const params = inject(SpaceComponentBaseParams);
+
 		super(CommuneTopPage.asset, params, assetService);
 	}
 

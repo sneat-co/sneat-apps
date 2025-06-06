@@ -1,4 +1,4 @@
-import { Component, Inject, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	PopoverController,
@@ -48,6 +48,11 @@ import { parseStoreRef } from '@sneat/core';
 	],
 })
 export class NewProjectFormComponent implements ViewDidEnter {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly projectService = inject(ProjectService);
+	private readonly popoverController = inject(PopoverController);
+	private readonly nav = inject(DatatugNavService);
+
 	store = 'cloud';
 	title = '';
 
@@ -56,13 +61,6 @@ export class NewProjectFormComponent implements ViewDidEnter {
 	@Input() onCancel?: () => void;
 
 	@ViewChild(IonInput, { static: false }) titleInput?: IonInput;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly projectService: ProjectService,
-		private readonly popoverController: PopoverController,
-		private readonly nav: DatatugNavService,
-	) {}
 
 	ionViewDidEnter(): void {
 		setTimeout(() => {

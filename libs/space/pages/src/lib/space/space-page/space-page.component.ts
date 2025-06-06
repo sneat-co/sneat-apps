@@ -5,6 +5,7 @@ import {
 	Component,
 	computed,
 	signal,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -80,10 +81,10 @@ export class SpacePageComponent extends SpacePageBaseComponent {
 		return spaceType === 'family' || spaceType === 'team';
 	});
 
-	constructor(
-		topMenuService: TopMenuService,
-		cd: ChangeDetectorRef, // readonly navService: TeamNavService,
-	) {
+	constructor() {
+		const topMenuService = inject(TopMenuService);
+		const cd = inject(ChangeDetectorRef);
+
 		super('SpacePageComponent', topMenuService, cd);
 		new ContactusSpaceContextService(
 			this.destroyed$,

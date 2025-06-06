@@ -68,6 +68,8 @@ function capitalizeFirstChar(str: string): string {
 	templateUrl: 'happening-participants.component.html',
 })
 export class HappeningParticipantsComponent extends WithSpaceInput {
+	private readonly happeningService = inject(HappeningService);
+
 	public readonly $happening = input.required<IHappeningContext>();
 
 	// protected readonly $space = computed(() => this.$happening().space);
@@ -104,7 +106,7 @@ export class HappeningParticipantsComponent extends WithSpaceInput {
 
 	private readonly analytics = inject(AnalyticsService);
 
-	constructor(private readonly happeningService: HappeningService) {
+	constructor() {
 		super('HappeningParticipantsComponent');
 	}
 

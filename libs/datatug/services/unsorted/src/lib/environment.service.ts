@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { IRecord } from '@sneat/data';
 import { Observable, of, throwError } from 'rxjs';
 
@@ -25,12 +25,10 @@ const envSummaryCache: Record<string, IEnvironmentSummary> = {};
 
 @Injectable()
 export class EnvironmentService {
-	constructor(
-		private readonly projectContextService: ProjectContextService,
-		private readonly api: SneatApiService,
-		private readonly projectService: ProjectService,
-		private readonly storeApiService: StoreApiService, // private readonly http: HttpClient,
-	) {}
+	private readonly projectContextService = inject(ProjectContextService);
+	private readonly api = inject(SneatApiService);
+	private readonly projectService = inject(ProjectService);
+	private readonly storeApiService = inject(StoreApiService);
 
 	createEnvironment = (
 		request: CreateNamedRequest,

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
 	IonBackButton,
 	IonButtons,
@@ -38,7 +38,9 @@ import {
 	templateUrl: './happening-page.component.html',
 })
 export class HappeningPageComponent extends HappeningBasePage {
-	constructor(params: HappeningComponentBaseParams) {
+	constructor() {
+		const params = inject(HappeningComponentBaseParams);
+
 		super('HappeningPageComponent', params);
 	}
 }

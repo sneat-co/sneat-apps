@@ -1,10 +1,10 @@
 import {
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	Output,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -31,6 +31,11 @@ import { IListItemWithUiState } from '../list-item-with-ui-state';
 	templateUrl: './new-list-item.component.html',
 })
 export class NewListItemComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly randomService = inject(RandomIdService);
+	private readonly toastCtrl = inject(ToastController);
+	private readonly listService = inject(ListService);
+
 	isFocused = false;
 
 	public isAdding = false;
@@ -47,13 +52,6 @@ export class NewListItemComponent {
 	@Output() readonly failedToAdd = new EventEmitter<string>();
 
 	public title = '';
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly randomService: RandomIdService,
-		private readonly toastCtrl: ToastController,
-		private readonly listService: ListService,
-	) {}
 
 	protected focused(): void {
 		console.log('focused');

@@ -1,11 +1,11 @@
 import {
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	OnChanges,
 	Output,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import {
 	IonIcon,
@@ -45,11 +45,11 @@ export class DocumentsListComponent
 
 	protected filteredDocs?: IAssetDocumentContext[];
 
-	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
-		assetService: AssetService,
-		toastCtrl: ToastController,
-	) {
+	constructor() {
+		const errorLogger = inject<IErrorLogger>(ErrorLogger);
+		const assetService = inject(AssetService);
+		const toastCtrl = inject(ToastController);
+
 		super(errorLogger, assetService, toastCtrl);
 	}
 

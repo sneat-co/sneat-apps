@@ -4,7 +4,6 @@ import {
 	computed,
 	EventEmitter,
 	forwardRef,
-	Inject,
 	input,
 	Input,
 	OnChanges,
@@ -13,6 +12,7 @@ import {
 	signal,
 	SimpleChanges,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import {
 	ControlValueAccessor,
@@ -75,6 +75,8 @@ import { ISelectItem } from '../selector-interfaces';
 export class SelectFromListComponent
 	implements ControlValueAccessor, OnChanges, OnDestroy
 {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+
 	@Input() value: string | undefined = '';
 	@Output() readonly valueChange = new EventEmitter<string>();
 
@@ -131,10 +133,6 @@ export class SelectFromListComponent
 	protected isDisabled = false;
 
 	protected readonly $filter = signal('');
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {}
 
 	public focus(): void {
 		console.log('SelectFromListComponent.focus()');

@@ -5,6 +5,7 @@ import {
 	OnChanges,
 	Output,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -49,7 +50,9 @@ export class MultiSelectorComponent<T = ISelectItem>
 
 	protected selectedItems?: ISelectItem[];
 
-	constructor(modalController: ModalController) {
+	constructor() {
+		const modalController = inject(ModalController);
+
 		super('MultiSelectorComponent', modalController);
 	}
 

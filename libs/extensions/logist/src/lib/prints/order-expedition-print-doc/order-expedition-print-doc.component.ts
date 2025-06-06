@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
 	IonCard,
 	IonCol,
@@ -17,7 +17,9 @@ import { OrderPrintPageBaseComponent } from '../order-print-page-base.component'
 	imports: [IonCard, IonRow, IonCol, IonItem, IonLabel, IonInput, IonGrid],
 })
 export class OrderExpeditionPrintDocComponent extends OrderPrintPageBaseComponent {
-	constructor(orderService: LogistOrderService) {
+	constructor() {
+		const orderService = inject(LogistOrderService);
+
 		super('OrderShippingDocComponent', orderService);
 	}
 }

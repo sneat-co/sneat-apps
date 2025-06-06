@@ -1,4 +1,4 @@
-import { Component, computed, Input, signal } from '@angular/core';
+import { Component, computed, Input, signal, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
 	IonAccordion,
@@ -56,6 +56,8 @@ import { ICalendarFilter } from './calendar-filter';
 	],
 })
 export class CalendarFilterComponent extends WeekdaysFormBase {
+	private readonly filterService = inject(CalendarFilterService);
+
 	protected readonly $expanded = signal(false);
 	public accordionValue?: string;
 	private resetting = false;
@@ -100,8 +102,10 @@ export class CalendarFilterComponent extends WeekdaysFormBase {
 		);
 	});
 
-	constructor(private readonly filterService: CalendarFilterService) {
+	constructor() {
 		super('ScheduleFilterComponent', false);
+		const filterService = this.filterService;
+
 		filterService.filter.subscribe({
 			next: this.onFilterChanged,
 		});

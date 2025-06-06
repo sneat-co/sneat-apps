@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
 	IonBackButton,
 	IonButton,
@@ -39,7 +39,9 @@ import { CommuneTopPage } from '../../../../pages/constants';
 	],
 })
 export class OptimizationPageComponent extends CommuneBasePage {
-	constructor(params: CommuneBasePageParams) {
+	constructor() {
+		const params = inject(CommuneBasePageParams);
+
 		super(CommuneTopPage.home, params);
 	}
 }

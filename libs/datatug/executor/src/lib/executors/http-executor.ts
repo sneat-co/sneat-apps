@@ -1,6 +1,6 @@
 import { ICommandExecutor, IRequestExecutor } from '../command-executor';
 import { Observable, throwError } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import {
@@ -14,7 +14,7 @@ import {
 
 @Injectable()
 export class HttpExecutor implements IRequestExecutor, ICommandExecutor {
-	constructor(private httpClient: HttpClient) {}
+	private httpClient = inject(HttpClient);
 
 	execute(
 		agentId: string,

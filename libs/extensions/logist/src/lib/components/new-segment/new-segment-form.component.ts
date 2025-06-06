@@ -2,12 +2,12 @@ import { NgIf } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	OnChanges,
 	OnInit,
 	Output,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -56,6 +56,9 @@ import {
 	],
 })
 export class NewSegmentFormComponent implements OnInit, OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly orderService = inject(LogistOrderService);
+
 	@Input() order?: ILogistOrderContext;
 	@Input() container?: IOrderContainer;
 	@Input() isInModal?: boolean;
@@ -84,11 +87,6 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
 	byRefNumber = '';
 
 	selectedContainers: IContainer[] = [];
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly orderService: LogistOrderService,
-	) {}
 
 	onSelectedContainersChanged(selectedContainers: IContainer[]): void {
 		this.selectedContainers = selectedContainers;

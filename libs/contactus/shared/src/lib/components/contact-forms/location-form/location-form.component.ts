@@ -1,13 +1,13 @@
 import {
 	Component,
 	EventEmitter,
-	Inject,
 	input,
 	Input,
 	OnChanges,
 	Output,
 	SimpleChanges,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import {
 	FormControl,
@@ -66,6 +66,9 @@ import { AddressFormComponent } from '../../address-form';
 	],
 })
 export class LocationFormComponent implements OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly contactService = inject(ContactService);
+
 	public readonly $space = input.required<ISpaceContext>();
 	protected readonly $spaceRef = computeSpaceRefFromSpaceContext(this.$space);
 
@@ -98,11 +101,6 @@ export class LocationFormComponent implements OnChanges {
 	get disabled(): boolean {
 		return this.isCreating;
 	}
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly contactService: ContactService,
-	) {}
 
 	private readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
 

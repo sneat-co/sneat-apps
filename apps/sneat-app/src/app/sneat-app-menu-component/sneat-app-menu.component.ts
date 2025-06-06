@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { IonList, ModalController } from '@ionic/angular/standalone';
 import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth-core';
 import { AuthMenuItemComponent } from '@sneat/auth-ui';
@@ -19,9 +19,13 @@ import { SpaceServiceModule } from '@sneat/space-services';
 	],
 })
 export class SneatAppMenuComponent {
+	private readonly authStateService = inject(SneatAuthStateService);
+
 	public authState?: ISneatAuthState;
 
-	constructor(private readonly authStateService: SneatAuthStateService) {
+	constructor() {
+		const authStateService = this.authStateService;
+
 		authStateService.authState.subscribe((authState) => {
 			this.authState = authState;
 		});

@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonButton,
@@ -38,18 +38,16 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	],
 })
 export class AddDbServerComponent implements OnDestroy {
+	private readonly modalCtrl = inject(ModalController);
+	private readonly dbServerService = inject(DbServerService);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+
 	readonly dbServer: IDbServer = {
 		driver: 'sqlserver',
 		host: '',
 	};
 	submitting = false;
 	private readonly destroyed = new Subject<void>();
-
-	constructor(
-		private readonly modalCtrl: ModalController,
-		private readonly dbServerService: DbServerService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {}
 
 	ngOnDestroy() {
 		this.destroyed.next();

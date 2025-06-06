@@ -1,5 +1,5 @@
 import { NgForOf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
 	IonBackButton,
@@ -60,10 +60,9 @@ export class RetroMyFeedbackPageComponent {
 		{ id: 'ideas', title: 'What to improve?' },
 	];
 
-	constructor(
-		route: ActivatedRoute,
-		// private navService: NavService,
-	) {
+	constructor() {
+		const route = inject(ActivatedRoute);
+
 		this.spaceID = route.snapshot.queryParamMap.get('space');
 		this.retroId = getMeetingIdFromDate(new Date());
 	}

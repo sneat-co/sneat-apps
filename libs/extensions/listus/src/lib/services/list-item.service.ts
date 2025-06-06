@@ -1,13 +1,11 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { SneatApiService } from '@sneat/api';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Injectable()
 export class ListItemService {
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly sneatApiService: SneatApiService,
-	) {}
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly sneatApiService = inject(SneatApiService);
 
 	// public txRemoveKinds(): string[] {
 	//     return [ListItemKind, ListKind, CommuneKind];

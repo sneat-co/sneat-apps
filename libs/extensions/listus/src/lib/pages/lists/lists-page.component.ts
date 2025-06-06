@@ -1,4 +1,4 @@
-import { Component, Inject, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonInput,
@@ -76,6 +76,11 @@ import { NewListDialogComponent } from './new-list-dialog.component';
 	providers: [SpaceComponentBaseParams, ListusComponentBaseParams],
 })
 export class ListsPageComponent extends SpaceBaseComponent {
+	private readonly params = inject(ListusComponentBaseParams);
+	private readonly appService = inject<IAppInfo>(APP_INFO);
+	private readonly modalCtrl = inject(PopoverController);
+	private readonly listusAppStateService = inject(IListusAppStateService);
+
 	@ViewChild('newListTitle', { static: false }) newListTitle?: IonInput;
 	addingToGroup: ListType | undefined;
 	listGroups?: IListGroup[];
@@ -84,14 +89,7 @@ export class ListsPageComponent extends SpaceBaseComponent {
 	private userCommunesSubscriptions: Subscription[] = [];
 	private collapsedGroups?: string[];
 
-	constructor(
-		private readonly params: ListusComponentBaseParams,
-		@Inject(APP_INFO) private readonly appService: IAppInfo,
-		private readonly modalCtrl: PopoverController,
-		// private readonly shelfService: ShelfService,
-		// private preloaderService: NgModulePreloaderService,
-		private readonly listusAppStateService: IListusAppStateService,
-	) {
+	constructor() {
 		super('ListsPageComponent');
 		// this.preloaderService.markAsPreloaded('lists');
 		this.listusAppStateService.changed.subscribe((appState) => {

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import {
 	ContactService,
 	IUpdateContactRequest,
@@ -18,7 +18,9 @@ import {
 	imports: [InlistOptionsComponent],
 })
 export class InlistAgeGroupComponent extends WithSpaceInput {
-	constructor(private readonly contactService: ContactService) {
+	private readonly contactService = inject(ContactService);
+
+	constructor() {
 		super('InlistAgeGroupComponent');
 	}
 

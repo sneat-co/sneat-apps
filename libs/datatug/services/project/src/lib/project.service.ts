@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { getStoreUrl, SneatApiServiceFactory } from '@sneat/api';
 import { PrivateTokenStoreService } from '@sneat/auth-core';
 import {
@@ -27,6 +27,14 @@ import {
 
 @Injectable()
 export class ProjectService {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly http = inject(HttpClient);
+	private readonly privateTokenStoreService = inject(PrivateTokenStoreService);
+	private readonly sneatApiServiceFactory = inject(SneatApiServiceFactory);
+	private readonly datatugStoreServiceFactory = inject(
+		DatatugStoreServiceFactory,
+	);
+
 	private projects: Record<string, Observable<IProjectFull>> = {};
 	private projSummary: Record<
 		string,
@@ -34,14 +42,7 @@ export class ProjectService {
 	> = {};
 	// private readonly projectsCollection: AngularFirestoreCollection;
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		// db: AngularFirestore,
-		private readonly http: HttpClient,
-		private readonly privateTokenStoreService: PrivateTokenStoreService,
-		private readonly sneatApiServiceFactory: SneatApiServiceFactory,
-		private readonly datatugStoreServiceFactory: DatatugStoreServiceFactory,
-	) {
+	constructor() {
 		throw new Error('Not implemented');
 		// this.projectsCollection =
 		// 	db.collection<IProjectSummary>('datatug_projects');

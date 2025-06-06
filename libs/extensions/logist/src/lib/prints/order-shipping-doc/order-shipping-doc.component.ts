@@ -1,5 +1,5 @@
 import { NgForOf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
 	IonCard,
 	IonCardContent,
@@ -31,7 +31,9 @@ import { OrderPrintPageBaseComponent } from '../order-print-page-base.component'
 	],
 })
 export class OrderShippingDocComponent extends OrderPrintPageBaseComponent {
-	constructor(orderService: LogistOrderService) {
+	constructor() {
+		const orderService = inject(LogistOrderService);
+
 		super('OrderShippingDocComponent', orderService);
 	}
 }

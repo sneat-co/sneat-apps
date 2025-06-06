@@ -64,7 +64,9 @@ export class CalendarWeekdayComponent extends SneatBaseComponent {
 
 	private readonly scheduleNavService = inject(ScheduleNavService);
 
-	constructor(filterService: CalendarFilterService) {
+	constructor() {
+		const filterService = inject(CalendarFilterService);
+
 		super('CalendarWeekdayComponent');
 		filterService.filter
 			.pipe(this.takeUntilDestroyed())

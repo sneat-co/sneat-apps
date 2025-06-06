@@ -1,17 +1,18 @@
-import { Directive, Inject, InjectionToken } from '@angular/core';
+import { Directive, InjectionToken, inject } from '@angular/core';
 import { SpaceBaseComponent } from '@sneat/space-components';
 import { ILogistOrderContext } from '../dto';
 import { LogistOrderService } from '../services';
 
 @Directive() // we need this decorator so we can implement Angular interfaces
 export class OrderPageBaseComponent extends SpaceBaseComponent {
+	private readonly orderService = inject(LogistOrderService);
+
 	protected order?: ILogistOrderContext;
 	numberOfDispatchers?: number;
 
-	constructor(
-		@Inject(new InjectionToken('className')) className: string,
-		private readonly orderService: LogistOrderService,
-	) {
+	constructor() {
+		const className = inject(new InjectionToken('className'));
+
 		super(className);
 		this.route.paramMap.pipe(this.takeUntilDestroyed()).subscribe((params) => {
 			this.order = {

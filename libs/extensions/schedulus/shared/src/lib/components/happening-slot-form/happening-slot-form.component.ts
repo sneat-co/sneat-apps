@@ -10,6 +10,7 @@ import {
 	signal,
 	SimpleChanges,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import {
 	FormControl,
@@ -100,6 +101,9 @@ export class HappeningSlotFormComponent
 	extends WeekdaysFormBase
 	implements OnChanges, OnDestroy, IHappeningSlotFormComponentInputs
 {
+	protected readonly modalCtrl = inject(ModalController);
+	private readonly happeningService = inject(HappeningService);
+
 	public readonly $happening = input.required<IHappeningContext>();
 	public readonly $happeningID = computed(() => this.$happening().id);
 	protected readonly $happeningType = computed(
@@ -197,10 +201,7 @@ export class HappeningSlotFormComponent
 		);
 	});
 
-	constructor(
-		protected readonly modalCtrl: ModalController,
-		private readonly happeningService: HappeningService,
-	) {
+	constructor() {
 		super('RecurringSlotFormComponent', true);
 		// const now = new Date();
 		const preselectedWd = window.history.state.wd as WeekdayCode2;

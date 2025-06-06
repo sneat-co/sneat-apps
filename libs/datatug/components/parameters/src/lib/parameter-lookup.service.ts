@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { IonInput, ModalController } from '@ionic/angular/standalone';
 import { share } from 'rxjs/operators';
@@ -12,11 +12,9 @@ import { AgentService } from '@sneat/ext-datatug-services-repo';
 
 @Injectable()
 export class ParameterLookupService {
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly modal: ModalController,
-		private readonly agentService: AgentService,
-	) {}
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly modal = inject(ModalController);
+	private readonly agentService = inject(AgentService);
 
 	public lookupParameterValue(
 		parameter: IParameterDef,

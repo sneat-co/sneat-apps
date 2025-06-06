@@ -3,10 +3,10 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	Output,
 	signal,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -52,14 +52,12 @@ import { HappeningPriceModalComponent } from '../happening-price-form/happening-
 	],
 })
 export class HappeningPricesComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly modalCtrl = inject(ModalController);
+	private readonly happeningService = inject(HappeningService);
+
 	@Input({ required: true }) happening?: IHappeningContext;
 	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly modalCtrl: ModalController,
-		private readonly happeningService: HappeningService,
-	) {}
 
 	protected openNewPriceForm(): void {
 		this.modalCtrl

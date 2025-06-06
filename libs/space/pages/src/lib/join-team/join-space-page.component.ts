@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	signal,
+	inject,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -73,6 +78,11 @@ export const getPinFromUrl: () => string = () => {
 	templateUrl: './join-space-page.component.html',
 })
 export class JoinSpacePageComponent extends WithSpaceInput {
+	protected readonly route = inject(ActivatedRoute);
+	private readonly navService = inject(SpaceNavService);
+	private readonly inviteService = inject(InviteService);
+	private readonly authStateService = inject(SneatAuthStateService);
+
 	private readonly id?: string;
 	public inviteInfo?: IJoinSpaceInfoResponse;
 	public pin?: string;
@@ -101,12 +111,7 @@ export class JoinSpacePageComponent extends WithSpaceInput {
 
 	public authStatus: AuthStatus = AuthStatuses.authenticating;
 
-	constructor(
-		protected readonly route: ActivatedRoute,
-		private readonly navService: SpaceNavService,
-		private readonly inviteService: InviteService,
-		private readonly authStateService: SneatAuthStateService,
-	) {
+	constructor() {
 		super('JoinSpacePageComponent');
 		this.getActionFromLocationHash();
 		this.id = this.route.snapshot.queryParamMap.get('id') || undefined;

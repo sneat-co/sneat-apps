@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -24,6 +24,12 @@ import {
 	styleUrls: ['./datatug-menu.component.scss'],
 })
 export class DatatugMenuComponent implements OnDestroy {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly sneatAuthStateService = inject(SneatAuthStateService);
+	private readonly datatugNavContextService = inject(DatatugNavContextService);
+	private readonly nav = inject(DatatugNavService);
+	private readonly datatugUserService = inject(DatatugUserService);
+
 	public authStatus?: AuthStatus;
 	public currentStoreId?: string;
 	public currentProject?: IProjectContext;
@@ -35,15 +41,10 @@ export class DatatugMenuComponent implements OnDestroy {
 
 	public datatugUserState?: IDatatugUserState;
 
-	constructor(
-		@Inject(ErrorLogger)
-		private readonly errorLogger: IErrorLogger,
-		private readonly sneatAuthStateService: SneatAuthStateService,
-		private readonly datatugNavContextService: DatatugNavContextService,
-		private readonly nav: DatatugNavService,
-		// private readonly storeService: DatatugStoreService,
-		private readonly datatugUserService: DatatugUserService,
-	) {
+	constructor() {
+		const errorLogger = this.errorLogger;
+		const datatugNavContextService = this.datatugNavContextService;
+
 		// console.log('DatatugMenuComponent.constructor()');
 		this.sneatAuthStateService.authState
 			.pipe(takeUntil(this.destroyed))

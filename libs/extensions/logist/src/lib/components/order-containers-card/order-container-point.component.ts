@@ -2,10 +2,10 @@ import { NgIf } from '@angular/common';
 import {
 	ChangeDetectorRef,
 	Component,
-	Inject,
 	Input,
 	OnChanges,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -65,6 +65,10 @@ import { ContainerPointLoadFormComponent } from './container-point-load-form.com
 	],
 })
 export class OrderContainerPointComponent implements OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly orderService = inject(LogistOrderService);
+	private readonly changeDetector = inject(ChangeDetectorRef);
+
 	@Input({ required: true }) space?: ISpaceContext;
 	@Input() order?: ILogistOrderContext;
 	// @Input() shippingPoint?: IOrderShippingPoint;
@@ -79,12 +83,6 @@ export class OrderContainerPointComponent implements OnChanges {
 
 	protected deleting = false;
 	protected saving = false;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly orderService: LogistOrderService,
-		private readonly changeDetector: ChangeDetectorRef,
-	) {}
 
 	get showNotes(): boolean {
 		return (this.dateTimeTab as string) === 'notes';

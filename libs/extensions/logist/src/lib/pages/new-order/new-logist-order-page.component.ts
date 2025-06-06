@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonBackButton,
@@ -56,6 +56,10 @@ import { NewOrderContainersFormComponent } from './new-order-containers-form.com
 	],
 })
 export class NewLogistOrderPageComponent extends SpaceBaseComponent {
+	private readonly freightOrdersService = inject(LogistOrderService);
+	private readonly logistSpaceService = inject(LogistSpaceService);
+	private readonly contactService = inject(ContactService);
+
 	public order: ILogistOrderContext = {
 		id: '',
 		space: this.space || { id: '', type: 'company' },
@@ -85,11 +89,7 @@ export class NewLogistOrderPageComponent extends SpaceBaseComponent {
 
 	readonly = false;
 
-	constructor(
-		private readonly freightOrdersService: LogistOrderService,
-		private readonly logistSpaceService: LogistSpaceService,
-		private readonly contactService: ContactService,
-	) {
+	constructor() {
 		super('NewLogistOrderPageComponent');
 	}
 

@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonBackButton,
@@ -65,6 +65,8 @@ import { DocumentsListComponent } from './components/documents-list/documents-li
 	],
 })
 export class DocumentsPageComponent extends SpaceItemsBaseComponent {
+	private assetService = inject(AssetService);
+
 	public segment: 'type' | 'owner' | 'list' = 'type';
 
 	public documents: IAssetDocumentContext[];
@@ -72,7 +74,7 @@ export class DocumentsPageComponent extends SpaceItemsBaseComponent {
 
 	protected $filter = signal<string>('');
 
-	constructor(private assetService: AssetService) {
+	constructor() {
 		super('DocumentsPageComponent', '');
 		this.documents = window.history.state.documents as IAssetContext<
 			'document',

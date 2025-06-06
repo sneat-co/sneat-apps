@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Inject, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, inject } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -42,19 +42,26 @@ export class RetrospectivePageComponent
 	extends SpaceBaseComponent
 	implements OnDestroy
 {
+	readonly changeDetectorRef: ChangeDetectorRef;
+	readonly errorLogger: IErrorLogger;
+	readonly spaceService: SpaceService;
+	readonly route: ActivatedRoute;
+	readonly userService: SneatUserService;
+	readonly navController: NavController;
+	private readonly retrospectiveService = inject(RetrospectiveService);
+
 	public title = 'Retrospective';
 	public retrospective: IRecord<IRetrospective>;
 	private retroSub: Subscription;
 
-	constructor(
-		readonly changeDetectorRef: ChangeDetectorRef,
-		@Inject(ErrorLogger) readonly errorLogger: IErrorLogger,
-		readonly spaceService: SpaceService,
-		readonly route: ActivatedRoute,
-		readonly userService: SneatUserService,
-		readonly navController: NavController,
-		private readonly retrospectiveService: RetrospectiveService,
-	) {
+	constructor() {
+		const changeDetectorRef = inject(ChangeDetectorRef);
+		const errorLogger = inject<IErrorLogger>(ErrorLogger);
+		const spaceService = inject(SpaceService);
+		const route = inject(ActivatedRoute);
+		const userService = inject(SneatUserService);
+		const navController = inject(NavController);
+
 		super(
 			changeDetectorRef,
 			route,
@@ -63,6 +70,13 @@ export class RetrospectivePageComponent
 			spaceService,
 			userService,
 		);
+		this.changeDetectorRef = changeDetectorRef;
+		this.errorLogger = errorLogger;
+		this.spaceService = spaceService;
+		this.route = route;
+		this.userService = userService;
+		this.navController = navController;
+
 		this.trackMeetingIdFromUrl();
 	}
 

@@ -1,12 +1,12 @@
 import {
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	OnChanges,
 	OnDestroy,
 	Output,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -25,6 +25,8 @@ import { Subscription } from 'rxjs';
 	imports: [IonButton, IonSpinner, IonIcon, IonLabel],
 })
 export class TimerMemberButtonComponent implements OnDestroy, OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+
 	@Input() public scrumID?: string;
 	@Input() public scrum?: IScrumDbo;
 	@Input() public memberID?: string;
@@ -36,10 +38,6 @@ export class TimerMemberButtonComponent implements OnDestroy, OnChanges {
 	public timerState?: ITimerState;
 
 	private timerSubscription?: Subscription;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {}
 
 	public get isDisabled(): boolean {
 		return !!(

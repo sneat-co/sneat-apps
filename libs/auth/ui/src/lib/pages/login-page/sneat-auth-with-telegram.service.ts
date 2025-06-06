@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { SneatApiService } from '@sneat/api';
 import { SneatAuthStateService } from '@sneat/auth-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -20,11 +20,9 @@ interface IResponse {
 
 @Injectable()
 export class SneatAuthWithTelegramService {
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly apiService: SneatApiService,
-		private readonly authService: SneatAuthStateService,
-	) {}
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly apiService = inject(SneatApiService);
+	private readonly authService = inject(SneatAuthStateService);
 
 	public loginWithTelegram(
 		botID: string,

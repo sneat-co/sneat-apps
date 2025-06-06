@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
 	IonBackButton,
 	IonButtons,
@@ -25,10 +25,11 @@ import { OrderPageBaseComponent } from '../order-page-base.component';
 	],
 })
 export class NewSegmentPageComponent extends OrderPageBaseComponent {
-	constructor(
-		orderService: LogistOrderService,
-		private readonly orderNavService: OrderNavService,
-	) {
+	private readonly orderNavService = inject(OrderNavService);
+
+	constructor() {
+		const orderService = inject(LogistOrderService);
+
 		super('NewSegmentPageComponent', orderService);
 	}
 

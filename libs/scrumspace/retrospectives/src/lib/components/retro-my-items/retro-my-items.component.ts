@@ -1,4 +1,4 @@
-import { Component, Inject, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, inject } from '@angular/core';
 import {
 	FormControl,
 	ReactiveFormsModule,
@@ -39,6 +39,9 @@ import {
 	],
 })
 export class RetroMyItemsComponent {
+	private readonly retrospectiveService = inject(RetrospectiveService);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+
 	@ViewChild(IonInput, { static: true }) titleInput?: IonInput; // TODO: strong typing : IonInput;
 
 	@Input() public question?: RetroItemType;
@@ -52,11 +55,6 @@ export class RetroMyItemsComponent {
 	});
 
 	public items?: IRetroItem[];
-
-	constructor(
-		private readonly retrospectiveService: RetrospectiveService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {}
 
 	public trackById = (i: number, item: IRetroItem) => item.ID;
 

@@ -1,9 +1,9 @@
 import {
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	OnDestroy,
+	inject,
 } from '@angular/core';
 import { IonCard } from '@ionic/angular/standalone';
 import {
@@ -22,17 +22,13 @@ import { HappeningService } from '../../../../services/happening.service';
 	imports: [IonCard],
 })
 export class RecurringCardComponent implements OnDestroy {
+	private readonly happeningService = inject(HappeningService);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly spaceNavService = inject(SpaceNavService);
+
 	private readonly destroyed = new EventEmitter<void>();
 	@Input() recurring?: IHappeningWithUiState;
 	@Input({ required: true }) space?: ISpaceContext;
-
-	constructor(
-		private readonly happeningService: HappeningService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly spaceNavService: SpaceNavService,
-	) {
-		//
-	}
 
 	ngOnDestroy(): void {
 		this.destroyed.next();

@@ -5,6 +5,7 @@ import {
 	EventEmitter,
 	Input,
 	Output,
+	inject,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -62,6 +63,9 @@ import { RadioGroupToSelectComponent, SelectOption } from '@sneat/wizard';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HappeningPriceModalComponent extends SneatBaseModalComponent {
+	protected readonly changeDetectorRef = inject(ChangeDetectorRef);
+	protected readonly happeningService = inject(HappeningService);
+
 	@Input({ required: true }) happening?: IHappeningContext;
 
 	@Output() happeningChange = new EventEmitter<IHappeningContext>();
@@ -73,10 +77,7 @@ export class HappeningPriceModalComponent extends SneatBaseModalComponent {
 
 	protected isSubmitting = false;
 
-	constructor(
-		protected readonly changeDetectorRef: ChangeDetectorRef,
-		protected readonly happeningService: HappeningService,
-	) {
+	constructor() {
 		super('HappeningPriceFormComponent');
 		this.setTermLengths();
 	}

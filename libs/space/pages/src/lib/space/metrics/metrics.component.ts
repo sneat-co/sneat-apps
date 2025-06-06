@@ -1,4 +1,4 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import {
 	IonButton,
 	IonButtons,
@@ -36,18 +36,16 @@ import { SpaceNavService, SpaceService } from '@sneat/space-services';
 	],
 })
 export class MetricsComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly spaceService = inject(SpaceService);
+	private readonly navController = inject(NavController);
+	readonly navService = inject(SpaceNavService);
+
 	@Input() public space?: IRecord<ISpaceDbo>;
 
 	public deletingMetrics: string[] = [];
 
 	private readonly demoMetrics = ['cc', 'bb', 'wfh'];
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly spaceService: SpaceService,
-		private readonly navController: NavController,
-		public readonly navService: SpaceNavService,
-	) {}
 
 	public get isDemoMetricsOnly(): boolean {
 		const metrics = this.space?.dbo?.metrics;

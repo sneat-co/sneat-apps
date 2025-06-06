@@ -12,6 +12,7 @@ import {
 	signal,
 	SimpleChanges,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -78,6 +79,9 @@ export class CalendarComponent
 	extends CalendarBaseComponent
 	implements OnInit, AfterViewInit, OnChanges, OnDestroy
 {
+	private readonly filterService = inject(CalendarFilterService);
+	private readonly calendarStateService = inject(CalendarStateService);
+
 	private readonly $filter = signal(emptyCalendarFilter);
 
 	// prevWeekdays: SlotsGroup[];
@@ -97,13 +101,11 @@ export class CalendarComponent
 		readonly IHappeningWithUiState[] | undefined
 	>(() => this.filterRecurrings(this.$filter(), this.$allRecurrings()));
 
-	constructor(
-		private readonly filterService: CalendarFilterService,
-		private readonly calendarStateService: CalendarStateService,
-		happeningService: HappeningService,
-		calendarDayService: CalendarDayService,
-		calendariumSpaceService: CalendariumSpaceService,
-	) {
+	constructor() {
+		const happeningService = inject(HappeningService);
+		const calendarDayService = inject(CalendarDayService);
+		const calendariumSpaceService = inject(CalendariumSpaceService);
+
 		super(
 			'CalendarComponent',
 			calendariumSpaceService,

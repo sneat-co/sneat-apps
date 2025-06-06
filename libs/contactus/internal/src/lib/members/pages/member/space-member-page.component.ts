@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonBackButton,
@@ -44,7 +44,9 @@ import { MemberBasePage } from '../member-base-page';
 export class SpaceMemberPageComponent extends MemberBasePage {
 	public relatedAs?: MemberRelationship;
 
-	constructor(contactService: ContactService) {
+	constructor() {
+		const contactService = inject(ContactService);
+
 		super('SpaceMemberPageComponent', contactService);
 	}
 

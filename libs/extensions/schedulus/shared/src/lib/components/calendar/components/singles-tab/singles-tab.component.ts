@@ -9,6 +9,7 @@ import {
 	OnDestroy,
 	Output,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonSegment, IonSegmentButton } from '@ionic/angular/standalone';
@@ -35,6 +36,9 @@ export class SinglesTabComponent
 	extends WithSpaceInput
 	implements OnChanges, OnDestroy
 {
+	private readonly happeningService = inject(HappeningService);
+	private readonly changeDetectorRef = inject(ChangeDetectorRef);
+
 	private upcomingSinglesSubscription?: Subscription;
 	protected upcomingSingles?: IHappeningContext[];
 
@@ -54,10 +58,7 @@ export class SinglesTabComponent
 		IContactusSpaceDboAndID | undefined
 	>();
 
-	constructor(
-		private readonly happeningService: HappeningService,
-		private readonly changeDetectorRef: ChangeDetectorRef,
-	) {
+	constructor() {
 		super('SinglesTabComponent');
 	}
 

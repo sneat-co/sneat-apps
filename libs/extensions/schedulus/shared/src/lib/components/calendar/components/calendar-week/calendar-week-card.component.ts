@@ -3,6 +3,7 @@ import {
 	Component,
 	input,
 	Input,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -50,7 +51,9 @@ export class CalendarWeekCardComponent extends SwipeableBaseComponent {
 		return this.evenSlide as SwipeableWeek;
 	}
 
-	constructor(scheduleStateService: CalendarStateService) {
+	constructor() {
+		const scheduleStateService = inject(CalendarStateService);
+
 		super('ScheduleWeekCardComponent', scheduleStateService, 7);
 
 		this.createSlides();

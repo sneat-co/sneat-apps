@@ -1,9 +1,9 @@
 import {
 	Component,
 	EventEmitter,
-	Inject,
 	Output,
 	ViewChild,
+	inject,
 } from '@angular/core';
 // import { getApp } from '@angular/fire/app';
 // import { getAuth } from '@angular/fire/auth';
@@ -71,6 +71,16 @@ import {
 	],
 })
 export class EmailLoginFormComponent {
+	readonly appInfo = inject<IAppInfo>(APP_INFO);
+	private readonly analyticsService =
+		inject<IAnalyticsService>(AnalyticsService);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly toastController = inject(ToastController);
+	private readonly afAuth = inject(AngularFireAuth);
+	private readonly randomIdService = inject(RandomIdService);
+	private readonly sneatApiService = inject(SneatApiService);
+	private readonly userRecordService = inject(UserRecordService);
+
 	protected sign: 'in' | 'up' = 'up'; // TODO: document here what 'in' & 'up' means
 	protected email = '';
 	protected password = '';
@@ -91,17 +101,7 @@ export class EmailLoginFormComponent {
 
 	public readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
 
-	constructor(
-		@Inject(APP_INFO) public readonly appInfo: IAppInfo,
-		@Inject(AnalyticsService)
-		private readonly analyticsService: IAnalyticsService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly toastController: ToastController,
-		private readonly afAuth: AngularFireAuth,
-		private readonly randomIdService: RandomIdService,
-		private readonly sneatApiService: SneatApiService,
-		private readonly userRecordService: UserRecordService,
-	) {
+	constructor() {
 		this.email = localStorage.getItem('emailForSignIn') || '';
 		if (this.email) {
 			this.sign = 'in';

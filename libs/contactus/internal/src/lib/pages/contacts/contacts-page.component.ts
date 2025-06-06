@@ -4,6 +4,7 @@ import {
 	computed,
 	OnDestroy,
 	signal,
+	inject,
 } from '@angular/core';
 import {
 	IonBackButton,
@@ -68,6 +69,8 @@ export class ContactsPageComponent
 	extends SpaceItemsBaseComponent
 	implements OnDestroy
 {
+	private readonly contactusSpaceService = inject(ContactusSpaceService);
+
 	protected readonly $allContacts = signal<
 		undefined | readonly IContactWithCheck[]
 	>(undefined);
@@ -87,10 +90,7 @@ export class ContactsPageComponent
 		this.$allContacts()?.filter((c) => c.isChecked),
 	);
 
-	constructor(
-		// private readonly contactService: ContactService,
-		private readonly contactusSpaceService: ContactusSpaceService,
-	) {
+	constructor() {
 		super('ContactsPageComponent', '');
 		const role = location.pathname.match(/(applicant|landlord|tenant)/);
 		if (role) {

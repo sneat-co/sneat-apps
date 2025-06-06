@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	signal,
+	inject,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonButton,
@@ -40,16 +45,16 @@ import { UserAuthAProviderStatusComponent } from './user-auth-provider-status';
 	],
 })
 export class UserAuthAccountsComponent extends SneatBaseComponent {
+	private readonly sneatUserService = inject(SneatUserService);
+	private readonly sneatApiService = inject(SneatApiService);
+
 	protected readonly $userRecord = signal<IUserRecord | undefined>(undefined);
 
 	protected readonly signingInWith = signal<AuthProviderID | undefined>(
 		undefined,
 	);
 
-	constructor(
-		private readonly sneatUserService: SneatUserService,
-		private readonly sneatApiService: SneatApiService,
-	) {
+	constructor() {
 		super('UserAuthAccountsComponent');
 		this.sneatUserService.userState.pipe(this.takeUntilDestroyed()).subscribe({
 			next: (user) => {

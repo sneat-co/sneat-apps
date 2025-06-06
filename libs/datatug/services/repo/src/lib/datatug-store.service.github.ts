@@ -1,13 +1,13 @@
 import { IDatatugStoreService } from './datatug-store.service.interface';
 import { Observable, of, throwError } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { IProjectSummary } from '@sneat/ext-datatug-models';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class DatatugStoreGithubService implements IDatatugStoreService {
-	constructor(private readonly http: HttpClient) {}
+	private readonly http = inject(HttpClient);
 
 	getProjectSummary(projectId: string): Observable<IProjectSummary> {
 		console.log('DatatugStoreGithubService.getProjectSummary()', projectId);

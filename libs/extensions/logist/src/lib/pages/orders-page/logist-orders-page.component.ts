@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import {
 	IonBackButton,
 	IonButton,
@@ -42,6 +42,9 @@ const defaultFilter: IOrdersFilter = { status: 'active' };
 	],
 })
 export class LogistOrdersPageComponent extends SpaceBaseComponent {
+	private readonly ordersService = inject(LogistOrderService);
+	private readonly changeDetectorRef = inject(ChangeDetectorRef);
+
 	orders?: ILogistOrderContext[];
 
 	private ordersSubscription?: Subscription;
@@ -49,10 +52,7 @@ export class LogistOrdersPageComponent extends SpaceBaseComponent {
 
 	protected viewMode: 'list' | 'grid' = 'grid';
 
-	constructor(
-		private readonly ordersService: LogistOrderService,
-		private readonly changeDetectorRef: ChangeDetectorRef,
-	) {
+	constructor() {
 		super('OrdersPageComponent');
 	}
 

@@ -2,11 +2,11 @@ import { NgIf } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	OnChanges,
 	Output,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -52,6 +52,10 @@ import { OrderCounterpartyInputComponent } from '../order-counterparty-input/ord
 	],
 })
 export class OrderCounterpartyComponent implements OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly orderService = inject(LogistOrderService);
+	private readonly toastController = inject(ToastController);
+
 	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';
 	@Input() readonly = false;
 	@Input() useColumns = true;
@@ -82,12 +86,6 @@ export class OrderCounterpartyComponent implements OnChanges {
 	isRefNumberChanged = false;
 
 	savingRefNumber = false;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly orderService: LogistOrderService,
-		private readonly toastController: ToastController,
-	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (

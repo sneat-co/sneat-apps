@@ -5,6 +5,7 @@ import {
 	computed,
 	input,
 	signal,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -39,6 +40,10 @@ import { CalendarDayCardComponent } from './calendar-day-card.component';
 	styleUrls: ['calendar-day-tab.component.scss'],
 })
 export class CalendarDayTabComponent extends WithSpaceInput {
+	private readonly scheduleSateService = inject(CalendarStateService);
+	private readonly popoverController = inject(PopoverController);
+	private readonly changeDetectorRef = inject(ChangeDetectorRef);
+
 	private readonly $date = signal<Date | undefined>(undefined);
 
 	protected readonly $dateAsIsoString = computed(() => {
@@ -48,12 +53,10 @@ export class CalendarDayTabComponent extends WithSpaceInput {
 
 	public readonly $spaceDaysProvider = input.required<CalendarDataProvider>();
 
-	constructor(
-		private readonly scheduleSateService: CalendarStateService,
-		private readonly popoverController: PopoverController,
-		private readonly changeDetectorRef: ChangeDetectorRef,
-	) {
+	constructor() {
 		super('CalendarDayTabComponent');
+		const scheduleSateService = this.scheduleSateService;
+
 		scheduleSateService.dateChanged.pipe(this.takeUntilDestroyed()).subscribe({
 			next: (value) => {
 				console.log('ScheduleDayTabComponent => date changed:', value.date);

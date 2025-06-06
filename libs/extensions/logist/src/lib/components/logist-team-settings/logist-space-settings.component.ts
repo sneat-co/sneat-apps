@@ -2,12 +2,12 @@ import { JsonPipe, NgIf } from '@angular/common';
 import {
 	AfterViewInit,
 	Component,
-	Inject,
 	Input,
 	OnChanges,
 	OnDestroy,
 	SimpleChanges,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import {
 	FormControl,
@@ -67,6 +67,10 @@ type LogistSpaceSettingsForm = FormGroup<ILogistSpaceSettingsFormControls>;
 export class LogistSpaceSettingsComponent
 	implements OnChanges, OnDestroy, AfterViewInit
 {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly logistSpaceService = inject(LogistSpaceService);
+	private readonly contactService = inject(ContactService);
+
 	@Input({ required: true }) space?: ISpaceContext;
 	@Input() logistSpace?: ILogistSpaceContext;
 
@@ -91,12 +95,6 @@ export class LogistSpaceSettingsComponent
 	}) as unknown as LogistSpaceSettingsForm; // TODO: get rid of unknown
 
 	isSubmitting = false;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly logistSpaceService: LogistSpaceService,
-		private readonly contactService: ContactService, // private readonly navController: NavController,
-	) {}
 
 	ngAfterViewInit(): void /* Intentionally not ngOnInit */ {
 		const c = this.addressFormComponent;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import {
@@ -68,6 +68,9 @@ import { AssetsBasePage } from '../assets-base.page';
 	],
 }) /*implements AfterViewInit*/
 export class AssetsPageComponent extends AssetsBasePage implements OnInit {
+	private readonly assetusSpaceService = inject(AssetusSpaceService);
+	private readonly alertCtrl = inject(AlertController);
+
 	public vehicles?: IAssetContext[];
 
 	protected readonly assetTypes: IAssetCategory[] = [
@@ -77,10 +80,7 @@ export class AssetsPageComponent extends AssetsBasePage implements OnInit {
 
 	public segment: 'all' | 'byCategory' = 'byCategory';
 
-	constructor(
-		private readonly assetusSpaceService: AssetusSpaceService,
-		private readonly alertCtrl: AlertController,
-	) {
+	constructor() {
 		super('AssetsPageComponent');
 	}
 

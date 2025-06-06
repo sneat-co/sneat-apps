@@ -1,12 +1,12 @@
 import {
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	OnChanges,
 	Output,
 	SimpleChanges,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import {
 	FormControl,
@@ -76,6 +76,9 @@ import { TimeSelectorComponent } from './time-selector.component';
 	],
 })
 export class StartEndDatetimeFormComponent implements OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly modalController = inject(ModalController);
+
 	@Input() addSlotLabel?: string;
 	@Input({ required: true }) mode?: HappeningType;
 	@Input({ required: true }) date?: string;
@@ -164,10 +167,7 @@ export class StartEndDatetimeFormComponent implements OnChanges {
 		);
 	}
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly modalController: ModalController, // private readonly popoverController: PopoverController,
-	) {
+	constructor() {
 		console.log('StartEndDatetimeFormComponent.constructor()');
 		this.endTime.disable();
 	}

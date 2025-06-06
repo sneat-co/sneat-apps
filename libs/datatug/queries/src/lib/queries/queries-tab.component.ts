@@ -1,5 +1,5 @@
 import { TitleCasePipe } from '@angular/common';
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonBadge,
@@ -62,6 +62,13 @@ type QueryType = 'SQL' | 'GraphQL' | 'HTTP';
 	],
 })
 export class QueriesTabComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly route = inject(ActivatedRoute);
+	private readonly router = inject(Router);
+	private readonly queriesService = inject(QueriesService);
+	private readonly dataTugNavContextService = inject(DatatugNavContextService);
+	private readonly dataTugNavService = inject(DatatugNavService);
+
 	@Input() rootFolder?: 'shared' | 'personal' | 'bookmarked';
 	@Input() project?: IProjectContext;
 
@@ -88,14 +95,7 @@ export class QueriesTabComponent {
 
 	public currentFolder: IQueryFolderContext = { path: '~', id: '' };
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly route: ActivatedRoute,
-		private readonly router: Router,
-		private readonly queriesService: QueriesService,
-		private readonly dataTugNavContextService: DatatugNavContextService,
-		private readonly dataTugNavService: DatatugNavService,
-	) {
+	constructor() {
 		console.log('QueriesPageComponent.constructor()');
 		this.route.queryParamMap.subscribe({
 			next: (queryParams) => {

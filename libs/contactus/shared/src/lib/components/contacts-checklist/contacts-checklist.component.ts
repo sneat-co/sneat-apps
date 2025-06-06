@@ -9,6 +9,7 @@ import {
 	signal,
 	computed,
 	effect,
+	inject,
 } from '@angular/core';
 import { IonItem, IonLabel } from '@ionic/angular/standalone';
 import { ContactusSpaceService } from '@sneat/contactus-services';
@@ -41,6 +42,9 @@ export interface ICheckChangedArgs {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactsChecklistComponent extends SneatBaseComponent {
+	private readonly changeDetectorRef = inject(ChangeDetectorRef);
+	private readonly contactusSpaceService = inject(ContactusSpaceService);
+
 	public readonly $lastItemLine = input<
 		undefined | 'full' | 'none' | 'inset'
 	>();
@@ -129,10 +133,7 @@ export class ContactsChecklistComponent extends SneatBaseComponent {
 	protected readonly contactID = (_: number, contact: IContactWithBrief) =>
 		contact.id;
 
-	constructor(
-		private readonly changeDetectorRef: ChangeDetectorRef,
-		private readonly contactusSpaceService: ContactusSpaceService,
-	) {
+	constructor() {
 		super('ContactsChecklistComponent');
 		effect(() => {
 			const spaceID = this.$spaceID();

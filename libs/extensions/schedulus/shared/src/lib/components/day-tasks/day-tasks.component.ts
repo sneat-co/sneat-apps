@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Component({
@@ -6,9 +6,7 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	templateUrl: './day-tasks.component.html',
 })
 export class DayTasksComponent {
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger, // private readonly slotsProvider: ISlotsProvider,
-	) {}
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
 
 	// ngOnInit(): void {
 	// this.slotsProvider.preloadEvents(undefined, new Date())

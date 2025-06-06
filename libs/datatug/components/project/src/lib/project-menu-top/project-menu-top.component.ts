@@ -1,5 +1,5 @@
 import { AsyncPipe, NgForOf } from '@angular/common';
-import { Component, Inject, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import {
 	IonButton,
 	IonButtons,
@@ -43,6 +43,11 @@ interface IProjectTopLevelPage {
 	],
 })
 export class ProjectMenuTopComponent implements OnDestroy {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly datatugNavContextService = inject(DatatugNavContextService);
+	private readonly nav = inject(DatatugNavService);
+	private readonly userService = inject(DatatugUserService);
+
 	public readonly projTopLevelPages: IProjectTopLevelPage[] = [
 		{
 			path: 'overview',
@@ -102,12 +107,9 @@ export class ProjectMenuTopComponent implements OnDestroy {
 
 	private destroyed = new Subject<void>();
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly datatugNavContextService: DatatugNavContextService,
-		private readonly nav: DatatugNavService,
-		private readonly userService: DatatugUserService,
-	) {
+	constructor() {
+		const datatugNavContextService = this.datatugNavContextService;
+
 		this.datatugNavContextService.currentProject
 			.pipe(takeUntil(this.destroyed))
 			.subscribe({

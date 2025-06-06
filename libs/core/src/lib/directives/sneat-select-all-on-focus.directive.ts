@@ -1,10 +1,10 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, inject } from '@angular/core';
 
 @Directive({
 	selector: '[sneatSelectAllOnFocus]',
 })
 export class SneatSelectAllOnFocusDirective {
-	constructor(private readonly el: ElementRef) {}
+	private readonly el = inject(ElementRef);
 
 	@HostListener('focus') // TODO: Fix - for some reason does not get focus events
 	public selectAll() {

@@ -1,5 +1,5 @@
 import { ActionSheetController } from '@ionic/angular/standalone';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { QueryType } from '@sneat/ext-datatug-models';
 import { QueryEditorStateService } from './query-editor-state-service';
 import { RandomIdService } from '@sneat/random';
@@ -8,12 +8,10 @@ import { IProjectRef } from '@sneat/ext-datatug-core';
 
 @Injectable()
 export class QueriesUiService {
-	constructor(
-		private readonly randomIdService: RandomIdService,
-		private readonly actionSheet: ActionSheetController,
-		private readonly queryEditorStateService: QueryEditorStateService,
-		private readonly nav: DatatugNavService,
-	) {}
+	private readonly randomIdService = inject(RandomIdService);
+	private readonly actionSheet = inject(ActionSheetController);
+	private readonly queryEditorStateService = inject(QueryEditorStateService);
+	private readonly nav = inject(DatatugNavService);
 
 	async openNewQuery(projectRef: IProjectRef): Promise<void> {
 		console.log('openNewQuery', projectRef);

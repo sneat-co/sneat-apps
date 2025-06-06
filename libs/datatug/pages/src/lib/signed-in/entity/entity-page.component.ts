@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component, Inject, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -71,6 +71,11 @@ import { IGridColumn } from '@sneat/grid';
 	],
 })
 export class EntityPageComponent implements OnDestroy {
+	readonly route = inject(ActivatedRoute);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	readonly entityService = inject(EntityService);
+	readonly http = inject(HttpClient);
+
 	storeId?: string;
 	projectId?: string;
 	entityId?: string;
@@ -81,12 +86,9 @@ export class EntityPageComponent implements OnDestroy {
 	sourceCols?: IGridColumn[];
 	private destroyed = new Subject<void>();
 
-	constructor(
-		readonly route: ActivatedRoute,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		readonly entityService: EntityService,
-		readonly http: HttpClient,
-	) {
+	constructor() {
+		const route = this.route;
+
 		this.projEntity = history.state.entity;
 		route.paramMap.pipe(takeUntil(this.destroyed)).subscribe((params) => {
 			this.storeId = params.get(routingParamStoreId) || undefined;

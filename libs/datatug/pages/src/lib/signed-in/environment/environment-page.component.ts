@@ -1,5 +1,5 @@
 import { NgForOf, NgIf } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -56,6 +56,12 @@ import { IProjectContext } from '@sneat/ext-datatug-nav';
 	],
 })
 export class EnvironmentPageComponent {
+	private readonly route = inject(ActivatedRoute);
+	private readonly envService = inject(EnvironmentService);
+	private readonly navController = inject(NavController);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly dataTugNavContextService = inject(DatatugNavContextService);
+
 	projEnv?: IProjEnv;
 	projBrief?: IDatatugProjectBriefWithIdAndStoreRef;
 
@@ -65,13 +71,7 @@ export class EnvironmentPageComponent {
 	public defaultBackUrl = '/store/localhost:8989';
 	private envId?: string;
 
-	constructor(
-		private readonly route: ActivatedRoute,
-		private readonly envService: EnvironmentService,
-		private readonly navController: NavController,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly dataTugNavContextService: DatatugNavContextService,
-	) {
+	constructor() {
 		this.projEnv = history.state.projEnv as IProjEnv;
 
 		this.dataTugNavContextService.currentProject.subscribe({

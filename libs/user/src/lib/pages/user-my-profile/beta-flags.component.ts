@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import {
 	IonCard,
 	IonCheckbox,
@@ -28,7 +28,9 @@ export class BetaFlagsComponent extends SneatBaseComponent {
 		undefined,
 	);
 
-	constructor(userService: SneatUserService) {
+	constructor() {
+		const userService = inject(SneatUserService);
+
 		super('BetaFlagsComponent');
 		userService.userState.pipe(this.takeUntilDestroyed()).subscribe({
 			next: (user) => this.$userRecord.set(user.record),

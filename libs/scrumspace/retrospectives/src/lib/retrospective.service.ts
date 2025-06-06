@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
 	IRetroItem,
 	IRetrospective,
@@ -38,7 +38,9 @@ export interface IAddRetroItemResponse {
 
 @Injectable()
 export class RetrospectiveService extends BaseMeetingService {
-	constructor(sneatApiService: SneatApiService) {
+	constructor() {
+		const sneatApiService = inject(SneatApiService);
+
 		super('retrospective', sneatApiService);
 	}
 

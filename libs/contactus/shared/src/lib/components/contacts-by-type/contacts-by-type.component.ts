@@ -9,6 +9,7 @@ import {
 	Output,
 	signal,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -69,6 +70,8 @@ export class ContactsByTypeComponent
 	extends SneatBaseComponent
 	implements OnChanges, OnInit
 {
+	private readonly contactNavService = inject(ContactNavService);
+
 	public readonly $space = input.required<ISpaceContext>();
 
 	public readonly $contactGroupDefinitions =
@@ -108,7 +111,7 @@ export class ContactsByTypeComponent
 	@Input() goToNewContactPage = true;
 	@Output() readonly addContactClick = new EventEmitter<IContactAddEventArgs>();
 
-	constructor(private readonly contactNavService: ContactNavService) {
+	constructor() {
 		super('ContactsByTypeComponent');
 		effect(() => {
 			this.setContactGroups();

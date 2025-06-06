@@ -69,7 +69,9 @@ export class SpaceMenuComponent extends SpaceBaseComponent {
 	private readonly activatedRoute = inject(ActivatedRoute);
 	private readonly menuCtrl = inject(MenuController);
 
-	constructor(router: Router) {
+	constructor() {
+		const router = inject(Router);
+
 		super('SpaceMenuComponent');
 		this.spaceParams.userService.userState
 			.pipe(takeUntil(this.destroyed$))

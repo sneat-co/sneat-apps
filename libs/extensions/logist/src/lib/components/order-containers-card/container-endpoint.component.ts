@@ -2,10 +2,10 @@ import { NgIf } from '@angular/common';
 import {
 	ChangeDetectorRef,
 	Component,
-	Inject,
 	Input,
 	OnChanges,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -65,6 +65,10 @@ function debounce<T>(field: string, o: Subject<T>): Observable<T> {
 	],
 })
 export class ContainerEndpointComponent implements OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly orderService = inject(LogistOrderService);
+	private readonly changedDetectorRef = inject(ChangeDetectorRef);
+
 	@Input({ required: true }) space?: ISpaceContext;
 	@Input() order?: ILogistOrderContext;
 	@Input() containerPoint?: IContainerPoint;
@@ -101,11 +105,7 @@ export class ContainerEndpointComponent implements OnChanges {
 	private readonly $actualTime = new Subject<string>();
 	private readonly actualTime$ = debounce('actualTime', this.$actualTime);
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly orderService: LogistOrderService,
-		private readonly changedDetectorRef: ChangeDetectorRef,
-	) {
+	constructor() {
 		this.scheduledDate$.subscribe((date) =>
 			this.setDateField('scheduledDate', date),
 		);

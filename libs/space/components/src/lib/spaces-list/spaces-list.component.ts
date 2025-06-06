@@ -5,6 +5,7 @@ import {
 	EventEmitter,
 	Input,
 	Output,
+	inject,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
@@ -37,6 +38,13 @@ import { first } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpacesListComponent extends SneatBaseComponent {
+	readonly userService = inject(SneatUserService);
+	private readonly spaceNavService = inject(SpaceNavService);
+	private readonly spaceService = inject(SpaceService);
+	private readonly userRequiredFieldsService = inject(
+		UserRequiredFieldsService,
+	);
+
 	// Inputs
 	@Input({ required: true }) userID?: string;
 	@Input({ required: true }) spaces?: ISpaceContext[];
@@ -45,12 +53,7 @@ export class SpacesListComponent extends SneatBaseComponent {
 	// Outputs
 	@Output() readonly beforeNavigateToSpace = new EventEmitter<ISpaceContext>();
 
-	constructor(
-		readonly userService: SneatUserService,
-		private readonly spaceNavService: SpaceNavService,
-		private readonly spaceService: SpaceService,
-		private readonly userRequiredFieldsService: UserRequiredFieldsService,
-	) {
+	constructor() {
 		super('SpacesListComponent');
 	}
 

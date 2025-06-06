@@ -4,7 +4,7 @@ import {
 } from '@sneat/ext-datatug-services-base';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { map, shareReplay } from 'rxjs/operators';
 import {
 	IParameter,
@@ -18,15 +18,17 @@ import { storeCanProvideListOfProjects } from '@sneat/core';
 
 @Injectable()
 export class DatatugStoreService {
+	private readonly http = inject(HttpClient);
+	private readonly datatugUserService = inject(DatatugUserService);
+
 	private readonly projectsByStore: Record<string, Observable<IProjectBase[]>> =
 		{};
 
 	private datatugUserState?: IDatatugUserState;
 
-	constructor(
-		private readonly http: HttpClient,
-		private readonly datatugUserService: DatatugUserService,
-	) {
+	constructor() {
+		const datatugUserService = this.datatugUserService;
+
 		console.log('StoreService.constructor()');
 		datatugUserService.datatugUserState.subscribe({
 			next: (datatugUserState) => {

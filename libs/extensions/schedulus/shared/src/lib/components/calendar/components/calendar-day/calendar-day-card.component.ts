@@ -6,6 +6,7 @@ import {
 	Input,
 	OnInit,
 	Output,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -61,10 +62,9 @@ export class CalendarDayCardComponent
 		console.log('set activeDayPlus()', value, 'shiftDays=', this.shiftDays);
 	}
 
-	constructor(
-		scheduleSateService: CalendarStateService,
-		// private readonly spaceDaysProvider: SpaceDaysProvider,
-	) {
+	constructor() {
+		const scheduleSateService = inject(CalendarStateService);
+
 		super('ScheduleDayCardComponent', scheduleSateService);
 	}
 

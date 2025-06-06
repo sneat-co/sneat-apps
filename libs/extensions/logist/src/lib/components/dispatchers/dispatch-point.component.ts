@@ -1,10 +1,10 @@
 import { NgIf } from '@angular/common';
 import {
 	Component,
-	Inject,
 	Input,
 	OnChanges,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -61,6 +61,12 @@ import { DispatchPointContainersGridComponent } from './dispatch-point-container
 	],
 })
 export class DispatchPointComponent implements OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly orderService = inject(LogistOrderService);
+	private readonly containersSelectorService = inject(
+		OrderContainersSelectorService,
+	);
+
 	@Input() dispatchPoint?: IOrderCounterparty;
 	@Input() order?: ILogistOrderContext;
 	@Input() disabled = false;
@@ -80,12 +86,6 @@ export class DispatchPointComponent implements OnChanges {
 		notes: this.notes,
 		address: this.address,
 	});
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly orderService: LogistOrderService,
-		private readonly containersSelectorService: OrderContainersSelectorService,
-	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order'] || changes['dispatchPoint']) {

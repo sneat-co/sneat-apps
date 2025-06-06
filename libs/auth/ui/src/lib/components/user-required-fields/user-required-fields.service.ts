@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
 import { UserRequiredFieldsModalComponent } from './user-required-fields-modal.component';
 
 @Injectable()
 export class UserRequiredFieldsService {
-	constructor(private readonly modalController: ModalController) {}
+	private readonly modalController = inject(ModalController);
 
 	public async open(): Promise<boolean> {
 		const modal = await this.modalController.create({

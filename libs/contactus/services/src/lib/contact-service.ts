@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { IFilter, SneatApiService } from '@sneat/api';
 import { SneatUserService } from '@sneat/auth-core';
@@ -42,12 +42,13 @@ export class ContactService extends ModuleSpaceItemService<
 	IContactBrief,
 	IContactDbo
 > {
-	constructor(
-		afs: AngularFirestore,
-		sneatApiService: SneatApiService,
-		protected contactusSpaceService: ContactusSpaceService,
-		private readonly userService: SneatUserService,
-	) {
+	protected contactusSpaceService = inject(ContactusSpaceService);
+	private readonly userService = inject(SneatUserService);
+
+	constructor() {
+		const afs = inject(AngularFirestore);
+		const sneatApiService = inject(SneatApiService);
+
 		super('contactus', 'contacts', afs, sneatApiService);
 		// this.briefService = new TeamItemService<{id: string}, IContactsBrief>('briefs', afs, sneatApiService);
 	}

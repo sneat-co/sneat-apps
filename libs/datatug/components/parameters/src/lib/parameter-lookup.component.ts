@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { DataGridComponent } from '@sneat/datagrid';
 import { SqlEditorComponent } from '@sneat/ext-datatug-components-sqleditor';
 import { Observable, Subject } from 'rxjs';
@@ -26,6 +26,10 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	imports: [DataGridComponent, SqlEditorComponent],
 })
 export class ParameterLookupComponent implements OnInit {
+	private readonly repoService = inject(DatatugStoreService);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly modal = inject(ModalController);
+
 	@Input() parameter?: IParameterDef;
 	@Input() subj?: Subject<IParameterValueWithoutID>;
 	@Input() canceled?: () => void;
@@ -35,12 +39,6 @@ export class ParameterLookupComponent implements OnInit {
 	@Input() lookupResponse?: Observable<IExecuteResponse>;
 
 	grid?: IGridDef;
-
-	constructor(
-		private readonly repoService: DatatugStoreService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly modal: ModalController,
-	) {}
 
 	ngOnInit() {
 		this.lookupResponse?.pipe(first()).subscribe({

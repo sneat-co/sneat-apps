@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import {
 	ActivationStart,
 	Router,
@@ -23,14 +23,16 @@ import { AuthMenuItemComponent } from '@sneat/auth-ui';
 	],
 })
 export class LogistMenuComponent implements OnInit {
+	private readonly router = inject(Router);
+	private readonly authStateService = inject(SneatAuthStateService);
+
 	@ViewChild(RouterOutlet) outlet?: RouterOutlet;
 
 	public authState?: ISneatAuthState;
 
-	constructor(
-		private readonly router: Router,
-		private readonly authStateService: SneatAuthStateService,
-	) {
+	constructor() {
+		const authStateService = this.authStateService;
+
 		authStateService.authState.subscribe((authState) => {
 			this.authState = authState;
 		});

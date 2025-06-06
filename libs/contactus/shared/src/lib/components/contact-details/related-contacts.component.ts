@@ -1,5 +1,12 @@
 import { LowerCasePipe } from '@angular/common';
-import { Component, computed, effect, input, signal } from '@angular/core';
+import {
+	Component,
+	computed,
+	effect,
+	input,
+	signal,
+	inject,
+} from '@angular/core';
 import {
 	IonButton,
 	IonButtons,
@@ -78,6 +85,8 @@ const emptyRelatedGroupRoles = emptyRelatedGroups
 	],
 })
 export class RelatedContactsComponent extends WithSpaceInput {
+	private readonly contactusSpaceService = inject(ContactusSpaceService);
+
 	public readonly $relatedTo = input.required<IRelatedTo | undefined>();
 
 	public readonly $related = computed<IRelatedModules | undefined>(
@@ -132,7 +141,7 @@ export class RelatedContactsComponent extends WithSpaceInput {
 		}));
 	});
 
-	constructor(private readonly contactusSpaceService: ContactusSpaceService) {
+	constructor() {
 		super('RelatedContactsComponent');
 		let prevSpaceID: string;
 		effect(() => {

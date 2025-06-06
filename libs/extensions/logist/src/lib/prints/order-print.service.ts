@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ILogistOrderContext } from '../dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
@@ -8,9 +8,7 @@ export interface IOrderPrintedDocContext extends ILogistOrderContext {
 
 @Injectable()
 export class OrderPrintService {
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {}
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
 
 	openOrderPrintedDocument(
 		event: Event,

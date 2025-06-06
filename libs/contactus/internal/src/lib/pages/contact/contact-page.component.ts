@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
 	IonBackButton,
 	IonButton,
@@ -43,13 +43,14 @@ import { ContactBasePage } from '../contact-base-page';
 	],
 })
 export class ContactPageComponent extends ContactBasePage {
+	private readonly contactsService = inject(ContactService);
+	private readonly sneatNavService = inject(SneatNavService);
+
 	protected segment: 'contact' | 'members' | 'assets' = 'contact';
 
-	constructor(
-		contactService: ContactService,
-		private readonly contactsService: ContactService,
-		private readonly sneatNavService: SneatNavService,
-	) {
+	constructor() {
+		const contactService = inject(ContactService);
+
 		super('ContactPageComponent', contactService);
 		this.defaultBackPage = 'contacts';
 	}

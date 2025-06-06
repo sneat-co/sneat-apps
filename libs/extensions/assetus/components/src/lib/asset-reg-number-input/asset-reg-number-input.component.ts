@@ -1,12 +1,12 @@
 import {
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	OnChanges,
 	Output,
 	SimpleChanges,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -35,6 +35,9 @@ import { ISpaceContext } from '@sneat/space-models';
 	],
 })
 export class AssetRegNumberInputComponent implements OnChanges {
+	private readonly assetService = inject(AssetService);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+
 	@Input({ required: true }) space?: ISpaceContext;
 	@Input({ required: true }) assetID?: string;
 	@Input({ required: true }) countyID?: string;
@@ -53,11 +56,6 @@ export class AssetRegNumberInputComponent implements OnChanges {
 
 	protected isSaving = false;
 	protected readonly regNumberControl = new FormControl('');
-
-	constructor(
-		private readonly assetService: AssetService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['regNumber'] && !this.regNumberControl.dirty) {

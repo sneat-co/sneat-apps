@@ -1,4 +1,4 @@
-import { Injectable, NgModule } from '@angular/core';
+import { Injectable, NgModule, inject } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
 import {
 	IHappeningContext,
@@ -15,7 +15,7 @@ export interface EditRecurringSlotParams {
 
 @Injectable()
 export class HappeningSlotModalService {
-	constructor(private readonly modalController: ModalController) {}
+	private readonly modalController = inject(ModalController);
 
 	async editSingleHappeningSlot(
 		event: Event,

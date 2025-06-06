@@ -1,11 +1,11 @@
 import {
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	OnChanges,
 	Output,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import {
 	IContactContext,
@@ -31,6 +31,9 @@ import {
 	imports: [ContactInputComponent],
 })
 export class OrderCounterpartyInputComponent implements OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly orderService = inject(LogistOrderService);
+
 	@Input() label?: string = undefined;
 	@Input() canReset = false;
 	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';
@@ -59,11 +62,6 @@ export class OrderCounterpartyInputComponent implements OnChanges {
 	protected parentContact?: IContactContext;
 
 	protected deleting = false;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly orderService: LogistOrderService,
-	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		// console.log('OrderCounterpartyInputComponent.ngOnChanges()', changes);

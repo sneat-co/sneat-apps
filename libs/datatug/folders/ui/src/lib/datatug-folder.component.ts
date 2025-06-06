@@ -1,11 +1,11 @@
 import { TitleCasePipe } from '@angular/common';
 import {
 	Component,
-	Inject,
 	Input,
 	OnChanges,
 	OnDestroy,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -58,6 +58,14 @@ import { DatatugBoardService } from '@sneat/ext-datatug-board-core';
 	],
 })
 export class DatatugFolderComponent implements OnChanges, OnDestroy {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly foldersService = inject(DatatugFoldersService);
+	private readonly datatugNavService = inject(DatatugNavService);
+	private readonly schemaService = inject(SchemaService);
+	private readonly environmentService = inject(EnvironmentService);
+	private readonly boardService = inject(DatatugBoardService);
+	private readonly entityService = inject(EntityService);
+
 	readonly Environment: ProjectItemType = ProjectItem.environment as const;
 
 	readonly Board: ProjectItemType = ProjectItem.Board;
@@ -83,18 +91,6 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
 
 	public getItemLink = (path: string) => (item: IProjItemBrief) =>
 		`${path}/${item.id}`;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly foldersService: DatatugFoldersService,
-		private readonly datatugNavService: DatatugNavService,
-		private readonly schemaService: SchemaService,
-		private readonly environmentService: EnvironmentService,
-		private readonly boardService: DatatugBoardService,
-		private readonly entityService: EntityService,
-	) {
-		// foldersService.watchFolder()
-	}
 
 	ngOnDestroy(): void {
 		this.destroyed.next();

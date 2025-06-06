@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import {
 	IonBackButton,
@@ -72,6 +72,14 @@ import { filter, takeUntil, tap } from 'rxjs/operators';
 export class DatatugStorePageComponent
 	implements OnInit, OnDestroy, ViewDidLeave, ViewDidEnter
 {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly route = inject(ActivatedRoute);
+	private readonly storeService = inject(DatatugStoreService);
+	private readonly nav = inject(DatatugNavService);
+	private readonly agentStateService = inject(AgentStateService);
+	private readonly newProjectService = inject(NewProjectService);
+	private readonly datatugUserService = inject(DatatugUserService);
+
 	public storeId?: string | null;
 	public projects?: IProjectBase[];
 	public error: unknown;
@@ -87,15 +95,10 @@ export class DatatugStorePageComponent
 
 	protected authStatus?: AuthStatus;
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly route: ActivatedRoute,
-		private readonly storeService: DatatugStoreService,
-		private readonly nav: DatatugNavService,
-		private readonly agentStateService: AgentStateService,
-		private readonly newProjectService: NewProjectService,
-		private readonly datatugUserService: DatatugUserService,
-	) {
+	constructor() {
+		const route = this.route;
+		const datatugUserService = this.datatugUserService;
+
 		console.log(
 			'DatatugStorePageComponent.constructor(), window.history.state:',
 			window.history.state,

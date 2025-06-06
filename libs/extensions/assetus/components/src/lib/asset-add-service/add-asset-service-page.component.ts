@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
 	IonBackButton,
 	IonButtons,
@@ -33,15 +33,15 @@ import { AssetBasePage, AssetComponentBaseParams } from '../asset-base-page';
 	],
 })
 export class AddAssetServicePageComponent extends AssetBasePage {
+	private serviceProviderService = inject(IServiceProviderService);
+
 	// serviceProviders: DtoServiceProvider[];
 	// serviceType: LiabilityServiceType;
 	serviceTypeTitle: string;
 
-	constructor(
-		assetService: IAssetService,
-		private serviceProviderService: IServiceProviderService,
-		params: AssetComponentBaseParams,
-	) {
+	constructor() {
+		const params = inject(AssetComponentBaseParams);
+
 		super('AddAssetServicePageComponent', params);
 	}
 

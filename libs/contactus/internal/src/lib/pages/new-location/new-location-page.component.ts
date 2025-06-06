@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
 	IonBackButton,
 	IonContent,
@@ -32,10 +32,9 @@ export class NewLocationPageComponent extends ContactBasePage {
 		// space: this.space,
 	};
 
-	constructor(
-		contactService: ContactService,
-		// private readonly contactService: ContactService,
-	) {
+	constructor() {
+		const contactService = inject(ContactService);
+
 		super('ContactPageComponent', contactService);
 	}
 

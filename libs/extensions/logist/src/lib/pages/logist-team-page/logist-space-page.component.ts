@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
 	IonButton,
@@ -45,7 +45,9 @@ import { LogistSpaceBaseComponent } from '../logist-space-base.component';
 	],
 })
 export class LogistSpacePageComponent extends LogistSpaceBaseComponent {
-	constructor(logistTeamService: LogistSpaceService) {
+	constructor() {
+		const logistTeamService = inject(LogistSpaceService);
+
 		super('LogistSpacePageComponent', logistTeamService);
 	}
 }

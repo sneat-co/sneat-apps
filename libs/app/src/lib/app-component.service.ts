@@ -1,4 +1,4 @@
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Platform } from '@ionic/angular/standalone';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -7,12 +7,10 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 @Injectable()
 // TODO: check if it's used and probably remove
 export class AppComponentService {
-	constructor(
-		private platform: Platform,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		@Optional() private splashScreen: SplashScreen,
-		@Optional() private statusBar: StatusBar, // @Inject(AnalyticsService) private readonly analyticsService: IAnalyticsService,
-	) {}
+	private platform = inject(Platform);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private splashScreen = inject(SplashScreen, { optional: true });
+	private statusBar = inject(StatusBar, { optional: true });
 
 	public initializeApp() {
 		this.platform

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { IIdAndDbo, ISpaceRef } from '@sneat/core';
@@ -188,7 +188,10 @@ export class ContactGroupService {
 		IContactGroupDbo
 	>;
 
-	constructor(afs: AngularFirestore, sneatApiService: SneatApiService) {
+	constructor() {
+		const afs = inject(AngularFirestore);
+		const sneatApiService = inject(SneatApiService);
+
 		this.spaceItemService = new ModuleSpaceItemService(
 			'contactus',
 			'contact_groups',

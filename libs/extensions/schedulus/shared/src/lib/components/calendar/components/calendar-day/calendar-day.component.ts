@@ -8,6 +8,7 @@ import {
 	OnDestroy,
 	signal,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -59,6 +60,10 @@ export class CalendarDayComponent
 	extends WithSpaceInput
 	implements OnChanges, OnDestroy
 {
+	private readonly filterService = inject(CalendarFilterService);
+	private readonly changeDetectorRef = inject(ChangeDetectorRef);
+	private readonly scheduleNavService = inject(ScheduleNavService);
+
 	private slotsSubscription?: Subscription;
 	private filter = emptyCalendarFilter;
 	// @Input() filter?: ICalendarFilter;
@@ -77,12 +82,10 @@ export class CalendarDayComponent
 	public slots?: ISlotUIContext[];
 	public slotsHiddenByFilter?: number;
 
-	constructor(
-		private readonly filterService: CalendarFilterService,
-		private readonly changeDetectorRef: ChangeDetectorRef,
-		private readonly scheduleNavService: ScheduleNavService,
-	) {
+	constructor() {
 		super('CalendarDayComponent');
+		const filterService = this.filterService;
+
 		filterService.filter.pipe(this.takeUntilDestroyed()).subscribe({
 			next: (filter) => {
 				this.filter = filter;

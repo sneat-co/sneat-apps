@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Params } from '@angular/router';
 import { NavController } from '@ionic/angular/standalone';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
@@ -14,12 +14,10 @@ export type ScrumPageTab = 'team' | 'my' | 'risks' | 'qna';
 	providedIn: 'root',
 })
 export class SpaceNavService {
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly navController: NavController,
-		@Inject(AnalyticsService)
-		private readonly analyticsService: IAnalyticsService,
-	) {}
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly navController = inject(NavController);
+	private readonly analyticsService =
+		inject<IAnalyticsService>(AnalyticsService);
 
 	public navigateToSpaces(animationDirection?: 'forward' | 'back'): void {
 		console.log('navigateToSpaces()');

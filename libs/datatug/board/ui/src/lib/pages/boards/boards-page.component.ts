@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
 	IonBackButton,
 	IonButton,
@@ -48,6 +48,13 @@ import { DatatugFoldersService } from '@sneat/ext-datatug-folders-core';
 	],
 })
 export class BoardsPageComponent implements OnInit, OnDestroy {
+	private readonly datatugNavContextService = inject(DatatugNavContextService);
+	private readonly datatugNavService = inject(DatatugNavService);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly boardService = inject(DatatugBoardService);
+	private readonly alertCtrl = inject(AlertController);
+	private readonly foldersService = inject(DatatugFoldersService);
+
 	tab = 'shared';
 	noItemsText?: string;
 
@@ -59,14 +66,7 @@ export class BoardsPageComponent implements OnInit, OnDestroy {
 
 	private readonly destroyed = new Subject<void>();
 
-	constructor(
-		private readonly datatugNavContextService: DatatugNavContextService,
-		private readonly datatugNavService: DatatugNavService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly boardService: DatatugBoardService,
-		private readonly alertCtrl: AlertController,
-		private readonly foldersService: DatatugFoldersService,
-	) {
+	constructor() {
 		this.tabChanged(this.tab);
 		this.datatugNavContextService.currentProject
 			.pipe(takeUntil(this.destroyed))

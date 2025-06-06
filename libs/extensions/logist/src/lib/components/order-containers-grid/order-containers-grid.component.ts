@@ -2,10 +2,10 @@ import { NgIf } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	OnChanges,
 	Output,
+	inject,
 } from '@angular/core';
 import { IonCard, IonCardContent } from '@ionic/angular/standalone';
 import { DataGridComponent } from '@sneat/datagrid';
@@ -29,6 +29,9 @@ interface IOrderContainerWithIndex extends IOrderContainer {
 	imports: [IonCard, IonCardContent, DataGridComponent, NgIf],
 })
 export class OrderContainersGridComponent implements OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly orderService = inject(LogistOrderService);
+
 	protected containers?: IOrderContainer[];
 
 	@Input() order?: ILogistOrderContext;
@@ -140,11 +143,6 @@ export class OrderContainersGridComponent implements OnChanges {
 	];
 
 	protected selectedContainer?: IOrderContainer;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly orderService: LogistOrderService,
-	) {}
 
 	ngOnChanges(/*changes: SimpleChanges*/): void {
 		const containers = this.order?.dbo?.containers?.map((c, i) => ({

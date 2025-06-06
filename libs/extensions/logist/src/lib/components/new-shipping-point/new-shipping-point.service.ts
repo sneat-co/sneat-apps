@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ILogistOrderContext, IOrderContainer } from '../../dto';
@@ -12,11 +12,9 @@ export interface INewShippingPointParams {
 
 @Injectable()
 export class NewShippingPointService {
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly modalController: ModalController,
-		private readonly orderNavService: OrderNavService,
-	) {}
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly modalController = inject(ModalController);
+	private readonly orderNavService = inject(OrderNavService);
 
 	async openNewShippingPointDialog(
 		componentProps: INewShippingPointParams,

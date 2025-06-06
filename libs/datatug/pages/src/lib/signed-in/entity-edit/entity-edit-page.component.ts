@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component, Inject, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SneatErrorCardComponent } from '@sneat/components';
@@ -59,6 +59,13 @@ import {
 	],
 })
 export class EntityEditPageComponent implements OnDestroy {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly route = inject(ActivatedRoute);
+	private readonly navContextService = inject(DatatugNavContextService);
+	private readonly entityService = inject(EntityService);
+	private readonly datatugNavService = inject(DatatugNavService);
+	private readonly popoverCtrl = inject(PopoverController);
+
 	mode?: 'new' | 'edit';
 	public entity: IEntity = { fields: [] };
 	backUrl = '/';
@@ -68,14 +75,10 @@ export class EntityEditPageComponent implements OnDestroy {
 	public showNewPropForm = false;
 	private readonly destroyed = new Subject<void>();
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly route: ActivatedRoute,
-		private readonly navContextService: DatatugNavContextService,
-		private readonly entityService: EntityService,
-		private readonly datatugNavService: DatatugNavService,
-		private readonly popoverCtrl: PopoverController,
-	) {
+	constructor() {
+		const route = this.route;
+		const navContextService = this.navContextService;
+
 		try {
 			this.mode = !route.snapshot.paramMap.get('entityId') ? 'new' : 'edit';
 			this.entity = {

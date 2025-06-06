@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
 	IonContent,
 	IonHeader,
@@ -21,7 +21,9 @@ import { LogistSpaceBaseComponent } from '../logist-space-base.component';
 	],
 })
 export class LogistSpaceSettingsPageComponent extends LogistSpaceBaseComponent {
-	constructor(logistTeamService: LogistSpaceService) {
+	constructor() {
+		const logistTeamService = inject(LogistSpaceService);
+
 		super('LogistTeamSettingsPageComponent', logistTeamService);
 	}
 }

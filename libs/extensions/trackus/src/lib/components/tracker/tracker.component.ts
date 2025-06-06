@@ -5,6 +5,7 @@ import {
 	effect,
 	input,
 	signal,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -52,7 +53,9 @@ export class TrackerComponent extends SneatBaseComponent {
 		undefined,
 	);
 
-	constructor(contactusSpaceService: ContactusSpaceService) {
+	constructor() {
+		const contactusSpaceService = inject(ContactusSpaceService);
+
 		super('TrackerComponent');
 
 		let contactusSpaceSub: Subscription | undefined = undefined;

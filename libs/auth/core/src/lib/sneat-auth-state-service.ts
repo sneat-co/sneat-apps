@@ -10,7 +10,7 @@ import {
 	IAnalyticsService,
 } from '@sneat/core';
 import { BehaviorSubject, from, Observable } from 'rxjs';
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { distinctUntilChanged, shareReplay } from 'rxjs/operators';
 import {
@@ -65,6 +65,11 @@ export const initialSneatAuthState = { status: initialAuthStatus };
 
 @Injectable({ providedIn: 'root' })
 export class SneatAuthStateService {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly analyticsService =
+		inject<IAnalyticsService>(AnalyticsService);
+	readonly fbAuth = inject(Auth);
+
 	private readonly id = newRandomId({ len: 5 });
 
 	private readonly authStatus$ = new BehaviorSubject<AuthStatus>(
@@ -89,12 +94,9 @@ export class SneatAuthStateService {
 
 	// private readonly fbAuth: Auth;
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		@Inject(AnalyticsService)
-		private readonly analyticsService: IAnalyticsService,
-		public readonly fbAuth: Auth,
-	) {
+	constructor() {
+		const errorLogger = this.errorLogger;
+
 		console.log(`SneatAuthStateService.constructor(): id=${this.id}`);
 		this.fbAuth.onIdTokenChanged({
 			next: (firebaseUser) => {

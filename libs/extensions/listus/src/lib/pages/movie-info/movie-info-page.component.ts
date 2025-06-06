@@ -1,5 +1,5 @@
 import { NgForOf, NgIf, NgOptimizedImage } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import {
 	NavController,
@@ -73,20 +73,17 @@ export class MovieInfoPageComponent
 	extends BaseListItemPage
 	implements SpacePageBaseComponent
 {
+	navCtrl = inject(NavController);
+	private readonly tmdbService = inject(ITmdbService);
+
 	movie: IMovie | undefined;
 
 	// listDto: IListDto;
 
-	constructor(
-		params: ListusComponentBaseParams,
-		listService: ListService,
-		route: ActivatedRoute,
-		public navCtrl: NavController,
-		private readonly tmdbService: ITmdbService,
-		// private readonly listusDbService: ListusService,
-		// private readonly listusService: ListusService,
-		// public authStateService: AuthStateService,
-	) {
+	constructor() {
+		const params = inject(ListusComponentBaseParams);
+		const route = inject(ActivatedRoute);
+
 		super('MovieInfoPageComponent', route, params);
 	}
 

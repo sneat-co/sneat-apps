@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
 	IonCard,
 	IonCardContent,
@@ -54,7 +54,9 @@ export class ContainerPrintDocComponent extends OrderPrintPageBaseComponent {
 
 	protected total? = { numberOfPallets: 0, grossWeightKg: 0 };
 
-	constructor(orderService: LogistOrderService) {
+	constructor() {
+		const orderService = inject(LogistOrderService);
+
 		super('OrderShippingDocComponent', orderService);
 		this.route.queryParamMap
 			.pipe(this.takeUntilDestroyed())

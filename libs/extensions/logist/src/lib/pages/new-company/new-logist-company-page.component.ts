@@ -1,9 +1,9 @@
 import {
 	ChangeDetectionStrategy,
 	Component,
-	Inject,
 	OnDestroy,
 	signal,
+	inject,
 } from '@angular/core';
 import {
 	IonBackButton,
@@ -42,6 +42,10 @@ export class NewLogistCompanyPageComponent
 	extends SpaceBaseComponent
 	implements OnDestroy
 {
+	readonly contactRolesByType = inject<Record<string, IContactRole[]>>(
+		CONTACT_ROLES_BY_TYPE,
+	);
+
 	readonly contactTypes: ISelectItem[] = [
 		{ id: 'agent', title: 'Agent', iconName: 'body-outline' },
 		{ id: 'buyer', title: 'Buyer', iconName: 'cash-outline' },
@@ -57,11 +61,10 @@ export class NewLogistCompanyPageComponent
 		dbo: { type: 'company' },
 	});
 
-	constructor(
-		@Inject(CONTACT_ROLES_BY_TYPE)
-		public readonly contactRolesByType: Record<string, IContactRole[]>,
-	) {
+	constructor() {
 		super('NewLogistCompanyPageComponent');
+		const contactRolesByType = this.contactRolesByType;
+
 		this.contactTypes = contactRolesByType['company'];
 		this.route.queryParamMap
 			.pipe(first(), this.takeUntilDestroyed())

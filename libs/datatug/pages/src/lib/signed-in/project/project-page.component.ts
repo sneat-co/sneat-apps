@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DatatugFolderComponent } from '@sneat/ext-datatug-folders-ui';
 import { DatatugServicesStoreModule } from '@sneat/ext-datatug-services-repo';
@@ -86,6 +86,16 @@ import { parseStoreRef } from '@sneat/core';
 export class ProjectPageComponent
 	implements OnInit, OnDestroy, ViewWillEnter, ViewDidLeave
 {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly route = inject(ActivatedRoute);
+	private readonly datatugNavService = inject(DatatugNavService);
+	private readonly datatugNavContextService = inject(DatatugNavContextService);
+	private readonly projectService = inject(ProjectService);
+	private readonly schemaService = inject(SchemaService);
+	private readonly environmentService = inject(EnvironmentService);
+	private readonly entityService = inject(EntityService);
+	private readonly navController = inject(NavController);
+
 	// readonly DbModel = ProjectItem.dbModel as const;
 
 	protected project?: IProjectContext;
@@ -97,17 +107,9 @@ export class ProjectPageComponent
 
 	private readonly projectTracker: ProjectTracker;
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly route: ActivatedRoute,
-		private readonly datatugNavService: DatatugNavService,
-		private readonly datatugNavContextService: DatatugNavContextService,
-		private readonly projectService: ProjectService,
-		private readonly schemaService: SchemaService,
-		private readonly environmentService: EnvironmentService,
-		private readonly entityService: EntityService,
-		private readonly navController: NavController,
-	) {
+	constructor() {
+		const route = this.route;
+
 		console.log(
 			'ProjectPageComponent.constructor()',
 			route?.snapshot?.paramMap,

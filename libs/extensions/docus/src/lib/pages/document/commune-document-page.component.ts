@@ -6,7 +6,7 @@ import {
 	NgSwitchDefault,
 	TitleCasePipe,
 } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonBackButton,
@@ -72,6 +72,9 @@ export class CommuneDocumentPageComponent
 	extends CommuneBasePage
 	implements OnInit
 {
+	private readonly toastCtrl = inject(ToastController);
+	private readonly assetService = inject(IAssetService);
+
 	document: IDocument | undefined;
 	parentAsset: IAssetDto | undefined;
 
@@ -105,11 +108,9 @@ export class CommuneDocumentPageComponent
 		this.mode = 'view';
 	}
 
-	constructor(
-		params: CommuneBasePageParams,
-		private readonly toastCtrl: ToastController,
-		private readonly assetService: IAssetService,
-	) {
+	constructor() {
+		const params = inject(CommuneBasePageParams);
+
 		super('documents', params);
 	}
 

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import {
 	FormControl,
 	FormGroup,
@@ -55,6 +55,10 @@ import { takeUntil } from 'rxjs';
 	],
 })
 export class UserRequiredFieldsModalComponent extends SneatBaseComponent {
+	private readonly modalController = inject(ModalController);
+	private readonly userRecordService = inject(UserRecordService);
+	private readonly sneatUserService = inject(SneatUserService);
+
 	@Input({ required: true }) space: ISpaceContext = { id: '' };
 
 	protected readonly genders: ISelectItem[] = [
@@ -85,11 +89,7 @@ export class UserRequiredFieldsModalComponent extends SneatBaseComponent {
 
 	protected userState?: ISneatUserState;
 
-	constructor(
-		private readonly modalController: ModalController,
-		private readonly userRecordService: UserRecordService,
-		private readonly sneatUserService: SneatUserService,
-	) {
+	constructor() {
 		super('UserRequiredFieldsModalComponent');
 		this.sneatUserService.userState.pipe(takeUntil(this.destroyed$)).subscribe({
 			next: (userState) => (this.userState = userState),

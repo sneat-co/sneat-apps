@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -67,6 +67,13 @@ import { EnvSelectorComponent } from '../../components/env-selector/env-selector
 	providers: [QueryParamsService],
 })
 export class BoardPageComponent implements OnInit, OnDestroy {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly boardService = inject(DatatugBoardService);
+	private readonly route = inject(ActivatedRoute);
+	private readonly lookupService = inject(ParameterLookupService);
+	private readonly dataTugNavContext = inject(DatatugNavContextService);
+	private readonly queryParamsService = inject(QueryParamsService);
+
 	boardId?: string | null;
 
 	projBoard?: IProjBoard;
@@ -83,14 +90,9 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 	boardContext: IBoardContext = { parameters: {}, mode: 'view' };
 	private readonly destroyed$ = new Subject<void>();
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly boardService: DatatugBoardService,
-		private readonly route: ActivatedRoute,
-		private readonly lookupService: ParameterLookupService,
-		private readonly dataTugNavContext: DatatugNavContextService,
-		private readonly queryParamsService: QueryParamsService,
-	) {
+	constructor() {
+		const dataTugNavContext = this.dataTugNavContext;
+
 		console.log('BoardPage.constructor()');
 		this.projBoard = history.state?.projBoard;
 		try {

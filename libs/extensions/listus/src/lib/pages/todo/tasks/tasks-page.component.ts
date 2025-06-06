@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommuneBasePageParams } from 'sneat-shared/services/params';
 import { CommuneBasePage } from 'sneat-shared/pages/commune-base-page';
 import { CommuneTopPage } from '../../../../../pages/constants';
@@ -9,7 +9,9 @@ import { CommuneTopPage } from '../../../../../pages/constants';
 	providers: [CommuneBasePageParams],
 })
 export class TasksPageComponent extends CommuneBasePage {
-	constructor(params: CommuneBasePageParams) {
+	constructor() {
+		const params = inject(CommuneBasePageParams);
+
 		super(CommuneTopPage.home, params);
 	}
 

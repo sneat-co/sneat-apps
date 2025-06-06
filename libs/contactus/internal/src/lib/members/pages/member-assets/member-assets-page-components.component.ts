@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
 	IonBackButton,
 	IonButtons,
@@ -23,7 +23,9 @@ import { MemberBasePage } from '../member-base-page';
 	],
 })
 export class MemberAssetsPageComponent extends MemberBasePage {
-	constructor(contactService: ContactService) {
+	constructor() {
+		const contactService = inject(ContactService);
+
 		super('MemberAssetsPageComponent', contactService);
 	}
 }

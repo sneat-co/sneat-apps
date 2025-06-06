@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	signal,
+	inject,
+} from '@angular/core';
 import { ParamMap } from '@angular/router';
 import {
 	IonBackButton,
@@ -56,14 +61,13 @@ import { SpaceServiceModule } from '@sneat/space-services';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarPageComponent extends SpaceBaseComponent {
+	private readonly scheduleNavService = inject(ScheduleNavService);
+
 	protected readonly $tab = signal<CalendarTab>('day');
 	protected readonly $date = signal('');
 	protected readonly $member = signal<IMemberContext | undefined>(undefined);
 
-	constructor(
-		// private filterService: CalendarFilterService,
-		private readonly scheduleNavService: ScheduleNavService,
-	) {
+	constructor() {
 		super('CalendarPageComponent');
 
 		// filterService.filter.subscribe({

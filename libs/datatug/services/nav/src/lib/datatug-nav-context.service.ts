@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 import {
@@ -37,6 +37,13 @@ const reStore = /\/store\/(.+?)($|\/)/,
 
 @Injectable()
 export class DatatugNavContextService {
+	private readonly appContext = inject(AppContextService);
+	private readonly projectContextService = inject(ProjectContextService);
+	private readonly router = inject(Router);
+	private readonly projectService = inject(ProjectService);
+	private readonly envService = inject(EnvironmentService);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+
 	readonly id = newRandomId({ len: 5 });
 	private readonly $currentContext = new BehaviorSubject<IDatatugNavContext>(
 		{},
@@ -84,14 +91,10 @@ export class DatatugNavContextService {
 
 	private navEndSubscription: Subscription;
 
-	constructor(
-		private readonly appContext: AppContextService,
-		private readonly projectContextService: ProjectContextService,
-		private readonly router: Router,
-		private readonly projectService: ProjectService,
-		private readonly envService: EnvironmentService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {
+	constructor() {
+		const appContext = this.appContext;
+		const projectContextService = this.projectContextService;
+
 		console.log('DatatugNavContextService.constructor(), id=', this.id);
 		this.currentProject.subscribe({
 			next: (p) => {

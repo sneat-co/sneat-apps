@@ -1,11 +1,11 @@
 import {
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	OnChanges,
 	Output,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import {
 	IDatatugProjectBriefWithId,
@@ -26,6 +26,11 @@ import { parseStoreRef } from '@sneat/core';
 	templateUrl: 'menu-project-selector.component.html',
 })
 export class MenuProjectSelectorComponent implements OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly newProjectService = inject(NewProjectService);
+	private readonly nav = inject(DatatugNavService);
+	private readonly datatugNavContextService = inject(DatatugNavContextService);
+
 	@Input() datatugUser?: IDatatugUser;
 	currentStoreId?: string;
 	currentProjectId?: string;
@@ -36,13 +41,9 @@ export class MenuProjectSelectorComponent implements OnChanges {
 
 	projects?: IDatatugProjectBriefWithId[];
 
-	constructor(
-		@Inject(ErrorLogger)
-		private readonly errorLogger: IErrorLogger,
-		private readonly newProjectService: NewProjectService,
-		private readonly nav: DatatugNavService,
-		private readonly datatugNavContextService: DatatugNavContextService,
-	) {
+	constructor() {
+		const datatugNavContextService = this.datatugNavContextService;
+
 		datatugNavContextService.currentStoreId.subscribe({
 			next: (storeId) => (this.currentStoreId = storeId),
 			error: this.errorLogger.logErrorHandler('Failed to retrieve store id'),

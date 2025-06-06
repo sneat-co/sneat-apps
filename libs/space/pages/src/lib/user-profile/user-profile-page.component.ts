@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
 	FormControl,
 	FormsModule,
@@ -36,12 +36,16 @@ import { IUserRecord } from '@sneat/auth-models';
 	],
 })
 export class UserProfilePageComponent {
+	private readonly userService = inject(SneatUserService);
+
 	public user?: IUserRecord | null;
 	public userTitle = new FormControl<string>('', [Validators.required]);
 
 	edit = false;
 
-	constructor(private readonly userService: SneatUserService) {
+	constructor() {
+		const userService = this.userService;
+
 		userService.userState.subscribe((userState) => {
 			console.log('UserProfilePage => userState:', userState);
 			this.user = userState.record;

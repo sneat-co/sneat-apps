@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonBackButton,
@@ -81,7 +81,9 @@ export class AssetPageComponent extends AssetBasePage {
 
 	mode: 'view' | 'edit' = 'view';
 
-	constructor(params: AssetComponentBaseParams) {
+	constructor() {
+		const params = inject(AssetComponentBaseParams);
+
 		super('AssetPageComponent', params);
 		// const path = location.pathname;
 		// if (path.includes('vehicle')) {

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonBackButton,
@@ -38,14 +38,16 @@ import { IProjectSummary } from '@sneat/ext-datatug-models';
 	],
 })
 export class EnvironmentsPageComponent {
+	readonly datatugNavContextService = inject(DatatugNavContextService);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+
 	protected project?: IProjectSummary;
 
 	public environments?: { id: string; title?: string }[];
 
-	constructor(
-		readonly datatugNavContextService: DatatugNavContextService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {
+	constructor() {
+		const datatugNavContextService = this.datatugNavContextService;
+
 		this.setProjSummary(history.state.projSummary as IProjectSummary);
 		if (!this.project) {
 			// this.projectService.getSummary()

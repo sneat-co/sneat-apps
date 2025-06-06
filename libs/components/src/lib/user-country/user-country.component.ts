@@ -7,6 +7,7 @@ import {
 	Input,
 	OnDestroy,
 	signal,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -44,6 +45,9 @@ export class UserCountryComponent
 	extends SneatBaseComponent
 	implements OnDestroy
 {
+	private readonly httpClient = inject(HttpClient);
+	private readonly userService = inject(SneatUserService);
+
 	protected readonly $ipCountryID = signal('');
 	protected readonly $ipCountry = signal<ICountry | undefined>(undefined);
 
@@ -69,10 +73,7 @@ export class UserCountryComponent
 			});
 	}
 
-	constructor(
-		private readonly httpClient: HttpClient,
-		private readonly userService: SneatUserService,
-	) {
+	constructor() {
 		super('UserCountryComponent');
 		this.trackUserRecord();
 		// this.getIpCountry();

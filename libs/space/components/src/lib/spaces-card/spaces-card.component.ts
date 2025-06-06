@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonButton,
@@ -51,6 +51,14 @@ import { takeUntil } from 'rxjs/operators';
 	],
 })
 export class SpacesCardComponent implements OnInit, OnDestroy {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly navService = inject(SpaceNavService);
+	private readonly userService = inject(SneatUserService);
+	private readonly spaceService = inject(SpaceService);
+	private readonly analyticsService =
+		inject<IAnalyticsService>(AnalyticsService);
+	private readonly toastController = inject(ToastController);
+
 	@ViewChild(IonInput, { static: false }) addSpaceInput?: IonInput; // TODO: IonInput;
 
 	public spaces?: IIdAndBrief<IUserSpaceBrief>[];
@@ -60,16 +68,6 @@ export class SpacesCardComponent implements OnInit, OnDestroy {
 	public showAdd = false; //
 	private readonly destroyed = new Subject<void>();
 	private subscriptions: Subscription[] = [];
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly navService: SpaceNavService,
-		private readonly userService: SneatUserService,
-		private readonly spaceService: SpaceService,
-		@Inject(AnalyticsService)
-		private readonly analyticsService: IAnalyticsService,
-		private readonly toastController: ToastController,
-	) {}
 
 	public ngOnDestroy(): void {
 		console.log('SpacesCardComponent.ngOnDestroy()');

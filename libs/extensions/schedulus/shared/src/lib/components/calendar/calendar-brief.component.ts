@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	signal,
+	inject,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IonCard, IonIcon, IonItem, IonLabel } from '@ionic/angular/standalone';
 import {
@@ -42,11 +47,11 @@ export class CalendarBriefComponent extends CalendarBaseComponent {
 	protected readonly $today = signal<Weekday | undefined>(undefined);
 	protected readonly $tomorrow = signal<Weekday | undefined>(undefined);
 
-	constructor(
-		calendarDayService: CalendarDayService,
-		happeningService: HappeningService,
-		calendariumSpaceService: CalendariumSpaceService,
-	) {
+	constructor() {
+		const calendarDayService = inject(CalendarDayService);
+		const happeningService = inject(HappeningService);
+		const calendariumSpaceService = inject(CalendariumSpaceService);
+
 		super(
 			'CalendarBriefComponent',
 			calendariumSpaceService,

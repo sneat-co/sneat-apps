@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
 	IonButton,
 	IonCard,
@@ -32,15 +32,15 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	],
 })
 export class SignInFromEmailLinkPageComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly authStateService = inject(SneatAuthStateService);
+	private readonly navController = inject(NavController);
+
 	email: string;
 	emailFromStorage = false;
 	isSigning = false;
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly authStateService: SneatAuthStateService,
-		private readonly navController: NavController,
-	) {
+	constructor() {
 		this.email = localStorage.getItem('emailForSignIn') || '';
 		this.emailFromStorage = !!this.email;
 		if (this.email) {

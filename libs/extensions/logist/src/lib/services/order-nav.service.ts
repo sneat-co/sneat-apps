@@ -1,14 +1,12 @@
-import { Inject, Injectable, NgModule } from '@angular/core';
+import { Injectable, NgModule, inject } from '@angular/core';
 import { NavController } from '@ionic/angular/standalone';
 import { ILogistOrderContext } from '../dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Injectable()
 export class OrderNavService {
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly navController: NavController,
-	) {}
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly navController = inject(NavController);
 
 	goOrderPage(
 		direction: 'forward' | 'back',

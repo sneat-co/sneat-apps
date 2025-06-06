@@ -4,6 +4,7 @@ import {
 	Component,
 	computed,
 	signal,
+	inject,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
@@ -71,7 +72,9 @@ export class SneatAppHomePageComponent extends SneatBaseComponent {
 
 	protected readonly $err = signal<unknown>(undefined);
 
-	constructor(authStateService: SneatAuthStateService) {
+	constructor() {
+		const authStateService = inject(SneatAuthStateService);
+
 		super('SneatAppHomePageComponent');
 		authStateService.authState.pipe(this.takeUntilDestroyed()).subscribe({
 			next: (authState) => {

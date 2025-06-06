@@ -1,4 +1,4 @@
-import { Component, Inject, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import {
 	IonButton,
 	IonButtons,
@@ -32,14 +32,12 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	],
 })
 export class NewCardDialogComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly modalCtrl = inject(ModalController);
+
 	public cardTitle?: string;
 
 	@ViewChild(IonInput) inputTitle?: IonInput;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly modalCtrl: ModalController,
-	) {}
 
 	ionViewDidEnter() {
 		setTimeout(() => {

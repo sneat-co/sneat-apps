@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IDatatugUser } from '@sneat/ext-datatug-models';
 import { map, shareReplay } from 'rxjs/operators';
@@ -11,11 +11,15 @@ export interface IDatatugUserState extends ISneatUserState {
 
 @Injectable()
 export class DatatugUserService {
+	readonly sneatUserService = inject(SneatUserService);
+
 	public datatugUserState: Observable<IDatatugUserState>;
 
 	private readonly id = newRandomId({ len: 5 });
 
-	constructor(readonly sneatUserService: SneatUserService) {
+	constructor() {
+		const sneatUserService = this.sneatUserService;
+
 		if (!sneatUserService) {
 			throw new Error('sneatUserService is not injected');
 		}

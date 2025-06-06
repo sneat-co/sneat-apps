@@ -6,12 +6,12 @@ import {
 	Firestore as AngularFirestore,
 } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { IProjectSummary } from '@sneat/ext-datatug-models';
 
 @Injectable()
 export class DatatugStoreFirestoreService implements IDatatugStoreService {
-	constructor(private readonly db: AngularFirestore) {}
+	private readonly db = inject(AngularFirestore);
 
 	getProjectSummary(projectId: string): Observable<IProjectSummary> {
 		return throwError(() => 'not implemented ' + projectId);

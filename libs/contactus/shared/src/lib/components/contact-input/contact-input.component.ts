@@ -1,11 +1,11 @@
 import {
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	OnChanges,
 	Output,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
@@ -48,6 +48,9 @@ import { ContactsSelectorService } from '../contacts-selector/contacts-selector.
 	],
 })
 export class ContactInputComponent implements OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly contactSelectorService = inject(ContactsSelectorService);
+
 	@Input({ required: true }) space?: ISpaceContext;
 	@Input() disabled?: boolean;
 	@Input() canChangeContact = true;
@@ -87,11 +90,6 @@ export class ContactInputComponent implements OnChanges {
 			)
 		);
 	}
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly contactSelectorService: ContactsSelectorService,
-	) {}
 
 	protected parentTitle(): string {
 		return this.getTitle(this.showParentFlag, this.parentContact);

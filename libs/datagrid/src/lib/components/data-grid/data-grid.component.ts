@@ -3,12 +3,12 @@ import {
 	Component,
 	ElementRef,
 	EventEmitter,
-	Inject,
 	Input,
 	OnChanges,
 	Output,
 	SimpleChanges,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -86,6 +86,8 @@ Tabulator.registerModule([
 	],
 })
 export class DataGridComponent implements AfterViewInit, OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+
 	@Input() layout?: 'fitData' | 'fitColumns' = 'fitColumns';
 	@Input() data?: unknown[] = [];
 	@Input() columns?: IGridColumn[] = [];
@@ -110,7 +112,7 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
 	private tabulatorOptions?: TabulatorOptions;
 	private clickEvent?: Event;
 
-	constructor(@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger) {
+	constructor() {
 		console.log('DataGridComponent.constructor()');
 	}
 

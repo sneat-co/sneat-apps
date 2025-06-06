@@ -7,6 +7,7 @@ import {
 	OnDestroy,
 	signal,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
@@ -51,6 +52,9 @@ export class ForSpaceTypeCardComponent
 	extends SneatBaseComponent
 	implements OnChanges, OnDestroy
 {
+	private readonly userService = inject(SneatUserService);
+	private readonly changeDetectorRef = inject(ChangeDetectorRef);
+
 	@Input() emptyTitle?: string;
 	@Input() itemsTitle?: string;
 	@Input() buttonColor?: string;
@@ -62,10 +66,7 @@ export class ForSpaceTypeCardComponent
 
 	private subscription?: Subscription;
 
-	constructor(
-		private readonly userService: SneatUserService,
-		private readonly changeDetectorRef: ChangeDetectorRef,
-	) {
+	constructor() {
 		super('ForSpaceTypeCardComponent');
 	}
 

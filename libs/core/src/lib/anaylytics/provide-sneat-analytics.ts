@@ -45,12 +45,13 @@ export function provideSneatAnalytics(
 			console.log(`provideSneatAnalytics(), config: ${JSON.stringify(config)}`);
 			const as: IAnalyticsService[] = [];
 			if (config?.addPosthog) {
-				as.push(new PosthogAnalyticsService(errorLogger));
+				as.push(new PosthogAnalyticsService());
 			}
 			if (config?.addFirebaseAnalytics) {
 				const analytics: Analytics = fbApp && getAnalytics(fbApp); // Ideally we would want to get it from the DI
 				if (analytics) {
-					as.push(new FireAnalyticsService(errorLogger, analytics));
+					as.push(new FireAnalyticsService());
+					// as.push(new FireAnalyticsService(errorLogger, analytics));
 				} else {
 					errorLogger.logError(
 						'addFirebaseAnalytics==true, but Firebase Analytics is not provided',

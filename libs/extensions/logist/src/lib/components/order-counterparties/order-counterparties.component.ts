@@ -2,11 +2,11 @@ import { LowerCasePipe, NgForOf, NgIf } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	OnChanges,
 	Output,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -57,6 +57,10 @@ interface ICounterparty extends IOrderCounterparty {
 	],
 })
 export class OrderCounterpartiesComponent implements OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly contactSelectorService = inject(ContactsSelectorService);
+	private readonly ordersService = inject(LogistOrderService);
+
 	@Input({ required: true }) space?: ISpaceContext;
 	@Input() order?: ILogistOrderContext;
 	@Output() readonly orderChange = new EventEmitter<ILogistOrderContext>();
@@ -74,12 +78,6 @@ export class OrderCounterpartiesComponent implements OnChanges {
 	public counterparties?: ICounterparty[];
 
 	protected readonly index = (i: number) => i;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly contactSelectorService: ContactsSelectorService,
-		private readonly ordersService: LogistOrderService,
-	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order']) {

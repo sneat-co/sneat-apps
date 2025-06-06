@@ -1,5 +1,5 @@
 import { DatePipe, NgIf } from '@angular/common';
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
 	PopoverController,
@@ -56,6 +56,11 @@ import { OrderPrintMenuComponent } from './order-print-menu.component';
 	],
 })
 export class OrderCardComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly popoverController = inject(PopoverController);
+	private readonly orderService = inject(LogistOrderService);
+	private readonly toastController = inject(ToastController);
+
 	@Input() public readonly = false;
 	@Input({ required: true }) space?: ISpaceContext;
 	@Input() order?: ILogistOrderContext;
@@ -69,13 +74,6 @@ export class OrderCardComponent {
 		'trucker',
 		'shipping_line',
 	];
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly popoverController: PopoverController,
-		private readonly orderService: LogistOrderService,
-		private readonly toastController: ToastController,
-	) {}
 
 	protected copyNumberToClipboard(event: Event): void {
 		event.stopPropagation();

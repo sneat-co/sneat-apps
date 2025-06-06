@@ -4,6 +4,7 @@ import {
 	input,
 	computed,
 	ChangeDetectionStrategy,
+	inject,
 } from '@angular/core';
 import {
 	PopoverController,
@@ -53,6 +54,9 @@ import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
 	templateUrl: './day-slot-item.component.html',
 })
 export class DaySlotItemComponent extends WithSpaceInput {
+	private readonly popoverController = inject(PopoverController);
+	private readonly calendarNavService = inject(CalendarNavService);
+
 	public readonly $slotContext = input.required<ISlotUIContext>();
 
 	@Input() dateID?: string;
@@ -67,10 +71,7 @@ export class DaySlotItemComponent extends WithSpaceInput {
 		return happening?.brief?.status === 'canceled' || !!adjustment?.canceled;
 	});
 
-	constructor(
-		private readonly popoverController: PopoverController,
-		private readonly calendarNavService: CalendarNavService,
-	) {
+	constructor() {
 		super('DaySlotItemComponent');
 	}
 

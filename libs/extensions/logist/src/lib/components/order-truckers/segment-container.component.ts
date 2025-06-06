@@ -1,10 +1,10 @@
 import { NgIf } from '@angular/common';
 import {
 	Component,
-	Inject,
 	Input,
 	OnChanges,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -42,6 +42,9 @@ import { FreightLoadForm } from '../freight-load-form/freight-load-form.componen
 	],
 })
 export class SegmentContainerComponent implements OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly orderService = inject(LogistOrderService);
+
 	@Input() order?: ILogistOrderContext;
 	@Input() segment?: IContainerSegment;
 
@@ -60,10 +63,7 @@ export class SegmentContainerComponent implements OnChanges {
 		arrivalDate: this.arrivalDate,
 	});
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly orderService: LogistOrderService,
-	) {
+	constructor() {
 		this.form.disable();
 	}
 

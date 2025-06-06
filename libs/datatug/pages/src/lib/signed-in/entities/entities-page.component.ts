@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonBackButton,
@@ -66,19 +66,21 @@ type Entities = IRecord<IEntity>[];
 export class EntitiesPageComponent
 	implements OnDestroy, ViewDidEnter, ViewDidLeave
 {
+	private readonly route = inject(ActivatedRoute);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private navCtrl = inject(NavController);
+	private readonly datatugNavService = inject(DatatugNavService);
+	private readonly navContextService = inject(DatatugNavContextService);
+	private readonly entityService = inject(EntityService);
+	private readonly toastCtrl = inject(ToastController);
+
 	entities?: Entities;
 	project?: IProjectContext;
 	private readonly destroyed = new Subject<void>();
 
-	constructor(
-		private readonly route: ActivatedRoute,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private navCtrl: NavController,
-		private readonly datatugNavService: DatatugNavService,
-		private readonly navContextService: DatatugNavContextService,
-		private readonly entityService: EntityService,
-		private readonly toastCtrl: ToastController,
-	) {
+	constructor() {
+		const navContextService = this.navContextService;
+
 		navContextService.currentProject.pipe(takeUntil(this.destroyed)).subscribe({
 			next: (currentProject) => {
 				this.project = currentProject;

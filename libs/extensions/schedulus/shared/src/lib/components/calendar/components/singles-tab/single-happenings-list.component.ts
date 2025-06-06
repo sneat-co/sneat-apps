@@ -4,6 +4,7 @@ import {
 	input,
 	Input,
 	OnChanges,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -42,6 +43,8 @@ export class SingleHappeningsListComponent
 	extends WithSpaceInput
 	implements OnChanges
 {
+	readonly filterService = inject(CalendarFilterService);
+
 	@Input({ required: true }) public happenings?: IHappeningContext[];
 
 	public readonly $contactusSpace = input.required<
@@ -52,8 +55,10 @@ export class SingleHappeningsListComponent
 
 	protected happeningsMatchingFilter?: IHappeningContext[];
 
-	constructor(readonly filterService: CalendarFilterService) {
+	constructor() {
 		super('SingleHappeningsListComponent');
+		const filterService = this.filterService;
+
 		filterService.filter
 			.pipe(takeUntil(this.destroyed$))
 			.subscribe((filter) => {

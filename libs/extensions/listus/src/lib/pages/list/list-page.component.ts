@@ -5,6 +5,7 @@ import {
 	Component,
 	NgZone,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -109,6 +110,11 @@ type ListPagePerforming =
 	],
 })
 export class ListPageComponent extends BaseListPage implements AfterViewInit {
+	private readonly zone = inject(NgZone);
+	private readonly listDialogs = inject(ListDialogsService);
+	private readonly listusAppStateService = inject(IListusAppStateService);
+	private readonly changeDetectorRef = inject(ChangeDetectorRef);
+
 	protected isPersisting = false;
 	protected isHideWatched = false;
 	protected isReordering = false;
@@ -126,18 +132,12 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 	// protected completedListItems?: IListItemWithUiState[];
 	// protected activeListItems?: IListItemWithUiState[];
 
-	constructor(
-		params: ListusComponentBaseParams,
-		private readonly zone: NgZone,
-		// private readonly listusService: IListusService,
-		// listService: ListService,
-		// private readonly listItemService: IListItemService,
-		private readonly listDialogs: ListDialogsService,
-		// private readonly shelfService: ShelfService,
-		private readonly listusAppStateService: IListusAppStateService,
-		private readonly changeDetectorRef: ChangeDetectorRef, // private readonly listusDbService: IListusService,
-	) {
+	constructor() {
+		const params = inject(ListusComponentBaseParams);
+
 		super('ListPageComponent', params);
+		const listusAppStateService = this.listusAppStateService;
+
 		console.log('ListPageComponent.constructor(), userId:', this.currentUserId);
 		this.preloader.markAsPreloaded('list');
 		if (location.pathname.includes('/lists')) {

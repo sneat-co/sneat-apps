@@ -1,7 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
-import { Firestore as AngularFirestore } from '@angular/fire/firestore';
-import { SneatApiService } from '@sneat/api';
-import { SneatUserService } from '@sneat/auth-core';
+import { Injectable, inject } from '@angular/core';
 import { trimNames } from '@sneat/auth-models';
 import {
 	IMemberBrief,
@@ -11,22 +8,10 @@ import {
 	validateCreateSpaceMemberRequest,
 } from '@sneat/contactus-core';
 import { ContactService } from './contact-service';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { Observable } from 'rxjs';
-import { ContactusSpaceService } from './contactus-space.service';
 
 @Injectable()
 export class MemberService extends ContactService {
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		afs: AngularFirestore,
-		contactusTeamService: ContactusSpaceService,
-		sneatApiService: SneatApiService,
-		userService: SneatUserService,
-	) {
-		super(afs, sneatApiService, contactusTeamService, userService);
-	}
-
 	public acceptPersonalInvite(
 		request: IAcceptPersonalInviteRequest,
 		firebaseToken: string,

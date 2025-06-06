@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
 	IonCard,
 	IonCardContent,
@@ -57,7 +57,9 @@ export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 
 	buyerRefNumber?: string;
 
-	constructor(orderService: LogistOrderService) {
+	constructor() {
+		const orderService = inject(LogistOrderService);
+
 		super('OrderTruckerSummaryComponent', orderService);
 		this.route.queryParams?.pipe(this.takeUntilDestroyed())?.subscribe({
 			next: (params) => {

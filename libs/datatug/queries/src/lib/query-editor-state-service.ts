@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
 	BehaviorSubject,
 	catchError,
@@ -58,17 +58,19 @@ let counter = 0;
 
 @Injectable()
 export class QueryEditorStateService {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly queriesService = inject(QueriesService);
+	readonly datatugNavContextService = inject(DatatugNavContextService);
+
 	public readonly queryEditorState = $state
 		.asObservable()
 		.pipe(filter((state) => !!state));
 
 	private currentProject?: IProjectContext;
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly queriesService: QueriesService,
-		readonly datatugNavContextService: DatatugNavContextService,
-	) {
+	constructor() {
+		const datatugNavContextService = this.datatugNavContextService;
+
 		console.log('QueryEditorStateService.constructor()');
 		datatugNavContextService.currentProject.subscribe((currentProject) => {
 			this.currentProject = currentProject;

@@ -68,6 +68,14 @@ import { InlistAgeGroupComponent } from '../inlist-options/inlist-age-group.comp
 })
 // TODO: Is it deprecated and should we migrated to Contacts list? Document reason if not.
 export class MembersListComponent extends WithSpaceInput {
+	private readonly navService = inject(SpaceNavService);
+	private readonly navController = inject(NavController);
+	private readonly userService = inject(SneatUserService);
+	private readonly contactService = inject(ContactService);
+	private readonly scheduleNavService = inject(ScheduleNavService);
+	private readonly modalController = inject(ModalController);
+	readonly routerOutlet = inject(IonRouterOutlet);
+
 	private $selfRemove = signal(false);
 
 	public readonly $members = input.required<readonly IContactWithBrief[]>();
@@ -97,15 +105,7 @@ export class MembersListComponent extends WithSpaceInput {
 
 	private readonly contactusNavService = inject(ContactusNavService);
 
-	constructor(
-		private readonly navService: SpaceNavService,
-		private readonly navController: NavController,
-		private readonly userService: SneatUserService,
-		private readonly contactService: ContactService,
-		private readonly scheduleNavService: ScheduleNavService,
-		private readonly modalController: ModalController,
-		public readonly routerOutlet: IonRouterOutlet,
-	) {
+	constructor() {
 		super('MembersListComponent');
 	}
 

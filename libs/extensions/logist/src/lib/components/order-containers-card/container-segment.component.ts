@@ -2,10 +2,10 @@ import { NgIf } from '@angular/common';
 import {
 	ChangeDetectorRef,
 	Component,
-	Inject,
 	Input,
 	OnChanges,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -57,6 +57,10 @@ import {
 	],
 })
 export class ContainerSegmentComponent implements OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly orderService = inject(LogistOrderService);
+	private readonly changedDetectorRef = inject(ChangeDetectorRef);
+
 	@Input() order?: ILogistOrderContext;
 	@Input() segment?: IContainerSegment;
 
@@ -84,12 +88,6 @@ export class ContainerSegmentComponent implements OnChanges {
 	});
 
 	deleting = false;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly orderService: LogistOrderService,
-		private readonly changedDetectorRef: ChangeDetectorRef,
-	) {}
 
 	private setForm(): void {
 		this.from = this.order?.dbo?.counterparties?.find(

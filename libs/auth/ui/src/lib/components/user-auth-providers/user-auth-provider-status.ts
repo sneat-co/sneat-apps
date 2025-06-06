@@ -5,8 +5,8 @@ import {
 	Output,
 	signal,
 	computed,
-	Inject,
 	OnDestroy,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -48,6 +48,9 @@ interface provider {
 	imports: [IonItem, IonIcon, IonLabel, IonButtons, IonButton, IonSpinner],
 })
 export class UserAuthAProviderStatusComponent implements OnDestroy {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly authStateService = inject(SneatAuthStateService);
+
 	private readonly $destroyed = new Subject<void>();
 	public providerID = input.required<AuthProviderID>();
 	protected readonly provider = computed<provider>(() => {
@@ -103,10 +106,7 @@ export class UserAuthAProviderStatusComponent implements OnDestroy {
 		undefined,
 	);
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly authStateService: SneatAuthStateService,
-	) {
+	constructor() {
 		this.authStateService.authUser
 			.pipe(takeUntil(this.$destroyed))
 			.subscribe((authUser) => {

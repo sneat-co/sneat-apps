@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import {
 	ActivationStart,
 	Router,
@@ -26,9 +26,11 @@ export class LogistSpaceMenuComponent
 	extends SpaceBaseComponent
 	implements OnInit
 {
+	private readonly router = inject(Router);
+
 	@ViewChild(RouterOutlet) outlet?: RouterOutlet;
 
-	constructor(private readonly router: Router) {
+	constructor() {
 		super('LogistTeamMenuComponent');
 	}
 

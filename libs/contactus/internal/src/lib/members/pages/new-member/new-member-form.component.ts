@@ -146,7 +146,9 @@ export class NewMemberFormComponent
 
 	private readonly memberService = inject(MemberService);
 
-	public constructor(routingState: RoutingState) {
+	public constructor() {
+		const routingState = inject(RoutingState);
+
 		super('NewMemberFormComponent');
 		this.hasNavHistory = routingState.hasHistory();
 	}

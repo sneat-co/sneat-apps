@@ -1,14 +1,12 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { PopoverController } from '@ionic/angular/standalone';
 import { NewProjectFormComponent } from './new-project-form.component';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 
 @Injectable()
 export class NewProjectService {
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly popoverController: PopoverController,
-	) {}
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly popoverController = inject(PopoverController);
 
 	public openNewProjectDialog(event: Event): void {
 		console.log('openNewProjectDialog', event);

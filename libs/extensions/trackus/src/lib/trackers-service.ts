@@ -1,4 +1,4 @@
-import { Injectable, NgModule } from '@angular/core';
+import { Injectable, NgModule, inject } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { ModuleSpaceItemService } from '@sneat/space-services';
@@ -9,7 +9,10 @@ export class TrackersService extends ModuleSpaceItemService<
 	ITrackerBrief,
 	ITrackerDbo
 > {
-	constructor(afs: AngularFirestore, sneatApiService: SneatApiService) {
+	constructor() {
+		const afs = inject(AngularFirestore);
+		const sneatApiService = inject(SneatApiService);
+
 		super('trackus', 'trackers', afs, sneatApiService);
 	}
 }

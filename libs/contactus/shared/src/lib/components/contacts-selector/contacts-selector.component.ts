@@ -5,13 +5,13 @@ import {
 	computed,
 	effect,
 	EffectRef,
-	Inject,
 	Input,
 	OnChanges,
 	OnDestroy,
 	OnInit,
 	signal,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -100,6 +100,11 @@ export class ContactsSelectorComponent
 	extends SelectorModalComponent<IContactWithBriefAndSpace>
 	implements IContactSelectorOptions, OnInit, OnChanges, OnDestroy
 {
+	private readonly contactRolesByType = inject<ContactRolesByType>(
+		CONTACT_ROLES_BY_TYPE,
+	);
+	private readonly contactusSpaceService = inject(ContactusSpaceService);
+
 	private readonly parentChanged = new Subject<void>();
 
 	protected readonly $parentTab = signal<'existing' | 'new'>('existing');
@@ -239,11 +244,7 @@ export class ContactsSelectorComponent
 		return r ? r[0].toUpperCase() + r.substr(1) : 'Contact';
 	}
 
-	constructor(
-		@Inject(CONTACT_ROLES_BY_TYPE)
-		private readonly contactRolesByType: ContactRolesByType,
-		private readonly contactusSpaceService: ContactusSpaceService,
-	) {
+	constructor() {
 		super('ContactSelectorComponent');
 		this.setupEffects();
 	}

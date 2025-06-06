@@ -1,16 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { DatatugStoreGithubService } from './datatug-store.service.github';
 import { DatatugStoreFirestoreService } from './datatug-store.service.firestore';
 import { IDatatugStoreService } from './datatug-store.service.interface';
 
 @Injectable()
 export class DatatugStoreServiceFactory {
-	// TODO: consider to use separate factory per each service
-
-	constructor(
-		private readonly firestoreService: DatatugStoreFirestoreService,
-		private readonly githubService: DatatugStoreGithubService,
-	) {}
+	private readonly firestoreService = inject(DatatugStoreFirestoreService);
+	private readonly githubService = inject(DatatugStoreGithubService);
 
 	getDatatugStoreService(store: string): IDatatugStoreService {
 		switch (store) {

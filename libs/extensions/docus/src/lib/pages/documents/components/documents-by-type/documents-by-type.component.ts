@@ -24,10 +24,10 @@ import { DocumentsBaseComponent } from '../documents-base.component';
 import {
 	Component,
 	EventEmitter,
-	Inject,
 	OnChanges,
 	Output,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 
 interface IDocumentType {
@@ -70,11 +70,11 @@ export class DocumentsByTypeComponent
 	@Output() goDocType = new EventEmitter<string>();
 	@Output() goDoc = new EventEmitter<IAssetDocumentContext>();
 
-	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
-		assetService: AssetService,
-		toastCtrl: ToastController,
-	) {
+	constructor() {
+		const errorLogger = inject<IErrorLogger>(ErrorLogger);
+		const assetService = inject(AssetService);
+		const toastCtrl = inject(ToastController);
+
 		super(errorLogger, assetService, toastCtrl);
 	}
 

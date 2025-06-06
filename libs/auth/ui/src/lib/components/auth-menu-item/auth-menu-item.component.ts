@@ -3,9 +3,9 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	computed,
-	Inject,
 	signal,
 	OnDestroy,
+	inject,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
@@ -44,6 +44,11 @@ import { PersonNamesPipe, personNames } from '../../pipes/person-names.pipe';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthMenuItemComponent implements OnDestroy {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly navCtrl = inject(NavController);
+	private readonly authStateService = inject(SneatAuthStateService);
+	private readonly menuController = inject(MenuController);
+
 	protected readonly $user = signal<ISneatUserState | undefined>(undefined);
 	protected $err = signal<unknown>(undefined);
 
@@ -62,14 +67,11 @@ export class AuthMenuItemComponent implements OnDestroy {
 		this.$destroyed.complete();
 	}
 
-	constructor(
-		@Inject(ErrorLogger)
-		private readonly errorLogger: IErrorLogger,
-		private readonly navCtrl: NavController,
-		private readonly authStateService: SneatAuthStateService,
-		private readonly menuController: MenuController,
-		userService: SneatUserService,
-	) {
+	constructor() {
+		const errorLogger = this.errorLogger;
+		const authStateService = this.authStateService;
+		const userService = inject(SneatUserService);
+
 		userService.userState
 			.pipe(takeUntil(this.$destroyed))
 			.subscribe(this.$user.set);

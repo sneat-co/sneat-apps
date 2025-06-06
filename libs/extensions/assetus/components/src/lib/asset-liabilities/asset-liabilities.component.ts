@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import {
 	AlertController,
 	ModalController,
@@ -47,6 +47,14 @@ interface ILiabilityService {
 	imports: [IonItemGroup, IonItem, IonLabel, IonButtons, IonButton, IonIcon],
 })
 export class AssetLiabilitiesComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly assetService = inject(AssetService);
+	private readonly liabilityService = inject(ILiabilityService);
+	private readonly alertCtrl = inject(AlertController);
+	private readonly modalCtrl = inject(ModalController);
+	private readonly popoverCtrl = inject(PopoverController);
+	private readonly serviceTypeService = inject(IServiceTypeService);
+
 	assetDto: IAssetDboBase | undefined;
 
 	@Input() addTitle?: string;
@@ -67,16 +75,6 @@ export class AssetLiabilitiesComponent {
 	}
 
 	handleError = (err: unknown): void => console.log(err);
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly assetService: AssetService,
-		private readonly liabilityService: ILiabilityService,
-		private readonly alertCtrl: AlertController,
-		private readonly modalCtrl: ModalController,
-		private readonly popoverCtrl: PopoverController,
-		private readonly serviceTypeService: IServiceTypeService,
-	) {}
 
 	load(): void {
 		if (!this.assetDto) {

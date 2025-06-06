@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
@@ -13,10 +13,8 @@ import { PrivateTokenStoreService } from '@sneat/auth-core';
 
 @Injectable()
 export class TableService {
-	constructor(
-		private readonly httpClient: HttpClient,
-		private readonly privateTokenStoreService: PrivateTokenStoreService,
-	) {}
+	private readonly httpClient = inject(HttpClient);
+	private readonly privateTokenStoreService = inject(PrivateTokenStoreService);
 
 	public getDbCatalogRefs(
 		r: ISqlQueryTarget,

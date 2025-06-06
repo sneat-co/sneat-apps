@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
 	NavigationBehaviorOptions,
 	NavigationEnd,
@@ -12,13 +12,15 @@ import { NavController } from '@ionic/angular/standalone';
 	providedIn: 'root',
 })
 export class SneatNavService {
+	private readonly router = inject(Router);
+	private readonly location = inject(Location);
+	private readonly navController = inject(NavController);
+
 	private previous?: NavigationEnd;
 
-	constructor(
-		private readonly router: Router,
-		private readonly location: Location,
-		private readonly navController: NavController,
-	) {
+	constructor() {
+		const router = this.router;
+
 		router.events.subscribe((event) => {
 			if (event instanceof NavigationEnd) {
 				this.previous = event;

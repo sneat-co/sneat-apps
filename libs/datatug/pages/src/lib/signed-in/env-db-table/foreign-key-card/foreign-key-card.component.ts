@@ -1,10 +1,10 @@
 import { NgForOf } from '@angular/common';
 import {
 	Component,
-	Inject,
 	Input,
 	OnChanges,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import {
 	IonBadge,
@@ -44,6 +44,11 @@ import { ICommandResponseWithRecordset } from '@sneat/ext-datatug-dto';
 	],
 })
 export class ForeignKeyCardComponent implements OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly projectService = inject(ProjectService);
+	private readonly datatugNavService = inject(DatatugNavService);
+	private readonly agentService = inject(AgentService);
+
 	@Input() fk?: IForeignKey;
 	@Input() row?: Record<string, unknown>;
 	@Input() tableNavParams?: IDbObjectNavParams;
@@ -52,13 +57,6 @@ export class ForeignKeyCardComponent implements OnChanges {
 		meta: ITableFull;
 		row: Record<string, unknown>;
 	};
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly projectService: ProjectService,
-		private readonly datatugNavService: DatatugNavService,
-		private readonly agentService: AgentService,
-	) {}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	public goTable(event: Event, tableRef?: ITableRef): void {

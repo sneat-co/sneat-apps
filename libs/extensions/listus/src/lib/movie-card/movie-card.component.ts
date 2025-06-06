@@ -6,6 +6,7 @@ import {
 	OnChanges,
 	Output,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import {
 	IonBadge,
@@ -54,6 +55,9 @@ import { ITmdbService } from '../watchlist';
 	],
 })
 export class MovieCardComponent implements OnChanges {
+	private readonly param = inject(ListusComponentBaseParams);
+	private readonly tmdbService = inject(ITmdbService);
+
 	@Input()
 	public movie?: IMovie;
 	@Input()
@@ -64,11 +68,6 @@ export class MovieCardComponent implements OnChanges {
 	@Output() goMovie = new EventEmitter<IMovie>();
 	@Output() movieChanged = new EventEmitter<IMovieDbo>();
 	@Output() public readonly listChanged = new EventEmitter<IListContext>();
-
-	constructor(
-		private readonly param: ListusComponentBaseParams,
-		private readonly tmdbService: ITmdbService,
-	) {}
 
 	get userId(): string | undefined {
 		return this.param.spaceParams.userService.currentUserID;

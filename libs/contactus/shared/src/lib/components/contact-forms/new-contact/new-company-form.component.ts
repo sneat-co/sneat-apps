@@ -1,5 +1,11 @@
 import { JsonPipe } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnChanges,
+	SimpleChanges,
+	inject,
+} from '@angular/core';
 import {
 	FormControl,
 	FormGroup,
@@ -52,6 +58,8 @@ export class NewCompanyFormComponent
 	extends NewContactFormBaseComponent
 	implements OnChanges
 {
+	private readonly contactService = inject(ContactService);
+
 	@Input() contactRoles?: ISelectItem[];
 	@Input() contactRole?: ContactRole = undefined;
 	@Input() hideRole = false;
@@ -71,7 +79,7 @@ export class NewCompanyFormComponent
 		title: new FormControl<string>('', Validators.required),
 	});
 
-	constructor(private readonly contactService: ContactService) {
+	constructor() {
 		super('NewCompanyFormComponent');
 	}
 
