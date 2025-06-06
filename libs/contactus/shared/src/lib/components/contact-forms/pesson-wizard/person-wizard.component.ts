@@ -38,7 +38,6 @@ import {
 	IPersonRequirements,
 	IPhone,
 	IRelatedPerson,
-	MemberContactType,
 	NewContactBaseDboAndSpaceRef,
 } from '@sneat/contactus-core';
 import {

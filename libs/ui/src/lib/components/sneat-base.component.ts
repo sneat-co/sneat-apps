@@ -1,12 +1,4 @@
-import {
-	inject,
-	Inject,
-	Injectable,
-	InjectionToken,
-	OnDestroy,
-	OnInit,
-	signal,
-} from '@angular/core';
+import { inject, Injectable, InjectionToken, OnDestroy } from '@angular/core';
 import { createSetFocusToInput } from '../focus';
 import { ErrorLogger } from '@sneat/logging';
 import { MonoTypeOperatorFunction, Subject, Subscription } from 'rxjs';
@@ -54,7 +46,7 @@ export abstract class SneatBaseComponent implements OnDestroy {
 	// Passes focus to the input element
 	protected readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
 
-	protected constructor(@Inject(ClassName) public readonly className: string) {
+	protected constructor(public readonly className: string) {
 		this.log(`${this.className}.SneatBaseComponent.constructor()`);
 	}
 

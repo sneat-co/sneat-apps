@@ -46,7 +46,7 @@ export class ContactsAsBadgesComponent {
 			isDeleting: deletingContactIDs.includes(c.id),
 		}));
 		if (deletingContactIDs.some((id) => result.some((c) => c.id === id))) {
-			this.$deletingContactIDs.update((ids) =>
+			this.$deletingContactIDs.update((deletingContactIDs) =>
 				deletingContactIDs.filter((id) => result.some((c) => c.id === id)),
 			);
 		}

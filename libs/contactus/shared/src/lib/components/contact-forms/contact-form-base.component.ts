@@ -1,7 +1,6 @@
 import { Directive, EventEmitter, input, Output } from '@angular/core';
 import { ContactDboWithSpaceRef } from '@sneat/contactus-core';
 import { WithSpaceInput } from '@sneat/space-services';
-import { SneatBaseComponent } from '@sneat/ui';
 
 @Directive()
 export abstract class ContactFormBaseComponent extends WithSpaceInput {

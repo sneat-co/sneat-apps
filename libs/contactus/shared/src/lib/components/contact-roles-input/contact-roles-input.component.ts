@@ -12,10 +12,7 @@ import {
 	IContactWithBrief,
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import {
-	ContactService,
-	IUpdateContactRequest,
-} from '@sneat/contactus-services';
+import { ContactService } from '@sneat/contactus-services';
 import { ISpaceContext } from '@sneat/space-models';
 import { MultiSelectorComponent } from '@sneat/ui';
 

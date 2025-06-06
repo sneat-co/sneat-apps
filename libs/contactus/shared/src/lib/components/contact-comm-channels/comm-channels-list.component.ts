@@ -14,9 +14,6 @@ import {
 	IonInput,
 	IonItem,
 	IonLabel,
-	IonSelect,
-	IonSelectOption,
-	IonTextarea,
 } from '@ionic/angular/standalone';
 import {
 	ContactCommChannelType,
