@@ -2,7 +2,6 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	input,
-	Input,
 	inject,
 } from '@angular/core';
 import { IonButton, IonButtons, IonIcon } from '@ionic/angular/standalone';

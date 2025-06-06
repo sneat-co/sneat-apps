@@ -5,7 +5,6 @@ import {
 	inject,
 	signal,
 	computed,
-	input,
 } from '@angular/core';
 import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';

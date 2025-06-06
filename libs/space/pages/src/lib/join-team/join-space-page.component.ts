@@ -43,7 +43,7 @@ import {
 	IRejectPersonalInviteRequest,
 	ISpaceContext,
 } from '@sneat/space-models';
-import { SpaceNavService, SpaceService } from '@sneat/space-services';
+import { SpaceNavService } from '@sneat/space-services';
 import { takeUntil } from 'rxjs/operators';
 import { InviteService } from '@sneat/contactus-services';
 

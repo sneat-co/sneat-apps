@@ -4,7 +4,6 @@ import {
 	EventEmitter,
 	Injectable,
 	input,
-	Input,
 	Output,
 	signal,
 	inject,

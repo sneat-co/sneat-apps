@@ -464,7 +464,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		if (!this.space || !this.list?.brief || !items) {
 			return;
 		}
-		const deletingItems: IListItemWithUiState[] = [];
+		let deletingItems: IListItemWithUiState[] = [];
 		items.forEach((li) => {
 			li = { ...li, state: { ...li.state, isDeleting: true } };
 			deletingItems.push(li);
@@ -483,9 +483,10 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		this.listService.deleteListItems(request).subscribe({
 			error: this.errorLogger.logErrorHandler('failed to delete list items'),
 			complete: () => {
-				deletingItems.forEach((li) => {
-					li = { ...li, state: { ...li.state, isDeleting: false } };
-				});
+				deletingItems = deletingItems.map((li) => ({
+					...li,
+					state: { ...li.state, isDeleting: false },
+				}));
 			},
 		});
 	}

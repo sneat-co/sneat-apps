@@ -1,4 +1,4 @@
-import { Component, inject, Inject, InjectionToken } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { AssetExtraType, IAssetExtra } from '@sneat/mod-assetus-core';
@@ -24,12 +24,6 @@ export abstract class AddAssetBaseComponent extends SpaceBaseComponent {
 	});
 
 	protected readonly assetService = inject(AssetService);
-
-	protected constructor(
-		@Inject(new InjectionToken('className')) className: string,
-	) {
-		super(className);
-	}
 
 	protected createAssetAndGoToAssetPage<
 		ExtraType extends AssetExtraType,

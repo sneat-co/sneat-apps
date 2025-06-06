@@ -20,15 +20,14 @@ import {
 	SpaceComponentBaseParams,
 	SpacePageBaseComponent,
 } from '@sneat/space-components';
-import { Observable } from 'rxjs';
 
-interface IAssetGroupService {
-	watchById(id: string): Observable<IAssetDtoGroup>;
-}
-
-interface IAssetService {
-	assetsByGroupID(groupID: string): Observable<IAssetContext[]>;
-}
+// interface IAssetGroupService {
+// 	watchById(id: string): Observable<IAssetDtoGroup>;
+// }
+//
+// interface IAssetService {
+// 	assetsByGroupID(groupID: string): Observable<IAssetContext[]>;
+// }
 
 class AssetFactory {
 	newAsset(asset: IAssetContext): IAssetContext {

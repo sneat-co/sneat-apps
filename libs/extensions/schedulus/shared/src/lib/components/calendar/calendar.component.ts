@@ -22,7 +22,7 @@ import {
 } from '@ionic/angular/standalone';
 import { IMemberContext } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
-import { dateToIso, localDateToIso } from '@sneat/core';
+import { localDateToIso } from '@sneat/core';
 import {
 	IHappeningSlot,
 	WeekdayCode2,
@@ -35,7 +35,6 @@ import {
 } from '../../services/calendar-day.service';
 import { CalendariumSpaceService } from '../../services/calendarium-space.service';
 import { HappeningService } from '../../services/happening.service';
-import { isToday } from '../calendar-core';
 import {
 	emptyCalendarFilter,
 	CalendarFilterService,

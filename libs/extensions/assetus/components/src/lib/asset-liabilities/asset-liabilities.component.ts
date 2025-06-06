@@ -12,14 +12,12 @@ import {
 } from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
-	AssetCategory,
 	DtoLiability,
 	DtoServiceType,
 	IAssetDboBase,
 	LiabilityServiceType,
 } from '@sneat/mod-assetus-core';
 import { ISelectItem, MultiSelectorComponent } from '@sneat/ui';
-import { Observable } from 'rxjs';
 import { AssetService } from '../services';
 
 interface AssetLiabilitiesByServiceType {
@@ -28,18 +26,18 @@ interface AssetLiabilitiesByServiceType {
 	liabilities?: DtoLiability[];
 }
 
-interface IServiceTypeService {
-	serviceTypesByAssetCategory(
-		a: unknown,
-		category: AssetCategory,
-	): Observable<{ values: DtoServiceType[] }>;
-}
-
-interface ILiabilityService {
-	getByAssetId(
-		assetId: string,
-	): Observable<{ values: { serviceTypes: LiabilityServiceType[] }[] }>;
-}
+// interface IServiceTypeService {
+// 	serviceTypesByAssetCategory(
+// 		a: unknown,
+// 		category: AssetCategory,
+// 	): Observable<{ values: DtoServiceType[] }>;
+// }
+//
+// interface ILiabilityService {
+// 	getByAssetId(
+// 		assetId: string,
+// 	): Observable<{ values: { serviceTypes: LiabilityServiceType[] }[] }>;
+// }
 
 @Component({
 	selector: 'sneat-asset-liabilities',

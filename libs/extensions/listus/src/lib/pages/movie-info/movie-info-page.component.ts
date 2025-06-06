@@ -35,7 +35,6 @@ import { ListusComponentBaseParams } from '../../listus-component-base-params';
 // import { IListItemInfo } from '../../../../models/dto/dto-list';
 import {
 	IListItemsCommandParams,
-	ListService,
 	// ListusService,
 } from '../../services';
 import { ITmdbService } from '../../watchlist';
