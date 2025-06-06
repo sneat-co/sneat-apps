@@ -24,8 +24,8 @@ importers:
         specifier: 20.0.0
         version: 20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1)
       '@angular/fire':
-        specifier: 19.2.0
-        version: 19.2.0(809ebdbe6921b3888396c555f1ed4492)
+        specifier: 20.0.0
+        version: 20.0.0(809ebdbe6921b3888396c555f1ed4492)
       '@angular/forms':
         specifier: 20.0.0
         version: 20.0.0(@angular/common@20.0.0(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@20.0.0(@angular/animations@20.0.0(@angular/common@20.0.0(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1)))(@angular/common@20.0.0(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1)))(rxjs@7.8.2)
@@ -560,15 +560,15 @@ packages:
       zone.js:
         optional: true
 
-  '@angular/fire@19.2.0':
-    resolution: {integrity: sha512-XoIggKcwY75JioGDNtNQFn4d2RpsBR4ugPN8bNWhylZIcWe47o760BxwnXn111I+P5FfZ6DMX8BOW7SmrC6VTQ==}
+  '@angular/fire@20.0.0':
+    resolution: {integrity: sha512-kZ0DhpLsdVv3d6U7lTw5PlU5ZPC+vC0aWEC1exSz/bumUOYy4l6hK9S7fOf4C2G+gq8lm7Bahrc+VW1fzNGsOQ==}
     peerDependencies:
-      '@angular/common': ^19.0.0
-      '@angular/core': ^19.0.0
-      '@angular/platform-browser': ^19.0.0
-      '@angular/platform-browser-dynamic': ^19.0.0
-      '@angular/platform-server': ^19.0.0
-      firebase-tools: ^13.0.0
+      '@angular/common': ^20.0.0
+      '@angular/core': ^20.0.0
+      '@angular/platform-browser': ^20.0.0
+      '@angular/platform-browser-dynamic': ^20.0.0
+      '@angular/platform-server': ^20.0.0
+      firebase-tools: ^14.0.0
       rxjs: ~7.8.0
     peerDependenciesMeta:
       '@angular/platform-server':
@@ -4169,10 +4169,6 @@ packages:
     peerDependenciesMeta:
       webpack-hot-middleware:
         optional: true
-
-  '@schematics/angular@19.2.14':
-    resolution: {integrity: sha512-p/jvMwth67g7tOrziTx+yWRagIPtjx21TF2uU2Pv5bqTY+JjRTczJs3yHPmVpzJN+ptmw47K4/NeLJmVUGuBgA==}
-    engines: {node: ^18.19.1 || ^20.11.1 || >=22.0.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
 
   '@schematics/angular@20.0.0':
     resolution: {integrity: sha512-lK5TvxEoeaoPnxM31qeNWhHUJ3kKMnRHknYhOfOmS8xfme78nS01FdU7TODLkg2p4GNEVVtXoxhj3FmrG3srKw==}
@@ -10845,14 +10841,14 @@ snapshots:
       '@angular/compiler': 20.0.0
       zone.js: 0.15.1
 
-  '@angular/fire@19.2.0(809ebdbe6921b3888396c555f1ed4492)':
+  '@angular/fire@20.0.0(809ebdbe6921b3888396c555f1ed4492)':
     dependencies:
-      '@angular-devkit/schematics': 19.2.14(chokidar@4.0.3)
+      '@angular-devkit/schematics': 20.0.0(chokidar@4.0.3)
       '@angular/common': 20.0.0(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
       '@angular/core': 20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1)
       '@angular/platform-browser': 20.0.0(@angular/animations@20.0.0(@angular/common@20.0.0(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1)))(@angular/common@20.0.0(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1))
       '@angular/platform-browser-dynamic': 20.0.0(@angular/common@20.0.0(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/compiler@20.0.0)(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@20.0.0(@angular/animations@20.0.0(@angular/common@20.0.0(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1)))(@angular/common@20.0.0(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1)))
-      '@schematics/angular': 19.2.14(chokidar@4.0.3)
+      '@schematics/angular': 20.0.0(chokidar@4.0.3)
       firebase: 11.9.0
       rxfire: 6.1.0(firebase@11.9.0)(rxjs@7.8.2)
       rxjs: 7.8.2
@@ -15193,14 +15189,6 @@ snapshots:
       error-stack-parser: 2.1.4
       html-entities: 2.6.0
       react-refresh: 0.17.0
-
-  '@schematics/angular@19.2.14(chokidar@4.0.3)':
-    dependencies:
-      '@angular-devkit/core': 19.2.14(chokidar@4.0.3)
-      '@angular-devkit/schematics': 19.2.14(chokidar@4.0.3)
-      jsonc-parser: 3.3.1
-    transitivePeerDependencies:
-      - chokidar
 
   '@schematics/angular@20.0.0(chokidar@4.0.3)':
     dependencies:
