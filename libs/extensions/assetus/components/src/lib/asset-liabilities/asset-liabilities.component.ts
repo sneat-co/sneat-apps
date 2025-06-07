@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import {
 	AlertController,
 	ModalController,
@@ -12,14 +12,12 @@ import {
 } from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import {
-	AssetCategory,
 	DtoLiability,
 	DtoServiceType,
 	IAssetDboBase,
 	LiabilityServiceType,
 } from '@sneat/mod-assetus-core';
 import { ISelectItem, MultiSelectorComponent } from '@sneat/ui';
-import { Observable } from 'rxjs';
 import { AssetService } from '../services';
 
 interface AssetLiabilitiesByServiceType {
@@ -28,18 +26,18 @@ interface AssetLiabilitiesByServiceType {
 	liabilities?: DtoLiability[];
 }
 
-interface IServiceTypeService {
-	serviceTypesByAssetCategory(
-		a: unknown,
-		category: AssetCategory,
-	): Observable<{ values: DtoServiceType[] }>;
-}
-
-interface ILiabilityService {
-	getByAssetId(
-		assetId: string,
-	): Observable<{ values: { serviceTypes: LiabilityServiceType[] }[] }>;
-}
+// interface IServiceTypeService {
+// 	serviceTypesByAssetCategory(
+// 		a: unknown,
+// 		category: AssetCategory,
+// 	): Observable<{ values: DtoServiceType[] }>;
+// }
+//
+// interface ILiabilityService {
+// 	getByAssetId(
+// 		assetId: string,
+// 	): Observable<{ values: { serviceTypes: LiabilityServiceType[] }[] }>;
+// }
 
 @Component({
 	selector: 'sneat-asset-liabilities',
@@ -47,6 +45,14 @@ interface ILiabilityService {
 	imports: [IonItemGroup, IonItem, IonLabel, IonButtons, IonButton, IonIcon],
 })
 export class AssetLiabilitiesComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly assetService = inject(AssetService);
+	private readonly liabilityService = inject(ILiabilityService);
+	private readonly alertCtrl = inject(AlertController);
+	private readonly modalCtrl = inject(ModalController);
+	private readonly popoverCtrl = inject(PopoverController);
+	private readonly serviceTypeService = inject(IServiceTypeService);
+
 	assetDto: IAssetDboBase | undefined;
 
 	@Input() addTitle?: string;
@@ -67,16 +73,6 @@ export class AssetLiabilitiesComponent {
 	}
 
 	handleError = (err: unknown): void => console.log(err);
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly assetService: AssetService,
-		private readonly liabilityService: ILiabilityService,
-		private readonly alertCtrl: AlertController,
-		private readonly modalCtrl: ModalController,
-		private readonly popoverCtrl: PopoverController,
-		private readonly serviceTypeService: IServiceTypeService,
-	) {}
 
 	load(): void {
 		if (!this.assetDto) {

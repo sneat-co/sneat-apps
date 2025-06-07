@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	signal,
+	inject,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -38,7 +43,8 @@ import {
 	IRejectPersonalInviteRequest,
 	ISpaceContext,
 } from '@sneat/space-models';
-import { SpaceNavService, SpaceService } from '@sneat/space-services';
+import { SpaceNavService } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { takeUntil } from 'rxjs/operators';
 import { InviteService } from '@sneat/contactus-services';
 
@@ -67,12 +73,20 @@ export const getPinFromUrl: () => string = () => {
 		IonButton,
 		IonSpinner,
 	],
-	providers: [InviteService],
+	providers: [
+		{ provide: ClassName, useValue: 'JoinSpacePageComponent' },
+		InviteService,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-join-space',
 	templateUrl: './join-space-page.component.html',
 })
 export class JoinSpacePageComponent extends WithSpaceInput {
+	protected readonly route = inject(ActivatedRoute);
+	private readonly navService = inject(SpaceNavService);
+	private readonly inviteService = inject(InviteService);
+	private readonly authStateService = inject(SneatAuthStateService);
+
 	private readonly id?: string;
 	public inviteInfo?: IJoinSpaceInfoResponse;
 	public pin?: string;
@@ -101,13 +115,8 @@ export class JoinSpacePageComponent extends WithSpaceInput {
 
 	public authStatus: AuthStatus = AuthStatuses.authenticating;
 
-	constructor(
-		protected readonly route: ActivatedRoute,
-		private readonly navService: SpaceNavService,
-		private readonly inviteService: InviteService,
-		private readonly authStateService: SneatAuthStateService,
-	) {
-		super('JoinSpacePageComponent');
+	public constructor() {
+		super();
 		this.getActionFromLocationHash();
 		this.id = this.route.snapshot.queryParamMap.get('id') || undefined;
 		try {

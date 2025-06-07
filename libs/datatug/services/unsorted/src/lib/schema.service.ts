@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { SneatApiService } from '@sneat/api';
 import { CreateNamedRequest } from '@sneat/ext-datatug-dto';
@@ -8,7 +8,7 @@ import { createProjItem } from '@sneat/ext-datatug-services-base';
 
 @Injectable()
 export class SchemaService {
-	constructor(private readonly api: SneatApiService) {}
+	private readonly api = inject(SneatApiService);
 
 	public createSchema = (
 		request: CreateNamedRequest,

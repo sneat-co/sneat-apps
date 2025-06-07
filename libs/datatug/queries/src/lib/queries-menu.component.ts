@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonButton,
@@ -34,18 +34,18 @@ import { ProjectContextService } from '@sneat/ext-datatug-services-project';
 	],
 })
 export class QueriesMenuComponent {
+	readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly projectContextService = inject(ProjectContextService);
+	private readonly queriesUiService = inject(QueriesUiService);
+	private readonly queryEditorStateService = inject(QueryEditorStateService);
+
 	tab: 'active' | 'all' | 'bookmarked' = 'all';
 
 	currentQueryId?: string;
 
 	queries?: ReadonlyArray<IQueryState>;
 
-	constructor(
-		@Inject(ErrorLogger) readonly errorLogger: IErrorLogger,
-		private readonly projectContextService: ProjectContextService,
-		private readonly queriesUiService: QueriesUiService,
-		private readonly queryEditorStateService: QueryEditorStateService,
-	) {
+	constructor() {
 		this.setupQueryEditorStateTracking();
 	}
 

@@ -17,7 +17,7 @@ import {
 	IonText,
 } from '@ionic/angular/standalone';
 import { SneatAuthStateService } from '@sneat/auth-core';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { distinctUntilChanged, map } from 'rxjs';
 import { ITracker } from '../../dbo/i-tracker-dbo';
 import {
@@ -38,6 +38,12 @@ import {
 		IonButton,
 		IonIcon,
 	],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'TrackerFormComponent',
+		},
+	],
 })
 export class TrackerFormComponent
 	extends SneatBaseComponent
@@ -54,8 +60,10 @@ export class TrackerFormComponent
 
 	private readonly trackusApiService = inject(TrackusApiService);
 
-	constructor(userService: SneatAuthStateService) {
-		super('TrackerFormComponent');
+	public constructor() {
+		super();
+		const userService = inject(SneatAuthStateService);
+
 		userService.authState
 			.pipe(
 				this.takeUntilDestroyed(),

@@ -1,4 +1,9 @@
-import { Component, ChangeDetectionStrategy, input } from '@angular/core';
+import {
+	Component,
+	ChangeDetectionStrategy,
+	input,
+	inject,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
 	IonButton,
@@ -19,12 +24,12 @@ import { SpaceNavService } from '@sneat/space-services';
 	templateUrl: './members-card-header.component.html',
 })
 export class MembersCardHeaderComponent {
+	protected readonly spaceNavService = inject(SpaceNavService);
+
 	public readonly $space = input.required<ISpaceContext>();
 
 	public readonly $contactusSpace =
 		input.required<IIdAndOptionalDbo<IContactusSpaceDbo>>();
-
-	constructor(protected readonly spaceNavService: SpaceNavService) {}
 
 	protected goMembers(event: Event): void {
 		event.stopPropagation();

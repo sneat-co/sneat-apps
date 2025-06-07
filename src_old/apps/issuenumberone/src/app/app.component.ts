@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { Platform } from '@ionic/angular/standalone';
 
@@ -7,9 +7,9 @@ import { Platform } from '@ionic/angular/standalone';
 	templateUrl: 'app.component.html',
 })
 export class AppComponent {
-	constructor(
-		private platform: Platform, // private splashScreen: SplashScreen,
-	) // private statusBar: StatusBar
+	private platform = inject(Platform);
+
+	constructor() // private statusBar: StatusBar
 	{
 		this.initializeApp();
 	}

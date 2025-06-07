@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpExecutor } from './executors/http-executor';
 import { IRequestExecutor } from './command-executor';
 import { AgentService } from '@sneat/ext-datatug-services-repo';
@@ -7,10 +7,8 @@ import { IExecuteRequest, IExecuteResponse } from '@sneat/ext-datatug-dto';
 
 @Injectable()
 export class Coordinator {
-	constructor(
-		private readonly httpExecutor: HttpExecutor, // Load dynamically?
-		private readonly agentService: AgentService,
-	) {}
+	private readonly httpExecutor = inject(HttpExecutor);
+	private readonly agentService = inject(AgentService);
 
 	public execute(
 		agentId: string,

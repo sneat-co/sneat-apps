@@ -7,6 +7,7 @@ import {
 	input,
 	Input,
 	Output,
+	inject,
 } from '@angular/core';
 import {
 	IonBadge,
@@ -36,7 +37,7 @@ import { ContactService } from '@sneat/contactus-services';
 import { IRelatedTo } from '@sneat/dto';
 import { ISpaceContext } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { PersonTitle } from '../../pipes';
 import { ICheckChangedArgs } from '../contacts-checklist';
 import { RelatedAsComponent } from './related-as.component';
@@ -65,9 +66,18 @@ import { RelatedAsComponent } from './related-as.component';
 		IonItemOptions,
 		IonItemOption,
 	],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'ContactsListItemComponent',
+		},
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactsListItemComponent extends SneatBaseComponent {
+	private readonly spaceNavService = inject(SpaceNavService);
+	private readonly contactService = inject(ContactService);
+
 	public readonly $contact = input.required<IContactWithCheck>();
 	public readonly $contactID = computed(() => this.$contact().id);
 	public readonly $space = input.required<ISpaceContext>();
@@ -115,11 +125,8 @@ export class ContactsListItemComponent extends SneatBaseComponent {
 		return this.hideRoles.includes(role) || role == this.excludeRole;
 	}
 
-	constructor(
-		private readonly spaceNavService: SpaceNavService,
-		private readonly contactService: ContactService,
-	) {
-		super('ContactsListItemComponent');
+	constructor() {
+		super();
 	}
 
 	// @Input() clicked: (contactID: string, event: Event) => void = () => void 0;

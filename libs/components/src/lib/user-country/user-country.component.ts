@@ -7,6 +7,7 @@ import {
 	Input,
 	OnDestroy,
 	signal,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -18,7 +19,7 @@ import {
 	IonLabel,
 } from '@ionic/angular/standalone';
 import { SneatUserService } from '@sneat/auth-core';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { map, race, takeUntil } from 'rxjs';
 import { CountryInputComponent } from '../country-input';
 import { countries, ICountry } from '../country-selector';
@@ -36,6 +37,12 @@ let ipCountryCached: string | undefined; // TODO: Should have expiration?
 		IonLabel,
 		IonCard,
 	],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'UserCountryComponent',
+		},
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-user-country',
 	templateUrl: './user-country.component.html',
@@ -44,6 +51,9 @@ export class UserCountryComponent
 	extends SneatBaseComponent
 	implements OnDestroy
 {
+	private readonly httpClient = inject(HttpClient);
+	private readonly userService = inject(SneatUserService);
+
 	protected readonly $ipCountryID = signal('');
 	protected readonly $ipCountry = signal<ICountry | undefined>(undefined);
 
@@ -69,11 +79,8 @@ export class UserCountryComponent
 			});
 	}
 
-	constructor(
-		private readonly httpClient: HttpClient,
-		private readonly userService: SneatUserService,
-	) {
-		super('UserCountryComponent');
+	constructor() {
+		super();
 		this.trackUserRecord();
 		// this.getIpCountry();
 		effect(() => {

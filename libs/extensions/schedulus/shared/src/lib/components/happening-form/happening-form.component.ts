@@ -100,6 +100,10 @@ export class HappeningFormComponent
 	extends WithSpaceInput
 	implements AfterViewInit
 {
+	private readonly changeDetectorRef = inject(ChangeDetectorRef);
+	private readonly happeningService = inject(HappeningService);
+	private readonly params = inject(SpaceComponentBaseParams);
+
 	public readonly $happening = input.required<IHappeningContext>();
 	protected readonly $happeningID = computed(() => this.$happening().id);
 	protected readonly $mode = computed<'edit' | 'create'>(() =>
@@ -183,13 +187,9 @@ export class HappeningFormComponent
 		console.log('onHappeningTitleChanged', this.happeningTitle.value);
 	};
 
-	constructor(
-		routingState: RoutingState,
-		private readonly changeDetectorRef: ChangeDetectorRef,
-		private readonly happeningService: HappeningService,
-		private readonly params: SpaceComponentBaseParams,
-	) {
-		super('');
+	constructor() {
+		super();
+		const routingState = inject(RoutingState);
 		this.happeningTitle.registerOnChange(this.onHappeningTitleChanged);
 		this.hasNavHistory = routingState.hasHistory();
 		effect(() => {

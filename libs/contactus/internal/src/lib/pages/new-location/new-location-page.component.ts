@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
 	IonBackButton,
 	IonContent,
@@ -10,6 +10,7 @@ import { PersonTitle } from '@sneat/contactus-shared';
 import { ContactService } from '@sneat/contactus-services';
 import { LocationFormComponent } from '@sneat/contactus-shared';
 import { IContactWithOptionalDbo } from '@sneat/contactus-core';
+import { ClassName } from '@sneat/ui';
 import { ContactBasePage } from '../contact-base-page';
 
 @Component({
@@ -24,6 +25,7 @@ import { ContactBasePage } from '../contact-base-page';
 		IonTitle,
 		IonContent,
 	],
+	providers: [{ provide: ClassName, useValue: 'NewLocationPageComponent' }],
 })
 export class NewLocationPageComponent extends ContactBasePage {
 	newLocation: IContactWithOptionalDbo = {
@@ -32,11 +34,8 @@ export class NewLocationPageComponent extends ContactBasePage {
 		// space: this.space,
 	};
 
-	constructor(
-		contactService: ContactService,
-		// private readonly contactService: ContactService,
-	) {
-		super('ContactPageComponent', contactService);
+	public constructor() {
+		super(inject(ContactService));
 	}
 
 	protected override onSpaceDboChanged() {

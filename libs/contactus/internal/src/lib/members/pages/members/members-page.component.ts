@@ -1,4 +1,4 @@
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Params } from '@angular/router';
 import {
@@ -25,7 +25,6 @@ import {
 	ContactusServicesModule,
 	ContactusSpaceService,
 	MemberGroupService,
-	MemberService,
 } from '@sneat/contactus-services';
 import { FamilyMembersComponent, MemberGroup } from '@sneat/contactus-shared';
 import { IMemberGroupContext } from '@sneat/contactus-core';
@@ -35,13 +34,11 @@ import {
 	SpacePageTitleComponent,
 } from '@sneat/space-components';
 import { SpaceServiceModule } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { MembersBasePage } from '../../members-base-page';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 @Component({
-	selector: 'sneat-members-page',
-	templateUrl: 'members-page.component.html',
-	providers: [SpaceComponentBaseParams],
 	imports: [
 		FormsModule,
 		SpacePageTitleComponent,
@@ -66,10 +63,17 @@ import { Component } from '@angular/core';
 		IonItem,
 		IonFooter,
 		IonButton,
-		NgIf,
 	],
+	providers: [
+		{ provide: ClassName, useValue: 'MembersPageComponent' },
+		SpaceComponentBaseParams,
+	],
+	selector: 'sneat-members-page',
+	templateUrl: 'members-page.component.html',
 })
 export class MembersPageComponent extends MembersBasePage {
+	// private readonly memberGroupService = inject(MemberGroupService);
+
 	public memberGroups?: readonly IMemberGroupContext[];
 	// public loadingStubs?: number[];
 	public segment: 'all' | 'groups' = 'all';
@@ -78,12 +82,10 @@ export class MembersPageComponent extends MembersBasePage {
 
 	readonly memberType: SpaceMemberType = 'member';
 
-	constructor(
-		memberService: MemberService,
-		contactusTeamService: ContactusSpaceService,
-		private readonly memberGroupService: MemberGroupService,
-	) {
-		super('MembersPageComponent', contactusTeamService, memberService);
+	constructor() {
+		const contactusTeamService = inject(ContactusSpaceService);
+
+		super(contactusTeamService);
 	}
 
 	protected goGroup(memberGroup: IMemberGroupContext): void {

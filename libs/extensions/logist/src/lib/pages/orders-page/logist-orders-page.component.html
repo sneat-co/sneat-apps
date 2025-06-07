@@ -19,19 +19,17 @@
 		(filterChange)="onFilterChanged($event)"
 		(viewModeChange)="viewMode = $event"
 	>
-		></sneat-orders-filter
-	>
+		>
+	</sneat-orders-filter>
 
-	<sneat-logist-orders-grid
-		*ngIf="viewMode === 'grid'"
-		[space]="space"
-		[orders]="orders"
-	/>
-	<sneat-logist-orders-list
-		*ngIf="viewMode === 'list'"
-		[space]="space"
-		[orders]="orders"
-	/>
+	@switch (viewMode) {
+		@case ("grid") {
+			<sneat-logist-orders-grid [space]="space" [orders]="orders" />
+		}
+		@case ("list") {
+			<sneat-logist-orders-list [space]="space" [orders]="orders" />
+		}
+	}
 
 	<div style="min-height: 100px"></div>
 </ion-content>

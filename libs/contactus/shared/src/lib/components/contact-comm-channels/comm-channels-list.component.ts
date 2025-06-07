@@ -14,9 +14,6 @@ import {
 	IonInput,
 	IonItem,
 	IonLabel,
-	IonSelect,
-	IonSelectOption,
-	IonTextarea,
 } from '@ionic/angular/standalone';
 import {
 	ContactCommChannelType,
@@ -43,11 +40,9 @@ export const importsForChannelsListComponent = [
 	CommChannelFormComponent,
 ];
 
-@Directive({})
+// @Directive({})
 export abstract class CommChannelsListComponent extends SneatBaseComponent {
 	protected $showAddForm = signal(false);
-
-	public readonly $contact = input.required<IContactContext>();
 
 	protected readonly $channels: Signal<
 		readonly ICommChannelListItem[] | undefined
@@ -56,10 +51,7 @@ export abstract class CommChannelsListComponent extends SneatBaseComponent {
 	protected readonly $title = signal('');
 	protected readonly $placeholder = signal('');
 
-	protected readonly contactService = inject(ContactService);
-
 	protected constructor(
-		className: 'ContactEmailsComponent' | 'ContactPhonesComponent',
 		protected readonly channelType: ContactCommChannelType,
 		title: string,
 		placeholder: string,
@@ -67,7 +59,7 @@ export abstract class CommChannelsListComponent extends SneatBaseComponent {
 			Readonly<Record<string, IContactCommChannelProps>> | undefined
 		>,
 	) {
-		super(className);
+		super();
 		this.$channels = computed(() =>
 			Object.entries($channels() || {}).map(([id, props]) => ({
 				id,

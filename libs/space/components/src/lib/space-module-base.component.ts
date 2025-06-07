@@ -11,11 +11,8 @@ export abstract class SpaceModuleBaseComponent<
 		Dbo | null | undefined
 	>(undefined);
 
-	constructor(
-		className: string,
-		protected spaceModuleService: SpaceModuleService<Dbo>,
-	) {
-		super(className);
+	constructor(protected spaceModuleService: SpaceModuleService<Dbo>) {
+		super();
 	}
 
 	protected override onSpaceIdChanged() {

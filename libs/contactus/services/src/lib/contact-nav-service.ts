@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { excludeUndefined } from '@sneat/core';
 import { ContactRole } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -14,10 +14,8 @@ export interface INewContactPageParams {
 
 @Injectable({ providedIn: 'root' })
 export class ContactNavService {
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly spaceNavService: SpaceNavService,
-	) {}
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly spaceNavService = inject(SpaceNavService);
 
 	goNewContactPage(space: ISpaceContext, params?: INewContactPageParams): void {
 		this.spaceNavService

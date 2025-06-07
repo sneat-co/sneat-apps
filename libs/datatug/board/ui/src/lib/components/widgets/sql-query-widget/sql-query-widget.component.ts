@@ -1,11 +1,11 @@
 import {
 	ChangeDetectorRef,
 	Component,
-	Inject,
 	Input,
 	OnChanges,
 	OnDestroy,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonSegment, IonSegmentButton } from '@ionic/angular/standalone';
@@ -37,6 +37,11 @@ const reSqlParams = /@(\w+)/;
 	],
 })
 export class SqlQueryWidgetComponent implements OnChanges, OnDestroy {
+	private readonly boardCardTab = inject(BoardCardTabService);
+	private readonly changeDetectorRef = inject(ChangeDetectorRef);
+	private readonly agentService = inject(AgentService);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+
 	@Input() level?: number;
 	@Input() tab?: QueryType | 'grid' | 'card' = QueryType.SQL;
 	@Input() data?: ISqlWidgetSettings;
@@ -50,12 +55,9 @@ export class SqlQueryWidgetComponent implements OnChanges, OnDestroy {
 
 	destroyed = new Subject<boolean>();
 
-	constructor(
-		private readonly boardCardTab: BoardCardTabService,
-		private readonly changeDetectorRef: ChangeDetectorRef,
-		private readonly agentService: AgentService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {
+	constructor() {
+		const boardCardTab = this.boardCardTab;
+
 		setTimeout(() => boardCardTab.setTab('grid'), 2000);
 		this.boardCardTab.changed
 			.pipe(takeUntil(this.destroyed))

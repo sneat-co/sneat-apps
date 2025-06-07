@@ -4,6 +4,7 @@ import {
 	input,
 	Input,
 	OnChanges,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -16,6 +17,7 @@ import {
 import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
 import { WithSpaceInput } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
 import { CalendarFilterService } from '../../../calendar-filter.service';
 import { HappeningCardComponent } from '../../../happening-card/happening-card.component';
@@ -34,6 +36,9 @@ import {
 		IonButton,
 		IonLabel,
 	],
+	providers: [
+		{ provide: ClassName, useValue: 'SingleHappeningsListComponent' },
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-single-happenings-list',
 	templateUrl: 'single-happenings-list.component.html',
@@ -42,6 +47,8 @@ export class SingleHappeningsListComponent
 	extends WithSpaceInput
 	implements OnChanges
 {
+	readonly filterService = inject(CalendarFilterService);
+
 	@Input({ required: true }) public happenings?: IHappeningContext[];
 
 	public readonly $contactusSpace = input.required<
@@ -52,8 +59,10 @@ export class SingleHappeningsListComponent
 
 	protected happeningsMatchingFilter?: IHappeningContext[];
 
-	constructor(readonly filterService: CalendarFilterService) {
-		super('SingleHappeningsListComponent');
+	constructor() {
+		super();
+		const filterService = this.filterService;
+
 		filterService.filter
 			.pipe(takeUntil(this.destroyed$))
 			.subscribe((filter) => {

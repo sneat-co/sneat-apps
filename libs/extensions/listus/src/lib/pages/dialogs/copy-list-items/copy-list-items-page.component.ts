@@ -1,5 +1,5 @@
 import { NgForOf } from '@angular/common';
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {
 	ModalController,
 	ToastController,
@@ -42,19 +42,16 @@ import { ListService } from '../../../services/list.service';
 	],
 })
 export class CopyListItemsPageComponent implements OnInit {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly toastCrl = inject(ToastController);
+	private readonly listService = inject(ListService);
+
 	@Input() modal?: ModalController;
 	@Input() from?: IListInfo;
 	@Input() to?: IListInfo;
 	@Input() listItems: IListItemBrief[] | undefined;
 
 	private selectedListItemIds: string[] = [];
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly toastCrl: ToastController,
-		private readonly listService: ListService, // private readonly listusService: IListusService,
-		// private readonly userService: IUserService,
-	) {}
 
 	ngOnInit(): void {
 		if (!this.listItems) {

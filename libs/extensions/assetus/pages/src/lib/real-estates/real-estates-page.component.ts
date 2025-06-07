@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonBackButton,
@@ -42,7 +42,10 @@ import { CommuneBasePageParams } from 'sneat-shared/services/params';
 export class RealEstatesPageComponent extends AssetsBasePage {
 	filter: string;
 
-	constructor(params: CommuneBasePageParams, assetService: IAssetService) {
+	constructor() {
+		const params = inject(CommuneBasePageParams);
+		const assetService = inject(IAssetService);
+
 		super(params, assetService);
 	}
 

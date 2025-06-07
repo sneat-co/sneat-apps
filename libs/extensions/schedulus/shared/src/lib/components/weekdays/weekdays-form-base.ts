@@ -98,10 +98,7 @@ export abstract class WeekdaysFormBase extends SneatBaseComponent {
 			.map(([wd]) => wd as WeekdayCode2),
 	);
 
-	protected constructor(
-		className: string,
-		protected readonly isWeekdayRequired: boolean,
-	) {
-		super(className);
+	protected constructor(protected readonly isWeekdayRequired: boolean) {
+		super();
 	}
 }

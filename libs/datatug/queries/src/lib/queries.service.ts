@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { QUERY_PROJ_ITEM_SERVICE } from './queries.service.token';
 import { IQueryDef, IQueryFolder } from '@sneat/ext-datatug-models';
@@ -7,10 +7,9 @@ import { ProjectItemService } from '@sneat/ext-datatug-services-repo';
 
 @Injectable()
 export class QueriesService {
-	constructor(
-		@Inject(QUERY_PROJ_ITEM_SERVICE)
-		private readonly projItemService: ProjectItemService<IQueryDef>,
-	) {}
+	private readonly projItemService = inject<ProjectItemService<IQueryDef>>(
+		QUERY_PROJ_ITEM_SERVICE,
+	);
 
 	public getQueriesFolder(
 		projRef: IProjectRef,

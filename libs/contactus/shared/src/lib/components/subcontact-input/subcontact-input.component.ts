@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import {
 	IonButton,
 	IonButtons,
@@ -23,6 +23,9 @@ import { IContactSelectorOptions } from '../contacts-selector/contacts-selector.
 	imports: [IonItem, IonLabel, IonInput, IonButtons, IonButton, IonIcon],
 })
 export class SubcontactInputComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly contactSelectorService = inject(ContactsSelectorService);
+
 	@Input() canReset = false;
 	@Input() readonly = false;
 	@Input({ required: true }) space?: ISpaceContext;
@@ -42,11 +45,6 @@ export class SubcontactInputComponent {
 			'Contact'
 		);
 	}
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly contactSelectorService: ContactsSelectorService,
-	) {}
 
 	get contactLink(): string {
 		return `/company/${this.space?.type}/${this.space?.id}/contact/${this.contact?.id}`;

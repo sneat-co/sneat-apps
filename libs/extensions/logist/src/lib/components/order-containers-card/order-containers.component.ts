@@ -7,6 +7,7 @@ import {
 	OnChanges,
 	Output,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import {
 	ModalController,
@@ -39,6 +40,8 @@ import { OrderContainerComponent } from './order-container.component';
 	],
 })
 export class OrderContainersComponent implements OnChanges {
+	private readonly modalController = inject(ModalController);
+
 	@Input({ required: true }) space?: ISpaceContext;
 
 	@Input() order?: ILogistOrderContext;
@@ -47,8 +50,6 @@ export class OrderContainersComponent implements OnChanges {
 	protected selectedContainer?: IOrderContainer;
 
 	containers?: readonly IOrderContainer[];
-
-	constructor(private readonly modalController: ModalController) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order']) {

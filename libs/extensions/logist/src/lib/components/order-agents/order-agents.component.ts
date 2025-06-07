@@ -2,11 +2,11 @@ import { NgForOf, TitleCasePipe } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	OnChanges,
 	Output,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import {
 	PopoverController,
@@ -47,6 +47,9 @@ import { OrderCounterpartyComponent } from '../order-counterparty/order-counterp
 	],
 })
 export class OrderAgentsComponent implements OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly popoverController = inject(PopoverController);
+
 	@Input() public readonly = false;
 	@Input({ required: true }) space?: ISpaceContext;
 	@Input() order?: ILogistOrderContext;
@@ -54,11 +57,6 @@ export class OrderAgentsComponent implements OnChanges {
 	@Output() added = new EventEmitter<IOrderCounterparty[]>();
 
 	protected counterparties?: IOrderCounterparty[];
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly popoverController: PopoverController,
-	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order']) {
@@ -107,15 +105,13 @@ export class OrderAgentsComponent implements OnChanges {
 	imports: [IonItemDivider, IonLabel, IonButtons, IonButton, IonIcon, IonItem],
 })
 export class AgentRoleMenuComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	protected readonly popoverController = inject(PopoverController);
+	private readonly contactSelectorService = inject(ContactsSelectorService);
+
 	@Input({ required: true }) space?: ISpaceContext;
 	@Input() order?: ILogistOrderContext;
 	@Input() selected?: (counterparty: IOrderCounterparty) => void;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		protected readonly popoverController: PopoverController,
-		private readonly contactSelectorService: ContactsSelectorService,
-	) {}
 
 	protected openContactSelector(event: Event, role: CounterpartyRole): void {
 		if (!this.space) {

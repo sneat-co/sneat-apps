@@ -5,6 +5,7 @@ import {
 	EventEmitter,
 	Input,
 	Output,
+	inject,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -30,7 +31,7 @@ import {
 	IHappeningPrice,
 	TermUnit,
 } from '@sneat/mod-schedulus-core';
-import { SneatBaseModalComponent } from '@sneat/ui';
+import { ClassName, SneatBaseModalComponent } from '@sneat/ui';
 import {
 	HappeningService,
 	IHappeningPricesRequest,
@@ -57,11 +58,15 @@ import { RadioGroupToSelectComponent, SelectOption } from '@sneat/wizard';
 		IonToolbar,
 		IonFooter,
 	],
+	providers: [{ provide: ClassName, useValue: 'HappeningPriceFormComponent' }],
 	selector: 'sneat-happening-price-form',
 	templateUrl: 'happening-price-modal.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HappeningPriceModalComponent extends SneatBaseModalComponent {
+	protected readonly changeDetectorRef = inject(ChangeDetectorRef);
+	protected readonly happeningService = inject(HappeningService);
+
 	@Input({ required: true }) happening?: IHappeningContext;
 
 	@Output() happeningChange = new EventEmitter<IHappeningContext>();
@@ -73,11 +78,8 @@ export class HappeningPriceModalComponent extends SneatBaseModalComponent {
 
 	protected isSubmitting = false;
 
-	constructor(
-		protected readonly changeDetectorRef: ChangeDetectorRef,
-		protected readonly happeningService: HappeningService,
-	) {
-		super('HappeningPriceFormComponent');
+	public constructor() {
+		super();
 		this.setTermLengths();
 	}
 

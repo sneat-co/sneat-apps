@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonButton,
@@ -32,6 +32,9 @@ import { ISpaceContext } from '@sneat/space-models';
 	],
 })
 export class BasicContactFormComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly contactService = inject(ContactService);
+
 	@Input() parentContact?: IContactWithBrief;
 	@Input({ required: true }) space?: ISpaceContext;
 	@Input() contactType?: ContactType;
@@ -46,11 +49,6 @@ export class BasicContactFormComponent {
 	isCreated = false;
 
 	title = '';
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly contactService: ContactService,
-	) {}
 
 	createContact(event: Event): void {
 		event.stopPropagation();

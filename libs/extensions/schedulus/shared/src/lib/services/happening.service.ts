@@ -1,4 +1,4 @@
-import { Inject, Injectable, NgModule } from '@angular/core';
+import { Injectable, NgModule, inject, Injector } from '@angular/core';
 import {
 	Firestore as AngularFirestore,
 	orderBy,
@@ -114,6 +114,9 @@ function processHappeningContext(
 
 @Injectable()
 export class HappeningService {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly sneatApiService = inject(SneatApiService);
+
 	private readonly spaceItemService: ModuleSpaceItemService<
 		IHappeningBrief,
 		IHappeningDbo
@@ -125,15 +128,14 @@ export class HappeningService {
 		return { field: 'status', operator, value };
 	}
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		afs: AngularFirestore,
-		private readonly sneatApiService: SneatApiService,
-	) {
+	constructor() {
+		const afs = inject(AngularFirestore);
+		const sneatApiService = this.sneatApiService;
+
 		this.spaceItemService = new ModuleSpaceItemService<
 			IHappeningBrief,
 			IHappeningDbo
-		>('calendarium', 'happenings', afs, sneatApiService);
+		>(inject(Injector), 'calendarium', 'happenings', afs, sneatApiService);
 	}
 
 	public createHappening(

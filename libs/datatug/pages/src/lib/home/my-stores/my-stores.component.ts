@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
 	IonBadge,
 	IonButton,
@@ -45,6 +45,12 @@ import { LoadingItemsComponent } from '../loading-items-component';
 	],
 })
 export class MyStoresComponent implements OnInit, OnDestroy {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly navController = inject(NavController);
+	readonly agentStateService = inject(AgentStateService);
+	private readonly datatugNavService = inject(DatatugNavService);
+	private readonly datatugUserService = inject(DatatugUserService);
+
 	public authStatus?: AuthStatus;
 	public userRecordLoaded = false;
 
@@ -53,14 +59,6 @@ export class MyStoresComponent implements OnInit, OnDestroy {
 	public agentState?: IAgentState;
 
 	private readonly destroyed = new Subject<void>();
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly navController: NavController,
-		readonly agentStateService: AgentStateService,
-		private readonly datatugNavService: DatatugNavService,
-		private readonly datatugUserService: DatatugUserService,
-	) {}
 
 	ngOnInit(): void {
 		this.agentStateService

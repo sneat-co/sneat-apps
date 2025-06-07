@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
 	IonBackButton,
 	IonButtons,
@@ -10,6 +10,7 @@ import {
 } from '@ionic/angular/standalone';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { SpaceServiceModule } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { HappeningBasePage } from './happening-base-page';
 import {
 	HappeningComponentBaseParams,
@@ -33,12 +34,13 @@ import {
 		IonTitle,
 		IonContent,
 	],
+	providers: [{ provide: ClassName, useValue: 'HappeningPageComponent' }],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-happening-page',
 	templateUrl: './happening-page.component.html',
 })
 export class HappeningPageComponent extends HappeningBasePage {
-	constructor(params: HappeningComponentBaseParams) {
-		super('HappeningPageComponent', params);
+	public constructor() {
+		super(inject(HappeningComponentBaseParams));
 	}
 }

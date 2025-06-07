@@ -17,6 +17,7 @@ import { distinctUntilChanged, map } from 'rxjs';
 import { TrackerComponent } from '../../components';
 import { TrackerProviderComponent } from '../../components/tracker/tracker-provider.component';
 import { ITracker } from '../../dbo/i-tracker-dbo';
+import { ClassName } from '@sneat/ui';
 
 @Component({
 	selector: 'sneat-tracker-page',
@@ -34,14 +35,20 @@ import { ITracker } from '../../dbo/i-tracker-dbo';
 	],
 	templateUrl: './tracker-page.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	providers: [SpaceComponentBaseParams],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'TrackerPageComponent',
+		},
+		SpaceComponentBaseParams,
+	],
 })
 export class TrackerPageComponent extends SpacePageBaseComponent {
 	protected readonly $trackerID = signal<string | undefined>(undefined);
 	protected readonly $tracker = signal<ITracker | undefined>(undefined);
 
 	constructor() {
-		super('TrackerPageComponent');
+		super();
 		this.route.paramMap
 			.pipe(
 				map((p) => p.get('trackerID')),

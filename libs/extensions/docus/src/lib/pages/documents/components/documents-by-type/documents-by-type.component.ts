@@ -10,7 +10,6 @@ import {
 	IonItemSliding,
 	IonLabel,
 	IonList,
-	ToastController,
 } from '@ionic/angular/standalone';
 import { listItemAnimations } from '@sneat/core';
 import { eq } from '@sneat/core';
@@ -18,13 +17,10 @@ import {
 	IAssetDocumentContext,
 	standardDocTypesByID,
 } from '@sneat/mod-assetus-core';
-import { AssetService } from '@sneat/ext-assetus-components';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { DocumentsBaseComponent } from '../documents-base.component';
 import {
 	Component,
 	EventEmitter,
-	Inject,
 	OnChanges,
 	Output,
 	SimpleChanges,
@@ -70,12 +66,8 @@ export class DocumentsByTypeComponent
 	@Output() goDocType = new EventEmitter<string>();
 	@Output() goDoc = new EventEmitter<IAssetDocumentContext>();
 
-	constructor(
-		@Inject(ErrorLogger) errorLogger: IErrorLogger,
-		assetService: AssetService,
-		toastCtrl: ToastController,
-	) {
-		super(errorLogger, assetService, toastCtrl);
+	constructor() {
+		super();
 	}
 
 	selectDocType(docType: IDocumentType): void {

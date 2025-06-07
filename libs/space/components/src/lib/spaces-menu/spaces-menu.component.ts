@@ -4,6 +4,7 @@ import {
 	computed,
 	Input,
 	signal,
+	inject,
 } from '@angular/core';
 import {
 	IonIcon,
@@ -20,17 +21,27 @@ import {
 	spaceContextFromBrief,
 	zipMapBriefsWithIDs,
 } from '@sneat/space-models';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { SpacesListComponent } from '../spaces-list';
 
 @Component({
 	selector: 'sneat-spaces-menu',
 	templateUrl: './spaces-menu.component.html',
 	imports: [SpacesListComponent, IonItem, IonLabel, IonIcon],
-	providers: [UserRequiredFieldsService],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'SpacesMenuComponent',
+		},
+		UserRequiredFieldsService,
+	],
 })
 export class SpacesMenuComponent extends SneatBaseComponent {
+	readonly userService = inject(SneatUserService);
+	private readonly navController = inject(NavController);
+	private readonly menuController = inject(MenuController);
+
 	@Input() spacesLabel = 'Spaces';
 	@Input() pathPrefix = '/space';
 
@@ -107,13 +118,10 @@ export class SpacesMenuComponent extends SneatBaseComponent {
 		undefined,
 	);
 
-	constructor(
-		readonly userService: SneatUserService,
-		// private readonly spaceNavService: SpaceNavService,
-		private readonly navController: NavController,
-		private readonly menuController: MenuController,
-	) {
-		super('SpacesMenuComponent');
+	constructor() {
+		super();
+		const userService = this.userService;
+
 		userService.userState.pipe(this.takeUntilDestroyed()).subscribe({
 			next: this.onUserStateChanged,
 		});

@@ -18,7 +18,7 @@ import { AgeGroupID } from '@sneat/core';
 import { WithSpaceInput } from '@sneat/space-services';
 import { IRelatedChange, IUpdateRelatedRequest } from '@sneat/space-models';
 import { SpaceService } from '@sneat/space-services';
-import { ISelectItem } from '@sneat/ui';
+import { ClassName, ISelectItem } from '@sneat/ui';
 import { RelationshipFormComponent } from './relationship-form.component';
 import {
 	IRelatedTo,
@@ -37,6 +37,9 @@ const getRelOptions = (r: FamilyMemberRelation[]): ISelectItem[] => [
 	selector: 'sneat-contact-relationship-form',
 	templateUrl: './contact-relationship-form.component.html',
 	imports: [RelationshipFormComponent],
+	providers: [
+		{ provide: ClassName, useValue: 'ContactRelationshipFormComponent' },
+	],
 })
 export class ContactRelationshipFormComponent extends WithSpaceInput {
 	public readonly $contactID = input.required<string | undefined>();
@@ -73,7 +76,7 @@ export class ContactRelationshipFormComponent extends WithSpaceInput {
 	private readonly spaceService = inject(SpaceService);
 
 	public constructor() {
-		super('ContactRelationshipFormComponent');
+		super();
 	}
 
 	protected onRelatedAsChanged(relatedChange: IRelatedChange): void {

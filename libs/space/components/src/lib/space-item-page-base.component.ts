@@ -4,7 +4,6 @@ import { INavContext, SpaceItem } from '@sneat/core';
 import { ISpaceItemNavContext } from '@sneat/space-models';
 import { ModuleSpaceItemService } from '@sneat/space-services';
 import {
-	delay,
 	distinctUntilChanged,
 	filter,
 	map,
@@ -32,12 +31,11 @@ export abstract class SpaceItemPageBaseComponent<
 	protected readonly $itemID = computed(() => this.$item()?.id);
 
 	protected constructor(
-		className: string,
 		defaultBackPage: string,
 		private readonly itemName: SpaceItem,
 		protected readonly spaceItemService: ModuleSpaceItemService<Brief, Dbo>,
 	) {
-		super(className);
+		super();
 		this.defaultBackPage = defaultBackPage;
 		const item = window.history.state[itemName] as ISpaceItemNavContext<
 			Brief,

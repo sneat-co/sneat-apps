@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
 	Analytics,
 	logEvent,
@@ -18,14 +18,14 @@ const logErrOptions: ILogErrorOptions = { show: false, feedback: false };
 
 @Injectable()
 export class FireAnalyticsService implements IAnalyticsService {
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly analytics: Analytics,
-	) {
-		if (!errorLogger) {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly analytics = inject(Analytics);
+
+	constructor() {
+		if (!this.errorLogger) {
 			console.error(`FireAnalyticsService() - !errorLogger`);
 		}
-		if (!analytics) {
+		if (!this.analytics) {
 			console.error(`FireAnalyticsService() - !analytics`);
 		}
 	}

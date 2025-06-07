@@ -5,6 +5,7 @@ import {
 	OnChanges,
 	signal,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -29,7 +30,7 @@ import {
 	IonToolbar,
 } from '@ionic/angular/standalone';
 import { ContactsSelectorInputComponent } from '@sneat/contactus-shared';
-import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
+import { ClassName, ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import { CountrySelectorComponent } from '@sneat/components';
 import {
 	addSpace,
@@ -61,9 +62,6 @@ import { SpaceNavService, SpaceServiceModule } from '@sneat/space-services';
 import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 
 @Component({
-	selector: 'sneat-new-document',
-	templateUrl: './new-document-page.component.html',
-	providers: [SpaceComponentBaseParams],
 	imports: [
 		FormsModule,
 		CountrySelectorComponent,
@@ -92,11 +90,20 @@ import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 		IonButton,
 		RouterLink,
 	],
+	providers: [
+		SpaceComponentBaseParams,
+		{ provide: ClassName, useValue: 'NewDocumentPageComponent' },
+	],
+	selector: 'sneat-new-document',
+	templateUrl: './new-document-page.component.html',
 })
 export class NewDocumentPageComponent
 	extends AddAssetBaseComponent
 	implements OnChanges
 {
+	private readonly contactService = inject(ContactService);
+	private readonly spaceNavService = inject(SpaceNavService);
+
 	// @Input() public override space?: ISpaceContext;
 	@Input() public override contactusSpace?: IContactusSpaceDboAndID;
 
@@ -126,11 +133,8 @@ export class NewDocumentPageComponent
 		() => !!this.$selectedContacts().length,
 	);
 
-	constructor(
-		private readonly contactService: ContactService,
-		private readonly spaceNavService: SpaceNavService,
-	) {
-		super('NewDocumentPageComponent');
+	public constructor() {
+		super();
 		this.trackUrl();
 	}
 

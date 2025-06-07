@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { Platform } from '@ionic/angular/standalone';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -9,11 +9,11 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 	templateUrl: 'app.component.html',
 })
 export class AppComponent {
-	constructor(
-		private platform: Platform,
-		private splashScreen: SplashScreen,
-		private statusBar: StatusBar,
-	) {
+	private platform = inject(Platform);
+	private splashScreen = inject(SplashScreen);
+	private statusBar = inject(StatusBar);
+
+	constructor() {
 		this.initializeApp();
 	}
 

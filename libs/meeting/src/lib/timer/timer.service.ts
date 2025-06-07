@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, inject } from '@angular/core';
 // import { Timestamp } from '@firebase/firestore-types';
 
 import { takeUntil } from 'rxjs/operators';
@@ -352,11 +352,9 @@ export class Timer {
 
 @Injectable()
 export class TimerFactory {
-	private readonly timers: Record<string, Timer> = {};
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {}
+	private readonly timers: Record<string, Timer> = {};
 
 	public getTimer(
 		timerService: IMeetingTimerService,

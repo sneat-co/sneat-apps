@@ -7,7 +7,7 @@ import {
 	OnDestroy,
 	signal,
 } from '@angular/core';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { Subscription } from 'rxjs';
 import { ITracker, standardTrackers } from '../../dbo/i-tracker-dbo';
 import { TrackersService } from '../../trackers-service';
@@ -19,7 +19,10 @@ import { TrackersService } from '../../trackers-service';
 @Component({
 	selector: 'sneat-tracker-provider',
 	template: '<ng-content></ng-content>',
-	providers: [TrackersService],
+	providers: [
+		TrackersService,
+		{ provide: ClassName, useValue: 'TrackerProviderComponent' },
+	],
 })
 export class TrackerProviderComponent
 	extends SneatBaseComponent
@@ -28,7 +31,7 @@ export class TrackerProviderComponent
 	// @ContentChild(TemplateRef) contentTemplate!: TemplateRef<{$tracker: Signal<IIdAndOptionalBriefAndOptionalDbo<ITrackerBrief, ITrackerDbo> | undefined>}>;
 
 	constructor() {
-		super('TrackerProviderComponent');
+		super();
 	}
 
 	@Output() trackerChange = new EventEmitter<ITracker>();

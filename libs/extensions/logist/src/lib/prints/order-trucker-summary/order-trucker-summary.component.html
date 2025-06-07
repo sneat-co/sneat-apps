@@ -40,16 +40,16 @@
 							<ion-col>
 								<ion-item>
 									<ion-label position="stacked" color="medium"
-										>Order #</ion-label
-									>
+										>Order #
+									</ion-label>
 									<ion-input [value]="order?.id" readonly="true" />
 								</ion-item>
 							</ion-col>
 							<ion-col>
 								<ion-item>
 									<ion-label position="stacked" color="medium"
-										>Buyer Reference</ion-label
-									>
+										>Buyer Reference
+									</ion-label>
 									<ion-input
 										[value]="buyerCounterparty?.refNumber ?? '-'"
 										readonly="true"
@@ -59,8 +59,8 @@
 							<ion-col>
 								<ion-item>
 									<ion-label position="stacked" color="medium"
-										>Export Declaration #</ion-label
-									>
+										>Export Declaration #
+									</ion-label>
 									<ion-input readonly="true" value="to be implemented" />
 								</ion-item>
 							</ion-col>
@@ -118,9 +118,11 @@
 							<pre style="margin: 0">{{
 								point.from?.location?.address?.lines
 							}}</pre>
-							<p *ngIf="point.from?.location?.address?.zipCode">
-								{{ point.from?.location?.address?.zipCode }}
-							</p>
+							@if (point.from?.location?.address?.zipCode) {
+								<p>
+									{{ point.from?.location?.address?.zipCode }}
+								</p>
+							}
 						</td>
 					</tr>
 				}

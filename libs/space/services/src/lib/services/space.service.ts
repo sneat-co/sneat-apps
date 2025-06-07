@@ -1,6 +1,5 @@
 import { HttpParams } from '@angular/common/http';
 import {
-	Inject,
 	Injectable,
 	Injector,
 	inject,
@@ -56,6 +55,12 @@ const spaceBriefFromUserSpaceInfo = (v: IUserSpaceBrief): ISpaceBrief => ({
 
 @Injectable()
 export class SpaceService {
+	readonly sneatAuthStateService = inject(SneatAuthStateService);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly afs = inject(AngularFirestore);
+	private readonly userService = inject(SneatUserService);
+	private readonly sneatApiService = inject(SneatApiService);
+
 	private userID?: string;
 
 	private currentUserSpaces?: Record<string, IUserSpaceBrief>;
@@ -68,13 +73,9 @@ export class SpaceService {
 
 	private readonly injector = inject(Injector);
 
-	constructor(
-		readonly sneatAuthStateService: SneatAuthStateService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly afs: AngularFirestore,
-		private readonly userService: SneatUserService,
-		private readonly sneatApiService: SneatApiService,
-	) {
+	constructor() {
+		const sneatAuthStateService = this.sneatAuthStateService;
+
 		// console.log('SpaceService.constructor()');
 		this.sfs = new SneatFirestoreService<ISpaceBrief, ISpaceDbo>(
 			this.injector,

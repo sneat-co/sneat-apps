@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import {
@@ -72,6 +72,8 @@ export interface IHttpApiEndpoint {
 	],
 })
 export class HttpQueryEditorComponent {
+	private readonly httpClient = inject(HttpClient);
+
 	protected tab = 'headers';
 	protected queryDef: IHttpQueryDef = {
 		method: 'GET',
@@ -92,8 +94,6 @@ export class HttpQueryEditorComponent {
 			title: 'Exchange rates',
 		},
 	];
-
-	constructor(private readonly httpClient: HttpClient) {}
 
 	public readonly currencyPipe = new LookupPipe(
 		currencyFlag,

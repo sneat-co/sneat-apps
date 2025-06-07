@@ -4,6 +4,7 @@ import {
 	computed,
 	OnDestroy,
 	signal,
+	inject,
 } from '@angular/core';
 import {
 	IonBackButton,
@@ -38,6 +39,7 @@ import {
 	ContactusSpaceService,
 } from '@sneat/contactus-services';
 import { SpaceServiceModule } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -60,6 +62,7 @@ import { Subject } from 'rxjs';
 		IonContent,
 		IonMenuButton,
 	],
+	providers: [{ provide: ClassName, useValue: 'ContactsPageComponent' }],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-contacts-page',
 	templateUrl: './contacts-page.component.html',
@@ -68,6 +71,8 @@ export class ContactsPageComponent
 	extends SpaceItemsBaseComponent
 	implements OnDestroy
 {
+	private readonly contactusSpaceService = inject(ContactusSpaceService);
+
 	protected readonly $allContacts = signal<
 		undefined | readonly IContactWithCheck[]
 	>(undefined);
@@ -87,11 +92,8 @@ export class ContactsPageComponent
 		this.$allContacts()?.filter((c) => c.isChecked),
 	);
 
-	constructor(
-		// private readonly contactService: ContactService,
-		private readonly contactusSpaceService: ContactusSpaceService,
-	) {
-		super('ContactsPageComponent', '');
+	constructor() {
+		super('');
 		const role = location.pathname.match(/(applicant|landlord|tenant)/);
 		if (role) {
 			this.$role.set(role[1] as ContactRole);

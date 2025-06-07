@@ -16,7 +16,7 @@ import {
 	IonToolbar,
 	PopoverController,
 } from '@ionic/angular/standalone';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 
 @Component({
 	imports: [
@@ -29,6 +29,12 @@ import { SneatBaseComponent } from '@sneat/ui';
 		IonButtons,
 		IonLabel,
 	],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'DateModalComponent',
+		},
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-contact-dob-modal',
 	templateUrl: 'date-modal.component.html',
@@ -37,8 +43,8 @@ export class DateModalComponent extends SneatBaseComponent {
 	@Input() title?: string;
 	@Input() max?: string;
 
-	constructor() {
-		super('DateModalComponent');
+	public constructor() {
+		super();
 	}
 
 	private popoverCtrl = inject(PopoverController);

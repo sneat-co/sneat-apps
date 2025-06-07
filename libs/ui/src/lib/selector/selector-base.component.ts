@@ -1,17 +1,22 @@
-import { Directive, inject, Input, signal } from '@angular/core';
+import {
+	Directive,
+	inject,
+	InjectionToken,
+	Input,
+	signal,
+} from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular/standalone';
 import { SneatBaseComponent } from '../components/sneat-base.component';
+
+export const OverlayController = new InjectionToken<
+	ModalController | PopoverController
+>('OverlayController');
 
 @Directive()
 export abstract class SelectorBaseComponent<T> extends SneatBaseComponent {
 	@Input() public selectMode?: 'single' | 'multiple';
 
-	protected constructor(
-		className: string,
-		protected readonly overlayController: ModalController | PopoverController,
-	) {
-		super(className);
-	}
+	protected readonly overlayController = inject(OverlayController);
 
 	protected $selectedItems = signal<readonly T[]>([]);
 
@@ -32,11 +37,7 @@ export abstract class SelectorBaseComponent<T> extends SneatBaseComponent {
 export abstract class SelectorModalComponent<
 	T,
 > extends SelectorBaseComponent<T> {
-	protected constructor(className: string) {
-		// we can not inject ModalController in parent as parent takes either modal or popup, use this.overlayController
-		super(className, inject(ModalController));
+	protected get modalController() {
+		return this.overlayController as ModalController;
 	}
-
-	protected readonly modalController = this
-		.overlayController as ModalController;
 }

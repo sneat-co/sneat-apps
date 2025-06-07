@@ -6,6 +6,7 @@ import {
 	Input,
 	OnChanges,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -63,13 +64,11 @@ export class BoardCardTabService {
 	],
 })
 export class BoardCardComponent implements OnChanges {
+	readonly boardCardTab = inject(BoardCardTabService);
+	private readonly changeDetectorRef = inject(ChangeDetectorRef);
+
 	@Input() boarCardDef?: IBoardCardDef;
 	@Input() boardContext?: IBoardContext;
-
-	constructor(
-		public readonly boardCardTab: BoardCardTabService,
-		private readonly changeDetectorRef: ChangeDetectorRef,
-	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['boarCardDef'] && this.boarCardDef) {

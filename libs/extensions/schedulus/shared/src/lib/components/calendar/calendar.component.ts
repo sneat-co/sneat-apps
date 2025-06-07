@@ -12,6 +12,7 @@ import {
 	signal,
 	SimpleChanges,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -21,20 +22,16 @@ import {
 } from '@ionic/angular/standalone';
 import { IMemberContext } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
-import { dateToIso, localDateToIso } from '@sneat/core';
+import { localDateToIso } from '@sneat/core';
 import {
 	IHappeningSlot,
 	WeekdayCode2,
 	IHappeningWithUiState,
 } from '@sneat/mod-schedulus-core';
+import { ClassName } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
-import {
-	CalendarDayService,
-	CalendarDayServiceModule,
-} from '../../services/calendar-day.service';
+import { CalendarDayServiceModule } from '../../services/calendar-day.service';
 import { CalendariumSpaceService } from '../../services/calendarium-space.service';
-import { HappeningService } from '../../services/happening.service';
-import { isToday } from '../calendar-core';
 import {
 	emptyCalendarFilter,
 	CalendarFilterService,
@@ -64,6 +61,7 @@ import { SinglesTabComponent } from './components/singles-tab/singles-tab.compon
 		IonLabel,
 	],
 	providers: [
+		{ provide: ClassName, useValue: 'CalendarComponent' },
 		CalendarFilterService,
 		CalendarStateService,
 		CalendariumSpaceService,
@@ -78,6 +76,9 @@ export class CalendarComponent
 	extends CalendarBaseComponent
 	implements OnInit, AfterViewInit, OnChanges, OnDestroy
 {
+	private readonly filterService = inject(CalendarFilterService);
+	private readonly calendarStateService = inject(CalendarStateService);
+
 	private readonly $filter = signal(emptyCalendarFilter);
 
 	// prevWeekdays: SlotsGroup[];
@@ -97,19 +98,8 @@ export class CalendarComponent
 		readonly IHappeningWithUiState[] | undefined
 	>(() => this.filterRecurrings(this.$filter(), this.$allRecurrings()));
 
-	constructor(
-		private readonly filterService: CalendarFilterService,
-		private readonly calendarStateService: CalendarStateService,
-		happeningService: HappeningService,
-		calendarDayService: CalendarDayService,
-		calendariumSpaceService: CalendariumSpaceService,
-	) {
-		super(
-			'CalendarComponent',
-			calendariumSpaceService,
-			happeningService,
-			calendarDayService,
-		);
+	public constructor() {
+		super();
 
 		// setTimeout(() => {
 		// 	// TODO: Fix this dirty workaround for initial animations

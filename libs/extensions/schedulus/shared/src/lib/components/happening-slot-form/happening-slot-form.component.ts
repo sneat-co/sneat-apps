@@ -10,6 +10,7 @@ import {
 	signal,
 	SimpleChanges,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import {
 	FormControl,
@@ -33,7 +34,7 @@ import {
 	IonSpinner,
 	ModalController,
 } from '@ionic/angular/standalone';
-import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
+import { ClassName, ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import {
 	emptyTiming,
 	IHappeningSlot,
@@ -87,7 +88,10 @@ export interface IHappeningSlotFormComponentInputs {
 		IonSpinner,
 		IonIcon,
 	],
-	providers: [HappeningService],
+	providers: [
+		{ provide: ClassName, useValue: 'RecurringSlotFormComponent' },
+		HappeningService,
+	],
 	selector: 'sneat-happening-slot-form',
 	templateUrl: './happening-slot-form.component.html',
 })
@@ -100,6 +104,9 @@ export class HappeningSlotFormComponent
 	extends WeekdaysFormBase
 	implements OnChanges, OnDestroy, IHappeningSlotFormComponentInputs
 {
+	protected readonly modalCtrl = inject(ModalController);
+	private readonly happeningService = inject(HappeningService);
+
 	public readonly $happening = input.required<IHappeningContext>();
 	public readonly $happeningID = computed(() => this.$happening().id);
 	protected readonly $happeningType = computed(
@@ -197,11 +204,8 @@ export class HappeningSlotFormComponent
 		);
 	});
 
-	constructor(
-		protected readonly modalCtrl: ModalController,
-		private readonly happeningService: HappeningService,
-	) {
-		super('RecurringSlotFormComponent', true);
+	public constructor() {
+		super(true);
 		// const now = new Date();
 		const preselectedWd = window.history.state.wd as WeekdayCode2;
 		if (preselectedWd) {

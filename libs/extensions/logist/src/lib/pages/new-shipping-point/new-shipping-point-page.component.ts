@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
 	IonBackButton,
 	IonButtons,
@@ -7,6 +7,7 @@ import {
 	IonTitle,
 	IonToolbar,
 } from '@ionic/angular/standalone';
+import { ClassName } from '@sneat/ui';
 import { LogistOrderService } from '../../services';
 import { OrderPageBaseComponent } from '../order-page-base.component';
 
@@ -21,12 +22,14 @@ import { OrderPageBaseComponent } from '../order-page-base.component';
 		IonTitle,
 		IonContent,
 	],
+	providers: [
+		{ provide: ClassName, useValue: 'NewShippingPointPageComponent' },
+	],
 })
 export class NewShippingPointPageComponent extends OrderPageBaseComponent {
-	constructor(
-		orderService: LogistOrderService,
-		// private readonly orderNavService: OrderNavService,
-	) {
-		super('NewShippingPointPageComponent', orderService);
+	constructor() {
+		const orderService = inject(LogistOrderService);
+
+		super(orderService);
 	}
 }

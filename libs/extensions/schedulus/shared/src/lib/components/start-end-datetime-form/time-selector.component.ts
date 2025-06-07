@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonButton,
@@ -68,6 +68,8 @@ const eveningHours: string[] = [
 	],
 })
 export class TimeSelectorComponent {
+	private readonly modalController = inject(ModalController);
+
 	@Input() hideHeader = false;
 	@Output() readonly selected = new EventEmitter<string>();
 
@@ -75,7 +77,7 @@ export class TimeSelectorComponent {
 
 	public hours: string[] = dayHours;
 
-	constructor(private readonly modalController: ModalController) {
+	constructor() {
 		console.log('TimeSelectorComponent.constructor()');
 	}
 

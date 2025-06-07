@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -18,11 +18,9 @@ import { IProjectRef } from '@sneat/ext-datatug-core';
 
 @Injectable()
 export class DbServerService {
-	constructor(
-		private readonly http: HttpClient,
-		private readonly projectContextService: ProjectContextService,
-		private readonly projectService: ProjectService,
-	) {}
+	private readonly http = inject(HttpClient);
+	private readonly projectContextService = inject(ProjectContextService);
+	private readonly projectService = inject(ProjectService);
 
 	public getDbServerSummary(dbServer: IDbServer): Observable<IDbServerSummary> {
 		const target = this.projectContextService?.current;

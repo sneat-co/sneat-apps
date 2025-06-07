@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonBackButton,
@@ -63,6 +63,12 @@ import { AddDbServerComponent } from '@sneat/ext-datatug-db';
 	],
 })
 export class ServersPageComponent implements OnDestroy {
+	private readonly projectContextService = inject(ProjectContextService);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly modalCtrl = inject(ModalController);
+	private readonly navCtrl = inject(NavController);
+	private readonly dbServerService = inject(DbServerService);
+
 	protected tab: 'db' | 'web' | 'api' = 'db';
 
 	protected dbServers?: IProjDbServerSummary[];
@@ -71,13 +77,7 @@ export class ServersPageComponent implements OnDestroy {
 	private target?: IProjectRef;
 	private readonly isDeletingServer: Record<string, boolean> = {};
 
-	constructor(
-		private readonly projectContextService: ProjectContextService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly modalCtrl: ModalController,
-		private readonly navCtrl: NavController,
-		private readonly dbServerService: DbServerService,
-	) {
+	constructor() {
 		this.projectContextService.current$
 			.pipe(takeUntil(this.destroyed))
 			.subscribe((target) => {

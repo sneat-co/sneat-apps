@@ -2,10 +2,10 @@ import { NgIf } from '@angular/common';
 import {
 	ChangeDetectorRef,
 	Component,
-	Inject,
 	Input,
 	OnChanges,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -59,6 +59,10 @@ function debounce<T>(o: Subject<T>): Observable<T> {
 	],
 })
 export class ContainerPointLoadFormComponent implements OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly orderService = inject(LogistOrderService);
+	private readonly changeDetector = inject(ChangeDetectorRef);
+
 	@Input() order?: ILogistOrderContext;
 	@Input() task?: ShippingPointTask;
 	@Input() shippingPoint?: IOrderShippingPoint;
@@ -92,11 +96,7 @@ export class ContainerPointLoadFormComponent implements OnChanges {
 	// protected readonly onPalletsChange = (event: Event): void => this.onNumberDebounced('numberOfPallets', this.pallets.value || undefined);
 	// protected readonly onWeightChange = (event: Event): void => this.onNumberDebounced('grossWeightKg', this.weight.value || undefined);
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly orderService: LogistOrderService,
-		private readonly changeDetector: ChangeDetectorRef,
-	) {
+	constructor() {
 		console.log('ContainerPointLoadFormComponent.constructor()');
 		this.weight$.subscribe((v) => this.onNumberDebounced('grossWeightKg', v));
 		this.pallets$.subscribe((v) =>

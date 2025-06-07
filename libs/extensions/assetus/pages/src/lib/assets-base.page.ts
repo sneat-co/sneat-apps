@@ -11,10 +11,6 @@ export abstract class AssetsBasePage extends SpaceBaseComponent {
 
 	protected assetusSpace?: IAssetusSpaceContext;
 
-	protected constructor(className: string) {
-		super(className);
-	}
-
 	public goNew(assetType?: AssetCategory): void {
 		const space = this.space;
 		if (!space) {

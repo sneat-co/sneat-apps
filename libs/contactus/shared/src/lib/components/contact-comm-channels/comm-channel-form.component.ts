@@ -25,6 +25,7 @@ import {
 	IAddContactCommChannelRequest,
 } from '@sneat/contactus-services';
 import {
+	ClassName,
 	ISelectItem,
 	SelectFromListComponent,
 	SneatBaseComponent,
@@ -43,6 +44,12 @@ import {
 		SelectFromListComponent,
 		IonSelectOption,
 		ReactiveFormsModule,
+	],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'CommChannelFormComponent',
+		},
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-comm-channel-form',
@@ -71,7 +78,7 @@ export class CommChannelFormComponent extends SneatBaseComponent {
 	private readonly contactService = inject(ContactService);
 
 	constructor() {
-		super('CommChannelFormComponent');
+		super();
 	}
 
 	protected readonly $saving = signal(false);

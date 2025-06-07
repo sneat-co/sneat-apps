@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
 	IonBackButton,
@@ -41,17 +41,15 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	],
 })
 export class ScrumsHistoryPageComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly spaceService = inject(SpaceService);
+
 	public space?: ISpaceContext;
 	public scrums?: IRecord<IScrumDbo>[];
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly spaceService: SpaceService,
-		route: ActivatedRoute,
-		// private readonly scrumService: ScrumService,
-		// private readonly afAuth: AngularFireAuth,
-		// private readonly navService: NavService,
-	) {
+	constructor() {
+		const route = inject(ActivatedRoute);
+
 		const space = history.state?.team as IRecord<ISpaceDbo>;
 		console.log('space', space);
 		if (space?.id) {

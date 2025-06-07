@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonButton,
@@ -38,6 +38,9 @@ import { OrderContainersSelectorComponent } from '../order-containers-selector/o
 	],
 })
 export class NewShippingPointFormComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly orderService = inject(LogistOrderService);
+
 	@Input() order?: ILogistOrderContext;
 	@Input() container?: IOrderContainer;
 	@Output() readonly orderCreated = new EventEmitter<ILogistOrderContext>();
@@ -50,11 +53,6 @@ export class NewShippingPointFormComponent {
 
 	load?: boolean;
 	unload?: boolean;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly orderService: LogistOrderService,
-	) {}
 
 	protected onContactChanged(contact?: IContactContext): void {
 		this.contact = contact;

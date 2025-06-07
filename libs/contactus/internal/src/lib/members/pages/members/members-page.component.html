@@ -25,8 +25,13 @@
 					<ion-label>All</ion-label>
 				</ion-segment-button>
 				<ion-segment-button value="groups">
-					<ion-label *ngIf="space.type !== 'cohabit'">By group</ion-label>
-					<ion-label *ngIf="space.type === 'cohabit'">By room</ion-label>
+					<ion-label>
+						@if (space.type === "cohabit") {
+							By room
+						} @else {
+							By group
+						}
+					</ion-label>
 				</ion-segment-button>
 			</ion-segment>
 		</div>
@@ -67,9 +72,11 @@
 							<ion-label>
 								{{ group.brief?.title }}
 							</ion-label>
-							<ion-badge color="light" *ngIf="group.dbo?.numberOf?.members">
-								{{ group.dbo?.numberOf?.members }} members
-							</ion-badge>
+							@if (group.dbo?.numberOf?.members) {
+								<ion-badge color="light">
+									{{ group.dbo?.numberOf?.members }} members
+								</ion-badge>
+							}
 						</ion-item-divider>
 						<!--					<ng-container *ngIf="membersByGroupId[group.id]">-->
 						<!--						<sneat-members-list [members]="this.membersByGroupId[group.id]"-->
@@ -94,9 +101,11 @@
 						<ion-label>
 							{{ group.brief?.title }}
 						</ion-label>
-						<ion-badge color="light" *ngIf="group.dbo?.numberOf?.members">
-							{{ group?.dbo?.numberOf?.members }} members
-						</ion-badge>
+						@if (group.dbo?.numberOf?.members) {
+							<ion-badge color="light">
+								{{ group?.dbo?.numberOf?.members }} members
+							</ion-badge>
+						}
 					</ion-item>
 				</ion-item-group>
 			}
@@ -117,17 +126,27 @@
 
 <ion-footer>
 	<ion-toolbar color="light">
-		<ion-label *ngIf="space.dbo && segment === 'all'">
-			<b>Total</b>:
-			<!--			{{ team.dto.numberOf?.members ?? 0 }}-->
-			<!--			{{ team.dto.numberOf?.members === 1 ? "member" : "members" }}-->
-		</ion-label>
-		<ion-label *ngIf="space.dbo && segment === 'groups'">
-			<b>Total</b>:
-			<!--			{{ team.dto.numberOf?.memberGroups || 0 }}-->
-			<!--			{{ team.dto.numberOf?.memberGroups === 1 ? "group" : "groups" }}-->
-		</ion-label>
-		<ion-label *ngIf="!space.dbo">Loading...</ion-label>
+		@if (space.dbo) {
+			@switch (segment) {
+				@case ("all") {
+					<ion-label>
+						<b>Total</b>:
+						<!--			{{ team.dto.numberOf?.members ?? 0 }}-->
+						<!--			{{ team.dto.numberOf?.members === 1 ? "member" : "members" }}-->
+					</ion-label>
+				}
+				@case ("groups") {
+					<ion-label>
+						<b>Total</b>:
+						<!--			{{ team.dto.numberOf?.memberGroups || 0 }}-->
+						<!--			{{ team.dto.numberOf?.memberGroups === 1 ? "group" : "groups" }}-->
+					</ion-label>
+				}
+			}
+		} @else {
+			<ion-label>Loading...</ion-label>
+		}
+
 		<ion-buttons slot="end">
 			<ion-button
 				size="small"

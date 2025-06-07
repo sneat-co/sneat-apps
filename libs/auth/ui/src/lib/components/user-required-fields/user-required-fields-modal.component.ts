@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import {
 	FormControl,
 	FormGroup,
@@ -28,7 +28,7 @@ import {
 	UserRecordService,
 } from '@sneat/auth-core';
 import { AgeGroupID, Gender } from '@sneat/core';
-import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
+import { ClassName, ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import { ISpaceContext } from '@sneat/space-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
@@ -53,8 +53,18 @@ import { takeUntil } from 'rxjs';
 		IonLabel,
 		IonFooter,
 	],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'UserRequiredFieldsModalComponent',
+		},
+	],
 })
 export class UserRequiredFieldsModalComponent extends SneatBaseComponent {
+	private readonly modalController = inject(ModalController);
+	private readonly userRecordService = inject(UserRecordService);
+	private readonly sneatUserService = inject(SneatUserService);
+
 	@Input({ required: true }) space: ISpaceContext = { id: '' };
 
 	protected readonly genders: ISelectItem[] = [
@@ -85,12 +95,8 @@ export class UserRequiredFieldsModalComponent extends SneatBaseComponent {
 
 	protected userState?: ISneatUserState;
 
-	constructor(
-		private readonly modalController: ModalController,
-		private readonly userRecordService: UserRecordService,
-		private readonly sneatUserService: SneatUserService,
-	) {
-		super('UserRequiredFieldsModalComponent');
+	constructor() {
+		super();
 		this.sneatUserService.userState.pipe(takeUntil(this.destroyed$)).subscribe({
 			next: (userState) => (this.userState = userState),
 		});

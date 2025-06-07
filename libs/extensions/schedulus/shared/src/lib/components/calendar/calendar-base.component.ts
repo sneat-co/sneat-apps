@@ -5,7 +5,6 @@ import {
 	inject,
 	signal,
 	computed,
-	input,
 } from '@angular/core';
 import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
@@ -78,14 +77,13 @@ export abstract class CalendarBaseComponent
 
 	private readonly contactusSpaceService = inject(ContactusSpaceService);
 
-	protected constructor(
-		className: string,
-		calendariumSpaceService: CalendariumSpaceService,
-		happeningService: HappeningService,
-		calendarDayService: CalendarDayService,
-	) {
-		super(className);
-		console.log(`${className}:CalendarBaseComponent.constructor()`);
+	protected constructor() {
+		super();
+		console.log(`${this.className}:CalendarBaseComponent.constructor()`);
+		const calendariumSpaceService = inject(CalendariumSpaceService);
+		const happeningService = inject(HappeningService);
+		const calendarDayService = inject(CalendarDayService);
+
 		this.spaceDaysProvider = new CalendarDataProvider(
 			this.injector,
 			this.$spaceID,

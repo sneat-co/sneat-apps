@@ -1,4 +1,4 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import {
 	IonContent,
 	IonHeader,
@@ -21,14 +21,12 @@ import { NewSegmentFormComponent } from './new-segment-form.component';
 	],
 })
 export class NewSegmentDialogComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly modalController = inject(ModalController);
+	private readonly orderNavService = inject(OrderNavService);
+
 	@Input() order?: ILogistOrderContext;
 	@Input() container?: IOrderContainer;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly modalController: ModalController,
-		private readonly orderNavService: OrderNavService,
-	) {}
 
 	protected close(): void {
 		// this.modalController

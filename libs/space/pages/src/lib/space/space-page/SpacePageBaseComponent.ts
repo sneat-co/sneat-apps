@@ -7,10 +7,9 @@ export abstract class SpacePageBaseComponent
 	implements OnDestroy
 {
 	protected constructor(
-		className: string,
 		protected readonly topMenuService: TopMenuService,
 		protected readonly cd: ChangeDetectorRef, // readonly navService: TeamNavService,
 	) {
-		super(className);
+		super();
 	}
 }

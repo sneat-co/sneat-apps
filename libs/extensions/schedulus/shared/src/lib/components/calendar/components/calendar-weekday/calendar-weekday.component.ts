@@ -25,7 +25,7 @@ import {
 	ScheduleNavService,
 } from '@sneat/mod-schedulus-core';
 import { ISpaceContext } from '@sneat/space-models';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { CalendarDay } from '../../../../services/calendar-day';
 import {
 	emptyCalendarFilter,
@@ -48,6 +48,7 @@ import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
 		IonIcon,
 		IonItem,
 	],
+	providers: [{ provide: ClassName, useValue: 'CalendarWeekdayComponent' }],
 	selector: 'sneat-calendar-weekday',
 	templateUrl: './calendar-weekday.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -64,8 +65,9 @@ export class CalendarWeekdayComponent extends SneatBaseComponent {
 
 	private readonly scheduleNavService = inject(ScheduleNavService);
 
-	constructor(filterService: CalendarFilterService) {
-		super('CalendarWeekdayComponent');
+	constructor() {
+		super();
+		const filterService = inject(CalendarFilterService);
 		filterService.filter
 			.pipe(this.takeUntilDestroyed())
 			.subscribe(this.$filter.set);

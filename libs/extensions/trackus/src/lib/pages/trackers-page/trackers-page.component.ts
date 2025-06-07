@@ -17,6 +17,7 @@ import {
 } from '@sneat/space-components';
 import { SpaceServiceModule } from '@sneat/space-services';
 import { TrackersComponent } from '../../components';
+import { ClassName } from '@sneat/ui';
 
 @Component({
 	selector: 'sneat-trackers-page',
@@ -35,11 +36,17 @@ import { TrackersComponent } from '../../components';
 		IonContent,
 	],
 	templateUrl: './trackers-page.component.html',
-	providers: [SpaceComponentBaseParams],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'TrackersPageComponent',
+		},
+		SpaceComponentBaseParams,
+	],
 })
 export class TrackersPageComponent extends SpaceBaseComponent {
 	constructor() {
-		super('TrackersPageComponent');
+		super();
 	}
 
 	protected goNewTracker(category?: string): void {

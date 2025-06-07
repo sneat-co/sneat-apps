@@ -5,6 +5,7 @@ import {
 	effect,
 	input,
 	signal,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -18,7 +19,7 @@ import {
 	ContactusServicesModule,
 	ContactusSpaceService,
 } from '@sneat/contactus-services';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { Subscription } from 'rxjs';
 import { ITracker } from '../../dbo/i-tracker-dbo';
 import { TrackersServiceModule } from '../../trackers-service';
@@ -40,6 +41,12 @@ import { TrackerHistoryComponent } from './tracker-history.component';
 		IonButton,
 		IonIcon,
 	],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'TrackerComponent',
+		},
+	],
 	templateUrl: './tracker.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -52,8 +59,10 @@ export class TrackerComponent extends SneatBaseComponent {
 		undefined,
 	);
 
-	constructor(contactusSpaceService: ContactusSpaceService) {
-		super('TrackerComponent');
+	constructor() {
+		const contactusSpaceService = inject(ContactusSpaceService);
+
+		super();
 
 		let contactusSpaceSub: Subscription | undefined = undefined;
 

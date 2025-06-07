@@ -1,10 +1,10 @@
 import {
 	Component,
-	Inject,
 	Input,
 	OnChanges,
 	OnDestroy,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -41,6 +41,10 @@ import { SpaceNavService } from '@sneat/space-services';
 	],
 })
 export class ScrumsComponent implements OnChanges, OnDestroy {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly navController = inject(NavController);
+	readonly navService = inject(SpaceNavService);
+
 	@Input() public space?: IRecord<ISpaceDbo>;
 
 	public prevScrumId?: string;
@@ -49,13 +53,6 @@ export class ScrumsComponent implements OnChanges, OnDestroy {
 	protected readonly destroyed = new Subject<boolean>();
 
 	private spaceID?: string;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		// private readonly scrumService: ScrumService,
-		private readonly navController: NavController,
-		public readonly navService: SpaceNavService,
-	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['space']) {

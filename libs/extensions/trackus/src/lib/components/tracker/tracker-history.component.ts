@@ -13,7 +13,7 @@ import {
 } from '@ionic/angular/standalone';
 import { IContactusSpaceDbo } from '@sneat/contactus-core';
 import { IIdAndBrief } from '@sneat/core';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { ITracker, TrackerPointBrief } from '../../dbo/i-tracker-dbo';
 import {
 	IDeleteTrackerPointsRequest,
@@ -52,6 +52,12 @@ interface ITargetInfo {
 		IonItem,
 		IonChip,
 	],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'TrackerHistoryComponent',
+		},
+	],
 })
 export class TrackerHistoryComponent extends SneatBaseComponent {
 	public readonly $tracker = input.required<ITracker | undefined>();
@@ -62,7 +68,7 @@ export class TrackerHistoryComponent extends SneatBaseComponent {
 	private readonly trackusApiService = inject(TrackusApiService);
 
 	constructor() {
-		super('TrackerHistoryComponent');
+		super();
 	}
 
 	protected readonly $deletingTrackerPointRequests = signal<

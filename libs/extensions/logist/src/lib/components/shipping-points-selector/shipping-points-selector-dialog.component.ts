@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import {
 	ModalController,
 	IonButton,
@@ -34,18 +34,16 @@ import {
 	],
 })
 export class ShippingPointsSelectorDialogComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly orderService = inject(LogistOrderService);
+	private readonly modalController = inject(ModalController);
+
 	@Input() title = 'Select shipping points for container';
 	@Input() order?: ILogistOrderContext;
 	@Input() container?: IOrderContainer;
 
 	protected submitting = false;
 	protected tasksByID?: TasksByID;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly orderService: LogistOrderService,
-		private readonly modalController: ModalController,
-	) {}
 
 	protected onTasksByShippingPointIDChanged(tasksByID: TasksByID): void {
 		console.log(

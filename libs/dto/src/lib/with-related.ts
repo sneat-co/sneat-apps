@@ -53,12 +53,12 @@ export function validateRelated(related?: IRelatedModules): void {
 	if (!related) {
 		return;
 	}
-	Object.entries(related).forEach(([module, collections]) => {
-		Object.entries(collections).forEach(([collection, items]) => {
+	Object.entries(related).forEach(([, collections]) => {
+		Object.entries(collections).forEach(([, items]) => {
 			if (!items) {
 				return;
 			}
-			Object.entries(items).forEach(([itemID, item]) => {
+			Object.entries(items).forEach(([itemID]) => {
 				if (!itemID) {
 					throw new Error('ItemID is not set');
 				}

@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -69,6 +69,10 @@ type OrderBy = (typeof orderBys)[number];
 export class QueriesPageComponent
 	implements OnInit, ViewWillEnter, ViewDidEnter, ViewDidLeave
 {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly route = inject(ActivatedRoute);
+	private readonly router = inject(Router);
+
 	@ViewChild('codemirrorComponent', { static: true })
 	public codemirrorComponent?: CodemirrorComponent;
 
@@ -92,11 +96,7 @@ export class QueriesPageComponent
 			: '/';
 	}
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly route: ActivatedRoute,
-		private readonly router: Router,
-	) {
+	constructor() {
 		this.route.queryParamMap.subscribe((q) => {
 			const tab = q.get('tab') as Tab;
 			if (!tab) {

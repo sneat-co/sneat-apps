@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
 	APP_INFO,
 	IAppInfo,
@@ -12,17 +12,10 @@ import { SneatUserService } from '@sneat/auth-core';
 
 @Injectable()
 export class SpaceComponentBaseParams {
-	// TODO: obsolete
-	// TODO: verify it should be declared in providers attribute for each page or can be just on app level?
-	constructor(
-		@Inject(ErrorLogger) public readonly errorLogger: IErrorLogger,
-		@Inject(LOGGER_FACTORY) public readonly loggerFactory: ILoggerFactory,
-		@Inject(APP_INFO) protected readonly appService: IAppInfo, // Check if used anywhere
-		// public readonly changeDetectorRef: ChangeDetectorRef,
-		// public readonly navController: NavController,
-		public readonly userService: SneatUserService,
-		public readonly spaceNavService: SpaceNavService,
-		// public readonly contactusTeamService: ContactusTeamService,
-		public readonly preloader: NgModulePreloaderService,
-	) {}
+	readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	readonly loggerFactory = inject<ILoggerFactory>(LOGGER_FACTORY);
+	protected readonly appService = inject<IAppInfo>(APP_INFO);
+	readonly userService = inject(SneatUserService);
+	readonly spaceNavService = inject(SpaceNavService);
+	readonly preloader = inject(NgModulePreloaderService);
 }

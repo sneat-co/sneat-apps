@@ -1,11 +1,11 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import posthog from 'posthog-js';
 import { IAnalyticsService } from './analytics.interface';
 
 @Injectable()
 export class PosthogAnalyticsService implements IAnalyticsService {
-	constructor(@Inject(ErrorLogger) private errorLogger: IErrorLogger) {}
+	private errorLogger = inject<IErrorLogger>(ErrorLogger);
 
 	public identify(userID: string): void {
 		posthog.identify(userID);

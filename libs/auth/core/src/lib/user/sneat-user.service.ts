@@ -1,5 +1,4 @@
 import {
-	Inject,
 	Injectable,
 	inject,
 	Injector,
@@ -38,6 +37,10 @@ const UsersCollection = 'users';
 
 @Injectable({ providedIn: 'root' }) // TODO: lazy loading
 export class SneatUserService {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly sneatApiService = inject(SneatApiService);
+	private readonly userRecordService = inject(UserRecordService);
+
 	// private userDocSubscription?: Subscription;
 	private readonly injector = inject(Injector);
 	private readonly userCollection: CollectionReference<IUserRecord>;
@@ -68,13 +71,10 @@ export class SneatUserService {
 		}
 	}
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly sneatApiService: SneatApiService,
-		private readonly userRecordService: UserRecordService, // private readonly sneatTeamApiService: SneatTeamApiService
-		afs: AngularFirestore,
-		sneatAuthStateService: SneatAuthStateService,
-	) {
+	constructor() {
+		const afs = inject(AngularFirestore);
+		const sneatAuthStateService = inject(SneatAuthStateService);
+
 		console.log('SneatUserService.constructor()');
 		this.userCollection = collection(
 			afs,

@@ -2,12 +2,11 @@ import {
 	ChangeDetectorRef,
 	Directive,
 	EventEmitter,
-	Inject,
 	Injectable,
 	input,
-	Input,
 	Output,
 	signal,
+	inject,
 } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
 import {
@@ -33,14 +32,11 @@ import {
 
 @Injectable()
 export class HappeningBaseComponentParams {
-	constructor(
-		@Inject(ErrorLogger) public readonly errorLogger: IErrorLogger,
-		public readonly happeningService: HappeningService,
-		public readonly spaceNavService: SpaceNavService,
-		public readonly contactsSelectorService: ContactsSelectorService,
-		public readonly modalController: ModalController,
-		// public readonly happeningSlotModalService: HappeningSlotModalService,
-	) {}
+	readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	readonly happeningService = inject(HappeningService);
+	readonly spaceNavService = inject(SpaceNavService);
+	readonly contactsSelectorService = inject(ContactsSelectorService);
+	readonly modalController = inject(ModalController);
 }
 
 /* The meatadata should be passed to component declaration as:
@@ -96,12 +92,14 @@ export abstract class HappeningBaseComponent extends WithSpaceInput {
 		return this.happeningBaseComponentParams.contactsSelectorService;
 	}
 
-	protected constructor(
-		className: string,
-		private readonly happeningBaseComponentParams: HappeningBaseComponentParams,
-		protected changeDetectorRef: ChangeDetectorRef,
-	) {
-		super(className);
+	private readonly happeningBaseComponentParams = inject(
+		HappeningBaseComponentParams,
+	);
+
+	protected readonly changeDetectorRef = inject(ChangeDetectorRef);
+
+	protected constructor() {
+		super();
 	}
 
 	protected goHappening(event: Event): void {

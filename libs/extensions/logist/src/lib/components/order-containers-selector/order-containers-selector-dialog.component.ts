@@ -1,4 +1,4 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import {
 	IonButton,
 	IonContent,
@@ -24,15 +24,13 @@ import { OrderContainersSelectorComponent } from './order-containers-selector.co
 	],
 })
 export class OrderContainersSelectorDialogComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+
 	@Input() title = 'Select containers';
 	@Input() order?: ILogistOrderContext;
 	@Input() onSelected?: (items: IContainer[] | null) => void;
 
 	private selectedContainers: IContainer[] = [];
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {}
 
 	onSelectedContainersChanged(selectedContainers: IContainer[]): void {
 		console.log(

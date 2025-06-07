@@ -1,13 +1,13 @@
 import { NgForOf, NgIf } from '@angular/common';
 import {
 	Component,
-	Inject,
 	Input,
 	NgZone,
 	OnChanges,
 	OnDestroy,
 	SimpleChanges,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import {
 	ModalController,
@@ -57,6 +57,11 @@ import { ScrumTaskComponent } from '../scrum-task/scrum-task.component';
 	],
 })
 export class ScrumTasksComponent implements OnDestroy, OnChanges {
+	private readonly zone = inject(NgZone);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly scrumService = inject(ScrumService);
+	private modalController = inject(ModalController);
+
 	@Input() space?: IRecord<ISpaceDbo>;
 	@Input() public scrumId?: string;
 
@@ -85,13 +90,6 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 
 	private userSubscription?: Subscription;
 	private deletingTaskIds: string[] = [];
-
-	constructor(
-		private readonly zone: NgZone,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly scrumService: ScrumService,
-		private modalController: ModalController,
-	) {}
 
 	ngOnDestroy(): void {
 		if (this.userSubscription) {

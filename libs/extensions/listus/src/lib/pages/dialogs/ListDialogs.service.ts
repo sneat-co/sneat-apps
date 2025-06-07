@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
 import { IListInfo, IListItemBrief } from '../../dto';
 import { CopyListItemsPageComponent } from './copy-list-items/copy-list-items-page.component';
 
 @Injectable()
 export class ListDialogsService {
-	constructor(private readonly modalCtrl: ModalController) {}
+	private readonly modalCtrl = inject(ModalController);
 
 	async copyListItems(
 		listItems: IListItemBrief[],

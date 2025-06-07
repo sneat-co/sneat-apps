@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
 	IonBackButton,
 	IonButtons,
@@ -25,7 +25,10 @@ import { CommuneBasePageParams } from 'sneat-shared/services/params';
 	],
 })
 export class MemberBudgetPageComponent extends MemberBasePage {
-	constructor(params: CommuneBasePageParams, membersService: IMemberService) {
+	constructor() {
+		const params = inject(CommuneBasePageParams);
+		const membersService = inject(IMemberService);
+
 		super(params, membersService);
 	}
 }

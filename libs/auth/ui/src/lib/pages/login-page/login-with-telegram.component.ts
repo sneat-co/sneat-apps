@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, ElementRef, Inject, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, inject } from '@angular/core';
 import {
 	ITelegramAuthData,
 	SneatAuthWithTelegramService,
@@ -24,12 +24,14 @@ let authWithTelegramService: SneatAuthWithTelegramService;
 	`,
 })
 export class LoginWithTelegramComponent implements OnInit {
+	private readonly el = inject(ElementRef);
+	private readonly document = inject<Document>(DOCUMENT);
+	readonly authWithTelegram = inject(SneatAuthWithTelegramService);
+
 	// TODO: Article about Telegram login
-	constructor(
-		private readonly el: ElementRef,
-		@Inject(DOCUMENT) private readonly document: Document,
-		readonly authWithTelegram: SneatAuthWithTelegramService,
-	) {
+	constructor() {
+		const authWithTelegram = this.authWithTelegram;
+
 		authWithTelegramService = authWithTelegram;
 	}
 

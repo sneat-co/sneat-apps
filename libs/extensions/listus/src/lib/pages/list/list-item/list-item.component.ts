@@ -7,6 +7,7 @@ import {
 	Input,
 	Output,
 	signal,
+	inject,
 } from '@angular/core';
 import {
 	ToastController,
@@ -60,6 +61,10 @@ import { IListItemWithUiState } from '../list-item-with-ui-state';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListItemComponent {
+	private readonly params = inject(ListusComponentBaseParams);
+	private readonly listDialogs = inject(ListDialogsService);
+	private readonly toastCtrl = inject(ToastController);
+
 	@Input()
 	public showDoneCheckbox = false;
 
@@ -88,12 +93,6 @@ export class ListItemComponent {
 
 	@Output()
 	public readonly listChanged = new EventEmitter<IListContext>();
-
-	constructor(
-		private readonly params: ListusComponentBaseParams,
-		private readonly listDialogs: ListDialogsService,
-		private readonly toastCtrl: ToastController,
-	) {}
 
 	protected readonly $listItem = computed(
 		() => this.$listItemWithUiState().brief,

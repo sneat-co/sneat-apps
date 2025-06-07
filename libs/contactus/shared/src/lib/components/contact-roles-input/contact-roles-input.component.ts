@@ -1,9 +1,9 @@
 import {
 	Component,
-	Inject,
 	Input,
 	OnChanges,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { CONTACT_ROLES_BY_TYPE, IContactRole } from '@sneat/app';
 import {
@@ -12,10 +12,7 @@ import {
 	IContactWithBrief,
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import {
-	ContactService,
-	IUpdateContactRequest,
-} from '@sneat/contactus-services';
+import { ContactService } from '@sneat/contactus-services';
 import { ISpaceContext } from '@sneat/space-models';
 import { MultiSelectorComponent } from '@sneat/ui';
 
@@ -25,19 +22,18 @@ import { MultiSelectorComponent } from '@sneat/ui';
 	imports: [MultiSelectorComponent],
 })
 export class ContactRolesInputComponent implements OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly contactService = inject(ContactService);
+	private readonly contactRolesByType = inject<
+		Record<ContactType, IContactRole[]>
+	>(CONTACT_ROLES_BY_TYPE);
+
 	@Input({ required: true }) space?: ISpaceContext;
 	@Input() contact?: IContactWithBrief;
 	// @Output() readonly rolesChange = new EventEmitter<ContactRole[]>();
 
 	protected roles?: IContactRole[];
 	protected processingRoleIDs: ContactRole[] = [];
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly contactService: ContactService,
-		@Inject(CONTACT_ROLES_BY_TYPE)
-		private readonly contactRolesByType?: Record<ContactType, IContactRole[]>,
-	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['contact']) {

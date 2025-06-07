@@ -1,10 +1,10 @@
 import { NgForOf, NgIf } from '@angular/common';
 import {
 	Component,
-	Inject,
 	Input,
 	OnChanges,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -46,6 +46,10 @@ import { SegmentContainerComponent } from './segment-container.component';
 	],
 })
 export class TruckerSegmentComponent implements OnChanges {
+	private readonly orderService = inject(LogistOrderService);
+	private readonly orderPrintService = inject(OrderPrintService);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+
 	@Input() order?: ILogistOrderContext;
 	@Input() orderSegment?: IOrderSegment;
 	@Input() trucker?: IOrderCounterparty;
@@ -54,12 +58,6 @@ export class TruckerSegmentComponent implements OnChanges {
 	to?: IOrderCounterparty;
 
 	deleting = false;
-
-	constructor(
-		private readonly orderService: LogistOrderService,
-		private readonly orderPrintService: OrderPrintService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {}
 
 	assignSegmentsToTransporter(): void {
 		alert('not implemented yet');

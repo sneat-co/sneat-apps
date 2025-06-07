@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Input,
+	inject,
+} from '@angular/core';
 import {
 	IonBadge,
 	IonButton,
@@ -31,13 +36,13 @@ import { HappeningSlotModalService } from '../happening-slot-form/happening-slot
 	],
 })
 export class HappeningSlotComponent {
+	private readonly happeningSlotModalService = inject(
+		HappeningSlotModalService,
+	);
+
 	@Input({ required: true }) public happening?: IHappeningContext;
 	@Input({ required: true }) public slot: IHappeningSlotWithID =
 		emptyHappeningSlot;
-
-	constructor(
-		private readonly happeningSlotModalService: HappeningSlotModalService,
-	) {}
 
 	protected deleting = false;
 

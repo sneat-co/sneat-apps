@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
 	IForeignKey,
 	ISqlQueryTarget,
@@ -19,6 +19,9 @@ const equalRecordsets = (a?: IAstRecordset, b?: IAstRecordset): boolean =>
 
 @Injectable()
 export class QueryContextSqlService {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly tableService = inject(TableService);
+
 	private readonly sqlParser = new SqlParser();
 
 	private target?: ISqlQueryTarget;
@@ -35,11 +38,6 @@ export class QueryContextSqlService {
 	);
 
 	public readonly suggestedJoins = this._suggestedJoins.asObservable();
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly tableService: TableService,
-	) {}
 
 	private static getAutoAlias(name: string): string {
 		throw new Error(`Not implemented yet ${name}`);

@@ -4,6 +4,7 @@ import {
 	OnChanges,
 	OnDestroy,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import {
 	allUserStoresAsFlatList,
@@ -23,6 +24,10 @@ import { filter, takeUntil } from 'rxjs/operators';
 	templateUrl: 'menu-store-selector.component.html',
 })
 export class MenuStoreSelectorComponent implements OnDestroy, OnChanges {
+	private readonly errorLogger = inject(IErrorLogger);
+	private readonly nav = inject(DatatugNavService);
+	readonly datatugNavContextService = inject(DatatugNavContextService);
+
 	@Input() datatugUser?: IDatatugUser;
 
 	currentStoreId?: string;
@@ -33,12 +38,9 @@ export class MenuStoreSelectorComponent implements OnDestroy, OnChanges {
 
 	private externalChange = false;
 
-	constructor(
-		@Inject(ErrorLogger)
-		private readonly errorLogger: IErrorLogger,
-		private readonly nav: DatatugNavService,
-		readonly datatugNavContextService: DatatugNavContextService,
-	) {
+	constructor() {
+		const datatugNavContextService = this.datatugNavContextService;
+
 		datatugNavContextService.currentStoreId
 			.pipe(
 				takeUntil(this.destroyed),

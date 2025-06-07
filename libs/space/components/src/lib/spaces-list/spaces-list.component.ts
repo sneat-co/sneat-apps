@@ -5,6 +5,7 @@ import {
 	EventEmitter,
 	Input,
 	Output,
+	inject,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
@@ -19,7 +20,7 @@ import { SpaceType } from '@sneat/core';
 import { ICreateSpaceRequest, ISpaceContext } from '@sneat/space-models';
 import { SpaceNavService, SpaceService } from '@sneat/space-services';
 import { SneatUserService } from '@sneat/auth-core';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { first } from 'rxjs';
 
 @Component({
@@ -34,9 +35,22 @@ import { first } from 'rxjs';
 		IonBadge,
 		IonSpinner,
 	],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'SpacesListComponent',
+		},
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpacesListComponent extends SneatBaseComponent {
+	readonly userService = inject(SneatUserService);
+	private readonly spaceNavService = inject(SpaceNavService);
+	private readonly spaceService = inject(SpaceService);
+	private readonly userRequiredFieldsService = inject(
+		UserRequiredFieldsService,
+	);
+
 	// Inputs
 	@Input({ required: true }) userID?: string;
 	@Input({ required: true }) spaces?: ISpaceContext[];
@@ -45,13 +59,8 @@ export class SpacesListComponent extends SneatBaseComponent {
 	// Outputs
 	@Output() readonly beforeNavigateToSpace = new EventEmitter<ISpaceContext>();
 
-	constructor(
-		readonly userService: SneatUserService,
-		private readonly spaceNavService: SpaceNavService,
-		private readonly spaceService: SpaceService,
-		private readonly userRequiredFieldsService: UserRequiredFieldsService,
-	) {
-		super('SpacesListComponent');
+	constructor() {
+		super();
 	}
 
 	protected goSpace(event: Event, space: ISpaceContext): boolean {

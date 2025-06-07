@@ -1,9 +1,9 @@
 import {
 	AfterViewInit,
 	Component,
-	Inject,
 	Input,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -50,6 +50,9 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	],
 })
 export class NewListDialogComponent implements AfterViewInit {
+	private readonly modalCtrl = inject(ModalController);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+
 	@ViewChild('listNameInput', { static: false }) listNameInput?: IonInput;
 
 	public listName = '';
@@ -58,11 +61,6 @@ export class NewListDialogComponent implements AfterViewInit {
 	@Input() title?: string;
 	@Input() listType?: ListType;
 	@Input() modal?: ModalController;
-
-	constructor(
-		private readonly modalCtrl: ModalController,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {}
 
 	ngAfterViewInit(): void /* Intentionally not ngOnInit */ {
 		setTimeout(() => {

@@ -1,10 +1,10 @@
 import { NgIf } from '@angular/common';
 import {
 	Component,
-	Inject,
 	Input,
 	OnChanges,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -56,6 +56,8 @@ interface IMeetingMemberWithCounts extends IMeetingMember {
 	],
 })
 export class RetroMembersComponent implements OnChanges {
+	private errorLogger = inject<IErrorLogger>(ErrorLogger);
+
 	@Input({ required: true }) space?: ISpaceContext;
 	@Input({ required: true }) retrospective?: IRecord<IRetrospective>;
 
@@ -64,8 +66,6 @@ export class RetroMembersComponent implements OnChanges {
 	public participants?: IMeetingMemberWithCounts[];
 	public spectators?: IMeetingMemberWithCounts[];
 	public absents?: IMeetingMember[];
-
-	constructor(@Inject(ErrorLogger) private errorLogger: IErrorLogger) {}
 
 	public ngOnChanges(changes: SimpleChanges): void {
 		console.log('ngOnChanges', this.space, this.retrospective);

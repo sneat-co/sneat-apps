@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { forkJoin, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { last, map, mapTo, mergeMap } from 'rxjs/operators';
@@ -13,22 +13,14 @@ type GenresById = Record<number, Genre>;
 
 @Injectable()
 export class TmdbService extends ITmdbService {
+	private readonly httpClient = inject(HttpClient);
+
 	private readonly genres: GenresById = {
 		1: { id: 1, name: 'comedy' },
 		2: { id: 2, name: 'traget' },
 	};
 
 	private readonly api = '1fc63e90ce0e426f9534b0b97a9248b6';
-
-	// private readonly userId = '123';
-	//
-	// public getUserId(): string {
-	// 	return this.userId;
-	// }
-
-	constructor(private readonly httpClient: HttpClient) {
-		super();
-	}
 
 	// search(s: string): Observable<{ movies: IMovie[] }> {
 	// 	return of({movies: []});

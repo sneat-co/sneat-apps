@@ -1,10 +1,10 @@
 import {
 	Component,
 	ElementRef,
-	Inject,
 	OnDestroy,
 	OnInit,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -76,6 +76,11 @@ interface IRecordsetInfo {
 	],
 })
 export class EnvDbPageComponent implements OnDestroy, OnInit {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly projService = inject(ProjectService);
+	private datatugNavService = inject(DatatugNavService);
+	private readonly route = inject(ActivatedRoute);
+
 	@ViewChild('grid', { static: false }) gridElRef?: ElementRef;
 
 	filter = '';
@@ -97,12 +102,7 @@ export class EnvDbPageComponent implements OnDestroy, OnInit {
 
 	private readonly destroyed = new Subject<void>();
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly projService: ProjectService,
-		private datatugNavService: DatatugNavService,
-		private readonly route: ActivatedRoute,
-	) {
+	constructor() {
 		// this.tabulator = new Tabulator({
 		// 	// columns: this.tablesCols,
 		// });

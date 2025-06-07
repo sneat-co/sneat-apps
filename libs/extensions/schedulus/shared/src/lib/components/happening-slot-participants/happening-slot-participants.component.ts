@@ -6,6 +6,7 @@ import {
 	signal,
 	computed,
 	effect,
+	inject,
 } from '@angular/core';
 import { IonBadge, IonLabel } from '@ionic/angular/standalone';
 import { PersonNamesPipe } from '@sneat/auth-ui';
@@ -17,15 +18,21 @@ import { ContactusSpaceService } from '@sneat/contactus-services';
 import { getRelatedItemByIDs, getRelatedItems } from '@sneat/dto';
 import { ISlotUIContext } from '@sneat/mod-schedulus-core';
 import { ISpaceRef } from '@sneat/core';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 
 @Component({
+	imports: [PersonNamesPipe, IonBadge, IonLabel],
+	providers: [
+		{ provide: ClassName, useValue: 'HappeningSlotParticipantsComponent' },
+	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-happening-slot-participants',
 	templateUrl: 'happening-slot-participants.component.html',
-	imports: [PersonNamesPipe, IonBadge, IonLabel],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HappeningSlotParticipantsComponent extends SneatBaseComponent {
+	private readonly changedDetectorRef = inject(ChangeDetectorRef);
+	private readonly contactusService = inject(ContactusSpaceService);
+
 	protected contacts?: readonly IContactWithBriefAndSpace[];
 	protected readonly $spaceContacts = signal<
 		readonly IContactWithBrief[] | undefined
@@ -75,11 +82,8 @@ export class HappeningSlotParticipantsComponent extends SneatBaseComponent {
 
 	// private readonly spaceID$ = new Subject<string>();
 
-	constructor(
-		private readonly changedDetectorRef: ChangeDetectorRef,
-		private readonly contactusService: ContactusSpaceService,
-	) {
-		super('HappeningSlotParticipantsComponent');
+	public constructor() {
+		super();
 		effect(() => {
 			const spaceID = this.$spaceID();
 			this.onSpaceIDChanged(spaceID);

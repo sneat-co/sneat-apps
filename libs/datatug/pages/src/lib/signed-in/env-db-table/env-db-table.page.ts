@@ -1,9 +1,9 @@
 import {
 	AfterViewInit,
 	Component,
-	Inject,
 	OnDestroy,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -94,6 +94,14 @@ import { ForeignKeyCardComponent } from './foreign-key-card/foreign-key-card.com
 	],
 })
 export class EnvDbTablePageComponent implements OnDestroy, AfterViewInit {
+	private readonly datatugNavContextService = inject(DatatugNavContextService);
+	private readonly route = inject(ActivatedRoute);
+	private readonly projService = inject(ProjectService);
+	private readonly agentService = inject(AgentService);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly popoverController = inject(PopoverController);
+	private readonly datatugNavService = inject(DatatugNavService);
+
 	project?: IProjectContext;
 	envId?: string;
 	dbId?: string;
@@ -129,15 +137,10 @@ export class EnvDbTablePageComponent implements OnDestroy, AfterViewInit {
 
 	private readonly destroyed = new Subject<void>();
 
-	constructor(
-		private readonly datatugNavContextService: DatatugNavContextService,
-		private readonly route: ActivatedRoute,
-		private readonly projService: ProjectService,
-		private readonly agentService: AgentService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly popoverController: PopoverController,
-		private readonly datatugNavService: DatatugNavService,
-	) {
+	constructor() {
+		const route = this.route;
+		const errorLogger = this.errorLogger;
+
 		console.log('EnvDbTablePage.constructor()', errorLogger);
 		// const projectTracker = new ProjectTracker(this.destroyed, route);
 		try {

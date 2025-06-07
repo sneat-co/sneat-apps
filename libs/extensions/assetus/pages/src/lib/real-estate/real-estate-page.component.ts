@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommuneBasePageParams } from '@sneat/shared';
 import { ContactType } from 'sneat-shared/models/types';
 import { AssetBasePage } from '../../asset-base.page';
@@ -12,7 +12,10 @@ import { IContact2Asset } from 'sneat-shared/models/dto/dto-contact';
 	providers: [CommuneBasePageParams],
 })
 export class RealEstatePageComponent extends AssetBasePage {
-	constructor(params: CommuneBasePageParams, assetService: IAssetService) {
+	constructor() {
+		const params = inject(CommuneBasePageParams);
+		const assetService = inject(IAssetService);
+
 		super('real-estates', params, assetService);
 	}
 

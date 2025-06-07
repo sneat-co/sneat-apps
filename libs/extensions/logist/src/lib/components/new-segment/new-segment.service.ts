@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
 import { excludeUndefined } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -13,11 +13,9 @@ export interface INewSegmentParams {
 
 @Injectable()
 export class NewSegmentService {
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly modalController: ModalController,
-		private readonly orderNavService: OrderNavService,
-	) {}
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly modalController = inject(ModalController);
+	private readonly orderNavService = inject(OrderNavService);
 
 	async openNewSegmentDialog(componentProps: INewSegmentParams): Promise<void> {
 		const modal = await this.modalController.create({

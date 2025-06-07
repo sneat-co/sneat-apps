@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { StoreApiService } from './store-api.service';
 import { interval, Observable, of, throwError } from 'rxjs';
 import { catchError, first, map, startWith, switchMap } from 'rxjs/operators';
@@ -19,9 +19,9 @@ const periodMs = 10000;
 
 @Injectable()
 export class AgentStateService {
-	private watchers: Record<string, Observable<IAgentState>> = {};
+	private repoApiService = inject(StoreApiService);
 
-	constructor(private repoApiService: StoreApiService) {}
+	private watchers: Record<string, Observable<IAgentState>> = {};
 
 	public getAgentInfo(storeId: string): Observable<IAgentState> {
 		return this.watchAgentInfo(storeId).pipe(first());

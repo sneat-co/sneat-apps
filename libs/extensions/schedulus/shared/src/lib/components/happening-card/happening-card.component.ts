@@ -1,9 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	ChangeDetectorRef,
-	Component,
-	computed,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import {
 	IonButton,
 	IonButtons,
@@ -18,17 +13,18 @@ import { IContactWithBrief } from '@sneat/contactus-core';
 import { SelectedContactsPipe } from '@sneat/contactus-shared';
 import { getRelatedItemIDs } from '@sneat/dto';
 import { WdToWeekdayPipe } from '@sneat/mod-schedulus-core';
-import {
-	HappeningBaseComponent,
-	HappeningBaseComponentParams,
-} from '../happening-base.component';
+import { ClassName } from '@sneat/ui';
+import { HappeningBaseComponent } from '../happening-base.component';
 import { IHappeningContactRequest } from '../../services/happening.service';
 import { HappeningSlotsComponent } from '../happening-slots/happening-slots.component';
 import { ContactsAsBadgesComponent } from '@sneat/contactus-shared';
 
 @Component({
 	styleUrls: ['happening-card.component.scss'],
-	providers: [...HappeningBaseComponent.providers],
+	providers: [
+		{ provide: ClassName, useValue: 'HappeningCardComponent' },
+		...HappeningBaseComponent.providers,
+	],
 	...HappeningBaseComponent.metadata,
 	imports: [
 		IonText,
@@ -66,15 +62,8 @@ export class HappeningCardComponent extends HappeningBaseComponent {
 		() => !!this.$relatedContactIDs()?.length,
 	);
 
-	constructor(
-		happeningBaseComponentParams: HappeningBaseComponentParams,
-		changeDetectorRef: ChangeDetectorRef,
-	) {
-		super(
-			'HappeningCardComponent',
-			happeningBaseComponentParams,
-			changeDetectorRef,
-		);
+	public constructor() {
+		super();
 	}
 
 	protected removeContact(contact: IContactWithBrief): void {

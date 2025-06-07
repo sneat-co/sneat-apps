@@ -10,6 +10,7 @@ import {
 	signal,
 	SimpleChanges,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -37,7 +38,6 @@ import {
 	IPersonRequirements,
 	IPhone,
 	IRelatedPerson,
-	MemberContactType,
 	NewContactBaseDboAndSpaceRef,
 } from '@sneat/contactus-core';
 import {
@@ -48,6 +48,7 @@ import {
 	IRelationshipRoles,
 	ISpaceModuleItemRef,
 } from '@sneat/dto';
+import { ClassName } from '@sneat/ui';
 import { UserSpaceBriefProvider } from '../../../providers/user-space-brief.provider';
 import { NewContactFormBaseComponent } from '../new-contact/new-contact-form-base.component';
 import { AgeGroupFormComponent } from '../person-forms/age-group';
@@ -126,11 +127,14 @@ export type IPersonFormWizardFields = {
 	],
 	selector: 'sneat-person-wizard',
 	templateUrl: './person-wizard.component.html',
+	providers: [{ provide: ClassName, useValue: 'PersonWizardComponent' }],
 })
 export class PersonWizardComponent
 	extends NewContactFormBaseComponent
 	implements OnInit, OnChanges
 {
+	private readonly userService = inject(SneatUserService);
+
 	@Input() requires: IPersonRequirements = {};
 	@Input() disabled = false;
 	@Input() hideRelationship = false;
@@ -194,10 +198,6 @@ export class PersonWizardComponent
 		this.$spaceID,
 		this.userService,
 	);
-
-	constructor(private readonly userService: SneatUserService) {
-		super('PersonWizardComponent');
-	}
 
 	public ngOnInit() {
 		this.setContactData(this.$contact().dbo, {

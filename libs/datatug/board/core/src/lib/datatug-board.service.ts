@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { IBoardDef, IProjBoard } from '@sneat/ext-datatug-models';
 // import {StoreApiService} from '@sneat/ext-datatug-services-repo';
@@ -8,10 +8,7 @@ import { CreateNamedRequest } from '@sneat/ext-datatug-dto';
 
 @Injectable()
 export class DatatugBoardService {
-	constructor(
-		// private readonly repoProviderService: StoreApiService,
-		private readonly sneatApiServiceFactory: SneatApiServiceFactory,
-	) {}
+	private readonly sneatApiServiceFactory = inject(SneatApiServiceFactory);
 
 	getBoard(
 		storeId: string,

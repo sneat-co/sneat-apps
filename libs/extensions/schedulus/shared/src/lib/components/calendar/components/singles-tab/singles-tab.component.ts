@@ -9,6 +9,7 @@ import {
 	OnDestroy,
 	Output,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonSegment, IonSegmentButton } from '@ionic/angular/standalone';
@@ -19,6 +20,7 @@ import { WithSpaceInput } from '@sneat/space-services';
 import { HappeningService } from '../../../../services/happening.service';
 import { Observable, Subscription } from 'rxjs';
 import { SingleHappeningsListComponent } from './single-happenings-list.component';
+import { ClassName } from '@sneat/ui';
 
 @Component({
 	imports: [
@@ -27,6 +29,7 @@ import { SingleHappeningsListComponent } from './single-happenings-list.componen
 		IonSegmentButton,
 		FormsModule,
 	],
+	providers: [{ provide: ClassName, useValue: 'SinglesTabComponent' }],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-singles-tab',
 	templateUrl: 'singles-tab.component.html',
@@ -35,6 +38,9 @@ export class SinglesTabComponent
 	extends WithSpaceInput
 	implements OnChanges, OnDestroy
 {
+	private readonly happeningService = inject(HappeningService);
+	private readonly changeDetectorRef = inject(ChangeDetectorRef);
+
 	private upcomingSinglesSubscription?: Subscription;
 	protected upcomingSingles?: IHappeningContext[];
 
@@ -54,11 +60,8 @@ export class SinglesTabComponent
 		IContactusSpaceDboAndID | undefined
 	>();
 
-	constructor(
-		private readonly happeningService: HappeningService,
-		private readonly changeDetectorRef: ChangeDetectorRef,
-	) {
-		super('SinglesTabComponent');
+	public constructor() {
+		super();
 	}
 
 	public ngOnChanges(changes: SimpleChanges): void {

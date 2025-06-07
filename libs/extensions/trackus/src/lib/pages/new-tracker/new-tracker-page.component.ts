@@ -11,6 +11,7 @@ import {
 } from '@ionic/angular/standalone';
 import { SpaceBaseComponent } from '@sneat/space-components';
 import { NewTrackerFormComponent } from '../../components/new-tracker/new-tracker-form.component';
+import { ClassName } from '@sneat/ui';
 
 @Component({
 	selector: 'sneat-new-tracker',
@@ -26,13 +27,19 @@ import { NewTrackerFormComponent } from '../../components/new-tracker/new-tracke
 		IonContent,
 		IonCard,
 	],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'NewTrackerPageComponent',
+		},
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewTrackerPageComponent extends SpaceBaseComponent {
 	protected readonly $category = signal<string>('');
 
 	constructor() {
-		super('NewTrackerPage');
+		super();
 		this.route.queryParamMap.subscribe((paramMap) => {
 			const category = paramMap.get('category');
 			if (category) {

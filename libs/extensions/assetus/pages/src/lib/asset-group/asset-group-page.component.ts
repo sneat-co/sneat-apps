@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
 	IonBackButton,
 	IonButton,
@@ -20,15 +20,14 @@ import {
 	SpaceComponentBaseParams,
 	SpacePageBaseComponent,
 } from '@sneat/space-components';
-import { Observable } from 'rxjs';
 
-interface IAssetGroupService {
-	watchById(id: string): Observable<IAssetDtoGroup>;
-}
-
-interface IAssetService {
-	assetsByGroupID(groupID: string): Observable<IAssetContext[]>;
-}
+// interface IAssetGroupService {
+// 	watchById(id: string): Observable<IAssetDtoGroup>;
+// }
+//
+// interface IAssetService {
+// 	assetsByGroupID(groupID: string): Observable<IAssetContext[]>;
+// }
 
 class AssetFactory {
 	newAsset(asset: IAssetContext): IAssetContext {
@@ -58,15 +57,15 @@ export class AssetGroupPageComponent
 	extends SpacePageBaseComponent
 	implements OnInit
 {
+	private readonly assetGroupsService = inject(IAssetGroupService);
+	private readonly assetService = inject(IAssetService);
+	private readonly assetFactory = inject(AssetFactory);
+
 	public period: Period = 'month';
 	public assetGroup?: IAssetDtoGroup;
 	public assets?: IAssetContext[];
 
-	constructor(
-		private readonly assetGroupsService: IAssetGroupService,
-		private readonly assetService: IAssetService,
-		private readonly assetFactory: AssetFactory,
-	) {
+	constructor() {
 		super('AssetGroupPageComponent');
 		this.assetGroup = window.history.state.assetGroupDto as IAssetDtoGroup;
 	}

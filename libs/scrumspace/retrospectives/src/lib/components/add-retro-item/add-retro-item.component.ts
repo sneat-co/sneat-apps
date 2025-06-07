@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, inject } from '@angular/core';
 import {
 	IAddRetroItemRequest,
 	RetrospectiveService,
@@ -13,17 +13,15 @@ import { Subject } from 'rxjs';
 	templateUrl: './add-retro-item.component.html',
 })
 export class AddRetroItemComponent implements OnDestroy {
+	private retrospectiveService = inject(RetrospectiveService);
+	private errorLogger = inject<IErrorLogger>(ErrorLogger);
+
 	// @Input() retroItemType: RetroItemType;
 	@Input() spaceID?: string;
 	@Input() meetingId?: string;
 	public titleControl = new FormControl('', [Validators.required]);
 	public isAdding = false;
 	private destroyed = new Subject<boolean>();
-
-	constructor(
-		private retrospectiveService: RetrospectiveService,
-		@Inject(ErrorLogger) private errorLogger: IErrorLogger,
-	) {}
 
 	ngOnDestroy() {
 		this.destroyed.next(true);

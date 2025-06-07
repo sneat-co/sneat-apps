@@ -2,10 +2,10 @@ import {
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
 	Component,
-	Inject,
 	Input,
 	OnChanges,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { DataGridComponent } from '@sneat/datagrid';
 import { IRecordset } from '@sneat/ext-datatug-dto';
@@ -20,15 +20,13 @@ import { recordsetToGridDef } from '@sneat/ext-datatug-services-repo';
 	imports: [DataGridComponent],
 })
 export class GridWidgetComponent implements OnChanges {
+	private readonly changeDetectorRef = inject(ChangeDetectorRef);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+
 	@Input() recordset?: IRecordset;
 	@Input() hideColumns?: string[];
 
 	public grid?: IGridDef;
-
-	constructor(
-		private readonly changeDetectorRef: ChangeDetectorRef,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log('GridWidgetComponent.ngOnChanges()', changes);

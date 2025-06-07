@@ -42,11 +42,10 @@ export abstract class SwipeableBaseComponent extends SneatBaseComponent {
 	// }
 
 	protected constructor(
-		className: string,
 		protected readonly scheduleSateService: CalendarStateService,
 		private readonly stepDays: number,
 	) {
-		super(className);
+		super();
 		// this.animationState = this.parity === 'odd' ? showVirtualSlide : hideVirtualSlide;
 		scheduleSateService.dateChanged.subscribe({
 			next: (value) => this.onDateChanged(value),

@@ -16,11 +16,18 @@ import { format, parseISO } from 'date-fns';
 import { ICreateAssetRequest } from '../../services';
 import { VehicleCardComponent } from '../../vehicle-card/vehicle-card.component';
 import { AddAssetBaseComponent } from '../add-asset-base-component';
+import { ClassName } from '@sneat/ui';
 
 @Component({
 	selector: 'sneat-asset-add-vehicle',
 	templateUrl: './asset-add-vehicle.component.html',
-	providers: [SpaceComponentBaseParams],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'AssetAddVehicleComponent',
+		},
+		SpaceComponentBaseParams,
+	],
 	imports: [
 		SelectFromListComponent,
 		FormsModule,
@@ -86,7 +93,7 @@ export class AssetAddVehicleComponent
 
 	constructor() {
 		// super('AssetAddVehicleComponent', route, teamParams, assetService);
-		super('AssetAddVehicleComponent');
+		super();
 	}
 
 	protected onAssetChanged(asset: IAssetContext): void {

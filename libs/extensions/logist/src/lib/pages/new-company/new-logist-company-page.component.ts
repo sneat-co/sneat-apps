@@ -1,9 +1,9 @@
 import {
 	ChangeDetectionStrategy,
 	Component,
-	Inject,
 	OnDestroy,
 	signal,
+	inject,
 } from '@angular/core';
 import {
 	IonBackButton,
@@ -15,7 +15,7 @@ import {
 } from '@ionic/angular/standalone';
 import { CONTACT_ROLES_BY_TYPE, IContactRole } from '@sneat/app';
 import { NewCompanyFormComponent } from '@sneat/contactus-shared';
-import { ISelectItem } from '@sneat/ui';
+import { ClassName, ISelectItem } from '@sneat/ui';
 import {
 	ContactRole,
 	NewContactBaseDboAndSpaceRef,
@@ -36,12 +36,19 @@ import { first } from 'rxjs';
 		IonBackButton,
 		IonTitle,
 	],
+	providers: [
+		{ provide: ClassName, useValue: 'NewLogistCompanyPageComponent' },
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewLogistCompanyPageComponent
 	extends SpaceBaseComponent
 	implements OnDestroy
 {
+	readonly contactRolesByType = inject<Record<string, IContactRole[]>>(
+		CONTACT_ROLES_BY_TYPE,
+	);
+
 	readonly contactTypes: ISelectItem[] = [
 		{ id: 'agent', title: 'Agent', iconName: 'body-outline' },
 		{ id: 'buyer', title: 'Buyer', iconName: 'cash-outline' },
@@ -57,11 +64,10 @@ export class NewLogistCompanyPageComponent
 		dbo: { type: 'company' },
 	});
 
-	constructor(
-		@Inject(CONTACT_ROLES_BY_TYPE)
-		public readonly contactRolesByType: Record<string, IContactRole[]>,
-	) {
-		super('NewLogistCompanyPageComponent');
+	public constructor() {
+		super();
+		const contactRolesByType = this.contactRolesByType;
+
 		this.contactTypes = contactRolesByType['company'];
 		this.route.queryParamMap
 			.pipe(first(), this.takeUntilDestroyed())

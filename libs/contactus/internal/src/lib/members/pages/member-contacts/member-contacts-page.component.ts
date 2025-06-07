@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
 	IonBackButton,
 	IonButtons,
@@ -39,12 +39,12 @@ import { NgModulePreloaderService } from 'sneat-shared/services/ng-module-preloa
 export class MemberContactsPageComponent extends MemberBasePage {
 	public override segment: 'friends' | 'other' = 'friends';
 
-	constructor(
-		params: CommuneBasePageParams,
-		membersService: IMemberService,
-		preloader: NgModulePreloaderService,
-		assetService: IAssetService,
-	) {
+	constructor() {
+		const params = inject(CommuneBasePageParams);
+		const membersService = inject(IMemberService);
+		const preloader = inject(NgModulePreloaderService);
+		const assetService = inject(IAssetService);
+
 		super(params, membersService, preloader, assetService);
 	}
 }

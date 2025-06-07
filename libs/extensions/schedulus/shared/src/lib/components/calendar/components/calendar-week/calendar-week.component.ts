@@ -3,7 +3,6 @@ import {
 	Component,
 	EventEmitter,
 	input,
-	Input,
 	OnChanges,
 	Output,
 	signal,
@@ -15,7 +14,6 @@ import { ISpaceContext } from '@sneat/space-models';
 import { CalendarDataProvider } from '../../../../services/calendar-data-provider';
 import { NewHappeningParams } from '@sneat/mod-schedulus-core';
 import { Week } from '../../../week';
-import { ICalendarFilter } from '../calendar-filter/calendar-filter';
 import { createWeekdays } from '../../../calendar-core';
 import { CalendarWeekdayComponent } from '../calendar-weekday/calendar-weekday.component';
 

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -43,6 +43,14 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	],
 })
 export class RetroTreePageComponent extends SpaceBaseComponent {
+	readonly changeDetectorRef: ChangeDetectorRef;
+	readonly route: ActivatedRoute;
+	readonly errorLogger: IErrorLogger;
+	readonly navController: NavController;
+	readonly spaceService: SpaceService;
+	readonly userService: SneatUserService;
+	private retrospectiveService = inject(RetrospectiveService);
+
 	public meetingId: string;
 	public retrospective: IRetrospective;
 
@@ -134,15 +142,14 @@ export class RetroTreePageComponent extends SpaceBaseComponent {
 		this.kudos,
 	];
 
-	constructor(
-		readonly changeDetectorRef: ChangeDetectorRef,
-		readonly route: ActivatedRoute,
-		@Inject(ErrorLogger) readonly errorLogger: IErrorLogger,
-		readonly navController: NavController,
-		readonly spaceService: SpaceService,
-		readonly userService: SneatUserService,
-		private retrospectiveService: RetrospectiveService,
-	) {
+	constructor() {
+		const changeDetectorRef = inject(ChangeDetectorRef);
+		const route = inject(ActivatedRoute);
+		const errorLogger = inject<IErrorLogger>(ErrorLogger);
+		const navController = inject(NavController);
+		const spaceService = inject(SpaceService);
+		const userService = inject(SneatUserService);
+
 		super(
 			changeDetectorRef,
 			route,
@@ -151,6 +158,13 @@ export class RetroTreePageComponent extends SpaceBaseComponent {
 			spaceService,
 			userService,
 		);
+		this.changeDetectorRef = changeDetectorRef;
+		this.route = route;
+		this.errorLogger = errorLogger;
+		this.navController = navController;
+		this.spaceService = spaceService;
+		this.userService = userService;
+
 		route.queryParamMap.subscribe((queryParams) => {
 			this.meetingId = queryParams.get('date');
 			if (this.meetingId === 'today') {

@@ -2,9 +2,9 @@ import { Location, NgForOf, NgIf } from '@angular/common';
 import {
 	ChangeDetectorRef,
 	Component,
-	Inject,
 	OnDestroy,
 	OnInit,
+	inject,
 } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import {
@@ -85,6 +85,13 @@ export class ScrumPageComponent
 	extends SpaceBaseComponent
 	implements OnInit, OnDestroy
 {
+	readonly changeDetectorRef = inject(ChangeDetectorRef);
+	private readonly scrumService = inject(ScrumService);
+	private readonly analyticsService =
+		inject<IAnalyticsService>(AnalyticsService);
+	private readonly location = inject(Location);
+	private readonly timerFactory = inject(TimerFactory);
+
 	public tab: ScrumPageTab = 'my';
 
 	public totalElapsed?: string;
@@ -121,16 +128,10 @@ export class ScrumPageComponent
 	private scrumsById: Record<string, IScrumDbo> = {};
 	private subscriptions: Subscription[] = []; // TODO: replace with subs from BAsePage?
 
-	constructor(
-		readonly changeDetectorRef: ChangeDetectorRef,
-		route: ActivatedRoute,
-		params: SpaceComponentBaseParams,
-		private readonly scrumService: ScrumService,
-		@Inject(AnalyticsService)
-		private readonly analyticsService: IAnalyticsService,
-		private readonly location: Location,
-		private readonly timerFactory: TimerFactory,
-	) {
+	constructor() {
+		const route = inject(ActivatedRoute);
+		const params = inject(SpaceComponentBaseParams);
+
 		super('ScrumPageComponent', route, params);
 	}
 

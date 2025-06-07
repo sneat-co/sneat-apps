@@ -1,4 +1,4 @@
-import { Inject, Injectable, NgZone } from '@angular/core';
+import { Injectable, NgZone, inject } from '@angular/core';
 import { Params } from '@angular/router';
 import { NavController } from '@ionic/angular/standalone';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
@@ -15,15 +15,11 @@ export type ScrumPageTab = 'team' | 'my' | 'risks' | 'qna';
 
 @Injectable()
 export class NavService {
-	// TODO: Should it be inside the /libs/datatug/services/nav/ folder?
-
-	constructor(
-		private readonly zone: NgZone,
-		private readonly navController: NavController,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		@Inject(AnalyticsService)
-		private readonly analyticsService: IAnalyticsService,
-	) {}
+	private readonly zone = inject(NgZone);
+	private readonly navController = inject(NavController);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly analyticsService =
+		inject<IAnalyticsService>(AnalyticsService);
 
 	public navigateToSpaces(animationDirection?: 'forward' | 'back'): void {
 		console.log('navigateToTeams()');

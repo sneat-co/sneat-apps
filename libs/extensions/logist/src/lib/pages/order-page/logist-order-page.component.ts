@@ -1,5 +1,4 @@
-import { NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	ModalController,
@@ -22,6 +21,7 @@ import {
 	IonTitle,
 	IonToolbar,
 } from '@ionic/angular/standalone';
+import { ClassName } from '@sneat/ui';
 import { first } from 'rxjs';
 import { DispatchersComponent } from '../../components';
 import { NewContainerComponent } from '../../components/new-container/new-container.component';
@@ -46,8 +46,6 @@ type OrderDetailsTab =
 	| 'notes';
 
 @Component({
-	selector: 'sneat-order-page',
-	templateUrl: './logist-order-page.component.html',
 	imports: [
 		IonHeader,
 		IonToolbar,
@@ -66,33 +64,32 @@ type OrderDetailsTab =
 		IonSegmentButton,
 		IonBadge,
 		IonText,
-		NgSwitchCase,
-		NgSwitch,
 		OrderSegmentsComponent,
 		OrderTruckersComponent,
 		OrderContainersComponent,
 		OrderCardComponent,
 		DispatchersComponent,
-		NgIf,
 	],
+	providers: [{ provide: ClassName, useValue: 'LogistOrderPageComponent' }],
+	selector: 'sneat-order-page',
+	templateUrl: './logist-order-page.component.html',
 })
 export class LogistOrderPageComponent
 	extends OrderPageBaseComponent
 	implements OnDestroy
 {
+	private readonly newSegmentService = inject(NewSegmentService);
+	private readonly newShippingPointService = inject(NewShippingPointService);
+	private readonly modalController = inject(ModalController);
+	private readonly popoverController = inject(PopoverController);
+	private readonly toastController = inject(ToastController);
+
 	tab: OrderDetailsTab = 'containers';
 
 	private modal?: HTMLIonModalElement;
 
-	constructor(
-		orderService: LogistOrderService,
-		private readonly newSegmentService: NewSegmentService,
-		private readonly newShippingPointService: NewShippingPointService,
-		private readonly modalController: ModalController,
-		private readonly popoverController: PopoverController,
-		private readonly toastController: ToastController,
-	) {
-		super('LogistOrderPageComponent', orderService);
+	public constructor() {
+		super(inject(LogistOrderService));
 		try {
 			this.route.queryParamMap
 				.pipe(first(), this.takeUntilDestroyed())

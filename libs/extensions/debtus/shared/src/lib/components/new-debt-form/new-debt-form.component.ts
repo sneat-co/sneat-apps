@@ -1,4 +1,4 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import {
 	FormControl,
 	FormGroup,
@@ -45,13 +45,11 @@ import {
 	providers: [DebtusService],
 })
 export class NewDebtFormComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly debtusService = inject(DebtusService);
+
 	@Input({ required: true }) public space?: ISpaceContext;
 	@Input({ required: true }) public contact?: IContactContext;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly debtusService: DebtusService,
-	) {}
 
 	protected currency = new FormControl<CurrencyCode>('EUR');
 	protected amount = new FormControl<number | undefined>(

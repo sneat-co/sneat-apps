@@ -1,11 +1,11 @@
 import { NgIf } from '@angular/common';
 import {
 	Component,
-	Inject,
 	Input,
 	NgZone,
 	OnChanges,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import {
 	IonCard,
@@ -37,6 +37,10 @@ interface OrderRow {
 	imports: [IonCard, IonCardContent, DataGridComponent, NgIf],
 })
 export class OrdersGridComponent implements OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly navController = inject(NavController);
+	private readonly zone = inject(NgZone);
+
 	@Input({ required: true }) space?: ISpaceContext;
 	@Input() orders?: ILogistOrderContext[];
 
@@ -107,12 +111,6 @@ export class OrdersGridComponent implements OnChanges {
 	];
 
 	displayCols = this.allCols;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly navController: NavController,
-		private readonly zone: NgZone,
-	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log('OrdersGridComponent.ngOnChanges():', changes);

@@ -29,7 +29,7 @@ import {
 } from '@sneat/dto';
 import { IRelatedChange, IUpdateRelatedRequest } from '@sneat/space-models';
 import { SpaceService } from '@sneat/space-services';
-import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
+import { ClassName, ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import { SpaceRelatedFormComponent } from '../space-related-form.component';
 
 interface IRelationshipWithID extends IRelationshipRole {
@@ -51,11 +51,19 @@ interface IRelationshipWithID extends IRelationshipRole {
 		IonIcon,
 		IonSpinner,
 	],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'RelationshipFormComponent',
+		},
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-relationship-form',
 	templateUrl: 'relationship-form.component.html',
 })
 export class RelationshipFormComponent extends SpaceRelatedFormComponent {
+	private readonly userService = inject(SneatUserService);
+
 	public readonly $itemRef = input.required<ISpaceModuleItemRef | undefined>();
 
 	public readonly $relatedTo = input.required<IRelatedTo | undefined>();
@@ -109,8 +117,8 @@ export class RelationshipFormComponent extends SpaceRelatedFormComponent {
 
 	protected readonly relatedAsSingle = new FormControl<string>('');
 
-	constructor(private readonly userService: SneatUserService) {
-		super('RelationshipFormComponent');
+	constructor() {
+		super();
 	}
 
 	private readonly spaceService = inject(SpaceService);

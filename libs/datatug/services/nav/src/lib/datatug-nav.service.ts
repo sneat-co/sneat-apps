@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { NavController } from '@ionic/angular/standalone';
 import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -30,10 +30,8 @@ export type ProjectTopLevelPage =
 
 @Injectable()
 export class DatatugNavService {
-	constructor(
-		private readonly nav: NavController,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {}
+	private readonly nav = inject(NavController);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
 
 	goStore(store: IDatatugStoreContext): void {
 		if (!store?.ref) {

@@ -1,7 +1,6 @@
 import {
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	OnChanges,
 	OnInit,
@@ -9,6 +8,7 @@ import {
 	signal,
 	SimpleChanges,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import {
 	FormControl,
@@ -72,6 +72,8 @@ export interface AddressRequiredFields {
 	],
 })
 export class AddressFormComponent implements OnChanges, OnInit {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+
 	@Input() mode?: 'new' | 'edit';
 	@Input() title = 'Address';
 	@Input() address?: IAddress;
@@ -105,10 +107,6 @@ export class AddressFormComponent implements OnChanges, OnInit {
 		city: this.city,
 		lines: this.lines,
 	});
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger, // private readonly changeDetectorRef: ChangeDetectorRef,
-	) {}
 
 	ngOnInit(): void {
 		this.formCreated.emit(this.form);

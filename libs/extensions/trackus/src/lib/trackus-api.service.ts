@@ -1,11 +1,11 @@
-import { Injectable, NgModule } from '@angular/core';
+import { Injectable, NgModule, inject } from '@angular/core';
 import { SneatApiService } from '@sneat/api';
 import { Observable } from 'rxjs';
 import { ITrackerBrief } from './dbo/i-tracker-dbo';
 
 @Injectable()
 export class TrackusApiService {
-	constructor(private readonly sneatApiService: SneatApiService) {}
+	private readonly sneatApiService = inject(SneatApiService);
 
 	public addTracker(
 		request: ICreateTrackerRequest,

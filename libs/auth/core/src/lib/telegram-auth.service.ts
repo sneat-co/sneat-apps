@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { SneatApiService } from '@sneat/api';
 import { SneatAuthStateService } from './sneat-auth-state-service';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -7,11 +7,9 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 	providedIn: 'root',
 })
 export class TelegramAuthService {
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly authStateService: SneatAuthStateService,
-		private readonly sneatApiService: SneatApiService,
-	) {}
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly authStateService = inject(SneatAuthStateService);
+	private readonly sneatApiService = inject(SneatApiService);
 
 	public authenticateIfTelegramWebApp() {
 		const telegramWebApp = (

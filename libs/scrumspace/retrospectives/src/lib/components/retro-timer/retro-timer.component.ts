@@ -1,11 +1,11 @@
 import {
 	Component,
-	Inject,
 	Input,
 	OnChanges,
 	OnDestroy,
 	signal,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -52,6 +52,10 @@ import {
 	],
 })
 export class RetroTimerComponent implements OnDestroy, OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly retrospectiveService = inject(RetrospectiveService);
+	private readonly timerFactory = inject(TimerFactory);
+
 	@Input() public space?: IRecord<ISpaceDbo>;
 	@Input() retrospective?: IRecord<IRetrospective>;
 
@@ -63,16 +67,6 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
 	leftInSeconds = 600;
 	public totalElapsed?: string;
 	private timerSubscription?: Subscription;
-
-	// public get isEnabled(): boolean {
-	// 	return !!this.team;
-	// }
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly retrospectiveService: RetrospectiveService,
-		private readonly timerFactory: TimerFactory,
-	) {}
 
 	get minutesLeft(): number {
 		return Math.round((this.leftInSeconds - 30) / 60);

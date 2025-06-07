@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonBackButton,
@@ -33,13 +33,13 @@ import {
 	IAssetDocumentExtra,
 } from '@sneat/mod-assetus-core';
 import { SpaceServiceModule } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { DocumentsByTypeComponent } from './components/documents-by-type/documents-by-type.component';
 import { DocumentsListComponent } from './components/documents-list/documents-list.component';
 
 @Component({
 	selector: 'sneat-documents-page',
 	templateUrl: './documents-page.component.html',
-	providers: [SpaceComponentBaseParams],
 	imports: [
 		DocumentsListComponent,
 		FilterItemComponent,
@@ -63,8 +63,14 @@ import { DocumentsListComponent } from './components/documents-list/documents-li
 		IonCard,
 		IonFooter,
 	],
+	providers: [
+		{ provide: ClassName, useValue: 'DocumentsPageComponent' },
+		SpaceComponentBaseParams,
+	],
 })
 export class DocumentsPageComponent extends SpaceItemsBaseComponent {
+	private assetService = inject(AssetService);
+
 	public segment: 'type' | 'owner' | 'list' = 'type';
 
 	public documents: IAssetDocumentContext[];
@@ -72,8 +78,8 @@ export class DocumentsPageComponent extends SpaceItemsBaseComponent {
 
 	protected $filter = signal<string>('');
 
-	constructor(private assetService: AssetService) {
-		super('DocumentsPageComponent', '');
+	constructor() {
+		super('');
 		this.documents = window.history.state.documents as IAssetContext<
 			'document',
 			IAssetDocumentExtra

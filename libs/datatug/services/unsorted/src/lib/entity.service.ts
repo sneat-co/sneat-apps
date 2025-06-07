@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { catchError, Observable, of, take } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
@@ -12,15 +12,10 @@ import { IHttpRequestOptions } from '@sneat/api';
 
 @Injectable()
 export class EntityService {
-	private cache = new ProjectItemsByAgent<IRecord<IEntity>>();
+	private readonly agentProvider = inject(StoreApiService);
+	private readonly http = inject(HttpClient);
 
-	constructor(
-		// private readonly api: SneatTeamApiService,
-		private readonly agentProvider: StoreApiService,
-		private readonly http: HttpClient,
-	) {
-		// console.log('EntityService.constructor()');
-	}
+	private cache = new ProjectItemsByAgent<IRecord<IEntity>>();
 
 	public getEntity = (
 		store: string,

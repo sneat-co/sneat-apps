@@ -2,13 +2,13 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	OnChanges,
 	OnDestroy,
 	Output,
 	SimpleChanges,
 	OnInit,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -55,6 +55,9 @@ import {
 export class HappeningSlotModalComponent
 	implements OnChanges, OnDestroy, IHappeningSlotFormComponentInputs, OnInit
 {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly modalController = inject(ModalController);
+
 	private readonly destroyed = new Subject<void>();
 
 	@Input({ required: true }) space?: ISpaceContext;
@@ -70,11 +73,7 @@ export class HappeningSlotModalComponent
 	@Output() readonly happeningSlotChange =
 		new EventEmitter<IHappeningSlotWithID>();
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly modalController: ModalController,
-		// private readonly happeningService: HappeningService,
-	) {
+	constructor() {
 		console.log('SingleSlotFormComponent.constructor()');
 	}
 

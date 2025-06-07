@@ -1,4 +1,4 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
 	ModalController,
@@ -46,6 +46,10 @@ import { ISpaceBrief } from '@sneat/dto';
 	],
 })
 export class MileAgeDialogComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly assetService = inject(AssetService);
+	private readonly modalCtrl = inject(ModalController);
+
 	@Input() space?: IIdAndBrief<ISpaceBrief>;
 	@Input() asset?: IIdAndBrief<IAssetBrief>;
 
@@ -74,12 +78,6 @@ export class MileAgeDialogComponent {
 		mileage: this.mileage,
 		mileageUnit: this.mileageUnit,
 	});
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly assetService: AssetService,
-		private readonly modalCtrl: ModalController,
-	) {}
 
 	// ionViewDidEnter() {
 	// 	setTimeout(() => {

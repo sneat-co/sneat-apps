@@ -1,8 +1,8 @@
 import {
 	ChangeDetectionStrategy,
 	Component,
-	Inject,
 	Input,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -35,13 +35,11 @@ import { BoardRowComponent } from '../board-row/board-row.component';
 	],
 })
 export class BoardComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly modalCtrl = inject(ModalController);
+
 	@Input() boardDef?: IBoardDef;
 	@Input() boardContext?: IBoardContext;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly modalCtrl: ModalController,
-	) {}
 
 	async newCard() {
 		console.log('newCard()');

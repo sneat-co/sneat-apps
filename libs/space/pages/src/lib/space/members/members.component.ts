@@ -1,9 +1,9 @@
 import {
 	Component,
-	Inject,
 	Input,
 	OnChanges,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -46,18 +46,16 @@ import { SpaceNavService, SpaceService } from '@sneat/space-services';
 	],
 }) // TODO: use or delete unused MembersComponent
 export class MembersComponent implements OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly spaceService = inject(SpaceService);
+	private readonly navController = inject(NavController);
+	readonly navService = inject(SpaceNavService);
+
 	@Input({ required: true }) public contactusSpace?: IContactusSpaceDboAndID;
 
 	public membersRoleTab: MemberRole | '*' = MemberRoleContributor;
 	public contributorsCount?: number;
 	public spectatorsCount?: number;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly spaceService: SpaceService,
-		private readonly navController: NavController,
-		public readonly navService: SpaceNavService,
-	) {}
 
 	public goAddMember(event?: Event): void {
 		if (event) {

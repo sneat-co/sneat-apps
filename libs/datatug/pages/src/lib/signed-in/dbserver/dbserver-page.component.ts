@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -61,6 +61,11 @@ import { DbServerService } from '@sneat/ext-datatug-services-unsorted';
 	],
 })
 export class DbserverPageComponent implements OnDestroy {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly route = inject(ActivatedRoute);
+	private readonly dbServerService = inject(DbServerService);
+	private readonly projectContextService = inject(ProjectContextService);
+
 	tab: 'known' | 'unknown' = 'known';
 	public dbServer?: IDbServer;
 	public dbServerSummary?: IDbServerSummary;
@@ -71,12 +76,7 @@ export class DbserverPageComponent implements OnDestroy {
 
 	private readonly destroyed = new Subject<void>();
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly route: ActivatedRoute,
-		private readonly dbServerService: DbServerService,
-		private readonly projectContextService: ProjectContextService,
-	) {
+	constructor() {
 		this.route.paramMap
 			.pipe(
 				takeUntil(this.destroyed),

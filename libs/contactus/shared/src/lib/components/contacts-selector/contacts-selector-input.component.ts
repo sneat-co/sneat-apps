@@ -2,10 +2,10 @@ import {
 	Component,
 	computed,
 	EventEmitter,
-	Inject,
 	input,
 	Output,
 	signal,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -51,6 +51,9 @@ import { ContactsSelectorService } from './contacts-selector.service';
 	],
 })
 export class ContactsSelectorInputComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly contactsSelectorService = inject(ContactsSelectorService);
+
 	// TODO: Is it duplicate of ContactInputComponent?
 	protected readonly $contactusSpace = signal<
 		IContactusSpaceDboAndID | undefined
@@ -78,11 +81,6 @@ export class ContactsSelectorInputComponent {
 	>();
 
 	@Output() readonly removeMember = new EventEmitter<IContactWithBrief>();
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly contactsSelectorService: ContactsSelectorService,
-	) {}
 
 	get selectedContactID(): string | undefined {
 		const selectedContacts = this.$selectedContacts();

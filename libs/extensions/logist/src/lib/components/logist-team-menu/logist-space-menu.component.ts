@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import {
 	ActivationStart,
 	Router,
@@ -8,6 +8,7 @@ import {
 import { IonItem, IonLabel, IonList } from '@ionic/angular/standalone';
 import { AuthMenuItemComponent } from '@sneat/auth-ui';
 import { SpaceBaseComponent } from '@sneat/space-components';
+import { ClassName } from '@sneat/ui';
 import { LogistSpaceMenuItemsComponent } from '../logist-team-menu-items/logist-space-menu-items.component';
 
 @Component({
@@ -21,15 +22,18 @@ import { LogistSpaceMenuItemsComponent } from '../logist-team-menu-items/logist-
 		IonItem,
 		IonLabel,
 	],
+	providers: [{ provide: ClassName, useValue: 'LogistSpaceMenuComponent' }],
 })
 export class LogistSpaceMenuComponent
 	extends SpaceBaseComponent
 	implements OnInit
 {
+	private readonly router = inject(Router);
+
 	@ViewChild(RouterOutlet) outlet?: RouterOutlet;
 
-	constructor(private readonly router: Router) {
-		super('LogistTeamMenuComponent');
+	public constructor() {
+		super();
 	}
 
 	override ngOnInit(): void {

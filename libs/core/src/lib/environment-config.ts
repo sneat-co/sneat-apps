@@ -1,6 +1,6 @@
 import { InjectionToken } from '@angular/core';
 import { BrowserOptions } from '@sentry/browser';
-import { AutocaptureConfig, PostHogConfig } from 'posthog-js';
+import { PostHogConfig } from 'posthog-js';
 
 export interface IFirebaseEmulatorConfig {
 	authPort: number;

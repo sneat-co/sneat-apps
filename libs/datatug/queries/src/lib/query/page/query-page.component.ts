@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Inject, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IProjectRef } from '@sneat/ext-datatug-core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -79,6 +79,18 @@ import { HttpQueryEditorComponent } from '../http-query/http-query-editor.compon
 	],
 })
 export class QueryPageComponent implements OnDestroy, ViewDidEnter {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly randomIdService = inject(RandomIdService);
+	private readonly datatugNavContextService = inject(DatatugNavContextService);
+	private readonly route = inject(ActivatedRoute);
+	private readonly router = inject(Router);
+	private readonly queryContextSqlService = inject(QueryContextSqlService);
+	private readonly queriesService = inject(QueriesService);
+	private readonly coordinator = inject(Coordinator);
+	private readonly queryEditorStateService = inject(QueryEditorStateService);
+	private readonly envService = inject(EnvironmentService);
+	private readonly changeDetector = inject(ChangeDetectorRef);
+
 	public project?: IProjectContext;
 
 	public showQueryBuilder?: boolean;
@@ -112,19 +124,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
 
 	private readonly destroyed = new Subject<void>();
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly randomIdService: RandomIdService,
-		private readonly datatugNavContextService: DatatugNavContextService,
-		private readonly route: ActivatedRoute,
-		private readonly router: Router,
-		private readonly queryContextSqlService: QueryContextSqlService,
-		private readonly queriesService: QueriesService,
-		private readonly coordinator: Coordinator,
-		private readonly queryEditorStateService: QueryEditorStateService,
-		private readonly envService: EnvironmentService,
-		private readonly changeDetector: ChangeDetectorRef,
-	) {
+	constructor() {
 		console.log('QueryPage.constructor()', location.hash);
 		this.trackQueryState();
 		const query = history.state.query as IQueryDef;

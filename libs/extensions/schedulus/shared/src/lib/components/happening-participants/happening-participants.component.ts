@@ -36,6 +36,7 @@ import {
 } from '@sneat/dto';
 import { IHappeningContext, IHappeningBase } from '@sneat/mod-schedulus-core';
 import { WithSpaceInput } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import {
 	HappeningService,
 	IHappeningContactRequest,
@@ -63,11 +64,16 @@ function capitalizeFirstChar(str: string): string {
 		IonItemGroup,
 		IonItemDivider,
 	],
+	providers: [
+		{ provide: ClassName, useValue: 'HappeningParticipantsComponent' },
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-happening-participants',
 	templateUrl: 'happening-participants.component.html',
 })
 export class HappeningParticipantsComponent extends WithSpaceInput {
+	private readonly happeningService = inject(HappeningService);
+
 	public readonly $happening = input.required<IHappeningContext>();
 
 	// protected readonly $space = computed(() => this.$happening().space);
@@ -104,8 +110,8 @@ export class HappeningParticipantsComponent extends WithSpaceInput {
 
 	private readonly analytics = inject(AnalyticsService);
 
-	constructor(private readonly happeningService: HappeningService) {
-		super('HappeningParticipantsComponent');
+	public constructor() {
+		super();
 	}
 
 	protected onCheckChanged(args: ICheckChangedArgs): void {

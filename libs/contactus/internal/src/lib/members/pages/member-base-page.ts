@@ -10,8 +10,8 @@ export abstract class MemberBasePage extends ContactBasePage {
 	// protected currentUserDto: IUserDto | undefined;
 	private memberContext?: IContactContext;
 
-	protected constructor(className: string, contactService: ContactService) {
-		super(className, contactService, 'members');
+	protected constructor(contactService: ContactService) {
+		super(contactService, 'members');
 	}
 
 	public get member(): IContactContext | undefined {

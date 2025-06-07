@@ -28,12 +28,11 @@ type ICreateSpaceItemResponse<
 	Dbo extends Brief,
 > = ISpaceItemWithBriefAndDbo<Brief, Dbo>;
 
-@Injectable()
 abstract class SpaceItemBaseService<Brief, Dbo extends Brief> {
-	protected readonly injector = inject(Injector);
 	protected readonly sfs: SneatFirestoreService<Brief, Dbo>;
 
 	protected constructor(
+		protected readonly injector: Injector,
 		public readonly collectionName: string,
 		public readonly afs: AngularFirestore,
 		public readonly sneatApiService: SneatApiService,
@@ -147,11 +146,12 @@ export class GlobalSpaceItemService<
 	Dbo extends Brief,
 > extends SpaceItemBaseService<Brief, Dbo> {
 	constructor(
+		injector: Injector,
 		collectionName: string,
 		afs: AngularFirestore,
 		sneatApiService: SneatApiService,
 	) {
-		super(collectionName, afs, sneatApiService);
+		super(injector, collectionName, afs, sneatApiService);
 	}
 
 	protected override collectionRef<
@@ -206,12 +206,13 @@ export class ModuleSpaceItemService<
 	protected readonly spacesCollection: CollectionReference<ISpaceDbo>;
 
 	constructor(
+		injector: Injector,
 		public readonly moduleID: string,
 		collectionName: string,
 		afs: AngularFirestore,
 		sneatApiService: SneatApiService,
 	) {
-		super(collectionName, afs, sneatApiService);
+		super(injector, collectionName, afs, sneatApiService);
 		if (!moduleID) {
 			throw new Error('moduleID is required');
 		}

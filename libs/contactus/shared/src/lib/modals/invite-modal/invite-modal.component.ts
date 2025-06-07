@@ -1,10 +1,10 @@
 import {
 	ChangeDetectionStrategy,
 	Component,
-	Inject,
 	Input,
 	Pipe,
 	PipeTransform,
+	inject,
 } from '@angular/core';
 import {
 	FormControl,
@@ -83,6 +83,11 @@ export class EncodeSmsText implements PipeTransform {
 	templateUrl: 'invite-modal.component.html',
 })
 export class InviteModalComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly modalController = inject(ModalController);
+	private readonly toastController = inject(ToastController);
+	private readonly inviteService = inject(InviteService);
+
 	@Input({ required: true }) space?: ISpaceContext;
 	@Input() member?: IContactWithBriefAndSpace;
 
@@ -108,13 +113,6 @@ export class InviteModalComponent {
 		phone: this.phone,
 		message: this.message,
 	});
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly modalController: ModalController,
-		private readonly toastController: ToastController,
-		private readonly inviteService: InviteService,
-	) {}
 
 	async close(): Promise<void> {
 		await this.modalController.dismiss();

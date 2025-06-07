@@ -1,4 +1,4 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import {
 	IonContent,
 	IonHeader,
@@ -20,13 +20,11 @@ import { NewShippingPointFormComponent } from './new-shipping-point-form.compone
 	],
 })
 export class NewShippingPointDialogComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	protected readonly modalController = inject(ModalController);
+
 	@Input() order?: ILogistOrderContext;
 	@Input() container?: IOrderContainer;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		protected readonly modalController: ModalController,
-	) {}
 
 	protected onOrderCreated(order: ILogistOrderContext): void {
 		this.modalController

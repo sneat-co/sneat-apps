@@ -5,6 +5,7 @@ import {
 	Component,
 	NgZone,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -38,6 +39,7 @@ import { ContactusServicesModule } from '@sneat/contactus-services';
 import { SharedWithComponent } from '@sneat/contactus-shared';
 import { RandomIdService } from '@sneat/random';
 import { SpaceServiceModule } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { ListusCoreServicesModule } from '../../services';
 import { SpaceComponentBaseParams } from '@sneat/space-components';
 import { IListInfo, IListItemBrief } from '../../dto';
@@ -102,6 +104,7 @@ type ListPagePerforming =
 	],
 	styleUrls: ['./list-page.component.scss'],
 	providers: [
+		{ provide: ClassName, useValue: 'ListPageComponent' },
 		SpaceComponentBaseParams,
 		ListusComponentBaseParams,
 		ListDialogsService,
@@ -109,6 +112,11 @@ type ListPagePerforming =
 	],
 })
 export class ListPageComponent extends BaseListPage implements AfterViewInit {
+	private readonly zone = inject(NgZone);
+	private readonly listDialogs = inject(ListDialogsService);
+	private readonly listusAppStateService = inject(IListusAppStateService);
+	private readonly changeDetectorRef = inject(ChangeDetectorRef);
+
 	protected isPersisting = false;
 	protected isHideWatched = false;
 	protected isReordering = false;
@@ -126,18 +134,12 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 	// protected completedListItems?: IListItemWithUiState[];
 	// protected activeListItems?: IListItemWithUiState[];
 
-	constructor(
-		params: ListusComponentBaseParams,
-		private readonly zone: NgZone,
-		// private readonly listusService: IListusService,
-		// listService: ListService,
-		// private readonly listItemService: IListItemService,
-		private readonly listDialogs: ListDialogsService,
-		// private readonly shelfService: ShelfService,
-		private readonly listusAppStateService: IListusAppStateService,
-		private readonly changeDetectorRef: ChangeDetectorRef, // private readonly listusDbService: IListusService,
-	) {
-		super('ListPageComponent', params);
+	constructor() {
+		const params = inject(ListusComponentBaseParams);
+
+		super(params);
+		const listusAppStateService = this.listusAppStateService;
+
 		console.log('ListPageComponent.constructor(), userId:', this.currentUserId);
 		this.preloader.markAsPreloaded('list');
 		if (location.pathname.includes('/lists')) {
@@ -464,7 +466,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		if (!this.space || !this.list?.brief || !items) {
 			return;
 		}
-		const deletingItems: IListItemWithUiState[] = [];
+		let deletingItems: IListItemWithUiState[] = [];
 		items.forEach((li) => {
 			li = { ...li, state: { ...li.state, isDeleting: true } };
 			deletingItems.push(li);
@@ -483,9 +485,10 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		this.listService.deleteListItems(request).subscribe({
 			error: this.errorLogger.logErrorHandler('failed to delete list items'),
 			complete: () => {
-				deletingItems.forEach((li) => {
-					li = { ...li, state: { ...li.state, isDeleting: false } };
-				});
+				deletingItems = deletingItems.map((li) => ({
+					...li,
+					state: { ...li.state, isDeleting: false },
+				}));
 			},
 		});
 	}

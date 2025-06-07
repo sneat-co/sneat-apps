@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
 	IonButton,
@@ -44,6 +44,12 @@ import { LoadingItemsComponent } from '../loading-items-component';
 	],
 })
 export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly navService = inject(DatatugNavService);
+	private readonly sneatAuthStateService = inject(SneatAuthStateService);
+	private readonly datatugUserService = inject(DatatugUserService);
+	private readonly newProjectService = inject(NewProjectService);
+
 	@Input() title?: string;
 
 	public datatugUserState?: IDatatugUserState;
@@ -63,14 +69,6 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
 	];
 
 	public showDemoProjects = true;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly navService: DatatugNavService,
-		private readonly sneatAuthStateService: SneatAuthStateService,
-		private readonly datatugUserService: DatatugUserService,
-		private readonly newProjectService: NewProjectService,
-	) {}
 
 	ngOnDestroy(): void {
 		this.destroyed.next();

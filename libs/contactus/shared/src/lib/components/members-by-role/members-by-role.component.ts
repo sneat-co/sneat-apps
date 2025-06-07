@@ -16,6 +16,7 @@ import {
 } from '@ionic/angular/standalone';
 import { IContactWithBriefAndSpace } from '@sneat/contactus-core';
 import { WithSpaceInput } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { MembersListComponent } from '../members-list';
 import { MemberGroup } from './member-group';
 
@@ -32,6 +33,7 @@ import { MemberGroup } from './member-group';
 		IonItem,
 		IonSpinner,
 	],
+	providers: [{ provide: ClassName, useValue: 'MembersByRoleComponent' }],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MembersByRoleComponent extends WithSpaceInput {
@@ -42,8 +44,4 @@ export class MembersByRoleComponent extends WithSpaceInput {
 		string,
 		readonly IContactWithBriefAndSpace[]
 	> = {};
-
-	public constructor() {
-		super('MembersByRoleComponent');
-	}
 }

@@ -1,4 +1,4 @@
-import { Component, computed, Input, signal } from '@angular/core';
+import { Component, computed, Input, signal, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
 	IonAccordion,
@@ -29,10 +29,9 @@ import {
 import { WeekdaysFormBase } from '../../../weekdays/weekdays-form-base';
 import { ContactsFilterComponent } from './contacts-filter.component';
 import { ICalendarFilter } from './calendar-filter';
+import { ClassName } from '@sneat/ui';
 
 @Component({
-	selector: 'sneat-calendar-filter',
-	templateUrl: 'calendar-filter.component.html',
 	imports: [
 		ContactTitlePipe,
 		ContactsFilterComponent,
@@ -54,8 +53,13 @@ import { ICalendarFilter } from './calendar-filter';
 		IonBadge,
 		IonLabel,
 	],
+	providers: [{ provide: ClassName, useValue: 'CalendarFilterComponent' }],
+	selector: 'sneat-calendar-filter',
+	templateUrl: 'calendar-filter.component.html',
 })
 export class CalendarFilterComponent extends WeekdaysFormBase {
+	private readonly filterService = inject(CalendarFilterService);
+
 	protected readonly $expanded = signal(false);
 	public accordionValue?: string;
 	private resetting = false;
@@ -100,8 +104,10 @@ export class CalendarFilterComponent extends WeekdaysFormBase {
 		);
 	});
 
-	constructor(private readonly filterService: CalendarFilterService) {
-		super('ScheduleFilterComponent', false);
+	public constructor() {
+		super(false);
+		const filterService = this.filterService;
+
 		filterService.filter.subscribe({
 			next: this.onFilterChanged,
 		});

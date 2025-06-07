@@ -5,6 +5,7 @@ import {
 	Component,
 	computed,
 	signal,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -34,6 +35,7 @@ import {
 import { MembersShortListCardComponent } from '@sneat/contactus-shared';
 import { IIdAndOptionalDbo, TopMenuService } from '@sneat/core';
 import { SpaceServiceModule } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { SpacePageBaseComponent } from './SpacePageBaseComponent';
 import { CalendarBriefComponent } from '@sneat/extensions-schedulus-shared';
 
@@ -65,7 +67,10 @@ import { CalendarBriefComponent } from '@sneat/extensions-schedulus-shared';
 		SpaceServiceModule,
 		IonRouterLinkWithHref,
 	],
-	providers: [ContactusNavService],
+	providers: [
+		{ provide: ClassName, useValue: 'SpacePageComponent' },
+		ContactusNavService,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-space-page',
 	templateUrl: './space-page.component.html',
@@ -80,11 +85,11 @@ export class SpacePageComponent extends SpacePageBaseComponent {
 		return spaceType === 'family' || spaceType === 'team';
 	});
 
-	constructor(
-		topMenuService: TopMenuService,
-		cd: ChangeDetectorRef, // readonly navService: TeamNavService,
-	) {
-		super('SpacePageComponent', topMenuService, cd);
+	constructor() {
+		const topMenuService = inject(TopMenuService);
+		const cd = inject(ChangeDetectorRef);
+
+		super(topMenuService, cd);
 		new ContactusSpaceContextService(
 			this.destroyed$,
 			this.spaceIDChanged$,

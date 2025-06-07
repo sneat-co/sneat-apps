@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
 	IonBackButton,
 	IonButtons,
@@ -7,6 +7,7 @@ import {
 	IonTitle,
 	IonToolbar,
 } from '@ionic/angular/standalone';
+import { ClassName } from '@sneat/ui';
 import { NewSegmentFormComponent } from '../../components/new-segment';
 import { LogistOrderService, OrderNavService } from '../../services';
 import { OrderPageBaseComponent } from '../order-page-base.component';
@@ -23,13 +24,15 @@ import { OrderPageBaseComponent } from '../order-page-base.component';
 		IonContent,
 		NewSegmentFormComponent,
 	],
+	providers: [{ provide: ClassName, useValue: 'NewSegmentPageComponent' }],
 })
 export class NewSegmentPageComponent extends OrderPageBaseComponent {
-	constructor(
-		orderService: LogistOrderService,
-		private readonly orderNavService: OrderNavService,
-	) {
-		super('NewSegmentPageComponent', orderService);
+	private readonly orderNavService = inject(OrderNavService);
+
+	public constructor() {
+		const orderService = inject(LogistOrderService);
+
+		super(orderService);
 	}
 
 	back(): void {

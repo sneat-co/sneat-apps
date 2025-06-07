@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
@@ -122,6 +122,17 @@ import { JoinsComponent } from './query-builder/joins.component';
 	],
 })
 export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly randomIdService = inject(RandomIdService);
+	private readonly datatugNavContextService = inject(DatatugNavContextService);
+	private readonly route = inject(ActivatedRoute);
+	private readonly router = inject(Router);
+	private readonly queryContextSqlService = inject(QueryContextSqlService);
+	private readonly queriesService = inject(QueriesService);
+	private readonly coordinator = inject(Coordinator);
+	private readonly queryEditorStateService = inject(QueryEditorStateService);
+	private readonly envService = inject(EnvironmentService);
+
 	@Input() currentProject?: IProjectContext;
 
 	public showQueryBuilder = false;
@@ -164,18 +175,7 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 	private readonly destroyed = new Subject<void>();
 	public readonly sqlParser = new SqlParser();
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly randomIdService: RandomIdService,
-		private readonly datatugNavContextService: DatatugNavContextService,
-		private readonly route: ActivatedRoute,
-		private readonly router: Router,
-		private readonly queryContextSqlService: QueryContextSqlService,
-		private readonly queriesService: QueriesService,
-		private readonly coordinator: Coordinator,
-		private readonly queryEditorStateService: QueryEditorStateService,
-		private readonly envService: EnvironmentService,
-	) {
+	constructor() {
 		// private readonly changeDetector: ChangeDetectorRef,
 		console.log('SqlQueryEditorComponent.constructor()', location.hash);
 		this.queryEditorStateService.queryEditorState

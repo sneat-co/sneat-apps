@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonButton, IonCard } from '@ionic/angular/standalone';
-import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
+import { ClassName, ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import { timestamp } from '@sneat/dto';
 import {
 	AssetRealEstateType,
@@ -17,7 +17,13 @@ import { AddAssetBaseComponent } from '../add-asset-base-component';
 @Component({
 	selector: 'sneat-asset-add-dwelling',
 	templateUrl: './asset-add-dwelling.component.html',
-	providers: [SpaceComponentBaseParams],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'AssetAddDwellingComponent',
+		},
+		SpaceComponentBaseParams,
+	],
 	imports: [
 		AddDwellingCardComponent,
 		IonCard,
@@ -40,7 +46,7 @@ export class AssetAddDwellingComponent
 	];
 
 	constructor() {
-		super('AssetAddDwellingComponent');
+		super();
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {

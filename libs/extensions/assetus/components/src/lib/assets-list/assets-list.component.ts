@@ -1,10 +1,10 @@
 import { NgIf } from '@angular/common';
 import {
 	Component,
-	Inject,
 	Input,
 	OnChanges,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import {
 	IonBadge,
@@ -40,6 +40,11 @@ import { MileAgeDialogComponent } from '../mileage-dialog/mileage-dialog.compone
 	],
 })
 export class AssetsListComponent implements OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly assetService = inject(AssetService);
+	private readonly spaceNavService = inject(SpaceNavService);
+	private readonly modalCtrl = inject(ModalController);
+
 	protected assets?: IIdAndBrief<IAssetBrief>[];
 	protected mileAgeAsset?: IIdAndBrief<IAssetBrief>;
 
@@ -58,14 +63,6 @@ export class AssetsListComponent implements OnChanges {
 	};
 
 	protected deletingIDs: string[] = [];
-
-	constructor(
-		@Inject(ErrorLogger)
-		private readonly errorLogger: IErrorLogger,
-		private readonly assetService: AssetService,
-		private readonly spaceNavService: SpaceNavService,
-		private readonly modalCtrl: ModalController,
-	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		const { allAssets, assetType, filter } = this;

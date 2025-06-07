@@ -1,10 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 @Injectable()
 export class QueryParamsService {
-	constructor(
-		private readonly location: Location, // @Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {}
+	private readonly location = inject(Location);
 
 	public setQueryParameter(
 		name: string,

@@ -25,11 +25,10 @@ export abstract class ContactBasePage extends SpaceItemPageBaseComponent<
 	protected readonly contactusSpaceService = inject(ContactusSpaceService);
 
 	protected constructor(
-		className: string,
 		protected readonly contactService: ContactService,
 		defaultBackPage: 'contacts' | 'members' = 'contacts',
 	) {
-		super(className, defaultBackPage, 'contact', contactService);
+		super(defaultBackPage, 'contact', contactService);
 	}
 
 	protected override watchItemChanges(): Observable<IContactContext> {

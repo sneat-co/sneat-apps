@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import {
 	ModalController,
 	IonButton,
@@ -14,9 +14,9 @@ import {
 	imports: [IonItem, IonLabel, IonButtons, IonButton, IonIcon],
 })
 export class DialogHeaderComponent {
-	@Input() dialogTitle = 'Dialog'; // Do not use just `title` as it conflicts with the HTML attribute.
+	private readonly modalController = inject(ModalController);
 
-	constructor(private readonly modalController: ModalController) {}
+	@Input() dialogTitle = 'Dialog';
 
 	close(event: Event): void {
 		event.stopPropagation();

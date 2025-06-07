@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonLabel,
@@ -20,14 +20,16 @@ export interface IEnv {
 	imports: [IonSegment, FormsModule, IonSegmentButton, IonLabel],
 })
 export class EnvSelectorComponent {
+	private readonly dataTugNavContext = inject(DatatugNavContextService);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+
 	public currentEnvId?: string;
 
 	public environments?: IProjEnv[];
 
-	constructor(
-		private readonly dataTugNavContext: DatatugNavContextService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {
+	constructor() {
+		const dataTugNavContext = this.dataTugNavContext;
+
 		dataTugNavContext.currentProject.subscribe((currentProject) => {
 			if (currentProject?.summary?.environments) {
 				this.environments = currentProject.summary.environments;

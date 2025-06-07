@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
 	IonButton,
@@ -16,6 +16,7 @@ import {
 	IonTitle,
 	IonToolbar,
 } from '@ionic/angular/standalone';
+import { ClassName } from '@sneat/ui';
 import { LogistSpaceMenuItemsComponent } from '../../components/logist-team-menu-items/logist-space-menu-items.component';
 import { LogistSpaceSettingsComponent } from '../../components/logist-team-settings/logist-space-settings.component';
 import { LogistSpaceService } from '../../services/logist-space.service';
@@ -43,9 +44,10 @@ import { LogistSpaceBaseComponent } from '../logist-space-base.component';
 		IonTitle,
 		RouterLink,
 	],
+	providers: [{ provide: ClassName, useValue: 'LogistSpacePageComponent' }],
 })
 export class LogistSpacePageComponent extends LogistSpaceBaseComponent {
-	constructor(logistTeamService: LogistSpaceService) {
-		super('LogistSpacePageComponent', logistTeamService);
+	public constructor() {
+		super(inject(LogistSpaceService));
 	}
 }

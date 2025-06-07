@@ -38,6 +38,7 @@ import {
 } from '@sneat/contactus-core';
 import { SpaceNavService } from '@sneat/space-services';
 import { SneatUserService } from '@sneat/auth-core';
+import { ClassName } from '@sneat/ui';
 import { InviteModalComponent } from '../../modals/invite-modal';
 import { ContactTitlePipe } from '../../pipes';
 import { ContactRoleBadgesComponent } from '../contact-role-badges/contact-role-badges.component';
@@ -65,9 +66,18 @@ import { InlistAgeGroupComponent } from '../inlist-options/inlist-age-group.comp
 		IonItemOption,
 		ContactTitlePipe,
 	],
+	providers: [{ provide: ClassName, useValue: 'MembersListComponent' }],
 })
 // TODO: Is it deprecated and should we migrated to Contacts list? Document reason if not.
 export class MembersListComponent extends WithSpaceInput {
+	private readonly navService = inject(SpaceNavService);
+	private readonly navController = inject(NavController);
+	private readonly userService = inject(SneatUserService);
+	private readonly contactService = inject(ContactService);
+	private readonly scheduleNavService = inject(ScheduleNavService);
+	private readonly modalController = inject(ModalController);
+	readonly routerOutlet = inject(IonRouterOutlet);
+
 	private $selfRemove = signal(false);
 
 	public readonly $members = input.required<readonly IContactWithBrief[]>();
@@ -96,18 +106,6 @@ export class MembersListComponent extends WithSpaceInput {
 	);
 
 	private readonly contactusNavService = inject(ContactusNavService);
-
-	constructor(
-		private readonly navService: SpaceNavService,
-		private readonly navController: NavController,
-		private readonly userService: SneatUserService,
-		private readonly contactService: ContactService,
-		private readonly scheduleNavService: ScheduleNavService,
-		private readonly modalController: ModalController,
-		public readonly routerOutlet: IonRouterOutlet,
-	) {
-		super('MembersListComponent');
-	}
 
 	private readonly $isFamilySpace = computed(
 		() => this.$spaceType() === SpaceTypeFamily,

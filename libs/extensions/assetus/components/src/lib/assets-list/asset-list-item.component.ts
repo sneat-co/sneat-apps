@@ -1,4 +1,4 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { NavController } from '@ionic/angular/standalone';
 import { IAssetContext, AssetCategory } from '@sneat/mod-assetus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
@@ -9,12 +9,10 @@ import { ISpaceContext } from '@sneat/space-models';
 	template: ``,
 })
 export class AssetListItemComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly navCtrl = inject(NavController);
+
 	@Input({ required: true }) space?: ISpaceContext;
 	@Input() assetType?: AssetCategory;
 	@Input() asset?: IAssetContext;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly navCtrl: NavController, // private readonly assertService: AssertSer
-	) {}
 }

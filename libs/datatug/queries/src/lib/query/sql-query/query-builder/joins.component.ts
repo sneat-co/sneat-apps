@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import {
 	IonBadge,
 	IonButton,
@@ -46,6 +46,9 @@ import {
 	],
 })
 export class JoinsComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	readonly queryContextSqlService = inject(QueryContextSqlService);
+
 	@Input() public sql?: string;
 	@Input() public queryAst?: IAstQuery;
 	@Input() public sqlParser?: SqlParser;
@@ -53,10 +56,9 @@ export class JoinsComponent {
 
 	public suggestedJoins?: ICanJoin[];
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		readonly queryContextSqlService: QueryContextSqlService,
-	) {
+	constructor() {
+		const queryContextSqlService = this.queryContextSqlService;
+
 		queryContextSqlService.suggestedJoins.subscribe({
 			next: (suggestedJoins) => {
 				this.suggestedJoins = suggestedJoins;

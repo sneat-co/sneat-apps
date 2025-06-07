@@ -28,6 +28,7 @@ import {
 	GenderUndisclosed,
 } from '@sneat/core';
 import {
+	ClassName,
 	ISelectItem,
 	SelectFromListComponent,
 	SneatBaseComponent,
@@ -75,10 +76,11 @@ const genders: readonly GenderOption[] = [
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-gender-form',
 	templateUrl: './gender-form.component.html',
+	providers: [{ provide: ClassName, useValue: 'GenderFormComponent' }],
 })
 export class GenderFormComponent extends SneatBaseComponent {
 	constructor() {
-		super('GenderFormComponent');
+		super();
 	}
 
 	protected readonly genderOptions: readonly ISelectItem[] = genders.map(

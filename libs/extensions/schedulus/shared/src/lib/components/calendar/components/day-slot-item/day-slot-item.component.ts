@@ -4,6 +4,7 @@ import {
 	input,
 	computed,
 	ChangeDetectionStrategy,
+	inject,
 } from '@angular/core';
 import {
 	PopoverController,
@@ -20,6 +21,7 @@ import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import { ContactsSelectorModule } from '@sneat/contactus-shared';
 import { WithSpaceInput } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import {
 	CalendarNavService,
 	CalendarNavServicesModule,
@@ -31,7 +33,6 @@ import { HappeningSlotParticipantsComponent } from '../../../happening-slot-part
 import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
 
 @Component({
-	providers: [ContactusSpaceService],
 	imports: [
 		HappeningServiceModule,
 		ContactsSelectorModule,
@@ -48,11 +49,18 @@ import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
 		IonButtons,
 		IonButton,
 	],
+	providers: [
+		{ provide: ClassName, useValue: 'DaySlotItemComponent' },
+		ContactusSpaceService,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-day-slot-item',
 	templateUrl: './day-slot-item.component.html',
 })
 export class DaySlotItemComponent extends WithSpaceInput {
+	private readonly popoverController = inject(PopoverController);
+	private readonly calendarNavService = inject(CalendarNavService);
+
 	public readonly $slotContext = input.required<ISlotUIContext>();
 
 	@Input() dateID?: string;
@@ -67,11 +75,8 @@ export class DaySlotItemComponent extends WithSpaceInput {
 		return happening?.brief?.status === 'canceled' || !!adjustment?.canceled;
 	});
 
-	constructor(
-		private readonly popoverController: PopoverController,
-		private readonly calendarNavService: CalendarNavService,
-	) {
-		super('DaySlotItemComponent');
+	public constructor() {
+		super();
 	}
 
 	protected onSlotClicked(event: Event): void {

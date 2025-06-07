@@ -44,6 +44,7 @@ import {
 import { zipMapBriefsWithIDs } from '@sneat/space-models';
 import { QRCodeComponent } from 'angularx-qrcode';
 import { WithNewContactInput } from '@sneat/contactus-shared';
+import { ClassName } from '@sneat/ui';
 
 @Component({
 	animations: [formNexInAnimation],
@@ -64,6 +65,7 @@ import { WithNewContactInput } from '@sneat/contactus-shared';
 		IonGrid,
 		IonCol,
 	],
+	providers: [{ provide: ClassName, useValue: 'NewMemberFormComponent' }],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-new-member-form',
 	templateUrl: 'new-member-form.component.html',
@@ -146,8 +148,9 @@ export class NewMemberFormComponent
 
 	private readonly memberService = inject(MemberService);
 
-	public constructor(routingState: RoutingState) {
-		super('NewMemberFormComponent');
+	public constructor() {
+		super();
+		const routingState = inject(RoutingState);
 		this.hasNavHistory = routingState.hasHistory();
 	}
 

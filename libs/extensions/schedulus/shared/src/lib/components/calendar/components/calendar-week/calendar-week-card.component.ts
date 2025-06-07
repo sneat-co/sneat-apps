@@ -2,7 +2,7 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	input,
-	Input,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -14,6 +14,7 @@ import {
 } from '@ionic/angular/standalone';
 import { virtualSliderAnimations } from '@sneat/components';
 import { ISpaceContext } from '@sneat/space-models';
+import { ClassName } from '@sneat/ui';
 import { CalendarDataProvider } from '../../../../services/calendar-data-provider';
 import { getToday, CalendarStateService } from '../../calendar-state.service';
 import { SwipeableBaseComponent } from '../../../swipeable-base.component';
@@ -33,6 +34,7 @@ import { CalendarWeekComponent } from './calendar-week.component';
 		IonIcon,
 		IonLabel,
 	],
+	providers: [{ provide: ClassName, useValue: 'ScheduleWeekCardComponent' }],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-week-card',
 	templateUrl: 'calendar-week-card.component.html',
@@ -50,8 +52,10 @@ export class CalendarWeekCardComponent extends SwipeableBaseComponent {
 		return this.evenSlide as SwipeableWeek;
 	}
 
-	constructor(scheduleStateService: CalendarStateService) {
-		super('ScheduleWeekCardComponent', scheduleStateService, 7);
+	constructor() {
+		const scheduleStateService = inject(CalendarStateService);
+
+		super(scheduleStateService, 7);
 
 		this.createSlides();
 

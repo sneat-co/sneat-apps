@@ -1,4 +1,4 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
 	PopoverController,
@@ -17,13 +17,11 @@ import { ILogistOrderContext } from '../../dto';
 	imports: [IonItemDivider, IonIcon, IonLabel, IonItem, RouterLink],
 })
 export class OrderPrintMenuComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly popoverController = inject(PopoverController);
+
 	@Input({ required: true }) space?: ISpaceContext;
 	@Input() order?: ILogistOrderContext;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly popoverController: PopoverController,
-	) {}
 
 	print(event: Event, path: string): void {
 		// TODO: can we dismiss popover declaratively?

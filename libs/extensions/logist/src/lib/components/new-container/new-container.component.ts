@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, Inject, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonButton,
@@ -54,6 +54,10 @@ import {
 	],
 })
 export class NewContainerComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly modalController = inject(ModalController);
+	private readonly orderService = inject(LogistOrderService);
+
 	@Input() order?: ILogistOrderContext;
 	@Input({ required: true }) space?: ISpaceContext;
 
@@ -76,12 +80,6 @@ export class NewContainerComponent {
 	isSubmitting = false;
 
 	public readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly modalController: ModalController,
-		private readonly orderService: LogistOrderService,
-	) {}
 
 	onContainerTypeChanged(): void {
 		setTimeout(() => this.setFocusToInput(this.containerNumberInput), 100);

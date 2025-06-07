@@ -1,4 +1,4 @@
-import { Inject, Injectable, NgModule } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { excludeEmpty } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
@@ -7,10 +7,8 @@ import { ISchedulePageParams, NewHappeningParams } from './view-models';
 
 @Injectable()
 export class ScheduleNavService {
-	constructor(
-		private readonly spaceNavService: SpaceNavService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {}
+	private readonly spaceNavService = inject(SpaceNavService);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
 
 	public goCalendar(
 		space: ISpaceContext,

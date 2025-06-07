@@ -8,6 +8,7 @@ import {
 	OnDestroy,
 	signal,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -29,6 +30,7 @@ import {
 	WeekdayNumber,
 } from '@sneat/mod-schedulus-core';
 import { WithSpaceInput } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { Subscription } from 'rxjs';
 import {
 	emptyCalendarFilter,
@@ -51,6 +53,7 @@ import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
 		IonIcon,
 		IonButton,
 	],
+	providers: [{ provide: ClassName, useValue: 'CalendarDayComponent' }],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-calendar-day',
 	templateUrl: './calendar-day.component.html',
@@ -59,6 +62,10 @@ export class CalendarDayComponent
 	extends WithSpaceInput
 	implements OnChanges, OnDestroy
 {
+	private readonly filterService = inject(CalendarFilterService);
+	private readonly changeDetectorRef = inject(ChangeDetectorRef);
+	private readonly scheduleNavService = inject(ScheduleNavService);
+
 	private slotsSubscription?: Subscription;
 	private filter = emptyCalendarFilter;
 	// @Input() filter?: ICalendarFilter;
@@ -77,12 +84,10 @@ export class CalendarDayComponent
 	public slots?: ISlotUIContext[];
 	public slotsHiddenByFilter?: number;
 
-	constructor(
-		private readonly filterService: CalendarFilterService,
-		private readonly changeDetectorRef: ChangeDetectorRef,
-		private readonly scheduleNavService: ScheduleNavService,
-	) {
-		super('CalendarDayComponent');
+	public constructor() {
+		super();
+		const filterService = this.filterService;
+
 		filterService.filter.pipe(this.takeUntilDestroyed()).subscribe({
 			next: (filter) => {
 				this.filter = filter;

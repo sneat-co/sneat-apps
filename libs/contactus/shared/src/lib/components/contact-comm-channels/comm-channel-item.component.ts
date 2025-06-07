@@ -26,7 +26,7 @@ import {
 	IContactCommChannelRequest,
 	IUpdateContactCommChannelRequest,
 } from '@sneat/contactus-services';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 
 export interface ICommChannelListItem extends IContactCommChannelProps {
 	readonly id: string;
@@ -43,6 +43,12 @@ export interface ICommChannelListItem extends IContactCommChannelProps {
 		IonSelectOption,
 		ReactiveFormsModule,
 		IonLabel,
+	],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'CommChannelItemComponent',
+		},
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-comm-channel-item',
@@ -61,7 +67,7 @@ export class CommChannelItemComponent extends SneatBaseComponent {
 	protected readonly contactService = inject(ContactService);
 
 	constructor() {
-		super('CommChannelItemComponent');
+		super();
 		effect(() => {
 			const channel = this.$channel();
 			if (!this.channelID.dirty) {

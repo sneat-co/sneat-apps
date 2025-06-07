@@ -7,6 +7,7 @@ import {
 	OnDestroy,
 	signal,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
@@ -27,7 +28,7 @@ import {
 	spaceContextFromBrief,
 	zipMapBriefsWithIDs,
 } from '@sneat/space-models';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { Subscription, takeUntil } from 'rxjs';
 
 @Component({
@@ -46,11 +47,20 @@ import { Subscription, takeUntil } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-for-space-card',
 	templateUrl: 'for-space-type-card.component.html',
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'ForSpaceTypeCardComponent',
+		},
+	],
 })
 export class ForSpaceTypeCardComponent
 	extends SneatBaseComponent
 	implements OnChanges, OnDestroy
 {
+	private readonly userService = inject(SneatUserService);
+	private readonly changeDetectorRef = inject(ChangeDetectorRef);
+
 	@Input() emptyTitle?: string;
 	@Input() itemsTitle?: string;
 	@Input() buttonColor?: string;
@@ -62,11 +72,8 @@ export class ForSpaceTypeCardComponent
 
 	private subscription?: Subscription;
 
-	constructor(
-		private readonly userService: SneatUserService,
-		private readonly changeDetectorRef: ChangeDetectorRef,
-	) {
-		super('ForSpaceTypeCardComponent');
+	public constructor() {
+		super();
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {

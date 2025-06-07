@@ -1,4 +1,4 @@
-import { Component, Inject, Optional, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
@@ -39,7 +39,7 @@ import {
 	IAppInfo,
 } from '@sneat/core';
 import { RandomIdService } from '@sneat/random';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { Subject, takeUntil } from 'rxjs';
 import {
 	EmailFormSigningWith,
@@ -76,9 +76,27 @@ type Action = 'join' | 'refuse'; // TODO: inject provider for action description
 		IonList,
 		IonGrid,
 	],
-	providers: [RandomIdService],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'LoginPageComponent',
+		},
+		RandomIdService,
+	],
 })
 export class LoginPageComponent extends SneatBaseComponent {
+	private readonly analyticsService =
+		inject<IAnalyticsService>(AnalyticsService);
+	private readonly route = inject(ActivatedRoute);
+	private readonly navController = inject(NavController);
+	private readonly userService = inject(SneatUserService);
+	private readonly authStateService = inject(SneatAuthStateService);
+	private appInfo = inject<IAppInfo>(APP_INFO);
+	private readonly loginEventsHandler = inject<ILoginEventsHandler>(
+		LoginEventsHandler,
+		{ optional: true },
+	);
+
 	protected readonly signingWith = signal<AuthProviderID | undefined>(
 		undefined,
 	);
@@ -90,20 +108,10 @@ export class LoginPageComponent extends SneatBaseComponent {
 
 	protected readonly appTitle: string;
 
-	constructor(
-		@Inject(AnalyticsService)
-		private readonly analyticsService: IAnalyticsService,
-		private readonly route: ActivatedRoute,
-		private readonly navController: NavController,
-		private readonly userService: SneatUserService,
-		private readonly authStateService: SneatAuthStateService,
-		@Inject(APP_INFO) private appInfo: IAppInfo, // TODO: Unused - remove or implement
+	constructor() {
+		super();
+		const appInfo = this.appInfo;
 
-		@Optional() // TODO: Unused - remove or implement
-		@Inject(LoginEventsHandler)
-		private readonly loginEventsHandler: ILoginEventsHandler,
-	) {
-		super('LoginPageComponent');
 		console.log('LoginPageComponent.constructor()');
 		this.appTitle = appInfo.appTitle || 'Sneat.app';
 		if (location.hash.startsWith('#/')) {

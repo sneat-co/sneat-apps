@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
 	IonBackButton,
 	IonButton,
@@ -21,6 +21,7 @@ import {
 	IUpdateContactRequest,
 } from '@sneat/contactus-services';
 import { SpaceServiceModule } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { ContactBasePage } from '../contact-base-page';
 
 @Component({
@@ -41,16 +42,16 @@ import { ContactBasePage } from '../contact-base-page';
 		IonMenuButton,
 		IonContent,
 	],
+	providers: [{ provide: ClassName, useValue: 'ContactPageComponent' }],
 })
 export class ContactPageComponent extends ContactBasePage {
+	private readonly contactsService = inject(ContactService);
+	private readonly sneatNavService = inject(SneatNavService);
+
 	protected segment: 'contact' | 'members' | 'assets' = 'contact';
 
-	constructor(
-		contactService: ContactService,
-		private readonly contactsService: ContactService,
-		private readonly sneatNavService: SneatNavService,
-	) {
-		super('ContactPageComponent', contactService);
+	constructor() {
+		super(inject(ContactService));
 		this.defaultBackPage = 'contacts';
 	}
 

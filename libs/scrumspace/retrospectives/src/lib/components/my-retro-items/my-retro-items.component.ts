@@ -1,13 +1,13 @@
 import { NgForOf, NgIf } from '@angular/common';
 import {
 	Component,
-	Inject,
 	Input,
 	OnChanges,
 	OnDestroy,
 	OnInit,
 	SimpleChanges,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import {
 	FormControl,
@@ -70,6 +70,10 @@ import { IUserRecord } from '@sneat/auth-models';
 	],
 })
 export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
+	private readonly retrospectiveService = inject(RetrospectiveService);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly userService = inject(SneatUserService);
+
 	@ViewChild(IonInput, { static: false }) titleInput?: IonInput; // TODO: IonInput;
 
 	@Input() isEditable = true;
@@ -98,12 +102,6 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 	];
 
 	private userSubscription?: Subscription;
-
-	constructor(
-		private readonly retrospectiveService: RetrospectiveService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly userService: SneatUserService,
-	) {}
 
 	public get currentType(): string {
 		return this.typeControl.value as string;

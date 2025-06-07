@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonBackButton,
@@ -51,6 +51,12 @@ export class AddToWatchPageComponent
 	extends BaseListPage
 	implements CommuneBasePage
 {
+	private readonly tmdbService = inject(TmdbService);
+	private readonly listusDbService = inject(ListusDbService);
+	private readonly ts = inject(TmdbService);
+	readonly params: CommuneBasePageParams;
+	readonly listService: IListService;
+
 	listItems?: IListItemInfo[];
 	searchText = '';
 	movies: IMovie[];
@@ -58,14 +64,14 @@ export class AddToWatchPageComponent
 
 	// public segment: 'list' | 'cards' | 'recipe' | 'settings' = 'list';
 
-	constructor(
-		private readonly tmdbService: TmdbService,
-		private readonly listusDbService: ListusDbService,
-		private readonly ts: TmdbService,
-		readonly params: CommuneBasePageParams,
-		readonly listService: IListService,
-	) {
+	constructor() {
+		const params = inject(CommuneBasePageParams);
+		const listService = inject(IListService);
+
 		super('id', 'lists', params, listService);
+
+		this.params = params;
+		this.listService = listService;
 	}
 
 	public clickShowWatchedMovies(): void {

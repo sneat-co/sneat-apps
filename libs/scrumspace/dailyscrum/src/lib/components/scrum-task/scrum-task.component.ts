@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, inject } from '@angular/core';
 import {
 	IonInput,
 	ModalController,
@@ -39,6 +39,11 @@ import { ITask, TaskType } from '@sneat/ext-scrumspace-scrummodels';
 	],
 })
 export class ScrumTaskComponent implements OnInit {
+	private errorLogger = inject<IErrorLogger>(ErrorLogger);
+	modalController = inject(ModalController);
+	private userService = inject(SneatUserService);
+	private scrumService = inject(ScrumService);
+
 	@Input() spaceID?: string;
 	@Input() date?: Date;
 	@Input() memberID?: string;
@@ -51,12 +56,7 @@ export class ScrumTaskComponent implements OnInit {
 
 	public user: IRecord<IUserDbo>;
 
-	constructor(
-		@Inject(ErrorLogger) private errorLogger: IErrorLogger,
-		public modalController: ModalController,
-		private userService: SneatUserService,
-		private scrumService: ScrumService,
-	) {
+	constructor() {
 		// this.userService.userRecord.subscribe((user) => {
 		// 	this.user = user;
 		// });

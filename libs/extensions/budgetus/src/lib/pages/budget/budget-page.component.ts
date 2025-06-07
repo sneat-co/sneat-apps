@@ -3,6 +3,7 @@ import {
 	Component,
 	computed,
 	signal,
+	inject,
 } from '@angular/core';
 import {
 	IonBackButton,
@@ -32,6 +33,7 @@ import {
 } from '@sneat/space-components';
 import { Totals } from '@sneat/space-models';
 import { SpaceServiceModule } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
 import { LiabilitiesMode } from './budget-component-types';
 import { BudgetPeriodsComponent } from './budget-periods.component';
@@ -60,12 +62,18 @@ import { CalendariumSpaceService } from '@sneat/extensions-schedulus-shared';
 		IonItem,
 		IonList,
 	],
-	providers: [SpaceComponentBaseParams, CalendariumSpaceService],
+	providers: [
+		{ provide: ClassName, useValue: 'BudgetPageComponent' },
+		SpaceComponentBaseParams,
+		CalendariumSpaceService,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-budget-page',
 	templateUrl: './budget-page.component.html',
 })
 export class BudgetPageComponent extends SpaceBaseComponent {
+	private readonly calendariumSpaceService = inject(CalendariumSpaceService);
+
 	protected readonly $total = signal<number | undefined>(undefined);
 	protected readonly $liabilitiesMode = signal<LiabilitiesMode>('expenses');
 
@@ -82,10 +90,8 @@ export class BudgetPageComponent extends SpaceBaseComponent {
 		return undefined;
 	}
 
-	constructor(
-		private readonly calendariumSpaceService: CalendariumSpaceService,
-	) {
-		super('BudgetPageComponent');
+	constructor() {
+		super();
 		this.route.queryParamMap.subscribe((qp) => {
 			const tab = qp.get('tab');
 			if (tab === 'incomes' || tab === 'expenses') {

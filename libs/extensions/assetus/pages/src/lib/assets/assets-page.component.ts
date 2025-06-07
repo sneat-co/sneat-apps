@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import {
@@ -34,13 +34,17 @@ import {
 } from '@sneat/space-components';
 import { IAssetContext } from '@sneat/mod-assetus-core';
 import { SpaceServiceModule } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
 import { AssetsBasePage } from '../assets-base.page';
 
 @Component({
 	selector: 'sneat-assets-page',
 	templateUrl: './assets-page.component.html',
-	providers: [SpaceComponentBaseParams],
+	providers: [
+		{ provide: ClassName, useValue: 'AssetsPageComponent' },
+		SpaceComponentBaseParams,
+	],
 	imports: [
 		FormsModule,
 		RouterModule,
@@ -68,6 +72,9 @@ import { AssetsBasePage } from '../assets-base.page';
 	],
 }) /*implements AfterViewInit*/
 export class AssetsPageComponent extends AssetsBasePage implements OnInit {
+	private readonly assetusSpaceService = inject(AssetusSpaceService);
+	private readonly alertCtrl = inject(AlertController);
+
 	public vehicles?: IAssetContext[];
 
 	protected readonly assetTypes: IAssetCategory[] = [
@@ -77,11 +84,8 @@ export class AssetsPageComponent extends AssetsBasePage implements OnInit {
 
 	public segment: 'all' | 'byCategory' = 'byCategory';
 
-	constructor(
-		private readonly assetusSpaceService: AssetusSpaceService,
-		private readonly alertCtrl: AlertController,
-	) {
-		super('AssetsPageComponent');
+	constructor() {
+		super();
 	}
 
 	override ngOnInit(): void {

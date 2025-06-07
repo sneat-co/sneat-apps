@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
@@ -61,6 +61,16 @@ import { InviteService } from '@sneat/contactus-services';
 	templateUrl: './invite-personal-page.component.html',
 })
 export class InvitePersonalPageComponent implements OnInit {
+	private readonly afAuth = inject(AngularFireAuth);
+	private readonly userService = inject(SneatUserService);
+	private readonly route = inject(ActivatedRoute);
+	private readonly sneatApiService = inject(SneatApiService);
+	private readonly memberService = inject(MemberService);
+	private readonly inviteService = inject(InviteService);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly navController = inject(NavController);
+	private readonly randomIdService = inject(RandomIdService);
+
 	public fullName = '';
 	public email = '';
 	public pin = '';
@@ -77,17 +87,7 @@ export class InvitePersonalPageComponent implements OnInit {
 	private inviteId = '';
 	private spaceID = '';
 
-	constructor(
-		private readonly afAuth: AngularFireAuth,
-		private readonly userService: SneatUserService,
-		private readonly route: ActivatedRoute,
-		private readonly sneatApiService: SneatApiService,
-		private readonly memberService: MemberService,
-		private readonly inviteService: InviteService,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly navController: NavController,
-		private readonly randomIdService: RandomIdService,
-	) {
+	constructor() {
 		this.getPinFromUrl();
 	}
 

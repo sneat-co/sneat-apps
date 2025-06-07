@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonBackButton,
@@ -29,6 +29,7 @@ import {
 	VehicleCardComponent,
 } from '@sneat/ext-assetus-components';
 import { SpaceComponentBaseParams } from '@sneat/space-components';
+import { ClassName } from '@sneat/ui';
 
 interface LiabilityServiceBrief {
 	type: LiabilityServiceType;
@@ -38,7 +39,6 @@ interface LiabilityServiceBrief {
 @Component({
 	selector: 'sneat-asset-page',
 	templateUrl: './asset-page.component.html',
-	providers: [SpaceComponentBaseParams, AssetComponentBaseParams],
 	imports: [
 		FormsModule,
 		VehicleCardComponent,
@@ -63,6 +63,11 @@ interface LiabilityServiceBrief {
 		IonSelect,
 		IonItemGroup,
 	],
+	providers: [
+		{ provide: ClassName, useValue: 'AssetPageComponent' },
+		SpaceComponentBaseParams,
+		AssetComponentBaseParams,
+	],
 })
 export class AssetPageComponent extends AssetBasePage {
 	public segment: 'contacts' | 'taxes' | 'services' = 'services';
@@ -81,8 +86,10 @@ export class AssetPageComponent extends AssetBasePage {
 
 	mode: 'view' | 'edit' = 'view';
 
-	constructor(params: AssetComponentBaseParams) {
-		super('AssetPageComponent', params);
+	constructor() {
+		const params = inject(AssetComponentBaseParams);
+
+		super(params);
 		// const path = location.pathname;
 		// if (path.includes('vehicle')) {
 		// 	this.assetTypeId = 'vehicles';

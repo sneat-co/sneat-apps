@@ -1,15 +1,9 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IonCard, IonIcon, IonItem, IonLabel } from '@ionic/angular/standalone';
-import {
-	CalendarDayService,
-	CalendarDayServiceModule,
-} from '../../services/calendar-day.service';
-import { CalendariumSpaceService } from '../../services/calendarium-space.service';
-import {
-	HappeningService,
-	HappeningServiceModule,
-} from '../../services/happening.service';
+import { ClassName } from '@sneat/ui';
+import { CalendarDayServiceModule } from '../../services/calendar-day.service';
+import { HappeningServiceModule } from '../../services/happening.service';
 import { CalendariumServicesModule } from '../../services/calendarium-services.module';
 import { CalendarFilterService } from '../calendar-filter.service';
 import { createWeekday } from '../weekday-functions';
@@ -33,7 +27,10 @@ import { Weekday } from './weekday';
 		IonIcon,
 		IonLabel,
 	],
-	providers: [CalendarFilterService],
+	providers: [
+		CalendarFilterService,
+		{ provide: ClassName, useValue: 'CalendarBriefComponent' },
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-calendar-brief',
 	templateUrl: './calendar-brief.component.html',
@@ -42,17 +39,8 @@ export class CalendarBriefComponent extends CalendarBaseComponent {
 	protected readonly $today = signal<Weekday | undefined>(undefined);
 	protected readonly $tomorrow = signal<Weekday | undefined>(undefined);
 
-	constructor(
-		calendarDayService: CalendarDayService,
-		happeningService: HappeningService,
-		calendariumSpaceService: CalendariumSpaceService,
-	) {
-		super(
-			'CalendarBriefComponent',
-			calendariumSpaceService,
-			happeningService,
-			calendarDayService,
-		);
+	public constructor() {
+		super();
 
 		const todayDate = new Date();
 		const today = createWeekday(todayDate, this.spaceDaysProvider);

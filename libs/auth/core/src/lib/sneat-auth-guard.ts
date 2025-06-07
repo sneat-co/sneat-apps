@@ -10,7 +10,7 @@ import {
 	UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
 	Auth as AngularFireAuth /*, onAuthStateChanged*/,
 } from '@angular/fire/auth';
@@ -37,10 +37,8 @@ export const redirectToLoginIfNotSignedIn: AuthPipe = map((user) => {
 	providedIn: 'root',
 })
 export class SneatAuthGuard /*implements CanLoad, CanActivate, CanActivateChild*/ {
-	constructor(
-		private readonly router: Router,
-		private readonly auth: AngularFireAuth,
-	) {}
+	private readonly router = inject(Router);
+	private readonly auth = inject(AngularFireAuth);
 
 	public canLoad(
 		route: Route,

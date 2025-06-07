@@ -2,11 +2,11 @@ import { NgForOf, NgIf } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	OnChanges,
 	Output,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -58,6 +58,10 @@ import { DispatchPointComponent } from './dispatch-point.component';
 	],
 })
 export class DispatcherComponent implements OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly contactSelectorService = inject(ContactsSelectorService);
+	private readonly ordersService = inject(LogistOrderService);
+
 	@Input() order?: ILogistOrderContext;
 	@Input() counterparty?: IOrderCounterparty;
 	@Input() orderDispatchers?: readonly IOrderCounterparty[];
@@ -80,12 +84,6 @@ export class DispatcherComponent implements OnChanges {
 
 	protected readonly counterpartyKey = (i: number, c: IOrderCounterparty) =>
 		`${c.contactID}&${c.role}`;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly contactSelectorService: ContactsSelectorService,
-		private readonly ordersService: LogistOrderService,
-	) {}
 
 	cancelChanges(): void {
 		this.form.reset();

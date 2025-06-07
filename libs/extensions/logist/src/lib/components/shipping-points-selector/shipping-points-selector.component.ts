@@ -2,11 +2,11 @@ import { NgIf } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	OnChanges,
 	Output,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -57,6 +57,9 @@ export type TasksByID = Record<string, selected | undefined>;
 	],
 })
 export class ShippingPointsSelectorComponent implements OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly newShippingPointService = inject(NewShippingPointService);
+
 	@Input() order?: ILogistOrderContext;
 	@Input() container?: IOrderContainer;
 	@Output() tasksByShippingPointChange = new EventEmitter<TasksByID>();
@@ -68,11 +71,6 @@ export class ShippingPointsSelectorComponent implements OnChanges {
 	protected shippingPoints?: readonly IOrderShippingPoint[];
 
 	protected readonly tasksByShippingPoint: TasksByID = {};
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly newShippingPointService: NewShippingPointService,
-	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order']) {

@@ -3,10 +3,10 @@ import {
 	Component,
 	computed,
 	EventEmitter,
-	Inject,
 	input,
 	Output,
 	signal,
+	inject,
 } from '@angular/core';
 import {
 	IonBadge,
@@ -59,6 +59,12 @@ export interface AddSlotParams {
 	templateUrl: './happening-slots.component.html',
 })
 export class HappeningSlotsComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly happeningService = inject(HappeningService);
+	private readonly happeningSlotModalService = inject(
+		HappeningSlotModalService,
+	);
+
 	public readonly happening = input.required<IHappeningContext>();
 
 	public readonly wd = input<WeekdayCode2 | undefined>();
@@ -77,16 +83,6 @@ export class HappeningSlotsComponent {
 		slot: IHappeningSlotWithID,
 		...wds: readonly WeekdayCode2[]
 	) => wds.some((wd) => !!slot.weekdays?.includes(wd));
-
-	// protected isShowingSlotFormModal = false;
-	//
-	// protected addSlotParams?: AddSlotParams;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger, // private readonly modalController: ModalController,
-		private readonly happeningService: HappeningService,
-		private readonly happeningSlotModalService: HappeningSlotModalService,
-	) {}
 
 	protected removeSlot(event: Event, slot: IHappeningSlotWithID): void {
 		event.preventDefault();

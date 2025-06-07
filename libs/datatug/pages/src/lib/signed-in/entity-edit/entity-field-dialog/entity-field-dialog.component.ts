@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonButton,
@@ -32,14 +32,12 @@ import { DataType, IEntityFieldDef } from '@sneat/ext-datatug-models';
 	],
 })
 export class EntityFieldDialogComponent {
+	private readonly popoverCtrl = inject(PopoverController);
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+
 	protected fieldId = '';
 	protected fieldType?: DataType;
 	protected regexPattern?: string;
-
-	constructor(
-		private readonly popoverCtrl: PopoverController,
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {}
 
 	complete(): void {
 		if (!this.fieldType) {

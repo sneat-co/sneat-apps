@@ -6,9 +6,10 @@ import {
 	input,
 	Output,
 	signal,
+	inject,
 } from '@angular/core';
 import { IonCard, IonItemDivider, IonLabel } from '@ionic/angular/standalone';
-import { SelectFromListComponent } from '@sneat/ui';
+import { ClassName, SelectFromListComponent } from '@sneat/ui';
 import { ContactGroupService } from '@sneat/contactus-services';
 import { IIdAndDbo } from '@sneat/core';
 import {
@@ -22,6 +23,12 @@ import { SneatBaseComponent } from '@sneat/ui';
 	selector: 'sneat-contact-role-form',
 	templateUrl: './contact-role-form.component.html',
 	imports: [SelectFromListComponent, IonCard, IonItemDivider, IonLabel],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'ContactRoleFormComponent',
+		},
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactRoleFormComponent extends SneatBaseComponent {
@@ -87,8 +94,9 @@ export class ContactRoleFormComponent extends SneatBaseComponent {
 	protected readonly groupID = (_: number, o: IIdAndDbo<IContactGroupDbo>) =>
 		o.id;
 
-	constructor(contactGroupService: ContactGroupService) {
-		super('ContactRoleFormComponent');
+	constructor() {
+		super();
+		const contactGroupService = inject(ContactGroupService);
 		contactGroupService
 			.getContactGroups()
 			.pipe(this.takeUntilDestroyed())

@@ -1,4 +1,4 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import {
 	IonButton,
 	IonButtons,
@@ -30,15 +30,12 @@ import { RetroItemType } from '@sneat/ext-scrumspace-scrummodels';
 	],
 })
 export class RetrospectivesComponent {
-	@Input() public space?: IRecord<ISpaceDbo>;
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly userService = inject(SneatUserService);
+	private readonly navController = inject(NavController);
+	readonly navService = inject(SpaceNavService);
 
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		// private readonly spaceService: SpaceService,
-		private readonly userService: SneatUserService, // TODO: replace with user context service
-		private readonly navController: NavController,
-		public readonly navService: SpaceNavService,
-	) {}
+	@Input() public space?: IRecord<ISpaceDbo>;
 
 	navigateToCurrentRetro(): void {
 		console.log('navigateToCurrentRetro()');

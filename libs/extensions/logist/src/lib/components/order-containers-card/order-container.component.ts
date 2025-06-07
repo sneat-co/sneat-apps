@@ -2,10 +2,10 @@ import { NgForOf, NgIf } from '@angular/common';
 import {
 	ChangeDetectorRef,
 	Component,
-	Inject,
 	Input,
 	OnChanges,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import {
 	FormControl,
@@ -79,6 +79,15 @@ import { OrderContainerPointComponent } from './order-container-point.component'
 	],
 })
 export class OrderContainerComponent implements OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly changeDetector = inject(ChangeDetectorRef);
+	private readonly orderService = inject(LogistOrderService);
+	private readonly newSegmentService = inject(NewSegmentService);
+	private readonly shippingPointsSelectorService = inject(
+		ShippingPointsSelectorService,
+	);
+	private readonly newShippingPointService = inject(NewShippingPointService);
+
 	@Input() container?: IOrderContainer;
 	@Input() order?: ILogistOrderContext;
 	@Input({ required: true }) space?: ISpaceContext;
@@ -106,15 +115,6 @@ export class OrderContainerComponent implements OnChanges {
 	): string {
 		return `${containerPoint.containerID}-${containerPoint.shippingPointID}`;
 	}
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly changeDetector: ChangeDetectorRef,
-		private readonly orderService: LogistOrderService,
-		private readonly newSegmentService: NewSegmentService,
-		private readonly shippingPointsSelectorService: ShippingPointsSelectorService,
-		private readonly newShippingPointService: NewShippingPointService,
-	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['container']) {

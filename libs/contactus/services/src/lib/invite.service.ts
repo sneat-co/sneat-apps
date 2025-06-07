@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
 	Auth as AngularFireAuth,
 	createUserWithEmailAndPassword,
@@ -23,13 +23,11 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class InviteService {
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly sneatAuthService: SneatAuthStateService,
-		private readonly sneatApiService: SneatApiService,
-		private readonly afAuth: AngularFireAuth,
-		private readonly randomService: RandomIdService,
-	) {}
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly sneatAuthService = inject(SneatAuthStateService);
+	private readonly sneatApiService = inject(SneatApiService);
+	private readonly afAuth = inject(AngularFireAuth);
+	private readonly randomService = inject(RandomIdService);
 
 	public createInviteForMember(
 		request: ICreatePersonalInviteRequest,

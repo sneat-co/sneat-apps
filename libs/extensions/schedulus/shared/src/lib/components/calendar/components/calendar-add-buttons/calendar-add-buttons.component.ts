@@ -2,7 +2,7 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	input,
-	Input,
+	inject,
 } from '@angular/core';
 import { IonButton, IonButtons, IonIcon } from '@ionic/angular/standalone';
 import {
@@ -12,19 +12,23 @@ import {
 	ScheduleNavService,
 } from '@sneat/mod-schedulus-core';
 import { WithSpaceInput } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 
 @Component({
 	selector: 'sneat-calendar-add-buttons',
 	templateUrl: './calendar-add-buttons.component.html',
 	imports: [IonButtons, IonButton, IonIcon],
+	providers: [{ provide: ClassName, useValue: 'CalendarAddButtonsComponent' }],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarAddButtonsComponent extends WithSpaceInput {
+	private readonly scheduleNavService = inject(ScheduleNavService);
+
 	public readonly dateID = input.required<string | undefined>();
 	public readonly weekdayID = input.required<WeekdayCode2 | undefined>();
 
-	constructor(private readonly scheduleNavService: ScheduleNavService) {
-		super('CalendarAddButtonsComponent');
+	public constructor() {
+		super();
 	}
 
 	protected newHappeningUrl(type: HappeningType): string {

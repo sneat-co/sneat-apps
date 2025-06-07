@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, inject } from '@angular/core';
 import {
 	IonApp,
 	IonContent,
@@ -36,7 +36,9 @@ export class LogistAppComponent
 {
 	@ViewChild('ionSplitPane') ionSplitPane!: IonSplitPane;
 
-	constructor(topMenuService: TopMenuService) {
+	constructor() {
+		const topMenuService = inject(TopMenuService);
+
 		super(topMenuService);
 		// window.addEventListener('hashchange', (event: HashChangeEvent) => {
 		// 	// Log the state data to the console

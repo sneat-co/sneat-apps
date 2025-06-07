@@ -24,7 +24,7 @@ import {
 } from '@ionic/angular/standalone';
 import { AnalyticsService, IIdAndBrief, IIdAndOptionalDbo } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { Subscription } from 'rxjs';
 import {
 	getStandardTrackerTitle,
@@ -65,6 +65,12 @@ interface Category {
 		IonIcon,
 		IonList,
 		IonSpinner,
+	],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'TrackersComponent',
+		},
 	],
 	templateUrl: './trackers.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -131,7 +137,7 @@ export class TrackersComponent extends SneatBaseComponent {
 	private readonly trackusApiService = inject(TrackusApiService);
 
 	constructor() {
-		super('TrackersComponent');
+		super();
 		const watchTrackusSpaceEffect = effect(this.watchTrackusSpace);
 		this.destroyed$.subscribe(() => {
 			this.trackersSub?.unsubscribe();

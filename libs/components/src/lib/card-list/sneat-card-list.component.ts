@@ -1,10 +1,10 @@
 import {
 	Component,
 	EventEmitter,
-	Inject,
 	Input,
 	Output,
 	ViewChild,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -53,6 +53,8 @@ export interface ICardTab {
 	],
 })
 export class SneatCardListComponent {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+
 	@Input() title?: string;
 	@Input() isFilterable?: boolean;
 	@Input() isLoading?: boolean;
@@ -76,10 +78,6 @@ export class SneatCardListComponent {
 	protected mode: 'list' | 'add' = 'list';
 	protected name = '';
 	protected isAdding?: boolean;
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-	) {}
 
 	protected click(event: Event, item: IProjItemBrief): void {
 		event.preventDefault();

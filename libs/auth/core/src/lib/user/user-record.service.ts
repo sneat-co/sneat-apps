@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { SneatApiService } from '@sneat/api';
 import { IPersonNames } from '@sneat/auth-models';
 import { AgeGroupID, excludeUndefined, Gender, SpaceType } from '@sneat/core';
@@ -7,7 +7,7 @@ import { Observable, share } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class UserRecordService {
-	constructor(private readonly sneatApiService: SneatApiService) {}
+	private readonly sneatApiService = inject(SneatApiService);
 
 	private initUserRecord$?: Observable<IUserDbo>;
 

@@ -1,10 +1,10 @@
 import { NgIf } from '@angular/common';
 import {
 	Component,
-	Inject,
 	Input,
 	OnChanges,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -61,6 +61,10 @@ import {
 	],
 })
 export class ContainerPointComponent implements OnChanges {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly contactSelectorService = inject(ContactsSelectorService);
+	private readonly ordersService = inject(LogistOrderService);
+
 	@Input() order?: ILogistOrderContext;
 	@Input() shippingPoint?: IOrderShippingPoint;
 	@Input() container?: IOrderContainer;
@@ -89,12 +93,6 @@ export class ContainerPointComponent implements OnChanges {
 		arrivesOn: this.arrivesOn,
 		leavesOn: this.leavesOn,
 	});
-
-	constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		private readonly contactSelectorService: ContactsSelectorService,
-		private readonly ordersService: LogistOrderService,
-	) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['order'] || changes['container'] || changes['shippingPoint']) {

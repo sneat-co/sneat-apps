@@ -5,6 +5,7 @@ import {
 	computed,
 	input,
 	signal,
+	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -18,6 +19,7 @@ import {
 } from '@ionic/angular/standalone';
 import { dateToIso, isoStringsToDate } from '@sneat/core';
 import { WithSpaceInput } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { CalendarDataProvider } from '../../../../services/calendar-data-provider';
 import { addDays, CalendarStateService } from '../../calendar-state.service';
 import { CalendarDayCardComponent } from './calendar-day-card.component';
@@ -33,12 +35,17 @@ import { CalendarDayCardComponent } from './calendar-day-card.component';
 		IonPopover,
 		IonDatetime,
 	],
+	providers: [{ provide: ClassName, useValue: 'CalendarDayTabComponent' }],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-day-tab',
 	templateUrl: 'calendar-day-tab.component.html',
 	styleUrls: ['calendar-day-tab.component.scss'],
 })
 export class CalendarDayTabComponent extends WithSpaceInput {
+	private readonly scheduleSateService = inject(CalendarStateService);
+	private readonly popoverController = inject(PopoverController);
+	private readonly changeDetectorRef = inject(ChangeDetectorRef);
+
 	private readonly $date = signal<Date | undefined>(undefined);
 
 	protected readonly $dateAsIsoString = computed(() => {
@@ -48,12 +55,10 @@ export class CalendarDayTabComponent extends WithSpaceInput {
 
 	public readonly $spaceDaysProvider = input.required<CalendarDataProvider>();
 
-	constructor(
-		private readonly scheduleSateService: CalendarStateService,
-		private readonly popoverController: PopoverController,
-		private readonly changeDetectorRef: ChangeDetectorRef,
-	) {
-		super('CalendarDayTabComponent');
+	public constructor() {
+		super();
+		const scheduleSateService = this.scheduleSateService;
+
 		scheduleSateService.dateChanged.pipe(this.takeUntilDestroyed()).subscribe({
 			next: (value) => {
 				console.log('ScheduleDayTabComponent => date changed:', value.date);

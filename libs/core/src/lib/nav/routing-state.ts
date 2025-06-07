@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class RoutingState {
 	private history: string[] = [];
 
-	constructor(router: Router) {
+	constructor() {
+		const router = inject(Router);
+
 		router.events.subscribe({
 			next: (event) => {
 				if (event instanceof NavigationEnd) {

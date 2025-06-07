@@ -5,13 +5,13 @@ import {
 	computed,
 	effect,
 	EffectRef,
-	Inject,
 	Input,
 	OnChanges,
 	OnDestroy,
 	OnInit,
 	signal,
 	SimpleChanges,
+	inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -31,12 +31,15 @@ import {
 	IonSpinner,
 	IonText,
 	IonToolbar,
+	ModalController,
 } from '@ionic/angular/standalone';
 import { CONTACT_ROLES_BY_TYPE, ContactRolesByType } from '@sneat/app';
 import { getFullName } from '@sneat/auth-models';
 import { countryFlagEmoji } from '@sneat/components';
 import {
+	ClassName,
 	ISelectItem,
+	OverlayController,
 	SelectFromListComponent,
 	SelectorModalComponent,
 } from '@sneat/ui';
@@ -92,6 +95,16 @@ import { IContactSelectorOptions } from './contacts-selector.interfaces';
 		IonHeader,
 		NewContactFormComponent,
 	],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'ContactsSelectorComponent',
+		},
+		{
+			provide: OverlayController,
+			useClass: ModalController,
+		},
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-contacts-selector',
 	templateUrl: './contacts-selector.component.html',
@@ -100,6 +113,11 @@ export class ContactsSelectorComponent
 	extends SelectorModalComponent<IContactWithBriefAndSpace>
 	implements IContactSelectorOptions, OnInit, OnChanges, OnDestroy
 {
+	private readonly contactRolesByType = inject<ContactRolesByType>(
+		CONTACT_ROLES_BY_TYPE,
+	);
+	private readonly contactusSpaceService = inject(ContactusSpaceService);
+
 	private readonly parentChanged = new Subject<void>();
 
 	protected readonly $parentTab = signal<'existing' | 'new'>('existing');
@@ -239,12 +257,8 @@ export class ContactsSelectorComponent
 		return r ? r[0].toUpperCase() + r.substr(1) : 'Contact';
 	}
 
-	constructor(
-		@Inject(CONTACT_ROLES_BY_TYPE)
-		private readonly contactRolesByType: ContactRolesByType,
-		private readonly contactusSpaceService: ContactusSpaceService,
-	) {
-		super('ContactSelectorComponent');
+	constructor() {
+		super();
 		this.setupEffects();
 	}
 
