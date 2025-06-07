@@ -5,7 +5,6 @@ import {
 	OnChanges,
 	Output,
 	SimpleChanges,
-	inject,
 } from '@angular/core';
 import {
 	IonIcon,
@@ -15,10 +14,7 @@ import {
 	IonItemSliding,
 	IonLabel,
 	IonList,
-	ToastController,
 } from '@ionic/angular/standalone';
-import { AssetService } from '@sneat/ext-assetus-components';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { IAssetDocumentContext } from '@sneat/mod-assetus-core';
 import { DocumentsBaseComponent } from '../documents-base.component';
 
@@ -45,12 +41,8 @@ export class DocumentsListComponent
 
 	protected filteredDocs?: IAssetDocumentContext[];
 
-	constructor() {
-		const errorLogger = inject<IErrorLogger>(ErrorLogger);
-		const assetService = inject(AssetService);
-		const toastCtrl = inject(ToastController);
-
-		super(errorLogger, assetService, toastCtrl);
+	public constructor() {
+		super();
 	}
 
 	protected readonly trackById = (i: number, record: { id: string }) =>
