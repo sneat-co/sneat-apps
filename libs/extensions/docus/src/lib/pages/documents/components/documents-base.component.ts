@@ -1,14 +1,15 @@
-import { Directive, Inject, Input } from '@angular/core';
+import { Directive, inject, Inject, Input } from '@angular/core';
 import { IonItemSliding, ToastController } from '@ionic/angular/standalone';
 import { eq } from '@sneat/core';
 import { IAssetDocumentContext } from '@sneat/mod-assetus-core';
 import { AssetService } from '@sneat/ext-assetus-components';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';
+import { SneatBaseComponent } from '@sneat/ui';
 import { ignoreElements } from 'rxjs/operators';
 
 @Directive()
-export abstract class DocumentsBaseComponent {
+export abstract class DocumentsBaseComponent extends SneatBaseComponent {
 	@Input() space?: ISpaceContext;
 	@Input() allDocuments?: IAssetDocumentContext[];
 
@@ -16,11 +17,12 @@ export abstract class DocumentsBaseComponent {
 		inputs: ['space', 'allDocuments'],
 	};
 
-	protected constructor(
-		@Inject(ErrorLogger) private readonly errorLogger: IErrorLogger,
-		protected readonly asset: AssetService,
-		protected readonly toastCtrl: ToastController,
-	) {}
+	protected readonly asset = inject(AssetService);
+	protected readonly toastCtrl = inject(ToastController);
+
+	protected constructor() {
+		super();
+	}
 
 	deleteDocument(
 		asset: IAssetDocumentContext,
@@ -28,7 +30,7 @@ export abstract class DocumentsBaseComponent {
 	): void {
 		this.asset
 			.deleteAsset(this.space?.id || '', asset.id)
-			.pipe(ignoreElements())
+			.pipe(ignoreElements(), this.takeUntilDestroyed())
 			.subscribe({
 				complete: async () => {
 					const toast = await this.toastCtrl.create({

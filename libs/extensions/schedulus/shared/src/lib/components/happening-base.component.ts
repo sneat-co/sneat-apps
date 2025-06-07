@@ -96,7 +96,9 @@ export abstract class HappeningBaseComponent extends WithSpaceInput {
 		HappeningBaseComponentParams,
 	);
 
-	protected constructor(protected changeDetectorRef: ChangeDetectorRef) {
+	protected readonly changeDetectorRef = inject(ChangeDetectorRef);
+
+	protected constructor() {
 		super();
 	}
 

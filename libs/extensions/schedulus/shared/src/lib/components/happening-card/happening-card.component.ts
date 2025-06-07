@@ -20,10 +20,7 @@ import { SelectedContactsPipe } from '@sneat/contactus-shared';
 import { getRelatedItemIDs } from '@sneat/dto';
 import { WdToWeekdayPipe } from '@sneat/mod-schedulus-core';
 import { ClassName } from '@sneat/ui';
-import {
-	HappeningBaseComponent,
-	HappeningBaseComponentParams,
-} from '../happening-base.component';
+import { HappeningBaseComponent } from '../happening-base.component';
 import { IHappeningContactRequest } from '../../services/happening.service';
 import { HappeningSlotsComponent } from '../happening-slots/happening-slots.component';
 import { ContactsAsBadgesComponent } from '@sneat/contactus-shared';
@@ -71,11 +68,8 @@ export class HappeningCardComponent extends HappeningBaseComponent {
 		() => !!this.$relatedContactIDs()?.length,
 	);
 
-	constructor() {
-		// const happeningBaseComponentParams = inject(HappeningBaseComponentParams);
-		const changeDetectorRef = inject(ChangeDetectorRef);
-
-		super(changeDetectorRef);
+	public constructor() {
+		super();
 	}
 
 	protected removeContact(contact: IContactWithBrief): void {
