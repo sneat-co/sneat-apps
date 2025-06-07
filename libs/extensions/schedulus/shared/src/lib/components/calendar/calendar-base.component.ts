@@ -77,13 +77,13 @@ export abstract class CalendarBaseComponent
 
 	private readonly contactusSpaceService = inject(ContactusSpaceService);
 
-	protected constructor(
-		calendariumSpaceService: CalendariumSpaceService,
-		happeningService: HappeningService,
-		calendarDayService: CalendarDayService,
-	) {
+	protected constructor() {
 		super();
 		console.log(`${this.className}:CalendarBaseComponent.constructor()`);
+		const calendariumSpaceService = inject(CalendariumSpaceService);
+		const happeningService = inject(HappeningService);
+		const calendarDayService = inject(CalendarDayService);
+
 		this.spaceDaysProvider = new CalendarDataProvider(
 			this.injector,
 			this.$spaceID,
