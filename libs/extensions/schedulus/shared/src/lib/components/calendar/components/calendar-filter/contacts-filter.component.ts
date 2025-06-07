@@ -34,10 +34,9 @@ import {
 import { ContactusModuleBaseComponent } from '@sneat/contactus-shared';
 import { IIdAndOptionalDbo } from '@sneat/core';
 import { zipMapBriefsWithIDs } from '@sneat/space-models';
+import { ClassName } from '@sneat/ui';
 
 @Component({
-	selector: 'sneat-contacts-filter',
-	templateUrl: 'contacts-filter.component.html',
 	imports: [
 		FormsModule,
 		ContactTitlePipe,
@@ -53,7 +52,10 @@ import { zipMapBriefsWithIDs } from '@sneat/space-models';
 		IonSegment,
 		IonSegmentButton,
 	],
+	providers: [{ provide: ClassName, useValue: 'ContactsFilterComponent' }],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-contacts-filter',
+	templateUrl: 'contacts-filter.component.html',
 })
 export class ContactsFilterComponent extends ContactusModuleBaseComponent {
 	public readonly $contactIDs = input.required<readonly string[]>();
@@ -99,7 +101,7 @@ export class ContactsFilterComponent extends ContactusModuleBaseComponent {
 	constructor() {
 		const contactusSpaceService = inject(ContactusSpaceService);
 
-		super('ContactsFilterComponent', contactusSpaceService);
+		super(contactusSpaceService);
 		const contactusSpaceContextService = new ContactusSpaceContextService(
 			this.destroyed$,
 			this.spaceIDChanged$,

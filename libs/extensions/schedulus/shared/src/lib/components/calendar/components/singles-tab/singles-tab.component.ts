@@ -20,6 +20,7 @@ import { WithSpaceInput } from '@sneat/space-services';
 import { HappeningService } from '../../../../services/happening.service';
 import { Observable, Subscription } from 'rxjs';
 import { SingleHappeningsListComponent } from './single-happenings-list.component';
+import { ClassName } from '@sneat/ui';
 
 @Component({
 	imports: [
@@ -28,6 +29,7 @@ import { SingleHappeningsListComponent } from './single-happenings-list.componen
 		IonSegmentButton,
 		FormsModule,
 	],
+	providers: [{ provide: ClassName, useValue: 'SinglesTabComponent' }],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-singles-tab',
 	templateUrl: 'singles-tab.component.html',
@@ -58,8 +60,8 @@ export class SinglesTabComponent
 		IContactusSpaceDboAndID | undefined
 	>();
 
-	constructor() {
-		super('SinglesTabComponent');
+	public constructor() {
+		super();
 	}
 
 	public ngOnChanges(changes: SimpleChanges): void {

@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, Injector } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { IFilter, SneatApiService } from '@sneat/api';
 import {
@@ -28,8 +28,8 @@ export class AssetService extends ModuleSpaceItemService<
 	constructor() {
 		const afs = inject(AngularFirestore);
 		const sneatApiService = inject(SneatApiService);
-
-		super('assetus', 'assets', afs, sneatApiService);
+		const injector = inject(Injector);
+		super(injector, 'assetus', 'assets', afs, sneatApiService);
 	}
 
 	public deleteAsset(spaceID: string, assetID: string): Observable<void> {

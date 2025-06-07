@@ -10,6 +10,7 @@ import {
 } from '@ionic/angular/standalone';
 import { formNexInAnimation } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
+import { ClassName } from '@sneat/ui';
 import { SpaceRelatedFormComponent } from '../space-related-form.component';
 
 interface Role {
@@ -32,6 +33,7 @@ interface Role {
 		IonItemGroup,
 		IonCheckbox,
 	],
+	providers: [{ provide: ClassName, useValue: 'RolesFormComponent' }],
 })
 export class RolesFormComponent extends SpaceRelatedFormComponent {
 	@Input() isActive = false;
@@ -39,10 +41,6 @@ export class RolesFormComponent extends SpaceRelatedFormComponent {
 	roles?: Role[];
 
 	@Output() readonly rolesChange = new EventEmitter<string[]>();
-
-	public constructor() {
-		super('RolesFormComponent');
-	}
 
 	protected override onSpaceTypeChanged(space?: ISpaceContext): void {
 		super.onSpaceTypeChanged(space);

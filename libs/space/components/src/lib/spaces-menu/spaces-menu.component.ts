@@ -21,15 +21,21 @@ import {
 	spaceContextFromBrief,
 	zipMapBriefsWithIDs,
 } from '@sneat/space-models';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { SpacesListComponent } from '../spaces-list';
 
 @Component({
 	selector: 'sneat-spaces-menu',
 	templateUrl: './spaces-menu.component.html',
 	imports: [SpacesListComponent, IonItem, IonLabel, IonIcon],
-	providers: [UserRequiredFieldsService],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'SpacesMenuComponent',
+		},
+		UserRequiredFieldsService,
+	],
 })
 export class SpacesMenuComponent extends SneatBaseComponent {
 	readonly userService = inject(SneatUserService);
@@ -113,7 +119,7 @@ export class SpacesMenuComponent extends SneatBaseComponent {
 	);
 
 	constructor() {
-		super('SpacesMenuComponent');
+		super();
 		const userService = this.userService;
 
 		userService.userState.pipe(this.takeUntilDestroyed()).subscribe({

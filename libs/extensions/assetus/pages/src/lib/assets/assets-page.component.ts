@@ -34,13 +34,17 @@ import {
 } from '@sneat/space-components';
 import { IAssetContext } from '@sneat/mod-assetus-core';
 import { SpaceServiceModule } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
 import { AssetsBasePage } from '../assets-base.page';
 
 @Component({
 	selector: 'sneat-assets-page',
 	templateUrl: './assets-page.component.html',
-	providers: [SpaceComponentBaseParams],
+	providers: [
+		{ provide: ClassName, useValue: 'AssetsPageComponent' },
+		SpaceComponentBaseParams,
+	],
 	imports: [
 		FormsModule,
 		RouterModule,
@@ -81,7 +85,7 @@ export class AssetsPageComponent extends AssetsBasePage implements OnInit {
 	public segment: 'all' | 'byCategory' = 'byCategory';
 
 	constructor() {
-		super('AssetsPageComponent');
+		super();
 	}
 
 	override ngOnInit(): void {

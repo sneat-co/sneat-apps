@@ -17,6 +17,7 @@ import {
 	IonLabel,
 } from '@ionic/angular/standalone';
 import { virtualSliderAnimations } from '@sneat/components';
+import { ClassName } from '@sneat/ui';
 import { CalendarDayComponent } from './calendar-day.component';
 import { CalendarDayTitleComponent } from './calendar-day-title.component';
 import { ISpaceContext } from '@sneat/space-models';
@@ -43,6 +44,7 @@ import { CalendarDayBaseComponent } from './calendar-day-base.component';
 		IonIcon,
 		IonLabel,
 	],
+	providers: [{ provide: ClassName, useValue: 'ScheduleDayCardComponent' }],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-calendar-day-card',
 	templateUrl: 'calendar-day-card.component.html',
@@ -62,10 +64,10 @@ export class CalendarDayCardComponent
 		console.log('set activeDayPlus()', value, 'shiftDays=', this.shiftDays);
 	}
 
-	constructor() {
+	public constructor() {
 		const scheduleSateService = inject(CalendarStateService);
 
-		super('ScheduleDayCardComponent', scheduleSateService);
+		super(scheduleSateService);
 	}
 
 	public ngOnInit(): void {

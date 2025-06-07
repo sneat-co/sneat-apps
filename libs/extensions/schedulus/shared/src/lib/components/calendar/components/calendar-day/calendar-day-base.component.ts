@@ -19,11 +19,8 @@ export abstract class CalendarDayBaseComponent extends SwipeableBaseComponent {
 		return (this.activeSlide as SwipeableDay) || undefined;
 	}
 
-	protected constructor(
-		className: string,
-		scheduleSateService: CalendarStateService,
-	) {
-		super(className, scheduleSateService, 1);
+	protected constructor(scheduleSateService: CalendarStateService) {
+		super(scheduleSateService, 1);
 	}
 
 	override onDateChanged(changed: IDateChanged): void {

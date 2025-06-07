@@ -4,7 +4,6 @@ import {
 	computed,
 	OnInit,
 	signal,
-	ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ParamMap } from '@angular/router';
@@ -37,9 +36,9 @@ import {
 } from '@sneat/space-components';
 import { IAssetContext } from '@sneat/mod-assetus-core';
 import { SpaceServiceModule } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 
 @Component({
-	providers: [SpaceComponentBaseParams],
 	imports: [
 		FormsModule,
 		SpaceServiceModule,
@@ -53,6 +52,10 @@ import { SpaceServiceModule } from '@sneat/space-services';
 		IonContent,
 		NewContactFormComponent,
 	],
+	providers: [
+		SpaceComponentBaseParams,
+		{ provide: ClassName, useValue: 'NewContactPageComponent' },
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-new-contact-page',
 	templateUrl: './new-contact-page.component.html',
@@ -61,7 +64,7 @@ export class NewContactPageComponent
 	extends SpaceBaseComponent
 	implements OnInit
 {
-	@ViewChild('nameInput', { static: true }) nameInput?: IonInput;
+	// @ViewChild('nameInput', { static: true }) nameInput?: IonInput;
 
 	// TODO: relationship is not implemented yet
 	protected $relation = signal<ContactToContactRelation | undefined>(undefined);
@@ -97,7 +100,7 @@ export class NewContactPageComponent
 	protected readonly $asset = signal<IAssetContext | undefined>(undefined);
 
 	constructor() {
-		super('NewContactPageComponent');
+		super();
 		this.defaultBackPage = 'contacts';
 		this.$asset.set(window.history.state.asset as IAssetContext);
 	}

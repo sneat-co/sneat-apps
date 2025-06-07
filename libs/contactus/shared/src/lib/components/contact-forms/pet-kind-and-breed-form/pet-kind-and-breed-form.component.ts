@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { IonCard, IonItemDivider, IonLabel } from '@ionic/angular/standalone';
-import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
+import { ClassName, ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import { ContactTypeAnimal, PetKind } from '@sneat/contactus-core';
 import { EditContactFormBaseComponent } from '../contact-form-base.component';
 
@@ -8,6 +8,7 @@ import { EditContactFormBaseComponent } from '../contact-form-base.component';
 	imports: [SelectFromListComponent, IonCard, IonItemDivider, IonLabel],
 	selector: 'sneat-pet-kind-and-breed-form',
 	templateUrl: './pet-kind-and-breed-form.component.html',
+	providers: [{ provide: ClassName, useValue: 'PetKindAndBreedFormComponent' }],
 })
 export class PetKindAndBreedFormComponent extends EditContactFormBaseComponent {
 	@Output() readonly petKindChange = new EventEmitter<PetKind | undefined>();
@@ -39,7 +40,7 @@ export class PetKindAndBreedFormComponent extends EditContactFormBaseComponent {
 	];
 
 	public constructor() {
-		super('PetKindAndBreedFormComponent');
+		super();
 	}
 
 	protected onPetKindChanged(petKind: string): void {

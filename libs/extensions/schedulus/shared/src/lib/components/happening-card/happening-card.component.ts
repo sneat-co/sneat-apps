@@ -19,6 +19,7 @@ import { IContactWithBrief } from '@sneat/contactus-core';
 import { SelectedContactsPipe } from '@sneat/contactus-shared';
 import { getRelatedItemIDs } from '@sneat/dto';
 import { WdToWeekdayPipe } from '@sneat/mod-schedulus-core';
+import { ClassName } from '@sneat/ui';
 import {
 	HappeningBaseComponent,
 	HappeningBaseComponentParams,
@@ -29,7 +30,10 @@ import { ContactsAsBadgesComponent } from '@sneat/contactus-shared';
 
 @Component({
 	styleUrls: ['happening-card.component.scss'],
-	providers: [...HappeningBaseComponent.providers],
+	providers: [
+		{ provide: ClassName, useValue: 'HappeningCardComponent' },
+		...HappeningBaseComponent.providers,
+	],
 	...HappeningBaseComponent.metadata,
 	imports: [
 		IonText,
@@ -68,14 +72,10 @@ export class HappeningCardComponent extends HappeningBaseComponent {
 	);
 
 	constructor() {
-		const happeningBaseComponentParams = inject(HappeningBaseComponentParams);
+		// const happeningBaseComponentParams = inject(HappeningBaseComponentParams);
 		const changeDetectorRef = inject(ChangeDetectorRef);
 
-		super(
-			'HappeningCardComponent',
-			happeningBaseComponentParams,
-			changeDetectorRef,
-		);
+		super(changeDetectorRef);
 	}
 
 	protected removeContact(contact: IContactWithBrief): void {

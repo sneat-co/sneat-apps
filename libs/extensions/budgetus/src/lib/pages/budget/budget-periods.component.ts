@@ -14,6 +14,7 @@ import {
 	ShowBy,
 } from '@sneat/mod-schedulus-core';
 import { WithSpaceInput } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { getLiabilitiesByPeriod } from './budget-calc-periods';
 import { LiabilitiesByPeriod, LiabilitiesMode } from './budget-component-types';
 import { BudgetPeriodComponent } from './budget-period.component';
@@ -22,6 +23,7 @@ import { BudgetPeriodComponent } from './budget-period.component';
 	selector: 'sneat-budget-periods',
 	templateUrl: './budget-periods.component.html',
 	imports: [BudgetPeriodComponent, IonAccordionGroup],
+	providers: [{ provide: ClassName, useValue: 'BudgetPeriodsComponent' }],
 })
 export class BudgetPeriodsComponent extends WithSpaceInput {
 	public readonly $recurringHappenings = input.required<
@@ -44,7 +46,7 @@ export class BudgetPeriodsComponent extends WithSpaceInput {
 	@Output() readonly activePeriodChange = new EventEmitter<RepeatPeriod>();
 
 	constructor() {
-		super('BudgetPeriodsComponent');
+		super();
 	}
 
 	protected onPeriodChanged(event: Event): void {

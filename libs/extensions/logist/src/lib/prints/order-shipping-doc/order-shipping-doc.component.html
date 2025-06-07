@@ -61,24 +61,24 @@ SPAIN</pre
 							<ion-col>
 								<ion-item>
 									<ion-label position="stacked" color="medium"
-										>Reference</ion-label
-									>
+										>Reference
+									</ion-label>
 									<ion-input value="ABC1233" />
 								</ion-item>
 							</ion-col>
 							<ion-col>
 								<ion-item>
 									<ion-label position="stacked" color="medium"
-										>Buyer Reference</ion-label
-									>
+										>Buyer Reference
+									</ion-label>
 									<ion-input value="ABC1233" />
 								</ion-item>
 							</ion-col>
 							<ion-col>
 								<ion-item>
 									<ion-label position="stacked" color="medium"
-										>Export Declaration #</ion-label
-									>
+										>Export Declaration #
+									</ion-label>
 									<ion-input value="ABC1233" />
 								</ion-item>
 							</ion-col>
@@ -94,14 +94,14 @@ SPAIN</pre
 						Consignee<br />
 						<pre style="margin: 0"
 							>{{ counterpartyByRole("consignee")?.title }}
-{{ counterpartyByRole("consignee")?.address }}</pre
+							{{ counterpartyByRole("consignee")?.address }}</pre
 						>
 					</ion-card-content>
 				</ion-card>
 			</ion-col>
 			<ion-col>
 				<ion-card>
-					<ion-card-content> Carrier </ion-card-content>
+					<ion-card-content> Carrier</ion-card-content>
 				</ion-card>
 			</ion-col>
 		</ion-row>
@@ -111,9 +111,11 @@ SPAIN</pre
 		<ion-item-divider>
 			<ion-label>Containers</ion-label>
 		</ion-item-divider>
-		<ion-item *ngFor="let container of order?.dbo?.containers">
-			<ion-label>{{ container.type }} - {{ container.number }}</ion-label>
-		</ion-item>
+		@for (container of order?.dbo?.containers; track container.id) {
+			<ion-item>
+				<ion-label>{{ container.type }} - {{ container.number }}</ion-label>
+			</ion-item>
+		}
 	</ion-card>
 	<!--	<ion-card>-->
 	<!--		<ion-card-content>-->

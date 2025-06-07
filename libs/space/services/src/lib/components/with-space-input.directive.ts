@@ -24,8 +24,8 @@ export abstract class WithSpaceInput extends SneatBaseComponent {
 		type: this.$spaceType(),
 	}));
 
-	constructor(className: string) {
-		super(className);
+	constructor() {
+		super();
 		effect(() => {
 			const spaceID = this.$spaceID();
 			if (spaceID !== this.spaceIDChanged.value) {

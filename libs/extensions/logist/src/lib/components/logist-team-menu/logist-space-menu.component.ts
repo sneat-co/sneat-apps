@@ -8,6 +8,7 @@ import {
 import { IonItem, IonLabel, IonList } from '@ionic/angular/standalone';
 import { AuthMenuItemComponent } from '@sneat/auth-ui';
 import { SpaceBaseComponent } from '@sneat/space-components';
+import { ClassName } from '@sneat/ui';
 import { LogistSpaceMenuItemsComponent } from '../logist-team-menu-items/logist-space-menu-items.component';
 
 @Component({
@@ -21,6 +22,7 @@ import { LogistSpaceMenuItemsComponent } from '../logist-team-menu-items/logist-
 		IonItem,
 		IonLabel,
 	],
+	providers: [{ provide: ClassName, useValue: 'LogistSpaceMenuComponent' }],
 })
 export class LogistSpaceMenuComponent
 	extends SpaceBaseComponent
@@ -30,8 +32,8 @@ export class LogistSpaceMenuComponent
 
 	@ViewChild(RouterOutlet) outlet?: RouterOutlet;
 
-	constructor() {
-		super('LogistTeamMenuComponent');
+	public constructor() {
+		super();
 	}
 
 	override ngOnInit(): void {

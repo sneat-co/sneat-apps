@@ -48,6 +48,7 @@ import {
 	IRelationshipRoles,
 	ISpaceModuleItemRef,
 } from '@sneat/dto';
+import { ClassName } from '@sneat/ui';
 import { UserSpaceBriefProvider } from '../../../providers/user-space-brief.provider';
 import { NewContactFormBaseComponent } from '../new-contact/new-contact-form-base.component';
 import { AgeGroupFormComponent } from '../person-forms/age-group';
@@ -126,6 +127,7 @@ export type IPersonFormWizardFields = {
 	],
 	selector: 'sneat-person-wizard',
 	templateUrl: './person-wizard.component.html',
+	providers: [{ provide: ClassName, useValue: 'PersonWizardComponent' }],
 })
 export class PersonWizardComponent
 	extends NewContactFormBaseComponent
@@ -196,10 +198,6 @@ export class PersonWizardComponent
 		this.$spaceID,
 		this.userService,
 	);
-
-	constructor() {
-		super('PersonWizardComponent');
-	}
 
 	public ngOnInit() {
 		this.setContactData(this.$contact().dbo, {

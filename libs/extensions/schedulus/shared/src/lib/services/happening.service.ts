@@ -1,4 +1,4 @@
-import { Injectable, NgModule, inject } from '@angular/core';
+import { Injectable, NgModule, inject, Injector } from '@angular/core';
 import {
 	Firestore as AngularFirestore,
 	orderBy,
@@ -135,7 +135,7 @@ export class HappeningService {
 		this.spaceItemService = new ModuleSpaceItemService<
 			IHappeningBrief,
 			IHappeningDbo
-		>('calendarium', 'happenings', afs, sneatApiService);
+		>(inject(Injector), 'calendarium', 'happenings', afs, sneatApiService);
 	}
 
 	public createHappening(

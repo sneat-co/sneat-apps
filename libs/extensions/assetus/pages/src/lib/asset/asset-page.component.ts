@@ -29,6 +29,7 @@ import {
 	VehicleCardComponent,
 } from '@sneat/ext-assetus-components';
 import { SpaceComponentBaseParams } from '@sneat/space-components';
+import { ClassName } from '@sneat/ui';
 
 interface LiabilityServiceBrief {
 	type: LiabilityServiceType;
@@ -38,7 +39,6 @@ interface LiabilityServiceBrief {
 @Component({
 	selector: 'sneat-asset-page',
 	templateUrl: './asset-page.component.html',
-	providers: [SpaceComponentBaseParams, AssetComponentBaseParams],
 	imports: [
 		FormsModule,
 		VehicleCardComponent,
@@ -63,6 +63,11 @@ interface LiabilityServiceBrief {
 		IonSelect,
 		IonItemGroup,
 	],
+	providers: [
+		{ provide: ClassName, useValue: 'AssetPageComponent' },
+		SpaceComponentBaseParams,
+		AssetComponentBaseParams,
+	],
 })
 export class AssetPageComponent extends AssetBasePage {
 	public segment: 'contacts' | 'taxes' | 'services' = 'services';
@@ -84,7 +89,7 @@ export class AssetPageComponent extends AssetBasePage {
 	constructor() {
 		const params = inject(AssetComponentBaseParams);
 
-		super('AssetPageComponent', params);
+		super(params);
 		// const path = location.pathname;
 		// if (path.includes('vehicle')) {
 		// 	this.assetTypeId = 'vehicles';

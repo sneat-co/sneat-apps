@@ -30,6 +30,7 @@ import {
 	WeekdayNumber,
 } from '@sneat/mod-schedulus-core';
 import { WithSpaceInput } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { Subscription } from 'rxjs';
 import {
 	emptyCalendarFilter,
@@ -52,6 +53,7 @@ import { DaySlotItemComponent } from '../day-slot-item/day-slot-item.component';
 		IonIcon,
 		IonButton,
 	],
+	providers: [{ provide: ClassName, useValue: 'CalendarDayComponent' }],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-calendar-day',
 	templateUrl: './calendar-day.component.html',
@@ -82,8 +84,8 @@ export class CalendarDayComponent
 	public slots?: ISlotUIContext[];
 	public slotsHiddenByFilter?: number;
 
-	constructor() {
-		super('CalendarDayComponent');
+	public constructor() {
+		super();
 		const filterService = this.filterService;
 
 		filterService.filter.pipe(this.takeUntilDestroyed()).subscribe({

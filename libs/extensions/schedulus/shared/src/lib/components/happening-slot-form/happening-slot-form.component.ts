@@ -34,7 +34,7 @@ import {
 	IonSpinner,
 	ModalController,
 } from '@ionic/angular/standalone';
-import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
+import { ClassName, ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import {
 	emptyTiming,
 	IHappeningSlot,
@@ -88,7 +88,10 @@ export interface IHappeningSlotFormComponentInputs {
 		IonSpinner,
 		IonIcon,
 	],
-	providers: [HappeningService],
+	providers: [
+		{ provide: ClassName, useValue: 'RecurringSlotFormComponent' },
+		HappeningService,
+	],
 	selector: 'sneat-happening-slot-form',
 	templateUrl: './happening-slot-form.component.html',
 })
@@ -201,8 +204,8 @@ export class HappeningSlotFormComponent
 		);
 	});
 
-	constructor() {
-		super('RecurringSlotFormComponent', true);
+	public constructor() {
+		super(true);
 		// const now = new Date();
 		const preselectedWd = window.history.state.wd as WeekdayCode2;
 		if (preselectedWd) {

@@ -11,6 +11,7 @@ import {
 	IonTextarea,
 } from '@ionic/angular/standalone';
 import { IAddress } from '@sneat/contactus-core';
+import { ClassName } from '@sneat/ui';
 import {
 	IContainerPoint,
 	ILogistOrderContext,
@@ -43,6 +44,7 @@ interface IPoint {
 		IonCardContent,
 		IonTextarea,
 	],
+	providers: [{ provide: ClassName, useValue: 'ContainerPrintDocComponent' }],
 })
 export class ContainerPrintDocComponent extends OrderPrintPageBaseComponent {
 	protected containerID?: string | null;
@@ -54,10 +56,8 @@ export class ContainerPrintDocComponent extends OrderPrintPageBaseComponent {
 
 	protected total? = { numberOfPallets: 0, grossWeightKg: 0 };
 
-	constructor() {
-		const orderService = inject(LogistOrderService);
-
-		super('OrderShippingDocComponent', orderService);
+	public constructor() {
+		super(inject(LogistOrderService));
 		this.route.queryParamMap
 			.pipe(this.takeUntilDestroyed())
 			.subscribe((params) => {

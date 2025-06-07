@@ -31,7 +31,7 @@ import {
 	IHappeningPrice,
 	TermUnit,
 } from '@sneat/mod-schedulus-core';
-import { SneatBaseModalComponent } from '@sneat/ui';
+import { ClassName, SneatBaseModalComponent } from '@sneat/ui';
 import {
 	HappeningService,
 	IHappeningPricesRequest,
@@ -58,6 +58,7 @@ import { RadioGroupToSelectComponent, SelectOption } from '@sneat/wizard';
 		IonToolbar,
 		IonFooter,
 	],
+	providers: [{ provide: ClassName, useValue: 'HappeningPriceFormComponent' }],
 	selector: 'sneat-happening-price-form',
 	templateUrl: 'happening-price-modal.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -77,8 +78,8 @@ export class HappeningPriceModalComponent extends SneatBaseModalComponent {
 
 	protected isSubmitting = false;
 
-	constructor() {
-		super('HappeningPriceFormComponent');
+	public constructor() {
+		super();
 		this.setTermLengths();
 	}
 

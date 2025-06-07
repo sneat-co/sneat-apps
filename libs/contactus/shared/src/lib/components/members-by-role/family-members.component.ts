@@ -20,6 +20,7 @@ import {
 	MemberGroupTypePets,
 } from '@sneat/contactus-core';
 import { WithSpaceInput } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { MembersByRoleComponent } from '../members-by-role/members-by-role.component';
 import { MemberGroup } from '../members-by-role/member-group';
 import { IIdAndBriefAndOptionalDbo } from '@sneat/core';
@@ -35,6 +36,7 @@ import { zipMapBriefsWithIDs } from '@sneat/space-models';
 		/>
 	`,
 	imports: [MembersByRoleComponent],
+	providers: [{ provide: ClassName, useValue: 'FamilyMembersComponent' }],
 })
 export class FamilyMembersComponent
 	extends WithSpaceInput
@@ -85,10 +87,6 @@ export class FamilyMembersComponent
 		this.pets,
 		this.other,
 	];
-
-	public constructor() {
-		super('FamilyMembersComponent');
-	}
 
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['contactusSpaceDbo']) {

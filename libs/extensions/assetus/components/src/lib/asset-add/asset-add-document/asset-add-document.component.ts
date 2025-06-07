@@ -10,7 +10,7 @@ import {
 	IonItem,
 	IonPopover,
 } from '@ionic/angular/standalone';
-import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
+import { ClassName, ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import { timestamp } from '@sneat/dto';
 import {
 	AssetPossession,
@@ -27,7 +27,13 @@ import { AddAssetBaseComponent } from '../add-asset-base-component';
 @Component({
 	selector: 'sneat-asset-add-document',
 	templateUrl: './asset-add-document.component.html',
-	providers: [SpaceComponentBaseParams],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'AssetAddVehicleComponent',
+		},
+		SpaceComponentBaseParams,
+	],
 	imports: [
 		IonCard,
 		SelectFromListComponent,
@@ -96,7 +102,7 @@ export class AssetAddDocumentComponent
 
 	constructor() {
 		// super('AssetAddVehicleComponent', route, teamParams, assetService);
-		super('AssetAddVehicleComponent');
+		super();
 	}
 
 	protected onAssetChanged(asset: IAssetContext): void {

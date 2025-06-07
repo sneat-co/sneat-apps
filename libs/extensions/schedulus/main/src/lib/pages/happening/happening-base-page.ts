@@ -26,11 +26,10 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 	private calendariumSpaceSub?: Subscription;
 
 	protected constructor(
-		className: string,
 		protected readonly params: HappeningComponentBaseParams, // 	HappeningModuleSchema,
 	) {
 		// 	typeof SingleHappeningKind | typeof RegularHappeningKind>,
-		super(className);
+		super();
 		try {
 			const happening = window.history.state
 				.happening as unknown as IHappeningContext;

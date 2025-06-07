@@ -1,4 +1,4 @@
-import { runInInjectionContext } from '@angular/core';
+import { Injector, runInInjectionContext } from '@angular/core';
 import {
 	collection,
 	CollectionReference,
@@ -18,9 +18,19 @@ export abstract class SpaceModuleService<Dbo> extends ModuleSpaceItemService<
 	Dbo
 > {
 	// protected readonly sfs: SneatFirestoreService<Brief, Dto>;
-	protected constructor(moduleID: string, afs: AngularFirestore) {
+	protected constructor(
+		injector: Injector,
+		moduleID: string,
+		afs: AngularFirestore,
+	) {
 		// this.sfs = new SneatFirestoreService<Brief, Dto>(collectionName, afs);
-		super(moduleID, 'ext', afs, undefined as unknown as SneatApiService);
+		super(
+			injector,
+			moduleID,
+			'ext',
+			afs,
+			undefined as unknown as SneatApiService,
+		);
 	}
 
 	watchSpaceModuleRecord(spaceID: string): Observable<IIdAndOptionalDbo<Dbo>> {

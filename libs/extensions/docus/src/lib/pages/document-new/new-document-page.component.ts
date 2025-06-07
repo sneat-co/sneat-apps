@@ -30,7 +30,7 @@ import {
 	IonToolbar,
 } from '@ionic/angular/standalone';
 import { ContactsSelectorInputComponent } from '@sneat/contactus-shared';
-import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
+import { ClassName, ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import { CountrySelectorComponent } from '@sneat/components';
 import {
 	addSpace,
@@ -62,9 +62,6 @@ import { SpaceNavService, SpaceServiceModule } from '@sneat/space-services';
 import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 
 @Component({
-	selector: 'sneat-new-document',
-	templateUrl: './new-document-page.component.html',
-	providers: [SpaceComponentBaseParams],
 	imports: [
 		FormsModule,
 		CountrySelectorComponent,
@@ -93,6 +90,12 @@ import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
 		IonButton,
 		RouterLink,
 	],
+	providers: [
+		SpaceComponentBaseParams,
+		{ provide: ClassName, useValue: 'NewDocumentPageComponent' },
+	],
+	selector: 'sneat-new-document',
+	templateUrl: './new-document-page.component.html',
 })
 export class NewDocumentPageComponent
 	extends AddAssetBaseComponent
@@ -130,8 +133,8 @@ export class NewDocumentPageComponent
 		() => !!this.$selectedContacts().length,
 	);
 
-	constructor() {
-		super('NewDocumentPageComponent');
+	public constructor() {
+		super();
 		this.trackUrl();
 	}
 

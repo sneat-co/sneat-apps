@@ -23,7 +23,7 @@ import {
 	computeSpaceRefFromSpaceContext,
 	ISpaceContext,
 } from '@sneat/space-models';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { Subscription } from 'rxjs';
 import { ContactsChecklistItemComponent } from './contacts-checklist-item.component';
 
@@ -39,6 +39,12 @@ export interface ICheckChangedArgs {
 	selector: 'sneat-contacts-checklist',
 	templateUrl: './contacts-checklist.component.html',
 	imports: [ContactsChecklistItemComponent, IonItem, IonLabel],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'ContactsChecklistComponent',
+		},
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactsChecklistComponent extends SneatBaseComponent {
@@ -134,7 +140,7 @@ export class ContactsChecklistComponent extends SneatBaseComponent {
 		contact.id;
 
 	constructor() {
-		super('ContactsChecklistComponent');
+		super();
 		effect(() => {
 			const spaceID = this.$spaceID();
 			this.contactusSpaceSubscription?.unsubscribe();

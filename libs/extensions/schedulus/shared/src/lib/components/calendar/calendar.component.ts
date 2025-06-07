@@ -28,6 +28,7 @@ import {
 	WeekdayCode2,
 	IHappeningWithUiState,
 } from '@sneat/mod-schedulus-core';
+import { ClassName } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
 import {
 	CalendarDayService,
@@ -64,6 +65,7 @@ import { SinglesTabComponent } from './components/singles-tab/singles-tab.compon
 		IonLabel,
 	],
 	providers: [
+		{ provide: ClassName, useValue: 'CalendarComponent' },
 		CalendarFilterService,
 		CalendarStateService,
 		CalendariumSpaceService,
@@ -105,12 +107,7 @@ export class CalendarComponent
 		const calendarDayService = inject(CalendarDayService);
 		const calendariumSpaceService = inject(CalendariumSpaceService);
 
-		super(
-			'CalendarComponent',
-			calendariumSpaceService,
-			happeningService,
-			calendarDayService,
-		);
+		super(calendariumSpaceService, happeningService, calendarDayService);
 
 		// setTimeout(() => {
 		// 	// TODO: Fix this dirty workaround for initial animations

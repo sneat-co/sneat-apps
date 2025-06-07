@@ -12,17 +12,23 @@ import {
 	ContactService,
 	IUpdateContactRequest,
 } from '@sneat/contactus-services';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 
 @Component({
 	selector: 'sneat-contact-dob',
 	templateUrl: './contact-dob.component.html',
 	imports: [DateInputComponent],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'ContactDobComponent',
+		},
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactDobComponent extends SneatBaseComponent {
 	constructor() {
-		super('ContactDobComponent');
+		super();
 	}
 
 	public readonly $contact = input.required<IContactContext | undefined>();

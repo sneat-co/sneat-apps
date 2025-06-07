@@ -35,13 +35,9 @@ import {
 	CalendarTab,
 } from '@sneat/extensions-schedulus-shared';
 import { SpaceServiceModule } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 
 @Component({
-	selector: 'sneat-schedule-page',
-	templateUrl: './calendar-page.component.html',
-	styleUrls: ['./calendar-page.component.scss'],
-	providers: [SpaceComponentBaseParams],
-	animations: virtualSliderAnimations,
 	imports: [
 		SpacePageTitleComponent,
 		ScheduleNavServiceModule,
@@ -58,7 +54,15 @@ import { SpaceServiceModule } from '@sneat/space-services';
 		SpaceServiceModule,
 		CalendarComponent,
 	],
+	providers: [
+		{ provide: ClassName, useValue: 'CalendarPageComponent' },
+		SpaceComponentBaseParams,
+	],
+	animations: virtualSliderAnimations,
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'sneat-schedule-page',
+	templateUrl: './calendar-page.component.html',
+	styleUrls: ['./calendar-page.component.scss'],
 })
 export class CalendarPageComponent extends SpaceBaseComponent {
 	private readonly scheduleNavService = inject(ScheduleNavService);
@@ -67,8 +71,8 @@ export class CalendarPageComponent extends SpaceBaseComponent {
 	protected readonly $date = signal('');
 	protected readonly $member = signal<IMemberContext | undefined>(undefined);
 
-	constructor() {
-		super('CalendarPageComponent');
+	public constructor() {
+		super();
 
 		// filterService.filter.subscribe({
 		// 	next: (filter) => {

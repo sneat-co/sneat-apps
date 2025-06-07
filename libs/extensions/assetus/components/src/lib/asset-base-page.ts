@@ -24,11 +24,10 @@ export abstract class AssetBasePage extends SpaceItemPageBaseComponent<
 	protected readonly assetService = this.params.assetService;
 
 	protected constructor(
-		className: string,
 		public readonly params: AssetComponentBaseParams,
 		parentPagePath = 'assets',
 	) {
-		super(className, parentPagePath, 'asset', params.assetService);
+		super(parentPagePath, 'asset', params.assetService);
 	}
 
 	protected override watchItemChanges(): Observable<IAssetContext> {

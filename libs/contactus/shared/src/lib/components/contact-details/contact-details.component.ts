@@ -40,6 +40,7 @@ import {
 	ISpaceModuleItemRef,
 } from '@sneat/dto';
 import { WithSpaceInput } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { ContactNamesModalComponent } from '../../modals/contact-names-modal/contact-names-modal.component';
 import { ContactTitlePipe } from '../../pipes';
 import { UserSpaceBriefProvider } from '../../providers/user-space-brief.provider';
@@ -53,7 +54,6 @@ import { GenderFormComponent } from '../contact-forms';
 import { RelatedContactsComponent } from './related-contacts.component';
 
 @Component({
-	providers: [ModalController],
 	imports: [
 		ContactDobComponent,
 		ContactModulesMenuComponent,
@@ -82,6 +82,10 @@ import { RelatedContactsComponent } from './related-contacts.component';
 	],
 	selector: 'sneat-contact-details',
 	templateUrl: './contact-details.component.html',
+	providers: [
+		{ provide: ClassName, useValue: 'ContactDetailsComponent' },
+		ModalController,
+	],
 })
 export class ContactDetailsComponent extends WithSpaceInput {
 	public readonly $contact = input.required<IContactContext>();
@@ -145,10 +149,6 @@ export class ContactDetailsComponent extends WithSpaceInput {
 		'peers';
 
 	private readonly userService = inject(SneatUserService);
-
-	constructor() {
-		super('ContactDetailsComponent');
-	}
 
 	// this.setRelatedToCurrentUser();
 	// this.setRelatedAs(spaceID, this.userContactID);

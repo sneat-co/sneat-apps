@@ -39,7 +39,7 @@ import {
 	IAppInfo,
 } from '@sneat/core';
 import { RandomIdService } from '@sneat/random';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { Subject, takeUntil } from 'rxjs';
 import {
 	EmailFormSigningWith,
@@ -76,7 +76,13 @@ type Action = 'join' | 'refuse'; // TODO: inject provider for action description
 		IonList,
 		IonGrid,
 	],
-	providers: [RandomIdService],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'LoginPageComponent',
+		},
+		RandomIdService,
+	],
 })
 export class LoginPageComponent extends SneatBaseComponent {
 	private readonly analyticsService =
@@ -103,7 +109,7 @@ export class LoginPageComponent extends SneatBaseComponent {
 	protected readonly appTitle: string;
 
 	constructor() {
-		super('LoginPageComponent');
+		super();
 		const appInfo = this.appInfo;
 
 		console.log('LoginPageComponent.constructor()');

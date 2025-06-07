@@ -35,6 +35,7 @@ import {
 import { MembersShortListCardComponent } from '@sneat/contactus-shared';
 import { IIdAndOptionalDbo, TopMenuService } from '@sneat/core';
 import { SpaceServiceModule } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { SpacePageBaseComponent } from './SpacePageBaseComponent';
 import { CalendarBriefComponent } from '@sneat/extensions-schedulus-shared';
 
@@ -66,7 +67,10 @@ import { CalendarBriefComponent } from '@sneat/extensions-schedulus-shared';
 		SpaceServiceModule,
 		IonRouterLinkWithHref,
 	],
-	providers: [ContactusNavService],
+	providers: [
+		{ provide: ClassName, useValue: 'SpacePageComponent' },
+		ContactusNavService,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-space-page',
 	templateUrl: './space-page.component.html',
@@ -85,7 +89,7 @@ export class SpacePageComponent extends SpacePageBaseComponent {
 		const topMenuService = inject(TopMenuService);
 		const cd = inject(ChangeDetectorRef);
 
-		super('SpacePageComponent', topMenuService, cd);
+		super(topMenuService, cd);
 		new ContactusSpaceContextService(
 			this.destroyed$,
 			this.spaceIDChanged$,

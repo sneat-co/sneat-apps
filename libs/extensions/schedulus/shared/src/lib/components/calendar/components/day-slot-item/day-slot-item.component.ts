@@ -21,6 +21,7 @@ import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
 import { ContactsSelectorModule } from '@sneat/contactus-shared';
 import { WithSpaceInput } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import {
 	CalendarNavService,
 	CalendarNavServicesModule,
@@ -32,7 +33,6 @@ import { HappeningSlotParticipantsComponent } from '../../../happening-slot-part
 import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
 
 @Component({
-	providers: [ContactusSpaceService],
 	imports: [
 		HappeningServiceModule,
 		ContactsSelectorModule,
@@ -48,6 +48,10 @@ import { TimingBadgeComponent } from '../timing-badge/timing-badge.component';
 		IonBadge,
 		IonButtons,
 		IonButton,
+	],
+	providers: [
+		{ provide: ClassName, useValue: 'DaySlotItemComponent' },
+		ContactusSpaceService,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-day-slot-item',
@@ -71,8 +75,8 @@ export class DaySlotItemComponent extends WithSpaceInput {
 		return happening?.brief?.status === 'canceled' || !!adjustment?.canceled;
 	});
 
-	constructor() {
-		super('DaySlotItemComponent');
+	public constructor() {
+		super();
 	}
 
 	protected onSlotClicked(event: Event): void {

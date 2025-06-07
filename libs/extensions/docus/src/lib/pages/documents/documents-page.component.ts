@@ -33,13 +33,13 @@ import {
 	IAssetDocumentExtra,
 } from '@sneat/mod-assetus-core';
 import { SpaceServiceModule } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { DocumentsByTypeComponent } from './components/documents-by-type/documents-by-type.component';
 import { DocumentsListComponent } from './components/documents-list/documents-list.component';
 
 @Component({
 	selector: 'sneat-documents-page',
 	templateUrl: './documents-page.component.html',
-	providers: [SpaceComponentBaseParams],
 	imports: [
 		DocumentsListComponent,
 		FilterItemComponent,
@@ -63,6 +63,10 @@ import { DocumentsListComponent } from './components/documents-list/documents-li
 		IonCard,
 		IonFooter,
 	],
+	providers: [
+		{ provide: ClassName, useValue: 'DocumentsPageComponent' },
+		SpaceComponentBaseParams,
+	],
 })
 export class DocumentsPageComponent extends SpaceItemsBaseComponent {
 	private assetService = inject(AssetService);
@@ -75,7 +79,7 @@ export class DocumentsPageComponent extends SpaceItemsBaseComponent {
 	protected $filter = signal<string>('');
 
 	constructor() {
-		super('DocumentsPageComponent', '');
+		super('');
 		this.documents = window.history.state.documents as IAssetContext<
 			'document',
 			IAssetDocumentExtra

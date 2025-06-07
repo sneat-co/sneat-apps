@@ -19,7 +19,7 @@ import {
 	IonLabel,
 } from '@ionic/angular/standalone';
 import { SneatUserService } from '@sneat/auth-core';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { map, race, takeUntil } from 'rxjs';
 import { CountryInputComponent } from '../country-input';
 import { countries, ICountry } from '../country-selector';
@@ -36,6 +36,12 @@ let ipCountryCached: string | undefined; // TODO: Should have expiration?
 		IonIcon,
 		IonLabel,
 		IonCard,
+	],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'UserCountryComponent',
+		},
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-user-country',
@@ -74,7 +80,7 @@ export class UserCountryComponent
 	}
 
 	constructor() {
-		super('UserCountryComponent');
+		super();
 		this.trackUserRecord();
 		// this.getIpCountry();
 		effect(() => {

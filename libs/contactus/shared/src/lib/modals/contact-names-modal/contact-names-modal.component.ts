@@ -22,7 +22,7 @@ import {
 	IUpdateContactRequest,
 } from '@sneat/contactus-services';
 import { NamesFormComponent } from '../../components/contact-forms/person-forms/names-form';
-import { SneatBaseModalComponent } from '@sneat/ui';
+import { ClassName, SneatBaseModalComponent } from '@sneat/ui';
 
 @Component({
 	imports: [
@@ -37,6 +37,12 @@ import { SneatBaseModalComponent } from '@sneat/ui';
 		IonFooter,
 		IonLabel,
 	],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'ContactNamesModalComponent',
+		},
+	],
 	selector: 'sneat-contact-names-modal',
 	templateUrl: './contact-names-modal.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -49,7 +55,7 @@ export class ContactNamesModalComponent extends SneatBaseModalComponent {
 	private readonly contactService = inject(ContactService);
 
 	constructor() {
-		super('ContactNamesModalComponent');
+		super();
 	}
 
 	protected readonly $saving = signal(false);

@@ -9,7 +9,7 @@ import {
 } from '@ionic/angular/standalone';
 import { SneatUserService } from '@sneat/auth-core';
 import { IUserRecord } from '@sneat/auth-models';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 
 @Component({
 	selector: 'sneat-beta-flags',
@@ -22,6 +22,12 @@ import { SneatBaseComponent } from '@sneat/ui';
 		IonLabel,
 		IonItem,
 	],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'BetaFlagsComponent',
+		},
+	],
 })
 export class BetaFlagsComponent extends SneatBaseComponent {
 	protected readonly $userRecord = signal<IUserRecord | undefined | null>(
@@ -31,7 +37,7 @@ export class BetaFlagsComponent extends SneatBaseComponent {
 	constructor() {
 		const userService = inject(SneatUserService);
 
-		super('BetaFlagsComponent');
+		super();
 		userService.userState.pipe(this.takeUntilDestroyed()).subscribe({
 			next: (user) => this.$userRecord.set(user.record),
 		});

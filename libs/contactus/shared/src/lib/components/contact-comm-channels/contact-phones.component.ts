@@ -3,9 +3,16 @@ import {
 	CommChannelsListComponent,
 	importsForChannelsListComponent,
 } from './comm-channels-list.component';
+import { ClassName } from '@sneat/ui';
 
 @Component({
 	imports: importsForChannelsListComponent,
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'ContactPhonesComponent',
+		},
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-contact-phones',
 	templateUrl: 'comm-channels-list.component.html',
@@ -13,7 +20,6 @@ import {
 export class ContactPhonesComponent extends CommChannelsListComponent {
 	constructor() {
 		super(
-			'ContactPhonesComponent',
 			'phone',
 			'Phones',
 			'Phone #',

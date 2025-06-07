@@ -5,7 +5,6 @@ import {
 	OnChanges,
 	Output,
 	SimpleChanges,
-	inject,
 } from '@angular/core';
 import {
 	IonButton,
@@ -18,8 +17,12 @@ import {
 	IonList,
 	ModalController,
 } from '@ionic/angular/standalone';
+import { ClassName } from '../../components';
 import { ISelectItem, ISelectItemEvent } from '../selector-interfaces';
-import { SelectorBaseComponent } from '../selector-base.component';
+import {
+	OverlayController,
+	SelectorBaseComponent,
+} from '../selector-base.component';
 
 @Component({
 	selector: 'sneat-multi-selector',
@@ -33,6 +36,16 @@ import { SelectorBaseComponent } from '../selector-base.component';
 		IonItem,
 		IonIcon,
 		IonList,
+	],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'MultiSelectorComponent',
+		},
+		{
+			provide: OverlayController,
+			useClass: ModalController,
+		},
 	],
 })
 export class MultiSelectorComponent<T = ISelectItem>
@@ -51,9 +64,7 @@ export class MultiSelectorComponent<T = ISelectItem>
 	protected selectedItems?: ISelectItem[];
 
 	constructor() {
-		const modalController = inject(ModalController);
-
-		super('MultiSelectorComponent', modalController);
+		super();
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {

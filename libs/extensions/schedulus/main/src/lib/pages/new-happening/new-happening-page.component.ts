@@ -17,6 +17,7 @@ import {
 } from '@sneat/mod-schedulus-core';
 import { SpaceComponentBaseParams } from '@sneat/space-components';
 import { SpaceServiceModule } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { first } from 'rxjs';
 import { CalendarBasePage } from '../calendar-base-page';
 import { HappeningFormComponent } from '@sneat/extensions-schedulus-shared';
@@ -37,7 +38,10 @@ import { HappeningFormComponent } from '@sneat/extensions-schedulus-shared';
 		IonTitle,
 		IonContent,
 	],
-	providers: [SpaceComponentBaseParams],
+	providers: [
+		{ provide: ClassName, useValue: 'NewHappeningPageComponent' },
+		SpaceComponentBaseParams,
+	],
 })
 export class NewHappeningPageComponent extends CalendarBasePage {
 	@ViewChild('happeningPageFormComponent')
@@ -55,7 +59,7 @@ export class NewHappeningPageComponent extends CalendarBasePage {
 	});
 
 	constructor() {
-		super('NewHappeningPageComponent');
+		super();
 		this.isToDo = location.pathname.includes('/new-task');
 		this.date = (history.state.date as string) || '';
 		console.log('date', this.date);

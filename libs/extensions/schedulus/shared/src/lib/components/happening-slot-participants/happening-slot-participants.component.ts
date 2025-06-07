@@ -18,13 +18,16 @@ import { ContactusSpaceService } from '@sneat/contactus-services';
 import { getRelatedItemByIDs, getRelatedItems } from '@sneat/dto';
 import { ISlotUIContext } from '@sneat/mod-schedulus-core';
 import { ISpaceRef } from '@sneat/core';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 
 @Component({
+	imports: [PersonNamesPipe, IonBadge, IonLabel],
+	providers: [
+		{ provide: ClassName, useValue: 'HappeningSlotParticipantsComponent' },
+	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-happening-slot-participants',
 	templateUrl: 'happening-slot-participants.component.html',
-	imports: [PersonNamesPipe, IonBadge, IonLabel],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HappeningSlotParticipantsComponent extends SneatBaseComponent {
 	private readonly changedDetectorRef = inject(ChangeDetectorRef);
@@ -79,8 +82,8 @@ export class HappeningSlotParticipantsComponent extends SneatBaseComponent {
 
 	// private readonly spaceID$ = new Subject<string>();
 
-	constructor() {
-		super('HappeningSlotParticipantsComponent');
+	public constructor() {
+		super();
 		effect(() => {
 			const spaceID = this.$spaceID();
 			this.onSpaceIDChanged(spaceID);

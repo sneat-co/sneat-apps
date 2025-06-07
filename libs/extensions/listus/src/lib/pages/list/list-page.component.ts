@@ -39,6 +39,7 @@ import { ContactusServicesModule } from '@sneat/contactus-services';
 import { SharedWithComponent } from '@sneat/contactus-shared';
 import { RandomIdService } from '@sneat/random';
 import { SpaceServiceModule } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { ListusCoreServicesModule } from '../../services';
 import { SpaceComponentBaseParams } from '@sneat/space-components';
 import { IListInfo, IListItemBrief } from '../../dto';
@@ -103,6 +104,7 @@ type ListPagePerforming =
 	],
 	styleUrls: ['./list-page.component.scss'],
 	providers: [
+		{ provide: ClassName, useValue: 'ListPageComponent' },
 		SpaceComponentBaseParams,
 		ListusComponentBaseParams,
 		ListDialogsService,
@@ -135,7 +137,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 	constructor() {
 		const params = inject(ListusComponentBaseParams);
 
-		super('ListPageComponent', params);
+		super(params);
 		const listusAppStateService = this.listusAppStateService;
 
 		console.log('ListPageComponent.constructor(), userId:', this.currentUserId);

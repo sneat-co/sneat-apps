@@ -34,6 +34,7 @@ import { filter } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SpaceBaseComponent } from '../space-base-component.directive';
 import { SpaceComponentBaseParams } from '../space-component-base-params.service';
+import { ClassName } from '@sneat/ui';
 
 @Component({
 	selector: 'sneat-space-menu',
@@ -54,7 +55,13 @@ import { SpaceComponentBaseParams } from '../space-component-base-params.service
 		IonButtons,
 		IonButton,
 	],
-	providers: [SpaceComponentBaseParams],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'SpaceMenuComponent',
+		},
+		SpaceComponentBaseParams,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpaceMenuComponent extends SpaceBaseComponent {
@@ -72,7 +79,7 @@ export class SpaceMenuComponent extends SpaceBaseComponent {
 	constructor() {
 		const router = inject(Router);
 
-		super('SpaceMenuComponent');
+		super();
 		this.spaceParams.userService.userState
 			.pipe(takeUntil(this.destroyed$))
 			.subscribe({

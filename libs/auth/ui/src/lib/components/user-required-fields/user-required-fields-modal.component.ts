@@ -28,7 +28,7 @@ import {
 	UserRecordService,
 } from '@sneat/auth-core';
 import { AgeGroupID, Gender } from '@sneat/core';
-import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
+import { ClassName, ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import { ISpaceContext } from '@sneat/space-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
@@ -52,6 +52,12 @@ import { takeUntil } from 'rxjs';
 		IonItemDivider,
 		IonLabel,
 		IonFooter,
+	],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'UserRequiredFieldsModalComponent',
+		},
 	],
 })
 export class UserRequiredFieldsModalComponent extends SneatBaseComponent {
@@ -90,7 +96,7 @@ export class UserRequiredFieldsModalComponent extends SneatBaseComponent {
 	protected userState?: ISneatUserState;
 
 	constructor() {
-		super('UserRequiredFieldsModalComponent');
+		super();
 		this.sneatUserService.userState.pipe(takeUntil(this.destroyed$)).subscribe({
 			next: (userState) => (this.userState = userState),
 		});

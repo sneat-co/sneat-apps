@@ -5,6 +5,7 @@ import {
 } from '@sneat/contactus-services';
 import { AgeGroupID } from '@sneat/core';
 import { WithSpaceInput } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import {
 	OptionEvent,
 	Option,
@@ -16,13 +17,10 @@ import {
 	template:
 		'<sneat-inlist-options [options]="ageOptions" [selectedOption]="selectedOption" (optionSelected)="onAgeGroupSelected($event)"/>',
 	imports: [InlistOptionsComponent],
+	providers: [{ provide: ClassName, useValue: 'InlistAgeGroupComponent' }],
 })
 export class InlistAgeGroupComponent extends WithSpaceInput {
 	private readonly contactService = inject(ContactService);
-
-	constructor() {
-		super('InlistAgeGroupComponent');
-	}
 
 	protected selectedOption?: Option;
 

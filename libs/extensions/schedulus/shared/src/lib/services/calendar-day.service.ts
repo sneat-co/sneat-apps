@@ -1,4 +1,4 @@
-import { Injectable, NgModule, inject } from '@angular/core';
+import { Injectable, NgModule, inject, Injector } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { ICalendarDayBrief, ICalendarDayDbo } from '@sneat/mod-schedulus-core';
@@ -20,9 +20,10 @@ export class CalendarDayService {
 	constructor() {
 		const afs = this.afs;
 		const sneatApiService = inject(SneatApiService);
-
+		const injector = inject(Injector);
 		console.log('CalendarDayService.constructor()');
 		this.spaceItemService = new ModuleSpaceItemService(
+			injector,
 			'calendarium',
 			'days',
 			afs,

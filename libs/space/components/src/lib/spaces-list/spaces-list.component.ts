@@ -20,7 +20,7 @@ import { SpaceType } from '@sneat/core';
 import { ICreateSpaceRequest, ISpaceContext } from '@sneat/space-models';
 import { SpaceNavService, SpaceService } from '@sneat/space-services';
 import { SneatUserService } from '@sneat/auth-core';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { first } from 'rxjs';
 
 @Component({
@@ -34,6 +34,12 @@ import { first } from 'rxjs';
 		IonLabel,
 		IonBadge,
 		IonSpinner,
+	],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'SpacesListComponent',
+		},
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -54,7 +60,7 @@ export class SpacesListComponent extends SneatBaseComponent {
 	@Output() readonly beforeNavigateToSpace = new EventEmitter<ISpaceContext>();
 
 	constructor() {
-		super('SpacesListComponent');
+		super();
 	}
 
 	protected goSpace(event: Event, space: ISpaceContext): boolean {

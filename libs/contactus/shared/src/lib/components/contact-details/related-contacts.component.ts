@@ -30,6 +30,7 @@ import {
 } from '@sneat/dto';
 import { WithSpaceInput } from '@sneat/space-services';
 import { Subscription } from 'rxjs';
+import { ClassName } from '@sneat/ui';
 
 interface IRelatedGroup {
 	readonly title: string;
@@ -83,6 +84,7 @@ const emptyRelatedGroupRoles = emptyRelatedGroups
 		LowerCasePipe,
 		IonSpinner,
 	],
+	providers: [{ provide: ClassName, useValue: 'RelatedContactsComponent' }],
 })
 export class RelatedContactsComponent extends WithSpaceInput {
 	private readonly contactusSpaceService = inject(ContactusSpaceService);
@@ -142,7 +144,7 @@ export class RelatedContactsComponent extends WithSpaceInput {
 	});
 
 	constructor() {
-		super('RelatedContactsComponent');
+		super();
 		let prevSpaceID: string;
 		effect(() => {
 			const spaceID = this.$spaceID();

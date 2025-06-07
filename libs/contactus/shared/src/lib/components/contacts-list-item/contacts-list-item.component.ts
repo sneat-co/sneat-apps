@@ -37,7 +37,7 @@ import { ContactService } from '@sneat/contactus-services';
 import { IRelatedTo } from '@sneat/dto';
 import { ISpaceContext } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { PersonTitle } from '../../pipes';
 import { ICheckChangedArgs } from '../contacts-checklist';
 import { RelatedAsComponent } from './related-as.component';
@@ -65,6 +65,12 @@ import { RelatedAsComponent } from './related-as.component';
 		IonTextarea,
 		IonItemOptions,
 		IonItemOption,
+	],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'ContactsListItemComponent',
+		},
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -120,7 +126,7 @@ export class ContactsListItemComponent extends SneatBaseComponent {
 	}
 
 	constructor() {
-		super('ContactsListItemComponent');
+		super();
 	}
 
 	// @Input() clicked: (contactID: string, event: Event) => void = () => void 0;

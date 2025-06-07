@@ -1,4 +1,4 @@
-import { Injectable, NgModule, inject } from '@angular/core';
+import { Injectable, NgModule, inject, Injector } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SpaceModuleService } from '@sneat/space-services';
 import { ITrackusSpaceDbo } from './dbo/i-trackus-space-dbo';
@@ -7,8 +7,8 @@ import { ITrackusSpaceDbo } from './dbo/i-trackus-space-dbo';
 export class TrackusSpaceService extends SpaceModuleService<ITrackusSpaceDbo> {
 	constructor() {
 		const afs = inject(AngularFirestore);
-
-		super('trackus', afs);
+		const injector = inject(Injector);
+		super(injector, 'trackus', afs);
 	}
 }
 

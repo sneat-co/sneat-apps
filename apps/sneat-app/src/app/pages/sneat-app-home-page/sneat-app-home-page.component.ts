@@ -27,7 +27,7 @@ import {
 } from '@ionic/angular/standalone';
 import { AuthStatus, SneatAuthStateService } from '@sneat/auth-core';
 import { UserCountryComponent } from '@sneat/components';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { ForEducatorsComponent } from './for-educators.component';
 import { ForFamiliesComponent } from './for-families.component';
 import { ForWorkComponent } from './for-work.component';
@@ -60,6 +60,12 @@ import { ForWorkComponent } from './for-work.component';
 		JsonPipe,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'SneatAppHomePageComponent',
+		},
+	],
 })
 export class SneatAppHomePageComponent extends SneatBaseComponent {
 	protected readonly $authStatus = signal<AuthStatus | undefined>(undefined);
@@ -72,10 +78,9 @@ export class SneatAppHomePageComponent extends SneatBaseComponent {
 
 	protected readonly $err = signal<unknown>(undefined);
 
-	constructor() {
+	public constructor() {
+		super();
 		const authStateService = inject(SneatAuthStateService);
-
-		super('SneatAppHomePageComponent');
 		authStateService.authState.pipe(this.takeUntilDestroyed()).subscribe({
 			next: (authState) => {
 				this.$authStatus.set(authState.status);

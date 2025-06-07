@@ -41,6 +41,7 @@ import {
 	ListusCoreServicesModule,
 } from '../../services';
 import { NewListDialogComponent } from './new-list-dialog.component';
+import { ClassName } from '@sneat/ui';
 
 @Component({
 	selector: 'sneat-lists-page',
@@ -73,7 +74,11 @@ import { NewListDialogComponent } from './new-list-dialog.component';
 		IonItemOption,
 		IonInput,
 	],
-	providers: [SpaceComponentBaseParams, ListusComponentBaseParams],
+	providers: [
+		{ provide: ClassName, useValue: 'ListsPageComponent' },
+		SpaceComponentBaseParams,
+		ListusComponentBaseParams,
+	],
 })
 export class ListsPageComponent extends SpaceBaseComponent {
 	private readonly params = inject(ListusComponentBaseParams);
@@ -90,7 +95,7 @@ export class ListsPageComponent extends SpaceBaseComponent {
 	private collapsedGroups?: string[];
 
 	constructor() {
-		super('ListsPageComponent');
+		super();
 		// this.preloaderService.markAsPreloaded('lists');
 		this.listusAppStateService.changed.subscribe((appState) => {
 			this.collapsedGroups = appState.collapsedGroups;

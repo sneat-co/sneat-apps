@@ -28,7 +28,7 @@ import {
 	spaceContextFromBrief,
 	zipMapBriefsWithIDs,
 } from '@sneat/space-models';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { Subscription, takeUntil } from 'rxjs';
 
 @Component({
@@ -47,6 +47,12 @@ import { Subscription, takeUntil } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-for-space-card',
 	templateUrl: 'for-space-type-card.component.html',
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'ForSpaceTypeCardComponent',
+		},
+	],
 })
 export class ForSpaceTypeCardComponent
 	extends SneatBaseComponent
@@ -66,8 +72,8 @@ export class ForSpaceTypeCardComponent
 
 	private subscription?: Subscription;
 
-	constructor() {
-		super('ForSpaceTypeCardComponent');
+	public constructor() {
+		super();
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {

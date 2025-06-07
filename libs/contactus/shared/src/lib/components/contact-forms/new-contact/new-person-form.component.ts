@@ -40,6 +40,7 @@ import {
 import { IAssetContext } from '@sneat/mod-assetus-core';
 import { first, Observable, Subject, takeUntil } from 'rxjs';
 import { NewContactFormBaseComponent } from './new-contact-form-base.component';
+import { ClassName } from '@sneat/ui';
 
 export type OptionalContactRoleIdAndBrief =
 	| IContactRoleWithIdAndBrief
@@ -60,6 +61,7 @@ export type NewContactFormCommand = 'create' | 'reset';
 		IonButton,
 		AssetusServicesModule,
 	],
+	providers: [{ provide: ClassName, useValue: 'NewContactFormComponent' }],
 	selector: 'sneat-new-person-form',
 	templateUrl: './new-person-form.component.html',
 })
@@ -128,7 +130,7 @@ export class NewPersonFormComponent
 	private readonly contactRoleService = inject(ContactRoleService);
 
 	public constructor() {
-		super('NewContactFormComponent');
+		super();
 		this.setupEffects();
 	}
 

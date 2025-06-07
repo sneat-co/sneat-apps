@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import {
 	IonBackButton,
@@ -13,6 +12,7 @@ import {
 } from '@ionic/angular/standalone';
 import { excludeEmpty } from '@sneat/core';
 import { SpaceBaseComponent } from '@sneat/space-components';
+import { ClassName } from '@sneat/ui';
 import { Subscription, takeUntil } from 'rxjs';
 import { OrdersGridComponent } from '../../components/orders-grid/orders-grid.component';
 import { OrdersListComponent } from '../../components/orders-list/orders-list.component';
@@ -36,10 +36,10 @@ const defaultFilter: IOrdersFilter = { status: 'active' };
 		IonLabel,
 		IonContent,
 		OrdersFilterComponent,
-		NgIf,
 		OrdersGridComponent,
 		OrdersListComponent,
 	],
+	providers: [{ provide: ClassName, useValue: 'OrdersPageComponent' }],
 })
 export class LogistOrdersPageComponent extends SpaceBaseComponent {
 	private readonly ordersService = inject(LogistOrderService);
@@ -52,8 +52,8 @@ export class LogistOrdersPageComponent extends SpaceBaseComponent {
 
 	protected viewMode: 'list' | 'grid' = 'grid';
 
-	constructor() {
-		super('OrdersPageComponent');
+	public constructor() {
+		super();
 	}
 
 	protected override onSpaceIdChanged() {

@@ -14,6 +14,7 @@ import {
 	SpacePageBaseComponent,
 } from '@sneat/space-components';
 import { SpaceServiceModule } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 
 @Component({
 	selector: 'sneat-debtus-home-page',
@@ -29,10 +30,16 @@ import { SpaceServiceModule } from '@sneat/space-services';
 		IonBackButton,
 		IonContent,
 	],
-	providers: [SpaceComponentBaseParams],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'DebtusHomePageComponent',
+		},
+		SpaceComponentBaseParams,
+	],
 })
 export class DebtusHomePageComponent extends SpacePageBaseComponent {
 	constructor() {
-		super('DebtusHomePageComponent');
+		super();
 	}
 }

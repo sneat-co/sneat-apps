@@ -188,9 +188,8 @@ export class HappeningFormComponent
 	};
 
 	constructor() {
+		super();
 		const routingState = inject(RoutingState);
-
-		super('');
 		this.happeningTitle.registerOnChange(this.onHappeningTitleChanged);
 		this.hasNavHistory = routingState.hasHistory();
 		effect(() => {

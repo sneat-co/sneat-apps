@@ -31,12 +31,15 @@ import {
 	IonSpinner,
 	IonText,
 	IonToolbar,
+	ModalController,
 } from '@ionic/angular/standalone';
 import { CONTACT_ROLES_BY_TYPE, ContactRolesByType } from '@sneat/app';
 import { getFullName } from '@sneat/auth-models';
 import { countryFlagEmoji } from '@sneat/components';
 import {
+	ClassName,
 	ISelectItem,
+	OverlayController,
 	SelectFromListComponent,
 	SelectorModalComponent,
 } from '@sneat/ui';
@@ -91,6 +94,16 @@ import { IContactSelectorOptions } from './contacts-selector.interfaces';
 		IonItemDivider,
 		IonHeader,
 		NewContactFormComponent,
+	],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'ContactsSelectorComponent',
+		},
+		{
+			provide: OverlayController,
+			useClass: ModalController,
+		},
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-contacts-selector',
@@ -245,7 +258,7 @@ export class ContactsSelectorComponent
 	}
 
 	constructor() {
-		super('ContactSelectorComponent');
+		super();
 		this.setupEffects();
 	}
 

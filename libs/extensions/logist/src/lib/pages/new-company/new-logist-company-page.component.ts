@@ -15,7 +15,7 @@ import {
 } from '@ionic/angular/standalone';
 import { CONTACT_ROLES_BY_TYPE, IContactRole } from '@sneat/app';
 import { NewCompanyFormComponent } from '@sneat/contactus-shared';
-import { ISelectItem } from '@sneat/ui';
+import { ClassName, ISelectItem } from '@sneat/ui';
 import {
 	ContactRole,
 	NewContactBaseDboAndSpaceRef,
@@ -35,6 +35,9 @@ import { first } from 'rxjs';
 		IonButtons,
 		IonBackButton,
 		IonTitle,
+	],
+	providers: [
+		{ provide: ClassName, useValue: 'NewLogistCompanyPageComponent' },
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -61,8 +64,8 @@ export class NewLogistCompanyPageComponent
 		dbo: { type: 'company' },
 	});
 
-	constructor() {
-		super('NewLogistCompanyPageComponent');
+	public constructor() {
+		super();
 		const contactRolesByType = this.contactRolesByType;
 
 		this.contactTypes = contactRolesByType['company'];

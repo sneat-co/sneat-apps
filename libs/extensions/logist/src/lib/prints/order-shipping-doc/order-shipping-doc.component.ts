@@ -11,6 +11,7 @@ import {
 	IonLabel,
 	IonRow,
 } from '@ionic/angular/standalone';
+import { ClassName } from '@sneat/ui';
 import { LogistOrderService } from '../../services';
 import { OrderPrintPageBaseComponent } from '../order-print-page-base.component';
 
@@ -26,14 +27,12 @@ import { OrderPrintPageBaseComponent } from '../order-print-page-base.component'
 		IonInput,
 		IonItem,
 		IonLabel,
-		NgForOf,
 		IonItemDivider,
 	],
+	providers: [{ provide: ClassName, useValue: 'OrderShippingDocComponent' }],
 })
 export class OrderShippingDocComponent extends OrderPrintPageBaseComponent {
-	constructor() {
-		const orderService = inject(LogistOrderService);
-
-		super('OrderShippingDocComponent', orderService);
+	public constructor() {
+		super(inject(LogistOrderService));
 	}
 }

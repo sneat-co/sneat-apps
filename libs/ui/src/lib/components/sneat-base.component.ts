@@ -46,7 +46,9 @@ export abstract class SneatBaseComponent implements OnDestroy {
 	// Passes focus to the input element
 	protected readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
 
-	protected constructor(public readonly className: string) {
+	protected readonly className = inject(ClassName);
+
+	protected constructor() {
 		this.log(`${this.className}.SneatBaseComponent.constructor()`);
 	}
 

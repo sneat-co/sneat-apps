@@ -20,7 +20,7 @@ import {
 import { SneatApiService } from '@sneat/api';
 import { AuthProviderID, SneatUserService } from '@sneat/auth-core';
 import { IUserRecord } from '@sneat/auth-models';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { LoginWithTelegramComponent } from '../../pages/login-page/login-with-telegram.component';
 import { UserAuthAProviderStatusComponent } from './user-auth-provider-status';
 
@@ -43,6 +43,12 @@ import { UserAuthAProviderStatusComponent } from './user-auth-provider-status';
 		IonButton,
 		IonCardContent,
 	],
+	providers: [
+		{
+			provide: ClassName,
+			useValue: 'UserAuthAccountsComponent',
+		},
+	],
 })
 export class UserAuthAccountsComponent extends SneatBaseComponent {
 	private readonly sneatUserService = inject(SneatUserService);
@@ -55,7 +61,7 @@ export class UserAuthAccountsComponent extends SneatBaseComponent {
 	);
 
 	constructor() {
-		super('UserAuthAccountsComponent');
+		super();
 		this.sneatUserService.userState.pipe(this.takeUntilDestroyed()).subscribe({
 			next: (user) => {
 				this.$userRecord.set(user.record || undefined);

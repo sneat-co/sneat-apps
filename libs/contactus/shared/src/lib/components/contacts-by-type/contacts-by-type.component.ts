@@ -34,7 +34,7 @@ import {
 } from '@sneat/contactus-core';
 import { ContactNavService } from '@sneat/contactus-services';
 import { ISpaceContext } from '@sneat/space-models';
-import { SneatBaseComponent } from '@sneat/ui';
+import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { Observable } from 'rxjs';
 import { IContactAddEventArgs } from '../contact-events';
 import { ICheckChangedArgs } from '../contacts-checklist';
@@ -62,6 +62,7 @@ export interface IRoleContactCheckChangedArgs extends ICheckChangedArgs {
 		IonItemDivider,
 		IonSpinner,
 	],
+	providers: [{ provide: ClassName, useValue: 'ContactsByTypeComponent' }],
 	selector: 'sneat-contacts-by-type',
 	templateUrl: './contacts-by-type.component.html',
 	animations: [listItemAnimations],
@@ -112,7 +113,7 @@ export class ContactsByTypeComponent
 	@Output() readonly addContactClick = new EventEmitter<IContactAddEventArgs>();
 
 	constructor() {
-		super('ContactsByTypeComponent');
+		super();
 		effect(() => {
 			this.setContactGroups();
 		});

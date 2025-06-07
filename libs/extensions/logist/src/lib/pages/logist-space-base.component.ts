@@ -5,11 +5,10 @@ import { LogistSpaceService } from '../services';
 export class LogistSpaceBaseComponent extends SpaceBaseComponent {
 	protected logistSpace?: ILogistSpaceContext;
 
-	constructor(
-		className: string,
+	protected constructor(
 		private readonly logistSpaceService: LogistSpaceService,
 	) {
-		super(className);
+		super();
 	}
 
 	protected override onSpaceIdChanged() {

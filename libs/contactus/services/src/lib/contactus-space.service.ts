@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, Injector, inject } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { IContactBrief, IContactusSpaceDbo } from '@sneat/contactus-core';
 import { SpaceModuleService } from '@sneat/space-services';
@@ -7,8 +7,8 @@ import { SpaceModuleService } from '@sneat/space-services';
 export class ContactusSpaceService extends SpaceModuleService<IContactusSpaceDbo> {
 	public constructor() {
 		const afs = inject(AngularFirestore);
-
-		super('contactus', afs);
+		const injector = inject(Injector);
+		super(injector, 'contactus', afs);
 	}
 
 	public readonly watchContactBriefs = (spaceID: string) => {

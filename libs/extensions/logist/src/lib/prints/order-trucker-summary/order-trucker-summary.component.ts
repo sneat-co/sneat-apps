@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {
 	IonCard,
@@ -21,6 +20,7 @@ import {
 } from '../../dto';
 import { LogistOrderService } from '../../services';
 import { OrderPrintPageBaseComponent } from '../order-print-page-base.component';
+import { ClassName } from '@sneat/ui';
 
 interface IContainerInfo {
 	dispatcher?: IOrderCounterparty;
@@ -43,8 +43,8 @@ interface IContainerInfo {
 		IonLabel,
 		IonInput,
 		IonItemDivider,
-		NgIf,
 	],
+	providers: [{ provide: ClassName, useValue: 'OrderTruckerSummaryComponent' }],
 })
 export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 	truckerID?: string;
@@ -57,10 +57,10 @@ export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
 
 	buyerRefNumber?: string;
 
-	constructor() {
+	public constructor() {
 		const orderService = inject(LogistOrderService);
 
-		super('OrderTruckerSummaryComponent', orderService);
+		super(orderService);
 		this.route.queryParams?.pipe(this.takeUntilDestroyed())?.subscribe({
 			next: (params) => {
 				this.truckerID = params['truckerID'];

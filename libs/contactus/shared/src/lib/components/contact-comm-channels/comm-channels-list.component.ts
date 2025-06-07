@@ -56,7 +56,6 @@ export abstract class CommChannelsListComponent extends SneatBaseComponent {
 	protected readonly contactService = inject(ContactService);
 
 	protected constructor(
-		className: 'ContactEmailsComponent' | 'ContactPhonesComponent',
 		protected readonly channelType: ContactCommChannelType,
 		title: string,
 		placeholder: string,
@@ -64,7 +63,7 @@ export abstract class CommChannelsListComponent extends SneatBaseComponent {
 			Readonly<Record<string, IContactCommChannelProps>> | undefined
 		>,
 	) {
-		super(className);
+		super();
 		this.$channels = computed(() =>
 			Object.entries($channels() || {}).map(([id, props]) => ({
 				id,

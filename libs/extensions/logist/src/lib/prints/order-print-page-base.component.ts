@@ -1,12 +1,12 @@
-import { Directive } from '@angular/core';
 import { CounterpartyRole, IOrderCounterparty } from '../dto';
 
 import { OrderPageBaseComponent } from '../pages/order-page-base.component';
+import { LogistOrderService } from '../services';
 
-@Directive() // we need this decorator so we can implement Angular interfaces
-export class OrderPrintPageBaseComponent extends OrderPageBaseComponent {
-	constructor(className: string) {
-		super(className);
+// @Directive() // we need this decorator so we can implement Angular interfaces
+export abstract class OrderPrintPageBaseComponent extends OrderPageBaseComponent {
+	protected constructor(orderService: LogistOrderService) {
+		super(orderService);
 	}
 
 	protected counterpartyByRole(

@@ -16,6 +16,7 @@ import {
 	NewContactBaseDboAndSpaceRef,
 	RoleSpaceMember,
 } from '@sneat/contactus-core';
+import { ClassName } from '@sneat/ui';
 import { Observable } from 'rxjs';
 import { IContactAddEventArgs } from '../../contact-events';
 import { NewCompanyFormComponent } from './new-company-form.component';
@@ -38,6 +39,7 @@ type NewContactFormTab = 'person' | 'pet' | 'company' | 'location';
 		NewCompanyFormComponent,
 		NewPetFormComponent,
 	],
+	providers: [{ provide: ClassName, useValue: 'NewContactFormComponent' }],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-new-contact-form',
 	templateUrl: './new-contact-form.component.html',
@@ -52,10 +54,6 @@ export class NewContactFormComponent
 	@Input() selectGroupAndRole$?: Observable<IContactAddEventArgs | undefined>;
 
 	private readonly injector = inject(Injector);
-
-	constructor() {
-		super('NewContactFormComponent');
-	}
 
 	public ngOnInit(): void {
 		runInInjectionContext(this.injector, () => {

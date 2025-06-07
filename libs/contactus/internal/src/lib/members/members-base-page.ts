@@ -1,11 +1,8 @@
 import { SpaceMemberType } from '@sneat/auth-models';
 import { ContactusModuleBaseComponent } from '@sneat/contactus-shared';
-import { IIdAndBriefAndOptionalDbo, SpaceType } from '@sneat/core';
+import { IIdAndBriefAndOptionalDbo } from '@sneat/core';
 import { isSpaceSupportsMemberGroups } from '@sneat/dto';
-import {
-	ContactusSpaceService,
-	MemberService,
-} from '@sneat/contactus-services';
+import { ContactusSpaceService } from '@sneat/contactus-services';
 import { IContactBrief, IContactDbo } from '@sneat/contactus-core';
 
 export abstract class MembersBasePage extends ContactusModuleBaseComponent {
@@ -22,12 +19,8 @@ export abstract class MembersBasePage extends ContactusModuleBaseComponent {
 	//     this.currentUserDto = dto;
 	// }
 
-	protected constructor(
-		className: string,
-		contactusTeamService: ContactusSpaceService,
-		protected membersService: MemberService,
-	) {
-		super(className, contactusTeamService);
+	protected constructor(contactusTeamService: ContactusSpaceService) {
+		super(contactusTeamService);
 		// this.userService.currentUserLoaded.subscribe(user => this.setCurrentUser(user));
 	}
 

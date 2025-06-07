@@ -148,15 +148,15 @@ export abstract class SpaceBaseComponent
 	protected readonly route = inject(ActivatedRoute);
 	protected readonly spaceParams = inject(SpaceComponentBaseParams);
 
-	protected constructor(className: string) {
-		super(className);
-		console.log(`${className}.SpaceBaseComponent.constructor()`);
+	protected constructor() {
+		super();
+		console.log(`${this.className}.SpaceBaseComponent.constructor()`);
 
 		let prevSpaceID: string | undefined;
 
 		effect(() => {
 			const spaceID = this.$spaceID();
-			const logMsgPrefix = `${className}.SpaceBaseComponent.constructor() => effect($spaceID=${spaceID})`;
+			const logMsgPrefix = `${this.className}.SpaceBaseComponent.constructor() => effect($spaceID=${spaceID})`;
 
 			if (spaceID === prevSpaceID) {
 				// This seems to be a bag or a strange feature in Angular signals?

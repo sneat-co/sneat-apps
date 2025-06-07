@@ -22,7 +22,7 @@ import {
 	IonList,
 	IonSpinner,
 } from '@ionic/angular/standalone';
-import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
+import { ClassName, ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import { excludeEmpty } from '@sneat/core';
 import {
 	ContactRole,
@@ -53,6 +53,7 @@ import { NewContactFormBaseComponent } from './new-contact-form-base.component';
 	],
 	selector: 'sneat-new-company-form',
 	templateUrl: './new-company-form.component.html',
+	providers: [{ provide: ClassName, useValue: 'NewCompanyFormComponent' }],
 })
 export class NewCompanyFormComponent
 	extends NewContactFormBaseComponent
@@ -78,10 +79,6 @@ export class NewCompanyFormComponent
 		),
 		title: new FormControl<string>('', Validators.required),
 	});
-
-	constructor() {
-		super('NewCompanyFormComponent');
-	}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['contactRole']) {

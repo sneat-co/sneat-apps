@@ -17,7 +17,7 @@ import { ContactService } from '@sneat/contactus-services';
 import { excludeUndefined } from '@sneat/core';
 import { IContactContext } from '@sneat/contactus-core';
 import { first, takeUntil } from 'rxjs';
-import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
+import { ClassName, ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import { SpaceBaseComponent } from '@sneat/space-components';
 import { OrderAgentsComponent } from '../../components/order-agents/order-agents.component';
 import { OrderCounterpartyComponent } from '../../components/order-counterparty/order-counterparty.component';
@@ -54,6 +54,7 @@ import { NewOrderContainersFormComponent } from './new-order-containers-form.com
 		OrderCounterpartyComponent,
 		OrderAgentsComponent,
 	],
+	providers: [{ provide: ClassName, useValue: 'NewLogistOrderPageComponent' }],
 })
 export class NewLogistOrderPageComponent extends SpaceBaseComponent {
 	private readonly freightOrdersService = inject(LogistOrderService);
@@ -87,10 +88,10 @@ export class NewLogistOrderPageComponent extends SpaceBaseComponent {
 
 	private numberOfContainers: Record<string, number> = {};
 
-	readonly = false;
+	protected readonly = false;
 
-	constructor() {
-		super('NewLogistOrderPageComponent');
+	public constructor() {
+		super();
 	}
 
 	get formIsValid(): boolean {

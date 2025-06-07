@@ -24,6 +24,7 @@ import {
 import { excludeUndefined } from '@sneat/core';
 import { hasRelated } from '@sneat/dto';
 import { WithSpaceInput } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { CalendarNavServicesModule } from '../../../../services';
 import {
 	HappeningUIState,
@@ -71,6 +72,7 @@ const notImplemented = 'Sorry, not implemented yet';
 		IonText,
 		IonIcon,
 	],
+	providers: [{ provide: ClassName, useValue: 'SlotContextMenuComponent' }],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-slot-context-menu',
 	templateUrl: 'slot-context-menu.component.html',
@@ -105,8 +107,8 @@ export class SlotContextMenuComponent extends WithSpaceInput {
 		HappeningSlotModalService,
 	);
 
-	constructor() {
-		super('SlotContextMenuComponent');
+	public constructor() {
+		super();
 	}
 
 	protected assign(event: Event, to: 'member' | 'contact'): void {

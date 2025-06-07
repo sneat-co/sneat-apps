@@ -21,6 +21,7 @@ import {
 	IUpdateContactRequest,
 } from '@sneat/contactus-services';
 import { SpaceServiceModule } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { ContactBasePage } from '../contact-base-page';
 
 @Component({
@@ -41,6 +42,7 @@ import { ContactBasePage } from '../contact-base-page';
 		IonMenuButton,
 		IonContent,
 	],
+	providers: [{ provide: ClassName, useValue: 'ContactPageComponent' }],
 })
 export class ContactPageComponent extends ContactBasePage {
 	private readonly contactsService = inject(ContactService);
@@ -49,9 +51,7 @@ export class ContactPageComponent extends ContactBasePage {
 	protected segment: 'contact' | 'members' | 'assets' = 'contact';
 
 	constructor() {
-		const contactService = inject(ContactService);
-
-		super('ContactPageComponent', contactService);
+		super(inject(ContactService));
 		this.defaultBackPage = 'contacts';
 	}
 

@@ -29,10 +29,9 @@ import {
 import { WeekdaysFormBase } from '../../../weekdays/weekdays-form-base';
 import { ContactsFilterComponent } from './contacts-filter.component';
 import { ICalendarFilter } from './calendar-filter';
+import { ClassName } from '@sneat/ui';
 
 @Component({
-	selector: 'sneat-calendar-filter',
-	templateUrl: 'calendar-filter.component.html',
 	imports: [
 		ContactTitlePipe,
 		ContactsFilterComponent,
@@ -54,6 +53,9 @@ import { ICalendarFilter } from './calendar-filter';
 		IonBadge,
 		IonLabel,
 	],
+	providers: [{ provide: ClassName, useValue: 'CalendarFilterComponent' }],
+	selector: 'sneat-calendar-filter',
+	templateUrl: 'calendar-filter.component.html',
 })
 export class CalendarFilterComponent extends WeekdaysFormBase {
 	private readonly filterService = inject(CalendarFilterService);
@@ -102,8 +104,8 @@ export class CalendarFilterComponent extends WeekdaysFormBase {
 		);
 	});
 
-	constructor() {
-		super('ScheduleFilterComponent', false);
+	public constructor() {
+		super(false);
 		const filterService = this.filterService;
 
 		filterService.filter.subscribe({

@@ -19,6 +19,7 @@ import {
 import { ContactDetailsComponent } from '@sneat/contactus-shared';
 import { MemberRelationship } from '@sneat/contactus-core';
 import { SpaceServiceModule } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { MemberBasePage } from '../member-base-page';
 
 @Component({
@@ -40,14 +41,13 @@ import { MemberBasePage } from '../member-base-page';
 		IonContent,
 		IonButton,
 	],
+	providers: [{ provide: ClassName, useValue: 'SpaceMemberPageComponent' }],
 })
 export class SpaceMemberPageComponent extends MemberBasePage {
 	public relatedAs?: MemberRelationship;
 
-	constructor() {
-		const contactService = inject(ContactService);
-
-		super('SpaceMemberPageComponent', contactService);
+	public constructor() {
+		super(inject(ContactService));
 	}
 
 	// protected setMemberId(memberId: string): void {

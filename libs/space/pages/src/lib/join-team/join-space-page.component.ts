@@ -44,6 +44,7 @@ import {
 	ISpaceContext,
 } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { takeUntil } from 'rxjs/operators';
 import { InviteService } from '@sneat/contactus-services';
 
@@ -72,7 +73,10 @@ export const getPinFromUrl: () => string = () => {
 		IonButton,
 		IonSpinner,
 	],
-	providers: [InviteService],
+	providers: [
+		{ provide: ClassName, useValue: 'JoinSpacePageComponent' },
+		InviteService,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-join-space',
 	templateUrl: './join-space-page.component.html',
@@ -111,8 +115,8 @@ export class JoinSpacePageComponent extends WithSpaceInput {
 
 	public authStatus: AuthStatus = AuthStatuses.authenticating;
 
-	constructor() {
-		super('JoinSpacePageComponent');
+	public constructor() {
+		super();
 		this.getActionFromLocationHash();
 		this.id = this.route.snapshot.queryParamMap.get('id') || undefined;
 		try {

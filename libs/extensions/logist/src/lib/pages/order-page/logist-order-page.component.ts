@@ -1,4 +1,3 @@
-import { NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { Component, OnDestroy, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -22,6 +21,7 @@ import {
 	IonTitle,
 	IonToolbar,
 } from '@ionic/angular/standalone';
+import { ClassName } from '@sneat/ui';
 import { first } from 'rxjs';
 import { DispatchersComponent } from '../../components';
 import { NewContainerComponent } from '../../components/new-container/new-container.component';
@@ -46,8 +46,6 @@ type OrderDetailsTab =
 	| 'notes';
 
 @Component({
-	selector: 'sneat-order-page',
-	templateUrl: './logist-order-page.component.html',
 	imports: [
 		IonHeader,
 		IonToolbar,
@@ -66,15 +64,15 @@ type OrderDetailsTab =
 		IonSegmentButton,
 		IonBadge,
 		IonText,
-		NgSwitchCase,
-		NgSwitch,
 		OrderSegmentsComponent,
 		OrderTruckersComponent,
 		OrderContainersComponent,
 		OrderCardComponent,
 		DispatchersComponent,
-		NgIf,
 	],
+	providers: [{ provide: ClassName, useValue: 'LogistOrderPageComponent' }],
+	selector: 'sneat-order-page',
+	templateUrl: './logist-order-page.component.html',
 })
 export class LogistOrderPageComponent
 	extends OrderPageBaseComponent
@@ -90,10 +88,8 @@ export class LogistOrderPageComponent
 
 	private modal?: HTMLIonModalElement;
 
-	constructor() {
-		const orderService = inject(LogistOrderService);
-
-		super('LogistOrderPageComponent', orderService);
+	public constructor() {
+		super(inject(LogistOrderService));
 		try {
 			this.route.queryParamMap
 				.pipe(first(), this.takeUntilDestroyed())

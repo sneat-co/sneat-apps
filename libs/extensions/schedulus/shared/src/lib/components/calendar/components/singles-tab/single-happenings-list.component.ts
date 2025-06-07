@@ -17,6 +17,7 @@ import {
 import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
 import { WithSpaceInput } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
 import { CalendarFilterService } from '../../../calendar-filter.service';
 import { HappeningCardComponent } from '../../../happening-card/happening-card.component';
@@ -34,6 +35,9 @@ import {
 		IonText,
 		IonButton,
 		IonLabel,
+	],
+	providers: [
+		{ provide: ClassName, useValue: 'SingleHappeningsListComponent' },
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-single-happenings-list',
@@ -56,7 +60,7 @@ export class SingleHappeningsListComponent
 	protected happeningsMatchingFilter?: IHappeningContext[];
 
 	constructor() {
-		super('SingleHappeningsListComponent');
+		super();
 		const filterService = this.filterService;
 
 		filterService.filter

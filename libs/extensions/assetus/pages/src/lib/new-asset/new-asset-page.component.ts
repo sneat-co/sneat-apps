@@ -26,11 +26,9 @@ import {
 	SpacePageTitleComponent,
 } from '@sneat/space-components';
 import { SpaceServiceModule } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 
 @Component({
-	selector: 'sneat-new-asset-page',
-	templateUrl: './new-asset-page.component.html',
-	providers: [SpaceComponentBaseParams],
 	imports: [
 		FormsModule,
 		SpacePageTitleComponent,
@@ -51,6 +49,12 @@ import { SpaceServiceModule } from '@sneat/space-services';
 		IonList,
 		IonRadio,
 	],
+	providers: [
+		{ provide: ClassName, useValue: 'NewAssetPageComponent' },
+		SpaceComponentBaseParams,
+	],
+	selector: 'sneat-new-asset-page',
+	templateUrl: './new-asset-page.component.html',
 })
 export class NewAssetPageComponent extends SpaceBaseComponent {
 	protected name?: string;
@@ -64,7 +68,7 @@ export class NewAssetPageComponent extends SpaceBaseComponent {
 
 	constructor() {
 		// assetService: IAssetService, // assetCategoryService: IAssetCategoryService,
-		super('AssetNewPageComponent');
+		super();
 		const assetType = window.history.state['assetType'];
 		if (assetType) {
 			this.category = this.categories.find((c) => c.id === assetType);

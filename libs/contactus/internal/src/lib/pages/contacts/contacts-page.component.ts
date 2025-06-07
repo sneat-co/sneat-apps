@@ -39,6 +39,7 @@ import {
 	ContactusSpaceService,
 } from '@sneat/contactus-services';
 import { SpaceServiceModule } from '@sneat/space-services';
+import { ClassName } from '@sneat/ui';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -61,6 +62,7 @@ import { Subject } from 'rxjs';
 		IonContent,
 		IonMenuButton,
 	],
+	providers: [{ provide: ClassName, useValue: 'ContactsPageComponent' }],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	selector: 'sneat-contacts-page',
 	templateUrl: './contacts-page.component.html',
@@ -91,7 +93,7 @@ export class ContactsPageComponent
 	);
 
 	constructor() {
-		super('ContactsPageComponent', '');
+		super('');
 		const role = location.pathname.match(/(applicant|landlord|tenant)/);
 		if (role) {
 			this.$role.set(role[1] as ContactRole);

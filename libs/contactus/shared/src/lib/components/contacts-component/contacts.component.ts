@@ -39,7 +39,7 @@ import { defaultFamilyContactGroups } from '@sneat/contactus-services';
 import { listItemAnimations } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
-import { ISelectItem, SneatBaseComponent } from '@sneat/ui';
+import { ClassName, ISelectItem, SneatBaseComponent } from '@sneat/ui';
 import { Observable } from 'rxjs';
 import { IContactAddEventArgs } from '../contact-events';
 import { ContactsByTypeComponent } from '../contacts-by-type';
@@ -69,6 +69,7 @@ import { OptionalContactRoleIdAndBrief } from '../contact-forms/new-contact';
 		IonList,
 		IonItemSliding,
 	],
+	providers: [{ provide: ClassName, useValue: 'ContactsComponent' }],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	animations: [listItemAnimations],
 })
@@ -93,10 +94,6 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 		() => !this.$roleID() && this.$space().type === 'family',
 	);
 
-	constructor() {
-		super('ContactsComponent');
-	}
-
 	protected readonly $filter = signal<string>('');
 
 	protected onFilterChanged(filter: string): void {
@@ -119,6 +116,10 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 		const space = this.$space();
 		return contacts?.map(addSpace(space));
 	});
+
+	public constructor() {
+		super();
+	}
 
 	protected readonly familyGroupDefinitions = defaultFamilyContactGroups;
 

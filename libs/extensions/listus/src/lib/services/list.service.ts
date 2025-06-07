@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, Injector } from '@angular/core';
 import {
 	Firestore as AngularFirestore,
 	DocumentReference,
@@ -28,8 +28,8 @@ export class ListService extends ModuleSpaceItemService<IListBrief, IListDbo> {
 	constructor() {
 		const afs = inject(AngularFirestore);
 		const sneatApiService = inject(SneatApiService);
-
-		super('listus', 'lists', afs, sneatApiService);
+		const injector = inject(Injector);
+		super(injector, 'listus', 'lists', afs, sneatApiService);
 	}
 
 	public createList(request: ICreateListRequest): Observable<IListContext> {

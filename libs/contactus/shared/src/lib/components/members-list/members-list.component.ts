@@ -38,6 +38,7 @@ import {
 } from '@sneat/contactus-core';
 import { SpaceNavService } from '@sneat/space-services';
 import { SneatUserService } from '@sneat/auth-core';
+import { ClassName } from '@sneat/ui';
 import { InviteModalComponent } from '../../modals/invite-modal';
 import { ContactTitlePipe } from '../../pipes';
 import { ContactRoleBadgesComponent } from '../contact-role-badges/contact-role-badges.component';
@@ -65,6 +66,7 @@ import { InlistAgeGroupComponent } from '../inlist-options/inlist-age-group.comp
 		IonItemOption,
 		ContactTitlePipe,
 	],
+	providers: [{ provide: ClassName, useValue: 'MembersListComponent' }],
 })
 // TODO: Is it deprecated and should we migrated to Contacts list? Document reason if not.
 export class MembersListComponent extends WithSpaceInput {
@@ -104,10 +106,6 @@ export class MembersListComponent extends WithSpaceInput {
 	);
 
 	private readonly contactusNavService = inject(ContactusNavService);
-
-	constructor() {
-		super('MembersListComponent');
-	}
 
 	private readonly $isFamilySpace = computed(
 		() => this.$spaceType() === SpaceTypeFamily,

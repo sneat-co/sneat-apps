@@ -7,8 +7,4 @@ export class WithNewContactInput extends WithSpaceInput {
 	public readonly $contact = input.required<NewContactBaseDboAndSpaceRef>();
 	@Output() readonly contactChange =
 		new EventEmitter<NewContactBaseDboAndSpaceRef>();
-
-	constructor(className: string) {
-		super(className);
-	}
 }

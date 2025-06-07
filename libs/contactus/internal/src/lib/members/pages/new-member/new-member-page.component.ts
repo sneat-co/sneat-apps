@@ -31,6 +31,7 @@ import { SpacePageBaseComponent } from '@sneat/space-components';
 import { SpaceServiceModule } from '@sneat/space-services';
 import { filter, first, takeUntil } from 'rxjs';
 import { NewMemberFormComponent } from './new-member-form.component';
+import { ClassName } from '@sneat/ui';
 
 type InviteType = 'personal' | 'mass';
 
@@ -52,11 +53,12 @@ type InviteType = 'personal' | 'mass';
 		IonCardContent,
 		NewPetFormComponent,
 	],
+	providers: [{ provide: ClassName, useValue: 'NewMemberPageComponent' }],
 	selector: 'sneat-new-member-page',
 	templateUrl: './new-member-page.component.html',
 })
 export class NewMemberPageComponent extends SpacePageBaseComponent {
-	@ViewChild('nameInput', { static: false }) nameInput?: IonInput;
+	// @ViewChild('nameInput', { static: false }) nameInput?: IonInput;
 
 	protected onContactTypeChanged(event: CustomEvent): void {
 		this.$contact.update((contact) => ({
@@ -81,8 +83,8 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
 
 	protected readonly $contactType = computed(() => this.$contact().dbo?.type);
 
-	constructor() {
-		super('NewMemberPageComponent');
+	public constructor() {
+		super();
 		this.$defaultBackUrlSpacePath.set('members');
 		const contactusSpaceContextService = new ContactusSpaceContextService(
 			this.destroyed$,

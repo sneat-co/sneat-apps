@@ -34,7 +34,7 @@ import {
 	IUpdateHappeningTextsRequest,
 } from '../../services/happening.service';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
-import { SneatBaseModalComponent } from '@sneat/ui';
+import { ClassName, SneatBaseModalComponent } from '@sneat/ui';
 
 @Component({
 	imports: [
@@ -54,6 +54,7 @@ import { SneatBaseModalComponent } from '@sneat/ui';
 		HappeningServiceModule,
 		IonSpinner,
 	],
+	providers: [{ provide: ClassName, useValue: 'HappeningTitleModalComponent' }],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	templateUrl: './happening-title-modal.component.html',
 	selector: 'sneat-happening-title-modal',
@@ -80,8 +81,8 @@ export class HappeningTitleModalComponent
 
 	private happeningService = inject(HappeningService);
 
-	constructor() {
-		super('HappeningTitleModalComponent');
+	public constructor() {
+		super();
 	}
 
 	ngOnInit(): void {

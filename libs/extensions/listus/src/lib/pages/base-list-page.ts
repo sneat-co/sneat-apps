@@ -17,11 +17,10 @@ export abstract class BaseListPage extends SpaceItemPageBaseComponent<
 	protected listType?: ListType;
 
 	protected constructor(
-		className: string,
 		// defaultBackPage: DefaultBackPage,
 		protected readonly params: ListusComponentBaseParams,
 	) {
-		super(className, 'lists', 'list', params.listService);
+		super('lists', 'list', params.listService);
 	}
 
 	protected override setItemContext(item: IListContext): void {
