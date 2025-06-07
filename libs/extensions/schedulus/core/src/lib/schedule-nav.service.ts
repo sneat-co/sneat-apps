@@ -1,4 +1,4 @@
-import { Injectable, NgModule, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { excludeEmpty } from '@sneat/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { ISpaceContext } from '@sneat/space-models';

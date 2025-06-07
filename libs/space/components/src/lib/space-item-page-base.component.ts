@@ -4,7 +4,6 @@ import { INavContext, SpaceItem } from '@sneat/core';
 import { ISpaceItemNavContext } from '@sneat/space-models';
 import { ModuleSpaceItemService } from '@sneat/space-services';
 import {
-	delay,
 	distinctUntilChanged,
 	filter,
 	map,

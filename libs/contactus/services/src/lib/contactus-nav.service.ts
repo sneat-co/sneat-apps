@@ -1,5 +1,4 @@
 import { inject, Injectable } from '@angular/core';
-import { NavController } from '@ionic/angular/standalone';
 import { IContactContext } from '@sneat/contactus-core';
 import { ISpaceContext } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';

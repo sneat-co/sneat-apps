@@ -1,8 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { ISneatApiService } from './sneat-api-service.interface';
-import { HttpClient } from '@angular/common/http';
-import { Auth as AngularFireAuth } from '@angular/fire/auth';
-import { parseStoreRef, storeRefToId } from '@sneat/core';
+import { parseStoreRef } from '@sneat/core';
 import { SneatApiService } from './sneat-api-service';
 
 export const getStoreUrl = (storeId: string): string => {
