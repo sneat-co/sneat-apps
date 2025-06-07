@@ -30,12 +30,8 @@ import {
 } from '@sneat/mod-schedulus-core';
 import { ClassName } from '@sneat/ui';
 import { takeUntil } from 'rxjs';
-import {
-	CalendarDayService,
-	CalendarDayServiceModule,
-} from '../../services/calendar-day.service';
+import { CalendarDayServiceModule } from '../../services/calendar-day.service';
 import { CalendariumSpaceService } from '../../services/calendarium-space.service';
-import { HappeningService } from '../../services/happening.service';
 import {
 	emptyCalendarFilter,
 	CalendarFilterService,
@@ -102,12 +98,8 @@ export class CalendarComponent
 		readonly IHappeningWithUiState[] | undefined
 	>(() => this.filterRecurrings(this.$filter(), this.$allRecurrings()));
 
-	constructor() {
-		const happeningService = inject(HappeningService);
-		const calendarDayService = inject(CalendarDayService);
-		const calendariumSpaceService = inject(CalendariumSpaceService);
-
-		super(calendariumSpaceService, happeningService, calendarDayService);
+	public constructor() {
+		super();
 
 		// setTimeout(() => {
 		// 	// TODO: Fix this dirty workaround for initial animations
