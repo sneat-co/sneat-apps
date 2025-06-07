@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	computed,
+	input,
+} from '@angular/core';
+import { IContactContext } from '@sneat/contactus-core';
 import {
 	CommChannelsListComponent,
 	importsForChannelsListComponent,
@@ -18,6 +24,8 @@ import { ClassName } from '@sneat/ui';
 	templateUrl: 'comm-channels-list.component.html',
 })
 export class ContactPhonesComponent extends CommChannelsListComponent {
+	public readonly $contact = input.required<IContactContext>();
+
 	constructor() {
 		super(
 			'phone',
