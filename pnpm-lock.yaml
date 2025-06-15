@@ -40,7 +40,7 @@ importers:
         version: 20.0.3(@angular/common@20.0.3(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@20.0.3(@angular/animations@20.0.3(@angular/common@20.0.3(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1)))(@angular/common@20.0.3(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1)))(rxjs@7.8.2)
       '@capacitor-firebase/authentication':
         specifier: 7.2.0
-        version: 7.2.0(@capacitor/core@7.3.0)(firebase@11.9.0)
+        version: 7.2.0(@capacitor/core@7.3.0)(firebase@11.9.1)
       '@capacitor/android':
         specifier: 7.3.0
         version: 7.3.0(@capacitor/core@7.3.0)
@@ -54,8 +54,8 @@ importers:
         specifier: ^7.0.0
         version: 7.0.0(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/forms@20.0.3(@angular/common@20.0.3(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@20.0.3(@angular/animations@20.0.3(@angular/common@20.0.3(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1)))(@angular/common@20.0.3(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1)))(rxjs@7.8.2))(codemirror@6.0.1)
       '@firebase/auth':
-        specifier: 1.10.6
-        version: 1.10.6(@firebase/app@0.13.1)
+        specifier: 1.10.7
+        version: 1.10.7(@firebase/app@0.13.1)
       '@firebase/firestore':
         specifier: 4.7.17
         version: 4.7.17(@firebase/app@0.13.1)
@@ -108,8 +108,8 @@ importers:
         specifier: 4.1.0
         version: 4.1.0
       firebase:
-        specifier: 11.9.0
-        version: 11.9.0
+        specifier: 11.9.1
+        version: 11.9.1
       ionicons:
         specifier: 8.0.9
         version: 8.0.9
@@ -2048,8 +2048,8 @@ packages:
     resolution: {integrity: sha512-0O33PKrXLoIWkoOO5ByFaLjZehBctSYWnb+xJkIdx2SKP/K9l1UPFXPwASyrOIqyY3ws+7orF/1j7wI5EKzPYQ==}
     engines: {node: '>=18.0.0'}
 
-  '@firebase/auth-compat@0.5.26':
-    resolution: {integrity: sha512-4baB7tR0KukyGzrlD25aeO4t0ChLifwvDQXTBiVJE9WWwJEOjkZpHmoU9Iww0+Vdalsq4sZ3abp6YTNjHyB1dA==}
+  '@firebase/auth-compat@0.5.27':
+    resolution: {integrity: sha512-axZx/MgjNO7uPA8/nMQiuVotGCngUFMppt5w0pxFIoIPD0kac0bsFdSEh5S2ttuEE0Aq1iUB6Flzwn+wvMgXnQ==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       '@firebase/app-compat': 0.x
@@ -2063,8 +2063,8 @@ packages:
       '@firebase/app-types': 0.x
       '@firebase/util': 1.x
 
-  '@firebase/auth@1.10.6':
-    resolution: {integrity: sha512-cFbo2FymQltog4atI9cKTO6CxKxS0dOMXslTQrlNZRH7qhDG44/d7QeI6GXLweFZtrnlecf52ESnNz1DU6ek8w==}
+  '@firebase/auth@1.10.7':
+    resolution: {integrity: sha512-77o0aBKCfchdL1gkahARdawHyYefh+wRYn7o60tbwW6bfJNq2idbrRb3WSYCT4yBKWL0+9kKdwxBHPZ6DEiB+g==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       '@firebase/app': 0.x
@@ -2184,8 +2184,8 @@ packages:
     peerDependencies:
       '@firebase/app': 0.x
 
-  '@firebase/storage-compat@0.3.22':
-    resolution: {integrity: sha512-29j6JgXTjQ76sOIkxmTNHQfYA/hDTeV9qGbn0jolynPXSg/AmzCB0CpCoCYrS0ja0Flgmy1hkA3XYDZ/eiV1Cg==}
+  '@firebase/storage-compat@0.3.23':
+    resolution: {integrity: sha512-B/ufkT/R/tSvc2av+vP6ZYybGn26FwB9YVDYg/6Bro+5TN3VEkCeNmfnX3XLa2DSdXUTZAdWCbMxW0povGa4MA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       '@firebase/app-compat': 0.x
@@ -2196,8 +2196,8 @@ packages:
       '@firebase/app-types': 0.x
       '@firebase/util': 1.x
 
-  '@firebase/storage@0.13.12':
-    resolution: {integrity: sha512-5JmoFS01MYjW1XMQa5F5rD/kvMwBN10QF03bmcuJWq4lg+BJ3nRgL3sscWnyJPhwM/ZCyv2eRwcfzESVmsYkdQ==}
+  '@firebase/storage@0.13.13':
+    resolution: {integrity: sha512-E+MTNcBgpoAynicgVb2ZsHCuEOO4aAiUX5ahNwe/1dEyZpo2H4DwFqKQRNK/sdAIgBbjBwcfV2p0MdPFGIR0Ew==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       '@firebase/app': 0.x
@@ -5903,8 +5903,8 @@ packages:
     resolution: {integrity: sha512-v2ZsoEuVHYy8ZIlYqwPe/39Cy+cFDzp4dXPaxNvkEuouymu+2Jbz0PxpKarJHYJTmv2HWT3O382qY8l4jMWthw==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  firebase@11.9.0:
-    resolution: {integrity: sha512-7uIGhxKtTNfDcoMKWn0G8G0Z1Zj5VeW8uzImAcUmI31PaYQdVWi2rVVig7thWB3vPianESPrLEKim2Fw7U8fiA==}
+  firebase@11.9.1:
+    resolution: {integrity: sha512-nbQbQxNlkHHRDn4cYwHdAKHwJPeZ0jRXxlNp6PCOb9CQx8Dc6Vjve97R34r1EZJnzOsPYZ3+ssJH7fkovDjvCw==}
 
   flat-cache@4.0.1:
     resolution: {integrity: sha512-f7ccFPK3SXFHpx15UIGyRJ/FJQctuKZ0zVuN3frBo4HnK3cay9VEW0R6yPYFHC0AgqhukPzKjq22t5DmAyqGyw==}
@@ -10237,8 +10237,8 @@ snapshots:
       '@angular/platform-browser': 20.0.3(@angular/animations@20.0.3(@angular/common@20.0.3(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1)))(@angular/common@20.0.3(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1))
       '@angular/platform-browser-dynamic': 20.0.3(@angular/common@20.0.3(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/compiler@20.0.3)(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@20.0.3(@angular/animations@20.0.3(@angular/common@20.0.3(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1)))(@angular/common@20.0.3(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1)))
       '@schematics/angular': 20.0.2(chokidar@4.0.3)
-      firebase: 11.9.0
-      rxfire: 6.1.0(firebase@11.9.0)(rxjs@7.8.2)
+      firebase: 11.9.1
+      rxfire: 6.1.0(firebase@11.9.1)(rxjs@7.8.2)
       rxjs: 7.8.2
       tslib: 2.8.1
     transitivePeerDependencies:
@@ -11606,11 +11606,11 @@ snapshots:
 
   '@bufbuild/protobuf@2.2.5': {}
 
-  '@capacitor-firebase/authentication@7.2.0(@capacitor/core@7.3.0)(firebase@11.9.0)':
+  '@capacitor-firebase/authentication@7.2.0(@capacitor/core@7.3.0)(firebase@11.9.1)':
     dependencies:
       '@capacitor/core': 7.3.0
     optionalDependencies:
-      firebase: 11.9.0
+      firebase: 11.9.1
 
   '@capacitor/android@7.3.0(@capacitor/core@7.3.0)':
     dependencies:
@@ -12346,10 +12346,10 @@ snapshots:
       idb: 7.1.1
       tslib: 2.8.1
 
-  '@firebase/auth-compat@0.5.26(@firebase/app-compat@0.4.1)(@firebase/app-types@0.9.3)(@firebase/app@0.13.1)':
+  '@firebase/auth-compat@0.5.27(@firebase/app-compat@0.4.1)(@firebase/app-types@0.9.3)(@firebase/app@0.13.1)':
     dependencies:
       '@firebase/app-compat': 0.4.1
-      '@firebase/auth': 1.10.6(@firebase/app@0.13.1)
+      '@firebase/auth': 1.10.7(@firebase/app@0.13.1)
       '@firebase/auth-types': 0.13.0(@firebase/app-types@0.9.3)(@firebase/util@1.12.0)
       '@firebase/component': 0.6.17
       '@firebase/util': 1.12.0
@@ -12366,7 +12366,7 @@ snapshots:
       '@firebase/app-types': 0.9.3
       '@firebase/util': 1.12.0
 
-  '@firebase/auth@1.10.6(@firebase/app@0.13.1)':
+  '@firebase/auth@1.10.7(@firebase/app@0.13.1)':
     dependencies:
       '@firebase/app': 0.13.1
       '@firebase/component': 0.6.17
@@ -12560,11 +12560,11 @@ snapshots:
       '@firebase/util': 1.12.0
       tslib: 2.8.1
 
-  '@firebase/storage-compat@0.3.22(@firebase/app-compat@0.4.1)(@firebase/app-types@0.9.3)(@firebase/app@0.13.1)':
+  '@firebase/storage-compat@0.3.23(@firebase/app-compat@0.4.1)(@firebase/app-types@0.9.3)(@firebase/app@0.13.1)':
     dependencies:
       '@firebase/app-compat': 0.4.1
       '@firebase/component': 0.6.17
-      '@firebase/storage': 0.13.12(@firebase/app@0.13.1)
+      '@firebase/storage': 0.13.13(@firebase/app@0.13.1)
       '@firebase/storage-types': 0.8.3(@firebase/app-types@0.9.3)(@firebase/util@1.12.0)
       '@firebase/util': 1.12.0
       tslib: 2.8.1
@@ -12577,7 +12577,7 @@ snapshots:
       '@firebase/app-types': 0.9.3
       '@firebase/util': 1.12.0
 
-  '@firebase/storage@0.13.12(@firebase/app@0.13.1)':
+  '@firebase/storage@0.13.13(@firebase/app@0.13.1)':
     dependencies:
       '@firebase/app': 0.13.1
       '@firebase/component': 0.6.17
@@ -17208,7 +17208,7 @@ snapshots:
       locate-path: 7.2.0
       path-exists: 5.0.0
 
-  firebase@11.9.0:
+  firebase@11.9.1:
     dependencies:
       '@firebase/ai': 1.4.0(@firebase/app-types@0.9.3)(@firebase/app@0.13.1)
       '@firebase/analytics': 0.10.16(@firebase/app@0.13.1)
@@ -17218,8 +17218,8 @@ snapshots:
       '@firebase/app-check-compat': 0.3.25(@firebase/app-compat@0.4.1)(@firebase/app@0.13.1)
       '@firebase/app-compat': 0.4.1
       '@firebase/app-types': 0.9.3
-      '@firebase/auth': 1.10.6(@firebase/app@0.13.1)
-      '@firebase/auth-compat': 0.5.26(@firebase/app-compat@0.4.1)(@firebase/app-types@0.9.3)(@firebase/app@0.13.1)
+      '@firebase/auth': 1.10.7(@firebase/app@0.13.1)
+      '@firebase/auth-compat': 0.5.27(@firebase/app-compat@0.4.1)(@firebase/app-types@0.9.3)(@firebase/app@0.13.1)
       '@firebase/data-connect': 0.3.9(@firebase/app@0.13.1)
       '@firebase/database': 1.0.19
       '@firebase/database-compat': 2.0.10
@@ -17235,8 +17235,8 @@ snapshots:
       '@firebase/performance-compat': 0.2.19(@firebase/app-compat@0.4.1)(@firebase/app@0.13.1)
       '@firebase/remote-config': 0.6.4(@firebase/app@0.13.1)
       '@firebase/remote-config-compat': 0.2.17(@firebase/app-compat@0.4.1)(@firebase/app@0.13.1)
-      '@firebase/storage': 0.13.12(@firebase/app@0.13.1)
-      '@firebase/storage-compat': 0.3.22(@firebase/app-compat@0.4.1)(@firebase/app-types@0.9.3)(@firebase/app@0.13.1)
+      '@firebase/storage': 0.13.13(@firebase/app@0.13.1)
+      '@firebase/storage-compat': 0.3.23(@firebase/app-compat@0.4.1)(@firebase/app-types@0.9.3)(@firebase/app@0.13.1)
       '@firebase/util': 1.12.0
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
@@ -20395,9 +20395,9 @@ snapshots:
     dependencies:
       queue-microtask: 1.2.3
 
-  rxfire@6.1.0(firebase@11.9.0)(rxjs@7.8.2):
+  rxfire@6.1.0(firebase@11.9.1)(rxjs@7.8.2):
     dependencies:
-      firebase: 11.9.0
+      firebase: 11.9.1
       rxjs: 7.8.2
 
   rxjs@7.8.2:
