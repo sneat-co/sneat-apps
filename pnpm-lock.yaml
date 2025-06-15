@@ -24,8 +24,8 @@ importers:
         specifier: 20.0.3
         version: 20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1)
       '@angular/fire':
-        specifier: 20.0.0
-        version: 20.0.0(ccbe8b112e81f0354be222a5d4d0a10b)
+        specifier: 20.0.1
+        version: 20.0.1(ccbe8b112e81f0354be222a5d4d0a10b)
       '@angular/forms':
         specifier: 20.0.3
         version: 20.0.3(@angular/common@20.0.3(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@20.0.3(@angular/animations@20.0.3(@angular/common@20.0.3(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1)))(@angular/common@20.0.3(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1)))(rxjs@7.8.2)
@@ -512,8 +512,8 @@ packages:
       zone.js:
         optional: true
 
-  '@angular/fire@20.0.0':
-    resolution: {integrity: sha512-kZ0DhpLsdVv3d6U7lTw5PlU5ZPC+vC0aWEC1exSz/bumUOYy4l6hK9S7fOf4C2G+gq8lm7Bahrc+VW1fzNGsOQ==}
+  '@angular/fire@20.0.1':
+    resolution: {integrity: sha512-iZxE/7d5hJ2WpaENPEjHYBh7m68QybTwBHKOKaeqHz18XCP5Ufl89LuTrnoWkWOk0GdZBVAqpo6n/bM2jYIQAw==}
     peerDependencies:
       '@angular/common': ^20.0.0
       '@angular/core': ^20.0.0
@@ -10229,7 +10229,7 @@ snapshots:
       '@angular/compiler': 20.0.3
       zone.js: 0.15.1
 
-  '@angular/fire@20.0.0(ccbe8b112e81f0354be222a5d4d0a10b)':
+  '@angular/fire@20.0.1(ccbe8b112e81f0354be222a5d4d0a10b)':
     dependencies:
       '@angular-devkit/schematics': 20.0.2(chokidar@4.0.3)
       '@angular/common': 20.0.3(@angular/core@20.0.3(@angular/compiler@20.0.3)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
