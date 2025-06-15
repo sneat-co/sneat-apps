@@ -40,7 +40,8 @@
 			"lmdb",
 			"msgpackr-extract",
 			"nx",
-			"protobufjs"
+			"protobufjs",
+			"unrs-resolver"
 		]
 	},
 	"dependencies": {
