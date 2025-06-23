@@ -2,7 +2,7 @@
 	"name": "sneat-apps",
 	"version": "0.0.0",
 	"license": "MIT",
-	"packageManager": "pnpm@10.12.1",
+	"packageManager": "pnpm@10.12.2",
 	"scripts": {
 		"nx": "nx",
 		"ng": "nx",
@@ -136,7 +136,7 @@
 		"postcss-import": "16.1.1",
 		"postcss-preset-env": "10.2.3",
 		"postcss-url": "10.1.3",
-		"prettier": "3.5.3",
+		"prettier": "3.6.0",
 		"ts-jest": "29.4.0",
 		"ts-node": "10.9.2",
 		"typescript": "5.8.3",
