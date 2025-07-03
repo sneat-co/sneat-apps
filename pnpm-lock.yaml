@@ -40,16 +40,16 @@ importers:
         version: 20.0.6(@angular/common@20.0.6(@angular/core@20.0.6(@angular/compiler@20.0.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.6(@angular/compiler@20.0.6)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@20.0.6(@angular/animations@20.0.6(@angular/common@20.0.6(@angular/core@20.0.6(@angular/compiler@20.0.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.6(@angular/compiler@20.0.6)(rxjs@7.8.2)(zone.js@0.15.1)))(@angular/common@20.0.6(@angular/core@20.0.6(@angular/compiler@20.0.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.6(@angular/compiler@20.0.6)(rxjs@7.8.2)(zone.js@0.15.1)))(rxjs@7.8.2)
       '@capacitor-firebase/authentication':
         specifier: 7.2.0
-        version: 7.2.0(@capacitor/core@7.4.0)(firebase@11.10.0)
+        version: 7.2.0(@capacitor/core@7.4.1)(firebase@11.10.0)
       '@capacitor/android':
-        specifier: 7.4.0
-        version: 7.4.0(@capacitor/core@7.4.0)
+        specifier: 7.4.1
+        version: 7.4.1(@capacitor/core@7.4.1)
       '@capacitor/core':
-        specifier: 7.4.0
-        version: 7.4.0
+        specifier: 7.4.1
+        version: 7.4.1
       '@capacitor/ios':
-        specifier: 7.4.0
-        version: 7.4.0(@capacitor/core@7.4.0)
+        specifier: 7.4.1
+        version: 7.4.1(@capacitor/core@7.4.1)
       '@ctrl/ngx-codemirror':
         specifier: ^7.0.0
         version: 7.0.0(@angular/core@20.0.6(@angular/compiler@20.0.6)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/forms@20.0.6(@angular/common@20.0.6(@angular/core@20.0.6(@angular/compiler@20.0.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.6(@angular/compiler@20.0.6)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@20.0.6(@angular/animations@20.0.6(@angular/common@20.0.6(@angular/core@20.0.6(@angular/compiler@20.0.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.6(@angular/compiler@20.0.6)(rxjs@7.8.2)(zone.js@0.15.1)))(@angular/common@20.0.6(@angular/core@20.0.6(@angular/compiler@20.0.6)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.6(@angular/compiler@20.0.6)(rxjs@7.8.2)(zone.js@0.15.1)))(rxjs@7.8.2))(codemirror@6.0.2)
@@ -161,7 +161,7 @@ importers:
         version: 20.0.6
       '@capacitor/cli':
         specifier: ^7.0.1
-        version: 7.4.0
+        version: 7.4.1
       '@eslint/eslintrc':
         specifier: 3.3.1
         version: 3.3.1
@@ -1217,21 +1217,21 @@ packages:
       firebase:
         optional: true
 
-  '@capacitor/android@7.4.0':
-    resolution: {integrity: sha512-HVCQsnUobviGt/MR5qCfXsfkSyZ5gjJVW6Jbn0CI5NHhsvUkBtazGjaMjdt5JueIz1pfKXpiuZc/njfRHwjx6Q==}
+  '@capacitor/android@7.4.1':
+    resolution: {integrity: sha512-/LxreKsXt6oZnS7gOpHz2WvRuZzwaLpGOKqomvBTliISTQaKEwqLkX1k665fqZquuJjP8RKnkz8thO6UZJTfbg==}
     peerDependencies:
       '@capacitor/core': ^7.4.0
 
-  '@capacitor/cli@7.4.0':
-    resolution: {integrity: sha512-RXmsW067r9sz7K1qtXGNB12w2aJtt86J3Jc4vOvmvpA+GyVYkVY1UhAMRnuVrXHjGZEVlwBORHunwrmv30HoZg==}
+  '@capacitor/cli@7.4.1':
+    resolution: {integrity: sha512-pN5SCj5SAA54yHj8XKJNhRXjjHNKrSfUuSS7a8GKQl/+OeaG0aA2hNJmM5RQJMBQ5MtU0sQqSLWpTkSW9nd7YA==}
     engines: {node: '>=20.0.0'}
     hasBin: true
 
-  '@capacitor/core@7.4.0':
-    resolution: {integrity: sha512-P6NnjoHyobZgTjynlZSn27d0SUj6j38inlNxFnKZr9qwU7/r6+0Sg2nWkGkIH/pMmXHsvGD8zVe6KUq1UncIjA==}
+  '@capacitor/core@7.4.1':
+    resolution: {integrity: sha512-0ap4FzPJItaeg3QiiS1WguPNHY2aD67fQ9wr7DojCRzTFuNXQPvFB6lBkqlrVeQyJ9jCw0KV/LXv25oXjDcsyA==}
 
-  '@capacitor/ios@7.4.0':
-    resolution: {integrity: sha512-xajNljo39eu0+Bw3eVnnMc73VRzWkp0m55S3dqJJOaT2GjqoWl1x0PrnnhYcDMp0X8aDPDBL8oz+XFpMjQiM1Q==}
+  '@capacitor/ios@7.4.1':
+    resolution: {integrity: sha512-KIvpCi2Hi5nWHGjGBLOCMrF46jDafu8s79dkZCPdK+4myy/pnzLpdj8xSic6umTHYOKThJMBYX42ZCBT2Cjt2w==}
     peerDependencies:
       '@capacitor/core': ^7.4.0
 
@@ -11977,17 +11977,17 @@ snapshots:
 
   '@bufbuild/protobuf@2.2.5': {}
 
-  '@capacitor-firebase/authentication@7.2.0(@capacitor/core@7.4.0)(firebase@11.10.0)':
+  '@capacitor-firebase/authentication@7.2.0(@capacitor/core@7.4.1)(firebase@11.10.0)':
     dependencies:
-      '@capacitor/core': 7.4.0
+      '@capacitor/core': 7.4.1
     optionalDependencies:
       firebase: 11.10.0
 
-  '@capacitor/android@7.4.0(@capacitor/core@7.4.0)':
+  '@capacitor/android@7.4.1(@capacitor/core@7.4.1)':
     dependencies:
-      '@capacitor/core': 7.4.0
+      '@capacitor/core': 7.4.1
 
-  '@capacitor/cli@7.4.0':
+  '@capacitor/cli@7.4.1':
     dependencies:
       '@ionic/cli-framework-output': 2.2.8
       '@ionic/utils-subprocess': 3.0.1
@@ -12009,13 +12009,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@capacitor/core@7.4.0':
+  '@capacitor/core@7.4.1':
     dependencies:
       tslib: 2.8.1
 
-  '@capacitor/ios@7.4.0(@capacitor/core@7.4.0)':
+  '@capacitor/ios@7.4.1(@capacitor/core@7.4.1)':
     dependencies:
-      '@capacitor/core': 7.4.0
+      '@capacitor/core': 7.4.1
 
   '@codemirror/autocomplete@6.18.6':
     dependencies:
