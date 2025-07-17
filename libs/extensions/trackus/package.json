@@ -17,7 +17,7 @@
 		"@ionic/angular": "8.6.5",
 		"rxjs": "7.8.2",
 		"@angular/common": "20.1.1",
-		"@firebase/firestore": "4.8.0",
+		"@firebase/firestore": "4.9.0",
 		"@angular/router": "20.1.1",
 		"@angular/fire": "20.0.1",
 		"jest-preset-angular": "14.6.0"
