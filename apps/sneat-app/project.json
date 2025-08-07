@@ -177,6 +177,24 @@
 				"testingType": "e2e",
 				"skipServe": true
 			}
+		},
+		"e2e-playwright": {
+			"executor": "nx:run-commands",
+			"options": {
+				"command": "npx playwright test",
+				"cwd": "."
+			},
+			"configurations": {
+				"development": {
+					"command": "npx playwright test --project=chromium"
+				},
+				"debug": {
+					"command": "npx playwright test --debug --project=chromium"
+				},
+				"ui": {
+					"command": "npx playwright test --ui --project=chromium"
+				}
+			}
 		}
 	}
 }
