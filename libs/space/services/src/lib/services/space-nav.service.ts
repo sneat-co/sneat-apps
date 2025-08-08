@@ -1,8 +1,11 @@
 import { Injectable, inject } from '@angular/core';
 import { Params } from '@angular/router';
 import { NavController } from '@ionic/angular/standalone';
-import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
 import { AnalyticsService, IAnalyticsService, ISpaceRef } from '@sneat/core';
+
+type NavigationOptions = NonNullable<
+	Parameters<NavController['navigateRoot']>[1]
+>;
 import { IRecord } from '@sneat/data';
 import { ISpaceDbo } from '@sneat/dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';

@@ -1,0 +1,112 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-back-button defaultHref=".." />
+			<ion-menu-button />
+		</ion-buttons>
+		<ion-title>
+			DB server: {{ dbServer?.host }}
+			@if (dbServer?.port) {
+			<span>{{ dbServer?.port }}</span>
+			}
+		</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-card>
+		<ion-item-divider>
+			@switch (dbServer?.driver) { @case ("sqlserver") {
+			<ion-icon name="logo-windows" slot="start" />
+			<ion-label>Microsoft SQL Server</ion-label>
+			} @default {
+			<ion-label>{{ dbServer?.driver }}</ion-label>
+			} }
+		</ion-item-divider>
+		<ion-item>
+			<ion-label color="medium">Host</ion-label>
+			<ion-input [value]="dbServer?.host" readonly="true" />
+		</ion-item>
+		@if (dbServer?.port) {
+		<ion-item>
+			<ion-label color="medium">Port</ion-label>
+			<ion-input [value]="dbServer?.port" type="number" readonly="true" />
+		</ion-item>
+		}
+	</ion-card>
+	<ion-card>
+		<ion-item-divider>
+			<ion-label>Environments</ion-label>
+		</ion-item-divider>
+		@if (loadingSummary) {
+		<ion-item>
+			<ion-label color="medium">Loading...</ion-label>
+		</ion-item>
+		} @if (!loadingSummary && envs?.length) {
+		<ion-item tappable>
+			<ion-label>Local</ion-label>
+			<ion-badge color="light">1</ion-badge>
+		</ion-item>
+		} @if (!loadingSummary && !envs?.length) {
+		<ion-item>
+			<ion-label color="medium"
+				>Not assigned to any specific environment yet
+			</ion-label>
+		</ion-item>
+		}
+	</ion-card>
+	<ion-card>
+		<ion-item-divider>
+			<ion-label slot="start">Databases</ion-label>
+			<ion-segment [(ngModel)]="tab">
+				<ion-segment-button value="known">Known</ion-segment-button>
+				<ion-segment-button value="unknown">
+					<ion-label>
+						Unknown
+						<ion-badge color="light" *ngIf="dbServerCatalogs?.length"
+							>{{ dbServerCatalogs?.length }}
+						</ion-badge>
+					</ion-label>
+				</ion-segment-button>
+			</ion-segment>
+		</ion-item-divider>
+		<ion-list>
+			@switch (tab) { @case ("known") { @if (loadingSummary) {
+			<ion-item>
+				<ion-label color="medium">Loading...</ion-label>
+			</ion-item>
+			} @if (!loadingSummary && dbServerSummary?.databases?.length) { @for (
+			database of dbServerSummary?.databases || []; track database.id ) {
+			<ion-item tappable>
+				<ion-label>{{ database.id }}</ion-label>
+				<ion-badge
+					color="light"
+					*ngFor="let env of database?.environments || []"
+					>{{ env }}
+				</ion-badge>
+			</ion-item>
+			} } @else {
+			<ion-item>
+				<ion-text color="medium">
+					<ion-label
+						>Nothing from this server have been added to the project yet.
+					</ion-label>
+				</ion-text>
+			</ion-item>
+			} } @case ("unknown") { @if (loadingCatalogs) {
+			<ion-item>
+				<ion-label color="medium">Loading...</ion-label>
+			</ion-item>
+			} @if (dbServerCatalogs) { @for (dbCatalog of dbServerCatalogs; track
+			dbCatalog.name) {
+			<ion-item tappable>
+				<ion-icon slot="start" name="server-outline" />
+				<ion-label>{{ dbCatalog.name }}</ion-label>
+				<ion-buttons slot="end">
+					<ion-button title="Add to project">Add</ion-button>
+				</ion-buttons>
+			</ion-item>
+			} } } }
+		</ion-list>
+	</ion-card>
+</ion-content>

@@ -1,0 +1,31 @@
+{
+	"name": "@sneat/datatug-main",
+	"version": "0.0.1",
+	"peerDependencies": {
+		"@angular/common": "^20.1.0",
+		"@angular/core": "^20.1.0",
+		"@angular/router": "^20.1.0",
+		"@angular/forms": "^20.1.0",
+		"@angular/fire": "^20.0.0",
+		"@ionic/angular": "^8.0.0",
+		"rxjs": "^7.8.0",
+		"tabulator-tables": "^6.0.0",
+		"@ctrl/ngx-codemirror": "^7.0.0",
+		"@sneat/api": "*",
+		"@sneat/auth-core": "*",
+		"@sneat/auth-models": "*",
+		"@sneat/components": "*",
+		"@sneat/contactus-core": "*",
+		"@sneat/core": "*",
+		"@sneat/data": "*",
+		"@sneat/datagrid": "*",
+		"@sneat/dto": "*",
+		"@sneat/grid": "*",
+		"@sneat/logging": "*",
+		"@sneat/space-models": "*",
+		"@sneat/wormhole": "*",
+		"@sneat/random": "*",
+		"jest-preset-angular": "*"
+	},
+	"sideEffects": false
+}

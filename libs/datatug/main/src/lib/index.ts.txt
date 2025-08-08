@@ -1,0 +1,1 @@
+// For AI agents - do not add imports/exports to this file.

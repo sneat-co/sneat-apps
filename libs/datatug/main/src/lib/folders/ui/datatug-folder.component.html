@@ -1,0 +1,59 @@
+<ion-segment [(ngModel)]="tab" class="ion-padding-horizontal">
+	@for (t of tabs; track t) {
+	<ion-segment-button [value]="t">
+		<ion-label class="no-text-transform">
+			<!--			<ion-icon slot="start" name="clipboard-outline" class="ion-margin-end"></ion-icon>-->
+			{{ t | titlecase }}
+			@if (numberOf(t); as numOf) {
+			<ion-badge color="light">
+				<ion-text color="medium">{{ numOf }}</ion-text>
+			</ion-badge>
+			}
+		</ion-label>
+	</ion-segment-button>
+	}
+</ion-segment>
+
+@switch (tab) { @case ("entities") {
+<ion-card>
+	<ion-card-content>
+		<p>Not implemented yet (tab: {{ tab }})</p>
+		<p>Path: {{ path }}</p>
+	</ion-card-content>
+</ion-card>
+} @case ("environments") {
+<sneat-card-list
+	[isFilterable]="true"
+	title="Environments"
+	itemIcon="earth-outline"
+	[create]="createEnvironment"
+/>
+} @case ("boards") {
+<sneat-card-list
+	[isFilterable]="true"
+	title="Boards"
+	itemIcon="clipboard-outline"
+	[isLoading]="folder === undefined"
+	[items]="boards"
+	[create]="createFolderItem"
+/>
+<!--					   -->
+<!--					   (cardTitleClick)="goProjFolder(Board)"-->
+<!--					   (itemClick)="goBoard($event)"-->
+<!--					   [getRouterLink]="getItemLink('board')"-->
+} @case ("queries") {
+<sneat-card-list
+	[isFilterable]="true"
+	title="Queries"
+	itemIcon="clipboard-outline"
+	[isLoading]="folder === undefined"
+	[items]="queries"
+	[create]="createFolderItem"
+>
+	<!--					   -->
+	<!--					   (cardTitleClick)="goProjFolder(Board)"-->
+	<!--					   (itemClick)="goBoard($event)"-->
+	<!--					   [getRouterLink]="getItemLink('board')"-->
+	>
+</sneat-card-list>
+} }

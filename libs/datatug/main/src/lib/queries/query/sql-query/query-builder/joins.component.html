@@ -1,0 +1,86 @@
+<ion-card>
+	<ion-list>
+		@if (!queryAst?.from) {
+		<ion-item>
+			<ion-label color="medium" style="font-weight: bold">FROM</ion-label>
+			<ion-select>
+				<ion-select-option>Artist</ion-select-option>
+				<ion-select-option>Album</ion-select-option>
+			</ion-select>
+		</ion-item>
+		} @if (queryAst?.from) {
+		<ion-item>
+			<ion-checkbox checked="true" disabled slot="start" />
+			<ion-label title="FROM">
+				@if (queryAst?.from?.schema; as schema) {
+				<span>[{{ schema }}].</span>
+				} |{{ queryAst?.from?.name }}|
+			</ion-label>
+			@if (queryAst?.from?.alias; as alias) {
+			<ion-badge color="medium">{{ alias }}</ion-badge>
+			}
+			<ion-buttons slot="end">
+				<ion-button>
+					<ion-icon name="link-outline" />
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
+		} @for (join of queryAst?.joins || []; track $index) {
+		<ion-item>
+			<ion-checkbox
+				slot="start"
+				[checked]="!join.disabled"
+				(ionChange)="joinCheckChanged($event, join)"
+			/>
+			<ion-label
+				><b>{{ join.alias }}</b> -
+				<ion-text color="medium">{{ join.name }}</ion-text>
+			</ion-label>
+			<ion-buttons slot="end">
+				<ion-button>
+					<ion-icon name="link-outline" />
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
+		}
+	</ion-list>
+</ion-card>
+
+@if (this.suggestedJoins?.length) {
+<ion-card>
+	<ion-list>
+		@for (sj of suggestedJoins; track $index) {
+		<ion-item>
+			@if (sj.to?.recordset; as recordset) {
+			<ion-label>{{ recordset.schema }}.{{ recordset.name }}</ion-label>
+			} @if (!sj.to) {
+			<ion-label>[{{ sj | json }}]</ion-label>
+			}
+			<ion-buttons slot="end">
+				<ion-button
+					color="medium"
+					(click)="addJoin(sj, 'left')"
+					title="Add LEFT join"
+				>
+					<ion-icon name="arrow-back-outline" />
+				</ion-button>
+				<ion-button
+					color="medium"
+					(click)="addJoin(sj, 'inner')"
+					title="Add INNER join"
+				>
+					<ion-icon name="reorder-two-outline" />
+				</ion-button>
+				<ion-button
+					color="medium"
+					(click)="addJoin(sj, 'right')"
+					title="Add RIGHT join"
+				>
+					<ion-icon name="arrow-forward-outline" />
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
+		}
+	</ion-list>
+</ion-card>
+}

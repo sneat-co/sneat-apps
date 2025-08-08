@@ -1,0 +1,27 @@
+@if (!!boardDef?.rows?.length) { @for (boardRowDef of boardDef?.rows || [];
+track boardRowDef) {
+<sneat-datatug-board-row
+	[boardRowDef]="boardRowDef"
+	[boardContext]="boardContext"
+/>
+} } @else {
+<ion-grid>
+	<ion-row>
+		<ion-col>
+			<ion-text color="medium">
+				<p>No cards/widgets have been added to this board yet.</p>
+			</ion-text>
+		</ion-col>
+	</ion-row>
+	@if (boardContext?.mode === "edit") {
+	<ion-row>
+		<ion-col>
+			<ion-button fill="outline" (click)="newCard()">
+				<ion-icon slot="start" name="add" />
+				<ion-label>New card</ion-label>
+			</ion-button>
+		</ion-col>
+	</ion-row>
+	}
+</ion-grid>
+}

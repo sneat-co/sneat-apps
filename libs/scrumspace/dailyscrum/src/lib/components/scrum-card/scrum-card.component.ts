@@ -21,7 +21,7 @@ import {
 	IonList,
 } from '@ionic/angular/standalone';
 import { IRecord } from '@sneat/data';
-import { NavService } from '@sneat/ext-datatug-core';
+import { NavService } from '@sneat/datatug-main';
 import { IMemberBrief, ISpaceDbo } from '@sneat/dto';
 import { Timer } from '@sneat/ext-meeting';
 import { IScrumDbo, IStatus, ITask } from '@sneat/ext-scrumspace-scrummodels';

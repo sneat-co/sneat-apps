@@ -1,0 +1,14 @@
+<ion-segment [(ngModel)]="selectedTab">
+	@for (tab of tabsWidgetSettings?.tabs || []; track tab.title) {
+	<ion-segment-button [value]="tab.title">
+		<ion-label style="text-transform: none">{{ tab.title }}</ion-label>
+	</ion-segment-button>
+	}
+</ion-segment>
+@for (tab of tabsWidgetSettings?.tabs || []; track tab.title) { @if ((tab.title
+=== selectedTab && level) || level === 0) {
+<!--		<sneat-datatug-board-widget-->
+<!--			[level]="level + 1"-->
+<!--			[widgetDef]="tab.widget"-->
+<!--		/>-->
+} }

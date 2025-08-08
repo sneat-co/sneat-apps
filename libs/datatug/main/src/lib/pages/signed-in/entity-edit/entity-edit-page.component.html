@@ -1,0 +1,72 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-menu-button />
+			<ion-back-button [defaultHref]="backUrl" />
+		</ion-buttons>
+		@if (mode === "new") {
+		<ion-title>
+			New entity @if (project?.brief) {
+			<span>&#64; {{ project?.brief?.title || project?.ref?.projectId }}</span>
+			}
+		</ion-title>
+		}
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-card>
+		<ion-item>
+			<ion-label position="floating">Name</ion-label>
+			<ion-input #nameInput autofocus="autofocus" [(ngModel)]="entity.title" />
+		</ion-item>
+	</ion-card>
+
+	<ion-card>
+		<ion-list class="last-child-no-border">
+			<ion-item>
+				<ion-label color="medium">Properties</ion-label>
+				<ion-buttons slot="end">
+					<ion-button (click)="addProperty($event)">
+						<ion-icon name="add" slot="start" />
+						<ion-label>Add</ion-label>
+					</ion-button>
+				</ion-buttons>
+			</ion-item>
+			@if (entity && !entity.fields.length) {
+			<ion-item>
+				<ion-label color="medium">No properties defined yet</ion-label>
+			</ion-item>
+			} @if (entity) { @for (field of entity.fields; track field.id) {
+			<ion-item tappable>
+				<ion-label>
+					{{ field.id }}
+					@if (field.namePattern) {
+					<p>Name pattern: {{ field.namePattern | json }}</p>
+					}
+				</ion-label>
+				<ion-badge color="light" style="font-weight: normal">
+					<ion-text color="medium">{{ field.type }}</ion-text>
+				</ion-badge>
+				<ion-buttons slot="end">
+					<ion-button (click)="deleteField(field.id)">
+						<ion-icon name="close-outline" color="medium" />
+					</ion-button>
+				</ion-buttons>
+			</ion-item>
+			} }
+		</ion-list>
+	</ion-card>
+
+	@switch (mode) { @case ("new") {
+	<ion-button class="ion-margin" (click)="createEntity()">
+		<ion-label>Create entity</ion-label>
+	</ion-button>
+	} @case ("edit") {
+	<ion-button class="ion-margin" (click)="saveEntityChanges()">
+		<ion-label>Save changes</ion-label>
+	</ion-button>
+	} } @if (error) {
+	<sneat-datatug-error-card />
+	}
+</ion-content>

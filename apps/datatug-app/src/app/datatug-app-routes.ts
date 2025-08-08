@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { datatugRoutes } from '@sneat/ext-datatug-routes';
 
 export const routes: Routes = [
 	{
@@ -12,14 +11,16 @@ export const routes: Routes = [
 	{
 		path: 'home',
 		loadChildren: () =>
-			import('@sneat/ext-datatug-pages').then(
-				(m) => m.DatatugHomePageComponent,
-			),
+			import('@sneat/datatug-main').then((m) => m.DatatugHomePageComponent),
 	},
 	{
 		path: '',
 		redirectTo: 'home',
 		pathMatch: 'full',
 	},
-	...datatugRoutes,
+	{
+		path: '',
+		loadChildren: () =>
+			import('@sneat/datatug-main').then((m) => m.DatatugRoutingModule),
+	},
 ];

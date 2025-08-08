@@ -8,8 +8,11 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { NavController } from '@ionic/angular/standalone';
-import { NavigationOptions } from '@ionic/angular/common/providers/nav-controller';
 import { equalSpaceRefs, ILogger, ISpaceRef, SpaceType } from '@sneat/core';
+
+type NavigationOptions = NonNullable<
+	Parameters<NavController['navigateRoot']>[1]
+>;
 import { equalSpaceBriefs, ISpaceBrief, ISpaceDbo } from '@sneat/dto';
 import { ISpaceContext } from '@sneat/space-models';
 import {
@@ -391,8 +394,8 @@ export abstract class SpaceBaseComponent
 				(keys.length === 2 && keys.includes('id') && keys.includes('type'))
 				? spaceRef
 				: spaceRef.type || (prev?.type && prev.id !== spaceRef.id)
-					? { id: spaceRef.id, type: spaceRef.type || prev?.type }
-					: { id: spaceRef.id };
+				? { id: spaceRef.id, type: spaceRef.type || prev?.type }
+				: { id: spaceRef.id };
 		});
 	}
 

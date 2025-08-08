@@ -1,0 +1,175 @@
+import { JsonPipe } from '@angular/common';
+import { Component, OnDestroy, ViewChild, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { SneatErrorCardComponent } from '@sneat/components';
+import { Subject } from 'rxjs';
+import {
+	IonBackButton,
+	IonBadge,
+	IonButton,
+	IonButtons,
+	IonCard,
+	IonContent,
+	IonHeader,
+	IonIcon,
+	IonInput,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonMenuButton,
+	IonText,
+	IonTitle,
+	IonToolbar,
+	PopoverController,
+} from '@ionic/angular/standalone';
+import {
+	IEntity,
+	IEntityFieldDef,
+} from '../../../models/definition/metapedia/entity';
+import { IProjectContext } from '../../../nav/nav-models';
+import { DatatugNavContextService } from '../../../services/nav/datatug-nav-context.service';
+import { DatatugNavService } from '../../../services/nav/datatug-nav.service';
+import { EntityService } from '../../../services/unsorted/entity.service';
+import { EntityFieldDialogComponent } from './entity-field-dialog/entity-field-dialog.component';
+import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+
+@Component({
+	selector: 'sneat-datatug-entity-edit',
+	templateUrl: './entity-edit-page.component.html',
+	imports: [
+		FormsModule,
+		SneatErrorCardComponent,
+		IonHeader,
+		IonToolbar,
+		IonButtons,
+		IonMenuButton,
+		IonBackButton,
+		IonContent,
+		IonTitle,
+		IonCard,
+		IonItem,
+		IonLabel,
+		IonInput,
+		IonList,
+		IonButton,
+		IonIcon,
+		JsonPipe,
+		IonBadge,
+		IonText,
+	],
+})
+export class EntityEditPageComponent implements OnDestroy {
+	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+	private readonly route = inject(ActivatedRoute);
+	private readonly navContextService = inject(DatatugNavContextService);
+	private readonly entityService = inject(EntityService);
+	private readonly datatugNavService = inject(DatatugNavService);
+	private readonly popoverCtrl = inject(PopoverController);
+
+	mode?: 'new' | 'edit';
+	public entity: IEntity = { fields: [] };
+	backUrl = '/';
+	project?: IProjectContext;
+	@ViewChild('nameInput') nameInput?: IonInput;
+	public error: unknown;
+	public showNewPropForm = false;
+	private readonly destroyed = new Subject<void>();
+
+	constructor() {
+		const route = this.route;
+		const navContextService = this.navContextService;
+
+		try {
+			this.mode = !route.snapshot.paramMap.get('entityId') ? 'new' : 'edit';
+			this.entity = {
+				fields: [],
+			};
+			this.showNewPropForm = true;
+			navContextService.currentProject.subscribe({
+				next: (currentProject) => {
+					try {
+						console.log('EntityEditPage: currentProject:', currentProject);
+						this.project = currentProject;
+						this.backUrl = currentProject
+							? `/store/${currentProject.ref.storeId}/project/${currentProject.ref.projectId}/entities`
+							: '/';
+					} catch (e) {
+						this.errorLogger.logError(e, 'Failed to process current project');
+					}
+				},
+			});
+		} catch (e) {
+			this.error = this.errorLogger.logError(
+				e,
+				'Failed in EntityEditPage.constructor()',
+			);
+		}
+	}
+
+	ionViewDidEnter() {
+		try {
+			this.nameInput
+				?.setFocus()
+				.catch((e) =>
+					this.errorLogger.logError(e, 'Failed to set focus to "name" input'),
+				);
+		} catch (e) {
+			this.errorLogger.logError(e, 'Failed to process ionViewDidEnter');
+		}
+	}
+
+	ngOnDestroy(): void {
+		this.destroyed.next();
+		this.destroyed.complete();
+	}
+
+	createEntity(): void {
+		console.log('createEntity()');
+		const project = this.project;
+		if (!project) {
+			return;
+		}
+		try {
+			this.entityService.createEntity(project.ref, this.entity).subscribe({
+				next: (value) => {
+					console.log('Entity created:', value);
+					this.datatugNavService.goEntity(project, {
+						id: value.id,
+						title: value.dbo?.title,
+					});
+				},
+			});
+		} catch (e) {
+			this.errorLogger.logError(e, 'Failed to create entity');
+		}
+	}
+
+	saveEntityChanges(): void {
+		console.log('saveEntityChanges()');
+	}
+
+	async addProperty(event: Event) {
+		const popover = await this.popoverCtrl.create({
+			component: EntityFieldDialogComponent,
+			event,
+		});
+		popover.onDidDismiss().then((response) => {
+			console.log('response:', response);
+			this.entity = {
+				...this.entity,
+				fields: [...this.entity.fields, response.data as IEntityFieldDef],
+			};
+			console.log('entity', this.entity);
+		});
+		return await popover.present();
+	}
+
+	deleteField(id: string): void {
+		console.log('deleteField', id);
+		this.entity = {
+			...this.entity,
+			fields: this.entity.fields.filter((f) => f.id !== id),
+		};
+	}
+}

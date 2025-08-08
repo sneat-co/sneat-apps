@@ -1,0 +1,9 @@
+table.json-table {
+	border-collapse: collapse;
+	border: 1px solid var(--ion-color-step-300, #ccc);
+	th,
+	td {
+		border: 1px solid var(--ion-color-step-300, #ccc);
+		padding: 0.25em 0.5em;
+	}
+}

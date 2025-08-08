@@ -1,0 +1,23 @@
+@switch (widgetDef?.name) { @case ("tabs") {
+<sneat-datatug-tabs-widget
+	[level]="level"
+	[tabsWidgetSettings]="tabsWidgetSettings"
+	[boardContext]="boardContext"
+/>
+}
+<!--	@case ('SQL') {-->
+<!--			<sneat-datatug-sql-query-widget-->
+<!--					*ngSwitchCase="'SQL'"-->
+<!--					[level]="level"-->
+<!--					[tab]="cardTab //noinspection InvalidExpressionResultType"-->
+<!--					[data]="sqlWidgetSettings"-->
+<!--					[boardContext]="boardContext"-->
+<!--				/>-->
+<!--	}-->
+@default {
+<div class="ion-margin-top">
+	@if (!widgetDef) { No widget definition } @else if (!widgetDef.name) { No
+	widget name } @else { To be implemented: {{ widgetDef.name }}
+	}
+</div>
+} }

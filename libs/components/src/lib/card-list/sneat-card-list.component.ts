@@ -23,13 +23,17 @@ import {
 	IonSkeletonText,
 } from '@ionic/angular/standalone';
 import { IRecord } from '@sneat/data';
-import { IOptionallyTitled, IProjItemBrief } from '@sneat/ext-datatug-models';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 import { Observable } from 'rxjs';
 
 export interface ICardTab {
 	id: string;
 	title: string;
+}
+
+interface IOptionallyTitled {
+	id?: string;
+	title?: string;
 }
 
 @Component({
@@ -58,17 +62,17 @@ export class SneatCardListComponent {
 	@Input() title?: string;
 	@Input() isFilterable?: boolean;
 	@Input() isLoading?: boolean;
-	@Input() items?: IProjItemBrief[];
+	@Input() items?: { id?: unknown; title?: string }[];
 	@Input() create?: (name: string) => Observable<IRecord<IOptionallyTitled>>;
 	@Input() itemIcon?: string;
 	@Input() tab?: string;
 	@Input() tabs?: ICardTab[];
 	@Input() noItemsText?: string;
-	@Input() getRouterLink: (item: IProjItemBrief) => string = () =>
+	@Input() getRouterLink: (item: unknown) => string = () =>
 		undefined as unknown as string;
 
 	@Output() readonly cardTitleClick = new EventEmitter<void>();
-	@Output() readonly itemClick = new EventEmitter<IProjItemBrief>();
+	@Output() readonly itemClick = new EventEmitter<unknown>();
 	@Output() readonly tabChanged = new EventEmitter<string>();
 
 	@ViewChild(IonInput, { static: false }) addInput?: IonInput;
@@ -79,7 +83,7 @@ export class SneatCardListComponent {
 	protected name = '';
 	protected isAdding?: boolean;
 
-	protected click(event: Event, item: IProjItemBrief): void {
+	protected click(event: Event, item: unknown): void {
 		event.preventDefault();
 		event.stopPropagation();
 		this.itemClick.emit(item);

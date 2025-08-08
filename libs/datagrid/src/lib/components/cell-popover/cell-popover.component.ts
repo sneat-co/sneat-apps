@@ -14,8 +14,25 @@ import {
 	IonSegmentButton,
 	IonText,
 } from '@ionic/angular/standalone';
-import { IRecordsetColumn } from '@sneat/ext-datatug-dto';
-import { IForeignKey } from '@sneat/ext-datatug-models';
+
+// TODO: Local minimal copies to avoid dependency on @sneat/datatug-main and break circular build deps
+interface IRecordsetColumn {
+	name: string;
+	title?: string;
+	dbType: string; // Using string here to avoid coupling to DbType type from datatug-main
+}
+
+interface ITableRef {
+	name: string;
+	schema: string;
+	catalog?: string;
+}
+
+interface IForeignKey {
+	name: string;
+	columns: string[];
+	refTable: ITableRef;
+}
 
 @Component({
 	selector: 'sneat-datatug-cell-popover',

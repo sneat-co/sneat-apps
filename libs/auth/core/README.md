@@ -1,4 +1,4 @@
-# auth
+# auth-core library
 
 This library was generated with [Nx](https://nx.dev).
 
