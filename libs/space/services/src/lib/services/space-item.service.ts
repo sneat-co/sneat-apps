@@ -1,9 +1,4 @@
-import {
-	inject,
-	Injector,
-	Injectable,
-	runInInjectionContext,
-} from '@angular/core';
+import { Injector, runInInjectionContext } from '@angular/core';
 import {
 	Firestore as AngularFirestore,
 	doc,

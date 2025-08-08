@@ -8,7 +8,6 @@ import {
 import { FormsModule } from '@angular/forms';
 import { ParamMap } from '@angular/router';
 import {
-	IonInput,
 	IonBackButton,
 	IonButtons,
 	IonContent,

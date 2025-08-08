@@ -1,11 +1,4 @@
-import {
-	computed,
-	Directive,
-	inject,
-	input,
-	signal,
-	Signal,
-} from '@angular/core';
+import { computed, signal, Signal } from '@angular/core';
 import {
 	IonButton,
 	IonButtons,
@@ -18,9 +11,7 @@ import {
 import {
 	ContactCommChannelType,
 	IContactCommChannelProps,
-	IContactContext,
 } from '@sneat/contactus-core';
-import { ContactService } from '@sneat/contactus-services';
 import { SneatBaseComponent } from '@sneat/ui';
 import { CommChannelFormComponent } from './comm-channel-form.component';
 import {

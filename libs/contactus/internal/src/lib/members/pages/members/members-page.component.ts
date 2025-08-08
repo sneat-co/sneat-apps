@@ -24,7 +24,6 @@ import { SpaceMemberType } from '@sneat/auth-models';
 import {
 	ContactusServicesModule,
 	ContactusSpaceService,
-	MemberGroupService,
 } from '@sneat/contactus-services';
 import { FamilyMembersComponent, MemberGroup } from '@sneat/contactus-shared';
 import { IMemberGroupContext } from '@sneat/contactus-core';

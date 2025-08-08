@@ -1,6 +1,5 @@
-import { Component, computed, effect, signal, ViewChild } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import {
-	IonInput,
 	IonBackButton,
 	IonButtons,
 	IonCard,
