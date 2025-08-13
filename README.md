@@ -34,15 +34,21 @@ A suit of open source apps that help in work & personal life.
   cross-platform native and web app experiences.
 - [nx](https://nx.dev/) by [Nrwl](https://nrwl.io/) - extensible dev tools for monorepos
 
-# Setting up development environment
+## Setting up development environment
 
 If you want to contribute to this open source project you can
 read instructions on how to set up local dev environment in [README-DEV-SETUP.md](docs/README-DEV-SETUP.md).
 
-# Promoted discussions
+## Promoted discussions
 
 - [Best tag-line for Sneat.app?](https://github.com/sneat-co/sneat-apps/discussions/1568)
 
-# Signed commits
+## Signed commits
 
 Test signed commits 3.
+
+
+## Follow us on Telegram
+
+If you want to know insights about deveopment of Sneat apps follow [@SneatDevDiaries](https://t.me/SneatDevDiaries)
+
