@@ -2,7 +2,7 @@
 	"name": "sneat-apps",
 	"version": "0.0.0",
 	"license": "MIT",
-	"packageManager": "pnpm@10.15.0",
+	"packageManager": "pnpm@10.15.1",
 	"scripts": {
 		"nx": "nx",
 		"ng": "nx",
@@ -129,7 +129,7 @@
 		"jest-preset-angular": "15.0.0",
 		"jest-util": "^30.0.2",
 		"jsonc-eslint-parser": "2.4.0",
-		"lint-staged": "16.1.5",
+		"lint-staged": "16.1.6",
 		"madge": "^8.0.0",
 		"ng-packagr": "20.2.0",
 		"nx": "21.4.1",
