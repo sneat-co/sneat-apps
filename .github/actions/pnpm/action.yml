@@ -12,29 +12,33 @@ runs:
             continue-on-error: true
             shell: sh
 
+        -   name: Setup pnpm
+            uses: pnpm/action-setup@v4 # Use the official pnpm setup action
+
         -   name: Setup NodeJS
             uses: actions/setup-node@v4
-#            with:
-#                node-version: '22'
+            with:
+                cache: 'pnpm'
+        #                node-version: '22'
 
-        - name: Set up PNPM (corepack)
-          id: pnpm-setup
-          shell: sh
-          run: |
-            echo "Before: corepack version => $(corepack --version || echo 'not installed')"
-            npm install -g corepack@latest
-            echo "After : corepack version => $(corepack --version)"
-            corepack enable
+        #        -   name: Set up PNPM (corepack)
+        #            id: pnpm-setup
+        #            shell: sh
+        #            run: |
+        #                echo "Before: corepack version => $(corepack --version || echo 'not installed')"
+        #                npm install -g corepack@latest
+        #                echo "After : corepack version => $(corepack --version)"
+        #                corepack enable
 
-#        -   name: Install PNPM
+        #        -   name: Install PNPM
 
-#            shell: sh
-#            run: npm install pnpm@8 -g
+        #            shell: sh
+        #            run: npm install pnpm@8 -g
 
-#            uses: pnpm/action-setup@v2
-#            with:
-#                version: 8
-#                run_install: false
+        #            uses: pnpm/action-setup@v2
+        #            with:
+        #                version: 8
+        #                run_install: false
 
         -   run: pnpm --version
             shell: sh
@@ -56,5 +60,6 @@ runs:
                 restore-keys: |
                     ${{ runner.os }}-pnpm-store-
 
-        -   run: pnpm install
+        -   name: Install dependencies
+            run: pnpm install
             shell: sh
