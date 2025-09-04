@@ -4,7 +4,7 @@
 	"license": "MIT",
 	"packageManager": "pnpm@10.15.1",
 	"scripts": {
-		"nx": "nx",
+		"nx": "NODE_OPTIONS=--no-deprecation nx",
 		"ng": "nx",
 		"postinstall_legacy": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main --first-only --create-ivy-entry-points",
 		"start": "nx serve",
@@ -40,6 +40,7 @@
 			"lmdb",
 			"msgpackr-extract",
 			"nx",
+			"oxc-resolver",
 			"protobufjs",
 			"unrs-resolver"
 		]
