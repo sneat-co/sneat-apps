@@ -14,8 +14,8 @@ runs:
 
         -   name: Setup NodeJS
             uses: actions/setup-node@v4
-            with:
-                node-version: '22'
+#            with:
+#                node-version: '22'
 
         - name: Set up PNPM (corepack)
           id: pnpm-setup
