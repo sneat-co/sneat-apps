@@ -5,10 +5,10 @@ on:
         branches:
             # - renovate/* - do not build renovate branches as they'll be built by PRs
             - main
-#            - feature/*
-#            - bugfix/*
-#            - improvement/*
-#            - personal/*
+    #            - feature/*
+    #            - bugfix/*
+    #            - improvement/*
+    #            - personal/*
     pull_request:
     merge_group:
 
@@ -68,6 +68,8 @@ jobs:
                 with:
                     fetch-depth: 0
 
+            -   uses: ./.github/actions/pnpm
+
             -   uses: sneat-co/sneat-go-server@main
 
             -   name: Install latest Chrome
@@ -84,12 +86,12 @@ jobs:
                     pnpm run cy:serve:ci &
                     sleep 5
 
-#            -   name: Run e2e tests
-#                uses: cypress-io/github-action@v6
-#                with:
-#                    command: pnpm run cy:test:ci
-#                    wait-on: 'http://localhost:4205'
-#                    wait-on-timeout: 120
+    #            -   name: Run e2e tests
+    #                uses: cypress-io/github-action@v6
+    #                with:
+    #                    command: pnpm run cy:test:ci
+    #                    wait-on: 'http://localhost:4205'
+    #                    wait-on-timeout: 120
 
     e2e-playwright:
         name: Playwright tests
@@ -98,12 +100,11 @@ jobs:
         steps:
             -   uses: actions/checkout@v5
 
+            -   uses: ./.github/actions/pnpm
+
             -   uses: actions/setup-node@v4
                 with:
                     node-version: lts/*
-
-            -   name: Install dependencies
-                run: npm install -g pnpm && pnpm install
 
             -   name: Install Playwright Browsers
                 run: pnpm exec playwright install chromium --with-deps
