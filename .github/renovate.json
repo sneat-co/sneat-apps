@@ -1,13 +1,16 @@
 {
-  "extends": [
-    "github>sneat-co/sneat-renovate-nx"
-  ],
+  "extends": ["github>sneat-co/sneat-renovate-nx"],
   "packageRules": [
     {
-      "matchPackagePrefixes": ["@sneat/"],
-      "matchDepTypes": ["dependencies", "devDependencies", "peerDependencies", "optionalDependencies"],
+      "matchDepTypes": [
+        "dependencies",
+        "devDependencies",
+        "peerDependencies",
+        "optionalDependencies"
+      ],
       "enabled": false,
-      "description": "Disable lookup/updates for local workspace @sneat/* packages"
+      "description": "Disable lookup/updates for local workspace @sneat/* packages",
+      "matchPackageNames": ["@sneat/{/,}**"]
     }
   ]
 }
