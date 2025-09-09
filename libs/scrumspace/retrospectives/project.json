@@ -9,15 +9,14 @@
 			"executor": "@nx/angular:ng-packagr-lite",
 			"outputs": ["{workspaceRoot}/dist/libs/scrumspace/retrospectives"],
 			"options": {
-				"project": "libs/scrumspace/retrospectives/ng-package.json"
+				"project": "libs/scrumspace/retrospectives/ng-package.json",
+				"tsConfig": "libs/scrumspace/retrospectives/tsconfig.lib.json"
 			},
 			"configurations": {
 				"production": {
 					"tsConfig": "libs/scrumspace/retrospectives/tsconfig.lib.prod.json"
 				},
-				"development": {
-					"tsConfig": "libs/scrumspace/retrospectives/tsconfig.lib.json"
-				}
+				"development": {}
 			},
 			"defaultConfiguration": "production"
 		},
@@ -25,7 +24,8 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/libs/scrumspace/retrospectives"],
 			"options": {
-				"jestConfig": "libs/scrumspace/retrospectives/jest.config.ts"
+				"jestConfig": "libs/scrumspace/retrospectives/jest.config.ts",
+				"tsConfig": "libs/scrumspace/retrospectives/tsconfig.spec.json"
 			}
 		},
 		"lint": {

@@ -9,15 +9,14 @@
 			"executor": "@nx/angular:ng-packagr-lite",
 			"outputs": ["{workspaceRoot}/dist/libs/extensions/listus"],
 			"options": {
-				"project": "libs/extensions/listus/ng-package.json"
+				"project": "libs/extensions/listus/ng-package.json",
+				"tsConfig": "libs/extensions/listus/tsconfig.lib.json"
 			},
 			"configurations": {
 				"production": {
 					"tsConfig": "libs/extensions/listus/tsconfig.lib.prod.json"
 				},
-				"development": {
-					"tsConfig": "libs/extensions/listus/tsconfig.lib.json"
-				}
+				"development": {}
 			},
 			"defaultConfiguration": "production"
 		},
@@ -25,7 +24,8 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/libs/extensions/listus"],
 			"options": {
-				"jestConfig": "libs/extensions/listus/jest.config.ts"
+				"jestConfig": "libs/extensions/listus/jest.config.ts",
+				"tsConfig": "libs/extensions/listus/tsconfig.spec.json"
 			}
 		},
 		"lint": {

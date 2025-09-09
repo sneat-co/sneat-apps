@@ -9,15 +9,14 @@
 			"executor": "@nx/angular:ng-packagr-lite",
 			"outputs": ["{workspaceRoot}/dist/libs/extensions/assetus/components"],
 			"options": {
-				"project": "libs/extensions/assetus/components/ng-package.json"
+				"project": "libs/extensions/assetus/components/ng-package.json",
+				"tsConfig": "libs/extensions/assetus/components/tsconfig.lib.json"
 			},
 			"configurations": {
 				"production": {
 					"tsConfig": "libs/extensions/assetus/components/tsconfig.lib.prod.json"
 				},
-				"development": {
-					"tsConfig": "libs/extensions/assetus/components/tsconfig.lib.json"
-				}
+				"development": {}
 			},
 			"defaultConfiguration": "production"
 		},
@@ -27,7 +26,8 @@
 				"{workspaceRoot}/coverage/libs/extensions/assetus/components"
 			],
 			"options": {
-				"jestConfig": "libs/extensions/assetus/components/jest.config.ts"
+				"jestConfig": "libs/extensions/assetus/components/jest.config.ts",
+				"tsConfig": "libs/extensions/assetus/components/tsconfig.spec.json"
 			}
 		},
 		"lint": {

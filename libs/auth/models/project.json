@@ -9,15 +9,14 @@
 			"executor": "@nx/angular:ng-packagr-lite",
 			"outputs": ["{workspaceRoot}/dist/libs/auth/models"],
 			"options": {
-				"project": "libs/auth/models/ng-package.json"
+				"project": "libs/auth/models/ng-package.json",
+				"tsConfig": "libs/auth/models/tsconfig.lib.json"
 			},
 			"configurations": {
 				"production": {
 					"tsConfig": "libs/auth/models/tsconfig.lib.prod.json"
 				},
-				"development": {
-					"tsConfig": "libs/auth/models/tsconfig.lib.json"
-				}
+				"development": {}
 			},
 			"defaultConfiguration": "production"
 		},
@@ -25,7 +24,8 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/libs/auth/models"],
 			"options": {
-				"jestConfig": "libs/auth/models/jest.config.ts"
+				"jestConfig": "libs/auth/models/jest.config.ts",
+				"tsConfig": "libs/auth/models/tsconfig.spec.json"
 			}
 		},
 		"lint": {

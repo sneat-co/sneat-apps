@@ -9,15 +9,14 @@
 			"executor": "@nx/angular:ng-packagr-lite",
 			"outputs": ["{workspaceRoot}/dist/libs/logging"],
 			"options": {
-				"project": "libs/logging/ng-package.json"
+				"project": "libs/logging/ng-package.json",
+				"tsConfig": "libs/logging/tsconfig.lib.json"
 			},
 			"configurations": {
 				"production": {
 					"tsConfig": "libs/logging/tsconfig.lib.prod.json"
 				},
-				"development": {
-					"tsConfig": "libs/logging/tsconfig.lib.json"
-				}
+				"development": {}
 			},
 			"defaultConfiguration": "production"
 		},
@@ -25,7 +24,8 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/libs/logging"],
 			"options": {
-				"jestConfig": "libs/logging/jest.config.ts"
+				"jestConfig": "libs/logging/jest.config.ts",
+				"tsConfig": "libs/logging/tsconfig.spec.json"
 			}
 		},
 		"lint": {

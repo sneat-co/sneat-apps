@@ -9,15 +9,14 @@
 			"executor": "@nx/angular:ng-packagr-lite",
 			"outputs": ["{workspaceRoot}/dist/libs/communes/ui"],
 			"options": {
-				"project": "libs/communes/ui/ng-package.json"
+				"project": "libs/communes/ui/ng-package.json",
+				"tsConfig": "libs/communes/ui/tsconfig.lib.json"
 			},
 			"configurations": {
 				"production": {
 					"tsConfig": "libs/communes/ui/tsconfig.lib.prod.json"
 				},
-				"development": {
-					"tsConfig": "libs/communes/ui/tsconfig.lib.json"
-				}
+				"development": {}
 			},
 			"defaultConfiguration": "production"
 		},
@@ -25,7 +24,8 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/libs/communes/ui"],
 			"options": {
-				"jestConfig": "libs/communes/ui/jest.config.ts"
+				"jestConfig": "libs/communes/ui/jest.config.ts",
+				"tsConfig": "libs/communes/ui/tsconfig.spec.json"
 			}
 		},
 		"lint": {

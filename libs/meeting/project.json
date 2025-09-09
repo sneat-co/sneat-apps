@@ -9,15 +9,14 @@
 			"executor": "@nx/angular:ng-packagr-lite",
 			"outputs": ["{workspaceRoot}/dist/libs/meeting"],
 			"options": {
-				"project": "libs/meeting/ng-package.json"
+				"project": "libs/meeting/ng-package.json",
+				"tsConfig": "libs/meeting/tsconfig.lib.json"
 			},
 			"configurations": {
 				"production": {
 					"tsConfig": "libs/meeting/tsconfig.lib.prod.json"
 				},
-				"development": {
-					"tsConfig": "libs/meeting/tsconfig.lib.json"
-				}
+				"development": {}
 			},
 			"defaultConfiguration": "production"
 		},
@@ -25,7 +24,8 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/libs/meeting"],
 			"options": {
-				"jestConfig": "libs/meeting/jest.config.ts"
+				"jestConfig": "libs/meeting/jest.config.ts",
+				"tsConfig": "libs/meeting/tsconfig.spec.json"
 			}
 		},
 		"lint": {

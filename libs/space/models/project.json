@@ -9,15 +9,14 @@
 			"executor": "@nx/angular:ng-packagr-lite",
 			"outputs": ["{workspaceRoot}/dist/libs/space/models"],
 			"options": {
-				"project": "libs/space/models/ng-package.json"
+				"project": "libs/space/models/ng-package.json",
+				"tsConfig": "libs/space/models/tsconfig.lib.json"
 			},
 			"configurations": {
 				"production": {
 					"tsConfig": "libs/space/models/tsconfig.lib.prod.json"
 				},
-				"development": {
-					"tsConfig": "libs/space/models/tsconfig.lib.json"
-				}
+				"development": {}
 			},
 			"defaultConfiguration": "production"
 		},
@@ -25,7 +24,8 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/libs/space/models"],
 			"options": {
-				"jestConfig": "libs/space/models/jest.config.ts"
+				"jestConfig": "libs/space/models/jest.config.ts",
+				"tsConfig": "libs/space/models/tsconfig.spec.json"
 			}
 		},
 		"lint": {

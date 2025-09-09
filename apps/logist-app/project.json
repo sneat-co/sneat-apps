@@ -87,7 +87,8 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/apps/logist-app"],
 			"options": {
-				"jestConfig": "apps/logist-app/jest.config.ts"
+				"jestConfig": "apps/logist-app/jest.config.ts",
+				"tsConfig": "apps/logist-app/tsconfig.spec.json"
 			}
 		}
 	}

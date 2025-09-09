@@ -9,15 +9,14 @@
 			"executor": "@nx/angular:ng-packagr-lite",
 			"outputs": ["{workspaceRoot}/dist/libs/scrumspace/scrummodels"],
 			"options": {
-				"project": "libs/scrumspace/scrummodels/ng-package.json"
+				"project": "libs/scrumspace/scrummodels/ng-package.json",
+				"tsConfig": "libs/scrumspace/scrummodels/tsconfig.lib.json"
 			},
 			"configurations": {
 				"production": {
 					"tsConfig": "libs/scrumspace/scrummodels/tsconfig.lib.prod.json"
 				},
-				"development": {
-					"tsConfig": "libs/scrumspace/scrummodels/tsconfig.lib.json"
-				}
+				"development": {}
 			},
 			"defaultConfiguration": "production"
 		},
@@ -25,7 +24,8 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/libs/scrumspace/scrummodels"],
 			"options": {
-				"jestConfig": "libs/scrumspace/scrummodels/jest.config.ts"
+				"jestConfig": "libs/scrumspace/scrummodels/jest.config.ts",
+				"tsConfig": "libs/scrumspace/scrummodels/tsconfig.spec.json"
 			}
 		},
 		"lint": {

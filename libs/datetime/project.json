@@ -9,15 +9,14 @@
 			"executor": "@nx/angular:ng-packagr-lite",
 			"outputs": ["{workspaceRoot}/dist/libs/datetime"],
 			"options": {
-				"project": "libs/datetime/ng-package.json"
+				"project": "libs/datetime/ng-package.json",
+				"tsConfig": "libs/datetime/tsconfig.lib.json"
 			},
 			"configurations": {
 				"production": {
 					"tsConfig": "libs/datetime/tsconfig.lib.prod.json"
 				},
-				"development": {
-					"tsConfig": "libs/datetime/tsconfig.lib.json"
-				}
+				"development": {}
 			},
 			"defaultConfiguration": "production"
 		},
@@ -25,7 +24,8 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/libs/datetime"],
 			"options": {
-				"jestConfig": "libs/datetime/jest.config.ts"
+				"jestConfig": "libs/datetime/jest.config.ts",
+				"tsConfig": "libs/datetime/tsconfig.spec.json"
 			}
 		},
 		"lint": {

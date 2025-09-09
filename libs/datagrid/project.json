@@ -9,15 +9,14 @@
 			"executor": "@nx/angular:package",
 			"outputs": ["{workspaceRoot}/dist/libs/datagrid"],
 			"options": {
-				"project": "libs/datagrid/ng-package.json"
+				"project": "libs/datagrid/ng-package.json",
+				"tsConfig": "libs/datagrid/tsconfig.lib.json"
 			},
 			"configurations": {
 				"production": {
 					"tsConfig": "libs/datagrid/tsconfig.lib.prod.json"
 				},
-				"development": {
-					"tsConfig": "libs/datagrid/tsconfig.lib.json"
-				}
+				"development": {}
 			},
 			"defaultConfiguration": "production"
 		},
@@ -25,7 +24,8 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/libs/datagrid"],
 			"options": {
-				"jestConfig": "libs/datagrid/jest.config.ts"
+				"jestConfig": "libs/datagrid/jest.config.ts",
+				"tsConfig": "libs/datagrid/tsconfig.spec.json"
 			}
 		},
 		"lint": {

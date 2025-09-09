@@ -87,7 +87,8 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/apps/datatug-app"],
 			"options": {
-				"jestConfig": "apps/datatug-app/jest.config.ts"
+				"jestConfig": "apps/datatug-app/jest.config.ts",
+				"tsConfig": "apps/datatug-app/tsconfig.spec.json"
 			}
 		}
 	}

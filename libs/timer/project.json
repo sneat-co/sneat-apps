@@ -9,15 +9,14 @@
 			"executor": "@nx/angular:ng-packagr-lite",
 			"outputs": ["{workspaceRoot}/dist/libs/timer"],
 			"options": {
-				"project": "libs/timer/ng-package.json"
+				"project": "libs/timer/ng-package.json",
+				"tsConfig": "libs/timer/tsconfig.lib.json"
 			},
 			"configurations": {
 				"production": {
 					"tsConfig": "libs/timer/tsconfig.lib.prod.json"
 				},
-				"development": {
-					"tsConfig": "libs/timer/tsconfig.lib.json"
-				}
+				"development": {}
 			},
 			"defaultConfiguration": "production"
 		},
@@ -25,7 +24,8 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/libs/timer"],
 			"options": {
-				"jestConfig": "libs/timer/jest.config.ts"
+				"jestConfig": "libs/timer/jest.config.ts",
+				"tsConfig": "libs/timer/tsconfig.spec.json"
 			}
 		},
 		"lint": {

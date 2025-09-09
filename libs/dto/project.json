@@ -9,15 +9,14 @@
 			"executor": "@nx/angular:ng-packagr-lite",
 			"outputs": ["{workspaceRoot}/dist/libs/dto"],
 			"options": {
-				"project": "libs/dto/ng-package.json"
+				"project": "libs/dto/ng-package.json",
+				"tsConfig": "libs/dto/tsconfig.lib.json"
 			},
 			"configurations": {
 				"production": {
 					"tsConfig": "libs/dto/tsconfig.lib.prod.json"
 				},
-				"development": {
-					"tsConfig": "libs/dto/tsconfig.lib.json"
-				}
+				"development": {}
 			},
 			"defaultConfiguration": "production"
 		},
@@ -25,7 +24,8 @@
 			"executor": "@nx/jest:jest",
 			"outputs": ["{workspaceRoot}/coverage/libs/dto"],
 			"options": {
-				"jestConfig": "libs/dto/jest.config.ts"
+				"jestConfig": "libs/dto/jest.config.ts",
+				"tsConfig": "libs/dto/tsconfig.spec.json"
 			}
 		},
 		"lint": {
