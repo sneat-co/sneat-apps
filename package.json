@@ -2,7 +2,7 @@
 	"name": "sneat-apps",
 	"version": "0.0.0",
 	"license": "MIT",
-	"packageManager": "pnpm@10.15.1",
+	"packageManager": "pnpm@10.16.0",
 	"scripts": {
 		"nx": "NODE_OPTIONS=--no-deprecation nx",
 		"ng": "nx",
@@ -80,7 +80,7 @@
 		"date-fns": "4.1.0",
 		"firebase": "12.2.1",
 		"ionicons": "8.0.13",
-		"posthog-js": "1.264.2",
+		"posthog-js": "1.265.0",
 		"rxjs": "7.8.2",
 		"tabulator-tables": "6.3.1",
 		"ts-md5": "2.0.1",
