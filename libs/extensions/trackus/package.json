@@ -20,7 +20,7 @@
 		"@firebase/firestore": "4.9.2",
 		"@angular/router": "20.3.6",
 		"@angular/fire": "20.0.1",
-		"jest-preset-angular": "15.0.2"
+		"jest-preset-angular": "15.0.3"
 	},
 	"sideEffects": false
 }
