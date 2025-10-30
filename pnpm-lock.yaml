@@ -54,8 +54,8 @@ importers:
         specifier: ^7.0.0
         version: 7.0.0(@angular/core@20.3.9(@angular/compiler@20.3.9)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/forms@20.3.9(@angular/common@20.3.9(@angular/core@20.3.9(@angular/compiler@20.3.9)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.3.9(@angular/compiler@20.3.9)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@20.3.9(@angular/animations@20.3.9(@angular/core@20.3.9(@angular/compiler@20.3.9)(rxjs@7.8.2)(zone.js@0.15.1)))(@angular/common@20.3.9(@angular/core@20.3.9(@angular/compiler@20.3.9)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.3.9(@angular/compiler@20.3.9)(rxjs@7.8.2)(zone.js@0.15.1)))(rxjs@7.8.2))(codemirror@6.0.2)
       '@firebase/auth':
-        specifier: 1.11.0
-        version: 1.11.0(@firebase/app@0.14.5)
+        specifier: 1.11.1
+        version: 1.11.1(@firebase/app@0.14.5)
       '@firebase/firestore':
         specifier: 4.9.2
         version: 4.9.2(@firebase/app@0.14.5)
@@ -2072,16 +2072,6 @@ packages:
   '@firebase/auth@1.10.8':
     resolution: {integrity: sha512-GpuTz5ap8zumr/ocnPY57ZanX02COsXloY6Y/2LYPAuXYiaJRf6BAGDEdRq1BMjP93kqQnKNuKZUTMZbQ8MNYA==}
     engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@firebase/app': 0.x
-      '@react-native-async-storage/async-storage': ^1.18.1
-    peerDependenciesMeta:
-      '@react-native-async-storage/async-storage':
-        optional: true
-
-  '@firebase/auth@1.11.0':
-    resolution: {integrity: sha512-5j7+ua93X+IRcJ1oMDTClTo85l7Xe40WSkoJ+shzPrX7OISlVWLdE1mKC57PSD+/LfAbdhJmvKixINBw2ESK6w==}
-    engines: {node: '>=20.0.0'}
     peerDependencies:
       '@firebase/app': 0.x
       '@react-native-async-storage/async-storage': ^1.18.1
@@ -12452,14 +12442,6 @@ snapshots:
       '@firebase/component': 0.6.18
       '@firebase/logger': 0.4.4
       '@firebase/util': 1.12.1
-      tslib: 2.8.1
-
-  '@firebase/auth@1.11.0(@firebase/app@0.14.5)':
-    dependencies:
-      '@firebase/app': 0.14.5
-      '@firebase/component': 0.7.0
-      '@firebase/logger': 0.5.0
-      '@firebase/util': 1.13.0
       tslib: 2.8.1
 
   '@firebase/auth@1.11.1(@firebase/app@0.14.5)':
