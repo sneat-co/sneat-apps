@@ -60,7 +60,7 @@
 		"@capacitor/core": "7.4.4",
 		"@capacitor/ios": "7.4.4",
 		"@ctrl/ngx-codemirror": "^7.0.0",
-		"@firebase/auth": "1.11.0",
+		"@firebase/auth": "1.11.1",
 		"@firebase/firestore": "4.9.2",
 		"@firebase/firestore-types": "3.0.3",
 		"@ionic-native/core": "5.36.0",
