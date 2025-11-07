@@ -114,8 +114,8 @@ importers:
         specifier: 8.0.13
         version: 8.0.13
       posthog-js:
-        specifier: 1.289.0
-        version: 1.289.0
+        specifier: 1.290.0
+        version: 1.290.0
       rxjs:
         specifier: 7.8.2
         version: 7.8.2
@@ -8710,8 +8710,8 @@ packages:
     resolution: {integrity: sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==}
     engines: {node: ^10 || ^12 || >=14}
 
-  posthog-js@1.289.0:
-    resolution: {integrity: sha512-fv1ClV/yqwub5zs3QbrO7Jqi50StGaUAcCE5xwmlsnMxh3GgwMHip7waRk34T/9LhAI7rLXT7ykGOrIEULANjA==}
+  posthog-js@1.290.0:
+    resolution: {integrity: sha512-zavBwZkf+3JeiSDVE7ZDXBfzva/iOljicdhdJH+cZoqp0LsxjKxjnNhGOd3KpAhw0wqdwjhd7Lp1aJuI7DXyaw==}
 
   preact@10.26.4:
     resolution: {integrity: sha512-KJhO7LBFTjP71d83trW+Ilnjbo+ySsaAgCfXOXUlmGzJ4ygYPWmysm77yg4emwfmoz3b22yvH5IsVFHbhUaH5w==}
@@ -20571,7 +20571,7 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  posthog-js@1.289.0:
+  posthog-js@1.290.0:
     dependencies:
       '@posthog/core': 1.5.2
       core-js: 3.41.0
