@@ -78,7 +78,7 @@
 		"angularx-qrcode": "^20.0.0",
 		"codemirror": "^6.0.1",
 		"date-fns": "4.1.0",
-		"firebase": "12.5.0",
+		"firebase": "12.6.0",
 		"ionicons": "8.0.13",
 		"posthog-js": "1.292.0",
 		"rxjs": "7.8.2",
