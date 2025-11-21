@@ -1,7 +1,7 @@
 import { inject, provideAppInitializer, ErrorHandler } from '@angular/core';
 import { TraceService, init, createErrorHandler } from '@sentry/angular';
 import { Router } from '@angular/router';
-import { BrowserOptions } from '@sentry/browser/build/npm/types/client';
+import { BrowserOptions } from '@sentry/browser';
 
 export const provideSentryAppInitializer = (options: BrowserOptions) => {
 	initSentry(options);
