@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular/standalone';
 import { captureException, showReportDialog } from '@sentry/angular';
 import { IErrorLogger, ILogErrorOptions } from './interfaces';
@@ -79,10 +79,13 @@ export class ErrorLoggerService implements IErrorLogger {
 
 		let message = clientMessage;
 
-		const serverMessage: string | undefined =
-			e instanceof HttpErrorResponse ? e.error?.error?.message : undefined;
-		if (serverMessage) {
-			message += `.\n\nServer returned error message: ${serverMessage}`;
+		let serverMessage: string | undefined;
+		if (e instanceof HttpErrorResponse) {
+			const e2 = e as HttpErrorResponse;
+			serverMessage = e2.error?.error?.message;
+			if (serverMessage) {
+				message += `.\n\nServer returned error message: ${serverMessage}`;
+			}
 		}
 		this.toastController
 			.create({

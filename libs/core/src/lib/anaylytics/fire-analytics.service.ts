@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
 	Analytics,
 	logEvent,
@@ -6,13 +6,11 @@ import {
 	setUserProperties,
 } from '@angular/fire/analytics';
 import { ErrorLogger, IErrorLogger, ILogErrorOptions } from '@sneat/logging';
-import firebase from 'firebase/compat';
 import {
 	IAnalyticsCallOptions,
 	IAnalyticsService,
 	UserProperties,
 } from './analytics.interface';
-import CustomParams = firebase.analytics.CustomParams;
 
 const logErrOptions: ILogErrorOptions = { show: false, feedback: false };
 
@@ -67,12 +65,20 @@ export class FireAnalyticsService implements IAnalyticsService {
 		} catch (e) {
 			this.logError(e, 'Failed to set user id in Firebase analytics');
 		}
-		if (userPropertiesToSetOnce) {
-			try {
-				setUserProperties(this.analytics, userPropertiesToSet as CustomParams);
-			} catch (e) {
-				this.logError(e, 'Failed to set user props in Firebase analytics');
-			}
+		const customProperties: { [id: string]: unknown } = {};
+
+		if (userPropertiesToSet)
+			Object.keys(userPropertiesToSet).forEach(
+				(k) => (customProperties[k] = userPropertiesToSet[k]),
+			);
+		if (userPropertiesToSetOnce)
+			Object.keys(userPropertiesToSetOnce).forEach(
+				(k) => (customProperties[k] = userPropertiesToSetOnce[k]),
+			);
+		try {
+			setUserProperties(this.analytics, customProperties);
+		} catch (e) {
+			this.logError(e, 'Failed to set user props in Firebase analytics');
 		}
 	}
 
