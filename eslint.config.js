@@ -52,4 +52,12 @@ module.exports = [
 	{
 		ignores: ['node_modules', 'src_old'],
 	},
+	// Ensure config files can import other local config via relative paths without triggering module-boundaries.
+	// Keep this at the very end so it has the highest precedence.
+	{
+		files: ['**/eslint.config.*', '**/.eslintrc.*'],
+		rules: {
+			'@nx/enforce-module-boundaries': 'off',
+		},
+	},
 ];
