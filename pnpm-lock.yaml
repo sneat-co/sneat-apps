@@ -132,6 +132,9 @@ importers:
         specifier: 0.16.0
         version: 0.16.0
     devDependencies:
+      '@angular-devkit/architect':
+        specifier: 0.2003.11
+        version: 0.2003.11(chokidar@4.0.3)
       '@angular-devkit/build-angular':
         specifier: 20.3.11
         version: 20.3.11(ba3b4f210722a68706e2d7e35ab84dce)
