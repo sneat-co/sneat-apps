@@ -1,9 +1,16 @@
- 
-const baseConfig = require('../../eslint.config.js');
- 
-const { sneatLibConfig } = require('../../eslint.lib.config.js');
+// ESM version of the ESLint flat config for this app.
+// apps/sneat-app/package.json likely has { "type": "module" }, so CommonJS `require`
+// is not available. Use ESM imports and export default.
 
-module.exports = [
+import baseConfig from '../../eslint.config.js';
+import { sneatLibConfig } from '../../eslint.lib.config.js';
+import { fileURLToPath } from 'node:url';
+import { dirname } from 'node:path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+export default [
 	...baseConfig,
 	...sneatLibConfig(__dirname),
 	{
