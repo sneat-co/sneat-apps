@@ -21,9 +21,8 @@
 		"noPropertyAccessFromIndexSignature": true,
 		"noImplicitReturns": true,
 		"noFallthroughCasesInSwitch": true,
-		"lib": ["es2019", "dom"],
+		"lib": ["ES2022", "DOM"],
 		"skipLibCheck": true,
-		"skipDefaultLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
 			"@sneat/api": ["libs/api/src/index.ts"],
