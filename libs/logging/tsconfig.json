@@ -12,7 +12,7 @@
 	],
 	"compilerOptions": {
 		"module": "ES2022",
-		"target": "es2022",
+		"target": "ES2022",
 		"forceConsistentCasingInFileNames": true,
 		"strict": true,
 		"noImplicitOverride": true,
