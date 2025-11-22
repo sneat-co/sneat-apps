@@ -1,11 +1,10 @@
-<sneat-datagrid
-	*ngIf="containerPoints?.length"
-	[selectable]="1"
-	[data]="containerPoints"
-	[columns]="allCols"
-	height="100"
-/>
-
-<p *ngIf="!containerPoints?.length">
-	No containers have been assigned to this point yet.
-</p>
+@if (containerPoints.length) {
+	<sneat-datagrid
+		[selectable]="1"
+		[data]="containerPoints"
+		[columns]="allCols"
+		height="100"
+	/>
+} @else {
+	<p>No containers have been assigned to this point yet.</p>
+}

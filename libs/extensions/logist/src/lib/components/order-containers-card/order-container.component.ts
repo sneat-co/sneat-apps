@@ -1,4 +1,3 @@
-import { NgForOf, NgIf } from '@angular/common';
 import {
 	ChangeDetectorRef,
 	Component,
@@ -56,8 +55,6 @@ import { OrderContainerPointComponent } from './order-container-point.component'
 	templateUrl: './order-container.component.html',
 	imports: [
 		ContainerSegmentsComponent,
-		NgIf,
-		NgForOf,
 		IonItemGroup,
 		IonLabel,
 		IonButtons,
@@ -109,10 +106,7 @@ export class OrderContainerComponent implements OnChanges {
 		instructions: this.instructions,
 	});
 
-	protected containerPointKey(
-		_: number,
-		containerPoint: IContainerPoint,
-	): string {
+	protected containerPointKey(containerPoint: IContainerPoint): string {
 		return `${containerPoint.containerID}-${containerPoint.shippingPointID}`;
 	}
 
