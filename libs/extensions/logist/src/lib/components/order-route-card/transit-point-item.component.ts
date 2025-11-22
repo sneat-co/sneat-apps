@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
 	IonItemDivider,
@@ -11,13 +10,7 @@ import { ITransitPoint } from '../../dto';
 @Component({
 	selector: 'sneat-transit-point-item',
 	templateUrl: './transit-point-item.component.html',
-	imports: [
-		IonItemGroup,
-		IonItemDivider,
-		IonLabel,
-		CountryInputComponent,
-		NgIf,
-	],
+	imports: [IonItemGroup, IonItemDivider, IonLabel, CountryInputComponent],
 })
 export class TransitPointItemComponent {
 	@Input() label = 'Transit point';

@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import {
 	IonButton,
@@ -18,7 +17,6 @@ import { ITreeNode } from '@angular-dnd/tree';
 	styleUrls: ['./retro-item-card.component.scss'],
 	imports: [
 		IonCard,
-		NgIf,
 		IonItem,
 		IonButtons,
 		IonButton,

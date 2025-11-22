@@ -1,4 +1,3 @@
-import { NgForOf, NgIf } from '@angular/common';
 import {
 	Component,
 	Input,
@@ -34,10 +33,8 @@ import { SegmentContainerComponent } from './segment-container.component';
 	templateUrl: './trucker-segment.component.html',
 	imports: [
 		SegmentContainerComponent,
-		NgForOf,
 		IonItem,
 		IonCard,
-		NgIf,
 		IonLabel,
 		IonInput,
 		IonButtons,

@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {
 	IonCard,
@@ -37,7 +36,6 @@ interface IPoint {
 		IonContent,
 		IonCard,
 		IonItemDivider,
-		NgIf,
 		IonLabel,
 		IonItem,
 		IonText,

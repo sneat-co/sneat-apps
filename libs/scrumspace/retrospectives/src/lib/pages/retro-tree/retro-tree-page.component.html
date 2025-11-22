@@ -3,9 +3,9 @@
 		<ion-back-button slot="start" [defaultHref]="$defaultBackUrl()" />
 		<ion-title>
 			Retrospective
-			<ng-container *ngIf="space"
-				>&#64; {{ space?.data?.title || space?.id }}</ng-container
-			>
+			@if (space) {
+				&#64; {{ space?.data?.title || space?.id }}
+			}
 			: {{ meetingId }}
 		</ion-title>
 	</ion-toolbar>
@@ -13,21 +13,25 @@
 
 <ion-content>
 	<ion-row>
-		<ion-col size="12" size-lg="3" *ngFor="let category of categories">
-			<h2 class="ion-padding">{{ category.title }}</h2>
-			<angular-dnd-tree [treeId]="positive.ID" [rootItem]="category">
-				(moved)="itemMoved($event)" >
-				<ng-template angularDndTreeItem let-node>
-					<sneat-retro-item-card [treeNode]="node" />
-				</ng-template>
-			</angular-dnd-tree>
-			<ion-card *ngIf="isAllowedToAddItems()">
-				<sneat-add-retro-item
-					[spaceID]="space?.id"
-					[meetingId]="meetingId"
-					[retroItemType]="category.ID"
-				/>
-			</ion-card>
-		</ion-col>
+		@for (category of categories; track category) {
+			<ion-col size="12" size-lg="3">
+				<h2 class="ion-padding">{{ category.title }}</h2>
+				<angular-dnd-tree [treeId]="positive.ID" [rootItem]="category">
+					(moved)="itemMoved($event)" >
+					<ng-template angularDndTreeItem let-node>
+						<sneat-retro-item-card [treeNode]="node" />
+					</ng-template>
+				</angular-dnd-tree>
+				@if (isAllowedToAddItems()) {
+					<ion-card>
+						<sneat-add-retro-item
+							[spaceID]="space?.id"
+							[meetingId]="meetingId"
+							[retroItemType]="category.ID"
+						/>
+					</ion-card>
+				}
+			</ion-col>
+		}
 	</ion-row>
 </ion-content>

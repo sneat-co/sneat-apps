@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import {
 	Component,
 	Input,
@@ -38,7 +37,6 @@ import { FreightLoadForm } from '../freight-load-form/freight-load-form.componen
 		IonButton,
 		ReactiveFormsModule,
 		IonIcon,
-		NgIf,
 	],
 })
 export class SegmentContainerComponent implements OnChanges {

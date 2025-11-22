@@ -1,4 +1,3 @@
-import { NgForOf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
 	IonCard,
@@ -12,7 +11,7 @@ import { LogistSpaceRole, LogistSpaceRoles } from '../../dto';
 @Component({
 	selector: 'sneat-logist-space-roles',
 	templateUrl: 'logist-space-roles.component.html',
-	imports: [IonCard, IonItemDivider, IonLabel, IonItem, NgForOf, IonCheckbox],
+	imports: [IonCard, IonItemDivider, IonLabel, IonItem, IonCheckbox],
 })
 export class LogistSpaceRolesComponent {
 	protected readonly roles: {

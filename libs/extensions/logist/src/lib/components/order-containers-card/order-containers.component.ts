@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -32,7 +31,6 @@ import { OrderContainerComponent } from './order-container.component';
 		IonRow,
 		IonCol,
 		IonCard,
-		NgIf,
 		OrderContainerComponent,
 		IonItemDivider,
 		IonLabel,

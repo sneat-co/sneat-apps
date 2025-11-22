@@ -1,4 +1,3 @@
-import { NgForOf, NgIf } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -42,7 +41,6 @@ import { DispatchPointComponent } from './dispatch-point.component';
 	templateUrl: './dispatcher.component.html',
 	imports: [
 		DispatchPointComponent,
-		NgForOf,
 		IonItem,
 		IonLabel,
 		IonButtons,
@@ -54,7 +52,6 @@ import { DispatchPointComponent } from './dispatch-point.component';
 		IonItemDivider,
 		CountryFlagPipe,
 		IonCard,
-		NgIf,
 	],
 })
 export class DispatcherComponent implements OnChanges {

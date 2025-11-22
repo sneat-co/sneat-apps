@@ -160,15 +160,14 @@
 		</ion-segment>
 
 		@if (table?.meta && cardTab === 'fks') { @if
-		(table?.meta?.foreignKeys?.length) {
+		(table?.meta?.foreignKeys?.length) { @for (fk of table?.meta?.foreignKeys ||
+		[]; track fk) {
 		<sneat-datatug-fk-card
-			*ngFor="let fk of table?.meta?.foreignKeys || []"
 			[fk]="fk"
 			[row]="currentRow?.data"
 			[tableNavParams]="tableNavParams"
 		/>
-
-		} @else {
+		} } @else {
 		<p>No foreign keys</p>
 		} } @if (table?.meta && cardTab === 'refs') { @if
 		(table?.meta?.referencedBy?.length) {

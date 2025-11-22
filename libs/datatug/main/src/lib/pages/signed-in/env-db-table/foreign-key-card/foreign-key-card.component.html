@@ -20,18 +20,24 @@
 		</ion-card-title>
 	</ion-card-header>
 	@if (table?.meta?.columns) {
-	<ion-item *ngFor="let c of table?.meta?.columns || []">
-		<ion-label>
-			{{ c.name }}
-			<ion-badge color="light">
-				<ion-text
-					color="medium"
-					style="font-weight: normal; font-size: xx-small"
-					>{{ c.dbType.toUpperCase() }}
-				</ion-text>
-			</ion-badge>
-		</ion-label>
-		<ion-input readonly [value]="colValue(c.name)" style="text-align: right" />
-	</ion-item>
+		@for (c of table?.meta?.columns || []; track c) {
+			<ion-item>
+				<ion-label>
+					{{ c.name }}
+					<ion-badge color="light">
+						<ion-text
+							color="medium"
+							style="font-weight: normal; font-size: xx-small"
+							>{{ c.dbType.toUpperCase() }}
+						</ion-text>
+					</ion-badge>
+				</ion-label>
+				<ion-input
+					readonly
+					[value]="colValue(c.name)"
+					style="text-align: right"
+				/>
+			</ion-item>
+		}
 	}
 </ion-card>

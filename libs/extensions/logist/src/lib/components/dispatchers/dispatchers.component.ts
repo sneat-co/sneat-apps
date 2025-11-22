@@ -1,4 +1,3 @@
-import { NgForOf, NgIf } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -14,7 +13,7 @@ import { DispatcherComponent } from './dispatcher.component';
 @Component({
 	selector: 'sneat-dispatchers',
 	templateUrl: './dispatchers.component.html',
-	imports: [NgForOf, IonItemDivider, DispatcherComponent, NgIf, IonCard],
+	imports: [IonItemDivider, DispatcherComponent, IonCard],
 })
 export class DispatchersComponent implements OnChanges {
 	@Input() order?: ILogistOrderContext;

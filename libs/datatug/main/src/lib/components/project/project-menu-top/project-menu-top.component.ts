@@ -1,4 +1,4 @@
-import { AsyncPipe, NgForOf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, OnDestroy, inject } from '@angular/core';
 import {
 	IonButton,
@@ -25,7 +25,6 @@ interface IProjectTopLevelPage {
 	templateUrl: './project-menu-top.component.html',
 	imports: [
 		IonItem,
-		NgForOf,
 		AsyncPipe,
 		IonIcon,
 		IonLabel,

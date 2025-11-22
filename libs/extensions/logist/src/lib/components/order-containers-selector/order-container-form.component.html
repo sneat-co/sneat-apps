@@ -5,14 +5,17 @@
 				<!--				<ion-checkbox slot="start" [(ngModel)]="container.checked" (ionChange)="toggled.emit(this.container)"></ion-checkbox>-->
 				<ion-label>
 					{{ container.type | uppercase }}
-					<span *ngIf="container.number">#</span>
+					@if (container.number) {
+						<span>#</span>
+					}
 				</ion-label>
-				<ion-input
-					*ngIf="container.number"
-					readonly="readonly"
-					[value]="container.number"
-					style="font-weight: bold"
-				/>
+				@if (container.number) {
+					<ion-input
+						readonly="readonly"
+						[value]="container.number"
+						style="font-weight: bold"
+					/>
+				}
 			</ion-item>
 		</ion-col>
 		<ion-col>

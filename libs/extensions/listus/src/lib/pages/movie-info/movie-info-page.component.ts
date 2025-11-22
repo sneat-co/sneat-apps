@@ -1,4 +1,4 @@
-import { NgForOf, NgIf, NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import {
@@ -52,7 +52,6 @@ import { BaseListItemPage } from '../base-list-item-page';
 		IonBackButton,
 		IonContent,
 		IonCard,
-		NgIf,
 		IonButton,
 		IonIcon,
 		NgOptimizedImage,
@@ -62,7 +61,6 @@ import { BaseListItemPage } from '../base-list-item-page';
 		IonItem,
 		IonCol,
 		IonText,
-		NgForOf,
 		IonGrid,
 		IonBadge,
 		IonRow,

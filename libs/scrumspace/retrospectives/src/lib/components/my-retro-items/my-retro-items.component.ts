@@ -1,4 +1,3 @@
-import { NgForOf, NgIf } from '@angular/common';
 import {
 	Component,
 	Input,
@@ -62,11 +61,9 @@ import { IUserRecord } from '@sneat/auth-models';
 		ReactiveFormsModule,
 		IonSegment,
 		IonSegmentButton,
-		NgForOf,
 		IonItem,
 		IonSpinner,
 		IonInput,
-		NgIf,
 	],
 })
 export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {

@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { IonItemDivider, IonLabel } from '@ionic/angular/standalone';
 import { DataGridComponent } from '@sneat/datagrid';
@@ -25,7 +24,6 @@ interface IContainerRouteRow {
 		IonItemDivider,
 		IonLabel,
 		DataGridComponent,
-		NgIf,
 		ContainerSegmentComponent,
 	],
 })

@@ -1,4 +1,3 @@
-import { NgForOf } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -38,7 +37,6 @@ export interface IRetroQuestion {
 		IonContent,
 		RetroTimerComponent,
 		IonCard,
-		NgForOf,
 		IonCardHeader,
 		IonCardTitle,
 		IonButton,

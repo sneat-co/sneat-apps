@@ -5,10 +5,11 @@
 				[defaultHref]="memberId ? '/member?id=' + memberId : '/communes'"
 			/>
 		</ion-buttons>
-		<ion-title *ngIf="memberInfo; else titleNoCommune">
-			Assets of {{ memberInfo.title }}
-		</ion-title>
-		<ng-template #titleNoCommune>Assets of a member</ng-template>
+		@if (memberInfo) {
+			<ion-title> Assets of {{ memberInfo.title }} </ion-title>
+		} @else {
+			Assets of a member
+		}
 	</ion-toolbar>
 </ion-header>
 

@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import {
 	Component,
 	Input,
@@ -56,7 +55,6 @@ import {
 		IonGrid,
 		IonRow,
 		IonCol,
-		NgIf,
 		FreightLoadFormComponent,
 	],
 })

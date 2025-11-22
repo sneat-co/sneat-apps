@@ -1,4 +1,4 @@
-import { NgIf, TitleCasePipe } from '@angular/common';
+import { TitleCasePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -30,7 +30,6 @@ export type SegmentEndpointType = 'port' | 'dispatcher';
 		ContactInputComponent,
 		IonItem,
 		IonInput,
-		NgIf,
 	],
 })
 export class SegmentCounterpartyComponent {

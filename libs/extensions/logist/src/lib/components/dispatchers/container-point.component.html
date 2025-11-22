@@ -6,7 +6,7 @@
 			>
 			<ion-input readonly [value]="container?.number" />
 			<ion-buttons slot="end">
-				<ng-container *ngIf="containerForm.dirty">
+				@if (containerForm.dirty) {
 					<ion-button
 						color="danger"
 						title="Save changes"
@@ -14,28 +14,36 @@
 						[disabled]="saving"
 					>
 						<ion-icon name="save-outline" slot="start" />
-						<ion-label *ngIf="!saving">Save</ion-label>
-						<ion-label *ngIf="saving">Saving...</ion-label>
-						<ion-spinner slot="end" *ngIf="saving" />
+						@if (!saving) {
+							<ion-label>Save</ion-label>
+						}
+						@if (saving) {
+							<ion-label>Saving...</ion-label>
+						}
+						@if (saving) {
+							<ion-spinner slot="end" />
+						}
 					</ion-button>
+					@if (!saving) {
+						<ion-button
+							color="medium"
+							title="Cancel changes"
+							(click)="containerForm.reset()"
+						>
+							<ion-icon name="close-circle-outline" slot="start" />
+							<ion-label>Cancel</ion-label>
+						</ion-button>
+					}
+				}
+				@if (!containerForm.dirty) {
 					<ion-button
 						color="medium"
-						*ngIf="!saving"
-						title="Cancel changes"
-						(click)="containerForm.reset()"
+						title="Remove container from dispatch point"
 					>
-						<ion-icon name="close-circle-outline" slot="start" />
-						<ion-label>Cancel</ion-label>
+						<ion-icon name="close-outline" />
+						<!--				<ion-label>Remove</ion-label>-->
 					</ion-button>
-				</ng-container>
-				<ion-button
-					*ngIf="!containerForm.dirty"
-					color="medium"
-					title="Remove container from dispatch point"
-				>
-					<ion-icon name="close-outline" />
-					<!--				<ion-label>Remove</ion-label>-->
-				</ion-button>
+				}
 			</ion-buttons>
 		</ion-item>
 
@@ -44,23 +52,28 @@
 				<ion-col size="8">
 					<ion-item class="sneat-tiny-end-padding">
 						<ion-label color="medium">Delivery to by</ion-label>
-						<ion-input *ngIf="truckerTo" readonly [value]="truckerTo.title" />
-						<ion-input
-							*ngIf="!truckerTo"
-							color="medium"
-							readonly
-							value="not assigned yet"
-							style="font-style: italic"
-						/>
-						<ion-buttons *ngIf="truckerTo && !containerForm.dirty">
-							<ion-button
+						@if (truckerTo) {
+							<ion-input readonly [value]="truckerTo.title" />
+						}
+						@if (!truckerTo) {
+							<ion-input
 								color="medium"
-								title="Exclude delivery of this container by the trucker"
-								(click)="excludeContainerFromSegment()"
-							>
-								<ion-icon name="close-outline" />
-							</ion-button>
-						</ion-buttons>
+								readonly
+								value="not assigned yet"
+								style="font-style: italic"
+							/>
+						}
+						@if (truckerTo && !containerForm.dirty) {
+							<ion-buttons>
+								<ion-button
+									color="medium"
+									title="Exclude delivery of this container by the trucker"
+									(click)="excludeContainerFromSegment()"
+								>
+									<ion-icon name="close-outline" />
+								</ion-button>
+							</ion-buttons>
+						}
 					</ion-item>
 				</ion-col>
 				<ion-col size="4">
@@ -75,12 +88,10 @@
 				<ion-col size="8">
 					<ion-item class="sneat-tiny-end-padding">
 						<ion-label color="medium">Retrieval from by</ion-label>
-						<ion-input
-							*ngIf="truckerFrom"
-							readonly
-							[value]="truckerFrom.title"
-						/>
-						<ng-container *ngIf="!truckerFrom">
+						@if (truckerFrom) {
+							<ion-input readonly [value]="truckerFrom.title" />
+						}
+						@if (!truckerFrom) {
 							<ion-input color="danger" readonly value="not assigned yet" />
 							<ion-buttons>
 								<ion-button
@@ -91,7 +102,7 @@
 									<ion-icon name="add-outline" />
 								</ion-button>
 							</ion-buttons>
-						</ng-container>
+						}
 					</ion-item>
 				</ion-col>
 				<ion-col size="4">

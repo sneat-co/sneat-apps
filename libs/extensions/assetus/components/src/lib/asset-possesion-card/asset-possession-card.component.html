@@ -1,7 +1,9 @@
 <ion-card>
-	<ion-item lines="full" *ngIf="!asset?.dbo?.possession" color="light">
-		<ion-label>Possession</ion-label>
-	</ion-item>
+	@if (!asset?.dbo?.possession) {
+		<ion-item lines="full" color="light">
+			<ion-label>Possession</ion-label>
+		</ion-item>
+	}
 	<sneat-select-from-list
 		[items]="possessionOptions"
 		[value]="asset?.dbo?.possession || ''"

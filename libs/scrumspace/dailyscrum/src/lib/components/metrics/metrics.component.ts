@@ -1,4 +1,3 @@
-import { NgForOf, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -15,10 +14,6 @@ import { IMetric } from '../../interfaces';
 	selector: 'sneat-metrics',
 	templateUrl: './metrics.component.html',
 	imports: [
-		NgIf,
-		NgForOf,
-		NgSwitch,
-		NgSwitchCase,
 		IonLabel,
 		IonText,
 		FormsModule,

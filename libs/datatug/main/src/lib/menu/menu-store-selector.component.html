@@ -5,26 +5,24 @@
 		</ion-button>
 	</ion-buttons>
 	<ion-label color="medium"> Store </ion-label>
-	<ion-select
-		disabled
-		*ngIf="currentStoreId && !stores?.length"
-		[value]="currentStoreId"
-	>
-		<ion-select-option [value]="currentStoreId">{{
-			currentStoreId
-		}}</ion-select-option>
-	</ion-select>
-	<ion-select
-		*ngIf="stores"
-		interface="popover"
-		[value]="currentStoreId"
-		(ionChange)="switchStore($event)"
-	>
-		<ion-select-option
-			[value]="store.id"
-			*ngFor="let store of stores; trackBy: trackById"
+	@if (currentStoreId && !stores?.length) {
+		<ion-select disabled [value]="currentStoreId">
+			<ion-select-option [value]="currentStoreId">{{
+				currentStoreId
+			}}</ion-select-option>
+		</ion-select>
+	}
+	@if (stores) {
+		<ion-select
+			interface="popover"
+			[value]="currentStoreId"
+			(ionChange)="switchStore($event)"
 		>
-			{{ store.title || store.id }}
-		</ion-select-option>
-	</ion-select>
+			@for (store of stores; track trackById($index, store)) {
+				<ion-select-option [value]="store.id">
+					{{ store.title || store.id }}
+				</ion-select-option>
+			}
+		</ion-select>
+	}
 </ion-item>

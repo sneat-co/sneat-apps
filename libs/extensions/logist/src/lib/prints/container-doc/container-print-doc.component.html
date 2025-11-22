@@ -7,10 +7,11 @@
 		<ion-item-divider color="light">
 			Container&nbsp;{{ container?.type?.toUpperCase() }}
 			#&nbsp;
-			<b *ngIf="container?.number?.trim(); else noNumber">{{
-				container?.number
-			}}</b>
-			<ng-template #noNumber><b>no number</b></ng-template>
+			@if (container?.number?.trim()) {
+				<b>{{ container?.number }}</b>
+			} @else {
+				<b>no number</b>
+			}
 		</ion-item-divider>
 		<ion-item>
 			<ion-label color="medium"
@@ -76,33 +77,45 @@
 							}
 						</style>
 						<table class="no-borders" style="width: 100%">
-							<tr
-								*ngIf="
-									point.containerPoint.arrival?.scheduledDate ||
-									point.containerPoint.arrival?.scheduledTime
-								"
-							>
-								<td *ngIf="showArrivalLabel(point.containerPoint)">Arrival</td>
-								<td style="text-align: right">
-									{{ point.containerPoint.arrival?.scheduledDate }}
-									<span *ngIf="point.containerPoint.arrival?.scheduledTime"
-										>&#64;
-										{{ point.containerPoint.arrival?.scheduledTime }}</span
-									>
-								</td>
-							</tr>
-							<tr *ngIf="showDeparture(point.containerPoint)">
-								<td>Departure</td>
-								<td style="text-align: right">
-									<span *ngIf="showDepartureDate(point.containerPoint)">{{
-										point.containerPoint.departure?.scheduledDate
-									}}</span>
-									<span *ngIf="point.containerPoint.departure?.scheduledTime"
-										>&#64;
-										{{ point.containerPoint.departure?.scheduledTime }}</span
-									>
-								</td>
-							</tr>
+							@if (
+								point.containerPoint.arrival?.scheduledDate ||
+								point.containerPoint.arrival?.scheduledTime
+							) {
+								<tr>
+									@if (showArrivalLabel(point.containerPoint)) {
+										<td>Arrival</td>
+									}
+									<td style="text-align: right">
+										{{ point.containerPoint.arrival?.scheduledDate }}
+										@if (point.containerPoint.arrival?.scheduledTime) {
+											<span
+												>&#64;
+												{{ point.containerPoint.arrival?.scheduledTime }}</span
+											>
+										}
+									</td>
+								</tr>
+							}
+							@if (showDeparture(point.containerPoint)) {
+								<tr>
+									<td>Departure</td>
+									<td style="text-align: right">
+										@if (showDepartureDate(point.containerPoint)) {
+											<span>{{
+												point.containerPoint.departure?.scheduledDate
+											}}</span>
+										}
+										@if (point.containerPoint.departure?.scheduledTime) {
+											<span
+												>&#64;
+												{{
+													point.containerPoint.departure?.scheduledTime
+												}}</span
+											>
+										}
+									</td>
+								</tr>
+							}
 						</table>
 					</td>
 					<td class="number">
@@ -114,32 +127,34 @@
 					<td>{{ point.containerPoint.notes }}</td>
 					<td>
 						{{ point.address?.lines }}
-						<ng-container *ngIf="point.address?.city || point.address?.state">
+						@if (point.address?.city || point.address?.state) {
 							<br />
 							{{ point.address?.city }}
-							<span *ngIf="point.address?.city && point.address?.state"
-								>,
-							</span>
+							@if (point.address?.city && point.address?.state) {
+								<span>, </span>
+							}
 							{{ point.address?.state }}
-						</ng-container>
+						}
 					</td>
 				</tr>
 			}
 			<tfoot>
-				<tr *ngIf="total">
-					<td
-						colspan="4"
-						style="text-align: right; color: grey; font-weight: bold"
-					>
-						Total:
-					</td>
-					<td style="text-align: right; font-weight: bold">
-						{{ total.numberOfPallets }}
-					</td>
-					<td style="text-align: right; font-weight: bold">
-						{{ total.grossWeightKg }}
-					</td>
-				</tr>
+				@if (total) {
+					<tr>
+						<td
+							colspan="4"
+							style="text-align: right; color: grey; font-weight: bold"
+						>
+							Total:
+						</td>
+						<td style="text-align: right; font-weight: bold">
+							{{ total.numberOfPallets }}
+						</td>
+						<td style="text-align: right; font-weight: bold">
+							{{ total.grossWeightKg }}
+						</td>
+					</tr>
+				}
 			</tfoot>
 		</table>
 	</ion-card>

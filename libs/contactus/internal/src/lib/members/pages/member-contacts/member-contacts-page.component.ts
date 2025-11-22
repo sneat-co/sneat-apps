@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {
 	IonBackButton,
@@ -29,7 +28,6 @@ import { NgModulePreloaderService } from 'sneat-shared/services/ng-module-preloa
 		IonButtons,
 		IonBackButton,
 		IonTitle,
-		NgIf,
 		IonContent,
 		IonSegment,
 		IonSegmentButton,

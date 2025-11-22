@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -35,7 +34,6 @@ import { CommuneBasePageParams } from 'sneat-shared/services/params';
 		IonItem,
 		IonInput,
 		FormsModule,
-		NgIf,
 		AssetsListComponentModule,
 	],
 })

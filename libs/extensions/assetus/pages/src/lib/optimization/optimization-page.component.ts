@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {
 	IonBackButton,
@@ -28,7 +27,6 @@ import { CommuneTopPage } from '../../../../pages/constants';
 		IonButtons,
 		IonBackButton,
 		IonTitle,
-		NgIf,
 		IonContent,
 		IonCard,
 		IonCardHeader,

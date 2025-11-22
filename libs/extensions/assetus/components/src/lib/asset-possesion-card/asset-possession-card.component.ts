@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonCard, IonItem, IonLabel } from '@ionic/angular/standalone';
@@ -12,14 +11,7 @@ import {
 @Component({
 	selector: 'sneat-asset-possession-card',
 	templateUrl: './asset-possession-card.component.html',
-	imports: [
-		FormsModule,
-		SelectFromListComponent,
-		NgIf,
-		IonCard,
-		IonItem,
-		IonLabel,
-	],
+	imports: [FormsModule, SelectFromListComponent, IonCard, IonItem, IonLabel],
 })
 export class AssetPossessionCardComponent {
 	@Input() public asset?: IAssetContext;

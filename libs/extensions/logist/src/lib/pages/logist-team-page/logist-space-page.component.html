@@ -8,28 +8,32 @@
 </ion-header>
 
 <ion-content>
-	<ion-card *ngIf="!logistSpace">
-		<ion-card-content>
-			<ion-spinner name="line-small" />
-			Loading...
-		</ion-card-content>
-	</ion-card>
+	@if (!logistSpace) {
+		<ion-card>
+			<ion-card-content>
+				<ion-spinner name="line-small" />
+				Loading...
+			</ion-card-content>
+		</ion-card>
+	}
 
-	<ion-card *ngIf="logistSpace?.dbo?.contactID">
-		<ion-item-divider>
-			<ion-label>Company</ion-label>
-			<ion-buttons slot="end">
-				<ion-button title="Settings" routerLink="settings">
-					<ion-icon name="settings-outline" slot="start" />
-					<ion-label>Settings</ion-label>
-				</ion-button>
-			</ion-buttons>
-		</ion-item-divider>
-		<sneat-logist-space-menu-items [space]="space" />
-	</ion-card>
+	@if (logistSpace?.dbo?.contactID) {
+		<ion-card>
+			<ion-item-divider>
+				<ion-label>Company</ion-label>
+				<ion-buttons slot="end">
+					<ion-button title="Settings" routerLink="settings">
+						<ion-icon name="settings-outline" slot="start" />
+						<ion-label>Settings</ion-label>
+					</ion-button>
+				</ion-buttons>
+			</ion-item-divider>
+			<sneat-logist-space-menu-items [space]="space" />
+		</ion-card>
+	}
 
-	<ng-container *ngIf="logistSpace && !logistSpace.dbo?.contactID">
+	@if (logistSpace && !logistSpace.dbo?.contactID) {
 		<p class="ion-margin">To start working please setup your company data.</p>
 		<sneat-logist-space-settings [space]="space" [logistSpace]="logistSpace" />
-	</ng-container>
+	}
 </ion-content>

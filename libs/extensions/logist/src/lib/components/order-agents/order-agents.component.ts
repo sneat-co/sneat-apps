@@ -1,4 +1,4 @@
-import { NgForOf, TitleCasePipe } from '@angular/common';
+import { TitleCasePipe } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -41,7 +41,6 @@ import { OrderCounterpartyComponent } from '../order-counterparty/order-counterp
 		IonButtons,
 		IonButton,
 		IonIcon,
-		NgForOf,
 		OrderCounterpartyComponent,
 		TitleCasePipe,
 	],

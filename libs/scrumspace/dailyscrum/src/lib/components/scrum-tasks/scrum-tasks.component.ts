@@ -1,4 +1,3 @@
-import { NgForOf, NgIf } from '@angular/common';
 import {
 	Component,
 	Input,
@@ -43,7 +42,6 @@ import { ScrumTaskComponent } from '../scrum-task/scrum-task.component';
 	animations: listAddRemoveAnimation,
 	imports: [
 		IonItemDivider,
-		NgIf,
 		IonIcon,
 		IonLabel,
 		IonButtons,
@@ -52,7 +50,6 @@ import { ScrumTaskComponent } from '../scrum-task/scrum-task.component';
 		IonItem,
 		IonReorderGroup,
 		IonSpinner,
-		NgForOf,
 		IonInput,
 	],
 })

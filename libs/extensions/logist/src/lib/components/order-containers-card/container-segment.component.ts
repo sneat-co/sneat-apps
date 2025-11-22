@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import {
 	ChangeDetectorRef,
 	Component,
@@ -53,7 +52,6 @@ import {
 		IonButton,
 		IonCard,
 		IonGrid,
-		NgIf,
 	],
 })
 export class ContainerSegmentComponent implements OnChanges {

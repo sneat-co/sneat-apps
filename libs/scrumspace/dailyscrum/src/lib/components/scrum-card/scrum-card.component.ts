@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -36,7 +35,6 @@ import { ScrumPageModule } from '../../scrum.module';
 	styleUrls: ['./scrum-card.component.scss'],
 	imports: [
 		IonCardHeader,
-		NgIf,
 		IonList,
 		IonItem,
 		IonAvatar,

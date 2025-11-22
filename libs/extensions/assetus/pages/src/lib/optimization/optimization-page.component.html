@@ -3,12 +3,11 @@
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
-		<ion-title *ngIf="commune; else titleNoCommune">
-			{{ commune.title }}: Savings
-		</ion-title>
-		<ng-template #titleNoCommune>
+		@if (commune) {
+			<ion-title> {{ commune.title }}: Savings </ion-title>
+		} @else {
 			<ion-title>Savings</ion-title>
-		</ng-template>
+		}
 	</ion-toolbar>
 </ion-header>
 

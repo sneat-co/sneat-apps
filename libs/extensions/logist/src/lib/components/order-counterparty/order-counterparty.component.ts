@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -48,7 +47,6 @@ import { OrderCounterpartyInputComponent } from '../order-counterparty-input/ord
 		IonIcon,
 		IonSpinner,
 		FormsModule,
-		NgIf,
 	],
 })
 export class OrderCounterpartyComponent implements OnChanges {

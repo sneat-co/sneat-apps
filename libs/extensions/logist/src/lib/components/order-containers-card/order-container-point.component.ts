@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import {
 	ChangeDetectorRef,
 	Component,
@@ -51,7 +50,6 @@ import { ContainerPointLoadFormComponent } from './container-point-load-form.com
 		ReactiveFormsModule,
 		IonButtons,
 		IonButton,
-		NgIf,
 		IonIcon,
 		IonSegmentButton,
 		IonSegment,

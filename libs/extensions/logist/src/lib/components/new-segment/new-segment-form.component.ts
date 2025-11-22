@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -49,7 +48,6 @@ import {
 		IonRow,
 		IonCol,
 		SegmentCounterpartyComponent,
-		NgIf,
 		IonButton,
 		ContactWithRefNumComponent,
 		OrderContainersSelectorComponent,

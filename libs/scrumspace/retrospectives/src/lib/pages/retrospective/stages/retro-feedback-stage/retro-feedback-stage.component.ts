@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonCheckbox, IonItem, IonLabel } from '@ionic/angular/standalone';
@@ -18,7 +17,6 @@ import { RetroMembersComponent } from '../../retro-members/retro-members.compone
 		IonLabel,
 		RetroMembersComponent,
 		FormsModule,
-		NgIf,
 	],
 })
 export class RetroFeedbackStageComponent {

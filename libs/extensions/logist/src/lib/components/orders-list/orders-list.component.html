@@ -5,12 +5,13 @@
 		</ion-card-content>
 	</ion-card>
 } @else if (orders.length) {
-	<sneat-logist-order-card
-		*ngFor="let order of orders"
-		[order]="order"
-		[space]="space"
-		[readonly]="true"
-	/>
+	@for (order of orders; track order) {
+		<sneat-logist-order-card
+			[order]="order"
+			[space]="space"
+			[readonly]="true"
+		/>
+	}
 } @else {
 	<ion-card>
 		<ion-card-content>

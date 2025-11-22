@@ -8,14 +8,12 @@
 			(ionChange)="onEndpointTypeChanged($event)"
 		>
 			<ion-segment-button value="port">Port</ion-segment-button>
-			<ion-segment-button
-				value="dispatcher"
-				*ngIf="endpointDirection === 'from'"
-				>Dispatcher</ion-segment-button
-			>
-			<ion-segment-button value="dispatcher" *ngIf="endpointDirection === 'to'"
-				>Receiver</ion-segment-button
-			>
+			@if (endpointDirection === "from") {
+				<ion-segment-button value="dispatcher">Dispatcher</ion-segment-button>
+			}
+			@if (endpointDirection === "to") {
+				<ion-segment-button value="dispatcher">Receiver</ion-segment-button>
+			}
 		</ion-segment>
 	</ion-item-divider>
 	<sneat-contact-input

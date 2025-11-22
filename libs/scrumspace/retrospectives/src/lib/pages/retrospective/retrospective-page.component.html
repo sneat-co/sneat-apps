@@ -5,9 +5,9 @@
 		</ion-buttons>
 		<ion-title>
 			{{ title }}
-			<ng-container *ngIf="space">
+			@if (space) {
 				&#64; {{ space.data?.title || space.id }}
-			</ng-container>
+			}
 		</ion-title>
 	</ion-toolbar>
 </ion-header>
@@ -15,14 +15,13 @@
 <ion-content>
 	<sneat-retro-timer [team]="space" [retrospective]="retrospective" />
 
-	<sneat-retro-feedback-stage
-		[space]="space"
-		[retrospective]="retrospective"
-		*ngIf="showPersonalFeedback()"
-	/>
-	<sneat-retro-review-stage
-		[space]="space"
-		[retrospective]="retrospective"
-		*ngIf="retrospective?.dbo?.stage === 'review'"
-	/>
+	@if (showPersonalFeedback()) {
+		<sneat-retro-feedback-stage
+			[space]="space"
+			[retrospective]="retrospective"
+		/>
+	}
+	@if (retrospective?.dbo?.stage === "review") {
+		<sneat-retro-review-stage [space]="space" [retrospective]="retrospective" />
+	}
 </ion-content>

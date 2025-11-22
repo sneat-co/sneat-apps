@@ -1,4 +1,4 @@
-import { JsonPipe, NgForOf, NgIf } from '@angular/common';
+import { JsonPipe } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { arrayToGrid } from '../../plugins/array-to-grid';
 import { IJsonGridData, IPipe } from '../../plugins/interfaces';
@@ -8,7 +8,7 @@ import { JsonGridComponent } from './json-grid.component';
 	selector: 'sneat-datatug-json-table',
 	templateUrl: 'json-table.component.html',
 	styleUrls: ['json-component.scss'],
-	imports: [JsonPipe, NgIf, JsonGridComponent, NgForOf],
+	imports: [JsonPipe, JsonGridComponent],
 })
 export class JsonTableComponent implements OnChanges {
 	@Input() path = '';

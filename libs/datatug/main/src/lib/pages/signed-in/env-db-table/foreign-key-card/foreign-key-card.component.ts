@@ -1,4 +1,3 @@
-import { NgForOf } from '@angular/common';
 import {
 	Component,
 	Input,
@@ -41,7 +40,6 @@ import { AgentService } from '../../../../services/repo/agent.service';
 		IonCardTitle,
 		IonText,
 		IonItem,
-		NgForOf,
 		IonLabel,
 		IonInput,
 		IonBadge,

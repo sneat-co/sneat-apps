@@ -1,28 +1,29 @@
 <ion-card>
-	<ion-item
-		*ngIf="showHeader"
-		color="light"
-		[routerLink]="'../order/' + order?.id"
-		class="sneat-tiny-end-padding"
-	>
-		<ion-label [color]="readonly ? 'primary' : undefined">
-			Order # {{ order?.id }} - {{ order?.brief?.direction }}
-		</ion-label>
-		<ion-buttons slot="end">
-			<ion-button
-				color="medium"
-				title="Copy to clipboard"
-				(click)="copyNumberToClipboard($event)"
-			>
-				<ion-icon name="clipboard-outline" slot="start" />
-				<ion-label>Copy #</ion-label>
-			</ion-button>
-			<ion-button color="medium" (click)="showPrintMenu($event)">
-				<ion-icon name="print-outline" slot="start" />
-				<ion-label>Print</ion-label>
-			</ion-button>
-		</ion-buttons>
-	</ion-item>
+	@if (showHeader) {
+		<ion-item
+			color="light"
+			[routerLink]="'../order/' + order?.id"
+			class="sneat-tiny-end-padding"
+		>
+			<ion-label [color]="readonly ? 'primary' : undefined">
+				Order # {{ order?.id }} - {{ order?.brief?.direction }}
+			</ion-label>
+			<ion-buttons slot="end">
+				<ion-button
+					color="medium"
+					title="Copy to clipboard"
+					(click)="copyNumberToClipboard($event)"
+				>
+					<ion-icon name="clipboard-outline" slot="start" />
+					<ion-label>Copy #</ion-label>
+				</ion-button>
+				<ion-button color="medium" (click)="showPrintMenu($event)">
+					<ion-icon name="print-outline" slot="start" />
+					<ion-label>Print</ion-label>
+				</ion-button>
+			</ion-buttons>
+		</ion-item>
+	}
 
 	<ion-grid class="ion-grid-layout">
 		<ion-row>
@@ -67,30 +68,32 @@
 		</ion-row>
 	</ion-grid>
 
-	<ion-grid class="ion-grid-layout" *ngIf="readonly">
-		<ion-row>
-			<ion-col size="6">
-				<ion-item tappable>
-					<ion-label>
-						<ion-text color="medium">Containers</ion-text>
-						2 x <b>20</b>ft, 1 x <b>40</b>ft
-					</ion-label>
-				</ion-item>
-			</ion-col>
-			<ion-col size="3">
-				<ion-item>
-					<ion-label color="medium">Gross (kg)</ion-label>
-					<ion-input value="32760" />
-				</ion-item>
-			</ion-col>
-			<ion-col size="3">
-				<ion-item>
-					<ion-label color="medium">Volume (m<sup>3</sup>)</ion-label>
-					<ion-input value="53" />
-				</ion-item>
-			</ion-col>
-		</ion-row>
-	</ion-grid>
+	@if (readonly) {
+		<ion-grid class="ion-grid-layout">
+			<ion-row>
+				<ion-col size="6">
+					<ion-item tappable>
+						<ion-label>
+							<ion-text color="medium">Containers</ion-text>
+							2 x <b>20</b>ft, 1 x <b>40</b>ft
+						</ion-label>
+					</ion-item>
+				</ion-col>
+				<ion-col size="3">
+					<ion-item>
+						<ion-label color="medium">Gross (kg)</ion-label>
+						<ion-input value="32760" />
+					</ion-item>
+				</ion-col>
+				<ion-col size="3">
+					<ion-item>
+						<ion-label color="medium">Volume (m<sup>3</sup>)</ion-label>
+						<ion-input value="53" />
+					</ion-item>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	}
 
 	<ion-item-group>
 		<ion-item-divider color="light">

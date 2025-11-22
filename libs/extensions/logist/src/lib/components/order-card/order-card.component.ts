@@ -1,4 +1,4 @@
-import { DatePipe, NgIf } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { Component, Input, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
@@ -35,7 +35,6 @@ import { OrderPrintMenuComponent } from './order-print-menu.component';
 	imports: [
 		IonCard,
 		IonItem,
-		NgIf,
 		RouterLink,
 		IonLabel,
 		IonButtons,

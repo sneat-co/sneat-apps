@@ -1,5 +1,7 @@
 <ion-card style="padding: 0.5em">
-	<ion-card-content *ngIf="!containers">Loading...</ion-card-content>
+	@if (!containers) {
+		<ion-card-content>Loading...</ion-card-content>
+	}
 	<sneat-datagrid
 		[selectable]="1"
 		[data]="containers"

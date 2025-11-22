@@ -10,7 +10,7 @@
 		[items]="containerTypes"
 		(ngModelChange)="onContainerTypeChanged()"
 	/>
-	<ng-container *ngIf="containerType">
+	@if (containerType) {
 		<ion-item>
 			<ion-label color="medium">Container #</ion-label>
 			<ion-input
@@ -19,19 +19,26 @@
 				[(ngModel)]="containerNumber"
 			/>
 		</ion-item>
-
 		<sneat-shipping-points-selector
 			[order]="order"
 			(tasksByShippingPointChange)="onTasksByShippingPointChanged($event)"
 		/>
-	</ng-container>
+	}
 </ion-content>
 
-<ion-footer class="ion-padding" *ngIf="containerType">
-	<ion-button [disabled]="isSubmitting" (click)="addContainer($event)">
-		<ion-icon name="save-outline" slot="start" />
-		<ion-label *ngIf="!isSubmitting">Create container record</ion-label>
-		<ion-label *ngIf="isSubmitting">Creating container record...</ion-label>
-		<ion-spinner name="lines-small" slot="end" *ngIf="isSubmitting" />
-	</ion-button>
-</ion-footer>
+@if (containerType) {
+	<ion-footer class="ion-padding">
+		<ion-button [disabled]="isSubmitting" (click)="addContainer($event)">
+			<ion-icon name="save-outline" slot="start" />
+			@if (!isSubmitting) {
+				<ion-label>Create container record</ion-label>
+			}
+			@if (isSubmitting) {
+				<ion-label>Creating container record...</ion-label>
+			}
+			@if (isSubmitting) {
+				<ion-spinner name="lines-small" slot="end" />
+			}
+		</ion-button>
+	</ion-footer>
+}

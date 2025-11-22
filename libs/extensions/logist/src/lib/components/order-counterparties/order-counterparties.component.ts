@@ -1,4 +1,4 @@
-import { LowerCasePipe, NgForOf, NgIf } from '@angular/common';
+import { LowerCasePipe } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -52,8 +52,6 @@ interface ICounterparty extends IOrderCounterparty {
 		IonIcon,
 		LowerCasePipe,
 		IonItem,
-		NgForOf,
-		NgIf,
 	],
 })
 export class OrderCounterpartiesComponent implements OnChanges {

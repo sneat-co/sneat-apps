@@ -1,33 +1,36 @@
 <ion-header>
 	<ion-toolbar>
-		<ion-buttons slot="start" *ngIf="space">
+		@if (space) {
+		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="'/team?id='+space.id" />
 		</ion-buttons>
+		}
 		<ion-title
-			>Scrums
-			<ng-container *ngIf="space?.dbo">&#64; {{space.dbo.title}}</ng-container>
+			>Scrums @if (space?.dbo) { &#64; {{space.dbo.title}} }
 		</ion-title>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<ion-item *ngIf="!scrums">
+	@if (!scrums) {
+	<ion-item>
 		<ion-spinner name="lines-small" slot="start" />
 		<ion-label color="medium"> Loading... </ion-label>
 	</ion-item>
-	<ion-item *ngIf="scrums && !scrums.length">
+	} @if (scrums && !scrums.length) {
+	<ion-item>
 		<ion-icon slot="start" name="remove-circle-outline" />
 		<ion-label color="medium"> No records yet. </ion-label>
 	</ion-item>
-	<ion-item *ngFor="let scrum of scrums" tappable (click)="goScrum(scrum)">
+	} @for (scrum of scrums; track scrum) {
+	<ion-item tappable (click)="goScrum(scrum)">
 		<ion-icon name="checkmark-done-outline" slot="start" />
 		<ion-label> {{scrum.id}} </ion-label>
-		<ion-button
-			*ngIf="scrum.dbo.risksCount"
-			slot="end"
-			color="danger"
-			title="Risks"
+		@if (scrum.dbo.risksCount) {
+		<ion-button slot="end" color="danger" title="Risks"
 			>{{scrum.dbo.risksCount}}</ion-button
 		>
+		}
 	</ion-item>
+	}
 </ion-content>

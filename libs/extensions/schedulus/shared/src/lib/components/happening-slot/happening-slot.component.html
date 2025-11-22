@@ -5,12 +5,11 @@
 
 	<ion-label text-wrap>
 		<p>
-			<ion-badge
-				color="light"
-				style="margin-right: 4px"
-				*ngFor="let wd of slot.weekdays || []"
-				>{{ wd | wdToWeekday }}</ion-badge
-			>
+			@for (wd of slot.weekdays || []; track wd) {
+				<ion-badge color="light" style="margin-right: 4px">{{
+					wd | wdToWeekday
+				}}</ion-badge>
+			}
 		</p>
 		@if (slot.location && (slot.location.title || slot.location.address)) {
 			<p>

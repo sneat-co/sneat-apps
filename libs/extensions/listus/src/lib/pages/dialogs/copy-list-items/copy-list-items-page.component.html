@@ -6,15 +6,17 @@
 
 <ion-content>
 	<ion-list>
-		<ion-item button="" *ngFor="let item of listItems">
-			<ion-label>{{ item.emoji }} {{ item.title }}</ion-label>
-			<ion-checkbox
-				slot="end"
-				[value]="item.id"
-				checked="true"
-				(ionChange)="onItemToggled($event)"
-			/>
-		</ion-item>
+		@for (item of listItems; track item) {
+			<ion-item button="">
+				<ion-label>{{ item.emoji }} {{ item.title }}</ion-label>
+				<ion-checkbox
+					slot="end"
+					[value]="item.id"
+					checked="true"
+					(ionChange)="onItemToggled($event)"
+				/>
+			</ion-item>
+		}
 	</ion-list>
 	<ion-footer>
 		<ion-toolbar>

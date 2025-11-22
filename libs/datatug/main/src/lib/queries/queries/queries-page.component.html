@@ -40,14 +40,14 @@
 		</ion-segment-button>
 	</ion-segment>
 	<ion-card>
-		<ion-card-content *ngIf="tab === 'active' || tab === 'bookmarked'">
-			<p>{{ tab }} &mdash; not implemented yet</p>
-		</ion-card-content>
-		<sneat-datatug-queries-tab
-			*ngIf="tab === 'shared' || tab === 'personal'"
-			[rootFolder]="tab"
-			[project]="project"
-		/>
+		@if (tab === "active" || tab === "bookmarked") {
+			<ion-card-content>
+				<p>{{ tab }} &mdash; not implemented yet</p>
+			</ion-card-content>
+		}
+		@if (tab === "shared" || tab === "personal") {
+			<sneat-datatug-queries-tab [rootFolder]="tab" [project]="project" />
+		}
 	</ion-card>
 
 	<ion-card>

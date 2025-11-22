@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import {
 	Component,
 	Input,
@@ -48,7 +47,6 @@ interface IMeetingMemberWithCounts extends IMeetingMember {
 		IonText,
 		IonList,
 		IonItem,
-		NgIf,
 		IonCardContent,
 		IonButton,
 		IonIcon,

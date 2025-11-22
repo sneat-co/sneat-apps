@@ -15,32 +15,47 @@
 			(keyup.enter)="saveChanges()"
 		/>
 		<ion-buttons slot="end">
-			<ion-button
-				*ngIf="!form.dirty"
-				color="medium"
-				[disabled]="deleting"
-				title="Remove from the order counterparty & related container points"
-				(click)="deleteDispatcher()"
-			>
-				<ion-icon name="trash-outline" slot="end" *ngIf="!deleting" />
-				<ion-label *ngIf="deleting">deleting...</ion-label>
-				<ion-label *ngIf="!deleting">Delete</ion-label>
-				<ion-spinner name="lines-small" slot="start" *ngIf="deleting" />
-			</ion-button>
-			<ion-button *ngIf="form.dirty" (click)="saveChanges()">
-				<ion-icon name="save-outline" slot="start" />
-				<ion-label *ngIf="!saving">Save changes</ion-label>
-				<ion-label *ngIf="saving">Saving...</ion-label>
-				<ion-spinner name="lines-small" color="medium" *ngIf="saving" />
-			</ion-button>
-			<ion-button
-				*ngIf="form.dirty && !saving"
-				(click)="cancelChanges()"
-				color="medium"
-			>
-				<ion-icon name="close-circle-outline" slot="start" />
-				<ion-label>Cancel</ion-label>
-			</ion-button>
+			@if (!form.dirty) {
+				<ion-button
+					color="medium"
+					[disabled]="deleting"
+					title="Remove from the order counterparty & related container points"
+					(click)="deleteDispatcher()"
+				>
+					@if (!deleting) {
+						<ion-icon name="trash-outline" slot="end" />
+					}
+					@if (deleting) {
+						<ion-label>deleting...</ion-label>
+					}
+					@if (!deleting) {
+						<ion-label>Delete</ion-label>
+					}
+					@if (deleting) {
+						<ion-spinner name="lines-small" slot="start" />
+					}
+				</ion-button>
+			}
+			@if (form.dirty) {
+				<ion-button (click)="saveChanges()">
+					<ion-icon name="save-outline" slot="start" />
+					@if (!saving) {
+						<ion-label>Save changes</ion-label>
+					}
+					@if (saving) {
+						<ion-label>Saving...</ion-label>
+					}
+					@if (saving) {
+						<ion-spinner name="lines-small" color="medium" />
+					}
+				</ion-button>
+			}
+			@if (form.dirty && !saving) {
+				<ion-button (click)="cancelChanges()" color="medium">
+					<ion-icon name="close-circle-outline" slot="start" />
+					<ion-label>Cancel</ion-label>
+				</ion-button>
+			}
 		</ion-buttons>
 	</ion-item-divider>
 
@@ -60,11 +75,12 @@
 		</ion-buttons>
 	</ion-item>
 
-	<sneat-dispatch-point
-		*ngFor="let location of locations; trackBy: counterpartyKey"
-		[dispatchPoint]="location"
-		[disabled]="deleting"
-		[deleting]="deleting"
-		[order]="order"
-	/>
+	@for (location of locations; track counterpartyKey($index, location)) {
+		<sneat-dispatch-point
+			[dispatchPoint]="location"
+			[disabled]="deleting"
+			[deleting]="deleting"
+			[order]="order"
+		/>
+	}
 </ion-card>

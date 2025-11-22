@@ -12,11 +12,13 @@
 	<!--	<sneat-new-shipping-point-form [order]="order" *ngIf="tab === 'new'"></sneat-new-shipping-point-form>-->
 
 	<ng-container>
-		<ion-item-divider *ngIf="!shippingPoints?.length">
-			<ion-label
-				>No shipping points have been added to the order yet.
-			</ion-label>
-		</ion-item-divider>
+		@if (!shippingPoints?.length) {
+			<ion-item-divider>
+				<ion-label
+					>No shipping points have been added to the order yet.
+				</ion-label>
+			</ion-item-divider>
+		}
 		<ion-grid class="ion-grid-layout">
 			@for (shippingPoint of shippingPoints; track shippingPoint.id) {
 				<ion-row>

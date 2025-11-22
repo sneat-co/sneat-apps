@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
@@ -34,7 +33,6 @@ import { LogistSpaceBaseComponent } from '../logist-space-base.component';
 		IonCardContent,
 		IonSpinner,
 		IonItemDivider,
-		NgIf,
 		IonLabel,
 		IonButtons,
 		IonButton,

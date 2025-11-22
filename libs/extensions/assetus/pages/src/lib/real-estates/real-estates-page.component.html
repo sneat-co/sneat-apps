@@ -25,14 +25,11 @@
 			(ionChange)="filterChanged($event)"
 		/>
 		<ion-buttons slot="end">
-			<ion-button
-				fill="clear"
-				color="medium"
-				*ngIf="filter"
-				(click)="clearFilter()"
-			>
-				<ion-icon name="close-outline" />
-			</ion-button>
+			@if (filter) {
+				<ion-button fill="clear" color="medium" (click)="clearFilter()">
+					<ion-icon name="close-outline" />
+				</ion-button>
+			}
 		</ion-buttons>
 	</ion-item>
 

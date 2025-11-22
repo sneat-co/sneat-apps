@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -21,15 +20,7 @@ import { ISpaceContext } from '@sneat/space-models';
 @Component({
 	selector: 'sneat-basic-contact-form',
 	templateUrl: './basic-contact-form.component.html',
-	imports: [
-		IonItem,
-		IonInput,
-		FormsModule,
-		IonButton,
-		IonLabel,
-		IonSpinner,
-		NgIf,
-	],
+	imports: [IonItem, IonInput, FormsModule, IonButton, IonLabel, IonSpinner],
 })
 export class BasicContactFormComponent {
 	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);

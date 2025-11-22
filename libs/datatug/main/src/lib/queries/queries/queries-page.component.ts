@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
@@ -57,7 +56,6 @@ type OrderBy = (typeof orderBys)[number];
 		IonCard,
 		IonCardContent,
 		QueriesTabComponent,
-		NgIf,
 		IonItem,
 		IonSelect,
 		IonSelectOption,
@@ -92,7 +90,7 @@ export class QueriesPageComponent
 		return this.project
 			? `/store/${getStoreId(this.project.ref.storeId)}/project/${
 					this.project.ref.projectId
-			  }`
+				}`
 			: '/';
 	}
 

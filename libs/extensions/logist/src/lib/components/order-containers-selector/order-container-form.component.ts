@@ -1,4 +1,4 @@
-import { NgIf, UpperCasePipe } from '@angular/common';
+import { UpperCasePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
 	IonCheckbox,
@@ -24,7 +24,6 @@ import { IContainer } from './condainer-interface';
 		IonInput,
 		IonCheckbox,
 		UpperCasePipe,
-		NgIf,
 	],
 })
 export class OrderContainerFormComponent {

@@ -3,16 +3,19 @@
 		<ion-buttons slot="start">
 			<ion-back-button [defaultHref]="defaultBackUrl" />
 		</ion-buttons>
-		<ion-title *ngIf="asset">{{ asset.dto.title }}</ion-title>
-		<ion-title *ngIf="!asset">Property</ion-title>
+		@if (asset) {
+			<ion-title>{{ asset.dto.title }}</ion-title>
+		}
+		@if (!asset) {
+			<ion-title>Property</ion-title>
+		}
 	</ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<app-real-estate-location
-		*ngIf="asset && asset.dto.categoryId === 'real_estate'"
-		[asset]="asset"
-	/>
+	@if (asset && asset.dto.categoryId === "real_estate") {
+		<app-real-estate-location [asset]="asset" />
+	}
 
 	<ion-item-group>
 		<ion-item-divider color="light">

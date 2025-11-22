@@ -64,25 +64,29 @@
 		[form]="freightLoadForm"
 		(keyUpEnter)="saveChanges($event)"
 	/>
-	<ion-item *ngIf="form.dirty">
-		<ion-buttons slot="end">
-			<ion-button
-				[disabled]="saving"
-				color="danger"
-				(click)="saveChanges($event)"
-			>
-				<ion-icon name="save-outline" slot="start" />
-				<ion-label *ngIf="!saving">Save changes</ion-label>
-				<ion-label *ngIf="saving">Saving changes...</ion-label>
-			</ion-button>
-			<ion-button
-				*ngIf="!saving"
-				(click)="cancelChanges($event)"
-				color="medium"
-			>
-				<ion-icon name="close-circle-outline" slot="start" />
-				<ion-label>Cancel</ion-label>
-			</ion-button>
-		</ion-buttons>
-	</ion-item>
+	@if (form.dirty) {
+		<ion-item>
+			<ion-buttons slot="end">
+				<ion-button
+					[disabled]="saving"
+					color="danger"
+					(click)="saveChanges($event)"
+				>
+					<ion-icon name="save-outline" slot="start" />
+					@if (!saving) {
+						<ion-label>Save changes</ion-label>
+					}
+					@if (saving) {
+						<ion-label>Saving changes...</ion-label>
+					}
+				</ion-button>
+				@if (!saving) {
+					<ion-button (click)="cancelChanges($event)" color="medium">
+						<ion-icon name="close-circle-outline" slot="start" />
+						<ion-label>Cancel</ion-label>
+					</ion-button>
+				}
+			</ion-buttons>
+		</ion-item>
+	}
 </ion-card>

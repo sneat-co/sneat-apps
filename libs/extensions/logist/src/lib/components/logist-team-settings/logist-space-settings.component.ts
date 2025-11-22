@@ -1,4 +1,4 @@
-import { JsonPipe, NgIf } from '@angular/common';
+import { JsonPipe } from '@angular/common';
 import {
 	AfterViewInit,
 	Component,
@@ -56,7 +56,6 @@ type LogistSpaceSettingsForm = FormGroup<ILogistSpaceSettingsFormControls>;
 		ReactiveFormsModule,
 		AddressFormComponent,
 		LogistSpaceRolesComponent,
-		NgIf,
 		IonButton,
 		IonItem,
 		IonLabel,

@@ -5,7 +5,9 @@
 		</ion-buttons>
 		<ion-title>
 			ToDo
-			<ng-container *ngIf="commune">&#64; {{ commune.title }}</ng-container>
+			@if (commune) {
+				&#64; {{ commune.title }}
+			}
 		</ion-title>
 		<ion-buttons slot="end">
 			<ion-button title="Add ToDo" (click)="goNew()">

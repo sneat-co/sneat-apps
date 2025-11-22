@@ -1,4 +1,4 @@
-import { Location, NgForOf, NgIf } from '@angular/common';
+import { Location } from '@angular/common';
 import {
 	ChangeDetectorRef,
 	Component,
@@ -62,7 +62,6 @@ import { IMetric } from '../interfaces';
 		IonHeader,
 		IonToolbar,
 		IonTitle,
-		NgIf,
 		IonButtons,
 		IonBackButton,
 		IonContent,
@@ -75,7 +74,6 @@ import { IMetric } from '../interfaces';
 		IonSegmentButton,
 		IonBadge,
 		ScrumTasksComponent,
-		NgForOf,
 		MetricsComponent,
 		IonItemDivider,
 		IonCard,

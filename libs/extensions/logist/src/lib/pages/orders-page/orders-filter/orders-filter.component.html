@@ -11,31 +11,37 @@
 	<ion-item color="light" class="sneat-no-end-padding">
 		<ion-label style="font-weight: bold"
 			>Filter
-			<ion-text *ngIf="refNumber" color="medium"> | Ref #</ion-text>
+			@if (refNumber) {
+				<ion-text color="medium"> | Ref #</ion-text>
+			}
 		</ion-label>
 		<ion-input
 			placeholder="ref #"
 			[(ngModel)]="refNumber"
 			(ionChange)="refNumberChanged()"
 		/>
-		<ion-buttons slot="end" *ngIf="refNumber || isRefNumberChanged">
-			<ion-button
-				*ngIf="isRefNumberChanged"
-				fill="solid"
-				color="primary"
-				(click)="findByRefNumber($event)"
-			>
-				<ion-label>Find</ion-label>
-			</ion-button>
-			<ion-button
-				*ngIf="refNumber"
-				color="danger"
-				title="Clear filter"
-				(click)="clearRefNumber($event)"
-			>
-				<ion-icon name="close-outline" />
-			</ion-button>
-		</ion-buttons>
+		@if (refNumber || isRefNumberChanged) {
+			<ion-buttons slot="end">
+				@if (isRefNumberChanged) {
+					<ion-button
+						fill="solid"
+						color="primary"
+						(click)="findByRefNumber($event)"
+					>
+						<ion-label>Find</ion-label>
+					</ion-button>
+				}
+				@if (refNumber) {
+					<ion-button
+						color="danger"
+						title="Clear filter"
+						(click)="clearRefNumber($event)"
+					>
+						<ion-icon name="close-outline" />
+					</ion-button>
+				}
+			</ion-buttons>
+		}
 	</ion-item>
 	<sneat-contact-input
 		label="Counterparty"

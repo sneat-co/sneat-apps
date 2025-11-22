@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import {
 	Component,
 	Input,
@@ -56,7 +55,6 @@ import { DispatchPointContainersGridComponent } from './dispatch-point-container
 		IonItemDivider,
 		IonCard,
 		IonText,
-		NgIf,
 		CountryFlagPipe,
 	],
 })

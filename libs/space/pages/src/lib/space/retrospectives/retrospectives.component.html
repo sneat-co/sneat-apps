@@ -19,12 +19,16 @@
 		<!--				? 'Active retrospective'-->
 		<!--				: 'Upcoming retrospective'-->
 		<!--		}}</ion-label>-->
-		<ion-buttons slot="end" *ngIf="space?.dbo?.upcomingRetro">
-			<ion-button color="success">{{ retroCount("good") }}</ion-button>
-			<ion-button color="danger">{{ retroCount("bad") }}</ion-button>
-			<ion-button color="primary">{{ retroCount("idea") }}</ion-button>
-			<ion-button color="tertiary">{{ retroCount("endorsement") }}</ion-button>
-		</ion-buttons>
+		@if (space?.dbo?.upcomingRetro) {
+			<ion-buttons slot="end">
+				<ion-button color="success">{{ retroCount("good") }}</ion-button>
+				<ion-button color="danger">{{ retroCount("bad") }}</ion-button>
+				<ion-button color="primary">{{ retroCount("idea") }}</ion-button>
+				<ion-button color="tertiary">{{
+					retroCount("endorsement")
+				}}</ion-button>
+			</ion-buttons>
+		}
 	</ion-item>
 	<ion-item disabled>
 		<ion-label class="ion-text-wrap">

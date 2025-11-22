@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, Input, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -50,7 +49,6 @@ import {
 		IonIcon,
 		IonSpinner,
 		ShippingPointsSelectorComponent,
-		NgIf,
 	],
 })
 export class NewContainerComponent {

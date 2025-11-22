@@ -1,79 +1,88 @@
-<ng-container *ngIf="metrics">
-	<ng-container *ngFor="let metric of metrics; trackBy: trackById">
-		<ng-container [ngSwitch]="metric.type">
-			<ion-item *ngSwitchCase="'int'">
-				<ng-container
-					*ngIf="metric.min !== undefined && metric.max !== undefined"
-				>
-					<ion-label position="stacked">
-						{{ metric.title }}:
-						<ion-text
-							*ngIf="metric && hasValue(metric)"
-							[color]="
-								!metric?.value
-									? 'medium'
-									: metric?.value < 70
-									? 'danger'
-									: metric?.value < 80
-									? 'warning'
-									: metric?.value > 90
-									? 'success'
-									: 'primary'
-							"
-						>
-							{{ metric?.value }}%
-						</ion-text>
-						<ng-container *ngIf="!hasValue(metric)">none</ng-container>
-					</ion-label>
-					<ion-range
-						[color]="
-							!metric.value
-								? 'medium'
-								: metric.value < 70
-								? 'danger'
-								: metric.value < 80
-								? 'warning'
-								: metric.value > 90
-								? 'success'
-								: 'primary'
-						"
-						[(ngModel)]="metric.value"
-						pin="false"
-						snaps="true"
-						ticks="true"
-						*ngIf="
+@if (metrics) {
+	@for (metric of metrics; track trackById($index, metric)) {
+		@switch (metric.type) {
+			@case ("int") {
+				<ion-item>
+					@if (metric.min !== undefined && metric.max !== undefined) {
+						<ion-label position="stacked">
+							{{ metric.title }}:
+							@if (metric && hasValue(metric)) {
+								<ion-text
+									[color]="
+										!metric?.value
+											? 'medium'
+											: metric?.value < 70
+												? 'danger'
+												: metric?.value < 80
+													? 'warning'
+													: metric?.value > 90
+														? 'success'
+														: 'primary'
+									"
+								>
+									{{ metric?.value }}%
+								</ion-text>
+							}
+							@if (!hasValue(metric)) {
+								none
+							}
+						</ion-label>
+						@if (
 							metric && metric.min !== undefined && metric.max !== undefined
-						"
-						[min]="metric.min"
-						[max]="metric.max"
-					/>
-				</ng-container>
-				<ng-container
-					*ngIf="metric.min === undefined || metric.max === undefined"
-				>
-					<ion-label>{{ metric.title }}</ion-label>
-					<ion-input type="number" [(ngModel)]="metric.value" />
-				</ng-container>
-			</ion-item>
-			<ion-item *ngSwitchCase="'bool'">
-				<ion-toggle
-					slot="start"
-					[color]="
-						metric.value ? metric.bool.true.color : metric.bool.false.color
-					"
-					[(ngModel)]="metric.value"
-					*ngIf="metric.type === 'bool'"
-				/>
-				<ion-label>
-					{{ metric.title }}:
-					<ion-text [color]="metric.bool.true.color" *ngIf="metric.value">{{
-						metric.bool.true.label
-					}}</ion-text>
-					<ion-text [color]="metric.bool.false.color" *ngIf="!metric.value">{{
-						metric.bool.false.label
-					}}</ion-text>
-				</ion-label>
-			</ion-item>
-		</ng-container>
-	</ng-container>
-</ng-container>
+						) {
+							<ion-range
+								[color]="
+									!metric.value
+										? 'medium'
+										: metric.value < 70
+											? 'danger'
+											: metric.value < 80
+												? 'warning'
+												: metric.value > 90
+													? 'success'
+													: 'primary'
+								"
+								[(ngModel)]="metric.value"
+								pin="false"
+								snaps="true"
+								ticks="true"
+								[min]="metric.min"
+								[max]="metric.max"
+							/>
+						}
+					}
+					@if (metric.min === undefined || metric.max === undefined) {
+						<ion-label>{{ metric.title }}</ion-label>
+						<ion-input type="number" [(ngModel)]="metric.value" />
+					}
+				</ion-item>
+			}
+			@case ("bool") {
+				<ion-item>
+					@if (metric.type === "bool") {
+						<ion-toggle
+							slot="start"
+							[color]="
+								metric.value ? metric.bool.true.color : metric.bool.false.color
+							"
+							[(ngModel)]="metric.value"
+						/>
+					}
+					<ion-label>
+						{{ metric.title }}:
+						@if (metric.value) {
+							<ion-text [color]="metric.bool.true.color">{{
+								metric.bool.true.label
+							}}</ion-text>
+						}
+						@if (!metric.value) {
+							<ion-text [color]="metric.bool.false.color">{{
+								metric.bool.false.label
+							}}</ion-text>
+						}
+					</ion-label>
+				</ion-item>
+			}
+		}
+	}
+}

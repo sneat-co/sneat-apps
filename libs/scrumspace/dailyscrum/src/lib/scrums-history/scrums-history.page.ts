@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -37,7 +36,6 @@ import { ErrorLogger, IErrorLogger } from '@sneat/logging';
 		IonLabel,
 		IonIcon,
 		IonButton,
-		NgIf,
 	],
 })
 export class ScrumsHistoryPageComponent {

@@ -20,30 +20,34 @@
 			<!--			></sneat-logist-order-counterparty-input>-->
 		</ion-col>
 		<ion-col size="6">
-			<ion-item *ngIf="dateTimeTab === 'scheduled'">
-				<ion-input
-					type="date"
-					[formControl]="scheduledDate"
-					(ionChange)="onScheduledDateChanged($event)"
-				/>
-				<ion-input
-					type="time"
-					[formControl]="scheduledTime"
-					(ionChange)="onScheduledTimeChanged($event)"
-				/>
-			</ion-item>
-			<ion-item *ngIf="dateTimeTab === 'actual'">
-				<ion-input
-					type="date"
-					[formControl]="actualDate"
-					(ionChange)="onActualDateChanged($event)"
-				/>
-				<ion-input
-					type="time"
-					[formControl]="actualTime"
-					(ionChange)="onActualTimeChanged($event)"
-				/>
-			</ion-item>
+			@if (dateTimeTab === "scheduled") {
+				<ion-item>
+					<ion-input
+						type="date"
+						[formControl]="scheduledDate"
+						(ionChange)="onScheduledDateChanged($event)"
+					/>
+					<ion-input
+						type="time"
+						[formControl]="scheduledTime"
+						(ionChange)="onScheduledTimeChanged($event)"
+					/>
+				</ion-item>
+			}
+			@if (dateTimeTab === "actual") {
+				<ion-item>
+					<ion-input
+						type="date"
+						[formControl]="actualDate"
+						(ionChange)="onActualDateChanged($event)"
+					/>
+					<ion-input
+						type="time"
+						[formControl]="actualTime"
+						(ionChange)="onActualTimeChanged($event)"
+					/>
+				</ion-item>
+			}
 		</ion-col>
 	</ion-row>
 </ion-grid>

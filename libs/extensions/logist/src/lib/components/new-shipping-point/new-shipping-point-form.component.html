@@ -9,11 +9,13 @@
 	(contactChange)="onContactChanged($event)"
 />
 
-<p class="ion-margin" *ngIf="!contact">
-	<ion-text color="medium">Please select location above.</ion-text>
-</p>
+@if (!contact) {
+	<p class="ion-margin">
+		<ion-text color="medium">Please select location above.</ion-text>
+	</p>
+}
 
-<ng-container *ngIf="contact && !order?.dbo?.containers?.length">
+@if (contact && !order?.dbo?.containers?.length) {
 	<ion-item>
 		<ion-checkbox [(ngModel)]="load" slot="start" />
 		<ion-label>Load</ion-label>
@@ -22,18 +24,21 @@
 		<ion-checkbox [(ngModel)]="unload" slot="start" />
 		<ion-label>Unload</ion-label>
 	</ion-item>
-</ng-container>
+}
 
-<sneat-order-containers-selector
-	*ngIf="contact && order?.dbo?.containers?.length"
-	[disabled]="creating"
-	[order]="order"
-	[container]="container"
-	(selectedContainersChange)="onSelectedContainersChanged($event)"
-/>
+@if (contact && order?.dbo?.containers?.length) {
+	<sneat-order-containers-selector
+		[disabled]="creating"
+		[order]="order"
+		[container]="container"
+		(selectedContainersChange)="onSelectedContainersChanged($event)"
+	/>
+}
 
-<div class="ion-padding" *ngIf="contact">
-	<ion-button [disabled]="creating" (click)="addShippingPoint()">
-		Add shipping point
-	</ion-button>
-</div>
+@if (contact) {
+	<div class="ion-padding">
+		<ion-button [disabled]="creating" (click)="addShippingPoint()">
+			Add shipping point
+		</ion-button>
+	</div>
+}

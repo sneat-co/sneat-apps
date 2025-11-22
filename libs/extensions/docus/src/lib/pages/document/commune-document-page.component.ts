@@ -1,11 +1,4 @@
-import {
-	NgForOf,
-	NgIf,
-	NgSwitch,
-	NgSwitchCase,
-	NgSwitchDefault,
-	TitleCasePipe,
-} from '@angular/common';
+import { TitleCasePipe } from '@angular/common';
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -45,7 +38,6 @@ import { CommuneBasePageParams } from '@sneat/shared/services/params';
 		IonButtons,
 		IonBackButton,
 		IonTitle,
-		NgIf,
 		TitleCasePipe,
 		IonContent,
 		IonList,
@@ -61,10 +53,6 @@ import { CommuneBasePageParams } from '@sneat/shared/services/params';
 		IonRow,
 		IonCol,
 		IonItemGroup,
-		NgSwitchCase,
-		NgSwitch,
-		NgSwitchDefault,
-		NgForOf,
 		IonBadge,
 	],
 })

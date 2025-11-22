@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -31,7 +30,6 @@ import { OrderContainersSelectorComponent } from '../order-containers-selector/o
 		IonItem,
 		IonCheckbox,
 		IonLabel,
-		NgIf,
 		IonButton,
 		FormsModule,
 		OrderContainersSelectorComponent,

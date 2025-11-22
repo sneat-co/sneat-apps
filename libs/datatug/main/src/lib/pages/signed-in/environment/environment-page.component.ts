@@ -1,4 +1,3 @@
-import { NgForOf, NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -50,9 +49,7 @@ import { EnvironmentService } from '../../../services/unsorted/environment.servi
 		IonItem,
 		IonSkeletonText,
 		IonLabel,
-		NgIf,
 		IonButton,
-		NgForOf,
 	],
 })
 export class EnvironmentPageComponent {

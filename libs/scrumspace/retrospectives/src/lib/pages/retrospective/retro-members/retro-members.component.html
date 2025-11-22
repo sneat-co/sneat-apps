@@ -3,59 +3,75 @@
 	<ion-segment [(ngModel)]="membersTab">
 		<ion-segment-button value="participants">
 			<ion-label
-			>Participants
-				<ion-badge *ngIf="retrospective?.dbo" color="light">
-					<ion-text color="medium">{{ participants?.length || 0 }}</ion-text>
-				</ion-badge>
+				>Participants
+				@if (retrospective?.dbo) {
+					<ion-badge color="light">
+						<ion-text color="medium">{{ participants?.length || 0 }}</ion-text>
+					</ion-badge>
+				}
 			</ion-label>
 		</ion-segment-button>
 		<ion-segment-button value="spectators">
 			<ion-label
-			>Spectators
-				<ion-badge *ngIf="retrospective?.dbo" color="light">
-					<ion-text color="medium">{{ spectators?.length || 0 }}</ion-text>
-				</ion-badge>
+				>Spectators
+				@if (retrospective?.dbo) {
+					<ion-badge color="light">
+						<ion-text color="medium">{{ spectators?.length || 0 }}</ion-text>
+					</ion-badge>
+				}
 			</ion-label>
 		</ion-segment-button>
 		<ion-segment-button value="absent">
 			<ion-label
-			>Absent
-				<ion-badge *ngIf="retrospective?.dbo" color="light">
-					<ion-text color="medium">{{ absents?.length || 0 }}</ion-text>
-				</ion-badge>
+				>Absent
+				@if (retrospective?.dbo) {
+					<ion-badge color="light">
+						<ion-text color="medium">{{ absents?.length || 0 }}</ion-text>
+					</ion-badge>
+				}
 			</ion-label>
 		</ion-segment-button>
 	</ion-segment>
 
-	<ion-list *ngIf="membersTab === 'participants' && retrospective?.dbo">
-		<ion-item *ngIf="!participants?.length; else membersList" disabled="true">
-			<ion-label>No participants yet</ion-label>
-		</ion-item>
-		<ng-template #membersList>
-			@for (member of participants; track member.id) {
-				<ion-item>
-					<ion-label>{{ member.title }}</ion-label>
-					<ion-badge color="danger" slot="end">2 risks</ion-badge>
+	@if (membersTab === "participants" && retrospective?.dbo) {
+		<ion-list>
+			@if (!participants?.length) {
+				<ion-item disabled="true">
+					<ion-label>No participants yet</ion-label>
 				</ion-item>
+			} @else {
+				@for (member of participants; track member.id) {
+					<ion-item>
+						<ion-label>{{ member.title }}</ion-label>
+						<ion-badge color="danger" slot="end">2 risks</ion-badge>
+					</ion-item>
+				}
 			}
-		</ng-template>
-	</ion-list>
+		</ion-list>
+	}
 
-	<ion-list *ngIf="membersTab === 'spectators' && retrospective?.dbo">
-		<ion-item *ngIf="!spectators?.length; else membersList" disabled="true">
-			<ion-label>No spectators yet</ion-label>
-		</ion-item>
-		<ng-template #membersList>
-			<ion-item *ngFor="let member of spectators; trackBy: id">
-				<ion-label>{{ member.title }}</ion-label>
-			</ion-item>
-		</ng-template>
-	</ion-list>
+	@if (membersTab === "spectators" && retrospective?.dbo) {
+		<ion-list>
+			@if (!spectators?.length) {
+				<ion-item disabled="true">
+					<ion-label>No spectators yet</ion-label>
+				</ion-item>
+			} @else {
+				@for (member of spectators; track id($index, member)) {
+					<ion-item>
+						<ion-label>{{ member.title }}</ion-label>
+					</ion-item>
+				}
+			}
+		</ion-list>
+	}
 
-	<ion-card-content *ngIf="membersTab !== 'absent'">
-		<ion-button color="tertiary">
-			<ion-icon name="pricetags-outline" slot="start" />
-			<ion-label>Get invite link</ion-label>
-		</ion-button>
-	</ion-card-content>
+	@if (membersTab !== "absent") {
+		<ion-card-content>
+			<ion-button color="tertiary">
+				<ion-icon name="pricetags-outline" slot="start" />
+				<ion-label>Get invite link</ion-label>
+			</ion-button>
+		</ion-card-content>
+	}
 </ion-card>

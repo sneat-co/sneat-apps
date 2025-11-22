@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import {
 	Component,
 	Input,
@@ -34,7 +33,7 @@ interface OrderRow {
 @Component({
 	selector: 'sneat-logist-orders-grid',
 	templateUrl: './orders-grid.component.html',
-	imports: [IonCard, IonCardContent, DataGridComponent, NgIf],
+	imports: [IonCard, IonCardContent, DataGridComponent],
 })
 export class OrdersGridComponent implements OnChanges {
 	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);

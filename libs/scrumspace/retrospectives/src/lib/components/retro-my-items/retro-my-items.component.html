@@ -1,13 +1,19 @@
 <ion-list>
-	<ion-item *ngFor="let item of items || []; trackBy: trackById">
-		<ion-label>{{ item.title }}</ion-label>
-		<ion-spinner name="lines-small" *ngIf="!item.ID" />
-		<ion-buttons slot="end" *ngIf="item.ID">
-			<ion-button title="Delete" (click)="delete(item)">
-				<ion-icon name="close-outline" color="medium" />
-			</ion-button>
-		</ion-buttons>
-	</ion-item>
+	@for (item of items || []; track trackById($index, item)) {
+		<ion-item>
+			<ion-label>{{ item.title }}</ion-label>
+			@if (!item.ID) {
+				<ion-spinner name="lines-small" />
+			}
+			@if (item.ID) {
+				<ion-buttons slot="end">
+					<ion-button title="Delete" (click)="delete(item)">
+						<ion-icon name="close-outline" color="medium" />
+					</ion-button>
+				</ion-buttons>
+			}
+		</ion-item>
+	}
 	<form [formGroup]="addRetroItemForm">
 		<ion-item>
 			<!--suppress AngularUndefinedBinding -->

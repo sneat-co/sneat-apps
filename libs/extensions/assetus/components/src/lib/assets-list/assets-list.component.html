@@ -42,27 +42,24 @@
 						{{ asset.brief.title }}
 					}
 				</ion-label>
-				<ion-badge
-					*ngIf="asset.brief.yearOfBuild && !asset.brief.extra?.['regNumber']"
-					color="light"
-					style="font-weight: normal"
-					>{{ asset.brief.yearOfBuild }}
-				</ion-badge>
-				<ion-badge
-					*ngIf="asset.brief.extra?.['regNumber']"
-					color="light"
-					style="font-weight: normal"
-					>{{ asset.brief.extra?.["regNumber"] }}
-				</ion-badge>
+				@if (asset.brief.yearOfBuild && !asset.brief.extra?.["regNumber"]) {
+					<ion-badge color="light" style="font-weight: normal"
+						>{{ asset.brief.yearOfBuild }}
+					</ion-badge>
+				}
+				@if (asset.brief.extra?.["regNumber"]) {
+					<ion-badge color="light" style="font-weight: normal"
+						>{{ asset.brief.extra?.["regNumber"] }}
+					</ion-badge>
+				}
 				<ion-buttons slot="end">
-					<ion-button
-						(click)="addNewMilesAndFuel($event, asset)"
-						*ngIf="asset.brief.category === 'vehicle'"
-					>
-						<ion-icon name="add" slot="start"></ion-icon>
-						<ion-label>Record miles</ion-label>
-						<!-- <ion-label>Add miles & fuel</ion-label> -->
-					</ion-button>
+					@if (asset.brief.category === "vehicle") {
+						<ion-button (click)="addNewMilesAndFuel($event, asset)">
+							<ion-icon name="add" slot="start"></ion-icon>
+							<ion-label>Record miles</ion-label>
+							<!-- <ion-label>Add miles & fuel</ion-label> -->
+						</ion-button>
+					}
 					<ion-button
 						(click)="delete($event, asset)"
 						[disabled]="deletingIDs.includes(asset.id)"

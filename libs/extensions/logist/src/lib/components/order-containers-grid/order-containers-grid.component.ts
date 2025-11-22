@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -26,7 +25,7 @@ interface IOrderContainerWithIndex extends IOrderContainer {
 @Component({
 	selector: 'sneat-order-containers-grid',
 	templateUrl: './order-containers-grid.component.html',
-	imports: [IonCard, IonCardContent, DataGridComponent, NgIf],
+	imports: [IonCard, IonCardContent, DataGridComponent],
 })
 export class OrderContainersGridComponent implements OnChanges {
 	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);

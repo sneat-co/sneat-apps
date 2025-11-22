@@ -1,4 +1,3 @@
-import { NgForOf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { IonCard, IonCardContent } from '@ionic/angular/standalone';
 import { ISpaceContext } from '@sneat/space-models';
@@ -8,7 +7,7 @@ import { OrderCardComponent } from '../order-card/order-card.component';
 @Component({
 	selector: 'sneat-logist-orders-list',
 	templateUrl: './orders-list.component.html',
-	imports: [OrderCardComponent, NgForOf, IonCard, IonCardContent],
+	imports: [OrderCardComponent, IonCard, IonCardContent],
 })
 export class OrdersListComponent {
 	@Input({ required: true }) space?: ISpaceContext;

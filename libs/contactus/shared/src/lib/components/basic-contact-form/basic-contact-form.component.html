@@ -7,18 +7,20 @@
 	/>
 </ion-item>
 <div class="ion-padding">
-	<ion-button
-		(click)="createContact($event)"
-		[disabled]="isSubmitting"
-		*ngIf="!isCreated"
-	>
-		<ion-label *ngIf="!isSubmitting">Create</ion-label>
-		<ion-label *ngIf="isSubmitting">Creating...</ion-label>
-		<ion-spinner
-			name="lines-small"
-			slot="end"
-			*ngIf="isSubmitting && !isCreated"
-		/>
-	</ion-button>
-	<p *ngIf="isCreated">Created...</p>
+	@if (!isCreated) {
+		<ion-button (click)="createContact($event)" [disabled]="isSubmitting">
+			@if (!isSubmitting) {
+				<ion-label>Create</ion-label>
+			}
+			@if (isSubmitting) {
+				<ion-label>Creating...</ion-label>
+			}
+			@if (isSubmitting && !isCreated) {
+				<ion-spinner name="lines-small" slot="end" />
+			}
+		</ion-button>
+	}
+	@if (isCreated) {
+		<p>Created...</p>
+	}
 </div>

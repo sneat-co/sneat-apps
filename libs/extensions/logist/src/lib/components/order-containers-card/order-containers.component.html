@@ -1,8 +1,10 @@
-<ion-card *ngIf="containers && !containers.length">
-	<ion-item-divider>
-		<ion-label>No container have been added yet</ion-label>
-	</ion-item-divider>
-</ion-card>
+@if (containers && !containers.length) {
+	<ion-card>
+		<ion-item-divider>
+			<ion-label>No container have been added yet</ion-label>
+		</ion-item-divider>
+	</ion-card>
+}
 
 <ion-grid class="ion-grid-layout">
 	<ion-row>
@@ -12,16 +14,18 @@
 				(containerSelected)="onContainerSelected($event)"
 			/>
 		</ion-col>
-		<ion-col *ngIf="selectedContainer" size="9">
-			<ion-card>
-				<sneat-order-container
-					[space]="space"
-					[order]="order"
-					[container]="selectedContainer"
-					[i]="indexOfContainer(selectedContainer)"
-				/>
-			</ion-card>
-		</ion-col>
+		@if (selectedContainer) {
+			<ion-col size="9">
+				<ion-card>
+					<sneat-order-container
+						[space]="space"
+						[order]="order"
+						[container]="selectedContainer"
+						[i]="indexOfContainer(selectedContainer)"
+					/>
+				</ion-card>
+			</ion-col>
+		}
 	</ion-row>
 </ion-grid>
 

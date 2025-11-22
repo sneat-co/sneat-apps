@@ -19,10 +19,12 @@
 		}
 
 		<ion-item tappable (click)="other()">
-			<ion-label color="medium" *ngIf="!isOtherSelected">
-				<ion-icon name="add" />
-				Other provider
-			</ion-label>
+			@if (!isOtherSelected) {
+				<ion-label color="medium">
+					<ion-icon name="add" />
+					Other provider
+				</ion-label>
+			}
 			@if (isOtherSelected) {
 				<ion-input placeholder="Other provider name" />
 			}

@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import {
 	Component,
 	Input,
@@ -32,7 +31,6 @@ import { MileAgeDialogComponent } from '../mileage-dialog/mileage-dialog.compone
 		IonItem,
 		IonSpinner,
 		IonLabel,
-		NgIf,
 		IonButton,
 		IonIcon,
 		IonBadge,

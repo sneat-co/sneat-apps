@@ -1,4 +1,3 @@
-import { NgForOf, NgIf } from '@angular/common';
 import {
 	Component,
 	Input,
@@ -45,12 +44,10 @@ import { TruckerSegmentComponent } from './trucker-segment.component';
 		IonInput,
 		IonButtons,
 		IonButton,
-		NgIf,
 		IonIcon,
 		IonSpinner,
 		IonItemDivider,
 		TruckerSegmentComponent,
-		NgForOf,
 		CountryFlagPipe,
 	],
 })

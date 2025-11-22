@@ -13,48 +13,60 @@
 		<ion-card-header>
 			<ion-card-title> Servers </ion-card-title>
 		</ion-card-header>
-		<ion-list *ngIf="env?.dbServers">
-			<ion-item
-				tappable
-				*ngFor="let server of env?.dbServers || []"
-				(click)="goDbServer(server)"
-			>
-				<ion-label *ngIf="server"
-					>{{ server.driver }}: <b>{{ server.host }}</b></ion-label
-				>
-				<ion-buttons slot="end">
-					<ion-button>Sign in</ion-button>
-				</ion-buttons>
-			</ion-item>
-		</ion-list>
-		<ion-list *ngIf="!env">
-			<ion-item>
-				<ion-skeleton-text style="width: 50%" />
-			</ion-item>
-		</ion-list>
+		@if (env?.dbServers) {
+			<ion-list>
+				@for (server of env?.dbServers || []; track server) {
+					<ion-item tappable (click)="goDbServer(server)">
+						@if (server) {
+							<ion-label
+								>{{ server.driver }}: <b>{{ server.host }}</b></ion-label
+							>
+						}
+						<ion-buttons slot="end">
+							<ion-button>Sign in</ion-button>
+						</ion-buttons>
+					</ion-item>
+				}
+			</ion-list>
+		}
+		@if (!env) {
+			<ion-list>
+				<ion-item>
+					<ion-skeleton-text style="width: 50%" />
+				</ion-item>
+			</ion-list>
+		}
 	</ion-card>
 
 	<ion-card>
 		<ion-card-header>
 			<ion-card-title> DB servers </ion-card-title>
 		</ion-card-header>
-		<ion-list *ngIf="env?.dbServers">
-			<ion-item
-				tappable
-				*ngFor="let dbServer of env?.dbServers || []"
-				(click)="goDbServer(dbServer)"
-			>
-				<ion-label *ngIf="dbServer"
-					>{{ dbServer?.host
-					}}<span *ngIf="dbServer.port">:{{ dbServer.port }}</span></ion-label
-				>
-				<ion-label *ngIf="!dbServer">!dbServer</ion-label>
-			</ion-item>
-		</ion-list>
-		<ion-list *ngIf="!env">
-			<ion-item>
-				<ion-skeleton-text style="width: 50%" />
-			</ion-item>
-		</ion-list>
+		@if (env?.dbServers) {
+			<ion-list>
+				@for (dbServer of env?.dbServers || []; track dbServer) {
+					<ion-item tappable (click)="goDbServer(dbServer)">
+						@if (dbServer) {
+							<ion-label
+								>{{ dbServer?.host }}
+								@if (dbServer.port) {
+									<span>:{{ dbServer.port }}</span>
+								}
+							</ion-label>
+						}
+						@if (!dbServer) {
+							<ion-label>!dbServer</ion-label>
+						}
+					</ion-item>
+				}
+			</ion-list>
+		}
+		@if (!env) {
+			<ion-list>
+				<ion-item>
+					<ion-skeleton-text style="width: 50%" />
+				</ion-item>
+			</ion-list>
+		}
 	</ion-card>
 </ion-content>

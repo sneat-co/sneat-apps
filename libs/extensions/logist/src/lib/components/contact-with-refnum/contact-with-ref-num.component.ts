@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -27,7 +26,6 @@ import { ILogistOrderContext } from '../../dto';
 		IonItem,
 		IonInput,
 		FormsModule,
-		NgIf,
 	],
 })
 export class ContactWithRefNumComponent {

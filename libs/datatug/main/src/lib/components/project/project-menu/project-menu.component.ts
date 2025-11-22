@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -26,7 +25,6 @@ import { ProjectMenuTopComponent } from '../project-menu-top/project-menu-top.co
 		QueriesMenuComponent,
 		IonLabel,
 		IonItem,
-		NgIf,
 		FormsModule,
 	],
 })

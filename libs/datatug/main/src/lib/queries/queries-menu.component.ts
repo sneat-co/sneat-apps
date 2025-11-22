@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -30,7 +29,6 @@ import { QueriesUiService } from './queries-ui.service';
 		IonButton,
 		IonLabel,
 		FormsModule,
-		NgIf,
 	],
 })
 export class QueriesMenuComponent {

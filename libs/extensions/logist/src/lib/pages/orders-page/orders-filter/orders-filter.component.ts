@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -37,7 +36,6 @@ import { IOrdersFilter, OrderDirection } from '../../../dto';
 		FormsModule,
 		IonButtons,
 		IonButton,
-		NgIf,
 		ContactInputComponent,
 		CountryInputComponent,
 		IonGrid,

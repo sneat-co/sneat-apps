@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -47,7 +46,6 @@ import { ActivatedRoute } from '@angular/router';
 		IonItem,
 		IonRadio,
 		IonLabel,
-		NgIf,
 		IonInput,
 		IonSegment,
 		IonSegmentButton,

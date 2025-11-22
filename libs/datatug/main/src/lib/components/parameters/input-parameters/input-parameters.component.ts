@@ -1,4 +1,3 @@
-import { NgForOf, NgIf } from '@angular/common';
 import {
 	Component,
 	EventEmitter,
@@ -31,8 +30,6 @@ import {
 		IonItem,
 		IonInput,
 		IonBadge,
-		NgForOf,
-		NgIf,
 		FormsModule,
 		IonItemDivider,
 		IonText,

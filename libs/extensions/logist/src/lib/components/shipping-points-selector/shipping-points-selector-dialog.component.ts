@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, Input, inject } from '@angular/core';
 import {
 	ModalController,
@@ -30,7 +29,6 @@ import {
 		ShippingPointsSelectorComponent,
 		IonButton,
 		IonLabel,
-		NgIf,
 	],
 })
 export class ShippingPointsSelectorDialogComponent {
