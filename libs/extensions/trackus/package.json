@@ -14,7 +14,7 @@
 		"@sneat/contactus-services": "workspace:*",
 		"@angular/core": "21.0.1",
 		"@angular/forms": "21.0.1",
-		"@ionic/angular": "8.7.10",
+		"@ionic/angular": "8.7.11",
 		"rxjs": "7.8.2",
 		"@angular/common": "21.0.1",
 		"@firebase/firestore": "4.9.2",
