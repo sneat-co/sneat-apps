@@ -97,7 +97,7 @@ importers:
         version: 6.3.0
       '@types/telegram-web-app':
         specifier: ^9.0.0
-        version: 9.1.0
+        version: 9.1.1
       angularx-qrcode:
         specifier: ^21.0.0
         version: 21.0.0(@angular/common@21.0.2(@angular/core@21.0.2(@angular/compiler@21.0.2)(rxjs@7.8.2)(zone.js@0.16.0))(rxjs@7.8.2))(@angular/core@21.0.2(@angular/compiler@21.0.2)(rxjs@7.8.2)(zone.js@0.16.0))
@@ -114,8 +114,8 @@ importers:
         specifier: 8.0.13
         version: 8.0.13
       posthog-js:
-        specifier: 1.298.1
-        version: 1.298.1
+        specifier: 1.299.0
+        version: 1.299.0
       rxjs:
         specifier: 7.8.2
         version: 7.8.2
@@ -4676,8 +4676,8 @@ packages:
   '@types/tabulator-tables@6.3.0':
     resolution: {integrity: sha512-/mQzrThCdSQXc2lz2SUZglIG+vWQ1sb1CEiVxw9SFGKPulaj1543zrL2qABeJIKjKPxcSgmWUyDA9e8CMaI2cQ==}
 
-  '@types/telegram-web-app@9.1.0':
-    resolution: {integrity: sha512-DnDoFTNaKkO7k3QqKD+LBCVTThSbq4rTz/IKBJ9MGWBmjIHpiCrKNAYebRB6cQe76PPTzcbVZA6QZP1WKqyKHQ==}
+  '@types/telegram-web-app@9.1.1':
+    resolution: {integrity: sha512-laSJZRDnab91uvq2yNqJnTGr9wz94IsU+6PCiOiJHMqfYqkN4xEXw+wh7KcfbVr0vtEKZxKvYS9fC4zU3scv9g==}
 
   '@types/tern@0.23.9':
     resolution: {integrity: sha512-ypzHFE/wBzh+BlH6rrBgS5I/Z7RD21pGhZ2rltb/+ZrVM1awdZwjx7hE5XfuYgHWk9uvV5HLZN3SloevCAp3Bw==}
@@ -9156,8 +9156,8 @@ packages:
     resolution: {integrity: sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==}
     engines: {node: ^10 || ^12 || >=14}
 
-  posthog-js@1.298.1:
-    resolution: {integrity: sha512-MynFhC2HO6sg5moUfpkd0s6RzAqcqFX75kjIi4Xrj2Gl0/YQWYvFUgvv8FCpWPKPs2mdvNWYhs+oqJg0BVVHPw==}
+  posthog-js@1.299.0:
+    resolution: {integrity: sha512-euHXKcEqQpRJNWitudVl4/doTJsftgaBDRLNGczt/v3S9N6ppLMzEOmeoqvNhNDIlpxGVlTvSawfw9HeW1r5nA==}
 
   preact@10.26.4:
     resolution: {integrity: sha512-KJhO7LBFTjP71d83trW+Ilnjbo+ySsaAgCfXOXUlmGzJ4ygYPWmysm77yg4emwfmoz3b22yvH5IsVFHbhUaH5w==}
@@ -16061,7 +16061,7 @@ snapshots:
 
   '@types/tabulator-tables@6.3.0': {}
 
-  '@types/telegram-web-app@9.1.0': {}
+  '@types/telegram-web-app@9.1.1': {}
 
   '@types/tern@0.23.9':
     dependencies:
@@ -21436,7 +21436,7 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  posthog-js@1.298.1:
+  posthog-js@1.299.0:
     dependencies:
       '@posthog/core': 1.6.0
       core-js: 3.41.0
