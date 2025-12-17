@@ -120,7 +120,7 @@
 		"angular-eslint": "21.1.0",
 		"autoprefixer": "10.4.23",
 		"cross-env": "^10.0.0",
-		"cypress": "15.7.1",
+		"cypress": "15.8.0",
 		"eslint": "9.39.2",
 		"eslint-config-prettier": "10.1.8",
 		"eslint-plugin-cypress": "5.2.0",
