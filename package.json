@@ -2,7 +2,7 @@
 	"name": "sneat-apps",
 	"version": "0.0.0",
 	"license": "MIT",
-	"packageManager": "pnpm@10.26.0",
+	"packageManager": "pnpm@10.26.1",
 	"scripts": {
 		"nx": "NODE_OPTIONS=--no-deprecation nx",
 		"ng": "nx",
