@@ -124,7 +124,7 @@
 		"cypress": "15.8.2",
 		"eslint": "9.39.2",
 		"eslint-config-prettier": "10.1.8",
-		"eslint-plugin-cypress": "5.2.0",
+		"eslint-plugin-cypress": "5.2.1",
 		"eslint-plugin-json": "4.0.1",
 		"git-describe": "4.1.1",
 		"jest": "30.2.0",
