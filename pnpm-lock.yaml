@@ -114,8 +114,8 @@ importers:
         specifier: 8.0.13
         version: 8.0.13
       posthog-js:
-        specifier: 1.321.2
-        version: 1.321.2
+        specifier: 1.322.0
+        version: 1.322.0
       rxjs:
         specifier: 7.8.2
         version: 7.8.2
@@ -283,8 +283,8 @@ importers:
         specifier: 16.1.1
         version: 16.1.1(postcss@8.5.6)
       postcss-preset-env:
-        specifier: 11.1.0
-        version: 11.1.0(postcss@8.5.6)
+        specifier: 11.1.1
+        version: 11.1.1(postcss@8.5.6)
       postcss-url:
         specifier: 10.1.3
         version: 10.1.3(postcss@8.5.6)
@@ -1519,8 +1519,8 @@ packages:
       '@csstools/css-parser-algorithms': ^4.0.0
       '@csstools/css-tokenizer': ^4.0.0
 
-  '@csstools/postcss-alpha-function@2.0.0':
-    resolution: {integrity: sha512-MZUgpdBcg4vMk3/fal+PF9NagFhgjWlet7dbbNjhyfzsmM/FPO6iHF6M451YEJxkYGqdSJOl5wVZdvg0I2IZaw==}
+  '@csstools/postcss-alpha-function@2.0.1':
+    resolution: {integrity: sha512-kXppoqo6QI4xVjfuRMf/2XSxldYnWELHy5R6Vo/RI8iu2IpE2vY80ZjXFJ0N36yn7zT1ZPuHpiAszpfrIaa2hA==}
     engines: {node: '>=20.19.0'}
     peerDependencies:
       postcss: ^8.4
@@ -3935,8 +3935,8 @@ packages:
   '@posthog/core@1.9.1':
     resolution: {integrity: sha512-kRb1ch2dhQjsAapZmu6V66551IF2LnCbc1rnrQqnR7ArooVyJN9KOPXre16AJ3ObJz2eTfuP7x25BMyS2Y5Exw==}
 
-  '@posthog/types@1.321.2':
-    resolution: {integrity: sha512-nsMeHlVNlTB68JyV3/0+5FDreiTpUCStDH8ZUH/Hfsbw1howyf9a7DyURTwwhXdnyO0DksEFUIX+4IKCJs/H9g==}
+  '@posthog/types@1.322.0':
+    resolution: {integrity: sha512-oaGT0yshq1hdulGXzIYGPmv8TiRPBdNMlrdrAJRTkT+t7LcRRIfNGZ8VCvgXvRAKKfe0KSobl8SkJm+TJ1qX6Q==}
 
   '@protobufjs/aspromise@1.1.2':
     resolution: {integrity: sha512-j+gKExEuLmKwvz3OgROXtrJ2UG2x8Ch2YZUxahh+s1F2HZ+wAceUNLkvy6zKCPVRkU++ZWQrdxsUeQXmcg4uoQ==}
@@ -9144,8 +9144,8 @@ packages:
     peerDependencies:
       postcss: ^8.4
 
-  postcss-preset-env@11.1.0:
-    resolution: {integrity: sha512-Xxa3RTPqyCt/rNWmRP/R6mnVa9flOqU+fYOr4OxWsCZ5qyxQUEmA7kJwT12JQwKJHM97c4b/t2sj4RHvF0JZ5w==}
+  postcss-preset-env@11.1.1:
+    resolution: {integrity: sha512-40TvWF5sqMxGdyiPfskRf4gLcCou3ymNTpSDYD/ZsOKQNzsG2lwhEjNWMGShKvA/p4veR+dRhTYfUfIQ/5gbfg==}
     engines: {node: '>=20.19.0'}
     peerDependencies:
       postcss: ^8.4
@@ -9218,8 +9218,8 @@ packages:
     resolution: {integrity: sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==}
     engines: {node: ^10 || ^12 || >=14}
 
-  posthog-js@1.321.2:
-    resolution: {integrity: sha512-h5852d9lYmSNjKWvjDkrmO9/awUU3jayNBEoEBUuMAdfDPc4yYYdxBJeDBxYnCFm6RjCLy4O+vmcwuCRC67EXA==}
+  posthog-js@1.322.0:
+    resolution: {integrity: sha512-vNNcWp2NpFMX8nqf06uZ49OzGjj9tqh1F25ls9YegXCeCIpT37sYPSFI4GiyQAaunUXd1IR2L5iWK/zGGhVESA==}
 
   powershell-utils@0.1.0:
     resolution: {integrity: sha512-dM0jVuXJPsDN6DvRpea484tCUaMiXWjuCn++HGTqUWzGDjv5tZkEZldAJ/UMlqRYGFrD/etByo4/xOuC/snX2A==}
@@ -13138,7 +13138,7 @@ snapshots:
       '@csstools/css-parser-algorithms': 4.0.0(@csstools/css-tokenizer@4.0.0)
       '@csstools/css-tokenizer': 4.0.0
 
-  '@csstools/postcss-alpha-function@2.0.0(postcss@8.5.6)':
+  '@csstools/postcss-alpha-function@2.0.1(postcss@8.5.6)':
     dependencies:
       '@csstools/css-color-parser': 4.0.0(@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0))(@csstools/css-tokenizer@4.0.0)
       '@csstools/css-parser-algorithms': 4.0.0(@csstools/css-tokenizer@4.0.0)
@@ -16165,7 +16165,7 @@ snapshots:
     dependencies:
       cross-spawn: 7.0.6
 
-  '@posthog/types@1.321.2': {}
+  '@posthog/types@1.322.0': {}
 
   '@protobufjs/aspromise@1.1.2': {}
 
@@ -22255,9 +22255,9 @@ snapshots:
       postcss: 8.5.6
       postcss-value-parser: 4.2.0
 
-  postcss-preset-env@11.1.0(postcss@8.5.6):
+  postcss-preset-env@11.1.1(postcss@8.5.6):
     dependencies:
-      '@csstools/postcss-alpha-function': 2.0.0(postcss@8.5.6)
+      '@csstools/postcss-alpha-function': 2.0.1(postcss@8.5.6)
       '@csstools/postcss-cascade-layers': 6.0.0(postcss@8.5.6)
       '@csstools/postcss-color-function': 5.0.0(postcss@8.5.6)
       '@csstools/postcss-color-function-display-p3-linear': 2.0.0(postcss@8.5.6)
@@ -22400,7 +22400,7 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  posthog-js@1.321.2:
+  posthog-js@1.322.0:
     dependencies:
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/api-logs': 0.208.0
@@ -22408,7 +22408,7 @@ snapshots:
       '@opentelemetry/resources': 2.3.0(@opentelemetry/api@1.9.0)
       '@opentelemetry/sdk-logs': 0.208.0(@opentelemetry/api@1.9.0)
       '@posthog/core': 1.9.1
-      '@posthog/types': 1.321.2
+      '@posthog/types': 1.322.0
       core-js: 3.41.0
       dompurify: 3.3.1
       fflate: 0.4.8
