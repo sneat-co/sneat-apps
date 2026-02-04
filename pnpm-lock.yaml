@@ -114,8 +114,8 @@ importers:
         specifier: 8.0.13
         version: 8.0.13
       posthog-js:
-        specifier: 1.338.0
-        version: 1.338.0
+        specifier: 1.339.1
+        version: 1.339.1
       rxjs:
         specifier: 7.8.2
         version: 7.8.2
@@ -3845,8 +3845,8 @@ packages:
   '@posthog/core@1.19.0':
     resolution: {integrity: sha512-OMcdu5cJcvkle2hw0rpe+1mTOFRlerTHTtZKZFvB8z0hgzbN1WeaGZfGFY5wOq42LVTSxwdUgK1MYERyzG1Epw==}
 
-  '@posthog/types@1.338.0':
-    resolution: {integrity: sha512-OruyKCjjovPUnag0p9CEQ0QeSOKhsd1ztDOcr6mISBeKG7bE+Dg8pR1sBHZKiCdkEurB1RcufvSQyNBTddWLMA==}
+  '@posthog/types@1.339.1':
+    resolution: {integrity: sha512-ZaTIepn8rzKtv/AwdBt24N3ASn9H+98rV9l/yGAPS/Tnwsno8igKcHq1Qoki9io8se58QtLARMcuMa72nzfh3A==}
 
   '@protobufjs/aspromise@1.1.2':
     resolution: {integrity: sha512-j+gKExEuLmKwvz3OgROXtrJ2UG2x8Ch2YZUxahh+s1F2HZ+wAceUNLkvy6zKCPVRkU++ZWQrdxsUeQXmcg4uoQ==}
@@ -9058,8 +9058,8 @@ packages:
     resolution: {integrity: sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==}
     engines: {node: ^10 || ^12 || >=14}
 
-  posthog-js@1.338.0:
-    resolution: {integrity: sha512-Lnoz1YiSh1c3FbmwKYfCCeELHp1MWhYz6b5dEIX2YeDMvUt6xyeVy+MhpiA9xKs0Lbj5kGYk48kGt42qIlqq8A==}
+  posthog-js@1.339.1:
+    resolution: {integrity: sha512-47zqtMT+VtT0xdadyMuOhNmKU6m2dHizYhvGE9ZHffsFjrWbe2Cqq2i0BElNZvdBd4R8TxX+aKu5ZAOyUejQrw==}
 
   powershell-utils@0.1.0:
     resolution: {integrity: sha512-dM0jVuXJPsDN6DvRpea484tCUaMiXWjuCn++HGTqUWzGDjv5tZkEZldAJ/UMlqRYGFrD/etByo4/xOuC/snX2A==}
@@ -15181,7 +15181,7 @@ snapshots:
     dependencies:
       cross-spawn: 7.0.6
 
-  '@posthog/types@1.338.0': {}
+  '@posthog/types@1.339.1': {}
 
   '@protobufjs/aspromise@1.1.2': {}
 
@@ -21158,7 +21158,7 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  posthog-js@1.338.0:
+  posthog-js@1.339.1:
     dependencies:
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/api-logs': 0.208.0
@@ -21166,7 +21166,7 @@ snapshots:
       '@opentelemetry/resources': 2.3.0(@opentelemetry/api@1.9.0)
       '@opentelemetry/sdk-logs': 0.208.0(@opentelemetry/api@1.9.0)
       '@posthog/core': 1.19.0
-      '@posthog/types': 1.338.0
+      '@posthog/types': 1.339.1
       core-js: 3.41.0
       dompurify: 3.3.1
       fflate: 0.4.8
