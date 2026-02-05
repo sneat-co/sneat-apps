@@ -155,31 +155,6 @@
 			}
 		},
 		"e2e": {
-			"executor": "@nx/cypress:cypress",
-			"options": {
-				"cypressConfig": "apps/sneat-app/cypress.config.ts",
-				"testingType": "e2e",
-				"devServerTarget": "sneat-app:serve",
-				"port": "cypress-auto"
-			},
-			"configurations": {
-				"development": {
-					"devServerTarget": "sneat-app:serve:e2e-development"
-				},
-				"production": {
-					"devServerTarget": "sneat-app:serve:e2e-production"
-				}
-			}
-		},
-		"e2e-ci": {
-			"executor": "@nx/cypress:cypress",
-			"options": {
-				"cypressConfig": "apps/sneat-app/cypress.config.ts",
-				"testingType": "e2e",
-				"skipServe": true
-			}
-		},
-		"e2e-playwright": {
 			"executor": "nx:run-commands",
 			"options": {
 				"command": "npx playwright test",
@@ -189,11 +164,24 @@
 				"development": {
 					"command": "npx playwright test --project=chromium"
 				},
+				"production": {
+					"command": "npx playwright test --project=chromium"
+				},
 				"debug": {
 					"command": "npx playwright test --debug --project=chromium"
 				},
 				"ui": {
 					"command": "npx playwright test --ui --project=chromium"
+				}
+			}
+		},
+		"e2e-ci": {
+			"executor": "nx:run-commands",
+			"options": {
+				"command": "npx playwright test",
+				"cwd": ".",
+				"env": {
+					"CI": "1"
 				}
 			}
 		}

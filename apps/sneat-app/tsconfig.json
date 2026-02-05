@@ -5,7 +5,6 @@
 	"references": [
 		{ "path": "./tsconfig.app.json" },
 		{ "path": "./tsconfig.spec.json" },
-		{ "path": "./tsconfig.editor.json" },
-		{ "path": "./cypress/tsconfig.json" }
+		{ "path": "./tsconfig.editor.json" }
 	]
 }

@@ -13,20 +13,20 @@ This directory contains end-to-end tests using Playwright, which have been migra
 
 You can run the Playwright tests using the following commands:
 
-### Using pnx (PNPM)
+### Using Nx (pnx/PNPM)
 
 ```bash
 # Run all tests
-pnx run sneat-app:e2e-playwright
+pnx run sneat-app:e2e
 
 # Run in development mode (chromium only)
-pnx run sneat-app:e2e-playwright:development
+pnx run sneat-app:e2e:development
 
 # Run in debug mode
-pnx run sneat-app:e2e-playwright:debug
+pnx run sneat-app:e2e:debug
 
 # Run with UI mode
-pnx run sneat-app:e2e-playwright:ui
+pnx run sneat-app:e2e:ui
 ```
 
 ### Using Playwright CLI directly
@@ -67,6 +67,6 @@ The Playwright configuration is in `playwright.config.ts` at the root of the pro
 
 These tests were migrated from Cypress tests that were previously in:
 
-- `/apps/sneat-app/cypress/e2e/`
+- `/apps/sneat-app/cypress/e2e/` (removed)
 
 The migration preserves the same test coverage while taking advantage of Playwright's features.

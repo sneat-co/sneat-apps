@@ -1,13 +1,15 @@
 import { test, expect } from '@playwright/test';
 import { MOCK_USER_EMAIL, MOCK_USER_PASS } from '../common/fixtures';
 import {
+	createUser,
 	deleteAllAuthUsers,
+	initializeFirebaseEmulators,
 	loginViaUI,
 	signUpViaUI,
 	isAuthEmulatorAvailable,
 } from '../common/firebase-helpers';
 
-test.describe.skip('Email Auth', () => {
+test.describe('Email Auth', () => {
 	test.beforeAll(async () => {
 		const available = await isAuthEmulatorAvailable();
 		test.skip(
@@ -34,19 +36,13 @@ test.describe.skip('Email Auth', () => {
 	});
 
 	test.describe('Sign In/Out', () => {
+		test.beforeAll(async () => {
+			await initializeFirebaseEmulators();
+		});
+
 		test('should sign user in', async ({ page }) => {
+			await createUser(MOCK_USER_EMAIL, MOCK_USER_PASS);
 			await page.goto('/');
-
-			// Ensure user exists by signing up via UI first (idempotent for our demo environment)
-			await signUpViaUI(page, MOCK_USER_EMAIL, 'Test', 'Name');
-
-			// Sign out to test sign-in flow
-			await page.locator('ion-button[title="Sign-out"]').click();
-			await expect(
-				page.locator(
-					'sneat-auth-menu-item ion-item ion-label:has-text("Please sign in")',
-				),
-			).toBeVisible();
 
 			// Now sign in
 			await loginViaUI(page, MOCK_USER_EMAIL, MOCK_USER_PASS);
@@ -65,10 +61,11 @@ test.describe.skip('Email Auth', () => {
 		});
 
 		test('should user sign out', async ({ page }) => {
+			await createUser(MOCK_USER_EMAIL, MOCK_USER_PASS);
 			await page.goto('/');
 
-			// Ensure user exists and is signed in
-			await signUpViaUI(page, MOCK_USER_EMAIL, 'Test', 'Name');
+			// Sign in
+			await loginViaUI(page, MOCK_USER_EMAIL, MOCK_USER_PASS);
 
 			// Verify new space button is visible
 			await expect(

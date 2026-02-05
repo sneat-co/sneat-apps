@@ -54,45 +54,6 @@ jobs:
 
 
 
-    e2e-cypress:
-        #        needs: pnpm-cache
-        runs-on: ubuntu-latest
-        env:
-            GCLOUD_PROJECT: demo-local-sneat-app
-            FIREBASE_AUTH_EMULATOR_HOST: 127.0.0.1:9099
-            FIRESTORE_EMULATOR_HOST: 127.0.0.1:8080
-
-        steps:
-            -   name: Checkout repository
-                uses: actions/checkout@v6
-                with:
-                    fetch-depth: 0
-
-            -   uses: ./.github/actions/pnpm
-
-            -   uses: sneat-co/sneat-go-server@main
-
-            -   name: Install latest Chrome
-                uses: browser-actions/setup-chrome@v2
-                with:
-                    chrome-version: latest
-
-            -   uses: sneat-co/sneat-firebase@main
-
-            -   uses: ./.github/actions/pnpm
-
-            -   name: Build and serve application
-                run: |
-                    pnpm run cy:serve:ci &
-                    sleep 5
-
-    #            -   name: Run e2e tests
-    #                uses: cypress-io/github-action@v6
-    #                with:
-    #                    command: pnpm run cy:test:ci
-    #                    wait-on: 'http://localhost:4205'
-    #                    wait-on-timeout: 120
-
     e2e-playwright:
         name: Playwright tests
         timeout-minutes: 60
