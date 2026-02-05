@@ -6,12 +6,12 @@
 	"prefix": "sneat",
 	"targets": {
 		"build": {
-			"executor": "@angular-devkit/build-angular:browser",
+			"executor": "@angular-devkit/build-angular:application",
 			"outputs": ["{options.outputPath}"],
 			"options": {
 				"outputPath": "dist/apps/logist-app",
 				"index": "apps/logist-app/src/index.html",
-				"main": "apps/logist-app/src/main.ts",
+				"browser": "apps/logist-app/src/main.ts",
 				"polyfills": ["zone.js"],
 				"allowedCommonJsDependencies": ["qrcode"],
 				"tsConfig": "apps/logist-app/tsconfig.app.json",
@@ -51,9 +51,7 @@
 					"outputHashing": "all"
 				},
 				"development": {
-					"buildOptimizer": false,
 					"optimization": false,
-					"vendorChunk": true,
 					"extractLicenses": false,
 					"sourceMap": true,
 					"namedChunks": true
