@@ -62,42 +62,42 @@
 						}
 					]
 				},
-			"e2e-development": {
-				"optimization": false,
-				"outputHashing": "all",
-				"sourceMap": true,
-				"namedChunks": true,
-				"aot": true,
-				"extractLicenses": false,
-				"fileReplacements": [
+				"e2e-development": {
+					"optimization": false,
+					"outputHashing": "all",
+					"sourceMap": true,
+					"namedChunks": true,
+					"aot": true,
+					"extractLicenses": false,
+					"fileReplacements": [
 						{
 							"replace": "libs/app/src/environments/environment.ts",
 							"with": "libs/app/src/environments/environment.e2e.ts"
 						}
 					]
 				},
-			"e2e-production": {
-				"optimization": true,
-				"outputHashing": "all",
-				"sourceMap": false,
-				"namedChunks": false,
-				"aot": true,
-				"extractLicenses": true,
-				"fileReplacements": [
+				"e2e-production": {
+					"optimization": true,
+					"outputHashing": "all",
+					"sourceMap": false,
+					"namedChunks": false,
+					"aot": true,
+					"extractLicenses": true,
+					"fileReplacements": [
 						{
 							"replace": "libs/app/src/environments/environment.ts",
 							"with": "libs/app/src/environments/environment.e2e.ts"
 						}
 					]
 				},
-			"e2e-ci": {
-				"optimization": true,
-				"outputHashing": "all",
-				"sourceMap": false,
-				"namedChunks": false,
-				"aot": true,
-				"extractLicenses": true,
-				"fileReplacements": [
+				"e2e-ci": {
+					"optimization": true,
+					"outputHashing": "all",
+					"sourceMap": false,
+					"namedChunks": false,
+					"aot": true,
+					"extractLicenses": true,
+					"fileReplacements": [
 						{
 							"replace": "libs/app/src/environments/environment.ts",
 							"with": "libs/app/src/environments/environment.ci.ts"
