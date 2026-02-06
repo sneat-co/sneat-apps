@@ -12,7 +12,7 @@ import { SneatAppComponent } from './app/sneat-app.component';
 import { provideRouter } from '@angular/router';
 import { sneatAppEnvironmentConfig } from './environments/environment';
 import { registerIonicons } from './register-ionicons';
-
+//
 bootstrapApplication(SneatAppComponent, {
 	providers: [
 		...getStandardSneatProviders(sneatAppEnvironmentConfig),
