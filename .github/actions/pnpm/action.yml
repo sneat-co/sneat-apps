@@ -8,9 +8,9 @@ runs:
         -   run: git rev-parse HEAD
             shell: sh
 
-#        -   run: git rev-parse HEAD~1
-#            continue-on-error: true
-#            shell: sh
+        #        -   run: git rev-parse HEAD~1
+        #            continue-on-error: true
+        #            shell: sh
 
         -   name: Setup pnpm
             uses: pnpm/action-setup@v4 # Use the official pnpm setup action
@@ -19,7 +19,7 @@ runs:
             uses: actions/setup-node@v6
             with:
                 cache: 'pnpm'
-        #                node-version: '22'
+                node-version: '22'
 
         #        -   name: Set up PNPM (corepack)
         #            id: pnpm-setup
@@ -42,22 +42,6 @@ runs:
 
         -   run: pnpm --version
             shell: sh
-
-        -   name: Get pnpm store directory
-            id: pnpm-cache
-            shell: sh
-            run: |
-                echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-        -   name: Cache PNPM store directory
-            uses: actions/cache@v5
-            with:
-                # noinspection Annotator
-                path: |
-                    ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-                key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-                restore-keys: |
-                    ${{ runner.os }}-pnpm-store-
 
         -   name: Install dependencies
             run: pnpm install
