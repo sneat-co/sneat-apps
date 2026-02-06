@@ -52,7 +52,6 @@ jobs:
                 # BE AWARE: Adding PARALLEL options may cause build to pass when it should have been failed
                 run: pnpm run nx affected --target=build,lint --base=${{ env.NX_BASE }} --parallel=8
 
-
             -   uses: sneat-co/sneat-firebase@main
 
             -   name: Install Playwright Browsers
