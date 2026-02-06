@@ -67,6 +67,8 @@ jobs:
                 with:
                     node-version: lts/*
 
+            -   uses: sneat-co/sneat-firebase@main
+
             -   name: Install Playwright Browsers
                 run: pnpm exec playwright install chromium --with-deps
 
