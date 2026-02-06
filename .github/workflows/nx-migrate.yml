@@ -21,12 +21,12 @@ jobs:
             #        with:
             #          git_bot_token: ${{ secrets.GIT_BOT_TOKEN }}
 
-#            -   name: Check if @nx/workspace is outdated
-#                id: nx-workspace-outdated
-#                run: |
-#                    IS_OUTDATED=$(test ! -z "$(npm outdated @nx/workspace)" && echo true || echo false)
-#                    echo "IS_OUTDATED=$IS_OUTDATED"
-#                    echo "is_changed=$IS_OUTDATED" >> $GITHUB_OUTPUT
+            #            -   name: Check if @nx/workspace is outdated
+            #                id: nx-workspace-outdated
+            #                run: |
+            #                    IS_OUTDATED=$(test ! -z "$(npm outdated @nx/workspace)" && echo true || echo false)
+            #                    echo "IS_OUTDATED=$IS_OUTDATED"
+            #                    echo "is_changed=$IS_OUTDATED" >> $GITHUB_OUTPUT
 
             -   name: Remove migrations.json if exists
                 # we delete if migrations.json exists - might be accidentally checked-in by a developer or by previous run
@@ -77,7 +77,7 @@ jobs:
                 uses: ad-m/github-push-action@master
                 with:
                     github_token: ${{ secrets.GITHUB_TOKEN }}
-                    branch: ${{ github.ref }}
+                    branch: "ci/nx-migrate-latest"
                     force: true
                     tags: true
 
@@ -87,7 +87,7 @@ jobs:
                     GH_TOKEN: ${{ github.token }}
                 run: |
                     LAST_VERSION=$(npm view @nx/workspace version)
-                    BRANCH="renovate/nx-migrate-to-${LAST_VERSION}"
+                    BRANCH="ci/nx-migrate-latest"
                     git checkout -b ${BRANCH}
                     git push -f --set-upstream origin ${BRANCH}
                     gh pr view ${BRANCH} || gh pr create -t "Update @nx/workspace to ${BRANCH}" -b "Update @nx/workspace dependencies to ${LAST_VERSION}."
