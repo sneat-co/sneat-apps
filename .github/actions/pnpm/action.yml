@@ -8,9 +8,9 @@ runs:
         -   run: git rev-parse HEAD
             shell: sh
 
-        -   run: git rev-parse HEAD~1
-            continue-on-error: true
-            shell: sh
+#        -   run: git rev-parse HEAD~1
+#            continue-on-error: true
+#            shell: sh
 
         -   name: Setup pnpm
             uses: pnpm/action-setup@v4 # Use the official pnpm setup action
