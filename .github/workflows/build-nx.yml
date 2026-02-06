@@ -74,6 +74,8 @@ jobs:
 
             -   name: Run Playwright tests
                 run: pnpm exec playwright test
+                env:
+                    NODE_OPTIONS: "--no-deprecation nx"
 
             -   uses: actions/upload-artifact@v6
                 if: always()
