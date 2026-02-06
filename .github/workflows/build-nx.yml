@@ -27,6 +27,12 @@ jobs:
             -   name: Checkout repository
                 uses: actions/checkout@v6
                 with:
+                    # TODO: document why we need `fetch-depth` and check if it can be 2
+                    # currently it fails with:
+                    # pnpm run nx affected --target=build,lint --base=ea7a47aa562a54bea8e4be5237e603f1d5e5e196 --parallel=8
+                    # NX   Command failed: git diff --name-only --no-renames --relative "ea7a47aa562a54bea8e4be5237e603f1d5e5e196" "84733ee7b6cdce9397f6fc2cb4877184e4ad6432"
+                    # fatal: bad object ea7a47aa562a54bea8e4be5237e603f1d5e5e196
+                    # Error: Process completed with exit code 1.
                     fetch-depth: 0
 
             -   uses: ./.github/actions/pnpm
