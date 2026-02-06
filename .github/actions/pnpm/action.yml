@@ -19,7 +19,7 @@ runs:
             uses: actions/setup-node@v6
             with:
                 cache: 'pnpm'
-                node-version: '22'
+                node-version: '24'
 
         #        -   name: Set up PNPM (corepack)
         #            id: pnpm-setup
