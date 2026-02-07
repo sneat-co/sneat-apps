@@ -1,14 +1,30 @@
 import { TestBed } from '@angular/core/testing';
 import { SpaceService } from '@sneat/space-services';
-
 import { MemberService } from './member.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { Firestore } from '@angular/fire/firestore';
+import { SneatApiService } from '@sneat/api';
+import { of } from 'rxjs';
+import { ContactusSpaceService } from './contactus-space.service';
+import { SneatUserService } from '@sneat/auth-core';
+
+jest.mock('@angular/fire/firestore', () => ({
+	...jest.requireActual('@angular/fire/firestore'),
+	collection: jest.fn().mockReturnValue({}),
+}));
 
 describe('MemberService', () => {
 	beforeEach(() =>
 		TestBed.configureTestingModule({
 			imports: [HttpClientTestingModule],
-			providers: [SpaceService],
+			providers: [
+				MemberService,
+				{ provide: SpaceService, useValue: { team$: of() } },
+				{ provide: Firestore, useValue: { type: 'firestore' } },
+				{ provide: SneatApiService, useValue: {} },
+				{ provide: ContactusSpaceService, useValue: {} },
+				{ provide: SneatUserService, useValue: {} },
+			],
 		}),
 	);
 

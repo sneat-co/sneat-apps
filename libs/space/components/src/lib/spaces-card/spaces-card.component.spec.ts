@@ -3,7 +3,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { SpacesCardComponent } from './spaces-card.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { UserService } from '../../../services/user-service';
+import { SneatUserService } from '@sneat/auth-core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { SpaceService } from '@sneat/space-services';
 
@@ -13,11 +13,14 @@ describe('SpacesCardComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [SpacesCardComponent, 
+			imports: [
+				SpacesCardComponent,
 				IonicModule.forRoot(),
 				RouterTestingModule,
-				HttpClientTestingModule],
-			providers: [SpaceService, UserService]}).compileComponents();
+				HttpClientTestingModule,
+			],
+			providers: [SpaceService, UserService],
+		}).compileComponents();
 
 		fixture = TestBed.createComponent(SpacesCardComponent);
 		component = fixture.componentInstance;
