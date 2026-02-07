@@ -22,10 +22,9 @@
 			"defaultConfiguration": "production"
 		},
 		"test": {
-			"executor": "@nx/jest:jest",
+			"executor": "@nx/vitest:test",
 			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
 			"options": {
-				"jestConfig": "libs/datatug/main/jest.config.ts",
 				"tsConfig": "libs/datatug/main/tsconfig.spec.json"
 			}
 		},

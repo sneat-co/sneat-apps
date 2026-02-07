@@ -1,4 +1,4 @@
-import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone';
+import '@analogjs/vitest-angular/setup-zone';
 
 if (!global.fetch) {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -11,4 +11,4 @@ if (!global.fetch) {
 	(global as any).Headers = class {};
 }
 
-setupZoneTestEnv();
+

@@ -21,10 +21,9 @@
 			"defaultConfiguration": "production"
 		},
 		"test": {
-			"executor": "@nx/jest:jest",
+			"executor": "@nx/vitest:test",
 			"outputs": ["{workspaceRoot}/coverage/libs/user"],
 			"options": {
-				"jestConfig": "libs/user/jest.config.ts",
 				"tsConfig": "libs/user/tsconfig.spec.json"
 			}
 		},

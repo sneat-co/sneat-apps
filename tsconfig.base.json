@@ -7,7 +7,7 @@
 		"declaration": false,
 		"target": "esnext",
 		"module": "esnext",
-		"moduleResolution": "node",
+		"moduleResolution": "bundler",
 		"incremental": true,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
@@ -25,34 +25,6 @@
 		"skipLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
-			"@angular/core/testing": [
-				"node_modules/@angular/core/types/testing.d.ts"
-			],
-			"@angular/common/testing": [
-				"node_modules/@angular/common/types/testing.d.ts"
-			],
-			"@angular/common/http": ["node_modules/@angular/common/types/http.d.ts"],
-			"@angular/common/http/testing": [
-				"node_modules/@angular/common/types/http-testing.d.ts"
-			],
-			"@angular/router/testing": [
-				"node_modules/@angular/router/types/testing.d.ts"
-			],
-			"@angular/platform-browser/testing": [
-				"node_modules/@angular/platform-browser/types/testing.d.ts"
-			],
-			"@angular/platform-browser-dynamic/testing": [
-				"node_modules/@angular/platform-browser-dynamic/types/testing.d.ts"
-			],
-			"@angular/forms/testing": [
-				"node_modules/@angular/forms/types/testing.d.ts"
-			],
-			"@angular/platform-browser/animations": [
-				"node_modules/@angular/platform-browser/types/animations.d.ts"
-			],
-			"@angular/platform-browser/animations/async": [
-				"node_modules/@angular/platform-browser/types/animations-async.d.ts"
-			],
 			"@sneat/app": ["libs/app/src/index.ts"],
 			"@sneat/api": ["libs/api/src/index.ts"],
 			"@sneat/auth-core": ["libs/auth/core/src/index.ts"],

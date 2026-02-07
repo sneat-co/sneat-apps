@@ -21,10 +21,9 @@
 			"defaultConfiguration": "production"
 		},
 		"test": {
-			"executor": "@nx/jest:jest",
+			"executor": "@nx/vitest:test",
 			"outputs": ["{workspaceRoot}/coverage/libs/timer"],
 			"options": {
-				"jestConfig": "libs/timer/jest.config.ts",
 				"tsConfig": "libs/timer/tsconfig.spec.json"
 			}
 		},

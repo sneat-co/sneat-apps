@@ -8,9 +8,9 @@ import { of } from 'rxjs';
 import { ContactusSpaceService } from './contactus-space.service';
 import { SneatUserService } from '@sneat/auth-core';
 
-jest.mock('@angular/fire/firestore', () => ({
+vi.mock('@angular/fire/firestore', () => ({
 	...jest.requireActual('@angular/fire/firestore'),
-	collection: jest.fn().mockReturnValue({}),
+	collection: vi.fn().mockReturnValue({}),
 }));
 
 describe('MemberService', () => {

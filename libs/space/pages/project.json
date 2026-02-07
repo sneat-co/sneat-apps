@@ -21,11 +21,10 @@
 			"defaultConfiguration": "production"
 		},
 		"test": {
-			"executor": "@nx/jest:jest",
-			"outputs": ["{workspaceRoot}/coverage/libs/space/pages"],
+			"executor": "@nx/vitest:test",
+			"outputs": ["{options.reportsDirectory}"],
 			"options": {
-				"jestConfig": "libs/space/pages/jest.config.ts",
-				"tsConfig": "libs/space/pages/tsconfig.spec.json"
+				"reportsDirectory": "../../../coverage/libs/space/pages"
 			}
 		},
 		"lint": {

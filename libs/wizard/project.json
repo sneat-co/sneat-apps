@@ -21,11 +21,10 @@
 			"defaultConfiguration": "production"
 		},
 		"test": {
-			"executor": "@nx/jest:jest",
-			"outputs": ["{workspaceRoot}/coverage/libs/wizard"],
+			"executor": "@nx/vitest:test",
+			"outputs": ["{options.reportsDirectory}"],
 			"options": {
-				"jestConfig": "libs/wizard/jest.config.ts",
-				"tsConfig": "libs/wizard/tsconfig.spec.json"
+				"reportsDirectory": "../../coverage/libs/wizard"
 			}
 		},
 		"lint": {

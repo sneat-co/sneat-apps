@@ -21,11 +21,10 @@
 			"defaultConfiguration": "production"
 		},
 		"test": {
-			"executor": "@nx/jest:jest",
-			"outputs": ["{workspaceRoot}/coverage/libs/auth/ui"],
+			"executor": "@nx/vitest:test",
+			"outputs": ["{options.reportsDirectory}"],
 			"options": {
-				"jestConfig": "libs/auth/ui/jest.config.ts",
-				"tsConfig": "libs/auth/ui/tsconfig.spec.json"
+				"reportsDirectory": "../../../coverage/libs/auth/ui"
 			}
 		},
 		"lint": {

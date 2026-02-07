@@ -24,7 +24,6 @@
 		"@sneat/space-models": "*",
 		"@sneat/wormhole": "*",
 		"@sneat/random": "*",
-		"jest-preset-angular": "*"
 	},
 	"sideEffects": false
 }

@@ -21,15 +21,21 @@
 			"defaultConfiguration": "production"
 		},
 		"test": {
-			"executor": "@nx/jest:jest",
+			"executor": "@nx/vitest:test",
 			"outputs": ["{workspaceRoot}/coverage/libs/core"],
 			"options": {
-				"jestConfig": "libs/core/jest.config.ts",
 				"tsConfig": "libs/core/tsconfig.spec.json"
 			}
 		},
 		"lint": {
 			"executor": "@nx/eslint:lint"
+		},
+		"vitest": {
+			"executor": "@nx/vitest:test",
+			"outputs": ["{options.reportsDirectory}"],
+			"options": {
+				"reportsDirectory": "../../coverage/libs/core"
+			}
 		}
 	}
 }

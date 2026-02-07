@@ -21,10 +21,9 @@
 			"defaultConfiguration": "production"
 		},
 		"test": {
-			"executor": "@nx/jest:jest",
+			"executor": "@nx/vitest:test",
 			"outputs": ["{workspaceRoot}/coverage/libs/dto"],
 			"options": {
-				"jestConfig": "libs/dto/jest.config.ts",
 				"tsConfig": "libs/dto/tsconfig.spec.json"
 			}
 		},

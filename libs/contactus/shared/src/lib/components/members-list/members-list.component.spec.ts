@@ -40,7 +40,7 @@ describe('MembersListComponent', () => {
 				{ provide: SpaceNavService, useValue: {} },
 				{ provide: NavController, useValue: {} },
 				{ provide: SneatUserService, useValue: { userState: of({}) } },
-				{ provide: ContactService, useValue: { setContactsStatus: jest.fn() } },
+				{ provide: ContactService, useValue: { setContactsStatus: vi.fn() } },
 				{ provide: ScheduleNavService, useValue: {} },
 				{ provide: ModalController, useValue: {} },
 				{ provide: IonRouterOutlet, useValue: {} },
@@ -48,8 +48,8 @@ describe('MembersListComponent', () => {
 				{
 					provide: ErrorLogger,
 					useValue: {
-						logError: jest.fn(),
-						logErrorHandler: jest.fn(() => jest.fn()),
+						logError: vi.fn(),
+						logErrorHandler: jest.fn(() => vi.fn()),
 					},
 				},
 			],

@@ -48,15 +48,15 @@ describe('SpacesCardComponent', () => {
 				{
 					provide: ErrorLogger,
 					useValue: {
-						logError: jest.fn(),
-						logErrorHandler: jest.fn(() => jest.fn()),
+						logError: vi.fn(),
+						logErrorHandler: jest.fn(() => vi.fn()),
 					},
 				},
-				{ provide: AnalyticsService, useValue: { logEvent: jest.fn() } },
+				{ provide: AnalyticsService, useValue: { logEvent: vi.fn() } },
 				{
 					provide: ionic.ToastController,
 					useValue: {
-						create: jest.fn().mockResolvedValue({ present: jest.fn() }),
+						create: vi.fn().mockResolvedValue({ present: vi.fn() }),
 					},
 				},
 			],

@@ -21,10 +21,9 @@
 			"defaultConfiguration": "production"
 		},
 		"test": {
-			"executor": "@nx/jest:jest",
+			"executor": "@nx/vitest:test",
 			"outputs": ["{workspaceRoot}/coverage/libs/extensions/schedulus/shared"],
 			"options": {
-				"jestConfig": "libs/extensions/schedulus/shared/jest.config.ts",
 				"tsConfig": "libs/extensions/schedulus/shared/tsconfig.spec.json"
 			}
 		},

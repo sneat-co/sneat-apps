@@ -21,10 +21,9 @@
 			"defaultConfiguration": "production"
 		},
 		"test": {
-			"executor": "@nx/jest:jest",
+			"executor": "@nx/vitest:test",
 			"outputs": ["{workspaceRoot}/coverage/libs/extensions/budgetus"],
 			"options": {
-				"jestConfig": "libs/extensions/budgetus/jest.config.ts",
 				"tsConfig": "libs/extensions/budgetus/tsconfig.spec.json"
 			}
 		},

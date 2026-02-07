@@ -21,10 +21,9 @@
 			"defaultConfiguration": "production"
 		},
 		"test": {
-			"executor": "@nx/jest:jest",
+			"executor": "@nx/vitest:test",
 			"outputs": ["{workspaceRoot}/coverage/libs/datetime"],
 			"options": {
-				"jestConfig": "libs/datetime/jest.config.ts",
 				"tsConfig": "libs/datetime/tsconfig.spec.json"
 			}
 		},

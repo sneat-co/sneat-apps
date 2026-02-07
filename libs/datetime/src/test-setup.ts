@@ -1,1 +1,1 @@
-import 'jest-preset-angular';
+import '@analogjs/vitest-angular/setup-zone';

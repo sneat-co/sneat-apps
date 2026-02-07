@@ -22,10 +22,9 @@
 			"defaultConfiguration": "production"
 		},
 		"test": {
-			"executor": "@nx/jest:jest",
+			"executor": "@nx/vitest:test",
 			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
 			"options": {
-				"jestConfig": "libs/contactus/shared/jest.config.ts",
 				"tsConfig": "libs/contactus/shared/tsconfig.spec.json"
 			}
 		},

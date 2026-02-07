@@ -82,11 +82,10 @@
 			"executor": "@nx/eslint:lint"
 		},
 		"test": {
-			"executor": "@nx/jest:jest",
-			"outputs": ["{workspaceRoot}/coverage/apps/datatug-app"],
+			"executor": "@nx/vitest:test",
+			"outputs": ["{options.reportsDirectory}"],
 			"options": {
-				"jestConfig": "apps/datatug-app/jest.config.ts",
-				"tsConfig": "apps/datatug-app/tsconfig.spec.json"
+				"reportsDirectory": "../../coverage/apps/datatug-app"
 			}
 		}
 	}

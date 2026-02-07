@@ -61,13 +61,13 @@ describe('ContactRoleFormComponent', () => {
 			providers: [
 				{
 					provide: ContactGroupService,
-					useValue: { getContactGroups: jest.fn().mockReturnValue(of([])) },
+					useValue: { getContactGroups: vi.fn().mockReturnValue(of([])) },
 				},
 				{
 					provide: ErrorLogger,
 					useValue: {
-						logError: jest.fn(),
-						logErrorHandler: jest.fn(() => jest.fn()),
+						logError: vi.fn(),
+						logErrorHandler: jest.fn(() => vi.fn()),
 					},
 				},
 			],

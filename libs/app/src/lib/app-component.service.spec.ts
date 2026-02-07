@@ -13,9 +13,9 @@ describe('AppComponentService', () => {
 				AppComponentService,
 				{
 					provide: Platform,
-					useValue: { ready: jest.fn().mockResolvedValue('') },
+					useValue: { ready: vi.fn().mockResolvedValue('') },
 				},
-				{ provide: ErrorLogger, useValue: { logError: jest.fn() } },
+				{ provide: ErrorLogger, useValue: { logError: vi.fn() } },
 			],
 		});
 		service = TestBed.inject(AppComponentService);

@@ -35,10 +35,9 @@
 			}
 		},
 		"test": {
-			"executor": "@nx/jest:jest",
+			"executor": "@nx/vitest:test",
 			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
 			"options": {
-				"jestConfig": "libs/extensions/trackus/jest.config.ts",
 				"tsConfig": "libs/extensions/trackus/tsconfig.spec.json"
 			}
 		},

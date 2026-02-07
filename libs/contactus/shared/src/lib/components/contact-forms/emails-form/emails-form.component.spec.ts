@@ -69,8 +69,8 @@ describe('EmailsFormComponent', () => {
 				{
 					provide: ErrorLogger,
 					useValue: {
-						logError: jest.fn(),
-						logErrorHandler: jest.fn(() => jest.fn()),
+						logError: vi.fn(),
+						logErrorHandler: jest.fn(() => vi.fn()),
 					},
 				},
 			],

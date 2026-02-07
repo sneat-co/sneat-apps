@@ -82,10 +82,9 @@
 			"executor": "@nx/eslint:lint"
 		},
 		"test": {
-			"executor": "@nx/jest:jest",
+			"executor": "@nx/vitest:test",
 			"outputs": ["{workspaceRoot}/coverage/apps/logist-app"],
 			"options": {
-				"jestConfig": "apps/logist-app/jest.config.ts",
 				"tsConfig": "apps/logist-app/tsconfig.spec.json"
 			}
 		}

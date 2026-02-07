@@ -1,6 +1,14 @@
-import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone';
+import '@analogjs/vitest-angular/setup-zone';
+import { TestBed } from '@angular/core/testing';
+import {
+	BrowserDynamicTestingModule,
+	platformBrowserDynamicTesting,
+} from '@angular/platform-browser-dynamic/testing';
 
-setupZoneTestEnv();
+TestBed.initTestEnvironment(
+	BrowserDynamicTestingModule,
+	platformBrowserDynamicTesting(),
+);
 
 if (!global.fetch) {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any

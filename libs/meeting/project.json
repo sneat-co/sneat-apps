@@ -21,10 +21,9 @@
 			"defaultConfiguration": "production"
 		},
 		"test": {
-			"executor": "@nx/jest:jest",
+			"executor": "@nx/vitest:test",
 			"outputs": ["{workspaceRoot}/coverage/libs/meeting"],
 			"options": {
-				"jestConfig": "libs/meeting/jest.config.ts",
 				"tsConfig": "libs/meeting/tsconfig.spec.json"
 			}
 		},

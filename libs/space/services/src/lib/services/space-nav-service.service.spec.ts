@@ -12,14 +12,14 @@ describe('SpaceNavService', () => {
 			providers: [
 				SpaceNavService,
 				provideRouter([]),
-				{ provide: ErrorLogger, useValue: { logError: jest.fn() } },
-				{ provide: AnalyticsService, useValue: { logEvent: jest.fn() } },
+				{ provide: ErrorLogger, useValue: { logError: vi.fn() } },
+				{ provide: AnalyticsService, useValue: { logEvent: vi.fn() } },
 				{
 					provide: NavController,
 					useValue: {
-						navigateRoot: jest.fn().mockResolvedValue(true),
-						navigateForward: jest.fn().mockResolvedValue(true),
-						navigateBack: jest.fn().mockResolvedValue(true),
+						navigateRoot: vi.fn().mockResolvedValue(true),
+						navigateForward: vi.fn().mockResolvedValue(true),
+						navigateBack: vi.fn().mockResolvedValue(true),
 					},
 				},
 			],

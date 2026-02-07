@@ -5,9 +5,9 @@ globalThis.ngJest = {
 		errorOnUnknownProperties: true,
 	},
 };
-import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone';
+import '@analogjs/vitest-angular/setup-zone';
 
-setupZoneTestEnv();
+
 
 if (!global.fetch) {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any

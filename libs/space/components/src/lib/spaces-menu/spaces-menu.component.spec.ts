@@ -35,11 +35,11 @@ describe('SpacesMenuComponent', () => {
 				{
 					provide: ErrorLogger,
 					useValue: {
-						logError: jest.fn(),
-						logErrorHandler: jest.fn(() => jest.fn()),
+						logError: vi.fn(),
+						logErrorHandler: jest.fn(() => vi.fn()),
 					},
 				},
-				{ provide: AnalyticsService, useValue: { logEvent: jest.fn() } },
+				{ provide: AnalyticsService, useValue: { logEvent: vi.fn() } },
 				{ provide: LOGGER_FACTORY, useValue: { getLogger: () => console } },
 				{ provide: APP_INFO, useValue: {} },
 				{ provide: SneatUserService, useValue: { userState: of({}) } },
@@ -48,8 +48,8 @@ describe('SpacesMenuComponent', () => {
 				{
 					provide: Auth,
 					useValue: {
-						onIdTokenChanged: jest.fn(() => jest.fn()),
-						onAuthStateChanged: jest.fn(() => jest.fn()),
+						onIdTokenChanged: jest.fn(() => vi.fn()),
+						onAuthStateChanged: jest.fn(() => vi.fn()),
 					},
 				},
 				{ provide: Firestore, useValue: {} },
