@@ -181,11 +181,11 @@ export class HappeningParticipantsComponent extends WithSpaceInput {
 		happening = {
 			...happening,
 			brief: {
-				...(brief || {}),
+				...brief,
 				...happeningBase,
 			},
 			dbo: {
-				...(dbo || {}), // TODO: It does not make much sense to update DTO as brief should be enough?
+				...dbo, // TODO: It does not make much sense to update DTO as brief should be enough?
 				...happeningBase,
 			},
 		};

@@ -441,7 +441,7 @@ export class HappeningSlotFormComponent
 			...happening,
 			brief: {
 				...happening.brief,
-				slots: { ...(happening.brief?.slots || {}), [slotID]: slot },
+				slots: { ...happening.brief?.slots, [slotID]: slot },
 			},
 		};
 		console.log('happening:', happening);

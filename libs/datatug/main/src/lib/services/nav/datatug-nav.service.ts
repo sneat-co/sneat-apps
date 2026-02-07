@@ -163,7 +163,7 @@ export class DatatugNavService {
 		if (!isValidProjectRef(project.ref)) {
 			throw new Error('project.ref is a required parameter');
 		}
-		state = { ...(state || {}), project };
+		state = { ...state, project };
 		this.navForward(
 			[
 				'store',

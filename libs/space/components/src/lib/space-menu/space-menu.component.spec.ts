@@ -13,21 +13,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ErrorLogger } from '@sneat/logging';
 import { AnalyticsService, APP_INFO, LOGGER_FACTORY } from '@sneat/core';
 import { SneatUserService } from '@sneat/auth-core';
-import { MenuController, NavController } from '@ionic/angular';
-import { Auth } from '@angular/fire/auth';
-import { Firestore } from '@angular/fire/firestore';
 import { of } from 'rxjs';
-
-import {
-	IonList,
-	IonItem,
-	IonSelect,
-	IonSelectOption,
-	IonIcon,
-	IonLabel,
-	IonButtons,
-	IonButton,
-} from '@ionic/angular/standalone';
 
 describe('SpaceMenuComponent', () => {
 	let component: SpaceMenuComponent;

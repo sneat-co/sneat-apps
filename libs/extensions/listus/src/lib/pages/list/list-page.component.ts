@@ -42,7 +42,7 @@ import { SpaceServiceModule } from '@sneat/space-services';
 import { ClassName } from '@sneat/ui';
 import { ListusCoreServicesModule } from '../../services';
 import { SpaceComponentBaseParams } from '@sneat/space-components';
-import { IListInfo, IListItemBrief } from '../../dto';
+import { IListItemBrief } from '../../dto';
 import { IListContext } from '../../contexts';
 import { takeUntil } from 'rxjs';
 import { ListusComponentBaseParams } from '../../listus-component-base-params';
@@ -90,6 +90,7 @@ type ListPagePerforming =
 		IonItem,
 		IonLabel,
 		IonSelect,
+		IonSelectOption,
 		IonList,
 		IonReorderGroup,
 		IonCardContent,
@@ -100,7 +101,6 @@ type ListPagePerforming =
 		IonReorder,
 		IonSpinner,
 		IonFooter,
-		IonSelectOption,
 	],
 	styleUrls: ['./list-page.component.scss'],
 	providers: [
@@ -428,25 +428,10 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 			event.stopPropagation();
 		}
 
-		let list: IListInfo | undefined;
-		// let listItems: IListItemWithUiState[] = [];
-
 		if (listItem) {
 			this.errorLogger.logError('not implemented yet');
-			// list = {
-			// 	type: listItem.subListType || 'other',
-			// 	id: listItem.subListId || '',
-			// 	title: listItem.title || 'no title - to be fixed',
-			// };
 		} else if (this.list && this.listItems) {
-			// list = ...;
-			// listItems = this.filteredListItems as IListItemWithUiState[];
 			this.errorLogger.logError('not implemented yet');
-			return;
-		}
-		if (list) {
-			// this.listDialogs.copyListItems(listItems, list)
-			// 	.catch(this.errorLogger.logError);
 		}
 	}
 

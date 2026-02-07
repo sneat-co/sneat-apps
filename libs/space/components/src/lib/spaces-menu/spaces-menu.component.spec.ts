@@ -15,13 +15,7 @@ class SpacesListStubComponent {
 import { SpacesMenuComponent } from './spaces-menu.component';
 import { ErrorLogger } from '@sneat/logging';
 import { AnalyticsService, APP_INFO, LOGGER_FACTORY } from '@sneat/core';
-import { SneatUserService } from '@sneat/auth-core';
-import { MenuController, NavController } from '@ionic/angular';
-import { Auth } from '@angular/fire/auth';
-import { Firestore } from '@angular/fire/firestore';
 import { of } from 'rxjs';
-
-import { IonIcon, IonItem, IonLabel } from '@ionic/angular/standalone';
 
 describe('SpacesMenuComponent', () => {
 	let component: SpacesMenuComponent;

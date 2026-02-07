@@ -379,7 +379,7 @@ export class StartEndDatetimeFormComponent implements OnChanges {
 		const slot = this.timing;
 		this.timing = {
 			...slot,
-			start: { ...(slot.start || {}), date: this.startDate.value || '' },
+			start: { ...slot.start, date: this.startDate.value || '' },
 		};
 		if (
 			(!this.startTime.value ||
@@ -397,7 +397,7 @@ export class StartEndDatetimeFormComponent implements OnChanges {
 		const slot = this.timing;
 		this.timing = {
 			...slot,
-			start: { ...(slot.start || {}), time: this.startTime.value || '' },
+			start: { ...slot.start, time: this.startTime.value || '' },
 		};
 		if (
 			this.timing.start?.time &&
@@ -463,7 +463,7 @@ export class StartEndDatetimeFormComponent implements OnChanges {
 		const slot = this.timing;
 		this.timing = {
 			...slot,
-			end: { ...(slot.end || {}), time: this.endTime.value || '' },
+			end: { ...slot.end, time: this.endTime.value || '' },
 		};
 		if (isValidaTimeString(this.startTime.value as string)) {
 			this.setDuration();

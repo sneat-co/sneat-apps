@@ -26,7 +26,6 @@ export abstract class SelectorBaseService<T = ISelectItem> {
 		console.log('selectMultipleInModal(), options:', options);
 
 		let result: readonly T[] | undefined = undefined;
-		let error: unknown;
 
 		const onSelected = options.onSelected;
 
@@ -65,9 +64,6 @@ export abstract class SelectorBaseService<T = ISelectItem> {
 		const { role, data } = await modal.onDidDismiss();
 		console.log('Modal closed with role:', role, 'data:', data);
 
-		if (error) {
-			throw error;
-		}
 		return result;
 	}
 }

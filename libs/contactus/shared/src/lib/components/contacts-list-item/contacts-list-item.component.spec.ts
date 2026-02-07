@@ -1,27 +1,10 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { TitleCasePipe } from '@angular/common';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ErrorLogger } from '@sneat/logging';
-
-import {
-	IonItem,
-	IonIcon,
-	IonLabel,
-	IonBadge,
-	IonText,
-	IonButtons,
-	IonButton,
-	IonCheckbox,
-	IonTextarea,
-	IonItemOptions,
-	IonItemOption,
-} from '@ionic/angular/standalone';
 
 import { ContactsListItemComponent } from './contacts-list-item.component';
 import { SpaceNavService } from '@sneat/space-services';
 import { ContactService } from '@sneat/contactus-services';
-
-import { RelatedAsComponent } from './related-as.component';
 
 describe('ContactListItemComponent', () => {
 	let component: ContactsListItemComponent;

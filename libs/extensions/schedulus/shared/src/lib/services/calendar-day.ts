@@ -104,7 +104,6 @@ export class CalendarDay {
 		if (this.dateID === '1970-01-01') {
 			throw new Error('an attempt to set an empty date 1970-01-01');
 		}
-		this.date = date;
 		console.log('SpaceDay.constructor()', this.dateID, this.date);
 		this.wd = getWd2(date);
 		this.wdLongTitle = wdCodeToWeekdayLongName(this.wd);

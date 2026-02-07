@@ -17,7 +17,7 @@ export function arrayToGrid(o: unknown[], pipes?: IPipe[]): IJsonGridData {
 				data.cols.push(key);
 			}
 		});
-		const row = new Array(data.cols.length);
+		const row = Array.from({ length: data.cols.length });
 		keys.forEach((key) => {
 			const v = (item as Record<string, unknown>)[key];
 			if (v) {

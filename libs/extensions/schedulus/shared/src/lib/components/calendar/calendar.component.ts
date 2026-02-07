@@ -234,11 +234,7 @@ export class CalendarComponent
 			if (
 				!hide &&
 				(!r.brief ||
-					!hasContact(
-						r.space.id,
-						filter.contactIDs,
-						r.brief.related || r.brief.related,
-					))
+					!hasContact(r.space.id, filter.contactIDs, r.brief.related))
 			) {
 				hide = 'contactIDs';
 			}

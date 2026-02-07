@@ -345,7 +345,7 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 					queryParams,
 				);
 				this.target = {
-					...(this.target || {}),
+					...this.target,
 					server: queryParams.get('server'),
 					catalog: queryParams.get('catalog'),
 					driver: queryParams.get('driver'),
@@ -366,7 +366,7 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 				};
 				if (projectRef) {
 					this.target = {
-						...(this.target || {}),
+						...this.target,
 						repository: projectRef.storeId,
 						project: projectRef.projectId,
 					} as ISqlQueryTarget;
@@ -432,7 +432,7 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 							queryType: query.request.queryType,
 							text: (query.request as ISqlQueryRequest).text,
 						} as ISqlQueryRequest,
-				  },
+					},
 		);
 		this.sql = (query.request as ISqlQueryRequest)?.text;
 		if (query.targets?.length && !this.targetCatalog) {
@@ -717,7 +717,7 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 					!query.targets?.find((t) => t.catalog === this.target?.catalog)
 				) {
 					this.target = {
-						...(this.target || {}),
+						...this.target,
 						catalog: query.targets?.length && query.targets[0].catalog,
 					} as ISqlQueryTarget;
 					this.updateQueryContext();

@@ -158,7 +158,7 @@ export class SpaceNavService {
 		eventName: string,
 		params?: Record<string, unknown>,
 	): void => {
-		params = { ...(params || {}), space: space.id };
+		params = { ...params, space: space.id };
 		this.navForward(
 			navController,
 			url,

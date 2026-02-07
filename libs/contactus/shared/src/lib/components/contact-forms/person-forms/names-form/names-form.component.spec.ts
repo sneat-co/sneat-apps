@@ -1,21 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA, Component, forwardRef } from '@angular/core';
-import {
-	ReactiveFormsModule,
-	FormsModule,
-	NG_VALUE_ACCESSOR,
-	ControlValueAccessor,
-} from '@angular/forms';
+import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ErrorLogger } from '@sneat/logging';
-
-import {
-	IonItemDivider,
-	IonItem,
-	IonLabel,
-	IonInput,
-	IonButton,
-	IonIcon,
-} from '@ionic/angular/standalone';
 
 import { NamesFormComponent } from './names-form.component';
 

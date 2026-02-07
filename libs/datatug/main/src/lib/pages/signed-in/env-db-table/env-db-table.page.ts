@@ -41,7 +41,6 @@ import { IGridColumn, IGridDef } from '@sneat/grid';
 import { Subject } from 'rxjs';
 import { CellPopoverComponent, DataGridComponent } from '@sneat/datagrid';
 import { ColumnComponent } from 'tabulator-tables';
-import { ICommandResponseItem } from '../../../dto/command-response';
 import { IExecuteResponse, IRecordsetResult } from '../../../dto/execute';
 import { ICommandResponseWithRecordset } from '../../../dto/response';
 import { IForeignKey } from '../../../models/definition/apis/database';
@@ -386,7 +385,7 @@ from ${from}`;
 			const firstCommand = response.commands?.length
 				? response.commands[0]
 				: undefined;
-			const firstItem = (firstCommand?.items as ICommandResponseItem[])[0];
+			const firstItem = firstCommand?.items?.[0];
 			const itemWithRecordset = firstItem as ICommandResponseWithRecordset;
 			this.recordset = itemWithRecordset?.value;
 			this.setupGrid();

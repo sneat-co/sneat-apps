@@ -6,28 +6,10 @@ import {
 	NavController,
 	ModalController,
 	IonRouterOutlet,
-	IonItem,
-	IonAvatar,
-	IonImg,
-	IonSkeletonText,
-	IonItemSliding,
-	IonLabel,
-	IonIcon,
-	IonButtons,
-	IonButton,
-	IonItemOptions,
-	IonItemOption,
 } from '@ionic/angular/standalone';
 import { of } from 'rxjs';
 
 import { MembersListComponent } from './members-list.component';
-import { SpaceNavService } from '@sneat/space-services';
-import { SneatUserService } from '@sneat/auth-core';
-import { ContactService, ContactusNavService } from '@sneat/contactus-services';
-import { ScheduleNavService } from '@sneat/mod-schedulus-core';
-
-import { ContactRoleBadgesComponent } from '../contact-role-badges/contact-role-badges.component';
-import { InlistAgeGroupComponent } from '../inlist-options/inlist-age-group.component';
 
 describe('MembersListComponent', () => {
 	let component: MembersListComponent;

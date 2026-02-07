@@ -22,7 +22,7 @@ export function newProjectBriefFromSummary(
 	brief?: IProjectBrief,
 ): IProjectBrief {
 	return {
-		...(brief || {}),
+		...brief,
 		access: summary.access,
 		title: summary.title,
 		// titleOverride: summary.t

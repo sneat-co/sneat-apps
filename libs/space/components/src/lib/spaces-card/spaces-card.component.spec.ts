@@ -8,26 +8,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { SpaceNavService, SpaceService } from '@sneat/space-services';
 import { ErrorLogger } from '@sneat/logging';
 import { AnalyticsService } from '@sneat/core';
-import { ToastController } from '@ionic/angular';
 import { of } from 'rxjs';
-
-import {
-	IonInput,
-	IonCard,
-	IonItem,
-	IonLabel,
-	IonCardTitle,
-	IonButtons,
-	IonButton,
-	IonIcon,
-	IonList,
-	IonItemSliding,
-	IonItemOptions,
-	IonItemOption,
-	IonSpinner,
-	IonSkeletonText,
-	IonCardContent,
-} from '@ionic/angular/standalone';
 
 describe('SpacesCardComponent', () => {
 	let component: SpacesCardComponent;

@@ -1,27 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import {
-	CUSTOM_ELEMENTS_SCHEMA,
-	Component,
-	forwardRef,
-	Input,
-} from '@angular/core';
-import {
-	FormsModule,
-	NG_VALUE_ACCESSOR,
-	ControlValueAccessor,
-} from '@angular/forms';
-import {
-	IonCard,
-	IonItemDivider,
-	IonLabel,
-	IonRadioGroup,
-	IonRadio,
-	IonListHeader,
-	IonButtons,
-	IonButton,
-	IonIcon,
-	IonSpinner,
-} from '@ionic/angular/standalone';
+import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ErrorLogger } from '@sneat/logging';
 
 import { GenderFormComponent } from './gender-form.component';

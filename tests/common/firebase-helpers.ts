@@ -99,7 +99,7 @@ export async function userExists(email: string): Promise<boolean> {
 			email,
 		);
 		return signInMethods.length > 0;
-	} catch (error) {
+	} catch {
 		return false;
 	}
 }

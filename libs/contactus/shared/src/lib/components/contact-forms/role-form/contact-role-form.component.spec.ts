@@ -1,19 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import {
-	CUSTOM_ELEMENTS_SCHEMA,
-	Component,
-	forwardRef,
-	Input,
-} from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import {
-	IonCard,
-	IonItemDivider,
-	IonLabel,
-	IonSelect,
-	IonSelectOption,
-	IonItem,
-} from '@ionic/angular/standalone';
+import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { of } from 'rxjs';
 
 import { ContactRoleFormComponent } from './contact-role-form.component';

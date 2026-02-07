@@ -4,7 +4,6 @@ import { SpaceNavService } from './space-nav.service';
 import { ErrorLogger } from '@sneat/logging';
 import { AnalyticsService } from '@sneat/core';
 import { NavController } from '@ionic/angular';
-import { of } from 'rxjs';
 
 describe('SpaceNavService', () => {
 	beforeEach(() =>

@@ -1,24 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA, forwardRef, Component } from '@angular/core';
-import {
-	FormsModule,
-	NG_VALUE_ACCESSOR,
-	ControlValueAccessor,
-} from '@angular/forms';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ErrorLogger } from '@sneat/logging';
-import {
-	IonCard,
-	IonItemDivider,
-	IonLabel,
-	IonIcon,
-	IonGrid,
-	IonRow,
-	IonCol,
-	IonItem,
-	IonSelect,
-	IonSelectOption,
-	IonInput,
-} from '@ionic/angular/standalone';
 
 import { PhonesFormComponent } from './phones-form.component';
 

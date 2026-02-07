@@ -88,7 +88,7 @@ export class NewContactFormComponent
 				contact = {
 					...contact,
 					dbo: {
-						...(contact.dbo || {}),
+						...contact.dbo,
 						type: ContactTypeAnimal,
 						roles: [RoleSpaceMember, ContactRolePet],
 					},
