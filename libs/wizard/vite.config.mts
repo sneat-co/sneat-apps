@@ -1,34 +1,19 @@
 /// <reference types='vitest' />
-import angular from '@analogjs/vite-plugin-angular';
-import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
-import { defineConfig } from 'vite';
+import { defineConfig, mergeConfig } from 'vite';
+import { createBaseViteConfig } from '../../vite.config.base.mts';
 
-export default defineConfig(() => ({
-	root: __dirname,
-	cacheDir: '../../node_modules/.vite/libs/wizard',
-	plugins: [
-		angular({
-			jit: true,
-			tsconfig: './tsconfig.spec.json',
-		}),
-		nxViteTsPaths(),
-	],
-	test: {
+export default defineConfig(() => {
+	const baseConfig = createBaseViteConfig({
+		dirname: __dirname,
 		name: 'wizard',
-		watch: false,
-		globals: true,
-		environment: 'jsdom',
-		include: ['src/**/*.spec.ts'],
-		setupFiles: ['src/test-setup.ts'],
-		reporters: ['default'],
-		server: {
-			deps: {
-				inline: ['@ionic/core', 'ionicons'],
+	});
+	return mergeConfig(baseConfig, {
+		test: {
+			server: {
+				deps: {
+					inline: ['@ionic/core', 'ionicons'],
+				},
 			},
 		},
-		coverage: {
-			reportsDirectory: '../../coverage/libs/wizard',
-			provider: 'v8' as const,
-		},
-	},
-}));
+	});
+});
