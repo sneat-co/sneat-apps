@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitest/config';
-import { createBaseViteConfig } from '../../../vite.config.base.mts';
+import { createBaseViteConfig } from '../../../vite.config.base';
 
 export default defineConfig(() =>
 	createBaseViteConfig({

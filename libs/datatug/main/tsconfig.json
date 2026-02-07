@@ -7,7 +7,7 @@
 		"noPropertyAccessFromIndexSignature": true,
 		"noImplicitReturns": true,
 		"noFallthroughCasesInSwitch": true,
-		"module": "preserve"
+		"module": "esnext"
 	},
 	"angularCompilerOptions": {
 		"enableI18nLegacyMessageIdFormat": false,
