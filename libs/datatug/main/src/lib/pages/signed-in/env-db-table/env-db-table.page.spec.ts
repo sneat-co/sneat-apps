@@ -9,9 +9,7 @@ describe('EnvDbTablePage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [EnvDbTablePageComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [EnvDbTablePageComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(EnvDbTablePageComponent);
 		component = fixture.componentInstance;

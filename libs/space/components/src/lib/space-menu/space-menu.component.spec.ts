@@ -8,8 +8,7 @@ describe('SpaceMenuComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [SpaceMenuComponent],
-		}).compileComponents();
+			imports: [SpaceMenuComponent]}).compileComponents();
 	}));
 
 	beforeEach(() => {

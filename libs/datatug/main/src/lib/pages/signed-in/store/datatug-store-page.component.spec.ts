@@ -9,9 +9,7 @@ describe('StorePageComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [DatatugStorePageComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [DatatugStorePageComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(DatatugStorePageComponent);
 		component = fixture.componentInstance;

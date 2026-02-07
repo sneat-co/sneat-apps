@@ -10,8 +10,7 @@ describe('SelectServiceProviderPage', () => {
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			imports: [SelectServiceProviderPageComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+			schemas: [CUSTOM_ELEMENTS_SCHEMA]}).compileComponents();
 	}));
 
 	beforeEach(() => {

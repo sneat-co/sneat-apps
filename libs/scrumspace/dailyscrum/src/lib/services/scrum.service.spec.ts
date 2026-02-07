@@ -9,11 +9,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 describe('ScrumService', () => {
 	beforeEach(() =>
 		TestBed.configureTestingModule({
-			imports: [
-				HttpClientTestingModule,
-				// AngularFireModule.initializeApp(environment.firebaseConfig),
-			],
-			// providers: [TeamService, UserService],
+			imports: [HttpClientTestingModule],
 		}),
 	);
 

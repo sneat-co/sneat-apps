@@ -13,13 +13,11 @@ describe('SpacesCardComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
 			imports: [SpacesCardComponent, 
 				IonicModule.forRoot(),
 				RouterTestingModule,
 				HttpClientTestingModule],
-			providers: [SpaceService, UserService],
-		}).compileComponents();
+			providers: [SpaceService, UserService]}).compileComponents();
 
 		fixture = TestBed.createComponent(SpacesCardComponent);
 		component = fixture.componentInstance;

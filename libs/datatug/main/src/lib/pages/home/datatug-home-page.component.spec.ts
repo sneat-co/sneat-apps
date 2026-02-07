@@ -9,9 +9,7 @@ describe('HomePage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [DatatugHomePageComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [DatatugHomePageComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(DatatugHomePageComponent);
 		component = fixture.componentInstance;

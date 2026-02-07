@@ -9,9 +9,7 @@ describe('ParameterLookupComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [ParameterLookupComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [ParameterLookupComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(ParameterLookupComponent);
 		component = fixture.componentInstance;

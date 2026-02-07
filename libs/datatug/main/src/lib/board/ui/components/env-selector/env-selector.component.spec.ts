@@ -9,9 +9,7 @@ describe('EnvSelectorComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [EnvSelectorComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [EnvSelectorComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(EnvSelectorComponent);
 		component = fixture.componentInstance;

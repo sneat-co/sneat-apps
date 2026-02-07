@@ -8,7 +8,6 @@
 		"@sneat/ui": "workspace:*",
 		"@sneat/space-components": "workspace:*",
 		"@sneat/space-services": "workspace:*",
-		"@sneat/api": "workspace:*",
 		"@sneat/auth-core": "workspace:*",
 		"@sneat/contactus-core": "workspace:*",
 		"@sneat/contactus-services": "workspace:*",

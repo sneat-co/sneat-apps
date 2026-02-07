@@ -10,8 +10,7 @@ describe('AssetLiabilitiesComponent', () => {
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			imports: [AssetLiabilitiesComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+			schemas: [CUSTOM_ELEMENTS_SCHEMA]}).compileComponents();
 	}));
 
 	beforeEach(() => {

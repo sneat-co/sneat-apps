@@ -9,9 +9,7 @@ describe('SqlQueryWidgetComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [SqlQueryWidgetComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [SqlQueryWidgetComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(SqlQueryWidgetComponent);
 		component = fixture.componentInstance;

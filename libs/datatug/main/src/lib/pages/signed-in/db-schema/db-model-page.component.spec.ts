@@ -9,9 +9,7 @@ describe('DbModelPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [DbModelPageComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [DbModelPageComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(DbModelPageComponent);
 		component = fixture.componentInstance;

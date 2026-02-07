@@ -10,8 +10,7 @@ describe('RealEstatePage', () => {
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			imports: [RealEstatePageComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+			schemas: [CUSTOM_ELEMENTS_SCHEMA]}).compileComponents();
 	}));
 
 	beforeEach(() => {

@@ -9,9 +9,7 @@ describe('GridWidgetComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [GridWidgetComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [GridWidgetComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(GridWidgetComponent);
 		component = fixture.componentInstance;

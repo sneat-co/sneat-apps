@@ -10,8 +10,7 @@ describe('MakeModelEngineComponent', () => {
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			imports: [VehicleCardComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+			schemas: [CUSTOM_ELEMENTS_SCHEMA]}).compileComponents();
 	}));
 
 	beforeEach(() => {

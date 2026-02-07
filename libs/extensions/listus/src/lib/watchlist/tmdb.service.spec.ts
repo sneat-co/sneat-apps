@@ -6,8 +6,7 @@ describe('TmdbService', () => {
 	beforeEach(() =>
 		TestBed.configureTestingModule({
 			providers: [TmdbService],
-			imports: [HttpClientModule],
-		}),
+			imports: [HttpClientModule]}),
 	);
 
 	it('should be created', () => {

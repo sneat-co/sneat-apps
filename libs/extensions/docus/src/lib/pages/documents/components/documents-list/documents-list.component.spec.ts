@@ -10,8 +10,7 @@ describe('DocumentsListComponent', () => {
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			imports: [DocumentsListComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+			schemas: [CUSTOM_ELEMENTS_SCHEMA]}).compileComponents();
 	}));
 
 	beforeEach(() => {

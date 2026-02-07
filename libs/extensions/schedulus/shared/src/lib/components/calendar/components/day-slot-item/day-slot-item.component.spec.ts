@@ -8,8 +8,7 @@ describe('ActivityItemComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [DaySlotItemComponent],
-		}).compileComponents();
+			imports: [DaySlotItemComponent]}).compileComponents();
 	}));
 
 	beforeEach(() => {

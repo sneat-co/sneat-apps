@@ -9,9 +9,7 @@ describe('RecordValuesCardComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [RecordValuesCardComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [RecordValuesCardComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(RecordValuesCardComponent);
 		component = fixture.componentInstance;

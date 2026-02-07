@@ -10,8 +10,7 @@ describe('ListsPage', () => {
 	beforeEach(waitForAsync(async () => {
 		TestBed.configureTestingModule({
 			imports: [ListsPageComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+			schemas: [CUSTOM_ELEMENTS_SCHEMA]}).compileComponents();
 	}));
 
 	beforeEach(() => {

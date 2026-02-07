@@ -8,8 +8,7 @@ describe('FreightCardComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [OrderCardComponent],
-		}).compileComponents();
+			imports: [OrderCardComponent]}).compileComponents();
 
 		fixture = TestBed.createComponent(OrderCardComponent);
 		component = fixture.componentInstance;

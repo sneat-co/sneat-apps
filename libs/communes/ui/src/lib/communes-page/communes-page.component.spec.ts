@@ -8,8 +8,7 @@ describe('CommunesPageComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [CommunesPageComponent],
-		}).compileComponents();
+			imports: [CommunesPageComponent]}).compileComponents();
 	}));
 
 	beforeEach(() => {

@@ -12,10 +12,8 @@ describe('SpacePage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
 			imports: [SpacePageComponent, IonicModule.forRoot()],
-			providers: [provideHttpClientTesting(), SpaceService, SneatUserService],
-		}).compileComponents();
+			providers: [provideHttpClientTesting(), SpaceService, SneatUserService]}).compileComponents();
 
 		fixture = TestBed.createComponent(SpacePageComponent);
 		component = fixture.componentInstance;

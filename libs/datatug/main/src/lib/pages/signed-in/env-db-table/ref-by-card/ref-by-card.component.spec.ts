@@ -9,9 +9,7 @@ describe('RefByCardComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [RefByCardComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [RefByCardComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(RefByCardComponent);
 		component = fixture.componentInstance;

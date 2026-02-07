@@ -13,13 +13,11 @@ describe('MembersListComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
 			imports: [MembersListComponent, 
 				IonicModule.forRoot(),
 				RouterTestingModule,
 				HttpClientTestingModule],
-			providers: [SneatUserService, SpaceService],
-		}).compileComponents();
+			providers: [SneatUserService, SpaceService]}).compileComponents();
 
 		fixture = TestBed.createComponent(MembersListComponent);
 		component = fixture.componentInstance;

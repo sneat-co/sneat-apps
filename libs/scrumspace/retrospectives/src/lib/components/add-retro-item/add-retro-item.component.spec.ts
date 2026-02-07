@@ -10,9 +10,7 @@ describe('AddRetroItemComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [AddRetroItemComponent, IonicModule.forRoot(), HttpClientTestingModule],
-		}).compileComponents();
+			imports: [AddRetroItemComponent, IonicModule.forRoot(), HttpClientTestingModule]}).compileComponents();
 
 		fixture = TestBed.createComponent(AddRetroItemComponent);
 		component = fixture.componentInstance;

@@ -8,8 +8,7 @@ describe('AuthMenuItemComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [AuthMenuItemComponent],
-		}).compileComponents();
+			imports: [AuthMenuItemComponent]}).compileComponents();
 	}));
 
 	beforeEach(() => {

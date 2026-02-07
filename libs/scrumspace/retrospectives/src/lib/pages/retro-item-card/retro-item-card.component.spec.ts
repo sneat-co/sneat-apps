@@ -9,9 +9,7 @@ describe('RetroItemCardComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [RetroItemCardComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [RetroItemCardComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(RetroItemCardComponent);
 		component = fixture.componentInstance;

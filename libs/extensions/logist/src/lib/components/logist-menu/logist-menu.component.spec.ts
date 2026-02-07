@@ -8,8 +8,7 @@ describe('LogistMenuComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [LogistMenuComponent],
-		}).compileComponents();
+			imports: [LogistMenuComponent]}).compileComponents();
 
 		fixture = TestBed.createComponent(LogistMenuComponent);
 		component = fixture.componentInstance;

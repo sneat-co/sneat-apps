@@ -9,9 +9,7 @@ describe('IntroComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [IntroComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [IntroComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(IntroComponent);
 		component = fixture.componentInstance;

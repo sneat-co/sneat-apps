@@ -13,13 +13,11 @@ describe('MetricsComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
 			imports: [MetricsComponent, 
 				IonicModule.forRoot(),
 				HttpClientTestingModule,
 				RouterTestingModule],
-			providers: [SpaceService, UserService],
-		}).compileComponents();
+			providers: [SpaceService, UserService]}).compileComponents();
 
 		fixture = TestBed.createComponent(MetricsComponent);
 		component = fixture.componentInstance;

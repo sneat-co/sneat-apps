@@ -9,9 +9,7 @@ describe('BoardWidgetComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [BoardWidgetComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [BoardWidgetComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(BoardWidgetComponent);
 		component = fixture.componentInstance;

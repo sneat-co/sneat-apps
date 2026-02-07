@@ -11,13 +11,12 @@ describe('RetrospectivesComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [RetrospectivesComponent, 
+			imports: [
+				RetrospectivesComponent,
 				IonicModule.forRoot(),
 				HttpClientTestingModule,
 				RouterTestingModule,
-				// AngularFireModule.initializeApp(environment.firebaseConfig)],
-			// providers: [TeamService, UserService],
+			],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(RetrospectivesComponent);

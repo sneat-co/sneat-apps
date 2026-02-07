@@ -5,8 +5,7 @@ import { ListService } from './list.service';
 describe('ListService', () => {
 	beforeEach(() =>
 		TestBed.configureTestingModule({
-			providers: [ListService],
-		}),
+			providers: [ListService]}),
 	);
 
 	it('should be created', () => {

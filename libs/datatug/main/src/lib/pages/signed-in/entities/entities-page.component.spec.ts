@@ -9,9 +9,7 @@ describe('EntitiesPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [EntitiesPageComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [EntitiesPageComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(EntitiesPageComponent);
 		component = fixture.componentInstance;

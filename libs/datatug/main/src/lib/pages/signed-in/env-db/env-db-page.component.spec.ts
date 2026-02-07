@@ -9,9 +9,7 @@ describe('EnvDbPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [EnvDbPageComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [EnvDbPageComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(EnvDbPageComponent);
 		component = fixture.componentInstance;

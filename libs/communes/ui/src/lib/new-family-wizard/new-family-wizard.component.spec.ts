@@ -8,8 +8,7 @@ describe('NewFamilyWizardComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [NewFamilyWizardComponent],
-		}).compileComponents();
+			imports: [NewFamilyWizardComponent]}).compileComponents();
 	}));
 
 	beforeEach(() => {

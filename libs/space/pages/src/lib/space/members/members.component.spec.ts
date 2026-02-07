@@ -12,13 +12,12 @@ describe('MembersComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [MembersComponent, 
+			imports: [
+				MembersComponent,
 				IonicModule.forRoot(),
 				RouterTestingModule,
 				HttpClientTestingModule,
-				// AngularFireModule.initializeApp(environment.firebaseConfig)],
-			// providers: [TeamService, UserService],
+			],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(MembersComponent);

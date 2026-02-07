@@ -9,8 +9,7 @@ describe('CardListComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [SneatCardListComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [SneatCardListComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(SneatCardListComponent);
 		component = fixture.componentInstance;

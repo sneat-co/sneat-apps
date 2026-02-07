@@ -9,9 +9,7 @@ describe('RetroFeedbackStageComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [RetroFeedbackStageComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [RetroFeedbackStageComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(RetroFeedbackStageComponent);
 		component = fixture.componentInstance;

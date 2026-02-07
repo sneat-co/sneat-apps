@@ -7,8 +7,7 @@ describe('TrackersComponent', () => {
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			imports: [TrackersComponent],
-		}).compileComponents();
+			imports: [TrackersComponent]}).compileComponents();
 
 		fixture = TestBed.createComponent(TrackersComponent);
 		component = fixture.componentInstance;

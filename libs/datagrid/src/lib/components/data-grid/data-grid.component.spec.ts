@@ -9,9 +9,7 @@ describe('DataGridComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [DataGridComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [DataGridComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(DataGridComponent);
 		component = fixture.componentInstance;

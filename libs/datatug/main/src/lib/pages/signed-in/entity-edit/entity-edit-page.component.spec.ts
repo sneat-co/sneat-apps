@@ -9,9 +9,7 @@ describe('EntityEditPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [EntityEditPageComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [EntityEditPageComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(EntityEditPageComponent);
 		component = fixture.componentInstance;

@@ -1,20 +1,17 @@
 import {
 	HttpClientTestingModule,
-	HttpTestingController,
-} from '@angular/common/http/testing';
+	HttpTestingController} from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { firstValueFrom } from 'rxjs';
 import {
 	DefaultSneatAppApiBaseUrl,
 	SneatApiBaseUrl,
-	SneatApiService,
-} from './sneat-api-service';
+	SneatApiService} from './sneat-api-service';
 import { Auth, onIdTokenChanged } from '@angular/fire/auth';
 
 jest.mock('@angular/fire/auth', () => ({
 	onIdTokenChanged: jest.fn(),
-	Auth: class {},
-}));
+	Auth: class {}}));
 
 const NOT_AUTHENTICATED_ERROR =
 	'User is not authenticated yet - no Firebase ID token';
@@ -30,8 +27,7 @@ describe('SneatApiService', () => {
 				SneatApiService,
 				{ provide: SneatApiBaseUrl, useValue: undefined },
 				{ provide: Auth, useValue: {} },
-			],
-		});
+			]});
 
 		httpMock = TestBed.inject(HttpTestingController);
 		service = TestBed.inject(SneatApiService);

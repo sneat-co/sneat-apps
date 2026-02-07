@@ -7,8 +7,7 @@ describe('TrackerPageComponent', () => {
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			imports: [TrackerPageComponent],
-		}).compileComponents();
+			imports: [TrackerPageComponent]}).compileComponents();
 
 		fixture = TestBed.createComponent(TrackerPageComponent);
 		component = fixture.componentInstance;

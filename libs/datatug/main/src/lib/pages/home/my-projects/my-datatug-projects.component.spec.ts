@@ -9,9 +9,7 @@ describe('MyProjectsComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [MyDatatugProjectsComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [MyDatatugProjectsComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(MyDatatugProjectsComponent);
 		component = fixture.componentInstance;

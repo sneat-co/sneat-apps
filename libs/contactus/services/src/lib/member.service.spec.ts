@@ -8,8 +8,7 @@ describe('MemberService', () => {
 	beforeEach(() =>
 		TestBed.configureTestingModule({
 			imports: [HttpClientTestingModule],
-			providers: [TeamService],
-		}),
+			providers: [TeamService]}),
 	);
 
 	it('should be created', () => {

@@ -9,9 +9,7 @@ describe('EnvironmentPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [EnvironmentPageComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [EnvironmentPageComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(EnvironmentPageComponent);
 		component = fixture.componentInstance;

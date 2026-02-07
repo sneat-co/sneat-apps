@@ -6,8 +6,7 @@ import { SpaceNavService } from './space-nav.service';
 describe('SpaceNavService', () => {
 	beforeEach(() =>
 		TestBed.configureTestingModule({
-			providers: [provideRouter([])],
-		}),
+			providers: [provideRouter([])]}),
 	);
 
 	it('should be created', () => {

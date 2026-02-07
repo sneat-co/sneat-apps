@@ -9,9 +9,7 @@ describe('DataboardsPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [BoardsPageComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [BoardsPageComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(BoardsPageComponent);
 		component = fixture.componentInstance;

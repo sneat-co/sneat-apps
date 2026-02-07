@@ -9,9 +9,7 @@ describe('WidgetsPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [WidgetsPageComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [WidgetsPageComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(WidgetsPageComponent);
 		component = fixture.componentInstance;

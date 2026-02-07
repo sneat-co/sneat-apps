@@ -9,9 +9,7 @@ describe('TagsPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [TagsPageComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [TagsPageComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(TagsPageComponent);
 		component = fixture.componentInstance;

@@ -12,10 +12,8 @@ describe('ScrumTasksComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
 			imports: [ScrumTasksComponent, IonicModule.forRoot(), HttpClientTestingModule],
-			providers: [SpaceService, UserService],
-		}).compileComponents();
+			providers: [SpaceService, UserService]}).compileComponents();
 
 		fixture = TestBed.createComponent(ScrumTasksComponent);
 		component = fixture.componentInstance;

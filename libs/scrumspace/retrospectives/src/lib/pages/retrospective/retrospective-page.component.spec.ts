@@ -13,13 +13,11 @@ describe('RetrospectivePage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
 			imports: [RetrospectivePageComponent, 
 				IonicModule.forRoot(),
 				HttpClientTestingModule,
 				RouterTestingModule],
-			providers: [TeamService, UserService],
-		}).compileComponents();
+			providers: [TeamService, UserService]}).compileComponents();
 
 		fixture = TestBed.createComponent(RetrospectivePageComponent);
 		component = fixture.componentInstance;

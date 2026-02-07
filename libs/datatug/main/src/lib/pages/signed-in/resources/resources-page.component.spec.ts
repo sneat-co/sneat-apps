@@ -9,9 +9,7 @@ describe('ResourcesPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [ResourcesPageComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [ResourcesPageComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(ResourcesPageComponent);
 		component = fixture.componentInstance;

@@ -9,9 +9,7 @@ describe('DiffPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [DiffPageComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [DiffPageComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(DiffPageComponent);
 		component = fixture.componentInstance;

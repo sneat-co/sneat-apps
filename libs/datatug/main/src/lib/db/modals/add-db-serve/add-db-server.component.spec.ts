@@ -9,9 +9,7 @@ describe('AddDbServerComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [AddDbServerComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [AddDbServerComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(AddDbServerComponent);
 		component = fixture.componentInstance;

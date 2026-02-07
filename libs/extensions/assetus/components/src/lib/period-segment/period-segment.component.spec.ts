@@ -8,8 +8,7 @@ describe('PeriodSegmentComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [PeriodSegmentComponent],
-		}).compileComponents();
+			imports: [PeriodSegmentComponent]}).compileComponents();
 	}));
 
 	beforeEach(() => {

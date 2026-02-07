@@ -8,8 +8,7 @@ describe('InputParametersComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [InputParametersComponent],
-		}).compileComponents();
+			imports: [InputParametersComponent]}).compileComponents();
 	}));
 
 	beforeEach(() => {

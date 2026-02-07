@@ -9,9 +9,7 @@ describe('BoardRowComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [BoardRowComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [BoardRowComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(BoardRowComponent);
 		component = fixture.componentInstance;

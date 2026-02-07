@@ -9,9 +9,7 @@ describe('SqlEditorPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [QueryPageComponent, IonicModule.forRoot()],
-		}).compileComponents();
+			imports: [QueryPageComponent, IonicModule.forRoot()]}).compileComponents();
 
 		fixture = TestBed.createComponent(QueryPageComponent);
 		component = fixture.componentInstance;

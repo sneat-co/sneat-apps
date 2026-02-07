@@ -13,13 +13,11 @@ describe('RetroTreePage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
 			imports: [RetroTreePageComponent, 
 				RouterTestingModule,
 				HttpClientTestingModule,
 				IonicModule.forRoot()],
-			providers: [TeamService, UserService],
-		}).compileComponents();
+			providers: [TeamService, UserService]}).compileComponents();
 
 		fixture = TestBed.createComponent(RetroTreePageComponent);
 		component = fixture.componentInstance;

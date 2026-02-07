@@ -10,9 +10,7 @@ describe('ScrumCardComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			,
-			imports: [ScrumCardComponent, IonicModule.forRoot(), RouterTestingModule],
-		}).compileComponents();
+			imports: [ScrumCardComponent, IonicModule.forRoot(), RouterTestingModule]}).compileComponents();
 
 		fixture = TestBed.createComponent(ScrumCardComponent);
 		component = fixture.componentInstance;

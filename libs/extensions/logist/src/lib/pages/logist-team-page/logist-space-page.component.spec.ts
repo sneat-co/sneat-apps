@@ -8,8 +8,7 @@ describe('LogistMainPageComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [LogistSpacePageComponent],
-		}).compileComponents();
+			imports: [LogistSpacePageComponent]}).compileComponents();
 
 		fixture = TestBed.createComponent(LogistSpacePageComponent);
 		component = fixture.componentInstance;

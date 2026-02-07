@@ -8,8 +8,7 @@ describe('ProjectContextMenuComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [ProjectMenuTopComponent],
-		}).compileComponents();
+			imports: [ProjectMenuTopComponent]}).compileComponents();
 	}));
 
 	beforeEach(() => {
