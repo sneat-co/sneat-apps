@@ -1,4 +1,4 @@
-import { ViteUserConfigExport } from 'vitest/config';
+import { ViteUserConfig } from 'vitest/config';
 import angular from '@analogjs/vite-plugin-angular';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { join } from 'path';
@@ -11,7 +11,7 @@ export interface BaseViteConfigOptions {
 
 export function createBaseViteConfig(
 	options: BaseViteConfigOptions,
-): ViteUserConfigExport {
+): ViteUserConfig {
 	const { dirname, name, reportsDirectory } = options;
 
 	// Better way to calculate relative path to root based on distance from root
@@ -55,6 +55,21 @@ export function createBaseViteConfig(
 				reportsDirectory: reportsDirectory || coverageDir,
 				provider: 'v8' as const,
 			},
+			server: {
+				deps: {
+					inline: [
+						'@ionic/angular',
+						'@ionic/core',
+						'ionicons',
+						'rxfire',
+						'firebase',
+						'@angular/fire',
+						'@stencil/core',
+						'@sneat/logging',
+						'@sneat/core',
+					],
+				},
+			},
 		},
-	} as ViteUserConfigExport;
+	} as ViteUserConfig;
 }

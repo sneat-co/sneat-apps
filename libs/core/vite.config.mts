@@ -1,5 +1,5 @@
 /// <reference types='vitest' />
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import { createBaseViteConfig } from '../../vite.config.base.mts';
 
 export default defineConfig(() =>

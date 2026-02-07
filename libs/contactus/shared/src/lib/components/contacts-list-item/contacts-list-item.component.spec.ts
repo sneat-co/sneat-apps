@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ErrorLogger } from '@sneat/logging';
@@ -47,34 +47,12 @@ describe('ContactListItemComponent', () => {
 					provide: ErrorLogger,
 					useValue: {
 						logError: vi.fn(),
-						logErrorHandler: jest.fn(() => vi.fn()),
+						logErrorHandler: vi.fn(() => vi.fn()),
 					},
 				},
 			],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(ContactsListItemComponent, {
-				remove: {
-					imports: [
-						IonItem,
-						IonIcon,
-						IonLabel,
-						IonBadge,
-						IonText,
-						IonButtons,
-						IonButton,
-						IonCheckbox,
-						IonTextarea,
-						IonItemOptions,
-						IonItemOption,
-						RelatedAsComponent,
-					],
-				},
-				add: {
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
-				},
-			})
-			.compileComponents();
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {

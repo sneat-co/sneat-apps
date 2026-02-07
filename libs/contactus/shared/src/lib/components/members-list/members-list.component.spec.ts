@@ -49,35 +49,12 @@ describe('MembersListComponent', () => {
 					provide: ErrorLogger,
 					useValue: {
 						logError: vi.fn(),
-						logErrorHandler: jest.fn(() => vi.fn()),
+						logErrorHandler: vi.fn(() => vi.fn()),
 					},
 				},
 			],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(MembersListComponent, {
-				remove: {
-					imports: [
-						IonItem,
-						IonAvatar,
-						IonImg,
-						IonSkeletonText,
-						IonItemSliding,
-						IonLabel,
-						IonIcon,
-						IonButtons,
-						IonButton,
-						IonItemOptions,
-						IonItemOption,
-						ContactRoleBadgesComponent,
-						InlistAgeGroupComponent,
-					],
-				},
-				add: {
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
-				},
-			})
-			.compileComponents();
+		}).compileComponents();
 
 		fixture = TestBed.createComponent(MembersListComponent);
 		component = fixture.componentInstance;

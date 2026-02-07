@@ -3,6 +3,7 @@
 	"compilerOptions": {
 		"outDir": "./dist/out-tsc",
 		"module": "esnext",
+		"allowImportingTsExtensions": true,
 		"types": ["node", "@angular/core"]
 	}
 }
