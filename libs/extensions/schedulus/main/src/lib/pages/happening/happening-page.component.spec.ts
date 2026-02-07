@@ -9,7 +9,7 @@ describe('RegularHappeningPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [HappeningPageComponent],
+			imports: [HappeningPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

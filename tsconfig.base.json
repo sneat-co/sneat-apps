@@ -25,7 +25,6 @@
 		"skipLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
-			"@sneat/api": ["libs/api/src/index.ts"],
 			"@sneat/app": ["libs/app/src/index.ts"],
 			"@sneat/auth-core": ["libs/auth/core/src/index.ts"],
 			"@sneat/auth-models": ["libs/auth/models/src/index.ts"],

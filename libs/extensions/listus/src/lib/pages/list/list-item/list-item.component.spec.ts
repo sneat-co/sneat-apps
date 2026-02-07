@@ -9,7 +9,7 @@ describe('ListItemComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [ListItemComponent],
+			imports: [ListItemComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

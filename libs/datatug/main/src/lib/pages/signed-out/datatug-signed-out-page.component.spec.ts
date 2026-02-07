@@ -9,8 +9,8 @@ describe('SignedOutPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [DatatugSignedOutPageComponent],
-			imports: [IonicModule.forRoot()],
+			,
+			imports: [DatatugSignedOutPageComponent, IonicModule.forRoot()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(DatatugSignedOutPageComponent);

@@ -9,8 +9,8 @@ describe('SqlComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [SqlEditorComponent],
-			imports: [IonicModule.forRoot()],
+			,
+			imports: [SqlEditorComponent, IonicModule.forRoot()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(SqlEditorComponent);

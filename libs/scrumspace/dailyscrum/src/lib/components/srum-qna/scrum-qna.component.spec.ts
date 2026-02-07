@@ -9,8 +9,8 @@ describe('SrumQnaComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [ScrumQnaComponent],
-			imports: [IonicModule.forRoot()],
+			,
+			imports: [ScrumQnaComponent, IonicModule.forRoot()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(ScrumQnaComponent);

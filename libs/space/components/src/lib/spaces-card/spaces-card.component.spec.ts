@@ -13,12 +13,11 @@ describe('SpacesCardComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [SpacesCardComponent],
-			imports: [
+			,
+			imports: [SpacesCardComponent, 
 				IonicModule.forRoot(),
 				RouterTestingModule,
-				HttpClientTestingModule,
-			],
+				HttpClientTestingModule],
 			providers: [SpaceService, UserService],
 		}).compileComponents();
 

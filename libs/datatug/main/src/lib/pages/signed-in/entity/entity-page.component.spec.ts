@@ -9,8 +9,8 @@ describe('EntityPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [EntityPageComponent],
-			imports: [IonicModule.forRoot()],
+			,
+			imports: [EntityPageComponent, IonicModule.forRoot()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(EntityPageComponent);

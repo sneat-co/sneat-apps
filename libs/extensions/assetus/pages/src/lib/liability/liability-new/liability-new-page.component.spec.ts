@@ -9,7 +9,7 @@ describe('LiabilityNewPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [LiabilityNewPageComponent],
+			imports: [LiabilityNewPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

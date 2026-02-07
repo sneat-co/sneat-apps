@@ -13,12 +13,11 @@ describe('RetroTreePage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [RetroTreePageComponent],
-			imports: [
+			,
+			imports: [RetroTreePageComponent, 
 				RouterTestingModule,
 				HttpClientTestingModule,
-				IonicModule.forRoot(),
-			],
+				IonicModule.forRoot()],
 			providers: [TeamService, UserService],
 		}).compileComponents();
 

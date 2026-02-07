@@ -13,13 +13,12 @@ describe('ScrumsComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [ScrumsComponent],
-			imports: [
+			,
+			imports: [ScrumsComponent, 
 				IonicModule.forRoot(),
 				HttpClientTestingModule,
 				RouterTestingModule,
-				// AngularFireModule.initializeApp(environment.firebaseConfig),
-			],
+				// AngularFireModule.initializeApp(environment.firebaseConfig)],
 			providers: [SneatUserService],
 		}).compileComponents();
 

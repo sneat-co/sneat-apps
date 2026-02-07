@@ -9,7 +9,7 @@ describe('MovieInfoPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [MovieInfoPageComponent],
+			imports: [MovieInfoPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

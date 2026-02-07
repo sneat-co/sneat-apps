@@ -9,8 +9,8 @@ describe('BoardCardComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [BoardCardComponent],
-			imports: [IonicModule.forRoot()],
+			,
+			imports: [BoardCardComponent, IonicModule.forRoot()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(BoardCardComponent);

@@ -9,8 +9,8 @@ describe('RetroMembersComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [RetroMembersComponent],
-			imports: [IonicModule.forRoot()],
+			,
+			imports: [RetroMembersComponent, IonicModule.forRoot()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(RetroMembersComponent);

@@ -8,7 +8,7 @@ describe('GenderFormComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [GenderFormComponent],
+			imports: [GenderFormComponent],
 		}).compileComponents();
 	}));
 

@@ -9,8 +9,8 @@ describe('ScrumBlockersComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [ScrumBlockersComponent],
-			imports: [IonicModule.forRoot()],
+			,
+			imports: [ScrumBlockersComponent, IonicModule.forRoot()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(ScrumBlockersComponent);

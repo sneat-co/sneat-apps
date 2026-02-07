@@ -13,12 +13,11 @@ describe('RetrospectivePage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [RetrospectivePageComponent],
-			imports: [
+			,
+			imports: [RetrospectivePageComponent, 
 				IonicModule.forRoot(),
 				HttpClientTestingModule,
-				RouterTestingModule,
-			],
+				RouterTestingModule],
 			providers: [TeamService, UserService],
 		}).compileComponents();
 

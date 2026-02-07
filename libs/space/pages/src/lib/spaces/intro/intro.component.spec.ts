@@ -9,8 +9,8 @@ describe('IntroComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [IntroComponent],
-			imports: [IonicModule.forRoot()],
+			,
+			imports: [IntroComponent, IonicModule.forRoot()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(IntroComponent);

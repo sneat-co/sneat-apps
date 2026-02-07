@@ -8,7 +8,7 @@ describe('AssetCardComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [AssetCardComponent],
+			imports: [AssetCardComponent],
 		}).compileComponents();
 	}));
 

@@ -9,7 +9,7 @@ describe('ContactsFamilyComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [ContactsByTypeComponent],
+			imports: [ContactsByTypeComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

@@ -12,13 +12,12 @@ describe('JoinSpacePage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [JoinSpacePageComponent],
-			imports: [
+			,
+			imports: [JoinSpacePageComponent, 
 				IonicModule.forRoot(),
 				RouterTestingModule,
 				HttpClientTestingModule,
-				// AngularFireModule.initializeApp(environment.firebaseConfig),
-			],
+				// AngularFireModule.initializeApp(environment.firebaseConfig)],
 			// providers: [TeamService, UserService],
 		}).compileComponents();
 

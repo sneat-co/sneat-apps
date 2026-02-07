@@ -9,8 +9,8 @@ describe('DbModelsPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [DbModelsPageComponent],
-			imports: [IonicModule.forRoot()],
+			,
+			imports: [DbModelsPageComponent, IonicModule.forRoot()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(DbModelsPageComponent);

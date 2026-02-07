@@ -13,12 +13,11 @@ describe('InvitePersonalPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [InvitePersonalPageComponent],
-			imports: [
+			,
+			imports: [InvitePersonalPageComponent, 
 				IonicModule.forRoot(),
 				HttpClientTestingModule,
-				RouterTestingModule,
-			],
+				RouterTestingModule],
 			providers: [UserService, SpaceService],
 		}).compileComponents();
 

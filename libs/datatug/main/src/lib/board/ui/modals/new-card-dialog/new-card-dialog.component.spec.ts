@@ -9,8 +9,8 @@ describe('NewCardDialogComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [NewCardDialogComponent],
-			imports: [IonicModule.forRoot()],
+			,
+			imports: [NewCardDialogComponent, IonicModule.forRoot()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(NewCardDialogComponent);

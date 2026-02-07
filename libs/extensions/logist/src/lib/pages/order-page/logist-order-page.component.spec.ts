@@ -8,7 +8,7 @@ describe('FreightPageComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [LogistOrderPageComponent],
+			imports: [LogistOrderPageComponent],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(LogistOrderPageComponent);

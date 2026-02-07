@@ -9,8 +9,8 @@ describe('ProjectPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [ProjectPageComponent],
-			imports: [IonicModule.forRoot()],
+			,
+			imports: [ProjectPageComponent, IonicModule.forRoot()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(ProjectPageComponent);

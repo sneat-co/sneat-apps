@@ -9,7 +9,7 @@ describe('RealEstatesPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [RealEstatesPageComponent],
+			imports: [RealEstatesPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

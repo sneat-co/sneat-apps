@@ -9,7 +9,7 @@ describe('DocumentNewPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [NewDocumentPageComponent],
+			imports: [NewDocumentPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

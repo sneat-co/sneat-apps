@@ -9,8 +9,8 @@ describe('DatatugMenuComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [DatatugMenuComponent],
-			imports: [IonicModule.forRoot()],
+			,
+			imports: [DatatugMenuComponent, IonicModule.forRoot()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(DatatugMenuComponent);

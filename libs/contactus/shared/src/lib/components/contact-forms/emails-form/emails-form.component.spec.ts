@@ -8,7 +8,7 @@ describe('EmailsFormComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [EmailsFormComponent],
+			imports: [EmailsFormComponent],
 		}).compileComponents();
 	}));
 

@@ -9,8 +9,8 @@ describe('HomePage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [DatatugHomePageComponent],
-			imports: [IonicModule.forRoot()],
+			,
+			imports: [DatatugHomePageComponent, IonicModule.forRoot()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(DatatugHomePageComponent);

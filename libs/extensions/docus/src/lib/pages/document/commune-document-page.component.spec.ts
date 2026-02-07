@@ -9,7 +9,7 @@ describe('CommuneDocumentPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [CommuneDocumentPageComponent],
+			imports: [CommuneDocumentPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

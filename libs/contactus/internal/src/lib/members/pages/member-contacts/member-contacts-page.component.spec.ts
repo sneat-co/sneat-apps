@@ -9,7 +9,7 @@ describe('MemberContactsPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [MemberContactsPageComponent],
+			imports: [MemberContactsPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

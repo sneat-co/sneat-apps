@@ -9,7 +9,7 @@ describe('ListsPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		TestBed.configureTestingModule({
-			declarations: [ListsPageComponent],
+			imports: [ListsPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

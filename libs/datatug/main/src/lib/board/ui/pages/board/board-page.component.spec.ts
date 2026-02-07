@@ -9,8 +9,8 @@ describe('BoardPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [BoardPageComponent],
-			imports: [IonicModule.forRoot()],
+			,
+			imports: [BoardPageComponent, IonicModule.forRoot()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(BoardPageComponent);

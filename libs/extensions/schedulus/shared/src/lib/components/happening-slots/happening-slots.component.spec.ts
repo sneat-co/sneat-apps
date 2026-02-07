@@ -9,7 +9,7 @@ describe('RegularSlotsComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [HappeningSlotsComponent],
+			imports: [HappeningSlotsComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

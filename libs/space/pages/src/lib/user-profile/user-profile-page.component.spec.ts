@@ -12,12 +12,11 @@ describe('UserProfilePage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [UserProfilePageComponent],
-			imports: [
+			,
+			imports: [UserProfilePageComponent, 
 				IonicModule.forRoot(),
 				RouterTestingModule,
-				HttpClientTestingModule,
-			],
+				HttpClientTestingModule],
 			providers: [UserService],
 		}).compileComponents();
 

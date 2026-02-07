@@ -9,7 +9,7 @@ describe('FilterItemComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [FilterItemComponent],
+			imports: [FilterItemComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

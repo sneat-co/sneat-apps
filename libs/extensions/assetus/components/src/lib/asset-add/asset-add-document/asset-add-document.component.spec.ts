@@ -9,7 +9,7 @@ describe('AssetAddDocumentComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [AssetAddDocumentComponent],
+			imports: [AssetAddDocumentComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

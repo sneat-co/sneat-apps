@@ -9,8 +9,8 @@ describe('EnvironmentPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [EnvironmentPageComponent],
-			imports: [IonicModule.forRoot()],
+			,
+			imports: [EnvironmentPageComponent, IonicModule.forRoot()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(EnvironmentPageComponent);

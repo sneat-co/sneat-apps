@@ -9,7 +9,7 @@ describe('ScheduleWeekdayComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [CalendarWeekdayComponent],
+			imports: [CalendarWeekdayComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

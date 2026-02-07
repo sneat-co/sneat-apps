@@ -9,7 +9,7 @@ describe('DocumentsByTypeComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [DocumentsByTypeComponent],
+			imports: [DocumentsByTypeComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

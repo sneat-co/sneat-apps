@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { TeamService } from '@sneat/space/services';
+import { TeamService } from '@sneat/space-services';
 
 import { MemberService } from './member.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';

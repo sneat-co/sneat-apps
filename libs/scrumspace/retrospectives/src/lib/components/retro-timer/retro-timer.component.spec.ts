@@ -10,8 +10,8 @@ describe('RetroTimerComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [RetroTimerComponent],
-			imports: [IonicModule.forRoot(), HttpClientTestingModule],
+			,
+			imports: [RetroTimerComponent, IonicModule.forRoot(), HttpClientTestingModule],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(RetroTimerComponent);

@@ -9,8 +9,8 @@ describe('RecordTabComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [RecordTabComponent],
-			imports: [IonicModule.forRoot()],
+			,
+			imports: [RecordTabComponent, IonicModule.forRoot()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(RecordTabComponent);

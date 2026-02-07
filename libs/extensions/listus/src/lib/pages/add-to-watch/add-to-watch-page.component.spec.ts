@@ -9,7 +9,7 @@ describe('AddToWatchPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [AddToWatchPageComponent],
+			imports: [AddToWatchPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

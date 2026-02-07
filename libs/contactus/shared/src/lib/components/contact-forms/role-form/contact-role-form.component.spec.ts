@@ -8,7 +8,7 @@ describe('ContactTypeFormComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [ContactRoleFormComponent],
+			imports: [ContactRoleFormComponent],
 		}).compileComponents();
 	}));
 

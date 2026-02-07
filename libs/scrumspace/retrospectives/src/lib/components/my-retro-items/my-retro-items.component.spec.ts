@@ -11,8 +11,8 @@ describe('MyRetroItemsComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [MyRetroItemsComponent],
-			imports: [IonicModule.forRoot(), HttpClientTestingModule],
+			,
+			imports: [MyRetroItemsComponent, IonicModule.forRoot(), HttpClientTestingModule],
 			providers: [TeamService, UserService],
 		}).compileComponents();
 

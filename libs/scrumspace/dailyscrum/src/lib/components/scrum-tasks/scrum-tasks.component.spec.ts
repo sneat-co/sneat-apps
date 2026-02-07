@@ -12,8 +12,8 @@ describe('ScrumTasksComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [ScrumTasksComponent],
-			imports: [IonicModule.forRoot(), HttpClientTestingModule],
+			,
+			imports: [ScrumTasksComponent, IonicModule.forRoot(), HttpClientTestingModule],
 			providers: [SpaceService, UserService],
 		}).compileComponents();
 

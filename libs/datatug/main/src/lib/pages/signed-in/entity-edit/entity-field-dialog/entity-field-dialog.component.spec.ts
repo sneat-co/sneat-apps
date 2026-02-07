@@ -9,8 +9,8 @@ describe('EntityFieldDialogComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [EntityFieldDialogComponent],
-			imports: [IonicModule.forRoot()],
+			,
+			imports: [EntityFieldDialogComponent, IonicModule.forRoot()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(EntityFieldDialogComponent);

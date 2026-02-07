@@ -9,7 +9,7 @@ describe('AssetGroupPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [AssetGroupPageComponent],
+			imports: [AssetGroupPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

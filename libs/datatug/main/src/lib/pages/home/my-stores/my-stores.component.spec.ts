@@ -9,8 +9,8 @@ describe('MyStoresComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [MyStoresComponent],
-			imports: [IonicModule.forRoot()],
+			,
+			imports: [MyStoresComponent, IonicModule.forRoot()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(MyStoresComponent);

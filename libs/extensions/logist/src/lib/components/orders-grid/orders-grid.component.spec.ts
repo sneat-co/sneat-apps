@@ -8,7 +8,7 @@ describe('FreightsListComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [OrdersGridComponent],
+			imports: [OrdersGridComponent],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(OrdersGridComponent);

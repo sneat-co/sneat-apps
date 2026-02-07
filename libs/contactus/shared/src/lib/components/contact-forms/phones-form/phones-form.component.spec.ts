@@ -8,7 +8,7 @@ describe('PhonesFormComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [PhonesFormComponent],
+			imports: [PhonesFormComponent],
 		}).compileComponents();
 	}));
 

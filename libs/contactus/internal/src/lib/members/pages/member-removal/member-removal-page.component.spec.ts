@@ -9,7 +9,7 @@ describe('MemberRemovalPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [MemberRemovalPageComponent],
+			imports: [MemberRemovalPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

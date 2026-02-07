@@ -9,8 +9,7 @@ describe('ErrorCardComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [SneatErrorCardComponent],
-			imports: [IonicModule.forRoot()],
+			imports: [SneatErrorCardComponent, IonicModule.forRoot()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(SneatErrorCardComponent);

@@ -9,8 +9,8 @@ describe('ForeignKeyCardComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [ForeignKeyCardComponent],
-			imports: [IonicModule.forRoot()],
+			,
+			imports: [ForeignKeyCardComponent, IonicModule.forRoot()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(ForeignKeyCardComponent);

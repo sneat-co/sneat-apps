@@ -13,12 +13,11 @@ describe('MembersListComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [MembersListComponent],
-			imports: [
+			,
+			imports: [MembersListComponent, 
 				IonicModule.forRoot(),
 				RouterTestingModule,
-				HttpClientTestingModule,
-			],
+				HttpClientTestingModule],
 			providers: [SneatUserService, SpaceService],
 		}).compileComponents();
 

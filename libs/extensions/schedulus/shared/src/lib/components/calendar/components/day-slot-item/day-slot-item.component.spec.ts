@@ -8,7 +8,7 @@ describe('ActivityItemComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [DaySlotItemComponent],
+			imports: [DaySlotItemComponent],
 		}).compileComponents();
 	}));
 

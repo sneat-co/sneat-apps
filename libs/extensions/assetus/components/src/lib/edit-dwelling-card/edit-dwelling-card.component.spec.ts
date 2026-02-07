@@ -9,7 +9,7 @@ describe('MakeModelEngineComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [AddDwellingCardComponent],
+			imports: [AddDwellingCardComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

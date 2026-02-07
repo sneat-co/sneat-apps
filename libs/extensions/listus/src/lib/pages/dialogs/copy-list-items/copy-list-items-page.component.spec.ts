@@ -9,7 +9,7 @@ describe('CopyListItemsPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [CopyListItemsPageComponent],
+			imports: [CopyListItemsPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

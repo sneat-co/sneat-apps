@@ -14,13 +14,12 @@ describe('ScrumPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [ScrumPageComponent],
-			imports: [
+			,
+			imports: [ScrumPageComponent, 
 				IonicModule.forRoot(),
 				HttpClientTestingModule,
 				RouterTestingModule,
-				// AngularFireModule.initializeApp(environment.firebaseConfig),
-			],
+				// AngularFireModule.initializeApp(environment.firebaseConfig)],
 			// providers: [TeamService, UserService],
 		}).compileComponents();
 

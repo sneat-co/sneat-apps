@@ -9,8 +9,8 @@ describe('HomePage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [SpacesPageComponent],
-			imports: [IonicModule.forRoot()],
+			,
+			imports: [SpacesPageComponent, IonicModule.forRoot()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(SpacesPageComponent);

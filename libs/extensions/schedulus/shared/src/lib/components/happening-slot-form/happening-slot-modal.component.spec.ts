@@ -8,7 +8,7 @@ describe('SingleSlotFormComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [HappeningSlotModalComponent],
+			imports: [HappeningSlotModalComponent],
 		}).compileComponents();
 	}));
 

@@ -9,7 +9,7 @@ describe('NewHappeningPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [NewHappeningPageComponent],
+			imports: [NewHappeningPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

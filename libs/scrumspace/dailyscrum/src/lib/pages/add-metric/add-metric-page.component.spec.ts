@@ -13,12 +13,11 @@ describe('AddMetricPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [AddMetricPageComponent],
-			imports: [
+			,
+			imports: [AddMetricPageComponent, 
 				IonicModule.forRoot(),
 				RouterTestingModule,
-				HttpClientTestingModule,
-			],
+				HttpClientTestingModule],
 			providers: [TeamService, UserService],
 		}).compileComponents();
 

@@ -9,8 +9,8 @@ describe('TabsWidgetComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [TabsWidgetComponent],
-			imports: [IonicModule.forRoot()],
+			,
+			imports: [TabsWidgetComponent, IonicModule.forRoot()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(TabsWidgetComponent);

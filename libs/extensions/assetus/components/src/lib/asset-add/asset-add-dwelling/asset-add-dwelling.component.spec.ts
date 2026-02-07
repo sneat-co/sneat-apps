@@ -9,7 +9,7 @@ describe('AssetAddDwellingPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [AssetAddDwellingComponent],
+			imports: [AssetAddDwellingComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

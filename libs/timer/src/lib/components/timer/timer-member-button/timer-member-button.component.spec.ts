@@ -9,8 +9,8 @@ describe('TimerMemberButtonComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [TimerMemberButtonComponent],
-			imports: [IonicModule.forRoot()],
+			,
+			imports: [TimerMemberButtonComponent, IonicModule.forRoot()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(TimerMemberButtonComponent);

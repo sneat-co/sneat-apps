@@ -8,7 +8,7 @@ describe('CopyrightComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [CopyrightComponent],
+			imports: [CopyrightComponent],
 		}).compileComponents();
 	}));
 

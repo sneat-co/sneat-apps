@@ -9,8 +9,8 @@ describe('CellPopoverComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [CellPopoverComponent],
-			imports: [IonicModule.forRoot()],
+			,
+			imports: [CellPopoverComponent, IonicModule.forRoot()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(CellPopoverComponent);

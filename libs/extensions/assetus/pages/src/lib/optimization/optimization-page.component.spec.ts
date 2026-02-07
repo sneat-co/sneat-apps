@@ -9,7 +9,7 @@ describe('OptimizationPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [OptimizationPageComponent],
+			imports: [OptimizationPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

@@ -9,7 +9,7 @@ describe('AssetLiabilitiesComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [AssetLiabilitiesComponent],
+			imports: [AssetLiabilitiesComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

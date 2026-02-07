@@ -9,7 +9,7 @@ describe('AssetContactsGroupComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [AssetContactsGroupComponent],
+			imports: [AssetContactsGroupComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

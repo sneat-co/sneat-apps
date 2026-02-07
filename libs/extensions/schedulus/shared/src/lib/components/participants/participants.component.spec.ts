@@ -9,7 +9,7 @@ describe('ParticipantsComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [ParticipantsComponent],
+			imports: [ParticipantsComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

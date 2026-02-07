@@ -9,7 +9,7 @@ describe('RealEstateLocationComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [RealEstateLocationComponent],
+			imports: [RealEstateLocationComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));
