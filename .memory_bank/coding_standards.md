@@ -18,21 +18,39 @@ When adding new lines to a 'public_api.ts' files add them as comments for manual
 Examples:
 
 ```TypeScript
-interface Example {
-  /**
+interface Example
+{
+	/**
    Describes the purpose in detail. Use TSDoc for long comments that exceed 80 characters.
    @remarks Provide any additional context or constraints here.
-   */
-  longCommentedMember: string;
+	 */
+	longCommentedMember: string;
 
-  shortCommentedMember: number; // Short inline comment (<= 80 chars)
+	shortCommentedMember: number; // Short inline comment (<= 80 chars)
 
-  /**
+	/**
    Adds two numbers.
    @param a First addend.
    @param b Second addend.
    @returns Sum of a and b.
-   */
-  add(a: number, b: number): number;
+	 */
+	add(a: number, b: number): number;
 }
 ```
+
+## Post-change verification
+
+Before reporting task as completed make sure:
+
+- linters report no warnings or errors
+- changed projects are building
+
+### Linting
+
+We expect both `eslint` and `oxlint` to pass without any errors or warnings.
+
+We check for (_but not limited to_):
+
+- @typescript-eslint/no-explicit-any
+- @typescript-eslint/no-unused-vars
+- @typescript-eslint/no-empty-function
