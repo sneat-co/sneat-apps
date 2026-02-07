@@ -5,7 +5,7 @@ import { IScrumDbo } from '@sneat/ext-scrumspace-scrummodels';
 @Component({
 	selector: 'sneat-timer-meeting-button',
 	templateUrl: './timer-meeting-button.component.html',
-	imports: [IonButton],
+	imports: [],
 })
 export class TimerMeetingButtonComponent {
 	@Input() public scrumID?: string;

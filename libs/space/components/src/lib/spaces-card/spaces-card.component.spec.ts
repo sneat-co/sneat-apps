@@ -1,11 +1,15 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { SpacesCardComponent } from './spaces-card.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SneatUserService } from '@sneat/auth-core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { SpaceService } from '@sneat/space-services';
+import { SpaceNavService, SpaceService } from '@sneat/space-services';
+import { ErrorLogger } from '@sneat/logging';
+import { AnalyticsService } from '@sneat/core';
+import { ToastController } from '@ionic/angular';
+import { of } from 'rxjs';
 
 describe('SpacesCardComponent', () => {
 	let component: SpacesCardComponent;
@@ -15,11 +19,24 @@ describe('SpacesCardComponent', () => {
 		await TestBed.configureTestingModule({
 			imports: [
 				SpacesCardComponent,
-				IonicModule.forRoot(),
 				RouterTestingModule,
 				HttpClientTestingModule,
 			],
-			providers: [SpaceService, UserService],
+			providers: [
+				{ provide: SpaceService, useValue: {} },
+				{ provide: SpaceNavService, useValue: {} },
+				{ provide: SneatUserService, useValue: { userState: of({}) } },
+				{
+					provide: ErrorLogger,
+					useValue: {
+						logError: jest.fn(),
+						logErrorHandler: jest.fn(() => jest.fn()),
+					},
+				},
+				{ provide: AnalyticsService, useValue: { logEvent: jest.fn() } },
+				{ provide: ToastController, useValue: {} },
+			],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(SpacesCardComponent);

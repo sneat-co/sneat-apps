@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { TimerMeetingButtonComponent } from './timer-meeting-button.component';
 
@@ -9,7 +9,9 @@ describe('TimerMeetingButtonComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [TimerMeetingButtonComponent, IonicModule.forRoot()]}).compileComponents();
+			imports: [TimerMeetingButtonComponent],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 
 		fixture = TestBed.createComponent(TimerMeetingButtonComponent);
 		component = fixture.componentInstance;

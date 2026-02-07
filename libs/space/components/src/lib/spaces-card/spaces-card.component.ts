@@ -31,24 +31,7 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
 	selector: 'sneat-spaces-card',
 	templateUrl: './spaces-card.component.html',
-	imports: [
-		FormsModule,
-		IonInput,
-		IonCard,
-		IonItem,
-		IonLabel,
-		IonCardTitle,
-		IonButtons,
-		IonButton,
-		IonIcon,
-		IonList,
-		IonItemSliding,
-		IonItemOptions,
-		IonItemOption,
-		IonSpinner,
-		IonSkeletonText,
-		IonCardContent,
-	],
+	imports: [FormsModule],
 })
 export class SpacesCardComponent implements OnInit, OnDestroy {
 	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);

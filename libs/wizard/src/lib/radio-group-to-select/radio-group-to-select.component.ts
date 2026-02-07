@@ -26,17 +26,7 @@ import {
 			multi: true,
 		},
 	],
-	imports: [
-		IonItem,
-		IonSelect,
-		FormsModule,
-		IonSelectOption,
-		IonRadioGroup,
-		IonList,
-		IonLabel,
-		IonListHeader,
-		IonRadio,
-	],
+	imports: [FormsModule],
 })
 export class RadioGroupToSelectComponent implements ControlValueAccessor {
 	v?: object;
