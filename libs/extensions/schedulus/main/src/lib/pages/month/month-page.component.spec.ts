@@ -3,6 +3,16 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { MonthPageComponent } from './month-page.component';
 
+import {
+	IonHeader,
+	IonToolbar,
+	IonTitle,
+	IonButtons,
+	IonButton,
+	IonIcon,
+	IonContent,
+} from '@ionic/angular/standalone';
+
 describe('MonthPage', () => {
 	let component: MonthPageComponent;
 	let fixture: ComponentFixture<MonthPageComponent>;
@@ -11,7 +21,22 @@ describe('MonthPage', () => {
 		await TestBed.configureTestingModule({
 			imports: [MonthPageComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+		})
+			.overrideComponent(MonthPageComponent, {
+				remove: {
+					imports: [
+						IonHeader,
+						IonToolbar,
+						IonTitle,
+						IonButtons,
+						IonButton,
+						IonIcon,
+						IonContent,
+					],
+				},
+				add: { schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+			})
+			.compileComponents();
 	}));
 
 	beforeEach(() => {

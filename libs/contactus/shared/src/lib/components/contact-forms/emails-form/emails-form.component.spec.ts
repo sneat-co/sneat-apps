@@ -1,6 +1,62 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA, forwardRef } from '@angular/core';
+import {
+	FormsModule,
+	NG_VALUE_ACCESSOR,
+	ControlValueAccessor,
+} from '@angular/forms';
+import {
+	IonCard,
+	IonItemDivider,
+	IonLabel,
+	IonIcon,
+	IonGrid,
+	IonRow,
+	IonCol,
+	IonItem,
+	IonSelect,
+	IonSelectOption,
+	IonInput,
+} from '@ionic/angular/standalone';
 
 import { EmailsFormComponent } from './emails-form.component';
+import { Component } from '@angular/core';
+
+@Component({
+	selector: 'ion-input',
+	template: '',
+	standalone: true,
+	providers: [
+		{
+			provide: NG_VALUE_ACCESSOR,
+			useExisting: forwardRef(() => MockIonInput),
+			multi: true,
+		},
+	],
+})
+class MockIonInput implements ControlValueAccessor {
+	writeValue() {}
+	registerOnChange() {}
+	registerOnTouched() {}
+}
+
+@Component({
+	selector: 'ion-select',
+	template: '',
+	standalone: true,
+	providers: [
+		{
+			provide: NG_VALUE_ACCESSOR,
+			useExisting: forwardRef(() => MockIonSelect),
+			multi: true,
+		},
+	],
+})
+class MockIonSelect implements ControlValueAccessor {
+	writeValue() {}
+	registerOnChange() {}
+	registerOnTouched() {}
+}
 
 describe('EmailsFormComponent', () => {
 	let component: EmailsFormComponent;
@@ -8,7 +64,31 @@ describe('EmailsFormComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [EmailsFormComponent]}).compileComponents();
+			imports: [EmailsFormComponent, FormsModule, MockIonInput, MockIonSelect],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		})
+			.overrideComponent(EmailsFormComponent, {
+				remove: {
+					imports: [
+						IonCard,
+						IonItemDivider,
+						IonLabel,
+						IonIcon,
+						IonGrid,
+						IonRow,
+						IonCol,
+						IonItem,
+						IonSelect,
+						IonSelectOption,
+						IonInput,
+					],
+				},
+				add: {
+					imports: [MockIonInput, MockIonSelect],
+					schemas: [CUSTOM_ELEMENTS_SCHEMA],
+				},
+			})
+			.compileComponents();
 	}));
 
 	beforeEach(() => {

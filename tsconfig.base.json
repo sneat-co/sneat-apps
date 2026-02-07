@@ -47,6 +47,12 @@
 			"@angular/forms/testing": [
 				"node_modules/@angular/forms/types/testing.d.ts"
 			],
+			"@angular/platform-browser/animations": [
+				"node_modules/@angular/platform-browser/types/animations.d.ts"
+			],
+			"@angular/platform-browser/animations/async": [
+				"node_modules/@angular/platform-browser/types/animations-async.d.ts"
+			],
 			"@sneat/app": ["libs/app/src/index.ts"],
 			"@sneat/api": ["libs/api/src/index.ts"],
 			"@sneat/auth-core": ["libs/auth/core/src/index.ts"],

@@ -22,7 +22,7 @@ import { Subscription } from 'rxjs';
 @Component({
 	selector: 'sneat-timer-member-button',
 	templateUrl: './timer-member-button.component.html',
-	imports: [],
+	imports: [IonButton],
 })
 export class TimerMemberButtonComponent implements OnDestroy, OnChanges {
 	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);

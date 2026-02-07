@@ -6,7 +6,13 @@ import {
 	signal,
 	inject,
 } from '@angular/core';
-import { MenuController, NavController } from '@ionic/angular/standalone';
+import {
+	IonIcon,
+	IonItem,
+	IonLabel,
+	MenuController,
+	NavController,
+} from '@ionic/angular/standalone';
 import { ISneatUserState, SneatUserService } from '@sneat/auth-core';
 import { UserRequiredFieldsService } from '@sneat/auth-ui';
 import { SpaceType } from '@sneat/core';
@@ -21,7 +27,7 @@ import { SpacesListComponent } from '../spaces-list';
 @Component({
 	selector: 'sneat-spaces-menu',
 	templateUrl: './spaces-menu.component.html',
-	imports: [SpacesListComponent],
+	imports: [SpacesListComponent, IonItem, IonLabel, IonIcon],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	providers: [
 		{

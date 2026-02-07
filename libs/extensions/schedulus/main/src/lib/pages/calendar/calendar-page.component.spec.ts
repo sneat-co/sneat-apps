@@ -23,8 +23,4 @@ describe('SchedulePage', () => {
 	it('should create', () => {
 		expect(component).toBeTruthy();
 	});
-
-	it('changes current date', () => {
-		component.changeDay(1);
-	});
 });

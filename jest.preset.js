@@ -13,6 +13,10 @@ module.exports = {
 	 */
 	snapshotFormat: { escapeString: true, printBasicPrototype: true },
 	transformIgnorePatterns: [
-		'node_modules/(?!.*\\.mjs$|@ionic/angular|@ionic/core|@stencil/core|ionicons)',
+		'node_modules/(?!.*\\.mjs$|@ionic/angular|@ionic/core|@stencil/core|ionicons|@capacitor-firebase|@angular)',
 	],
+	moduleNameMapper: {
+		'^@ionic/angular/standalone$': 'identity-obj-proxy',
+		'^@ionic/angular$': 'identity-obj-proxy',
+	},
 };

@@ -11,6 +11,24 @@ import { AnalyticsService } from '@sneat/core';
 import { ToastController } from '@ionic/angular';
 import { of } from 'rxjs';
 
+import {
+	IonInput,
+	IonCard,
+	IonItem,
+	IonLabel,
+	IonCardTitle,
+	IonButtons,
+	IonButton,
+	IonIcon,
+	IonList,
+	IonItemSliding,
+	IonItemOptions,
+	IonItemOption,
+	IonSpinner,
+	IonSkeletonText,
+	IonCardContent,
+} from '@ionic/angular/standalone';
+
 describe('SpacesCardComponent', () => {
 	let component: SpacesCardComponent;
 	let fixture: ComponentFixture<SpacesCardComponent>;
@@ -37,7 +55,32 @@ describe('SpacesCardComponent', () => {
 				{ provide: ToastController, useValue: {} },
 			],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+		})
+			.overrideComponent(SpacesCardComponent, {
+				remove: {
+					imports: [
+						IonInput,
+						IonCard,
+						IonItem,
+						IonLabel,
+						IonCardTitle,
+						IonButtons,
+						IonButton,
+						IonIcon,
+						IonList,
+						IonItemSliding,
+						IonItemOptions,
+						IonItemOption,
+						IonSpinner,
+						IonSkeletonText,
+						IonCardContent,
+					],
+				},
+				add: {
+					schemas: [CUSTOM_ELEMENTS_SCHEMA],
+				},
+			})
+			.compileComponents();
 
 		fixture = TestBed.createComponent(SpacesCardComponent);
 		component = fixture.componentInstance;

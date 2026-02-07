@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { IonButton } from '@ionic/angular/standalone';
+import { ErrorLogger } from '@sneat/logging';
 
 import { TimerMemberButtonComponent } from './timer-member-button.component';
 
@@ -10,8 +12,22 @@ describe('TimerMemberButtonComponent', () => {
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			imports: [TimerMemberButtonComponent],
+			providers: [
+				{
+					provide: ErrorLogger,
+					useValue: {
+						logError: jest.fn(),
+						logErrorHandler: jest.fn(() => jest.fn()),
+					},
+				},
+			],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+		})
+			.overrideComponent(TimerMemberButtonComponent, {
+				remove: { imports: [IonButton] },
+				add: { schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+			})
+			.compileComponents();
 
 		fixture = TestBed.createComponent(TimerMemberButtonComponent);
 		component = fixture.componentInstance;

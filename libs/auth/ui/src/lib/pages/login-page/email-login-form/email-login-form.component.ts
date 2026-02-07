@@ -47,7 +47,6 @@ export type EmailFormSigningWith = 'email' | 'emailLink' | 'resetPassword';
 import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
-	Auth,
 } from 'firebase/auth';
 
 @Component({

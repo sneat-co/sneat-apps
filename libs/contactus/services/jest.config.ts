@@ -15,10 +15,6 @@ export default {
 	transformIgnorePatterns: [
 		'node_modules/(?!.*\\.mjs$|@ionic|@stencil|ionicons|@capacitor-firebase|@angular)',
 	],
-	moduleNameMapper: {
-		'^@ionic/angular/standalone$': 'identity-obj-proxy',
-		'^@ionic/angular$': 'identity-obj-proxy',
-	},
 	snapshotSerializers: [
 		'jest-preset-angular/build/serializers/no-ng-attributes',
 		'jest-preset-angular/build/serializers/ng-snapshot',

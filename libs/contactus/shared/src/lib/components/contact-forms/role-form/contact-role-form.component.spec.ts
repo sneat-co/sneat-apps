@@ -1,19 +1,57 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
+import { IonCard, IonItemDivider, IonLabel } from '@ionic/angular/standalone';
+import { of } from 'rxjs';
 
 import { ContactRoleFormComponent } from './contact-role-form.component';
+import { ContactGroupService } from '@sneat/contactus-services';
+import { ErrorLogger } from '@sneat/logging';
 
-describe('ContactTypeFormComponent', () => {
+describe('ContactRoleFormComponent', () => {
 	let component: ContactRoleFormComponent;
-	let fixture: ComponentFixture<ContactRoleFormComponent>;
+	let fixture: ComponentFixture<MockComponent>;
+
+	@Component({
+		selector: 'sneat-mock-component',
+		template:
+			'<sneat-contact-role-form [contactGroupID]="undefined" [contactRoleID]="undefined"/>',
+		imports: [ContactRoleFormComponent],
+		standalone: true,
+	})
+	class MockComponent {}
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [ContactRoleFormComponent]}).compileComponents();
+			imports: [MockComponent],
+			providers: [
+				{
+					provide: ContactGroupService,
+					useValue: { getContactGroups: jest.fn().mockReturnValue(of([])) },
+				},
+				{
+					provide: ErrorLogger,
+					useValue: {
+						logError: jest.fn(),
+						logErrorHandler: jest.fn(() => jest.fn()),
+					},
+				},
+			],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		})
+			.overrideComponent(ContactRoleFormComponent, {
+				remove: {
+					imports: [IonCard, IonItemDivider, IonLabel],
+				},
+				add: {
+					schemas: [CUSTOM_ELEMENTS_SCHEMA],
+				},
+			})
+			.compileComponents();
 	}));
 
 	beforeEach(() => {
-		fixture = TestBed.createComponent(ContactRoleFormComponent);
-		component = fixture.componentInstance;
+		fixture = TestBed.createComponent(MockComponent);
+		component = fixture.debugElement.children[0].componentInstance;
 		fixture.detectChanges();
 	});
 

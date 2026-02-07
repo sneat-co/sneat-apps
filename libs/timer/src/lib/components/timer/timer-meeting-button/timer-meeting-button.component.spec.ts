@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { IonButton } from '@ionic/angular/standalone';
 
 import { TimerMeetingButtonComponent } from './timer-meeting-button.component';
 
@@ -11,7 +12,12 @@ describe('TimerMeetingButtonComponent', () => {
 		await TestBed.configureTestingModule({
 			imports: [TimerMeetingButtonComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+		})
+			.overrideComponent(TimerMeetingButtonComponent, {
+				remove: { imports: [IonButton] },
+				add: { schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+			})
+			.compileComponents();
 
 		fixture = TestBed.createComponent(TimerMeetingButtonComponent);
 		component = fixture.componentInstance;

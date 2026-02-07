@@ -1,7 +1,25 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { TitleCasePipe } from '@angular/common';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ErrorLogger } from '@sneat/logging';
+
+import {
+	IonItem,
+	IonIcon,
+	IonLabel,
+	IonBadge,
+	IonText,
+	IonButtons,
+	IonButton,
+	IonCheckbox,
+	IonTextarea,
+	IonItemOptions,
+	IonItemOption,
+} from '@ionic/angular/standalone';
 
 import { ContactsListItemComponent } from './contacts-list-item.component';
+import { SpaceNavService } from '@sneat/space-services';
+import { ContactService } from '@sneat/contactus-services';
 
 describe('ContactListItemComponent', () => {
 	let component: ContactsListItemComponent;
@@ -10,7 +28,40 @@ describe('ContactListItemComponent', () => {
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			imports: [ContactsListItemComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA]}).compileComponents();
+			providers: [
+				{ provide: SpaceNavService, useValue: {} },
+				{ provide: ContactService, useValue: {} },
+				{
+					provide: ErrorLogger,
+					useValue: {
+						logError: jest.fn(),
+						logErrorHandler: jest.fn(() => jest.fn()),
+					},
+				},
+			],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		})
+			.overrideComponent(ContactsListItemComponent, {
+				remove: {
+					imports: [
+						IonItem,
+						IonIcon,
+						IonLabel,
+						IonBadge,
+						IonText,
+						IonButtons,
+						IonButton,
+						IonCheckbox,
+						IonTextarea,
+						IonItemOptions,
+						IonItemOption,
+					],
+				},
+				add: {
+					schemas: [CUSTOM_ELEMENTS_SCHEMA],
+				},
+			})
+			.compileComponents();
 	}));
 
 	beforeEach(() => {

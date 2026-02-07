@@ -1,11 +1,30 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
-import { SneatUserService } from '@sneat/auth-core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ErrorLogger } from '@sneat/logging';
+import {
+	NavController,
+	ModalController,
+	IonRouterOutlet,
+	IonItem,
+	IonAvatar,
+	IonImg,
+	IonSkeletonText,
+	IonItemSliding,
+	IonLabel,
+	IonIcon,
+	IonButtons,
+	IonButton,
+	IonItemOptions,
+	IonItemOption,
+} from '@ionic/angular/standalone';
+import { of } from 'rxjs';
 
 import { MembersListComponent } from './members-list.component';
-import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { SpaceService } from '@sneat/space-services';
+import { SpaceNavService } from '@sneat/space-services';
+import { SneatUserService } from '@sneat/auth-core';
+import { ContactService, ContactusNavService } from '@sneat/contactus-services';
+import { ScheduleNavService } from '@sneat/mod-schedulus-core';
 
 describe('MembersListComponent', () => {
 	let component: MembersListComponent;
@@ -13,14 +32,51 @@ describe('MembersListComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [MembersListComponent, 
-				IonicModule.forRoot(),
-				RouterTestingModule,
-				HttpClientTestingModule],
-			providers: [SneatUserService, SpaceService]}).compileComponents();
+			imports: [MembersListComponent, RouterTestingModule],
+			providers: [
+				{ provide: SpaceNavService, useValue: {} },
+				{ provide: NavController, useValue: {} },
+				{ provide: SneatUserService, useValue: { userState: of({}) } },
+				{ provide: ContactService, useValue: { setContactsStatus: jest.fn() } },
+				{ provide: ScheduleNavService, useValue: {} },
+				{ provide: ModalController, useValue: {} },
+				{ provide: IonRouterOutlet, useValue: {} },
+				{ provide: ContactusNavService, useValue: {} },
+				{
+					provide: ErrorLogger,
+					useValue: {
+						logError: jest.fn(),
+						logErrorHandler: jest.fn(() => jest.fn()),
+					},
+				},
+			],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		})
+			.overrideComponent(MembersListComponent, {
+				remove: {
+					imports: [
+						IonItem,
+						IonAvatar,
+						IonImg,
+						IonSkeletonText,
+						IonItemSliding,
+						IonLabel,
+						IonIcon,
+						IonButtons,
+						IonButton,
+						IonItemOptions,
+						IonItemOption,
+					],
+				},
+				add: {
+					schemas: [CUSTOM_ELEMENTS_SCHEMA],
+				},
+			})
+			.compileComponents();
 
 		fixture = TestBed.createComponent(MembersListComponent);
 		component = fixture.componentInstance;
+		fixture.componentRef.setInput('$members', []);
 		fixture.detectChanges();
 	}));
 

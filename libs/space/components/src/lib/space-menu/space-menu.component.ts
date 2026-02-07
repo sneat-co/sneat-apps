@@ -46,6 +46,14 @@ import { ClassName } from '@sneat/ui';
 		SpaceServiceModule,
 		TitleCasePipe,
 		RouterLink,
+		IonList,
+		IonItem,
+		IonSelect,
+		IonSelectOption,
+		IonIcon,
+		IonLabel,
+		IonButtons,
+		IonButton,
 	],
 	providers: [
 		{

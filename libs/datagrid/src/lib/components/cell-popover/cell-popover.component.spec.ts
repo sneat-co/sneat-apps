@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { CellPopoverComponent } from './cell-popover.component';
 
@@ -9,7 +9,9 @@ describe('CellPopoverComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [CellPopoverComponent, IonicModule.forRoot()]}).compileComponents();
+			imports: [CellPopoverComponent],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 
 		fixture = TestBed.createComponent(CellPopoverComponent);
 		component = fixture.componentInstance;
