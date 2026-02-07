@@ -19,24 +19,6 @@ import {
 
 import { NamesFormComponent } from './names-form.component';
 
-@Component({
-	selector: 'ion-input',
-	template: '',
-	standalone: true,
-	providers: [
-		{
-			provide: NG_VALUE_ACCESSOR,
-			useExisting: forwardRef(() => MockIonInput),
-			multi: true,
-		},
-	],
-})
-class MockIonInput implements ControlValueAccessor {
-	writeValue() {}
-	registerOnChange() {}
-	registerOnTouched() {}
-}
-
 describe('NamesFormComponent', () => {
 	let component: NamesFormComponent;
 	let fixture: ComponentFixture<MockComponent>;
@@ -51,7 +33,7 @@ describe('NamesFormComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [MockComponent, ReactiveFormsModule, FormsModule, MockIonInput],
+			imports: [MockComponent, ReactiveFormsModule, FormsModule],
 			providers: [
 				{
 					provide: ErrorLogger,
@@ -62,24 +44,7 @@ describe('NamesFormComponent', () => {
 				},
 			],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(NamesFormComponent, {
-				remove: {
-					imports: [
-						IonItemDivider,
-						IonItem,
-						IonInput,
-						IonLabel,
-						IonButton,
-						IonIcon,
-					],
-				},
-				add: {
-					imports: [MockIonInput, ReactiveFormsModule, FormsModule],
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
-				},
-			})
-			.compileComponents();
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {

@@ -24,6 +24,8 @@
 		"@sneat/space-models": "*",
 		"@sneat/wormhole": "*",
 		"@sneat/random": "*",
+    "@sneat/api": "0.0.1",
+    "@analogjs/vitest-angular": "~2.1.2"
 	},
 	"sideEffects": false
 }

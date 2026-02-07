@@ -1,5 +1,10 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA, Component, forwardRef } from '@angular/core';
+import {
+	CUSTOM_ELEMENTS_SCHEMA,
+	Component,
+	forwardRef,
+	Input,
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import {
 	IonCard,
@@ -15,33 +20,6 @@ import { ContactRoleFormComponent } from './contact-role-form.component';
 import { ContactGroupService } from '@sneat/contactus-services';
 import { ErrorLogger } from '@sneat/logging';
 
-@Component({
-	selector: 'ion-select',
-	template: '',
-	standalone: true,
-	providers: [
-		{
-			provide: NG_VALUE_ACCESSOR,
-			useExisting: forwardRef(() => MockIonSelect),
-			multi: true,
-		},
-	],
-})
-class MockIonSelect implements ControlValueAccessor {
-	writeValue() {}
-	registerOnChange() {}
-	registerOnTouched() {}
-}
-
-@Component({
-	selector: 'ion-select-option',
-	template: '',
-	standalone: true,
-})
-class MockIonSelectOption {
-	@Input() value: any;
-}
-
 describe('ContactRoleFormComponent', () => {
 	let component: ContactRoleFormComponent;
 	let fixture: ComponentFixture<MockComponent>;
@@ -50,14 +28,14 @@ describe('ContactRoleFormComponent', () => {
 		selector: 'sneat-mock-component',
 		template:
 			'<sneat-contact-role-form [contactGroupID]="undefined" [contactRoleID]="undefined"/>',
-		imports: [ContactRoleFormComponent, MockIonSelect, MockIonSelectOption],
+		imports: [ContactRoleFormComponent],
 		standalone: true,
 	})
 	class MockComponent {}
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [MockComponent, MockIonSelect, MockIonSelectOption],
+			imports: [MockComponent],
 			providers: [
 				{
 					provide: ContactGroupService,
@@ -72,24 +50,7 @@ describe('ContactRoleFormComponent', () => {
 				},
 			],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(ContactRoleFormComponent, {
-				remove: {
-					imports: [
-						IonCard,
-						IonItemDivider,
-						IonLabel,
-						IonSelect,
-						IonSelectOption,
-						IonItem,
-					],
-				},
-				add: {
-					imports: [MockIonSelect, MockIonSelectOption],
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
-				},
-			})
-			.compileComponents();
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {

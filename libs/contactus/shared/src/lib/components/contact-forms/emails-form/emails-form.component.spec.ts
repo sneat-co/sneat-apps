@@ -22,49 +22,13 @@ import {
 
 import { EmailsFormComponent } from './emails-form.component';
 
-@Component({
-	selector: 'ion-input',
-	template: '',
-	standalone: true,
-	providers: [
-		{
-			provide: NG_VALUE_ACCESSOR,
-			useExisting: forwardRef(() => MockIonInput),
-			multi: true,
-		},
-	],
-})
-class MockIonInput implements ControlValueAccessor {
-	writeValue() {}
-	registerOnChange() {}
-	registerOnTouched() {}
-}
-
-@Component({
-	selector: 'ion-select',
-	template: '',
-	standalone: true,
-	providers: [
-		{
-			provide: NG_VALUE_ACCESSOR,
-			useExisting: forwardRef(() => MockIonSelect),
-			multi: true,
-		},
-	],
-})
-class MockIonSelect implements ControlValueAccessor {
-	writeValue() {}
-	registerOnChange() {}
-	registerOnTouched() {}
-}
-
 describe('EmailsFormComponent', () => {
 	let component: EmailsFormComponent;
 	let fixture: ComponentFixture<EmailsFormComponent>;
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [EmailsFormComponent, FormsModule, MockIonInput, MockIonSelect],
+			imports: [EmailsFormComponent, FormsModule],
 			providers: [
 				{
 					provide: ErrorLogger,
@@ -75,29 +39,7 @@ describe('EmailsFormComponent', () => {
 				},
 			],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(EmailsFormComponent, {
-				remove: {
-					imports: [
-						IonCard,
-						IonItemDivider,
-						IonLabel,
-						IonIcon,
-						IonGrid,
-						IonRow,
-						IonCol,
-						IonItem,
-						IonSelect,
-						IonSelectOption,
-						IonInput,
-					],
-				},
-				add: {
-					imports: [MockIonInput, MockIonSelect, FormsModule],
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
-				},
-			})
-			.compileComponents();
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {
