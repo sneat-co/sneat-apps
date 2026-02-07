@@ -1,8 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import {
-	Auth as AngularFireAuth,
-	createUserWithEmailAndPassword,
-} from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { SneatApiService } from '@sneat/api';
 import { SneatAuthStateService } from '@sneat/auth-core';
 import {
@@ -26,7 +23,7 @@ export class InviteService {
 	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
 	private readonly sneatAuthService = inject(SneatAuthStateService);
 	private readonly sneatApiService = inject(SneatApiService);
-	private readonly afAuth = inject(AngularFireAuth);
+	private readonly afAuth = inject(Auth);
 	private readonly randomService = inject(RandomIdService);
 
 	public createInviteForMember(

@@ -11,9 +11,7 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Injectable, inject } from '@angular/core';
-import {
-	Auth as AngularFireAuth /*, onAuthStateChanged*/,
-} from '@angular/fire/auth';
+import { Auth } from '@angular/fire/auth';
 import { map } from 'rxjs/operators';
 import { AuthPipe } from '@angular/fire/auth-guard';
 
@@ -38,7 +36,7 @@ export const redirectToLoginIfNotSignedIn: AuthPipe = map((user) => {
 })
 export class SneatAuthGuard /*implements CanLoad, CanActivate, CanActivateChild*/ {
 	private readonly router = inject(Router);
-	private readonly auth = inject(AngularFireAuth);
+	private readonly auth = inject(Auth);
 
 	public canLoad(
 		route: Route,

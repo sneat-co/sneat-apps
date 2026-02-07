@@ -9,7 +9,7 @@ import {
 	SneatApiBaseUrl,
 	SneatApiService,
 } from './sneat-api-service';
-import { Auth as AngularFireAuth, onIdTokenChanged } from '@angular/fire/auth';
+import { Auth, onIdTokenChanged } from '@angular/fire/auth';
 
 jest.mock('@angular/fire/auth', () => ({
 	onIdTokenChanged: jest.fn(),
@@ -29,7 +29,7 @@ describe('SneatApiService', () => {
 			providers: [
 				SneatApiService,
 				{ provide: SneatApiBaseUrl, useValue: undefined },
-				{ provide: AngularFireAuth, useValue: {} },
+				{ provide: Auth, useValue: {} },
 			],
 		});
 

@@ -24,10 +24,7 @@ import {
 	IContactWithBriefAndSpace,
 } from '@sneat/contactus-core';
 import { ErrorLogger, IErrorLogger } from '@sneat/logging';
-import {
-	Auth as AngularFireAuth,
-	createUserWithEmailAndPassword,
-} from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { SneatUserService } from '@sneat/auth-core';
 import { MemberService } from '@sneat/contactus-services';
 import {
@@ -61,7 +58,7 @@ import { InviteService } from '@sneat/contactus-services';
 	templateUrl: './invite-personal-page.component.html',
 })
 export class InvitePersonalPageComponent implements OnInit {
-	private readonly afAuth = inject(AngularFireAuth);
+	private readonly afAuth = inject(Auth);
 	private readonly userService = inject(SneatUserService);
 	private readonly route = inject(ActivatedRoute);
 	private readonly sneatApiService = inject(SneatApiService);

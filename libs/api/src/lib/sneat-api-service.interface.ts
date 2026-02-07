@@ -41,4 +41,10 @@ export interface ISneatApiService {
 		params?: HttpParams,
 		options?: IHttpRequestOptions,
 	): Observable<T>;
+
+	delete<T>(
+		endpoint: string,
+		params?: HttpParams,
+		body?: unknown,
+	): Observable<T>;
 }

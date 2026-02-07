@@ -8,7 +8,7 @@ import {
 // import { getApp } from '@angular/fire/app';
 // import { getAuth } from '@angular/fire/auth';
 import {
-	Auth as AngularFireAuth,
+	Auth,
 	sendPasswordResetEmail,
 	sendSignInLinkToEmail,
 } from '@angular/fire/auth';
@@ -76,7 +76,7 @@ export class EmailLoginFormComponent {
 		inject<IAnalyticsService>(AnalyticsService);
 	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
 	private readonly toastController = inject(ToastController);
-	private readonly afAuth = inject(AngularFireAuth);
+	private readonly afAuth = inject(Auth);
 	private readonly randomIdService = inject(RandomIdService);
 	private readonly sneatApiService = inject(SneatApiService);
 	private readonly userRecordService = inject(UserRecordService);

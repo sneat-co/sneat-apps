@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, InjectionToken, OnDestroy, inject } from '@angular/core';
-import { Auth as AngularFireAuth, onIdTokenChanged } from '@angular/fire/auth';
+import { Auth, onIdTokenChanged } from '@angular/fire/auth';
 import { Observable, Subject, throwError } from 'rxjs';
 import { ISneatApiService } from './sneat-api-service.interface';
 
@@ -16,19 +16,15 @@ export const DefaultSneatAppApiBaseUrl = 'https://api.sneat.ws/v0/';
 @Injectable({ providedIn: 'root' }) // Should it be in root? Probably it is OK.
 export class SneatApiService implements ISneatApiService, OnDestroy {
 	private readonly httpClient = inject(HttpClient);
-	private readonly baseUrl = inject(SneatApiBaseUrl);
+	private readonly baseUrl =
+		inject(SneatApiBaseUrl, { optional: true }) ?? DefaultSneatAppApiBaseUrl;
 
 	private readonly destroyed = new Subject<void>();
 	private authToken?: string;
 
 	constructor() {
-		const afAuth = inject(AngularFireAuth);
-		const baseUrl = this.baseUrl;
-
-		console.log('SneatApiService.constructor()', baseUrl);
-		if (!baseUrl) {
-			this.baseUrl = DefaultSneatAppApiBaseUrl;
-		}
+		const afAuth = inject(Auth);
+		console.log('SneatApiService.constructor()', this.baseUrl);
 		onIdTokenChanged(afAuth, {
 			next: (user) => {
 				user
