@@ -16,6 +16,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ContactsByTypeComponent } from './contacts-by-type.component';
 import { ContactNavService } from '@sneat/contactus-services';
 import { ErrorLogger } from '@sneat/logging';
+import { ContactsListItemComponent } from '../contacts-list-item/contacts-list-item.component';
 
 describe('ContactsFamilyComponent', () => {
 	let component: ContactsByTypeComponent;
@@ -24,11 +25,13 @@ describe('ContactsFamilyComponent', () => {
 	@Component({
 		selector: 'sneat-mock-component',
 		template:
-			'<sneat-contacts-by-type [$space]="undefined" [$contactGroupDefinitions]="[]" [$contacts]="[]" [$filter]="\'\'"/>',
+			'<sneat-contacts-by-type [$space]="space" [$contactGroupDefinitions]="[]" [$contacts]="[]" [$filter]="\'\'"/>',
 		imports: [ContactsByTypeComponent],
 		standalone: true,
 	})
-	class MockComponent {}
+	class MockComponent {
+		space = { id: 'test-space' };
+	}
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
@@ -57,6 +60,7 @@ describe('ContactsFamilyComponent', () => {
 						IonItemSliding,
 						IonItemDivider,
 						IonSpinner,
+						ContactsListItemComponent,
 					],
 				},
 				add: {

@@ -14,8 +14,9 @@ export default {
 		],
 	},
 	transformIgnorePatterns: [
-		'node_modules/(?!.*\\.mjs$|@ionic|@stencil|ionicons|@capacitor-firebase|@angular)',
+		'node_modules/(?!.*\\.mjs$|@ionic/angular|@ionic/core|@stencil/core|ionicons|@capacitor-firebase|@angular)',
 	],
+	extensionsToTreatAsEsm: ['.ts'],
 	snapshotSerializers: [
 		'jest-preset-angular/build/serializers/no-ng-attributes',
 		'jest-preset-angular/build/serializers/ng-snapshot',

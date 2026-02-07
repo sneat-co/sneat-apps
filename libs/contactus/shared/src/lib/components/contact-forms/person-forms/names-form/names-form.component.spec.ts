@@ -9,11 +9,12 @@ import {
 import { ErrorLogger } from '@sneat/logging';
 
 import {
-	IonCard,
 	IonItemDivider,
 	IonItem,
 	IonLabel,
 	IonInput,
+	IonButton,
+	IonIcon,
 } from '@ionic/angular/standalone';
 
 import { NamesFormComponent } from './names-form.component';
@@ -65,16 +66,16 @@ describe('NamesFormComponent', () => {
 			.overrideComponent(NamesFormComponent, {
 				remove: {
 					imports: [
-						IonCard,
 						IonItemDivider,
 						IonItem,
-						IonLabel,
 						IonInput,
+						IonLabel,
 						IonButton,
+						IonIcon,
 					],
 				},
 				add: {
-					imports: [MockIonInput],
+					imports: [MockIonInput, ReactiveFormsModule, FormsModule],
 					schemas: [CUSTOM_ELEMENTS_SCHEMA],
 				},
 			})

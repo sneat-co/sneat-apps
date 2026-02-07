@@ -1,5 +1,12 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
+@Component({
+	selector: 'sneat-auth-menu-item',
+	template: '',
+	standalone: true,
+})
+class AuthMenuItemStubComponent {}
 
 import { SpaceMenuComponent } from './space-menu.component';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -27,6 +34,7 @@ describe('SpaceMenuComponent', () => {
 	let fixture: ComponentFixture<SpaceMenuComponent>;
 
 	beforeEach(waitForAsync(async () => {
+		const ionic = require('@ionic/angular/standalone');
 		await TestBed.configureTestingModule({
 			imports: [SpaceMenuComponent, RouterTestingModule],
 			providers: [
@@ -41,8 +49,8 @@ describe('SpaceMenuComponent', () => {
 				{ provide: LOGGER_FACTORY, useValue: { getLogger: () => console } },
 				{ provide: APP_INFO, useValue: {} },
 				{ provide: SneatUserService, useValue: { userState: of({}) } },
-				{ provide: NavController, useValue: {} },
-				{ provide: MenuController, useValue: {} },
+				{ provide: ionic.NavController, useValue: {} },
+				{ provide: ionic.MenuController, useValue: {} },
 				{
 					provide: Auth,
 					useValue: {
@@ -57,17 +65,18 @@ describe('SpaceMenuComponent', () => {
 			.overrideComponent(SpaceMenuComponent, {
 				remove: {
 					imports: [
-						IonList,
-						IonItem,
-						IonSelect,
-						IonSelectOption,
-						IonIcon,
-						IonLabel,
-						IonButtons,
-						IonButton,
+						ionic.IonList,
+						ionic.IonItem,
+						ionic.IonSelect,
+						ionic.IonSelectOption,
+						ionic.IonIcon,
+						ionic.IonLabel,
+						ionic.IonButtons,
+						ionic.IonButton,
 					],
 				},
 				add: {
+					imports: [AuthMenuItemStubComponent],
 					schemas: [CUSTOM_ELEMENTS_SCHEMA],
 				},
 			})

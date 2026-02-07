@@ -34,6 +34,7 @@ describe('SpacesCardComponent', () => {
 	let fixture: ComponentFixture<SpacesCardComponent>;
 
 	beforeEach(waitForAsync(async () => {
+		const ionic = require('@ionic/angular/standalone');
 		await TestBed.configureTestingModule({
 			imports: [
 				SpacesCardComponent,
@@ -52,28 +53,33 @@ describe('SpacesCardComponent', () => {
 					},
 				},
 				{ provide: AnalyticsService, useValue: { logEvent: jest.fn() } },
-				{ provide: ToastController, useValue: {} },
+				{
+					provide: ionic.ToastController,
+					useValue: {
+						create: jest.fn().mockResolvedValue({ present: jest.fn() }),
+					},
+				},
 			],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		})
 			.overrideComponent(SpacesCardComponent, {
 				remove: {
 					imports: [
-						IonInput,
-						IonCard,
-						IonItem,
-						IonLabel,
-						IonCardTitle,
-						IonButtons,
-						IonButton,
-						IonIcon,
-						IonList,
-						IonItemSliding,
-						IonItemOptions,
-						IonItemOption,
-						IonSpinner,
-						IonSkeletonText,
-						IonCardContent,
+						ionic.IonInput,
+						ionic.IonCard,
+						ionic.IonItem,
+						ionic.IonLabel,
+						ionic.IonCardTitle,
+						ionic.IonButtons,
+						ionic.IonButton,
+						ionic.IonIcon,
+						ionic.IonList,
+						ionic.IonItemSliding,
+						ionic.IonItemOptions,
+						ionic.IonItemOption,
+						ionic.IonSpinner,
+						ionic.IonSkeletonText,
+						ionic.IonCardContent,
 					],
 				},
 				add: {

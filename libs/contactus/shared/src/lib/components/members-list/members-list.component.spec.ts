@@ -26,6 +26,9 @@ import { SneatUserService } from '@sneat/auth-core';
 import { ContactService, ContactusNavService } from '@sneat/contactus-services';
 import { ScheduleNavService } from '@sneat/mod-schedulus-core';
 
+import { ContactRoleBadgesComponent } from '../contact-role-badges/contact-role-badges.component';
+import { InlistAgeGroupComponent } from '../inlist-options/inlist-age-group.component';
+
 describe('MembersListComponent', () => {
 	let component: MembersListComponent;
 	let fixture: ComponentFixture<MembersListComponent>;
@@ -66,6 +69,8 @@ describe('MembersListComponent', () => {
 						IonButton,
 						IonItemOptions,
 						IonItemOption,
+						ContactRoleBadgesComponent,
+						InlistAgeGroupComponent,
 					],
 				},
 				add: {
@@ -76,6 +81,7 @@ describe('MembersListComponent', () => {
 
 		fixture = TestBed.createComponent(MembersListComponent);
 		component = fixture.componentInstance;
+		fixture.componentRef.setInput('$space', { id: 'test-space' });
 		fixture.componentRef.setInput('$members', []);
 		fixture.detectChanges();
 	}));

@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA, forwardRef } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, forwardRef, Component } from '@angular/core';
 import {
 	FormsModule,
 	NG_VALUE_ACCESSOR,
 	ControlValueAccessor,
 } from '@angular/forms';
+import { ErrorLogger } from '@sneat/logging';
 import {
 	IonCard,
 	IonItemDivider,
@@ -20,7 +21,6 @@ import {
 } from '@ionic/angular/standalone';
 
 import { EmailsFormComponent } from './emails-form.component';
-import { Component } from '@angular/core';
 
 @Component({
 	selector: 'ion-input',
@@ -65,6 +65,15 @@ describe('EmailsFormComponent', () => {
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			imports: [EmailsFormComponent, FormsModule, MockIonInput, MockIonSelect],
+			providers: [
+				{
+					provide: ErrorLogger,
+					useValue: {
+						logError: jest.fn(),
+						logErrorHandler: jest.fn(() => jest.fn()),
+					},
+				},
+			],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		})
 			.overrideComponent(EmailsFormComponent, {
@@ -84,7 +93,7 @@ describe('EmailsFormComponent', () => {
 					],
 				},
 				add: {
-					imports: [MockIonInput, MockIonSelect],
+					imports: [MockIonInput, MockIonSelect, FormsModule],
 					schemas: [CUSTOM_ELEMENTS_SCHEMA],
 				},
 			})

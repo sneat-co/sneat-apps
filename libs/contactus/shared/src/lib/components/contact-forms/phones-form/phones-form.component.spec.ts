@@ -1,15 +1,11 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import {
-	CUSTOM_ELEMENTS_SCHEMA,
-	Component,
-	Input,
-	forwardRef,
-} from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, forwardRef, Component } from '@angular/core';
 import {
 	FormsModule,
 	NG_VALUE_ACCESSOR,
 	ControlValueAccessor,
 } from '@angular/forms';
+import { ErrorLogger } from '@sneat/logging';
 import {
 	IonCard,
 	IonItemDivider,
@@ -69,6 +65,15 @@ describe('PhonesFormComponent', () => {
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			imports: [PhonesFormComponent, FormsModule, MockIonInput, MockIonSelect],
+			providers: [
+				{
+					provide: ErrorLogger,
+					useValue: {
+						logError: jest.fn(),
+						logErrorHandler: jest.fn(() => jest.fn()),
+					},
+				},
+			],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		})
 			.overrideComponent(PhonesFormComponent, {
@@ -88,7 +93,7 @@ describe('PhonesFormComponent', () => {
 					],
 				},
 				add: {
-					imports: [MockIonInput, MockIonSelect],
+					imports: [MockIonInput, MockIonSelect, FormsModule],
 					schemas: [CUSTOM_ELEMENTS_SCHEMA],
 				},
 			})

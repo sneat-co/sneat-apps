@@ -1,5 +1,16 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, Input } from '@angular/core';
+
+@Component({
+	selector: 'sneat-spaces-list',
+	template: '',
+	standalone: true,
+})
+class SpacesListStubComponent {
+	@Input() userID?: string;
+	@Input() spaces?: any[];
+	@Input() pathPrefix = '/space';
+}
 
 import { SpacesMenuComponent } from './spaces-menu.component';
 import { ErrorLogger } from '@sneat/logging';
@@ -17,6 +28,7 @@ describe('SpacesMenuComponent', () => {
 	let fixture: ComponentFixture<SpacesMenuComponent>;
 
 	beforeEach(waitForAsync(async () => {
+		const ionic = require('@ionic/angular/standalone');
 		await TestBed.configureTestingModule({
 			imports: [SpacesMenuComponent],
 			providers: [
@@ -31,8 +43,8 @@ describe('SpacesMenuComponent', () => {
 				{ provide: LOGGER_FACTORY, useValue: { getLogger: () => console } },
 				{ provide: APP_INFO, useValue: {} },
 				{ provide: SneatUserService, useValue: { userState: of({}) } },
-				{ provide: NavController, useValue: {} },
-				{ provide: MenuController, useValue: {} },
+				{ provide: ionic.NavController, useValue: {} },
+				{ provide: ionic.MenuController, useValue: {} },
 				{
 					provide: Auth,
 					useValue: {
@@ -45,10 +57,9 @@ describe('SpacesMenuComponent', () => {
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		})
 			.overrideComponent(SpacesMenuComponent, {
-				remove: {
-					imports: [IonIcon, IonItem, IonLabel],
-				},
+				remove: { imports: [ionic.IonIcon, ionic.IonItem, ionic.IonLabel] },
 				add: {
+					imports: [SpacesListStubComponent],
 					schemas: [CUSTOM_ELEMENTS_SCHEMA],
 				},
 			})

@@ -21,13 +21,25 @@ import { ContactsListItemComponent } from './contacts-list-item.component';
 import { SpaceNavService } from '@sneat/space-services';
 import { ContactService } from '@sneat/contactus-services';
 
+import { RelatedAsComponent } from './related-as.component';
+
 describe('ContactListItemComponent', () => {
 	let component: ContactsListItemComponent;
-	let fixture: ComponentFixture<ContactsListItemComponent>;
+	let fixture: ComponentFixture<MockComponent>;
+
+	@Component({
+		selector: 'sneat-mock-component',
+		template: '<sneat-contacts-list-item [$contact]="contact"/>',
+		imports: [ContactsListItemComponent],
+		standalone: true,
+	})
+	class MockComponent {
+		contact = { id: 'test-contact' };
+	}
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [ContactsListItemComponent],
+			imports: [MockComponent],
 			providers: [
 				{ provide: SpaceNavService, useValue: {} },
 				{ provide: ContactService, useValue: {} },
@@ -55,6 +67,7 @@ describe('ContactListItemComponent', () => {
 						IonTextarea,
 						IonItemOptions,
 						IonItemOption,
+						RelatedAsComponent,
 					],
 				},
 				add: {
@@ -65,8 +78,8 @@ describe('ContactListItemComponent', () => {
 	}));
 
 	beforeEach(() => {
-		fixture = TestBed.createComponent(ContactsListItemComponent);
-		component = fixture.componentInstance;
+		fixture = TestBed.createComponent(MockComponent);
+		component = fixture.debugElement.children[0].componentInstance;
 		fixture.detectChanges();
 	});
 

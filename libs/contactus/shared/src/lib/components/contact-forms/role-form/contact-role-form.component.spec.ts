@@ -1,11 +1,46 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
-import { IonCard, IonItemDivider, IonLabel } from '@ionic/angular/standalone';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, forwardRef } from '@angular/core';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import {
+	IonCard,
+	IonItemDivider,
+	IonLabel,
+	IonSelect,
+	IonSelectOption,
+	IonItem,
+} from '@ionic/angular/standalone';
 import { of } from 'rxjs';
 
 import { ContactRoleFormComponent } from './contact-role-form.component';
 import { ContactGroupService } from '@sneat/contactus-services';
 import { ErrorLogger } from '@sneat/logging';
+
+@Component({
+	selector: 'ion-select',
+	template: '',
+	standalone: true,
+	providers: [
+		{
+			provide: NG_VALUE_ACCESSOR,
+			useExisting: forwardRef(() => MockIonSelect),
+			multi: true,
+		},
+	],
+})
+class MockIonSelect implements ControlValueAccessor {
+	writeValue() {}
+	registerOnChange() {}
+	registerOnTouched() {}
+}
+
+@Component({
+	selector: 'ion-select-option',
+	template: '',
+	standalone: true,
+})
+class MockIonSelectOption {
+	@Input() value: any;
+}
 
 describe('ContactRoleFormComponent', () => {
 	let component: ContactRoleFormComponent;
@@ -15,14 +50,14 @@ describe('ContactRoleFormComponent', () => {
 		selector: 'sneat-mock-component',
 		template:
 			'<sneat-contact-role-form [contactGroupID]="undefined" [contactRoleID]="undefined"/>',
-		imports: [ContactRoleFormComponent],
+		imports: [ContactRoleFormComponent, MockIonSelect, MockIonSelectOption],
 		standalone: true,
 	})
 	class MockComponent {}
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [MockComponent],
+			imports: [MockComponent, MockIonSelect, MockIonSelectOption],
 			providers: [
 				{
 					provide: ContactGroupService,
@@ -40,9 +75,17 @@ describe('ContactRoleFormComponent', () => {
 		})
 			.overrideComponent(ContactRoleFormComponent, {
 				remove: {
-					imports: [IonCard, IonItemDivider, IonLabel],
+					imports: [
+						IonCard,
+						IonItemDivider,
+						IonLabel,
+						IonSelect,
+						IonSelectOption,
+						IonItem,
+					],
 				},
 				add: {
+					imports: [MockIonSelect, MockIonSelectOption],
 					schemas: [CUSTOM_ELEMENTS_SCHEMA],
 				},
 			})
