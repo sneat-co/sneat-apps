@@ -79,7 +79,7 @@ export class SpaceService {
 		// console.log('SpaceService.constructor()');
 		this.sfs = new SneatFirestoreService<ISpaceBrief, ISpaceDbo>(
 			this.injector,
-			(id, dto) => ({
+			(id: string, dto: ISpaceDbo) => ({
 				id,
 				...dto,
 			}),
@@ -100,7 +100,7 @@ export class SpaceService {
 
 	private readonly processUserRecordInSpaceService = (
 		userState: ISneatUserState,
-	) => {
+	): void => {
 		console.log('SpaceService.processUserRecordInSpaceService()', userState);
 		const user = userState?.record;
 		if (!user) {
@@ -131,7 +131,7 @@ export class SpaceService {
 	): Observable<IRecord<ISpaceDbo>> {
 		return this.sneatApiService
 			.post<ICreateSpaceResponse>('spaces/create_space', request)
-			.pipe(map((response) => response.space));
+			.pipe(map((response: ICreateSpaceResponse) => response.space));
 	}
 
 	// public getSpace(ref: ISpaceRef): Observable<ISpaceContext> {

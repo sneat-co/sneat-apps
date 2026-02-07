@@ -1,6 +1,6 @@
 export default {
 	displayName: 'auth-ui',
-	preset: '../../jest.preset.js',
+	preset: '../../../jest.preset.js',
 	setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
 	globals: {},
 	coverageDirectory: '../../coverage/libs/auth/ui',
@@ -13,7 +13,9 @@ export default {
 			},
 		],
 	},
-	transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],
+	transformIgnorePatterns: [
+		'node_modules/(?!.*\\.mjs$|@ionic/angular|@ionic/core|@stencil/core|ion-icons)',
+	],
 	snapshotSerializers: [
 		'jest-preset-angular/build/serializers/no-ng-attributes',
 		'jest-preset-angular/build/serializers/ng-snapshot',

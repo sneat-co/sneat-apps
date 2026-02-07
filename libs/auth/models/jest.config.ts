@@ -1,6 +1,6 @@
 export default {
 	displayName: 'auth-models',
-	preset: '../../jest.preset.js',
+	preset: '../../../jest.preset.js',
 	setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
 	globals: {},
 	coverageDirectory: '../../coverage/libs/auth/models',

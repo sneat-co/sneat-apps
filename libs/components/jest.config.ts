@@ -13,9 +13,7 @@ export default {
 			},
 		],
 	},
-	transformIgnorePatterns: [
-		'node_modules/(?!.*\\.mjs$|@ionic/core|@stencil/core|ion-icons)',
-	],
+	transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],
 	snapshotSerializers: [
 		'jest-preset-angular/build/serializers/no-ng-attributes',
 		'jest-preset-angular/build/serializers/ng-snapshot',

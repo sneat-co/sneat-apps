@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { TeamService } from '@sneat/space-services';
+import { SpaceService } from '@sneat/space-services';
 
 import { MemberService } from './member.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -8,7 +8,8 @@ describe('MemberService', () => {
 	beforeEach(() =>
 		TestBed.configureTestingModule({
 			imports: [HttpClientTestingModule],
-			providers: [TeamService]}),
+			providers: [SpaceService],
+		}),
 	);
 
 	it('should be created', () => {
