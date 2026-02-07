@@ -33,6 +33,13 @@ export function createBaseViteConfig(
 		dirname.replace(rootPath, ''),
 	);
 
+	const relativeToGlobalSetup = join(
+		Array(dirname.replace(rootPath, '').split('/').filter(Boolean).length)
+			.fill('..')
+			.join('/'),
+		'scripts/vitest-global-setup.ts',
+	);
+
 	return {
 		root: dirname,
 		cacheDir: relativeToRoot,
@@ -67,6 +74,7 @@ export function createBaseViteConfig(
 						'@stencil/core',
 						'@sneat/logging',
 						'@sneat/core',
+						'@ionic/angular/standalone',
 					],
 				},
 			},
