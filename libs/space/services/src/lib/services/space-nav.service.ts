@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Params } from '@angular/router';
-import { NavController } from '@ionic/angular/standalone';
+import { NavController } from '@ionic/angular';
 import { AnalyticsService, IAnalyticsService, ISpaceRef } from '@sneat/core';
 
 type NavigationOptions = NonNullable<
