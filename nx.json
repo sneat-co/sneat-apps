@@ -86,5 +86,13 @@
 		"version": {
 			"preVersionCommand": "pnpm dlx nx run-many -t build"
 		}
-	}
+	},
+	"plugins": [
+		{
+			"plugin": "nx-oxlint",
+			"options": {
+				"lintTargetName": "lint"
+			}
+		}
+	]
 }

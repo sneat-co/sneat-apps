@@ -6,6 +6,8 @@
 	"scripts": {
 		"nx": "NODE_OPTIONS=--no-deprecation nx",
 		"ng": "nx",
+		"lint": "oxlint",
+		"lint:fix": "oxlint --fix",
 		"postinstall_legacy": "node ./decorate-angular-cli.js && ngcc --properties es2022 browser module main --first-only --create-ivy-entry-points",
 		"start": "nx serve",
 		"build": "nx build",
@@ -125,6 +127,8 @@
 		"madge": "^8.0.0",
 		"ng-packagr": "21.1.0",
 		"nx": "22.4.5",
+		"nx-oxlint": "^0.1.1",
+		"oxlint": "^1.43.0",
 		"postcss": "8.5.6",
 		"postcss-import": "16.1.1",
 		"postcss-preset-env": "11.1.3",
