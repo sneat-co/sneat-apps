@@ -1,8 +1,8 @@
 /// <reference types='vitest' />
-import { defineConfig, UserConfig, mergeConfig } from 'vite';
 import angular from '@analogjs/vite-plugin-angular';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { join } from 'path';
+import { ViteUserConfigExport } from 'vitest/config';
 
 export interface BaseViteConfigOptions {
 	dirname: string;
@@ -12,12 +12,8 @@ export interface BaseViteConfigOptions {
 
 export function createBaseViteConfig(
 	options: BaseViteConfigOptions,
-): UserConfig {
+): ViteUserConfigExport {
 	const { dirname, name, reportsDirectory } = options;
-	const relativeRoot = join(dirname, '..')
-		.split('/')
-		.map(() => '..')
-		.join('/'); // This is a bit naive but might work for simple nesting
 
 	// Better way to calculate relative path to root based on distance from root
 	const rootPath = process.cwd();
@@ -61,5 +57,5 @@ export function createBaseViteConfig(
 				provider: 'v8' as const,
 			},
 		},
-	};
+	} as ViteUserConfigExport;
 }
