@@ -45,10 +45,6 @@ import { ClassName } from '@sneat/ui';
 	],
 })
 export class TrackersPageComponent extends SpaceBaseComponent {
-	constructor() {
-		super();
-	}
-
 	protected goNewTracker(category?: string): void {
 		console.log('goNewTracker', category);
 		this.navController

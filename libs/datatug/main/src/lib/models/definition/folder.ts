@@ -22,5 +22,5 @@ export function folderItemsAsList(
 ): IFolderItemWithId[] {
 	return Object.keys(items)
 		.map((id) => ({ id, name: items[id].name }))
-		.sort((a, b) => (a.name > b.name ? 1 : -1));
+		.toSorted((a, b) => (a.name > b.name ? 1 : -1));
 }

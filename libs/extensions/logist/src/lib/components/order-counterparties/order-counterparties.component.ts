@@ -90,12 +90,11 @@ export class OrderCounterpartiesComponent implements OnChanges {
 			.filter((c) => c.role === this.contactRole)
 			.map((c) =>
 				c.parent
-					? {
-							...c,
+					? Object.assign(c, {
 							parent: counterparties.find(
 								(cc) => cc.contactID === c.parent?.contactID,
 							),
-						}
+						})
 					: c,
 			);
 	}

@@ -41,10 +41,9 @@ export class ContactsAsBadgesComponent {
 		readonly IContactWithState[]
 	>(() => {
 		const deletingContactIDs = this.$deletingContactIDs();
-		const result: readonly IContactWithState[] = this.$contacts().map((c) => ({
-			...c,
-			isDeleting: deletingContactIDs.includes(c.id),
-		}));
+		const result: readonly IContactWithState[] = this.$contacts().map((c) =>
+			Object.assign(c, { isDeleting: deletingContactIDs.includes(c.id) }),
+		);
 		if (deletingContactIDs.some((id) => result.some((c) => c.id === id))) {
 			this.$deletingContactIDs.update((deletingContactIDs) =>
 				deletingContactIDs.filter((id) => result.some((c) => c.id === id)),

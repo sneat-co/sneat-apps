@@ -254,7 +254,7 @@ export class ContactsByTypeComponent
 	protected checkChanged(args: ICheckChangedArgs, role: ContactRole): void {
 		this.contactsChange.emit(
 			this.$contacts()?.map((c) =>
-				c.id === args.id ? { ...c, isChecked: args.checked } : c,
+				c.id === args.id ? Object.assign(c, { isChecked: args.checked }) : c,
 			),
 		);
 		this.contactSelectionChange.emit({ ...args, role });
@@ -267,7 +267,7 @@ export class ContactsByTypeComponent
 				case 'reset_selected': {
 					this.contactsChange.emit(
 						this.$contacts()?.map((c) =>
-							c.isChecked ? { ...c, isChecked: false } : c,
+							c.isChecked ? Object.assign(c, { isChecked: false }) : c,
 						),
 					);
 					this.setContactGroups();

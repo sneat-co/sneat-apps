@@ -100,11 +100,6 @@ export class AssetAddDocumentComponent
 		}
 	}
 
-	constructor() {
-		// super('AssetAddVehicleComponent', route, teamParams, assetService);
-		super();
-	}
-
 	protected onAssetChanged(asset: IAssetContext): void {
 		console.log('onAssetChanged', asset, this.documentAsset);
 	}

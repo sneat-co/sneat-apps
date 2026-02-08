@@ -52,10 +52,9 @@ export abstract class CommChannelsListComponent extends SneatBaseComponent {
 	) {
 		super();
 		this.$channels = computed(() =>
-			Object.entries($channels() || {}).map(([id, props]) => ({
-				id,
-				...props,
-			})),
+			Object.entries($channels() || {}).map(([id, props]) =>
+				Object.assign({ id }, props),
+			),
 		);
 		this.$title.set(title);
 		this.$placeholder.set(placeholder);

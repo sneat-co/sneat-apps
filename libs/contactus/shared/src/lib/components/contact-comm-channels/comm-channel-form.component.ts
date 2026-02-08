@@ -77,10 +77,6 @@ export class CommChannelFormComponent extends SneatBaseComponent {
 
 	private readonly contactService = inject(ContactService);
 
-	constructor() {
-		super();
-	}
-
 	protected readonly $saving = signal(false);
 
 	protected addNewChannel(event: Event): void {

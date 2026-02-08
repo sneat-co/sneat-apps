@@ -140,7 +140,9 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 					break;
 				case 'reset_selected':
 					this.contactsChange.emit(
-						this.$allContacts()?.map((c) => ({ ...c, isChecked: false })),
+						this.$allContacts()?.map((c) =>
+							Object.assign(c, { isChecked: false }),
+						),
 					);
 					break;
 				case 'select_all':
@@ -259,10 +261,11 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 
 	protected contactSelectionChanged(args: ICheckChangedArgs) {
 		this.contactsChange.emit(
-			this.$allContacts()?.map((c) => ({
-				...c,
-				isChecked: c.id === args.id ? args.checked : c.isChecked,
-			})),
+			this.$allContacts()?.map((c) =>
+				Object.assign(c, {
+					isChecked: c.id === args.id ? args.checked : c.isChecked,
+				}),
+			),
 		);
 	}
 

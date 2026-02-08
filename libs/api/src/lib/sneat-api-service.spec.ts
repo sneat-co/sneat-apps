@@ -16,7 +16,7 @@ const onIdTokenChangedMock = vi.fn();
 
 vi.mock('@angular/fire/auth', () => ({
 	onIdTokenChanged: (...args: unknown[]) => onIdTokenChangedMock(...args),
-	Auth: class {},
+	Auth: vi.fn(),
 }));
 
 const NOT_AUTHENTICATED_ERROR =

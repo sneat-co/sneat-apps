@@ -10,14 +10,12 @@ module.exports = [
 	...sneatLibConfig(__dirname),
 	...compatConfig(__dirname)
 		.config({ parser: 'jsonc-eslint-parser' })
-		.map((config) => ({
-			...config,
-			files: ['**/*.json-TODO'],
-			rules: {
-				...config.rules,
-				'@nx/dependency-checks': 'error',
-			},
-		})),
+		.map((config) =>
+			Object.assign(config, {
+				files: [`**/*.json-TODO`],
+				rules: { ...config.rules, '@nx/dependency-checks': `error` },
+			}),
+		),
 	{
 		files: ['**/*.ts'],
 		rules: {

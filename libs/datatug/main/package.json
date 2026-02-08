@@ -20,7 +20,6 @@
 		"@sneat/datagrid": "*",
 		"@sneat/dto": "*",
 		"@sneat/grid": "*",
-		"@sneat/logging": "*",
 		"@sneat/space-models": "*",
 		"@sneat/wormhole": "*",
 		"@sneat/random": "*",

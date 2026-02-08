@@ -17,9 +17,9 @@ export const logistRoutes: Routes = [
 	{
 		path: 'settings',
 		loadComponent: () =>
-			import(
-				'../pages/logist-team-settings-page/logist-space-settings-page.component'
-			).then((m) => m.LogistSpaceSettingsPageComponent),
+			import('../pages/logist-team-settings-page/logist-space-settings-page.component').then(
+				(m) => m.LogistSpaceSettingsPageComponent,
+			),
 	},
 	{
 		path: '',
@@ -57,9 +57,9 @@ export const logistRoutes: Routes = [
 	{
 		path: 'order/:orderID/new-shipping-point',
 		loadComponent: () =>
-			import(
-				'../pages/new-shipping-point/new-shipping-point-page.component'
-			).then((m) => m.NewShippingPointPageComponent),
+			import('../pages/new-shipping-point/new-shipping-point-page.component').then(
+				(m) => m.NewShippingPointPageComponent,
+			),
 	},
 	{
 		path: 'order/:orderID/print',
@@ -91,7 +91,9 @@ export const logistRoutes: Routes = [
 	imports: [
 		// CommonComponent,
 		RouterModule.forChild(
-			logistRoutes.map((r) => ({ ...r, path: r.path?.replace('logist/', '') })),
+			logistRoutes.map((r) =>
+				Object.assign(r, { path: r.path?.replace(`logist/`, ``) }),
+			),
 		),
 	],
 	providers: [SpaceComponentBaseParams],

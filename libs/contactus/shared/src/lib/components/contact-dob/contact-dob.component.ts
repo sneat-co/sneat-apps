@@ -27,10 +27,6 @@ import { ClassName, SneatBaseComponent } from '@sneat/ui';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactDobComponent extends SneatBaseComponent {
-	constructor() {
-		super();
-	}
-
 	public readonly $contact = input.required<IContactContext | undefined>();
 	public readonly $updating = signal(false);
 

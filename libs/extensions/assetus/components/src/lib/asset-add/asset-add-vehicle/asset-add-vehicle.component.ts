@@ -91,11 +91,6 @@ export class AssetAddVehicleComponent
 		}
 	}
 
-	constructor() {
-		// super('AssetAddVehicleComponent', route, teamParams, assetService);
-		super();
-	}
-
 	protected onAssetChanged(asset: IAssetContext): void {
 		this.vehicleAsset = asset as IAssetVehicleContext;
 	}

@@ -173,8 +173,8 @@ export class ContainerSegmentComponent implements OnChanges {
 			return 'no dates yet';
 		}
 		const { start, end } = dates;
-		const starts = start.split('-').reverse();
-		const ends = end.split('-').reverse();
+		const starts = start.split('-').toReversed();
+		const ends = end.split('-').toReversed();
 		if (start === end) {
 			return starts.join('/');
 		}

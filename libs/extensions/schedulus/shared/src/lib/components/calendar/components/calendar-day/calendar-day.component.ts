@@ -116,7 +116,7 @@ export class CalendarDayComponent
 		if (this.allSlots?.length) {
 			this.slots = this.allSlots
 				.filter((slot) => isSlotVisible(slot, this.filter))
-				.sort(sortSlotItems);
+				.toSorted(sortSlotItems);
 			this.slotsHiddenByFilter = this.allSlots.length - this.slots.length;
 			// console.log(
 			// 	this.logPrefix() + '.applyFilter() =>',

@@ -117,10 +117,6 @@ export class RelationshipFormComponent extends SpaceRelatedFormComponent {
 
 	protected readonly relatedAsSingle = new FormControl<string>('');
 
-	constructor() {
-		super();
-	}
-
 	private readonly spaceService = inject(SpaceService);
 
 	// Defined here as it is used in the template twice

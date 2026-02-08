@@ -13,10 +13,6 @@ import { IMovieService } from './interfaces';
 })
 // extends CommuneItemBaseService<typeof MovieKind, IMovieDto, ListusAppSchema>
 export class MovieService implements IMovieService {
-	constructor(/*rxStoreProvider: ISneatStoreProvider*/) {
-		// super(rxStoreProvider, MovieKind);
-	}
-
 	addCommuneItem(
 		dto: IMovieDbo,
 		// tx?: IRxReadwriteTransaction<ListusAppSchema>,

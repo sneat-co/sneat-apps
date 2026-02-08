@@ -45,10 +45,6 @@ export class BudgetPeriodsComponent extends WithSpaceInput {
 
 	@Output() readonly activePeriodChange = new EventEmitter<RepeatPeriod>();
 
-	constructor() {
-		super();
-	}
-
 	protected onPeriodChanged(event: Event): void {
 		this.activePeriod = (event as CustomEvent).detail.value;
 		this.activePeriodChange.emit(this.activePeriod);

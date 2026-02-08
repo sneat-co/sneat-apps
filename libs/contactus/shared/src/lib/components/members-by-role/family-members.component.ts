@@ -102,11 +102,8 @@ export class FamilyMembersComponent
 			contactusSpaceDbo,
 		);
 		const space = this.$space();
-		this.members = zipMapBriefsWithIDs(contactusSpaceDbo?.contacts).map(
-			(m) => ({
-				...m,
-				space,
-			}),
+		this.members = zipMapBriefsWithIDs(contactusSpaceDbo?.contacts).map((m) =>
+			Object.assign(m, { space }),
 		);
 		this.processMembers();
 	};
@@ -203,6 +200,6 @@ export class FamilyMembersComponent
 			this.children,
 			this.pets,
 			this.other,
-		].map((g) => ({ ...g, contacts: g.contacts || [] }));
+		].map((g) => Object.assign(g, { contacts: g.contacts || [] }));
 	}
 }

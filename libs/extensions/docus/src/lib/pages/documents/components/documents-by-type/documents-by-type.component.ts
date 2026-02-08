@@ -66,10 +66,6 @@ export class DocumentsByTypeComponent
 	@Output() goDocType = new EventEmitter<string>();
 	@Output() goDoc = new EventEmitter<IAssetDocumentContext>();
 
-	constructor() {
-		super();
-	}
-
 	selectDocType(docType: IDocumentType): void {
 		this.docTypes.some((v) => {
 			if (eq(v.id, docType.id) && !(v.documents && v.documents.length)) {

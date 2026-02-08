@@ -60,10 +60,7 @@ export class ContactLocationsComponent implements OnChanges {
 				return;
 			}
 			this.$contactLocations.set(
-				this.getContactLocations().map((c) => ({
-					...c,
-					space,
-				})),
+				this.getContactLocations().map((c) => Object.assign(c, { space })),
 			);
 		}
 	}

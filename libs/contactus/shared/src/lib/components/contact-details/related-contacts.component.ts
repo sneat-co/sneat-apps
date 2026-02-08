@@ -126,21 +126,22 @@ export class RelatedContactsComponent extends WithSpaceInput {
 		}
 		const relatedItems = getRelatedItems('contactus', 'contacts', related);
 
-		return emptyRelatedGroups.map((g) => ({
-			...g,
-			contacts:
-				relatedContacts?.filter((c) => {
-					const ri = relatedItems[c.id];
-					return (
-						ri?.rolesOfItem &&
-						(g.relatedAs === 'other'
-							? !emptyRelatedGroupRoles.some(
-									(r) => ri.rolesOfItem && ri.rolesOfItem[r],
-								)
-							: ri.rolesOfItem[g.relatedAs])
-					);
-				}) || [],
-		}));
+		return emptyRelatedGroups.map((g) =>
+			Object.assign(g, {
+				contacts:
+					relatedContacts?.filter((c) => {
+						const ri = relatedItems[c.id];
+						return (
+							ri?.rolesOfItem &&
+							(g.relatedAs === `other`
+								? !emptyRelatedGroupRoles.some(
+										(r) => ri.rolesOfItem && ri.rolesOfItem[r],
+									)
+								: ri.rolesOfItem[g.relatedAs])
+						);
+					}) || [],
+			}),
+		);
 	});
 
 	constructor() {

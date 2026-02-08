@@ -179,12 +179,12 @@ export class SelectFromListComponent
 		if (displayItems && this.sortBy) {
 			switch (this.sortBy) {
 				case 'title':
-					displayItems = [...displayItems].sort((a, b) =>
+					displayItems = [...displayItems].toSorted((a, b) =>
 						a.title.localeCompare(b.title),
 					);
 					break;
 				case 'id':
-					displayItems = [...displayItems].sort((a, b) =>
+					displayItems = [...displayItems].toSorted((a, b) =>
 						a.id.localeCompare(b.id),
 					);
 					break;

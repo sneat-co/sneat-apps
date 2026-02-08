@@ -125,10 +125,6 @@ export class ContactsListItemComponent extends SneatBaseComponent {
 		return this.hideRoles.includes(role) || role == this.excludeRole;
 	}
 
-	constructor() {
-		super();
-	}
-
 	// @Input() clicked: (contactID: string, event: Event) => void = () => void 0;
 
 	@Input() contactClicked = (

@@ -470,10 +470,9 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 		this.listService.deleteListItems(request).subscribe({
 			error: this.errorLogger.logErrorHandler('failed to delete list items'),
 			complete: () => {
-				deletingItems = deletingItems.map((li) => ({
-					...li,
-					state: { ...li.state, isDeleting: false },
-				}));
+				deletingItems = deletingItems.map((li) =>
+					Object.assign(li, { state: { ...li.state, isDeleting: false } }),
+				);
 			},
 		});
 	}

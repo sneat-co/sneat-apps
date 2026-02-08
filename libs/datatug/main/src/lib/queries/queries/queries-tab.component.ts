@@ -283,7 +283,7 @@ export class QueriesTabComponent {
 		if (path === '~') {
 			return folder;
 		}
-		const p = path.split('/').reverse();
+		const p = path.split('/').toReversed();
 		while (folder && p.length) {
 			const id = p.pop();
 			// if (id === '~' && !p.length) {

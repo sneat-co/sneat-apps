@@ -18,7 +18,7 @@ export class LogistSpaceRolesComponent {
 		readonly id: LogistSpaceRole;
 		readonly title: string;
 	}[] = Object.entries(LogistSpaceRoles)
-		.sort((a, b) => (a[1] > b[1] ? 1 : -1))
+		.toSorted((a, b) => (a[1] > b[1] ? 1 : -1))
 		.map((role) => ({ id: role[0] as LogistSpaceRole, title: role[1] }));
 
 	@Input() selectedRoles: readonly string[] = [];

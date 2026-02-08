@@ -67,10 +67,6 @@ export class TrackerHistoryComponent extends SneatBaseComponent {
 
 	private readonly trackusApiService = inject(TrackusApiService);
 
-	constructor() {
-		super();
-	}
-
 	protected readonly $deletingTrackerPointRequests = signal<
 		IDeleteTrackerPointsRequest[]
 	>([]);

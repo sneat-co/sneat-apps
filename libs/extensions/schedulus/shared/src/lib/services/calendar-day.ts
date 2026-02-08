@@ -265,7 +265,7 @@ export class CalendarDay {
 					this.calendarDayDbo?.happeningAdjustments?.[wdSlot.happening.id]
 						?.slots?.[wdSlot.slot.id];
 				if (adjustment) {
-					return { ...wdSlot, adjustment: adjustment };
+					return Object.assign(wdSlot, { adjustment });
 				}
 			}
 			return wdSlot;
@@ -284,7 +284,7 @@ export class CalendarDay {
 		// 	`${this.singles?.length || 0} singles:`, weekdaySlots,
 		// 	`=> ${slots.length} slots:`, slots);
 
-		slots = slots.sort(sortSlotItems);
+		slots = slots.toSorted(sortSlotItems);
 		this._slots.next(slots);
 		// this.$slots.set(slots);
 

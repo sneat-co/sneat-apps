@@ -63,10 +63,6 @@ export class MultiSelectorComponent<T = ISelectItem>
 
 	protected selectedItems?: ISelectItem[];
 
-	constructor() {
-		super();
-	}
-
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['allItems']) {
 			this.selectedItems = this.allItems?.filter((item) =>

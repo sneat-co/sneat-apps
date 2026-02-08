@@ -35,20 +35,22 @@ module.exports = [
 			],
 		},
 	},
-	...compat.config({ extends: ['plugin:@nx/typescript'] }).map((config) => ({
-		...config,
-		files: ['**/*.ts', '**/*.tsx', '**/*.cts', '**/*.mts'],
-		rules: {
-			...config.rules,
-		},
-	})),
-	...compat.config({ extends: ['plugin:@nx/javascript'] }).map((config) => ({
-		...config,
-		files: ['**/*.js', '**/*.jsx', '**/*.cjs', '**/*.mjs'],
-		rules: {
-			...config.rules,
-		},
-	})),
+	...compat
+		.config({ extends: ['plugin:@nx/typescript'] })
+		.map((config) =>
+			Object.assign(config, {
+				files: [`**/*.ts`, `**/*.tsx`, `**/*.cts`, `**/*.mts`],
+				rules: { ...config.rules },
+			}),
+		),
+	...compat
+		.config({ extends: ['plugin:@nx/javascript'] })
+		.map((config) =>
+			Object.assign(config, {
+				files: [`**/*.js`, `**/*.jsx`, `**/*.cjs`, `**/*.mjs`],
+				rules: { ...config.rules },
+			}),
+		),
 	{
 		ignores: ['node_modules', 'src_old', '**/vitest.config.*.timestamp*'],
 	},

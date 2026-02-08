@@ -54,10 +54,6 @@ export class ContactNamesModalComponent extends SneatBaseModalComponent {
 
 	private readonly contactService = inject(ContactService);
 
-	constructor() {
-		super();
-	}
-
 	protected readonly $saving = signal(false);
 
 	protected onNamesChanged(names: IPersonNames): void {

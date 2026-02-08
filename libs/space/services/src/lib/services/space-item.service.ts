@@ -140,15 +140,6 @@ export class GlobalSpaceItemService<
 	Brief,
 	Dbo extends Brief,
 > extends SpaceItemBaseService<Brief, Dbo> {
-	constructor(
-		injector: Injector,
-		collectionName: string,
-		afs: AngularFirestore,
-		sneatApiService: SneatApiService,
-	) {
-		super(injector, collectionName, afs, sneatApiService);
-	}
-
 	protected override collectionRef<
 		Dbo2 extends Dbo,
 	>(): CollectionReference<Dbo2> {

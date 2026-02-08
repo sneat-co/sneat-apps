@@ -30,10 +30,6 @@ export class TrackerProviderComponent
 {
 	// @ContentChild(TemplateRef) contentTemplate!: TemplateRef<{$tracker: Signal<IIdAndOptionalBriefAndOptionalDbo<ITrackerBrief, ITrackerDbo> | undefined>}>;
 
-	constructor() {
-		super();
-	}
-
 	@Output() trackerChange = new EventEmitter<ITracker>();
 
 	public readonly $spaceID = input.required<string | undefined>();

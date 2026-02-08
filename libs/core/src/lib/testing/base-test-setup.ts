@@ -201,9 +201,9 @@ export function setupGlobalMocks() {
 				ok: true,
 			}),
 		);
-		(global as any).Request = class {};
-		(global as any).Response = class {};
-		(global as any).Headers = class {};
+		(global as any).Request = vi.fn();
+		(global as any).Response = vi.fn();
+		(global as any).Headers = vi.fn();
 	}
 }
 

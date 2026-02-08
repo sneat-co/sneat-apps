@@ -84,10 +84,6 @@ export class AssetsPageComponent extends AssetsBasePage implements OnInit {
 
 	public segment: 'all' | 'byCategory' = 'byCategory';
 
-	constructor() {
-		super();
-	}
-
 	override ngOnInit(): void {
 		super.ngOnInit();
 		this.spaceIDChanged$.pipe(this.takeUntilDestroyed()).subscribe({

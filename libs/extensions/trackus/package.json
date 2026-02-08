@@ -3,7 +3,6 @@
 	"version": "workspace:*",
 	"peerDependencies": {
 		"@sneat/core": "workspace:*",
-		"@sneat/logging": "workspace:*",
 		"@sneat/space-models": "workspace:*",
 		"@sneat/ui": "workspace:*",
 		"@sneat/space-components": "workspace:*",

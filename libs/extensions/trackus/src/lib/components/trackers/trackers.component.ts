@@ -167,10 +167,9 @@ export class TrackersComponent extends SneatBaseComponent {
 			}
 		});
 
-		const categories: Category[] = this.$categories().map((c) => ({
-			...c,
-			trackers: [],
-		}));
+		const categories: Category[] = this.$categories().map((c) =>
+			Object.assign(c, { trackers: [] }),
+		);
 
 		const addTrackersToCategories = (
 			trackers: readonly IIdAndBrief<ITrackerBrief>[],

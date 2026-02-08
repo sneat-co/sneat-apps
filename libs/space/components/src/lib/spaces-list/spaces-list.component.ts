@@ -59,10 +59,6 @@ export class SpacesListComponent extends SneatBaseComponent {
 	// Outputs
 	@Output() readonly beforeNavigateToSpace = new EventEmitter<ISpaceContext>();
 
-	constructor() {
-		super();
-	}
-
 	protected goSpace(event: Event, space: ISpaceContext): boolean {
 		event.stopPropagation();
 		event.preventDefault();

@@ -73,10 +73,9 @@ export class HappeningSlotsComponent {
 	@Output() readonly happeningChange = new EventEmitter<IHappeningContext>();
 
 	protected readonly $slots = computed<IHappeningSlotWithID[] | undefined>(() =>
-		Object.entries(this.happening().brief?.slots || {}).map(([id, slot]) => ({
-			...slot,
-			id,
-		})),
+		Object.entries(this.happening().brief?.slots || {}).map(([id, slot]) =>
+			Object.assign(slot, { id }),
+		),
 	);
 
 	protected readonly hasAnyWd = (

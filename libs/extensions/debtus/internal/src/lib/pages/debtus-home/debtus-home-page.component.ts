@@ -38,8 +38,4 @@ import { ClassName } from '@sneat/ui';
 		SpaceComponentBaseParams,
 	],
 })
-export class DebtusHomePageComponent extends SpacePageBaseComponent {
-	constructor() {
-		super();
-	}
-}
+export class DebtusHomePageComponent extends SpacePageBaseComponent {}

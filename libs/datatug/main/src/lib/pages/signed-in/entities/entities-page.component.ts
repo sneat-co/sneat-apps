@@ -182,7 +182,7 @@ export class EntitiesPageComponent
 
 	private setEntities(entities: Entities): void {
 		//console.log('entities', [...entities]);
-		this.entities = entities.sort((a, b) => (a.id > b.id ? 1 : -1));
+		this.entities = entities.toSorted((a, b) => (a.id > b.id ? 1 : -1));
 		//console.log('this.entities', this.entities);
 	}
 }

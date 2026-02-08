@@ -45,10 +45,6 @@ export class AssetAddDwellingComponent
 		{ id: 'room', title: 'Room', iconName: 'storefront-outline' },
 	];
 
-	constructor() {
-		super();
-	}
-
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['space'] && this.space) {
 			this.dwellingAsset = this.dwellingAsset ?? {

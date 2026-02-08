@@ -298,6 +298,7 @@ export class StartEndDatetimeFormComponent implements OnChanges {
 				`failed to add ${JSON.stringify(v)} to ${d} [${this.startDate.value} ${
 					this.startTime.value
 				}]: ${e}`,
+				{ cause: e },
 			);
 		}
 	}

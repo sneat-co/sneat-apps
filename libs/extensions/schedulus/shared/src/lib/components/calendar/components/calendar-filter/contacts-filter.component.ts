@@ -120,10 +120,7 @@ export class ContactsFilterComponent extends ContactusModuleBaseComponent {
 		);
 		const contactBriefs = zipMapBriefsWithIDs(
 			contactusSpace?.dbo?.contacts,
-		)?.map((m) => ({
-			...m,
-			space: this.space || { id: '' },
-		}));
+		)?.map((m) => Object.assign(m, { space: this.space || { id: `` } }));
 		this.$members.set(
 			contactBriefs.filter((c) => c.brief.roles?.includes('member')),
 		);

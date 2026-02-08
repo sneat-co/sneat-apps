@@ -21,18 +21,16 @@ export abstract class NewContactFormBaseComponent extends ContactFormBaseCompone
 
 	protected readonly $emails = computed<IEmail[]>(() => {
 		const emails = this.$contact().dbo.emails;
-		return Object.entries(emails || {}).map(([address, props]) => ({
-			address,
-			...props,
-		}));
+		return Object.entries(emails || {}).map(([address, props]) =>
+			Object.assign({ address }, props),
+		);
 	});
 
 	protected readonly $phones = computed<IPhone[]>(() => {
 		const phones = this.$contact().dbo.phones;
-		return Object.entries(phones || {}).map(([number, props]) => ({
-			number,
-			...props,
-		}));
+		return Object.entries(phones || {}).map(([number, props]) =>
+			Object.assign({ number }, props),
+		);
 	});
 
 	@Output() readonly contactChange =

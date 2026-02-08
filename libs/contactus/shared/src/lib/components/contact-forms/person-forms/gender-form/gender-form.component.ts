@@ -79,10 +79,6 @@ const genders: readonly GenderOption[] = [
 	providers: [{ provide: ClassName, useValue: 'GenderFormComponent' }],
 })
 export class GenderFormComponent extends SneatBaseComponent {
-	constructor() {
-		super();
-	}
-
 	protected readonly genderOptions: readonly ISelectItem[] = genders.map(
 		(g) => ({
 			id: g.id,

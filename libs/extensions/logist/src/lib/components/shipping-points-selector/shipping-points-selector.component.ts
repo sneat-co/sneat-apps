@@ -147,7 +147,8 @@ export class ShippingPointsSelectorComponent implements OnChanges {
 							cp.shippingPointID === shippingPointID,
 					)?.tasks || [];
 				if (
-					[...tasks].sort().join(';') === [...containerTasks].sort().join(';')
+					[...tasks].toSorted().join(';') ===
+					[...containerTasks].toSorted().join(';')
 				) {
 					this.tasksByShippingPoint[shippingPointID] = { tasks, dirty: false };
 				}

@@ -1,1 +1,1 @@
-export class OddEvenVirtualSlider {}
+export const empty = {};
