@@ -50,6 +50,12 @@ export function createBaseViteConfig(
 				'rxjs',
 				'zone.js',
 			],
+			alias: [
+				{
+					find: '@ionic/core/components',
+					replacement: '@ionic/core/components/index.js',
+				},
+			],
 		},
 		plugins: [
 			angular({
@@ -74,6 +80,7 @@ export function createBaseViteConfig(
 				deps: {
 					inline: [
 						'@ionic/angular',
+						'@ionic/angular/standalone',
 						'@ionic/core',
 						'ionicons',
 						'rxfire',
@@ -83,6 +90,7 @@ export function createBaseViteConfig(
 						'@sneat/logging',
 						'@sneat/core',
 						'@ionic/angular/standalone',
+						'@ionic/core',
 						'@ionic-native/core',
 						'@ionic-native/splash-screen',
 						'@ionic-native/status-bar',

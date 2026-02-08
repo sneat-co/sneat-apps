@@ -1,5 +1,20 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, Input } from '@angular/core';
+import {
+	NavController,
+	MenuController,
+	IonIcon,
+	IonItem,
+	IonLabel,
+} from '@ionic/angular/standalone';
+import { SpacesListComponent } from '../spaces-list';
+import { SpacesMenuComponent } from './spaces-menu.component';
+import { ErrorLogger } from '@sneat/logging';
+import { AnalyticsService, APP_INFO, LOGGER_FACTORY } from '@sneat/core';
+import { of } from 'rxjs';
+import { SneatUserService } from '@sneat/auth-core';
+import { Auth } from '@angular/fire/auth';
+import { Firestore } from '@angular/fire/firestore';
 
 @Component({
 	selector: 'sneat-spaces-list',
@@ -7,22 +22,15 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, Input } from '@angular/core';
 	standalone: true,
 })
 class SpacesListStubComponent {
-	@Input() userID?: string;
-	@Input() spaces?: any[];
+	@Input() spaces?: unknown[];
 	@Input() pathPrefix = '/space';
 }
-
-import { SpacesMenuComponent } from './spaces-menu.component';
-import { ErrorLogger } from '@sneat/logging';
-import { AnalyticsService, APP_INFO, LOGGER_FACTORY } from '@sneat/core';
-import { of } from 'rxjs';
 
 describe('SpacesMenuComponent', () => {
 	let component: SpacesMenuComponent;
 	let fixture: ComponentFixture<SpacesMenuComponent>;
 
 	beforeEach(waitForAsync(async () => {
-		const ionic = require('@ionic/angular/standalone');
 		await TestBed.configureTestingModule({
 			imports: [SpacesMenuComponent],
 			providers: [
@@ -37,13 +45,13 @@ describe('SpacesMenuComponent', () => {
 				{ provide: LOGGER_FACTORY, useValue: { getLogger: () => console } },
 				{ provide: APP_INFO, useValue: {} },
 				{ provide: SneatUserService, useValue: { userState: of({}) } },
-				{ provide: ionic.NavController, useValue: {} },
-				{ provide: ionic.MenuController, useValue: {} },
+				{ provide: NavController, useValue: {} },
+				{ provide: MenuController, useValue: {} },
 				{
 					provide: Auth,
 					useValue: {
-						onIdTokenChanged: vi.fn(() => vi.fn()),
-						onAuthStateChanged: vi.fn(() => vi.fn()),
+						onIdTokenChanged: vi.fn(() => () => void 0),
+						onAuthStateChanged: vi.fn(() => () => void 0),
 					},
 				},
 				{ provide: Firestore, useValue: {} },
@@ -51,7 +59,7 @@ describe('SpacesMenuComponent', () => {
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		})
 			.overrideComponent(SpacesMenuComponent, {
-				remove: { imports: [ionic.IonIcon, ionic.IonItem, ionic.IonLabel] },
+				remove: { imports: [IonIcon, IonItem, IonLabel, SpacesListComponent] },
 				add: {
 					imports: [SpacesListStubComponent],
 					schemas: [CUSTOM_ELEMENTS_SCHEMA],

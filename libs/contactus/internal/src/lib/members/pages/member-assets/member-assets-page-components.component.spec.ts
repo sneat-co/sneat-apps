@@ -2,6 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { MemberAssetsPageComponent } from './member-assets-page-components.component';
+import { provideContactusMocks } from '../../../testing/test-utils';
 
 describe('MemberAssetsPage', () => {
 	let component: MemberAssetsPageComponent;
@@ -10,7 +11,9 @@ describe('MemberAssetsPage', () => {
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			imports: [MemberAssetsPageComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA]}).compileComponents();
+			providers: [provideContactusMocks()],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {

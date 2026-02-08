@@ -1,6 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { AssetCardComponent } from './asset-card.component';
+import { provideAssetusMocks } from '../testing/test-utils';
 
 describe('AssetCardComponent', () => {
 	let component: AssetCardComponent;
@@ -8,7 +10,9 @@ describe('AssetCardComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [AssetCardComponent]}).compileComponents();
+			imports: [AssetCardComponent],
+			providers: [provideRouter([]), ...provideAssetusMocks()],
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {

@@ -19,4 +19,5 @@ export * from './anaylytics';
 export * from './interfaces';
 export * from './directives';
 export * from './environment-config';
+export * from './testing/base-test-setup';
 export * from './testing/test-setup';

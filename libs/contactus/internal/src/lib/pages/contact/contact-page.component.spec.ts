@@ -2,6 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ContactPageComponent } from './contact-page.component';
+import { provideContactusMocks } from '../../testing/test-utils';
 
 describe('CommuneContactPage', () => {
 	let component: ContactPageComponent;
@@ -10,7 +11,9 @@ describe('CommuneContactPage', () => {
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			imports: [ContactPageComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA]}).compileComponents();
+			providers: [provideContactusMocks()],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {

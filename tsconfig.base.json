@@ -37,6 +37,9 @@
 			"@sneat/contactus-services": ["libs/contactus/services/src/index.ts"],
 			"@sneat/contactus-shared": ["libs/contactus/shared/src/index.ts"],
 			"@sneat/core": ["libs/core/src/index.ts"],
+			"@sneat/core/testing-base": [
+				"libs/core/src/lib/testing/base-test-setup.ts"
+			],
 			"@sneat/data": ["libs/data/src/index.ts"],
 			"@sneat/datagrid": ["libs/datagrid/src/index.ts"],
 			"@sneat/datatug-main": ["libs/datatug/main/src/public_api.ts"],

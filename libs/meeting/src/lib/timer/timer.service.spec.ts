@@ -1,10 +1,20 @@
 import { TestBed } from '@angular/core/testing';
 
-// noinspection ES6PreferShortImport
+import { ErrorLogger } from '@sneat/logging';
 import { TimerFactory } from './timer.service';
 
 describe('TimerService', () => {
-	beforeEach(() => TestBed.configureTestingModule({}));
+	beforeEach(() =>
+		TestBed.configureTestingModule({
+			providers: [
+				TimerFactory,
+				{
+					provide: ErrorLogger,
+					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+				},
+			],
+		}),
+	);
 
 	it('should be created', () => {
 		const service: TimerFactory = TestBed.inject(TimerFactory);

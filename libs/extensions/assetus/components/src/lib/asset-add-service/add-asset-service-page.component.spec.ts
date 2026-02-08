@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AddAssetServicePageComponent } from './add-asset-service-page.component';
 
@@ -10,7 +10,8 @@ describe('AddAssetServicePage', () => {
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			imports: [AddAssetServicePageComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA]}).compileComponents();
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {

@@ -1,7 +1,9 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { NewHappeningPageComponent } from './new-happening-page.component';
+import { provideSchedulusMocks } from '../../testing/test-utils';
 
 describe('NewHappeningPage', () => {
 	let component: NewHappeningPageComponent;
@@ -10,6 +12,7 @@ describe('NewHappeningPage', () => {
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			imports: [NewHappeningPageComponent],
+			providers: [provideRouter([]), ...provideSchedulusMocks()],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	}));

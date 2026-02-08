@@ -1,16 +1,19 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { VehicleCardComponent } from './vehicle-card.component';
+import { provideAssetusMocks } from '../testing/test-utils';
 
-describe('MakeModelEngineComponent', () => {
+describe('VehicleCardComponent', () => {
 	let component: VehicleCardComponent;
 	let fixture: ComponentFixture<VehicleCardComponent>;
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			imports: [VehicleCardComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA]}).compileComponents();
+			providers: [...provideAssetusMocks()],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {

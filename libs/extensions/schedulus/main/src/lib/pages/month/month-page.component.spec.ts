@@ -1,17 +1,9 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { MonthPageComponent } from './month-page.component';
-
-import {
-	IonHeader,
-	IonToolbar,
-	IonTitle,
-	IonButtons,
-	IonButton,
-	IonIcon,
-	IonContent,
-} from '@ionic/angular/standalone';
+import { provideSchedulusMocks } from '../../testing/test-utils';
 
 describe('MonthPage', () => {
 	let component: MonthPageComponent;
@@ -20,23 +12,9 @@ describe('MonthPage', () => {
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			imports: [MonthPageComponent],
+			providers: [provideRouter([]), ...provideSchedulusMocks()],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(MonthPageComponent, {
-				remove: {
-					imports: [
-						IonHeader,
-						IonToolbar,
-						IonTitle,
-						IonButtons,
-						IonButton,
-						IonIcon,
-						IonContent,
-					],
-				},
-				add: { schemas: [CUSTOM_ELEMENTS_SCHEMA] },
-			})
-			.compileComponents();
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {
