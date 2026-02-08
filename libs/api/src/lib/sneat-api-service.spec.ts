@@ -1,9 +1,9 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
-import {
-	HttpClientTestingModule,
-	HttpTestingController,
-} from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import {
+	HttpTestingController,
+	provideHttpClientTesting,
+} from '@angular/common/http/testing';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import {
 	DefaultSneatAppApiBaseUrl,
@@ -28,9 +28,8 @@ describe('SneatApiService', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			imports: [HttpClientTestingModule],
 			providers: [
-				SneatApiService,
+				provideHttpClientTesting(),
 				{ provide: SneatApiBaseUrl, useValue: undefined },
 				{ provide: Auth, useValue: {} },
 			],

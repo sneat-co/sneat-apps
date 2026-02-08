@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 import { ToastController } from '@ionic/angular/standalone';
 import { captureException, showReportDialog } from '@sentry/angular';
 import { IErrorLogger, ILogErrorOptions } from './interfaces';
@@ -8,7 +8,7 @@ const defaultErrorToastDuration = 7000;
 
 @Injectable()
 export class ErrorLoggerService implements IErrorLogger {
-	private readonly toastController = inject(ToastController);
+	constructor(@Optional() private readonly toastController: ToastController) {}
 
 	public readonly logErrorHandler =
 		(message?: string, options?: ILogErrorOptions) => (e: unknown) =>
@@ -86,6 +86,10 @@ export class ErrorLoggerService implements IErrorLogger {
 			if (serverMessage) {
 				message += `.\n\nServer returned error message: ${serverMessage}`;
 			}
+		}
+		if (!this.toastController) {
+			console.warn('ToastController not available, cannot show error toast');
+			return;
 		}
 		this.toastController
 			.create({

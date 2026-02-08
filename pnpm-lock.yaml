@@ -252,6 +252,9 @@ importers:
       git-describe:
         specifier: 4.1.1
         version: 4.1.1
+      happy-dom:
+        specifier: ^20.5.0
+        version: 20.5.0
       identity-obj-proxy:
         specifier: ^3.0.0
         version: 3.0.0
@@ -308,7 +311,7 @@ importers:
         version: 7.3.0(@types/node@24.10.11)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.86.3)(sass@1.97.1)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.1)
       vitest:
         specifier: ^4.0.18
-        version: 4.0.18(@opentelemetry/api@1.9.0)(@types/node@24.10.11)(@vitest/ui@4.0.18)(jiti@2.6.1)(jsdom@27.4.0)(less@4.4.2)(sass-embedded@1.86.3)(sass@1.97.1)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.1)
+        version: 4.0.18(@opentelemetry/api@1.9.0)(@types/node@24.10.11)(@vitest/ui@4.0.18)(happy-dom@20.5.0)(jiti@2.6.1)(jsdom@27.4.0)(less@4.4.2)(sass-embedded@1.86.3)(sass@1.97.1)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.1)
 
 packages:
 
@@ -4733,6 +4736,9 @@ packages:
   '@types/trusted-types@2.0.7':
     resolution: {integrity: sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==}
 
+  '@types/whatwg-mimetype@3.0.2':
+    resolution: {integrity: sha512-c2AKvDT8ToxLIOUlN51gTiHXflsfIFisS4pO7pDPoKouJCESkhZnEy623gwP9laCy5lnLDAw1vAzu2vM2YLOrA==}
+
   '@types/ws@8.18.1':
     resolution: {integrity: sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==}
 
@@ -6152,9 +6158,6 @@ packages:
     resolution: {integrity: sha512-z2S+W9X73hAUUki+N+9Za2lBlun89zigOyGrsax+KUQ6wKW4ZoWpEYBkGhQjwAjjDCkWxhY0VKEhk8wzY7F5cA==}
     engines: {node: '>=0.10.0'}
 
-  decimal.js@10.5.0:
-    resolution: {integrity: sha512-8vDa8Qxvr/+d94hSh5P3IJwI5t8/c0KsMp+g8bNw9cY2icONa5aPfvKeieW1WlG0WQYwwhJ7mjui2xtiePQSXw==}
-
   decimal.js@10.6.0:
     resolution: {integrity: sha512-YpgQiITW3JXGntzdUmyUR1V812Hn8T1YVXhCu+wO3OpS4eU9l4YdD3qjyiKdV6mvV29zapkMeD390UVEf2lkUg==}
 
@@ -7012,6 +7015,10 @@ packages:
     engines: {node: '>=0.4.7'}
     hasBin: true
 
+  happy-dom@20.5.0:
+    resolution: {integrity: sha512-VQe+Q5CYiGOgcCERXhcfNsbnrN92FDEKciMH/x6LppU9dd0j4aTjCTlqONFOIMcAm/5JxS3+utowbXV1OoFr+g==}
+    engines: {node: '>=20.0.0'}
+
   harmony-reflect@1.6.2:
     resolution: {integrity: sha512-HIp/n38R9kQjDEziXyDTuW3vvoxxyxjxFzXLrBr18uB47GnSt+G9D29fqrpM5ZkspMcPICud3XsBJQ4Y2URg8g==}
 
@@ -7437,10 +7444,6 @@ packages:
   istanbul-lib-source-maps@5.0.6:
     resolution: {integrity: sha512-yg2d+Em4KizZC5niWhQaIomgf5WlL4vOOjZ5xGCmF8SnPE/mDWWXgvRExdcpCgh9lLRRa1/fSYp2ymmbJ1pI+A==}
     engines: {node: '>=10'}
-
-  istanbul-reports@3.1.7:
-    resolution: {integrity: sha512-BewmUXImeuRk2YY0PVbxgKAysvhRPUQE0h5QRM++nVWyubKGV0l8qQ5op8+B2DOmwSe63Jivj0BjkPQVf8fP5g==}
-    engines: {node: '>=8'}
 
   istanbul-reports@3.2.0:
     resolution: {integrity: sha512-HGYWWS/ehqTV3xN10i23tkPkpH46MLCIMFNCaaKNavAXTF1RkqxawEPtnjnGZ6XKSInBKkiOA5BKS+aZiY3AvA==}
@@ -10685,6 +10688,10 @@ packages:
     engines: {node: '>=18'}
     deprecated: Use @exodus/bytes instead for a more spec-conformant and faster implementation
 
+  whatwg-mimetype@3.0.0:
+    resolution: {integrity: sha512-nt+N2dzIutVRxARx1nghPKGv1xHikU7HKdfafKkLNLindmPU/ch3U31NOCGGA/dmPcmb1VlofO0vnKAcsm0o/Q==}
+    engines: {node: '>=12'}
+
   whatwg-mimetype@4.0.0:
     resolution: {integrity: sha512-QaKxh0eNIi2mE9p2vEdzfagOKHCcj1pJ56EEHGQOVxp8r9/iszLUUV7v89x9O1p/T+NlTM5W7jW6+cz4Fq1YVg==}
     engines: {node: '>=18'}
@@ -11020,7 +11027,7 @@ snapshots:
     dependencies:
       '@analogjs/vite-plugin-angular': 2.1.3(@angular-devkit/build-angular@21.1.3(bf37e3d468d92bcfdf81199b97957468))(@angular/build@21.1.3(@angular/compiler-cli@21.1.3(@angular/compiler@21.1.3)(typescript@5.9.3))(@angular/compiler@21.1.3)(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2)(zone.js@0.16.0))(@angular/platform-browser@21.1.3(@angular/animations@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2)(zone.js@0.16.0)))(@angular/common@21.1.3(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2)(zone.js@0.16.0))(rxjs@7.8.2))(@angular/core@21.1.3(@angular/compiler@21.1.3)(rxjs@7.8.2)(zone.js@0.16.0)))(@types/node@24.10.11)(chokidar@5.0.0)(jiti@2.6.1)(less@4.4.2)(ng-packagr@21.1.0(@angular/compiler-cli@21.1.3(@angular/compiler@21.1.3)(typescript@5.9.3))(tslib@2.8.1)(typescript@5.9.3))(postcss@8.5.6)(sass-embedded@1.86.3)(stylus@0.64.0)(terser@5.44.1)(tslib@2.8.1)(typescript@5.9.3)(vitest@4.0.18)(yaml@2.8.1))
       '@angular-devkit/architect': 0.2101.3(chokidar@5.0.0)
-      vitest: 4.0.18(@opentelemetry/api@1.9.0)(@types/node@24.10.11)(@vitest/ui@4.0.18)(jiti@2.6.1)(jsdom@27.4.0)(less@4.4.2)(sass-embedded@1.86.3)(sass@1.97.1)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.1)
+      vitest: 4.0.18(@opentelemetry/api@1.9.0)(@types/node@24.10.11)(@vitest/ui@4.0.18)(happy-dom@20.5.0)(jiti@2.6.1)(jsdom@27.4.0)(less@4.4.2)(sass-embedded@1.86.3)(sass@1.97.1)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.1)
 
   '@angular-devkit/architect@0.2101.3(chokidar@5.0.0)':
     dependencies:
@@ -11278,7 +11285,7 @@ snapshots:
       lmdb: 3.4.4
       ng-packagr: 21.1.0(@angular/compiler-cli@21.1.3(@angular/compiler@21.1.3)(typescript@5.9.3))(tslib@2.8.1)(typescript@5.9.3)
       postcss: 8.5.6
-      vitest: 4.0.18(@opentelemetry/api@1.9.0)(@types/node@24.10.11)(@vitest/ui@4.0.18)(jiti@2.6.1)(jsdom@27.4.0)(less@4.4.2)(sass-embedded@1.86.3)(sass@1.97.1)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.1)
+      vitest: 4.0.18(@opentelemetry/api@1.9.0)(@types/node@24.10.11)(@vitest/ui@4.0.18)(happy-dom@20.5.0)(jiti@2.6.1)(jsdom@27.4.0)(less@4.4.2)(sass-embedded@1.86.3)(sass@1.97.1)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.1)
     transitivePeerDependencies:
       - '@types/node'
       - chokidar
@@ -14062,7 +14069,7 @@ snapshots:
       '@jest/test-result': 30.2.0
       '@jest/transform': 30.2.0
       '@jest/types': 30.2.0
-      '@jridgewell/trace-mapping': 0.3.29
+      '@jridgewell/trace-mapping': 0.3.31
       '@types/node': 24.10.11
       chalk: 4.1.2
       collect-v8-coverage: 1.0.2
@@ -14073,7 +14080,7 @@ snapshots:
       istanbul-lib-instrument: 6.0.3
       istanbul-lib-report: 3.0.1
       istanbul-lib-source-maps: 5.0.6
-      istanbul-reports: 3.1.7
+      istanbul-reports: 3.2.0
       jest-message-util: 30.2.0
       jest-util: 30.2.0
       jest-worker: 30.2.0
@@ -14102,7 +14109,7 @@ snapshots:
 
   '@jest/source-map@30.0.1':
     dependencies:
-      '@jridgewell/trace-mapping': 0.3.29
+      '@jridgewell/trace-mapping': 0.3.31
       callsites: 3.1.0
       graceful-fs: 4.2.11
     optional: true
@@ -14127,7 +14134,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.28.5
       '@jest/types': 30.2.0
-      '@jridgewell/trace-mapping': 0.3.29
+      '@jridgewell/trace-mapping': 0.3.31
       babel-plugin-istanbul: 7.0.1
       chalk: 4.1.2
       convert-source-map: 2.0.0
@@ -15065,7 +15072,7 @@ snapshots:
       tsconfig-paths: 4.2.0
       tslib: 2.8.1
       vite: 7.3.0(@types/node@24.10.11)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.86.3)(sass@1.97.1)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.1)
-      vitest: 4.0.18(@opentelemetry/api@1.9.0)(@types/node@24.10.11)(@vitest/ui@4.0.18)(jiti@2.6.1)(jsdom@27.4.0)(less@4.4.2)(sass-embedded@1.86.3)(sass@1.97.1)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.1)
+      vitest: 4.0.18(@opentelemetry/api@1.9.0)(@types/node@24.10.11)(@vitest/ui@4.0.18)(happy-dom@20.5.0)(jiti@2.6.1)(jsdom@27.4.0)(less@4.4.2)(sass-embedded@1.86.3)(sass@1.97.1)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.1)
     transitivePeerDependencies:
       - '@babel/traverse'
       - '@swc-node/register'
@@ -15085,7 +15092,7 @@ snapshots:
       tslib: 2.8.1
     optionalDependencies:
       vite: 7.3.0(@types/node@24.10.11)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.86.3)(sass@1.97.1)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.1)
-      vitest: 4.0.18(@opentelemetry/api@1.9.0)(@types/node@24.10.11)(@vitest/ui@4.0.18)(jiti@2.6.1)(jsdom@27.4.0)(less@4.4.2)(sass-embedded@1.86.3)(sass@1.97.1)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.1)
+      vitest: 4.0.18(@opentelemetry/api@1.9.0)(@types/node@24.10.11)(@vitest/ui@4.0.18)(happy-dom@20.5.0)(jiti@2.6.1)(jsdom@27.4.0)(less@4.4.2)(sass-embedded@1.86.3)(sass@1.97.1)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.1)
     transitivePeerDependencies:
       - '@babel/traverse'
       - '@swc-node/register'
@@ -15675,7 +15682,7 @@ snapshots:
       http-proxy-middleware: 2.0.9(@types/express@4.17.21)
       p-retry: 6.2.1
       webpack-dev-server: 5.2.2(webpack@5.104.1(@swc/core@1.15.11(@swc/helpers@0.5.18)))
-      ws: 8.18.1
+      ws: 8.19.0
     transitivePeerDependencies:
       - '@types/express'
       - bufferutil
@@ -15968,8 +15975,8 @@ snapshots:
 
   '@types/babel__core@7.20.5':
     dependencies:
-      '@babel/parser': 7.28.6
-      '@babel/types': 7.28.6
+      '@babel/parser': 7.29.0
+      '@babel/types': 7.29.0
       '@types/babel__generator': 7.27.0
       '@types/babel__template': 7.4.4
       '@types/babel__traverse': 7.20.7
@@ -15977,18 +15984,18 @@ snapshots:
 
   '@types/babel__generator@7.27.0':
     dependencies:
-      '@babel/types': 7.28.6
+      '@babel/types': 7.29.0
     optional: true
 
   '@types/babel__template@7.4.4':
     dependencies:
-      '@babel/parser': 7.28.6
-      '@babel/types': 7.28.6
+      '@babel/parser': 7.29.0
+      '@babel/types': 7.29.0
     optional: true
 
   '@types/babel__traverse@7.20.7':
     dependencies:
-      '@babel/types': 7.28.6
+      '@babel/types': 7.29.0
     optional: true
 
   '@types/body-parser@1.19.5':
@@ -16153,6 +16160,8 @@ snapshots:
 
   '@types/trusted-types@2.0.7':
     optional: true
+
+  '@types/whatwg-mimetype@3.0.2': {}
 
   '@types/ws@8.18.1':
     dependencies:
@@ -16567,7 +16576,7 @@ snapshots:
       obug: 2.1.1
       std-env: 3.10.0
       tinyrainbow: 3.0.3
-      vitest: 4.0.18(@opentelemetry/api@1.9.0)(@types/node@24.10.11)(@vitest/ui@4.0.18)(jiti@2.6.1)(jsdom@27.4.0)(less@4.4.2)(sass-embedded@1.86.3)(sass@1.97.1)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.1)
+      vitest: 4.0.18(@opentelemetry/api@1.9.0)(@types/node@24.10.11)(@vitest/ui@4.0.18)(happy-dom@20.5.0)(jiti@2.6.1)(jsdom@27.4.0)(less@4.4.2)(sass-embedded@1.86.3)(sass@1.97.1)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.1)
 
   '@vitest/expect@4.0.18':
     dependencies:
@@ -16612,7 +16621,7 @@ snapshots:
       sirv: 3.0.2
       tinyglobby: 0.2.15
       tinyrainbow: 3.0.3
-      vitest: 4.0.18(@opentelemetry/api@1.9.0)(@types/node@24.10.11)(@vitest/ui@4.0.18)(jiti@2.6.1)(jsdom@27.4.0)(less@4.4.2)(sass-embedded@1.86.3)(sass@1.97.1)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.1)
+      vitest: 4.0.18(@opentelemetry/api@1.9.0)(@types/node@24.10.11)(@vitest/ui@4.0.18)(happy-dom@20.5.0)(jiti@2.6.1)(jsdom@27.4.0)(less@4.4.2)(sass-embedded@1.86.3)(sass@1.97.1)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.1)
 
   '@vitest/utils@4.0.18':
     dependencies:
@@ -17783,9 +17792,6 @@ snapshots:
 
   decamelize@1.2.0: {}
 
-  decimal.js@10.5.0:
-    optional: true
-
   decimal.js@10.6.0: {}
 
   decompress-response@6.0.0:
@@ -18888,6 +18894,18 @@ snapshots:
     optionalDependencies:
       uglify-js: 3.19.3
 
+  happy-dom@20.5.0:
+    dependencies:
+      '@types/node': 24.10.11
+      '@types/whatwg-mimetype': 3.0.2
+      '@types/ws': 8.18.1
+      entities: 4.5.0
+      whatwg-mimetype: 3.0.0
+      ws: 8.19.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
   harmony-reflect@1.6.2: {}
 
   has-flag@4.0.0: {}
@@ -19285,17 +19303,11 @@ snapshots:
 
   istanbul-lib-source-maps@5.0.6:
     dependencies:
-      '@jridgewell/trace-mapping': 0.3.29
+      '@jridgewell/trace-mapping': 0.3.31
       debug: 4.4.3
       istanbul-lib-coverage: 3.2.2
     transitivePeerDependencies:
       - supports-color
-    optional: true
-
-  istanbul-reports@3.1.7:
-    dependencies:
-      html-escaper: 2.0.2
-      istanbul-lib-report: 3.0.1
     optional: true
 
   istanbul-reports@3.2.0:
@@ -19590,7 +19602,7 @@ snapshots:
       '@babel/generator': 7.28.6
       '@babel/plugin-syntax-jsx': 7.27.1(@babel/core@7.28.5)
       '@babel/plugin-syntax-typescript': 7.27.1(@babel/core@7.28.5)
-      '@babel/types': 7.28.6
+      '@babel/types': 7.29.0
       '@jest/expect-utils': 30.2.0
       '@jest/get-type': 30.1.0
       '@jest/snapshot-utils': 30.2.0
@@ -19711,7 +19723,7 @@ snapshots:
     dependencies:
       cssstyle: 4.4.0
       data-urls: 5.0.0
-      decimal.js: 10.5.0
+      decimal.js: 10.6.0
       html-encoding-sniffer: 4.0.0
       http-proxy-agent: 7.0.2
       https-proxy-agent: 7.0.6
@@ -19727,7 +19739,7 @@ snapshots:
       whatwg-encoding: 3.1.1
       whatwg-mimetype: 4.0.0
       whatwg-url: 14.2.0
-      ws: 8.18.1
+      ws: 8.19.0
       xml-name-validator: 5.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -22907,7 +22919,7 @@ snapshots:
 
   v8-to-istanbul@9.3.0:
     dependencies:
-      '@jridgewell/trace-mapping': 0.3.29
+      '@jridgewell/trace-mapping': 0.3.31
       '@types/istanbul-lib-coverage': 2.0.6
       convert-source-map: 2.0.0
     optional: true
@@ -23012,7 +23024,7 @@ snapshots:
       terser: 5.44.1
       yaml: 2.8.1
 
-  vitest@4.0.18(@opentelemetry/api@1.9.0)(@types/node@24.10.11)(@vitest/ui@4.0.18)(jiti@2.6.1)(jsdom@27.4.0)(less@4.4.2)(sass-embedded@1.86.3)(sass@1.97.1)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.1):
+  vitest@4.0.18(@opentelemetry/api@1.9.0)(@types/node@24.10.11)(@vitest/ui@4.0.18)(happy-dom@20.5.0)(jiti@2.6.1)(jsdom@27.4.0)(less@4.4.2)(sass-embedded@1.86.3)(sass@1.97.1)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.1):
     dependencies:
       '@vitest/expect': 4.0.18
       '@vitest/mocker': 4.0.18(vite@7.3.0(@types/node@24.10.11)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.86.3)(sass@1.97.1)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.1))
@@ -23038,6 +23050,7 @@ snapshots:
       '@opentelemetry/api': 1.9.0
       '@types/node': 24.10.11
       '@vitest/ui': 4.0.18(vitest@4.0.18)
+      happy-dom: 20.5.0
       jsdom: 27.4.0
     transitivePeerDependencies:
       - jiti
@@ -23317,6 +23330,8 @@ snapshots:
     dependencies:
       iconv-lite: 0.6.3
     optional: true
+
+  whatwg-mimetype@3.0.0: {}
 
   whatwg-mimetype@4.0.0: {}
 

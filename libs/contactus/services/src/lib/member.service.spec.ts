@@ -8,10 +8,13 @@ import { of } from 'rxjs';
 import { ContactusSpaceService } from './contactus-space.service';
 import { SneatUserService } from '@sneat/auth-core';
 
-vi.mock('@angular/fire/firestore', () => ({
-	...jest.requireActual('@angular/fire/firestore'),
-	collection: vi.fn().mockReturnValue({}),
-}));
+vi.mock('@angular/fire/firestore', async (importOriginal) => {
+	const actual = await importOriginal<any>();
+	return {
+		...actual,
+		collection: vi.fn().mockReturnValue({}),
+	};
+});
 
 describe('MemberService', () => {
 	beforeEach(() =>

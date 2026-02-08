@@ -1,14 +1,18 @@
 const fs = require('fs');
 const path = require('path');
 
-const files = [
+const testSetupFiles = [
 	'libs/datagrid/src/test-setup.ts',
 	'libs/dto/src/test-setup.ts',
 	'libs/ui/src/test-setup.ts',
+	'libs/core/src/test-setup.ts',
 	'libs/app/src/test-setup.ts',
+	'libs/auth/ui/src/test-setup.ts',
+	'libs/auth/core/src/test-setup.ts',
 	'libs/auth/models/src/test-setup.ts',
 	'libs/datetime/src/test-setup.ts',
 	'libs/timer/src/test-setup.ts',
+	'libs/wizard/src/test-setup.ts',
 	'libs/user/src/test-setup.ts',
 	'libs/scrumspace/scrummodels/src/test-setup.ts',
 	'libs/scrumspace/retrospectives/src/test-setup.ts',
@@ -25,14 +29,18 @@ const files = [
 	'libs/extensions/budgetus/src/test-setup.ts',
 	'libs/extensions/assetus/core/src/test-setup.ts',
 	'libs/extensions/assetus/components/src/test-setup.ts',
+	'libs/extensions/assetus/pages/src/test-setup.ts',
 	'libs/components/src/test-setup.ts',
 	'libs/meeting/src/test-setup.ts',
 	'libs/contactus/core/src/test-setup.ts',
 	'libs/contactus/internal/src/test-setup.ts',
+	'libs/contactus/shared/src/test-setup.ts',
 	'libs/contactus/services/src/test-setup.ts',
+	'libs/api/src/test-setup.ts',
 	'libs/communes/ui/src/test-setup.ts',
 	'libs/space/models/src/test-setup.ts',
 	'libs/space/components/src/test-setup.ts',
+	'libs/space/pages/src/test-setup.ts',
 	'libs/space/services/src/test-setup.ts',
 	'libs/datatug/main/src/test-setup.ts',
 	'libs/datatug/main/src/lib/services/repo/src/test-setup.ts',
@@ -42,13 +50,20 @@ const files = [
 	'libs/grid/src/test-setup.ts',
 ];
 
-const boilerplate = `
+const standardizedContent = `import '@analogjs/vitest-angular/setup-zone';
+import { TestBed } from '@angular/core/testing';
+import {
+	BrowserDynamicTestingModule,
+	platformBrowserDynamicTesting,
+} from '@angular/platform-browser-dynamic/testing';
+
+TestBed.initTestEnvironment(
+  BrowserDynamicTestingModule,
+  platformBrowserDynamicTesting(),
+);
+
+// Global mocks for jsdom environment
 if (typeof window !== 'undefined') {
-  if (!(window as any).document) {
-      (window as any).document = {
-          adoptedStyleSheets: [],
-      };
-  }
   if (!window.document.adoptedStyleSheets) {
     (window.document as any).adoptedStyleSheets = [];
   }
@@ -67,39 +82,73 @@ if (typeof window !== 'undefined') {
       }
       return originalGetOwnPropertyDescriptor.apply(this, arguments as any);
   };
+
+  if (!(window as any).location) {
+      (window as any).location = {
+          href: 'http://localhost',
+          pathname: '/',
+          search: '',
+          hash: '',
+          host: 'localhost',
+          hostname: 'localhost',
+          origin: 'http://localhost',
+          port: '',
+          protocol: 'http:',
+          assign: () => {},
+          replace: () => {},
+          reload: () => {},
+      };
+  }
+
+  if (!window.matchMedia) {
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      value: vi.fn().mockImplementation(query => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: vi.fn(), // deprecated
+        removeListener: vi.fn(), // deprecated
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        dispatchEvent: vi.fn(),
+      })),
+    });
+  }
+
+  if (!window.performance) {
+    (window as any).performance = {
+      mark: vi.fn(),
+      measure: vi.fn(),
+      clearMarks: vi.fn(),
+      clearMeasures: vi.fn(),
+      now: vi.fn(() => Date.now()),
+      getEntriesByName: vi.fn(() => []),
+      getEntriesByType: vi.fn(() => []),
+    };
+  }
 }
 
-import { TestBed } from '@angular/core/testing';
-import {
-	BrowserDynamicTestingModule,
-	platformBrowserDynamicTesting,
-} from '@angular/platform-browser-dynamic/testing';
-
-try {
-  TestBed.initTestEnvironment(
-    BrowserDynamicTestingModule,
-    platformBrowserDynamicTesting(),
+// Global mocks for fetch if not available
+if (!global.fetch) {
+  (global as any).fetch = vi.fn().mockImplementation(() =>
+    Promise.resolve({
+      json: () => Promise.resolve({}),
+      ok: true,
+    }),
   );
-} catch (e) {
-  // ignore if already initialized
+  (global as any).Request = class {};
+  (global as any).Response = class {};
+  (global as any).Headers = class {};
 }
 `;
 
-files.forEach((file) => {
-	if (fs.existsSync(file)) {
-		let content = fs.readFileSync(file, 'utf8');
-		if (!content.includes('adoptedStyleSheets')) {
-			// Remove previous boilerplate if it was added but incomplete
-			if (content.includes('TestBed.initTestEnvironment')) {
-				content = content.split(
-					"import { TestBed } from '@angular/core/testing';",
-				)[0];
-			}
-			content += boilerplate;
-			fs.writeFileSync(file, content);
-			console.log(`Updated ${file}`);
-		}
+testSetupFiles.forEach((file) => {
+	const fullPath = path.resolve(process.cwd(), file);
+	if (fs.existsSync(fullPath)) {
+		console.log('Updating ' + file + '...');
+		fs.writeFileSync(fullPath, standardizedContent);
 	} else {
-		console.warn(`File not found: ${file}`);
+		console.warn('File not found: ' + file);
 	}
 });

@@ -1,41 +1,17 @@
-if (typeof window !== 'undefined') {
-	if (!window.performance) {
-		(window as any).performance = {
-			now: () => Date.now(),
-			mark: () => {},
-			measure: () => {},
-			getEntriesByName: () => [],
-		};
-	}
-	if (!window.matchMedia) {
-		Object.defineProperty(window, 'matchMedia', {
-			writable: true,
-			value: (query: string) => ({
-				matches: false,
-				media: query,
-				onchange: null,
-				addListener: () => {},
-				removeListener: () => {},
-				addEventListener: () => {},
-				removeEventListener: () => {},
-				dispatchEvent: () => false,
-			}),
-		});
-	}
+import { TestBed } from '@angular/core/testing';
+import {
+	BrowserDynamicTestingModule,
+	platformBrowserDynamicTesting,
+} from '@angular/platform-browser-dynamic/testing';
 
-	// Stencil/Ionic requirements
-	if (!window.CSS) {
-		(window as any).CSS = {
-			supports: () => false,
-		};
-	}
-
-	if (!window.customElements) {
-		(window as any).customElements = {
-			define: () => {},
-			get: () => {},
-			whenDefined: () => Promise.resolve(),
-			upgrade: () => {},
-		};
+export default function setup() {
+	console.log('Vitest Global Setup: Initializing Angular Test Environment');
+	try {
+		TestBed.initTestEnvironment(
+			BrowserDynamicTestingModule,
+			platformBrowserDynamicTesting(),
+		);
+	} catch (e) {
+		// ignore if already initialized
 	}
 }

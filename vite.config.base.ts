@@ -33,16 +33,24 @@ export function createBaseViteConfig(
 		dirname.replace(rootPath, ''),
 	);
 
-	const relativeToGlobalSetup = join(
-		Array(dirname.replace(rootPath, '').split('/').filter(Boolean).length)
-			.fill('..')
-			.join('/'),
-		'scripts/vitest-global-setup.ts',
-	);
-
 	return {
 		root: dirname,
 		cacheDir: relativeToRoot,
+		resolve: {
+			dedupe: [
+				'@angular/core',
+				'@angular/common',
+				'@angular/common/http',
+				'@angular/platform-browser',
+				'@angular/platform-browser-dynamic',
+				'@angular/router',
+				'@angular/cdk',
+				'@angular/material',
+				'@angular/fire',
+				'rxjs',
+				'zone.js',
+			],
+		},
 		plugins: [
 			angular({
 				jit: true,
@@ -54,9 +62,9 @@ export function createBaseViteConfig(
 			name,
 			watch: false,
 			globals: true,
-			environment: 'jsdom',
+			environment: 'happy-dom',
 			include: ['src/**/*.spec.ts'],
-			setupFiles: ['src/test-setup.ts'],
+			setupFiles: [join(dirname, 'src/test-setup.ts')],
 			reporters: ['default'],
 			coverage: {
 				reportsDirectory: reportsDirectory || coverageDir,
@@ -75,6 +83,12 @@ export function createBaseViteConfig(
 						'@sneat/logging',
 						'@sneat/core',
 						'@ionic/angular/standalone',
+						'@ionic-native/core',
+						'@ionic-native/splash-screen',
+						'@ionic-native/status-bar',
+						/@angular\//,
+						/@stencil\//,
+						/tslib/,
 					],
 				},
 			},

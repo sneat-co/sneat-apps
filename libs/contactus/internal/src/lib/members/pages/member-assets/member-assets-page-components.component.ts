@@ -24,8 +24,6 @@ import { MemberBasePage } from '../member-base-page';
 })
 export class MemberAssetsPageComponent extends MemberBasePage {
 	constructor() {
-		const contactService = inject(ContactService);
-
-		super('MemberAssetsPageComponent', contactService);
+		super(inject(ContactService));
 	}
 }

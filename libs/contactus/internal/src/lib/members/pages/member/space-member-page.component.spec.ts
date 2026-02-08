@@ -1,20 +1,21 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { TeamMemberPageComponent } from './commune-member-page.component';
+import { SpaceMemberPageComponent } from './space-member-page.component';
 
-describe('CommuneMemberPage', () => {
-	let component: TeamMemberPageComponent;
-	let fixture: ComponentFixture<TeamMemberPageComponent>;
+describe('SpaceMemberPageComponent', () => {
+	let component: SpaceMemberPageComponent;
+	let fixture: ComponentFixture<SpaceMemberPageComponent>;
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [TeamMemberPageComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA]}).compileComponents();
+			imports: [SpaceMemberPageComponent],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {
-		fixture = TestBed.createComponent(TeamMemberPageComponent);
+		fixture = TestBed.createComponent(SpaceMemberPageComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});

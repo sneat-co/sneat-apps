@@ -30,7 +30,7 @@ describe('SpacesMenuComponent', () => {
 					provide: ErrorLogger,
 					useValue: {
 						logError: vi.fn(),
-						logErrorHandler: jest.fn(() => vi.fn()),
+						logErrorHandler: vi.fn(() => vi.fn()),
 					},
 				},
 				{ provide: AnalyticsService, useValue: { logEvent: vi.fn() } },
@@ -42,8 +42,8 @@ describe('SpacesMenuComponent', () => {
 				{
 					provide: Auth,
 					useValue: {
-						onIdTokenChanged: jest.fn(() => vi.fn()),
-						onAuthStateChanged: jest.fn(() => vi.fn()),
+						onIdTokenChanged: vi.fn(() => vi.fn()),
+						onAuthStateChanged: vi.fn(() => vi.fn()),
 					},
 				},
 				{ provide: Firestore, useValue: {} },

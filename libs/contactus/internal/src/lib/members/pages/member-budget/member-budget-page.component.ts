@@ -8,13 +8,11 @@ import {
 	IonToolbar,
 } from '@ionic/angular/standalone';
 import { MemberBasePage } from '../member-base-page';
-import { IMemberService } from 'sneat-shared/services/interfaces';
-import { CommuneBasePageParams } from 'sneat-shared/services/params';
+import { ContactService } from '@sneat/contactus-services';
 
 @Component({
 	selector: 'sneat-member-budget',
 	templateUrl: './member-budget-page.component.html',
-	providers: [CommuneBasePageParams],
 	imports: [
 		IonHeader,
 		IonToolbar,
@@ -26,9 +24,6 @@ import { CommuneBasePageParams } from 'sneat-shared/services/params';
 })
 export class MemberBudgetPageComponent extends MemberBasePage {
 	constructor() {
-		const params = inject(CommuneBasePageParams);
-		const membersService = inject(IMemberService);
-
-		super(params, membersService);
+		super(inject(ContactService));
 	}
 }

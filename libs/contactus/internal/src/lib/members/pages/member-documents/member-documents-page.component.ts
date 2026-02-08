@@ -13,14 +13,12 @@ import {
 	IonTitle,
 	IonToolbar,
 } from '@ionic/angular/standalone';
+import { ContactService } from '@sneat/contactus-services';
 import { MemberBasePage } from '../member-base-page';
-import { CommuneBasePageParams } from 'sneat-shared/services/params';
-import { IMemberService } from 'sneat-shared/services/interfaces';
 
 @Component({
 	selector: 'sneat-member-documents',
 	templateUrl: './member-documents-page.component.html',
-	providers: [CommuneBasePageParams],
 	imports: [
 		IonHeader,
 		IonToolbar,
@@ -38,9 +36,6 @@ import { IMemberService } from 'sneat-shared/services/interfaces';
 })
 export class MemberDocumentsPageComponent extends MemberBasePage {
 	constructor() {
-		const params = inject(CommuneBasePageParams);
-		const membersService = inject(IMemberService);
-
-		super(params, membersService);
+		super(inject(ContactService));
 	}
 }
