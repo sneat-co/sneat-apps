@@ -15,7 +15,7 @@ import {
 	IonList,
 	IonSpinner,
 } from '@ionic/angular/standalone';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { IRetroItem, RetroItemType } from '@sneat/ext-scrumspace-scrummodels';
 import {
 	IAddRetroItemRequest,

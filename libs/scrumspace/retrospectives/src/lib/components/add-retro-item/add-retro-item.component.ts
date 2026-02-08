@@ -4,7 +4,7 @@ import {
 	RetrospectiveService,
 } from '../../retrospective.service';
 import { FormControl, Validators } from '@angular/forms';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 

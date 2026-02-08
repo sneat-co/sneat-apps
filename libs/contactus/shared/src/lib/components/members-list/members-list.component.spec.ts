@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ErrorLogger } from '@sneat/logging';
+import { ErrorLogger } from '@sneat/core';
 import {
 	NavController,
 	ModalController,

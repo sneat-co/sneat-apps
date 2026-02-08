@@ -15,7 +15,7 @@ import {
 import { AuthMenuItemComponent } from '@sneat/auth-ui';
 import { SpaceMenuComponent } from './space-menu.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ErrorLogger } from '@sneat/logging';
+import { ErrorLogger } from '@sneat/core';
 import { AnalyticsService, APP_INFO, LOGGER_FACTORY } from '@sneat/core';
 import { SneatUserService } from '@sneat/auth-core';
 import { of } from 'rxjs';

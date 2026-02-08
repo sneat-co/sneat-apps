@@ -9,7 +9,7 @@ import {
 } from '@ionic/angular/standalone';
 import { ContactusNavService } from '@sneat/contactus-services';
 import { IIdAndOptionalDbo } from '@sneat/core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { IContactusSpaceDbo } from '@sneat/contactus-core';
 import { SpaceNavService } from '@sneat/space-services';
 import { SneatUserService } from '@sneat/auth-core';

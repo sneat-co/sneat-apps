@@ -5,12 +5,12 @@ import {
 	setUserId,
 	setUserProperties,
 } from '@angular/fire/analytics';
-import { ErrorLogger, IErrorLogger, ILogErrorOptions } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger, ILogErrorOptions } from '@sneat/core';
 import {
 	IAnalyticsCallOptions,
 	IAnalyticsService,
 	UserProperties,
-} from './analytics.interface';
+} from '../../../../core/src/lib/analytics.interface';
 
 const logErrOptions: ILogErrorOptions = { show: false, feedback: false };
 

@@ -23,7 +23,7 @@ import {
 	IonSkeletonText,
 } from '@ionic/angular/standalone';
 import { IRecord } from '@sneat/data';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { Observable } from 'rxjs';
 
 export interface ICardTab {

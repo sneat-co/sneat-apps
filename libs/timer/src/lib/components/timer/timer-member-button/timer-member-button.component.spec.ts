@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonButton } from '@ionic/angular/standalone';
-import { ErrorLogger } from '@sneat/logging';
+import { ErrorLogger } from '@sneat/core';
 
 import { TimerMemberButtonComponent } from './timer-member-button.component';
 

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { ErrorLogger } from '@sneat/logging';
+import { ErrorLogger } from '@sneat/core';
 
 import { NamesFormComponent } from './names-form.component';
 

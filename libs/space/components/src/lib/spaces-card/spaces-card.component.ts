@@ -21,7 +21,7 @@ import {
 import { AnalyticsService, IAnalyticsService } from '@sneat/core';
 import { IUserSpaceBrief } from '@sneat/auth-models';
 import { IIdAndBrief } from '@sneat/core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ICreateSpaceRequest, ISpaceContext } from '@sneat/space-models';
 import { SpaceNavService, SpaceService } from '@sneat/space-services';
 import { ISneatUserState, SneatUserService } from '@sneat/auth-core';

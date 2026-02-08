@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { ILogistOrderContext } from '../dto';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 
 export interface IOrderPrintedDocContext extends ILogistOrderContext {
 	params?: unknown;

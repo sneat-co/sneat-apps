@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 
 import { ContactRoleFormComponent } from './contact-role-form.component';
 import { ContactGroupService } from '@sneat/contactus-services';
-import { ErrorLogger } from '@sneat/logging';
+import { ErrorLogger } from '@sneat/core';
 
 describe('ContactRoleFormComponent', () => {
 	let component: ContactRoleFormComponent;

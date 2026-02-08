@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 
 @Component({
 	selector: 'sneat-day-tasks',

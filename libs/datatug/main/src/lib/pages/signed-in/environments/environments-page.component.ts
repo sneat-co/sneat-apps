@@ -14,7 +14,7 @@ import {
 	IonToolbar,
 } from '@ionic/angular/standalone';
 import { SneatCardListComponent } from '@sneat/components';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { IProjectSummary } from '../../../models/definition/project';
 import { DatatugNavContextService } from '../../../services/nav/datatug-nav-context.service';
 

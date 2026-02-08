@@ -4,7 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ModalController } from '@ionic/angular/standalone';
 import { IGridDef } from '@sneat/grid';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ICommandResponseItem } from '../../dto/command-response';
 import { IExecuteResponse } from '../../dto/execute';
 import { ICommandResponseWithRecordset } from '../../dto/response';

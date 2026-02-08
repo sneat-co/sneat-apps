@@ -36,7 +36,7 @@ import {
 	IonToolbar,
 	PopoverController,
 } from '@ionic/angular/standalone';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { IGridColumn, IGridDef } from '@sneat/grid';
 import { Subject } from 'rxjs';
 import { CellPopoverComponent, DataGridComponent } from '@sneat/datagrid';

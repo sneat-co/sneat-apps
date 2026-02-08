@@ -4,7 +4,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ContactsByTypeComponent } from './contacts-by-type.component';
 import { ContactNavService } from '@sneat/contactus-services';
-import { ErrorLogger } from '@sneat/logging';
+import { ErrorLogger } from '@sneat/core';
 
 describe('ContactsFamilyComponent', () => {
 	let component: ContactsByTypeComponent;

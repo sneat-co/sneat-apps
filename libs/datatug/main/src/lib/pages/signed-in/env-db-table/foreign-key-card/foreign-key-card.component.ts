@@ -15,7 +15,7 @@ import {
 	IonLabel,
 	IonText,
 } from '@ionic/angular/standalone';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { IGridDef } from '@sneat/grid';
 import { ICommandResponseWithRecordset } from '../../../../dto/response';
 import {

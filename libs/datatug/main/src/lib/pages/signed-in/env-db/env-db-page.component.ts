@@ -26,7 +26,7 @@ import {
 	IonToolbar,
 } from '@ionic/angular/standalone';
 import { GlobalTooltipOption, Options, Tabulator } from 'tabulator-tables';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { getTabulatorCols, IGridColumn } from '@sneat/grid';
 import { Subject } from 'rxjs';
 import { routingParamEnvironmentId } from '../../../core/datatug-routing-params';

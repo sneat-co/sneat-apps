@@ -43,7 +43,7 @@ import {
 } from '@sneat/core';
 import { emptyTiming, HappeningType, ITiming } from '@sneat/mod-schedulus-core';
 import { dateToTimeOnlyStr } from '@sneat/mod-schedulus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { isTomorrow } from '../calendar-core';
 import { StartEndDatesRangeFormComponent } from '../start-end-dates-range-form/start-end-dates-range-form.component';
 import { TimeSelectorComponent } from './time-selector.component';

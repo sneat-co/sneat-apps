@@ -14,7 +14,7 @@ import {
 	NavController,
 } from '@ionic/angular/standalone';
 import { IBoolMetricVal, ISpaceDbo, ISpaceMetric } from '@sneat/dto';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { IRecord } from '@sneat/data';
 import { SpaceNavService, SpaceService } from '@sneat/space-services';
 

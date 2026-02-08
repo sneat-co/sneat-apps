@@ -27,7 +27,7 @@ import {
 	IHappeningContext,
 	IHappeningSlotWithID,
 } from '@sneat/mod-schedulus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 // import { HappeningService } from '../../services/happening.service';
 import { Subject } from 'rxjs';

@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ClassName, SelectorService } from '@sneat/ui';
 import { SpaceComponentBaseParams } from '@sneat/space-components';
 import { AnalyticsService, APP_INFO, LOGGER_FACTORY } from '@sneat/core';
-import { ErrorLogger } from '@sneat/logging';
+import { ErrorLogger } from '@sneat/core';
 import { Firestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { AssetService } from '../services';

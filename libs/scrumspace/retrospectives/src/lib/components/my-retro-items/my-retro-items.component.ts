@@ -34,7 +34,7 @@ import {
 	IAddRetroItemRequest,
 	RetrospectiveService,
 } from '../../retrospective.service';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import {
 	IRetroItem,
 	IRetroList,

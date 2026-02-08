@@ -13,7 +13,7 @@ import {
 	AlertController,
 } from '@ionic/angular/standalone';
 import { SneatCardListComponent } from '@sneat/components';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DatatugFoldersService } from '../../../../folders/core/datatug-folders.service';

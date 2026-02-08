@@ -4,13 +4,13 @@ import {
 	setupAngularTestingEnvironment,
 	setupGlobalMocks,
 } from './base-test-setup';
-import { ErrorLogger } from '../../logging/src/lib/interfaces';
+import { ErrorLogger } from '../logging/interfaces';
 import { Firestore } from '@angular/fire/firestore';
 import { Auth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { of } from 'rxjs';
-import { AnalyticsService } from '../anaylytics/analytics.interface';
+import { AnalyticsService } from '../analytics.interface';
 
 export function configureGlobalTestBed() {
 	try {

@@ -7,7 +7,7 @@ import {
 	tap,
 	throwError,
 } from 'rxjs';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { IProjectRef } from '../core/project-context';
 import { IProjectContext } from '../nav/nav-models';
 import { DatatugNavContextService } from '../services/nav/datatug-nav-context.service';

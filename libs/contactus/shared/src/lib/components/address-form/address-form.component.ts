@@ -32,7 +32,7 @@ import {
 import { CountrySelectorComponent, ISaveEvent } from '@sneat/components';
 import { excludeUndefined } from '@sneat/core';
 import { IAddress } from '@sneat/contactus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { createSetFocusToInput } from '@sneat/ui';
 
 export interface IAddressFormControls {

@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { DataGridComponent } from '@sneat/datagrid';
 import { IGridDef } from '@sneat/grid';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 
 @Component({
 	selector: 'sneat-datatug-grid-widget',

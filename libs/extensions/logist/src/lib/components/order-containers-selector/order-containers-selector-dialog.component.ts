@@ -6,7 +6,7 @@ import {
 	IonLabel,
 } from '@ionic/angular/standalone';
 import { DialogHeaderComponent } from '@sneat/components';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ILogistOrderContext } from '../../dto';
 import { IContainer } from './condainer-interface';
 import { OrderContainersSelectorComponent } from './order-containers-selector.component';

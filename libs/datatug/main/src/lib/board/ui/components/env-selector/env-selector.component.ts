@@ -5,7 +5,7 @@ import {
 	IonSegment,
 	IonSegmentButton,
 } from '@ionic/angular/standalone';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { IProjEnv } from '../../../../models/definition/project';
 import { DatatugNavContextService } from '../../../../services/nav/datatug-nav-context.service';
 

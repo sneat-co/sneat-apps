@@ -38,7 +38,7 @@ import {
 	IAnalyticsService,
 	IAppInfo,
 } from '@sneat/core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { RandomIdService } from '@sneat/random';
 import { UserCredential, sendEmailVerification } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';

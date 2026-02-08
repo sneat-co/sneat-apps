@@ -18,7 +18,7 @@ import {
 	ISelectItem,
 	SelectFromListComponent,
 } from '@sneat/ui';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import {
 	ContainerType,

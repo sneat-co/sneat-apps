@@ -9,7 +9,7 @@ import {
 import { IonCard, IonCardContent } from '@ionic/angular/standalone';
 import { DataGridComponent } from '@sneat/datagrid';
 import { IGridColumn } from '@sneat/grid';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { RowComponent, RowContextMenuSignature } from 'tabulator-tables';
 import {
 	IContainerRequest,

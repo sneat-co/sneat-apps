@@ -18,7 +18,7 @@ import {
 	IonLabel,
 } from '@ionic/angular/standalone';
 import { AssetService, IUpdateAssetRequest } from '../services';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 
 @Component({

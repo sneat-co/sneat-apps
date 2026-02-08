@@ -9,7 +9,7 @@ import {
 } from '@ionic/angular/standalone';
 import { SpacesListComponent } from '../spaces-list';
 import { SpacesMenuComponent } from './spaces-menu.component';
-import { ErrorLogger } from '@sneat/logging';
+import { ErrorLogger } from '@sneat/core';
 import { AnalyticsService, APP_INFO, LOGGER_FACTORY } from '@sneat/core';
 import { of } from 'rxjs';
 import { SneatUserService } from '@sneat/auth-core';

@@ -27,7 +27,7 @@ import {
 } from '@ionic/angular/standalone';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { IProjectRef } from '../../../core/project-context';
 import { AddDbServerComponent } from '../../../db/modals/add-db-serve/add-db-server.component';
 import {

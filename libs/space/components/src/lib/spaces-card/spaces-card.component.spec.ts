@@ -7,7 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { SneatUserService } from '@sneat/auth-core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { SpaceNavService, SpaceService } from '@sneat/space-services';
-import { ErrorLogger } from '@sneat/logging';
+import { ErrorLogger } from '@sneat/core';
 import { AnalyticsService } from '@sneat/core';
 import { of } from 'rxjs';
 import { Auth } from '@angular/fire/auth';

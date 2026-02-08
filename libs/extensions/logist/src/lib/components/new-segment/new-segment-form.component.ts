@@ -19,7 +19,7 @@ import {
 	IonRow,
 } from '@ionic/angular/standalone';
 import { excludeEmpty } from '@sneat/core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { IContactContext } from '@sneat/contactus-core';
 import {
 	IAddSegmentParty,

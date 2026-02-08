@@ -14,7 +14,7 @@ import {
 } from '@sneat/contactus-core';
 import { ContactInputComponent } from '@sneat/contactus-shared';
 import { LogistOrderService } from '../../services';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import {
 	CounterpartyRole,

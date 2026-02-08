@@ -5,7 +5,7 @@ import {
 	ModalController,
 } from '@ionic/angular/standalone';
 import { DialogHeaderComponent } from '@sneat/components';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ILogistOrderContext, IOrderContainer } from '../../dto';
 import { NewShippingPointFormComponent } from './new-shipping-point-form.component';
 

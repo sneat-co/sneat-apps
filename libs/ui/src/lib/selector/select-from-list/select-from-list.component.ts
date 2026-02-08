@@ -37,7 +37,7 @@ import {
 	IonSelectOption,
 	IonSpinner,
 } from '@ionic/angular/standalone';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { NEVER, Observable, Subject, takeUntil } from 'rxjs';
 import { ISelectItem } from '../selector-interfaces';
 

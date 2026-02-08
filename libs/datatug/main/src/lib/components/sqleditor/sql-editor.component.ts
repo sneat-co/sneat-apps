@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CodemirrorComponent, CodemirrorModule } from '@ctrl/ngx-codemirror';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 
 // import { javascript, sql } from '@codemirror/lang-javascript';
 // import 'codemirror/mode/javascript/javascript';

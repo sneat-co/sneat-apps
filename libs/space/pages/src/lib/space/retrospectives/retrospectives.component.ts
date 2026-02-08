@@ -10,7 +10,7 @@ import {
 	NavController,
 } from '@ionic/angular/standalone';
 import { ISpaceDbo } from '@sneat/dto';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { IRecord } from '@sneat/data';
 import { SneatUserService } from '@sneat/auth-core';
 import { SpaceNavService } from '@sneat/space-services';

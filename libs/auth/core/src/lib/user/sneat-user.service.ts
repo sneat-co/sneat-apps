@@ -16,7 +16,7 @@ import {
 } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { IUserRecord } from '@sneat/auth-models';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import {
 	initialSneatAuthState,
 	ISneatAuthState,

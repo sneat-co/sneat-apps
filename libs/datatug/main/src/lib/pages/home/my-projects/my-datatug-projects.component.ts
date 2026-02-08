@@ -14,7 +14,7 @@ import {
 	IDatatugProjectBriefWithIdAndStoreRef,
 	IProjectAndStore,
 } from '../../../models/interfaces';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import {
 	DatatugUserService,
 	IDatatugUserState,

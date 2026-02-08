@@ -22,7 +22,7 @@ import {
 	ContactsSelectorService,
 	IContactSelectorOptions,
 } from '@sneat/contactus-shared';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import {
 	CounterpartyRole,

@@ -1,5 +1,5 @@
 import { inject, Injectable, NgModule } from '@angular/core';
-import { ErrorLogger } from '@sneat/logging';
+import { ErrorLogger } from '@sneat/core';
 import { ISlotUIEvent } from '@sneat/mod-schedulus-core';
 import { IHappeningContext } from '@sneat/mod-schedulus-core';
 import { SpaceNavService } from '@sneat/space-services';

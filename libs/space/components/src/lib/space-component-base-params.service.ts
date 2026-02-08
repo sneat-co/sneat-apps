@@ -6,7 +6,7 @@ import {
 	LOGGER_FACTORY,
 	NgModulePreloaderService,
 } from '@sneat/core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { SpaceNavService } from '@sneat/space-services';
 import { SneatUserService } from '@sneat/auth-core';
 

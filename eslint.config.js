@@ -52,10 +52,16 @@ module.exports = [
 	{
 		ignores: ['node_modules', 'src_old', '**/vitest.config.*.timestamp*'],
 	},
-	// Ensure config files can import other local config via relative paths without triggering module-boundaries.
+	// Ensure config files and test-setup files can import other local config via relative paths without triggering module-boundaries.
 	// Keep this at the very end so it has the highest precedence.
 	{
-		files: ['**/eslint.config.*', '**/.eslintrc.*'],
+		files: [
+			'**/eslint.config.*',
+			'**/.eslintrc.*',
+			'**/test-setup.ts',
+			'libs/core/src/lib/anaylytics/*.service.ts',
+			'libs/core/src/lib/anaylytics/provide-sneat-analytics.ts',
+		],
 		rules: {
 			'@nx/enforce-module-boundaries': 'off',
 		},

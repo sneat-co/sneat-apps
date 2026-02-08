@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { SpaceNavService } from './space-nav.service';
-import { ErrorLogger } from '@sneat/logging';
+import { ErrorLogger } from '@sneat/core';
 import { AnalyticsService } from '@sneat/core';
 import { NavController } from '@ionic/angular';
 

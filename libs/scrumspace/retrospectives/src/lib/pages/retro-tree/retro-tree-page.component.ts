@@ -24,7 +24,7 @@ import {
 import { SpaceService } from '@sneat/space-services';
 import { SneatUserService } from '@sneat/auth-core';
 import { getMeetingIdFromDate } from '@sneat/ext-meeting';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 
 @Component({
 	selector: 'sneat-retro-tree',

@@ -14,7 +14,7 @@ import {
 	IonItem,
 	ToastController,
 } from '@ionic/angular/standalone';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { RandomIdService } from '@sneat/random';
 import { ISpaceContext } from '@sneat/space-models';
 import { IListContext } from '../../../contexts';

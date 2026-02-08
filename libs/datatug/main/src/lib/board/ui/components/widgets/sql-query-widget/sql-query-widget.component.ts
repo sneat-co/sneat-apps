@@ -13,7 +13,7 @@ import { GridWidgetComponent } from '../grid-widget/grid-widget.component';
 import { BoardCardTabService } from '../../board-card/board-card.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 
 const reSqlParams = /@(\w+)/;
 

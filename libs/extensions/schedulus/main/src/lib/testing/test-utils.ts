@@ -9,7 +9,7 @@ import {
 	NgModulePreloaderService,
 	AnalyticsService,
 } from '@sneat/core';
-import { ErrorLogger } from '@sneat/logging';
+import { ErrorLogger } from '@sneat/core';
 import { SneatUserService } from '@sneat/auth-core';
 import { SpaceNavService, SpaceService } from '@sneat/space-services';
 import {

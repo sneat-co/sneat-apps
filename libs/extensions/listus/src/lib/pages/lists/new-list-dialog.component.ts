@@ -25,7 +25,7 @@ import {
 	ModalController,
 } from '@ionic/angular/standalone';
 import { IListInfo, ListType } from '../../dto';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 
 @Component({
 	selector: 'sneat-new-list-popover',

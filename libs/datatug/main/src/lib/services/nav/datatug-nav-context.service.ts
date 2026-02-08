@@ -10,7 +10,7 @@ import {
 	shareReplay,
 	tap,
 } from 'rxjs/operators';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { parseStoreRef } from '@sneat/core';
 import { newRandomId } from '@sneat/random';
 import { IProjectRef } from '../../core/project-context';

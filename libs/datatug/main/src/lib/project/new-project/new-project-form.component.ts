@@ -17,7 +17,7 @@ import {
 	IonTitle,
 	IonToolbar,
 } from '@ionic/angular/standalone';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { parseStoreRef } from '@sneat/core';
 import { IProjectContext } from '../../nav/nav-models';
 import { DatatugNavService } from '../../services/nav/datatug-nav.service';

@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { SneatApiService } from '@sneat/api';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 
 @Injectable()
 export class ListItemService {

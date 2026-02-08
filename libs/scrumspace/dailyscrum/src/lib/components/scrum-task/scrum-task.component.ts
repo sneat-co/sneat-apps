@@ -17,7 +17,7 @@ import {
 import { SneatUserService } from '@sneat/auth-core';
 import { IRecord } from '@sneat/data';
 import { IUserDbo } from '@sneat/dto';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ScrumService } from '../../services/scrum.service';
 import { ITask, TaskType } from '@sneat/ext-scrumspace-scrummodels';
 

@@ -1,7 +1,7 @@
 import { Injectable, NgModule, inject } from '@angular/core';
 import { NavController } from '@ionic/angular/standalone';
 import { ILogistOrderContext } from '../dto';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 
 @Injectable()
 export class OrderNavService {

@@ -21,7 +21,7 @@ import {
 	ISneatAuthUser,
 	SneatAuthStateService,
 } from '@sneat/auth-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { Subject, takeUntil } from 'rxjs';
 
 type IonicColor =

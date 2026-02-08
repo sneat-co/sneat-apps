@@ -20,7 +20,7 @@ import {
 	IonLabel,
 	IonRow,
 } from '@ionic/angular/standalone';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { IContactContext } from '@sneat/contactus-core';
 import {
 	ILogistOrderContext,

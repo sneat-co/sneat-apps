@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { SneatUserService } from '@sneat/auth-core';
 import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { ContactusSpaceService } from './contactus-space.service';
-import { ErrorLogger } from '@sneat/logging';
+import { ErrorLogger } from '@sneat/core';
 import { Observable, Subject, Subscription, takeUntil } from 'rxjs';
 
 // TODO: ContactusSpaceContextService can be abstracted and reused by other entities

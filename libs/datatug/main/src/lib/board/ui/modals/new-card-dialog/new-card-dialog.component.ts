@@ -12,7 +12,7 @@ import {
 	IonList,
 	ModalController,
 } from '@ionic/angular/standalone';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 
 @Component({
 	selector: 'sneat-datatug-new-card-dialog',

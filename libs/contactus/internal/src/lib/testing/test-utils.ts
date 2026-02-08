@@ -14,7 +14,7 @@ import {
 	LOGGER_FACTORY,
 	NgModulePreloaderService,
 } from '@sneat/core';
-import { ErrorLogger } from '@sneat/logging';
+import { ErrorLogger } from '@sneat/core';
 import { SpaceNavService } from '@sneat/space-services';
 import { Firestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';

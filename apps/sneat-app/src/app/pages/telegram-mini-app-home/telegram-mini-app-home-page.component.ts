@@ -3,7 +3,7 @@ import { IonContent, IonItem, IonLabel } from '@ionic/angular/standalone';
 // import { Router } from '@angular/router';
 // import { SneatApiService } from '@sneat/api';
 // import { SneatAuthStateService } from '@sneat/auth-core';
-// import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+// import { ErrorLogger, IErrorLogger } from '@sneat/core';
 
 @Component({
 	selector: 'sneat-telegram-menu-page',

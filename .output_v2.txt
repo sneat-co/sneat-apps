@@ -74,7 +74,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -116,7 +116,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -154,7 +154,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -192,7 +192,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -236,7 +236,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -268,7 +268,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   7  |  }
   8  |  catch (e) {
-  9  |      import { ErrorLogger } from '@sneat/logging';
+  9  |      import { ErrorLogger } from '@sneat/core';
      |             ^
   10 |      // Provide a default mock for ErrorLogger token for tests
   11 |      try {
@@ -306,7 +306,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -344,7 +344,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -384,7 +384,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -422,7 +422,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -462,7 +462,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -502,7 +502,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -548,7 +548,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -588,7 +588,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -632,7 +632,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -670,7 +670,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -710,7 +710,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -832,7 +832,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -870,7 +870,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -922,7 +922,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -960,7 +960,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -1000,7 +1000,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -1054,7 +1054,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -1092,7 +1092,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -1130,7 +1130,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -1498,7 +1498,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -1560,7 +1560,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -1598,7 +1598,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -1676,7 +1676,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -1718,7 +1718,7 @@ The remote cache will not be read from or written to during this run.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -1820,7 +1820,7 @@ Pass --verbose to see the stacktrace.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -1928,7 +1928,7 @@ Pass --verbose to see the stacktrace.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {
@@ -1998,7 +1998,7 @@ Pass --verbose to see the stacktrace.
   [33mUnexpected "{"[33m
   8  |  }
   9  |  catch (e) {
-  10 |      import { ErrorLogger } from '@sneat/logging';
+  10 |      import { ErrorLogger } from '@sneat/core';
      |             ^
   11 |      // Provide a default mock for ErrorLogger token for tests
   12 |      try {

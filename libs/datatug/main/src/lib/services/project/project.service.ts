@@ -7,7 +7,7 @@ import {
 	STORE_ID_GITHUB_COM,
 	STORE_TYPE_GITHUB,
 } from '@sneat/core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import {
 	map,
 	Observable,

@@ -27,7 +27,7 @@ import { DataGridComponent } from '@sneat/datagrid';
 import { Subject } from 'rxjs';
 import { takeUntil, takeWhile } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { IGridColumn } from '@sneat/grid';
 import {
 	routingParamEntityId,

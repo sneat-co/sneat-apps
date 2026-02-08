@@ -7,7 +7,7 @@ import {
 	IonLabel,
 } from '@ionic/angular/standalone';
 import { DialogHeaderComponent } from '@sneat/components';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import {
 	IAddContainerPointsRequest,
 	ILogistOrderContext,

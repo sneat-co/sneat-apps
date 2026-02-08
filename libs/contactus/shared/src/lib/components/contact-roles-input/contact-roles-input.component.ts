@@ -11,7 +11,7 @@ import {
 	ContactType,
 	IContactWithBrief,
 } from '@sneat/contactus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ContactService } from '@sneat/contactus-services';
 import { ISpaceContext } from '@sneat/space-models';
 import { MultiSelectorComponent } from '@sneat/ui';

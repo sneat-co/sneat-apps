@@ -24,7 +24,7 @@ import {
 import { AuthStatus } from '@sneat/auth-core';
 import { SneatErrorCardComponent } from '@sneat/components';
 import { parseStoreRef } from '@sneat/core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { merge, Subject } from 'rxjs';
 import { filter, takeUntil, tap } from 'rxjs/operators';
 import { IProjectBase } from '../../../models/definition/project';

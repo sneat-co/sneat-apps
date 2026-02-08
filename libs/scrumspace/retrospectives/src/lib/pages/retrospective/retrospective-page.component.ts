@@ -22,7 +22,7 @@ import {
 } from '@sneat/ext-scrumspace-scrummodels';
 import { SpaceService } from '@sneat/space-services';
 import { SneatUserService } from '@sneat/auth-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { getMeetingIdFromDate } from '@sneat/ext-meeting';
 
 @Component({

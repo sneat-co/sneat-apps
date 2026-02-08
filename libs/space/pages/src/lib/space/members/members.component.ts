@@ -25,7 +25,7 @@ import {
 	IContactusSpaceDbo,
 	IContactusSpaceDboAndID,
 } from '@sneat/contactus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { zipMapBriefsWithIDs } from '@sneat/space-models';
 import { SpaceNavService, SpaceService } from '@sneat/space-services';
 

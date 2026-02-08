@@ -18,7 +18,7 @@ import { ISpaceDbo } from '@sneat/dto';
 import { IScrumDbo } from '@sneat/ext-scrumspace-scrummodels';
 import { ISpaceContext } from '@sneat/space-models';
 import { SpaceService } from '@sneat/space-services';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 
 @Component({
 	selector: 'sneat-scrums-history',

@@ -13,7 +13,7 @@ import {
 	IonText,
 } from '@ionic/angular/standalone';
 import { Subscription } from 'rxjs';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SqlEditorComponent } from '../../components/sqleditor/sql-editor.component';
 import { IProjItemBrief } from '../../models/definition/project';

@@ -32,7 +32,7 @@ import { DatatugNavContextService } from '../../../services/nav/datatug-nav-cont
 import { DatatugNavService } from '../../../services/nav/datatug-nav.service';
 import { EntityService } from '../../../services/unsorted/entity.service';
 import { EntityFieldDialogComponent } from './entity-field-dialog/entity-field-dialog.component';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 
 @Component({
 	selector: 'sneat-datatug-entity-edit',

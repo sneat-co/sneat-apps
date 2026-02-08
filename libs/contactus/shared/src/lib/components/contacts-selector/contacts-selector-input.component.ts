@@ -28,7 +28,7 @@ import { ContactTitlePipe } from '../../pipes';
 import { ContactsListComponent } from '../contacts-list';
 import { ContactsAsBadgesComponent } from '../members-as-badges';
 import { IContactSelectorOptions } from './contacts-selector.interfaces';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import { ContactsSelectorService } from './contacts-selector.service';
 

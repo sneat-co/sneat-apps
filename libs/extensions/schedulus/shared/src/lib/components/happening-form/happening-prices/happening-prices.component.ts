@@ -21,7 +21,7 @@ import {
 	ModalController,
 } from '@ionic/angular/standalone';
 import { Decimal64p2Pipe } from '@sneat/components';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import {
 	IHappeningBrief,
 	IHappeningContext,

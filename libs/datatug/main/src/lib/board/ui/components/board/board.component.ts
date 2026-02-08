@@ -19,7 +19,7 @@ import {
 	IBoardDef,
 } from '../../../../models/definition/board/board';
 import { NewCardDialogComponent } from '../../modals/new-card-dialog/new-card-dialog.component';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { BoardRowComponent } from '../board-row/board-row.component';
 
 @Component({

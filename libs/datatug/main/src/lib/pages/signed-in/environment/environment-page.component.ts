@@ -19,7 +19,7 @@ import {
 	IonTitle,
 	IonToolbar,
 } from '@ionic/angular/standalone';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import {
 	IEnvDbServer,
 	IEnvironmentSummary,

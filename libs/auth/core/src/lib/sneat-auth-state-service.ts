@@ -11,7 +11,7 @@ import {
 } from '@sneat/core';
 import { BehaviorSubject, from, Observable } from 'rxjs';
 import { Injectable, inject } from '@angular/core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { distinctUntilChanged, shareReplay } from 'rxjs/operators';
 import {
 	Auth,

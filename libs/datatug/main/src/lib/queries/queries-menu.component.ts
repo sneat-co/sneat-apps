@@ -13,7 +13,7 @@ import {
 import { IQueryState } from '../editor/models';
 import { ProjectContextService } from '../services/project/project-context.service';
 import { QueryEditorStateService } from './query-editor-state-service';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { QueriesUiService } from './queries-ui.service';
 
 @Component({

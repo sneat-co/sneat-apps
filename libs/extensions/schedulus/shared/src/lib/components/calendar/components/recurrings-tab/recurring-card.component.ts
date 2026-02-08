@@ -10,7 +10,7 @@ import {
 	IHappeningContext,
 	IHappeningWithUiState,
 } from '@sneat/mod-schedulus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
 import { takeUntil } from 'rxjs';

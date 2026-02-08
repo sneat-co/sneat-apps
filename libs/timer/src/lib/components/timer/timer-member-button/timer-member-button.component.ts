@@ -14,7 +14,7 @@ import {
 	IonLabel,
 	IonSpinner,
 } from '@ionic/angular/standalone';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ITimerState, Timer } from '@sneat/ext-meeting';
 import { IScrumDbo, TimerStatusEnum } from '@sneat/ext-scrumspace-scrummodels';
 import { Subscription } from 'rxjs';

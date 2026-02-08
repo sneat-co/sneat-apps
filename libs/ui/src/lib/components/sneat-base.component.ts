@@ -1,6 +1,6 @@
 import { inject, Injectable, InjectionToken, OnDestroy } from '@angular/core';
 import { createSetFocusToInput } from '../focus';
-import { ErrorLogger } from '@sneat/logging';
+import { ErrorLogger } from '@sneat/core';
 import { MonoTypeOperatorFunction, Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

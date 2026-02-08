@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { WormholeModule } from '@sneat/wormhole';
 import { race, Subject } from 'rxjs';
 import { skip, takeUntil } from 'rxjs/operators';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ActivatedRoute } from '@angular/router';
 import {
 	IonBackButton,

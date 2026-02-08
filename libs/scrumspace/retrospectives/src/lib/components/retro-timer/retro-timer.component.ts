@@ -26,7 +26,7 @@ import {
 	RetrospectiveStage,
 } from '@sneat/ext-scrumspace-scrummodels';
 import { Subscription } from 'rxjs';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { IRecord } from '@sneat/data';
 import { secondsToStr } from '@sneat/datetime';
 import {

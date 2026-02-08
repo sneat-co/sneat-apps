@@ -21,7 +21,7 @@ import {
 	IonLabel,
 } from '@ionic/angular/standalone';
 import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
-import { ErrorLogger } from '@sneat/logging';
+import { ErrorLogger } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import { NumberKind, TrackBy, TrackerValueType } from '../../dbo/i-tracker-dbo';
 import {

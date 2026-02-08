@@ -1,5 +1,5 @@
 import { MultiAnalyticsService } from './multi-analytics.service';
-import { IAnalyticsService } from './analytics.interface';
+import { IAnalyticsService } from '../../../../core/src/lib/analytics.interface';
 
 describe('MultiAnalyticsService', () => {
 	beforeEach(() => {

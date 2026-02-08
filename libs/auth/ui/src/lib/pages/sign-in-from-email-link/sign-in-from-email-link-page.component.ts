@@ -13,7 +13,7 @@ import {
 	NavController,
 } from '@ionic/angular/standalone';
 import { SneatAuthStateService } from '@sneat/auth-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 
 @Component({
 	selector: 'sneat-sign-in-from-email-link-page',

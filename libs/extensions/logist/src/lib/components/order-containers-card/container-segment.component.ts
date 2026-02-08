@@ -20,7 +20,7 @@ import {
 	IonRow,
 } from '@ionic/angular/standalone';
 import { excludeUndefined } from '@sneat/core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import {
 	IContainerPoint,
 	IContainerSegment,

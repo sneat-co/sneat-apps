@@ -21,7 +21,7 @@ import {
 	IonSpinner,
 } from '@ionic/angular/standalone';
 import { LogistOrderContactRole, ContactType } from '@sneat/contactus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import { CounterpartyRole } from '../../dto';
 import {

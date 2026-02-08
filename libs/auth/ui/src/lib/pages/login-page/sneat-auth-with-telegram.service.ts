@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { SneatApiService } from '@sneat/api';
 import { SneatAuthStateService } from '@sneat/auth-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { Observable } from 'rxjs';
 
 export interface ITelegramAuthData {

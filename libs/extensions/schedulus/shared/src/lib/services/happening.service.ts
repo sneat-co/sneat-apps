@@ -15,7 +15,7 @@ import {
 	IHappeningPrice,
 	IHappeningSlotWithID,
 } from '@sneat/mod-schedulus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ISpaceContext, ISpaceRequest } from '@sneat/space-models';
 import { QueryOrderByConstraint } from 'firebase/firestore';
 import { map, Observable, tap, throwError } from 'rxjs';

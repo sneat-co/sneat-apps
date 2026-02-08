@@ -43,7 +43,7 @@ import {
 	ContactTitlePipe,
 	getContactTitle,
 } from '../../pipes/contact-title.pipe';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import { InviteService } from '@sneat/contactus-services';
 import { Observable, throwError } from 'rxjs';

@@ -20,7 +20,7 @@ import { isoStringsToDate } from '@sneat/core';
 import { getRelatedItemIDs } from '@sneat/dto';
 import { IHappeningContext, WeekdayCode2 } from '@sneat/mod-schedulus-core';
 import { getWd2 } from '@sneat/mod-schedulus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { WithSpaceInput } from '@sneat/space-services';
 import { ISpaceContext, zipMapBriefsWithIDs } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';

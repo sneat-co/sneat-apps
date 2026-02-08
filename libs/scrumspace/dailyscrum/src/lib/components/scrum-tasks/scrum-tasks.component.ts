@@ -25,7 +25,7 @@ import { IMemberBrief } from '@sneat/contactus-core';
 import { listAddRemoveAnimation } from '@sneat/core';
 import { IRecord } from '@sneat/data';
 import { ISpaceDbo } from '@sneat/dto';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ITaskWithUiStatus, ScrumService } from '../../services/scrum.service';
 import {
 	IReorderTaskRequest,

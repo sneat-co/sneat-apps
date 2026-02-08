@@ -21,7 +21,7 @@ import {
 } from '@ionic/angular/standalone';
 import { distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ParameterLookupService } from '../../../../components/parameters/parameter-lookup.service';
 import { routingParamBoard } from '../../../../core/datatug-routing-params';
 import { projectRefToString } from '../../../../core/project-context';

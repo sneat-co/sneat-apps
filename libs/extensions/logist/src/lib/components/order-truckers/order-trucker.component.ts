@@ -17,7 +17,7 @@ import {
 	IonSpinner,
 } from '@ionic/angular/standalone';
 import { CountryFlagPipe } from '@sneat/components';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import {
 	getOrderSegments,

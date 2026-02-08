@@ -26,7 +26,7 @@ import {
 	IContactDbo,
 	IContactContext,
 } from '@sneat/contactus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import { IContactSelectorOptions } from '../contacts-selector/contacts-selector.interfaces';
 import { ContactsSelectorModule } from '../contacts-selector/contacts-selector.module';

@@ -2,7 +2,7 @@ import { Injectable, inject, InjectionToken } from '@angular/core';
 import { Platform } from '@ionic/angular/standalone';
 // import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 // import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 
 export const SplashScreen = new InjectionToken<any>('SplashScreen');
 export const StatusBar = new InjectionToken<any>('StatusBar');

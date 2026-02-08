@@ -14,7 +14,7 @@ import {
 	IonToolbar,
 } from '@ionic/angular/standalone';
 import { IIdAndBrief } from '@sneat/core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import {
 	IAssetBrief,
 	CurrencyList,

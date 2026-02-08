@@ -21,7 +21,7 @@ import {
 	IonText,
 } from '@ionic/angular/standalone';
 import { LogistOrderContactRole } from '@sneat/contactus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import { ILogistOrderContext } from '../../dto';
 import { LogistOrderService } from '../../services';

@@ -31,7 +31,7 @@ import {
 import { createSetFocusToInput } from '@sneat/ui';
 import { excludeEmpty } from '@sneat/core';
 import { IPersonNames, isNameEmpty } from '@sneat/auth-models';
-import { ErrorLogger } from '@sneat/logging';
+import { ErrorLogger } from '@sneat/core';
 import { IFormField } from '@sneat/core';
 
 export interface INamesFormFields {

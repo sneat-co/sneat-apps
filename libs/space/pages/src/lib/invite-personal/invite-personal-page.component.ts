@@ -23,7 +23,7 @@ import {
 	IPersonalInvite,
 	IContactWithBriefAndSpace,
 } from '@sneat/contactus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { SneatUserService } from '@sneat/auth-core';
 import { MemberService } from '@sneat/contactus-services';

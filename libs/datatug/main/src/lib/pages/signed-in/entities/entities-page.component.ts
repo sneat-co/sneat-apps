@@ -27,7 +27,7 @@ import {
 	ViewDidLeave,
 } from '@ionic/angular/standalone';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { IRecord } from '@sneat/data';
 import { IEntity } from '../../../models/definition/metapedia/entity';
 import { IProjEntity } from '../../../models/definition/project';

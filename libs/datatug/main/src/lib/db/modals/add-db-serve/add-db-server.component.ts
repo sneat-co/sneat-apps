@@ -15,7 +15,7 @@ import {
 	ModalController,
 } from '@ionic/angular/standalone';
 import { Subject } from 'rxjs';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { IDbServer } from '../../../models/definition/apis/database';
 import { DbServerService } from '../../../services/unsorted/db-server.service';
 

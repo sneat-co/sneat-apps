@@ -18,7 +18,7 @@ import {
 	AgentStateService,
 	IAgentState,
 } from '../../../services/repo/agent-state.service';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DatatugNavService } from '../../../services/nav/datatug-nav.service';

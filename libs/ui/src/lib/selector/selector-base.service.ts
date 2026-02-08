@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { ModalController, ModalOptions } from '@ionic/angular/standalone';
 import type { ComponentProps, ComponentRef } from '@ionic/core';
-import { ErrorLogger } from '@sneat/logging';
+import { ErrorLogger } from '@sneat/core';
 import { ISelectItem } from './selector-interfaces';
 import { ISelectorOptions } from './selector-options';
 

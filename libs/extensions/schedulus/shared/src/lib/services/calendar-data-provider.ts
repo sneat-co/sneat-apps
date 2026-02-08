@@ -6,7 +6,7 @@ import {
 	ISlotUIContext,
 	WeekdayCode2,
 } from '@sneat/mod-schedulus-core';
-import { IErrorLogger } from '@sneat/logging';
+import { IErrorLogger } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import { EMPTY, Observable, Subject } from 'rxjs';
 import { CalendarDay, ICalendarDayInput } from './calendar-day';

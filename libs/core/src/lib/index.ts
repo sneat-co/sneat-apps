@@ -1,4 +1,3 @@
-export * from './anaylytics';
 export * from './animations';
 export * from './app.service';
 export * from './core-models';
@@ -15,9 +14,8 @@ export * from './sneat-extensions';
 export * from './form-field';
 export * from './team-type';
 export * from './location-href';
-export * from './anaylytics';
 export * from './interfaces';
 export * from './directives';
 export * from './environment-config';
-export * from './testing/base-test-setup';
-export * from './testing/test-setup';
+export * from './logging/interfaces';
+export * from './analytics.interface';

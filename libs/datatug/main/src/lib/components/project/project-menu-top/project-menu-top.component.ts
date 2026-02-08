@@ -9,7 +9,7 @@ import {
 	IonSpinner,
 } from '@ionic/angular/standalone';
 import { Observable, Subject } from 'rxjs';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { takeUntil } from 'rxjs/operators';
 
 interface IProjectTopLevelPage {

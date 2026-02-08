@@ -24,7 +24,7 @@ import {
 } from '@ionic/angular/standalone';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 
 @Component({
 	selector: 'sneat-datatug-dbserver',

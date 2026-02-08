@@ -23,7 +23,7 @@ import { IMeetingMember } from '@sneat/ext-meeting';
 import { IRecord } from '@sneat/data';
 import { ISpaceContext } from '@sneat/space-models';
 import { IRetrospective } from '@sneat/ext-scrumspace-scrummodels';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 
 interface IRetroCount {
 	title: string;

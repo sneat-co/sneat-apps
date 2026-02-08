@@ -31,7 +31,7 @@ import {
 import { CreateNamedRequest } from '../../dto/requests';
 import { IRecord } from '@sneat/data';
 import { DatatugNavService } from '../../services/nav/datatug-nav.service';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { EntityService } from '../../services/unsorted/entity.service';
 import { EnvironmentService } from '../../services/unsorted/environment.service';
 import { SchemaService } from '../../services/unsorted/schema.service';

@@ -20,7 +20,7 @@ import {
 	IonSpinner,
 } from '@ionic/angular/standalone';
 import { ContactsSelectorService } from '@sneat/contactus-shared';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import {
 	getSegmentCounterparty,
 	getSegmentsByContainerID,

@@ -1,6 +1,6 @@
 import { computed, effect, Signal, signal } from '@angular/core';
 import { dateToIso } from '@sneat/core';
-import { IErrorLogger } from '@sneat/logging';
+import { IErrorLogger } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import {
 	BehaviorSubject,

@@ -1,8 +1,11 @@
 import { Analytics, getAnalytics } from '@angular/fire/analytics';
 import { FirebaseApp } from '@angular/fire/app';
-import { IEnvironmentConfig } from '../environment-config';
-import { AnalyticsService, IAnalyticsService } from './analytics.interface';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { IEnvironmentConfig } from '../../../../core/src/lib/environment-config';
+import {
+	AnalyticsService,
+	IAnalyticsService,
+} from '../../../../core/src/lib/analytics.interface';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { FireAnalyticsService } from './fire-analytics.service';
 import { MultiAnalyticsService } from './multi-analytics.service';
 import { PosthogAnalyticsService } from './posthog-analytics.service';

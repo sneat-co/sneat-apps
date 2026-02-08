@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
 import { excludeUndefined } from '@sneat/core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ILogistOrderContext, IOrderContainer } from '../../dto';
 import { OrderNavService } from '../../services';
 import { NewSegmentDialogComponent } from './new-segment-dialog.component';

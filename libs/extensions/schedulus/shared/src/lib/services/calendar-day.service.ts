@@ -2,7 +2,7 @@ import { Injectable, NgModule, inject, Injector } from '@angular/core';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { ICalendarDayBrief, ICalendarDayDbo } from '@sneat/mod-schedulus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import { ModuleSpaceItemService } from '@sneat/space-services';
 import { tap } from 'rxjs';

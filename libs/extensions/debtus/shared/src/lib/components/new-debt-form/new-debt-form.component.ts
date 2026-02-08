@@ -17,7 +17,7 @@ import {
 	IonSelectOption,
 } from '@ionic/angular/standalone';
 import { IContactContext } from '@sneat/contactus-core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import {
 	CurrencyCode,

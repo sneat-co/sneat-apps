@@ -10,7 +10,7 @@ import { AnalyticsService, IAnalyticsService, IIdAndBrief } from '@sneat/core';
 import { IUserSpaceBrief } from '@sneat/auth-models';
 // import {IRetrospective} from '@sneat/ext-scrumspace-retrospectives';
 import { ISpaceDbo } from '@sneat/dto';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 // import {IScrum} from '@sneat/ext-scrumspace-scrummodels';
 

@@ -20,7 +20,7 @@ import { IUserSpaceBrief } from '@sneat/auth-models';
 import { IIdAndBrief } from '@sneat/core';
 import { IRecord } from '@sneat/data';
 import { ISpaceBrief, ISpaceDbo, ISpaceMetric } from '@sneat/dto';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import {
 	ICreateSpaceRequest,
 	ICreateSpaceResponse,

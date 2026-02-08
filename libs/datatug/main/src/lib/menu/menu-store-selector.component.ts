@@ -6,7 +6,7 @@ import {
 	SimpleChanges,
 	inject,
 } from '@angular/core';
-import { IErrorLogger } from '@sneat/logging';
+import { IErrorLogger } from '@sneat/core';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import {

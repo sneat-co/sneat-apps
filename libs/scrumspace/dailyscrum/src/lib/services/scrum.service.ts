@@ -14,7 +14,7 @@ import { HttpParams } from '@angular/common/http';
 import { BaseMeetingService } from '@sneat/ext-meeting';
 import { IRecord } from '@sneat/data';
 import { SneatApiService } from '@sneat/api';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { AnalyticsService, IAnalyticsService, IIdAndBrief } from '@sneat/core';
 import {
 	IAddCommentRequest,

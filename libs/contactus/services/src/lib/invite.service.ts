@@ -9,7 +9,7 @@ import {
 	IJoinSpaceInfoResponse,
 } from '@sneat/contactus-core';
 import { excludeEmpty } from '@sneat/core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { RandomIdService } from '@sneat/random';
 import {
 	IAcceptInviteResponse,

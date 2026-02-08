@@ -7,7 +7,7 @@ import {
 	SimpleChanges,
 	inject,
 } from '@angular/core';
-import { ErrorLogger, IErrorLogger } from '@sneat/logging';
+import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { parseStoreRef } from '@sneat/core';
 import { IProjectContext } from '../nav/nav-models';
 import { NewProjectService } from '../project/new-project/new-project.service';
