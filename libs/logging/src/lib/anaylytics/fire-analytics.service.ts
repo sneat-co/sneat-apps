@@ -10,7 +10,7 @@ import {
 	IAnalyticsCallOptions,
 	IAnalyticsService,
 	UserProperties,
-} from '../../../../core/src/lib/analytics.interface';
+} from '@sneat/core';
 
 const logErrOptions: ILogErrorOptions = { show: false, feedback: false };
 

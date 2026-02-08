@@ -6,15 +6,11 @@ import { IonicRouteStrategy } from '@ionic/angular/standalone';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { DefaultSneatAppApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
 import { TelegramAuthService } from '@sneat/auth-core';
-import {
-	LOGGER_FACTORY,
-	loggerFactory,
-	provideSneatAnalytics,
-	TopMenuService,
-} from '@sneat/core';
+import { LOGGER_FACTORY, loggerFactory, TopMenuService } from '@sneat/core';
 import {
 	provideErrorLogger,
 	provideSentryAppInitializer,
+	provideSneatAnalytics,
 } from '@sneat/logging';
 import { RANDOM_ID_OPTIONS } from '@sneat/random';
 import { AppComponentService } from './app-component.service';

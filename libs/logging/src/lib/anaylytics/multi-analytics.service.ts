@@ -2,7 +2,7 @@ import {
 	IAnalyticsCallOptions,
 	IAnalyticsService,
 	UserProperties,
-} from '../../../../core/src/lib/analytics.interface';
+} from '@sneat/core';
 
 const prefix = 'MultiAnalyticsService.';
 

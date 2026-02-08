@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import posthog, { PostHog } from 'posthog-js';
-import { IAnalyticsService } from '../../../../core/src/lib/analytics.interface';
+import { IAnalyticsService } from '@sneat/core';
 
 const ph = posthog as unknown as PostHog;
 

@@ -55,8 +55,7 @@ export class SneatApiServiceFactory {
 		// const baseUrl = getStoreUrl(storeRefToId(storeRef));
 		switch (storeRef.type) {
 			case 'firestore':
-				inject(SneatApiService);
-				this.services[id] = service = new SneatApiService(/*baseUrl*/);
+				this.services[id] = service = inject(SneatApiService);
 				return service;
 			default:
 				throw new Error('unknown store type: ' + storeRef.type);
