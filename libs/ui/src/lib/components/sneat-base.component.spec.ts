@@ -21,7 +21,8 @@ class TestComponent extends (SneatBaseComponent as any) {
 		return this.subs;
 	}
 
-	public log(msg: string) {
+	public log(_msg: string) {
+		void _msg;
 		// override log to avoid console output
 	}
 }

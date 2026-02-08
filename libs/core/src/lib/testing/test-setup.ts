@@ -4,7 +4,7 @@ import {
 	setupAngularTestingEnvironment,
 	setupGlobalMocks,
 } from './base-test-setup';
-import { ErrorLogger } from '@sneat/logging';
+import { ErrorLogger } from '../../logging/src/lib/interfaces';
 import { Firestore } from '@angular/fire/firestore';
 import { Auth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -18,7 +18,12 @@ export function configureGlobalTestBed() {
 			providers: [
 				{
 					provide: ErrorLogger,
-					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+					useValue: {
+						logError: vi.fn(),
+						logErrorHandler: () => {
+							return vi.fn();
+						},
+					},
 				},
 				{
 					provide: Firestore,
@@ -53,7 +58,7 @@ export function configureGlobalTestBed() {
 				{ provide: AngularFireAuth, useValue: { authState: of(null) } },
 			],
 		});
-	} catch (e) {
+	} catch {
 		// ignore
 	}
 }

@@ -1,8 +1,4 @@
-import {
-	AppComponentService,
-	SplashScreen,
-	StatusBar,
-} from './app-component.service';
+import { AppComponentService } from './app-component.service';
 
 describe('AppComponentService', () => {
 	let service: AppComponentService;

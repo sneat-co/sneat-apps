@@ -11,7 +11,7 @@ export function setupAngularTestingEnvironment() {
 			BrowserDynamicTestingModule,
 			platformBrowserDynamicTesting(),
 		);
-	} catch (e) {
+	} catch {
 		// ignore
 	}
 }
@@ -29,9 +29,15 @@ export function setupGlobalMocks() {
 				origin: 'http://localhost',
 				port: '',
 				protocol: 'http:',
-				assign: () => {},
-				replace: () => {},
-				reload: () => {},
+				assign: () => {
+					/* ignore */
+				},
+				replace: () => {
+					/* ignore */
+				},
+				reload: () => {
+					/* ignore */
+				},
 			};
 		}
 
@@ -64,7 +70,9 @@ export function setupGlobalMocks() {
 
 		if (!(window as any).CSSStyleSheet) {
 			(window as any).CSSStyleSheet = class {
-				replaceSync() {}
+				replaceSync() {
+					/* ignore */
+				}
 				replace() {
 					return Promise.resolve();
 				}
@@ -72,7 +80,9 @@ export function setupGlobalMocks() {
 		}
 
 		if ((window as any).CSSStyleSheet) {
-			(window as any).CSSStyleSheet.prototype.replaceSync = function () {};
+			(window as any).CSSStyleSheet.prototype.replaceSync = function () {
+				/* ignore */
+			};
 			(window as any).CSSStyleSheet.prototype.replace = function () {
 				return Promise.resolve();
 			};
@@ -97,12 +107,12 @@ export function setupGlobalMocks() {
 						value: (obj as any).length,
 					};
 				}
-			} catch (e) {
+			} catch {
 				// ignore
 			}
 			try {
 				return originalGetOwnPropertyDescriptor(obj, prop);
-			} catch (e) {
+			} catch {
 				return undefined;
 			}
 		};
@@ -151,8 +161,12 @@ export function setupGlobalMocks() {
 		(global as any).doc = mockDoc;
 
 		const MockMutationObserver = class {
-			observe() {}
-			disconnect() {}
+			observe() {
+				/* ignore */
+			}
+			disconnect() {
+				/* ignore */
+			}
 			takeRecords() {
 				return [];
 			}
@@ -161,9 +175,15 @@ export function setupGlobalMocks() {
 		(global as any).MutationObserver = MockMutationObserver;
 
 		const MockIntersectionObserver = class {
-			observe() {}
-			unobserve() {}
-			disconnect() {}
+			observe() {
+				/* ignore */
+			}
+			unobserve() {
+				/* ignore */
+			}
+			disconnect() {
+				/* ignore */
+			}
 			takeRecords() {
 				return [];
 			}

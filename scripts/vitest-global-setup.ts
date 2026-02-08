@@ -11,7 +11,7 @@ export default function setup() {
 			BrowserDynamicTestingModule,
 			platformBrowserDynamicTesting(),
 		);
-	} catch (e) {
+	} catch {
 		// ignore if already initialized
 	}
 }
