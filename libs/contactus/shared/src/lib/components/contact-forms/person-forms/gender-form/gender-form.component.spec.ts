@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ErrorLogger } from '@sneat/logging';
+import { ContactService } from '@sneat/contactus-services';
 
 import { GenderFormComponent } from './gender-form.component';
 
@@ -11,16 +12,25 @@ describe('GenderFormComponent', () => {
 
 	@Component({
 		selector: 'sneat-mock-component',
-		template: '<sneat-gender-form/>',
+		template:
+			'<sneat-gender-form [$spaceID]="spaceID" [$contactID]="contactID" [$genderID]="genderID"/>',
 		imports: [GenderFormComponent, FormsModule],
 		standalone: true,
 	})
-	class MockComponent {}
+	class MockComponent {
+		spaceID = 'test-space';
+		contactID = undefined;
+		genderID = undefined;
+	}
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			imports: [MockComponent, FormsModule],
 			providers: [
+				{
+					provide: ContactService,
+					useValue: { updateContact: vi.fn() },
+				},
 				{
 					provide: ErrorLogger,
 					useValue: {

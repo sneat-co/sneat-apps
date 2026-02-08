@@ -13,11 +13,14 @@ describe('ContactRoleFormComponent', () => {
 	@Component({
 		selector: 'sneat-mock-component',
 		template:
-			'<sneat-contact-role-form [contactGroupID]="undefined" [contactRoleID]="undefined"/>',
+			'<sneat-contact-role-form [$contactGroupID]="contactGroupID" [$contactRoleID]="contactRoleID"/>',
 		imports: [ContactRoleFormComponent],
 		standalone: true,
 	})
-	class MockComponent {}
+	class MockComponent {
+		contactGroupID = undefined;
+		contactRoleID = undefined;
+	}
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({

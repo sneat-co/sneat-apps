@@ -105,6 +105,34 @@ export function setupGlobalMocks() {
 			(window.document as any).adoptedStyleSheets = [];
 		}
 
+		if (!window.document.dir) {
+			(window.document as any).dir = 'ltr';
+		}
+
+		if (
+			(window as any).CSSStyleSheet &&
+			!(window as any).CSSStyleSheet.prototype.replaceSync
+		) {
+			(window as any).CSSStyleSheet.prototype.replaceSync = function () {};
+		}
+		if (
+			(window as any).CSSStyleSheet &&
+			!(window as any).CSSStyleSheet.prototype.replace
+		) {
+			(window as any).CSSStyleSheet.prototype.replace = function () {
+				return Promise.resolve();
+			};
+		}
+
+		// Ensure replaceSync and replace are always mocked if CSSStyleSheet exists,
+		// because Happy DOM might have them but they might be broken or call broken CSSParser
+		if ((window as any).CSSStyleSheet) {
+			(window as any).CSSStyleSheet.prototype.replaceSync = function () {};
+			(window as any).CSSStyleSheet.prototype.replace = function () {
+				return Promise.resolve();
+			};
+		}
+
 		// Mock Object.getOwnPropertyDescriptor(win.document.adoptedStyleSheets, "length")
 		// to avoid TypeError in Stencil: https://github.com/ionic-team/stencil/issues/5323
 		const originalGetOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
@@ -139,6 +167,37 @@ export function setupGlobalMocks() {
 				supports: () => false,
 			};
 		}
+
+		if (!(window as any).CSSParser) {
+			(window as any).CSSParser = class {
+				parseFromString() {
+					return {
+						cssRules: [],
+					};
+				}
+			};
+		}
+
+		const MockMutationObserver = class {
+			observe() {}
+			disconnect() {}
+			takeRecords() {
+				return [];
+			}
+		};
+		(window as any).MutationObserver = MockMutationObserver;
+		(global as any).MutationObserver = MockMutationObserver;
+
+		const MockIntersectionObserver = class {
+			observe() {}
+			unobserve() {}
+			disconnect() {}
+			takeRecords() {
+				return [];
+			}
+		};
+		(window as any).IntersectionObserver = MockIntersectionObserver;
+		(global as any).IntersectionObserver = MockIntersectionObserver;
 	}
 
 	// Global mocks for fetch if not available

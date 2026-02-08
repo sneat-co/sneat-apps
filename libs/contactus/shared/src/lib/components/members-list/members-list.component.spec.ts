@@ -8,6 +8,10 @@ import {
 	IonRouterOutlet,
 } from '@ionic/angular/standalone';
 import { of } from 'rxjs';
+import { SpaceNavService } from '@sneat/space-services';
+import { SneatUserService } from '@sneat/auth-core';
+import { ContactService, ContactusNavService } from '@sneat/contactus-services';
+import { ScheduleNavService } from '@sneat/mod-schedulus-core';
 
 import { MembersListComponent } from './members-list.component';
 

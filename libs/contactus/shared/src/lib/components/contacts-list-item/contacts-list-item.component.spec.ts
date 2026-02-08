@@ -12,12 +12,14 @@ describe('ContactListItemComponent', () => {
 
 	@Component({
 		selector: 'sneat-mock-component',
-		template: '<sneat-contacts-list-item [$contact]="contact"/>',
+		template:
+			'<sneat-contacts-list-item [$contact]="contact" [$space]="space"/>',
 		imports: [ContactsListItemComponent],
 		standalone: true,
 	})
 	class MockComponent {
-		contact = { id: 'test-contact' };
+		contact = { id: 'test-contact', brief: {} };
+		space = { id: 'test-space' };
 	}
 
 	beforeEach(waitForAsync(async () => {
