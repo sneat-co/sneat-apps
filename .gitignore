@@ -6,6 +6,7 @@
 /out-tsc
 
 .output*.*
+lint_output.*
 
 # dependencies
 node_modules
