@@ -124,7 +124,7 @@
 		"git-describe": "4.1.1",
 		"happy-dom": "^20.5.0",
 		"identity-obj-proxy": "^3.0.0",
-		"jsdom": "^27.1.0",
+		"jsdom": "^28.0.0",
 		"jsonc-eslint-parser": "2.4.2",
 		"lint-staged": "16.2.7",
 		"madge": "^8.0.0",
