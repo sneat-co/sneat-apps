@@ -1,5 +1,8 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ErrorLogger } from '@sneat/core';
+import { AssetService } from '@sneat/ext-assetus-components';
+import { ClassName } from '@sneat/ui';
 
 import { DocumentsListComponent } from './documents-list.component';
 
@@ -10,14 +13,24 @@ describe('DocumentsListComponent', () => {
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			imports: [DocumentsListComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA]}).compileComponents();
-	}));
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+			providers: [
+				{ provide: ClassName, useValue: 'DocumentsListComponent' },
+				{
+					provide: ErrorLogger,
+					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+				},
+				{ provide: AssetService, useValue: {} },
+			],
+		})
+			.overrideComponent(DocumentsListComponent, {
+				set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+			})
+			.compileComponents();
 
-	beforeEach(() => {
 		fixture = TestBed.createComponent(DocumentsListComponent);
 		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
+	}));
 
 	it('should create', () => {
 		expect(component).toBeTruthy();

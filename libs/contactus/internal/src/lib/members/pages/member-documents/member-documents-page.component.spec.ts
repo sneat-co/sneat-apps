@@ -2,6 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { MemberDocumentsPageComponent } from './member-documents-page.component';
+import { provideContactusMocks } from '../../../testing/test-utils';
 
 describe('MemberDocumentsPage', () => {
 	let component: MemberDocumentsPageComponent;
@@ -10,13 +11,18 @@ describe('MemberDocumentsPage', () => {
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			imports: [MemberDocumentsPageComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA]}).compileComponents();
+			providers: [provideContactusMocks()],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		})
+			.overrideComponent(MemberDocumentsPageComponent, {
+				set: { imports: [], providers: [] },
+			})
+			.compileComponents();
 	}));
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(MemberDocumentsPageComponent);
 		component = fixture.componentInstance;
-		fixture.detectChanges();
 	});
 
 	it('should create', () => {

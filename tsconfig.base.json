@@ -21,7 +21,7 @@
 		"noPropertyAccessFromIndexSignature": true,
 		"noImplicitReturns": true,
 		"noFallthroughCasesInSwitch": true,
-		"lib": ["ES2022", "DOM"],
+		"lib": ["ES2023", "DOM"],
 		"skipLibCheck": true,
 		"baseUrl": ".",
 		"paths": {

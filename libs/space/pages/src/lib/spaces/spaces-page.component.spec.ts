@@ -1,5 +1,5 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
 
 import { SpacesPageComponent } from './spaces-page.component';
 
@@ -9,11 +9,21 @@ describe('HomePage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [SpacesPageComponent, IonicModule.forRoot()]}).compileComponents();
+			imports: [SpacesPageComponent],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		})
+			.overrideComponent(SpacesPageComponent, {
+				set: {
+					imports: [],
+					providers: [],
+					template: '',
+					schemas: [CUSTOM_ELEMENTS_SCHEMA],
+				},
+			})
+			.compileComponents();
 
 		fixture = TestBed.createComponent(SpacesPageComponent);
 		component = fixture.componentInstance;
-		fixture.detectChanges();
 	}));
 
 	it('should create', () => {

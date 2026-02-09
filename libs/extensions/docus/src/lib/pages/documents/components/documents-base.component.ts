@@ -19,7 +19,7 @@ export abstract class DocumentsBaseComponent extends SneatBaseComponent {
 	protected readonly asset = inject(AssetService);
 	protected readonly toastCtrl = inject(ToastController);
 
-	protected constructor() {
+	public constructor() {
 		super();
 	}
 

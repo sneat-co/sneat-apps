@@ -1,18 +1,16 @@
 import { RegExpCheck } from './regexp_check';
 
 describe('RegExpCheck', () => {
-	const check = new RegExpCheck(/\w+/);
+	const check = new RegExpCheck(/^[a-zA-Z]+$/);
 
-	let result = check.checkValue('abc');
-	if (!result.ok) {
-		throw new Error('expected to pass');
-	}
-	if (result.message) {
-		throw new Error('expected not to have a message for passed validation');
-	}
+	it('should pass for alphabetic string', () => {
+		const result = check.checkValue('abc');
+		expect(result.ok).toBe(true);
+		expect(result.message).toBeUndefined();
+	});
 
-	result = check.checkValue('123');
-	if (result.ok) {
-		throw new Error('expected to fail');
-	}
+	it('should fail for numeric string', () => {
+		const result = check.checkValue('123');
+		expect(result.ok).toBe(false);
+	});
 });

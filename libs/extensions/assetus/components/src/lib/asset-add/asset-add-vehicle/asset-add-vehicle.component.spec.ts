@@ -1,12 +1,8 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { AssetService } from '../../services';
-import { SpaceComponentBaseParams } from '@sneat/space-components';
-import { NavController } from '@ionic/angular/standalone';
-import { SneatUserService } from '@sneat/auth-core';
-import { of } from 'rxjs';
 
 import { AssetAddVehicleComponent } from './asset-add-vehicle.component';
+import { provideAssetusMocks } from '../../testing/test-utils';
 
 describe('AssetAddVehicleComponent', () => {
 	let component: AssetAddVehicleComponent;
@@ -15,21 +11,13 @@ describe('AssetAddVehicleComponent', () => {
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			imports: [AssetAddVehicleComponent],
-			providers: [
-				{ provide: AssetService, useValue: {} },
-				{
-					provide: SpaceComponentBaseParams,
-					useValue: {
-						userService: { userState: of({}) },
-						spaceNavService: {},
-						errorLogger: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
-					},
-				},
-				{ provide: NavController, useValue: {} },
-				{ provide: SneatUserService, useValue: { userState: of({}) } },
-			],
+			providers: [...provideAssetusMocks()],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+		})
+			.overrideComponent(AssetAddVehicleComponent, {
+				set: { imports: [], providers: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+			})
+			.compileComponents();
 	}));
 
 	beforeEach(() => {

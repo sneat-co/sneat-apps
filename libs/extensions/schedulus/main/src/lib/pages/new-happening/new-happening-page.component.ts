@@ -64,7 +64,7 @@ export class NewHappeningPageComponent extends CalendarBasePage {
 		this.date = (history.state.date as string) || '';
 		console.log('date', this.date);
 
-		const type = window.history.state.type as HappeningType;
+		const type = window.history.state?.type as HappeningType;
 		if (type && this.space?.id && !this.$happening().id) {
 			this.createHappeningContext(type);
 		}

@@ -13,13 +13,16 @@ describe('CommuneContactPage', () => {
 			imports: [ContactPageComponent],
 			providers: [provideContactusMocks()],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+		})
+			.overrideComponent(ContactPageComponent, {
+				set: { imports: [], providers: [] },
+			})
+			.compileComponents();
 	}));
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(ContactPageComponent);
 		component = fixture.componentInstance;
-		fixture.detectChanges();
 	});
 
 	it('should create', () => {

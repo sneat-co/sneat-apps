@@ -16,7 +16,7 @@ export abstract class BaseListItemPage extends BaseListPage {
 	) {
 		super(className, route, params);
 		try {
-			this.listItemInfo = window.history.state.listItemInfo as IListItemBrief;
+			this.listItemInfo = window.history.state?.listItemInfo as IListItemBrief;
 			if (this.listItemInfo) {
 				this.itemId = this.listItemInfo.id;
 				this.onListItemInfoChanged(this.listItemInfo);

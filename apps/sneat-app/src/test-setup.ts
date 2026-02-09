@@ -1,3 +1,3 @@
-import '@analogjs/vitest-angular/setup-zone';
+import { setupTestEnvironment } from '@sneat/core/testing';
 
-
+setupTestEnvironment();

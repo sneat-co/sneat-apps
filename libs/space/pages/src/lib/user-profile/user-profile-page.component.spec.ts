@@ -1,10 +1,9 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { SneatUserService } from '@sneat/auth-core';
+import { of } from 'rxjs';
 
 import { UserProfilePageComponent } from './user-profile-page.component';
-import { RouterTestingModule } from '@angular/router/testing';
-import { UserService } from '../../services/user-service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('UserProfilePage', () => {
 	let component: UserProfilePageComponent;
@@ -12,15 +11,31 @@ describe('UserProfilePage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [UserProfilePageComponent, 
-				IonicModule.forRoot(),
-				RouterTestingModule,
-				HttpClientTestingModule],
-			providers: [UserService]}).compileComponents();
+			imports: [UserProfilePageComponent],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+			providers: [
+				{
+					provide: SneatUserService,
+					useValue: {
+						userState: of({ status: 'notAuthenticated', record: null }),
+						userChanged: of(undefined),
+						currentUserID: undefined,
+					},
+				},
+			],
+		})
+			.overrideComponent(UserProfilePageComponent, {
+				set: {
+					imports: [],
+					providers: [],
+					template: '',
+					schemas: [CUSTOM_ELEMENTS_SCHEMA],
+				},
+			})
+			.compileComponents();
 
 		fixture = TestBed.createComponent(UserProfilePageComponent);
 		component = fixture.componentInstance;
-		fixture.detectChanges();
 	}));
 
 	it('should create', () => {

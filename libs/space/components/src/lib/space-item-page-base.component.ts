@@ -37,7 +37,7 @@ export abstract class SpaceItemPageBaseComponent<
 	) {
 		super();
 		this.defaultBackPage = defaultBackPage;
-		const item = window.history.state[itemName] as ISpaceItemNavContext<
+		const item = window.history.state?.[itemName] as ISpaceItemNavContext<
 			Brief,
 			Dbo
 		>;

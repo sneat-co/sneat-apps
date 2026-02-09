@@ -67,7 +67,7 @@ export class AssetGroupPageComponent
 
 	constructor() {
 		super('AssetGroupPageComponent');
-		this.assetGroup = window.history.state.assetGroupDto as IAssetDtoGroup;
+		this.assetGroup = window.history.state?.assetGroupDto as IAssetDtoGroup;
 	}
 
 	override ngOnInit(): void {

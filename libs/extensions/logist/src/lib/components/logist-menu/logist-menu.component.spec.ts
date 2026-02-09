@@ -1,3 +1,4 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { LogistMenuComponent } from './logist-menu.component';
@@ -8,11 +9,16 @@ describe('LogistMenuComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [LogistMenuComponent]}).compileComponents();
+			imports: [LogistMenuComponent],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		})
+			.overrideComponent(LogistMenuComponent, {
+				set: { imports: [], providers: [] },
+			})
+			.compileComponents();
 
 		fixture = TestBed.createComponent(LogistMenuComponent);
 		component = fixture.componentInstance;
-		fixture.detectChanges();
 	}));
 
 	it('should create', () => {

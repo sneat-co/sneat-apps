@@ -207,7 +207,7 @@ export class HappeningSlotFormComponent
 	public constructor() {
 		super(true);
 		// const now = new Date();
-		const preselectedWd = window.history.state.wd as WeekdayCode2;
+		const preselectedWd = window.history.state?.wd as WeekdayCode2;
 		if (preselectedWd) {
 			this.weekdayById[preselectedWd].set(true);
 		}

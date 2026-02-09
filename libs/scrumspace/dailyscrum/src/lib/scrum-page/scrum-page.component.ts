@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import {
 	ChangeDetectorRef,
 	Component,
+	computed,
 	OnDestroy,
 	OnInit,
 	inject,
@@ -145,9 +146,9 @@ export class ScrumPageComponent
 			: 'Next scrum';
 	}
 
-	public override get $defaultBackUrl(): string {
+	protected override $defaultBackUrl = computed(() => {
 		return this.space?.id ? `team?id=${this.space.id}` : 'spaces';
-	}
+	});
 
 	private static getDateFromId(scrumId: string): Date {
 		const year = scrumId.substr(0, 4);
@@ -357,9 +358,11 @@ export class ScrumPageComponent
 
 	protected override unsubscribe(reason?: string): void {
 		super.unsubscribe(reason);
-		this.subscriptions.forEach((s) => s.unsubscribe());
+		this.subscriptions?.forEach((s) => s.unsubscribe());
 		this.subscriptions = [];
-		this.scrumsById = {};
+		if (this.scrumsById) {
+			this.scrumsById = {};
+		}
 	}
 
 	private setCurrentScrumIdFromUrl(params: ParamMap) {

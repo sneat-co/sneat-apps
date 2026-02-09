@@ -1,8 +1,11 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
+import { ErrorLogger } from '@sneat/core';
+import { RetrospectiveService } from '../../retrospective.service';
+import { TimerFactory } from '@sneat/ext-meeting';
 
 import { RetroTimerComponent } from './retro-timer.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('RetroTimerComponent', () => {
 	let component: RetroTimerComponent;
@@ -10,7 +13,22 @@ describe('RetroTimerComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [RetroTimerComponent, IonicModule.forRoot(), HttpClientTestingModule]}).compileComponents();
+			imports: [RetroTimerComponent, IonicModule.forRoot()],
+			providers: [
+				{ provide: RetrospectiveService, useValue: {} },
+				{ provide: ErrorLogger, useValue: { logError: vi.fn() } },
+				{ provide: TimerFactory, useValue: { getTimer: vi.fn() } },
+			],
+		})
+			.overrideComponent(RetroTimerComponent, {
+				set: {
+					imports: [],
+					template: '',
+					schemas: [CUSTOM_ELEMENTS_SCHEMA],
+					providers: [],
+				},
+			})
+			.compileComponents();
 
 		fixture = TestBed.createComponent(RetroTimerComponent);
 		component = fixture.componentInstance;

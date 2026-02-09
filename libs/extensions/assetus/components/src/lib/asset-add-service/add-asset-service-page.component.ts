@@ -12,7 +12,8 @@ import {
 	IonTitle,
 	IonToolbar,
 } from '@ionic/angular/standalone';
-import { AssetBasePage, AssetComponentBaseParams } from '../asset-base-page';
+import { AssetBasePage } from '../asset-base-page';
+import { AssetComponentBaseParams } from '../asset-component-base-params';
 
 @Component({
 	selector: 'sneat-add-asset-service-page',
@@ -33,18 +34,22 @@ import { AssetBasePage, AssetComponentBaseParams } from '../asset-base-page';
 	],
 })
 export class AddAssetServicePageComponent extends AssetBasePage {
-	private serviceProviderService = inject(IServiceProviderService);
+	// TODO: IServiceProviderService injection token was never defined - commented out until properly implemented
+	// private serviceProviderService = inject(IServiceProviderService);
 
 	// serviceProviders: DtoServiceProvider[];
 	// serviceType: LiabilityServiceType;
-	serviceTypeTitle: string;
+	serviceTypeTitle?: string;
 
 	constructor() {
 		const params = inject(AssetComponentBaseParams);
 
-		super('AddAssetServicePageComponent', params);
+		super(params, 'AddAssetServicePageComponent');
 	}
 
+	// TODO: The methods below reference undefined types and non-existent parent methods.
+	// Commented out until properly implemented.
+	/*
 	selectProvider(serviceProvider: DtoServiceProvider): void {
 		console.log('selectProvider() => id:', serviceProvider.id);
 	}
@@ -89,4 +94,5 @@ export class AddAssetServicePageComponent extends AssetBasePage {
 				});
 		}
 	}
+	*/
 }

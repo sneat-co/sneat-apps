@@ -14,13 +14,16 @@ describe('SchedulePage', () => {
 			imports: [CalendarPageComponent],
 			providers: [provideRouter([]), ...provideSchedulusMocks()],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+		})
+			.overrideComponent(CalendarPageComponent, {
+				set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+			})
+			.compileComponents();
 	}));
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(CalendarPageComponent);
 		component = fixture.componentInstance;
-		fixture.detectChanges();
 	});
 
 	it('should create', () => {

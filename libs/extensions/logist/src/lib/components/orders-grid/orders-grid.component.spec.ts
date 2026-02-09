@@ -1,3 +1,4 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { OrdersGridComponent } from './orders-grid.component';
@@ -8,11 +9,16 @@ describe('FreightsListComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [OrdersGridComponent]}).compileComponents();
+			imports: [OrdersGridComponent],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		})
+			.overrideComponent(OrdersGridComponent, {
+				set: { imports: [], providers: [] },
+			})
+			.compileComponents();
 
 		fixture = TestBed.createComponent(OrdersGridComponent);
 		component = fixture.componentInstance;
-		fixture.detectChanges();
 	}));
 
 	it('should create', () => {

@@ -9,18 +9,25 @@ describe('NewHappeningPage', () => {
 	let component: NewHappeningPageComponent;
 	let fixture: ComponentFixture<NewHappeningPageComponent>;
 
+	beforeEach(() => {
+		window.history.replaceState({}, '', window.location.href);
+	});
+
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			imports: [NewHappeningPageComponent],
 			providers: [provideRouter([]), ...provideSchedulusMocks()],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+		})
+			.overrideComponent(NewHappeningPageComponent, {
+				set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+			})
+			.compileComponents();
 	}));
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(NewHappeningPageComponent);
 		component = fixture.componentInstance;
-		fixture.detectChanges();
 	});
 
 	it('should create', () => {
