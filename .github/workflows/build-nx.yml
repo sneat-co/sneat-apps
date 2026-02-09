@@ -60,12 +60,8 @@ jobs:
             -   uses: sneat-co/sneat-firebase@main
 
             -   name: Download latest release of `sneat-go-server`
-                env:
-                    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 run: |
                     URL=$(curl -s \
-                      -H "Authorization: Bearer $GH_TOKEN" \
-                      -H "Accept: application/vnd.github+json" \
                       https://api.github.com/repos/sneat-co/sneat-go-server/releases/latest \
                       | jq -r '.assets[] | select(.name | test("linux_amd64.tar.gz$")) | .browser_download_url')
 
