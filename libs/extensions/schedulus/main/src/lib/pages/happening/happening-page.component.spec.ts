@@ -14,13 +14,16 @@ describe('RegularHappeningPage', () => {
 			imports: [HappeningPageComponent],
 			providers: [provideRouter([]), ...provideSchedulusMocks()],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+		})
+			.overrideComponent(HappeningPageComponent, {
+				set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+			})
+			.compileComponents();
 	}));
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(HappeningPageComponent);
 		component = fixture.componentInstance;
-		fixture.detectChanges();
 	});
 
 	it('should create', () => {

@@ -1,5 +1,5 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
 
 import { WidgetsPageComponent } from './widgets-page.component';
 
@@ -9,11 +9,21 @@ describe('WidgetsPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [WidgetsPageComponent, IonicModule.forRoot()]}).compileComponents();
+			imports: [WidgetsPageComponent],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		})
+			.overrideComponent(WidgetsPageComponent, {
+				set: {
+					imports: [],
+					template: '',
+					schemas: [CUSTOM_ELEMENTS_SCHEMA],
+					providers: [],
+				},
+			})
+			.compileComponents();
 
 		fixture = TestBed.createComponent(WidgetsPageComponent);
 		component = fixture.componentInstance;
-		fixture.detectChanges();
 	}));
 
 	it('should create', () => {

@@ -1,5 +1,5 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
 
 import { TagsPageComponent } from './tags-page.component';
 
@@ -9,11 +9,21 @@ describe('TagsPage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [TagsPageComponent, IonicModule.forRoot()]}).compileComponents();
+			imports: [TagsPageComponent],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		})
+			.overrideComponent(TagsPageComponent, {
+				set: {
+					imports: [],
+					template: '',
+					schemas: [CUSTOM_ELEMENTS_SCHEMA],
+					providers: [],
+				},
+			})
+			.compileComponents();
 
 		fixture = TestBed.createComponent(TagsPageComponent);
 		component = fixture.componentInstance;
-		fixture.detectChanges();
 	}));
 
 	it('should create', () => {

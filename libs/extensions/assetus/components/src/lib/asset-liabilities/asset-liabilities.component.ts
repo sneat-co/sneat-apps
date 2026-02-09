@@ -47,11 +47,13 @@ interface AssetLiabilitiesByServiceType {
 export class AssetLiabilitiesComponent {
 	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
 	private readonly assetService = inject(AssetService);
-	private readonly liabilityService = inject(ILiabilityService);
+	// TODO: ILiabilityService injection token was never defined - commented out until properly implemented
+	// private readonly liabilityService = inject(ILiabilityService);
 	private readonly alertCtrl = inject(AlertController);
 	private readonly modalCtrl = inject(ModalController);
 	private readonly popoverCtrl = inject(PopoverController);
-	private readonly serviceTypeService = inject(IServiceTypeService);
+	// TODO: IServiceTypeService injection token was never defined - commented out until properly implemented
+	// private readonly serviceTypeService = inject(IServiceTypeService);
 
 	assetDto: IAssetDboBase | undefined;
 
@@ -78,6 +80,9 @@ export class AssetLiabilitiesComponent {
 		if (!this.assetDto) {
 			return;
 		}
+		// TODO: load() body commented out because IServiceTypeService and ILiabilityService
+		// injection tokens were never defined - needs proper implementation
+		/*
 		const { assetDto } = this;
 
 		if (!assetDto) {
@@ -129,6 +134,7 @@ export class AssetLiabilitiesComponent {
 					}
 				});
 		}
+		*/
 	}
 
 	markAsNotUsed(service: AssetLiabilitiesByServiceType): void {

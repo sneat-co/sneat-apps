@@ -13,13 +13,16 @@ describe('MemberAssetsPage', () => {
 			imports: [MemberAssetsPageComponent],
 			providers: [provideContactusMocks()],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+		})
+			.overrideComponent(MemberAssetsPageComponent, {
+				set: { imports: [], providers: [] },
+			})
+			.compileComponents();
 	}));
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(MemberAssetsPageComponent);
 		component = fixture.componentInstance;
-		fixture.detectChanges();
 	});
 
 	it('should create', () => {

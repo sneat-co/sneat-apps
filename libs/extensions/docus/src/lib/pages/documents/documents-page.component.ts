@@ -80,7 +80,7 @@ export class DocumentsPageComponent extends SpaceItemsBaseComponent {
 
 	constructor() {
 		super('');
-		this.documents = window.history.state.documents as IAssetContext<
+		this.documents = window.history.state?.documents as IAssetContext<
 			'document',
 			IAssetDocumentExtra
 		>[];

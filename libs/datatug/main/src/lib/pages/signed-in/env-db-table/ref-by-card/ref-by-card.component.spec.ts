@@ -1,5 +1,5 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
 
 import { RefByCardComponent } from './ref-by-card.component';
 
@@ -9,11 +9,21 @@ describe('RefByCardComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [RefByCardComponent, IonicModule.forRoot()]}).compileComponents();
+			imports: [RefByCardComponent],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		})
+			.overrideComponent(RefByCardComponent, {
+				set: {
+					imports: [],
+					template: '',
+					schemas: [CUSTOM_ELEMENTS_SCHEMA],
+					providers: [],
+				},
+			})
+			.compileComponents();
 
 		fixture = TestBed.createComponent(RefByCardComponent);
 		component = fixture.componentInstance;
-		fixture.detectChanges();
 	}));
 
 	it('should create', () => {

@@ -101,7 +101,7 @@ export class NewContactPageComponent
 	constructor() {
 		super();
 		this.defaultBackPage = 'contacts';
-		this.$asset.set(window.history.state.asset as IAssetContext);
+		this.$asset.set(window.history.state?.asset as IAssetContext);
 	}
 
 	// onContactTypeChanged(v: ContactRole): void {

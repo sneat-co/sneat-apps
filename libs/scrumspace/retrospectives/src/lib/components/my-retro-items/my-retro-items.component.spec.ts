@@ -1,9 +1,12 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
+import { ErrorLogger } from '@sneat/core';
+import { SneatUserService } from '@sneat/auth-core';
+import { RetrospectiveService } from '../../retrospective.service';
+import { of } from 'rxjs';
+
 import { MyRetroItemsComponent } from './my-retro-items.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TeamService } from '../../../services/team.service';
-import { UserService } from '../../../services/user-service';
 
 describe('MyRetroItemsComponent', () => {
 	let component: MyRetroItemsComponent;
@@ -11,8 +14,32 @@ describe('MyRetroItemsComponent', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [MyRetroItemsComponent, IonicModule.forRoot(), HttpClientTestingModule],
-			providers: [TeamService, UserService]}).compileComponents();
+			imports: [MyRetroItemsComponent, IonicModule.forRoot()],
+			providers: [
+				{
+					provide: RetrospectiveService,
+					useValue: { addRetroItem: vi.fn(), deleteRetroItem: vi.fn() },
+				},
+				{ provide: ErrorLogger, useValue: { logError: vi.fn() } },
+				{
+					provide: SneatUserService,
+					useValue: {
+						userState: of(null),
+						userChanged: of(undefined),
+						currentUserID: undefined,
+					},
+				},
+			],
+		})
+			.overrideComponent(MyRetroItemsComponent, {
+				set: {
+					imports: [],
+					template: '',
+					schemas: [CUSTOM_ELEMENTS_SCHEMA],
+					providers: [],
+				},
+			})
+			.compileComponents();
 
 		fixture = TestBed.createComponent(MyRetroItemsComponent);
 		component = fixture.componentInstance;

@@ -14,6 +14,12 @@ import { BoardCardTabService } from '../../board-card/board-card.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ErrorLogger, IErrorLogger } from '@sneat/core';
+import { AgentService } from '../../../../../services/repo/agent.service';
+import { SqlEditorComponent } from '../../../../../components/sqleditor/sql-editor.component';
+import { QueryType } from '../../../../../models/definition/query-def';
+import { ISqlWidgetSettings } from '../../../../../models/definition/board/widget-sql';
+import { IBoardContext } from '../../../../../models/definition/board/board';
+import { IRecordsetResult, IRecordset } from '../../../../../dto/execute';
 
 const reSqlParams = /@(\w+)/;
 
@@ -23,7 +29,7 @@ const reSqlParams = /@(\w+)/;
 	imports: [
 		IonSegment,
 		IonSegmentButton,
-		DatatugComponentsSqlEditorModule,
+		SqlEditorComponent,
 		GridWidgetComponent,
 		FormsModule,
 	],

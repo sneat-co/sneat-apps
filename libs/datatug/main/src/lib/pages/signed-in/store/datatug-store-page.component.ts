@@ -98,7 +98,7 @@ export class DatatugStorePageComponent
 			'DatatugStorePageComponent.constructor(), window.history.state:',
 			window.history.state,
 		);
-		const store = window.history.state.store as IDatatugStoreContext;
+		const store = window.history.state?.store as IDatatugStoreContext;
 		if (store) {
 			// this.storeId = store.id;
 			// this.projects = projectsBriefFromDictToFlatList(store.brief.projects);

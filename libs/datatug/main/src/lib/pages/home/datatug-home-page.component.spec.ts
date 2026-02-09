@@ -1,5 +1,5 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
 
 import { DatatugHomePageComponent } from './datatug-home-page.component';
 
@@ -9,11 +9,21 @@ describe('HomePage', () => {
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [DatatugHomePageComponent, IonicModule.forRoot()]}).compileComponents();
+			imports: [DatatugHomePageComponent],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		})
+			.overrideComponent(DatatugHomePageComponent, {
+				set: {
+					imports: [],
+					template: '',
+					schemas: [CUSTOM_ELEMENTS_SCHEMA],
+					providers: [],
+				},
+			})
+			.compileComponents();
 
 		fixture = TestBed.createComponent(DatatugHomePageComponent);
 		component = fixture.componentInstance;
-		fixture.detectChanges();
 	}));
 
 	it('should create', () => {

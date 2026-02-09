@@ -46,7 +46,7 @@ export class ProjectTracker {
 			filter(([storeId, projectId]) => !!storeId && !!projectId),
 			map(([storeId, projectId]) => ({ storeId: storeId || '', projectId })),
 		);
-		const project = window.history.state.project as IProjectContext;
+		const project = window.history.state?.project as IProjectContext;
 		if (isValidProjectRef(project?.ref)) {
 			this.projectRef = this.projectRef.pipe(startWith(project.ref));
 		}

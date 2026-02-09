@@ -45,6 +45,35 @@ import { QueryContextSqlService } from '../../query-context-sql.service';
 import { parseStoreRef } from '@sneat/core';
 import { ColumnsComponent } from './query-builder/columns.component';
 import { JoinsComponent } from './query-builder/joins.component';
+import { GridWidgetComponent } from '../../../board/ui/components/widgets/grid-widget/grid-widget.component';
+import { SqlEditorComponent } from '../../../components/sqleditor/sql-editor.component';
+import { InputParametersComponent } from '../../../components/parameters/input-parameters/input-parameters.component';
+import { DatatugNavContextService } from '../../../services/nav/datatug-nav-context.service';
+import { Coordinator } from '../../../executor/coordinator';
+import { EnvironmentService } from '../../../services/unsorted/environment.service';
+import { ProjectTracker } from '../../../services/nav/contexts/project.tracker';
+import { IProjectContext, IEnvContext } from '../../../nav/nav-models';
+import {
+	IQueryEditorState,
+	IQueryEnvState,
+	IQueryState,
+} from '../../../editor/models';
+import {
+	IQueryDef,
+	QueryType,
+	ISqlQueryRequest,
+} from '../../../models/definition/query-def';
+import { IParameter } from '../../../models/definition/parameter';
+import { ISqlQueryTarget } from '../../../models/sql-models';
+import { SqlParser, IAstQuery } from '../../../services/unsorted/sql-parser';
+import { ISqlCommandRequest } from '../../../dto/requests';
+import { IExecuteRequest } from '../../../dto/request';
+import { IRecordsetResult, IRecordset } from '../../../dto/execute';
+import {
+	ICommandResponseItem,
+	ICommandResponseWithRecordset,
+} from '../../../dto/response';
+import { IEnvDbServer } from '../../../models/definition/environments';
 
 @Component({
 	selector: 'sneat-datatug-sql-query',

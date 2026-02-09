@@ -34,7 +34,7 @@ const monthNames = [
 @Component({
 	selector: 'sneat-month',
 	templateUrl: './month-page.component.html',
-	styleUrls: ['./month.page.scss'],
+	styleUrls: ['./month-page.component.scss'],
 	imports: [
 		FormsModule,
 		IonHeader,

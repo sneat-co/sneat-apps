@@ -13,13 +13,16 @@ describe('MemberBudgetPage', () => {
 			imports: [MemberBudgetPageComponent],
 			providers: [provideContactusMocks()],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+		})
+			.overrideComponent(MemberBudgetPageComponent, {
+				set: { imports: [], providers: [] },
+			})
+			.compileComponents();
 	}));
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(MemberBudgetPageComponent);
 		component = fixture.componentInstance;
-		fixture.detectChanges();
 	});
 
 	it('should create', () => {

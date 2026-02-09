@@ -3,7 +3,7 @@ import {
 	ContactService,
 	ContactusSpaceService,
 } from '@sneat/contactus-services';
-import { SneatUserService } from '@sneat/auth-core';
+import { SneatAuthStateService, SneatUserService } from '@sneat/auth-core';
 import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { ClassName } from '@sneat/ui';
@@ -15,9 +15,10 @@ import {
 	NgModulePreloaderService,
 } from '@sneat/core';
 import { ErrorLogger } from '@sneat/core';
-import { SpaceNavService } from '@sneat/space-services';
+import { SpaceNavService, SpaceService } from '@sneat/space-services';
 import { Firestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
+import { NavController } from '@ionic/angular/standalone';
 
 export const mockContactService = {
 	watchContactById: vi.fn(() => of({})),
@@ -31,6 +32,9 @@ export const mockContactusSpaceService = {
 
 export const mockSneatUserService = {
 	user$: of({}),
+	userState: of({}),
+	userChanged: of(undefined),
+	currentUserID: undefined,
 };
 
 export const mockSneatApiService = {
@@ -52,6 +56,8 @@ export function provideContactusMocks(): Provider[] {
 			useValue: {
 				paramMap: of({ get: () => null }),
 				queryParamMap: of({ get: () => null }),
+				queryParams: of({}),
+				params: of({}),
 				snapshot: {
 					paramMap: { get: () => null },
 					queryParamMap: { get: () => null },
@@ -73,6 +79,15 @@ export function provideContactusMocks(): Provider[] {
 			useValue: { navigateForwardToSpacePage: vi.fn() },
 		},
 		{ provide: NgModulePreloaderService, useValue: { preload: vi.fn() } },
+		{ provide: SpaceService, useValue: {} },
+		{
+			provide: SneatAuthStateService,
+			useValue: {
+				authState: of({ status: 'notAuthenticated' }),
+				authStatus: of('notAuthenticated'),
+			},
+		},
+		{ provide: NavController, useValue: {} },
 		{
 			provide: Firestore,
 			useValue: {

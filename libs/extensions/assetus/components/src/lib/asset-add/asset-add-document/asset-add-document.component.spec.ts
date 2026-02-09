@@ -2,6 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AssetAddDocumentComponent } from './asset-add-document.component';
+import { provideAssetusMocks } from '../../testing/test-utils';
 
 describe('AssetAddDocumentComponent', () => {
 	let component: AssetAddDocumentComponent;
@@ -10,8 +11,13 @@ describe('AssetAddDocumentComponent', () => {
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
 			imports: [AssetAddDocumentComponent],
+			providers: [...provideAssetusMocks()],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+		})
+			.overrideComponent(AssetAddDocumentComponent, {
+				set: { imports: [], providers: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+			})
+			.compileComponents();
 	}));
 
 	beforeEach(() => {

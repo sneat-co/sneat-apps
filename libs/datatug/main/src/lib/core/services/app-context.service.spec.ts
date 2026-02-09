@@ -6,7 +6,9 @@ describe('AppContextService', () => {
 	let service: AppContextService;
 
 	beforeEach(() => {
-		TestBed.configureTestingModule({});
+		TestBed.configureTestingModule({
+			providers: [AppContextService],
+		});
 		service = TestBed.inject(AppContextService);
 	});
 

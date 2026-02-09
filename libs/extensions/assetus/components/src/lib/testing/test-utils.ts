@@ -3,16 +3,30 @@ import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { ClassName, SelectorService } from '@sneat/ui';
 import { SpaceComponentBaseParams } from '@sneat/space-components';
-import { AnalyticsService, APP_INFO, LOGGER_FACTORY } from '@sneat/core';
+import {
+	AnalyticsService,
+	APP_INFO,
+	LOGGER_FACTORY,
+	NgModulePreloaderService,
+} from '@sneat/core';
 import { ErrorLogger } from '@sneat/core';
 import { Firestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
+import { SneatUserService } from '@sneat/auth-core';
+import { SpaceNavService, SpaceService } from '@sneat/space-services';
+import {
+	NavController,
+	ModalController,
+	AlertController,
+	PopoverController,
+} from '@ionic/angular/standalone';
 import { AssetService } from '../services';
 import { CountrySelectorService } from '@sneat/components';
 
 export const mockAssetService = {
 	updateAsset: vi.fn(() => of({})),
 	watchAssetByID: vi.fn(() => of({})),
+	createAsset: vi.fn(() => of({})),
 };
 
 export const mockSneatApiService = {
@@ -27,6 +41,29 @@ export function provideAssetusMocks(): Provider[] {
 		{ provide: ClassName, useValue: 'TestComponent' },
 		{ provide: AssetService, useValue: mockAssetService },
 		{ provide: SneatApiService, useValue: mockSneatApiService },
+		{
+			provide: SneatUserService,
+			useValue: {
+				userState: of(null),
+				userChanged: of(undefined),
+				currentUserID: undefined,
+			},
+		},
+		{
+			provide: SpaceService,
+			useValue: {
+				watchSpace: vi.fn(() => of({})),
+			},
+		},
+		{
+			provide: SpaceNavService,
+			useValue: { navigateForwardToSpacePage: vi.fn() },
+		},
+		{
+			provide: NavController,
+			useValue: { navigateForward: vi.fn(), navigateRoot: vi.fn() },
+		},
+		{ provide: NgModulePreloaderService, useValue: { preload: vi.fn() } },
 		{
 			provide: ActivatedRoute,
 			useValue: {
@@ -61,7 +98,35 @@ export function provideAssetusMocks(): Provider[] {
 				showSelector: vi.fn(),
 			},
 		},
-		CountrySelectorService,
+		{
+			provide: ModalController,
+			useValue: {
+				create: vi.fn(async () => ({
+					present: vi.fn(),
+					onDidDismiss: vi.fn(async () => ({})),
+				})),
+				dismiss: vi.fn(),
+			},
+		},
+		{
+			provide: AlertController,
+			useValue: {
+				create: vi.fn(async () => ({ present: vi.fn() })),
+			},
+		},
+		{
+			provide: PopoverController,
+			useValue: {
+				create: vi.fn(async () => ({
+					present: vi.fn(),
+					onDidDismiss: vi.fn(async () => ({})),
+				})),
+			},
+		},
+		{
+			provide: CountrySelectorService,
+			useValue: { selectSingleInModal: vi.fn() },
+		},
 		SpaceComponentBaseParams,
 	];
 }

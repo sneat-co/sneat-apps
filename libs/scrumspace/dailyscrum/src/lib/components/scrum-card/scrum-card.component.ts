@@ -25,9 +25,9 @@ import { IMemberBrief, ISpaceDbo } from '@sneat/dto';
 import { Timer } from '@sneat/ext-meeting';
 import { IScrumDbo, IStatus, ITask } from '@sneat/ext-scrumspace-scrummodels';
 import { TimerMemberButtonComponent } from '@sneat/timer';
-import { Md5 } from 'ts-md5/dist/md5';
+import { Md5 } from 'ts-md5';
 import { TaskType } from '@sneat/ext-scrumspace-scrummodels';
-import { ScrumPageModule } from '../../scrum.module';
+import { ScrumTasksComponent } from '../scrum-tasks/scrum-tasks.component';
 
 @Component({
 	selector: 'sneat-scrum-card',
@@ -45,7 +45,7 @@ import { ScrumPageModule } from '../../scrum.module';
 		IonButton,
 		IonBadge,
 		TimerMemberButtonComponent,
-		ScrumPageModule,
+		ScrumTasksComponent,
 	],
 })
 export class ScrumCardComponent {
