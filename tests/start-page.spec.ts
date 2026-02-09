@@ -27,8 +27,7 @@ test.describe('Start page for new user', () => {
 		await expect(page).toHaveURL(/\/login/);
 
 		// Verify the login page loaded with its title
-		const loginTitle = page.locator('ion-title');
-		await expect(loginTitle).toContainText('Login @');
+		await expect(page.getByText('Login @ sneat.app')).toBeVisible();
 
 		// Verify login options are present
 		await expect(page.getByText('Quick login')).toBeVisible();
