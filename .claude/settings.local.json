@@ -9,7 +9,16 @@
       "mcp__nx-mcp__nx_workspace_path",
       "Bash(node:*)",
       "Bash(npx nx reset:*)",
-      "Bash(npx nx test:*)"
+      "Bash(npx nx test:*)",
+      "Bash(while read file)",
+      "Bash(do)",
+      "Bash(spec_file=\"$file%.ts.spec.ts\")",
+      "Bash(if [ ! -f \"$spec_file\" ])",
+      "Bash(then)",
+      "Bash(echo:*)",
+      "Bash(fi)",
+      "Bash(done)",
+      "Bash(grep:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

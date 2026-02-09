@@ -1,25 +1,30 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FilterItemComponent } from './filter-item.component';
+import { PopoverController } from '@ionic/angular/standalone';
+import { DateInputComponent } from './date-input.component';
 
-describe('FilterItemComponent', () => {
-	let component: FilterItemComponent;
-	let fixture: ComponentFixture<FilterItemComponent>;
+describe('DateInputComponent', () => {
+	let component: DateInputComponent;
+	let fixture: ComponentFixture<DateInputComponent>;
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [FilterItemComponent],
+			imports: [DateInputComponent],
+			providers: [
+				{ provide: PopoverController, useValue: { create: vi.fn() } },
+			],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		})
-			.overrideComponent(FilterItemComponent, {
+			.overrideComponent(DateInputComponent, {
 				set: {
 					imports: [],
 					schemas: [CUSTOM_ELEMENTS_SCHEMA],
+					providers: [],
 					template: '',
 				},
 			})
 			.compileComponents();
-		fixture = TestBed.createComponent(FilterItemComponent);
+		fixture = TestBed.createComponent(DateInputComponent);
 		component = fixture.componentInstance;
 	}));
 

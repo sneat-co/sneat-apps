@@ -1,25 +1,28 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FilterItemComponent } from './filter-item.component';
 
-describe('FilterItemComponent', () => {
-	let component: FilterItemComponent;
-	let fixture: ComponentFixture<FilterItemComponent>;
+import { CellWidgetsComponent } from './cell-widgets.component';
+
+describe('CellWidgetsComponent', () => {
+	let component: CellWidgetsComponent;
+	let fixture: ComponentFixture<CellWidgetsComponent>;
 
 	beforeEach(waitForAsync(async () => {
 		await TestBed.configureTestingModule({
-			imports: [FilterItemComponent],
+			imports: [CellWidgetsComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		})
-			.overrideComponent(FilterItemComponent, {
+			.overrideComponent(CellWidgetsComponent, {
 				set: {
 					imports: [],
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
 					template: '',
+					schemas: [CUSTOM_ELEMENTS_SCHEMA],
+					providers: [],
 				},
 			})
 			.compileComponents();
-		fixture = TestBed.createComponent(FilterItemComponent);
+
+		fixture = TestBed.createComponent(CellWidgetsComponent);
 		component = fixture.componentInstance;
 	}));
 
