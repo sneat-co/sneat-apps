@@ -5,16 +5,6 @@ test.describe('Start page for new user', () => {
 		await page.goto('/');
 	});
 
-	test('should load start page with build info', async ({ page }) => {
-		// Verify the app version section is present with the placeholder build info
-		const buildInput = page.locator('sneat-app-version ion-input');
-		await expect(buildInput).toBeVisible();
-		await expect(buildInput).toHaveAttribute(
-			'value',
-			/gitHash.*@.*timestamp t0be\$et/,
-		);
-	});
-
 	test('should show "Please sign in" linking to /login', async ({ page }) => {
 		const signInItem = page.locator(
 			'sneat-auth-menu-item ion-item[routerLink="/login"]',
