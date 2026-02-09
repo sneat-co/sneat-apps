@@ -81,7 +81,7 @@ export default defineConfig({
 			timeout: 120_000,
 		},
 		{
-			command: './scripts/server_backend.sh',
+			command: './scripts/serve_backend.sh',
 			port: 4300,
 			reuseExistingServer: !process.env.CI,
 			timeout: 120_000,
