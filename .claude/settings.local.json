@@ -1,0 +1,6 @@
+{
+  "enabledMcpjsonServers": [
+    "nx-mcp"
+  ],
+  "enableAllProjectMcpServers": true
+}
