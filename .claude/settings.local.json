@@ -18,7 +18,9 @@
       "Bash(echo:*)",
       "Bash(fi)",
       "Bash(done)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(npm ls:*)",
+      "Bash(pnpm list:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

@@ -1,6 +1,4 @@
 #!/bin/sh
 
-./../../sneat-firebase/scripts/serve_fb_emulators_ssl.sh &
-./../../sneat-go-server/serve_gae.sh &
-
-wait
+# We make assumption you have access backed repositories and it's cloned
+../../sneat-go-server/serve_gae.sh
