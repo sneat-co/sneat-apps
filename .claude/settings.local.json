@@ -1,6 +1,14 @@
 {
+  "permissions": {
+    "allow": [
+      "mcp__nx-mcp__nx_workspace",
+      "Bash(npx nx run-many:*)",
+      "Bash(npx nx run contactus-internal:test:*)",
+      "Bash(npx nx run:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "nx-mcp"
-  ],
-  "enableAllProjectMcpServers": true
+  ]
 }
