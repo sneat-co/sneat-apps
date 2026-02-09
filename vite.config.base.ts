@@ -51,10 +51,10 @@ export function createBaseViteConfig(
 				'zone.js',
 			],
 			alias: [
-				{
-					find: '@ionic/core/components',
-					replacement: '@ionic/core/components/index.js',
-				},
+				//				{
+				//					find: '@ionic/core/components',
+				//					replacement: '@ionic/core/components/index.js',
+				//				},
 			],
 		},
 		plugins: [

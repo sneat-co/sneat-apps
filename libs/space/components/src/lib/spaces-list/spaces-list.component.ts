@@ -44,7 +44,7 @@ import { first } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpacesListComponent extends SneatBaseComponent {
-	readonly userService = inject(SneatUserService);
+	public readonly userService = inject(SneatUserService);
 	private readonly spaceNavService = inject(SpaceNavService);
 	private readonly spaceService = inject(SpaceService);
 	private readonly userRequiredFieldsService = inject(

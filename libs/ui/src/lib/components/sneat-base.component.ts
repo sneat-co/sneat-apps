@@ -48,7 +48,7 @@ export abstract class SneatBaseComponent implements OnDestroy {
 
 	protected readonly className = inject(ClassName);
 
-	protected constructor() {
+	public constructor() {
 		this.log(`${this.className}.SneatBaseComponent.constructor()`);
 	}
 

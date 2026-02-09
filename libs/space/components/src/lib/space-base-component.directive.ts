@@ -151,7 +151,7 @@ export abstract class SpaceBaseComponent
 	protected readonly route = inject(ActivatedRoute);
 	protected readonly spaceParams = inject(SpaceComponentBaseParams);
 
-	protected constructor() {
+	public constructor() {
 		super();
 		console.log(`${this.className}.SpaceBaseComponent.constructor()`);
 
@@ -394,8 +394,8 @@ export abstract class SpaceBaseComponent
 				(keys.length === 2 && keys.includes('id') && keys.includes('type'))
 				? spaceRef
 				: spaceRef.type || (prev?.type && prev.id !== spaceRef.id)
-				? { id: spaceRef.id, type: spaceRef.type || prev?.type }
-				: { id: spaceRef.id };
+					? { id: spaceRef.id, type: spaceRef.type || prev?.type }
+					: { id: spaceRef.id };
 		});
 	}
 
