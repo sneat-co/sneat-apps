@@ -4,9 +4,7 @@ A suit of open source apps that help in work & personal life.
 
 ---
 
-[![Build](https://github.com/sneat-co/sneat-apps/actions/workflows/build.yml/badge.svg)](https://github.com/sneat-co/sneat-apps/actions/workflows/build.yml)
-
----
+## [![Build and Test](https://github.com/sneat-co/sneat-apps/actions/workflows/build-nx.yml/badge.svg)](https://github.com/sneat-co/sneat-apps/actions/workflows/build-nx.yml)
 
 ## Apps for family & personal life
 
@@ -47,8 +45,6 @@ read instructions on how to set up local dev environment in [README-DEV-SETUP.md
 
 Test signed commits 3.
 
-
 ## Follow us on Telegram
 
 If you want to know insights about deveopment of Sneat apps follow [@SneatDevDiaries](https://t.me/SneatDevDiaries)
-
