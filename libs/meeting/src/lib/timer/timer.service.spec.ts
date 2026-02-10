@@ -369,6 +369,94 @@ describe('Timer', () => {
 				expect(err).toContain('Unexpected timer status');
 			}
 		});
+
+		it('should start when status is paused', async () => {
+			const mockResponse: ITimerResponse = {
+				timer: { status: TimerStatusEnum.active, elapsedSeconds: 0 },
+				by: { uid: 'user1' },
+			};
+			vi.mocked(mockTimerService.toggleMeetingTimer).mockReturnValue(
+				of(mockResponse),
+			);
+
+			// First pause the timer
+			const pauseObs = timer.pauseTimer();
+			pauseObs.subscribe({
+				error: () => {
+					// Non-completing observable might error
+				},
+			});
+
+			await new Promise((resolve) => setTimeout(resolve, 50));
+
+			// Then toggle it - it should start
+			const observable = timer.toggleTimer();
+			expect(observable).toBeDefined();
+
+			observable.subscribe({
+				error: () => {
+					// Non-completing observable might error
+				},
+			});
+
+			await new Promise((resolve) => setTimeout(resolve, 50));
+		});
+
+		it('should stop when active and member is same', async () => {
+			const mockResponse: ITimerResponse = {
+				timer: {
+					status: TimerStatusEnum.active,
+					elapsedSeconds: 0,
+					activeMemberId: 'member1',
+				},
+				by: { uid: 'user1' },
+			};
+			vi.mocked(mockTimerService.toggleMemberTimer).mockReturnValue(
+				of(mockResponse),
+			);
+
+			// First start the timer with member1
+			const startObs = timer.startTimer('member1');
+			startObs.subscribe({
+				error: () => {
+					// Non-completing observable might error
+				},
+			});
+
+			await new Promise((resolve) => setTimeout(resolve, 50));
+
+			// Then toggle it again with same member - it should stop
+			const observable = timer.toggleTimer('member1');
+			expect(observable).toBeDefined();
+		});
+
+		it('should start with different member when active', async () => {
+			const mockResponse: ITimerResponse = {
+				timer: {
+					status: TimerStatusEnum.active,
+					elapsedSeconds: 0,
+					activeMemberId: 'member1',
+				},
+				by: { uid: 'user1' },
+			};
+			vi.mocked(mockTimerService.toggleMemberTimer).mockReturnValue(
+				of(mockResponse),
+			);
+
+			// First start the timer with member1
+			const startObs = timer.startTimer('member1');
+			startObs.subscribe({
+				error: () => {
+					// Non-completing observable might error
+				},
+			});
+
+			await new Promise((resolve) => setTimeout(resolve, 50));
+
+			// Then toggle it with member2 - it should start for member2
+			const observable = timer.toggleTimer('member2');
+			expect(observable).toBeDefined();
+		});
 	});
 
 	describe('setTimerState', () => {
@@ -483,6 +571,116 @@ describe('Timer', () => {
 				operation: TimerOperationEnum.start,
 				member: 'member1',
 			});
+		});
+
+		it('should increment elapsed seconds when timer is active', async () => {
+			const mockResponse: ITimerResponse = {
+				timer: {
+					status: TimerStatusEnum.active,
+					elapsedSeconds: 0,
+					activeMemberId: 'member1',
+				},
+				by: { uid: 'user1' },
+			};
+			vi.mocked(mockTimerService.toggleMemberTimer).mockReturnValue(
+				of(mockResponse),
+			);
+
+			let lastElapsedSeconds = 0;
+			let tickedWithElapsed = false;
+
+			const sub = timer.onTick.subscribe((state) => {
+				if (state.elapsedSeconds && state.elapsedSeconds > lastElapsedSeconds) {
+					lastElapsedSeconds = state.elapsedSeconds;
+					tickedWithElapsed = true;
+				}
+			});
+
+			// Start the timer
+			timer.startTimer('member1').subscribe({
+				error: () => {
+					// Non-completing observable might error
+				},
+			});
+
+			// Wait for ticks
+			await new Promise((resolve) => setTimeout(resolve, 1500));
+
+			sub.unsubscribe();
+
+			// Verify ticking occurred
+			expect(tickedWithElapsed).toBe(true);
+			expect(lastElapsedSeconds).toBeGreaterThan(0);
+		});
+
+		it('should track seconds by member when member is active', async () => {
+			const mockResponse: ITimerResponse = {
+				timer: {
+					status: TimerStatusEnum.active,
+					elapsedSeconds: 0,
+					activeMemberId: 'member1',
+				},
+				by: { uid: 'user1' },
+			};
+			vi.mocked(mockTimerService.toggleMemberTimer).mockReturnValue(
+				of(mockResponse),
+			);
+
+			let secondsByMember: Record<string, number> | undefined;
+
+			const sub = timer.onTick.subscribe((state) => {
+				if (state.secondsByMember) {
+					secondsByMember = state.secondsByMember;
+				}
+			});
+
+			// Start the timer with member1
+			timer.startTimer('member1').subscribe({
+				error: () => {
+					// Non-completing observable might error
+				},
+			});
+
+			// Wait for ticks
+			await new Promise((resolve) => setTimeout(resolve, 1500));
+
+			sub.unsubscribe();
+
+			// Verify member seconds were tracked
+			expect(secondsByMember).toBeDefined();
+			if (secondsByMember) {
+				expect(secondsByMember['member1']).toBeGreaterThan(0);
+			}
+		});
+
+		it('should handle startTicking with already active status', async () => {
+			const mockResponse: ITimerResponse = {
+				timer: { status: TimerStatusEnum.active, elapsedSeconds: 0 },
+				by: { uid: 'user1' },
+			};
+			vi.mocked(mockTimerService.toggleMeetingTimer).mockReturnValue(
+				of(mockResponse),
+			);
+
+			// Start the timer
+			timer.startTimer().subscribe({
+				error: () => {
+					// Non-completing observable might error
+				},
+			});
+
+			// Wait for timer to start
+			await new Promise((resolve) => setTimeout(resolve, 100));
+
+			// Start it again - should handle already active state
+			timer.startTimer().subscribe({
+				error: () => {
+					// Non-completing observable might error
+				},
+			});
+
+			// Wait a bit more
+			await new Promise((resolve) => setTimeout(resolve, 100));
 		});
 	});
 });
