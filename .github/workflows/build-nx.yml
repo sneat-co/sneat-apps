@@ -103,6 +103,9 @@ jobs:
                 if: steps.playwright-cache.outputs.cache-hit == 'true'
                 run: pnpm exec playwright install-deps chromium
 
+            -   name: Clone sneat-firebase
+                run: git clone --depth 1 https://github.com/sneat-co/sneat-firebase.git ../sneat-firebase
+
             -   name: Run Playwright tests
                 run: pnpm exec playwright test
                 env:
