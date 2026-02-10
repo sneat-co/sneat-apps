@@ -57,7 +57,7 @@ jobs:
             -   name: nx test
                 run: pnpm run nx test api
 
-            -   uses: sneat-co/sneat-firebase@main
+            -   uses: sneat-co/sneat-firebase/actions/install-firebase-tools@main
 
             -   name: Download latest release of `sneat-go-server`
                 run: |
@@ -70,6 +70,7 @@ jobs:
 
                     tar -xzf app.tar.gz
                     chmod +x sneat-server
+
 
             -   name: Install Playwright Browsers
                 run: pnpm exec playwright install chromium --with-deps
