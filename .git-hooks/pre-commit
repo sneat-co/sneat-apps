@@ -4,7 +4,25 @@
 
 echo "Running .git-hooks/pre-commit..."
 
+# Check for circular dependencies
 npx madge --circular --extensions ts ./libs
 npx madge --circular --extensions ts ./apps
 
+# Get changed TypeScript files
+CHANGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.ts$')
+
+if [ -n "$CHANGED_FILES" ]; then
+  echo "Running tests for affected projects..."
+  # Run tests for affected projects based on uncommitted changes
+  pnpm nx affected --target=test --uncommitted
+  
+  if [ $? -ne 0 ]; then
+    echo "❌ Tests failed. Fix tests before committing."
+    echo "💡 Tip: Use 'git commit --no-verify' to skip this check if needed."
+    exit 1
+  fi
+  echo "✅ All tests passed!"
+fi
+
+# Run linters
 pnpx lint-staged
