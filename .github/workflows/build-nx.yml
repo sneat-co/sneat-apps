@@ -78,6 +78,12 @@ jobs:
                     distribution: temurin
                     java-version: '21'
 
+            -   name: Cache Firebase Emulators
+                uses: actions/cache@v4
+                with:
+                    path: ~/.cache/firebase/emulators
+                    key: firebase-emulators-${{ runner.os }}
+
             -   name: Install Playwright Browsers
                 run: pnpm exec playwright install chromium --with-deps
 
