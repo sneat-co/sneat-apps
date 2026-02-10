@@ -70,15 +70,20 @@ These tests run without requiring Firebase emulators or backend services:
 These tests require Firebase Authentication and Firestore emulators:
 
 - Auth tests (3 tests) - Sign up, sign in, and sign out flows
-- Space setup tests (1 test) - Space creation workflow
 
-Tests that need Firebase emulators will check for availability using `isAuthEmulatorAvailable()` and gracefully skip if not available.
+### Tests Requiring Backend Server 🔄
 
-## Running Tests with Firebase Emulators
+These tests require the backend server (port 4300):
 
-Firebase emulators are now enabled by default in `playwright.config.ts`. When you run the tests, the Firebase Auth and Firestore emulators will automatically start.
+- Space setup tests (2 tests) - Space creation workflow
 
-### Prerequisites for Firebase Emulators
+Tests will check for availability of required services and gracefully skip if not available.
+
+## Running Tests with Firebase Emulators and Backend
+
+Firebase emulators and the backend server are now enabled by default in `playwright.config.ts`. When you run the tests, all required services will automatically start:
+
+### Prerequisites
 
 1. **Java 21+** - Required for Firebase emulators
    ```bash
@@ -87,22 +92,25 @@ Firebase emulators are now enabled by default in `playwright.config.ts`. When yo
 
 2. **Firebase Tools** - Should be installed via npm dependencies
 
-### Running All Tests (Including Auth Tests)
+3. **Backend Server** - Automatically handled:
+   - In GitHub Actions: Runs `./sneat-server` binary
+   - Locally: Expects `sneat-go-server` repo in sibling directory
+
+### Running All Tests
 
 ```bash
-# Run all tests (Firebase emulators will start automatically)
+# Run all tests (all services start automatically)
 pnpm playwright test
 ```
 
-The Firebase emulators will:
-- Start automatically before tests run
-- Listen on port 9099 (Auth) and 8080 (Firestore)
-- Use configuration from `./firebase/firebase-ci.json`
-- Stop automatically after tests complete
+The following services will start automatically:
+- **Firebase emulators** on ports 9099 (Auth) and 8080 (Firestore)
+- **Backend server** on port 4300
+- **App server** on port 4205
 
 ### Local Development
 
-If you want to run tests without Firebase emulators (only start-page tests will run):
+If you want to run tests without all services (some tests will skip):
 
 1. **Comment out Firebase emulator config** in `playwright.config.ts`
 
@@ -153,14 +161,14 @@ pnpm playwright test
 
 ## Current Status
 
-With Firebase emulators enabled (default):
-- ✅ **7 tests total** - All tests can run with Firebase emulators
-  - 2 start-page tests (work without emulators)
+With Firebase emulators and backend server enabled (default):
+- ✅ **7 tests total** - All tests can run with full services
+  - 2 start-page tests (work without external dependencies)
   - 3 auth tests (require Firebase emulators)
-  - 2 space tests (require Firebase emulators)
+  - 2 space tests (require Firebase emulators + backend server)
 - ❌ **0 tests failing** - No broken tests
 
-Tests will automatically skip if Firebase emulators fail to start (e.g., Java not installed).
+Tests will automatically skip if required services fail to start (e.g., Java not installed, backend not available).
 
 ## Troubleshooting
 
