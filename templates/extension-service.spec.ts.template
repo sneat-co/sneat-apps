@@ -1,0 +1,25 @@
+import { TestBed } from '@angular/core/testing';
+import { SneatApiService } from '@sneat/api';
+import { {{ServiceName}} } from './{{service-name}}.service';
+
+describe('{{ServiceName}}', () => {
+	beforeEach(() =>
+		TestBed.configureTestingModule({
+			providers: [
+				{{ServiceName}},
+				{ provide: SneatApiService, useValue: { post: vi.fn() } },
+			],
+		}),
+	);
+
+	it('should be created', () => {
+		expect(TestBed.inject({{ServiceName}})).toBeTruthy();
+	});
+
+	// Add specific test cases for your service methods
+	// Example:
+	// it('should handle API calls', () => {
+	//   const service = TestBed.inject({{ServiceName}});
+	//   // Test your service logic
+	// });
+});

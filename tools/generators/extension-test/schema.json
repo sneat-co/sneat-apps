@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "ExtensionTest",
+  "title": "Generate extension module tests",
+  "description": "Generate test files for extension modules using templates",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "Type of test to generate",
+      "enum": ["service", "component", "sanity"],
+      "default": "sanity",
+      "x-prompt": {
+        "message": "What type of test would you like to generate?",
+        "type": "list",
+        "items": [
+          { "value": "service", "label": "Service test" },
+          { "value": "component", "label": "Component test" },
+          { "value": "sanity", "label": "Sanity test" }
+        ]
+      }
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the service/component (PascalCase, e.g., AssetusService or AssetListComponent)",
+      "x-prompt": "What is the name of the service/component? (PascalCase)"
+    },
+    "extension": {
+      "type": "string",
+      "description": "Extension module name (e.g., assetus, budgetus)",
+      "x-prompt": "What is the extension module name? (e.g., assetus, budgetus)"
+    },
+    "subLib": {
+      "type": "string",
+      "description": "Sub-library name (e.g., shared, internal, core, components, pages)",
+      "default": "shared",
+      "enum": ["shared", "internal", "core", "components", "pages"],
+      "x-prompt": {
+        "message": "Which sub-library?",
+        "type": "list",
+        "items": [
+          { "value": "shared", "label": "shared" },
+          { "value": "internal", "label": "internal" },
+          { "value": "core", "label": "core" },
+          { "value": "components", "label": "components" },
+          { "value": "pages", "label": "pages" }
+        ]
+      }
+    },
+    "path": {
+      "type": "string",
+      "description": "Relative path within the sub-library (e.g., services, components/asset-list)",
+      "x-prompt": "What is the relative path within the sub-library? (e.g., services, components/asset-list)"
+    }
+  },
+  "required": ["type", "extension", "subLib"]
+}
