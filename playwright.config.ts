@@ -90,14 +90,12 @@ export default defineConfig({
 			stdout: 'pipe',
 			stderr: 'pipe',
 		},
-		// Backend server is only needed for space creation tests (currently skipped)
-		// Uncomment when needed:
-		// {
-		// 	command: 'bash ./scripts/serve_backend.sh',
-		// 	port: 4300,
-		// 	reuseExistingServer: !process.env.CI,
-		// 	timeout: 120_000,
-		// },
+		{
+			command: 'bash ./scripts/serve_backend.sh',
+			port: 4300,
+			reuseExistingServer: !process.env.CI,
+			timeout: 120_000,
+		},
 		// {
 		// 	command: 'bash ./scripts/serve_firebase_emulators.sh',
 		// 	port: 9099, // Firebase Auth emulator port
