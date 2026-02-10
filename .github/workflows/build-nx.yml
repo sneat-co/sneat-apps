@@ -118,34 +118,3 @@ jobs:
                     name: playwright-report
                     path: playwright-report/
                     retention-days: 30
-
-#    e2e-playwright:
-#        name: Playwright tests
-#        timeout-minutes: 60
-#        runs-on: ubuntu-latest
-#        steps:
-#            -   uses: actions/checkout@v6
-#                with:
-#                    fetch-depth: 2
-#
-#            -   uses: ./.github/actions/pnpm
-#
-#            -   uses: actions/setup-node@v6
-#                with:
-#                    node-version: lts/*
-#
-#            -   uses: sneat-co/sneat-firebase@main
-#
-#            -   name: Install Playwright Browsers
-#                run: pnpm exec playwright install chromium --with-deps
-#
-#            -   name: Run Playwright tests
-#                run: pnpm exec playwright test
-#                env:
-#                    NODE_OPTIONS: "--no-deprecation nx"
-#
-#            -   uses: actions/upload-artifact@v6
-#                with:
-#                    name: playwright-report
-#                    path: playwright-report/
-#                    retention-days: 30
