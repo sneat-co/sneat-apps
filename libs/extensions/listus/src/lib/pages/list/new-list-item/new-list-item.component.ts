@@ -75,24 +75,26 @@ export class NewListItemComponent {
 			id,
 			title: this.title,
 		};
-		
-		// Async emoji detection - create item first, then add emoji if detected
-		this.emojisLoader.detectEmoji(item.title).then((emoji) => {
-			if (emoji) {
-				item = { ...item, emoji };
-			}
-			if (this.isDone) {
-				item = { ...item, isDone: true };
-			}
-			this.createListItem(item);
-		}).catch((err) => {
-			this.errorLogger.logError(err, 'Failed to detect emoji');
-			// Continue without emoji
-			if (this.isDone) {
-				item = { ...item, isDone: true };
-			}
-			this.createListItem(item);
-		});
+
+		// Async emoji detection
+		this.emojisLoader
+			.detectEmoji(item.title)
+			.then((emoji) => {
+				if (emoji) {
+					item = { ...item, emoji };
+				}
+			})
+			.catch((err) => {
+				this.errorLogger.logError(err, 'Failed to detect emoji');
+				// Continue without emoji
+			})
+			.finally(() => {
+				// Always apply isDone and create the item
+				if (this.isDone) {
+					item = { ...item, isDone: true };
+				}
+				this.createListItem(item);
+			});
 	}
 
 	protected clear(): void {
