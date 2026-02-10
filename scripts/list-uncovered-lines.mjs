@@ -88,11 +88,12 @@ function getProjectsFromCoverage() {
 
 /**
  * Run tests with coverage for all projects
+ * Note: --skip-nx-cache is used to ensure coverage files are regenerated
  */
 function runTestsWithCoverage() {
 	console.log('Running tests with coverage for all projects...\n');
 	try {
-		execSync('pnpm nx run-many --target=test --all --coverage.enabled=true', {
+		execSync('pnpm nx run-many --target=test --all --coverage.enabled=true --skip-nx-cache', {
 			stdio: 'inherit',
 			encoding: 'utf-8',
 		});
