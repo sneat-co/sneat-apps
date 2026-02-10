@@ -91,6 +91,8 @@ export default defineConfig({
 			port: 9099, // Firebase Auth emulator port
 			reuseExistingServer: !process.env.CI,
 			timeout: 180_000,
+			stdout: 'pipe',
+			stderr: 'pipe',
 		},
 	],
 });
