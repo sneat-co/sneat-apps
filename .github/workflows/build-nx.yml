@@ -85,6 +85,7 @@ jobs:
                 run: pnpm exec playwright test
                 env:
                     NODE_OPTIONS: "--no-deprecation nx"
+                    GCLOUD_PROJECT: "demo-sneat-app"
                 continue-on-error: true
 
             -   uses: actions/upload-artifact@v6
