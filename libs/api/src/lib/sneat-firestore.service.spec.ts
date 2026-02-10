@@ -76,7 +76,7 @@ describe('SneatFirestoreService', () => {
 			id: 'doc1',
 			exists: () => true,
 			data: () =>
-				({ id: 'doc1', name: 'Test', email: 'test@test.com' }) as TestDbo,
+				({ id: 'doc1', name: 'Test', email: 'test@example.com' }) as TestDbo,
 		} as unknown as DocumentSnapshot<TestDbo>;
 
 		const result = service.docSnapshotToContext(mockSnapshot);
