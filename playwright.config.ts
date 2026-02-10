@@ -83,13 +83,13 @@ export default defineConfig({
 			stderr: 'pipe',
 		},
 		{
-			command: './scripts/serve_backend.sh',
+			command: 'bash ./scripts/serve_backend.sh',
 			port: 4300,
 			reuseExistingServer: !process.env.CI,
 			timeout: 120_000,
 		},
 		{
-			command: 'bash -x ./scripts/serve_firebase_emulators.sh',
+			command: 'bash ./scripts/serve_firebase_emulators.sh',
 			port: 9099, // Firebase Auth emulator port
 			reuseExistingServer: !process.env.CI,
 			timeout: 180_000,
