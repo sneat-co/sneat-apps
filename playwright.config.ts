@@ -79,6 +79,8 @@ export default defineConfig({
 			port: 4205,
 			reuseExistingServer: !process.env.CI,
 			timeout: 120_000,
+			stdout: 'pipe',
+			stderr: 'pipe',
 		},
 		{
 			command: './scripts/serve_backend.sh',
