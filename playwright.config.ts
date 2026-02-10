@@ -87,7 +87,7 @@ export default defineConfig({
 			timeout: 120_000,
 		},
 		{
-			command: './scripts/serve_firebase_emulators.sh',
+			command: 'bash -x ./scripts/serve_firebase_emulators.sh',
 			port: 9099, // Firebase Auth emulator port
 			reuseExistingServer: !process.env.CI,
 			timeout: 180_000,
