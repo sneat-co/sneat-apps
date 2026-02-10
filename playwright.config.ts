@@ -76,8 +76,8 @@ export default defineConfig({
 	webServer: [
 		{
 			command:
-				'firebase emulators:start --only auth,firestore --project demo-sneat-app --config ../sneat-firebase/firebase/firebase-ci.json',
-			port: 4400,
+				'firebase emulators:start --only auth,firestore --project demo-sneat-app --config ./firebase/firebase-ci.json',
+			port: 9099,
 			timeout: 120_000,
 			stdout: 'pipe',
 			stderr: 'pipe',
