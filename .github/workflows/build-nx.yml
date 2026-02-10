@@ -72,6 +72,12 @@ jobs:
                     chmod +x sneat-server
 
 
+            -   name: Set up Java 21
+                uses: actions/setup-java@v4
+                with:
+                    distribution: temurin
+                    java-version: '21'
+
             -   name: Install Playwright Browsers
                 run: pnpm exec playwright install chromium --with-deps
 
