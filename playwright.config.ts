@@ -74,14 +74,16 @@ export default defineConfig({
 
 	/* Run your local dev server before starting the tests */
 	webServer: [
-		{
-			command:
-				'firebase emulators:start --only auth,firestore --project demo-sneat-app --config ./firebase/firebase-ci.json',
-			port: 9099,
-			timeout: 120_000,
-			stdout: 'pipe',
-			stderr: 'pipe',
-		},
+		// Firebase emulators commented out - may require network access to download
+		// Uncomment for local testing or CI with Firebase emulator support:
+		// {
+		// 	command:
+		// 		'firebase emulators:start --only auth,firestore --project demo-sneat-app --config ./firebase/firebase-ci.json',
+		// 	port: 9099,
+		// 	timeout: 120_000,
+		// 	stdout: 'pipe',
+		// 	stderr: 'pipe',
+		// },
 		{
 			command: 'nx serve sneat-app --configuration=e2e-ci --port=4205',
 			port: 4205,
