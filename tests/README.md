@@ -76,24 +76,37 @@ Tests that need Firebase emulators will check for availability using `isAuthEmul
 
 ## Running Tests with Firebase Emulators
 
-### Local Development
+Firebase emulators are now enabled by default in `playwright.config.ts`. When you run the tests, the Firebase Auth and Firestore emulators will automatically start.
 
-1. **Uncomment Firebase emulator config** in `playwright.config.ts`:
+### Prerequisites for Firebase Emulators
 
-   ```typescript
-   {
-     command:
-       'firebase emulators:start --only auth,firestore --project demo-sneat-app --config ./firebase/firebase-ci.json',
-     port: 9099,
-     timeout: 120_000,
-     stdout: 'pipe',
-     stderr: 'pipe',
-   },
+1. **Java 21+** - Required for Firebase emulators
+   ```bash
+   java -version  # Should be 21 or higher
    ```
 
-2. **Ensure Java 21+ is installed** (required by Firebase emulators)
+2. **Firebase Tools** - Should be installed via npm dependencies
 
-3. **Run tests**:
+### Running All Tests (Including Auth Tests)
+
+```bash
+# Run all tests (Firebase emulators will start automatically)
+pnpm playwright test
+```
+
+The Firebase emulators will:
+- Start automatically before tests run
+- Listen on port 9099 (Auth) and 8080 (Firestore)
+- Use configuration from `./firebase/firebase-ci.json`
+- Stop automatically after tests complete
+
+### Local Development
+
+If you want to run tests without Firebase emulators (only start-page tests will run):
+
+1. **Comment out Firebase emulator config** in `playwright.config.ts`
+
+2. **Run tests**:
    ```bash
    pnpm playwright test
    ```
@@ -140,9 +153,14 @@ pnpm playwright test
 
 ## Current Status
 
-- ✅ **2 tests passing** - Start page tests work without external dependencies
-- 🔄 **5 tests skipped** - Auth and space tests skip gracefully when Firebase emulators not available
+With Firebase emulators enabled (default):
+- ✅ **7 tests total** - All tests can run with Firebase emulators
+  - 2 start-page tests (work without emulators)
+  - 3 auth tests (require Firebase emulators)
+  - 2 space tests (require Firebase emulators)
 - ❌ **0 tests failing** - No broken tests
+
+Tests will automatically skip if Firebase emulators fail to start (e.g., Java not installed).
 
 ## Troubleshooting
 
