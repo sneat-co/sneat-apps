@@ -3,5 +3,8 @@
   "dest": "../../../dist/libs/extensions/listus",
   "lib": {
     "entryFile": "src/index.ts"
-  }
+  },
+  "assets": [
+    "src/assets"
+  ]
 }
