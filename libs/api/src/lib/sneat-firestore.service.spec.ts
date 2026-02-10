@@ -76,7 +76,7 @@ describe('SneatFirestoreService', () => {
 			id: 'doc1',
 			exists: () => true,
 			data: () =>
-				({ id: 'doc1', name: 'Test', email: 'test@example.com' }) as TestDbo,
+				({ id: 'doc1', name: 'Test', email: 'test1@example.com' }) as TestDbo,
 		} as unknown as DocumentSnapshot<TestDbo>;
 
 		const result = service.docSnapshotToContext(mockSnapshot);
@@ -97,7 +97,7 @@ describe('SneatFirestoreService', () => {
 			} as DocumentReference<TestDbo>;
 			const mockSnapshot = {
 				exists: () => true,
-				data: () => ({ id: 'doc1', name: 'Test', email: 'test@example.com' }),
+				data: () => ({ id: 'doc1', name: 'Test', email: 'test1@example.com' }),
 			} as unknown as DocumentSnapshot<TestDbo>;
 
 			mockDoc.mockReturnValue(mockDocRef);
@@ -117,7 +117,7 @@ describe('SneatFirestoreService', () => {
 			expect(mockDoc).toHaveBeenCalledWith(mockCollection, 'doc1');
 			expect(result).toEqual({
 				id: 'doc1',
-				dbo: { id: 'doc1', name: 'Test', email: 'test@example.com' },
+				dbo: { id: 'doc1', name: 'Test', email: 'test1@example.com' },
 				brief: { id: 'doc1', name: 'Test' },
 			});
 		}));
