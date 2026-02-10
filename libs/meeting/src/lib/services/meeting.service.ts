@@ -57,6 +57,12 @@ export abstract class BaseMeetingService implements IMeetingTimerService {
 		);
 	}
 
+	/**
+	 * Validates a meeting timer request.
+	 *
+	 * @param request - The meeting timer request to validate
+	 * @returns An error message if validation fails, null otherwise
+	 */
 	private validateRequest(request: IMeetingTimerRequest): string | null {
 		if (!request) {
 			return 'request parameter is required';
