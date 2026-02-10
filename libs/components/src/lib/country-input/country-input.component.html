@@ -6,7 +6,7 @@
 		(ionChange)="onCountryChanged()"
 	>
 		<ion-select-option value="">All</ion-select-option>
-		@for (c of countries; track c.id) {
+		@for (c of countries(); track c.id) {
 			<ion-select-option [value]="c.id">
 				{{ c.title }} {{ c.emoji }}
 			</ion-select-option>
