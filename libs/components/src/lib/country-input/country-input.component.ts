@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	inject,
+	Input,
+	OnInit,
+	Output,
+	signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
 	IonButton,
@@ -8,7 +16,7 @@ import {
 	IonSelect,
 	IonSelectOption,
 } from '@ionic/angular/standalone';
-import { countries } from '../country-selector';
+import { ICountry, CountriesLoaderService } from '../country-selector';
 
 @Component({
 	selector: 'sneat-country-input',
@@ -23,13 +31,22 @@ import { countries } from '../country-selector';
 		IonIcon,
 	],
 })
-export class CountryInputComponent {
+export class CountryInputComponent implements OnInit {
+	private readonly countriesLoader = inject(CountriesLoaderService);
+
 	@Input() canReset = true;
 	@Input() label = 'Country';
 	@Input() countryID = '';
 	@Output() countryIDChange = new EventEmitter<string>();
 
-	readonly countries = countries;
+	readonly countries = signal<readonly ICountry[]>([]);
+
+	ngOnInit(): void {
+		// Load countries data
+		this.countriesLoader.getCountries().then((countries) => {
+			this.countries.set(countries);
+		});
+	}
 
 	// constructor(
 	// 	// private readonly countrySelectorService: CountrySelectorService,

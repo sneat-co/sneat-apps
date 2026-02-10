@@ -22,7 +22,7 @@ import { SneatUserService } from '@sneat/auth-core';
 import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { map, race, takeUntil } from 'rxjs';
 import { CountryInputComponent } from '../country-input';
-import { countries, ICountry } from '../country-selector';
+import { ICountry, CountriesLoaderService } from '../country-selector';
 
 let ipCountryCached: string | undefined; // TODO: Should have expiration?
 
@@ -53,6 +53,7 @@ export class UserCountryComponent
 {
 	private readonly httpClient = inject(HttpClient);
 	private readonly userService = inject(SneatUserService);
+	private readonly countriesLoader = inject(CountriesLoaderService);
 
 	protected readonly $ipCountryID = signal('');
 	protected readonly $ipCountry = signal<ICountry | undefined>(undefined);
@@ -106,7 +107,9 @@ export class UserCountryComponent
 		this.isCountryDetectionStarted = true;
 		if (ipCountryCached) {
 			this.$ipCountryID.set(ipCountryCached);
-			this.$ipCountry.set(countries.find((c) => c.id === ipCountryCached));
+			this.countriesLoader.getCountryByID(ipCountryCached).then((country) => {
+				this.$ipCountry.set(country);
+			});
 			return;
 		}
 		this.$detectingCountry.set(true);
@@ -128,7 +131,9 @@ export class UserCountryComponent
 				const ipCountryID = response.country;
 				ipCountryCached = ipCountryID;
 				this.$ipCountryID.set(ipCountryID);
-				this.$ipCountry.set(countries.find((c) => c.id === ipCountryID));
+				this.countriesLoader.getCountryByID(ipCountryID).then((country) => {
+					this.$ipCountry.set(country);
+				});
 				this.$detectingCountry.set(false);
 			},
 			error: (err) => {

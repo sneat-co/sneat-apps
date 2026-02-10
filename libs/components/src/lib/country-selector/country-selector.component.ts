@@ -2,8 +2,10 @@ import {
 	Component,
 	computed,
 	EventEmitter,
+	inject,
 	Input,
 	OnChanges,
+	OnInit,
 	Output,
 	signal,
 	SimpleChanges,
@@ -11,14 +13,17 @@ import {
 import { FormsModule } from '@angular/forms';
 import { IonSegment, IonSegmentButton } from '@ionic/angular/standalone';
 import { ISelectItem, SelectFromListComponent } from '@sneat/ui';
-import { countries, GeoRegion, ICountry, unknownCountry } from './countries';
+import { GeoRegion, ICountry } from './countries';
+import { CountriesLoaderService } from './countries-loader.service';
 
 @Component({
 	selector: 'sneat-country-selector',
 	templateUrl: './country-selector.component.html',
 	imports: [FormsModule, SelectFromListComponent, IonSegment, IonSegmentButton],
 })
-export class CountrySelectorComponent implements OnChanges {
+export class CountrySelectorComponent implements OnInit, OnChanges {
+	private readonly countriesLoader = inject(CountriesLoaderService);
+
 	protected readonly geoRegions: readonly {
 		readonly id: string;
 		title?: string;
@@ -42,12 +47,19 @@ export class CountrySelectorComponent implements OnChanges {
 
 	protected readonly filter = signal<string>('');
 	protected readonly geoRegion = signal<GeoRegion | 'All' | 'Americas'>('All');
+	protected readonly allCountries = signal<readonly ICountry[]>([]);
+	protected readonly unknownCountry = signal<ICountry | undefined>(undefined);
 
 	protected readonly countries = computed<readonly ISelectItem[]>(() => {
+		const allCountries = this.allCountries();
+		if (allCountries.length === 0) {
+			return []; // Data not loaded yet
+		}
+
 		const filter = this.filter();
 		let countriesToShow: readonly ISelectItem[] = filter
-			? countries
-			: countries.filter(
+			? allCountries
+			: allCountries.filter(
 					(c) =>
 						this.geoRegion() === 'All' ||
 						(this.geoRegion() === 'Americas' &&
@@ -55,11 +67,21 @@ export class CountrySelectorComponent implements OnChanges {
 								c.geoRegions.includes('South America'))) ||
 						c.geoRegions.includes(this.geoRegion() as GeoRegion),
 				);
-		if (this.canBeUnknown) {
-			countriesToShow = [...countriesToShow, unknownCountry];
+		if (this.canBeUnknown && this.unknownCountry()) {
+			countriesToShow = [...countriesToShow, this.unknownCountry()!];
 		}
 		return countriesToShow;
 	});
+
+	ngOnInit(): void {
+		// Load countries data
+		this.countriesLoader.getCountries().then((countries) => {
+			this.allCountries.set(countries);
+		});
+		this.countriesLoader.getUnknownCountry().then((unknown) => {
+			this.unknownCountry.set(unknown);
+		});
+	}
 
 	// protected geoRegion: GeoRegion | 'All' | 'Americas' = 'All';
 
