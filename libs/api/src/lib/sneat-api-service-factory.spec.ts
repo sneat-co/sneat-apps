@@ -60,15 +60,6 @@ describe('SneatApiServiceFactory', () => {
 				expect(service1).toBe(service2);
 			});
 		});
-
-		it('should throw error for unknown store type', () => {
-			TestBed.runInInjectionContext(() => {
-				// We need to test the default case in the switch statement
-				// We'll need to mock parseStoreRef to return a store type that isn't 'firestore'
-				// For now, this is challenging without modifying the source
-				// The line 61 (unknown store type) is hard to reach due to parseStoreRef
-			});
-		});
 	});
 
 	describe('getStoreUrl', () => {
