@@ -1,10 +1,10 @@
 // Test data and constants used across tests
 
-export const MOCK_USER_EMAIL = 'testsignin@gmail.com';
+export const MOCK_USER_EMAIL = 'test.signin@example.com';
 export const MOCK_USER_PASS = 'password';
 
-export const TEST_USER_EMAIL = 'test@gmail.com';
-export const TEST_USER_PASS = 'password';
+// export const TEST_USER_EMAIL = 'test@example.com';
+// export const TEST_USER_PASS = 'password';
 
 export const FIREBASE_CONFIG = {
 	emulator: {
