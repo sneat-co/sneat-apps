@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { of, throwError } from 'rxjs';
+import { of, throwError, lastValueFrom } from 'rxjs';
 import {
 	BaseMeetingService,
 	validateMeetingRequest,
@@ -184,7 +184,7 @@ describe('BaseMeetingService', () => {
 			}
 		});
 
-		it('should call API with correct endpoint and data when request is valid', (done) => {
+		it('should call API with correct endpoint and data when request is valid', async () => {
 			const request: IMemberTimerRequest = {
 				operation: TimerOperationEnum.start,
 				spaceID: 'space1',
@@ -199,20 +199,15 @@ describe('BaseMeetingService', () => {
 
 			mockApiService.post.mockReturnValue(of(mockResponse));
 
-			service.toggleMemberTimer(request).subscribe({
-				next: (response) => {
-					expect(mockApiService.post).toHaveBeenCalledWith(
-						'test-meeting/toggle_member_timer',
-						request,
-					);
-					expect(response).toEqual(mockResponse);
-					done();
-				},
-				error: done,
-			});
+			const response = await lastValueFrom(service.toggleMemberTimer(request));
+			expect(mockApiService.post).toHaveBeenCalledWith(
+				'test-meeting/toggle_member_timer',
+				request,
+			);
+			expect(response).toEqual(mockResponse);
 		});
 
-		it('should propagate API errors', (done) => {
+		it('should propagate API errors', async () => {
 			const request: IMemberTimerRequest = {
 				operation: TimerOperationEnum.start,
 				spaceID: 'space1',
@@ -222,30 +217,24 @@ describe('BaseMeetingService', () => {
 
 			mockApiService.post.mockReturnValue(throwError(() => 'API error'));
 
-			service.toggleMemberTimer(request).subscribe({
-				error: (err) => {
-					expect(err).toBe('API error');
-					done();
-				},
-			});
+			await expect(
+				lastValueFrom(service.toggleMemberTimer(request)),
+			).rejects.toBe('API error');
 		});
 	});
 
 	describe('toggleMeetingTimer', () => {
-		it('should throw error when request validation fails', (done) => {
+		it('should throw error when request validation fails', async () => {
 			const request = {
 				operation: TimerOperationEnum.start,
 			} as IMeetingTimerRequest;
 
-			service.toggleMeetingTimer(request).subscribe({
-				error: (err) => {
-					expect(err).toBeTruthy();
-					done();
-				},
-			});
+			await expect(
+				lastValueFrom(service.toggleMeetingTimer(request)),
+			).rejects.toBeTruthy();
 		});
 
-		it('should call API with correct endpoint and data when request is valid', (done) => {
+		it('should call API with correct endpoint and data when request is valid', async () => {
 			const request: IMeetingTimerRequest = {
 				operation: TimerOperationEnum.start,
 				spaceID: 'space1',
@@ -259,20 +248,15 @@ describe('BaseMeetingService', () => {
 
 			mockApiService.post.mockReturnValue(of(mockResponse));
 
-			service.toggleMeetingTimer(request).subscribe({
-				next: (response) => {
-					expect(mockApiService.post).toHaveBeenCalledWith(
-						'test-meeting/toggle_meeting_timer',
-						request,
-					);
-					expect(response).toEqual(mockResponse);
-					done();
-				},
-				error: done,
-			});
+			const response = await lastValueFrom(service.toggleMeetingTimer(request));
+			expect(mockApiService.post).toHaveBeenCalledWith(
+				'test-meeting/toggle_meeting_timer',
+				request,
+			);
+			expect(response).toEqual(mockResponse);
 		});
 
-		it('should propagate API errors', (done) => {
+		it('should propagate API errors', async () => {
 			const request: IMeetingTimerRequest = {
 				operation: TimerOperationEnum.start,
 				spaceID: 'space1',
@@ -281,12 +265,9 @@ describe('BaseMeetingService', () => {
 
 			mockApiService.post.mockReturnValue(throwError(() => 'API error'));
 
-			service.toggleMeetingTimer(request).subscribe({
-				error: (err) => {
-					expect(err).toBe('API error');
-					done();
-				},
-			});
+			await expect(
+				lastValueFrom(service.toggleMeetingTimer(request)),
+			).rejects.toBe('API error');
 		});
 	});
 

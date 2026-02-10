@@ -47,13 +47,30 @@ export abstract class BaseMeetingService implements IMeetingTimerService {
 		request: IMeetingTimerRequest,
 		endpoint: 'toggle_meeting_timer' | 'toggle_member_timer',
 	): Observable<ITimerResponse> {
-		return (
-			validateMeetingRequest(request) ||
-			this.sneatApiService.post<ITimerResponse>(
-				`${this.meetingType}/${endpoint}`,
-				request,
-			)
+		const validationError = this.validateRequest(request);
+		if (validationError) {
+			return throwError(() => validationError);
+		}
+		return this.sneatApiService.post<ITimerResponse>(
+			`${this.meetingType}/${endpoint}`,
+			request,
 		);
+	}
+
+	private validateRequest(request: IMeetingTimerRequest): string | null {
+		if (!request) {
+			return 'request parameter is required';
+		}
+		if (!request.operation) {
+			return 'operation parameter is required';
+		}
+		if (!request.spaceID) {
+			return 'space parameter is required';
+		}
+		if (!request.meeting) {
+			return 'meeting parameter is required';
+		}
+		return null;
 	}
 }
 
