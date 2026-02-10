@@ -18,7 +18,9 @@
 		"firebase-emulators:ci": "cross-env firebase emulators:start --only auth,firestore --config ../../_actions/sneat-co/sneat-go-backend/main/firebase/firebase-ci.json",
 		"pw:pretest": "tsc --incremental -p tests/tsconfig.json",
 		"pw:test": "playwright test tests -c tests-out",
-		"serve:help": "serve --help"
+		"serve:help": "serve --help",
+		"coverage:analyze": "node scripts/list-uncovered-lines.mjs",
+		"coverage:analyze:run": "node scripts/list-uncovered-lines.mjs --run-tests"
 	},
 	"private": true,
 	"pnpm": {
