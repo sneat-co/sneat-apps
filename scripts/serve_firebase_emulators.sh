@@ -1,14 +1,18 @@
 #!/bin/sh
+
 set -e
 
 # Resolve directory where this script lives
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+echo "Executing $SCRIPT_DIR/.serve_firebase_emulators.sh..."
 
 FIREBASE_DIR="$SCRIPT_DIR/../../sneat-firebase"
 
 if [ ! -d "$FIREBASE_DIR" ]; then
   echo "Cloning sneat-firebase repository..."
   git clone https://github.com/sneat-co/sneat-firebase.git "$FIREBASE_DIR"
+  echo "Cloned sneat-firebase repository to $FIREBASE_DIR"
 fi
 
 if [ "$GITHUB_ACTIONS" = "true" ]; then
