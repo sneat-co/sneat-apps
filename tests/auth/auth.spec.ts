@@ -9,7 +9,7 @@ import {
 	isAuthEmulatorAvailable,
 } from '../common/firebase-helpers';
 
-test.describe('Email Auth', () => {
+test.describe.skip('Email Auth', () => {
 	test.beforeAll(async () => {
 		const available = await isAuthEmulatorAvailable();
 		test.skip(

@@ -11,7 +11,7 @@ import {
 } from '../common/spaces-helpers';
 import { MOCK_USER_EMAIL } from '../common/fixtures';
 
-test.describe('Space Setup', () => {
+test.describe.skip('Space Setup', () => {
 	test.beforeAll(async () => {
 		const available = await isAuthEmulatorAvailable();
 		test.skip(

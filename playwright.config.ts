@@ -75,6 +75,14 @@ export default defineConfig({
 	/* Run your local dev server before starting the tests */
 	webServer: [
 		{
+			command:
+				'firebase emulators:start --only auth,firestore --project demo-sneat-app --config ../sneat-firebase/firebase/firebase-ci.json',
+			port: 4400,
+			timeout: 120_000,
+			stdout: 'pipe',
+			stderr: 'pipe',
+		},
+		{
 			command: 'nx serve sneat-app --configuration=e2e-ci --port=4205',
 			port: 4205,
 			reuseExistingServer: !process.env.CI,
@@ -88,13 +96,13 @@ export default defineConfig({
 			reuseExistingServer: !process.env.CI,
 			timeout: 120_000,
 		},
-		{
-			command: 'bash ./scripts/serve_firebase_emulators.sh',
-			port: 9099, // Firebase Auth emulator port
-			reuseExistingServer: !process.env.CI,
-			timeout: 180_000,
-			stdout: 'pipe',
-			stderr: 'pipe',
-		},
+		// {
+		// 	command: 'bash ./scripts/serve_firebase_emulators.sh',
+		// 	port: 9099, // Firebase Auth emulator port
+		// 	reuseExistingServer: !process.env.CI,
+		// 	timeout: 180_000,
+		// 	stdout: 'pipe',
+		// 	stderr: 'pipe',
+		// },
 	],
 });
