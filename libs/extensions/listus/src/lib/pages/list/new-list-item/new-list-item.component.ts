@@ -19,7 +19,7 @@ import { RandomIdService } from '@sneat/random';
 import { ISpaceContext } from '@sneat/space-models';
 import { IListContext } from '../../../contexts';
 import {
-	detectEmoji,
+	EmojisLoaderService,
 	ICreateListItemRequest,
 	ListService,
 } from '../../../services';
@@ -35,6 +35,7 @@ export class NewListItemComponent {
 	private readonly randomService = inject(RandomIdService);
 	private readonly toastCtrl = inject(ToastController);
 	private readonly listService = inject(ListService);
+	private readonly emojisLoader = inject(EmojisLoaderService);
 
 	isFocused = false;
 
@@ -74,15 +75,24 @@ export class NewListItemComponent {
 			id,
 			title: this.title,
 		};
-		const emoji = detectEmoji(item.title);
-		if (emoji) {
-			item = { ...item, emoji };
-		}
-		if (this.isDone) {
-			item = { ...item, isDone: true };
-		}
-
-		this.createListItem(item);
+		
+		// Async emoji detection - create item first, then add emoji if detected
+		this.emojisLoader.detectEmoji(item.title).then((emoji) => {
+			if (emoji) {
+				item = { ...item, emoji };
+			}
+			if (this.isDone) {
+				item = { ...item, isDone: true };
+			}
+			this.createListItem(item);
+		}).catch((err) => {
+			this.errorLogger.logError(err, 'Failed to detect emoji');
+			// Continue without emoji
+			if (this.isDone) {
+				item = { ...item, isDone: true };
+			}
+			this.createListItem(item);
+		});
 	}
 
 	protected clear(): void {

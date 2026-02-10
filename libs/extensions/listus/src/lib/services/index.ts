@@ -1,4 +1,5 @@
 export * from './emojis';
+export * from './emojis-loader.service';
 export * from './list.service';
 export * from './interfaces';
 export * from './list-item.service';
