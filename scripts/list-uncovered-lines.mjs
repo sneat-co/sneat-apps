@@ -121,12 +121,16 @@ function parseUncoveredLines(coverageFile) {
 				for (const stmtId in statements) {
 					const stmt = statements[stmtId];
 					// Count lines (from start to end line)
-					const lineCount = stmt.end ? stmt.end.line - stmt.start.line + 1 : 1;
-					totalLines += lineCount;
-					
-					// If statement was executed at least once, count as covered
-					if (executedStatements[stmtId] > 0) {
-						coveredLines += lineCount;
+					// Only count if we have valid start and end line numbers
+					if (stmt.start && stmt.start.line) {
+						const endLine = stmt.end && stmt.end.line ? stmt.end.line : stmt.start.line;
+						const lineCount = endLine - stmt.start.line + 1;
+						totalLines += lineCount;
+						
+						// If statement was executed at least once, count as covered
+						if (executedStatements[stmtId] > 0) {
+							coveredLines += lineCount;
+						}
 					}
 				}
 			}
@@ -278,11 +282,16 @@ function displayResults(results) {
 	// Summary statistics
 	const totalUncovered = results.reduce((sum, r) => sum + r.uncoveredLines, 0);
 	const totalLines = results.reduce((sum, r) => sum + r.totalLines, 0);
-	const overallCoverage = ((totalLines - totalUncovered) / totalLines * 100).toFixed(2);
-
-	console.log(`Total uncovered lines: ${totalUncovered}`);
-	console.log(`Total lines: ${totalLines}`);
-	console.log(`Overall coverage: ${overallCoverage}%\n`);
+	
+	if (totalLines > 0) {
+		const overallCoverage = ((totalLines - totalUncovered) / totalLines * 100).toFixed(2);
+		console.log(`Total uncovered lines: ${totalUncovered}`);
+		console.log(`Total lines: ${totalLines}`);
+		console.log(`Overall coverage: ${overallCoverage}%\n`);
+	} else {
+		console.log(`Total uncovered lines: 0`);
+		console.log(`Total lines: 0\n`);
+	}
 }
 
 /**
