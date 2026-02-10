@@ -37,6 +37,14 @@ A suit of open source apps that help in work & personal life.
 If you want to contribute to this open source project you can
 read instructions on how to set up local dev environment in [README-DEV-SETUP.md](docs/README-DEV-SETUP.md).
 
+## AI Agent Improvement Plan
+
+We've analyzed the codebase and created a prioritized list of **Top 10 high-ROI improvements** for AI agents:
+- 📋 [Quick Summary](AI-TASKS-SUMMARY.md) - 10 tasks at a glance
+- 📚 [Full Plan](AI-IMPROVEMENT-PLAN.md) - Detailed implementation guide with step-by-step instructions
+
+**Quick wins** (Week 1): Re-enable CI tests, add coverage baseline, optimize bundle size, Docker setup.
+
 ## Promoted discussions
 
 - [Best tag-line for Sneat.app?](https://github.com/sneat-co/sneat-apps/discussions/1568)
