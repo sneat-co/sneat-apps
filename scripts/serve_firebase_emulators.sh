@@ -10,4 +10,8 @@ if [ ! -d "$FIREBASE_DIR" ]; then
   git clone https://github.com/sneat-co/sneat-firebase.git "$FIREBASE_DIR"
 fi
 
-"$FIREBASE_DIR/scripts/serve_fb_emulators_ssl.sh"
+if [ "$GITHUB_ACTIONS" = "true" ]; then
+  sh "$FIREBASE_DIR/scripts/serve_fb_emulators_ci.sh"
+else
+  "$FIREBASE_DIR/scripts/serve_fb_emulators_ssl.sh"
+fi
