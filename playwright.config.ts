@@ -76,8 +76,8 @@ export default defineConfig({
 	webServer: [
 		{
 			command:
-				'firebase emulators:start --only auth,firestore --project demo-sneat-app --config ../sneat-firebase/firebase/firebase-ci.json',
-			port: 4400,
+				'firebase emulators:start --only auth,firestore --project demo-sneat-app --config ./firebase/firebase-ci.json',
+			port: 9099,
 			timeout: 120_000,
 			stdout: 'pipe',
 			stderr: 'pipe',
@@ -90,12 +90,14 @@ export default defineConfig({
 			stdout: 'pipe',
 			stderr: 'pipe',
 		},
-		{
-			command: 'bash ./scripts/serve_backend.sh',
-			port: 4300,
-			reuseExistingServer: !process.env.CI,
-			timeout: 120_000,
-		},
+		// Backend server is only needed for space creation tests (currently skipped)
+		// Uncomment when needed:
+		// {
+		// 	command: 'bash ./scripts/serve_backend.sh',
+		// 	port: 4300,
+		// 	reuseExistingServer: !process.env.CI,
+		// 	timeout: 120_000,
+		// },
 		// {
 		// 	command: 'bash ./scripts/serve_firebase_emulators.sh',
 		// 	port: 9099, // Firebase Auth emulator port
