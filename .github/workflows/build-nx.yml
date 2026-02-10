@@ -56,7 +56,8 @@ jobs:
             -   name: nx test
                 run: pnpm run nx test api
 
-            -   uses: sneat-co/sneat-firebase/actions/install-firebase-tools@main
+            # We have firebase-tools in devDependencies
+            #            -   uses: sneat-co/sneat-firebase/actions/install-firebase-tools@main
 
             -   name: Download latest release of `sneat-go-server`
                 run: |

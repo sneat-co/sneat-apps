@@ -10,11 +10,11 @@
 
 <ion-content>
 	<ion-item class="sql-editor ion-margin ion-no-padding" style="min-height: 0">
-		<ngx-codemirror
+		<code-editor
 			style="height: auto"
-			#codemirrorComponent
 			[(ngModel)]="sql"
-			[options]="codemirrorOptions"
+			[readonly]="true"
+			[language]="'sql'"
 		/>
 		<ion-buttons slot="end" class="ion-no-margin">
 			<ion-button color="medium">Columns</ion-button>

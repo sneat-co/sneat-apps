@@ -20,7 +20,14 @@
       "Bash(done)",
       "Bash(grep:*)",
       "Bash(npm ls:*)",
-      "Bash(pnpm list:*)"
+      "Bash(pnpm list:*)",
+      "WebSearch",
+      "WebFetch(domain:www.npmjs.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(pnpm remove:*)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm nx build:*)",
+      "Bash(pnpm nx lint:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

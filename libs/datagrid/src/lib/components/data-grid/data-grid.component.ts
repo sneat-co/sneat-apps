@@ -81,9 +81,7 @@ Tabulator.registerModule([
 		<div id="tabulator" #tabulatorDiv></div>
 		<p class="ion-margin-start">Rows: {{ data?.length }}</p>
 	`,
-	imports: [
-		// CodemirrorModule,
-	],
+	imports: [],
 })
 export class DataGridComponent implements AfterViewInit, OnChanges {
 	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);

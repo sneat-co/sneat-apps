@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
 	IonBackButton,
@@ -70,9 +69,6 @@ export class QueriesPageComponent
 	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
 	private readonly route = inject(ActivatedRoute);
 	private readonly router = inject(Router);
-
-	@ViewChild('codemirrorComponent', { static: true })
-	public codemirrorComponent?: CodemirrorComponent;
 
 	public isActiveView = false;
 

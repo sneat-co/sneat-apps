@@ -37,10 +37,12 @@
 			"nx",
 			"oxc-resolver",
 			"protobufjs",
+			"re2",
 			"unrs-resolver"
 		]
 	},
 	"dependencies": {
+		"@acrodata/code-editor": "^0.6.0",
 		"@angular/animations": "21.1.3",
 		"@angular/common": "21.1.3",
 		"@angular/compiler": "21.1.3",
@@ -54,7 +56,7 @@
 		"@capacitor/android": "8.0.2",
 		"@capacitor/core": "8.0.2",
 		"@capacitor/ios": "8.0.2",
-		"@ctrl/ngx-codemirror": "^7.0.0",
+		"@codemirror/lang-sql": "^6.10.0",
 		"@firebase/auth": "1.12.0",
 		"@firebase/firestore": "4.11.0",
 		"@firebase/firestore-types": "3.0.3",
@@ -71,7 +73,6 @@
 		"@types/tabulator-tables": "6.3.1",
 		"@types/telegram-web-app": "^9.0.0",
 		"angularx-qrcode": "^21.0.0",
-		"codemirror": "^6.0.1",
 		"date-fns": "4.1.0",
 		"firebase": "12.9.0",
 		"ionicons": "8.0.13",
@@ -122,6 +123,7 @@
 		"eslint": "9.39.2",
 		"eslint-config-prettier": "10.1.8",
 		"eslint-plugin-json": "4.0.1",
+		"firebase-tools": "^15.5.1",
 		"git-describe": "4.1.1",
 		"happy-dom": "^20.5.0",
 		"identity-obj-proxy": "^3.0.0",

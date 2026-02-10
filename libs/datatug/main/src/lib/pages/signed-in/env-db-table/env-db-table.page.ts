@@ -1,14 +1,8 @@
-import {
-	AfterViewInit,
-	Component,
-	OnDestroy,
-	ViewChild,
-	inject,
-} from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
-import { CodemirrorComponent, CodemirrorModule } from '@ctrl/ngx-codemirror';
+import { CodeEditor } from '@acrodata/code-editor';
 import {
 	IonBackButton,
 	IonBadge,
@@ -60,7 +54,7 @@ import { ForeignKeyCardComponent } from './foreign-key-card/foreign-key-card.com
 	styleUrls: ['./env-db-table.page.scss'],
 	imports: [
 		ForeignKeyCardComponent,
-		CodemirrorModule,
+		CodeEditor,
 		DataGridComponent,
 		IonHeader,
 		IonToolbar,
@@ -89,7 +83,7 @@ import { ForeignKeyCardComponent } from './foreign-key-card/foreign-key-card.com
 		IonText,
 	],
 })
-export class EnvDbTablePageComponent implements OnDestroy, AfterViewInit {
+export class EnvDbTablePageComponent implements OnDestroy {
 	private readonly datatugNavContextService = inject(DatatugNavContextService);
 	private readonly route = inject(ActivatedRoute);
 	private readonly projService = inject(ProjectService);
@@ -116,17 +110,6 @@ export class EnvDbTablePageComponent implements OnDestroy, AfterViewInit {
 		data?: Record<string, unknown>;
 	};
 	public sql = 'select * from';
-
-	@ViewChild('codemirrorComponent')
-	public codemirrorComponent?: CodemirrorComponent;
-
-	public readonly codemirrorOptions = {
-		lineNumbers: true,
-		readOnly: true,
-		mode: 'text/x-sql',
-		viewportMargin: Infinity,
-		style: { height: 'auto' },
-	};
 
 	public step = 'initial';
 	public recordset?: IRecordsetResult;
@@ -218,21 +201,6 @@ from ${from}`;
 	ngOnDestroy(): void {
 		this.destroyed.next();
 		this.destroyed.complete();
-	}
-
-	ngAfterViewInit(): void /* Intentionally not ngOnInit */ {
-		if (!this.codemirrorComponent) {
-			return;
-		}
-		try {
-			const { codeMirror } = this.codemirrorComponent;
-			if (codeMirror) {
-				codeMirror.getWrapperElement().style.height = 'auto';
-				setTimeout(() => codeMirror.refresh(), 9);
-			}
-		} catch (e) {
-			this.errorLogger.logError(e, 'Failed to setup CodeMirror component');
-		}
 	}
 
 	public tabChanged(event: Event): void {
