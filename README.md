@@ -40,10 +40,15 @@ read instructions on how to set up local dev environment in [README-DEV-SETUP.md
 ## AI Agent Improvement Plan
 
 We've analyzed the codebase and created a prioritized list of **Top 10 high-ROI improvements** for AI agents:
-- 📋 [Quick Summary](AI-TASKS-SUMMARY.md) - 10 tasks at a glance
-- 📚 [Full Plan](AI-IMPROVEMENT-PLAN.md) - Detailed implementation guide with step-by-step instructions
 
-**Quick wins** (Week 1): Re-enable CI tests, add coverage baseline, optimize bundle size, Docker setup.
+**👉 [START HERE: AI Improvement Index](AI-IMPROVEMENT-INDEX.md)** ⭐
+
+Detailed documentation:
+- 📋 [Quick Summary](AI-TASKS-SUMMARY.md) - 10 tasks at a glance (5 min read)
+- 📚 [Full Plan](AI-IMPROVEMENT-PLAN.md) - Detailed guide with step-by-step instructions (20 min read)
+- 🎨 [Visual Roadmap](AI-IMPROVEMENT-VISUAL.md) - ASCII art timeline (3 min browse)
+
+**Quick wins** (Week 1, 16h): Re-enable CI tests, add coverage baseline, optimize bundle size, pre-commit hooks, Docker setup.
 
 ## Promoted discussions
 
