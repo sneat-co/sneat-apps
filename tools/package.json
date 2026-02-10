@@ -1,0 +1,6 @@
+{
+  "name": "@sneat/tools",
+  "version": "1.0.0",
+  "description": "Custom Nx generators for Sneat Apps",
+  "generators": "./generators.json"
+}
