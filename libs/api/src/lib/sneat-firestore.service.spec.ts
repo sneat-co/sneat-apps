@@ -10,7 +10,6 @@ import { Subject } from 'rxjs';
 import {
 	SneatFirestoreService,
 	docSnapshotToDto,
-	IFilter,
 	IQueryArgs,
 } from './sneat-firestore.service';
 
@@ -250,7 +249,7 @@ describe('SneatFirestoreService', () => {
 
 			mockWhere.mockReturnValue({});
 			mockQuery.mockReturnValue(mockQueryObj);
-			mockOnSnapshot.mockImplementation((q, subj: Subject<unknown>) => {
+			mockOnSnapshot.mockImplementation(() => {
 				// Just return to simulate subscription
 			});
 
