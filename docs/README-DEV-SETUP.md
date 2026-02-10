@@ -16,15 +16,15 @@ To develop & run **Sneat.app** locally you would need:
 4. Install [Java SE](https://www.oracle.com/ie/java/technologies/java-se-glance.html) runtime (_for running Firebase emulators_)
 5. Install [Go](https://go.dev/) language (_for running server side code_)
 6. Clone repositories
-    1. [github.com/sneat-co/sneat-apps](https://github.com/sneat-co/sneat-apps) - client side (_Progressive Web App_)
-    2. [github.com/sneat-co/sneat-go](https://github.com/sneat-co/sneat-go) - server side (_writes data to DB_)
+   1. [github.com/sneat-co/sneat-apps](https://github.com/sneat-co/sneat-apps) - client side (_Progressive Web App_)
+   2. [github.com/sneat-co/sneat-go](https://github.com/sneat-co/sneat-go) - server side (_writes data to DB_)
 7. Running Sneat.app locally processes:
    1. Run Firebase emulators
    2. Run Server side
    3. Run Client side progressive web app
 
 After above steps successful the local development version of the Sneat.app
-should be available at [http://localhost:4200](http://localhost:4200).  
+should be available at [http://localhost:4200](http://localhost:4200).
 
 Here is the instructions how to do this step by step.
 
@@ -71,25 +71,30 @@ but for now App Engine Standard works best for us.
 ## 7. Running Sneat.app locally
 
 ### 7.1 Running Firebase Emulators
+
 ```shell
 > cd ~/sneat/sneat-go
 ~/sneat/sneat-go> firebase emulators:start --only auth,firestore --config firebase/firebase.json --import ./firebase/local_data --export-on-exit ./firebase/local_data
 ```
+
 There is a shortcut batch file `serve_fb_emulator.sh`:
+
 ```shell
 ~/sneat/sneat-go> ./serve_fb_emulator.sh
 ```
 
 ## 7.2 Running server side
+
 ```shell
 > cd ~/sneat/sneat-go
-~/sneat/sneat-go> export GCLOUD_PROJECT="demo-local-sneat-app"
+~/sneat/sneat-go> export GCLOUD_PROJECT="demo-sneat-app"
 ~/sneat/sneat-go> export FIREBASE_AUTH_EMULATOR_HOST="localhost:9099"
 ~/sneat/sneat-go> export FIRESTORE_EMULATOR_HOST="localhost:8080"
 ~/sneat/sneat-go> go run ./gae
 ```
 
 There is a shortcut batch file `serve_gae.sh`:
+
 ```shell
 ~/sneat/sneat-go> ./serve_gae.sh
 ```
@@ -120,25 +125,16 @@ And run as:
 pnx serve <APP_NAME>
 ```
 
-[//]: # (### Run with source maps)
-
-[//]: # ()
-
-[//]: # (For some reason the serve is running with enabled optimization and no source maps.)
-
-[//]: # (It results in troubles with debugging.)
-
-[//]: # ()
-
-[//]: # (Here is how to run dev server properly for datatug app:)
-
-[//]: # ()
-
-[//]: # (```shell)
-
-[//]: # (pnx serve datatug --optimization=false --sourceMap=true)
-
-[//]: # (```)
+[//]: # '### Run with source maps'
+[//]: #
+[//]: # 'For some reason the serve is running with enabled optimization and no source maps.'
+[//]: # 'It results in troubles with debugging.'
+[//]: #
+[//]: # 'Here is how to run dev server properly for datatug app:'
+[//]: #
+[//]: # '```shell'
+[//]: # 'pnx serve datatug --optimization=false --sourceMap=true'
+[//]: # '```'
 
 ## Troubleshooting
 

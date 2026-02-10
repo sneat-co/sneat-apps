@@ -14,7 +14,7 @@ export const FIREBASE_CONFIG = {
 	},
 	apiKey: 'AIzaSyAYGGhSQQ8gUcyPUcUOFW7tTSYduRD3cuw',
 	authDomain: 'sneat.app',
-	projectId: 'demo-local-sneat-app', // In real app The 'demo-' prefix is added if useEmulators is true
+	projectId: 'demo-sneat-app', // In real app The 'demo-' prefix is added if useEmulators is true
 	appId: '1:724666284649:web:080ffaab56bb71e49740f8',
 	measurementId: 'G-RRM3BNCN0S',
 };
