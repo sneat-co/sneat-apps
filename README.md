@@ -34,19 +34,19 @@ graph TB
         iOS["📱 iOS App<br/>(Capacitor)"]
         Android["🤖 Android App<br/>(Capacitor)"]
     end
-    
+
     subgraph "Frontend Layer - Nx Monorepo"
         SneatApp["Sneat.app<br/>(Angular + Ionic)"]
         DataTug["DataTug<br/>(SQL Workbench)"]
         Logist["Logist<br/>(Logistics)"]
-        
+
         subgraph "Shared Libraries"
             Auth["@sneat/auth"]
             Space["@sneat/space"]
             UI["@sneat/ui"]
             Core["@sneat/core"]
         end
-        
+
         subgraph "Extensions"
             Assetus["assetus<br/>(Assets)"]
             Budgetus["budgetus<br/>(Budget)"]
@@ -55,7 +55,7 @@ graph TB
             Listus["listus<br/>(Lists)"]
         end
     end
-    
+
     subgraph "Backend Services"
         Firebase["🔥 Firebase"]
         Firestore["Firestore<br/>(Database)"]
@@ -63,27 +63,27 @@ graph TB
         Analytics["Analytics"]
         Storage["Cloud Storage"]
     end
-    
+
     WebApp --> SneatApp
     iOS --> SneatApp
     Android --> SneatApp
-    
+
     SneatApp --> Auth
     SneatApp --> Space
     SneatApp --> Extensions
     DataTug --> Core
     Logist --> Core
-    
+
     Auth --> FireAuth
     Space --> Firestore
     Extensions --> Firestore
     Core --> Firebase
-    
+
     Firebase --> Firestore
     Firebase --> FireAuth
     Firebase --> Analytics
     Firebase --> Storage
-    
+
     style SneatApp fill:#4CAF50
     style Extensions fill:#2196F3
     style Firebase fill:#FF9800
@@ -98,32 +98,32 @@ graph LR
         ExtShared["Extension Shared<br/>Components<br/>Models & DTOs"]
         ExtPages["Extension Pages<br/>Route Components<br/>Views"]
     end
-    
+
     subgraph "Example: Assetus Extension"
         AssetusCore["assetus-core<br/>Asset Services<br/>Asset Models"]
         AssetusComp["assetus-components<br/>Asset Card<br/>Asset List"]
         AssetusPages["assetus-pages<br/>Asset Details<br/>Asset Dashboard"]
     end
-    
+
     subgraph "Example: Schedulus Extension"
         SchedulusCore["schedulus-core<br/>Event Services<br/>Calendar Logic"]
         SchedulusShared["schedulus-shared<br/>Event Components<br/>Calendar UI"]
         SchedulusMain["schedulus-main<br/>Calendar Page<br/>Event Page"]
     end
-    
+
     ExtCore --> ExtShared
     ExtShared --> ExtPages
-    
+
     AssetusCore --> AssetusComp
     AssetusComp --> AssetusPages
-    
+
     SchedulusCore --> SchedulusShared
     SchedulusShared --> SchedulusMain
-    
+
     ExtPages --> App["Sneat.app<br/>Main Application"]
     AssetusPages --> App
     SchedulusMain --> App
-    
+
     style ExtCore fill:#E91E63
     style ExtShared fill:#9C27B0
     style ExtPages fill:#673AB7
@@ -139,27 +139,27 @@ sequenceDiagram
     participant Firestore as SneatFirestoreService<br/>(Data Layer)
     participant Firebase as Firebase Firestore<br/>(Backend)
     participant Auth as Firebase Auth
-    
+
     User->>Component: Interact with UI
     Component->>Auth: Check Authentication
     Auth-->>Component: User Authenticated
-    
+
     Component->>Service: Call Business Method<br/>(e.g., getSpaceMembers)
     Service->>Firestore: Query Data<br/>(with RxJS Observable)
     Firestore->>Firebase: Firestore Query<br/>(onSnapshot)
-    
+
     Firebase-->>Firestore: Real-time Data Stream
     Firestore-->>Service: Observable Emissions
     Service-->>Component: Transformed Data
     Component-->>User: Update UI
-    
+
     Note over Firebase,Firestore: Real-time Sync
-    
+
     Firebase->>Firestore: Data Changed
     Firestore->>Service: Auto-update via Observable
     Service->>Component: New Data
     Component->>User: UI Auto-updates
-    
+
     User->>Component: Modify Data
     Component->>Service: Update Request
     Service->>Firestore: Write Operation
@@ -193,6 +193,7 @@ This repository includes comprehensive test templates and documentation for writ
 - 🛠️ [Test Templates](templates/) - Reusable templates for services, components, and sanity tests
 
 **Quick start:**
+
 ```bash
 # Generate a test using templates
 node scripts/generate-extension-test.mjs service YourService extension-name shared services
@@ -205,12 +206,13 @@ pnpm nx test <project-name>
 
 We've analyzed the codebase and created a prioritized list of **Top 10 high-ROI improvements** for AI agents:
 
-**👉 [START HERE: AI Improvement Index](AI-IMPROVEMENT-INDEX.md)** ⭐
+**👉 [START HERE: AI Improvement Index](docs/AI-IMPROVEMENT-INDEX.md)** ⭐
 
 Detailed documentation:
-- 📋 [Quick Summary](AI-TASKS-SUMMARY.md) - 10 tasks at a glance (5 min read)
-- 📚 [Full Plan](AI-IMPROVEMENT-PLAN.md) - Detailed guide with step-by-step instructions (20 min read)
-- 🎨 [Visual Roadmap](AI-IMPROVEMENT-VISUAL.md) - ASCII art timeline (3 min browse)
+
+- 📋 [Quick Summary](docs/AI-TASKS-SUMMARY.md) - 10 tasks at a glance (5 min read)
+- 📚 [Full Plan](docs/AI-IMPROVEMENT-PLAN.md) - Detailed guide with step-by-step instructions (20 min read)
+- 🎨 [Visual Roadmap](docs/AI-IMPROVEMENT-VISUAL.md) - ASCII art timeline (3 min browse)
 
 **Quick wins** (Week 1, 16h): Re-enable CI tests, add coverage baseline, optimize bundle size, pre-commit hooks, Docker setup.
 

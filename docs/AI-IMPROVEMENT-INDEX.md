@@ -1,6 +1,7 @@
 # 🎯 AI Agent Improvement Plan - Start Here
 
 **Quick Links:**
+
 - 📋 **[Quick Summary](AI-TASKS-SUMMARY.md)** - 10 tasks at a glance (5 min read)
 - 📚 **[Full Implementation Plan](AI-IMPROVEMENT-PLAN.md)** - Detailed guide (20 min read)
 - 🎨 **[Visual Roadmap](AI-IMPROVEMENT-VISUAL.md)** - ASCII art timeline (3 min browse)
@@ -20,6 +21,7 @@ We analyzed **sneat-apps** (1,089 TypeScript files, 70+ libraries) and identifie
 ## 📊 What We Found
 
 ### Critical Issues ❌
+
 1. **Unit tests disabled in CI** - Regressions go undetected
 2. **Core services untested** - 0% coverage for API/Auth/Space
 3. **Bundle bloat** - 2,900 lines of data in main bundle
@@ -27,6 +29,7 @@ We analyzed **sneat-apps** (1,089 TypeScript files, 70+ libraries) and identifie
 5. **Complex dev setup** - 2-3 hours, manual configuration
 
 ### Quick Wins Identified ⚡
+
 1. Re-enable CI tests (2h) → Prevent regressions
 2. Add coverage baseline (3h) → Quality gates
 3. Lazy load data (4h) → 15% smaller bundles
@@ -37,18 +40,18 @@ We analyzed **sneat-apps** (1,089 TypeScript files, 70+ libraries) and identifie
 
 ## 🎯 Top 10 Tasks
 
-| # | Task | Time | ROI | Priority |
-|---|------|------|-----|----------|
-| 1 | Re-enable CI Tests | 2h | ⭐⭐⭐⭐⭐ | 🔴 Critical |
-| 2 | Coverage Baseline | 3h | ⭐⭐⭐⭐⭐ | 🔴 Critical |
-| 3 | Lazy Load Data | 4h | ⭐⭐⭐⭐ | 🔴 Critical |
-| 4 | Test Core Services | 10h | ⭐⭐⭐⭐ | 🟠 High |
-| 5 | Split Large Components | 8h | ⭐⭐⭐⭐ | 🟠 High |
-| 6 | Document Architecture | 5h | ⭐⭐⭐⭐ | 🟠 High |
-| 7 | Path Aliases | 3h | ⭐⭐⭐ | 🟡 Medium |
-| 8 | Pre-commit Tests | 2h | ⭐⭐⭐ | 🟡 Medium |
-| 9 | Test Templates | 5h | ⭐⭐⭐ | 🟡 Medium |
-| 10 | CI Optimization | 6h | ⭐⭐⭐ | 🟡 Medium |
+| #   | Task                   | Time | ROI        | Priority    |
+| --- | ---------------------- | ---- | ---------- | ----------- |
+| 1   | Re-enable CI Tests     | 2h   | ⭐⭐⭐⭐⭐ | 🔴 Critical |
+| 2   | Coverage Baseline      | 3h   | ⭐⭐⭐⭐⭐ | 🔴 Critical |
+| 3   | Lazy Load Data         | 4h   | ⭐⭐⭐⭐   | 🔴 Critical |
+| 4   | Test Core Services     | 10h  | ⭐⭐⭐⭐   | 🟠 High     |
+| 5   | Split Large Components | 8h   | ⭐⭐⭐⭐   | 🟠 High     |
+| 6   | Document Architecture  | 5h   | ⭐⭐⭐⭐   | 🟠 High     |
+| 7   | Path Aliases           | 3h   | ⭐⭐⭐     | 🟡 Medium   |
+| 8   | Pre-commit Tests       | 2h   | ⭐⭐⭐     | 🟡 Medium   |
+| 9   | Test Templates         | 5h   | ⭐⭐⭐     | 🟡 Medium   |
+| 10  | CI Optimization        | 6h   | ⭐⭐⭐     | 🟡 Medium   |
 
 ---
 
@@ -68,6 +71,7 @@ PR Quality:   Base → -60%   (better)
 ## 🗓️ 4-Week Execution Plan
 
 ### Week 1: Quick Wins (16h)
+
 - Task 1: Re-enable CI tests (2h)
 - Task 2: Coverage baseline (3h)
 - Task 3: Lazy load data (4h)
@@ -75,11 +79,13 @@ PR Quality:   Base → -60%   (better)
 - Task 6: Docker setup (5h)
 
 ### Week 2-3: High Priority (23h)
+
 - Task 4: Test core services (10h)
 - Task 5: Split large components (8h)
 - Task 6: Finish documentation (5h)
 
 ### Week 4: Polish (16h)
+
 - Task 7: Path aliases (3h)
 - Task 9: Test templates (5h)
 - Task 10: CI optimization (6h)
@@ -119,6 +125,7 @@ AI-IMPROVEMENT-VISUAL.md
 ## 🎬 Getting Started
 
 ### For AI Agents:
+
 1. **Read** [AI-TASKS-SUMMARY.md](AI-TASKS-SUMMARY.md) (5 min)
 2. **Study** [AI-IMPROVEMENT-PLAN.md](AI-IMPROVEMENT-PLAN.md) (20 min)
 3. **Start** with Task 1 (highest priority)
@@ -126,6 +133,7 @@ AI-IMPROVEMENT-VISUAL.md
 5. **Measure** outcomes with metrics
 
 ### For Developers:
+
 1. **Browse** [AI-IMPROVEMENT-VISUAL.md](AI-IMPROVEMENT-VISUAL.md) (3 min)
 2. **Pick** tasks matching your skills
 3. **Follow** step-by-step guides
@@ -133,6 +141,7 @@ AI-IMPROVEMENT-VISUAL.md
 5. **Share** learnings
 
 ### For Managers:
+
 1. **Review** expected outcomes table
 2. **Allocate** 16 hours for Week 1
 3. **Track** metrics monthly
@@ -145,13 +154,13 @@ AI-IMPROVEMENT-VISUAL.md
 
 Track these weekly:
 
-| Metric | Command | Target |
-|--------|---------|--------|
-| Test Coverage | `pnpm run coverage:analyze` | 75% |
-| CI Time | Check GitHub Actions | <7 min |
-| Bundle Size | `pnpm nx build sneat-app --stats-json` | -15% |
-| Large Files | `find . -name "*.ts" -exec wc -l {} + \| awk '$1>400'` | 0 |
-| TODOs | `grep -r "TODO\|FIXME" --include="*.ts" \| wc -l` | <50 |
+| Metric        | Command                                                | Target |
+| ------------- | ------------------------------------------------------ | ------ |
+| Test Coverage | `pnpm run coverage:analyze`                            | 75%    |
+| CI Time       | Check GitHub Actions                                   | <7 min |
+| Bundle Size   | `pnpm nx build sneat-app --stats-json`                 | -15%   |
+| Large Files   | `find . -name "*.ts" -exec wc -l {} + \| awk '$1>400'` | 0      |
+| TODOs         | `grep -r "TODO\|FIXME" --include="*.ts" \| wc -l`      | <50    |
 
 ---
 

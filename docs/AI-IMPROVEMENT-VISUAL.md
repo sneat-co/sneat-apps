@@ -161,6 +161,7 @@
 ```
 
 **Legend:**
+
 - **Upper Left (T1, T2)**: Quick wins - Do first!
 - **Upper Right (T4, T5)**: High value - Worth the investment
 - **Lower Left (T7, T8)**: Easy improvements

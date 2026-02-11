@@ -8,11 +8,11 @@
 
 ### ⚡ TIER 1: Critical (Do First)
 
-| # | Task | Impact | Effort | Time | Quick Description |
-|---|------|--------|--------|------|-------------------|
-| 1 | **Re-enable CI Tests** | 🔥🔥🔥🔥🔥 | 🟢 Low | 2h | Uncomment tests in `.github/workflows/build-nx.yml` |
-| 2 | **Coverage Baseline** | 🔥🔥🔥🔥🔥 | 🟢 Low | 3h | Add Vitest coverage thresholds, badges |
-| 3 | **Lazy Load Data** | 🔥🔥🔥🔥 | 🟡 Med | 4h | Move emojis.ts (1160 lines) & countries.ts (1757 lines) to JSON |
+| #   | Task                   | Impact     | Effort | Time | Quick Description                                               |
+| --- | ---------------------- | ---------- | ------ | ---- | --------------------------------------------------------------- |
+| 1   | **Re-enable CI Tests** | 🔥🔥🔥🔥🔥 | 🟢 Low | 2h   | Uncomment tests in `.github/workflows/build-nx.yml`             |
+| 2   | **Coverage Baseline**  | 🔥🔥🔥🔥🔥 | 🟢 Low | 3h   | Add Vitest coverage thresholds, badges                          |
+| 3   | **Lazy Load Data**     | 🔥🔥🔥🔥   | 🟡 Med | 4h   | Move emojis.ts (1160 lines) & countries.ts (1757 lines) to JSON |
 
 **Total**: 9 hours | **ROI**: ⭐⭐⭐⭐⭐
 
@@ -20,11 +20,11 @@
 
 ### 🔥 TIER 2: High Priority
 
-| # | Task | Impact | Effort | Time | Quick Description |
-|---|------|--------|--------|------|-------------------|
-| 4 | **Test Core Services** | 🔥🔥🔥🔥 | 🟡 Med | 10h | Add tests for: `sneat-firestore.service.ts`, `space.service.ts`, `sneat-auth-state-service.ts` |
-| 5 | **Split Large Components** | 🔥🔥🔥 | 🟡 Med | 8h | Refactor 3 components (775, 661, 607 lines) into <250 line units |
-| 6 | **Document Architecture** | 🔥🔥🔥 | 🟢 Low | 5h | Create `ARCHITECTURE.md`, `TESTING.md`, Docker Compose setup |
+| #   | Task                       | Impact   | Effort | Time | Quick Description                                                                              |
+| --- | -------------------------- | -------- | ------ | ---- | ---------------------------------------------------------------------------------------------- |
+| 4   | **Test Core Services**     | 🔥🔥🔥🔥 | 🟡 Med | 10h  | Add tests for: `sneat-firestore.service.ts`, `space.service.ts`, `sneat-auth-state-service.ts` |
+| 5   | **Split Large Components** | 🔥🔥🔥   | 🟡 Med | 8h   | Refactor 3 components (775, 661, 607 lines) into <250 line units                               |
+| 6   | **Document Architecture**  | 🔥🔥🔥   | 🟢 Low | 5h   | Create `ARCHITECTURE.md`, `TESTING.md`, Docker Compose setup                                   |
 
 **Total**: 23 hours | **ROI**: ⭐⭐⭐⭐
 
@@ -32,12 +32,12 @@
 
 ### 💡 TIER 3: Medium Priority
 
-| # | Task | Impact | Effort | Time | Quick Description |
-|---|------|--------|--------|------|-------------------|
-| 7 | **Path Aliases** | 🔥🔥 | 🟢 Low | 3h | Add TS path aliases to eliminate `../../../../` imports |
-| 8 | **Pre-commit Tests** | 🔥🔥 | 🟢 Low | 2h | Run tests in pre-commit hook |
-| 9 | **Test Templates** | 🔥🔥 | 🟡 Med | 5h | Create reusable test templates for extensions |
-| 10 | **CI Optimization** | 🔥🔥 | 🟡 Med | 6h | Reduce CI from 15min → 7min (caching, parallelization) |
+| #   | Task                 | Impact | Effort | Time | Quick Description                                       |
+| --- | -------------------- | ------ | ------ | ---- | ------------------------------------------------------- |
+| 7   | **Path Aliases**     | 🔥🔥   | 🟢 Low | 3h   | Add TS path aliases to eliminate `../../../../` imports |
+| 8   | **Pre-commit Tests** | 🔥🔥   | 🟢 Low | 2h   | Run tests in pre-commit hook                            |
+| 9   | **Test Templates**   | 🔥🔥   | 🟡 Med | 5h   | Create reusable test templates for extensions           |
+| 10  | **CI Optimization**  | 🔥🔥   | 🟡 Med | 6h   | Reduce CI from 15min → 7min (caching, parallelization)  |
 
 **Total**: 16 hours | **ROI**: ⭐⭐⭐
 
@@ -83,11 +83,13 @@ Copy this into your task tracker:
 
 ```markdown
 ## Critical (Week 1)
+
 - [ ] Task 1: Re-enable CI tests (.github/workflows/build-nx.yml)
 - [ ] Task 2: Add coverage baseline (vitest.workspace.ts)
 - [ ] Task 3: Lazy load emojis.ts & countries.ts
 
 ## High Priority (Week 2-3)
+
 - [ ] Task 4: Test sneat-firestore.service.ts
 - [ ] Task 4: Test space.service.ts
 - [ ] Task 4: Test sneat-auth-state-service.ts
@@ -99,6 +101,7 @@ Copy this into your task tracker:
 - [ ] Task 6: Create docker-compose.yml
 
 ## Medium Priority (Week 4)
+
 - [ ] Task 7: Add TypeScript path aliases
 - [ ] Task 8: Update pre-commit hooks
 - [ ] Task 9: Create test templates
@@ -142,19 +145,20 @@ vim .github/workflows/build-nx.yml  # Add caching
 
 Track these weekly:
 
-| Metric | Week 0 | Target | Track |
-|--------|--------|--------|-------|
-| Test Coverage | ~35% | 75% | `pnpm run coverage:analyze` |
-| CI Time | 15 min | 7 min | GitHub Actions dashboard |
-| Bundle Size | Baseline | -15% | `pnpm nx build sneat-app --stats-json` |
-| Files >400 lines | 8 | 0 | `find . -name "*.ts" -exec wc -l {} + \| awk '$1>400'` |
-| TODO/FIXME | 150+ | <50 | `grep -r "TODO\|FIXME" --include="*.ts"` |
+| Metric           | Week 0   | Target | Track                                                  |
+| ---------------- | -------- | ------ | ------------------------------------------------------ |
+| Test Coverage    | ~35%     | 75%    | `pnpm run coverage:analyze`                            |
+| CI Time          | 15 min   | 7 min  | GitHub Actions dashboard                               |
+| Bundle Size      | Baseline | -15%   | `pnpm nx build sneat-app --stats-json`                 |
+| Files >400 lines | 8        | 0      | `find . -name "*.ts" -exec wc -l {} + \| awk '$1>400'` |
+| TODO/FIXME       | 150+     | <50    | `grep -r "TODO\|FIXME" --include="*.ts"`               |
 
 ---
 
 ## 🔗 Full Details
 
 See [AI-IMPROVEMENT-PLAN.md](AI-IMPROVEMENT-PLAN.md) for:
+
 - Detailed problem statements
 - Step-by-step implementation guides
 - Code examples
