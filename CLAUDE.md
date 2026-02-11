@@ -1,8 +1,8 @@
 # Claude Instructions
 
-All repository agent instructions are defined in [AGENTS.md](AGENTS.md).
+All agent instructions for the repository are defined in [GUIDELINES.md](docs/GUIDELINES.md).
 
-Claude should follow [AGENTS.md](AGENTS.md) as the single source of truth.
+Claude should follow [GUIDELINES.md](docs/GUIDELINES.md) as the single source of truth.
 
 <!-- nx configuration start-->
 <!-- Leave the start & end comments to automatically receive updates. -->

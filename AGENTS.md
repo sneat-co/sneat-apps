@@ -1,5 +1,9 @@
 # Instructions for AI agents
 
+All agent instructions for the repository are defined in [GUIDELINES.md](docs/GUIDELINES.md).
+
+All AI agents should follow [GUIDELINES.md](docs/GUIDELINES.md) as the single source of truth.
+
 <!-- nx configuration start-->
 <!-- Leave the start & end comments to automatically receive updates. -->
 
