@@ -5,14 +5,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { MemberContactsPageComponent } from './member-contacts-page.component';
 
 const routes: Routes = [
-	{
-		path: '',
-		component: MemberContactsPageComponent,
-	},
+  {
+    path: '',
+    component: MemberContactsPageComponent,
+  },
 ];
 
 @NgModule({
-	imports: [FormsModule, RouterModule.forChild(routes)],
-	declarations: [MemberContactsPageComponent],
+  imports: [FormsModule, RouterModule.forChild(routes)],
+  declarations: [MemberContactsPageComponent],
 })
 export class MemberContactsPageModule {}

@@ -1,53 +1,53 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<title>Sneat.app</title>
-		<base href="/" />
-		<meta name="color-scheme" content="light dark" />
-		<meta
-			name="viewport"
-			content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
-		/>
-		<meta name="format-detection" content="telephone=no" />
-		<meta name="msapplication-tap-highlight" content="no" />
-		<link rel="icon" type="image/png" href="assets/icon/favicon.png" />
-		<!-- add to homescreen for ios -->
-		<meta name="mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-		<script>
-			(function () {
-				// TODO: decouple and reuse in all apps
-				try {
-					function getUrlParam(name) {
-						const re = new RegExp("[#?&]" + name + "(=([^&#]*))");
-						const results = re.exec(location.href);
-						return (
-							results &&
-							results.length > 2 &&
-							decodeURIComponent(results[2].replace(/\+/g, " "))
-						);
-					}
-					const tgWebAppData = getUrlParam("tgWebAppData");
-					if (!!tgWebAppData) {
-						const head = document.getElementsByTagName("head")[0];
-						const s = document.createElement("script");
-						s.async = false; // If we make it TRUE then window.onTelegramScripLoaded is NULL!
-						s.type = "text/javascript";
-						s.src = "https://telegram.org/js/telegram-web-app.js";
-						// s.onload = function () {
-						// 	Telegram.WebApp.ready();
-						// 	alert(location.hash);
-						// };
-						head.appendChild(s);
-					}
-				} catch (e) {
-					alert("Failed to initialize Telegram web app: " + e);
-				}
-			})();
-		</script>
-	</head>
-	<body>
-		<sneat-app-root></sneat-app-root>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>Sneat.app</title>
+    <base href="/" />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <link rel="icon" type="image/png" href="assets/icon/favicon.png" />
+    <!-- add to homescreen for ios -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <script>
+      (function () {
+        // TODO: decouple and reuse in all apps
+        try {
+          function getUrlParam(name) {
+            const re = new RegExp("[#?&]" + name + "(=([^&#]*))");
+            const results = re.exec(location.href);
+            return (
+              results &&
+              results.length > 2 &&
+              decodeURIComponent(results[2].replace(/\+/g, " "))
+            );
+          }
+          const tgWebAppData = getUrlParam("tgWebAppData");
+          if (!!tgWebAppData) {
+            const head = document.getElementsByTagName("head")[0];
+            const s = document.createElement("script");
+            s.async = false; // If we make it TRUE then window.onTelegramScripLoaded is NULL!
+            s.type = "text/javascript";
+            s.src = "https://telegram.org/js/telegram-web-app.js";
+            // s.onload = function () {
+            // 	Telegram.WebApp.ready();
+            // 	alert(location.hash);
+            // };
+            head.appendChild(s);
+          }
+        } catch (e) {
+          alert("Failed to initialize Telegram web app: " + e);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <sneat-app-root></sneat-app-root>
+  </body>
 </html>

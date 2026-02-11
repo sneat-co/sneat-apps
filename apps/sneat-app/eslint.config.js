@@ -11,12 +11,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export default [
-	...baseConfig,
-	...sneatLibConfig(__dirname),
-	{
-		files: ['**/*.ts'],
-		rules: {
-			'@angular-eslint/prefer-standalone': 'off',
-		},
-	},
+  ...baseConfig,
+  ...sneatLibConfig(__dirname),
+  {
+    files: ['**/*.ts'],
+    rules: {
+      '@angular-eslint/prefer-standalone': 'off',
+    },
+  },
 ];

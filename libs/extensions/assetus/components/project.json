@@ -1,36 +1,36 @@
 {
-	"name": "ext-assetus-components",
-	"$schema": "../../../../node_modules/nx/schemas/project-schema.json",
-	"projectType": "library",
-	"sourceRoot": "libs/extensions/assetus/components/src",
-	"prefix": "sneat",
-	"targets": {
-		"build": {
-			"executor": "@nx/angular:ng-packagr-lite",
-			"outputs": ["{workspaceRoot}/dist/libs/extensions/assetus/components"],
-			"options": {
-				"project": "libs/extensions/assetus/components/ng-package.json",
-				"tsConfig": "libs/extensions/assetus/components/tsconfig.lib.json"
-			},
-			"configurations": {
-				"production": {
-					"tsConfig": "libs/extensions/assetus/components/tsconfig.lib.prod.json"
-				},
-				"development": {}
-			},
-			"defaultConfiguration": "production"
-		},
-		"test": {
-			"executor": "@nx/vitest:test",
-			"outputs": [
-				"{workspaceRoot}/coverage/libs/extensions/assetus/components"
-			],
-			"options": {
-				"tsConfig": "libs/extensions/assetus/components/tsconfig.spec.json"
-			}
-		},
-		"lint": {
-			"executor": "@nx/eslint:lint"
-		}
-	}
+  "name": "ext-assetus-components",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/extensions/assetus/components/src",
+  "prefix": "sneat",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/libs/extensions/assetus/components"],
+      "options": {
+        "project": "libs/extensions/assetus/components/ng-package.json",
+        "tsConfig": "libs/extensions/assetus/components/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/extensions/assetus/components/tsconfig.lib.prod.json"
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": [
+        "{workspaceRoot}/coverage/libs/extensions/assetus/components"
+      ],
+      "options": {
+        "tsConfig": "libs/extensions/assetus/components/tsconfig.spec.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
 }

@@ -1,48 +1,48 @@
 name: 'PNPM install'
 
-description: "Installs PNPM & runs `pnpm install`"
+description: 'Installs PNPM & runs `pnpm install`'
 
 runs:
-    using: "composite"
-    steps:
-        -   run: git rev-parse HEAD
-            shell: sh
+  using: 'composite'
+  steps:
+    - run: git rev-parse HEAD
+      shell: sh
 
-        #        -   run: git rev-parse HEAD~1
-        #            continue-on-error: true
-        #            shell: sh
+    #        -   run: git rev-parse HEAD~1
+    #            continue-on-error: true
+    #            shell: sh
 
-        -   name: Setup pnpm
-            uses: pnpm/action-setup@v4 # Use the official pnpm setup action
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4 # Use the official pnpm setup action
 
-        -   name: Setup NodeJS
-            uses: actions/setup-node@v6
-            with:
-                cache: 'pnpm'
-                node-version: '24'
+    - name: Setup NodeJS
+      uses: actions/setup-node@v6
+      with:
+        cache: 'pnpm'
+        node-version: '24'
 
-        #        -   name: Set up PNPM (corepack)
-        #            id: pnpm-setup
-        #            shell: sh
-        #            run: |
-        #                echo "Before: corepack version => $(corepack --version || echo 'not installed')"
-        #                npm install -g corepack@latest
-        #                echo "After : corepack version => $(corepack --version)"
-        #                corepack enable
+    #        -   name: Set up PNPM (corepack)
+    #            id: pnpm-setup
+    #            shell: sh
+    #            run: |
+    #                echo "Before: corepack version => $(corepack --version || echo 'not installed')"
+    #                npm install -g corepack@latest
+    #                echo "After : corepack version => $(corepack --version)"
+    #                corepack enable
 
-        #        -   name: Install PNPM
+    #        -   name: Install PNPM
 
-        #            shell: sh
-        #            run: npm install pnpm@8 -g
+    #            shell: sh
+    #            run: npm install pnpm@8 -g
 
-        #            uses: pnpm/action-setup@v2
-        #            with:
-        #                version: 8
-        #                run_install: false
+    #            uses: pnpm/action-setup@v2
+    #            with:
+    #                version: 8
+    #                run_install: false
 
-        -   run: pnpm --version
-            shell: sh
+    - run: pnpm --version
+      shell: sh
 
-        -   name: Install dependencies
-            run: pnpm install
-            shell: sh
+    - name: Install dependencies
+      run: pnpm install
+      shell: sh

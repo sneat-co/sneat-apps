@@ -1,26 +1,26 @@
 <ion-card>
-	<ion-item-divider color="light">
-		<ion-label color="medium">{{ title }}</ion-label>
-		<ion-buttons slot="end">
-			<ion-button color="medium">
-				<ion-icon name="add-outline" />
-				<ion-label>Add</ion-label>
-			</ion-button>
-		</ion-buttons>
-	</ion-item-divider>
+  <ion-item-divider color="light">
+    <ion-label color="medium">{{ title }}</ion-label>
+    <ion-buttons slot="end">
+      <ion-button color="medium">
+        <ion-icon name="add-outline" />
+        <ion-label>Add</ion-label>
+      </ion-button>
+    </ion-buttons>
+  </ion-item-divider>
 
-	<ion-list>
-		@for (item of selectedItems; track item.id) {
-			<ion-item>
-				<ion-label>{{ item.title }}</ion-label>
-				@if (canRemove) {
-					<ion-buttons slot="end">
-						<ion-button title="Remove" (click)="removeItem($event, item)">
-							<ion-icon name="close-outline" />
-						</ion-button>
-					</ion-buttons>
-				}
-			</ion-item>
-		}
-	</ion-list>
+  <ion-list>
+    @for (item of selectedItems; track item.id) {
+      <ion-item>
+        <ion-label>{{ item.title }}</ion-label>
+        @if (canRemove) {
+          <ion-buttons slot="end">
+            <ion-button title="Remove" (click)="removeItem($event, item)">
+              <ion-icon name="close-outline" />
+            </ion-button>
+          </ion-buttons>
+        }
+      </ion-item>
+    }
+  </ion-list>
 </ion-card>

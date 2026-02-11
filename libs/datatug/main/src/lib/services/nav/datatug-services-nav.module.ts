@@ -4,7 +4,7 @@ import { DatatugNavContextService } from './datatug-nav-context.service';
 import { DatatugServicesProjectModule } from '../project/datatug-services-project.module';
 
 @NgModule({
-	imports: [DatatugServicesProjectModule],
-	providers: [DatatugNavService, DatatugNavContextService],
+  imports: [DatatugServicesProjectModule],
+  providers: [DatatugNavService, DatatugNavContextService],
 })
 export class DatatugServicesNavModule {}

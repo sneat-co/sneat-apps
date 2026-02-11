@@ -4,23 +4,23 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RealEstateLocationComponent } from './real-estate-location.component';
 
 describe('RealEstateLocationComponent', () => {
-	let component: RealEstateLocationComponent;
-	let fixture: ComponentFixture<RealEstateLocationComponent>;
+  let component: RealEstateLocationComponent;
+  let fixture: ComponentFixture<RealEstateLocationComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [RealEstateLocationComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [RealEstateLocationComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
+  }));
 
-	beforeEach(() => {
-		fixture = TestBed.createComponent(RealEstateLocationComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
+  beforeEach(() => {
+    fixture = TestBed.createComponent(RealEstateLocationComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

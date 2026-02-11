@@ -1,26 +1,26 @@
 <ion-item>
-	<ion-input
-		label="Name"
-		[(ngModel)]="title"
-		required="true"
-		[disabled]="isSubmitting"
-	/>
+  <ion-input
+    label="Name"
+    [(ngModel)]="title"
+    required="true"
+    [disabled]="isSubmitting"
+  />
 </ion-item>
 <div class="ion-padding">
-	@if (!isCreated) {
-		<ion-button (click)="createContact($event)" [disabled]="isSubmitting">
-			@if (!isSubmitting) {
-				<ion-label>Create</ion-label>
-			}
-			@if (isSubmitting) {
-				<ion-label>Creating...</ion-label>
-			}
-			@if (isSubmitting && !isCreated) {
-				<ion-spinner name="lines-small" slot="end" />
-			}
-		</ion-button>
-	}
-	@if (isCreated) {
-		<p>Created...</p>
-	}
+  @if (!isCreated) {
+    <ion-button (click)="createContact($event)" [disabled]="isSubmitting">
+      @if (!isSubmitting) {
+        <ion-label>Create</ion-label>
+      }
+      @if (isSubmitting) {
+        <ion-label>Creating...</ion-label>
+      }
+      @if (isSubmitting && !isCreated) {
+        <ion-spinner name="lines-small" slot="end" />
+      }
+    </ion-button>
+  }
+  @if (isCreated) {
+    <p>Created...</p>
+  }
 </div>

@@ -1,24 +1,24 @@
 <sneat-select-from-list
-	[value]="countryID || ''"
-	[isFilterable]="true"
-	[filterLabel]="label"
-	[label]="label"
-	[items]="countries()"
-	[(ngModel)]="countryID"
-	(ngModelChange)="onChanged()"
-	[isReadonly]="readonly"
-	[filterItem]="filterCountryByCode"
-	(filterChanged)="onFilterChanged($event)"
-	labelPlacement="start"
+  [value]="countryID || ''"
+  [isFilterable]="true"
+  [filterLabel]="label"
+  [label]="label"
+  [items]="countries()"
+  [(ngModel)]="countryID"
+  (ngModelChange)="onChanged()"
+  [isReadonly]="readonly"
+  [filterItem]="filterCountryByCode"
+  (filterChanged)="onFilterChanged($event)"
+  labelPlacement="start"
 >
-	@if (!countryID && !filter()) {
-		<ion-segment [(ngModel)]="geoRegion" (ionChange)="onRegionChanged($event)">
-			<ion-segment-button value="All">All</ion-segment-button>
-			@for (region of geoRegions; track region.id) {
-				<ion-segment-button [value]="region.id">
-					<small>{{ region.id }}</small>
-				</ion-segment-button>
-			}
-		</ion-segment>
-	}
+  @if (!countryID && !filter()) {
+    <ion-segment [(ngModel)]="geoRegion" (ionChange)="onRegionChanged($event)">
+      <ion-segment-button value="All">All</ion-segment-button>
+      @for (region of geoRegions; track region.id) {
+        <ion-segment-button [value]="region.id">
+          <small>{{ region.id }}</small>
+        </ion-segment-button>
+      }
+    </ion-segment>
+  }
 </sneat-select-from-list>

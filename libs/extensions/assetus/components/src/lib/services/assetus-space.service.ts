@@ -6,12 +6,12 @@ import { SpaceModuleService } from '@sneat/space-services';
 
 @Injectable()
 export class AssetusSpaceService extends SpaceModuleService<IAssetusSpaceDbo> {
-	public constructor() {
-		const afs = inject(AngularFirestore);
-		const injector = inject(Injector);
-		super(injector, 'assetus', afs);
-	}
+  public constructor() {
+    const afs = inject(AngularFirestore);
+    const injector = inject(Injector);
+    super(injector, 'assetus', afs);
+  }
 
-	readonly watchAssetBriefs = (space: ISpaceContext) =>
-		this.watchBriefs<IAssetBrief>(space.id, (dto) => dto?.assets || {});
+  readonly watchAssetBriefs = (space: ISpaceContext) =>
+    this.watchBriefs<IAssetBrief>(space.id, (dto) => dto?.assets || {});
 }

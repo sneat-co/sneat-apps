@@ -1,21 +1,21 @@
 @if (!orders) {
-	<ion-card>
-		<ion-card-content>
-			<p>Loading...</p>
-		</ion-card-content>
-	</ion-card>
+  <ion-card>
+    <ion-card-content>
+      <p>Loading...</p>
+    </ion-card-content>
+  </ion-card>
 } @else if (orders.length) {
-	@for (order of orders; track order) {
-		<sneat-logist-order-card
-			[order]="order"
-			[space]="space"
-			[readonly]="true"
-		/>
-	}
+  @for (order of orders; track order) {
+    <sneat-logist-order-card
+      [order]="order"
+      [space]="space"
+      [readonly]="true"
+    />
+  }
 } @else {
-	<ion-card>
-		<ion-card-content>
-			<p>No orders found for the current filter.</p>
-		</ion-card-content>
-	</ion-card>
+  <ion-card>
+    <ion-card-content>
+      <p>No orders found for the current filter.</p>
+    </ion-card-content>
+  </ion-card>
 }

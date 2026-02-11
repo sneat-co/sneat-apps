@@ -2,52 +2,52 @@
 @let day = $day();
 
 <ion-item-divider color="light" class="sneat-tiny-end-padding">
-	<ion-label (click)="onDateSelected()" tappable>
-		@if (day?.slots?.length) {
-			<b>{{ weekday.longTitle }}</b>
-		} @else if (!day?.slots?.length) {
-			{{ weekday.longTitle }}
-		}
-		@if (day?.date) {
-			, {{ day?.date?.getDate() }}
-			{{ day?.date?.getMonth() | shortMonthName }}
-		}
-	</ion-label>
-	@if (day?.$isLoading()) {
-		<ion-spinner style="opacity: 0.2" name="lines-small" slot="end" />
-	}
-	<ion-buttons slot="end">
-		<ion-button title="Add recurring" (click)="goNewHappening('recurring')">
-			<ion-icon name="duplicate-outline" />
-		</ion-button>
-		<ion-button title="Add one-timer" (click)="goNewHappening('single')">
-			<ion-icon name="add-circle-outline" />
-		</ion-button>
-	</ion-buttons>
+  <ion-label (click)="onDateSelected()" tappable>
+    @if (day?.slots?.length) {
+      <b>{{ weekday.longTitle }}</b>
+    } @else if (!day?.slots?.length) {
+      {{ weekday.longTitle }}
+    }
+    @if (day?.date) {
+      , {{ day?.date?.getDate() }}
+      {{ day?.date?.getMonth() | shortMonthName }}
+    }
+  </ion-label>
+  @if (day?.$isLoading()) {
+    <ion-spinner style="opacity: 0.2" name="lines-small" slot="end" />
+  }
+  <ion-buttons slot="end">
+    <ion-button title="Add recurring" (click)="goNewHappening('recurring')">
+      <ion-icon name="duplicate-outline" />
+    </ion-button>
+    <ion-button title="Add one-timer" (click)="goNewHappening('single')">
+      <ion-icon name="add-circle-outline" />
+    </ion-button>
+  </ion-buttons>
 </ion-item-divider>
 @if (!day || day.$isLoading()) {
-	<ion-item>
-		<ion-label color="medium" style="font-style: italic"
-			>Loading data for {{ weekday.longTitle }} isLoading={{
-				day?.$isLoading()
-			}}... weekday.day.id: {{ weekday.day?.dateID }}
-		</ion-label>
-		<ion-spinner name="lines-small" slot="end" color="medium" />
-	</ion-item>
+  <ion-item>
+    <ion-label color="medium" style="font-style: italic"
+      >Loading data for {{ weekday.longTitle }} isLoading={{
+        day?.$isLoading()
+      }}... weekday.day.id: {{ weekday.day?.dateID }}
+    </ion-label>
+    <ion-spinner name="lines-small" slot="end" color="medium" />
+  </ion-item>
 } @else if (day) {
-	@for (slot of day.slots; track slot.slot.id) {
-		@if (showSlot(slot, $day(), $filter())) {
-			<sneat-day-slot-item
-				[$space]="slot.happening.space"
-				[dateID]="day.dateID"
-				[$slotContext]="slot"
-			/>
-		}
-	} @empty {
-		<ion-item lines="full">
-			<ion-label color="medium" style="font-style: italic"
-				>Nothing scheduled yet for {{ weekday.longTitle }}.
-			</ion-label>
-		</ion-item>
-	}
+  @for (slot of day.slots; track slot.slot.id) {
+    @if (showSlot(slot, $day(), $filter())) {
+      <sneat-day-slot-item
+        [$space]="slot.happening.space"
+        [dateID]="day.dateID"
+        [$slotContext]="slot"
+      />
+    }
+  } @empty {
+    <ion-item lines="full">
+      <ion-label color="medium" style="font-style: italic"
+        >Nothing scheduled yet for {{ weekday.longTitle }}.
+      </ion-label>
+    </ion-item>
+  }
 }

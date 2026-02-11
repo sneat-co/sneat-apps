@@ -1,144 +1,144 @@
 <ion-header>
-	<ion-toolbar color="light" class="with-back-button">
-		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="$defaultBackUrl()" />
-		</ion-buttons>
-		<ion-title>New document</ion-title>
-	</ion-toolbar>
+  <ion-toolbar color="light" class="with-back-button">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="$defaultBackUrl()" />
+    </ion-buttons>
+    <ion-title>New document</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	@if (!docType) {
-		<p class="ion-margin">
-			<ion-text color="medium">Step 1 of 4</ion-text>
-		</p>
-	}
+  @if (!docType) {
+    <p class="ion-margin">
+      <ion-text color="medium">Step 1 of 4</ion-text>
+    </p>
+  }
 
-	<ion-card>
-		<sneat-select-from-list
-			[(ngModel)]="docType"
-			(ngModelChange)="onDocTypeChange($event)"
-			[isFilterable]="false"
-			title="Document Type"
-			[items]="docTypes"
-			labelPlacement="start"
-		/>
+  <ion-card>
+    <sneat-select-from-list
+      [(ngModel)]="docType"
+      (ngModelChange)="onDocTypeChange($event)"
+      [isFilterable]="false"
+      title="Document Type"
+      [items]="docTypes"
+      labelPlacement="start"
+    />
 
-		@if (docType === "other") {
-			<ion-item>
-				<ion-label>Title</ion-label>
-				<ion-input [(ngModel)]="docTitle" />
-			</ion-item>
-		}
-	</ion-card>
+    @if (docType === "other") {
+      <ion-item>
+        <ion-label>Title</ion-label>
+        <ion-input [(ngModel)]="docTitle" />
+      </ion-item>
+    }
+  </ion-card>
 
-	@if (docType && docType !== "unspecified") {
-		@if (!country) {
-			<p class="ion-margin">
-				<ion-text color="medium">Step 2 of 4</ion-text>
-			</p>
-		}
-		<ion-card>
-			<sneat-country-selector [(countryID)]="country" />
-		</ion-card>
+  @if (docType && docType !== "unspecified") {
+    @if (!country) {
+      <p class="ion-margin">
+        <ion-text color="medium">Step 2 of 4</ion-text>
+      </p>
+    }
+    <ion-card>
+      <sneat-country-selector [(countryID)]="country" />
+    </ion-card>
 
-		@if (country) {
-			@if (isMissingRequiredParams) {
-				<p>This page is missing a required parameter.</p>
-			}
+    @if (country) {
+      @if (isMissingRequiredParams) {
+        <p>This page is missing a required parameter.</p>
+      }
 
-			@if (!$hasSelectedContacts()) {
-				<p class="ion-margin">
-					<ion-text color="medium">Step 3 of 4</ion-text>
-				</p>
-			}
-			<ion-card>
-				<sneat-contacts-selector-input
-					[$space]="$space()"
-					[$contacts]="$contacts()"
-					[$max]="docFields.members?.max"
-					[$selectedContacts]="$selectedContacts()"
-					(selectedContactsChange)="$selectedContacts.set($event)"
-				/>
-			</ion-card>
+      @if (!$hasSelectedContacts()) {
+        <p class="ion-margin">
+          <ion-text color="medium">Step 3 of 4</ion-text>
+        </p>
+      }
+      <ion-card>
+        <sneat-contacts-selector-input
+          [$space]="$space()"
+          [$contacts]="$contacts()"
+          [$max]="docFields.members?.max"
+          [$selectedContacts]="$selectedContacts()"
+          (selectedContactsChange)="$selectedContacts.set($event)"
+        />
+      </ion-card>
 
-			@if ($hasSelectedContacts()) {
-				@if (!isMissingRequiredParams) {
-					<p class="ion-margin">
-						<ion-text color="medium">Step 4 of 4</ion-text>
-					</p>
-					<ion-card>
-						<ion-item-divider [color]="docNumber ? 'light' : 'primary'">
-							<ion-label>Required fields</ion-label>
-						</ion-item-divider>
-						<ion-item>
-							<ion-label>Number</ion-label>
-							<ion-input [(ngModel)]="docNumber" />
-						</ion-item>
-						<ion-item>
-							<ion-label color="medium">Issued by</ion-label>
-							<ion-input />
-						</ion-item>
-						<ion-grid class="ion-grid-layout">
-							<ion-row>
-								<ion-col>
-									<ion-item>
-										<ion-label color="medium">Issued on</ion-label>
-										<ion-input type="date" />
-									</ion-item>
-								</ion-col>
-								<ion-col>
-									<ion-item>
-										<ion-label color="medium">Valid till</ion-label>
-										<ion-input type="date" />
-									</ion-item>
-								</ion-col>
-							</ion-row>
-						</ion-grid>
-					</ion-card>
-				}
+      @if ($hasSelectedContacts()) {
+        @if (!isMissingRequiredParams) {
+          <p class="ion-margin">
+            <ion-text color="medium">Step 4 of 4</ion-text>
+          </p>
+          <ion-card>
+            <ion-item-divider [color]="docNumber ? 'light' : 'primary'">
+              <ion-label>Required fields</ion-label>
+            </ion-item-divider>
+            <ion-item>
+              <ion-label>Number</ion-label>
+              <ion-input [(ngModel)]="docNumber" />
+            </ion-item>
+            <ion-item>
+              <ion-label color="medium">Issued by</ion-label>
+              <ion-input />
+            </ion-item>
+            <ion-grid class="ion-grid-layout">
+              <ion-row>
+                <ion-col>
+                  <ion-item>
+                    <ion-label color="medium">Issued on</ion-label>
+                    <ion-input type="date" />
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item>
+                    <ion-label color="medium">Valid till</ion-label>
+                    <ion-input type="date" />
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card>
+        }
 
-				@if (docType === "driving_license") {
-					<ion-card>
-						<ion-item-divider color="light">
-							<ion-label>Categories</ion-label>
-						</ion-item-divider>
-						<ion-item>
-							<ion-label>Category A</ion-label>
-							<ion-checkbox value="A" />
-						</ion-item>
-						<ion-item>
-							<ion-label>Category B</ion-label>
-							<ion-checkbox value="B" />
-						</ion-item>
-						<ion-item>
-							<ion-label>Category C</ion-label>
-							<ion-checkbox value="C" />
-						</ion-item>
-						<ion-item>
-							<ion-label>Category D</ion-label>
-							<ion-checkbox value="D" />
-						</ion-item>
-						<ion-item>
-							<ion-label>Category E</ion-label>
-							<ion-checkbox value="E" />
-						</ion-item>
-					</ion-card>
-				}
-				<ion-card>
-					<ion-card-content>
-						<ion-button [disabled]="!isFormValid" (click)="submit()">
-							Create
-						</ion-button>
-						<ion-button
-							color="light"
-							routerDirection="back"
-							routerLink="../documents"
-							>Cancel
-						</ion-button>
-					</ion-card-content>
-				</ion-card>
-			}
-		}
-	}
+        @if (docType === "driving_license") {
+          <ion-card>
+            <ion-item-divider color="light">
+              <ion-label>Categories</ion-label>
+            </ion-item-divider>
+            <ion-item>
+              <ion-label>Category A</ion-label>
+              <ion-checkbox value="A" />
+            </ion-item>
+            <ion-item>
+              <ion-label>Category B</ion-label>
+              <ion-checkbox value="B" />
+            </ion-item>
+            <ion-item>
+              <ion-label>Category C</ion-label>
+              <ion-checkbox value="C" />
+            </ion-item>
+            <ion-item>
+              <ion-label>Category D</ion-label>
+              <ion-checkbox value="D" />
+            </ion-item>
+            <ion-item>
+              <ion-label>Category E</ion-label>
+              <ion-checkbox value="E" />
+            </ion-item>
+          </ion-card>
+        }
+        <ion-card>
+          <ion-card-content>
+            <ion-button [disabled]="!isFormValid" (click)="submit()">
+              Create
+            </ion-button>
+            <ion-button
+              color="light"
+              routerDirection="back"
+              routerLink="../documents"
+              >Cancel
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      }
+    }
+  }
 </ion-content>

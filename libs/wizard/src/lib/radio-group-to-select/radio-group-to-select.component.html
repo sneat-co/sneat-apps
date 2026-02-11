@@ -1,52 +1,52 @@
 @if (value) {
-	<ion-item>
-		@if (!!value) {
-			<ion-select
-				[label]="selectLabel || label"
-				(ionBlur)="onTouched()"
-				[(ngModel)]="value"
-				interface="popover"
-				(ionChange)="onValChanged($event)"
-			>
-				@for (o of selectOptions; track o.value) {
-					<ion-select-option [value]="o.value"
-						>{{ o.title || o.value }}
-					</ion-select-option>
-				}
-			</ion-select>
-		}
-	</ion-item>
+  <ion-item>
+    @if (!!value) {
+      <ion-select
+        [label]="selectLabel || label"
+        (ionBlur)="onTouched()"
+        [(ngModel)]="value"
+        interface="popover"
+        (ionChange)="onValChanged($event)"
+      >
+        @for (o of selectOptions; track o.value) {
+          <ion-select-option [value]="o.value"
+            >{{ o.title || o.value }}
+          </ion-select-option>
+        }
+      </ion-select>
+    }
+  </ion-item>
 } @else if (selectOptions) {
-	<ion-radio-group
-		[disabled]="disabled"
-		(blur)="onTouched()"
-		[(ngModel)]="value"
-		(ionChange)="onValChanged($event)"
-	>
-		<ion-list lines="full">
-			<ion-list-header>
-				@if (disabled) {
-					<ion-label color="medium">
-						{{ radioGroupLabel || label }}
-					</ion-label>
-				} @else {
-					<ion-label style="font-weight: bold">
-						{{ radioGroupLabel || label }}
-					</ion-label>
-				}
-			</ion-list-header>
-			@for (o of selectOptions; track o.value) {
-				<ion-item>
-					<ion-radio
-						[slot]="slot"
-						[value]="o.value"
-						[disabled]="disabled"
-						labelPlacement="end"
-						justify="start"
-						>{{ o.title || o.value }}
-					</ion-radio>
-				</ion-item>
-			}
-		</ion-list>
-	</ion-radio-group>
+  <ion-radio-group
+    [disabled]="disabled"
+    (blur)="onTouched()"
+    [(ngModel)]="value"
+    (ionChange)="onValChanged($event)"
+  >
+    <ion-list lines="full">
+      <ion-list-header>
+        @if (disabled) {
+          <ion-label color="medium">
+            {{ radioGroupLabel || label }}
+          </ion-label>
+        } @else {
+          <ion-label style="font-weight: bold">
+            {{ radioGroupLabel || label }}
+          </ion-label>
+        }
+      </ion-list-header>
+      @for (o of selectOptions; track o.value) {
+        <ion-item>
+          <ion-radio
+            [slot]="slot"
+            [value]="o.value"
+            [disabled]="disabled"
+            labelPlacement="end"
+            justify="start"
+            >{{ o.title || o.value }}
+          </ion-radio>
+        </ion-item>
+      }
+    </ion-list>
+  </ion-radio-group>
 }

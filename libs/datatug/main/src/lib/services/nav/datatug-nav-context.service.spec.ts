@@ -10,40 +10,40 @@ import { ProjectService } from '../project/project.service';
 import { EnvironmentService } from '../unsorted/environment.service';
 
 describe('DatatugNavContextService', () => {
-	let service: DatatugNavContextService;
+  let service: DatatugNavContextService;
 
-	beforeEach(() => {
-		TestBed.configureTestingModule({
-			providers: [
-				DatatugNavContextService,
-				{ provide: AppContextService, useValue: { currentApp: of(undefined) } },
-				{
-					provide: ProjectContextService,
-					useValue: {
-						current: undefined,
-						setCurrent: vi.fn(),
-						current$: of(undefined),
-					},
-				},
-				{ provide: Router, useValue: { events: of(), navigate: vi.fn() } },
-				{
-					provide: ProjectService,
-					useValue: { watchProjectSummary: vi.fn(), getFull: vi.fn() },
-				},
-				{ provide: EnvironmentService, useValue: { getEnvSummary: vi.fn() } },
-				{
-					provide: ErrorLogger,
-					useValue: {
-						logError: vi.fn(),
-						logErrorHandler: vi.fn(() => vi.fn()),
-					},
-				},
-			],
-		});
-		service = TestBed.inject(DatatugNavContextService);
-	});
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        DatatugNavContextService,
+        { provide: AppContextService, useValue: { currentApp: of(undefined) } },
+        {
+          provide: ProjectContextService,
+          useValue: {
+            current: undefined,
+            setCurrent: vi.fn(),
+            current$: of(undefined),
+          },
+        },
+        { provide: Router, useValue: { events: of(), navigate: vi.fn() } },
+        {
+          provide: ProjectService,
+          useValue: { watchProjectSummary: vi.fn(), getFull: vi.fn() },
+        },
+        { provide: EnvironmentService, useValue: { getEnvSummary: vi.fn() } },
+        {
+          provide: ErrorLogger,
+          useValue: {
+            logError: vi.fn(),
+            logErrorHandler: vi.fn(() => vi.fn()),
+          },
+        },
+      ],
+    });
+    service = TestBed.inject(DatatugNavContextService);
+  });
 
-	it('should be created', () => {
-		expect(service).toBeTruthy();
-	});
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
 });

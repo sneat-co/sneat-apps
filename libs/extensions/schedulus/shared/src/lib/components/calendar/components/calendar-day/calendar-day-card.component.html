@@ -1,74 +1,74 @@
 <ion-card>
-	<ion-item
-		lines="full"
-		color="light"
-		class="sneat-small-end-padding sneat-small-start-padding"
-	>
-		<ion-buttons
-			slot="start"
-			class="sneat-hide-if-width-less-638 sneat-tiny-end-margin sneat-no-horizontal-margins"
-		>
-			<ion-button
-				[disabled]="$isDefaultDate()"
-				[color]="$isDefaultDate() ? 'medium' : 'primary'"
-				[title]="shiftDays === 0 ? 'Jump to today' : 'Jump to tomorrow'"
-				(click)="setToday()"
-			>
-				<ion-icon name="today-outline" />
-			</ion-button>
-			<!--			<ion-button title="Previous day"-->
-			<!--									(click)="swipePrev()">-->
-			<!--				<ion-icon name="chevron-back-sharp"></ion-icon>-->
-			<!--			</ion-button>-->
-			<!--			<ion-button title="Next day"-->
-			<!--									(click)="swipeNext()">-->
-			<!--				<ion-icon name="chevron-forward-sharp"></ion-icon>-->
-			<!--			</ion-button>-->
-		</ion-buttons>
-		<ion-label>
-			<div
-				class="virtual-slider-outer"
-				(swipeleft)="swipeLeft()"
-				(swiperight)="swipeRight()"
-			>
-				<div class="virtual-slider-inner" [@virtualSlider]="animationState">
-					<h1
-						class="virtual-slide sneat-smaller-if-width-less-638"
-						[@virtualSlide]="oddDay?.animationState"
-					>
-						<sneat-calendar-day-title [weekday]="oddDay?.weekday" />
-					</h1>
-					<h1
-						class="virtual-slide"
-						[@virtualSlide]="evenDay?.animationState || 'hide'"
-					>
-						<sneat-calendar-day-title [weekday]="evenDay?.weekday" />
-					</h1>
-				</div>
-			</div>
-		</ion-label>
+  <ion-item
+    lines="full"
+    color="light"
+    class="sneat-small-end-padding sneat-small-start-padding"
+  >
+    <ion-buttons
+      slot="start"
+      class="sneat-hide-if-width-less-638 sneat-tiny-end-margin sneat-no-horizontal-margins"
+    >
+      <ion-button
+        [disabled]="$isDefaultDate()"
+        [color]="$isDefaultDate() ? 'medium' : 'primary'"
+        [title]="shiftDays === 0 ? 'Jump to today' : 'Jump to tomorrow'"
+        (click)="setToday()"
+      >
+        <ion-icon name="today-outline" />
+      </ion-button>
+      <!--			<ion-button title="Previous day"-->
+      <!--									(click)="swipePrev()">-->
+      <!--				<ion-icon name="chevron-back-sharp"></ion-icon>-->
+      <!--			</ion-button>-->
+      <!--			<ion-button title="Next day"-->
+      <!--									(click)="swipeNext()">-->
+      <!--				<ion-icon name="chevron-forward-sharp"></ion-icon>-->
+      <!--			</ion-button>-->
+    </ion-buttons>
+    <ion-label>
+      <div
+        class="virtual-slider-outer"
+        (swipeleft)="swipeLeft()"
+        (swiperight)="swipeRight()"
+      >
+        <div class="virtual-slider-inner" [@virtualSlider]="animationState">
+          <h1
+            class="virtual-slide sneat-smaller-if-width-less-638"
+            [@virtualSlide]="oddDay?.animationState"
+          >
+            <sneat-calendar-day-title [weekday]="oddDay?.weekday" />
+          </h1>
+          <h1
+            class="virtual-slide"
+            [@virtualSlide]="evenDay?.animationState || 'hide'"
+          >
+            <sneat-calendar-day-title [weekday]="evenDay?.weekday" />
+          </h1>
+        </div>
+      </div>
+    </ion-label>
 
-		<sneat-calendar-add-buttons
-			[$space]="$space()"
-			[dateID]="activeDay?.activeDateID"
-			[weekdayID]="activeDay?.weekday?.id"
-		/>
-	</ion-item>
+    <sneat-calendar-add-buttons
+      [$space]="$space()"
+      [dateID]="activeDay?.activeDateID"
+      [weekdayID]="activeDay?.weekday?.id"
+    />
+  </ion-item>
 
-	<div
-		class="virtual-slider-outer"
-		(swipeleft)="swipeLeft()"
-		(swiperight)="swipeRight()"
-	>
-		<div class="virtual-slider-inner" [@virtualSlider]="animationState">
-			<div class="virtual-slide" [@virtualSlide]="oddSlide?.animationState">
-				<sneat-calendar-day [$weekday]="oddDay?.weekday" [$space]="$space()" />
-				<div class="virtual-slide-overflow-fixer"></div>
-			</div>
-			<div class="virtual-slide" [@virtualSlide]="evenSlide?.animationState">
-				<sneat-calendar-day [$weekday]="evenDay?.weekday" [$space]="$space()" />
-				<div class="virtual-slide-overflow-fixer"></div>
-			</div>
-		</div>
-	</div>
+  <div
+    class="virtual-slider-outer"
+    (swipeleft)="swipeLeft()"
+    (swiperight)="swipeRight()"
+  >
+    <div class="virtual-slider-inner" [@virtualSlider]="animationState">
+      <div class="virtual-slide" [@virtualSlide]="oddSlide?.animationState">
+        <sneat-calendar-day [$weekday]="oddDay?.weekday" [$space]="$space()" />
+        <div class="virtual-slide-overflow-fixer"></div>
+      </div>
+      <div class="virtual-slide" [@virtualSlide]="evenSlide?.animationState">
+        <sneat-calendar-day [$weekday]="evenDay?.weekday" [$space]="$space()" />
+        <div class="virtual-slide-overflow-fixer"></div>
+      </div>
+    </div>
+  </div>
 </ion-card>

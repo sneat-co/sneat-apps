@@ -1,19 +1,19 @@
 import { Injectable, Type } from '@angular/core';
 
 export type PreloadPages =
-	| 'assets'
-	| 'contacts'
-	| 'members'
-	| 'real-estates'
-	| 'budget';
+  | 'assets'
+  | 'contacts'
+  | 'members'
+  | 'real-estates'
+  | 'budget';
 
 @Injectable({
-	providedIn: 'root',
+  providedIn: 'root',
 })
 export class NgModulePreloaderService {
-	private readonly preloaded: string[] = [];
+  private readonly preloaded: string[] = [];
 
-	/*
+  /*
 		 'applicants': './pages/commune/contact/contacts/commune-contacts.page.module#CommuneContactsPageModule',
 		 'assets': './pages/commune/asset/assets/assets.module#AssetsPageModule',
 		 'commune-overview': './pages/commune/overview/commune-overview.module#CommuneOverviewPageModule',
@@ -41,85 +41,85 @@ export class NgModulePreloaderService {
 		 'terms': './pages/commune/term/terms/terms.module#TermsPageModule',
 		 'tasks': './pages/commune/todo/tasks/tasks-page.module#TasksPageModule',
 	 */
-	private readonly configs: Record<
-		string,
-		{ path: string; type: Type<unknown> }
-	> = {}; // Use addPreloadConfigs
+  private readonly configs: Record<
+    string,
+    { path: string; type: Type<unknown> }
+  > = {}; // Use addPreloadConfigs
 
-	private warned = false;
+  private warned = false;
 
-	/*
-	 * https://blog.angularindepth.com/as-busy-as-a-bee-lazy-loading-in-the-angular-cli-d2812141637f
-	 * https://blog.angularindepth.com/here-is-what-you-need-to-know-about-dynamic-components-in-angular-ac1e96167f9e
-	 */
-	// constructor(
-	// 	// private readonly injector: Injector,
-	// 	// private loader: NgModuleFactoryLoader,
-	// ) {
-	// }
+  /*
+   * https://blog.angularindepth.com/as-busy-as-a-bee-lazy-loading-in-the-angular-cli-d2812141637f
+   * https://blog.angularindepth.com/here-is-what-you-need-to-know-about-dynamic-components-in-angular-ac1e96167f9e
+   */
+  // constructor(
+  // 	// private readonly injector: Injector,
+  // 	// private loader: NgModuleFactoryLoader,
+  // ) {
+  // }
 
-	public addPreloadConfigs(
-		...configs: {
-			id: string;
-			path: string;
-			type: Type<unknown>;
-			module?: string;
-		}[]
-	): void {
-		configs.forEach((config) => {
-			this.configs[config.id] = { path: config.path, type: config.type };
-		});
-	}
+  public addPreloadConfigs(
+    ...configs: {
+      id: string;
+      path: string;
+      type: Type<unknown>;
+      module?: string;
+    }[]
+  ): void {
+    configs.forEach((config) => {
+      this.configs[config.id] = { path: config.path, type: config.type };
+    });
+  }
 
-	public markAsPreloaded(path: string): void {
-		this.preloaded.push(path);
-	}
+  public markAsPreloaded(path: string): void {
+    this.preloaded.push(path);
+  }
 
-	public preload(paths: string[], ms = 1000): void {
-		if (!this.warned) {
-			this.warned = true;
-			console.warn(
-				`Preloading is disabled until migrated to Ivy (delay=${ms}ms)`,
-			);
-		}
-		return; // TODO: Enable preloading once migrated to Angular Ivy
-		// setTimeout(
-		// 	() => {
-		// 		paths = paths.filter(p => !this.preloaded.includes(p));
-		// 		if (!paths.length) {
-		// 			return;
-		// 		}
-		// 		console.log('preloading:', paths);
-		// 		paths.forEach(p => {
-		// 			if (this.preloaded.includes(p)) {
-		// 				return;
-		// 			}
-		// 			const config = this.configs[p];
-		// 			if (!config) {
-		// 				console.error('Unknown preload id:', p);
-		// 				return;
-		// 			}
-		// 				this.loader.load(config.path)
-		// 					.then((factory) => {
-		// 						console.log('preloaded:', factory);
-		// 						this.preloaded.push(p);
-		// 						if (config.type) {
-		// 							try {
-		// 								const module = factory.create(this.injector);
-		// 								const cf = module.componentFactoryResolver.resolveComponentFactory(config.type);
-		// 								const cr = cf.create(this.injector);
-		// 								cr.destroy();
-		// 							} catch (e) {
-		// 								console.error(`Failed to create or destroy preloaded component ${config.path}:`, e);
-		// 							}
-		// 						}
-		// 					})
-		// 					.catch(err => {
-		// 						console.error('Failed to preload NG module:', err);
-		// 					});
-		// 		});
-		// 	},
-		// 	ms,
-		// );
-	}
+  public preload(paths: string[], ms = 1000): void {
+    if (!this.warned) {
+      this.warned = true;
+      console.warn(
+        `Preloading is disabled until migrated to Ivy (delay=${ms}ms)`,
+      );
+    }
+    return; // TODO: Enable preloading once migrated to Angular Ivy
+    // setTimeout(
+    // 	() => {
+    // 		paths = paths.filter(p => !this.preloaded.includes(p));
+    // 		if (!paths.length) {
+    // 			return;
+    // 		}
+    // 		console.log('preloading:', paths);
+    // 		paths.forEach(p => {
+    // 			if (this.preloaded.includes(p)) {
+    // 				return;
+    // 			}
+    // 			const config = this.configs[p];
+    // 			if (!config) {
+    // 				console.error('Unknown preload id:', p);
+    // 				return;
+    // 			}
+    // 				this.loader.load(config.path)
+    // 					.then((factory) => {
+    // 						console.log('preloaded:', factory);
+    // 						this.preloaded.push(p);
+    // 						if (config.type) {
+    // 							try {
+    // 								const module = factory.create(this.injector);
+    // 								const cf = module.componentFactoryResolver.resolveComponentFactory(config.type);
+    // 								const cr = cf.create(this.injector);
+    // 								cr.destroy();
+    // 							} catch (e) {
+    // 								console.error(`Failed to create or destroy preloaded component ${config.path}:`, e);
+    // 							}
+    // 						}
+    // 					})
+    // 					.catch(err => {
+    // 						console.error('Failed to preload NG module:', err);
+    // 					});
+    // 		});
+    // 	},
+    // 	ms,
+    // );
+  }
 }

@@ -70,18 +70,18 @@ Based on comprehensive codebase analysis of sneat-apps, this plan identifies the
 ```typescript
 // vitest.workspace.ts
 export default defineWorkspace([
-	{
-		test: {
-			coverage: {
-				provider: 'v8',
-				reporter: ['text', 'json', 'html', 'lcov'],
-				lines: 50,
-				functions: 50,
-				branches: 45,
-				statements: 50,
-			},
-		},
-	},
+  {
+    test: {
+      coverage: {
+        provider: 'v8',
+        reporter: ['text', 'json', 'html', 'lcov'],
+        lines: 50,
+        functions: 50,
+        branches: 45,
+        statements: 50,
+      },
+    },
+  },
 ]);
 ```
 
@@ -167,23 +167,23 @@ import { TestBed } from '@angular/core/testing';
 import { SneatFirestoreService } from './sneat-firestore.service';
 
 describe('SneatFirestoreService', () => {
-	let service: SneatFirestoreService;
+  let service: SneatFirestoreService;
 
-	beforeEach(() => {
-		TestBed.configureTestingModule({
-			providers: [SneatFirestoreService],
-		});
-		service = TestBed.inject(SneatFirestoreService);
-	});
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [SneatFirestoreService],
+    });
+    service = TestBed.inject(SneatFirestoreService);
+  });
 
-	it('should create', () => {
-		expect(service).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(service).toBeTruthy();
+  });
 
-	it('should handle Firestore queries', async () => {
-		// Mock Firestore calls
-		// Test query logic
-	});
+  it('should handle Firestore queries', async () => {
+    // Mock Firestore calls
+    // Test query logic
+  });
 });
 ```
 
@@ -353,14 +353,14 @@ services:
 ```json
 // tsconfig.base.json
 {
-	"compilerOptions": {
-		"paths": {
-			"@sneat/core/*": ["libs/core/src/*"],
-			"@sneat/auth/*": ["libs/auth/*/src/*"],
-			"@sneat/extensions/*": ["libs/extensions/*/src/*"],
-			"@sneat/api": ["libs/api/src/index.ts"]
-		}
-	}
+  "compilerOptions": {
+    "paths": {
+      "@sneat/core/*": ["libs/core/src/*"],
+      "@sneat/auth/*": ["libs/auth/*/src/*"],
+      "@sneat/extensions/*": ["libs/extensions/*/src/*"],
+      "@sneat/api": ["libs/api/src/index.ts"]
+    }
+  }
 }
 ```
 

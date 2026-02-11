@@ -4,19 +4,20 @@ import { IonicModule } from '@ionic/angular';
 import { RetroMembersComponent } from './retro-members.component';
 
 describe('RetroMembersComponent', () => {
-	let component: RetroMembersComponent;
-	let fixture: ComponentFixture<RetroMembersComponent>;
+  let component: RetroMembersComponent;
+  let fixture: ComponentFixture<RetroMembersComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [RetroMembersComponent, IonicModule.forRoot()]}).compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [RetroMembersComponent, IonicModule.forRoot()],
+    }).compileComponents();
 
-		fixture = TestBed.createComponent(RetroMembersComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	}));
+    fixture = TestBed.createComponent(RetroMembersComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

@@ -7,45 +7,45 @@ import { IAssetService } from 'sneat-shared/services/interfaces';
 import { IContact2Asset } from 'sneat-shared/models/dto/dto-contact';
 
 @Component({
-	selector: 'sneat-real-estate',
-	templateUrl: './real-estate-page.component.html',
-	providers: [CommuneBasePageParams],
+  selector: 'sneat-real-estate',
+  templateUrl: './real-estate-page.component.html',
+  providers: [CommuneBasePageParams],
 })
 export class RealEstatePageComponent extends AssetBasePage {
-	constructor() {
-		const params = inject(CommuneBasePageParams);
-		const assetService = inject(IAssetService);
+  constructor() {
+    const params = inject(CommuneBasePageParams);
+    const assetService = inject(IAssetService);
 
-		super('real-estates', params, assetService);
-	}
+    super('real-estates', params, assetService);
+  }
 
-	protected landlords?: IContact2Asset[];
-	protected tenants?: IContact2Asset[];
+  protected landlords?: IContact2Asset[];
+  protected tenants?: IContact2Asset[];
 
-	protected setAssetDto(assetDto: IAssetDto): void {
-		super.setAssetDto(assetDto);
-		if (assetDto) {
-			if (assetDto.contacts) {
-				this.landlords = assetDto.contacts.filter(
-					(c) => c.relation === 'landlord',
-				);
-				this.tenants = assetDto.contacts.filter((c) => c.relation === 'tenant');
-			} else {
-				this.landlords = [];
-				this.tenants = [];
-			}
-		}
-	}
+  protected setAssetDto(assetDto: IAssetDto): void {
+    super.setAssetDto(assetDto);
+    if (assetDto) {
+      if (assetDto.contacts) {
+        this.landlords = assetDto.contacts.filter(
+          (c) => c.relation === 'landlord',
+        );
+        this.tenants = assetDto.contacts.filter((c) => c.relation === 'tenant');
+      } else {
+        this.landlords = [];
+        this.tenants = [];
+      }
+    }
+  }
 
-	goNewContact(type: ContactType): void {
-		if (!this.asset) {
-			throw new Error('!this.asset');
-		}
-		this.navigateForward(
-			'new-contact',
-			{ type, asset: this.asset.id },
-			{ assetDto: this.asset.dto },
-			{ excludeCommuneId: true },
-		);
-	}
+  goNewContact(type: ContactType): void {
+    if (!this.asset) {
+      throw new Error('!this.asset');
+    }
+    this.navigateForward(
+      'new-contact',
+      { type, asset: this.asset.id },
+      { assetDto: this.asset.dto },
+      { excludeCommuneId: true },
+    );
+  }
 }

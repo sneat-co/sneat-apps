@@ -6,26 +6,26 @@ import { ISpaceContext } from '@sneat/space-models';
 import { SpaceNavService } from '@sneat/space-services';
 
 export interface INewContactPageParams {
-	group?: string;
-	role?: ContactRole;
-	asset?: string;
-	document?: string;
+  group?: string;
+  role?: ContactRole;
+  asset?: string;
+  document?: string;
 }
 
 @Injectable({ providedIn: 'root' })
 export class ContactNavService {
-	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
-	private readonly spaceNavService = inject(SpaceNavService);
+  private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+  private readonly spaceNavService = inject(SpaceNavService);
 
-	goNewContactPage(space: ISpaceContext, params?: INewContactPageParams): void {
-		this.spaceNavService
-			.navigateForwardToSpacePage(space, 'new-contact', {
-				queryParams: excludeUndefined(params),
-			})
-			.catch(
-				this.errorLogger.logErrorHandler(
-					'failed to navigate to "new-contact" page',
-				),
-			);
-	}
+  goNewContactPage(space: ISpaceContext, params?: INewContactPageParams): void {
+    this.spaceNavService
+      .navigateForwardToSpacePage(space, 'new-contact', {
+        queryParams: excludeUndefined(params),
+      })
+      .catch(
+        this.errorLogger.logErrorHandler(
+          'failed to navigate to "new-contact" page',
+        ),
+      );
+  }
 }

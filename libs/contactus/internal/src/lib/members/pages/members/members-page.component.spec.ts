@@ -5,27 +5,27 @@ import { MembersPageComponent } from './members-page.component';
 import { provideContactusMocks } from '../../../testing/test-utils';
 
 describe('CommuneMembersPage', () => {
-	let component: MembersPageComponent;
-	let fixture: ComponentFixture<MembersPageComponent>;
+  let component: MembersPageComponent;
+  let fixture: ComponentFixture<MembersPageComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [MembersPageComponent],
-			providers: [provideContactusMocks()],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(MembersPageComponent, {
-				set: { imports: [], providers: [] },
-			})
-			.compileComponents();
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [MembersPageComponent],
+      providers: [provideContactusMocks()],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(MembersPageComponent, {
+        set: { imports: [], providers: [] },
+      })
+      .compileComponents();
+  }));
 
-	beforeEach(() => {
-		fixture = TestBed.createComponent(MembersPageComponent);
-		component = fixture.componentInstance;
-	});
+  beforeEach(() => {
+    fixture = TestBed.createComponent(MembersPageComponent);
+    component = fixture.componentInstance;
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

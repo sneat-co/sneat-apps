@@ -4,23 +4,23 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { AssetContactsGroupComponent } from './asset-contacts-group.component';
 
 describe('AssetContactsGroupComponent', () => {
-	let component: AssetContactsGroupComponent;
-	let fixture: ComponentFixture<AssetContactsGroupComponent>;
+  let component: AssetContactsGroupComponent;
+  let fixture: ComponentFixture<AssetContactsGroupComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [AssetContactsGroupComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [AssetContactsGroupComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
+  }));
 
-	beforeEach(() => {
-		fixture = TestBed.createComponent(AssetContactsGroupComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AssetContactsGroupComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

@@ -1,7 +1,7 @@
 export interface ITugPipeOutput {
-	output?: Record<string, unknown>;
+  output?: Record<string, unknown>;
 }
 
 export interface ITugPipe {
-	process(input: Record<string, unknown>): ITugPipeOutput;
+  process(input: Record<string, unknown>): ITugPipeOutput;
 }

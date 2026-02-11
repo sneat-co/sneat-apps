@@ -1,40 +1,40 @@
 <ion-header>
-	<ion-toolbar color="light">
-		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="defaultBackUrl" />
-		</ion-buttons>
-		@if (asset) {
-			<ion-title>{{ asset.dto.title }}</ion-title>
-		}
-		@if (!asset) {
-			<ion-title>Property</ion-title>
-		}
-	</ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="defaultBackUrl" />
+    </ion-buttons>
+    @if (asset) {
+      <ion-title>{{ asset.dto.title }}</ion-title>
+    }
+    @if (!asset) {
+      <ion-title>Property</ion-title>
+    }
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	@if (asset && asset.dto.categoryId === "real_estate") {
-		<app-real-estate-location [asset]="asset" />
-	}
+  @if (asset && asset.dto.categoryId === "real_estate") {
+    <app-real-estate-location [asset]="asset" />
+  }
 
-	<ion-item-group>
-		<ion-item-divider color="light">
-			<ion-label>Finance</ion-label>
-		</ion-item-divider>
-		<ion-item>
-			<ion-label>Rent</ion-label>
-			<ion-badge color="light">€1,880.00</ion-badge>
-		</ion-item>
-	</ion-item-group>
+  <ion-item-group>
+    <ion-item-divider color="light">
+      <ion-label>Finance</ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-label>Rent</ion-label>
+      <ion-badge color="light">€1,880.00</ion-badge>
+    </ion-item>
+  </ion-item-group>
 
-	<sneat-asset-contacts-group
-		[contacts]="landlords"
-		contactRelation="landlord"
-		(goNewContact)="goNewContact($event)"
-	/>
-	<sneat-asset-contacts-group
-		[contacts]="tenants"
-		contactRelation="tenant"
-		(goNewContact)="goNewContact($event)"
-	/>
+  <sneat-asset-contacts-group
+    [contacts]="landlords"
+    contactRelation="landlord"
+    (goNewContact)="goNewContact($event)"
+  />
+  <sneat-asset-contacts-group
+    [contacts]="tenants"
+    contactRelation="tenant"
+    (goNewContact)="goNewContact($event)"
+  />
 </ion-content>

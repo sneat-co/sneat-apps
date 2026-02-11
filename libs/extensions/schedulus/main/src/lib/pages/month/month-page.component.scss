@@ -1,9 +1,11 @@
-h2 {font-weight: bold;}
+h2 {
+  font-weight: bold;
+}
 
 .total {
   border-bottom: 1px solid darkgray;
 }
-.total div[slot=end] {
+.total div[slot='end'] {
   font-weight: bold;
   margin-right: 25px;
 }

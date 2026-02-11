@@ -1,235 +1,235 @@
 <form [formGroup]="happeningForm" (ngSubmit)="submit()">
-	@if ($mode() === "create") {
-		<ion-segment
-			class="ion-padding-horizontal"
-			[formControl]="happeningType"
-			(ionChange)="onHappeningTypeChanged($event)"
-		>
-			<ion-segment-button value="recurring" [disabled]="!!$happening().id">
-				Recurring
-			</ion-segment-button>
-			<ion-segment-button value="single" [disabled]="!!$happening().id">
-				One-timer
-			</ion-segment-button>
-		</ion-segment>
-	}
+  @if ($mode() === "create") {
+    <ion-segment
+      class="ion-padding-horizontal"
+      [formControl]="happeningType"
+      (ionChange)="onHappeningTypeChanged($event)"
+    >
+      <ion-segment-button value="recurring" [disabled]="!!$happening().id">
+        Recurring
+      </ion-segment-button>
+      <ion-segment-button value="single" [disabled]="!!$happening().id">
+        One-timer
+      </ion-segment-button>
+    </ion-segment>
+  }
 
-	<ion-card>
-		<ion-item
-			class="sneat-tiny-end-padding"
-			[lines]="happeningTitle.value ? 'none' : undefined"
-		>
-			@switch ($mode()) {
-				@case ("edit") {
-					@if ($happening().dbo) {
-						<ion-label (click)="editTitle($event)" style="font-weight: bold">
-							{{ $happening().dbo?.title }}
-						</ion-label>
-					} @else {
-						<ion-spinner
-							color="medium"
-							name="lines-small"
-							slot="start"
-							title="Loading..."
-						/>
-						<ion-label>Loading...</ion-label>
-					}
-					<ion-buttons slot="end">
-						<ion-button
-							color="medium"
-							(click)="editTitle($event)"
-							[disabled]="!$happeningID()"
-						>
-							<ion-icon name="create-outline" slot="start" />
-							<ion-label>Edit</ion-label>
-						</ion-button>
-					</ion-buttons>
-				}
-				@case ("create") {
-					<ion-input
-						placeholder="Title"
-						style="font-weight: bold"
-						#titleInput
-						[formControl]="happeningTitle"
-						(keyup.enter)="onTitleEnter($event)"
-						(ionChange)="onTitleChanged($event)"
-						type="text"
-					/>
-				}
-			}
-		</ion-item>
-		@if (!happeningTitle.value) {
-			<ion-item>
-				<ion-label color="medium">
-					Enter above the name of the event.
-				</ion-label>
-			</ion-item>
-		}
-		@if ($mode() === "edit") {
-			<ion-grid class="ion-grid-layout">
-				<ion-row>
-					<ion-col [size]="$hasDescription() ? 12 : 6">
-						<ion-item>
-							<ion-textarea
-								label="Summary"
-								labelPlacement="stacked"
-								placeholder="none"
-								auto-grow="true"
-								readonly="true"
-								[value]="$happening().dbo?.summary"
-							/>
-						</ion-item>
-					</ion-col>
-					<ion-col [size]="$hasDescription() ? 12 : 6">
-						<ion-item lines="none">
-							{{ $happening().dbo?.description }}
-						</ion-item>
-					</ion-col>
-				</ion-row>
-			</ion-grid>
-		}
-	</ion-card>
+  <ion-card>
+    <ion-item
+      class="sneat-tiny-end-padding"
+      [lines]="happeningTitle.value ? 'none' : undefined"
+    >
+      @switch ($mode()) {
+        @case ("edit") {
+          @if ($happening().dbo) {
+            <ion-label (click)="editTitle($event)" style="font-weight: bold">
+              {{ $happening().dbo?.title }}
+            </ion-label>
+          } @else {
+            <ion-spinner
+              color="medium"
+              name="lines-small"
+              slot="start"
+              title="Loading..."
+            />
+            <ion-label>Loading...</ion-label>
+          }
+          <ion-buttons slot="end">
+            <ion-button
+              color="medium"
+              (click)="editTitle($event)"
+              [disabled]="!$happeningID()"
+            >
+              <ion-icon name="create-outline" slot="start" />
+              <ion-label>Edit</ion-label>
+            </ion-button>
+          </ion-buttons>
+        }
+        @case ("create") {
+          <ion-input
+            placeholder="Title"
+            style="font-weight: bold"
+            #titleInput
+            [formControl]="happeningTitle"
+            (keyup.enter)="onTitleEnter($event)"
+            (ionChange)="onTitleChanged($event)"
+            type="text"
+          />
+        }
+      }
+    </ion-item>
+    @if (!happeningTitle.value) {
+      <ion-item>
+        <ion-label color="medium">
+          Enter above the name of the event.
+        </ion-label>
+      </ion-item>
+    }
+    @if ($mode() === "edit") {
+      <ion-grid class="ion-grid-layout">
+        <ion-row>
+          <ion-col [size]="$hasDescription() ? 12 : 6">
+            <ion-item>
+              <ion-textarea
+                label="Summary"
+                labelPlacement="stacked"
+                placeholder="none"
+                auto-grow="true"
+                readonly="true"
+                [value]="$happening().dbo?.summary"
+              />
+            </ion-item>
+          </ion-col>
+          <ion-col [size]="$hasDescription() ? 12 : 6">
+            <ion-item lines="none">
+              {{ $happening().dbo?.description }}
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    }
+  </ion-card>
 
-	@if (happeningTitle.value) {
-		<ion-card>
-			<ion-item-group>
-				@if (!$slots()?.length) {
-					<sneat-happening-slot-form
-						mode="in-form"
-						[wd]="wd"
-						[date]="date"
-						[$happening]="$happening()"
-						(happeningChange)="onHappeningChanged($event)"
-						(slotAdded)="onSlotAdded($event)"
-					/>
-				}
-				@if ($happening().id || $slots()?.length) {
-					<sneat-happening-slots
-						#happeningSlotsComponent
-						[happening]="$happening()"
-						[wd]="wd"
-					/>
-				}
-				<!--			<sneat-single-slot-form-->
-				<!--				[happening]="happening"-->
-				<!--				[style.display]="happeningType === 'single' ? 'block' : 'none'"-->
-				<!--				(happeningSlotChange)="onSingleSlotChanged($event)"-->
-				<!--			>-->
-				<!--				&lt;!&ndash; hide with [style.display] to preserve input values if tab switched back and forth &ndash;&gt;-->
-				<!--			</sneat-single-slot-form>-->
-			</ion-item-group>
-		</ion-card>
+  @if (happeningTitle.value) {
+    <ion-card>
+      <ion-item-group>
+        @if (!$slots()?.length) {
+          <sneat-happening-slot-form
+            mode="in-form"
+            [wd]="wd"
+            [date]="date"
+            [$happening]="$happening()"
+            (happeningChange)="onHappeningChanged($event)"
+            (slotAdded)="onSlotAdded($event)"
+          />
+        }
+        @if ($happening().id || $slots()?.length) {
+          <sneat-happening-slots
+            #happeningSlotsComponent
+            [happening]="$happening()"
+            [wd]="wd"
+          />
+        }
+        <!--			<sneat-single-slot-form-->
+        <!--				[happening]="happening"-->
+        <!--				[style.display]="happeningType === 'single' ? 'block' : 'none'"-->
+        <!--				(happeningSlotChange)="onSingleSlotChanged($event)"-->
+        <!--			>-->
+        <!--				&lt;!&ndash; hide with [style.display] to preserve input values if tab switched back and forth &ndash;&gt;-->
+        <!--			</sneat-single-slot-form>-->
+      </ion-item-group>
+    </ion-card>
 
-		@if ($happening().id || $happening().brief?.slots) {
-			<ng-container>
-				<sneat-happening-pricing
-					[happening]="$happening()"
-					(happeningChange)="onHappeningChanged($event)"
-				/>
+    @if ($happening().id || $happening().brief?.slots) {
+      <ng-container>
+        <sneat-happening-pricing
+          [happening]="$happening()"
+          (happeningChange)="onHappeningChanged($event)"
+        />
 
-				<sneat-happening-participants
-					[$space]="$space()"
-					[$happening]="$happening()"
-					(happeningChange)="onHappeningChanged($event)"
-				/>
+        <sneat-happening-participants
+          [$space]="$space()"
+          [$happening]="$happening()"
+          (happeningChange)="onHappeningChanged($event)"
+        />
 
-				<ion-card>
-					@if (!formIsValid()) {
-						<ion-item>
-							<ion-label color="danger">
-								<ul>
-									@if (
-										happeningForm.touched &&
-										happeningForm.controls["title"].errors
-									) {
-										<li>
-											@if (isToDo) {
-												Task title is required.
-											} @else {
-												Please enter a required "Title" field at top of the
-												page.
-											}
-										</li>
-									}
-									@if (
-										happeningType.value === "recurring" && !$slots()?.length
-									) {
-										<li>
-											<p>
-												At least 1 slot should be specified for a recurring
-												happening.
-											</p>
-											<ion-button>Add slot</ion-button>
-										</li>
-									}
-								</ul>
-							</ion-label>
-						</ion-item>
-					}
-					<!--				@if (weekdaysForm.touched && weekdaysForm.errors && weekdaysForm.errors['required']) {-->
-					<!--					<ion-item color="danger" *ngIf="">-->
-					<!--						{{ weekdaysForm.errors['required'] }}-->
-					<!--					</ion-item>-->
-					<!--				}-->
+        <ion-card>
+          @if (!formIsValid()) {
+            <ion-item>
+              <ion-label color="danger">
+                <ul>
+                  @if (
+                    happeningForm.touched &&
+                    happeningForm.controls["title"].errors
+                  ) {
+                    <li>
+                      @if (isToDo) {
+                        Task title is required.
+                      } @else {
+                        Please enter a required "Title" field at top of the
+                        page.
+                      }
+                    </li>
+                  }
+                  @if (
+                    happeningType.value === "recurring" && !$slots()?.length
+                  ) {
+                    <li>
+                      <p>
+                        At least 1 slot should be specified for a recurring
+                        happening.
+                      </p>
+                      <ion-button>Add slot</ion-button>
+                    </li>
+                  }
+                </ul>
+              </ion-label>
+            </ion-item>
+          }
+          <!--				@if (weekdaysForm.touched && weekdaysForm.errors && weekdaysForm.errors['required']) {-->
+          <!--					<ion-item color="danger" *ngIf="">-->
+          <!--						{{ weekdaysForm.errors['required'] }}-->
+          <!--					</ion-item>-->
+          <!--				}-->
 
-					@if (!$happening().id) {
-						<div class="ion-padding">
-							<ion-button
-								[disabled]="$isCreating()"
-								[color]="formIsValid() ? 'primary' : 'medium'"
-								size="large"
-								(click)="submit()"
-							>
-								@if (isToDo) {
-									<ion-label>Add task</ion-label>
-								} @else {
-									@switch (happeningType.value) {
-										@case ("recurring") {
-											<ion-label>Create recurring happening</ion-label>
-										}
-										@case ("single") {
-											<ion-label>Create one-timer happening</ion-label>
-										}
-									}
-								}
-								@if ($isCreating()) {
-									<ion-spinner slot="end" class="ion-margin-horizontal" />
-								}
-							</ion-button>
-						</div>
-					}
-				</ion-card>
-			</ng-container>
-		}
-	}
+          @if (!$happening().id) {
+            <div class="ion-padding">
+              <ion-button
+                [disabled]="$isCreating()"
+                [color]="formIsValid() ? 'primary' : 'medium'"
+                size="large"
+                (click)="submit()"
+              >
+                @if (isToDo) {
+                  <ion-label>Add task</ion-label>
+                } @else {
+                  @switch (happeningType.value) {
+                    @case ("recurring") {
+                      <ion-label>Create recurring happening</ion-label>
+                    }
+                    @case ("single") {
+                      <ion-label>Create one-timer happening</ion-label>
+                    }
+                  }
+                }
+                @if ($isCreating()) {
+                  <ion-spinner slot="end" class="ion-margin-horizontal" />
+                }
+              </ion-button>
+            </div>
+          }
+        </ion-card>
+      </ng-container>
+    }
+  }
 </form>
 
 @if ($happening().id) {
-	<ion-card>
-		<ion-card-header>
-			<!--		<ion-card-title>Danger zone</ion-card-title>-->
-			<ion-card-subtitle>Actions in red are irrevocable</ion-card-subtitle>
-		</ion-card-header>
-		<ion-card-content>
-			@if ($happening().brief?.status !== "canceled") {
-				<ion-button
-					color="warning"
-					[disabled]="$isCancelling()"
-					(click)="cancel()"
-				>
-					<ion-icon name="close-outline" slot="start" />
-					<ion-label>Cancel & Archive</ion-label>
-					<ion-icon name="archive-outline" slot="end" />
-				</ion-button>
-			}
-			<ion-button color="danger" (click)="delete()" [disabled]="$isDeleting()">
-				@if ($isDeleting()) {
-					<ion-spinner name="lines-small" slot="start" />
-				} @else {
-					<ion-icon name="close-circle-outline" slot="start" />
-				}
-				<ion-label>Delete</ion-label>
-			</ion-button>
-		</ion-card-content>
-	</ion-card>
+  <ion-card>
+    <ion-card-header>
+      <!--		<ion-card-title>Danger zone</ion-card-title>-->
+      <ion-card-subtitle>Actions in red are irrevocable</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      @if ($happening().brief?.status !== "canceled") {
+        <ion-button
+          color="warning"
+          [disabled]="$isCancelling()"
+          (click)="cancel()"
+        >
+          <ion-icon name="close-outline" slot="start" />
+          <ion-label>Cancel & Archive</ion-label>
+          <ion-icon name="archive-outline" slot="end" />
+        </ion-button>
+      }
+      <ion-button color="danger" (click)="delete()" [disabled]="$isDeleting()">
+        @if ($isDeleting()) {
+          <ion-spinner name="lines-small" slot="start" />
+        } @else {
+          <ion-icon name="close-circle-outline" slot="start" />
+        }
+        <ion-label>Delete</ion-label>
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
 }

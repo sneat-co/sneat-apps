@@ -4,7 +4,7 @@ import { IRequestCommand } from '../../dto/requests';
 
 // This
 export class IndexedDbExecutor {
-	execute(command: IRequestCommand): Observable<ICommandResponse> {
-		throw new Error(`Not implemented yet ${command}`); // TODO: Needs implementation
-	}
+  execute(command: IRequestCommand): Observable<ICommandResponse> {
+    throw new Error(`Not implemented yet ${command}`); // TODO: Needs implementation
+  }
 }

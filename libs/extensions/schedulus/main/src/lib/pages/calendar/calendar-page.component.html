@@ -1,55 +1,55 @@
 <ion-header>
-	<ion-toolbar color="light" class="with-back-button with-end-buttons">
-		<ion-buttons slot="start">
-			<!--			<ion-menu-button></ion-menu-button>-->
-			<ion-back-button [defaultHref]="$defaultBackUrl()" />
-		</ion-buttons>
-		@if ($member(); as member) {
-			<ion-title>📅 {{ member.brief?.title }}</ion-title>
-		} @else {
-			<sneat-space-page-title
-				[space]="space"
-				generalTitle="Schedule"
-				icon="📅"
-				[titlesBySpaceType]="{
-					family: 'Family calendar',
-					personal: 'Personal calendar',
-				}"
-			/>
-		}
-		<ion-buttons slot="end">
-			<ion-button
-				class="sneat-hide-if-width-less-638"
-				color="primary"
-				[disabled]="!space.id"
-				(click)="goNew('recurring')"
-				style="text-transform: none"
-			>
-				<ion-icon name="duplicate-outline" slot="start" />
-				<ion-label class="sneat-hide-if-width-less-766"
-					>Add recurring
-				</ion-label>
-			</ion-button>
-			<ion-button
-				class="sneat-hide-if-width-less-638"
-				color="primary"
-				[disabled]="!space.id"
-				(click)="goNew('single')"
-				style="text-transform: none"
-			>
-				<ion-icon name="add-circle-outline" slot="start" />
-				<ion-label class="sneat-hide-if-width-less-766">Add 1-timer</ion-label>
-			</ion-button>
-			<ion-menu-button />
-		</ion-buttons>
-	</ion-toolbar>
+  <ion-toolbar color="light" class="with-back-button with-end-buttons">
+    <ion-buttons slot="start">
+      <!--			<ion-menu-button></ion-menu-button>-->
+      <ion-back-button [defaultHref]="$defaultBackUrl()" />
+    </ion-buttons>
+    @if ($member(); as member) {
+      <ion-title>📅 {{ member.brief?.title }}</ion-title>
+    } @else {
+      <sneat-space-page-title
+        [space]="space"
+        generalTitle="Schedule"
+        icon="📅"
+        [titlesBySpaceType]="{
+          family: 'Family calendar',
+          personal: 'Personal calendar',
+        }"
+      />
+    }
+    <ion-buttons slot="end">
+      <ion-button
+        class="sneat-hide-if-width-less-638"
+        color="primary"
+        [disabled]="!space.id"
+        (click)="goNew('recurring')"
+        style="text-transform: none"
+      >
+        <ion-icon name="duplicate-outline" slot="start" />
+        <ion-label class="sneat-hide-if-width-less-766"
+          >Add recurring
+        </ion-label>
+      </ion-button>
+      <ion-button
+        class="sneat-hide-if-width-less-638"
+        color="primary"
+        [disabled]="!space.id"
+        (click)="goNew('single')"
+        style="text-transform: none"
+      >
+        <ion-icon name="add-circle-outline" slot="start" />
+        <ion-label class="sneat-hide-if-width-less-766">Add 1-timer</ion-label>
+      </ion-button>
+      <ion-menu-button />
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content class="cardy">
-	<sneat-calendar
-		[$space]="$space()"
-		[tab]="$tab()"
-		(tabChanged)="onTabChanged($event)"
-		(dateChanged)="onDateChanged($event)"
-	/>
+  <sneat-calendar
+    [$space]="$space()"
+    [tab]="$tab()"
+    (tabChanged)="onTabChanged($event)"
+    (dateChanged)="onDateChanged($event)"
+  />
 </ion-content>

@@ -11,12 +11,12 @@ https://github.com/pahen/madge/issues/157#issuecomment-1710043905
 
 ```json
 {
-	"madge": {
-		"detectiveOptions": {
-			"ts": {
-				"skipAsyncImports": true
-			}
-		}
-	}
+  "madge": {
+    "detectiveOptions": {
+      "ts": {
+        "skipAsyncImports": true
+      }
+    }
+  }
 }
 ```

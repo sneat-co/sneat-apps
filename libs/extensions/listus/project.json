@@ -1,34 +1,34 @@
 {
-	"name": "ext-listus",
-	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
-	"projectType": "library",
-	"sourceRoot": "libs/extensions/listus/src",
-	"prefix": "sneat",
-	"targets": {
-		"build": {
-			"executor": "@nx/angular:ng-packagr-lite",
-			"outputs": ["{workspaceRoot}/dist/libs/extensions/listus"],
-			"options": {
-				"project": "libs/extensions/listus/ng-package.json",
-				"tsConfig": "libs/extensions/listus/tsconfig.lib.json"
-			},
-			"configurations": {
-				"production": {
-					"tsConfig": "libs/extensions/listus/tsconfig.lib.prod.json"
-				},
-				"development": {}
-			},
-			"defaultConfiguration": "production"
-		},
-		"test": {
-			"executor": "@nx/vitest:test",
-			"outputs": ["{workspaceRoot}/coverage/libs/extensions/listus"],
-			"options": {
-				"tsConfig": "libs/extensions/listus/tsconfig.spec.json"
-			}
-		},
-		"lint": {
-			"executor": "@nx/eslint:lint"
-		}
-	}
+  "name": "ext-listus",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/extensions/listus/src",
+  "prefix": "sneat",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/libs/extensions/listus"],
+      "options": {
+        "project": "libs/extensions/listus/ng-package.json",
+        "tsConfig": "libs/extensions/listus/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/extensions/listus/tsconfig.lib.prod.json"
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{workspaceRoot}/coverage/libs/extensions/listus"],
+      "options": {
+        "tsConfig": "libs/extensions/listus/tsconfig.spec.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
 }

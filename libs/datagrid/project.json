@@ -1,34 +1,34 @@
 {
-	"name": "datagrid",
-	"$schema": "../../node_modules/nx/schemas/project-schema.json",
-	"projectType": "library",
-	"sourceRoot": "libs/datagrid/src",
-	"prefix": "sneat",
-	"targets": {
-		"build": {
-			"executor": "@nx/angular:package",
-			"outputs": ["{workspaceRoot}/dist/libs/datagrid"],
-			"options": {
-				"project": "libs/datagrid/ng-package.json",
-				"tsConfig": "libs/datagrid/tsconfig.lib.json"
-			},
-			"configurations": {
-				"production": {
-					"tsConfig": "libs/datagrid/tsconfig.lib.prod.json"
-				},
-				"development": {}
-			},
-			"defaultConfiguration": "production"
-		},
-		"test": {
-			"executor": "@nx/vitest:test",
-			"outputs": ["{workspaceRoot}/coverage/libs/datagrid"],
-			"options": {
-				"tsConfig": "libs/datagrid/tsconfig.spec.json"
-			}
-		},
-		"lint": {
-			"executor": "@nx/eslint:lint"
-		}
-	}
+  "name": "datagrid",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/datagrid/src",
+  "prefix": "sneat",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/libs/datagrid"],
+      "options": {
+        "project": "libs/datagrid/ng-package.json",
+        "tsConfig": "libs/datagrid/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/datagrid/tsconfig.lib.prod.json"
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{workspaceRoot}/coverage/libs/datagrid"],
+      "options": {
+        "tsConfig": "libs/datagrid/tsconfig.spec.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
 }

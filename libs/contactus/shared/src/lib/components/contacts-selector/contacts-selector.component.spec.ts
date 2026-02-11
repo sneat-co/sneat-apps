@@ -10,51 +10,51 @@ import { of } from 'rxjs';
 import { ContactsSelectorComponent } from './contacts-selector.component';
 
 describe('ContactsSelectorComponent', () => {
-	let component: ContactsSelectorComponent;
-	let fixture: ComponentFixture<ContactsSelectorComponent>;
+  let component: ContactsSelectorComponent;
+  let fixture: ComponentFixture<ContactsSelectorComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [ContactsSelectorComponent],
-			providers: [
-				{ provide: ClassName, useValue: 'ContactsSelectorComponent' },
-				{
-					provide: ErrorLogger,
-					useValue: {
-						logError: vi.fn(),
-						logErrorHandler: vi.fn(() => vi.fn()),
-					},
-				},
-				{
-					provide: OverlayController,
-					useValue: { create: vi.fn(), dismiss: vi.fn() },
-				},
-				{
-					provide: ModalController,
-					useValue: { create: vi.fn(), dismiss: vi.fn() },
-				},
-				{ provide: CONTACT_ROLES_BY_TYPE, useValue: {} },
-				{
-					provide: ContactusSpaceService,
-					useValue: { watchContactBriefs: vi.fn(() => of([])) },
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(ContactsSelectorComponent, {
-				set: { imports: [], template: '', providers: [] },
-			})
-			.compileComponents();
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ContactsSelectorComponent],
+      providers: [
+        { provide: ClassName, useValue: 'ContactsSelectorComponent' },
+        {
+          provide: ErrorLogger,
+          useValue: {
+            logError: vi.fn(),
+            logErrorHandler: vi.fn(() => vi.fn()),
+          },
+        },
+        {
+          provide: OverlayController,
+          useValue: { create: vi.fn(), dismiss: vi.fn() },
+        },
+        {
+          provide: ModalController,
+          useValue: { create: vi.fn(), dismiss: vi.fn() },
+        },
+        { provide: CONTACT_ROLES_BY_TYPE, useValue: {} },
+        {
+          provide: ContactusSpaceService,
+          useValue: { watchContactBriefs: vi.fn(() => of([])) },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(ContactsSelectorComponent, {
+        set: { imports: [], template: '', providers: [] },
+      })
+      .compileComponents();
+  }));
 
-	beforeEach(() => {
-		fixture = TestBed.createComponent(ContactsSelectorComponent);
-		component = fixture.componentInstance;
-		component.space = { id: 'test-space' };
-		fixture.detectChanges();
-	});
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ContactsSelectorComponent);
+    component = fixture.componentInstance;
+    component.space = { id: 'test-space' };
+    fixture.detectChanges();
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

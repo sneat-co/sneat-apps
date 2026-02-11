@@ -3,24 +3,24 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FreightLoadFormComponent } from './freight-load-form.component';
 
 describe('FreightLoadFormComponent', () => {
-	let component: FreightLoadFormComponent;
-	let fixture: ComponentFixture<FreightLoadFormComponent>;
+  let component: FreightLoadFormComponent;
+  let fixture: ComponentFixture<FreightLoadFormComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [FreightLoadFormComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(FreightLoadFormComponent, {
-				set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [FreightLoadFormComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(FreightLoadFormComponent, {
+        set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(FreightLoadFormComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(FreightLoadFormComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

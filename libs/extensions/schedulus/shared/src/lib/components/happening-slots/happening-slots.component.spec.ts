@@ -8,36 +8,36 @@ import { HappeningSlotModalService } from '../happening-slot-form/happening-slot
 import { HappeningSlotsComponent } from './happening-slots.component';
 
 describe('RegularSlotsComponent', () => {
-	let component: HappeningSlotsComponent;
-	let fixture: ComponentFixture<HappeningSlotsComponent>;
+  let component: HappeningSlotsComponent;
+  let fixture: ComponentFixture<HappeningSlotsComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [HappeningSlotsComponent],
-			providers: [
-				{
-					provide: ErrorLogger,
-					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
-				},
-				{ provide: HappeningService, useValue: {} },
-				{ provide: HappeningSlotModalService, useValue: {} },
-				{ provide: ModalController, useValue: {} },
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [HappeningSlotsComponent],
+      providers: [
+        {
+          provide: ErrorLogger,
+          useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+        },
+        { provide: HappeningService, useValue: {} },
+        { provide: HappeningSlotModalService, useValue: {} },
+        { provide: ModalController, useValue: {} },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
+  }));
 
-	beforeEach(() => {
-		fixture = TestBed.createComponent(HappeningSlotsComponent);
-		component = fixture.componentInstance;
-		fixture.componentRef.setInput('happening', {
-			id: 'test-happening',
-			brief: {},
-		});
-		fixture.detectChanges();
-	});
+  beforeEach(() => {
+    fixture = TestBed.createComponent(HappeningSlotsComponent);
+    component = fixture.componentInstance;
+    fixture.componentRef.setInput('happening', {
+      id: 'test-happening',
+      brief: {},
+    });
+    fixture.detectChanges();
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

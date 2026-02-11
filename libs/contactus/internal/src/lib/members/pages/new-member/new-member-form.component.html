@@ -1,67 +1,67 @@
 <form [formGroup]="addMemberForm" (ngSubmit)="submit()">
-	<sneat-person-wizard
-		[$space]="$spaceRef()"
-		[$contact]="$contact()"
-		(contactChange)="onContactChanged($event)"
-		[displayAgeGroupValue]="true"
-		[disabled]="$isSubmitting()"
-		[requires]="personRequirements"
-		[$fields]="{ contactType: { hide: true } }"
-	/>
+  <sneat-person-wizard
+    [$space]="$spaceRef()"
+    [$contact]="$contact()"
+    (contactChange)="onContactChanged($event)"
+    [displayAgeGroupValue]="true"
+    [disabled]="$isSubmitting()"
+    [requires]="personRequirements"
+    [$fields]="{ contactType: { hide: true } }"
+  />
 
-	@if (addMemberForm.errors) {
-		<ion-card>
-			<ion-card-header color="danger">
-				<ion-card-title>Errors</ion-card-title>
-			</ion-card-header>
-			<ion-card-content> Errors: {{ addMemberForm.errors }}</ion-card-content>
-		</ion-card>
-	}
+  @if (addMemberForm.errors) {
+    <ion-card>
+      <ion-card-header color="danger">
+        <ion-card-title>Errors</ion-card-title>
+      </ion-card-header>
+      <ion-card-content> Errors: {{ addMemberForm.errors }}</ion-card-content>
+    </ion-card>
+  }
 
-	<ion-card>
-		<ion-grid>
-			<ion-row>
-				<ion-col size="5">
-					<!--					personRequirements: {{personRequirements|json}}-->
-					<!--					$isContactReady: {{$isContactReady()}}-->
-					<ion-button
-						expand="full"
-						size="large"
-						(click)="submit()"
-						[disabled]="!$canSubmit()"
-					>
-						@if ($isSubmitting()) {
-							<ion-spinner
-								name="lines-small"
-								slot="start"
-								class="ion-margin-end"
-							/>
-						}
-						<ion-label>Add member</ion-label>
-					</ion-button>
-				</ion-col>
-				<ion-col size="1" style="text-align: center">
-					<p>or</p>
-				</ion-col>
-				@if (!$isSubmitting()) {
-					<ion-col size="6">
-						<qrcode
-							style="float: left"
-							[qrdata]="$qrData()"
-							[width]="140"
-							errorCorrectionLevel="M"
-						/>
-						<ion-card-header>
-							<ion-card-title>Self-add</ion-card-title>
-							<ion-card-subtitle>
-								Ask the new member to scan this QR code and fill the form to
-								join this space. Or send them this
-								<a target="_blank" [href]="$qrData()">link</a>.
-							</ion-card-subtitle>
-						</ion-card-header>
-					</ion-col>
-				}
-			</ion-row>
-		</ion-grid>
-	</ion-card>
+  <ion-card>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="5">
+          <!--					personRequirements: {{personRequirements|json}}-->
+          <!--					$isContactReady: {{$isContactReady()}}-->
+          <ion-button
+            expand="full"
+            size="large"
+            (click)="submit()"
+            [disabled]="!$canSubmit()"
+          >
+            @if ($isSubmitting()) {
+              <ion-spinner
+                name="lines-small"
+                slot="start"
+                class="ion-margin-end"
+              />
+            }
+            <ion-label>Add member</ion-label>
+          </ion-button>
+        </ion-col>
+        <ion-col size="1" style="text-align: center">
+          <p>or</p>
+        </ion-col>
+        @if (!$isSubmitting()) {
+          <ion-col size="6">
+            <qrcode
+              style="float: left"
+              [qrdata]="$qrData()"
+              [width]="140"
+              errorCorrectionLevel="M"
+            />
+            <ion-card-header>
+              <ion-card-title>Self-add</ion-card-title>
+              <ion-card-subtitle>
+                Ask the new member to scan this QR code and fill the form to
+                join this space. Or send them this
+                <a target="_blank" [href]="$qrData()">link</a>.
+              </ion-card-subtitle>
+            </ion-card-header>
+          </ion-col>
+        }
+      </ion-row>
+    </ion-grid>
+  </ion-card>
 </form>

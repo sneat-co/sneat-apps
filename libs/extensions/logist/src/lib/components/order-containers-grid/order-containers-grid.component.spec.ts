@@ -10,39 +10,39 @@ import { OrderContainersGridComponent } from './order-containers-grid.component'
 vi.mock('@angular/fire/firestore');
 
 describe('OrderContainersGridComponent', () => {
-	let component: OrderContainersGridComponent;
-	let fixture: ComponentFixture<OrderContainersGridComponent>;
+  let component: OrderContainersGridComponent;
+  let fixture: ComponentFixture<OrderContainersGridComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [OrderContainersGridComponent],
-			providers: [
-				{
-					provide: ErrorLogger,
-					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
-				},
-				LogistOrderService,
-				{
-					provide: SneatApiService,
-					useValue: { post: vi.fn(() => of({})), delete: vi.fn(() => of({})) },
-				},
-				{
-					provide: Firestore,
-					useValue: { type: 'Firestore', toJSON: () => ({}) },
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(OrderContainersGridComponent, {
-				set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [OrderContainersGridComponent],
+      providers: [
+        {
+          provide: ErrorLogger,
+          useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+        },
+        LogistOrderService,
+        {
+          provide: SneatApiService,
+          useValue: { post: vi.fn(() => of({})), delete: vi.fn(() => of({})) },
+        },
+        {
+          provide: Firestore,
+          useValue: { type: 'Firestore', toJSON: () => ({}) },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(OrderContainersGridComponent, {
+        set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(OrderContainersGridComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(OrderContainersGridComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

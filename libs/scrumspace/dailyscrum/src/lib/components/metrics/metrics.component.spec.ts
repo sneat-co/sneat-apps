@@ -4,19 +4,20 @@ import { IonicModule } from '@ionic/angular';
 import { MetricsComponent } from './metrics.component';
 
 describe('MetricsComponent', () => {
-	let component: MetricsComponent;
-	let fixture: ComponentFixture<MetricsComponent>;
+  let component: MetricsComponent;
+  let fixture: ComponentFixture<MetricsComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [MetricsComponent, IonicModule.forRoot()]}).compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [MetricsComponent, IonicModule.forRoot()],
+    }).compileComponents();
 
-		fixture = TestBed.createComponent(MetricsComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	}));
+    fixture = TestBed.createComponent(MetricsComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

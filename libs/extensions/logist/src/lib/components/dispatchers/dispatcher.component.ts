@@ -1,250 +1,250 @@
 import {
-	Component,
-	EventEmitter,
-	Input,
-	OnChanges,
-	Output,
-	SimpleChanges,
-	inject,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  inject,
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
-	IonButton,
-	IonButtons,
-	IonCard,
-	IonIcon,
-	IonInput,
-	IonItem,
-	IonItemDivider,
-	IonLabel,
-	IonSpinner,
+  IonButton,
+  IonButtons,
+  IonCard,
+  IonIcon,
+  IonInput,
+  IonItem,
+  IonItemDivider,
+  IonLabel,
+  IonSpinner,
 } from '@ionic/angular/standalone';
 import { CountryFlagPipe } from '@sneat/components';
 import { excludeUndefined } from '@sneat/core';
 import {
-	ContactsSelectorService,
-	IContactSelectorOptions,
+  ContactsSelectorService,
+  IContactSelectorOptions,
 } from '@sneat/contactus-shared';
 import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import {
-	IAddOrderShippingPointRequest,
-	IDeleteCounterpartyRequest,
-	ILogistOrderContext,
-	IOrderCounterparty,
-	ISetOrderCounterpartiesRequest,
+  IAddOrderShippingPointRequest,
+  IDeleteCounterpartyRequest,
+  ILogistOrderContext,
+  IOrderCounterparty,
+  ISetOrderCounterpartiesRequest,
 } from '../../dto';
 import { LogistOrderService } from '../../services';
 import { DispatchPointComponent } from './dispatch-point.component';
 
 @Component({
-	selector: 'sneat-order-dispatcher',
-	templateUrl: './dispatcher.component.html',
-	imports: [
-		DispatchPointComponent,
-		IonItem,
-		IonLabel,
-		IonButtons,
-		IonButton,
-		IonIcon,
-		IonSpinner,
-		IonInput,
-		ReactiveFormsModule,
-		IonItemDivider,
-		CountryFlagPipe,
-		IonCard,
-	],
+  selector: 'sneat-order-dispatcher',
+  templateUrl: './dispatcher.component.html',
+  imports: [
+    DispatchPointComponent,
+    IonItem,
+    IonLabel,
+    IonButtons,
+    IonButton,
+    IonIcon,
+    IonSpinner,
+    IonInput,
+    ReactiveFormsModule,
+    IonItemDivider,
+    CountryFlagPipe,
+    IonCard,
+  ],
 })
 export class DispatcherComponent implements OnChanges {
-	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
-	private readonly contactSelectorService = inject(ContactsSelectorService);
-	private readonly ordersService = inject(LogistOrderService);
+  private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+  private readonly contactSelectorService = inject(ContactsSelectorService);
+  private readonly ordersService = inject(LogistOrderService);
 
-	@Input() order?: ILogistOrderContext;
-	@Input() counterparty?: IOrderCounterparty;
-	@Input() orderDispatchers?: readonly IOrderCounterparty[];
+  @Input() order?: ILogistOrderContext;
+  @Input() counterparty?: IOrderCounterparty;
+  @Input() orderDispatchers?: readonly IOrderCounterparty[];
 
-	@Output() orderChange = new EventEmitter<ILogistOrderContext>();
+  @Output() orderChange = new EventEmitter<ILogistOrderContext>();
 
-	locations?: IOrderCounterparty[];
+  locations?: IOrderCounterparty[];
 
-	deleting = false;
+  deleting = false;
 
-	refNumber = new FormControl<string>('');
-	// specialInstructions = new FormControl<string>('');
+  refNumber = new FormControl<string>('');
+  // specialInstructions = new FormControl<string>('');
 
-	form = new FormGroup({
-		refNumber: this.refNumber,
-		// specInstructions: this.specialInstructions,
-	});
+  form = new FormGroup({
+    refNumber: this.refNumber,
+    // specInstructions: this.specialInstructions,
+  });
 
-	saving = false;
+  saving = false;
 
-	protected readonly counterpartyKey = (i: number, c: IOrderCounterparty) =>
-		`${c.contactID}&${c.role}`;
+  protected readonly counterpartyKey = (i: number, c: IOrderCounterparty) =>
+    `${c.contactID}&${c.role}`;
 
-	cancelChanges(): void {
-		this.form.reset();
-		this.setOrder(true);
-	}
+  cancelChanges(): void {
+    this.form.reset();
+    this.setOrder(true);
+  }
 
-	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['order'] || changes['counterparty']) {
-			this.setOrder(!!changes['counterparty']);
-		}
-	}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['order'] || changes['counterparty']) {
+      this.setOrder(!!changes['counterparty']);
+    }
+  }
 
-	private setOrder(counterpartyChanged: boolean): void {
-		const contactID = this.counterparty?.contactID;
-		this.locations = this.order?.dbo?.counterparties?.filter(
-			(l) => l.parent?.contactID === contactID,
-		);
-		if (counterpartyChanged && !this.refNumber.dirty) {
-			this.refNumber.setValue(this.counterparty?.refNumber || '');
-			// this.specialInstructions.setValue(this.counterparty?.specialInstructions || '');
-		}
-	}
+  private setOrder(counterpartyChanged: boolean): void {
+    const contactID = this.counterparty?.contactID;
+    this.locations = this.order?.dbo?.counterparties?.filter(
+      (l) => l.parent?.contactID === contactID,
+    );
+    if (counterpartyChanged && !this.refNumber.dirty) {
+      this.refNumber.setValue(this.counterparty?.refNumber || '');
+      // this.specialInstructions.setValue(this.counterparty?.specialInstructions || '');
+    }
+  }
 
-	addShippingPoint(event: Event): void {
-		console.log('addDispatchPoint(), event:', event);
-		event.stopPropagation();
-		event.preventDefault();
-		const space = this.order?.space;
-		if (!space) {
-			this.errorLogger.logError(
-				'ContactInputComponent.openContactSelector(): team is required',
-				undefined,
-			);
-			return;
-		}
-		const dispatcher = this.counterparty;
-		if (!dispatcher) {
-			alert('dispatcher is required');
-			return;
-		}
-		const selectorOptions: IContactSelectorOptions = {
-			componentProps: {
-				space: space,
-				contactRole: 'dispatch_point',
-				contactType: 'location',
-				parentRole: 'dispatcher',
-				parentContact: {
-					id: dispatcher.contactID,
-					space,
-					brief: {
-						type: 'company',
-						title: dispatcher.title,
-						countryID: dispatcher.countryID,
-					},
-				},
-				excludeContacts: this.orderDispatchers?.map((c) => ({
-					id: c.contactID,
-					space,
-				})),
-			},
-		};
-		this.contactSelectorService
-			.selectSingleInModal(selectorOptions)
-			.then((contact) => {
-				console.log(
-					'OrderCounterpartiesCardComponent.openContactSelector() contact:',
-					contact,
-				);
-				if (!this.order?.dbo) {
-					alert('Order is not loaded');
-					return;
-				}
-				if (!contact?.brief) {
-					alert('Contact is not loaded');
-					return;
-				}
-				const space = this.order.space;
-				// const counterparty: IOrderCounterparty = {
-				// 	contactID: contact.id,
-				// 	title: contact.brief.title || contact.id,
-				// 	role: 'dispatcher',
-				// 	address: contact.brief.address,
-				// 	countryID: contact.brief.address?.countryID || '--',
-				// };
-				const request: IAddOrderShippingPointRequest = {
-					spaceID: space.id,
-					orderID: this.order.id,
-					tasks: ['load'],
-					locationContactID: contact.id,
-				};
-				this.ordersService.addShippingPoint(space, request).subscribe({
-					next: (order) => {
-						console.log('added shipping point added to order');
-						this.order = { ...order, space: this.order?.space || space };
-						this.orderChange.emit(this.order);
-					},
-					error: (e) => {
-						this.errorLogger.logError(
-							e,
-							'Failed to add shipping point to order',
-						);
-					},
-				});
-			})
-			.catch(
-				this.errorLogger.logErrorHandler('failed to open contact selector'),
-			);
-	}
+  addShippingPoint(event: Event): void {
+    console.log('addDispatchPoint(), event:', event);
+    event.stopPropagation();
+    event.preventDefault();
+    const space = this.order?.space;
+    if (!space) {
+      this.errorLogger.logError(
+        'ContactInputComponent.openContactSelector(): team is required',
+        undefined,
+      );
+      return;
+    }
+    const dispatcher = this.counterparty;
+    if (!dispatcher) {
+      alert('dispatcher is required');
+      return;
+    }
+    const selectorOptions: IContactSelectorOptions = {
+      componentProps: {
+        space: space,
+        contactRole: 'dispatch_point',
+        contactType: 'location',
+        parentRole: 'dispatcher',
+        parentContact: {
+          id: dispatcher.contactID,
+          space,
+          brief: {
+            type: 'company',
+            title: dispatcher.title,
+            countryID: dispatcher.countryID,
+          },
+        },
+        excludeContacts: this.orderDispatchers?.map((c) => ({
+          id: c.contactID,
+          space,
+        })),
+      },
+    };
+    this.contactSelectorService
+      .selectSingleInModal(selectorOptions)
+      .then((contact) => {
+        console.log(
+          'OrderCounterpartiesCardComponent.openContactSelector() contact:',
+          contact,
+        );
+        if (!this.order?.dbo) {
+          alert('Order is not loaded');
+          return;
+        }
+        if (!contact?.brief) {
+          alert('Contact is not loaded');
+          return;
+        }
+        const space = this.order.space;
+        // const counterparty: IOrderCounterparty = {
+        // 	contactID: contact.id,
+        // 	title: contact.brief.title || contact.id,
+        // 	role: 'dispatcher',
+        // 	address: contact.brief.address,
+        // 	countryID: contact.brief.address?.countryID || '--',
+        // };
+        const request: IAddOrderShippingPointRequest = {
+          spaceID: space.id,
+          orderID: this.order.id,
+          tasks: ['load'],
+          locationContactID: contact.id,
+        };
+        this.ordersService.addShippingPoint(space, request).subscribe({
+          next: (order) => {
+            console.log('added shipping point added to order');
+            this.order = { ...order, space: this.order?.space || space };
+            this.orderChange.emit(this.order);
+          },
+          error: (e) => {
+            this.errorLogger.logError(
+              e,
+              'Failed to add shipping point to order',
+            );
+          },
+        });
+      })
+      .catch(
+        this.errorLogger.logErrorHandler('failed to open contact selector'),
+      );
+  }
 
-	saveChanges(): void {
-		if (
-			!this.order ||
-			!this.counterparty?.contactID ||
-			!this.counterparty?.role
-		) {
-			return;
-		}
-		const request: ISetOrderCounterpartiesRequest = {
-			spaceID: this.order.space.id,
-			orderID: this.order.id,
-			counterparties: [
-				excludeUndefined({
-					contactID: this.counterparty.contactID,
-					role: this.counterparty.role,
-					refNumber: this.refNumber.value || undefined,
-					// specialInstructions: this.specialInstructions.value || undefined,
-				}),
-			],
-		};
-		this.saving = true;
-		this.form.disable();
-		this.ordersService.setOrderCounterparties(request).subscribe({
-			next: () => {
-				this.form.markAsPristine();
-			},
-			error: (err) => {
-				this.errorLogger.logError(err, 'Failed to save dispatcher');
-			},
-			complete: () => {
-				this.saving = false;
-				this.form.disable();
-			},
-		});
-	}
+  saveChanges(): void {
+    if (
+      !this.order ||
+      !this.counterparty?.contactID ||
+      !this.counterparty?.role
+    ) {
+      return;
+    }
+    const request: ISetOrderCounterpartiesRequest = {
+      spaceID: this.order.space.id,
+      orderID: this.order.id,
+      counterparties: [
+        excludeUndefined({
+          contactID: this.counterparty.contactID,
+          role: this.counterparty.role,
+          refNumber: this.refNumber.value || undefined,
+          // specialInstructions: this.specialInstructions.value || undefined,
+        }),
+      ],
+    };
+    this.saving = true;
+    this.form.disable();
+    this.ordersService.setOrderCounterparties(request).subscribe({
+      next: () => {
+        this.form.markAsPristine();
+      },
+      error: (err) => {
+        this.errorLogger.logError(err, 'Failed to save dispatcher');
+      },
+      complete: () => {
+        this.saving = false;
+        this.form.disable();
+      },
+    });
+  }
 
-	deleteDispatcher(): void {
-		if (!this.order || !this.counterparty) {
-			return;
-		}
-		const request: IDeleteCounterpartyRequest = {
-			spaceID: this.order?.space?.id,
-			orderID: this.order.id,
-			contactID: this.counterparty?.contactID,
-			role: 'dispatcher',
-		};
-		this.deleting = true;
-		this.ordersService.deleteCounterparty(request).subscribe({
-			next: () => {
-				console.log('deleted dispatcher');
-			},
-			error: (err) => {
-				this.errorLogger.logError(err, 'Failed to delete dispatcher');
-				this.deleting = false;
-			},
-		});
-	}
+  deleteDispatcher(): void {
+    if (!this.order || !this.counterparty) {
+      return;
+    }
+    const request: IDeleteCounterpartyRequest = {
+      spaceID: this.order?.space?.id,
+      orderID: this.order.id,
+      contactID: this.counterparty?.contactID,
+      role: 'dispatcher',
+    };
+    this.deleting = true;
+    this.ordersService.deleteCounterparty(request).subscribe({
+      next: () => {
+        console.log('deleted dispatcher');
+      },
+      error: (err) => {
+        this.errorLogger.logError(err, 'Failed to delete dispatcher');
+        this.deleting = false;
+      },
+    });
+  }
 }

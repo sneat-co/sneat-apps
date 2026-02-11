@@ -2,23 +2,23 @@
 <!--	<ion-label color="medium">Apps</ion-label>-->
 <!--</ion-item>-->
 @for (ext of extensions; track ext.id; let last = $last) {
-	<ion-item
-		[lines]="last ? 'none' : undefined"
-		class="sneat-tiny-end-padding"
-		tappable
-		[routerLink]="ext.id"
-		(click)="goExt(ext)"
-	>
-		<ion-label>
-			<span class="ion-margin-end">{{ ext.emoji }}</span>
-			{{ ext.title }}
-		</ion-label>
-		<ion-buttons slot="end">
-			<ion-button color="medium" title="Add" (click)="goNew($event, ext)">
-				<ion-icon name="add" />
-			</ion-button>
-		</ion-buttons>
-	</ion-item>
+  <ion-item
+    [lines]="last ? 'none' : undefined"
+    class="sneat-tiny-end-padding"
+    tappable
+    [routerLink]="ext.id"
+    (click)="goExt(ext)"
+  >
+    <ion-label>
+      <span class="ion-margin-end">{{ ext.emoji }}</span>
+      {{ ext.title }}
+    </ion-label>
+    <ion-buttons slot="end">
+      <ion-button color="medium" title="Add" (click)="goNew($event, ext)">
+        <ion-icon name="add" />
+      </ion-button>
+    </ion-buttons>
+  </ion-item>
 }
 
 <!--		<app-menu-item-budget [goNew]="goNew" [memberInfo]="memberInfo"-->

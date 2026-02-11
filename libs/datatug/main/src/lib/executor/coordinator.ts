@@ -8,19 +8,19 @@ import { IRequestExecutor } from './command-executor';
 
 @Injectable()
 export class Coordinator {
-	private readonly httpExecutor = inject(HttpExecutor);
-	private readonly agentService = inject(AgentService);
+  private readonly httpExecutor = inject(HttpExecutor);
+  private readonly agentService = inject(AgentService);
 
-	public execute(
-		agentId: string,
-		request: IExecuteRequest,
-	): Observable<IExecuteResponse> {
-		let executor: IRequestExecutor;
-		if (request.commands.length === 1 && request.commands[0].type === 'HTTP') {
-			executor = this.httpExecutor;
-		} else {
-			executor = this.agentService;
-		}
-		return executor.execute(agentId, request);
-	}
+  public execute(
+    agentId: string,
+    request: IExecuteRequest,
+  ): Observable<IExecuteResponse> {
+    let executor: IRequestExecutor;
+    if (request.commands.length === 1 && request.commands[0].type === 'HTTP') {
+      executor = this.httpExecutor;
+    } else {
+      executor = this.agentService;
+    }
+    return executor.execute(agentId, request);
+  }
 }

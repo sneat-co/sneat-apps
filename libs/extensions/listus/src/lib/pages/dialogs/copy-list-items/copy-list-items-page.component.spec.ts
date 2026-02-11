@@ -7,43 +7,43 @@ import { of } from 'rxjs';
 import { CopyListItemsPageComponent } from './copy-list-items-page.component';
 
 describe('CopyListItemsPage', () => {
-	let component: CopyListItemsPageComponent;
-	let fixture: ComponentFixture<CopyListItemsPageComponent>;
+  let component: CopyListItemsPageComponent;
+  let fixture: ComponentFixture<CopyListItemsPageComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [CopyListItemsPageComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			providers: [
-				{
-					provide: ListService,
-					useValue: {
-						getListById: vi.fn(() => of(null)),
-					},
-				},
-				{
-					provide: ErrorLogger,
-					useValue: {
-						logError: vi.fn(),
-						logErrorHandler: () => vi.fn(),
-					},
-				},
-			],
-		})
-			.overrideComponent(CopyListItemsPageComponent, {
-				set: {
-					imports: [],
-					template: '',
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
-				},
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [CopyListItemsPageComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        {
+          provide: ListService,
+          useValue: {
+            getListById: vi.fn(() => of(null)),
+          },
+        },
+        {
+          provide: ErrorLogger,
+          useValue: {
+            logError: vi.fn(),
+            logErrorHandler: () => vi.fn(),
+          },
+        },
+      ],
+    })
+      .overrideComponent(CopyListItemsPageComponent, {
+        set: {
+          imports: [],
+          template: '',
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(CopyListItemsPageComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(CopyListItemsPageComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

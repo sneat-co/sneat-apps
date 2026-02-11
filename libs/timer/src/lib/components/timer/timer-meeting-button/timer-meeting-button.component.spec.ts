@@ -5,26 +5,26 @@ import { IonButton } from '@ionic/angular/standalone';
 import { TimerMeetingButtonComponent } from './timer-meeting-button.component';
 
 describe('TimerMeetingButtonComponent', () => {
-	let component: TimerMeetingButtonComponent;
-	let fixture: ComponentFixture<TimerMeetingButtonComponent>;
+  let component: TimerMeetingButtonComponent;
+  let fixture: ComponentFixture<TimerMeetingButtonComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [TimerMeetingButtonComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(TimerMeetingButtonComponent, {
-				remove: { imports: [IonButton] },
-				add: { schemas: [CUSTOM_ELEMENTS_SCHEMA] },
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [TimerMeetingButtonComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(TimerMeetingButtonComponent, {
+        remove: { imports: [IonButton] },
+        add: { schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(TimerMeetingButtonComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	}));
+    fixture = TestBed.createComponent(TimerMeetingButtonComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

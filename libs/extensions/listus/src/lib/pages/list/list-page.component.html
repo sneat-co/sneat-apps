@@ -1,354 +1,354 @@
 <ion-header>
-	<ion-toolbar color="light">
-		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="$defaultBackUrl()" />
-		</ion-buttons>
-		<ion-title>
-			@if (list?.brief) {
-				@switch (list?.brief?.type) {
-					@case ("buy") {
-						{{ list?.brief?.emoji || "🛒" }}
-						{{ list?.brief?.title }} to buy
-					}
-					@case ("cook") {
-						{{ list?.brief?.emoji || "🧑‍🍳" }}
-						{{ list?.brief?.title }} to cook
-					}
-					@case ("watch") {
-						{{ list?.brief?.emoji || "📽️" }}
-						{{ list?.brief?.title }} to watch
-					}
-					@default {
-						{{ list?.brief?.emoji || "📋" }}
-						@if (listGroupTitle) {
-							<span>{{ listGroupTitle }}: </span>
-						}
-						{{ list?.brief?.title }}
-					}
-				}
-			} @else {
-				List
-			}
-		</ion-title>
-		<ion-buttons slot="end">
-			<ion-button (click)="newItem()">
-				<ion-icon name="add" />
-			</ion-button>
-		</ion-buttons>
-	</ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="$defaultBackUrl()" />
+    </ion-buttons>
+    <ion-title>
+      @if (list?.brief) {
+        @switch (list?.brief?.type) {
+          @case ("buy") {
+            {{ list?.brief?.emoji || "🛒" }}
+            {{ list?.brief?.title }} to buy
+          }
+          @case ("cook") {
+            {{ list?.brief?.emoji || "🧑‍🍳" }}
+            {{ list?.brief?.title }} to cook
+          }
+          @case ("watch") {
+            {{ list?.brief?.emoji || "📽️" }}
+            {{ list?.brief?.title }} to watch
+          }
+          @default {
+            {{ list?.brief?.emoji || "📋" }}
+            @if (listGroupTitle) {
+              <span>{{ listGroupTitle }}: </span>
+            }
+            {{ list?.brief?.title }}
+          }
+        }
+      } @else {
+        List
+      }
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="newItem()">
+        <ion-icon name="add" />
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 <ion-content class="cardy">
-	<!--	<img-->
-	<!--		alt="List image"-->
-	<!--		*ngIf="list?.brief?.img"-->
-	<!--		[ngSrc]="list?.brief?.img || ''"-->
-	<!--		width="100"-->
-	<!--		height="100"-->
-	<!--	/>-->
+  <!--	<img-->
+  <!--		alt="List image"-->
+  <!--		*ngIf="list?.brief?.img"-->
+  <!--		[ngSrc]="list?.brief?.img || ''"-->
+  <!--		width="100"-->
+  <!--		height="100"-->
+  <!--	/>-->
 
-	<!--	<div class="ion-padding-top ion-padding-horizontal">-->
-	<!--	</div>-->
+  <!--	<div class="ion-padding-top ion-padding-horizontal">-->
+  <!--	</div>-->
 
-	<ion-card>
-		<ion-segment
-			[(ngModel)]="doneFilter"
-			(ionChange)="onIsDoneFilterChanged($event)"
-		>
-			<ion-segment-button value="all" style="text-transform: none"
-				>All
-			</ion-segment-button>
-			<ion-segment-button value="active" style="text-transform: none"
-				>Active
-			</ion-segment-button>
-			<ion-segment-button value="completed" style="text-transform: none"
-				>Completed
-			</ion-segment-button>
-		</ion-segment>
-		<!--		<div class="segment" [ngSwitch]="list?.brief?.type">-->
-		<!--			<ion-segment [(ngModel)]="segment" *ngSwitchCase="'recipes'">-->
-		<!--				<ion-segment-button value="list">Ingredients</ion-segment-button>-->
-		<!--				<ion-segment-button value="recipe">Recipe</ion-segment-button>-->
-		<!--			</ion-segment>-->
-		<!--			<ion-segment *ngSwitchDefault [(ngModel)]="segment">-->
-		<!--				<ion-segment-button value="list" title="Brief list">-->
-		<!--					<ion-icon name="list-outline"></ion-icon>-->
-		<!--				</ion-segment-button>-->
-		<!--				<ion-segment-button value="cards" title="Cards">-->
-		<!--					<ion-icon name="albums-outline"></ion-icon>-->
-		<!--				</ion-segment-button>-->
-		<!--				<ion-segment-button value="aisle" *ngIf="list && list.id.includes('groceries')">-->
-		<!--					<ion-label>By aisle</ion-label>-->
-		<!--				</ion-segment-button>-->
-		<!--				<ion-segment-button value="discover" title="Discover" *ngIf="listType === 'to-watch' || listType === 'recipes'">-->
-		<!--					<ion-icon name="compass"></ion-icon>-->
-		<!--				</ion-segment-button>-->
-		<!--				<ion-segment-button value="settings" title="Shared with">-->
-		<!--					<ion-icon name="people"></ion-icon>-->
-		<!--				</ion-segment-button>-->
-		<!--			</ion-segment>-->
-		<!--		</div>-->
+  <ion-card>
+    <ion-segment
+      [(ngModel)]="doneFilter"
+      (ionChange)="onIsDoneFilterChanged($event)"
+    >
+      <ion-segment-button value="all" style="text-transform: none"
+        >All
+      </ion-segment-button>
+      <ion-segment-button value="active" style="text-transform: none"
+        >Active
+      </ion-segment-button>
+      <ion-segment-button value="completed" style="text-transform: none"
+        >Completed
+      </ion-segment-button>
+    </ion-segment>
+    <!--		<div class="segment" [ngSwitch]="list?.brief?.type">-->
+    <!--			<ion-segment [(ngModel)]="segment" *ngSwitchCase="'recipes'">-->
+    <!--				<ion-segment-button value="list">Ingredients</ion-segment-button>-->
+    <!--				<ion-segment-button value="recipe">Recipe</ion-segment-button>-->
+    <!--			</ion-segment>-->
+    <!--			<ion-segment *ngSwitchDefault [(ngModel)]="segment">-->
+    <!--				<ion-segment-button value="list" title="Brief list">-->
+    <!--					<ion-icon name="list-outline"></ion-icon>-->
+    <!--				</ion-segment-button>-->
+    <!--				<ion-segment-button value="cards" title="Cards">-->
+    <!--					<ion-icon name="albums-outline"></ion-icon>-->
+    <!--				</ion-segment-button>-->
+    <!--				<ion-segment-button value="aisle" *ngIf="list && list.id.includes('groceries')">-->
+    <!--					<ion-label>By aisle</ion-label>-->
+    <!--				</ion-segment-button>-->
+    <!--				<ion-segment-button value="discover" title="Discover" *ngIf="listType === 'to-watch' || listType === 'recipes'">-->
+    <!--					<ion-icon name="compass"></ion-icon>-->
+    <!--				</ion-segment-button>-->
+    <!--				<ion-segment-button value="settings" title="Shared with">-->
+    <!--					<ion-icon name="people"></ion-icon>-->
+    <!--				</ion-segment-button>-->
+    <!--			</ion-segment>-->
+    <!--		</div>-->
 
-		@if (doneFilter === "all" && (allListItems?.length || 0) > 1) {
-			<ion-item color="light" class="ion-item-no-border">
-				<ion-label slot="end" color="medium" style="font-size: smaller"
-					>List mode:
-				</ion-label>
-				<ion-select
-					slot="end"
-					interface="popover"
-					[(ngModel)]="listMode"
-					style="font-size: smaller"
-				>
-					<ion-select-option value="reorder">Reorder</ion-select-option>
-					<ion-select-option value="swipe">Swipe</ion-select-option>
-				</ion-select>
-			</ion-item>
-		}
+    @if (doneFilter === "all" && (allListItems?.length || 0) > 1) {
+      <ion-item color="light" class="ion-item-no-border">
+        <ion-label slot="end" color="medium" style="font-size: smaller"
+          >List mode:
+        </ion-label>
+        <ion-select
+          slot="end"
+          interface="popover"
+          [(ngModel)]="listMode"
+          style="font-size: smaller"
+        >
+          <ion-select-option value="reorder">Reorder</ion-select-option>
+          <ion-select-option value="swipe">Swipe</ion-select-option>
+        </ion-select>
+      </ion-item>
+    }
 
-		<!--		<p class="ion-padding" *ngIf="!listItems && !list?.dto && !list?.dto !== null">Loading...</p>-->
+    <!--		<p class="ion-padding" *ngIf="!listItems && !list?.dto && !list?.dto !== null">Loading...</p>-->
 
-		<!--		<ng-container *ngIf="segment === 'recipes' && list?.dto">-->
-		<!--			<p class="ion-padding" *ngIf="list?.dto?.note">-->
-		<!--				{{list?.dto?.note}}-->
-		<!--			</p>-->
-		<!--		</ng-container>-->
+    <!--		<ng-container *ngIf="segment === 'recipes' && list?.dto">-->
+    <!--			<p class="ion-padding" *ngIf="list?.dto?.note">-->
+    <!--				{{list?.dto?.note}}-->
+    <!--			</p>-->
+    <!--		</ng-container>-->
 
-		<ion-list>
-			<ion-reorder-group
-				(ionItemReorder)="reorder($event)"
-				[disabled]="
-					isReordering || listMode !== 'reorder' || doneFilter !== 'all'
-				"
-			>
-				@for (item of listItems; track item.brief.id) {
-					<ion-reorder>
-						<sneat-list-item
-							[showDoneCheckbox]="doneFilter !== 'all'"
-							[$doneFilter]="doneFilter || 'all'"
-							[$listMode]="doneFilter === 'all' ? listMode : 'swipe'"
-							[$listItemWithUiState]="item"
-							[$list]="list"
-							(itemClicked)="goListItem($event)"
-							(itemChanged)="itemChanged($event)"
-							(listChanged)="setList($event)"
-						/>
-					</ion-reorder>
-				}
-			</ion-reorder-group>
-		</ion-list>
+    <ion-list>
+      <ion-reorder-group
+        (ionItemReorder)="reorder($event)"
+        [disabled]="
+          isReordering || listMode !== 'reorder' || doneFilter !== 'all'
+        "
+      >
+        @for (item of listItems; track item.brief.id) {
+          <ion-reorder>
+            <sneat-list-item
+              [showDoneCheckbox]="doneFilter !== 'all'"
+              [$doneFilter]="doneFilter || 'all'"
+              [$listMode]="doneFilter === 'all' ? listMode : 'swipe'"
+              [$listItemWithUiState]="item"
+              [$list]="list"
+              (itemClicked)="goListItem($event)"
+              (itemChanged)="itemChanged($event)"
+              (listChanged)="setList($event)"
+            />
+          </ion-reorder>
+        }
+      </ion-reorder-group>
+    </ion-list>
 
-		@if (
-			segment !== "settings" && listType !== "watch" && listType !== "recipes"
-		) {
-			<sneat-new-list-item
-				[space]="space"
-				[list]="list"
-				[isDone]="doneFilter === 'completed'"
-				[disabled]="isPersisting"
-				#newListItem
-			/>
-		}
-	</ion-card>
+    @if (
+      segment !== "settings" && listType !== "watch" && listType !== "recipes"
+    ) {
+      <sneat-new-list-item
+        [space]="space"
+        [list]="list"
+        [isDone]="doneFilter === 'completed'"
+        [disabled]="isPersisting"
+        #newListItem
+      />
+    }
+  </ion-card>
 
-	@switch (segment) {
-		@case ("discover") {
-			@if (listType === "watch") {
-				<div class="ion-padding">
-					<h1>Discover good movies</h1>
-					<p>
-						We give you recommendations based on what you added previously to
-						this watchlist and your rating to the watched movies.
-					</p>
-					<p>
-						The more movies you rate the better recommendations we can give.
-					</p>
-					<p>
-						Recommendations in your personal watchlist and in kids watchlist
-						would be different so it's safe to use with your family.
-					</p>
-					<ion-button expand="full">Got it, show recommendations</ion-button>
-				</div>
-			}
-		}
-		@case ("recipes") {
-			<div class="ion-padding">
-				<h1>Discover great recipes</h1>
-				<p>
-					We give you recommendations based on your rating to previous recipes
-					in this list.
-				</p>
-				<p>The more recipes you rate the better recommendations we can give.</p>
-				<ion-button expand="full">Got it, show recommendations</ion-button>
-			</div>
-		}
-		@case ("settings") {
-			<sneat-shared-with title="This list is shared with" />
-		}
-		@case ("list") {
-			@if (listItems) {
-				<div class="ion-padding" style="text-align: center">
-					<ion-text class="ion-padding" color="medium">
-						@switch (listMode) {
-							@case ("swipe") {
-								<div class="hint-sentence">
-									Swipe from right to left to remove item.
-								</div>
-								<div class="hint-sentence">
-									Swipe from left to right to mark as completed.
-								</div>
-								@if (doneFilter === "all" && (allListItems?.length || 0) > 1) {
-									<div class="hint-sentence">
-										Switch to
-										<a
-											href="#edit-mode:reorder"
-											(click)="setEditMode($event, 'reorder')"
-											>reorder mode</a
-										>
-										to sort.
-									</div>
-								}
-							}
-							@case ("reorder") {
-								<span class="hint-sentence">Drag & drop to reorder.</span>
-								<span class="hint-sentence">
-									Switch to
-									<a
-										href="#edit-mode:swipe"
-										fill="clear"
-										(click)="setEditMode($event, 'swipe')"
-									>
-										swipe mode
-									</a>
-									to edit.</span
-								>
-							}
-						}
-					</ion-text>
-				</div>
-				<ion-grid>
-					<ion-row>
-						<ion-col>
-							<ion-button
-								[disabled]="performing"
-								color="light"
-								expand="full"
-								(click)="reactivateCompleted()"
-							>
-								@if (performing === "reactivating completed") {
-									<ion-spinner slot="start" />
-								} @else {
-									<ion-icon name="refresh-outline" slot="start" />
-								}
-								<ion-label>Reactivate completed</ion-label>
-							</ion-button>
-						</ion-col>
-						@if (doneFilter !== "active") {
-							<ion-col>
-								<ion-button
-									[disabled]="performing"
-									color="warning"
-									expand="full"
-									(click)="deleteCompleted()"
-								>
-									@if (performing === "deleting completed") {
-										<ion-spinner slot="start" />
-									} @else {
-										<ion-icon name="trash-outline" slot="start" />
-									}
-									<ion-label>Delete completed</ion-label>
-								</ion-button>
-							</ion-col>
-						}
-						@if (doneFilter === "all") {
-							<ion-col>
-								<ion-button
-									[disabled]="performing"
-									color="danger"
-									expand="full"
-									(click)="deleteAll()"
-								>
-									@if (performing === "clear list") {
-										<ion-spinner slot="start" />
-									} @else {
-										<ion-icon name="trash-bin-outline" slot="start" />
-									}
-									<ion-label>Clear list</ion-label>
-								</ion-button>
-							</ion-col>
-						}
-					</ion-row>
-				</ion-grid>
-				@if (list?.brief?.type === "recipes") {
-					<div class="ion-padding">
-						<ion-button expand="block" (click)="openCopyListItemsDialog()">
-							🛒 Add to groceries
-						</ion-button>
-						<ion-button expand="block" fill="clear" (click)="goGroceries()">
-							📋 Groceries shopping list
-						</ion-button>
-					</div>
-				}
-			}
-		}
-		@case ("cards") {
-			@if (list?.dbo?.items) {
-				<div style="padding-top: 0.5em; padding-bottom: 0.5em">
-					@switch (list?.brief?.type) {
-						@case ("watch") {}
-						@default {
-							@for (item of listItems || []; track item.brief.id) {
-								<ion-card button (click)="goListItem(item.brief)">
-									@if (item.brief.img) {
-										<img
-											alt="Item image"
-											[ngSrc]="item.brief.img || ''"
-											width="100"
-											height="100"
-										/>
-									}
-									<ion-card-content>
-										<h2>{{ item.brief.title }}</h2>
-										Short description here
-									</ion-card-content>
-								</ion-card>
-							}
-						}
-					}
-				</div>
-			}
-		}
-	}
+  @switch (segment) {
+    @case ("discover") {
+      @if (listType === "watch") {
+        <div class="ion-padding">
+          <h1>Discover good movies</h1>
+          <p>
+            We give you recommendations based on what you added previously to
+            this watchlist and your rating to the watched movies.
+          </p>
+          <p>
+            The more movies you rate the better recommendations we can give.
+          </p>
+          <p>
+            Recommendations in your personal watchlist and in kids watchlist
+            would be different so it's safe to use with your family.
+          </p>
+          <ion-button expand="full">Got it, show recommendations</ion-button>
+        </div>
+      }
+    }
+    @case ("recipes") {
+      <div class="ion-padding">
+        <h1>Discover great recipes</h1>
+        <p>
+          We give you recommendations based on your rating to previous recipes
+          in this list.
+        </p>
+        <p>The more recipes you rate the better recommendations we can give.</p>
+        <ion-button expand="full">Got it, show recommendations</ion-button>
+      </div>
+    }
+    @case ("settings") {
+      <sneat-shared-with title="This list is shared with" />
+    }
+    @case ("list") {
+      @if (listItems) {
+        <div class="ion-padding" style="text-align: center">
+          <ion-text class="ion-padding" color="medium">
+            @switch (listMode) {
+              @case ("swipe") {
+                <div class="hint-sentence">
+                  Swipe from right to left to remove item.
+                </div>
+                <div class="hint-sentence">
+                  Swipe from left to right to mark as completed.
+                </div>
+                @if (doneFilter === "all" && (allListItems?.length || 0) > 1) {
+                  <div class="hint-sentence">
+                    Switch to
+                    <a
+                      href="#edit-mode:reorder"
+                      (click)="setEditMode($event, 'reorder')"
+                      >reorder mode</a
+                    >
+                    to sort.
+                  </div>
+                }
+              }
+              @case ("reorder") {
+                <span class="hint-sentence">Drag & drop to reorder.</span>
+                <span class="hint-sentence">
+                  Switch to
+                  <a
+                    href="#edit-mode:swipe"
+                    fill="clear"
+                    (click)="setEditMode($event, 'swipe')"
+                  >
+                    swipe mode
+                  </a>
+                  to edit.</span
+                >
+              }
+            }
+          </ion-text>
+        </div>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-button
+                [disabled]="performing"
+                color="light"
+                expand="full"
+                (click)="reactivateCompleted()"
+              >
+                @if (performing === "reactivating completed") {
+                  <ion-spinner slot="start" />
+                } @else {
+                  <ion-icon name="refresh-outline" slot="start" />
+                }
+                <ion-label>Reactivate completed</ion-label>
+              </ion-button>
+            </ion-col>
+            @if (doneFilter !== "active") {
+              <ion-col>
+                <ion-button
+                  [disabled]="performing"
+                  color="warning"
+                  expand="full"
+                  (click)="deleteCompleted()"
+                >
+                  @if (performing === "deleting completed") {
+                    <ion-spinner slot="start" />
+                  } @else {
+                    <ion-icon name="trash-outline" slot="start" />
+                  }
+                  <ion-label>Delete completed</ion-label>
+                </ion-button>
+              </ion-col>
+            }
+            @if (doneFilter === "all") {
+              <ion-col>
+                <ion-button
+                  [disabled]="performing"
+                  color="danger"
+                  expand="full"
+                  (click)="deleteAll()"
+                >
+                  @if (performing === "clear list") {
+                    <ion-spinner slot="start" />
+                  } @else {
+                    <ion-icon name="trash-bin-outline" slot="start" />
+                  }
+                  <ion-label>Clear list</ion-label>
+                </ion-button>
+              </ion-col>
+            }
+          </ion-row>
+        </ion-grid>
+        @if (list?.brief?.type === "recipes") {
+          <div class="ion-padding">
+            <ion-button expand="block" (click)="openCopyListItemsDialog()">
+              🛒 Add to groceries
+            </ion-button>
+            <ion-button expand="block" fill="clear" (click)="goGroceries()">
+              📋 Groceries shopping list
+            </ion-button>
+          </div>
+        }
+      }
+    }
+    @case ("cards") {
+      @if (list?.dbo?.items) {
+        <div style="padding-top: 0.5em; padding-bottom: 0.5em">
+          @switch (list?.brief?.type) {
+            @case ("watch") {}
+            @default {
+              @for (item of listItems || []; track item.brief.id) {
+                <ion-card button (click)="goListItem(item.brief)">
+                  @if (item.brief.img) {
+                    <img
+                      alt="Item image"
+                      [ngSrc]="item.brief.img || ''"
+                      width="100"
+                      height="100"
+                    />
+                  }
+                  <ion-card-content>
+                    <h2>{{ item.brief.title }}</h2>
+                    Short description here
+                  </ion-card-content>
+                </ion-card>
+              }
+            }
+          }
+        </div>
+      }
+    }
+  }
 </ion-content>
 @if (
-	(segment === "list" || segment === "cards") && list?.brief?.type === "watch"
+  (segment === "list" || segment === "cards") && list?.brief?.type === "watch"
 ) {
-	<ion-footer>
-		<ion-toolbar>
-			<ion-grid class="grid-layout">
-				<ion-row>
-					<ion-col size="6">
-						<ion-item (click)="clickShowWatchedMovies()">
-							<!--						<ion-checkbox slot="start" (click)="clickShowWatchedMovies()"></ion-checkbox>-->
-							@if (isHideWatched) {
-								<ion-icon name="checkbox-outline" slot="start" />
-							} @else {
-								<ion-icon name="square-outline" slot="start" />
-							}
+  <ion-footer>
+    <ion-toolbar>
+      <ion-grid class="grid-layout">
+        <ion-row>
+          <ion-col size="6">
+            <ion-item (click)="clickShowWatchedMovies()">
+              <!--						<ion-checkbox slot="start" (click)="clickShowWatchedMovies()"></ion-checkbox>-->
+              @if (isHideWatched) {
+                <ion-icon name="checkbox-outline" slot="start" />
+              } @else {
+                <ion-icon name="square-outline" slot="start" />
+              }
 
-							<ion-text>Hide watched</ion-text>
-						</ion-item>
-					</ion-col>
-					<ion-col size="6">
-						<ion-button
-							expand="full"
-							fill="clear"
-							(click)="removeIsWatchedFromWatchlist()"
-						>
-							Delete watched
-						</ion-button>
-					</ion-col>
-				</ion-row>
-			</ion-grid>
-		</ion-toolbar>
-	</ion-footer>
+              <ion-text>Hide watched</ion-text>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button
+              expand="full"
+              fill="clear"
+              (click)="removeIsWatchedFromWatchlist()"
+            >
+              Delete watched
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-toolbar>
+  </ion-footer>
 }

@@ -1,92 +1,92 @@
 <ion-card>
-	<ion-item-divider color="light">
-		<ion-label color="medium">
-			{{ title }}
-			@if (!countryID.value) {
-				<span>&mdash; please select country</span>
-			}
-		</ion-label>
-		@if (mode === "edit" && form.dirty) {
-			<ion-buttons slot="end">
-				@if (countryID.value) {
-					<ion-button
-						color="primary"
-						fill="solid"
-						[disabled]="$saving()"
-						(click)="saveChanges()"
-					>
-						@if ($saving()) {
-							<ion-spinner slot="start" color="light" name="lines-small" />
-						} @else {
-							<ion-icon slot="start" name="save-outline" />
-						}
+  <ion-item-divider color="light">
+    <ion-label color="medium">
+      {{ title }}
+      @if (!countryID.value) {
+        <span>&mdash; please select country</span>
+      }
+    </ion-label>
+    @if (mode === "edit" && form.dirty) {
+      <ion-buttons slot="end">
+        @if (countryID.value) {
+          <ion-button
+            color="primary"
+            fill="solid"
+            [disabled]="$saving()"
+            (click)="saveChanges()"
+          >
+            @if ($saving()) {
+              <ion-spinner slot="start" color="light" name="lines-small" />
+            } @else {
+              <ion-icon slot="start" name="save-outline" />
+            }
 
-						<ion-label>
-							@if ($saving()) {
-								Saving...
-							} @else {
-								Save changes
-							}
-						</ion-label>
-					</ion-button>
-				}
+            <ion-label>
+              @if ($saving()) {
+                Saving...
+              } @else {
+                Save changes
+              }
+            </ion-label>
+          </ion-button>
+        }
 
-				@if (!$saving()) {
-					<ion-button (click)="cancelChanges()">
-						<ion-label>Cancel</ion-label>
-					</ion-button>
-				}
-			</ion-buttons>
-		}
-	</ion-item-divider>
+        @if (!$saving()) {
+          <ion-button (click)="cancelChanges()">
+            <ion-label>Cancel</ion-label>
+          </ion-button>
+        }
+      </ion-buttons>
+    }
+  </ion-item-divider>
 
-	<sneat-country-selector
-		[countryID]="countryID.value || undefined"
-		[disabled]="$saving()"
-		(countryIDChange)="onCountryChanged($event)"
-	/>
+  <sneat-country-selector
+    [countryID]="countryID.value || undefined"
+    [disabled]="$saving()"
+    (countryIDChange)="onCountryChanged($event)"
+  />
 
-	@if (countryID.value) {
-		<ion-item>
-			<ion-label color="medium">Zip code</ion-label>
-			<ion-input
-				type="text"
-				#zipInput
-				maxlength="10"
-				[formControl]="zip"
-				[disabled]="$saving()"
-				(ionChange)="onZipChanged()"
-			/>
-		</ion-item>
+  @if (countryID.value) {
+    <ion-item>
+      <ion-label color="medium">Zip code</ion-label>
+      <ion-input
+        type="text"
+        #zipInput
+        maxlength="10"
+        [formControl]="zip"
+        [disabled]="$saving()"
+        (ionChange)="onZipChanged()"
+      />
+    </ion-item>
 
-		<ion-item>
-			<ion-label color="medium">State</ion-label>
-			<ion-input
-				type="text"
-				maxlength="20"
-				[formControl]="state"
-				(ionChange)="onStateChanged()"
-			/>
-		</ion-item>
+    <ion-item>
+      <ion-label color="medium">State</ion-label>
+      <ion-input
+        type="text"
+        maxlength="20"
+        [formControl]="state"
+        (ionChange)="onStateChanged()"
+      />
+    </ion-item>
 
-		<ion-item>
-			<ion-label color="medium">City</ion-label>
-			<ion-input
-				type="text"
-				maxlength="85"
-				[formControl]="city"
-				(ionChange)="onCityChanged()"
-			/>
-		</ion-item>
+    <ion-item>
+      <ion-label color="medium">City</ion-label>
+      <ion-input
+        type="text"
+        maxlength="85"
+        [formControl]="city"
+        (ionChange)="onCityChanged()"
+      />
+    </ion-item>
 
-		<ion-item>
-			<ion-label color="medium">Address</ion-label>
-			<ion-textarea
-				[formControl]="lines"
-				auto-grow="true"
-				[disabled]="$saving()"
-				(ionChange)="onLinesChanged()"
-			/>
-		</ion-item>
-	}
+    <ion-item>
+      <ion-label color="medium">Address</ion-label>
+      <ion-textarea
+        [formControl]="lines"
+        auto-grow="true"
+        [disabled]="$saving()"
+        (ionChange)="onLinesChanged()"
+      />
+    </ion-item>
+  }
 </ion-card>

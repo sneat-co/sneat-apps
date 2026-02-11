@@ -1,18 +1,18 @@
 @if (isLoginPage()) {
-	<ion-list lines="none">
-		<ion-item>
-			<ion-label class="ion-text-wrap">
-				<p>Free to sign up. No credit card required.</p>
-			</ion-label>
-		</ion-item>
-	</ion-list>
-	<sneat-app-version />
+  <ion-list lines="none">
+    <ion-item>
+      <ion-label class="ion-text-wrap">
+        <p>Free to sign up. No credit card required.</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <sneat-app-version />
 } @else {
-	<ion-list lines="full">
-		@if (authState?.status === "authenticated") {
-			<sneat-spaces-menu />
-		}
-		<sneat-auth-menu-item />
-		<sneat-app-version />
-	</ion-list>
+  <ion-list lines="full">
+    @if (authState?.status === "authenticated") {
+      <sneat-spaces-menu />
+    }
+    <sneat-auth-menu-item />
+    <sneat-app-version />
+  </ion-list>
 }

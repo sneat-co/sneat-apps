@@ -1,34 +1,34 @@
 {
-	"name": "ui",
-	"$schema": "../../node_modules/nx/schemas/project-schema.json",
-	"projectType": "library",
-	"sourceRoot": "libs/ui/src",
-	"prefix": "sneat",
-	"targets": {
-		"build": {
-			"executor": "@nx/angular:ng-packagr-lite",
-			"outputs": ["{workspaceRoot}/dist/libs/ui"],
-			"options": {
-				"project": "libs/ui/ng-package.json",
-				"tsConfig": "libs/ui/tsconfig.lib.json"
-			},
-			"configurations": {
-				"production": {
-					"tsConfig": "libs/ui/tsconfig.lib.prod.json"
-				},
-				"development": {}
-			},
-			"defaultConfiguration": "production"
-		},
-		"test": {
-			"executor": "@nx/vitest:test",
-			"outputs": ["{workspaceRoot}/coverage/libs/ui"],
-			"options": {
-				"tsConfig": "libs/ui/tsconfig.spec.json"
-			}
-		},
-		"lint": {
-			"executor": "@nx/eslint:lint"
-		}
-	}
+  "name": "ui",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/ui/src",
+  "prefix": "sneat",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/libs/ui"],
+      "options": {
+        "project": "libs/ui/ng-package.json",
+        "tsConfig": "libs/ui/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/ui/tsconfig.lib.prod.json"
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{workspaceRoot}/coverage/libs/ui"],
+      "options": {
+        "tsConfig": "libs/ui/tsconfig.spec.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
 }

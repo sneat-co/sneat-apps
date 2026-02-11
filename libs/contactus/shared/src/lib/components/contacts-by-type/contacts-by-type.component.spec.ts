@@ -7,44 +7,44 @@ import { ContactNavService } from '@sneat/contactus-services';
 import { ErrorLogger } from '@sneat/core';
 
 describe('ContactsFamilyComponent', () => {
-	let component: ContactsByTypeComponent;
-	let fixture: ComponentFixture<MockComponent>;
+  let component: ContactsByTypeComponent;
+  let fixture: ComponentFixture<MockComponent>;
 
-	@Component({
-		selector: 'sneat-mock-component',
-		template:
-			'<sneat-contacts-by-type [$space]="space" [$contactGroupDefinitions]="[]" [$contacts]="[]" [$filter]="\'\'"/>',
-		imports: [ContactsByTypeComponent],
-		standalone: true,
-	})
-	class MockComponent {
-		space = { id: 'test-space' };
-	}
+  @Component({
+    selector: 'sneat-mock-component',
+    template:
+      '<sneat-contacts-by-type [$space]="space" [$contactGroupDefinitions]="[]" [$contacts]="[]" [$filter]="\'\'"/>',
+    imports: [ContactsByTypeComponent],
+    standalone: true,
+  })
+  class MockComponent {
+    space = { id: 'test-space' };
+  }
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [MockComponent, NoopAnimationsModule],
-			providers: [
-				{ provide: ContactNavService, useValue: {} },
-				{
-					provide: ErrorLogger,
-					useValue: {
-						logError: vi.fn(),
-						logErrorHandler: vi.fn(() => vi.fn()),
-					},
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [MockComponent, NoopAnimationsModule],
+      providers: [
+        { provide: ContactNavService, useValue: {} },
+        {
+          provide: ErrorLogger,
+          useValue: {
+            logError: vi.fn(),
+            logErrorHandler: vi.fn(() => vi.fn()),
+          },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
+  }));
 
-	beforeEach(() => {
-		fixture = TestBed.createComponent(MockComponent);
-		component = fixture.debugElement.children[0].componentInstance;
-		fixture.detectChanges();
-	});
+  beforeEach(() => {
+    fixture = TestBed.createComponent(MockComponent);
+    component = fixture.debugElement.children[0].componentInstance;
+    fixture.detectChanges();
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

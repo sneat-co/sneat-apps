@@ -10,39 +10,39 @@ import { ContainerPointLoadFormComponent } from './container-point-load-form.com
 vi.mock('@angular/fire/firestore');
 
 describe('ContainerPointLoadFormComponent', () => {
-	let component: ContainerPointLoadFormComponent;
-	let fixture: ComponentFixture<ContainerPointLoadFormComponent>;
+  let component: ContainerPointLoadFormComponent;
+  let fixture: ComponentFixture<ContainerPointLoadFormComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [ContainerPointLoadFormComponent],
-			providers: [
-				{
-					provide: ErrorLogger,
-					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
-				},
-				LogistOrderService,
-				{
-					provide: SneatApiService,
-					useValue: { post: vi.fn(() => of({})) },
-				},
-				{
-					provide: Firestore,
-					useValue: { type: 'Firestore', toJSON: () => ({}) },
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(ContainerPointLoadFormComponent, {
-				set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ContainerPointLoadFormComponent],
+      providers: [
+        {
+          provide: ErrorLogger,
+          useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+        },
+        LogistOrderService,
+        {
+          provide: SneatApiService,
+          useValue: { post: vi.fn(() => of({})) },
+        },
+        {
+          provide: Firestore,
+          useValue: { type: 'Firestore', toJSON: () => ({}) },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(ContainerPointLoadFormComponent, {
+        set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(ContainerPointLoadFormComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(ContainerPointLoadFormComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

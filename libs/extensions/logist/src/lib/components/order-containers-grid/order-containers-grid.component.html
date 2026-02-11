@@ -1,14 +1,14 @@
 <ion-card style="padding: 0.5em">
-	@if (!containers) {
-		<ion-card-content>Loading...</ion-card-content>
-	}
-	<sneat-datagrid
-		[selectable]="1"
-		[data]="containers"
-		[columns]="allCols"
-		[rowClick]="rowClick"
-		height="150"
-		(rowSelected)="rowSelected($event.row)"
-		[rowContextMenu]="rowContextMenu"
-	/>
+  @if (!containers) {
+    <ion-card-content>Loading...</ion-card-content>
+  }
+  <sneat-datagrid
+    [selectable]="1"
+    [data]="containers"
+    [columns]="allCols"
+    [rowClick]="rowClick"
+    height="150"
+    (rowSelected)="rowSelected($event.row)"
+    [rowContextMenu]="rowContextMenu"
+  />
 </ion-card>

@@ -1,114 +1,114 @@
 <ion-header>
-	<ion-toolbar color="light">
-		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="spacePageUrl('orders') || '..'" />
-		</ion-buttons>
-		<ion-title>New order</ion-title>
-	</ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="spacePageUrl('orders') || '..'" />
+    </ion-buttons>
+    <ion-title>New order</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<ion-card>
-		<sneat-select-from-list
-			label="Order type"
-			[(ngModel)]="direction"
-			[items]="directions"
-		/>
-	</ion-card>
+  <ion-card>
+    <sneat-select-from-list
+      label="Order type"
+      [(ngModel)]="direction"
+      [items]="directions"
+    />
+  </ion-card>
 
-	@if (direction) {
-		<ion-card>
-			<ion-item-divider color="light">
-				<ion-label>Counterparties</ion-label>
-			</ion-item-divider>
+  @if (direction) {
+    <ion-card>
+      <ion-item-divider color="light">
+        <ion-label>Counterparties</ion-label>
+      </ion-item-divider>
 
-			<sneat-logist-order-counterparty
-				[space]="space"
-				[order]="order"
-				(orderChange)="onOrderChanged($event)"
-				[readonly]="readonly"
-				[useColumns]="true"
-				counterpartyRole="buyer"
-				contactRole="buyer"
-				labelPosition="fixed"
-			/>
+      <sneat-logist-order-counterparty
+        [space]="space"
+        [order]="order"
+        (orderChange)="onOrderChanged($event)"
+        [readonly]="readonly"
+        [useColumns]="true"
+        counterpartyRole="buyer"
+        contactRole="buyer"
+        labelPosition="fixed"
+      />
 
-			<sneat-logist-order-counterparty
-				[space]="space"
-				[order]="order"
-				(orderChange)="onOrderChanged($event)"
-				[readonly]="readonly"
-				[useColumns]="true"
-				label="Shipping line"
-				counterpartyRole="shipping_line"
-				contactRole="shipping_line"
-				labelPosition="fixed"
-			/>
+      <sneat-logist-order-counterparty
+        [space]="space"
+        [order]="order"
+        (orderChange)="onOrderChanged($event)"
+        [readonly]="readonly"
+        [useColumns]="true"
+        label="Shipping line"
+        counterpartyRole="shipping_line"
+        contactRole="shipping_line"
+        labelPosition="fixed"
+      />
 
-			<sneat-logist-order-counterparty
-				[space]="space"
-				[order]="order"
-				(orderChange)="onOrderChanged($event)"
-				[readonly]="readonly"
-				[useColumns]="true"
-				counterpartyRole="notify_party"
-				label="Notify party"
-				contactRole="notify_party"
-				labelPosition="fixed"
-			/>
-			<sneat-logist-order-counterparty
-				[space]="space"
-				[order]="order"
-				(orderChange)="onOrderChanged($event)"
-				[readonly]="readonly"
-				[useColumns]="true"
-				counterpartyRole="consignee"
-				label="Consignee"
-				contactRole="consignee"
-				labelPosition="fixed"
-			/>
-			<sneat-order-agents
-				[space]="space"
-				[order]="order"
-				(added)="onCounterpartiesAdded($event)"
-			/>
-		</ion-card>
-	}
+      <sneat-logist-order-counterparty
+        [space]="space"
+        [order]="order"
+        (orderChange)="onOrderChanged($event)"
+        [readonly]="readonly"
+        [useColumns]="true"
+        counterpartyRole="notify_party"
+        label="Notify party"
+        contactRole="notify_party"
+        labelPosition="fixed"
+      />
+      <sneat-logist-order-counterparty
+        [space]="space"
+        [order]="order"
+        (orderChange)="onOrderChanged($event)"
+        [readonly]="readonly"
+        [useColumns]="true"
+        counterpartyRole="consignee"
+        label="Consignee"
+        contactRole="consignee"
+        labelPosition="fixed"
+      />
+      <sneat-order-agents
+        [space]="space"
+        [order]="order"
+        (added)="onCounterpartiesAdded($event)"
+      />
+    </ion-card>
+  }
 
-	<!--	<ion-card>-->
-	<!--		<sneat-logist-order-counterparties-->
-	<!--			plural="Dispatchers"-->
-	<!--			[team]="team"-->
-	<!--			[order]="order"-->
-	<!--			(orderChange)="onOrderChanged($event)"-->
-	<!--			[readonly]="readonly"-->
-	<!--		></sneat-logist-order-counterparties>-->
-	<!--	</ion-card>-->
+  <!--	<ion-card>-->
+  <!--		<sneat-logist-order-counterparties-->
+  <!--			plural="Dispatchers"-->
+  <!--			[team]="team"-->
+  <!--			[order]="order"-->
+  <!--			(orderChange)="onOrderChanged($event)"-->
+  <!--			[readonly]="readonly"-->
+  <!--		></sneat-logist-order-counterparties>-->
+  <!--	</ion-card>-->
 
-	<!--	<sneat-order-route-card-->
-	<!--		[order]="order"-->
-	<!--		(orderChange)="onOrderChanged($event)"-->
-	<!--	></sneat-order-route-card>-->
+  <!--	<sneat-order-route-card-->
+  <!--		[order]="order"-->
+  <!--		(orderChange)="onOrderChanged($event)"-->
+  <!--	></sneat-order-route-card>-->
 
-	@if (direction) {
-		<sneat-new-order-containers-form
-			[order]="order"
-			(numberOfContainersChange)="onNumberOfContainersChanged($event)"
-		/>
-		<ion-card>
-			<ion-card-content>
-				<ion-button size="large" (click)="createOrder()">
-					<ion-label>Create order</ion-label>
-				</ion-button>
-				<ion-button disabled fill="clear" color="medium">or</ion-button>
-				<ion-button
-					size="large"
-					color="medium"
-					fill="outline"
-					(click)="cancel()"
-					>Cancel</ion-button
-				>
-			</ion-card-content>
-		</ion-card>
-	}
+  @if (direction) {
+    <sneat-new-order-containers-form
+      [order]="order"
+      (numberOfContainersChange)="onNumberOfContainersChanged($event)"
+    />
+    <ion-card>
+      <ion-card-content>
+        <ion-button size="large" (click)="createOrder()">
+          <ion-label>Create order</ion-label>
+        </ion-button>
+        <ion-button disabled fill="clear" color="medium">or</ion-button>
+        <ion-button
+          size="large"
+          color="medium"
+          fill="outline"
+          (click)="cancel()"
+          >Cancel</ion-button
+        >
+      </ion-card-content>
+    </ion-card>
+  }
 </ion-content>

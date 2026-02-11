@@ -1,18 +1,18 @@
 import {
-	ChangeDetectionStrategy,
-	Component,
-	EventEmitter,
-	Input,
-	Output,
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
 } from '@angular/core';
 import {
-	IonButton,
-	IonButtons,
-	IonIcon,
-	IonItem,
-	IonItemGroup,
-	IonLabel,
-	IonSpinner,
+  IonButton,
+  IonButtons,
+  IonIcon,
+  IonItem,
+  IonItemGroup,
+  IonLabel,
+  IonSpinner,
 } from '@ionic/angular/standalone';
 import { IContactWithBriefAndSpace } from '@sneat/contactus-core';
 import { WithSpaceInput } from '@sneat/space-services';
@@ -21,27 +21,27 @@ import { MembersListComponent } from '../members-list';
 import { MemberGroup } from './member-group';
 
 @Component({
-	selector: 'sneat-members-by-role',
-	templateUrl: './members-by-role.component.html',
-	imports: [
-		MembersListComponent,
-		IonItemGroup,
-		IonLabel,
-		IonButtons,
-		IonButton,
-		IonIcon,
-		IonItem,
-		IonSpinner,
-	],
-	providers: [{ provide: ClassName, useValue: 'MembersByRoleComponent' }],
-	changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'sneat-members-by-role',
+  templateUrl: './members-by-role.component.html',
+  imports: [
+    MembersListComponent,
+    IonItemGroup,
+    IonLabel,
+    IonButtons,
+    IonButton,
+    IonIcon,
+    IonItem,
+    IonSpinner,
+  ],
+  providers: [{ provide: ClassName, useValue: 'MembersByRoleComponent' }],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MembersByRoleComponent extends WithSpaceInput {
-	@Input({ required: true }) public memberGroups?: readonly MemberGroup[];
-	@Output() public readonly addMember = new EventEmitter<MemberGroup>();
+  @Input({ required: true }) public memberGroups?: readonly MemberGroup[];
+  @Output() public readonly addMember = new EventEmitter<MemberGroup>();
 
-	public contactsByMember: Record<
-		string,
-		readonly IContactWithBriefAndSpace[]
-	> = {};
+  public contactsByMember: Record<
+    string,
+    readonly IContactWithBriefAndSpace[]
+  > = {};
 }

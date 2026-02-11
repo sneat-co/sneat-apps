@@ -1,35 +1,35 @@
 <ion-header>
-	<ion-toolbar color="light">
-		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="spacePageUrl('') || './'" />
-		</ion-buttons>
-		<ion-title>Orders</ion-title>
-		<ion-buttons slot="end">
-			<ion-button color="primary" routerLink="../new-order">
-				<ion-icon name="add-outline" slot="start" />
-				<ion-label>New</ion-label>
-			</ion-button>
-		</ion-buttons>
-	</ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="spacePageUrl('') || './'" />
+    </ion-buttons>
+    <ion-title>Orders</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" routerLink="../new-order">
+        <ion-icon name="add-outline" slot="start" />
+        <ion-label>New</ion-label>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<sneat-orders-filter
-		[space]="space"
-		(filterChange)="onFilterChanged($event)"
-		(viewModeChange)="viewMode = $event"
-	>
-		>
-	</sneat-orders-filter>
+  <sneat-orders-filter
+    [space]="space"
+    (filterChange)="onFilterChanged($event)"
+    (viewModeChange)="viewMode = $event"
+  >
+    >
+  </sneat-orders-filter>
 
-	@switch (viewMode) {
-		@case ("grid") {
-			<sneat-logist-orders-grid [space]="space" [orders]="orders" />
-		}
-		@case ("list") {
-			<sneat-logist-orders-list [space]="space" [orders]="orders" />
-		}
-	}
+  @switch (viewMode) {
+    @case ("grid") {
+      <sneat-logist-orders-grid [space]="space" [orders]="orders" />
+    }
+    @case ("list") {
+      <sneat-logist-orders-list [space]="space" [orders]="orders" />
+    }
+  }
 
-	<div style="min-height: 100px"></div>
+  <div style="min-height: 100px"></div>
 </ion-content>

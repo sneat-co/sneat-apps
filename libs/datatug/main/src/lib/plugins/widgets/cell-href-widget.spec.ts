@@ -4,29 +4,29 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { CellHrefWidgetComponent } from './cell-href-widget';
 
 describe('CellHrefWidgetComponent', () => {
-	let component: CellHrefWidgetComponent;
-	let fixture: ComponentFixture<CellHrefWidgetComponent>;
+  let component: CellHrefWidgetComponent;
+  let fixture: ComponentFixture<CellHrefWidgetComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [CellHrefWidgetComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(CellHrefWidgetComponent, {
-				set: {
-					imports: [],
-					template: '',
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
-					providers: [],
-				},
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [CellHrefWidgetComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(CellHrefWidgetComponent, {
+        set: {
+          imports: [],
+          template: '',
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+          providers: [],
+        },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(CellHrefWidgetComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(CellHrefWidgetComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

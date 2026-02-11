@@ -1,34 +1,34 @@
 <ion-header>
-	<ion-toolbar color="light" class="with-back-button">
-		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="$defaultBackUrl()" />
-		</ion-buttons>
-		@if (isToDo) {
-			<ion-title>
-				New task
-				@if (space) {
-					&#64; {{ space.brief?.title }}
-				}
-			</ion-title>
-		} @else {
-			<ion-title>
-				@if (space) {
-					New happening &#64; {{ space.brief?.title }}
-				} @else {
-					New activity
-				}
-			</ion-title>
-		}
-	</ion-toolbar>
+  <ion-toolbar color="light" class="with-back-button">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="$defaultBackUrl()" />
+    </ion-buttons>
+    @if (isToDo) {
+      <ion-title>
+        New task
+        @if (space) {
+          &#64; {{ space.brief?.title }}
+        }
+      </ion-title>
+    } @else {
+      <ion-title>
+        @if (space) {
+          New happening &#64; {{ space.brief?.title }}
+        } @else {
+          New activity
+        }
+      </ion-title>
+    }
+  </ion-toolbar>
 </ion-header>
 
 <ion-content class="cardy">
-	<sneat-happening-form
-		#happeningPageFormComponent
-		[$space]="$space()"
-		[$happening]="$happening()"
-		(happeningChange)="onHappeningChanged($event)"
-		[wd]="wd"
-		[date]="date"
-	/>
+  <sneat-happening-form
+    #happeningPageFormComponent
+    [$space]="$space()"
+    [$happening]="$happening()"
+    (happeningChange)="onHappeningChanged($event)"
+    [wd]="wd"
+    [date]="date"
+  />
 </ion-content>

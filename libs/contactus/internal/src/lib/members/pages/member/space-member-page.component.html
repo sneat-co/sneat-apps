@@ -1,47 +1,47 @@
 <ion-header>
-	<ion-toolbar color="light">
-		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="spacePageUrl('members')" />
-		</ion-buttons>
-		<ion-title>
-			@switch (space.type) {
-				@case ("family") {
-					@if ($contact(); as contact) {
-						Family member: {{ contact | personTitle }}
-					} @else {
-						Family member
-					}
-				}
-				@case ("cohabit") {
-					Housemates
-				}
-				@default {
-					<ion-title>Member</ion-title>
-				}
-			}
-		</ion-title>
-		<!--<ion-title *ngIf="member else titleNoMember">{{member.title}}</ion-title>-->
-		<!--<ng-template #titleNoMember>-->
-		<!--<ion-title>Member</ion-title>-->
-		<!--</ng-template>-->
-		<ion-buttons slot="end">
-			@if (member) {
-				<ion-button
-					[title]="
-						member.brief?.userID === spaceParams.userService.currentUserID
-							? 'Leave team'
-							: 'Remove team member'
-					"
-					(click)="removeMember()"
-				>
-					<ion-icon name="trash" />
-				</ion-button>
-			}
-			<ion-menu-button menu="mainMenu" />
-		</ion-buttons>
-	</ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="spacePageUrl('members')" />
+    </ion-buttons>
+    <ion-title>
+      @switch (space.type) {
+        @case ("family") {
+          @if ($contact(); as contact) {
+            Family member: {{ contact | personTitle }}
+          } @else {
+            Family member
+          }
+        }
+        @case ("cohabit") {
+          Housemates
+        }
+        @default {
+          <ion-title>Member</ion-title>
+        }
+      }
+    </ion-title>
+    <!--<ion-title *ngIf="member else titleNoMember">{{member.title}}</ion-title>-->
+    <!--<ng-template #titleNoMember>-->
+    <!--<ion-title>Member</ion-title>-->
+    <!--</ng-template>-->
+    <ion-buttons slot="end">
+      @if (member) {
+        <ion-button
+          [title]="
+            member.brief?.userID === spaceParams.userService.currentUserID
+              ? 'Leave team'
+              : 'Remove team member'
+          "
+          (click)="removeMember()"
+        >
+          <ion-icon name="trash" />
+        </ion-button>
+      }
+      <ion-menu-button menu="mainMenu" />
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content class="cardy">
-	<sneat-contact-details [$contact]="$contact()" [$space]="$space()" />
+  <sneat-contact-details [$contact]="$contact()" [$space]="$space()" />
 </ion-content>

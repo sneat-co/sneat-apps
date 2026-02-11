@@ -34,15 +34,15 @@ pnpm nx generate @sneat/tools:extension-test \
 
 ## Options
 
-| Option      | Type                                              | Required | Description                                        |
-|-------------|---------------------------------------------------|----------|----------------------------------------------------|
-| `type`      | `service` \| `component` \| `sanity`              | Yes      | Type of test to generate                           |
-| `extension` | string                                            | Yes      | Extension module name (e.g., assetus, budgetus)    |
-| `subLib`    | `shared` \| `internal` \| `core` \| `components` \| `pages` | Yes | Sub-library name                                   |
-| `name`      | string                                            | No*      | Name in PascalCase (required for service/component)|
-| `path`      | string                                            | No       | Relative path within the sub-library               |
+| Option      | Type                                                        | Required | Description                                         |
+| ----------- | ----------------------------------------------------------- | -------- | --------------------------------------------------- |
+| `type`      | `service` \| `component` \| `sanity`                        | Yes      | Type of test to generate                            |
+| `extension` | string                                                      | Yes      | Extension module name (e.g., assetus, budgetus)     |
+| `subLib`    | `shared` \| `internal` \| `core` \| `components` \| `pages` | Yes      | Sub-library name                                    |
+| `name`      | string                                                      | No\*     | Name in PascalCase (required for service/component) |
+| `path`      | string                                                      | No       | Relative path within the sub-library                |
 
-*Required for `service` and `component` types
+\*Required for `service` and `component` types
 
 ## Examples
 
@@ -52,7 +52,7 @@ pnpm nx generate @sneat/tools:extension-test \
 # Sanity test for shared lib
 pnpm nx generate @sneat/tools:extension-test --type=sanity --extension=budgetus --subLib=shared
 
-# Sanity test for internal lib  
+# Sanity test for internal lib
 pnpm nx generate @sneat/tools:extension-test --type=sanity --extension=budgetus --subLib=internal
 
 # Service test
@@ -67,6 +67,7 @@ pnpm nx generate @sneat/tools:extension-test \
 ## Templates
 
 The generator uses templates from the `/templates` directory:
+
 - `extension-service.spec.ts.template` - Service test template
 - `extension-component.spec.ts.template` - Component test template
 - `extension-sanity.spec.ts.template` - Sanity test template
@@ -75,14 +76,14 @@ The generator uses templates from the `/templates` directory:
 
 The generator replaces the following placeholders in templates:
 
-| Placeholder          | Description                              | Example         |
-|----------------------|------------------------------------------|-----------------|
-| `{{ServiceName}}`    | PascalCase service name                  | AssetusService  |
-| `{{service-name}}`   | kebab-case file name                     | assetus-service |
-| `{{ComponentName}}`  | PascalCase component name                | AssetListComponent |
-| `{{component-name}}` | kebab-case file name                     | asset-list |
-| `{{extension-name}}` | Extension module name                    | assetus |
-| `{{sub-lib}}`        | Sub-library name                         | shared |
+| Placeholder          | Description               | Example            |
+| -------------------- | ------------------------- | ------------------ |
+| `{{ServiceName}}`    | PascalCase service name   | AssetusService     |
+| `{{service-name}}`   | kebab-case file name      | assetus-service    |
+| `{{ComponentName}}`  | PascalCase component name | AssetListComponent |
+| `{{component-name}}` | kebab-case file name      | asset-list         |
+| `{{extension-name}}` | Extension module name     | assetus            |
+| `{{sub-lib}}`        | Sub-library name          | shared             |
 
 ## Interactive Mode
 
@@ -93,6 +94,7 @@ pnpm nx generate @sneat/tools:extension-test
 ```
 
 You'll be prompted for:
+
 1. Test type (service, component, or sanity)
 2. Extension module name
 3. Sub-library name

@@ -3,24 +3,24 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { LogistSpaceRolesComponent } from './logist-space-roles.component';
 
 describe('LogistSpaceRolesComponent', () => {
-	let component: LogistSpaceRolesComponent;
-	let fixture: ComponentFixture<LogistSpaceRolesComponent>;
+  let component: LogistSpaceRolesComponent;
+  let fixture: ComponentFixture<LogistSpaceRolesComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [LogistSpaceRolesComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(LogistSpaceRolesComponent, {
-				set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [LogistSpaceRolesComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(LogistSpaceRolesComponent, {
+        set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(LogistSpaceRolesComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(LogistSpaceRolesComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

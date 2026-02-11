@@ -11,43 +11,43 @@ import { ContainerPointComponent } from './container-point.component';
 vi.mock('@angular/fire/firestore');
 
 describe('ContainerPointComponent', () => {
-	let component: ContainerPointComponent;
-	let fixture: ComponentFixture<ContainerPointComponent>;
+  let component: ContainerPointComponent;
+  let fixture: ComponentFixture<ContainerPointComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [ContainerPointComponent],
-			providers: [
-				{
-					provide: ErrorLogger,
-					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
-				},
-				{
-					provide: ContactsSelectorService,
-					useValue: { selectSingleInModal: vi.fn(() => Promise.resolve(null)) },
-				},
-				LogistOrderService,
-				{
-					provide: SneatApiService,
-					useValue: { post: vi.fn(() => of({})), delete: vi.fn(() => of({})) },
-				},
-				{
-					provide: Firestore,
-					useValue: { type: 'Firestore', toJSON: () => ({}) },
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(ContainerPointComponent, {
-				set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ContainerPointComponent],
+      providers: [
+        {
+          provide: ErrorLogger,
+          useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+        },
+        {
+          provide: ContactsSelectorService,
+          useValue: { selectSingleInModal: vi.fn(() => Promise.resolve(null)) },
+        },
+        LogistOrderService,
+        {
+          provide: SneatApiService,
+          useValue: { post: vi.fn(() => of({})), delete: vi.fn(() => of({})) },
+        },
+        {
+          provide: Firestore,
+          useValue: { type: 'Firestore', toJSON: () => ({}) },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(ContainerPointComponent, {
+        set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(ContainerPointComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(ContainerPointComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

@@ -7,44 +7,44 @@ import { SpaceNavService, SpaceService } from '@sneat/space-services';
 import { MembersComponent } from './members.component';
 
 describe('MembersComponent', () => {
-	let component: MembersComponent;
-	let fixture: ComponentFixture<MembersComponent>;
+  let component: MembersComponent;
+  let fixture: ComponentFixture<MembersComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [MembersComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			providers: [
-				{
-					provide: ErrorLogger,
-					useValue: {
-						logError: vi.fn(),
-						logErrorHandler: () => vi.fn(),
-					},
-				},
-				{ provide: SpaceService, useValue: {} },
-				{ provide: NavController, useValue: {} },
-				{
-					provide: SpaceNavService,
-					useValue: { navigateForwardToSpacePage: vi.fn() },
-				},
-			],
-		})
-			.overrideComponent(MembersComponent, {
-				set: {
-					imports: [],
-					providers: [],
-					template: '',
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
-				},
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [MembersComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        {
+          provide: ErrorLogger,
+          useValue: {
+            logError: vi.fn(),
+            logErrorHandler: () => vi.fn(),
+          },
+        },
+        { provide: SpaceService, useValue: {} },
+        { provide: NavController, useValue: {} },
+        {
+          provide: SpaceNavService,
+          useValue: { navigateForwardToSpacePage: vi.fn() },
+        },
+      ],
+    })
+      .overrideComponent(MembersComponent, {
+        set: {
+          imports: [],
+          providers: [],
+          template: '',
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(MembersComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(MembersComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

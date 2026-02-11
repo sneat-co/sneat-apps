@@ -1,57 +1,57 @@
 <ion-card>
-	contactRole: {{ contactRole }} contactRoles: {{ contactRoles?.length }}
-	@if (!contactRole || !hideRole) {
-		aaa
-		<sneat-select-from-list
-			label="Role"
-			[disabled]="isCreating"
-			[items]="contactRoles"
-			[(ngModel)]="contactRole"
-		/>
-	}
+  contactRole: {{ contactRole }} contactRoles: {{ contactRoles?.length }}
+  @if (!contactRole || !hideRole) {
+    aaa
+    <sneat-select-from-list
+      label="Role"
+      [disabled]="isCreating"
+      [items]="contactRoles"
+      [(ngModel)]="contactRole"
+    />
+  }
 </ion-card>
 
 @if (!!contactRole) {
-	<sneat-location-form
-		contactType="company"
-		label="Company details"
-		[$space]="$contact().space"
-		[parentContact]="parentContact"
-		[location]="contact"
-		(locationChange)="onContactChanged($event)"
-		[hideSubmitButton]="true"
-	/>
+  <sneat-location-form
+    contactType="company"
+    label="Company details"
+    [$space]="$contact().space"
+    [parentContact]="parentContact"
+    [location]="contact"
+    (locationChange)="onContactChanged($event)"
+    [hideSubmitButton]="true"
+  />
 }
 
 <!--team: {{team|json}}-->
 <!--contact: {{contact|json}}-->
 
 <div class="ion-padding-horizontal ion-margin-bottom">
-	<!--suppress PointlessBooleanExpressionJS -->
-	<ion-button
-		(click)="create()"
-		[disabled]="isCreating || (false && !formIsValid)"
-	>
-		@if (isCreating) {
-			<ion-label>Creating company...</ion-label>
-			<ion-spinner name="lines-small" slot="end" />
-		} @else {
-			<ion-label>Create company</ion-label>
-		}
-	</ion-button>
+  <!--suppress PointlessBooleanExpressionJS -->
+  <ion-button
+    (click)="create()"
+    [disabled]="isCreating || (false && !formIsValid)"
+  >
+    @if (isCreating) {
+      <ion-label>Creating company...</ion-label>
+      <ion-spinner name="lines-small" slot="end" />
+    } @else {
+      <ion-label>Create company</ion-label>
+    }
+  </ion-button>
 </div>
 
 @if (!form.valid && form.errors) {
-	<ion-card>
-		<ion-card-header>
-			<ion-card-title color="danger">Errors</ion-card-title>
-		</ion-card-header>
-		<ion-list>
-			@for (err of Object.values(form.errors); track err) {
-				<ion-item>
-					<ion-label>{{ err | json }}</ion-label>
-				</ion-item>
-			}
-		</ion-list>
-	</ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title color="danger">Errors</ion-card-title>
+    </ion-card-header>
+    <ion-list>
+      @for (err of Object.values(form.errors); track err) {
+        <ion-item>
+          <ion-label>{{ err | json }}</ion-label>
+        </ion-item>
+      }
+    </ion-list>
+  </ion-card>
 }

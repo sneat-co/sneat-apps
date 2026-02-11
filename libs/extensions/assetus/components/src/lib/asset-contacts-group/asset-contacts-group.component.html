@@ -1,30 +1,30 @@
 <ion-item-group>
-	<ion-item-divider color="light">
-		<ion-label>{{ title }}</ion-label>
-		<ion-buttons slot="end">
-			<ion-button
-				color="medium"
-				[title]="addTitle"
-				(click)="goNewContact.emit(this.contactRelation)"
-			>
-				<ion-icon name="add" />
-			</ion-button>
-		</ion-buttons>
-	</ion-item-divider>
-	@if (contacts && !contacts.length) {
-		<ion-item tappable="true" (click)="goNewContact.emit(this.contactRelation)">
-			<ion-icon name="add" color="primary" />
-			<ion-label color="primary">{{ addTitle }}</ion-label>
-		</ion-item>
-	}
+  <ion-item-divider color="light">
+    <ion-label>{{ title }}</ion-label>
+    <ion-buttons slot="end">
+      <ion-button
+        color="medium"
+        [title]="addTitle"
+        (click)="goNewContact.emit(this.contactRelation)"
+      >
+        <ion-icon name="add" />
+      </ion-button>
+    </ion-buttons>
+  </ion-item-divider>
+  @if (contacts && !contacts.length) {
+    <ion-item tappable="true" (click)="goNewContact.emit(this.contactRelation)">
+      <ion-icon name="add" color="primary" />
+      <ion-label color="primary">{{ addTitle }}</ion-label>
+    </ion-item>
+  }
 
-	@if (contacts) {
-		@for (contact of contacts; track contact.id) {
-			<ion-item-sliding>
-				<ion-item>
-					<ion-label>{{ contact.title }}</ion-label>
-				</ion-item>
-			</ion-item-sliding>
-		}
-	}
+  @if (contacts) {
+    @for (contact of contacts; track contact.id) {
+      <ion-item-sliding>
+        <ion-item>
+          <ion-label>{{ contact.title }}</ion-label>
+        </ion-item>
+      </ion-item-sliding>
+    }
+  }
 </ion-item-group>

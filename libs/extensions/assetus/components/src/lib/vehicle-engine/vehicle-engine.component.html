@@ -1,23 +1,23 @@
 @if (!vehicleAsset?.dbo?.extra?.engineType) {
-	<sneat-select-from-list
-		label="Engine type"
-		[items]="engineTypes"
-		labelPlacement="start"
-		(valueChange)="onEngineTypeChanged($event)"
-	/>
+  <sneat-select-from-list
+    label="Engine type"
+    [items]="engineTypes"
+    labelPlacement="start"
+    (valueChange)="onEngineTypeChanged($event)"
+  />
 }
 
 @if (vehicleAsset?.dbo?.extra?.engineFuel) {
-	<ion-item-group>
-		@if (hasCombustion) {
-			<ion-item>
-				<ion-input label="Size CC" />
-			</ion-item>
-		}
-		@if (hasBattery) {
-			<ion-item>
-				<ion-input label="Battery kWh" type="number" />
-			</ion-item>
-		}
-	</ion-item-group>
+  <ion-item-group>
+    @if (hasCombustion) {
+      <ion-item>
+        <ion-input label="Size CC" />
+      </ion-item>
+    }
+    @if (hasBattery) {
+      <ion-item>
+        <ion-input label="Battery kWh" type="number" />
+      </ion-item>
+    }
+  </ion-item-group>
 }

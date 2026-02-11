@@ -1,16 +1,16 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
-	IonBackButton,
-	IonButton,
-	IonButtons,
-	IonContent,
-	IonHeader,
-	IonIcon,
-	IonInput,
-	IonItem,
-	IonTitle,
-	IonToolbar,
+  IonBackButton,
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonInput,
+  IonItem,
+  IonTitle,
+  IonToolbar,
 } from '@ionic/angular/standalone';
 import { AssetsListComponentModule } from '@sneat/ext-assetus-components';
 import { AssetsBasePage } from '../../assets-base.page';
@@ -19,43 +19,43 @@ import { IAssetService } from 'sneat-shared/services/interfaces';
 import { CommuneBasePageParams } from 'sneat-shared/services/params';
 
 @Component({
-	selector: 'sneat-real-estates',
-	templateUrl: './real-estates-page.component.html',
-	providers: [CommuneBasePageParams],
-	imports: [
-		IonToolbar,
-		IonButtons,
-		IonHeader,
-		IonBackButton,
-		IonTitle,
-		IonButton,
-		IonIcon,
-		IonContent,
-		IonItem,
-		IonInput,
-		FormsModule,
-		AssetsListComponentModule,
-	],
+  selector: 'sneat-real-estates',
+  templateUrl: './real-estates-page.component.html',
+  providers: [CommuneBasePageParams],
+  imports: [
+    IonToolbar,
+    IonButtons,
+    IonHeader,
+    IonBackButton,
+    IonTitle,
+    IonButton,
+    IonIcon,
+    IonContent,
+    IonItem,
+    IonInput,
+    FormsModule,
+    AssetsListComponentModule,
+  ],
 })
 export class RealEstatesPageComponent extends AssetsBasePage {
-	filter: string;
+  filter: string;
 
-	constructor() {
-		const params = inject(CommuneBasePageParams);
-		const assetService = inject(IAssetService);
+  constructor() {
+    const params = inject(CommuneBasePageParams);
+    const assetService = inject(IAssetService);
 
-		super(params, assetService);
-	}
+    super(params, assetService);
+  }
 
-	protected setAssets(assets: IAssetDto[]): void {
-		this.assets = assets.filter((a) => a.categoryId === 'real_estate');
-	}
+  protected setAssets(assets: IAssetDto[]): void {
+    this.assets = assets.filter((a) => a.categoryId === 'real_estate');
+  }
 
-	clearFilter(): void {
-		this.filter = '';
-	}
+  clearFilter(): void {
+    this.filter = '';
+  }
 
-	filterChanged(event: Event): void {
-		console.log(this.filter, event);
-	}
+  filterChanged(event: Event): void {
+    console.log(this.filter, event);
+  }
 }

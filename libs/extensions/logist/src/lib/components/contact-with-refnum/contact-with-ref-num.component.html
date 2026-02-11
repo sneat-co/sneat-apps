@@ -1,30 +1,30 @@
 <ion-grid class="ion-grid-layout">
-	<ion-row>
-		<ion-col size="12" [sizeLg]="contact ? contactColSize : undefined">
-			<sneat-contact-input
-				label="🚛 By"
-				[canReset]="true"
-				[contactType]="contactType"
-				[contactRole]="contactRole"
-				[space]="order?.space"
-				[(contact)]="contact"
-				(contactChange)="onContactChanged($event)"
-			>
-				>
-			</sneat-contact-input>
-		</ion-col>
-		@if (contact) {
-			<ion-col size="12" [sizeLg]="refNumberColSize">
-				<ion-item>
-					<!--				<ion-label color="medium">Ref #</ion-label>-->
-					<ion-input
-						label="Ref #"
-						class="sneat-label-color-medium"
-						[(ngModel)]="refNumber"
-						(ionChange)="onRefNumberChange()"
-					/>
-				</ion-item>
-			</ion-col>
-		}
-	</ion-row>
+  <ion-row>
+    <ion-col size="12" [sizeLg]="contact ? contactColSize : undefined">
+      <sneat-contact-input
+        label="🚛 By"
+        [canReset]="true"
+        [contactType]="contactType"
+        [contactRole]="contactRole"
+        [space]="order?.space"
+        [(contact)]="contact"
+        (contactChange)="onContactChanged($event)"
+      >
+        >
+      </sneat-contact-input>
+    </ion-col>
+    @if (contact) {
+      <ion-col size="12" [sizeLg]="refNumberColSize">
+        <ion-item>
+          <!--				<ion-label color="medium">Ref #</ion-label>-->
+          <ion-input
+            label="Ref #"
+            class="sneat-label-color-medium"
+            [(ngModel)]="refNumber"
+            (ionChange)="onRefNumberChange()"
+          />
+        </ion-item>
+      </ion-col>
+    }
+  </ion-row>
 </ion-grid>

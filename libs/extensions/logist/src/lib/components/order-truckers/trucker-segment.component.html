@@ -1,44 +1,44 @@
 <ion-card>
-	@if (orderSegment) {
-		<ion-item
-			color="light"
-			class="sneat-no-end-padding"
-			[class.deleting-list-item]="deleting"
-		>
-			<ion-label color="medium">From</ion-label>
-			<ion-input readonly [value]="from?.title" />
-			<ion-label color="medium">To</ion-label>
-			<ion-input readonly [value]="to?.title" />
-			<ion-buttons slot="end">
-				<ion-button color="medium" (click)="assignSegmentsToTransporter()">
-					@if (!trucker) {
-						<ion-label>Assign</ion-label>
-					}
-					@if (trucker) {
-						<ion-label>Reassign</ion-label>
-					}
-				</ion-button>
-				<ion-button
-					color="medium"
-					(click)="deleteTruckerSegments()"
-					title="Delete trucker segments"
-				>
-					<ion-icon name="close-outline" />
-				</ion-button>
-			</ion-buttons>
-		</ion-item>
-	}
+  @if (orderSegment) {
+    <ion-item
+      color="light"
+      class="sneat-no-end-padding"
+      [class.deleting-list-item]="deleting"
+    >
+      <ion-label color="medium">From</ion-label>
+      <ion-input readonly [value]="from?.title" />
+      <ion-label color="medium">To</ion-label>
+      <ion-input readonly [value]="to?.title" />
+      <ion-buttons slot="end">
+        <ion-button color="medium" (click)="assignSegmentsToTransporter()">
+          @if (!trucker) {
+            <ion-label>Assign</ion-label>
+          }
+          @if (trucker) {
+            <ion-label>Reassign</ion-label>
+          }
+        </ion-button>
+        <ion-button
+          color="medium"
+          (click)="deleteTruckerSegments()"
+          title="Delete trucker segments"
+        >
+          <ion-icon name="close-outline" />
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  }
 
-	<!--	<ion-item-divider>-->
-	<!--		<ion-label>Containers:</ion-label>-->
-	<!--&lt;!&ndash;		<ion-buttons slot="end">&ndash;&gt;-->
-	<!--&lt;!&ndash;			<ion-button title="Print" color="medium" (click)="print($event)">&ndash;&gt;-->
-	<!--&lt;!&ndash;				<ion-icon name="print-outline" slot="start"></ion-icon>&ndash;&gt;-->
-	<!--&lt;!&ndash;				<ion-label>Print</ion-label>&ndash;&gt;-->
-	<!--&lt;!&ndash;			</ion-button>&ndash;&gt;-->
-	<!--&lt;!&ndash;		</ion-buttons>&ndash;&gt;-->
-	<!--	</ion-item-divider>-->
-	@for (segment of orderSegment?.containerSegments; track segment) {
-		<sneat-segment-container [order]="order" [segment]="segment" />
-	}
+  <!--	<ion-item-divider>-->
+  <!--		<ion-label>Containers:</ion-label>-->
+  <!--&lt;!&ndash;		<ion-buttons slot="end">&ndash;&gt;-->
+  <!--&lt;!&ndash;			<ion-button title="Print" color="medium" (click)="print($event)">&ndash;&gt;-->
+  <!--&lt;!&ndash;				<ion-icon name="print-outline" slot="start"></ion-icon>&ndash;&gt;-->
+  <!--&lt;!&ndash;				<ion-label>Print</ion-label>&ndash;&gt;-->
+  <!--&lt;!&ndash;			</ion-button>&ndash;&gt;-->
+  <!--&lt;!&ndash;		</ion-buttons>&ndash;&gt;-->
+  <!--	</ion-item-divider>-->
+  @for (segment of orderSegment?.containerSegments; track segment) {
+    <sneat-segment-container [order]="order" [segment]="segment" />
+  }
 </ion-card>

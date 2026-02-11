@@ -1,151 +1,151 @@
 @if (taskType !== "plan" && !hideTitle) {
-	<ion-item-divider tappable (click)="addTask($event)">
-		@if (cardMode === "by-person") {
-			<ion-icon
-				[name]="
-					showAddInput ? 'chevron-down-outline' : 'chevron-forward-outline'
-				"
-				color="medium"
-				style="margin-right: 0.25em"
-			/>
-		}
-		<ion-label tappable color="tertiary">
-			@switch (taskType) {
-				@case ("done") {
-					What was done?
-				}
-				@case ("todo") {
-					What is planned to do?
-				}
-				@case ("risk") {
-					Any blockers?
-				}
-				@case ("qna") {
-					Questions & Answers
-				}
-				@case ("kudos") {
-					Kudos
-				}
-			}
-		</ion-label>
-		@if (cardMode === "by-person" && !showAddInput) {
-			<ion-buttons slot="end">
-				<ion-button [title]="newTaskPlaceholder" (click)="addTask($event)">
-					<ion-icon name="add" />
-				</ion-button>
-			</ion-buttons>
-		}
-	</ion-item-divider>
+  <ion-item-divider tappable (click)="addTask($event)">
+    @if (cardMode === "by-person") {
+      <ion-icon
+        [name]="
+          showAddInput ? 'chevron-down-outline' : 'chevron-forward-outline'
+        "
+        color="medium"
+        style="margin-right: 0.25em"
+      />
+    }
+    <ion-label tappable color="tertiary">
+      @switch (taskType) {
+        @case ("done") {
+          What was done?
+        }
+        @case ("todo") {
+          What is planned to do?
+        }
+        @case ("risk") {
+          Any blockers?
+        }
+        @case ("qna") {
+          Questions & Answers
+        }
+        @case ("kudos") {
+          Kudos
+        }
+      }
+    </ion-label>
+    @if (cardMode === "by-person" && !showAddInput) {
+      <ion-buttons slot="end">
+        <ion-button [title]="newTaskPlaceholder" (click)="addTask($event)">
+          <ion-icon name="add" />
+        </ion-button>
+      </ion-buttons>
+    }
+  </ion-item-divider>
 }
 @if (taskType === "plan") {
-	@if (tasks && !tasks.length) {
-		<ion-card-content>Nothing was planned</ion-card-content>
-	}
-	@if (!tasks || tasks.length) {
-		<ion-item>
-			<ion-label color="medium">Planned before</ion-label>
-			<ion-buttons slot="end">
-				@if (!tasks) {
-					<ion-button disabled>
-						<ion-spinner name="lines-small" />
-					</ion-button>
-				}
-			</ion-buttons>
-		</ion-item>
-	}
+  @if (tasks && !tasks.length) {
+    <ion-card-content>Nothing was planned</ion-card-content>
+  }
+  @if (!tasks || tasks.length) {
+    <ion-item>
+      <ion-label color="medium">Planned before</ion-label>
+      <ion-buttons slot="end">
+        @if (!tasks) {
+          <ion-button disabled>
+            <ion-spinner name="lines-small" />
+          </ion-button>
+        }
+      </ion-buttons>
+    </ion-item>
+  }
 }
 @if (visibleTasks?.length) {
-	<ion-reorder-group disabled="false" (ionItemReorder)="doReorder($event)">
-		@for (task of visibleTasks; track trackByTaskId($index, task)) {
-			<ion-item
-				[@addRemove]="'added'"
-				tappable
-				(click)="showTaskPopover($event, task)"
-			>
-				<ion-reorder slot="start">
-					<ion-icon name="swap-vertical-outline" color="medium" />
-				</ion-reorder>
-				<ion-label
-					[color]="
-						taskType === 'risk'
-							? 'danger'
-							: taskType === 'qna'
-								? 'primary'
-								: undefined
-					"
-				>
-					{{ task.title }}
-				</ion-label>
-				<ion-buttons slot="end">
-					@if (task.comments?.length) {
-						<ion-button color="medium" title="Comments">
-							{{ task.comments?.length }}
-							<ion-icon name="reader-outline" />
-						</ion-button>
-					}
-					<ion-button
-						[color]="
-							task.thumbUps && task.thumbUps.includes(currentMemberId)
-								? 'success'
-								: 'medium'
-						"
-						(click)="thumbUp($event, member.id, task)"
-					>
-						@if (task.thumbUps?.length) {
-							{{ task.thumbUps.length }}
-						}
-						<ion-icon name="thumbs-up-outline" />
-					</ion-button>
-					<ion-button color="medium" (click)="deleteTask($event, task.id)">
-						<ion-icon name="close-outline" />
-					</ion-button>
-				</ion-buttons>
-			</ion-item>
-		}
-	</ion-reorder-group>
+  <ion-reorder-group disabled="false" (ionItemReorder)="doReorder($event)">
+    @for (task of visibleTasks; track trackByTaskId($index, task)) {
+      <ion-item
+        [@addRemove]="'added'"
+        tappable
+        (click)="showTaskPopover($event, task)"
+      >
+        <ion-reorder slot="start">
+          <ion-icon name="swap-vertical-outline" color="medium" />
+        </ion-reorder>
+        <ion-label
+          [color]="
+            taskType === 'risk'
+              ? 'danger'
+              : taskType === 'qna'
+                ? 'primary'
+                : undefined
+          "
+        >
+          {{ task.title }}
+        </ion-label>
+        <ion-buttons slot="end">
+          @if (task.comments?.length) {
+            <ion-button color="medium" title="Comments">
+              {{ task.comments?.length }}
+              <ion-icon name="reader-outline" />
+            </ion-button>
+          }
+          <ion-button
+            [color]="
+              task.thumbUps && task.thumbUps.includes(currentMemberId)
+                ? 'success'
+                : 'medium'
+            "
+            (click)="thumbUp($event, member.id, task)"
+          >
+            @if (task.thumbUps?.length) {
+              {{ task.thumbUps.length }}
+            }
+            <ion-icon name="thumbs-up-outline" />
+          </ion-button>
+          <ion-button color="medium" (click)="deleteTask($event, task.id)">
+            <ion-icon name="close-outline" />
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    }
+  </ion-reorder-group>
 }
 @for (task of addingTasks; track task) {
-	<ion-item>
-		<!--	<ion-buttons slot="start">-->
-		<!--		<ion-button disabled><ion-icon ></ion-icon></ion-button>-->
-		<!--	</ion-buttons>-->
-		<!--	<ion-spinner color="medium" slot="start" name="lines-small"></ion-spinner>-->
-		<ion-label
-			[style]="visibleTasks?.length ? 'margin-left: 3em' : ''"
-			[color]="taskType === 'risk' ? 'danger' : undefined"
-			>{{ task.title }}</ion-label
-		>
-	</ion-item>
+  <ion-item>
+    <!--	<ion-buttons slot="start">-->
+    <!--		<ion-button disabled><ion-icon ></ion-icon></ion-button>-->
+    <!--	</ion-buttons>-->
+    <!--	<ion-spinner color="medium" slot="start" name="lines-small"></ion-spinner>-->
+    <ion-label
+      [style]="visibleTasks?.length ? 'margin-left: 3em' : ''"
+      [color]="taskType === 'risk' ? 'danger' : undefined"
+      >{{ task.title }}</ion-label
+    >
+  </ion-item>
 }
 @if (!member) {
-	<ion-item>
-		<ion-spinner name="lines-small" slot="start" color="medium" />
-		<ion-label color="medium">Loading...</ion-label>
-	</ion-item>
+  <ion-item>
+    <ion-spinner name="lines-small" slot="start" color="medium" />
+    <ion-label color="medium">Loading...</ion-label>
+  </ion-item>
 }
 @if ((member && cardMode !== "by-person") || showAddInput) {
-	<ion-item>
-		<ion-input
-			[placeholder]="newTaskPlaceholder"
-			[(ngModel)]="newTaskTitle"
-			(keyup.enter)="addTask($event)"
-			(ionBlur)="taskBlur($event)"
-		/>
-		<ion-buttons slot="end">
-			@if (!tasks) {
-				<ion-button disabled>
-					<ion-spinner name="lines-small" />
-				</ion-button>
-			}
-			@if (tasks) {
-				<ion-button
-					[disabled]="!tasks"
-					[color]="newTaskTitle?.trim().length ? 'primary' : 'medium'"
-					(click)="addTask($event)"
-				>
-					Add
-				</ion-button>
-			}
-		</ion-buttons>
-	</ion-item>
+  <ion-item>
+    <ion-input
+      [placeholder]="newTaskPlaceholder"
+      [(ngModel)]="newTaskTitle"
+      (keyup.enter)="addTask($event)"
+      (ionBlur)="taskBlur($event)"
+    />
+    <ion-buttons slot="end">
+      @if (!tasks) {
+        <ion-button disabled>
+          <ion-spinner name="lines-small" />
+        </ion-button>
+      }
+      @if (tasks) {
+        <ion-button
+          [disabled]="!tasks"
+          [color]="newTaskTitle?.trim().length ? 'primary' : 'medium'"
+          (click)="addTask($event)"
+        >
+          Add
+        </ion-button>
+      }
+    </ion-buttons>
+  </ion-item>
 }

@@ -9,47 +9,47 @@ import { ignoreElements } from 'rxjs/operators';
 
 @Directive()
 export abstract class DocumentsBaseComponent extends SneatBaseComponent {
-	@Input() space?: ISpaceContext;
-	@Input() allDocuments?: IAssetDocumentContext[];
+  @Input() space?: ISpaceContext;
+  @Input() allDocuments?: IAssetDocumentContext[];
 
-	public static readonly metadata = {
-		inputs: ['space', 'allDocuments'],
-	};
+  public static readonly metadata = {
+    inputs: ['space', 'allDocuments'],
+  };
 
-	protected readonly asset = inject(AssetService);
-	protected readonly toastCtrl = inject(ToastController);
+  protected readonly asset = inject(AssetService);
+  protected readonly toastCtrl = inject(ToastController);
 
-	public constructor() {
-		super();
-	}
+  public constructor() {
+    super();
+  }
 
-	deleteDocument(
-		asset: IAssetDocumentContext,
-		slidingItem: IonItemSliding,
-	): void {
-		this.asset
-			.deleteAsset(this.space?.id || '', asset.id)
-			.pipe(ignoreElements(), this.takeUntilDestroyed())
-			.subscribe({
-				complete: async () => {
-					const toast = await this.toastCtrl.create({
-						message: `Document deleted: ${asset.id}`,
-					});
-					await toast.present();
-					await slidingItem.close();
-					this.allDocuments = this.allDocuments?.filter(
-						(d) => !eq(d.id, asset.id),
-					);
-					this.onDocsChanged();
-				},
-				error: (err) => {
-					slidingItem.close().catch((e) => {
-						console.error(e);
-					});
-					this.errorLogger.logError(err);
-				},
-			});
-	}
+  deleteDocument(
+    asset: IAssetDocumentContext,
+    slidingItem: IonItemSliding,
+  ): void {
+    this.asset
+      .deleteAsset(this.space?.id || '', asset.id)
+      .pipe(ignoreElements(), this.takeUntilDestroyed())
+      .subscribe({
+        complete: async () => {
+          const toast = await this.toastCtrl.create({
+            message: `Document deleted: ${asset.id}`,
+          });
+          await toast.present();
+          await slidingItem.close();
+          this.allDocuments = this.allDocuments?.filter(
+            (d) => !eq(d.id, asset.id),
+          );
+          this.onDocsChanged();
+        },
+        error: (err) => {
+          slidingItem.close().catch((e) => {
+            console.error(e);
+          });
+          this.errorLogger.logError(err);
+        },
+      });
+  }
 
-	protected abstract onDocsChanged(): void;
+  protected abstract onDocsChanged(): void;
 }

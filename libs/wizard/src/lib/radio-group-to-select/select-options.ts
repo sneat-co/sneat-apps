@@ -1,4 +1,4 @@
 export interface SelectOption {
-	value: string;
-	title?: string;
+  value: string;
+  title?: string;
 }

@@ -4,9 +4,9 @@ import { TmdbService } from './tmdb.service';
 import { MovieService } from './movie.service';
 
 @NgModule({
-	providers: [
-		{ provide: ITmdbService, useClass: TmdbService },
-		{ provide: IMovieService, useClass: MovieService },
-	],
+  providers: [
+    { provide: ITmdbService, useClass: TmdbService },
+    { provide: IMovieService, useClass: MovieService },
+  ],
 })
 export class WatchlistModule {}

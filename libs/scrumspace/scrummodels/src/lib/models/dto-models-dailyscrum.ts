@@ -3,60 +3,60 @@ import { ITaskRequest } from '@sneat/space-models';
 import { IMeetingRequest, ITimerState } from '@sneat/ext-meeting';
 
 export enum TimerOperationEnum {
-	start = 'start',
-	stop = 'stop',
-	pause = 'pause',
+  start = 'start',
+  stop = 'stop',
+  pause = 'pause',
 }
 
 export type TimerOperation =
-	| TimerOperationEnum.start
-	| TimerOperationEnum.stop
-	| TimerOperationEnum.pause;
+  | TimerOperationEnum.start
+  | TimerOperationEnum.stop
+  | TimerOperationEnum.pause;
 
 export enum TimerStatusEnum {
-	active = 'active',
-	stopped = 'stopped',
-	paused = 'paused',
+  active = 'active',
+  stopped = 'stopped',
+  paused = 'paused',
 }
 
 // TODO(StackOverflow): does it make sense to have both `type` && `enum`?
 export type TimerStatus =
-	| TimerStatusEnum.active
-	| TimerStatusEnum.stopped
-	| TimerStatusEnum.paused;
+  | TimerStatusEnum.active
+  | TimerStatusEnum.stopped
+  | TimerStatusEnum.paused;
 
 export interface IMeetingTimerRequest extends IMeetingRequest {
-	operation: TimerOperation;
+  operation: TimerOperation;
 }
 
 export interface IMemberTimerRequest extends IMeetingTimerRequest {
-	member: string;
+  member: string;
 }
 
 export interface ITimestamp {
-	timer: ITimerState;
+  timer: ITimerState;
 }
 
 export interface ITimerResponse extends ITimestamp {
-	by: IByUser;
+  by: IByUser;
 }
 
 export interface IReorderTaskRequest extends ITaskRequest {
-	len: number;
-	from: number;
-	to: number;
-	after?: string;
-	before?: string;
+  len: number;
+  from: number;
+  to: number;
+  after?: string;
+  before?: string;
 }
 
 export interface IThumbUpRequest extends ITaskRequest {
-	value: boolean;
+  value: boolean;
 }
 
 export interface IAddCommentRequest extends ITaskRequest {
-	message: string;
+  message: string;
 }
 
 export interface IAddTaskRequest extends ITaskRequest {
-	title: string;
+  title: string;
 }

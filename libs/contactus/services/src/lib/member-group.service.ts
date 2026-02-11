@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-	providedIn: 'root',
+  providedIn: 'root',
 })
 export class MemberGroupService {
-	// TODO: Move to ContactGroupService or delete
+  // TODO: Move to ContactGroupService or delete
 }

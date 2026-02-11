@@ -4,22 +4,23 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ParticipantsComponent } from './participants.component';
 
 describe('ParticipantsComponent', () => {
-	let component: ParticipantsComponent;
-	let fixture: ComponentFixture<ParticipantsComponent>;
+  let component: ParticipantsComponent;
+  let fixture: ComponentFixture<ParticipantsComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [ParticipantsComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA]}).compileComponents();
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ParticipantsComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
+  }));
 
-	beforeEach(() => {
-		fixture = TestBed.createComponent(ParticipantsComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ParticipantsComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

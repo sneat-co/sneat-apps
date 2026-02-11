@@ -1,25 +1,25 @@
 {
-	"name": "@sneat/extensions-trackus",
-	"version": "workspace:*",
-	"peerDependencies": {
-		"@sneat/core": "workspace:*",
-		"@sneat/space-models": "workspace:*",
-		"@sneat/ui": "workspace:*",
-		"@sneat/space-components": "workspace:*",
-		"@sneat/space-services": "workspace:*",
-		"@sneat/auth-core": "workspace:*",
-		"@sneat/contactus-core": "workspace:*",
-		"@sneat/contactus-services": "workspace:*",
-		"@angular/core": "21.1.3",
-		"@angular/forms": "21.1.3",
-		"@ionic/angular": "8.7.17",
-		"rxjs": "7.8.2",
-		"@angular/common": "21.1.3",
-		"@firebase/firestore": "4.11.0",
-		"@angular/router": "21.1.3",
-		"@angular/fire": "20.0.1",
-		"@sneat/api": "0.0.1",
-		"vitest": "^4.0.18"
-	},
-	"sideEffects": false
+  "name": "@sneat/extensions-trackus",
+  "version": "workspace:*",
+  "peerDependencies": {
+    "@sneat/core": "workspace:*",
+    "@sneat/space-models": "workspace:*",
+    "@sneat/ui": "workspace:*",
+    "@sneat/space-components": "workspace:*",
+    "@sneat/space-services": "workspace:*",
+    "@sneat/auth-core": "workspace:*",
+    "@sneat/contactus-core": "workspace:*",
+    "@sneat/contactus-services": "workspace:*",
+    "@angular/core": "21.1.3",
+    "@angular/forms": "21.1.3",
+    "@ionic/angular": "8.7.17",
+    "rxjs": "7.8.2",
+    "@angular/common": "21.1.3",
+    "@firebase/firestore": "4.11.0",
+    "@angular/router": "21.1.3",
+    "@angular/fire": "20.0.1",
+    "@sneat/api": "0.0.1",
+    "vitest": "^4.0.18"
+  },
+  "sideEffects": false
 }

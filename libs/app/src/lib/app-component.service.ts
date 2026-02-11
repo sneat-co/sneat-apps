@@ -10,45 +10,45 @@ export const StatusBar = new InjectionToken<any>('StatusBar');
 @Injectable()
 // TODO: check if it's used and probably remove
 export class AppComponentService {
-	private readonly platform: Platform;
-	private readonly errorLogger: IErrorLogger;
-	private readonly splashScreen?: any;
-	private readonly statusBar?: any;
+  private readonly platform: Platform;
+  private readonly errorLogger: IErrorLogger;
+  private readonly splashScreen?: any;
+  private readonly statusBar?: any;
 
-	constructor() {
-		this.platform = inject(Platform);
-		this.errorLogger = inject<IErrorLogger>(ErrorLogger);
-		this.splashScreen = inject(SplashScreen, { optional: true });
-		this.statusBar = inject(StatusBar, { optional: true });
-	}
+  constructor() {
+    this.platform = inject(Platform);
+    this.errorLogger = inject<IErrorLogger>(ErrorLogger);
+    this.splashScreen = inject(SplashScreen, { optional: true });
+    this.statusBar = inject(StatusBar, { optional: true });
+  }
 
-	public initializeApp() {
-		this.platform
-			.ready()
-			.then(() => {
-				try {
-					if (this.statusBar) {
-						this.statusBar.styleDefault();
-					} else {
-						console.log('statusBar is not provided');
-					}
-					if (this.splashScreen) {
-						this.splashScreen.hide();
-					} else {
-						console.log('splashScreen is not provided');
-					}
-					// this.analyticsService.logEvent('platform_ready');
-				} catch (e) {
-					this.errorLogger.logError(
-						e,
-						'failed to handle "platform_ready" event',
-					);
-				}
-			})
-			.catch(
-				this.errorLogger.logErrorHandler(
-					'Failed to initialize Platform@ionic/angular',
-				),
-			);
-	}
+  public initializeApp() {
+    this.platform
+      .ready()
+      .then(() => {
+        try {
+          if (this.statusBar) {
+            this.statusBar.styleDefault();
+          } else {
+            console.log('statusBar is not provided');
+          }
+          if (this.splashScreen) {
+            this.splashScreen.hide();
+          } else {
+            console.log('splashScreen is not provided');
+          }
+          // this.analyticsService.logEvent('platform_ready');
+        } catch (e) {
+          this.errorLogger.logError(
+            e,
+            'failed to handle "platform_ready" event',
+          );
+        }
+      })
+      .catch(
+        this.errorLogger.logErrorHandler(
+          'Failed to initialize Platform@ionic/angular',
+        ),
+      );
+  }
 }

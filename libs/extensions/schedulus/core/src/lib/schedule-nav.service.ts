@@ -7,31 +7,31 @@ import { ISchedulePageParams, NewHappeningParams } from './view-models';
 
 @Injectable()
 export class ScheduleNavService {
-	private readonly spaceNavService = inject(SpaceNavService);
-	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+  private readonly spaceNavService = inject(SpaceNavService);
+  private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
 
-	public goCalendar(
-		space: ISpaceContext,
-		queryParams?: ISchedulePageParams,
-	): Promise<boolean> {
-		return this.spaceNavService.navigateForwardToSpacePage(space, 'calendar', {
-			queryParams,
-		});
-	}
+  public goCalendar(
+    space: ISpaceContext,
+    queryParams?: ISchedulePageParams,
+  ): Promise<boolean> {
+    return this.spaceNavService.navigateForwardToSpacePage(space, 'calendar', {
+      queryParams,
+    });
+  }
 
-	public goNewHappening(
-		space: ISpaceContext,
-		params: NewHappeningParams,
-	): void {
-		console.log('ScheduleNavService.goNewHappening()', params);
-		this.spaceNavService
-			.navigateForwardToSpacePage(space, 'new-happening', {
-				queryParams: excludeEmpty(params),
-			})
-			.catch(
-				this.errorLogger.logErrorHandler(
-					'failed to navigate to new happening page',
-				),
-			);
-	}
+  public goNewHappening(
+    space: ISpaceContext,
+    params: NewHappeningParams,
+  ): void {
+    console.log('ScheduleNavService.goNewHappening()', params);
+    this.spaceNavService
+      .navigateForwardToSpacePage(space, 'new-happening', {
+        queryParams: excludeEmpty(params),
+      })
+      .catch(
+        this.errorLogger.logErrorHandler(
+          'failed to navigate to new happening page',
+        ),
+      );
+  }
 }

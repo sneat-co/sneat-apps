@@ -10,90 +10,90 @@ export const ContactRoleParentOfFriend = 'parent_of_friend';
 export const ContactRoleDriver = 'driver';
 export const ContactRoleLocation = 'location';
 export type ContactRoleDwellingRelated =
-	| typeof ContactRoleInsurer
-	| 'cleaner'
-	| 'gardener'
-	| 'plumber'
-	| 'handyman'
-	| 'gp'
-	| 'landlord'
-	| 'tenant'
-	| 'realtor';
+  | typeof ContactRoleInsurer
+  | 'cleaner'
+  | 'gardener'
+  | 'plumber'
+  | 'handyman'
+  | 'gp'
+  | 'landlord'
+  | 'tenant'
+  | 'realtor';
 export type ContactRoleVehicle =
-	| typeof ContactRoleInsurer
-	| 'mechanic'
-	| 'electrician'
-	| 'handyman'
-	| typeof ContactRoleDriver;
+  | typeof ContactRoleInsurer
+  | 'mechanic'
+  | 'electrician'
+  | 'handyman'
+  | typeof ContactRoleDriver;
 export type ContactRoleMedRelated = 'GP' | 'med_specialist';
 export type ContactRoleFamilyRelated =
-	| typeof RoleSpaceMember
-	| typeof ContactRolePet
-	| typeof ContactRoleFriend
-	| typeof ContactRoleRelative;
+  | typeof RoleSpaceMember
+  | typeof ContactRolePet
+  | typeof ContactRoleFriend
+  | typeof ContactRoleRelative;
 export type ContactRoleWorkRelated =
-	| typeof ContactRoleEmployee
-	| 'client'
-	| 'supplier';
+  | typeof ContactRoleEmployee
+  | 'client'
+  | 'supplier';
 export type ContactRoleKidRelated =
-	| typeof ContactRoleFriend
-	| typeof ContactRoleParentOfFriend
-	| 'teacher'
-	| 'babysitter';
+  | typeof ContactRoleFriend
+  | typeof ContactRoleParentOfFriend
+  | 'teacher'
+  | 'babysitter';
 export const ContactRoleShip = 'ship';
 export type ContactRoleLogistSubContact =
-	| typeof ContactRoleShip
-	| typeof ContactRoleLocation;
+  | typeof ContactRoleShip
+  | typeof ContactRoleLocation;
 export type ContactRoleLogistParentContact = 'shipper' | 'dispatcher';
 import { MemberRole, RoleSpaceMember } from './member-types';
 
 export type LogistOrderContactRole =
-	| ContactRoleLogistParentContact
-	| ContactRoleLogistSubContact
-	| 'consignee'
-	| 'dispatch_point'
-	| 'receive_point'
-	| 'dispatch_agent'
-	| 'receive_agent'
-	| 'buyer'
-	| 'courier'
-	| 'freight_agent'
-	| 'notify_party'
-	| 'port'
-	| 'port_from'
-	| 'port_from_location'
-	| 'port_to'
-	| 'port_to_location'
-	| 'shipping_line'
-	| 'truck'
-	| 'trucker'
-	| 'warehouse';
+  | ContactRoleLogistParentContact
+  | ContactRoleLogistSubContact
+  | 'consignee'
+  | 'dispatch_point'
+  | 'receive_point'
+  | 'dispatch_agent'
+  | 'receive_agent'
+  | 'buyer'
+  | 'courier'
+  | 'freight_agent'
+  | 'notify_party'
+  | 'port'
+  | 'port_from'
+  | 'port_from_location'
+  | 'port_to'
+  | 'port_to_location'
+  | 'shipping_line'
+  | 'truck'
+  | 'trucker'
+  | 'warehouse';
 export type ContactRole =
-	| MemberRole
-	| typeof RoleSpaceMember
-	| ContactRoleFamilyRelated
-	| ContactRoleWorkRelated
-	| ContactRoleKidRelated
-	| ContactRoleMedRelated
-	| ContactRoleDwellingRelated
-	| ContactRoleVehicle
-	| LogistOrderContactRole
-	| 'applicant';
+  | MemberRole
+  | typeof RoleSpaceMember
+  | ContactRoleFamilyRelated
+  | ContactRoleWorkRelated
+  | ContactRoleKidRelated
+  | ContactRoleMedRelated
+  | ContactRoleDwellingRelated
+  | ContactRoleVehicle
+  | LogistOrderContactRole
+  | 'applicant';
 
 export interface IContactRoleBrief {
-	readonly title: string;
-	readonly titlePlural?: string;
-	readonly emoji?: string;
-	readonly finder?: string;
+  readonly title: string;
+  readonly titlePlural?: string;
+  readonly emoji?: string;
+  readonly finder?: string;
 }
 
 export interface IContactRoleWithIdAndBrief {
-	readonly id: ContactRole;
-	readonly brief: IContactRoleBrief;
-	readonly hideInNewContactForm?: boolean;
+  readonly id: ContactRole;
+  readonly brief: IContactRoleBrief;
+  readonly hideInNewContactForm?: boolean;
 }
 
 export interface IContactRoleWithIdAndOptionalBrief {
-	readonly id: ContactRole;
-	readonly brief?: IContactRoleBrief;
+  readonly id: ContactRole;
+  readonly brief?: IContactRoleBrief;
 }

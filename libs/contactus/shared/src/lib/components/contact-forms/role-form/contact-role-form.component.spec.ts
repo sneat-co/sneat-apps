@@ -7,48 +7,48 @@ import { ContactGroupService } from '@sneat/contactus-services';
 import { ErrorLogger } from '@sneat/core';
 
 describe('ContactRoleFormComponent', () => {
-	let component: ContactRoleFormComponent;
-	let fixture: ComponentFixture<MockComponent>;
+  let component: ContactRoleFormComponent;
+  let fixture: ComponentFixture<MockComponent>;
 
-	@Component({
-		selector: 'sneat-mock-component',
-		template:
-			'<sneat-contact-role-form [$contactGroupID]="contactGroupID" [$contactRoleID]="contactRoleID"/>',
-		imports: [ContactRoleFormComponent],
-		standalone: true,
-	})
-	class MockComponent {
-		contactGroupID = undefined;
-		contactRoleID = undefined;
-	}
+  @Component({
+    selector: 'sneat-mock-component',
+    template:
+      '<sneat-contact-role-form [$contactGroupID]="contactGroupID" [$contactRoleID]="contactRoleID"/>',
+    imports: [ContactRoleFormComponent],
+    standalone: true,
+  })
+  class MockComponent {
+    contactGroupID = undefined;
+    contactRoleID = undefined;
+  }
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [MockComponent],
-			providers: [
-				{
-					provide: ContactGroupService,
-					useValue: { getContactGroups: vi.fn().mockReturnValue(of([])) },
-				},
-				{
-					provide: ErrorLogger,
-					useValue: {
-						logError: vi.fn(),
-						logErrorHandler: vi.fn(() => vi.fn()),
-					},
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [MockComponent],
+      providers: [
+        {
+          provide: ContactGroupService,
+          useValue: { getContactGroups: vi.fn().mockReturnValue(of([])) },
+        },
+        {
+          provide: ErrorLogger,
+          useValue: {
+            logError: vi.fn(),
+            logErrorHandler: vi.fn(() => vi.fn()),
+          },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
+  }));
 
-	beforeEach(() => {
-		fixture = TestBed.createComponent(MockComponent);
-		component = fixture.debugElement.children[0].componentInstance;
-		fixture.detectChanges();
-	});
+  beforeEach(() => {
+    fixture = TestBed.createComponent(MockComponent);
+    component = fixture.debugElement.children[0].componentInstance;
+    fixture.detectChanges();
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

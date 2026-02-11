@@ -8,45 +8,45 @@ import { TrackusApiService } from '../../trackus-api.service';
 import { TrackerFormComponent } from './tracker-form.component';
 
 describe('TrackerFormComponent', () => {
-	let component: TrackerFormComponent;
-	let fixture: ComponentFixture<TrackerFormComponent>;
+  let component: TrackerFormComponent;
+  let fixture: ComponentFixture<TrackerFormComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [TrackerFormComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			providers: [
-				{ provide: ClassName, useValue: 'TrackerFormComponent' },
-				{
-					provide: ErrorLogger,
-					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
-				},
-				{
-					provide: SneatAuthStateService,
-					useValue: { authState: of({ user: undefined }) },
-				},
-				{
-					provide: TrackusApiService,
-					useValue: { addTrackerPoint: vi.fn() },
-				},
-			],
-		})
-			.overrideComponent(TrackerFormComponent, {
-				set: {
-					imports: [],
-					providers: [],
-					template: '',
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
-				},
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [TrackerFormComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        { provide: ClassName, useValue: 'TrackerFormComponent' },
+        {
+          provide: ErrorLogger,
+          useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+        },
+        {
+          provide: SneatAuthStateService,
+          useValue: { authState: of({ user: undefined }) },
+        },
+        {
+          provide: TrackusApiService,
+          useValue: { addTrackerPoint: vi.fn() },
+        },
+      ],
+    })
+      .overrideComponent(TrackerFormComponent, {
+        set: {
+          imports: [],
+          providers: [],
+          template: '',
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(TrackerFormComponent);
-		component = fixture.componentInstance;
-		fixture.componentRef.setInput('$tracker', undefined);
-	}));
+    fixture = TestBed.createComponent(TrackerFormComponent);
+    component = fixture.componentInstance;
+    fixture.componentRef.setInput('$tracker', undefined);
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

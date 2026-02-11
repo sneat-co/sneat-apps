@@ -1,33 +1,33 @@
 <ion-header>
-	<ion-toolbar color="primary" class="with-back-button">
-		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="" />
-		</ion-buttons>
-		<ion-title>Add {{ serviceType }}</ion-title>
-	</ion-toolbar>
+  <ion-toolbar color="primary" class="with-back-button">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="" />
+    </ion-buttons>
+    <ion-title>Add {{ serviceType }}</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<ion-item-group>
-		<ion-item-divider>
-			<ion-label>Please select provider</ion-label>
-		</ion-item-divider>
-		@for (serviceProvider of serviceProviders; track serviceProvider.id) {
-			<ion-item tappable="true" (click)="selectProvider(serviceProvider)">
-				<ion-label>{{ serviceProvider.title }}</ion-label>
-			</ion-item>
-		}
+  <ion-item-group>
+    <ion-item-divider>
+      <ion-label>Please select provider</ion-label>
+    </ion-item-divider>
+    @for (serviceProvider of serviceProviders; track serviceProvider.id) {
+      <ion-item tappable="true" (click)="selectProvider(serviceProvider)">
+        <ion-label>{{ serviceProvider.title }}</ion-label>
+      </ion-item>
+    }
 
-		<ion-item tappable (click)="other()">
-			@if (!isOtherSelected) {
-				<ion-label color="medium">
-					<ion-icon name="add" />
-					Other provider
-				</ion-label>
-			}
-			@if (isOtherSelected) {
-				<ion-input placeholder="Other provider name" />
-			}
-		</ion-item>
-	</ion-item-group>
+    <ion-item tappable (click)="other()">
+      @if (!isOtherSelected) {
+        <ion-label color="medium">
+          <ion-icon name="add" />
+          Other provider
+        </ion-label>
+      }
+      @if (isOtherSelected) {
+        <ion-input placeholder="Other provider name" />
+      }
+    </ion-item>
+  </ion-item-group>
 </ion-content>

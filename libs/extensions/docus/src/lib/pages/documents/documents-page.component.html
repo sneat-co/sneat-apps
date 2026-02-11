@@ -1,90 +1,90 @@
 <ion-header>
-	<ion-toolbar color="light" class="with-back-button with-end-buttons">
-		<ion-buttons slot="start">
-			<ion-back-button [text]="null" [defaultHref]="$defaultBackUrl()" />
-		</ion-buttons>
-		<sneat-space-page-title
-			[space]="space"
-			generalTitle="Documents"
-			icon="📃"
-			[titlesBySpaceType]="{
-				personal: 'Personal documents',
-				family: 'Family documents',
-			}"
-		/>
-		<ion-buttons slot="end">
-			<ion-button
-				title="New document"
-				routerLink="../new-document"
-				color="primary"
-			>
-				<ion-icon name="add-outline" slot="start" />
-				<ion-label>Add</ion-label>
-			</ion-button>
-			<ion-menu-button />
-		</ion-buttons>
-	</ion-toolbar>
+  <ion-toolbar color="light" class="with-back-button with-end-buttons">
+    <ion-buttons slot="start">
+      <ion-back-button [text]="null" [defaultHref]="$defaultBackUrl()" />
+    </ion-buttons>
+    <sneat-space-page-title
+      [space]="space"
+      generalTitle="Documents"
+      icon="📃"
+      [titlesBySpaceType]="{
+        personal: 'Personal documents',
+        family: 'Family documents',
+      }"
+    />
+    <ion-buttons slot="end">
+      <ion-button
+        title="New document"
+        routerLink="../new-document"
+        color="primary"
+      >
+        <ion-icon name="add-outline" slot="start" />
+        <ion-label>Add</ion-label>
+      </ion-button>
+      <ion-menu-button />
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content class="cardy">
-	<ion-card>
-		<div class="segment">
-			<ion-segment [(ngModel)]="segment">
-				<ion-segment-button value="type">
-					<ion-label>By type</ion-label>
-				</ion-segment-button>
-				<ion-segment-button value="list">
-					<ion-label>List</ion-label>
-				</ion-segment-button>
-			</ion-segment>
-		</div>
+  <ion-card>
+    <div class="segment">
+      <ion-segment [(ngModel)]="segment">
+        <ion-segment-button value="type">
+          <ion-label>By type</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="list">
+          <ion-label>List</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
 
-		@if (segment === "list") {
-			<sneat-filter-item
-				[$filter]="$filter()"
-				(changed)="applyFilter($event)"
-			/>
-			<sneat-documents-list
-				[allDocuments]="documents"
-				[filter]="$filter()"
-				(goDoc)="goDoc($event)"
-			/>
-		}
+    @if (segment === "list") {
+      <sneat-filter-item
+        [$filter]="$filter()"
+        (changed)="applyFilter($event)"
+      />
+      <sneat-documents-list
+        [allDocuments]="documents"
+        [filter]="$filter()"
+        (goDoc)="goDoc($event)"
+      />
+    }
 
-		@if (segment === "type") {
-			<sneat-documents-by-type
-				[allDocuments]="documents"
-				(goDocType)="goType($event)"
-				(goNewDoc)="goNewDoc($event)"
-				(goDoc)="goDoc($event)"
-			/>
-		}
-	</ion-card>
+    @if (segment === "type") {
+      <sneat-documents-by-type
+        [allDocuments]="documents"
+        (goDocType)="goType($event)"
+        (goNewDoc)="goNewDoc($event)"
+        (goDoc)="goDoc($event)"
+      />
+    }
+  </ion-card>
 </ion-content>
 
 @if (segment === "list") {
-	<ion-footer>
-		<ion-toolbar color="light">
-			@if (rootDocs) {
-				<ion-label>
-					{{ rootDocs.length }}
-					{{ rootDocs.length === 1 ? "document" : "documents" }}
-				</ion-label>
-			}
-			@if (!documents) {
-				<ion-label>Loading...</ion-label>
-			}
-			<ion-buttons slot="end">
-				<ion-button
-					color="primary"
-					size="small"
-					(click)="goNewDoc()"
-					[title]="'Add document'"
-				>
-					<ion-icon name="add" />
-					Add
-				</ion-button>
-			</ion-buttons>
-		</ion-toolbar>
-	</ion-footer>
+  <ion-footer>
+    <ion-toolbar color="light">
+      @if (rootDocs) {
+        <ion-label>
+          {{ rootDocs.length }}
+          {{ rootDocs.length === 1 ? "document" : "documents" }}
+        </ion-label>
+      }
+      @if (!documents) {
+        <ion-label>Loading...</ion-label>
+      }
+      <ion-buttons slot="end">
+        <ion-button
+          color="primary"
+          size="small"
+          (click)="goNewDoc()"
+          [title]="'Add document'"
+        >
+          <ion-icon name="add" />
+          Add
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
 }

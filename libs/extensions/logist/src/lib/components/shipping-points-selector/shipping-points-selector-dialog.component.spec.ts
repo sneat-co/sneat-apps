@@ -11,46 +11,46 @@ import { ShippingPointsSelectorDialogComponent } from './shipping-points-selecto
 vi.mock('@angular/fire/firestore');
 
 describe('ShippingPointsSelectorDialogComponent', () => {
-	let component: ShippingPointsSelectorDialogComponent;
-	let fixture: ComponentFixture<ShippingPointsSelectorDialogComponent>;
+  let component: ShippingPointsSelectorDialogComponent;
+  let fixture: ComponentFixture<ShippingPointsSelectorDialogComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [ShippingPointsSelectorDialogComponent],
-			providers: [
-				{
-					provide: ErrorLogger,
-					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
-				},
-				LogistOrderService,
-				{
-					provide: ModalController,
-					useValue: {
-						create: vi.fn(),
-						dismiss: vi.fn(() => Promise.resolve()),
-					},
-				},
-				{
-					provide: SneatApiService,
-					useValue: { post: vi.fn(() => of({})) },
-				},
-				{
-					provide: Firestore,
-					useValue: { type: 'Firestore', toJSON: () => ({}) },
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(ShippingPointsSelectorDialogComponent, {
-				set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ShippingPointsSelectorDialogComponent],
+      providers: [
+        {
+          provide: ErrorLogger,
+          useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+        },
+        LogistOrderService,
+        {
+          provide: ModalController,
+          useValue: {
+            create: vi.fn(),
+            dismiss: vi.fn(() => Promise.resolve()),
+          },
+        },
+        {
+          provide: SneatApiService,
+          useValue: { post: vi.fn(() => of({})) },
+        },
+        {
+          provide: Firestore,
+          useValue: { type: 'Firestore', toJSON: () => ({}) },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(ShippingPointsSelectorDialogComponent, {
+        set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(ShippingPointsSelectorDialogComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(ShippingPointsSelectorDialogComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

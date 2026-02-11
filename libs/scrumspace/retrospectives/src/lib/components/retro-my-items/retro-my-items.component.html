@@ -1,35 +1,35 @@
 <ion-list>
-	@for (item of items || []; track trackById($index, item)) {
-		<ion-item>
-			<ion-label>{{ item.title }}</ion-label>
-			@if (!item.ID) {
-				<ion-spinner name="lines-small" />
-			}
-			@if (item.ID) {
-				<ion-buttons slot="end">
-					<ion-button title="Delete" (click)="delete(item)">
-						<ion-icon name="close-outline" color="medium" />
-					</ion-button>
-				</ion-buttons>
-			}
-		</ion-item>
-	}
-	<form [formGroup]="addRetroItemForm">
-		<ion-item>
-			<!--suppress AngularUndefinedBinding -->
-			<ion-input
-				[formControl]="titleControl"
-				placeholder="Type your feedback here"
-				(keyup.enter)="add()"
-			/>
-			<ion-buttons slot="end">
-				<ion-button
-					(click)="add()"
-					[color]="titleControl.value?.trim()?.length ? 'primary' : 'medium'"
-				>
-					Add
-				</ion-button>
-			</ion-buttons>
-		</ion-item>
-	</form>
+  @for (item of items || []; track trackById($index, item)) {
+    <ion-item>
+      <ion-label>{{ item.title }}</ion-label>
+      @if (!item.ID) {
+        <ion-spinner name="lines-small" />
+      }
+      @if (item.ID) {
+        <ion-buttons slot="end">
+          <ion-button title="Delete" (click)="delete(item)">
+            <ion-icon name="close-outline" color="medium" />
+          </ion-button>
+        </ion-buttons>
+      }
+    </ion-item>
+  }
+  <form [formGroup]="addRetroItemForm">
+    <ion-item>
+      <!--suppress AngularUndefinedBinding -->
+      <ion-input
+        [formControl]="titleControl"
+        placeholder="Type your feedback here"
+        (keyup.enter)="add()"
+      />
+      <ion-buttons slot="end">
+        <ion-button
+          (click)="add()"
+          [color]="titleControl.value?.trim()?.length ? 'primary' : 'medium'"
+        >
+          Add
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </form>
 </ion-list>

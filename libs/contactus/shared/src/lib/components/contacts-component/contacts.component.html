@@ -2,113 +2,113 @@
 @let role = $roleID();
 
 @if (space.type === "company") {
-	<ion-segment [value]="role" (ionChange)="onRoleChanged($event)">
-		<!--		<ion-segment-button>All</ion-segment-button>-->
-		@for (r of roles; track r.id) {
-			<ion-segment-button [value]="r.id">
-				@if (r.iconName) {
-					<ion-icon [name]="r.iconName" />
-				}
-				<ion-label style="font-size: smaller"
-					>{{ r.title }}
-					<ion-badge color="light">
-						<ion-label
-							color="medium"
-							style="font-size: smaller; font-weight: normal"
-							>{{ contactsNumber(r.id) }}
-						</ion-label>
-					</ion-badge>
-				</ion-label>
-			</ion-segment-button>
-		}
-	</ion-segment>
+  <ion-segment [value]="role" (ionChange)="onRoleChanged($event)">
+    <!--		<ion-segment-button>All</ion-segment-button>-->
+    @for (r of roles; track r.id) {
+      <ion-segment-button [value]="r.id">
+        @if (r.iconName) {
+          <ion-icon [name]="r.iconName" />
+        }
+        <ion-label style="font-size: smaller"
+          >{{ r.title }}
+          <ion-badge color="light">
+            <ion-label
+              color="medium"
+              style="font-size: smaller; font-weight: normal"
+              >{{ contactsNumber(r.id) }}
+            </ion-label>
+          </ion-badge>
+        </ion-label>
+      </ion-segment-button>
+    }
+  </ion-segment>
 }
 
 <ion-card>
-	<ion-grid class="ion-grid-layout">
-		<ion-row>
-			<ion-col size="12" size-sm="5">
-				<sneat-filter-item
-					[$filter]="$filter()"
-					(changed)="onFilterChanged($event)"
-				/>
-			</ion-col>
-			@if ($showTabs()) {
-				<ion-col size="12" size-sm="7">
-					<ion-item lines="none" class="ion-no-padding-ion-no-margin">
-						<ion-segment [(ngModel)]="segment">
-							<ion-segment-button value="list">
-								<ion-label>List</ion-label>
-							</ion-segment-button>
-							<ion-segment-button value="groups">
-								<ion-label>By type</ion-label>
-							</ion-segment-button>
-						</ion-segment>
-						<!--						Make it to work in a modal - too narrow at the moment.-->
-						<!--						@if (segment === "groups") {-->
-						<!--							<ion-buttons slot="end">-->
-						<!--								<ion-button color="tertiary" (click)="addGroup($event)">-->
-						<!--									<ion-icon name="add-outline" slot="start" />-->
-						<!--									<ion-label>Add group</ion-label>-->
-						<!--								</ion-button>-->
-						<!--							</ion-buttons>-->
-						<!--						}-->
-					</ion-item>
-				</ion-col>
-			}
-		</ion-row>
-	</ion-grid>
+  <ion-grid class="ion-grid-layout">
+    <ion-row>
+      <ion-col size="12" size-sm="5">
+        <sneat-filter-item
+          [$filter]="$filter()"
+          (changed)="onFilterChanged($event)"
+        />
+      </ion-col>
+      @if ($showTabs()) {
+        <ion-col size="12" size-sm="7">
+          <ion-item lines="none" class="ion-no-padding-ion-no-margin">
+            <ion-segment [(ngModel)]="segment">
+              <ion-segment-button value="list">
+                <ion-label>List</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="groups">
+                <ion-label>By type</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+            <!--						Make it to work in a modal - too narrow at the moment.-->
+            <!--						@if (segment === "groups") {-->
+            <!--							<ion-buttons slot="end">-->
+            <!--								<ion-button color="tertiary" (click)="addGroup($event)">-->
+            <!--									<ion-icon name="add-outline" slot="start" />-->
+            <!--									<ion-label>Add group</ion-label>-->
+            <!--								</ion-button>-->
+            <!--							</ion-buttons>-->
+            <!--						}-->
+          </ion-item>
+        </ion-col>
+      }
+    </ion-row>
+  </ion-grid>
 
-	@if (segment === "list" || space.type !== "family") {
-		<ion-list>
-			@for (contact of $contacts(); track contact.id) {
-				<ion-item-sliding @listItem>
-					<sneat-contacts-list-item
-						[$space]="$space()"
-						[$contact]="contact"
-						[contactClicked]="contactClicked"
-						[excludeRole]="$roleID()"
-					/>
-				</ion-item-sliding>
-			}
-			@if ($canAdd()) {
-				<ion-item button (click)="addNewContact($event)">
-					<ion-icon name="add" color="primary" />
-					<ion-label color="primary">Add contact</ion-label>
-				</ion-item>
-			}
-		</ion-list>
-	}
+  @if (segment === "list" || space.type !== "family") {
+    <ion-list>
+      @for (contact of $contacts(); track contact.id) {
+        <ion-item-sliding @listItem>
+          <sneat-contacts-list-item
+            [$space]="$space()"
+            [$contact]="contact"
+            [contactClicked]="contactClicked"
+            [excludeRole]="$roleID()"
+          />
+        </ion-item-sliding>
+      }
+      @if ($canAdd()) {
+        <ion-item button (click)="addNewContact($event)">
+          <ion-icon name="add" color="primary" />
+          <ion-label color="primary">Add contact</ion-label>
+        </ion-item>
+      }
+    </ion-list>
+  }
 
-	@if (segment === "groups") {
-		<ion-list>
-			@if (space.type === "family") {
-				<sneat-contacts-by-type
-					[$contacts]="$contactsWithSpace()"
-					[$contactGroupDefinitions]="familyGroupDefinitions"
-					[$space]="space"
-					[$filter]="$filter()"
-					[contactClicked]="contactClicked"
-					[command]="command"
-					[goToNewContactPage]="goToNewContactPage"
-					(contactSelectionChange)="contactSelectionChanged($event)"
-					(addContactClick)="addContactClick.emit($event)"
-				/>
-			}
-			@if (groups) {
-				@for (group of groups; track group.id) {
-					<ion-item (click)="goGroup(group)" tappable>
-						<ion-label>
-							{{ group.brief?.title }}
-						</ion-label>
-						@if (group.dbo?.numberOf?.members) {
-							<ion-badge color="light">
-								{{ group.dbo?.numberOf?.members }}
-							</ion-badge>
-						}
-					</ion-item>
-				}
-			}
-		</ion-list>
-	}
+  @if (segment === "groups") {
+    <ion-list>
+      @if (space.type === "family") {
+        <sneat-contacts-by-type
+          [$contacts]="$contactsWithSpace()"
+          [$contactGroupDefinitions]="familyGroupDefinitions"
+          [$space]="space"
+          [$filter]="$filter()"
+          [contactClicked]="contactClicked"
+          [command]="command"
+          [goToNewContactPage]="goToNewContactPage"
+          (contactSelectionChange)="contactSelectionChanged($event)"
+          (addContactClick)="addContactClick.emit($event)"
+        />
+      }
+      @if (groups) {
+        @for (group of groups; track group.id) {
+          <ion-item (click)="goGroup(group)" tappable>
+            <ion-label>
+              {{ group.brief?.title }}
+            </ion-label>
+            @if (group.dbo?.numberOf?.members) {
+              <ion-badge color="light">
+                {{ group.dbo?.numberOf?.members }}
+              </ion-badge>
+            }
+          </ion-item>
+        }
+      }
+    </ion-list>
+  }
 </ion-card>

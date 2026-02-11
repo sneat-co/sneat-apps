@@ -1,41 +1,41 @@
 {
-	"name": "core",
-	"$schema": "../../node_modules/nx/schemas/project-schema.json",
-	"projectType": "library",
-	"sourceRoot": "libs/core/src",
-	"prefix": "sneat",
-	"targets": {
-		"build": {
-			"executor": "@nx/angular:ng-packagr-lite",
-			"outputs": ["{workspaceRoot}/dist/libs/core"],
-			"options": {
-				"project": "libs/core/ng-package.json",
-				"tsConfig": "libs/core/tsconfig.lib.json"
-			},
-			"configurations": {
-				"production": {
-					"tsConfig": "libs/core/tsconfig.lib.prod.json"
-				},
-				"development": {}
-			},
-			"defaultConfiguration": "production"
-		},
-		"test": {
-			"executor": "@nx/vitest:test",
-			"outputs": ["{workspaceRoot}/coverage/libs/core"],
-			"options": {
-				"tsConfig": "libs/core/tsconfig.spec.json"
-			}
-		},
-		"lint": {
-			"executor": "@nx/eslint:lint"
-		},
-		"vitest": {
-			"executor": "@nx/vitest:test",
-			"outputs": ["{options.reportsDirectory}"],
-			"options": {
-				"reportsDirectory": "../../coverage/libs/core"
-			}
-		}
-	}
+  "name": "core",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/core/src",
+  "prefix": "sneat",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/libs/core"],
+      "options": {
+        "project": "libs/core/ng-package.json",
+        "tsConfig": "libs/core/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/core/tsconfig.lib.prod.json"
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{workspaceRoot}/coverage/libs/core"],
+      "options": {
+        "tsConfig": "libs/core/tsconfig.spec.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "vitest": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "reportsDirectory": "../../coverage/libs/core"
+      }
+    }
+  }
 }

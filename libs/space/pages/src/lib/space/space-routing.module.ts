@@ -9,38 +9,38 @@ import { listusRoutes } from '@sneat/extensions-listus';
 import { calendariumRoutes } from '@sneat/extensions-schedulus-main';
 import { trackusSpaceRoutes } from '@sneat/extensions-trackus';
 import {
-	SpaceComponentBaseParams,
-	SpaceMenuComponent,
+  SpaceComponentBaseParams,
+  SpaceMenuComponent,
 } from '@sneat/space-components';
 
 const routes: Routes = [
-	{
-		path: '',
-		// pathMatch: 'full', -- for all routes
-		component: SpaceMenuComponent,
-		outlet: 'menu',
-	},
-	{
-		path: '',
-		data: { title: 'Space' },
-		// pathMatch: 'full',
-		loadComponent: () =>
-			import('./space-page/space-page.component').then(
-				(m) => m.SpacePageComponent,
-			),
-	},
-	...contactusRoutes,
-	...spacePagesRoutes,
-	...budgetusRoutes,
-	...docusRoutes,
-	...listusRoutes,
-	...calendariumRoutes,
-	...trackusSpaceRoutes,
+  {
+    path: '',
+    // pathMatch: 'full', -- for all routes
+    component: SpaceMenuComponent,
+    outlet: 'menu',
+  },
+  {
+    path: '',
+    data: { title: 'Space' },
+    // pathMatch: 'full',
+    loadComponent: () =>
+      import('./space-page/space-page.component').then(
+        (m) => m.SpacePageComponent,
+      ),
+  },
+  ...contactusRoutes,
+  ...spacePagesRoutes,
+  ...budgetusRoutes,
+  ...docusRoutes,
+  ...listusRoutes,
+  ...calendariumRoutes,
+  ...trackusSpaceRoutes,
 ];
 
 @NgModule({
-	imports: [RouterModule.forChild(routes), AssetusRoutingModule],
-	exports: [RouterModule],
-	providers: [SpaceComponentBaseParams],
+  imports: [RouterModule.forChild(routes), AssetusRoutingModule],
+  exports: [RouterModule],
+  providers: [SpaceComponentBaseParams],
 })
 export class SpaceRoutingModule {}

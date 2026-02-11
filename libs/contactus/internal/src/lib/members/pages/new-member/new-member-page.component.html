@@ -1,88 +1,88 @@
 <ion-header>
-	<ion-toolbar color="light" class="with-back-button">
-		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="$defaultBackUrl()" />
-		</ion-buttons>
-		<ion-title>
-			@if (space.brief || space.type) {
-				@if ($contact().dbo.type === "animal") {
-					New pet
-				} @else {
-					@switch ($contact().dbo.ageGroup) {
-						@case ("child") {
-							New child
-						}
-						@case ("adult") {
-							New adult
-						}
-						@default {
-							New member
-						}
-					}
-				}
-				&#64; {{ $space().brief?.title || space.type }}
-			} @else {
-				New member
-			}
-		</ion-title>
-	</ion-toolbar>
+  <ion-toolbar color="light" class="with-back-button">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="$defaultBackUrl()" />
+    </ion-buttons>
+    <ion-title>
+      @if (space.brief || space.type) {
+        @if ($contact().dbo.type === "animal") {
+          New pet
+        } @else {
+          @switch ($contact().dbo.ageGroup) {
+            @case ("child") {
+              New child
+            }
+            @case ("adult") {
+              New adult
+            }
+            @default {
+              New member
+            }
+          }
+        }
+        &#64; {{ $space().brief?.title || space.type }}
+      } @else {
+        New member
+      }
+    </ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-segment
-	[value]="$contactType()"
-	(ionChange)="onContactTypeChanged($event)"
+  [value]="$contactType()"
+  (ionChange)="onContactTypeChanged($event)"
 >
-	<ion-segment-button value="person">Person</ion-segment-button>
-	<ion-segment-button value="animal">Pet</ion-segment-button>
+  <ion-segment-button value="person">Person</ion-segment-button>
+  <ion-segment-button value="animal">Pet</ion-segment-button>
 </ion-segment>
 
 <ion-content class="cardy">
-	@switch ($contactType()) {
-		@case ("person") {
-			@if (space.id && space.type !== "family") {
-				<ion-segment [value]="$inviteType()" (ionChange)="onTabChanged($event)">
-					<ion-segment-button value="mass">
-						Mass invite [{{ space.id }} - {{ space.type }}]
-					</ion-segment-button>
-					<ion-segment-button value="personal"
-						>Personal invite</ion-segment-button
-					>
-				</ion-segment>
-			}
+  @switch ($contactType()) {
+    @case ("person") {
+      @if (space.id && space.type !== "family") {
+        <ion-segment [value]="$inviteType()" (ionChange)="onTabChanged($event)">
+          <ion-segment-button value="mass">
+            Mass invite [{{ space.id }} - {{ space.type }}]
+          </ion-segment-button>
+          <ion-segment-button value="personal"
+            >Personal invite</ion-segment-button
+          >
+        </ion-segment>
+      }
 
-			@switch ($inviteType()) {
-				@case ("personal") {
-					<sneat-new-member-form
-						[$space]="$space()"
-						[$contact]="$contact()"
-						(contactChange)="$contact.set($event)"
-					/>
-				}
-				@case ("mass") {
-					<ion-card>
-						<ion-card-content>
-							<sneat-invite-links [contactusSpace]="contactusSpace" />
+      @switch ($inviteType()) {
+        @case ("personal") {
+          <sneat-new-member-form
+            [$space]="$space()"
+            [$contact]="$contact()"
+            (contactChange)="$contact.set($event)"
+          />
+        }
+        @case ("mass") {
+          <ion-card>
+            <ion-card-content>
+              <sneat-invite-links [contactusSpace]="contactusSpace" />
 
-							<p>
-								<b>Or</b> you can send
-								<a
-									href=""
-									(click)="$inviteType.set('personal'); $event.preventDefault()"
-									>personal invite</a
-								>
-								by email.
-							</p>
-						</ion-card-content>
-					</ion-card>
-				}
-			}
-		}
-		@case ("animal") {
-			<sneat-new-pet-form
-				[$space]="$space()"
-				[$contact]="$contact()"
-				(contactChange)="$contact.set($event)"
-			/>
-		}
-	}
+              <p>
+                <b>Or</b> you can send
+                <a
+                  href=""
+                  (click)="$inviteType.set('personal'); $event.preventDefault()"
+                  >personal invite</a
+                >
+                by email.
+              </p>
+            </ion-card-content>
+          </ion-card>
+        }
+      }
+    }
+    @case ("animal") {
+      <sneat-new-pet-form
+        [$space]="$space()"
+        [$contact]="$contact()"
+        (contactChange)="$contact.set($event)"
+      />
+    }
+  }
 </ion-content>

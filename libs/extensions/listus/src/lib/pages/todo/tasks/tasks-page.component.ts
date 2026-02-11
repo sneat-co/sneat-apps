@@ -4,18 +4,18 @@ import { CommuneBasePage } from 'sneat-shared/pages/commune-base-page';
 import { CommuneTopPage } from '../../../../../pages/constants';
 
 @Component({
-	selector: 'sneat-to-do',
-	templateUrl: './tasks-page.component.html',
-	providers: [CommuneBasePageParams],
+  selector: 'sneat-to-do',
+  templateUrl: './tasks-page.component.html',
+  providers: [CommuneBasePageParams],
 })
 export class TasksPageComponent extends CommuneBasePage {
-	constructor() {
-		const params = inject(CommuneBasePageParams);
+  constructor() {
+    const params = inject(CommuneBasePageParams);
 
-		super(CommuneTopPage.home, params);
-	}
+    super(CommuneTopPage.home, params);
+  }
 
-	goNew(): void {
-		this.navigateForward('new-task');
-	}
+  goNew(): void {
+    this.navigateForward('new-task');
+  }
 }

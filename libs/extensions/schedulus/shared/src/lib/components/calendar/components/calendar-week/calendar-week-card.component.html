@@ -1,78 +1,78 @@
 <ion-card>
-	<ion-item
-		class="sneat-small-end-padding sneat-small-start-padding"
-		lines="full"
-	>
-		<ion-buttons
-			slot="start"
-			class="sneat-tiny-end-margin sneat-no-horizontal-margins"
-		>
-			<ion-button
-				[disabled]="$isDefaultDate()"
-				[color]="$isDefaultDate() ? 'medium' : 'primary'"
-				[title]="'Jump to current week'"
-				(click)="setToday()"
-			>
-				<ion-icon name="today-outline" />
-			</ion-button>
-			<ion-button color="tertiary" title="Previous day" (click)="swipePrev()">
-				<ion-icon name="chevron-back-sharp" />
-			</ion-button>
-		</ion-buttons>
-		<ion-buttons
-			slot="end"
-			class="sneat-tiny-start-margin sneat-no-horizontal-margins"
-		>
-			<ion-button color="tertiary" title="Next day" (click)="swipeNext()">
-				<ion-icon name="chevron-forward-sharp" />
-			</ion-button>
-		</ion-buttons>
-		<ion-label>
-			<div
-				class="virtual-slider-outer"
-				(swipeleft)="swipeLeft()"
-				(swiperight)="swipeRight()"
-			>
-				<div class="virtual-slider-inner" [@virtualSlider]="animationState">
-					<h1
-						class="virtual-slide"
-						[@virtualSlide]="oddSlide?.animationState || 'show'"
-					>
-						<sneat-calendar-week-title [week]="oddWeek" />
-					</h1>
-					<h1
-						class="virtual-slide"
-						[@virtualSlide]="evenSlide?.animationState || 'hide'"
-					>
-						<sneat-calendar-week-title [week]="evenWeek" />
-					</h1>
-				</div>
-			</div>
-		</ion-label>
-	</ion-item>
+  <ion-item
+    class="sneat-small-end-padding sneat-small-start-padding"
+    lines="full"
+  >
+    <ion-buttons
+      slot="start"
+      class="sneat-tiny-end-margin sneat-no-horizontal-margins"
+    >
+      <ion-button
+        [disabled]="$isDefaultDate()"
+        [color]="$isDefaultDate() ? 'medium' : 'primary'"
+        [title]="'Jump to current week'"
+        (click)="setToday()"
+      >
+        <ion-icon name="today-outline" />
+      </ion-button>
+      <ion-button color="tertiary" title="Previous day" (click)="swipePrev()">
+        <ion-icon name="chevron-back-sharp" />
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons
+      slot="end"
+      class="sneat-tiny-start-margin sneat-no-horizontal-margins"
+    >
+      <ion-button color="tertiary" title="Next day" (click)="swipeNext()">
+        <ion-icon name="chevron-forward-sharp" />
+      </ion-button>
+    </ion-buttons>
+    <ion-label>
+      <div
+        class="virtual-slider-outer"
+        (swipeleft)="swipeLeft()"
+        (swiperight)="swipeRight()"
+      >
+        <div class="virtual-slider-inner" [@virtualSlider]="animationState">
+          <h1
+            class="virtual-slide"
+            [@virtualSlide]="oddSlide?.animationState || 'show'"
+          >
+            <sneat-calendar-week-title [week]="oddWeek" />
+          </h1>
+          <h1
+            class="virtual-slide"
+            [@virtualSlide]="evenSlide?.animationState || 'hide'"
+          >
+            <sneat-calendar-week-title [week]="evenWeek" />
+          </h1>
+        </div>
+      </div>
+    </ion-label>
+  </ion-item>
 
-	<div
-		class="virtual-slider-outer"
-		(swipeleft)="swipeLeft()"
-		(swiperight)="swipeRight()"
-	>
-		<div class="virtual-slider-inner" [@virtualSlider]="animationState">
-			<sneat-calendar-week
-				[$space]="$space()"
-				class="virtual-slide"
-				[@virtualSlide]="oddSlide?.animationState || 'show'"
-				[$week]="oddWeek"
-				[$spaceDaysProvider]="$spaceDaysProvider()"
-			/>
-			@if (isEvenSlideActivated) {
-				<sneat-calendar-week
-					class="virtual-slide"
-					[$space]="$space()"
-					[@virtualSlide]="evenSlide?.animationState || 'hide'"
-					[$week]="evenWeek"
-					[$spaceDaysProvider]="$spaceDaysProvider()"
-				/>
-			}
-		</div>
-	</div>
+  <div
+    class="virtual-slider-outer"
+    (swipeleft)="swipeLeft()"
+    (swiperight)="swipeRight()"
+  >
+    <div class="virtual-slider-inner" [@virtualSlider]="animationState">
+      <sneat-calendar-week
+        [$space]="$space()"
+        class="virtual-slide"
+        [@virtualSlide]="oddSlide?.animationState || 'show'"
+        [$week]="oddWeek"
+        [$spaceDaysProvider]="$spaceDaysProvider()"
+      />
+      @if (isEvenSlideActivated) {
+        <sneat-calendar-week
+          class="virtual-slide"
+          [$space]="$space()"
+          [@virtualSlide]="evenSlide?.animationState || 'hide'"
+          [$week]="evenWeek"
+          [$spaceDaysProvider]="$spaceDaysProvider()"
+        />
+      }
+    </div>
+  </div>
 </ion-card>

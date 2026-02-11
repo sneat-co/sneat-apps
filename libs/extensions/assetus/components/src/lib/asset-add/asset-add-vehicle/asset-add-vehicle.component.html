@@ -1,42 +1,42 @@
 @if (vehicleType) {
-	<h1 class="ion-padding">New {{ vehicleType }}</h1>
+  <h1 class="ion-padding">New {{ vehicleType }}</h1>
 } @else {
-	<h1 class="ion-padding">New vehicle</h1>
+  <h1 class="ion-padding">New vehicle</h1>
 }
 
 @if (vehicleType) {
-	<sneat-vehicle-card
-		[space]="space"
-		[(vehicleAsset)]="vehicleAsset"
-		(vehicleAssetChange)="onAssetChanged($event)"
-	/>
+  <sneat-vehicle-card
+    [space]="space"
+    [(vehicleAsset)]="vehicleAsset"
+    (vehicleAssetChange)="onAssetChanged($event)"
+  />
 } @else {
-	<ion-card>
-		<sneat-select-from-list
-			[(ngModel)]="vehicleType"
-			(ngModelChange)="onVehicleTypeChanged()"
-			[isFilterable]="false"
-			title="Type"
-			[items]="vehicleTypes"
-		/>
-	</ion-card>
+  <ion-card>
+    <sneat-select-from-list
+      [(ngModel)]="vehicleType"
+      (ngModelChange)="onVehicleTypeChanged()"
+      [isFilterable]="false"
+      title="Type"
+      [items]="vehicleTypes"
+    />
+  </ion-card>
 }
 
 @if (vehicleAsset?.dbo?.extra?.model || vehicleAsset?.dbo?.extra?.regNumber) {
-	<ion-button
-		[color]="vehicleAsset?.dbo?.extra?.model ? 'primary' : 'light'"
-		size="large"
-		class="ion-margin"
-		expand="full"
-		[disabled]="!space || isSubmitting"
-		(click)="submitVehicleForm()"
-	>
-		@if (isSubmitting) {
-			Adding vehicle...
-		} @else {
-			Add vehicle
-		}
-	</ion-button>
+  <ion-button
+    [color]="vehicleAsset?.dbo?.extra?.model ? 'primary' : 'light'"
+    size="large"
+    class="ion-margin"
+    expand="full"
+    [disabled]="!space || isSubmitting"
+    (click)="submitVehicleForm()"
+  >
+    @if (isSubmitting) {
+      Adding vehicle...
+    } @else {
+      Add vehicle
+    }
+  </ion-button>
 }
 
 <div style="height: 300px"></div>

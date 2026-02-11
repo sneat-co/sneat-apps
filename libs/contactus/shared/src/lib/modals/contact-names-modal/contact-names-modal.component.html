@@ -1,36 +1,36 @@
 <ion-header>
-	<ion-toolbar color="light">
-		<ion-title>Edit names</ion-title>
-		<ion-buttons slot="end">
-			<ion-button (click)="close()">
-				<ion-icon name="close-outline" />
-			</ion-button>
-		</ion-buttons>
-	</ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-title>Edit names</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon name="close-outline" />
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<sneat-names-form
-		[name]="names"
-		[showHeader]="false"
-		(namesChanged)="onNamesChanged($event)"
-	/>
+  <sneat-names-form
+    [name]="names"
+    [showHeader]="false"
+    (namesChanged)="onNamesChanged($event)"
+  />
 </ion-content>
 
 <ion-footer>
-	<ion-toolbar>
-		<ion-buttons slot="end">
-			<ion-button
-				[disabled]="$saving()"
-				fill="solid"
-				color="primary"
-				(click)="saveChanges()"
-			>
-				<ion-label>Save</ion-label>
-			</ion-button>
-			<ion-button (click)="close()">
-				<ion-label>Cancel</ion-label>
-			</ion-button>
-		</ion-buttons>
-	</ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button
+        [disabled]="$saving()"
+        fill="solid"
+        color="primary"
+        (click)="saveChanges()"
+      >
+        <ion-label>Save</ion-label>
+      </ion-button>
+      <ion-button (click)="close()">
+        <ion-label>Cancel</ion-label>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-footer>

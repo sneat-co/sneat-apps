@@ -28,7 +28,10 @@
       "Bash(pnpm add:*)",
       "Bash(pnpm nx build:*)",
       "Bash(pnpm nx lint:*)",
-      "Bash(xxd:*)"
+      "Bash(xxd:*)",
+      "Bash(pnpm prettier:*)",
+      "Bash(pnpm nx run-many:*)",
+      "Bash(npx vitest run:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

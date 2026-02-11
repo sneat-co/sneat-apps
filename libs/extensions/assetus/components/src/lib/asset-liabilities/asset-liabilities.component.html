@@ -1,56 +1,56 @@
 <ion-item-group>
-	<!--    <ion-item-divider color="light">-->
-	<!--        <ion-label>Services</ion-label>-->
-	<!--    </ion-item-divider>-->
-	@for (service of liabilitiesByServiceType; track service.type) {
-		<ion-item class="with-buttons">
-			<ion-label
-				[color]="
-					!service.liabilities || !service.liabilities.length ? 'danger' : ''
-				"
-			>
-				{{ service.title }}
-			</ion-label>
-			<ion-buttons slot="end">
-				@if (!service.liabilities || !service.liabilities.length) {
-					<ion-button
-						title="Not used"
-						color="medium"
-						style="text-transform: none"
-						(click)="markAsNotUsed(service)"
-					>
-						<ion-icon name="close-outline" />
-					</ion-button>
-				}
-				<ion-button
-					color="secondary"
-					style="text-transform: none"
-					title="Shop around"
-				>
-					<ion-icon name="cart" />
-				</ion-button>
-				<ion-button
-					(click)="addService(service.type)"
-					color="primary"
-					title="Add current"
-				>
-					<ion-icon name="add" />
-				</ion-button>
-			</ion-buttons>
-		</ion-item>
-		@if (service && service.liabilities && service.liabilities.length) {
-			@for (liability of service.liabilities; track liability.id) {
-				<ion-item>
-					<ion-label>{{ liability.title }}</ion-label>
-				</ion-item>
-			}
-		}
-	}
+  <!--    <ion-item-divider color="light">-->
+  <!--        <ion-label>Services</ion-label>-->
+  <!--    </ion-item-divider>-->
+  @for (service of liabilitiesByServiceType; track service.type) {
+    <ion-item class="with-buttons">
+      <ion-label
+        [color]="
+          !service.liabilities || !service.liabilities.length ? 'danger' : ''
+        "
+      >
+        {{ service.title }}
+      </ion-label>
+      <ion-buttons slot="end">
+        @if (!service.liabilities || !service.liabilities.length) {
+          <ion-button
+            title="Not used"
+            color="medium"
+            style="text-transform: none"
+            (click)="markAsNotUsed(service)"
+          >
+            <ion-icon name="close-outline" />
+          </ion-button>
+        }
+        <ion-button
+          color="secondary"
+          style="text-transform: none"
+          title="Shop around"
+        >
+          <ion-icon name="cart" />
+        </ion-button>
+        <ion-button
+          (click)="addService(service.type)"
+          color="primary"
+          title="Add current"
+        >
+          <ion-icon name="add" />
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+    @if (service && service.liabilities && service.liabilities.length) {
+      @for (liability of service.liabilities; track liability.id) {
+        <ion-item>
+          <ion-label>{{ liability.title }}</ion-label>
+        </ion-item>
+      }
+    }
+  }
 
-	<ion-item tappable (click)="addService()">
-		<ion-label color="medium">
-			<ion-icon name="add" />
-			{{ addTitle }}
-		</ion-label>
-	</ion-item>
+  <ion-item tappable (click)="addService()">
+    <ion-label color="medium">
+      <ion-icon name="add" />
+      {{ addTitle }}
+    </ion-label>
+  </ion-item>
 </ion-item-group>

@@ -1,12 +1,12 @@
 {
-	"extends": "../tsconfig.base.json",
-	"compilerOptions": {
-		"outDir": "../dist/out-tsc/tools",
-		"rootDir": ".",
-		"module": "esnext",
-		"target": "ES2022",
-		"types": ["node"],
-		"importHelpers": false
-	},
-	"include": ["**/*.ts"]
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../dist/out-tsc/tools",
+    "rootDir": ".",
+    "module": "esnext",
+    "target": "ES2022",
+    "types": ["node"],
+    "importHelpers": false
+  },
+  "include": ["**/*.ts"]
 }

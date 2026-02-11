@@ -2,6 +2,6 @@ import { NgModule } from '@angular/core';
 import { EditorStateStore } from './editor-state-store';
 
 @NgModule({
-	providers: [EditorStateStore],
+  providers: [EditorStateStore],
 })
 export class DatatugEditorModule {}

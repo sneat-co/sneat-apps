@@ -1,37 +1,37 @@
 <div class="ion-padding-horizontal">
-	<ion-segment [value]="$tab()" (ionChange)="onTabChange($event)">
-		<ion-segment-button value="person">Person</ion-segment-button>
-		<ion-segment-button value="pet">Pet</ion-segment-button>
-		<ion-segment-button value="company">Company</ion-segment-button>
-	</ion-segment>
+  <ion-segment [value]="$tab()" (ionChange)="onTabChange($event)">
+    <ion-segment-button value="person">Person</ion-segment-button>
+    <ion-segment-button value="pet">Pet</ion-segment-button>
+    <ion-segment-button value="company">Company</ion-segment-button>
+  </ion-segment>
 </div>
 
 @switch ($tab()) {
-	@case ("person") {
-		<sneat-new-person-form
-			[$space]="$space()"
-			[isInModal]="true"
-			[$contact]="$contact()"
-			[command]="command"
-			[selectGroupAndRole$]="selectGroupAndRole$"
-			(contactChange)="onContactChanged($event)"
-			(creatingChange)="creatingChange.emit($event)"
-		/>
-	}
-	@case ("pet") {
-		<sneat-new-pet-form
-			[$space]="$space()"
-			[$hideRole]="$hideRole()"
-			[$contact]="$contact()"
-			(contactChange)="onContactChanged($event)"
-		/>
-	}
-	@case ("company") {
-		<sneat-new-company-form
-			[$space]="$space()"
-			[$contact]="$contact()"
-			(contactChange)="onContactChanged($event)"
-			[$hideRole]="$hideRole()"
-		/>
-	}
+  @case ("person") {
+    <sneat-new-person-form
+      [$space]="$space()"
+      [isInModal]="true"
+      [$contact]="$contact()"
+      [command]="command"
+      [selectGroupAndRole$]="selectGroupAndRole$"
+      (contactChange)="onContactChanged($event)"
+      (creatingChange)="creatingChange.emit($event)"
+    />
+  }
+  @case ("pet") {
+    <sneat-new-pet-form
+      [$space]="$space()"
+      [$hideRole]="$hideRole()"
+      [$contact]="$contact()"
+      (contactChange)="onContactChanged($event)"
+    />
+  }
+  @case ("company") {
+    <sneat-new-company-form
+      [$space]="$space()"
+      [$contact]="$contact()"
+      (contactChange)="onContactChanged($event)"
+      [$hideRole]="$hideRole()"
+    />
+  }
 }

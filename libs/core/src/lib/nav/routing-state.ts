@@ -3,24 +3,24 @@ import { NavigationEnd, Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class RoutingState {
-	private history: string[] = [];
+  private history: string[] = [];
 
-	constructor() {
-		const router = inject(Router);
+  constructor() {
+    const router = inject(Router);
 
-		router.events.subscribe({
-			next: (event) => {
-				if (event instanceof NavigationEnd) {
-					this.history = [...this.history, event.urlAfterRedirects];
-					if (this.history.length > 2) {
-						this.history.slice(this.history.length - 2, this.history.length);
-					}
-				}
-			},
-		});
-	}
+    router.events.subscribe({
+      next: (event) => {
+        if (event instanceof NavigationEnd) {
+          this.history = [...this.history, event.urlAfterRedirects];
+          if (this.history.length > 2) {
+            this.history.slice(this.history.length - 2, this.history.length);
+          }
+        }
+      },
+    });
+  }
 
-	public hasHistory(): boolean {
-		return this.history.length > 1;
-	}
+  public hasHistory(): boolean {
+    return this.history.length > 1;
+  }
 }

@@ -1,79 +1,79 @@
 <ng-container [formGroup]="namesForm">
-	@if (showHeader) {
-		<ion-item-divider [color]="isActive ? 'primary' : 'light'">
-			<ion-label [style.font-weight]="isActive ? 'bold' : undefined">
-				Names
-			</ion-label>
-		</ion-item-divider>
-	}
-	@if (!fields?.nickName?.hide) {
-		<ion-item>
-			<ion-input
-				#nickNameInput
-				label="Nick name"
-				name="nick_name"
-				[formControl]="nickName"
-				(keyup.enter)="nameKeyupEnter($event)"
-				(ionChange)="onNameChanged($event)"
-			/>
-		</ion-item>
-	}
-	@if (!fields?.firstName?.hide) {
-		<ion-item>
-			<ion-input
-				#firstNameInput
-				label="First name"
-				name="first_name"
-				[formControl]="firstName"
-				(keyup.enter)="nameKeyupEnter($event)"
-				(keyup)="onNameChanged($event)"
-			/>
-		</ion-item>
-	}
-	@if (!fields?.lastName?.hide) {
-		<ion-item>
-			<ion-input
-				#lastNameInput
-				label="Last name"
-				name="last_name"
-				[formControl]="lastName"
-				(keyup.enter)="nameKeyupEnter($event)"
-				(keyup)="onNameChanged($event)"
-			/>
-		</ion-item>
-	}
-	@if (!fields?.middleName?.hide) {
-		<ion-item>
-			<ion-input
-				#middleNameInput
-				label="Middle name"
-				name="medium_name"
-				[formControl]="middleName"
-				(keyup.enter)="nameKeyupEnter($event)"
-				(ionChange)="onNameChanged($event)"
-			/>
-		</ion-item>
-	}
-	<ion-item>
-		<ion-input
-			#fullNameInput
-			label="Full name"
-			name="full_name"
-			[formControl]="fullName"
-			(keyup.enter)="nameKeyupEnter($event)"
-			(keyup)="onFullNameChanged($event)"
-		/>
-	</ion-item>
+  @if (showHeader) {
+    <ion-item-divider [color]="isActive ? 'primary' : 'light'">
+      <ion-label [style.font-weight]="isActive ? 'bold' : undefined">
+        Names
+      </ion-label>
+    </ion-item-divider>
+  }
+  @if (!fields?.nickName?.hide) {
+    <ion-item>
+      <ion-input
+        #nickNameInput
+        label="Nick name"
+        name="nick_name"
+        [formControl]="nickName"
+        (keyup.enter)="nameKeyupEnter($event)"
+        (ionChange)="onNameChanged($event)"
+      />
+    </ion-item>
+  }
+  @if (!fields?.firstName?.hide) {
+    <ion-item>
+      <ion-input
+        #firstNameInput
+        label="First name"
+        name="first_name"
+        [formControl]="firstName"
+        (keyup.enter)="nameKeyupEnter($event)"
+        (keyup)="onNameChanged($event)"
+      />
+    </ion-item>
+  }
+  @if (!fields?.lastName?.hide) {
+    <ion-item>
+      <ion-input
+        #lastNameInput
+        label="Last name"
+        name="last_name"
+        [formControl]="lastName"
+        (keyup.enter)="nameKeyupEnter($event)"
+        (keyup)="onNameChanged($event)"
+      />
+    </ion-item>
+  }
+  @if (!fields?.middleName?.hide) {
+    <ion-item>
+      <ion-input
+        #middleNameInput
+        label="Middle name"
+        name="medium_name"
+        [formControl]="middleName"
+        (keyup.enter)="nameKeyupEnter($event)"
+        (ionChange)="onNameChanged($event)"
+      />
+    </ion-item>
+  }
+  <ion-item>
+    <ion-input
+      #fullNameInput
+      label="Full name"
+      name="full_name"
+      [formControl]="fullName"
+      (keyup.enter)="nameKeyupEnter($event)"
+      (keyup)="onFullNameChanged($event)"
+    />
+  </ion-item>
 </ng-container>
 
 @if (showNextButton && isActive) {
-	<ion-button
-		class="ion-margin"
-		size="medium"
-		[color]="canGoNext ? 'primary' : 'medium'"
-		(click)="onNext($event)"
-	>
-		<ion-label>Next</ion-label>
-		<ion-icon name="arrow-forward-circle-outline" slot="end" />
-	</ion-button>
+  <ion-button
+    class="ion-margin"
+    size="medium"
+    [color]="canGoNext ? 'primary' : 'medium'"
+    (click)="onNext($event)"
+  >
+    <ion-label>Next</ion-label>
+    <ion-icon name="arrow-forward-circle-outline" slot="end" />
+  </ion-button>
 }

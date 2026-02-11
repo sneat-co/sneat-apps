@@ -1,27 +1,27 @@
 <ion-card>
-	@if (!$contactGroupID()) {
-		<ion-item-divider color="primary">
-			<ion-label>Please select contact group</ion-label>
-		</ion-item-divider>
-	}
-	<sneat-select-from-list
-		label="Contact group"
-		[items]="$groupItems()"
-		[value]="$contactGroupID() || ''"
-		(valueChange)="onContactGroupIDChanged($event)"
-	/>
-	@if ($contactGroupID()) {
-		@if (!$contactRoleID()) {
-			<ion-item-divider color="primary">
-				Please select contact role
-			</ion-item-divider>
-		}
-		<sneat-select-from-list
-			label="Contact role"
-			sortBy="title"
-			[items]="$roleItems()"
-			[value]="$contactRoleID() || ''"
-			(valueChange)="onContactRoleIDChanged($event)"
-		/>
-	}
+  @if (!$contactGroupID()) {
+    <ion-item-divider color="primary">
+      <ion-label>Please select contact group</ion-label>
+    </ion-item-divider>
+  }
+  <sneat-select-from-list
+    label="Contact group"
+    [items]="$groupItems()"
+    [value]="$contactGroupID() || ''"
+    (valueChange)="onContactGroupIDChanged($event)"
+  />
+  @if ($contactGroupID()) {
+    @if (!$contactRoleID()) {
+      <ion-item-divider color="primary">
+        Please select contact role
+      </ion-item-divider>
+    }
+    <sneat-select-from-list
+      label="Contact role"
+      sortBy="title"
+      [items]="$roleItems()"
+      [value]="$contactRoleID() || ''"
+      (valueChange)="onContactRoleIDChanged($event)"
+    />
+  }
 </ion-card>

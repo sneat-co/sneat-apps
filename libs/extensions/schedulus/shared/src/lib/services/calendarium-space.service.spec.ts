@@ -5,19 +5,19 @@ import { CalendariumSpaceService } from './calendarium-space.service';
 vi.mock('@angular/fire/firestore');
 
 describe('CalendariumSpaceService', () => {
-	beforeEach(() => {
-		TestBed.configureTestingModule({
-			providers: [
-				CalendariumSpaceService,
-				{
-					provide: Firestore,
-					useValue: { type: 'Firestore', toJSON: () => ({}) },
-				},
-			],
-		});
-	});
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        CalendariumSpaceService,
+        {
+          provide: Firestore,
+          useValue: { type: 'Firestore', toJSON: () => ({}) },
+        },
+      ],
+    });
+  });
 
-	it('should be created', () => {
-		expect(TestBed.inject(CalendariumSpaceService)).toBeTruthy();
-	});
+  it('should be created', () => {
+    expect(TestBed.inject(CalendariumSpaceService)).toBeTruthy();
+  });
 });

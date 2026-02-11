@@ -10,39 +10,39 @@ import { SegmentContainerComponent } from './segment-container.component';
 vi.mock('@angular/fire/firestore');
 
 describe('SegmentContainerComponent', () => {
-	let component: SegmentContainerComponent;
-	let fixture: ComponentFixture<SegmentContainerComponent>;
+  let component: SegmentContainerComponent;
+  let fixture: ComponentFixture<SegmentContainerComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [SegmentContainerComponent],
-			providers: [
-				{
-					provide: ErrorLogger,
-					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
-				},
-				LogistOrderService,
-				{
-					provide: SneatApiService,
-					useValue: { post: vi.fn(() => of({})), delete: vi.fn(() => of({})) },
-				},
-				{
-					provide: Firestore,
-					useValue: { type: 'Firestore', toJSON: () => ({}) },
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(SegmentContainerComponent, {
-				set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [SegmentContainerComponent],
+      providers: [
+        {
+          provide: ErrorLogger,
+          useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+        },
+        LogistOrderService,
+        {
+          provide: SneatApiService,
+          useValue: { post: vi.fn(() => of({})), delete: vi.fn(() => of({})) },
+        },
+        {
+          provide: Firestore,
+          useValue: { type: 'Firestore', toJSON: () => ({}) },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(SegmentContainerComponent, {
+        set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(SegmentContainerComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(SegmentContainerComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

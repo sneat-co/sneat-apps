@@ -4,15 +4,15 @@ import { RetrospectiveService } from './retrospective.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('RetrospectiveService', () => {
-	beforeEach(() =>
-		TestBed.configureTestingModule({
-			imports: [HttpClientTestingModule],
-			providers: [RetrospectiveService],
-		}),
-	);
+  beforeEach(() =>
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [RetrospectiveService],
+    }),
+  );
 
-	it('should be created', () => {
-		const service: RetrospectiveService = TestBed.inject(RetrospectiveService);
-		expect(service).toBeTruthy();
-	});
+  it('should be created', () => {
+    const service: RetrospectiveService = TestBed.inject(RetrospectiveService);
+    expect(service).toBeTruthy();
+  });
 });

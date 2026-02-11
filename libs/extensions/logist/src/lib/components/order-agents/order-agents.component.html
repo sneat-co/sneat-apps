@@ -1,24 +1,24 @@
 <ion-item-group>
-	<ion-item-divider color="light">
-		<ion-label color="medium">Agents</ion-label>
-		<ion-buttons slot="end">
-			<ion-button color="medium" (click)="selectRole($event)">
-				<ion-icon name="add-outline" />
-				<ion-label>Add</ion-label>
-			</ion-button>
-		</ion-buttons>
-	</ion-item-divider>
-	@for (counterparty of counterparties; track counterparty) {
-		<sneat-logist-order-counterparty
-			[label]="counterparty.role | titlecase"
-			[space]="space"
-			[order]="order"
-			[readonly]="readonly"
-			[canChangeContact]="false"
-			[counterpartyRole]="counterparty.role"
-			contactType="company"
-			[contactRole]="counterparty.role"
-			labelPosition="fixed"
-		></sneat-logist-order-counterparty>
-	}
+  <ion-item-divider color="light">
+    <ion-label color="medium">Agents</ion-label>
+    <ion-buttons slot="end">
+      <ion-button color="medium" (click)="selectRole($event)">
+        <ion-icon name="add-outline" />
+        <ion-label>Add</ion-label>
+      </ion-button>
+    </ion-buttons>
+  </ion-item-divider>
+  @for (counterparty of counterparties; track counterparty) {
+    <sneat-logist-order-counterparty
+      [label]="counterparty.role | titlecase"
+      [space]="space"
+      [order]="order"
+      [readonly]="readonly"
+      [canChangeContact]="false"
+      [counterpartyRole]="counterparty.role"
+      contactType="company"
+      [contactRole]="counterparty.role"
+      labelPosition="fixed"
+    ></sneat-logist-order-counterparty>
+  }
 </ion-item-group>

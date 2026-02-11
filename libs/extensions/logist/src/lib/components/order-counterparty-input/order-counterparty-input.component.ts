@@ -1,288 +1,288 @@
 import {
-	Component,
-	EventEmitter,
-	Input,
-	OnChanges,
-	Output,
-	SimpleChanges,
-	inject,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  inject,
 } from '@angular/core';
 import {
-	IContactContext,
-	LogistOrderContactRole,
-	ContactType,
+  IContactContext,
+  LogistOrderContactRole,
+  ContactType,
 } from '@sneat/contactus-core';
 import { ContactInputComponent } from '@sneat/contactus-shared';
 import { LogistOrderService } from '../../services';
 import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import {
-	CounterpartyRole,
-	IDeleteCounterpartyRequest,
-	ILogistOrderContext,
-	IOrderCounterparty,
-	IOrderCounterpartyRef,
-	ISetOrderCounterpartiesRequest,
+  CounterpartyRole,
+  IDeleteCounterpartyRequest,
+  ILogistOrderContext,
+  IOrderCounterparty,
+  IOrderCounterpartyRef,
+  ISetOrderCounterpartiesRequest,
 } from '../../dto';
 
 @Component({
-	selector: 'sneat-logist-order-counterparty-input',
-	templateUrl: './order-counterparty-input.component.html',
-	imports: [ContactInputComponent],
+  selector: 'sneat-logist-order-counterparty-input',
+  templateUrl: './order-counterparty-input.component.html',
+  imports: [ContactInputComponent],
 })
 export class OrderCounterpartyInputComponent implements OnChanges {
-	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
-	private readonly orderService = inject(LogistOrderService);
+  private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+  private readonly orderService = inject(LogistOrderService);
 
-	@Input() label?: string = undefined;
-	@Input() canReset = false;
-	@Input() labelPosition?: 'fixed' | 'stacked' | 'floating';
-	@Input() readonly = false;
-	@Input({ required: true }) space?: ISpaceContext;
+  @Input() label?: string = undefined;
+  @Input() canReset = false;
+  @Input() labelPosition?: 'fixed' | 'stacked' | 'floating';
+  @Input() readonly = false;
+  @Input({ required: true }) space?: ISpaceContext;
 
-	@Input() counterpartyRole?: CounterpartyRole;
+  @Input() counterpartyRole?: CounterpartyRole;
 
-	@Input() contactRole?: LogistOrderContactRole;
-	@Input() contactType?: ContactType;
+  @Input() contactRole?: LogistOrderContactRole;
+  @Input() contactType?: ContactType;
 
-	@Input() parentType: ContactType = 'company';
-	@Input() parentRole?: LogistOrderContactRole;
+  @Input() parentType: ContactType = 'company';
+  @Input() parentRole?: LogistOrderContactRole;
 
-	@Input() canChangeContact = true;
-	@Input() contactID?: string;
+  @Input() canChangeContact = true;
+  @Input() contactID?: string;
 
-	@Input() selectOnly = false;
+  @Input() selectOnly = false;
 
-	@Input() order?: ILogistOrderContext;
-	@Output() orderChange = new EventEmitter<ILogistOrderContext>();
+  @Input() order?: ILogistOrderContext;
+  @Output() orderChange = new EventEmitter<ILogistOrderContext>();
 
-	@Output() counterpartyChange = new EventEmitter<IOrderCounterpartyRef>();
+  @Output() counterpartyChange = new EventEmitter<IOrderCounterpartyRef>();
 
-	protected contact?: IContactContext;
-	protected parentContact?: IContactContext;
+  protected contact?: IContactContext;
+  protected parentContact?: IContactContext;
 
-	protected deleting = false;
+  protected deleting = false;
 
-	ngOnChanges(changes: SimpleChanges): void {
-		// console.log('OrderCounterpartyInputComponent.ngOnChanges()', changes);
-		if (
-			changes['order'] ||
-			changes['contactID'] ||
-			changes['counterpartyRole'] ||
-			changes['contactRole'] ||
-			changes['parentRole']
-		) {
-			this.setContacts();
-		}
-	}
+  ngOnChanges(changes: SimpleChanges): void {
+    // console.log('OrderCounterpartyInputComponent.ngOnChanges()', changes);
+    if (
+      changes['order'] ||
+      changes['contactID'] ||
+      changes['counterpartyRole'] ||
+      changes['contactRole'] ||
+      changes['parentRole']
+    ) {
+      this.setContacts();
+    }
+  }
 
-	private setContacts(): void {
-		if (!this.order) {
-			return;
-		}
-		const space = this.space;
-		if (!space) {
-			throw new Error('Space is not set');
-		}
-		const contactFromCounterparty = (
-			counterparty: IOrderCounterparty,
-		): IContactContext => ({
-			space,
-			id: counterparty.contactID,
-			brief: {
-				type: 'company',
-				countryID: counterparty.countryID,
-				title: counterparty.title,
-				names: { fullName: counterparty.title },
-			},
-		});
-		this.contact = undefined;
-		const counterparties = this.contactID
-			? this.order?.dbo?.counterparties?.filter(
-					(c) =>
-						c.contactID === this.contactID && c.role === this.counterpartyRole,
-				)
-			: this.order?.dbo?.counterparties?.filter(
-					(c) => c.role === this.counterpartyRole,
-				);
-		if (counterparties && counterparties.length === 1) {
-			const counterparty = counterparties[0];
-			this.contact = contactFromCounterparty(counterparty);
-			if (counterparty.parent) {
-				const parentCounterparty = this.order?.dbo?.counterparties?.find(
-					(c) => c.contactID === counterparty.parent?.contactID,
-				);
-				if (parentCounterparty) {
-					this.parentContact = contactFromCounterparty(parentCounterparty);
-				}
-			}
-		}
-	}
+  private setContacts(): void {
+    if (!this.order) {
+      return;
+    }
+    const space = this.space;
+    if (!space) {
+      throw new Error('Space is not set');
+    }
+    const contactFromCounterparty = (
+      counterparty: IOrderCounterparty,
+    ): IContactContext => ({
+      space,
+      id: counterparty.contactID,
+      brief: {
+        type: 'company',
+        countryID: counterparty.countryID,
+        title: counterparty.title,
+        names: { fullName: counterparty.title },
+      },
+    });
+    this.contact = undefined;
+    const counterparties = this.contactID
+      ? this.order?.dbo?.counterparties?.filter(
+          (c) =>
+            c.contactID === this.contactID && c.role === this.counterpartyRole,
+        )
+      : this.order?.dbo?.counterparties?.filter(
+          (c) => c.role === this.counterpartyRole,
+        );
+    if (counterparties && counterparties.length === 1) {
+      const counterparty = counterparties[0];
+      this.contact = contactFromCounterparty(counterparty);
+      if (counterparty.parent) {
+        const parentCounterparty = this.order?.dbo?.counterparties?.find(
+          (c) => c.contactID === counterparty.parent?.contactID,
+        );
+        if (parentCounterparty) {
+          this.parentContact = contactFromCounterparty(parentCounterparty);
+        }
+      }
+    }
+  }
 
-	protected onContactChanged(contact?: IContactContext): void {
-		console.log('onContactChanged(),', this.contactRole, contact);
-		if (this.selectOnly) {
-			return;
-		}
-		if (!this.space) {
-			console.error('onContactChanged(): !this.team');
-			return;
-		}
-		if (!this.counterpartyRole) {
-			console.error('onContactChanged(): !this.counterpartyRole');
-			return;
-		}
-		let order = this.order;
-		if (!order) {
-			return;
-		}
-		let orderDto = order?.dbo;
+  protected onContactChanged(contact?: IContactContext): void {
+    console.log('onContactChanged(),', this.contactRole, contact);
+    if (this.selectOnly) {
+      return;
+    }
+    if (!this.space) {
+      console.error('onContactChanged(): !this.team');
+      return;
+    }
+    if (!this.counterpartyRole) {
+      console.error('onContactChanged(): !this.counterpartyRole');
+      return;
+    }
+    let order = this.order;
+    if (!order) {
+      return;
+    }
+    let orderDto = order?.dbo;
 
-		if (!orderDto) {
-			console.error('onContactChanged(): !this.order.dto');
-			return;
-		}
+    if (!orderDto) {
+      console.error('onContactChanged(): !this.order.dto');
+      return;
+    }
 
-		if (!contact) {
-			if (!this.contact) {
-				return;
-			}
-			console.error('Not implemented counterparty removal');
-			const request: IDeleteCounterpartyRequest = {
-				orderID: order.id,
-				spaceID: this.space.id,
-				contactID: this.contact.id,
-				role: this.counterpartyRole,
-			};
-			this.deleting = true;
-			this.orderService.deleteCounterparty(request).subscribe({
-				next: () => {
-					this.contact = undefined;
-					this.deleting = false;
-				},
-				error: (err) => {
-					this.deleting = false;
-					this.errorLogger.logError(
-						err,
-						`Failed to remove counterparty with role=${this.counterpartyRole} from the order`,
-					);
-				},
-			});
-			return;
-		}
+    if (!contact) {
+      if (!this.contact) {
+        return;
+      }
+      console.error('Not implemented counterparty removal');
+      const request: IDeleteCounterpartyRequest = {
+        orderID: order.id,
+        spaceID: this.space.id,
+        contactID: this.contact.id,
+        role: this.counterpartyRole,
+      };
+      this.deleting = true;
+      this.orderService.deleteCounterparty(request).subscribe({
+        next: () => {
+          this.contact = undefined;
+          this.deleting = false;
+        },
+        error: (err) => {
+          this.deleting = false;
+          this.errorLogger.logError(
+            err,
+            `Failed to remove counterparty with role=${this.counterpartyRole} from the order`,
+          );
+        },
+      });
+      return;
+    }
 
-		if (!this.order?.id) {
-			const newCounterparty: IOrderCounterparty = {
-				contactID: contact.id,
-				role: this.counterpartyRole,
-				title: contact?.brief?.title || contact.id,
-				countryID: contact?.brief?.countryID || '--',
-			};
-			const i =
-				orderDto.counterparties?.findIndex(
-					(c) => c.role === this.contactRole,
-				) ?? -1;
-			if (i >= 0) {
-				if (orderDto.counterparties) {
-					orderDto = {
-						...orderDto,
-						counterparties: [
-							...orderDto.counterparties.slice(0, i),
-							newCounterparty,
-							...orderDto.counterparties.slice(i + 1),
-						],
-					};
-				}
-			} else {
-				if (orderDto) {
-					orderDto = {
-						...orderDto,
-						counterparties: orderDto.counterparties
-							? [...orderDto.counterparties, newCounterparty]
-							: [newCounterparty],
-					};
-				}
-			}
-			if (!orderDto.route) {
-				orderDto = { ...orderDto, route: {} };
-			}
-			switch (this.contactRole) {
-				case 'consignee':
-				case 'notify_party':
-					if (orderDto.route) {
-						orderDto = {
-							...orderDto,
-							route: {
-								...orderDto.route,
-								destination: {
-									countryID: newCounterparty.countryID,
-								},
-							},
-						};
-					}
-					break;
-				case 'freight_agent':
-				case 'shipper':
-					if (orderDto.route) {
-						orderDto = {
-							...orderDto,
-							route: {
-								...orderDto.route,
-								origin: {
-									countryID: newCounterparty.countryID,
-								},
-							},
-						};
-					}
-					break;
-			}
-			if (order) {
-				order = { ...order, dbo: orderDto };
-			}
-			this.emitOrder(order);
-			this.counterpartyChange.emit(newCounterparty);
-			return;
-		}
-		let request: ISetOrderCounterpartiesRequest = {
-			spaceID: this.space.id,
-			orderID: this.order.id,
-			counterparties: [
-				{
-					contactID: contact.id.substring(contact.id.indexOf(':') + 1),
-					role: this.counterpartyRole,
-				},
-			],
-		};
-		if (contact.parentContact && this.parentRole) {
-			request = {
-				...request,
-				counterparties: [
-					...request.counterparties,
-					{
-						contactID: contact.parentContact.id,
-						role: this.parentRole,
-					},
-				],
-			};
-		}
-		this.orderService.setOrderCounterparties(request).subscribe({
-			next: (counterparty) => {
-				console.log(
-					'onContactChanged(): setOrderCounterparties() =>',
-					counterparty,
-				);
-				if (!this.order?.brief) {
-					return;
-				}
-			},
-			error: this.errorLogger.logErrorHandler(
-				`Failed to set order's counterparty`,
-			),
-		});
-	}
+    if (!this.order?.id) {
+      const newCounterparty: IOrderCounterparty = {
+        contactID: contact.id,
+        role: this.counterpartyRole,
+        title: contact?.brief?.title || contact.id,
+        countryID: contact?.brief?.countryID || '--',
+      };
+      const i =
+        orderDto.counterparties?.findIndex(
+          (c) => c.role === this.contactRole,
+        ) ?? -1;
+      if (i >= 0) {
+        if (orderDto.counterparties) {
+          orderDto = {
+            ...orderDto,
+            counterparties: [
+              ...orderDto.counterparties.slice(0, i),
+              newCounterparty,
+              ...orderDto.counterparties.slice(i + 1),
+            ],
+          };
+        }
+      } else {
+        if (orderDto) {
+          orderDto = {
+            ...orderDto,
+            counterparties: orderDto.counterparties
+              ? [...orderDto.counterparties, newCounterparty]
+              : [newCounterparty],
+          };
+        }
+      }
+      if (!orderDto.route) {
+        orderDto = { ...orderDto, route: {} };
+      }
+      switch (this.contactRole) {
+        case 'consignee':
+        case 'notify_party':
+          if (orderDto.route) {
+            orderDto = {
+              ...orderDto,
+              route: {
+                ...orderDto.route,
+                destination: {
+                  countryID: newCounterparty.countryID,
+                },
+              },
+            };
+          }
+          break;
+        case 'freight_agent':
+        case 'shipper':
+          if (orderDto.route) {
+            orderDto = {
+              ...orderDto,
+              route: {
+                ...orderDto.route,
+                origin: {
+                  countryID: newCounterparty.countryID,
+                },
+              },
+            };
+          }
+          break;
+      }
+      if (order) {
+        order = { ...order, dbo: orderDto };
+      }
+      this.emitOrder(order);
+      this.counterpartyChange.emit(newCounterparty);
+      return;
+    }
+    let request: ISetOrderCounterpartiesRequest = {
+      spaceID: this.space.id,
+      orderID: this.order.id,
+      counterparties: [
+        {
+          contactID: contact.id.substring(contact.id.indexOf(':') + 1),
+          role: this.counterpartyRole,
+        },
+      ],
+    };
+    if (contact.parentContact && this.parentRole) {
+      request = {
+        ...request,
+        counterparties: [
+          ...request.counterparties,
+          {
+            contactID: contact.parentContact.id,
+            role: this.parentRole,
+          },
+        ],
+      };
+    }
+    this.orderService.setOrderCounterparties(request).subscribe({
+      next: (counterparty) => {
+        console.log(
+          'onContactChanged(): setOrderCounterparties() =>',
+          counterparty,
+        );
+        if (!this.order?.brief) {
+          return;
+        }
+      },
+      error: this.errorLogger.logErrorHandler(
+        `Failed to set order's counterparty`,
+      ),
+    });
+  }
 
-	private emitOrder(order: ILogistOrderContext): void {
-		this.order = order;
-		this.orderChange.emit(order);
-	}
+  private emitOrder(order: ILogistOrderContext): void {
+    this.order = order;
+    this.orderChange.emit(order);
+  }
 }

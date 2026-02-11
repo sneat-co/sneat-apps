@@ -7,25 +7,25 @@ import { ProjectService } from '../project/project.service';
 import { StoreApiService } from '../repo/store-api.service';
 
 describe('EnvironmentService', () => {
-	let service: EnvironmentService;
+  let service: EnvironmentService;
 
-	beforeEach(() => {
-		TestBed.configureTestingModule({
-			providers: [
-				EnvironmentService,
-				{
-					provide: ProjectContextService,
-					useValue: { current: undefined, setCurrent: vi.fn() },
-				},
-				{ provide: SneatApiService, useValue: {} },
-				{ provide: ProjectService, useValue: {} },
-				{ provide: StoreApiService, useValue: { get: vi.fn() } },
-			],
-		});
-		service = TestBed.inject(EnvironmentService);
-	});
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        EnvironmentService,
+        {
+          provide: ProjectContextService,
+          useValue: { current: undefined, setCurrent: vi.fn() },
+        },
+        { provide: SneatApiService, useValue: {} },
+        { provide: ProjectService, useValue: {} },
+        { provide: StoreApiService, useValue: { get: vi.fn() } },
+      ],
+    });
+    service = TestBed.inject(EnvironmentService);
+  });
 
-	it('should be created', () => {
-		expect(service).toBeTruthy();
-	});
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
 });

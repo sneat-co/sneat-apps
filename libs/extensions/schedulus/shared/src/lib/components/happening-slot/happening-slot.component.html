@@ -1,33 +1,33 @@
 <ion-item>
-	@if (slot.start?.time) {
-		<ion-badge color="light" slot="start">{{ slot.start?.time }}</ion-badge>
-	}
+  @if (slot.start?.time) {
+    <ion-badge color="light" slot="start">{{ slot.start?.time }}</ion-badge>
+  }
 
-	<ion-label text-wrap>
-		<p>
-			@for (wd of slot.weekdays || []; track wd) {
-				<ion-badge color="light" style="margin-right: 4px">{{
-					wd | wdToWeekday
-				}}</ion-badge>
-			}
-		</p>
-		@if (slot.location && (slot.location.title || slot.location.address)) {
-			<p>
-				&#64; {{ slot.location.title || slot.location.address }}, ends at
-				{{ slot.end?.time }}
-			</p>
-		} @else {
-			<p>Ends at {{ slot.end?.time }}</p>
-		}
-	</ion-label>
-	<ion-buttons slot="end">
-		<ion-button
-			color="tertiary"
-			(click)="editHappeningSlot($event)"
-			[disabled]="deleting"
-		>
-			<ion-icon slot="start" name="calendar-outline" />
-			<ion-label>Change</ion-label>
-		</ion-button>
-	</ion-buttons>
+  <ion-label text-wrap>
+    <p>
+      @for (wd of slot.weekdays || []; track wd) {
+        <ion-badge color="light" style="margin-right: 4px">{{
+          wd | wdToWeekday
+        }}</ion-badge>
+      }
+    </p>
+    @if (slot.location && (slot.location.title || slot.location.address)) {
+      <p>
+        &#64; {{ slot.location.title || slot.location.address }}, ends at
+        {{ slot.end?.time }}
+      </p>
+    } @else {
+      <p>Ends at {{ slot.end?.time }}</p>
+    }
+  </ion-label>
+  <ion-buttons slot="end">
+    <ion-button
+      color="tertiary"
+      (click)="editHappeningSlot($event)"
+      [disabled]="deleting"
+    >
+      <ion-icon slot="start" name="calendar-outline" />
+      <ion-label>Change</ion-label>
+    </ion-button>
+  </ion-buttons>
 </ion-item>

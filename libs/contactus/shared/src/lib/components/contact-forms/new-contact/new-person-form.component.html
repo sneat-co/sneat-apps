@@ -1,32 +1,32 @@
 @if ($asset()?.id) {
-	<!-- Replace with related items -->
-	<ion-item-divider color="light">
-		@let asset = $asset();
-		<ion-label color="medium"
-			>{{ asset?.brief?.title || asset?.id }}
-		</ion-label>
-	</ion-item-divider>
+  <!-- Replace with related items -->
+  <ion-item-divider color="light">
+    @let asset = $asset();
+    <ion-label color="medium"
+      >{{ asset?.brief?.title || asset?.id }}
+    </ion-label>
+  </ion-item-divider>
 }
 
 <sneat-contact-role-form
-	[$contactGroupID]="$selectedContactGroupID()"
-	(contactGroupChange)="onContactGroupChanged($event)"
-	[$contactRoleID]="$selectedContactRoleID()"
-	(contactRoleIDChange)="onContactRoleIDChanged($event)"
+  [$contactGroupID]="$selectedContactGroupID()"
+  (contactGroupChange)="onContactGroupChanged($event)"
+  [$contactRoleID]="$selectedContactRoleID()"
+  (contactRoleIDChange)="onContactRoleIDChanged($event)"
 />
 
 @if ($selectedContactRole()) {
-	<sneat-person-wizard
-		[$space]="$space()"
-		[$contact]="$contact()"
-		(contactChange)="onContactChanged($event)"
-		[hideRelationship]="true"
-		[hidePetOption]="true"
-		[$fields]="{ contactType: { hide: true }, relatedAs: { hide: true } }"
-		[displayAgeGroupValue]="true"
-		[requires]="personRequires"
-		(isReadyToSubmitChange)="onPersonFormIsReadyToSubmit()"
-	/>
+  <sneat-person-wizard
+    [$space]="$space()"
+    [$contact]="$contact()"
+    (contactChange)="onContactChanged($event)"
+    [hideRelationship]="true"
+    [hidePetOption]="true"
+    [$fields]="{ contactType: { hide: true }, relatedAs: { hide: true } }"
+    [displayAgeGroupValue]="true"
+    [requires]="personRequires"
+    (isReadyToSubmitChange)="onPersonFormIsReadyToSubmit()"
+  />
 }
 
 <!--	<ng-container *ngIf="member && !relation">-->
@@ -51,13 +51,13 @@
 <!--	<div class="ion-padding" *ngIf="!isContactNotReady">-->
 
 @if (!isInModal) {
-	<div class="ion-padding">
-		<ion-button
-			expand="full"
-			[disabled]="$creating() || $isContactNotReady()"
-			(click)="submit()"
-		>
-			<ion-label>Create contact</ion-label>
-		</ion-button>
-	</div>
+  <div class="ion-padding">
+    <ion-button
+      expand="full"
+      [disabled]="$creating() || $isContactNotReady()"
+      (click)="submit()"
+    >
+      <ion-label>Create contact</ion-label>
+    </ion-button>
+  </div>
 }

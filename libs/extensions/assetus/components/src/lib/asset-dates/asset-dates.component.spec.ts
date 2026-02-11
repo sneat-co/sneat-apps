@@ -4,23 +4,23 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { AssetDatesComponent } from './asset-dates.component';
 
 describe('AssetDatesComponent', () => {
-	let component: AssetDatesComponent;
-	let fixture: ComponentFixture<AssetDatesComponent>;
+  let component: AssetDatesComponent;
+  let fixture: ComponentFixture<AssetDatesComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [AssetDatesComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [AssetDatesComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
+  }));
 
-	beforeEach(() => {
-		fixture = TestBed.createComponent(AssetDatesComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AssetDatesComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

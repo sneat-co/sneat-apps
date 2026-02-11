@@ -8,15 +8,15 @@ import { AddToWatchPageComponent } from './add-to-watch-page.component';
 import { TmdbService } from '../../watchlist/tmdb.service';
 
 const routes: Routes = [
-	{
-		path: '',
-		component: AddToWatchPageComponent,
-	},
+  {
+    path: '',
+    component: AddToWatchPageComponent,
+  },
 ];
 
 @NgModule({
-	imports: [MovieCardComponent, FormsModule, RouterModule.forChild(routes)],
-	providers: [TmdbService],
-	declarations: [AddToWatchPageComponent],
+  imports: [MovieCardComponent, FormsModule, RouterModule.forChild(routes)],
+  providers: [TmdbService],
+  declarations: [AddToWatchPageComponent],
 })
 export class AddToWatchPageModule {}

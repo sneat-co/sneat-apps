@@ -1,55 +1,55 @@
 import { Component, inject } from '@angular/core';
 import {
-	IonBackButton,
-	IonButtons,
-	IonContent,
-	IonHeader,
-	IonIcon,
-	IonItem,
-	IonItemDivider,
-	IonItemGroup,
-	IonLabel,
-	IonTitle,
-	IonToolbar,
+  IonBackButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonItem,
+  IonItemDivider,
+  IonItemGroup,
+  IonLabel,
+  IonTitle,
+  IonToolbar,
 } from '@ionic/angular/standalone';
 import { AssetBasePage } from '../asset-base-page';
 import { AssetComponentBaseParams } from '../asset-component-base-params';
 
 @Component({
-	selector: 'sneat-add-asset-service-page',
-	templateUrl: './add-asset-service-page.component.html',
-	providers: [AssetComponentBaseParams],
-	imports: [
-		IonHeader,
-		IonToolbar,
-		IonButtons,
-		IonBackButton,
-		IonTitle,
-		IonContent,
-		IonItemGroup,
-		IonItemDivider,
-		IonLabel,
-		IonItem,
-		IonIcon,
-	],
+  selector: 'sneat-add-asset-service-page',
+  templateUrl: './add-asset-service-page.component.html',
+  providers: [AssetComponentBaseParams],
+  imports: [
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonTitle,
+    IonContent,
+    IonItemGroup,
+    IonItemDivider,
+    IonLabel,
+    IonItem,
+    IonIcon,
+  ],
 })
 export class AddAssetServicePageComponent extends AssetBasePage {
-	// TODO: IServiceProviderService injection token was never defined - commented out until properly implemented
-	// private serviceProviderService = inject(IServiceProviderService);
+  // TODO: IServiceProviderService injection token was never defined - commented out until properly implemented
+  // private serviceProviderService = inject(IServiceProviderService);
 
-	// serviceProviders: DtoServiceProvider[];
-	// serviceType: LiabilityServiceType;
-	serviceTypeTitle?: string;
+  // serviceProviders: DtoServiceProvider[];
+  // serviceType: LiabilityServiceType;
+  serviceTypeTitle?: string;
 
-	constructor() {
-		const params = inject(AssetComponentBaseParams);
+  constructor() {
+    const params = inject(AssetComponentBaseParams);
 
-		super(params, 'AddAssetServicePageComponent');
-	}
+    super(params, 'AddAssetServicePageComponent');
+  }
 
-	// TODO: The methods below reference undefined types and non-existent parent methods.
-	// Commented out until properly implemented.
-	/*
+  // TODO: The methods below reference undefined types and non-existent parent methods.
+  // Commented out until properly implemented.
+  /*
 	selectProvider(serviceProvider: DtoServiceProvider): void {
 		console.log('selectProvider() => id:', serviceProvider.id);
 	}

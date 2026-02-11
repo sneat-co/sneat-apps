@@ -1,34 +1,34 @@
 {
-	"name": "space-pages",
-	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
-	"projectType": "library",
-	"sourceRoot": "libs/space/pages/src",
-	"prefix": "sneat",
-	"targets": {
-		"build": {
-			"executor": "@nx/angular:ng-packagr-lite",
-			"outputs": ["{workspaceRoot}/dist/libs/space/pages"],
-			"options": {
-				"project": "libs/space/pages/ng-package.json",
-				"tsConfig": "libs/space/pages/tsconfig.lib.json"
-			},
-			"configurations": {
-				"production": {
-					"tsConfig": "libs/space/pages/tsconfig.lib.prod.json"
-				},
-				"development": {}
-			},
-			"defaultConfiguration": "production"
-		},
-		"test": {
-			"executor": "@nx/vitest:test",
-			"outputs": ["{options.reportsDirectory}"],
-			"options": {
-				"reportsDirectory": "../../../coverage/libs/space/pages"
-			}
-		},
-		"lint": {
-			"executor": "@nx/eslint:lint"
-		}
-	}
+  "name": "space-pages",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/space/pages/src",
+  "prefix": "sneat",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/libs/space/pages"],
+      "options": {
+        "project": "libs/space/pages/ng-package.json",
+        "tsConfig": "libs/space/pages/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/space/pages/tsconfig.lib.prod.json"
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "reportsDirectory": "../../../coverage/libs/space/pages"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
 }

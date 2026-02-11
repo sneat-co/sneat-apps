@@ -4,6 +4,6 @@ import { AssetusSpaceService } from './assetus-space.service';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-	providers: [AssetService, AssetusSpaceService, ReactiveFormsModule],
+  providers: [AssetService, AssetusSpaceService, ReactiveFormsModule],
 })
 export class AssetusServicesModule {}

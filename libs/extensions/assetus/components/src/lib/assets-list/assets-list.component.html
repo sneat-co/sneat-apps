@@ -1,73 +1,73 @@
 @if (!assets) {
-	<ion-item [disabled]="true">
-		<ion-spinner slot="start" name="lines-small" />
-		<ion-label>Loading...</ion-label>
-	</ion-item>
+  <ion-item [disabled]="true">
+    <ion-spinner slot="start" name="lines-small" />
+    <ion-label>Loading...</ion-label>
+  </ion-item>
 } @else if (!assets.length) {
-	<ion-item [disabled]="true">No items created yet</ion-item>
+  <ion-item [disabled]="true">No items created yet</ion-item>
 } @else {
-	<div class="last-child-no-border">
-		@for (asset of assets; track asset.id) {
-			<ion-item
-				tappable
-				(click)="goAsset(asset)"
-				class="sneat-tiny-end-padding"
-				[class.deleting]="deletingIDs.includes(asset.id)"
-			>
-				<ion-label
-					[color]="deletingIDs.includes(asset.id) ? 'medium' : undefined"
-				>
-					@switch (asset.brief.extraType) {
-						@case ("vehicle") {
-							@if (
-								asset.brief.extra?.["make"] && asset.brief.extra?.["model"]
-							) {
-								{{ asset.brief.extra?.["make"] }}/{{
-									asset.brief.extra?.["model"]
-								}}
-							}
-							@if (
-								asset.brief.title &&
-								asset.brief.extra?.["make"] &&
-								asset.brief.extra?.["model"]
-							) {
-								&mdash;
-							}
-						}
-						@case ("dwelling") {
-							{{ asset.brief.extra?.["address"] || asset.brief.title }}
-						}
-					}
-					@if (asset.brief.title) {
-						{{ asset.brief.title }}
-					}
-				</ion-label>
-				@if (asset.brief.yearOfBuild && !asset.brief.extra?.["regNumber"]) {
-					<ion-badge color="light" style="font-weight: normal"
-						>{{ asset.brief.yearOfBuild }}
-					</ion-badge>
-				}
-				@if (asset.brief.extra?.["regNumber"]) {
-					<ion-badge color="light" style="font-weight: normal"
-						>{{ asset.brief.extra?.["regNumber"] }}
-					</ion-badge>
-				}
-				<ion-buttons slot="end">
-					@if (asset.brief.category === "vehicle") {
-						<ion-button (click)="addNewMilesAndFuel($event, asset)">
-							<ion-icon name="add" slot="start"></ion-icon>
-							<ion-label>Record miles</ion-label>
-							<!-- <ion-label>Add miles & fuel</ion-label> -->
-						</ion-button>
-					}
-					<ion-button
-						(click)="delete($event, asset)"
-						[disabled]="deletingIDs.includes(asset.id)"
-					>
-						<ion-icon name="close-outline" />
-					</ion-button>
-				</ion-buttons>
-			</ion-item>
-		}
-	</div>
+  <div class="last-child-no-border">
+    @for (asset of assets; track asset.id) {
+      <ion-item
+        tappable
+        (click)="goAsset(asset)"
+        class="sneat-tiny-end-padding"
+        [class.deleting]="deletingIDs.includes(asset.id)"
+      >
+        <ion-label
+          [color]="deletingIDs.includes(asset.id) ? 'medium' : undefined"
+        >
+          @switch (asset.brief.extraType) {
+            @case ("vehicle") {
+              @if (
+                asset.brief.extra?.["make"] && asset.brief.extra?.["model"]
+              ) {
+                {{ asset.brief.extra?.["make"] }}/{{
+                  asset.brief.extra?.["model"]
+                }}
+              }
+              @if (
+                asset.brief.title &&
+                asset.brief.extra?.["make"] &&
+                asset.brief.extra?.["model"]
+              ) {
+                &mdash;
+              }
+            }
+            @case ("dwelling") {
+              {{ asset.brief.extra?.["address"] || asset.brief.title }}
+            }
+          }
+          @if (asset.brief.title) {
+            {{ asset.brief.title }}
+          }
+        </ion-label>
+        @if (asset.brief.yearOfBuild && !asset.brief.extra?.["regNumber"]) {
+          <ion-badge color="light" style="font-weight: normal"
+            >{{ asset.brief.yearOfBuild }}
+          </ion-badge>
+        }
+        @if (asset.brief.extra?.["regNumber"]) {
+          <ion-badge color="light" style="font-weight: normal"
+            >{{ asset.brief.extra?.["regNumber"] }}
+          </ion-badge>
+        }
+        <ion-buttons slot="end">
+          @if (asset.brief.category === "vehicle") {
+            <ion-button (click)="addNewMilesAndFuel($event, asset)">
+              <ion-icon name="add" slot="start"></ion-icon>
+              <ion-label>Record miles</ion-label>
+              <!-- <ion-label>Add miles & fuel</ion-label> -->
+            </ion-button>
+          }
+          <ion-button
+            (click)="delete($event, asset)"
+            [disabled]="deletingIDs.includes(asset.id)"
+          >
+            <ion-icon name="close-outline" />
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    }
+  </div>
 }

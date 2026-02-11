@@ -5,53 +5,53 @@ import { ListusComponentBaseParams } from '../listus-component-base-params';
 import { BaseListPage } from './base-list-page';
 
 export abstract class BaseListItemPage extends BaseListPage {
-	protected itemId?: string;
-	protected listItemInfo?: IListItemBrief;
+  protected itemId?: string;
+  protected listItemInfo?: IListItemBrief;
 
-	protected constructor(
-		className: string,
-		route: ActivatedRoute,
-		params: ListusComponentBaseParams,
-		// listService: ListService,
-	) {
-		super(className, route, params);
-		try {
-			this.listItemInfo = window.history.state?.listItemInfo as IListItemBrief;
-			if (this.listItemInfo) {
-				this.itemId = this.listItemInfo.id;
-				this.onListItemInfoChanged(this.listItemInfo);
-			}
-			route.queryParamMap.subscribe((queryParams) => {
-				const itemId = queryParams.get('item');
-				if (itemId !== this.itemId) {
-					this.itemId = itemId || undefined;
-				}
-				this.onQueryParamsChanged(queryParams);
-			});
-		} catch (e) {
-			params.spaceParams.errorLogger.logError(
-				e,
-				'failed in BaseListItemPage.constructor()',
-			);
-		}
-	}
+  protected constructor(
+    className: string,
+    route: ActivatedRoute,
+    params: ListusComponentBaseParams,
+    // listService: ListService,
+  ) {
+    super(className, route, params);
+    try {
+      this.listItemInfo = window.history.state?.listItemInfo as IListItemBrief;
+      if (this.listItemInfo) {
+        this.itemId = this.listItemInfo.id;
+        this.onListItemInfoChanged(this.listItemInfo);
+      }
+      route.queryParamMap.subscribe((queryParams) => {
+        const itemId = queryParams.get('item');
+        if (itemId !== this.itemId) {
+          this.itemId = itemId || undefined;
+        }
+        this.onQueryParamsChanged(queryParams);
+      });
+    } catch (e) {
+      params.spaceParams.errorLogger.logError(
+        e,
+        'failed in BaseListItemPage.constructor()',
+      );
+    }
+  }
 
-	override setList(list: IListContext): void {
-		super.setList(list);
-		const { itemId } = this;
-		if (itemId && list.dbo?.items) {
-			const listItemInfo = list.dbo.items.find((item) => item.id === itemId);
-			this.listItemInfo = listItemInfo;
-			this.onListItemInfoChanged(listItemInfo);
-		}
-	}
+  override setList(list: IListContext): void {
+    super.setList(list);
+    const { itemId } = this;
+    if (itemId && list.dbo?.items) {
+      const listItemInfo = list.dbo.items.find((item) => item.id === itemId);
+      this.listItemInfo = listItemInfo;
+      this.onListItemInfoChanged(listItemInfo);
+    }
+  }
 
-	// NO_tslint:disable-next-line:prefer-function-over-method
-	protected onQueryParamsChanged(queryParams: ParamMap): void {
-		console.log('BaseListItemPage.onQueryParamsChanged', queryParams);
-	}
+  // NO_tslint:disable-next-line:prefer-function-over-method
+  protected onQueryParamsChanged(queryParams: ParamMap): void {
+    console.log('BaseListItemPage.onQueryParamsChanged', queryParams);
+  }
 
-	protected onListItemInfoChanged(listItemInfo?: IListItemBrief): void {
-		console.log('BaseListItemPage.onListItemInfoChanged', listItemInfo);
-	}
+  protected onListItemInfoChanged(listItemInfo?: IListItemBrief): void {
+    console.log('BaseListItemPage.onListItemInfoChanged', listItemInfo);
+  }
 }

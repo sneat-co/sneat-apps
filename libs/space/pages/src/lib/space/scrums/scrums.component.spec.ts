@@ -7,47 +7,47 @@ import { SpaceNavService } from '@sneat/space-services';
 import { ScrumsComponent } from './scrums.component';
 
 describe('ScrumsComponent', () => {
-	let component: ScrumsComponent;
-	let fixture: ComponentFixture<ScrumsComponent>;
+  let component: ScrumsComponent;
+  let fixture: ComponentFixture<ScrumsComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [ScrumsComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			providers: [
-				{
-					provide: ErrorLogger,
-					useValue: {
-						logError: vi.fn(),
-						logErrorHandler: () => vi.fn(),
-					},
-				},
-				{ provide: NavController, useValue: {} },
-				{
-					provide: SpaceNavService,
-					useValue: {
-						navigateForwardToSpacePage: vi.fn(),
-						navigateToScrum: vi.fn(),
-						navigateToScrums: vi.fn(),
-					},
-				},
-			],
-		})
-			.overrideComponent(ScrumsComponent, {
-				set: {
-					imports: [],
-					providers: [],
-					template: '',
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
-				},
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ScrumsComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        {
+          provide: ErrorLogger,
+          useValue: {
+            logError: vi.fn(),
+            logErrorHandler: () => vi.fn(),
+          },
+        },
+        { provide: NavController, useValue: {} },
+        {
+          provide: SpaceNavService,
+          useValue: {
+            navigateForwardToSpacePage: vi.fn(),
+            navigateToScrum: vi.fn(),
+            navigateToScrums: vi.fn(),
+          },
+        },
+      ],
+    })
+      .overrideComponent(ScrumsComponent, {
+        set: {
+          imports: [],
+          providers: [],
+          template: '',
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(ScrumsComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(ScrumsComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

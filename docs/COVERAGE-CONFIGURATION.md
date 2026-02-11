@@ -13,10 +13,7 @@ The repository uses Vitest for testing with coverage powered by the V8 provider.
 The workspace configuration file that defines test discovery patterns for all projects in the monorepo:
 
 ```typescript
-export default [
-  '**/vite.config.{mjs,js,ts,mts}',
-  '**/vitest.config.{mjs,js,ts,mts}',
-];
+export default ['**/vite.config.{mjs,js,ts,mts}', '**/vitest.config.{mjs,js,ts,mts}'];
 ```
 
 Each individual project's configuration extends from `vite.config.base.ts`, which contains shared coverage settings.
@@ -28,7 +25,7 @@ The base Vite configuration that all projects inherit from. It includes:
 #### Coverage Settings
 
 - **Provider**: V8 (fast native coverage)
-- **Reporters**: 
+- **Reporters**:
   - `text` - Console output
   - `json` - Machine-readable format
   - `json-summary` - Compact summary format
@@ -45,12 +42,12 @@ The base Vite configuration that all projects inherit from. It includes:
 
 Current baseline thresholds (will fail tests if not met):
 
-| Metric | Threshold |
-|--------|-----------|
-| Lines | 35% |
-| Functions | 35% |
-| Branches | 30% |
-| Statements | 35% |
+| Metric     | Threshold |
+| ---------- | --------- |
+| Lines      | 35%       |
+| Functions  | 35%       |
+| Branches   | 30%       |
+| Statements | 35%       |
 
 **Note**: These are baseline thresholds set to the current coverage level. The target is to reach 75% coverage over time.
 
@@ -85,6 +82,7 @@ coverage/<project-path>/index.html
 ```
 
 For example:
+
 - `coverage/libs/core/index.html`
 - `coverage/libs/components/index.html`
 - `coverage/apps/sneat-app/index.html`
@@ -102,6 +100,7 @@ The coverage thresholds act as quality gates:
 To improve test coverage in your project:
 
 1. Run coverage analysis to identify uncovered code:
+
    ```bash
    pnpm run coverage:analyze
    ```
@@ -111,6 +110,7 @@ To improve test coverage in your project:
 3. Add tests for uncovered code
 
 4. Verify improvements:
+
    ```bash
    pnpm nx test <project-name> --coverage.enabled=true
    ```
@@ -130,12 +130,12 @@ export default defineConfig(() => {
     dirname: __dirname,
     name: 'my-lib',
   });
-  
+
   return mergeConfig(baseConfig, {
     test: {
       coverage: {
         thresholds: {
-          lines: 80,      // Higher threshold for this project
+          lines: 80, // Higher threshold for this project
           functions: 80,
           branches: 75,
           statements: 80,
@@ -156,6 +156,7 @@ The configuration supports multiple output formats for different use cases:
 - **html**: Interactive reports for detailed analysis
 
 These can be used to:
+
 - Generate coverage badges
 - Post coverage comments on PRs
 - Track coverage trends over time

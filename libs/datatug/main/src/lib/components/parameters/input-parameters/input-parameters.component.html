@@ -1,44 +1,44 @@
 <ion-item-divider color="light">
-	<ion-label>Parameters</ion-label>
-	@if (hasParamValues) {
-		<ion-buttons slot="end">
-			<ion-button
-				color="medium"
-				(click)="clearAllParams($event)"
-				title="Clear all parameters"
-			>
-				<ion-icon name="trash-bin-outline" />
-			</ion-button>
-		</ion-buttons>
-	}
+  <ion-label>Parameters</ion-label>
+  @if (hasParamValues) {
+    <ion-buttons slot="end">
+      <ion-button
+        color="medium"
+        (click)="clearAllParams($event)"
+        title="Clear all parameters"
+      >
+        <ion-icon name="trash-bin-outline" />
+      </ion-button>
+    </ion-buttons>
+  }
 </ion-item-divider>
 @if (parameters?.length) {
-	@for (param of parameters; track param) {
-		<ion-item>
-			<ion-label>
-				{{ param.def.id }}
-				<ion-badge color="light" style="font-weight: normal">
-					<ion-text color="medium">{{ param.def.type }}</ion-text>
-				</ion-badge>
-			</ion-label>
-			@if (param.def.type === "integer" || param.def.type === "number") {
-				<ion-input
-					type="number"
-					[(ngModel)]="param.val"
-					(ionChange)="onParamChanged($event, param)"
-				/>
-			}
-			@if (param.val !== undefined) {
-				<ion-buttons slot="end">
-					<ion-button color="medium" (click)="param.val = undefined">
-						<ion-icon name="close-outline" />
-					</ion-button>
-				</ion-buttons>
-			}
-		</ion-item>
-	}
+  @for (param of parameters; track param) {
+    <ion-item>
+      <ion-label>
+        {{ param.def.id }}
+        <ion-badge color="light" style="font-weight: normal">
+          <ion-text color="medium">{{ param.def.type }}</ion-text>
+        </ion-badge>
+      </ion-label>
+      @if (param.def.type === "integer" || param.def.type === "number") {
+        <ion-input
+          type="number"
+          [(ngModel)]="param.val"
+          (ionChange)="onParamChanged($event, param)"
+        />
+      }
+      @if (param.val !== undefined) {
+        <ion-buttons slot="end">
+          <ion-button color="medium" (click)="param.val = undefined">
+            <ion-icon name="close-outline" />
+          </ion-button>
+        </ion-buttons>
+      }
+    </ion-item>
+  }
 } @else {
-	<ion-item>
-		<ion-label color="medium">No input parameters</ion-label>
-	</ion-item>
+  <ion-item>
+    <ion-label color="medium">No input parameters</ion-label>
+  </ion-item>
 }

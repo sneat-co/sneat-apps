@@ -6,19 +6,19 @@ import { OrderContainersSelectorDialogComponent } from './order-containers-selec
 
 @Injectable()
 export class OrderContainersSelectorService extends SelectorBaseService<IContainer> {
-	constructor() {
-		super(OrderContainersSelectorDialogComponent);
-	}
+  constructor() {
+    super(OrderContainersSelectorDialogComponent);
+  }
 
-	public selectOrderContainersInModal(
-		order?: ILogistOrderContext,
-	): Promise<IContainer[] | undefined> {
-		const options: ISelectorOptions<IContainer> = {
-			componentProps: {
-				order,
-			},
-			// selectedItems: [...(order?.dto?.containers || [])],
-		};
-		return this.selectMultipleInModal(options);
-	}
+  public selectOrderContainersInModal(
+    order?: ILogistOrderContext,
+  ): Promise<IContainer[] | undefined> {
+    const options: ISelectorOptions<IContainer> = {
+      componentProps: {
+        order,
+      },
+      // selectedItems: [...(order?.dto?.containers || [])],
+    };
+    return this.selectMultipleInModal(options);
+  }
 }

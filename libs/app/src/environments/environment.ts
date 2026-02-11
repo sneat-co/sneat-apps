@@ -10,5 +10,5 @@ import { baseEnvironmentConfig } from './environment.base';
 // import 'zone.js/dist/zone-error';
 
 export const environmentConfig: IEnvironmentConfig = {
-	...baseEnvironmentConfig,
+  ...baseEnvironmentConfig,
 };

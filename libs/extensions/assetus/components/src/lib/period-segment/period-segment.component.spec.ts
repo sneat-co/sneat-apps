@@ -4,23 +4,23 @@ import { PeriodSegmentComponent } from './period-segment.component';
 import { provideAssetusMocks } from '../testing/test-utils';
 
 describe('PeriodSegmentComponent', () => {
-	let component: PeriodSegmentComponent;
-	let fixture: ComponentFixture<PeriodSegmentComponent>;
+  let component: PeriodSegmentComponent;
+  let fixture: ComponentFixture<PeriodSegmentComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [PeriodSegmentComponent],
-			providers: [...provideAssetusMocks()],
-		}).compileComponents();
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [PeriodSegmentComponent],
+      providers: [...provideAssetusMocks()],
+    }).compileComponents();
+  }));
 
-	beforeEach(() => {
-		fixture = TestBed.createComponent(PeriodSegmentComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
+  beforeEach(() => {
+    fixture = TestBed.createComponent(PeriodSegmentComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

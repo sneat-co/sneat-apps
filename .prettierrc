@@ -1,14 +1,14 @@
 {
-	"singleQuote": true,
-	"trailingComma": "all",
-	"overrides": [
-		{
-			"files": [
-				"**/*.html"
-			],
-			"options": {
-				"singleQuote": false
-			}
-		}
-	]
+  "useTabs": false,
+  "tabWidth": 2,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "overrides": [
+    {
+      "files": ["**/*.html"],
+      "options": {
+        "singleQuote": false
+      }
+    }
+  ]
 }

@@ -7,41 +7,41 @@ import { ErrorLogger, LOGGER_FACTORY } from '@sneat/core';
 import { SneatAppHomePageComponent } from './sneat-app-home-page.component';
 
 describe('SneatAppHomePageComponent', () => {
-	let component: SneatAppHomePageComponent;
-	let fixture: ComponentFixture<SneatAppHomePageComponent>;
+  let component: SneatAppHomePageComponent;
+  let fixture: ComponentFixture<SneatAppHomePageComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [SneatAppHomePageComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			providers: [
-				{
-					provide: SneatAuthStateService,
-					useValue: { authState: of({ status: 'notAuthenticated' }) },
-				},
-				{
-					provide: ErrorLogger,
-					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
-				},
-				{
-					provide: LOGGER_FACTORY,
-					useValue: { getLogger: () => console },
-				},
-			],
-		})
-			.overrideComponent(SneatAppHomePageComponent, {
-				set: { imports: [], template: '', schemas: [CUSTOM_ELEMENTS_SCHEMA] },
-			})
-			.compileComponents();
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [SneatAppHomePageComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        {
+          provide: SneatAuthStateService,
+          useValue: { authState: of({ status: 'notAuthenticated' }) },
+        },
+        {
+          provide: ErrorLogger,
+          useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+        },
+        {
+          provide: LOGGER_FACTORY,
+          useValue: { getLogger: () => console },
+        },
+      ],
+    })
+      .overrideComponent(SneatAppHomePageComponent, {
+        set: { imports: [], template: '', schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+      })
+      .compileComponents();
+  }));
 
-	beforeEach(() => {
-		fixture = TestBed.createComponent(SneatAppHomePageComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
+  beforeEach(() => {
+    fixture = TestBed.createComponent(SneatAppHomePageComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

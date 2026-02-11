@@ -5,8 +5,8 @@ import { SpaceModuleService } from '@sneat/space-services';
 
 @Injectable()
 export class CalendariumSpaceService extends SpaceModuleService<ICalendariumSpaceDbo> {
-	public constructor() {
-		const afs = inject(AngularFirestore);
-		super(inject(Injector), 'calendarium', afs);
-	}
+  public constructor() {
+    const afs = inject(AngularFirestore);
+    super(inject(Injector), 'calendarium', afs);
+  }
 }

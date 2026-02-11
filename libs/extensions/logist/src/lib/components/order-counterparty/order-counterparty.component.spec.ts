@@ -11,49 +11,49 @@ import { OrderCounterpartyComponent } from './order-counterparty.component';
 vi.mock('@angular/fire/firestore');
 
 describe('OrderCounterpartyComponent', () => {
-	let component: OrderCounterpartyComponent;
-	let fixture: ComponentFixture<OrderCounterpartyComponent>;
+  let component: OrderCounterpartyComponent;
+  let fixture: ComponentFixture<OrderCounterpartyComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [OrderCounterpartyComponent],
-			providers: [
-				{
-					provide: ErrorLogger,
-					useValue: {
-						logError: vi.fn(),
-						logErrorHandler: () => vi.fn(),
-					},
-				},
-				LogistOrderService,
-				{
-					provide: ToastController,
-					useValue: { create: vi.fn() },
-				},
-				{
-					provide: SneatApiService,
-					useValue: {
-						post: vi.fn(() => of({})),
-						delete: vi.fn(() => of({})),
-					},
-				},
-				{
-					provide: Firestore,
-					useValue: { type: 'Firestore', toJSON: () => ({}) },
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(OrderCounterpartyComponent, {
-				set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [OrderCounterpartyComponent],
+      providers: [
+        {
+          provide: ErrorLogger,
+          useValue: {
+            logError: vi.fn(),
+            logErrorHandler: () => vi.fn(),
+          },
+        },
+        LogistOrderService,
+        {
+          provide: ToastController,
+          useValue: { create: vi.fn() },
+        },
+        {
+          provide: SneatApiService,
+          useValue: {
+            post: vi.fn(() => of({})),
+            delete: vi.fn(() => of({})),
+          },
+        },
+        {
+          provide: Firestore,
+          useValue: { type: 'Firestore', toJSON: () => ({}) },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(OrderCounterpartyComponent, {
+        set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(OrderCounterpartyComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(OrderCounterpartyComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

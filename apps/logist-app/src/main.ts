@@ -3,10 +3,10 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { DefaultSneatAppApiBaseUrl, SneatApiBaseUrl } from '@sneat/api';
 import {
-	CONTACT_ROLES_BY_TYPE,
-	getStandardSneatProviders,
-	provideAppInfo,
-	provideRolesByType,
+  CONTACT_ROLES_BY_TYPE,
+  getStandardSneatProviders,
+  provideAppInfo,
+  provideRolesByType,
 } from '@sneat/app';
 import { authRoutes } from '@sneat/auth-ui';
 import { RANDOM_ID_OPTIONS } from '@sneat/random';
@@ -18,31 +18,31 @@ import { logistAppEnvironmentConfig } from './environments/environment';
 import { registerIonicons } from './register-ionicons';
 
 bootstrapApplication(LogistAppComponent, {
-	providers: [
-		...getStandardSneatProviders(logistAppEnvironmentConfig),
-		// App-specific providers
-		provideAppInfo({
-			appId: 'logist',
-			appTitle: 'Logistus.app',
-			requiredSpaceType: 'company',
-		}),
-		provideRouter([...routes, ...authRoutes]),
-		provideRolesByType(undefined),
-		{
-			provide: SneatApiBaseUrl,
-			useValue: logistAppEnvironmentConfig.firebaseConfig.emulator
-				? 'http://localhost:4300/v0/'
-				: DefaultSneatAppApiBaseUrl,
-		},
-		{
-			provide: CONTACT_ROLES_BY_TYPE,
-			useValue: contactRolesByType,
-		},
-		{
-			provide: RANDOM_ID_OPTIONS,
-			useValue: { len: 9 },
-		},
-	],
+  providers: [
+    ...getStandardSneatProviders(logistAppEnvironmentConfig),
+    // App-specific providers
+    provideAppInfo({
+      appId: 'logist',
+      appTitle: 'Logistus.app',
+      requiredSpaceType: 'company',
+    }),
+    provideRouter([...routes, ...authRoutes]),
+    provideRolesByType(undefined),
+    {
+      provide: SneatApiBaseUrl,
+      useValue: logistAppEnvironmentConfig.firebaseConfig.emulator
+        ? 'http://localhost:4300/v0/'
+        : DefaultSneatAppApiBaseUrl,
+    },
+    {
+      provide: CONTACT_ROLES_BY_TYPE,
+      useValue: contactRolesByType,
+    },
+    {
+      provide: RANDOM_ID_OPTIONS,
+      useValue: { len: 9 },
+    },
+  ],
 }).catch((err) => console.error(err));
 
 registerIonicons();

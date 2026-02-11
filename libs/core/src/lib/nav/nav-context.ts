@@ -5,8 +5,8 @@ export type SpaceItem = 'happening' | 'contact' | 'document' | 'asset' | 'list';
 export type DeleteOperationState = 'deleting' | 'deleted' | undefined;
 
 export type INavContext<
-	Brief,
-	Dbo extends Brief,
+  Brief,
+  Dbo extends Brief,
 > = IIdAndOptionalBriefAndOptionalDbo<Brief, Dbo>;
 
 // export interface INavContext<Brief, Dto> {

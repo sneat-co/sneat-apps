@@ -1,12 +1,12 @@
 {
-	"name": "@sneat/contactus-internal",
-	"version": "0.0.1",
-	"peerDependencies": {
-		"@angular/common": "^16.2.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0",
-		"@angular/core": "^16.2.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0"
-	},
-	"dependencies": {
-		"tslib": "2.8.1"
-	},
-	"sideEffects": false
+  "name": "@sneat/contactus-internal",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^16.2.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0",
+    "@angular/core": "^16.2.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0"
+  },
+  "dependencies": {
+    "tslib": "2.8.1"
+  },
+  "sideEffects": false
 }

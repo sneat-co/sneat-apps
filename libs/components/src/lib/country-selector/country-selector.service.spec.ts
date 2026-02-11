@@ -4,20 +4,20 @@ import { ErrorLogger } from '@sneat/core';
 import { CountrySelectorService } from './country-selector.service';
 
 describe('CountrySelectorService', () => {
-	beforeEach(() => {
-		TestBed.configureTestingModule({
-			providers: [
-				CountrySelectorService,
-				{
-					provide: ErrorLogger,
-					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
-				},
-				{ provide: ModalController, useValue: { create: vi.fn() } },
-			],
-		});
-	});
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        CountrySelectorService,
+        {
+          provide: ErrorLogger,
+          useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+        },
+        { provide: ModalController, useValue: { create: vi.fn() } },
+      ],
+    });
+  });
 
-	it('should be created', () => {
-		expect(TestBed.inject(CountrySelectorService)).toBeTruthy();
-	});
+  it('should be created', () => {
+    expect(TestBed.inject(CountrySelectorService)).toBeTruthy();
+  });
 });

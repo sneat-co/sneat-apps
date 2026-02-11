@@ -1,88 +1,88 @@
 @if (treeNode) {
-	<ion-card
-		[class.dragging]="treeNode.isDragging"
-		[color]="treeNode.childrenCount && 'light'"
-	>
-		<ion-item
-			tappable
-			[color]="
-				treeNode.isDragging || isHovered
-					? 'medium'
-					: item?.children?.length && 'light'
-			"
-			[class.expandable]="isExpandable"
-			(click)="toggle()"
-		>
-			@if (isExpandable) {
-				<ion-buttons slot="start" style="margin-right: 0">
-					<ion-button (click)="toggle($event)" color="medium">
-						<ion-icon
-							[name]="
-								treeNode?.isExpanded
-									? 'chevron-down-circle-outline'
-									: 'chevron-forward-circle-outline'
-							"
-						/>
-					</ion-button>
-				</ion-buttons>
-			}
-			<ion-label>
-				<!--			<i>{{num}}</i>:-->
-				{{ item?.title }}
-				@if (!treeNode?.isExpanded && treeNode.childrenCount) {
-					<i
-						><ion-text color="medium"
-							>({{ treeNode.childrenCount }})</ion-text
-						></i
-					>
-				}
-				<span style="color: #86888f">
-					(lev: {{ treeNode.level }}, i: {{ treeNode.index }},
-					@if (treeNode.level === 1) {
-						expanded: {{ treeNode.isExpanded }},
-					}
-					@if (treeNode.hasChildren !== undefined) {
-						hasChildren: {{ treeNode.hasChildren }},
-					}
-					@if (treeNode.childrenCount) {
-						childrenCount: {{ treeNode.childrenCount }}
-					}
-					@if (
-						isExpandable && !treeNode.isExpanded && treeNode.children?.length
-					) {
-						<i style="margin-left: 2em">
-							<ion-text color="medium"
-								>{{ treeNode.children.length }} sub items</ion-text
-							>
-						</i>
-					}
-					)
-				</span>
-				@if (treeNode.isDragging) {
-					<b style="margin-left: 1em">dragging</b>
-				}
-				@if (isHovered) {
-					<b style="margin-left: 1em">hovered</b>
-				}
-			</ion-label>
-			<ion-buttons slot="end">
-				@if (treeNode.level === 1) {
-					<ion-button
-						[color]="isLiked ? 'primary' : 'medium'"
-						(click)="like($event)"
-					>
-						@if (item?.likedUserIDs?.length) {
-							<ion-label>{{ item.likedUserIDs.length }}</ion-label>
-						}
-						<ion-icon name="thumbs-up-outline" />
-					</ion-button>
-				}
-			</ion-buttons>
-		</ion-item>
-		@if (treeNode.children?.length && treeNode.isExpanded) {
-			<angular-dnd-tree-list [parentNode]="treeNode" />
-		}
-	</ion-card>
+  <ion-card
+    [class.dragging]="treeNode.isDragging"
+    [color]="treeNode.childrenCount && 'light'"
+  >
+    <ion-item
+      tappable
+      [color]="
+        treeNode.isDragging || isHovered
+          ? 'medium'
+          : item?.children?.length && 'light'
+      "
+      [class.expandable]="isExpandable"
+      (click)="toggle()"
+    >
+      @if (isExpandable) {
+        <ion-buttons slot="start" style="margin-right: 0">
+          <ion-button (click)="toggle($event)" color="medium">
+            <ion-icon
+              [name]="
+                treeNode?.isExpanded
+                  ? 'chevron-down-circle-outline'
+                  : 'chevron-forward-circle-outline'
+              "
+            />
+          </ion-button>
+        </ion-buttons>
+      }
+      <ion-label>
+        <!--			<i>{{num}}</i>:-->
+        {{ item?.title }}
+        @if (!treeNode?.isExpanded && treeNode.childrenCount) {
+          <i
+            ><ion-text color="medium"
+              >({{ treeNode.childrenCount }})</ion-text
+            ></i
+          >
+        }
+        <span style="color: #86888f">
+          (lev: {{ treeNode.level }}, i: {{ treeNode.index }},
+          @if (treeNode.level === 1) {
+            expanded: {{ treeNode.isExpanded }},
+          }
+          @if (treeNode.hasChildren !== undefined) {
+            hasChildren: {{ treeNode.hasChildren }},
+          }
+          @if (treeNode.childrenCount) {
+            childrenCount: {{ treeNode.childrenCount }}
+          }
+          @if (
+            isExpandable && !treeNode.isExpanded && treeNode.children?.length
+          ) {
+            <i style="margin-left: 2em">
+              <ion-text color="medium"
+                >{{ treeNode.children.length }} sub items</ion-text
+              >
+            </i>
+          }
+          )
+        </span>
+        @if (treeNode.isDragging) {
+          <b style="margin-left: 1em">dragging</b>
+        }
+        @if (isHovered) {
+          <b style="margin-left: 1em">hovered</b>
+        }
+      </ion-label>
+      <ion-buttons slot="end">
+        @if (treeNode.level === 1) {
+          <ion-button
+            [color]="isLiked ? 'primary' : 'medium'"
+            (click)="like($event)"
+          >
+            @if (item?.likedUserIDs?.length) {
+              <ion-label>{{ item.likedUserIDs.length }}</ion-label>
+            }
+            <ion-icon name="thumbs-up-outline" />
+          </ion-button>
+        }
+      </ion-buttons>
+    </ion-item>
+    @if (treeNode.children?.length && treeNode.isExpanded) {
+      <angular-dnd-tree-list [parentNode]="treeNode" />
+    }
+  </ion-card>
 }
 <!--<ion-item *ngIf="treeNode.level == 2" tappable [color]="treeNode.isDragging || isHovered ? 'medium' : item?.children?.length && 'light'"-->
 <!--			 [class.expandable]="isExpandable" (click)="toggle()">-->

@@ -7,44 +7,44 @@ import { ContactsSelectorService } from '../contacts-selector/contacts-selector.
 import { ContactInputComponent } from './contact-input.component';
 
 describe('ContactInputComponent', () => {
-	let component: ContactInputComponent;
-	let fixture: ComponentFixture<ContactInputComponent>;
+  let component: ContactInputComponent;
+  let fixture: ComponentFixture<ContactInputComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [ContactInputComponent],
-			providers: [
-				{
-					provide: ErrorLogger,
-					useValue: {
-						logError: vi.fn(),
-						logErrorHandler: vi.fn(() => vi.fn()),
-					},
-				},
-				{
-					provide: ContactsSelectorService,
-					useValue: { selectSingleInModal: vi.fn() },
-				},
-				{
-					provide: ModalController,
-					useValue: { create: vi.fn(), dismiss: vi.fn() },
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(ContactInputComponent, {
-				set: { imports: [], template: '' },
-			})
-			.compileComponents();
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ContactInputComponent],
+      providers: [
+        {
+          provide: ErrorLogger,
+          useValue: {
+            logError: vi.fn(),
+            logErrorHandler: vi.fn(() => vi.fn()),
+          },
+        },
+        {
+          provide: ContactsSelectorService,
+          useValue: { selectSingleInModal: vi.fn() },
+        },
+        {
+          provide: ModalController,
+          useValue: { create: vi.fn(), dismiss: vi.fn() },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(ContactInputComponent, {
+        set: { imports: [], template: '' },
+      })
+      .compileComponents();
+  }));
 
-	beforeEach(() => {
-		fixture = TestBed.createComponent(ContactInputComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ContactInputComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

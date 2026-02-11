@@ -1,34 +1,34 @@
 {
-	"name": "ext-schedulus-main",
-	"$schema": "../../../../node_modules/nx/schemas/project-schema.json",
-	"projectType": "library",
-	"sourceRoot": "libs/extensions/schedulus/main/src",
-	"prefix": "sneat",
-	"targets": {
-		"build": {
-			"executor": "@nx/angular:ng-packagr-lite",
-			"outputs": ["{workspaceRoot}/dist/libs/extensions/schedulus/main"],
-			"options": {
-				"project": "libs/extensions/schedulus/main/ng-package.json",
-				"tsConfig": "libs/extensions/schedulus/main/tsconfig.lib.json"
-			},
-			"configurations": {
-				"production": {
-					"tsConfig": "libs/extensions/schedulus/main/tsconfig.lib.prod.json"
-				},
-				"development": {}
-			},
-			"defaultConfiguration": "production"
-		},
-		"test": {
-			"executor": "@nx/vitest:test",
-			"outputs": ["{workspaceRoot}/coverage/libs/extensions/schedulus/main"],
-			"options": {
-				"tsConfig": "libs/extensions/schedulus/main/tsconfig.spec.json"
-			}
-		},
-		"lint": {
-			"executor": "@nx/eslint:lint"
-		}
-	}
+  "name": "ext-schedulus-main",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/extensions/schedulus/main/src",
+  "prefix": "sneat",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/libs/extensions/schedulus/main"],
+      "options": {
+        "project": "libs/extensions/schedulus/main/ng-package.json",
+        "tsConfig": "libs/extensions/schedulus/main/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/extensions/schedulus/main/tsconfig.lib.prod.json"
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{workspaceRoot}/coverage/libs/extensions/schedulus/main"],
+      "options": {
+        "tsConfig": "libs/extensions/schedulus/main/tsconfig.spec.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
 }

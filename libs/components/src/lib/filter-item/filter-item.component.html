@@ -1,19 +1,19 @@
 <ion-item class="with-buttons" lines="none">
-	@if (!$filter()) {
-		<ion-icon name="search-outline" slot="start" />
-	}
-	<ion-input
-		[label]="$filter() ? 'Filter:' : ''"
-		placeholder="Filter"
-		[value]="$filter()"
-		(ionInput)="onFilterChanged($event)"
-		(ionBlur)="onBlured($event)"
-	/>
-	@if (!!$filter()) {
-		<ion-buttons slot="end">
-			<ion-button color="medium" (click)="clearFilter($event)">
-				<ion-icon name="close-outline" />
-			</ion-button>
-		</ion-buttons>
-	}
+  @if (!$filter()) {
+    <ion-icon name="search-outline" slot="start" />
+  }
+  <ion-input
+    [label]="$filter() ? 'Filter:' : ''"
+    placeholder="Filter"
+    [value]="$filter()"
+    (ionInput)="onFilterChanged($event)"
+    (ionBlur)="onBlured($event)"
+  />
+  @if (!!$filter()) {
+    <ion-buttons slot="end">
+      <ion-button color="medium" (click)="clearFilter($event)">
+        <ion-icon name="close-outline" />
+      </ion-button>
+    </ion-buttons>
+  }
 </ion-item>

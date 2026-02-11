@@ -1,23 +1,23 @@
 <ion-header>
-	<ion-toolbar>
-		<ion-title>{{ title }}</ion-title>
-		<ion-buttons slot="end">
-			<ion-button
-				(click)="dismiss()"
-				[disabled]="!$date()"
-				[color]="$date() ? 'primary' : undefined"
-				[fill]="$date() ? 'solid' : undefined"
-			>
-				<ion-label>Set</ion-label>
-			</ion-button>
-		</ion-buttons>
-	</ion-toolbar>
+  <ion-toolbar>
+    <ion-title>{{ title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button
+        (click)="dismiss()"
+        [disabled]="!$date()"
+        [color]="$date() ? 'primary' : undefined"
+        [fill]="$date() ? 'solid' : undefined"
+      >
+        <ion-label>Set</ion-label>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 <ion-content>
-	<ion-datetime
-		[value]="$date()"
-		[max]="max"
-		(ionChange)="onDateChanged($event)"
-		presentation="date"
-	/>
+  <ion-datetime
+    [value]="$date()"
+    [max]="max"
+    (ionChange)="onDateChanged($event)"
+    presentation="date"
+  />
 </ion-content>

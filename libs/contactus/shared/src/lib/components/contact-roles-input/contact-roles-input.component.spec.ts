@@ -7,38 +7,38 @@ import { CONTACT_ROLES_BY_TYPE } from '@sneat/app';
 import { ContactRolesInputComponent } from './contact-roles-input.component';
 
 describe('ContactRolesInputComponent', () => {
-	let component: ContactRolesInputComponent;
-	let fixture: ComponentFixture<ContactRolesInputComponent>;
+  let component: ContactRolesInputComponent;
+  let fixture: ComponentFixture<ContactRolesInputComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [ContactRolesInputComponent],
-			providers: [
-				{
-					provide: ErrorLogger,
-					useValue: {
-						logError: vi.fn(),
-						logErrorHandler: vi.fn(() => vi.fn()),
-					},
-				},
-				{ provide: ContactService, useValue: {} },
-				{ provide: CONTACT_ROLES_BY_TYPE, useValue: {} },
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(ContactRolesInputComponent, {
-				set: { imports: [], template: '' },
-			})
-			.compileComponents();
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ContactRolesInputComponent],
+      providers: [
+        {
+          provide: ErrorLogger,
+          useValue: {
+            logError: vi.fn(),
+            logErrorHandler: vi.fn(() => vi.fn()),
+          },
+        },
+        { provide: ContactService, useValue: {} },
+        { provide: CONTACT_ROLES_BY_TYPE, useValue: {} },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(ContactRolesInputComponent, {
+        set: { imports: [], template: '' },
+      })
+      .compileComponents();
+  }));
 
-	beforeEach(() => {
-		fixture = TestBed.createComponent(ContactRolesInputComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ContactRolesInputComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

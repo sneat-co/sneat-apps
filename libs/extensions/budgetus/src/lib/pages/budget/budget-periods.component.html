@@ -1,16 +1,16 @@
 <!--happeningLiabilitiesByPeriod: {{happeningLiabilitiesByPeriod()|json}}-->
 <ion-accordion-group
-	[value]="activePeriod"
-	(ionChange)="onPeriodChanged($event)"
+  [value]="activePeriod"
+  (ionChange)="onPeriodChanged($event)"
 >
-	@for (period of periods; track period) {
-		<sneat-budget-period
-			[$showBy]="$showBy()"
-			(showByChange)="$showBy.set($event)"
-			[$liabilitiesMode]="$liabilitiesMode()"
-			[activePeriod]="activePeriod"
-			[$period]="period"
-			[liabilitiesByPeriod]="$liabilitiesByPeriod()"
-		/>
-	}
+  @for (period of periods; track period) {
+    <sneat-budget-period
+      [$showBy]="$showBy()"
+      (showByChange)="$showBy.set($event)"
+      [$liabilitiesMode]="$liabilitiesMode()"
+      [activePeriod]="activePeriod"
+      [$period]="period"
+      [liabilitiesByPeriod]="$liabilitiesByPeriod()"
+    />
+  }
 </ion-accordion-group>

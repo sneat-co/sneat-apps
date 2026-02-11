@@ -1,87 +1,87 @@
 <ion-header>
-	<ion-toolbar>
-		<ion-title>Personal invite</ion-title>
-	</ion-toolbar>
+  <ion-toolbar>
+    <ion-title>Personal invite</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<div class="ion-padding">
-		@if (invite) {
-			<p>
-				You've been invited by <b>{{ invite.from.title }}</b>
-				<br />
-				to join team: <b>{{ invite.space.title }}</b>
-			</p>
-		}
-		<p>Please verify your details before joining.</p>
-	</div>
+  <div class="ion-padding">
+    @if (invite) {
+      <p>
+        You've been invited by <b>{{ invite.from.title }}</b>
+        <br />
+        to join team: <b>{{ invite.space.title }}</b>
+      </p>
+    }
+    <p>Please verify your details before joining.</p>
+  </div>
 
-	<ion-list>
-		<ion-item-divider>
-			<ion-label>My details</ion-label>
-		</ion-item-divider>
-		<ion-item>
-			<ion-label position="fixed">Full name</ion-label>
-			<ion-input [disabled]="working" [(ngModel)]="fullName" />
-		</ion-item>
-		<ion-item>
-			<ion-label position="fixed">Email</ion-label>
-			<ion-input
-				readonly
-				[disabled]="true"
-				id="email"
-				type="email"
-				[(ngModel)]="email"
-			/>
-		</ion-item>
-		@if (!hidePin) {
-			<ion-item-divider>
-				<ion-label>Secret</ion-label>
-			</ion-item-divider>
-			<ion-item>
-				<ion-label>PIN</ion-label>
-				<ion-input [disabled]="working" type="number" [(ngModel)]="pin" />
-			</ion-item>
-		}
-	</ion-list>
-	<div class="ion-padding">
-		<ion-button [disabled]="working" (click)="join()">
-			@if (accepting) {
-				<ion-spinner name="lines-small" slot="start" />
-				<ion-label>Joining team...</ion-label>
-			} @else {
-				<ion-icon name="log-in-outline" slot="start" />
-				<ion-label>Join team</ion-label>
-			}
-		</ion-button>
-		<ion-button
-			[disabled]="working"
-			color="medium"
-			fill="outline"
-			(click)="reject()"
-		>
-			@if (rejecting) {
-				<ion-spinner name="lines-small" slot="start" />
-				<ion-label>Rejecting invite...</ion-label>
-			} @else {
-				<ion-icon name="close-outline" slot="start" />
-				<ion-label>Refuse to join</ion-label>
-			}
-		</ion-button>
-		<!--		@if (accepting) {-->
-		<!--			<ion-progress-bar type="indeterminate" color="medium"></ion-progress-bar>-->
-		<!--		}-->
-	</div>
-	@if (members) {
-		<ion-list>
-			<ion-item-divider>
-				<ion-label>Team members</ion-label>
-			</ion-item-divider>
-			@for (member of members; track member.id) {
-				<ion-item>
-					<ion-label>{{ member.brief.title }}</ion-label>
-				</ion-item>
-			}
-		</ion-list>
-	}
+  <ion-list>
+    <ion-item-divider>
+      <ion-label>My details</ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-label position="fixed">Full name</ion-label>
+      <ion-input [disabled]="working" [(ngModel)]="fullName" />
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Email</ion-label>
+      <ion-input
+        readonly
+        [disabled]="true"
+        id="email"
+        type="email"
+        [(ngModel)]="email"
+      />
+    </ion-item>
+    @if (!hidePin) {
+      <ion-item-divider>
+        <ion-label>Secret</ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-label>PIN</ion-label>
+        <ion-input [disabled]="working" type="number" [(ngModel)]="pin" />
+      </ion-item>
+    }
+  </ion-list>
+  <div class="ion-padding">
+    <ion-button [disabled]="working" (click)="join()">
+      @if (accepting) {
+        <ion-spinner name="lines-small" slot="start" />
+        <ion-label>Joining team...</ion-label>
+      } @else {
+        <ion-icon name="log-in-outline" slot="start" />
+        <ion-label>Join team</ion-label>
+      }
+    </ion-button>
+    <ion-button
+      [disabled]="working"
+      color="medium"
+      fill="outline"
+      (click)="reject()"
+    >
+      @if (rejecting) {
+        <ion-spinner name="lines-small" slot="start" />
+        <ion-label>Rejecting invite...</ion-label>
+      } @else {
+        <ion-icon name="close-outline" slot="start" />
+        <ion-label>Refuse to join</ion-label>
+      }
+    </ion-button>
+    <!--		@if (accepting) {-->
+    <!--			<ion-progress-bar type="indeterminate" color="medium"></ion-progress-bar>-->
+    <!--		}-->
+  </div>
+  @if (members) {
+    <ion-list>
+      <ion-item-divider>
+        <ion-label>Team members</ion-label>
+      </ion-item-divider>
+      @for (member of members; track member.id) {
+        <ion-item>
+          <ion-label>{{ member.brief.title }}</ion-label>
+        </ion-item>
+      }
+    </ion-list>
+  }
 </ion-content>

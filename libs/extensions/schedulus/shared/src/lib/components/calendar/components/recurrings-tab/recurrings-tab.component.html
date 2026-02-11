@@ -2,64 +2,64 @@
 @let allRecurrings = $allRecurrings();
 
 @if (allRecurrings) {
-	@let numberOfHidden = $numberOfHidden();
-	@if (!!numberOfHidden) {
-		<ion-item class="ion-margin sneat-no-end-padding">
-			@if (numberOfHidden === 1) {
-				<ion-label color="medium"
-					>{{ numberOfHidden }} out of {{ allRecurrings.length }}
-					happenings is hidden by filter.
-				</ion-label>
-			} @else {
-				<ion-label color="medium"
-					>{{ numberOfHidden }} out of {{ allRecurrings.length }} happenings are
-					hidden by filter.
-				</ion-label>
-			}
-			<ion-buttons slot="end">
-				<ion-button fill="clear" (click)="resetFilter($event)">
-					<ion-icon slot="start" name="close-circle-outline" color="medium" />
-					<ion-label color="medium">Reset filter</ion-label>
-				</ion-button>
-			</ion-buttons>
-		</ion-item>
-	}
+  @let numberOfHidden = $numberOfHidden();
+  @if (!!numberOfHidden) {
+    <ion-item class="ion-margin sneat-no-end-padding">
+      @if (numberOfHidden === 1) {
+        <ion-label color="medium"
+          >{{ numberOfHidden }} out of {{ allRecurrings.length }}
+          happenings is hidden by filter.
+        </ion-label>
+      } @else {
+        <ion-label color="medium"
+          >{{ numberOfHidden }} out of {{ allRecurrings.length }} happenings are
+          hidden by filter.
+        </ion-label>
+      }
+      <ion-buttons slot="end">
+        <ion-button fill="clear" (click)="resetFilter($event)">
+          <ion-icon slot="start" name="close-circle-outline" color="medium" />
+          <ion-label color="medium">Reset filter</ion-label>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  }
 
-	@if (allRecurrings && space) {
-		@for (recurring of $recurrings() || []; track recurring.id) {
-			<sneat-happening-card
-				[$happening]="recurring"
-				[$space]="space"
-				[$contactusSpace]="$contactusSpace()"
-			/>
-		} @empty {
-			@if ($allRecurrings()) {
-				<ion-item>
-					<ion-label class="ion-text-wrap">
-						No recurring activities have been added yet.
-					</ion-label>
-					<ion-buttons slot="end">
-						<ion-button
-							color="primary"
-							style="text-transform: none"
-							routerLink="../new-happening"
-							[queryParams]="{ type: 'recurring' }"
-						>
-							<ion-icon name="duplicate-outline" color="medium" slot="start" />
-							<ion-label>Add 1st recurring</ion-label>
-						</ion-button>
-					</ion-buttons>
-				</ion-item>
-			}
-		}
-	}
+  @if (allRecurrings && space) {
+    @for (recurring of $recurrings() || []; track recurring.id) {
+      <sneat-happening-card
+        [$happening]="recurring"
+        [$space]="space"
+        [$contactusSpace]="$contactusSpace()"
+      />
+    } @empty {
+      @if ($allRecurrings()) {
+        <ion-item>
+          <ion-label class="ion-text-wrap">
+            No recurring activities have been added yet.
+          </ion-label>
+          <ion-buttons slot="end">
+            <ion-button
+              color="primary"
+              style="text-transform: none"
+              routerLink="../new-happening"
+              [queryParams]="{ type: 'recurring' }"
+            >
+              <ion-icon name="duplicate-outline" color="medium" slot="start" />
+              <ion-label>Add 1st recurring</ion-label>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+      }
+    }
+  }
 } @else {
-	<ion-card>
-		<ion-card-content>
-			<ion-item class="ion-item-no-border">
-				<ion-spinner slot="start" color="medium" />
-				<ion-label color="medium">Loading...</ion-label>
-			</ion-item>
-		</ion-card-content>
-	</ion-card>
+  <ion-card>
+    <ion-card-content>
+      <ion-item class="ion-item-no-border">
+        <ion-spinner slot="start" color="medium" />
+        <ion-label color="medium">Loading...</ion-label>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
 }

@@ -9,94 +9,94 @@
 <p>$wizardStep: {{ $wizardStep() }}</p>
 
 @if (show.ageGroup) {
-	<sneat-age-group-form
-		[spaceType]="$contact().space.type"
-		[hidePetOption]="hidePetOption"
-		[disabled]="disabled"
-		[$ageGroup]="$contact().dbo.ageGroup"
-		(ageGroupChange)="onAgeGroupChanged($event)"
-	/>
+  <sneat-age-group-form
+    [spaceType]="$contact().space.type"
+    [hidePetOption]="hidePetOption"
+    [disabled]="disabled"
+    [$ageGroup]="$contact().dbo.ageGroup"
+    (ageGroupChange)="onAgeGroupChanged($event)"
+  />
 }
 
 @if (show.gender) {
-	<ion-card>
-		<sneat-gender-form
-			[disabled]="disabled"
-			[$spaceID]="$spaceID()"
-			[$contactID]="undefined"
-			[$genderID]="$contact().dbo.gender"
-			(genderChange)="onGenderChanged($event)"
-		/>
-	</ion-card>
+  <ion-card>
+    <sneat-gender-form
+      [disabled]="disabled"
+      [$spaceID]="$spaceID()"
+      [$contactID]="undefined"
+      [$genderID]="$contact().dbo.gender"
+      (genderChange)="onGenderChanged($event)"
+    />
+  </ion-card>
 }
 
 @if (!requires.relatedAs?.hide && show.relatedAs && $contact().space.id) {
-	<sneat-contact-relationship-form
-		[$contactID]="''"
-		[$userSpaceContactID]="null"
-		[isActive]="$wizardStep() === 'relatedAs'"
-		[disabled]="disabled"
-		[$space]="$contact().space"
-		[$relatedTo]="$relatedTo()"
-		[$ageGroup]="$contact().dbo.ageGroup"
-		(relatedAsChange)="onRelatedAsChanged($event)"
-	/>
-	<!--[relatedAs]="newPerson.related?.relatedAs?.length === 1 ? newPerson.relatedTo?.relatedAs?.[0] : undefined"-->
+  <sneat-contact-relationship-form
+    [$contactID]="''"
+    [$userSpaceContactID]="null"
+    [isActive]="$wizardStep() === 'relatedAs'"
+    [disabled]="disabled"
+    [$space]="$contact().space"
+    [$relatedTo]="$relatedTo()"
+    [$ageGroup]="$contact().dbo.ageGroup"
+    (relatedAsChange)="onRelatedAsChanged($event)"
+  />
+  <!--[relatedAs]="newPerson.related?.relatedAs?.length === 1 ? newPerson.relatedTo?.relatedAs?.[0] : undefined"-->
 }
 
 @if (show.name) {
-	<ion-card>
-		<sneat-names-form
-			[name]="$contact().dbo.names"
-			[isActive]="$wizardStep() === 'name'"
-			[showNextButton]="false"
-			[fields]="nameFields"
-			(namesChanged)="onNameChanged($event)"
-			[disabled]="disabled"
-			(next)="nextFromName($event)"
-		/>
-	</ion-card>
+  <ion-card>
+    <sneat-names-form
+      [name]="$contact().dbo.names"
+      [isActive]="$wizardStep() === 'name'"
+      [showNextButton]="false"
+      [fields]="nameFields"
+      (namesChanged)="onNameChanged($event)"
+      [disabled]="disabled"
+      (next)="nextFromName($event)"
+    />
+  </ion-card>
 }
 
 @if (!requires.roles?.hide && show.roles) {
-	<sneat-roles-form
-		[$space]="$contact().space"
-		[isActive]="$wizardStep() === 'roles'"
-		[disabled]="disabled"
-	/>
+  <sneat-roles-form
+    [$space]="$contact().space"
+    [isActive]="$wizardStep() === 'roles'"
+    [disabled]="disabled"
+  />
 }
 
 @if (show.communicationChannels) {
-	<ion-segment [(ngModel)]="tab">
-		<ion-segment-button value="emails">Emails</ion-segment-button>
-		<ion-segment-button value="phones">Phones</ion-segment-button>
-	</ion-segment>
-	@switch (tab) {
-		@case ("emails") {
-			<sneat-emails-form
-				[hideHeader]="true"
-				[emails]="$emails()"
-				(emailsChange)="onEmailsChanged($event)"
-			/>
-		}
-		@case ("phones") {
-			<sneat-phones-form
-				[hideHeader]="true"
-				[phones]="$phones()"
-				(phonesChange)="onPhoneChanged($event)"
-			/>
-		}
-	}
+  <ion-segment [(ngModel)]="tab">
+    <ion-segment-button value="emails">Emails</ion-segment-button>
+    <ion-segment-button value="phones">Phones</ion-segment-button>
+  </ion-segment>
+  @switch (tab) {
+    @case ("emails") {
+      <sneat-emails-form
+        [hideHeader]="true"
+        [emails]="$emails()"
+        (emailsChange)="onEmailsChanged($event)"
+      />
+    }
+    @case ("phones") {
+      <sneat-phones-form
+        [hideHeader]="true"
+        [phones]="$phones()"
+        (phonesChange)="onPhoneChanged($event)"
+      />
+    }
+  }
 }
 
 @if ($wizardStep() === "communicationChannels") {
-	<ion-button
-		class="ion-margin"
-		size="medium"
-		[color]="show.nameNext ? 'primary' : 'medium'"
-		(click)="openNext($wizardStep())"
-	>
-		<ion-label>Next</ion-label>
-		<ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>
-	</ion-button>
+  <ion-button
+    class="ion-margin"
+    size="medium"
+    [color]="show.nameNext ? 'primary' : 'medium'"
+    (click)="openNext($wizardStep())"
+  >
+    <ion-label>Next</ion-label>
+    <ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>
+  </ion-button>
 }

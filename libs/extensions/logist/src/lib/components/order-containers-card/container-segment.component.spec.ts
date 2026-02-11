@@ -10,39 +10,39 @@ import { ContainerSegmentComponent } from './container-segment.component';
 vi.mock('@angular/fire/firestore');
 
 describe('ContainerSegmentComponent', () => {
-	let component: ContainerSegmentComponent;
-	let fixture: ComponentFixture<ContainerSegmentComponent>;
+  let component: ContainerSegmentComponent;
+  let fixture: ComponentFixture<ContainerSegmentComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [ContainerSegmentComponent],
-			providers: [
-				{
-					provide: ErrorLogger,
-					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
-				},
-				LogistOrderService,
-				{
-					provide: SneatApiService,
-					useValue: { post: vi.fn(() => of({})), delete: vi.fn(() => of({})) },
-				},
-				{
-					provide: Firestore,
-					useValue: { type: 'Firestore', toJSON: () => ({}) },
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(ContainerSegmentComponent, {
-				set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ContainerSegmentComponent],
+      providers: [
+        {
+          provide: ErrorLogger,
+          useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+        },
+        LogistOrderService,
+        {
+          provide: SneatApiService,
+          useValue: { post: vi.fn(() => of({})), delete: vi.fn(() => of({})) },
+        },
+        {
+          provide: Firestore,
+          useValue: { type: 'Firestore', toJSON: () => ({}) },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(ContainerSegmentComponent, {
+        set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(ContainerSegmentComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(ContainerSegmentComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

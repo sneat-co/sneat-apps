@@ -6,37 +6,37 @@ import { ClassName } from '@sneat/ui';
 import { TrackerComponent } from './tracker.component';
 
 describe('TrackerComponent', () => {
-	let component: TrackerComponent;
-	let fixture: ComponentFixture<TrackerComponent>;
+  let component: TrackerComponent;
+  let fixture: ComponentFixture<TrackerComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [TrackerComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			providers: [
-				{ provide: ClassName, useValue: 'TrackerComponent' },
-				{
-					provide: ErrorLogger,
-					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
-				},
-				{
-					provide: ContactusSpaceService,
-					useValue: { watchSpaceModuleRecord: vi.fn() },
-				},
-			],
-		})
-			.overrideComponent(TrackerComponent, {
-				set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [TrackerComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        { provide: ClassName, useValue: 'TrackerComponent' },
+        {
+          provide: ErrorLogger,
+          useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+        },
+        {
+          provide: ContactusSpaceService,
+          useValue: { watchSpaceModuleRecord: vi.fn() },
+        },
+      ],
+    })
+      .overrideComponent(TrackerComponent, {
+        set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(TrackerComponent);
-		component = fixture.componentInstance;
-		fixture.componentRef.setInput('$tracker', undefined);
-		fixture.detectChanges();
-	}));
+    fixture = TestBed.createComponent(TrackerComponent);
+    component = fixture.componentInstance;
+    fixture.componentRef.setInput('$tracker', undefined);
+    fixture.detectChanges();
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

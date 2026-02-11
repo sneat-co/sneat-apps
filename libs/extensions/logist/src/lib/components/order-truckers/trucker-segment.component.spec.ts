@@ -11,40 +11,40 @@ import { TruckerSegmentComponent } from './trucker-segment.component';
 vi.mock('@angular/fire/firestore');
 
 describe('TruckerSegmentComponent', () => {
-	let component: TruckerSegmentComponent;
-	let fixture: ComponentFixture<TruckerSegmentComponent>;
+  let component: TruckerSegmentComponent;
+  let fixture: ComponentFixture<TruckerSegmentComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [TruckerSegmentComponent],
-			providers: [
-				{
-					provide: ErrorLogger,
-					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
-				},
-				LogistOrderService,
-				OrderPrintService,
-				{
-					provide: SneatApiService,
-					useValue: { post: vi.fn(() => of({})), delete: vi.fn(() => of({})) },
-				},
-				{
-					provide: Firestore,
-					useValue: { type: 'Firestore', toJSON: () => ({}) },
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(TruckerSegmentComponent, {
-				set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [TruckerSegmentComponent],
+      providers: [
+        {
+          provide: ErrorLogger,
+          useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+        },
+        LogistOrderService,
+        OrderPrintService,
+        {
+          provide: SneatApiService,
+          useValue: { post: vi.fn(() => of({})), delete: vi.fn(() => of({})) },
+        },
+        {
+          provide: Firestore,
+          useValue: { type: 'Firestore', toJSON: () => ({}) },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(TruckerSegmentComponent, {
+        set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(TruckerSegmentComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(TruckerSegmentComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

@@ -1,160 +1,160 @@
 import {
-	Component,
-	Input,
-	NgZone,
-	OnChanges,
-	SimpleChanges,
-	inject,
+  Component,
+  Input,
+  NgZone,
+  OnChanges,
+  SimpleChanges,
+  inject,
 } from '@angular/core';
 import {
-	IonCard,
-	IonCardContent,
-	NavController,
+  IonCard,
+  IonCardContent,
+  NavController,
 } from '@ionic/angular/standalone';
 import { DataGridComponent } from '@sneat/datagrid';
 import { IGridColumn } from '@sneat/grid';
 import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 import {
-	ILogistOrderContext,
-	IOrderCounterpartyRef,
+  ILogistOrderContext,
+  IOrderCounterpartyRef,
 } from '../../dto/order-dto';
 
 interface OrderRow {
-	readonly id: string;
-	readonly status?: string;
-	readonly direction?: string;
-	readonly carrier?: IOrderCounterpartyRef;
-	readonly buyer?: IOrderCounterpartyRef;
-	readonly consignee?: IOrderCounterpartyRef;
-	readonly containers?: string;
+  readonly id: string;
+  readonly status?: string;
+  readonly direction?: string;
+  readonly carrier?: IOrderCounterpartyRef;
+  readonly buyer?: IOrderCounterpartyRef;
+  readonly consignee?: IOrderCounterpartyRef;
+  readonly containers?: string;
 }
 
 @Component({
-	selector: 'sneat-logist-orders-grid',
-	templateUrl: './orders-grid.component.html',
-	imports: [IonCard, IonCardContent, DataGridComponent],
+  selector: 'sneat-logist-orders-grid',
+  templateUrl: './orders-grid.component.html',
+  imports: [IonCard, IonCardContent, DataGridComponent],
 })
 export class OrdersGridComponent implements OnChanges {
-	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
-	private readonly navController = inject(NavController);
-	private readonly zone = inject(NgZone);
+  private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+  private readonly navController = inject(NavController);
+  private readonly zone = inject(NgZone);
 
-	@Input({ required: true }) space?: ISpaceContext;
-	@Input() orders?: ILogistOrderContext[];
+  @Input({ required: true }) space?: ISpaceContext;
+  @Input() orders?: ILogistOrderContext[];
 
-	rows?: OrderRow[];
+  rows?: OrderRow[];
 
-	allCols: IGridColumn[] = [
-		{
-			field: 'id',
-			dbType: 'string',
-			title: '#',
-			hozAlign: 'right',
-			headerHozAlign: 'right',
-			width: 50,
-			widthShrink: 2,
-		},
-		// {
-		// 	field: 'status',
-		// 	dbType: 'string',
-		// 	title: 'Status',
-		// },
-		{
-			field: 'direction',
-			dbType: 'string',
-			title: 'Direction',
-		},
-		{
-			field: 'consignee.title',
-			dbType: 'string',
-			title: 'Consignee',
-		},
-		{
-			field: 'buyer.title',
-			dbType: 'string',
-			title: 'Buyer',
-		},
-		{
-			field: 'receive_agent.title',
-			dbType: 'string',
-			title: `Buyer's agent`,
-		},
-		{
-			field: 'containers',
-			dbType: 'string',
-			title: 'Containers',
-			hozAlign: 'right',
-			headerHozAlign: 'right',
-			width: 100,
-			widthShrink: 1,
-		},
-		{
-			field: 'shippingPoints',
-			dbType: 'string',
-			title: 'Points',
-			hozAlign: 'right',
-			headerHozAlign: 'right',
-			width: 100,
-			widthShrink: 1,
-		},
-		{
-			field: 'segments',
-			dbType: 'string',
-			title: 'Segments',
-			hozAlign: 'right',
-			headerHozAlign: 'right',
-			width: 100,
-			widthShrink: 1,
-		},
-	];
+  allCols: IGridColumn[] = [
+    {
+      field: 'id',
+      dbType: 'string',
+      title: '#',
+      hozAlign: 'right',
+      headerHozAlign: 'right',
+      width: 50,
+      widthShrink: 2,
+    },
+    // {
+    // 	field: 'status',
+    // 	dbType: 'string',
+    // 	title: 'Status',
+    // },
+    {
+      field: 'direction',
+      dbType: 'string',
+      title: 'Direction',
+    },
+    {
+      field: 'consignee.title',
+      dbType: 'string',
+      title: 'Consignee',
+    },
+    {
+      field: 'buyer.title',
+      dbType: 'string',
+      title: 'Buyer',
+    },
+    {
+      field: 'receive_agent.title',
+      dbType: 'string',
+      title: `Buyer's agent`,
+    },
+    {
+      field: 'containers',
+      dbType: 'string',
+      title: 'Containers',
+      hozAlign: 'right',
+      headerHozAlign: 'right',
+      width: 100,
+      widthShrink: 1,
+    },
+    {
+      field: 'shippingPoints',
+      dbType: 'string',
+      title: 'Points',
+      hozAlign: 'right',
+      headerHozAlign: 'right',
+      width: 100,
+      widthShrink: 1,
+    },
+    {
+      field: 'segments',
+      dbType: 'string',
+      title: 'Segments',
+      hozAlign: 'right',
+      headerHozAlign: 'right',
+      width: 100,
+      widthShrink: 1,
+    },
+  ];
 
-	displayCols = this.allCols;
+  displayCols = this.allCols;
 
-	ngOnChanges(changes: SimpleChanges): void {
-		console.log('OrdersGridComponent.ngOnChanges():', changes);
-		if (changes['orders']) {
-			this.rows = this.orders?.map((o) => ({
-				id: o.id,
-				status: o.brief?.status,
-				direction: o.brief?.direction,
-				dispatch_agent: o.dbo?.counterparties?.find(
-					(c) => c.role === 'dispatch_agent',
-				),
-				receive_agent: o.dbo?.counterparties?.find(
-					(c) => c.role === 'receive_agent',
-				),
-				buyer: o.dbo?.counterparties?.find((c) => c.role === 'buyer'),
-				consignee: o.dbo?.counterparties?.find((c) => c.role === 'consignee'),
-				containers: o.dbo?.containers?.length?.toString(),
-				shippingPoints: o.dbo?.shippingPoints?.length?.toString(),
-				segments: o.dbo?.segments?.length?.toString(),
-			}));
-		}
-	}
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('OrdersGridComponent.ngOnChanges():', changes);
+    if (changes['orders']) {
+      this.rows = this.orders?.map((o) => ({
+        id: o.id,
+        status: o.brief?.status,
+        direction: o.brief?.direction,
+        dispatch_agent: o.dbo?.counterparties?.find(
+          (c) => c.role === 'dispatch_agent',
+        ),
+        receive_agent: o.dbo?.counterparties?.find(
+          (c) => c.role === 'receive_agent',
+        ),
+        buyer: o.dbo?.counterparties?.find((c) => c.role === 'buyer'),
+        consignee: o.dbo?.counterparties?.find((c) => c.role === 'consignee'),
+        containers: o.dbo?.containers?.length?.toString(),
+        shippingPoints: o.dbo?.shippingPoints?.length?.toString(),
+        segments: o.dbo?.segments?.length?.toString(),
+      }));
+    }
+  }
 
-	protected readonly rowClick = (event: Event, row: unknown) => {
-		console.log('OrdersGridComponent.rowClick():', event, row);
-		if (!this.space) {
-			alert('No team context provided!');
-			return;
-		}
-		const data = (row as { getData: () => { id: string } }).getData();
-		const space = this.space;
-		if (!space) {
-			alert('No space context provided!');
-			return;
-		}
-		this.zone
-			.run(() =>
-				this.navController
-					.navigateForward(['space', space.type, space.id, 'order', data.id])
-					.catch(
-						this.errorLogger.logErrorHandler(
-							'Failed to navigate to order details page',
-						),
-					),
-			)
-			.then(() => void 0);
-	};
+  protected readonly rowClick = (event: Event, row: unknown) => {
+    console.log('OrdersGridComponent.rowClick():', event, row);
+    if (!this.space) {
+      alert('No team context provided!');
+      return;
+    }
+    const data = (row as { getData: () => { id: string } }).getData();
+    const space = this.space;
+    if (!space) {
+      alert('No space context provided!');
+      return;
+    }
+    this.zone
+      .run(() =>
+        this.navController
+          .navigateForward(['space', space.type, space.id, 'order', data.id])
+          .catch(
+            this.errorLogger.logErrorHandler(
+              'Failed to navigate to order details page',
+            ),
+          ),
+      )
+      .then(() => void 0);
+  };
 }

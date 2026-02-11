@@ -6,21 +6,21 @@ import { Subject } from 'rxjs';
 import { SneatNavService } from './sneat-nav.service';
 
 describe('SneatNavService', () => {
-	beforeEach(() => {
-		TestBed.configureTestingModule({
-			providers: [
-				SneatNavService,
-				{
-					provide: Router,
-					useValue: { events: new Subject() },
-				},
-				{ provide: Location, useValue: { back: vi.fn() } },
-				{ provide: NavController, useValue: { pop: vi.fn() } },
-			],
-		});
-	});
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        SneatNavService,
+        {
+          provide: Router,
+          useValue: { events: new Subject() },
+        },
+        { provide: Location, useValue: { back: vi.fn() } },
+        { provide: NavController, useValue: { pop: vi.fn() } },
+      ],
+    });
+  });
 
-	it('should be created', () => {
-		expect(TestBed.inject(SneatNavService)).toBeTruthy();
-	});
+  it('should be created', () => {
+    expect(TestBed.inject(SneatNavService)).toBeTruthy();
+  });
 });

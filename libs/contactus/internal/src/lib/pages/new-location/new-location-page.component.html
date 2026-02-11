@@ -1,25 +1,25 @@
 <ion-header>
-	<ion-toolbar color="light">
-		<ion-back-button
-			slot="start"
-			[defaultHref]="spacePageUrl('contact/{{contact?.id}}')"
-		/>
-		<ion-title>
-			@if ($contact(); as contact) {
-				New location &#64; {{ contact | personTitle }}
-			} @else {
-				New location
-			}
-		</ion-title>
-	</ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-back-button
+      slot="start"
+      [defaultHref]="spacePageUrl('contact/{{contact?.id}}')"
+    />
+    <ion-title>
+      @if ($contact(); as contact) {
+        New location &#64; {{ contact | personTitle }}
+      } @else {
+        New location
+      }
+    </ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<sneat-location-form
-		[$space]="$space()"
-		[parentContact]="$contact()"
-		[location]="newLocation"
-		(locationChange)="onLocationChanged($event)"
-		(locationCreated)="onContactCreated($event)"
-	/>
+  <sneat-location-form
+    [$space]="$space()"
+    [parentContact]="$contact()"
+    [location]="newLocation"
+    (locationChange)="onLocationChanged($event)"
+    (locationCreated)="onContactCreated($event)"
+  />
 </ion-content>

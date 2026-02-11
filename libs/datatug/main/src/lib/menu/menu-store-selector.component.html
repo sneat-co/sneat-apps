@@ -1,28 +1,28 @@
 <ion-item class="ion-no-padding">
-	<ion-buttons slot="start" class="ion-no-margin">
-		<ion-button routerLink="/" slot="start">
-			<ion-icon name="storefront-outline" />
-		</ion-button>
-	</ion-buttons>
-	<ion-label color="medium"> Store </ion-label>
-	@if (currentStoreId && !stores?.length) {
-		<ion-select disabled [value]="currentStoreId">
-			<ion-select-option [value]="currentStoreId">{{
-				currentStoreId
-			}}</ion-select-option>
-		</ion-select>
-	}
-	@if (stores) {
-		<ion-select
-			interface="popover"
-			[value]="currentStoreId"
-			(ionChange)="switchStore($event)"
-		>
-			@for (store of stores; track trackById($index, store)) {
-				<ion-select-option [value]="store.id">
-					{{ store.title || store.id }}
-				</ion-select-option>
-			}
-		</ion-select>
-	}
+  <ion-buttons slot="start" class="ion-no-margin">
+    <ion-button routerLink="/" slot="start">
+      <ion-icon name="storefront-outline" />
+    </ion-button>
+  </ion-buttons>
+  <ion-label color="medium"> Store </ion-label>
+  @if (currentStoreId && !stores?.length) {
+    <ion-select disabled [value]="currentStoreId">
+      <ion-select-option [value]="currentStoreId">{{
+        currentStoreId
+      }}</ion-select-option>
+    </ion-select>
+  }
+  @if (stores) {
+    <ion-select
+      interface="popover"
+      [value]="currentStoreId"
+      (ionChange)="switchStore($event)"
+    >
+      @for (store of stores; track trackById($index, store)) {
+        <ion-select-option [value]="store.id">
+          {{ store.title || store.id }}
+        </ion-select-option>
+      }
+    </ion-select>
+  }
 </ion-item>

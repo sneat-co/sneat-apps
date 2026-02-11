@@ -5,16 +5,16 @@ import { CalendarDataProvider } from '../../../../services/calendar-data-provide
 import { CalendarWeekCardComponent } from './calendar-week-card.component';
 
 @Component({
-	selector: 'sneat-week-tab',
-	templateUrl: 'calendar-week-tab.component.html',
-	imports: [CalendarWeekCardComponent],
-	providers: [{ provide: ClassName, useValue: 'CalendarWeekTabComponent' }],
-	changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'sneat-week-tab',
+  templateUrl: 'calendar-week-tab.component.html',
+  imports: [CalendarWeekCardComponent],
+  providers: [{ provide: ClassName, useValue: 'CalendarWeekTabComponent' }],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarWeekTabComponent extends WithSpaceInput {
-	public readonly $spaceDaysProvider = input.required<CalendarDataProvider>();
+  public readonly $spaceDaysProvider = input.required<CalendarDataProvider>();
 
-	public constructor() {
-		super();
-	}
+  public constructor() {
+    super();
+  }
 }

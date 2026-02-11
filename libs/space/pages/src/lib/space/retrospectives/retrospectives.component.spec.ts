@@ -9,51 +9,51 @@ import { of } from 'rxjs';
 import { RetrospectivesComponent } from './retrospectives.component';
 
 describe('RetrospectivesComponent', () => {
-	let component: RetrospectivesComponent;
-	let fixture: ComponentFixture<RetrospectivesComponent>;
+  let component: RetrospectivesComponent;
+  let fixture: ComponentFixture<RetrospectivesComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [RetrospectivesComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			providers: [
-				{
-					provide: ErrorLogger,
-					useValue: {
-						logError: vi.fn(),
-						logErrorHandler: () => vi.fn(),
-					},
-				},
-				{
-					provide: SneatUserService,
-					useValue: {
-						userState: of(null),
-						userChanged: of(undefined),
-						currentUserID: undefined,
-					},
-				},
-				{ provide: NavController, useValue: {} },
-				{
-					provide: SpaceNavService,
-					useValue: { navigateForwardToSpacePage: vi.fn() },
-				},
-			],
-		})
-			.overrideComponent(RetrospectivesComponent, {
-				set: {
-					imports: [],
-					providers: [],
-					template: '',
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
-				},
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [RetrospectivesComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        {
+          provide: ErrorLogger,
+          useValue: {
+            logError: vi.fn(),
+            logErrorHandler: () => vi.fn(),
+          },
+        },
+        {
+          provide: SneatUserService,
+          useValue: {
+            userState: of(null),
+            userChanged: of(undefined),
+            currentUserID: undefined,
+          },
+        },
+        { provide: NavController, useValue: {} },
+        {
+          provide: SpaceNavService,
+          useValue: { navigateForwardToSpacePage: vi.fn() },
+        },
+      ],
+    })
+      .overrideComponent(RetrospectivesComponent, {
+        set: {
+          imports: [],
+          providers: [],
+          template: '',
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(RetrospectivesComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(RetrospectivesComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

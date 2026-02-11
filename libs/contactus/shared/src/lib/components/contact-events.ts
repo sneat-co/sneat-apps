@@ -1,10 +1,10 @@
 import {
-	ContactGroupWithIdAndBrief,
-	IContactRoleWithIdAndBrief,
+  ContactGroupWithIdAndBrief,
+  IContactRoleWithIdAndBrief,
 } from '@sneat/contactus-core';
 
 export interface IContactAddEventArgs {
-	event: Event;
-	group?: ContactGroupWithIdAndBrief;
-	role?: IContactRoleWithIdAndBrief;
+  event: Event;
+  group?: ContactGroupWithIdAndBrief;
+  role?: IContactRoleWithIdAndBrief;
 }

@@ -1,95 +1,95 @@
 <ion-header>
-	<ion-toolbar color="light" class="with-back-button with-end-buttons">
-		<ion-buttons slot="start">
-			<!--			<ion-menu-button></ion-menu-button>-->
-			<ion-back-button [defaultHref]="$defaultBackUrl()" />
-		</ion-buttons>
-		<sneat-space-page-title
-			[space]="space"
-			generalTitle="Assets"
-			icon="🏡"
-			[titlesBySpaceType]="{
-				personal: 'Personal assets',
-				family: 'Family assets',
-			}"
-		/>
-		<ion-buttons slot="end">
-			<ion-button
-				color="primary"
-				[disabled]="!space"
-				(click)="goNew()"
-				title="Add asset"
-			>
-				<ion-icon name="add" />
-				<ion-label>Add</ion-label>
-			</ion-button>
-			<ion-menu-button />
-		</ion-buttons>
-	</ion-toolbar>
+  <ion-toolbar color="light" class="with-back-button with-end-buttons">
+    <ion-buttons slot="start">
+      <!--			<ion-menu-button></ion-menu-button>-->
+      <ion-back-button [defaultHref]="$defaultBackUrl()" />
+    </ion-buttons>
+    <sneat-space-page-title
+      [space]="space"
+      generalTitle="Assets"
+      icon="🏡"
+      [titlesBySpaceType]="{
+        personal: 'Personal assets',
+        family: 'Family assets',
+      }"
+    />
+    <ion-buttons slot="end">
+      <ion-button
+        color="primary"
+        [disabled]="!space"
+        (click)="goNew()"
+        title="Add asset"
+      >
+        <ion-icon name="add" />
+        <ion-label>Add</ion-label>
+      </ion-button>
+      <ion-menu-button />
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 <ion-content class="cardy">
-	@if (noPermissions) {
-		<ion-card>
-			<ion-card-header color="danger">No permissions</ion-card-header>
-			<ion-list lines="none">
-				<ion-item>
-					Looks like you have no permissions to view assets in this space.
-				</ion-item>
-			</ion-list>
-		</ion-card>
-	}
-	<!--<div class="segment">-->
-	<!--<ion-segment [(ngModel)]="segment">-->
-	<!--<ion-segment-button value="all">List</ion-segment-button>-->
-	<!--<ion-segment-button value="byCategory">By category</ion-segment-button>-->
-	<!--</ion-segment>-->
-	<!--</div>-->
-	<!--    <ion-list *ngIf="segment === 'all' && assets">-->
-	<!--        <ion-item button *ngFor="let asset of assets; trackBy: trackById" (click)="goAsset(asset)">-->
-	<!--            <ion-label>-->
-	<!--                <h2>{{asset.title}}</h2>-->
-	<!--                <p>Category: {{asset.categoryId}}</p>-->
-	<!--            </ion-label>-->
-	<!--            <ion-buttons slot="end">-->
-	<!--                <ion-button color="medium" (click)="add2Asset($event)">-->
-	<!--                    <ion-icon name="add"></ion-icon>-->
-	<!--                </ion-button>-->
-	<!--            </ion-buttons>-->
-	<!--        </ion-item>-->
-	<!--    </ion-list>-->
+  @if (noPermissions) {
+    <ion-card>
+      <ion-card-header color="danger">No permissions</ion-card-header>
+      <ion-list lines="none">
+        <ion-item>
+          Looks like you have no permissions to view assets in this space.
+        </ion-item>
+      </ion-list>
+    </ion-card>
+  }
+  <!--<div class="segment">-->
+  <!--<ion-segment [(ngModel)]="segment">-->
+  <!--<ion-segment-button value="all">List</ion-segment-button>-->
+  <!--<ion-segment-button value="byCategory">By category</ion-segment-button>-->
+  <!--</ion-segment>-->
+  <!--</div>-->
+  <!--    <ion-list *ngIf="segment === 'all' && assets">-->
+  <!--        <ion-item button *ngFor="let asset of assets; trackBy: trackById" (click)="goAsset(asset)">-->
+  <!--            <ion-label>-->
+  <!--                <h2>{{asset.title}}</h2>-->
+  <!--                <p>Category: {{asset.categoryId}}</p>-->
+  <!--            </ion-label>-->
+  <!--            <ion-buttons slot="end">-->
+  <!--                <ion-button color="medium" (click)="add2Asset($event)">-->
+  <!--                    <ion-icon name="add"></ion-icon>-->
+  <!--                </ion-button>-->
+  <!--            </ion-buttons>-->
+  <!--        </ion-item>-->
+  <!--    </ion-list>-->
 
-	@if (!noPermissions) {
-		@for (assetType of assetTypes; track assetType.id) {
-			<ion-card>
-				<ion-item-group>
-					<ion-item-divider color="light" class="sneat-tiny-end-padding">
-						<ion-icon [name]="assetType.iconName" slot="start" color="medium" />
-						<ion-label>{{ assetType.title }}</ion-label>
-						<ion-buttons slot="end">
-							<ion-button
-								color="primary"
-								title="Add vehicle"
-								(click)="goNew(assetType.id)"
-							>
-								<ion-icon name="add" />
-								<ion-label>Add</ion-label>
-							</ion-button>
-						</ion-buttons>
-					</ion-item-divider>
-					<sneat-assets-list
-						[assetType]="assetType.id"
-						[space]="space"
-						[allAssets]="assets"
-					/>
-				</ion-item-group>
-			</ion-card>
-		}
-		<ion-card>
-			<ion-card-content>
-				<ion-button expand="full" routerLink="../new-asset"
-					>Add new asset
-				</ion-button>
-			</ion-card-content>
-		</ion-card>
-	}
+  @if (!noPermissions) {
+    @for (assetType of assetTypes; track assetType.id) {
+      <ion-card>
+        <ion-item-group>
+          <ion-item-divider color="light" class="sneat-tiny-end-padding">
+            <ion-icon [name]="assetType.iconName" slot="start" color="medium" />
+            <ion-label>{{ assetType.title }}</ion-label>
+            <ion-buttons slot="end">
+              <ion-button
+                color="primary"
+                title="Add vehicle"
+                (click)="goNew(assetType.id)"
+              >
+                <ion-icon name="add" />
+                <ion-label>Add</ion-label>
+              </ion-button>
+            </ion-buttons>
+          </ion-item-divider>
+          <sneat-assets-list
+            [assetType]="assetType.id"
+            [space]="space"
+            [allAssets]="assets"
+          />
+        </ion-item-group>
+      </ion-card>
+    }
+    <ion-card>
+      <ion-card-content>
+        <ion-button expand="full" routerLink="../new-asset"
+          >Add new asset
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  }
 </ion-content>

@@ -14,54 +14,54 @@ import { Auth } from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
 
 describe('SpacesCardComponent', () => {
-	let component: SpacesCardComponent;
-	let fixture: ComponentFixture<SpacesCardComponent>;
+  let component: SpacesCardComponent;
+  let fixture: ComponentFixture<SpacesCardComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [
-				SpacesCardComponent,
-				RouterTestingModule,
-				HttpClientTestingModule,
-			],
-			providers: [
-				{ provide: SpaceService, useValue: {} },
-				{ provide: SpaceNavService, useValue: {} },
-				{ provide: SneatUserService, useValue: { userState: of({}) } },
-				{
-					provide: ErrorLogger,
-					useValue: {
-						logError: vi.fn(),
-						logErrorHandler: vi.fn(() => vi.fn()),
-					},
-				},
-				{ provide: AnalyticsService, useValue: { logEvent: vi.fn() } },
-				{
-					provide: Auth,
-					useValue: {
-						onIdTokenChanged: vi.fn(() => () => void 0),
-						onAuthStateChanged: vi.fn(() => () => void 0),
-					},
-				},
-				{ provide: Firestore, useValue: {} },
-				{
-					provide: ToastController,
-					useValue: {
-						create: vi.fn().mockResolvedValue({ present: vi.fn() }),
-					},
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        SpacesCardComponent,
+        RouterTestingModule,
+        HttpClientTestingModule,
+      ],
+      providers: [
+        { provide: SpaceService, useValue: {} },
+        { provide: SpaceNavService, useValue: {} },
+        { provide: SneatUserService, useValue: { userState: of({}) } },
+        {
+          provide: ErrorLogger,
+          useValue: {
+            logError: vi.fn(),
+            logErrorHandler: vi.fn(() => vi.fn()),
+          },
+        },
+        { provide: AnalyticsService, useValue: { logEvent: vi.fn() } },
+        {
+          provide: Auth,
+          useValue: {
+            onIdTokenChanged: vi.fn(() => () => void 0),
+            onAuthStateChanged: vi.fn(() => () => void 0),
+          },
+        },
+        { provide: Firestore, useValue: {} },
+        {
+          provide: ToastController,
+          useValue: {
+            create: vi.fn().mockResolvedValue({ present: vi.fn() }),
+          },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
+  }));
 
-	beforeEach(() => {
-		fixture = TestBed.createComponent(SpacesCardComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
+  beforeEach(() => {
+    fixture = TestBed.createComponent(SpacesCardComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

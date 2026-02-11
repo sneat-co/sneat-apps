@@ -5,18 +5,18 @@ import { IDatatugStoreService } from './datatug-store.service.interface';
 
 @Injectable()
 export class DatatugStoreServiceFactory {
-	private readonly firestoreService = inject(DatatugStoreFirestoreService);
-	private readonly githubService = inject(DatatugStoreGithubService);
+  private readonly firestoreService = inject(DatatugStoreFirestoreService);
+  private readonly githubService = inject(DatatugStoreGithubService);
 
-	getDatatugStoreService(store: string): IDatatugStoreService {
-		switch (store) {
-			case 'firestore':
-				return this.firestoreService;
-			case 'github.com':
-			case 'github':
-				return this.githubService;
-			default:
-				throw new Error('unknown store: ' + store);
-		}
-	}
+  getDatatugStoreService(store: string): IDatatugStoreService {
+    switch (store) {
+      case 'firestore':
+        return this.firestoreService;
+      case 'github.com':
+      case 'github':
+        return this.githubService;
+      default:
+        throw new Error('unknown store: ' + store);
+    }
+  }
 }

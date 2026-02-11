@@ -1,17 +1,17 @@
 <ion-header>
-	<ion-toolbar color="light">
-		<ion-buttons slot="start">
-			<ion-back-button
-				[defaultHref]="spacePageUrl('order/{{order?.id}}') || '..'"
-			/>
-		</ion-buttons>
-		<ion-title>New segment at order # {{ order?.id }}</ion-title>
-	</ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button
+        [defaultHref]="spacePageUrl('order/{{order?.id}}') || '..'"
+      />
+    </ion-buttons>
+    <ion-title>New segment at order # {{ order?.id }}</ion-title>
+  </ion-toolbar>
 </ion-header>
 <ion-content>
-	<sneat-new-segment-form
-		[order]="order"
-		(canceled)="back()"
-		(created)="back()"
-	/>
+  <sneat-new-segment-form
+    [order]="order"
+    (canceled)="back()"
+    (created)="back()"
+  />
 </ion-content>

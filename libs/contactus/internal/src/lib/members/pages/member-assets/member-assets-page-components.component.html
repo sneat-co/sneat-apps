@@ -1,16 +1,16 @@
 <ion-header>
-	<ion-toolbar color="light">
-		<ion-buttons slot="start">
-			<ion-back-button
-				[defaultHref]="memberId ? '/member?id=' + memberId : '/communes'"
-			/>
-		</ion-buttons>
-		@if (memberInfo) {
-			<ion-title> Assets of {{ memberInfo.title }} </ion-title>
-		} @else {
-			Assets of a member
-		}
-	</ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button
+        [defaultHref]="memberId ? '/member?id=' + memberId : '/communes'"
+      />
+    </ion-buttons>
+    @if (memberInfo) {
+      <ion-title> Assets of {{ memberInfo.title }} </ion-title>
+    } @else {
+      Assets of a member
+    }
+  </ion-toolbar>
 </ion-header>
 
 <ion-content padding />

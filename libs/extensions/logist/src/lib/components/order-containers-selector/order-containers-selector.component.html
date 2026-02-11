@@ -3,8 +3,5 @@
 <!--		<ion-label>Containers</ion-label>-->
 <!--	</ion-item-divider>-->
 @for (c of containers; track c.id) {
-	<sneat-order-container-form
-		[container]="c"
-		(toggled)="onToggled($event)"
-	/>
+  <sneat-order-container-form [container]="c" (toggled)="onToggled($event)" />
 }

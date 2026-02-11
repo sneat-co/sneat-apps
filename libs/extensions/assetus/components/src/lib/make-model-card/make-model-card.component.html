@@ -1,34 +1,34 @@
 @if (make && !isKnownMake()) {
-	<ion-item>
-		<ion-input label="Make" [(ngModel)]="make" placeholder="Make" />
-	</ion-item>
+  <ion-item>
+    <ion-input label="Make" [(ngModel)]="make" placeholder="Make" />
+  </ion-item>
 } @else {
-	<sneat-select-from-list
-		label="Make"
-		filterLabel="Choose Make"
-		[(ngModel)]="make"
-		(ngModelChange)="onMakeChanged($event)"
-		labelPlacement="end"
-		[isFilterable]="true"
-		[items]="makes"
-		[canAdd]="true"
-	/>
+  <sneat-select-from-list
+    label="Make"
+    filterLabel="Choose Make"
+    [(ngModel)]="make"
+    (ngModelChange)="onMakeChanged($event)"
+    labelPlacement="end"
+    [isFilterable]="true"
+    [items]="makes"
+    [canAdd]="true"
+  />
 }
 @if (make && model && !isKnownModel()) {
-	<ion-item>
-		<ion-input label="Model" [(ngModel)]="model" placeholder="Model" />
-	</ion-item>
+  <ion-item>
+    <ion-input label="Model" [(ngModel)]="model" placeholder="Model" />
+  </ion-item>
 }
 @if (make && (!model || isKnownModel())) {
-	<sneat-select-from-list
-		#modelSelector
-		[(ngModel)]="model"
-		label="Model"
-		filterLabel="Choose Model"
-		(ngModelChange)="onModelChanged($event)"
-		labelPlacement="end"
-		[isFilterable]="true"
-		[items]="models"
-		[canAdd]="true"
-	/>
+  <sneat-select-from-list
+    #modelSelector
+    [(ngModel)]="model"
+    label="Model"
+    filterLabel="Choose Model"
+    (ngModelChange)="onModelChanged($event)"
+    labelPlacement="end"
+    [isFilterable]="true"
+    [items]="models"
+    [canAdd]="true"
+  />
 }

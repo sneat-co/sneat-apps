@@ -4,20 +4,20 @@ import { Auth } from '@angular/fire/auth';
 import { SneatAuthGuard } from './sneat-auth-guard';
 
 describe('SneatAuthGuard', () => {
-	beforeEach(() => {
-		TestBed.configureTestingModule({
-			providers: [
-				SneatAuthGuard,
-				{ provide: Router, useValue: {} },
-				{
-					provide: Auth,
-					useValue: {},
-				},
-			],
-		});
-	});
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        SneatAuthGuard,
+        { provide: Router, useValue: {} },
+        {
+          provide: Auth,
+          useValue: {},
+        },
+      ],
+    });
+  });
 
-	it('should be created', () => {
-		expect(TestBed.inject(SneatAuthGuard)).toBeTruthy();
-	});
+  it('should be created', () => {
+    expect(TestBed.inject(SneatAuthGuard)).toBeTruthy();
+  });
 });

@@ -6,15 +6,15 @@ import { DatatugStoreServiceFactory } from '../../services/repo/datatug-store-se
 
 @Injectable()
 export class DatatugFoldersService {
-	private readonly storeServiceFactory = inject(DatatugStoreServiceFactory);
+  private readonly storeServiceFactory = inject(DatatugStoreServiceFactory);
 
-	watchFolder(ref: IProjectItemRef): Observable<IFolder | null | undefined> {
-		const storeService = this.storeServiceFactory.getDatatugStoreService(
-			ref.storeId,
-		);
-		return storeService.watchProjectItem<IFolder>(
-			ref.projectId,
-			`/folders/${ref.id}`,
-		);
-	}
+  watchFolder(ref: IProjectItemRef): Observable<IFolder | null | undefined> {
+    const storeService = this.storeServiceFactory.getDatatugStoreService(
+      ref.storeId,
+    );
+    return storeService.watchProjectItem<IFolder>(
+      ref.projectId,
+      `/folders/${ref.id}`,
+    );
+  }
 }

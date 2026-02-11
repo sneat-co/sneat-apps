@@ -8,15 +8,15 @@ import { TableService } from './table.service';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-	imports: [HttpClientModule],
-	providers: [
-		DbServerService,
-		EntityService,
-		// EnvironmentService,
-		RecordsetService,
-		SchemaService,
-		VariableService,
-		TableService,
-	],
+  imports: [HttpClientModule],
+  providers: [
+    DbServerService,
+    EntityService,
+    // EnvironmentService,
+    RecordsetService,
+    SchemaService,
+    VariableService,
+    TableService,
+  ],
 })
 export class DatatugServicesUnsortedModule {}

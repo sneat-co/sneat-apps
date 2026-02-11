@@ -10,62 +10,62 @@ import { DatatugNavService } from '../services/nav/datatug-nav.service';
 import { DatatugUserService } from '../services/base/datatug-user-service';
 
 describe('DatatugMenuComponent', () => {
-	let component: DatatugMenuComponent;
-	let fixture: ComponentFixture<DatatugMenuComponent>;
+  let component: DatatugMenuComponent;
+  let fixture: ComponentFixture<DatatugMenuComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [DatatugMenuComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			providers: [
-				{
-					provide: ErrorLogger,
-					useValue: {
-						logError: vi.fn(),
-						logErrorHandler: vi.fn(() => vi.fn()),
-					},
-				},
-				{
-					provide: SneatAuthStateService,
-					useValue: {
-						authState: of({ status: undefined }),
-						authStatus: of(undefined),
-					},
-				},
-				{
-					provide: DatatugNavContextService,
-					useValue: {
-						currentProject: of(undefined),
-						currentEnv: of(undefined),
-						currentStoreId: of(undefined),
-						currentFolder: of(undefined),
-						currentEnvDbTable: of(undefined),
-					},
-				},
-				{ provide: DatatugNavService, useValue: { goProjPage: vi.fn() } },
-				{
-					provide: DatatugUserService,
-					useValue: {
-						datatugUserState: of({ status: undefined, record: null }),
-					},
-				},
-			],
-		})
-			.overrideComponent(DatatugMenuComponent, {
-				set: {
-					imports: [],
-					template: '',
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
-					providers: [],
-				},
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [DatatugMenuComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        {
+          provide: ErrorLogger,
+          useValue: {
+            logError: vi.fn(),
+            logErrorHandler: vi.fn(() => vi.fn()),
+          },
+        },
+        {
+          provide: SneatAuthStateService,
+          useValue: {
+            authState: of({ status: undefined }),
+            authStatus: of(undefined),
+          },
+        },
+        {
+          provide: DatatugNavContextService,
+          useValue: {
+            currentProject: of(undefined),
+            currentEnv: of(undefined),
+            currentStoreId: of(undefined),
+            currentFolder: of(undefined),
+            currentEnvDbTable: of(undefined),
+          },
+        },
+        { provide: DatatugNavService, useValue: { goProjPage: vi.fn() } },
+        {
+          provide: DatatugUserService,
+          useValue: {
+            datatugUserState: of({ status: undefined, record: null }),
+          },
+        },
+      ],
+    })
+      .overrideComponent(DatatugMenuComponent, {
+        set: {
+          imports: [],
+          template: '',
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+          providers: [],
+        },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(DatatugMenuComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(DatatugMenuComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

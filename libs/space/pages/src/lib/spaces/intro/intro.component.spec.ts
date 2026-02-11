@@ -4,19 +4,20 @@ import { IonicModule } from '@ionic/angular';
 import { IntroComponent } from './intro.component';
 
 describe('IntroComponent', () => {
-	let component: IntroComponent;
-	let fixture: ComponentFixture<IntroComponent>;
+  let component: IntroComponent;
+  let fixture: ComponentFixture<IntroComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [IntroComponent, IonicModule.forRoot()]}).compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [IntroComponent, IonicModule.forRoot()],
+    }).compileComponents();
 
-		fixture = TestBed.createComponent(IntroComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	}));
+    fixture = TestBed.createComponent(IntroComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

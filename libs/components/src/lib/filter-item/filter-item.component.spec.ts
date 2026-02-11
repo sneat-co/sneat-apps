@@ -3,27 +3,27 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FilterItemComponent } from './filter-item.component';
 
 describe('FilterItemComponent', () => {
-	let component: FilterItemComponent;
-	let fixture: ComponentFixture<FilterItemComponent>;
+  let component: FilterItemComponent;
+  let fixture: ComponentFixture<FilterItemComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [FilterItemComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(FilterItemComponent, {
-				set: {
-					imports: [],
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
-					template: '',
-				},
-			})
-			.compileComponents();
-		fixture = TestBed.createComponent(FilterItemComponent);
-		component = fixture.componentInstance;
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [FilterItemComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(FilterItemComponent, {
+        set: {
+          imports: [],
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+          template: '',
+        },
+      })
+      .compileComponents();
+    fixture = TestBed.createComponent(FilterItemComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

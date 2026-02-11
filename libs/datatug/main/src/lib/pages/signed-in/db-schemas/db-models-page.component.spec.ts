@@ -4,29 +4,29 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DbModelsPageComponent } from './db-models-page.component';
 
 describe('DbModelsPage', () => {
-	let component: DbModelsPageComponent;
-	let fixture: ComponentFixture<DbModelsPageComponent>;
+  let component: DbModelsPageComponent;
+  let fixture: ComponentFixture<DbModelsPageComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [DbModelsPageComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(DbModelsPageComponent, {
-				set: {
-					imports: [],
-					template: '',
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
-					providers: [],
-				},
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [DbModelsPageComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(DbModelsPageComponent, {
+        set: {
+          imports: [],
+          template: '',
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+          providers: [],
+        },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(DbModelsPageComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(DbModelsPageComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

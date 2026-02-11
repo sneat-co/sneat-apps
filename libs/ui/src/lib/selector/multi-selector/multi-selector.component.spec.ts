@@ -7,38 +7,38 @@ import { OverlayController } from '../selector-base.component';
 import { MultiSelectorComponent } from './multi-selector.component';
 
 describe('MultiSelectorComponent', () => {
-	let component: MultiSelectorComponent;
-	let fixture: ComponentFixture<MultiSelectorComponent>;
+  let component: MultiSelectorComponent;
+  let fixture: ComponentFixture<MultiSelectorComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [MultiSelectorComponent],
-			providers: [
-				{ provide: ClassName, useValue: 'TestComponent' },
-				{
-					provide: ErrorLogger,
-					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
-				},
-				{
-					provide: OverlayController,
-					useValue: { dismiss: vi.fn() },
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(MultiSelectorComponent, {
-				set: {
-					imports: [],
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
-					providers: [],
-				},
-			})
-			.compileComponents();
-		fixture = TestBed.createComponent(MultiSelectorComponent);
-		component = fixture.componentInstance;
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [MultiSelectorComponent],
+      providers: [
+        { provide: ClassName, useValue: 'TestComponent' },
+        {
+          provide: ErrorLogger,
+          useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+        },
+        {
+          provide: OverlayController,
+          useValue: { dismiss: vi.fn() },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(MultiSelectorComponent, {
+        set: {
+          imports: [],
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+          providers: [],
+        },
+      })
+      .compileComponents();
+    fixture = TestBed.createComponent(MultiSelectorComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

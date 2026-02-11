@@ -5,13 +5,13 @@ import { LogistOrderService } from '../services';
 
 // @Directive() // we need this decorator so we can implement Angular interfaces
 export abstract class OrderPrintPageBaseComponent extends OrderPageBaseComponent {
-	protected constructor(orderService: LogistOrderService) {
-		super(orderService);
-	}
+  protected constructor(orderService: LogistOrderService) {
+    super(orderService);
+  }
 
-	protected counterpartyByRole(
-		role: CounterpartyRole,
-	): IOrderCounterparty | undefined {
-		return this.order?.dbo?.counterparties?.find((c) => c.role === role);
-	}
+  protected counterpartyByRole(
+    role: CounterpartyRole,
+  ): IOrderCounterparty | undefined {
+    return this.order?.dbo?.counterparties?.find((c) => c.role === role);
+  }
 }

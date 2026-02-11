@@ -5,19 +5,19 @@ import { Observable } from 'rxjs';
 export type CurrencyCode = 'EUR' | 'USD';
 
 export interface ICreateDebtRecordRequest {
-	spaceID: string;
-	contactID: string;
-	currency: CurrencyCode;
-	amount: number;
+  spaceID: string;
+  contactID: string;
+  currency: CurrencyCode;
+  amount: number;
 }
 
 @Injectable()
 export class DebtusService {
-	private readonly sneatApiService = inject(SneatApiService);
+  private readonly sneatApiService = inject(SneatApiService);
 
-	public createDebtRecord(
-		request: ICreateDebtRecordRequest,
-	): Observable<string> {
-		return this.sneatApiService.post('debtus/create_debt_record', request);
-	}
+  public createDebtRecord(
+    request: ICreateDebtRecordRequest,
+  ): Observable<string> {
+    return this.sneatApiService.post('debtus/create_debt_record', request);
+  }
 }

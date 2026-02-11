@@ -3,13 +3,13 @@ import { TopMenuService } from '@sneat/core';
 import { SpaceBaseComponent } from '@sneat/space-components';
 
 export abstract class SpacePageBaseComponent
-	extends SpaceBaseComponent
-	implements OnDestroy
+  extends SpaceBaseComponent
+  implements OnDestroy
 {
-	protected constructor(
-		protected readonly topMenuService: TopMenuService,
-		protected readonly cd: ChangeDetectorRef, // readonly navService: TeamNavService,
-	) {
-		super();
-	}
+  protected constructor(
+    protected readonly topMenuService: TopMenuService,
+    protected readonly cd: ChangeDetectorRef, // readonly navService: TeamNavService,
+  ) {
+    super();
+  }
 }

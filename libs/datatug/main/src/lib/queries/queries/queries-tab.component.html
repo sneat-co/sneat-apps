@@ -1,167 +1,186 @@
 @if (!currentFolder) {
-<ion-item>
-	<ion-label>Loading queries...</ion-label>
-</ion-item>
+  <ion-item>
+    <ion-label>Loading queries...</ion-label>
+  </ion-item>
 } @else {
-<ion-item>
-	<ion-input
-		[disabled]="!currentFolder"
-		placeholder="Filter"
-		[(ngModel)]="filter"
-		(ionChange)="applyFilter()"
-	/>
-	<ion-buttons slot="end">
-		<!--					<ion-segment>-->
-		<!--						<ion-segment-button>SQL</ion-segment-button>-->
-		<!--						<ion-segment-button>HTTP</ion-segment-button>-->
-		<!--					</ion-segment>-->
-		@if (filter || type !== "*") {
-		<ion-button (click)="clearFilter()" color="medium" title="Clear filter">
-			<ion-icon name="close-outline" />
-		</ion-button>
-		}
-		<ion-button
-			(click)="setQueryType('SQL')"
-			[color]="type === 'SQL' ? 'success' : 'medium'"
-		>
-			<ion-icon
-				slot="start"
-				[name]="type === 'SQL' ? 'checkbox-outline' : 'terminal-outline'"
-			/>
-			<ion-label>SQL</ion-label>
-		</ion-button>
-		<ion-button
-			(click)="setQueryType('HTTP')"
-			[color]="type === 'HTTP' ? 'success' : 'medium'"
-		>
-			<ion-icon
-				slot="start"
-				[name]="type === 'HTTP' ? 'checkbox-outline' : 'earth-outline'"
-			/>
-			<ion-label>HTTP</ion-label>
-		</ion-button>
-	</ion-buttons>
-</ion-item>
-@if (!isFiltering() && currentFolder.folders) {
-<ion-item-divider>
-	@if (!parentFolders.length) {
-	<ion-label>{{ rootFolder || "" | titlecase }} queries</ion-label>
-	} @for (parentFolder of parentFolders; track parentFolder.id) {
-	<ion-badge
-		color="light"
-		tappable
-		(click)="cd(parentFolder.path)"
-		style="font-weight: normal"
-	>
-		<ion-icon name="folder-open-outline" />
-		{{ parentFolder.id || "root" }}
-	</ion-badge>
-	} @if (currentFolder.id && currentFolder.path !== "~") { &nbsp;/&nbsp;
-	<ion-badge color="light">{{ currentFolder.id }}</ion-badge>
-	}
-	<ion-buttons slot="end">
-		@if (currentFolder.path !== "~" || currentFolder.folders.length) {
-		<ion-button
-			title="Delete folder"
-			[disabled]="isDeletingFolders.includes(this.currentFolder.path)"
-			(click)="deleteFolder()"
-		>
-			<ion-icon name="trash" />
-		</ion-button>
-		}
-		<ion-button title="New query">
-			<ion-icon slot="start" name="add-outline" color="primary" />
-			<ion-label>New query</ion-label>
-		</ion-button>
-		<ion-button title="New folder" (click)="newFolder()">
-			<ion-icon slot="start" name="add-circle-outline" color="primary" />
-			<ion-label>New folder</ion-label>
-		</ion-button>
-	</ion-buttons>
-</ion-item-divider>
+  <ion-item>
+    <ion-input
+      [disabled]="!currentFolder"
+      placeholder="Filter"
+      [(ngModel)]="filter"
+      (ionChange)="applyFilter()"
+    />
+    <ion-buttons slot="end">
+      <!--					<ion-segment>-->
+      <!--						<ion-segment-button>SQL</ion-segment-button>-->
+      <!--						<ion-segment-button>HTTP</ion-segment-button>-->
+      <!--					</ion-segment>-->
+      @if (filter || type !== "*") {
+        <ion-button (click)="clearFilter()" color="medium" title="Clear filter">
+          <ion-icon name="close-outline" />
+        </ion-button>
+      }
+      <ion-button
+        (click)="setQueryType('SQL')"
+        [color]="type === 'SQL' ? 'success' : 'medium'"
+      >
+        <ion-icon
+          slot="start"
+          [name]="type === 'SQL' ? 'checkbox-outline' : 'terminal-outline'"
+        />
+        <ion-label>SQL</ion-label>
+      </ion-button>
+      <ion-button
+        (click)="setQueryType('HTTP')"
+        [color]="type === 'HTTP' ? 'success' : 'medium'"
+      >
+        <ion-icon
+          slot="start"
+          [name]="type === 'HTTP' ? 'checkbox-outline' : 'earth-outline'"
+        />
+        <ion-label>HTTP</ion-label>
+      </ion-button>
+    </ion-buttons>
+  </ion-item>
+  @if (!isFiltering() && currentFolder.folders) {
+    <ion-item-divider>
+      @if (!parentFolders.length) {
+        <ion-label>{{ rootFolder || "" | titlecase }} queries</ion-label>
+      }
+      @for (parentFolder of parentFolders; track parentFolder.id) {
+        <ion-badge
+          color="light"
+          tappable
+          (click)="cd(parentFolder.path)"
+          style="font-weight: normal"
+        >
+          <ion-icon name="folder-open-outline" />
+          {{ parentFolder.id || "root" }}
+        </ion-badge>
+      }
+      @if (currentFolder.id && currentFolder.path !== "~") {
+        &nbsp;/&nbsp;
+        <ion-badge color="light">{{ currentFolder.id }}</ion-badge>
+      }
+      <ion-buttons slot="end">
+        @if (currentFolder.path !== "~" || currentFolder.folders.length) {
+          <ion-button
+            title="Delete folder"
+            [disabled]="isDeletingFolders.includes(this.currentFolder.path)"
+            (click)="deleteFolder()"
+          >
+            <ion-icon name="trash" />
+          </ion-button>
+        }
+        <ion-button title="New query">
+          <ion-icon slot="start" name="add-outline" color="primary" />
+          <ion-label>New query</ion-label>
+        </ion-button>
+        <ion-button title="New folder" (click)="newFolder()">
+          <ion-icon slot="start" name="add-circle-outline" color="primary" />
+          <ion-label>New folder</ion-label>
+        </ion-button>
+      </ion-buttons>
+    </ion-item-divider>
+  }
+  <!--			<ion-item>-->
+  <!--				<ion-label>Tags:</ion-label>-->
+  <!--				<ion-badge slot="end" color="secondary">-->
+  <!--					tag1-->
+  <!--					<ion-icon name="close-outline" tappable></ion-icon>-->
+  <!--				</ion-badge>-->
+  <!--			</ion-item>-->
+  @if (parentFolders.length) {
+    <ion-item tappable (click)="cd('..')">
+      <ion-icon name="folder-open-outline" slot="start" />
+      <ion-label>..</ion-label>
+    </ion-item>
+  }
+  @if (filter) {
+    @for (item of filteredItems || []; track item.query.id) {
+      <ion-item tappable (click)="goQuery(item.query, 'edit', item.folders)">
+        <ion-icon name="document-text-outline" slot="start" />
+        <ion-label>
+          {{ item.query.title || item.query.id }}
+          @if (item.folders.length) {
+            <p>
+              <ion-text color="medium">Folder:&nbsp;</ion-text>
+              <code>
+                @for (p of item.folders; track p) {
+                  <span>{{ p }}/</span>
+                }
+              </code>
+            </p>
+          }
+        </ion-label>
+      </ion-item>
+    }
+  }
+  @if (!filter && currentFolder) {
+    @for (folder of currentFolder.folders; track folder.id) {
+      <ion-item tappable (click)="cd(folder.id)">
+        <ion-icon name="folder-outline" slot="start" color="primary" />
+        <ion-label>{{ folder.id }}</ion-label>
+      </ion-item>
+    }
+    @for (query of currentFolder.items; track query.id) {
+      <ion-item tappable (click)="goQuery(query)">
+        <ion-icon name="document-text-outline" slot="start" />
+
+        <ion-label>
+          <h3 style="display: inline; font-size: large">
+            {{ query.title || query.id }}
+          </h3>
+          @if (query.targets; as targets) {
+            @if (targets.length) {
+              <span class="ion-margin-start">
+                @for (
+                  target of targets;
+                  track "" + target.catalog + target.host + target.port
+                ) {
+                  <ion-badge>{{ target?.catalog }}</ion-badge>
+                }
+              </span>
+            }
+          }
+        </ion-label>
+
+        <ion-badge slot="end" color="secondary">{{
+          query.request.queryType
+        }}</ion-badge>
+
+        <ion-buttons slot="end" class="ion-no-margin">
+          <ion-button
+            color="medium"
+            title="Edit"
+            (click)="goQuery(query, 'edit')"
+          >
+            <ion-icon slot="start" name="create-outline" />
+          </ion-button>
+          <ion-button
+            color="medium"
+            title="Execute"
+            (click)="goQuery(query, 'execute')"
+          >
+            <ion-icon slot="start" name="play-outline" />
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+      @if (query.request.queryType === "SQL") {
+        <ion-item>
+          <small>
+            <small>
+              <sneat-datatug-sql [sql]="getText(query)" />
+            </small>
+          </small>
+          <!--					@if (query.text) {-->
+          <!--						<pre  style="font-size: smaller">{{query.text}}</pre>-->
+          <!--					}-->
+        </ion-item>
+      }
+    }
+  }
 }
-<!--			<ion-item>-->
-<!--				<ion-label>Tags:</ion-label>-->
-<!--				<ion-badge slot="end" color="secondary">-->
-<!--					tag1-->
-<!--					<ion-icon name="close-outline" tappable></ion-icon>-->
-<!--				</ion-badge>-->
-<!--			</ion-item>-->
-@if (parentFolders.length) {
-<ion-item tappable (click)="cd('..')">
-	<ion-icon name="folder-open-outline" slot="start" />
-	<ion-label>..</ion-label>
-</ion-item>
-} @if (filter) { @for (item of filteredItems || []; track item.query.id) {
-<ion-item tappable (click)="goQuery(item.query, 'edit', item.folders)">
-	<ion-icon name="document-text-outline" slot="start" />
-	<ion-label>
-		{{ item.query.title || item.query.id }}
-		@if (item.folders.length) {
-		<p>
-			<ion-text color="medium">Folder:&nbsp;</ion-text>
-			<code>
-				@for (p of item.folders; track p) {
-				<span>{{ p }}/</span>
-				}
-			</code>
-		</p>
-		}
-	</ion-label>
-</ion-item>
-} } @if (!filter && currentFolder) { @for (folder of currentFolder.folders;
-track folder.id) {
-<ion-item tappable (click)="cd(folder.id)">
-	<ion-icon name="folder-outline" slot="start" color="primary" />
-	<ion-label>{{ folder.id }}</ion-label>
-</ion-item>
-} @for (query of currentFolder.items; track query.id) {
-<ion-item tappable (click)="goQuery(query)">
-	<ion-icon name="document-text-outline" slot="start" />
-
-	<ion-label>
-		<h3 style="display: inline; font-size: large">
-			{{ query.title || query.id }}
-		</h3>
-		@if (query.targets; as targets) { @if (targets.length) {
-		<span class="ion-margin-start">
-			@for ( target of targets; track "" + target.catalog + target.host +
-			target.port ) {
-			<ion-badge>{{ target?.catalog }}</ion-badge>
-			}
-		</span>
-		} }
-	</ion-label>
-
-	<ion-badge slot="end" color="secondary">{{
-		query.request.queryType
-	}}</ion-badge>
-
-	<ion-buttons slot="end" class="ion-no-margin">
-		<ion-button color="medium" title="Edit" (click)="goQuery(query, 'edit')">
-			<ion-icon slot="start" name="create-outline" />
-		</ion-button>
-		<ion-button
-			color="medium"
-			title="Execute"
-			(click)="goQuery(query, 'execute')"
-		>
-			<ion-icon slot="start" name="play-outline" />
-		</ion-button>
-	</ion-buttons>
-</ion-item>
-@if (query.request.queryType === "SQL") {
-<ion-item>
-	<small>
-		<small>
-			<sneat-datatug-sql [sql]="getText(query)" />
-		</small>
-	</small>
-	<!--					@if (query.text) {-->
-	<!--						<pre  style="font-size: smaller">{{query.text}}</pre>-->
-	<!--					}-->
-</ion-item>
-} } } }
 
 <!--		<ion-item class="sql-editor ion-margin ion-no-padding" style="min-height: 0">-->
 <!--			<ngx-codemirror style="height: auto" #codemirrorComponent [(ngModel)]="sql"-->

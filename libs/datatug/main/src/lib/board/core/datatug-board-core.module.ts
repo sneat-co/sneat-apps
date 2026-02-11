@@ -3,7 +3,7 @@ import { DatatugServicesStoreModule } from '../../services/repo/datatug-services
 import { DatatugBoardService } from './datatug-board.service';
 
 @NgModule({
-	imports: [DatatugServicesStoreModule],
-	providers: [DatatugBoardService],
+  imports: [DatatugServicesStoreModule],
+  providers: [DatatugBoardService],
 })
 export class DatatugBoardCoreModule {}

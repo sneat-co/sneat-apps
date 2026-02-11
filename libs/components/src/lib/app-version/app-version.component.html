@@ -1,15 +1,15 @@
 <ion-item-divider color="light">
-	<ion-label>App version</ion-label>
+  <ion-label>App version</ion-label>
 </ion-item-divider>
 <ion-item>
-	<ion-input
-		label="Build:"
-		color="medium"
-		readonly="true"
-		disabled="true"
-		[value]="
-			buildInfo.gitHash.substring(0, 7) + ' @ ' + buildInfo.buildTimestamp
-		"
-		[title]="buildInfo.gitHash"
-	/>
+  <ion-input
+    label="Build:"
+    color="medium"
+    readonly="true"
+    disabled="true"
+    [value]="
+      buildInfo.gitHash.substring(0, 7) + ' @ ' + buildInfo.buildTimestamp
+    "
+    [title]="buildInfo.gitHash"
+  />
 </ion-item>

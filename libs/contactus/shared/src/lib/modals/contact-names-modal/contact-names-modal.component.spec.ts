@@ -11,42 +11,42 @@ import { ContactNamesModalComponent } from './contact-names-modal.component';
 (globalThis as Record<string, unknown>)['personalbar'] = {};
 
 describe('ContactNamesModalComponent', () => {
-	let component: ContactNamesModalComponent;
-	let fixture: ComponentFixture<ContactNamesModalComponent>;
+  let component: ContactNamesModalComponent;
+  let fixture: ComponentFixture<ContactNamesModalComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [ContactNamesModalComponent],
-			providers: [
-				{ provide: ClassName, useValue: 'ContactNamesModalComponent' },
-				{
-					provide: ErrorLogger,
-					useValue: {
-						logError: vi.fn(),
-						logErrorHandler: vi.fn(() => vi.fn()),
-					},
-				},
-				{
-					provide: ModalController,
-					useValue: { dismiss: vi.fn(), create: vi.fn() },
-				},
-				{ provide: ContactService, useValue: { updateContact: vi.fn() } },
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(ContactNamesModalComponent, {
-				set: { imports: [], template: '' },
-			})
-			.compileComponents();
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ContactNamesModalComponent],
+      providers: [
+        { provide: ClassName, useValue: 'ContactNamesModalComponent' },
+        {
+          provide: ErrorLogger,
+          useValue: {
+            logError: vi.fn(),
+            logErrorHandler: vi.fn(() => vi.fn()),
+          },
+        },
+        {
+          provide: ModalController,
+          useValue: { dismiss: vi.fn(), create: vi.fn() },
+        },
+        { provide: ContactService, useValue: { updateContact: vi.fn() } },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(ContactNamesModalComponent, {
+        set: { imports: [], template: '' },
+      })
+      .compileComponents();
+  }));
 
-	beforeEach(() => {
-		fixture = TestBed.createComponent(ContactNamesModalComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ContactNamesModalComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

@@ -1,118 +1,118 @@
 import {
-	Component,
-	signal,
-	ViewChild,
-	AfterViewInit,
-	inject,
-	input,
+  Component,
+  signal,
+  ViewChild,
+  AfterViewInit,
+  inject,
+  input,
 } from '@angular/core';
 import {
-	IonButton,
-	IonButtons,
-	IonCard,
-	IonIcon,
-	IonInput,
-	IonItem,
-	IonLabel,
-	IonText,
+  IonButton,
+  IonButtons,
+  IonCard,
+  IonIcon,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonText,
 } from '@ionic/angular/standalone';
 import { SneatAuthStateService } from '@sneat/auth-core';
 import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { distinctUntilChanged, map } from 'rxjs';
 import { ITracker } from '../../dbo/i-tracker-dbo';
 import {
-	IAddTrackerPointRequest,
-	TrackusApiService,
+  IAddTrackerPointRequest,
+  TrackusApiService,
 } from '../../trackus-api.service';
 
 @Component({
-	selector: 'sneat-tracker-form',
-	templateUrl: './tracker-form.component.html',
-	imports: [
-		IonCard,
-		IonItem,
-		IonLabel,
-		IonText,
-		IonInput,
-		IonButtons,
-		IonButton,
-		IonIcon,
-	],
-	providers: [
-		{
-			provide: ClassName,
-			useValue: 'TrackerFormComponent',
-		},
-	],
+  selector: 'sneat-tracker-form',
+  templateUrl: './tracker-form.component.html',
+  imports: [
+    IonCard,
+    IonItem,
+    IonLabel,
+    IonText,
+    IonInput,
+    IonButtons,
+    IonButton,
+    IonIcon,
+  ],
+  providers: [
+    {
+      provide: ClassName,
+      useValue: 'TrackerFormComponent',
+    },
+  ],
 })
 export class TrackerFormComponent
-	extends SneatBaseComponent
-	implements AfterViewInit
+  extends SneatBaseComponent
+  implements AfterViewInit
 {
-	public readonly $tracker = input.required<ITracker | undefined>();
-	// private readonly $trackerID = computed(() => this.$tracker()?.id);
+  public readonly $tracker = input.required<ITracker | undefined>();
+  // private readonly $trackerID = computed(() => this.$tracker()?.id);
 
-	private trackBy: 'contact' | 'space' = 'contact';
-	protected $trackByID = signal<string>('');
-	@ViewChild('numberInput') numberInput?: IonInput;
+  private trackBy: 'contact' | 'space' = 'contact';
+  protected $trackByID = signal<string>('');
+  @ViewChild('numberInput') numberInput?: IonInput;
 
-	protected readonly $isSubmitting = signal<boolean>(false);
+  protected readonly $isSubmitting = signal<boolean>(false);
 
-	private readonly trackusApiService = inject(TrackusApiService);
+  private readonly trackusApiService = inject(TrackusApiService);
 
-	public constructor() {
-		super();
-		const userService = inject(SneatAuthStateService);
+  public constructor() {
+    super();
+    const userService = inject(SneatAuthStateService);
 
-		userService.authState
-			.pipe(
-				this.takeUntilDestroyed(),
-				map((authState) => authState.user?.uid),
-				distinctUntilChanged(),
-			)
-			.subscribe((uid) => {
-				if (uid) {
-					this.$trackByID.set(uid);
-				}
-			});
-	}
+    userService.authState
+      .pipe(
+        this.takeUntilDestroyed(),
+        map((authState) => authState.user?.uid),
+        distinctUntilChanged(),
+      )
+      .subscribe((uid) => {
+        if (uid) {
+          this.$trackByID.set(uid);
+        }
+      });
+  }
 
-	public ngAfterViewInit(): void {
-		this.setFocusToInput(this.numberInput);
-	}
+  public ngAfterViewInit(): void {
+    this.setFocusToInput(this.numberInput);
+  }
 
-	protected addTrackerRecord(): void {
-		const tracker = this.$tracker();
-		let value: unknown = this.numberInput?.value;
-		if (!tracker || value === undefined || value === '') {
-			return;
-		}
-		if (
-			tracker?.dbo?.valueType === 'int' ||
-			tracker?.dbo?.valueType === 'float'
-		) {
-			value = Number(value);
-		}
-		const request: IAddTrackerPointRequest = {
-			spaceID: tracker.space.id,
-			trackerID: tracker.id,
-			trackByKind: this.trackBy,
-			trackByID: this.$trackByID(),
-			i: Number(value),
-		};
-		this.$isSubmitting.set(true);
-		this.trackusApiService.addTrackerPoint(request).subscribe({
-			next: () => {
-				this.$isSubmitting.set(false);
-				if (this.numberInput) {
-					this.numberInput.value = '';
-					this.setFocusToInput(this.numberInput);
-				}
-			},
-			error: (err) => {
-				this.$isSubmitting.set(false);
-				this.errorLogger.logError(err, 'Failed to add tracker record');
-			},
-		});
-	}
+  protected addTrackerRecord(): void {
+    const tracker = this.$tracker();
+    let value: unknown = this.numberInput?.value;
+    if (!tracker || value === undefined || value === '') {
+      return;
+    }
+    if (
+      tracker?.dbo?.valueType === 'int' ||
+      tracker?.dbo?.valueType === 'float'
+    ) {
+      value = Number(value);
+    }
+    const request: IAddTrackerPointRequest = {
+      spaceID: tracker.space.id,
+      trackerID: tracker.id,
+      trackByKind: this.trackBy,
+      trackByID: this.$trackByID(),
+      i: Number(value),
+    };
+    this.$isSubmitting.set(true);
+    this.trackusApiService.addTrackerPoint(request).subscribe({
+      next: () => {
+        this.$isSubmitting.set(false);
+        if (this.numberInput) {
+          this.numberInput.value = '';
+          this.setFocusToInput(this.numberInput);
+        }
+      },
+      error: (err) => {
+        this.$isSubmitting.set(false);
+        this.errorLogger.logError(err, 'Failed to add tracker record');
+      },
+    });
+  }
 }

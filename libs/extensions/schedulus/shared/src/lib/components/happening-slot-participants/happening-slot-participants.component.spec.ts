@@ -6,44 +6,44 @@ import { ClassName } from '@sneat/ui';
 import { HappeningSlotParticipantsComponent } from './happening-slot-participants.component';
 
 describe('HappeningSlotParticipantsComponent', () => {
-	let component: HappeningSlotParticipantsComponent;
-	let fixture: ComponentFixture<HappeningSlotParticipantsComponent>;
+  let component: HappeningSlotParticipantsComponent;
+  let fixture: ComponentFixture<HappeningSlotParticipantsComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [HappeningSlotParticipantsComponent],
-			providers: [
-				{ provide: ClassName, useValue: 'HappeningSlotParticipantsComponent' },
-				{
-					provide: ErrorLogger,
-					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
-				},
-				{
-					provide: ContactusSpaceService,
-					useValue: {
-						watchContactBriefs: vi.fn(() => ({
-							pipe: () => ({ subscribe: vi.fn() }),
-						})),
-					},
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(HappeningSlotParticipantsComponent, {
-				set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA], template: '' },
-			})
-			.compileComponents();
-		fixture = TestBed.createComponent(HappeningSlotParticipantsComponent);
-		component = fixture.componentInstance;
-		fixture.componentRef.setInput('$happeningSlot', {
-			slot: { id: 'test-slot', repeats: 'once' },
-			title: 'Test',
-			repeats: 'once',
-			happening: { id: 'test', space: { id: 'test-space' }, brief: {} },
-		});
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [HappeningSlotParticipantsComponent],
+      providers: [
+        { provide: ClassName, useValue: 'HappeningSlotParticipantsComponent' },
+        {
+          provide: ErrorLogger,
+          useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+        },
+        {
+          provide: ContactusSpaceService,
+          useValue: {
+            watchContactBriefs: vi.fn(() => ({
+              pipe: () => ({ subscribe: vi.fn() }),
+            })),
+          },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(HappeningSlotParticipantsComponent, {
+        set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA], template: '' },
+      })
+      .compileComponents();
+    fixture = TestBed.createComponent(HappeningSlotParticipantsComponent);
+    component = fixture.componentInstance;
+    fixture.componentRef.setInput('$happeningSlot', {
+      slot: { id: 'test-slot', repeats: 'once' },
+      title: 'Test',
+      repeats: 'once',
+      happening: { id: 'test', space: { id: 'test-space' }, brief: {} },
+    });
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

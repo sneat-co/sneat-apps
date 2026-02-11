@@ -1,14 +1,14 @@
 <span class="sneat-smaller-if-width-less-638" style="margin-left: 0.5em">
-	@if (isToday()) {
-		<span class="ion-margin-end">Today:</span>
-	} @else if (isTomorrow()) {
-		<span class="ion-margin-end">Tomorrow:</span>
-	}
-	@if (weekday) {
-		<b>{{ weekday.id | wdToWeekday }}</b
-		><span style="font-weight: normal"
-			>, {{ weekday.day?.date?.getDate() }}
-			{{ weekday.day?.date?.getMonth() | longMonthName }}</span
-		>
-	}
+  @if (isToday()) {
+    <span class="ion-margin-end">Today:</span>
+  } @else if (isTomorrow()) {
+    <span class="ion-margin-end">Tomorrow:</span>
+  }
+  @if (weekday) {
+    <b>{{ weekday.id | wdToWeekday }}</b
+    ><span style="font-weight: normal"
+      >, {{ weekday.day?.date?.getDate() }}
+      {{ weekday.day?.date?.getMonth() | longMonthName }}</span
+    >
+  }
 </span>

@@ -8,47 +8,47 @@ import { of } from 'rxjs';
 import { InviteService } from './invite.service';
 
 describe('InviteService', () => {
-	beforeEach(() =>
-		TestBed.configureTestingModule({
-			providers: [
-				InviteService,
-				{
-					provide: ErrorLogger,
-					useValue: {
-						logError: vi.fn(),
-						logErrorHandler: () => vi.fn(),
-					},
-				},
-				{
-					provide: SneatAuthStateService,
-					useValue: {
-						authState: of({ status: 'notAuthenticated' }),
-						authStatus: of('notAuthenticated'),
-					},
-				},
-				{
-					provide: SneatApiService,
-					useValue: {
-						post: vi.fn(),
-						get: vi.fn(),
-						delete: vi.fn(),
-						postAsAnonymous: vi.fn(),
-						setApiAuthToken: vi.fn(),
-					},
-				},
-				{
-					provide: Auth,
-					useValue: {},
-				},
-				{
-					provide: RandomIdService,
-					useValue: { newRandomId: vi.fn(() => 'test-id') },
-				},
-			],
-		}),
-	);
+  beforeEach(() =>
+    TestBed.configureTestingModule({
+      providers: [
+        InviteService,
+        {
+          provide: ErrorLogger,
+          useValue: {
+            logError: vi.fn(),
+            logErrorHandler: () => vi.fn(),
+          },
+        },
+        {
+          provide: SneatAuthStateService,
+          useValue: {
+            authState: of({ status: 'notAuthenticated' }),
+            authStatus: of('notAuthenticated'),
+          },
+        },
+        {
+          provide: SneatApiService,
+          useValue: {
+            post: vi.fn(),
+            get: vi.fn(),
+            delete: vi.fn(),
+            postAsAnonymous: vi.fn(),
+            setApiAuthToken: vi.fn(),
+          },
+        },
+        {
+          provide: Auth,
+          useValue: {},
+        },
+        {
+          provide: RandomIdService,
+          useValue: { newRandomId: vi.fn(() => 'test-id') },
+        },
+      ],
+    }),
+  );
 
-	it('should be created', () => {
-		expect(TestBed.inject(InviteService)).toBeTruthy();
-	});
+  it('should be created', () => {
+    expect(TestBed.inject(InviteService)).toBeTruthy();
+  });
 });

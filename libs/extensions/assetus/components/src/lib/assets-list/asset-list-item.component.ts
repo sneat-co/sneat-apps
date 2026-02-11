@@ -5,14 +5,14 @@ import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
 
 @Component({
-	selector: 'sneat-asset-list-item',
-	template: ``,
+  selector: 'sneat-asset-list-item',
+  template: ``,
 })
 export class AssetListItemComponent {
-	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
-	private readonly navCtrl = inject(NavController);
+  private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+  private readonly navCtrl = inject(NavController);
 
-	@Input({ required: true }) space?: ISpaceContext;
-	@Input() assetType?: AssetCategory;
-	@Input() asset?: IAssetContext;
+  @Input({ required: true }) space?: ISpaceContext;
+  @Input() assetType?: AssetCategory;
+  @Input() asset?: IAssetContext;
 }

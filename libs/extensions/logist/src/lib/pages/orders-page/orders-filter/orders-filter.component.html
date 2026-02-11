@@ -1,95 +1,95 @@
 <div class="ion-padding-horizontal">
-	<ion-segment [(ngModel)]="direction" (ionChange)="onDirectionChanged()">
-		<ion-segment-button value="">All</ion-segment-button>
-		<ion-segment-button value="export">Export</ion-segment-button>
-		<ion-segment-button value="import">Import</ion-segment-button>
-		<ion-segment-button value="internal">Internal</ion-segment-button>
-	</ion-segment>
+  <ion-segment [(ngModel)]="direction" (ionChange)="onDirectionChanged()">
+    <ion-segment-button value="">All</ion-segment-button>
+    <ion-segment-button value="export">Export</ion-segment-button>
+    <ion-segment-button value="import">Import</ion-segment-button>
+    <ion-segment-button value="internal">Internal</ion-segment-button>
+  </ion-segment>
 </div>
 
 <ion-card>
-	<ion-item color="light" class="sneat-no-end-padding">
-		<ion-label style="font-weight: bold"
-			>Filter
-			@if (refNumber) {
-				<ion-text color="medium"> | Ref #</ion-text>
-			}
-		</ion-label>
-		<ion-input
-			placeholder="ref #"
-			[(ngModel)]="refNumber"
-			(ionChange)="refNumberChanged()"
-		/>
-		@if (refNumber || isRefNumberChanged) {
-			<ion-buttons slot="end">
-				@if (isRefNumberChanged) {
-					<ion-button
-						fill="solid"
-						color="primary"
-						(click)="findByRefNumber($event)"
-					>
-						<ion-label>Find</ion-label>
-					</ion-button>
-				}
-				@if (refNumber) {
-					<ion-button
-						color="danger"
-						title="Clear filter"
-						(click)="clearRefNumber($event)"
-					>
-						<ion-icon name="close-outline" />
-					</ion-button>
-				}
-			</ion-buttons>
-		}
-	</ion-item>
-	<sneat-contact-input
-		label="Counterparty"
-		[labelPosition]="'stacked'"
-		[canReset]="true"
-		[space]="space"
-		[contact]="contactByRole['consignee']"
-		(contactChange)="onContactChanged('consignee', $event)"
-	/>
-	<sneat-country-input
-		label="Country"
-		[(countryID)]="countryID"
-		(countryIDChange)="emitFilterChange()"
-	/>
+  <ion-item color="light" class="sneat-no-end-padding">
+    <ion-label style="font-weight: bold"
+      >Filter
+      @if (refNumber) {
+        <ion-text color="medium"> | Ref #</ion-text>
+      }
+    </ion-label>
+    <ion-input
+      placeholder="ref #"
+      [(ngModel)]="refNumber"
+      (ionChange)="refNumberChanged()"
+    />
+    @if (refNumber || isRefNumberChanged) {
+      <ion-buttons slot="end">
+        @if (isRefNumberChanged) {
+          <ion-button
+            fill="solid"
+            color="primary"
+            (click)="findByRefNumber($event)"
+          >
+            <ion-label>Find</ion-label>
+          </ion-button>
+        }
+        @if (refNumber) {
+          <ion-button
+            color="danger"
+            title="Clear filter"
+            (click)="clearRefNumber($event)"
+          >
+            <ion-icon name="close-outline" />
+          </ion-button>
+        }
+      </ion-buttons>
+    }
+  </ion-item>
+  <sneat-contact-input
+    label="Counterparty"
+    [labelPosition]="'stacked'"
+    [canReset]="true"
+    [space]="space"
+    [contact]="contactByRole['consignee']"
+    (contactChange)="onContactChanged('consignee', $event)"
+  />
+  <sneat-country-input
+    label="Country"
+    [(countryID)]="countryID"
+    (countryIDChange)="emitFilterChange()"
+  />
 </ion-card>
 
 <ion-grid class="ion-grid-layout">
-	<ion-row>
-		<ion-col size="10">
-			<ion-segment
-				[(ngModel)]="status"
-				color="dark"
-				(ionChange)="emitFilterChange()"
-				class="ion-margin-horizontal"
-			>
-				<!--				<ion-segment-button value="draft">Drafts</ion-segment-button>-->
-				<ion-segment-button value="active">Active</ion-segment-button>
-				<ion-segment-button value="completed">Completed</ion-segment-button>
-				<ion-segment-button value="canceled">Canceled</ion-segment-button>
-			</ion-segment>
-		</ion-col>
-		<ion-col size="2">
-			<ion-segment
-				[(ngModel)]="viewMode"
-				color="medium"
-				(ionChange)="emitViewModeChange()"
-			>
-				<ion-segment-button value="grid" title="Grid view">
-					<ion-label color="medium">
-						<ion-icon name="grid-outline" />
-					</ion-label>
-				</ion-segment-button>
-				<ion-segment-button value="list" color="light" title="Cards list view">
-					<ion-label color="medium">
-						<ion-icon name="list-outline" />
-					</ion-label>
-				</ion-segment-button>
-			</ion-segment>
-		</ion-col>
-	</ion-row>
+  <ion-row>
+    <ion-col size="10">
+      <ion-segment
+        [(ngModel)]="status"
+        color="dark"
+        (ionChange)="emitFilterChange()"
+        class="ion-margin-horizontal"
+      >
+        <!--				<ion-segment-button value="draft">Drafts</ion-segment-button>-->
+        <ion-segment-button value="active">Active</ion-segment-button>
+        <ion-segment-button value="completed">Completed</ion-segment-button>
+        <ion-segment-button value="canceled">Canceled</ion-segment-button>
+      </ion-segment>
+    </ion-col>
+    <ion-col size="2">
+      <ion-segment
+        [(ngModel)]="viewMode"
+        color="medium"
+        (ionChange)="emitViewModeChange()"
+      >
+        <ion-segment-button value="grid" title="Grid view">
+          <ion-label color="medium">
+            <ion-icon name="grid-outline" />
+          </ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="list" color="light" title="Cards list view">
+          <ion-label color="medium">
+            <ion-icon name="list-outline" />
+          </ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-col>
+  </ion-row>
 </ion-grid>

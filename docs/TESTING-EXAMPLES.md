@@ -15,7 +15,7 @@ cd /home/runner/work/sneat-apps/sneat-apps
 # Generate a sanity test
 node scripts/generate-extension-test.mjs sanity assetus shared
 
-# Generate a service test  
+# Generate a service test
 node scripts/generate-extension-test.mjs service AssetService assetus components services
 
 # Generate a component test
@@ -27,6 +27,7 @@ node scripts/generate-extension-test.mjs component AssetListComponent assetus co
 ### Example 1: Generated Service Test for AssetService
 
 **Command:**
+
 ```bash
 node scripts/generate-extension-test.mjs service AssetService assetus components services
 ```
@@ -34,37 +35,36 @@ node scripts/generate-extension-test.mjs service AssetService assetus components
 **Output file:** `libs/extensions/assetus/components/src/lib/services/asset-service.spec.ts`
 
 **Generated content:**
+
 ```typescript
 import { TestBed } from '@angular/core/testing';
 import { SneatApiService } from '@sneat/api';
 import { AssetService } from './asset-service.service';
 
 describe('AssetService', () => {
-	beforeEach(() =>
-		TestBed.configureTestingModule({
-			providers: [
-				AssetService,
-				{ provide: SneatApiService, useValue: { post: vi.fn() } },
-			],
-		}),
-	);
+  beforeEach(() =>
+    TestBed.configureTestingModule({
+      providers: [AssetService, { provide: SneatApiService, useValue: { post: vi.fn() } }],
+    }),
+  );
 
-	it('should be created', () => {
-		expect(TestBed.inject(AssetService)).toBeTruthy();
-	});
+  it('should be created', () => {
+    expect(TestBed.inject(AssetService)).toBeTruthy();
+  });
 
-	// Add specific test cases for your service methods
-	// Example:
-	// it('should handle API calls', () => {
-	//   const service = TestBed.inject(AssetService);
-	//   // Test your service logic
-	// });
+  // Add specific test cases for your service methods
+  // Example:
+  // it('should handle API calls', () => {
+  //   const service = TestBed.inject(AssetService);
+  //   // Test your service logic
+  // });
 });
 ```
 
 ### Example 2: Generated Service Test for AssetusSpaceService
 
 **Command:**
+
 ```bash
 node scripts/generate-extension-test.mjs service AssetusSpaceService assetus components services
 ```
@@ -72,6 +72,7 @@ node scripts/generate-extension-test.mjs service AssetusSpaceService assetus com
 **Output file:** `libs/extensions/assetus/components/src/lib/services/assetus-space-service.spec.ts`
 
 **Key transformations:**
+
 - `AssetusSpaceService` (PascalCase) → `assetus-space-service` (kebab-case filename)
 - All `{{ServiceName}}` placeholders → `AssetusSpaceService`
 - All `{{service-name}}` placeholders → `assetus-space-service`
@@ -82,16 +83,16 @@ node scripts/generate-extension-test.mjs service AssetusSpaceService assetus com
 
 Based on analysis of the repository:
 
-| Extension | Test Files | Coverage Level | Action Needed |
-|-----------|-----------|----------------|---------------|
-| **assetus** | 22 | Good | Added 2 service tests |
-| **budgetus** | 4 | Good | Has sanity + component tests |
-| **listus** | 16 | Good | Well covered |
-| **schedulus** | 57 | Excellent | Comprehensive coverage |
-| **trackus** | 12 | Good | Services and components covered |
-| **logist** | 75+ | Excellent | Best coverage in repo |
-| **debtus** | 3 | Minimal | Could use more tests |
-| **docus** | 5 | Minimal | Could use more tests |
+| Extension     | Test Files | Coverage Level | Action Needed                   |
+| ------------- | ---------- | -------------- | ------------------------------- |
+| **assetus**   | 22         | Good           | Added 2 service tests           |
+| **budgetus**  | 4          | Good           | Has sanity + component tests    |
+| **listus**    | 16         | Good           | Well covered                    |
+| **schedulus** | 57         | Excellent      | Comprehensive coverage          |
+| **trackus**   | 12         | Good           | Services and components covered |
+| **logist**    | 75+        | Excellent      | Best coverage in repo           |
+| **debtus**    | 3          | Minimal        | Could use more tests            |
+| **docus**     | 5          | Minimal        | Could use more tests            |
 
 **Total: 200+ test files** across all extensions
 
@@ -100,6 +101,7 @@ Based on analysis of the repository:
 The problem statement mentions generating tests for top 5 extensions. Here are examples:
 
 ### 1. Assetus (Asset Management)
+
 ```bash
 # Service tests
 node scripts/generate-extension-test.mjs service AssetService assetus components services
@@ -113,6 +115,7 @@ node scripts/generate-extension-test.mjs sanity assetus core
 ```
 
 ### 2. Budgetus (Budget Management)
+
 ```bash
 # Already has good test coverage
 # Add sanity tests for additional sub-libs if needed
@@ -120,6 +123,7 @@ node scripts/generate-extension-test.mjs sanity budgetus shared
 ```
 
 ### 3. Listus (Task Lists)
+
 ```bash
 # Already well covered with 16 test files
 # Example for new features:
@@ -127,6 +131,7 @@ node scripts/generate-extension-test.mjs service ListService listus shared servi
 ```
 
 ### 4. Schedulus (Scheduling)
+
 ```bash
 # Excellent coverage with 57 test files
 # Example for new components:
@@ -134,6 +139,7 @@ node scripts/generate-extension-test.mjs component ScheduleViewComponent schedul
 ```
 
 ### 5. Trackus (Tracking)
+
 ```bash
 # Good coverage with 12 test files covering services and components
 # Example for additional features:
@@ -152,7 +158,7 @@ To generate multiple tests at once, create a shell script:
 node scripts/generate-extension-test.mjs service AssetService assetus components services
 node scripts/generate-extension-test.mjs service AssetusSpaceService assetus components services
 
-# Budgetus tests  
+# Budgetus tests
 node scripts/generate-extension-test.mjs sanity budgetus internal
 
 # Add more as needed...
@@ -165,6 +171,7 @@ echo "✅ All tests generated successfully!"
 After generation, enhance the tests with specific test cases:
 
 ### Before (Generated):
+
 ```typescript
 it('should be created', () => {
   expect(TestBed.inject(AssetService)).toBeTruthy();
@@ -174,6 +181,7 @@ it('should be created', () => {
 ```
 
 ### After (Customized):
+
 ```typescript
 it('should be created', () => {
   expect(TestBed.inject(AssetService)).toBeTruthy();
@@ -182,20 +190,17 @@ it('should be created', () => {
 it('should create a new asset', () => {
   const service = TestBed.inject(AssetService);
   const mockApi = TestBed.inject(SneatApiService);
-  
+
   service.createAsset({ name: 'Test Asset' });
-  
-  expect(mockApi.post).toHaveBeenCalledWith(
-    'assets/create',
-    expect.objectContaining({ name: 'Test Asset' })
-  );
+
+  expect(mockApi.post).toHaveBeenCalledWith('assets/create', expect.objectContaining({ name: 'Test Asset' }));
 });
 
 it('should handle API errors gracefully', async () => {
   const service = TestBed.inject(AssetService);
   const mockApi = TestBed.inject(SneatApiService);
   mockApi.post = vi.fn().mockRejectedValue(new Error('API Error'));
-  
+
   await expect(service.createAsset({})).rejects.toThrow('API Error');
 });
 ```
@@ -203,21 +208,25 @@ it('should handle API errors gracefully', async () => {
 ## Running Generated Tests
 
 ### Run tests for a specific extension:
+
 ```bash
 pnpm nx test assetus-components
 ```
 
 ### Run a specific test file:
+
 ```bash
 pnpm nx test assetus-components --testPathPattern=asset-service.spec.ts
 ```
 
 ### Run tests in watch mode:
+
 ```bash
 pnpm nx test assetus-components --watch
 ```
 
 ### Run all extension tests:
+
 ```bash
 pnpm nx run-many --target=test --projects=assetus-*,budgetus-*,listus-*,schedulus-*,trackus-*
 ```
@@ -248,12 +257,15 @@ Based on the template structure:
 ## Troubleshooting
 
 ### Issue: Generated test file has wrong import path
+
 **Solution:** Check the actual service/component file name and adjust the import in the generated test
 
 ### Issue: Test fails with "No provider for X"
+
 **Solution:** Add the missing provider to the TestBed configuration with a mock
 
 ### Issue: CUSTOM_ELEMENTS_SCHEMA warnings
+
 **Solution:** The component template already includes this schema; ensure it's not removed
 
 ## Resources

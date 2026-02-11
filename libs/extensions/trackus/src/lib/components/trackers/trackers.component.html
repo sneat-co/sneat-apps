@@ -1,74 +1,74 @@
 <ion-card>
-	<ion-accordion-group
-		[value]="$category()"
-		(ionChange)="onCategoryChanged($event)"
-	>
-		@for (category of $categories(); track category.id) {
-			<ion-accordion [value]="category.id">
-				<ion-item slot="header" color="light">
-					<ion-label>{{ category.emoji }} {{ category.title }}</ion-label>
-					@if ($category() === category.id) {
-						<ion-buttons slot="end">
-							<ion-button (click)="openNewTracker($event, category.id)">
-								<ion-icon slot="start" name="add-outline" color="secondary" />
-								<ion-label color="medium">Add</ion-label>
-							</ion-button>
-						</ion-buttons>
-					}
-				</ion-item>
-				<ion-list slot="content">
-					@if ($loading()) {
-						<ion-item>
-							<ion-spinner
-								color="medium"
-								name="lines-small"
-								slot="start"
-							></ion-spinner>
-							<ion-label color="medium">Loading...</ion-label>
-						</ion-item>
-					} @else if ($error()) {
-						<ion-item>
-							<ion-label color="danger">{{ $error() }}</ion-label>
-							<ion-buttons slot="end">
-								<ion-button color="danger" (click)="retry()" fill="solid"
-									>Retry
-								</ion-button>
-							</ion-buttons>
-						</ion-item>
-					} @else {
-						@for (tracker of category.trackers; track tracker.id) {
-							<ion-item [routerLink]="'../trackers/' + tracker.id">
-								<ion-label
-									>{{ tracker.brief.emoji }} {{ getTrackerTitle(tracker) }}
-								</ion-label>
-								<ion-buttons>
-									@let isArchiving =
-										$archivingTrackerIDs().includes(tracker.id);
-									<ion-button
-										[disabled]="isArchiving"
-										(click)="archiveTracker($event, tracker.id)"
-										color="medium"
-									>
-										@if (isArchiving) {
-											<ion-spinner name="lines-small" slot="start" />
-											<ion-label>Archiving...</ion-label>
-										} @else {
-											<ion-icon name="archive" slot="start"></ion-icon>
-											<ion-label>Archive</ion-label>
-										}
-									</ion-button>
-								</ion-buttons>
-							</ion-item>
-						} @empty {
-							<ion-item>
-								<ion-label color="medium"
-									>No trackers has been added yet.
-								</ion-label>
-							</ion-item>
-						}
-					}
-				</ion-list>
-			</ion-accordion>
-		}
-	</ion-accordion-group>
+  <ion-accordion-group
+    [value]="$category()"
+    (ionChange)="onCategoryChanged($event)"
+  >
+    @for (category of $categories(); track category.id) {
+      <ion-accordion [value]="category.id">
+        <ion-item slot="header" color="light">
+          <ion-label>{{ category.emoji }} {{ category.title }}</ion-label>
+          @if ($category() === category.id) {
+            <ion-buttons slot="end">
+              <ion-button (click)="openNewTracker($event, category.id)">
+                <ion-icon slot="start" name="add-outline" color="secondary" />
+                <ion-label color="medium">Add</ion-label>
+              </ion-button>
+            </ion-buttons>
+          }
+        </ion-item>
+        <ion-list slot="content">
+          @if ($loading()) {
+            <ion-item>
+              <ion-spinner
+                color="medium"
+                name="lines-small"
+                slot="start"
+              ></ion-spinner>
+              <ion-label color="medium">Loading...</ion-label>
+            </ion-item>
+          } @else if ($error()) {
+            <ion-item>
+              <ion-label color="danger">{{ $error() }}</ion-label>
+              <ion-buttons slot="end">
+                <ion-button color="danger" (click)="retry()" fill="solid"
+                  >Retry
+                </ion-button>
+              </ion-buttons>
+            </ion-item>
+          } @else {
+            @for (tracker of category.trackers; track tracker.id) {
+              <ion-item [routerLink]="'../trackers/' + tracker.id">
+                <ion-label
+                  >{{ tracker.brief.emoji }} {{ getTrackerTitle(tracker) }}
+                </ion-label>
+                <ion-buttons>
+                  @let isArchiving =
+                    $archivingTrackerIDs().includes(tracker.id);
+                  <ion-button
+                    [disabled]="isArchiving"
+                    (click)="archiveTracker($event, tracker.id)"
+                    color="medium"
+                  >
+                    @if (isArchiving) {
+                      <ion-spinner name="lines-small" slot="start" />
+                      <ion-label>Archiving...</ion-label>
+                    } @else {
+                      <ion-icon name="archive" slot="start"></ion-icon>
+                      <ion-label>Archive</ion-label>
+                    }
+                  </ion-button>
+                </ion-buttons>
+              </ion-item>
+            } @empty {
+              <ion-item>
+                <ion-label color="medium"
+                  >No trackers has been added yet.
+                </ion-label>
+              </ion-item>
+            }
+          }
+        </ion-list>
+      </ion-accordion>
+    }
+  </ion-accordion-group>
 </ion-card>

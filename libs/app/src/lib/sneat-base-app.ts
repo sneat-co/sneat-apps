@@ -1,10 +1,10 @@
 import { TopMenuService } from '@sneat/core';
 
 export class SneatBaseAppComponent {
-	// Sets `ion-split-pane[ionSplitPaneVisible]`
-	public readonly visibilityChanged: (event: Event) => void;
+  // Sets `ion-split-pane[ionSplitPaneVisible]`
+  public readonly visibilityChanged: (event: Event) => void;
 
-	constructor(topMenuService: TopMenuService) {
-		this.visibilityChanged = topMenuService.visibilityChanged;
-	}
+  constructor(topMenuService: TopMenuService) {
+    this.visibilityChanged = topMenuService.visibilityChanged;
+  }
 }

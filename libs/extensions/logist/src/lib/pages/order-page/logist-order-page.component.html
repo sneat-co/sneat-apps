@@ -1,130 +1,130 @@
 <ion-header>
-	<ion-toolbar color="light">
-		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="spacePageUrl('orders') || '..'" />
-		</ion-buttons>
-		<ion-title>
-			Order # {{ order?.id }} - {{ order?.brief?.direction }}
-		</ion-title>
-		<ion-buttons slot="end">
-			<ion-button
-				color="medium"
-				title="Copy to clipboard"
-				(click)="copyNumberToClipboard($event)"
-			>
-				<ion-icon name="clipboard-outline" slot="start" />
-				<ion-label>Copy #</ion-label>
-			</ion-button>
-			<ion-button color="medium" (click)="showPrintMenu($event)">
-				<ion-icon name="print-outline" slot="start" />
-				<ion-label>Print</ion-label>
-			</ion-button>
-		</ion-buttons>
-	</ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="spacePageUrl('orders') || '..'" />
+    </ion-buttons>
+    <ion-title>
+      Order # {{ order?.id }} - {{ order?.brief?.direction }}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button
+        color="medium"
+        title="Copy to clipboard"
+        (click)="copyNumberToClipboard($event)"
+      >
+        <ion-icon name="clipboard-outline" slot="start" />
+        <ion-label>Copy #</ion-label>
+      </ion-button>
+      <ion-button color="medium" (click)="showPrintMenu($event)">
+        <ion-icon name="print-outline" slot="start" />
+        <ion-label>Print</ion-label>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 <ion-content>
-	<sneat-logist-order-card
-		[space]="space"
-		[order]="order"
-		[hideDispatchers]="true"
-		[showHeader]="false"
-	/>
+  <sneat-logist-order-card
+    [space]="space"
+    [order]="order"
+    [hideDispatchers]="true"
+    [showHeader]="false"
+  />
 
-	<ion-grid class="ion-grid-layout">
-		<ion-row>
-			<ion-col size="10">
-				<ion-segment
-					[(ngModel)]="tab"
-					class="ion-padding-horizontal"
-					(ionChange)="onTabChanged($event)"
-				>
-					<ion-segment-button value="containers">
-						<ion-label>
-							📦 Containers
-							@if (order?.dbo?.containers?.length) {
-								<ion-badge color="light">
-									<ion-text color="medium"
-										>{{ order?.dbo?.containers?.length }}
-									</ion-text>
-								</ion-badge>
-							}
-						</ion-label>
-					</ion-segment-button>
-					<ion-segment-button value="points">
-						<ion-label>
-							🛒 Points
-							@if (numberOfDispatchers) {
-								<ion-badge color="light">
-									<ion-text color="medium">{{ numberOfDispatchers }}</ion-text>
-								</ion-badge>
-							}
-						</ion-label>
-					</ion-segment-button>
-					<ion-segment-button value="truckers">
-						<ion-label>
-							🚛 Trucking
-							<!--							<ion-badge color="light" *ngIf="order?.dto?.segments?.length">{{order?.dto?.segments?.length}}</ion-badge>-->
-						</ion-label>
-					</ion-segment-button>
-				</ion-segment>
-			</ion-col>
-			<ion-col size="2" class="ion-align-self-center" style="text-align: right">
-				@switch (tab) {
-					@case ("containers") {
-						<ion-button
-							fill="outline"
-							size="small"
-							color="medium"
-							class="ion-margin-end"
-							(click)="addContainer()"
-						>
-							<ion-icon name="add" slot="start" />
-							<ion-label>Add container</ion-label>
-						</ion-button>
-					}
-					@case ("points") {
-						<ion-button
-							fill="outline"
-							size="small"
-							color="medium"
-							class="ion-margin-end"
-							(click)="addShippingPoint()"
-						>
-							<ion-icon name="add" slot="start" />
-							<ion-label>Add point</ion-label>
-						</ion-button>
-					}
-					@case ("truckers") {
-						<ion-button
-							fill="outline"
-							size="small"
-							color="medium"
-							class="ion-margin-end"
-							(click)="addSegment()"
-						>
-							<ion-icon name="add" slot="start" />
-							<ion-label>Add segment</ion-label>
-						</ion-button>
-					}
-				}
-			</ion-col>
-		</ion-row>
-	</ion-grid>
+  <ion-grid class="ion-grid-layout">
+    <ion-row>
+      <ion-col size="10">
+        <ion-segment
+          [(ngModel)]="tab"
+          class="ion-padding-horizontal"
+          (ionChange)="onTabChanged($event)"
+        >
+          <ion-segment-button value="containers">
+            <ion-label>
+              📦 Containers
+              @if (order?.dbo?.containers?.length) {
+                <ion-badge color="light">
+                  <ion-text color="medium"
+                    >{{ order?.dbo?.containers?.length }}
+                  </ion-text>
+                </ion-badge>
+              }
+            </ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="points">
+            <ion-label>
+              🛒 Points
+              @if (numberOfDispatchers) {
+                <ion-badge color="light">
+                  <ion-text color="medium">{{ numberOfDispatchers }}</ion-text>
+                </ion-badge>
+              }
+            </ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="truckers">
+            <ion-label>
+              🚛 Trucking
+              <!--							<ion-badge color="light" *ngIf="order?.dto?.segments?.length">{{order?.dto?.segments?.length}}</ion-badge>-->
+            </ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+      <ion-col size="2" class="ion-align-self-center" style="text-align: right">
+        @switch (tab) {
+          @case ("containers") {
+            <ion-button
+              fill="outline"
+              size="small"
+              color="medium"
+              class="ion-margin-end"
+              (click)="addContainer()"
+            >
+              <ion-icon name="add" slot="start" />
+              <ion-label>Add container</ion-label>
+            </ion-button>
+          }
+          @case ("points") {
+            <ion-button
+              fill="outline"
+              size="small"
+              color="medium"
+              class="ion-margin-end"
+              (click)="addShippingPoint()"
+            >
+              <ion-icon name="add" slot="start" />
+              <ion-label>Add point</ion-label>
+            </ion-button>
+          }
+          @case ("truckers") {
+            <ion-button
+              fill="outline"
+              size="small"
+              color="medium"
+              class="ion-margin-end"
+              (click)="addSegment()"
+            >
+              <ion-icon name="add" slot="start" />
+              <ion-label>Add segment</ion-label>
+            </ion-button>
+          }
+        }
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-	@switch (tab) {
-		@case ("containers") {
-			<sneat-order-containers-card [space]="space" [order]="order" />
-		}
-		@case ("segments") {
-			<sneat-order-segments [space]="space" [order]="order" />
-		}
-		@case ("truckers") {
-			<sneat-order-truckers [space]="space" [order]="order" />
-		}
-		@case ("points") {
-			<sneat-dispatchers [order]="order" />
-		}
-	}
+  @switch (tab) {
+    @case ("containers") {
+      <sneat-order-containers-card [space]="space" [order]="order" />
+    }
+    @case ("segments") {
+      <sneat-order-segments [space]="space" [order]="order" />
+    }
+    @case ("truckers") {
+      <sneat-order-truckers [space]="space" [order]="order" />
+    }
+    @case ("points") {
+      <sneat-dispatchers [order]="order" />
+    }
+  }
 
-	<div style="min-height: 100px"></div>
+  <div style="min-height: 100px"></div>
 </ion-content>

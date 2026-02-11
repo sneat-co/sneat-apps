@@ -6,11 +6,11 @@ import { IContactSelectorOptions } from './contacts-selector.interfaces';
 
 @Injectable()
 export class ContactsSelectorService extends SelectorBaseService<IContactWithBriefAndSpace> {
-	constructor() {
-		super(ContactsSelectorComponent);
-	}
+  constructor() {
+    super(ContactsSelectorComponent);
+  }
 
-	public async selectMultipleContacts(options: IContactSelectorOptions) {
-		return this.selectMultipleInModal(options);
-	}
+  public async selectMultipleContacts(options: IContactSelectorOptions) {
+    return this.selectMultipleInModal(options);
+  }
 }

@@ -2,9 +2,9 @@ import { computed, Signal, signal, Injector } from '@angular/core';
 import { dateToIso } from '@sneat/core';
 import { CalendariumSpaceService } from '../services/calendarium-space.service';
 import {
-	CalendarHappeningBriefsBySpaceID,
-	ISlotUIContext,
-	WeekdayCode2,
+  CalendarHappeningBriefsBySpaceID,
+  ISlotUIContext,
+  WeekdayCode2,
 } from '@sneat/mod-schedulus-core';
 import { IErrorLogger } from '@sneat/core';
 import { ISpaceContext } from '@sneat/space-models';
@@ -12,8 +12,8 @@ import { EMPTY, Observable, Subject } from 'rxjs';
 import { CalendarDay, ICalendarDayInput } from './calendar-day';
 import { CalendarSpace } from './calendar-space';
 import {
-	emptyRecurringsByWeekday,
-	RecurringsByWeekday,
+  emptyRecurringsByWeekday,
+  RecurringsByWeekday,
 } from './calendar-types';
 import { HappeningService } from './happening.service';
 import { CalendarDayService } from './calendar-day.service';
@@ -62,270 +62,270 @@ import { CalendarDayService } from './calendar-day.service';
 // }
 
 export class CalendarDataProvider {
-	/*implements OnDestroy - this is not a component, do not implement ngOnDestroy(), instead call destroy() */
-	/*extends ISlotsProvider*/
-	// At the moment tracks schedule of a single team
-	// but probably will track multiple teams at once.
+  /*implements OnDestroy - this is not a component, do not implement ngOnDestroy(), instead call destroy() */
+  /*extends ISlotsProvider*/
+  // At the moment tracks schedule of a single team
+  // but probably will track multiple teams at once.
 
-	private readonly destroyed = new Subject<void>();
+  private readonly destroyed = new Subject<void>();
 
-	// private readonly recurringsSpaceItemService?: ModuleSpaceItemService<
-	// 	IHappeningBrief,
-	// 	IHappeningDbo
-	// >;
-	// private readonly singlesByDate: Record<string, ISlotUIContext[]> = {};
+  // private readonly recurringsSpaceItemService?: ModuleSpaceItemService<
+  // 	IHappeningBrief,
+  // 	IHappeningDbo
+  // >;
+  // private readonly singlesByDate: Record<string, ISlotUIContext[]> = {};
 
-	private readonly $space = signal<ISpaceContext | undefined>(undefined);
+  private readonly $space = signal<ISpaceContext | undefined>(undefined);
 
-	private readonly days: Record<string, CalendarDay> = {};
+  private readonly days: Record<string, CalendarDay> = {};
 
-	// private contactID?: string; // TODO: should be {readonly spaceID: string; readonly contactID: string}
-	// public setContactId(contactID: string): void {
-	// 	this.contactID = contactID;
-	// }
+  // private contactID?: string; // TODO: should be {readonly spaceID: string; readonly contactID: string}
+  // public setContactId(contactID: string): void {
+  // 	this.contactID = contactID;
+  // }
 
-	constructor(
-		private readonly injector: Injector,
-		private readonly $primarySpaceID: Signal<string | undefined>,
-		private readonly errorLogger: IErrorLogger,
-		private readonly happeningService: HappeningService,
-		private readonly calendarDayService: CalendarDayService,
-		private readonly calendariumSpaceService: CalendariumSpaceService,
-		// sneatApiService: SneatApiService,
-		// private readonly regularService: IRegularHappeningService,
-		// private readonly singleService: ISingleHappeningService,
-	) {
-		console.log('SpaceDaysProvider.constructor()');
-		// this.recurringsSpaceItemService = new ModuleSpaceItemService(
-		// 	'calendarium',
-		// 	'recurring_happenings', // TODO: Is this obsolete? Should we use 'happenings' instead?
-		// 	calendarDayService.afs,
-		// 	undefined as SneatApiService,
-		// );
-	}
+  constructor(
+    private readonly injector: Injector,
+    private readonly $primarySpaceID: Signal<string | undefined>,
+    private readonly errorLogger: IErrorLogger,
+    private readonly happeningService: HappeningService,
+    private readonly calendarDayService: CalendarDayService,
+    private readonly calendariumSpaceService: CalendariumSpaceService,
+    // sneatApiService: SneatApiService,
+    // private readonly regularService: IRegularHappeningService,
+    // private readonly singleService: ISingleHappeningService,
+  ) {
+    console.log('SpaceDaysProvider.constructor()');
+    // this.recurringsSpaceItemService = new ModuleSpaceItemService(
+    // 	'calendarium',
+    // 	'recurring_happenings', // TODO: Is this obsolete? Should we use 'happenings' instead?
+    // 	calendarDayService.afs,
+    // 	undefined as SneatApiService,
+    // );
+  }
 
-	private primarySpace?: CalendarSpace;
+  private primarySpace?: CalendarSpace;
 
-	private $primarySpace = computed<CalendarSpace | undefined>(() => {
-		const newSpaceID = this.$primarySpaceID();
-		if (this.primarySpace?.spaceID === newSpaceID) {
-			return this.primarySpace;
-		}
-		this.primarySpace?.destroy();
-		if (this.primarySpace?.spaceID == newSpaceID) {
-			return this.primarySpace;
-		}
-		this.primarySpace = newSpaceID
-			? new CalendarSpace(newSpaceID, this.calendariumSpaceService)
-			: undefined;
-		return this.primarySpace;
-	});
+  private $primarySpace = computed<CalendarSpace | undefined>(() => {
+    const newSpaceID = this.$primarySpaceID();
+    if (this.primarySpace?.spaceID === newSpaceID) {
+      return this.primarySpace;
+    }
+    this.primarySpace?.destroy();
+    if (this.primarySpace?.spaceID == newSpaceID) {
+      return this.primarySpace;
+    }
+    this.primarySpace = newSpaceID
+      ? new CalendarSpace(newSpaceID, this.calendariumSpaceService)
+      : undefined;
+    return this.primarySpace;
+  });
 
-	private $spaces = computed<readonly CalendarSpace[]>(() => {
-		const primarySpace = this.$primarySpace();
-		return primarySpace ? [primarySpace] : [];
-	});
+  private $spaces = computed<readonly CalendarSpace[]>(() => {
+    const primarySpace = this.$primarySpace();
+    return primarySpace ? [primarySpace] : [];
+  });
 
-	public readonly $recurringByWd = computed<Readonly<RecurringsByWeekday>>(
-		() => {
-			const recurringsByWd: RecurringsByWeekday = emptyRecurringsByWeekday();
-			const spaces = this.$spaces();
-			spaces.forEach((space) => {
-				const spaceRecurringsByWd = space.$recurringByWd();
-				Object.entries(spaceRecurringsByWd).forEach(([wd, slots]) => {
-					recurringsByWd[wd as WeekdayCode2] = [
-						...recurringsByWd[wd as WeekdayCode2].filter(
-							(slot) => slot.happening.space.id !== space.spaceID,
-						),
-						...slots,
-					];
-				});
-			});
-			return recurringsByWd;
-		},
-	);
+  public readonly $recurringByWd = computed<Readonly<RecurringsByWeekday>>(
+    () => {
+      const recurringsByWd: RecurringsByWeekday = emptyRecurringsByWeekday();
+      const spaces = this.$spaces();
+      spaces.forEach((space) => {
+        const spaceRecurringsByWd = space.$recurringByWd();
+        Object.entries(spaceRecurringsByWd).forEach(([wd, slots]) => {
+          recurringsByWd[wd as WeekdayCode2] = [
+            ...recurringsByWd[wd as WeekdayCode2].filter(
+              (slot) => slot.happening.space.id !== space.spaceID,
+            ),
+            ...slots,
+          ];
+        });
+      });
+      return recurringsByWd;
+    },
+  );
 
-	public readonly $recurringsBySpaceID = computed<
-		Readonly<CalendarHappeningBriefsBySpaceID>
-	>(() => {
-		const spaces = this.$spaces();
-		const result: CalendarHappeningBriefsBySpaceID = {};
-		spaces.forEach((space) => {
-			result[space.spaceID] = space.$recurrings()?.recurringHappenings || {};
-		});
-		console.log('$recurringsBySpaceID():', result);
-		return result;
-	});
+  public readonly $recurringsBySpaceID = computed<
+    Readonly<CalendarHappeningBriefsBySpaceID>
+  >(() => {
+    const spaces = this.$spaces();
+    const result: CalendarHappeningBriefsBySpaceID = {};
+    spaces.forEach((space) => {
+      result[space.spaceID] = space.$recurrings()?.recurringHappenings || {};
+    });
+    console.log('$recurringsBySpaceID():', result);
+    return result;
+  });
 
-	public destroy(): void {
-		this.destroyed.next();
-		Object.values(this.days).forEach((day) => {
-			day.destroy();
-		});
-		this.$spaces().forEach((space) => space.destroy());
-	}
+  public destroy(): void {
+    this.destroyed.next();
+    Object.values(this.days).forEach((day) => {
+      day.destroy();
+    });
+    this.$spaces().forEach((space) => space.destroy());
+  }
 
-	private readonly $inputs = computed<readonly ICalendarDayInput[]>(() =>
-		this.$spaces().map(
-			(space): ICalendarDayInput => ({
-				spaceID: space.spaceID,
-				$recurringSlots: space.$recurringSlots.asReadonly(),
-				recurringSlots$: space.recurringSlots$,
-			}),
-		),
-	);
+  private readonly $inputs = computed<readonly ICalendarDayInput[]>(() =>
+    this.$spaces().map(
+      (space): ICalendarDayInput => ({
+        spaceID: space.spaceID,
+        $recurringSlots: space.$recurringSlots.asReadonly(),
+        recurringSlots$: space.recurringSlots$,
+      }),
+    ),
+  );
 
-	public getCalendarDay(date: Date): CalendarDay {
-		const id = dateToIso(date);
-		let day = this.days[id];
-		if (!day) {
-			day = new CalendarDay(
-				date,
-				this.injector,
-				this.$inputs,
-				this.errorLogger,
-				this.happeningService,
-				this.calendarDayService,
-			);
-			this.days[id] = day;
-		}
-		return day;
-	}
+  public getCalendarDay(date: Date): CalendarDay {
+    const id = dateToIso(date);
+    let day = this.days[id];
+    if (!day) {
+      day = new CalendarDay(
+        date,
+        this.injector,
+        this.$inputs,
+        this.errorLogger,
+        this.happeningService,
+        this.calendarDayService,
+      );
+      this.days[id] = day;
+    }
+    return day;
+  }
 
-	public preloadEvents(...dates: Date[]): Observable<CalendarDay> {
-		console.warn('not implemented: Preload events for:', dates);
-		return EMPTY;
-		// const dateKeys = dates.filter(d => !!d)
-		// 	.map(localDateToIso)
-		// 	.filter(dateKey => !this.singlesByDate[dateKey]);
-		// if (!dateKeys.length) {
-		// 	return EMPTY;
-		// }
-		// return this.loadEvents(...dates)
-		// 	.pipe(ignoreElements());
-	}
+  public preloadEvents(...dates: Date[]): Observable<CalendarDay> {
+    console.warn('not implemented: Preload events for:', dates);
+    return EMPTY;
+    // const dateKeys = dates.filter(d => !!d)
+    // 	.map(localDateToIso)
+    // 	.filter(dateKey => !this.singlesByDate[dateKey]);
+    // if (!dateKeys.length) {
+    // 	return EMPTY;
+    // }
+    // return this.loadEvents(...dates)
+    // 	.pipe(ignoreElements());
+  }
 
-	public getDays(...weekdays: CalendarDay[]): Observable<CalendarDay> {
-		console.log('SpaceDaysProvider.getDays()', weekdays);
-		return EMPTY;
-		// if (!weekdays?.length) {
-		// 	return EMPTY;
-		// }
-		// if (!this.team) {
-		// 	return from(weekdays);
-		// }
-		// const weekdaysByDateKey: { [date: string]: Day } = {};
-		//
-		// const weekdaysToLoad: Day[] = [];
-		// const weekdaysLoaded: Day[] = [];
-		//
-		// weekdays.forEach(weekday => {
-		// 	if (!weekday.date) {
-		// 		throw new Error('!weekday.date');
-		// 	}
-		// 	const dateKey = localDateToIso(weekday.date);
-		// 	weekdaysByDateKey[dateKey] = weekday;
-		// 	this.addRecurringsToSlotsGroup(weekday);
-		// 	const dateSingleSlots = this.singlesByDate[dateKey];
-		// 	if (dateSingleSlots) {
-		// 		if (weekday.slots) {
-		// 			weekday = { ...weekday, slots: weekday.slots.filter(slot => !slot.single) };
-		// 		}
-		// 		if (!weekday.slots) {
-		// 			weekday = { ...weekday, slots: [] };
-		// 		}
-		// 		dateSingleSlots.forEach(slot => weekday.slots && weekday.slots.push(slot));
-		// 		weekdaysLoaded.push(weekday);
-		// 	} else {
-		// 		weekdaysToLoad.push(weekday);
-		// 	}
-		// });
-		//
-		// if (weekdaysToLoad.length === 0) {
-		// 	return from(weekdaysLoaded);
-		// }
-		//
-		// const dates: Date[] = weekdaysToLoad
-		// 	.map(weekday => weekday.date)
-		// 	.filter(date => !!date) as Date[];
-		//
-		// const loadWeekdays$ = this.loadEvents(...dates)
-		// 	.pipe(
-		// 		map(eventSlotsByDate => {
-		// 			let weekday = weekdaysByDateKey[eventSlotsByDate.dateKey];
-		// 			if (weekday.slots) {
-		// 				weekday = { ...weekday, slots: weekday.slots.filter(slot => !slot.single) };
-		// 			}
-		// 			eventSlotsByDate.events.forEach(slot => {
-		// 				weekday.slots && weekday.slots.push(slot);
-		// 			});
-		// 			return weekday;
-		// 		}),
-		// 	);
-		//
-		// return weekdaysLoaded ? merge(weekdaysLoaded, loadWeekdays$) : loadWeekdays$;
-	}
+  public getDays(...weekdays: CalendarDay[]): Observable<CalendarDay> {
+    console.log('SpaceDaysProvider.getDays()', weekdays);
+    return EMPTY;
+    // if (!weekdays?.length) {
+    // 	return EMPTY;
+    // }
+    // if (!this.team) {
+    // 	return from(weekdays);
+    // }
+    // const weekdaysByDateKey: { [date: string]: Day } = {};
+    //
+    // const weekdaysToLoad: Day[] = [];
+    // const weekdaysLoaded: Day[] = [];
+    //
+    // weekdays.forEach(weekday => {
+    // 	if (!weekday.date) {
+    // 		throw new Error('!weekday.date');
+    // 	}
+    // 	const dateKey = localDateToIso(weekday.date);
+    // 	weekdaysByDateKey[dateKey] = weekday;
+    // 	this.addRecurringsToSlotsGroup(weekday);
+    // 	const dateSingleSlots = this.singlesByDate[dateKey];
+    // 	if (dateSingleSlots) {
+    // 		if (weekday.slots) {
+    // 			weekday = { ...weekday, slots: weekday.slots.filter(slot => !slot.single) };
+    // 		}
+    // 		if (!weekday.slots) {
+    // 			weekday = { ...weekday, slots: [] };
+    // 		}
+    // 		dateSingleSlots.forEach(slot => weekday.slots && weekday.slots.push(slot));
+    // 		weekdaysLoaded.push(weekday);
+    // 	} else {
+    // 		weekdaysToLoad.push(weekday);
+    // 	}
+    // });
+    //
+    // if (weekdaysToLoad.length === 0) {
+    // 	return from(weekdaysLoaded);
+    // }
+    //
+    // const dates: Date[] = weekdaysToLoad
+    // 	.map(weekday => weekday.date)
+    // 	.filter(date => !!date) as Date[];
+    //
+    // const loadWeekdays$ = this.loadEvents(...dates)
+    // 	.pipe(
+    // 		map(eventSlotsByDate => {
+    // 			let weekday = weekdaysByDateKey[eventSlotsByDate.dateKey];
+    // 			if (weekday.slots) {
+    // 				weekday = { ...weekday, slots: weekday.slots.filter(slot => !slot.single) };
+    // 			}
+    // 			eventSlotsByDate.events.forEach(slot => {
+    // 				weekday.slots && weekday.slots.push(slot);
+    // 			});
+    // 			return weekday;
+    // 		}),
+    // 	);
+    //
+    // return weekdaysLoaded ? merge(weekdaysLoaded, loadWeekdays$) : loadWeekdays$;
+  }
 
-	public loadForWeek(d: Date): void {
-		console.log('SpaceDaysProvider.loadForWeek()', d);
-	}
+  public loadForWeek(d: Date): void {
+    console.log('SpaceDaysProvider.loadForWeek()', d);
+  }
 
-	// private addEventsToSlotsGroup(weekday: SlotsGroup, date:)
+  // private addEventsToSlotsGroup(weekday: SlotsGroup, date:)
 
-	// public loadTodayAndFutureEvents(): Observable<DtoSingleActivity[]> {
-	//
-	// 	return this.singleService.selectFutureEvents(this.teamId)
-	// 		.pipe(
-	// 			map(selectResult => {
-	// 				const processedEventIds: string[] = [];
-	//
-	// 				selectResult.values.forEach(singleHappening => {
-	// 					const { id } = singleHappening;
-	// 					if (!id) {
-	// 						throw new Error('!id');
-	// 					}
-	// 					if (processedEventIds.includes(id)) {
-	// 						return;
-	// 					}
-	// 					processedEventIds.push(id);
-	// 					let date = new Date(singleHappening.dtStarts);
-	// 					while (date.getTime() < singleHappening.dtEnds) {
-	// 						const dateKey = localDateToIso(date);
-	// 						let dateEvents = this.singlesByDate[dateKey];
-	// 						if (!dateEvents) {
-	// 							this.singlesByDate[dateKey] = dateEvents = [];
-	// 						}
-	// 						dateEvents.push(eventToSlot(singleHappening));
-	// 						date = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
-	// 					}
-	// 				});
-	// 				return selectResult.values;
-	// 			}),
-	// 		);
-	// }
+  // public loadTodayAndFutureEvents(): Observable<DtoSingleActivity[]> {
+  //
+  // 	return this.singleService.selectFutureEvents(this.teamId)
+  // 		.pipe(
+  // 			map(selectResult => {
+  // 				const processedEventIds: string[] = [];
+  //
+  // 				selectResult.values.forEach(singleHappening => {
+  // 					const { id } = singleHappening;
+  // 					if (!id) {
+  // 						throw new Error('!id');
+  // 					}
+  // 					if (processedEventIds.includes(id)) {
+  // 						return;
+  // 					}
+  // 					processedEventIds.push(id);
+  // 					let date = new Date(singleHappening.dtStarts);
+  // 					while (date.getTime() < singleHappening.dtEnds) {
+  // 						const dateKey = localDateToIso(date);
+  // 						let dateEvents = this.singlesByDate[dateKey];
+  // 						if (!dateEvents) {
+  // 							this.singlesByDate[dateKey] = dateEvents = [];
+  // 						}
+  // 						dateEvents.push(eventToSlot(singleHappening));
+  // 						date = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
+  // 					}
+  // 				});
+  // 				return selectResult.values;
+  // 			}),
+  // 		);
+  // }
 
-	private loadEvents(
-		...dates: Date[]
-	): Observable<{ dateKey: string; events: ISlotUIContext[] }> {
-		console.log('loadEvents()', dates);
-		return EMPTY;
-		// const dateISOs = dates.map(localDateToIso);
-		//
-		// const mapSelectResult = (selectResult: SelectResult<DtoSingleActivity>) => {
-		// 	const dateKey = selectResult.key;
-		// 	if (!dateKey) {
-		// 		throw new Error('!dateKey');
-		// 	}
-		// 	this.singlesByDate[dateKey] = selectResult.values.length ? selectResult.values.map(eventToSlot) : [];
-		// 	return { dateKey, events: this.singlesByDate[dateKey] };
-		// };
+  private loadEvents(
+    ...dates: Date[]
+  ): Observable<{ dateKey: string; events: ISlotUIContext[] }> {
+    console.log('loadEvents()', dates);
+    return EMPTY;
+    // const dateISOs = dates.map(localDateToIso);
+    //
+    // const mapSelectResult = (selectResult: SelectResult<DtoSingleActivity>) => {
+    // 	const dateKey = selectResult.key;
+    // 	if (!dateKey) {
+    // 		throw new Error('!dateKey');
+    // 	}
+    // 	this.singlesByDate[dateKey] = selectResult.values.length ? selectResult.values.map(eventToSlot) : [];
+    // 	return { dateKey, events: this.singlesByDate[dateKey] };
+    // };
 
-		// return this.singleService.selectByDate(tx, this.communeId, ...dateISOs)
-		// 	.pipe(
-		// 		map(selectResult => {
-		// 			console.log(`Loaded events ${selectResult.key}: ${selectResult.values.length}`);
-		// 			return mapSelectResult(selectResult);
-		// 		}),
-		// 	);
-	}
+    // return this.singleService.selectByDate(tx, this.communeId, ...dateISOs)
+    // 	.pipe(
+    // 		map(selectResult => {
+    // 			console.log(`Loaded events ${selectResult.key}: ${selectResult.values.length}`);
+    // 			return mapSelectResult(selectResult);
+    // 		}),
+    // 	);
+  }
 }

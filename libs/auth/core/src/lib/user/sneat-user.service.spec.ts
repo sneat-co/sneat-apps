@@ -1,5 +1,5 @@
 describe('SneatUserService', () => {
-	it('should be created', () => {
-		expect(true).toBeTruthy();
-	});
+  it('should be created', () => {
+    expect(true).toBeTruthy();
+  });
 });

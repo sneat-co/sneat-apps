@@ -4,29 +4,29 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DatatugHomePageComponent } from './datatug-home-page.component';
 
 describe('HomePage', () => {
-	let component: DatatugHomePageComponent;
-	let fixture: ComponentFixture<DatatugHomePageComponent>;
+  let component: DatatugHomePageComponent;
+  let fixture: ComponentFixture<DatatugHomePageComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [DatatugHomePageComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(DatatugHomePageComponent, {
-				set: {
-					imports: [],
-					template: '',
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
-					providers: [],
-				},
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [DatatugHomePageComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(DatatugHomePageComponent, {
+        set: {
+          imports: [],
+          template: '',
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+          providers: [],
+        },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(DatatugHomePageComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(DatatugHomePageComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

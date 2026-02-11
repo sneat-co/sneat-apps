@@ -1,27 +1,27 @@
 <ion-header>
-	<ion-toolbar color="light" class="with-end-buttons">
-		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="$defaultBackUrl()" />
-		</ion-buttons>
-		<ion-title
-			>📊 Trackers
-			@if (space.brief?.title) {
-				&#64; {{ space.brief?.title }}
-			}
-		</ion-title>
-		<ion-buttons slot="end">
-			<ion-button (click)="goNewTracker()">
-				<ion-icon name="add" slot="start" />
-				<ion-label>Add</ion-label>
-			</ion-button>
-			<ion-menu-button menu="mainMenu" />
-		</ion-buttons>
-	</ion-toolbar>
+  <ion-toolbar color="light" class="with-end-buttons">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="$defaultBackUrl()" />
+    </ion-buttons>
+    <ion-title
+      >📊 Trackers
+      @if (space.brief?.title) {
+        &#64; {{ space.brief?.title }}
+      }
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="goNewTracker()">
+        <ion-icon name="add" slot="start" />
+        <ion-label>Add</ion-label>
+      </ion-button>
+      <ion-menu-button menu="mainMenu" />
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<sneat-trackers
-		[$space]="space"
-		(goNewTracker)="goNewTracker($event)"
-	></sneat-trackers>
+  <sneat-trackers
+    [$space]="space"
+    (goNewTracker)="goNewTracker($event)"
+  ></sneat-trackers>
 </ion-content>

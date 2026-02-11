@@ -1,37 +1,37 @@
 <ion-button
-	color="tertiary"
-	(click)="toggleTimer($event)"
-	[disabled]="isDisabled"
+  color="tertiary"
+  (click)="toggleTimer($event)"
+  [disabled]="isDisabled"
 >
-	@if (
-		(timerState?.isToggling && timerState?.activeMemberId === memberID) ||
-		!timerState
-	) {
-		<ion-spinner name="lines-small" />
-	}
-	@if (
-		timerState &&
-		(!timerState.status ||
-			timerState.status === "stopped" ||
-			timerState.activeMemberId !== memberID)
-	) {
-		@if (!timerState?.isToggling) {
-			<ion-icon slot="start" name="play-outline" />
-		}
-		@if (!totalElapsed) {
-			<ion-label>Start</ion-label>
-		}
-	}
-	@if (
-		!timerState?.isToggling &&
-		timerState?.status === "active" &&
-		timerState?.activeMemberId === memberID
-	) {
-		<ion-icon name="pause-outline" />
-	}
-	@if (timerState?.status === "active" || totalElapsed) {
-		<ion-label style="text-transform: none">
-			{{ totalElapsed }}
-		</ion-label>
-	}
+  @if (
+    (timerState?.isToggling && timerState?.activeMemberId === memberID) ||
+    !timerState
+  ) {
+    <ion-spinner name="lines-small" />
+  }
+  @if (
+    timerState &&
+    (!timerState.status ||
+      timerState.status === "stopped" ||
+      timerState.activeMemberId !== memberID)
+  ) {
+    @if (!timerState?.isToggling) {
+      <ion-icon slot="start" name="play-outline" />
+    }
+    @if (!totalElapsed) {
+      <ion-label>Start</ion-label>
+    }
+  }
+  @if (
+    !timerState?.isToggling &&
+    timerState?.status === "active" &&
+    timerState?.activeMemberId === memberID
+  ) {
+    <ion-icon name="pause-outline" />
+  }
+  @if (timerState?.status === "active" || totalElapsed) {
+    <ion-label style="text-transform: none">
+      {{ totalElapsed }}
+    </ion-label>
+  }
 </ion-button>

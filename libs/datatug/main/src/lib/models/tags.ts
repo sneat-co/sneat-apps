@@ -1,3 +1,3 @@
 export interface ITagged {
-	tags?: string[];
+  tags?: string[];
 }

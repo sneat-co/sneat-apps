@@ -1,5 +1,5 @@
 describe('AuthMenuItemComponent', () => {
-	it('should create', () => {
-		expect(true).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(true).toBeTruthy();
+  });
 });

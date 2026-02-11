@@ -1,7 +1,7 @@
 import {
-	IEnvironmentConfig,
-	IFirebaseConfig,
-	IFirebaseEmulatorConfig,
+  IEnvironmentConfig,
+  IFirebaseConfig,
+  IFirebaseEmulatorConfig,
 } from '@sneat/core';
 /*
  * For easier debugging in development mode, you can import the following file
@@ -19,34 +19,34 @@ const useSSL = useNgrok || window.location.hostname == 'local-app.sneat.ws';
 const nonSecureEmulatorHost = '127.0.0.1'; // 'localhost';
 
 export const firebaseEmulatorConfig: IFirebaseEmulatorConfig = {
-	authPort: useSSL ? 443 : 9099,
-	authHost: useNgrok
-		? window.location.hostname
-		: useSSL
-			? 'local-fb-auth.sneat.ws'
-			: nonSecureEmulatorHost,
-	firestorePort: useSSL ? 443 : 8080,
-	firestoreHost: useNgrok
-		? window.location.hostname
-		: useSSL
-			? 'local-firestore.sneat.ws'
-			: nonSecureEmulatorHost,
+  authPort: useSSL ? 443 : 9099,
+  authHost: useNgrok
+    ? window.location.hostname
+    : useSSL
+      ? 'local-fb-auth.sneat.ws'
+      : nonSecureEmulatorHost,
+  firestorePort: useSSL ? 443 : 8080,
+  firestoreHost: useNgrok
+    ? window.location.hostname
+    : useSSL
+      ? 'local-firestore.sneat.ws'
+      : nonSecureEmulatorHost,
 };
 
 export const notNeededForEmulator = 'not-needed-for-emulator';
 
 const firebaseConfig: IFirebaseConfig = {
-	emulator: firebaseEmulatorConfig,
-	apiKey: notNeededForEmulator,
-	authDomain: 'sneat.app',
-	projectId: 'local-sneat-app', // The 'demo-' prefix is added if useEmulators is true
-	appId: notNeededForEmulator,
-	measurementId: 'G-PROVIDE_IF_NEEDED',
+  emulator: firebaseEmulatorConfig,
+  apiKey: notNeededForEmulator,
+  authDomain: 'sneat.app',
+  projectId: 'local-sneat-app', // The 'demo-' prefix is added if useEmulators is true
+  appId: notNeededForEmulator,
+  measurementId: 'G-PROVIDE_IF_NEEDED',
 };
 
 export const baseEnvironmentConfig: IEnvironmentConfig = {
-	production: false,
-	useNgrok,
-	agents: {},
-	firebaseConfig,
+  production: false,
+  useNgrok,
+  agents: {},
+  firebaseConfig,
 };

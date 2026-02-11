@@ -4,19 +4,20 @@ import { IonicModule } from '@ionic/angular';
 import { ScrumBlockersComponent } from './scrum-blockers.component';
 
 describe('ScrumBlockersComponent', () => {
-	let component: ScrumBlockersComponent;
-	let fixture: ComponentFixture<ScrumBlockersComponent>;
+  let component: ScrumBlockersComponent;
+  let fixture: ComponentFixture<ScrumBlockersComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [ScrumBlockersComponent, IonicModule.forRoot()]}).compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ScrumBlockersComponent, IonicModule.forRoot()],
+    }).compileComponents();
 
-		fixture = TestBed.createComponent(ScrumBlockersComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	}));
+    fixture = TestBed.createComponent(ScrumBlockersComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

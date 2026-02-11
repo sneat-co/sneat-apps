@@ -1,93 +1,93 @@
 name: 'NX migrate'
 
 on:
-    workflow_dispatch:
-    schedule:
-        # Every day at 6am UTC
-        -   cron: '0 6 * * *'
+  workflow_dispatch:
+  schedule:
+    # Every day at 6am UTC
+    - cron: '0 6 * * *'
 
 jobs:
-    nx-migrate:
-        runs-on: ubuntu-latest
+  nx-migrate:
+    runs-on: ubuntu-latest
 
-        steps:
-            -   name: Checkout repository
-                uses: actions/checkout@v6
-                with:
-                    fetch-depth: 0
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
-            -   name: Setup
-                uses: ./.github/actions/pnpm
-            #        with:
-            #          git_bot_token: ${{ secrets.GIT_BOT_TOKEN }}
+      - name: Setup
+        uses: ./.github/actions/pnpm
+      #        with:
+      #          git_bot_token: ${{ secrets.GIT_BOT_TOKEN }}
 
-            #            -   name: Check if @nx/workspace is outdated
-            #                id: nx-workspace-outdated
-            #                run: |
-            #                    IS_OUTDATED=$(test ! -z "$(npm outdated @nx/workspace)" && echo true || echo false)
-            #                    echo "IS_OUTDATED=$IS_OUTDATED"
-            #                    echo "is_changed=$IS_OUTDATED" >> $GITHUB_OUTPUT
+      #            -   name: Check if @nx/workspace is outdated
+      #                id: nx-workspace-outdated
+      #                run: |
+      #                    IS_OUTDATED=$(test ! -z "$(npm outdated @nx/workspace)" && echo true || echo false)
+      #                    echo "IS_OUTDATED=$IS_OUTDATED"
+      #                    echo "is_changed=$IS_OUTDATED" >> $GITHUB_OUTPUT
 
-            -   name: Remove migrations.json if exists
-                # we delete if migrations.json exists - might be accidentally checked-in by a developer or by previous run
-                run: |
-                    [ -f path/to/your/file ] && git rm -f migrations.json && git add migrations.json || echo "File migrations.json does not exist."
+      - name: Remove migrations.json if exists
+        # we delete if migrations.json exists - might be accidentally checked-in by a developer or by previous run
+        run: |
+          [ -f path/to/your/file ] && git rm -f migrations.json && git add migrations.json || echo "File migrations.json does not exist."
 
-            -   name: Run `nx migrate latest`
-                run: pnpm run nx migrate latest
+      - name: Run `nx migrate latest`
+        run: pnpm run nx migrate latest
 
-            -   name: Check if package.json is changed
-                id: package-json-changed
-                run: |
-                    IS_CHANGED=$(test ! -z "$(git diff --name-only --exit-code package.json)" && echo true || echo false)
-                    echo "IS_CHANGED=$IS_CHANGED"
-                    echo "is_changed=$IS_CHANGED" >> $GITHUB_OUTPUT
+      - name: Check if package.json is changed
+        id: package-json-changed
+        run: |
+          IS_CHANGED=$(test ! -z "$(git diff --name-only --exit-code package.json)" && echo true || echo false)
+          echo "IS_CHANGED=$IS_CHANGED"
+          echo "is_changed=$IS_CHANGED" >> $GITHUB_OUTPUT
 
-            -   name: Show package.json changes
-                if: steps.package-json-changed.outputs.is_changed == 'true'
-                run: git diff package.json
+      - name: Show package.json changes
+        if: steps.package-json-changed.outputs.is_changed == 'true'
+        run: git diff package.json
 
-            -   name: Install dependencies
-                if: steps.package-json-changed.outputs.is_changed == 'true'
-                run: pnpm install --no-frozen-lockfile
+      - name: Install dependencies
+        if: steps.package-json-changed.outputs.is_changed == 'true'
+        run: pnpm install --no-frozen-lockfile
 
-            -   name: Check if has migrations
-                id: nx-workspace-has-migrations
-                run: |
-                    HAS_MIGRATIONS=$(test -f migrations.json && echo true || echo false)
-                    echo "has_migrations=$HAS_MIGRATIONS"
-                    echo "has_migrations=$HAS_MIGRATIONS" >> $GITHUB_OUTPUT
+      - name: Check if has migrations
+        id: nx-workspace-has-migrations
+        run: |
+          HAS_MIGRATIONS=$(test -f migrations.json && echo true || echo false)
+          echo "has_migrations=$HAS_MIGRATIONS"
+          echo "has_migrations=$HAS_MIGRATIONS" >> $GITHUB_OUTPUT
 
-            -   name: Run @nx/workspace migrations
-                if: steps.nx-workspace-has-migrations.outputs.has_migrations == 'true'
-                run: pnpm run nx migrate --run-migrations
+      - name: Run @nx/workspace migrations
+        if: steps.nx-workspace-has-migrations.outputs.has_migrations == 'true'
+        run: pnpm run nx migrate --run-migrations
 
-            -   name: Commit changes
-                if: steps.package-json-changed.outputs.is_changed == 'true'
-                run: |
-                    LAST_VERSION=$(npm view @nx/workspace version)
-                    echo "LAST_VERSION=$LAST_VERSION"
-                    git config user.name NX-migrate-action
-                    git config user.email alex@trakhimenok.com
-                    git add .
-                    [[ $(git status --porcelain) ]] && git commit -m "fix(deps): 📦 update nrwl workspace to ${LAST_VERSION}" || echo "nothing to commit"
+      - name: Commit changes
+        if: steps.package-json-changed.outputs.is_changed == 'true'
+        run: |
+          LAST_VERSION=$(npm view @nx/workspace version)
+          echo "LAST_VERSION=$LAST_VERSION"
+          git config user.name NX-migrate-action
+          git config user.email alex@trakhimenok.com
+          git add .
+          [[ $(git status --porcelain) ]] && git commit -m "fix(deps): 📦 update nrwl workspace to ${LAST_VERSION}" || echo "nothing to commit"
 
-            -   name: Push changes
-                if: steps.package-json-changed.outputs.is_changed == 'true' #  && steps.test.outcome == 'success'
-                uses: ad-m/github-push-action@master
-                with:
-                    github_token: ${{ secrets.GITHUB_TOKEN }}
-                    branch: "ci/nx-migrate-latest"
-                    force: true
-                    tags: true
+      - name: Push changes
+        if: steps.package-json-changed.outputs.is_changed == 'true' #  && steps.test.outcome == 'success'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: 'ci/nx-migrate-latest'
+          force: true
+          tags: true
 
-            -   name: Create PR
-                if: steps.package-json-changed.outputs.is_changed == 'true' #  && steps.test.outcome != 'success'
-                env:
-                    GH_TOKEN: ${{ github.token }}
-                run: |
-                    LAST_VERSION=$(npm view @nx/workspace version)
-                    BRANCH="ci/nx-migrate-latest"
-                    git checkout -b ${BRANCH}
-                    git push -f --set-upstream origin ${BRANCH}
-                    gh pr view ${BRANCH} || gh pr create -t "Update @nx/workspace to ${BRANCH}" -b "Update @nx/workspace dependencies to ${LAST_VERSION}."
+      - name: Create PR
+        if: steps.package-json-changed.outputs.is_changed == 'true' #  && steps.test.outcome != 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          LAST_VERSION=$(npm view @nx/workspace version)
+          BRANCH="ci/nx-migrate-latest"
+          git checkout -b ${BRANCH}
+          git push -f --set-upstream origin ${BRANCH}
+          gh pr view ${BRANCH} || gh pr create -t "Update @nx/workspace to ${BRANCH}" -b "Update @nx/workspace dependencies to ${LAST_VERSION}."

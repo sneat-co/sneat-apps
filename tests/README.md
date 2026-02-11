@@ -86,6 +86,7 @@ Firebase emulators and the backend server are now enabled by default in `playwri
 ### Prerequisites
 
 1. **Java 21+** - Required for Firebase emulators
+
    ```bash
    java -version  # Should be 21 or higher
    ```
@@ -104,6 +105,7 @@ pnpm playwright test
 ```
 
 The following services will start automatically:
+
 - **Firebase emulators** on ports 9099 (Auth) and 8080 (Firestore)
 - **Backend server** on port 4300
 - **App server** on port 4205
@@ -162,6 +164,7 @@ pnpm playwright test
 ## Current Status
 
 With Firebase emulators and backend server enabled (default):
+
 - ✅ **7 tests total** - All tests can run with full services
   - 2 start-page tests (work without external dependencies)
   - 3 auth tests (require Firebase emulators)

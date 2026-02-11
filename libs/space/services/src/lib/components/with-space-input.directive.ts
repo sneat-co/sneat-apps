@@ -6,35 +6,35 @@ import { SpaceNavService } from '../services/space-nav.service';
 
 @Directive()
 export abstract class WithSpaceInput extends SneatBaseComponent {
-	protected readonly spaceNavService = inject(SpaceNavService);
+  protected readonly spaceNavService = inject(SpaceNavService);
 
-	public readonly $space = input.required<ISpaceContext>();
+  public readonly $space = input.required<ISpaceContext>();
 
-	protected readonly $spaceID = computed(() => this.$space().id);
-	private readonly spaceIDChanged = new BehaviorSubject<string | undefined>(
-		undefined,
-	);
-	protected spaceID$ = this.spaceIDChanged
-		.asObservable()
-		.pipe(this.takeUntilDestroyed(), distinctUntilChanged());
+  protected readonly $spaceID = computed(() => this.$space().id);
+  private readonly spaceIDChanged = new BehaviorSubject<string | undefined>(
+    undefined,
+  );
+  protected spaceID$ = this.spaceIDChanged
+    .asObservable()
+    .pipe(this.takeUntilDestroyed(), distinctUntilChanged());
 
-	protected readonly $spaceType = computed(() => this.$space().type);
-	protected readonly $spaceRef = computed(() => ({
-		id: this.$spaceID(),
-		type: this.$spaceType(),
-	}));
+  protected readonly $spaceType = computed(() => this.$space().type);
+  protected readonly $spaceRef = computed(() => ({
+    id: this.$spaceID(),
+    type: this.$spaceType(),
+  }));
 
-	constructor() {
-		super();
-		effect(() => {
-			const spaceID = this.$spaceID();
-			if (spaceID !== this.spaceIDChanged.value) {
-				this.onSpaceIdChanged(spaceID);
-			}
-		});
-	}
+  constructor() {
+    super();
+    effect(() => {
+      const spaceID = this.$spaceID();
+      if (spaceID !== this.spaceIDChanged.value) {
+        this.onSpaceIdChanged(spaceID);
+      }
+    });
+  }
 
-	protected onSpaceIdChanged(spaceID: string): void {
-		this.spaceIDChanged.next(spaceID);
-	}
+  protected onSpaceIdChanged(spaceID: string): void {
+    this.spaceIDChanged.next(spaceID);
+  }
 }

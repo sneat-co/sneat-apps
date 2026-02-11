@@ -1,92 +1,92 @@
 {
-	"name": "logist-app",
-	"$schema": "../../node_modules/nx/schemas/project-schema.json",
-	"projectType": "application",
-	"sourceRoot": "apps/logist-app/src",
-	"prefix": "sneat",
-	"targets": {
-		"build": {
-			"executor": "@angular-devkit/build-angular:application",
-			"outputs": ["{options.outputPath}"],
-			"options": {
-				"outputPath": "dist/apps/logist-app",
-				"index": "apps/logist-app/src/index.html",
-				"browser": "apps/logist-app/src/main.ts",
-				"polyfills": ["zone.js"],
-				"allowedCommonJsDependencies": ["qrcode"],
-				"tsConfig": "apps/logist-app/tsconfig.app.json",
-				"inlineStyleLanguage": "scss",
-				"assets": [
-					"apps/logist-app/src/favicon.ico",
-					"apps/logist-app/src/assets",
-					{
-						"glob": "**/*.svg",
-						"input": "node_modules/ionicons/dist/ionicons/svg",
-						"output": "./svg"
-					}
-				],
-				"styles": ["apps/logist-app/src/styles.scss"],
-				"scripts": []
-			},
-			"configurations": {
-				"production": {
-					"budgets": [
-						{
-							"type": "initial",
-							"maximumWarning": "2.5mb",
-							"maximumError": "3mb"
-						},
-						{
-							"type": "anyComponentStyle",
-							"maximumWarning": "2kb",
-							"maximumError": "4kb"
-						}
-					],
-					"fileReplacements": [
-						{
-							"replace": "apps/logist-app/src/environments/environment.ts",
-							"with": "apps/logist-app/src/environments/environment.prod.ts"
-						}
-					],
-					"outputHashing": "all"
-				},
-				"development": {
-					"optimization": false,
-					"extractLicenses": false,
-					"sourceMap": true,
-					"namedChunks": true
-				}
-			},
-			"defaultConfiguration": "production"
-		},
-		"serve": {
-			"executor": "@angular-devkit/build-angular:dev-server",
-			"configurations": {
-				"production": {
-					"buildTarget": "logist-app:build:production"
-				},
-				"development": {
-					"buildTarget": "logist-app:build:development"
-				}
-			},
-			"defaultConfiguration": "development",
-			"continuous": true
-		},
-		"extract-i18n": {
-			"executor": "@angular-devkit/build-angular:extract-i18n",
-			"options": {
-				"buildTarget": "logist-app:build"
-			}
-		},
-		"lint": {
-			"executor": "@nx/eslint:lint"
-		},
-		"test": {
-			"executor": "@nx/vitest:test",
-			"outputs": ["{workspaceRoot}/coverage/apps/logist-app"],
-			"options": {
-				"tsConfig": "apps/logist-app/tsconfig.spec.json"
-			}
-		}
-	}
+  "name": "logist-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/logist-app/src",
+  "prefix": "sneat",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/logist-app",
+        "index": "apps/logist-app/src/index.html",
+        "browser": "apps/logist-app/src/main.ts",
+        "polyfills": ["zone.js"],
+        "allowedCommonJsDependencies": ["qrcode"],
+        "tsConfig": "apps/logist-app/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/logist-app/src/favicon.ico",
+          "apps/logist-app/src/assets",
+          {
+            "glob": "**/*.svg",
+            "input": "node_modules/ionicons/dist/ionicons/svg",
+            "output": "./svg"
+          }
+        ],
+        "styles": ["apps/logist-app/src/styles.scss"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2.5mb",
+              "maximumError": "3mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/logist-app/src/environments/environment.ts",
+              "with": "apps/logist-app/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "logist-app:build:production"
+        },
+        "development": {
+          "buildTarget": "logist-app:build:development"
+        }
+      },
+      "defaultConfiguration": "development",
+      "continuous": true
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "logist-app:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{workspaceRoot}/coverage/apps/logist-app"],
+      "options": {
+        "tsConfig": "apps/logist-app/tsconfig.spec.json"
+      }
+    }
+  }
 }

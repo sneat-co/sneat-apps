@@ -5,37 +5,46 @@ This directory contains reusable test templates for creating consistent tests ac
 ## Available Templates
 
 ### 1. `extension-service.spec.ts.template`
+
 Template for testing Angular services in extension modules.
 
 **Placeholders:**
+
 - `{{ServiceName}}` - PascalCase service name (e.g., AssetusService)
 - `{{service-name}}` - kebab-case file name (e.g., assetus-service)
 
 **Example usage:**
+
 ```bash
 node scripts/generate-extension-test.mjs service AssetusService assetus shared services
 ```
 
 ### 2. `extension-component.spec.ts.template`
+
 Template for testing Angular components in extension modules.
 
 **Placeholders:**
+
 - `{{ComponentName}}` - PascalCase component name (e.g., AssetListComponent)
 - `{{component-name}}` - kebab-case file name (e.g., asset-list)
 
 **Example usage:**
+
 ```bash
 node scripts/generate-extension-test.mjs component AssetListComponent assetus components asset-list
 ```
 
 ### 3. `extension-sanity.spec.ts.template`
+
 Template for basic sanity tests to ensure test infrastructure is working.
 
 **Placeholders:**
+
 - `{{extension-name}}` - Extension module name (e.g., assetus)
 - `{{sub-lib}}` - Sub-library name (e.g., shared, internal, core)
 
 **Example usage:**
+
 ```bash
 node scripts/generate-extension-test.mjs sanity assetus shared
 ```
@@ -77,6 +86,7 @@ pnpm nx generate @sneat/tools:extension-test --type=sanity --extension=assetus -
 ## Template Features
 
 All templates include:
+
 - ✅ Proper TestBed configuration
 - ✅ Mock dependencies (SneatApiService, ErrorLogger)
 - ✅ Basic "should create" test
@@ -107,6 +117,7 @@ For comprehensive testing guidelines, see [docs/TESTING.md](../docs/TESTING.md).
 ## Contributing
 
 To improve these templates:
+
 1. Identify common patterns in existing tests
 2. Update templates to include best practices
 3. Document new placeholders in this README

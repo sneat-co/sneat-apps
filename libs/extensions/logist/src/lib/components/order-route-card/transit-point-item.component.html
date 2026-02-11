@@ -1,15 +1,15 @@
 <ion-item-group>
-	<ion-item-divider>
-		<ion-label style="font-weight: bold">{{ label }}</ion-label>
-	</ion-item-divider>
-	@if (transitPoint) {
-		<sneat-country-input
-			[countryID]="transitPoint.countryID || ''"
-			(countryIDChange)="onCountryChanged($event)"
-		/>
-	}
-	<!--	<ion-item>-->
-	<!--		<ion-label position="stacked">Address</ion-label>-->
-	<!--		<ion-textarea></ion-textarea>-->
-	<!--	</ion-item>-->
+  <ion-item-divider>
+    <ion-label style="font-weight: bold">{{ label }}</ion-label>
+  </ion-item-divider>
+  @if (transitPoint) {
+    <sneat-country-input
+      [countryID]="transitPoint.countryID || ''"
+      (countryIDChange)="onCountryChanged($event)"
+    />
+  }
+  <!--	<ion-item>-->
+  <!--		<ion-label position="stacked">Address</ion-label>-->
+  <!--		<ion-textarea></ion-textarea>-->
+  <!--	</ion-item>-->
 </ion-item-group>

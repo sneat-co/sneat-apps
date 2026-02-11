@@ -1,79 +1,79 @@
 @let members = $members();
 @if (members && members.length <= 7) {
-	<ion-item-divider color="light" class="sneat-tiny-end-padding">
-		<!--		<ion-label color="medium" class="ion-margin-end">Participants</ion-label>-->
-		<ion-segment [value]="$tab()" (ionChange)="onTabChanged($event)">
-			<ion-segment-button value="members">Members</ion-segment-button>
-			<ion-segment-button value="contacts">Contacts</ion-segment-button>
-		</ion-segment>
-		<ion-buttons slot="end">
-			@if ($tab() === "contacts") {
-				<ion-button title="Choose members and contacts" color="medium">
-					<ion-icon slot="start" name="add-circle-outline" />
-					<ion-label>Choose</ion-label>
-				</ion-button>
-			}
-			@if ($hasContactIDs()) {
-				<ion-button
-					title="Clear participants filter"
-					color="medium"
-					(click)="clearSelectedContacts()"
-				>
-					<ion-icon name="close-outline" />
-				</ion-button>
-			}
-		</ion-buttons>
-	</ion-item-divider>
-	@if ($tab() === "members") {
-		@for (contact of members; track contact.id) {
-			<ion-item>
-				<ion-checkbox
-					justify="start"
-					labelPlacement="end"
-					[value]="contact.id"
-					[checked]="$contactIDs().includes(contact.id)"
-					(ionChange)="onContactCheckChanged($event)"
-					>{{ contact | contactTitle }}
-				</ion-checkbox>
-				<ion-buttons slot="end">
-					<ion-button>
-						<ion-icon name="person-circle-outline" />
-					</ion-button>
-				</ion-buttons>
-			</ion-item>
-		}
-	}
-	<ion-item>
-		<ion-checkbox
-			value=""
-			labelPlacement="end"
-			justify="start"
-			[checked]="$contactIDs().includes('')"
-			(ionChange)="onContactCheckChanged($event)"
-			><small>Unassigned only</small>
-		</ion-checkbox>
-	</ion-item>
-	<!--					<ion-segment [(ngModel)]="memberID" color="dark" (ionChange)="onMemberChanged($event)">-->
-	<!--						<ion-segment-button value="">Anyone</ion-segment-button>-->
-	<!--						<ion-segment-button [value]="member.id" *ngFor="let member of members">-->
+  <ion-item-divider color="light" class="sneat-tiny-end-padding">
+    <!--		<ion-label color="medium" class="ion-margin-end">Participants</ion-label>-->
+    <ion-segment [value]="$tab()" (ionChange)="onTabChanged($event)">
+      <ion-segment-button value="members">Members</ion-segment-button>
+      <ion-segment-button value="contacts">Contacts</ion-segment-button>
+    </ion-segment>
+    <ion-buttons slot="end">
+      @if ($tab() === "contacts") {
+        <ion-button title="Choose members and contacts" color="medium">
+          <ion-icon slot="start" name="add-circle-outline" />
+          <ion-label>Choose</ion-label>
+        </ion-button>
+      }
+      @if ($hasContactIDs()) {
+        <ion-button
+          title="Clear participants filter"
+          color="medium"
+          (click)="clearSelectedContacts()"
+        >
+          <ion-icon name="close-outline" />
+        </ion-button>
+      }
+    </ion-buttons>
+  </ion-item-divider>
+  @if ($tab() === "members") {
+    @for (contact of members; track contact.id) {
+      <ion-item>
+        <ion-checkbox
+          justify="start"
+          labelPlacement="end"
+          [value]="contact.id"
+          [checked]="$contactIDs().includes(contact.id)"
+          (ionChange)="onContactCheckChanged($event)"
+          >{{ contact | contactTitle }}
+        </ion-checkbox>
+        <ion-buttons slot="end">
+          <ion-button>
+            <ion-icon name="person-circle-outline" />
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    }
+  }
+  <ion-item>
+    <ion-checkbox
+      value=""
+      labelPlacement="end"
+      justify="start"
+      [checked]="$contactIDs().includes('')"
+      (ionChange)="onContactCheckChanged($event)"
+      ><small>Unassigned only</small>
+    </ion-checkbox>
+  </ion-item>
+  <!--					<ion-segment [(ngModel)]="memberID" color="dark" (ionChange)="onMemberChanged($event)">-->
+  <!--						<ion-segment-button value="">Anyone</ion-segment-button>-->
+  <!--						<ion-segment-button [value]="member.id" *ngFor="let member of members">-->
 
-	<!--						</ion-segment-button>-->
-	<!--					</ion-segment>-->
+  <!--						</ion-segment-button>-->
+  <!--					</ion-segment>-->
 } @else {
-	<ion-item>
-		<ion-select
-			interface="popover"
-			[(ngModel)]="contactID"
-			(ionChange)="onContactCheckChanged($event)"
-			label="Participants"
-		>
-			<ion-select-option value="">* Anyone</ion-select-option>
-			<ion-select-option value="UNASSIGNED">- Unassigned</ion-select-option>
-			@for (contact of members; track contact.id) {
-				<ion-select-option [value]="contact.id">
-					{{ contact | contactTitle }}
-				</ion-select-option>
-			}
-		</ion-select>
-	</ion-item>
+  <ion-item>
+    <ion-select
+      interface="popover"
+      [(ngModel)]="contactID"
+      (ionChange)="onContactCheckChanged($event)"
+      label="Participants"
+    >
+      <ion-select-option value="">* Anyone</ion-select-option>
+      <ion-select-option value="UNASSIGNED">- Unassigned</ion-select-option>
+      @for (contact of members; track contact.id) {
+        <ion-select-option [value]="contact.id">
+          {{ contact | contactTitle }}
+        </ion-select-option>
+      }
+    </ion-select>
+  </ion-item>
 }

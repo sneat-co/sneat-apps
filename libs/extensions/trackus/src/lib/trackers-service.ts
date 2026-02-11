@@ -6,18 +6,18 @@ import { ITrackerBrief, ITrackerDbo } from './dbo/i-tracker-dbo';
 
 @Injectable()
 export class TrackersService extends ModuleSpaceItemService<
-	ITrackerBrief,
-	ITrackerDbo
+  ITrackerBrief,
+  ITrackerDbo
 > {
-	constructor() {
-		const afs = inject(AngularFirestore);
-		const sneatApiService = inject(SneatApiService);
-		const injector = inject(Injector);
-		super(injector, 'trackus', 'trackers', afs, sneatApiService);
-	}
+  constructor() {
+    const afs = inject(AngularFirestore);
+    const sneatApiService = inject(SneatApiService);
+    const injector = inject(Injector);
+    super(injector, 'trackus', 'trackers', afs, sneatApiService);
+  }
 }
 
 @NgModule({
-	providers: [TrackersService],
+  providers: [TrackersService],
 })
 export class TrackersServiceModule {}

@@ -1,184 +1,184 @@
 <ion-header>
-	<ion-toolbar color="light">
-		<ion-title>
-			@if (inviteInfo?.space?.type === "family") {
-				Join family &#64; Sneat.app
-			} @else {
-				Join team &#64; Sneat.app
-			}
-		</ion-title>
-	</ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-title>
+      @if (inviteInfo?.space?.type === "family") {
+        Join family &#64; Sneat.app
+      } @else {
+        Join team &#64; Sneat.app
+      }
+    </ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	@if (inviteInfo) {
-		<ion-card color="warning">
-			@if (userOwnInvite) {
-				<ion-card-content>
-					<p>
-						You've invited <b>{{ inviteInfo.invite.to.title }}</b> to join
-						<b>{{ inviteInfo.space.title || inviteInfo.space.type }}</b>
-					</p>
-				</ion-card-content>
-			} @else {
-				<ion-card-content>
-					@if (inviteInfo.invite.to.title) {
-						<p>
-							Hello <b>{{ inviteInfo.invite.to.title }}</b
-							>,
-						</p>
-					}
-					@if (inviteInfo.space.title) {
-						<p>
-							You've been invited by
-							<b>{{ inviteInfo.invite.from.title }}</b> to join team
-							{{ inviteInfo.space.title }}
-						</p>
-					} @else {
-						You've been invited by <b>{{ inviteInfo.invite.from.title }}</b> to
-						join {{ inviteInfo.space.type }} space &#64;
-						<a href="https://sneat.app" target="_blank">Sneat.app</a>
-					}
-				</ion-card-content>
-			}
-		</ion-card>
-	}
-	@if (!inviteInfo?.space) {
-		<p>
-			<ion-spinner name="lines-small" color="medium" />
-			Loading...
-		</p>
-	}
+  @if (inviteInfo) {
+    <ion-card color="warning">
+      @if (userOwnInvite) {
+        <ion-card-content>
+          <p>
+            You've invited <b>{{ inviteInfo.invite.to.title }}</b> to join
+            <b>{{ inviteInfo.space.title || inviteInfo.space.type }}</b>
+          </p>
+        </ion-card-content>
+      } @else {
+        <ion-card-content>
+          @if (inviteInfo.invite.to.title) {
+            <p>
+              Hello <b>{{ inviteInfo.invite.to.title }}</b
+              >,
+            </p>
+          }
+          @if (inviteInfo.space.title) {
+            <p>
+              You've been invited by
+              <b>{{ inviteInfo.invite.from.title }}</b> to join team
+              {{ inviteInfo.space.title }}
+            </p>
+          } @else {
+            You've been invited by <b>{{ inviteInfo.invite.from.title }}</b> to
+            join {{ inviteInfo.space.type }} space &#64;
+            <a href="https://sneat.app" target="_blank">Sneat.app</a>
+          }
+        </ion-card-content>
+      }
+    </ion-card>
+  }
+  @if (!inviteInfo?.space) {
+    <p>
+      <ion-spinner name="lines-small" color="medium" />
+      Loading...
+    </p>
+  }
 
-	@if (inviteInfo?.invite?.to?.channel === "email") {
-		<ion-card>
-			<ion-item-divider color="light">
-				<ion-icon name="mail-outline" slot="start" />
-				<ion-label>My email</ion-label>
-			</ion-item-divider>
-			<ion-item>
-				<ion-label color="medium">Address</ion-label>
-				<ion-input
-					readonly="true"
-					color="medium"
-					type="email"
-					[value]="inviteInfo?.invite?.to?.address"
-				/>
-			</ion-item>
-		</ion-card>
-	}
+  @if (inviteInfo?.invite?.to?.channel === "email") {
+    <ion-card>
+      <ion-item-divider color="light">
+        <ion-icon name="mail-outline" slot="start" />
+        <ion-label>My email</ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-label color="medium">Address</ion-label>
+        <ion-input
+          readonly="true"
+          color="medium"
+          type="email"
+          [value]="inviteInfo?.invite?.to?.address"
+        />
+      </ion-item>
+    </ion-card>
+  }
 
-	<ion-card>
-		<ion-card-header>
-			<ion-card-title>Why to join?</ion-card-title>
-		</ion-card-header>
-		<ion-card-content>
-			<p>
-				Sneat.app helps families to organize their life neatly. With it you can
-				have shared:
-			</p>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Why to join?</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>
+        Sneat.app helps families to organize their life neatly. With it you can
+        have shared:
+      </p>
 
-			<ul>
-				<li>Schedule/timetable</li>
-				<li>Contacts</li>
-				<li>To-buy/to-do/to-watch lists</li>
-				<li>Repository of documents</li>
-				<li>Catalog of assets</li>
-				<li>Simple budgeting</li>
-				<li>And more...</li>
-			</ul>
-		</ion-card-content>
-	</ion-card>
+      <ul>
+        <li>Schedule/timetable</li>
+        <li>Contacts</li>
+        <li>To-buy/to-do/to-watch lists</li>
+        <li>Repository of documents</li>
+        <li>Catalog of assets</li>
+        <li>Simple budgeting</li>
+        <li>And more...</li>
+      </ul>
+    </ion-card-content>
+  </ion-card>
 
-	<sneat-person-wizard
-		#personFormWizardComponent
-		[$space]="$space()"
-		[$contact]="$contact()"
-		(contactChange)="onContactChanged($event)"
-		[nameFields]="nameFields"
-		[$fields]="wizardFields"
-		[disabled]="userOwnInvite"
-	/>
+  <sneat-person-wizard
+    #personFormWizardComponent
+    [$space]="$space()"
+    [$contact]="$contact()"
+    (contactChange)="onContactChanged($event)"
+    [nameFields]="nameFields"
+    [$fields]="wizardFields"
+    [disabled]="userOwnInvite"
+  />
 
-	<!--	<ion-card>-->
-	<!--		<ion-card-content>-->
-	<!--			relatedPerson: {{relatedPerson|json}}-->
-	<!--		</ion-card-content>-->
-	<!--	</ion-card>-->
+  <!--	<ion-card>-->
+  <!--		<ion-card-content>-->
+  <!--			relatedPerson: {{relatedPerson|json}}-->
+  <!--		</ion-card-content>-->
+  <!--	</ion-card>-->
 
-	@if (!userOwnInvite && personFormWizardComponent.isReadyToSubmit) {
-		<ion-card>
-			<ion-card-content>
-				<!--			authStatus: {{authStatus}}-->
-				<ion-button
-					color="primary"
-					size="large"
-					[disabled]="status !== 'reviewing' || userOwnInvite"
-					(click)="join()"
-				>
-					<ion-icon name="enter-outline" slot="end" />
-					@if (status === "joining") {
-						Joining {{ inviteInfo?.space?.type || "team" }}...
-						<ion-spinner name="lines-small" />
-					} @else {
-						Join {{ inviteInfo?.space?.type || "team" }}
-					}
-				</ion-button>
-				<ion-button
-					fill="clear"
-					disabled="true"
-					color="medium"
-					class="ion-margin-start"
-					>or
-				</ion-button>
-				@if (inviteInfo?.space) {
-					<ion-button
-						[disabled]="status !== 'reviewing' || userOwnInvite"
-						fill="clear"
-						color="secondary"
-						(click)="refuse()"
-						style="text-transform: none"
-					>
-						Refuse to join
-						@if (status === "refusing") {
-							<ion-spinner name="lines-small" />
-						}
-					</ion-button>
-				}
+  @if (!userOwnInvite && personFormWizardComponent.isReadyToSubmit) {
+    <ion-card>
+      <ion-card-content>
+        <!--			authStatus: {{authStatus}}-->
+        <ion-button
+          color="primary"
+          size="large"
+          [disabled]="status !== 'reviewing' || userOwnInvite"
+          (click)="join()"
+        >
+          <ion-icon name="enter-outline" slot="end" />
+          @if (status === "joining") {
+            Joining {{ inviteInfo?.space?.type || "team" }}...
+            <ion-spinner name="lines-small" />
+          } @else {
+            Join {{ inviteInfo?.space?.type || "team" }}
+          }
+        </ion-button>
+        <ion-button
+          fill="clear"
+          disabled="true"
+          color="medium"
+          class="ion-margin-start"
+          >or
+        </ion-button>
+        @if (inviteInfo?.space) {
+          <ion-button
+            [disabled]="status !== 'reviewing' || userOwnInvite"
+            fill="clear"
+            color="secondary"
+            (click)="refuse()"
+            style="text-transform: none"
+          >
+            Refuse to join
+            @if (status === "refusing") {
+              <ion-spinner name="lines-small" />
+            }
+          </ion-button>
+        }
 
-				@if (authStatus === "notAuthenticated") {
-					<p class="ion-padding-top">
-						You would need to sign-in to join the
-						{{ inviteInfo?.space?.type || "team" }}.
-					</p>
-				}
-				@if (userOwnInvite) {
-					<p class="ion-padding-top">
-						You can not use your own invite to join the team.
-					</p>
-				}
-			</ion-card-content>
-		</ion-card>
-	}
+        @if (authStatus === "notAuthenticated") {
+          <p class="ion-padding-top">
+            You would need to sign-in to join the
+            {{ inviteInfo?.space?.type || "team" }}.
+          </p>
+        }
+        @if (userOwnInvite) {
+          <p class="ion-padding-top">
+            You can not use your own invite to join the team.
+          </p>
+        }
+      </ion-card-content>
+    </ion-card>
+  }
 
-	@if (userOwnInvite) {
-		<ion-card>
-			<ion-card-content>
-				<p>
-					You can not use your own invite to join but the peron you've invite
-					can fill the form above and join.
-				</p>
-			</ion-card-content>
-		</ion-card>
-	}
+  @if (userOwnInvite) {
+    <ion-card>
+      <ion-card-content>
+        <p>
+          You can not use your own invite to join but the peron you've invite
+          can fill the form above and join.
+        </p>
+      </ion-card-content>
+    </ion-card>
+  }
 
-	<!--	@if (space?.dto?.members?.length) {-->
-	<!--			<ion-list >-->
-	<!--					<ion-item-divider>Members</ion-item-divider>-->
-	<!--		@for (member of team?.dto?.members; track member.id) {-->
-	<!--			<ion-item >{{member.title}}</ion-item>-->
-	<!--			-->
-	<!--		}-->
-	<!--				</ion-list>-->
-	<!--	}-->
+  <!--	@if (space?.dto?.members?.length) {-->
+  <!--			<ion-list >-->
+  <!--					<ion-item-divider>Members</ion-item-divider>-->
+  <!--		@for (member of team?.dto?.members; track member.id) {-->
+  <!--			<ion-item >{{member.title}}</ion-item>-->
+  <!--			-->
+  <!--		}-->
+  <!--				</ion-list>-->
+  <!--	}-->
 </ion-content>

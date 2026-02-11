@@ -1,23 +1,23 @@
 @if (order && !containerSegments?.length) {
-	<ion-item-divider>
-		<ion-label color="medium">
-			No shipping segments have been added for the container yet.
-		</ion-label>
-	</ion-item-divider>
+  <ion-item-divider>
+    <ion-label color="medium">
+      No shipping segments have been added for the container yet.
+    </ion-label>
+  </ion-item-divider>
 }
 
 @if (containerSegments?.length) {
-	<div class="ion-padding">
-		<sneat-datagrid
-			[selectable]="1"
-			[data]="routeRows"
-			[columns]="allCols"
-			height="150"
-			(rowSelected)="rowSelected($event.row)"
-		/>
-	</div>
+  <div class="ion-padding">
+    <sneat-datagrid
+      [selectable]="1"
+      [data]="routeRows"
+      [columns]="allCols"
+      height="150"
+      (rowSelected)="rowSelected($event.row)"
+    />
+  </div>
 }
 
 @if (selectedSegment) {
-	<sneat-container-segment [order]="order" [segment]="selectedSegment" />
+  <sneat-container-segment [order]="order" [segment]="selectedSegment" />
 }

@@ -1,13 +1,13 @@
 @if (dispatchers && !dispatchers.length) {
-	<ion-card>
-		<ion-item-divider>No dispatchers have been added yet.</ion-item-divider>
-	</ion-card>
+  <ion-card>
+    <ion-item-divider>No dispatchers have been added yet.</ion-item-divider>
+  </ion-card>
 }
 @for (dispatcher of dispatchers; track counterpartyKey($index, dispatcher)) {
-	<sneat-order-dispatcher
-		[(order)]="order"
-		[counterparty]="dispatcher"
-		(orderChange)="orderChange.emit($event)"
-		[orderDispatchers]="dispatchers"
-	/>
+  <sneat-order-dispatcher
+    [(order)]="order"
+    [counterparty]="dispatcher"
+    (orderChange)="orderChange.emit($event)"
+    [orderDispatchers]="dispatchers"
+  />
 }

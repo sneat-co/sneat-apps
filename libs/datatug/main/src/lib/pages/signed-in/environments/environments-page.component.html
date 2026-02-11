@@ -1,28 +1,29 @@
 <ion-header>
-	<ion-toolbar>
-		<ion-buttons slot="start">
-			<ion-menu-button />
-			<ion-back-button />
-		</ion-buttons>
-		<ion-title>
-			Environments @if (project) {
-			{{ project.title || project.id }}
-			}
-		</ion-title>
-	</ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button />
+      <ion-back-button />
+    </ion-buttons>
+    <ion-title>
+      Environments
+      @if (project) {
+        {{ project.title || project.id }}
+      }
+    </ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content color="light">
-	<ion-card>
-		<ion-item>
-			<ion-label>Project</ion-label>
-			<ion-input readonly="true" color="medium" [value]="project?.title" />
-		</ion-item>
-	</ion-card>
+  <ion-card>
+    <ion-item>
+      <ion-label>Project</ion-label>
+      <ion-input readonly="true" color="medium" [value]="project?.title" />
+    </ion-item>
+  </ion-card>
 
-	<sneat-card-list
-		title="Environments"
-		[isLoading]="!project"
-		[items]="project?.environments"
-	/>
+  <sneat-card-list
+    title="Environments"
+    [isLoading]="!project"
+    [items]="project?.environments"
+  />
 </ion-content>

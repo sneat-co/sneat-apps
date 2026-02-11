@@ -1,4 +1,4 @@
-@use "sass:meta";
+@use 'sass:meta';
 
 /*
  * App Global CSS
@@ -28,231 +28,231 @@
 //@import '~@ionic/angular/css/flex-utils.css';
 
 @include meta.load-css('sneat-grid-layout');
-@include meta.load-css("theme/variables.scss");
+@include meta.load-css('theme/variables.scss');
 
 //noinspection CssUnknownTarget
-@include meta.load-css("lib/virtual-slider/virtual-slider.scss");
+@include meta.load-css('lib/virtual-slider/virtual-slider.scss');
 
 // https://ionicframework.com/docs/theming/colors
 :root {
-	--ion-color-divider: #f0f7ff;
-	--ion-color-divider-rgb: 240,247,255;
-	--ion-color-divider-contrast: #000000;
-	--ion-color-divider-contrast-rgb: 0,0,0;
-	--ion-color-divider-shade: #d3d9e0;
-	--ion-color-divider-tint: #f2f8ff;
+  --ion-color-divider: #f0f7ff;
+  --ion-color-divider-rgb: 240, 247, 255;
+  --ion-color-divider-contrast: #000000;
+  --ion-color-divider-contrast-rgb: 0, 0, 0;
+  --ion-color-divider-shade: #d3d9e0;
+  --ion-color-divider-tint: #f2f8ff;
 }
 
 .ion-color-divider {
-	--ion-color-base: var(--ion-color-divider);
-	--ion-color-base-rgb: var(--ion-color-divider-rgb);
-	--ion-color-contrast: var(--ion-color-divider-contrast);
-	--ion-color-contrast-rgb: var(--ion-color-divider-contrast-rgb);
-	--ion-color-shade: var(--ion-color-divider-shade);
-	--ion-color-tint: var(--ion-color-divider-tint);
+  --ion-color-base: var(--ion-color-divider);
+  --ion-color-base-rgb: var(--ion-color-divider-rgb);
+  --ion-color-contrast: var(--ion-color-divider-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-divider-contrast-rgb);
+  --ion-color-shade: var(--ion-color-divider-shade);
+  --ion-color-tint: var(--ion-color-divider-tint);
 }
 .cardy {
-	//--ion-background-color: #fcfcfc;
+  //--ion-background-color: #fcfcfc;
 }
 
 .cardy ion-card {
-	--ion-background-color: #ffffff;
-	background-color: #ffffff;
+  --ion-background-color: #ffffff;
+  background-color: #ffffff;
 }
 
-
 .sneat-tiny-start-padding {
-	--padding-start: 0.25em;
+  --padding-start: 0.25em;
 }
 
 .sneat-small-start-padding {
-	--padding-start: 0.5em;
+  --padding-start: 0.5em;
 }
 
 .sneat-small-end-padding {
-	--inner-padding-end: 0.5em;
+  --inner-padding-end: 0.5em;
 }
 
 .sneat-tiny-end-padding {
-	--inner-padding-end: 0.25em;
+  --inner-padding-end: 0.25em;
 }
 
 .sneat-no-end-padding-margin {
-	--inner-padding-end: 0;
-	--margin-end: 0;
+  --inner-padding-end: 0;
+  --margin-end: 0;
 }
 
 .sneat-no-end-padding {
-	--inner-padding-end: 0;
+  --inner-padding-end: 0;
 }
 
 .sneat-small-end-margin {
-	margin-right: 0.5em;
+  margin-right: 0.5em;
 }
 
 .sneat-tiny-end-margin {
-	margin-right: 0.25em;
+  margin-right: 0.25em;
 }
 
 ion-buttons.sneat-no-horizontal-margins ion-button {
-	margin-right: 0;
-	margin-left: 0;
+  margin-right: 0;
+  margin-left: 0;
 }
 
 .sneat-no-end-margin {
-	margin-right: 0;
+  margin-right: 0;
 }
 
 .sneat-no-bottom-margin {
-	margin-bottom: 0;
-	--margin-bottom: 0;
+  margin-bottom: 0;
+  --margin-bottom: 0;
 }
 
 .sneat-no-bottom-padding {
-	padding-bottom: 0;
-	--padding-bottom: 0;
+  padding-bottom: 0;
+  --padding-bottom: 0;
 }
 
 ion-item.sneat-no-bottom-border {
-	--border-width: 0;
-	--inner-border-width: 0;
+  --border-width: 0;
+  --inner-border-width: 0;
 }
 
 ion-modal.auto-height {
-	--height: auto;
+  --height: auto;
 
-	//.modal-wrapper {
-	//width: 90vw;
+  //.modal-wrapper {
+  //width: 90vw;
 
-	.ion-page {
-		position: relative;
-		contain: content;
-		max-height: 90vh;
+  .ion-page {
+    position: relative;
+    contain: content;
+    max-height: 90vh;
 
-		.modal-content {
-			overflow: auto;
-		}
-	}
+    .modal-content {
+      overflow: auto;
+    }
+  }
 
-	//}
+  //}
 }
 
-@media screen and (max-width: 766px) { // 768=PAL @ https://en.wikipedia.org/wiki/Computer_display_standard
-	.sneat-hide-if-width-less-766 {
-		display: none
-	}
-	.sneat-hide-if-width-less-766 {
-		font-size: smaller
-	}
-	.sneat-hide-if-width-less-766 {
-		font-size: small
-	}
-}
-
-@media screen and (max-width: 530px) { // 640=VGA @ https://en.wikipedia.org/wiki/Computer_display_standard
-	.sneat-hide-if-width-less-638 {
-		display: none
-	}
-	.sneat-smaller-if-width-less-638 {
-		font-size: smaller
-	}
-	.sneat-small-if-width-less-638 {
-		font-size: small
-	}
+@media screen and (max-width: 766px) {
+  // 768=PAL @ https://en.wikipedia.org/wiki/Computer_display_standard
+  .sneat-hide-if-width-less-766 {
+    display: none;
+  }
+  .sneat-hide-if-width-less-766 {
+    font-size: smaller;
+  }
+  .sneat-hide-if-width-less-766 {
+    font-size: small;
+  }
 }
 
 @media screen and (max-width: 530px) {
-	.sneat-hide-if-width-less-530 {
-		display: none
-	}
-	.sneat-smaller-if-width-less-530 {
-		font-size: smaller
-	}
-	.sneat-small-if-width-less-530 {
-		font-size: small
-	}
+  // 640=VGA @ https://en.wikipedia.org/wiki/Computer_display_standard
+  .sneat-hide-if-width-less-638 {
+    display: none;
+  }
+  .sneat-smaller-if-width-less-638 {
+    font-size: smaller;
+  }
+  .sneat-small-if-width-less-638 {
+    font-size: small;
+  }
+}
+
+@media screen and (max-width: 530px) {
+  .sneat-hide-if-width-less-530 {
+    display: none;
+  }
+  .sneat-smaller-if-width-less-530 {
+    font-size: smaller;
+  }
+  .sneat-small-if-width-less-530 {
+    font-size: small;
+  }
 }
 
 @media screen and (max-width: 420px) {
-	.sneat-hide-if-width-less-420 {
-		display: none
-	}
-	.sneat-smaller-if-width-less-420 {
-		font-size: smaller
-	}
-	.sneat-small-if-width-less-420 {
-		font-size: small
-	}
+  .sneat-hide-if-width-less-420 {
+    display: none;
+  }
+  .sneat-smaller-if-width-less-420 {
+    font-size: smaller;
+  }
+  .sneat-small-if-width-less-420 {
+    font-size: small;
+  }
 }
 
 @media screen and (min-width: 321px) {
-	.sneat-hide-if-width-greater-320 {
-		display: none
-	}
+  .sneat-hide-if-width-greater-320 {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 320px) {
-	.sneat-hide-if-width-less-320 {
-		display: none
-	}
-	.sneat-smaller-if-width-less-320 {
-		font-size: smaller
-	}
-	.sneat-small-if-width-less-320 {
-		font-size: small
-	}
+  .sneat-hide-if-width-less-320 {
+    display: none;
+  }
+  .sneat-smaller-if-width-less-320 {
+    font-size: smaller;
+  }
+  .sneat-small-if-width-less-320 {
+    font-size: small;
+  }
 }
 
 @media screen and (max-width: 240px) {
-	.sneat-hide-if-width-less-240 {
-		display: none
-	}
-	.sneat-smaller-if-width-less-240 {
-		font-size: smaller
-	}
-	.sneat-small-if-width-less-240 {
-		font-size: small
-	}
+  .sneat-hide-if-width-less-240 {
+    display: none;
+  }
+  .sneat-smaller-if-width-less-240 {
+    font-size: smaller;
+  }
+  .sneat-small-if-width-less-240 {
+    font-size: small;
+  }
 }
 
 ion-popover {
-	--min-width: 350px; // 350px is <ion-datetime> width TODO: This sucks!!!
+  --min-width: 350px; // 350px is <ion-datetime> width TODO: This sucks!!!
 }
 
 ion-item.ion-item-no-border {
-	--inner-border-width: 0;
-	--border-width: 0;
+  --inner-border-width: 0;
+  --border-width: 0;
 }
 
 .sneat-label-color-medium .label-text {
-	//color: #92949c;
-	color: var(--ion-color-medium);
+  //color: #92949c;
+  color: var(--ion-color-medium);
 }
 
 .ion-input.sneat-input-padding-top {
-	padding-top: 10px;
+  padding-top: 10px;
 }
 
-
 .canceled {
-	text-decoration: line-through;
+  text-decoration: line-through;
 }
 
 .deleting-list-item {
-	text-decoration: line-through;
+  text-decoration: line-through;
 }
 
 .no-border-for-last-child {
-	:last-child {
-		--border-style: none !important;
-	}
+  :last-child {
+    --border-style: none !important;
+  }
 }
 
 .sneat-badges {
-	ion-badge {
-		font-weight: normal;
-		margin-left: 0.25em;
-		padding-left: 0.5em;
-		padding-right: 0.5em;
-	}
+  ion-badge {
+    font-weight: normal;
+    margin-left: 0.25em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
 }

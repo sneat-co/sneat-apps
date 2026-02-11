@@ -3,6 +3,6 @@ import { HappeningSlotModalService } from '../components/happening-slot-form/hap
 import { CalendariumSpaceService } from './calendarium-space.service';
 
 @NgModule({
-	providers: [CalendariumSpaceService, HappeningSlotModalService],
+  providers: [CalendariumSpaceService, HappeningSlotModalService],
 })
 export class CalendariumServicesModule {}

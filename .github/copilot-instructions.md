@@ -3,6 +3,7 @@
 ## Project Overview
 
 This is an Nx monorepo containing open source apps that help in work & personal life, including:
+
 - **Sneat.app** - A family app for members, schedule, contacts, assets, budgeting, and lists
 - **DataTug** - SQL & HTTP queries workbench
 - Mobile apps built with Ionic and Capacitor for iOS and Android
@@ -44,12 +45,14 @@ pnpm nx e2e <app-name>
 ## Nx Workspace Guidelines
 
 ### Running Tasks
+
 - **ALWAYS** use `pnpm nx` prefix for Nx commands (e.g., `pnpm nx build`, `pnpm nx test`)
 - Use `nx run-many` or `nx affected` to run tasks across multiple projects
 - Prefer running tasks through Nx instead of using underlying tools directly
 - Check `nx.json` for target defaults and cache configuration
 
 ### Project Structure
+
 - Apps are in `apps/` directory
 - Shared libraries are in `libs/` directory
 - Follow the naming convention for Angular modules:
@@ -58,6 +61,7 @@ pnpm nx e2e <app-name>
   - `{module-name}-pages` - Page components
 
 ### Generators
+
 - Use Nx generators to scaffold new apps and libraries
 - Generators are configured in `nx.json` with defaults:
   - Angular applications use SCSS, ESLint, Vitest, and Playwright
@@ -66,6 +70,7 @@ pnpm nx e2e <app-name>
 ## Coding Standards
 
 ### TypeScript
+
 - Use TypeScript strict mode
 - Prefer `async/await` over callbacks
 - Use `camelCase` for variables and functions
@@ -73,6 +78,7 @@ pnpm nx e2e <app-name>
 - Use union types or enums appropriately (see `README-DEV-FAQ.md` for enum guidance)
 
 ### Angular
+
 - Follow Angular style guide
 - Use standalone components when possible (Angular 21+)
 - Inject dependencies using the `inject()` function in modern Angular
@@ -80,12 +86,14 @@ pnpm nx e2e <app-name>
 - Keep components focused and single-purpose
 
 ### Testing
+
 - Write unit tests for all new code using Vitest
 - Test files should be co-located with source files (`.spec.ts`)
 - Use E2E tests for critical user flows with Playwright
 - Aim for meaningful test coverage (see `scripts/list-uncovered-lines.mjs`)
 
 ### Linting and Formatting
+
 - Run `pnpm nx lint` before committing
 - Use Prettier for code formatting (configured in `.prettierrc`)
 - ESLint is configured for TypeScript and Angular

@@ -4,11 +4,11 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular/standalone';
 import { SneatAuthStateService, SneatUserService } from '@sneat/auth-core';
 import {
-	AnalyticsService,
-	APP_INFO,
-	ErrorLogger,
-	LOGGER_FACTORY,
-	NgModulePreloaderService,
+  AnalyticsService,
+  APP_INFO,
+  ErrorLogger,
+  LOGGER_FACTORY,
+  NgModulePreloaderService,
 } from '@sneat/core';
 import { SpaceComponentBaseParams } from '@sneat/space-components';
 import { SpaceNavService, SpaceService } from '@sneat/space-services';
@@ -19,74 +19,74 @@ import { LogistSpaceService } from '../../services/logist-space.service';
 import { LogistSpacePageComponent } from './logist-space-page.component';
 
 describe('LogistMainPageComponent', () => {
-	let component: LogistSpacePageComponent;
-	let fixture: ComponentFixture<LogistSpacePageComponent>;
+  let component: LogistSpacePageComponent;
+  let fixture: ComponentFixture<LogistSpacePageComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [LogistSpacePageComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			providers: [
-				{ provide: ClassName, useValue: 'TestComponent' },
-				{
-					provide: SneatUserService,
-					useValue: {
-						userState: of({}),
-						userChanged: of(undefined),
-						currentUserID: undefined,
-					},
-				},
-				{
-					provide: ActivatedRoute,
-					useValue: {
-						paramMap: of({ get: () => null }),
-						queryParamMap: of({ get: () => null }),
-						queryParams: of({}),
-						params: of({}),
-						snapshot: {
-							paramMap: { get: () => null },
-							queryParamMap: { get: () => null },
-						},
-					},
-				},
-				{ provide: APP_INFO, useValue: { appId: 'test', appTitle: 'Test' } },
-				{ provide: LOGGER_FACTORY, useValue: { getLogger: () => console } },
-				{
-					provide: ErrorLogger,
-					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
-				},
-				{ provide: AnalyticsService, useValue: { logEvent: vi.fn() } },
-				{
-					provide: SpaceNavService,
-					useValue: { navigateForwardToSpacePage: vi.fn() },
-				},
-				{ provide: NgModulePreloaderService, useValue: { preload: vi.fn() } },
-				{ provide: SpaceService, useValue: {} },
-				{
-					provide: SneatAuthStateService,
-					useValue: {
-						authState: of({ status: 'notAuthenticated' }),
-						authStatus: of('notAuthenticated'),
-					},
-				},
-				{ provide: NavController, useValue: {} },
-				{
-					provide: LogistSpaceService,
-					useValue: { watchLogistSpaceByID: vi.fn(() => of(undefined)) },
-				},
-				SpaceComponentBaseParams,
-			],
-		})
-			.overrideComponent(LogistSpacePageComponent, {
-				set: { imports: [], providers: [] },
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [LogistSpacePageComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        { provide: ClassName, useValue: 'TestComponent' },
+        {
+          provide: SneatUserService,
+          useValue: {
+            userState: of({}),
+            userChanged: of(undefined),
+            currentUserID: undefined,
+          },
+        },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            paramMap: of({ get: () => null }),
+            queryParamMap: of({ get: () => null }),
+            queryParams: of({}),
+            params: of({}),
+            snapshot: {
+              paramMap: { get: () => null },
+              queryParamMap: { get: () => null },
+            },
+          },
+        },
+        { provide: APP_INFO, useValue: { appId: 'test', appTitle: 'Test' } },
+        { provide: LOGGER_FACTORY, useValue: { getLogger: () => console } },
+        {
+          provide: ErrorLogger,
+          useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+        },
+        { provide: AnalyticsService, useValue: { logEvent: vi.fn() } },
+        {
+          provide: SpaceNavService,
+          useValue: { navigateForwardToSpacePage: vi.fn() },
+        },
+        { provide: NgModulePreloaderService, useValue: { preload: vi.fn() } },
+        { provide: SpaceService, useValue: {} },
+        {
+          provide: SneatAuthStateService,
+          useValue: {
+            authState: of({ status: 'notAuthenticated' }),
+            authStatus: of('notAuthenticated'),
+          },
+        },
+        { provide: NavController, useValue: {} },
+        {
+          provide: LogistSpaceService,
+          useValue: { watchLogistSpaceByID: vi.fn(() => of(undefined)) },
+        },
+        SpaceComponentBaseParams,
+      ],
+    })
+      .overrideComponent(LogistSpacePageComponent, {
+        set: { imports: [], providers: [] },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(LogistSpacePageComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(LogistSpacePageComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

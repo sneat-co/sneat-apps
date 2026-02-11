@@ -1,59 +1,59 @@
 <ion-item>
-	<ion-input
-		label="Registration #"
-		[formControl]="regNumberControl"
-		[placeholder]="placeholder"
-		(keyup.enter)="submit()"
-	/>
-	<ion-buttons slot="end">
-		@if (!isSkipped && !assetID) {
-			<ion-button color="medium" (click)="skipOrNext()">
-				@if (regNumberControl.value) {
-					Next
-				} @else {
-					Skip
-				}
-			</ion-button>
-		}
+  <ion-input
+    label="Registration #"
+    [formControl]="regNumberControl"
+    [placeholder]="placeholder"
+    (keyup.enter)="submit()"
+  />
+  <ion-buttons slot="end">
+    @if (!isSkipped && !assetID) {
+      <ion-button color="medium" (click)="skipOrNext()">
+        @if (regNumberControl.value) {
+          Next
+        } @else {
+          Skip
+        }
+      </ion-button>
+    }
 
-		@if (!isValidated && (!assetID || regNumberControl.dirty)) {
-			<ion-button
-				fill="solid"
-				color="primary"
-				[disabled]="!regNumberControl.value"
-				(click)="validate()"
-			>
-				<ion-icon name="search-outline" />
-				<ion-label>Validate</ion-label>
-			</ion-button>
-		}
+    @if (!isValidated && (!assetID || regNumberControl.dirty)) {
+      <ion-button
+        fill="solid"
+        color="primary"
+        [disabled]="!regNumberControl.value"
+        (click)="validate()"
+      >
+        <ion-icon name="search-outline" />
+        <ion-label>Validate</ion-label>
+      </ion-button>
+    }
 
-		@if (assetID && regNumberControl.dirty) {
-			<ion-button
-				(click)="
-					regNumberControl.setValue(regNumber || '');
-					regNumberControl.markAsPristine()
-				"
-			>
-				<ion-label>Cancel</ion-label>
-			</ion-button>
-		}
+    @if (assetID && regNumberControl.dirty) {
+      <ion-button
+        (click)="
+          regNumberControl.setValue(regNumber || '');
+          regNumberControl.markAsPristine()
+        "
+      >
+        <ion-label>Cancel</ion-label>
+      </ion-button>
+    }
 
-		@if (showSave) {
-			<ion-button
-				[color]="isSaving ? 'primary' : undefined"
-				[disabled]="isSaving"
-				(click)="submit()"
-			>
-				<ion-icon name="save" slot="start" />
-				<ion-label>
-					@if (isSaving) {
-						Saving...
-					} @else {
-						Save
-					}
-				</ion-label>
-			</ion-button>
-		}
-	</ion-buttons>
+    @if (showSave) {
+      <ion-button
+        [color]="isSaving ? 'primary' : undefined"
+        [disabled]="isSaving"
+        (click)="submit()"
+      >
+        <ion-icon name="save" slot="start" />
+        <ion-label>
+          @if (isSaving) {
+            Saving...
+          } @else {
+            Save
+          }
+        </ion-label>
+      </ion-button>
+    }
+  </ion-buttons>
 </ion-item>

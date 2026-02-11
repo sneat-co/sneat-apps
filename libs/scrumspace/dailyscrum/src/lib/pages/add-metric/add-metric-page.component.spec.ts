@@ -8,44 +8,44 @@ import { SpaceService } from '../../services/space.service';
 import { AddMetricPageComponent } from './add-metric-page.component';
 
 describe('AddMetricPage', () => {
-	let component: AddMetricPageComponent;
-	let fixture: ComponentFixture<AddMetricPageComponent>;
+  let component: AddMetricPageComponent;
+  let fixture: ComponentFixture<AddMetricPageComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [AddMetricPageComponent, IonicModule.forRoot()],
-			providers: [
-				{
-					provide: ActivatedRoute,
-					useValue: {
-						snapshot: { queryParamMap: { get: () => null } },
-					},
-				},
-				{ provide: ErrorLogger, useValue: { logError: () => undefined } },
-				{
-					provide: SpaceService,
-					useValue: { getTeam: vi.fn(), addMetric: vi.fn() },
-				},
-				{ provide: NavController, useValue: { back: vi.fn() } },
-				{ provide: ToastController, useValue: { create: vi.fn() } },
-			],
-		})
-			.overrideComponent(AddMetricPageComponent, {
-				set: {
-					imports: [],
-					template: '',
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
-					providers: [],
-				},
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [AddMetricPageComponent, IonicModule.forRoot()],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: { queryParamMap: { get: () => null } },
+          },
+        },
+        { provide: ErrorLogger, useValue: { logError: () => undefined } },
+        {
+          provide: SpaceService,
+          useValue: { getTeam: vi.fn(), addMetric: vi.fn() },
+        },
+        { provide: NavController, useValue: { back: vi.fn() } },
+        { provide: ToastController, useValue: { create: vi.fn() } },
+      ],
+    })
+      .overrideComponent(AddMetricPageComponent, {
+        set: {
+          imports: [],
+          template: '',
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+          providers: [],
+        },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(AddMetricPageComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	}));
+    fixture = TestBed.createComponent(AddMetricPageComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

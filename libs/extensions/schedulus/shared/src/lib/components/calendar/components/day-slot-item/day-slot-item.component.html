@@ -1,94 +1,94 @@
 <style>
-	.canceled {
-		text-decoration: line-through;
-		color: grey;
-	}
+  .canceled {
+    text-decoration: line-through;
+    color: grey;
+  }
 </style>
 @let slotContext = $slotContext();
 
 <ion-item
-	tappable="true"
-	lines="full"
-	(click)="onSlotClicked($event)"
-	class="sneat-tiny-end-padding"
-	[color]="color"
+  tappable="true"
+  lines="full"
+  (click)="onSlotClicked($event)"
+  class="sneat-tiny-end-padding"
+  [color]="color"
 >
-	<ion-icon
-		class="sneat-tiny-end-margin"
-		[name]="
-			slotContext?.happening?.brief?.type === 'recurring'
-				? 'calendar-outline'
-				: 'today-outline'
-		"
-		slot="start"
-	/>
+  <ion-icon
+    class="sneat-tiny-end-margin"
+    [name]="
+      slotContext?.happening?.brief?.type === 'recurring'
+        ? 'calendar-outline'
+        : 'today-outline'
+    "
+    slot="start"
+  />
 
-	<ion-badge
-		color="light"
-		slot="start"
-		class="sneat-small-end-margin"
-		[class.canceled]="$isCanceled()"
-		style="font-weight: normal; background-color: white"
-	>
-		<!-- We use ion-badge here trying to workaround issue with ion-buttons slot=end not rendering on 1st paint -->
-		<sneat-timing-badge
-			[$isCanceled]="$isCanceled()"
-			[$timing]="slotContext.timing"
-			[$adjustment]="slotContext.adjustment"
-		/>
-	</ion-badge>
+  <ion-badge
+    color="light"
+    slot="start"
+    class="sneat-small-end-margin"
+    [class.canceled]="$isCanceled()"
+    style="font-weight: normal; background-color: white"
+  >
+    <!-- We use ion-badge here trying to workaround issue with ion-buttons slot=end not rendering on 1st paint -->
+    <sneat-timing-badge
+      [$isCanceled]="$isCanceled()"
+      [$timing]="slotContext.timing"
+      [$adjustment]="slotContext.adjustment"
+    />
+  </ion-badge>
 
-	<ion-label class="ion-text-wrap">
-		<span
-			style="font-size: 1em; margin-bottom: 0.4em; font-weight: bold"
-			[class.canceled]="$isCanceled()"
-		>
-			{{ slotContext?.title }}
-		</span>
-		@if ($isCanceled()) {
-			<ion-text color="medium">&nbsp;&mdash; canceled</ion-text>
-		}
+  <ion-label class="ion-text-wrap">
+    <span
+      style="font-size: 1em; margin-bottom: 0.4em; font-weight: bold"
+      [class.canceled]="$isCanceled()"
+    >
+      {{ slotContext?.title }}
+    </span>
+    @if ($isCanceled()) {
+      <ion-text color="medium">&nbsp;&mdash; canceled</ion-text>
+    }
 
-		<!--		@if (mode === 'full') {-->
-		<!--			<sneat-members-as-badges-->
-		<!--				[showDelete]="false"-->
-		<!--				[members]="-->
-		<!--						slot?.happening?.brief?.contactIDs || []-->
-		<!--							| selectedMembers: contactusTeam?.dto?.contacts-->
-		<!--					"-->
-		<!--			/>-->
-		<!--		}-->
+    <!--		@if (mode === 'full') {-->
+    <!--			<sneat-members-as-badges-->
+    <!--				[showDelete]="false"-->
+    <!--				[members]="-->
+    <!--						slot?.happening?.brief?.contactIDs || []-->
+    <!--							| selectedMembers: contactusTeam?.dto?.contacts-->
+    <!--					"-->
+    <!--			/>-->
+    <!--		}-->
 
-		@if (mode === "full") {
-			@if (slotContext?.location?.title || slotContext?.location?.address) {
-				<p>
-					{{ slotContext?.location?.title || slotContext?.location?.address }}
-				</p>
-			}
-			@if (slotContext.participants || slotContext.levels?.length) {
-				<p>
-					@if (slotContext.levels?.length) {
-						@for (level of slotContext.levels || []; track level) {
-							<ion-badge color="light" style="margin-right: 0.5em">
-								🎚️ {{ level[0].toUpperCase() + level.substring(1) }}
-							</ion-badge>
-						}
-					}
-				</p>
-			}
-		}
+    @if (mode === "full") {
+      @if (slotContext?.location?.title || slotContext?.location?.address) {
+        <p>
+          {{ slotContext?.location?.title || slotContext?.location?.address }}
+        </p>
+      }
+      @if (slotContext.participants || slotContext.levels?.length) {
+        <p>
+          @if (slotContext.levels?.length) {
+            @for (level of slotContext.levels || []; track level) {
+              <ion-badge color="light" style="margin-right: 0.5em">
+                🎚️ {{ level[0].toUpperCase() + level.substring(1) }}
+              </ion-badge>
+            }
+          }
+        </p>
+      }
+    }
 
-		<p>
-			<sneat-happening-slot-participants [$happeningSlot]="slotContext" />
-		</p>
-	</ion-label>
-	<ion-buttons slot="end">
-		<ion-button
-			(click)="showContextMenu($event)"
-			color="medium"
-			title="Actions"
-		>
-			<ion-icon name="ellipsis-vertical-outline"></ion-icon>
-		</ion-button>
-	</ion-buttons>
+    <p>
+      <sneat-happening-slot-participants [$happeningSlot]="slotContext" />
+    </p>
+  </ion-label>
+  <ion-buttons slot="end">
+    <ion-button
+      (click)="showContextMenu($event)"
+      color="medium"
+      title="Actions"
+    >
+      <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+    </ion-button>
+  </ion-buttons>
 </ion-item>

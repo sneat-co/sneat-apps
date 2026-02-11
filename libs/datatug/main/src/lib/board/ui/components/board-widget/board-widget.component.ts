@@ -7,23 +7,23 @@ import { QueryType } from '../../../../models/definition/query-def';
 import { TabsWidgetComponent } from '../widgets/tabs-widget/tabs-widget.component';
 
 @Component({
-	selector: 'sneat-datatug-board-widget',
-	templateUrl: './board-widget.component.html',
-	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [TabsWidgetComponent],
+  selector: 'sneat-datatug-board-widget',
+  templateUrl: './board-widget.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [TabsWidgetComponent],
 })
 export class BoardWidgetComponent {
-	@Input() level?: number;
-	@Input() cardTab?: QueryType | 'grid' | 'card';
-	@Input() widgetDef?: WidgetDef;
+  @Input() level?: number;
+  @Input() cardTab?: QueryType | 'grid' | 'card';
+  @Input() widgetDef?: WidgetDef;
 
-	get tabsWidgetSettings() {
-		return this.widgetDef?.data as ITabsWidgetSettings;
-	}
+  get tabsWidgetSettings() {
+    return this.widgetDef?.data as ITabsWidgetSettings;
+  }
 
-	get sqlWidgetSettings() {
-		return this.widgetDef?.data as ISqlWidgetSettings;
-	}
+  get sqlWidgetSettings() {
+    return this.widgetDef?.data as ISqlWidgetSettings;
+  }
 
-	@Input() boardContext?: IBoardContext;
+  @Input() boardContext?: IBoardContext;
 }

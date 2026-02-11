@@ -8,41 +8,41 @@ import { DatatugNavService } from '../../../../services/nav/datatug-nav.service'
 import { AgentService } from '../../../../services/repo/agent.service';
 
 describe('ForeignKeyCardComponent', () => {
-	let component: ForeignKeyCardComponent;
-	let fixture: ComponentFixture<ForeignKeyCardComponent>;
+  let component: ForeignKeyCardComponent;
+  let fixture: ComponentFixture<ForeignKeyCardComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [ForeignKeyCardComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			providers: [
-				{
-					provide: ErrorLogger,
-					useValue: {
-						logError: vi.fn(),
-						logErrorHandler: vi.fn(() => vi.fn()),
-					},
-				},
-				{ provide: ProjectService, useValue: { getFull: vi.fn() } },
-				{ provide: DatatugNavService, useValue: { goTable: vi.fn() } },
-				{ provide: AgentService, useValue: { select: vi.fn() } },
-			],
-		})
-			.overrideComponent(ForeignKeyCardComponent, {
-				set: {
-					imports: [],
-					template: '',
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
-					providers: [],
-				},
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ForeignKeyCardComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        {
+          provide: ErrorLogger,
+          useValue: {
+            logError: vi.fn(),
+            logErrorHandler: vi.fn(() => vi.fn()),
+          },
+        },
+        { provide: ProjectService, useValue: { getFull: vi.fn() } },
+        { provide: DatatugNavService, useValue: { goTable: vi.fn() } },
+        { provide: AgentService, useValue: { select: vi.fn() } },
+      ],
+    })
+      .overrideComponent(ForeignKeyCardComponent, {
+        set: {
+          imports: [],
+          template: '',
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+          providers: [],
+        },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(ForeignKeyCardComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(ForeignKeyCardComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

@@ -4,58 +4,58 @@ import { interval, Observable, of, throwError } from 'rxjs';
 import { catchError, first, map, startWith, switchMap } from 'rxjs/operators';
 
 export interface IAgentInfo {
-	version: string;
-	uptimeMinutes: number;
+  version: string;
+  uptimeMinutes: number;
 }
 
 export interface IAgentState {
-	lastCheckedAt: Date;
-	info?: IAgentInfo;
-	isNotAvailable?: boolean;
-	error?: unknown;
+  lastCheckedAt: Date;
+  info?: IAgentInfo;
+  isNotAvailable?: boolean;
+  error?: unknown;
 }
 
 const periodMs = 10000;
 
 @Injectable()
 export class AgentStateService {
-	private repoApiService = inject(StoreApiService);
+  private repoApiService = inject(StoreApiService);
 
-	private watchers: Record<string, Observable<IAgentState>> = {};
+  private watchers: Record<string, Observable<IAgentState>> = {};
 
-	public getAgentInfo(storeId: string): Observable<IAgentState> {
-		return this.watchAgentInfo(storeId).pipe(first());
-	}
+  public getAgentInfo(storeId: string): Observable<IAgentState> {
+    return this.watchAgentInfo(storeId).pipe(first());
+  }
 
-	public watchAgentInfo(storeId: string): Observable<IAgentState> {
-		let watcher = this.watchers[storeId];
-		if (watcher) {
-			return watcher;
-		}
-		watcher = interval(periodMs).pipe(
-			startWith(0),
-			switchMap(() =>
-				this.repoApiService.get<IAgentInfo>(storeId, '/agent-info').pipe(
-					catchError((err) => {
-						console.log('Failed to get agent info:', err);
-						if (
-							err.name === 'HttpErrorResponse' &&
-							err.ok === false &&
-							err.status === 0
-						) {
-							return of(undefined);
-						}
-						return throwError(err);
-					}),
-				),
-			),
-			map((info) => ({
-				info,
-				lastCheckedAt: new Date(),
-				isNotAvailable: info === undefined,
-			})),
-		);
-		this.watchers[storeId] = watcher;
-		return watcher;
-	}
+  public watchAgentInfo(storeId: string): Observable<IAgentState> {
+    let watcher = this.watchers[storeId];
+    if (watcher) {
+      return watcher;
+    }
+    watcher = interval(periodMs).pipe(
+      startWith(0),
+      switchMap(() =>
+        this.repoApiService.get<IAgentInfo>(storeId, '/agent-info').pipe(
+          catchError((err) => {
+            console.log('Failed to get agent info:', err);
+            if (
+              err.name === 'HttpErrorResponse' &&
+              err.ok === false &&
+              err.status === 0
+            ) {
+              return of(undefined);
+            }
+            return throwError(err);
+          }),
+        ),
+      ),
+      map((info) => ({
+        info,
+        lastCheckedAt: new Date(),
+        isNotAvailable: info === undefined,
+      })),
+    );
+    this.watchers[storeId] = watcher;
+    return watcher;
+  }
 }

@@ -12,9 +12,7 @@
     ],
     "allowJs": true
   },
-  "files": [
-    "src/test-setup.ts"
-  ],
+  "files": ["src/test-setup.ts"],
   "include": [
     "vite.config.ts",
     "vite.config.mts",

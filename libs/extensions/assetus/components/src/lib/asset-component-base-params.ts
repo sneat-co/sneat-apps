@@ -4,6 +4,6 @@ import { SpaceComponentBaseParams } from '@sneat/space-components';
 
 @Injectable()
 export class AssetComponentBaseParams {
-	readonly spaceParams = inject(SpaceComponentBaseParams);
-	readonly assetService = inject(AssetService);
+  readonly spaceParams = inject(SpaceComponentBaseParams);
+  readonly assetService = inject(AssetService);
 }

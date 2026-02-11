@@ -1,25 +1,25 @@
 <!--$checkedContactIDsOfSpace: {{$checkedContactIDsOfSpace()}}-->
 @for (
-	contact of $contactsToDisplay() || [];
-	track contact.id;
-	let last = $last
+  contact of $contactsToDisplay() || [];
+  track contact.id;
+  let last = $last
 ) {
-	<sneat-contacts-checklist-item
-		[$contact]="contact"
-		[$isLast]="last"
-		[$lastItemLine]="$lastItemLine()"
-		[$checkedInProgress]="$checkedInProgress()"
-		[$uncheckedInProgress]="$uncheckedInProgress()"
-		(checkboxChange)="onCheckboxChange($event.event, $event.item)"
-	/>
+  <sneat-contacts-checklist-item
+    [$contact]="contact"
+    [$isLast]="last"
+    [$lastItemLine]="$lastItemLine()"
+    [$checkedInProgress]="$checkedInProgress()"
+    [$uncheckedInProgress]="$uncheckedInProgress()"
+    (checkboxChange)="onCheckboxChange($event.event, $event.item)"
+  />
 } @empty {
-	<ion-item>
-		@if ($spaceContacts()) {
-			<ion-label color="medium">{{
-				noContactsMessage || "No contacts"
-			}}</ion-label>
-		} @else {
-			<ion-label>Loading...</ion-label>
-		}
-	</ion-item>
+  <ion-item>
+    @if ($spaceContacts()) {
+      <ion-label color="medium">{{
+        noContactsMessage || "No contacts"
+      }}</ion-label>
+    } @else {
+      <ion-label>Loading...</ion-label>
+    }
+  </ion-item>
 }

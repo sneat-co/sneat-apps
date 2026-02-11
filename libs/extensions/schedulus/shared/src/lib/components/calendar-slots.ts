@@ -3,23 +3,23 @@ import { ISlotUIContext } from '@sneat/mod-schedulus-core';
 import { ICalendarFilter } from './calendar/components/calendar-filter/calendar-filter';
 
 export function hasContact(
-	spaceID: string,
-	contactIDs: readonly string[],
-	related?: IRelatedModules,
+  spaceID: string,
+  contactIDs: readonly string[],
+  related?: IRelatedModules,
 ): boolean {
-	if (!contactIDs.length) {
-		return true;
-	}
-	const relatedContactIDs = getRelatedItemIDs(
-		related,
-		'contactus',
-		'contacts',
-		spaceID,
-	);
-	return (
-		(!relatedContactIDs?.length && contactIDs.includes('')) ||
-		relatedContactIDs?.some((id) => contactIDs.includes(id))
-	);
+  if (!contactIDs.length) {
+    return true;
+  }
+  const relatedContactIDs = getRelatedItemIDs(
+    related,
+    'contactus',
+    'contacts',
+    spaceID,
+  );
+  return (
+    (!relatedContactIDs?.length && contactIDs.includes('')) ||
+    relatedContactIDs?.some((id) => contactIDs.includes(id))
+  );
 }
 
 // noinspection JSMethodCanBeStatic
@@ -29,34 +29,34 @@ export function hasContact(
 // }
 
 export function isSlotVisible(
-	slot: ISlotUIContext,
-	filter: ICalendarFilter,
+  slot: ISlotUIContext,
+  filter: ICalendarFilter,
 ): boolean {
-	if (
-		!hasContact(
-			slot.happening.space.id,
-			filter.contactIDs,
-			slot.happening?.dbo?.related || slot.happening?.brief?.related,
-		)
-	) {
-		return false;
-	}
-	// if (!hasWeekday(happening?.brief?.slots || happening?.dto?.slots, weekdays)) {
-	// 	return false;
-	// }
-	const happeningBrief = slot.happening?.brief || slot.happening?.dbo;
-	if (
-		filter.repeats?.length &&
-		!Object.values(happeningBrief?.slots || {}).some((slot) =>
-			filter.repeats.includes(slot.repeats),
-		)
-	) {
-		return false;
-	}
+  if (
+    !hasContact(
+      slot.happening.space.id,
+      filter.contactIDs,
+      slot.happening?.dbo?.related || slot.happening?.brief?.related,
+    )
+  ) {
+    return false;
+  }
+  // if (!hasWeekday(happening?.brief?.slots || happening?.dto?.slots, weekdays)) {
+  // 	return false;
+  // }
+  const happeningBrief = slot.happening?.brief || slot.happening?.dbo;
+  if (
+    filter.repeats?.length &&
+    !Object.values(happeningBrief?.slots || {}).some((slot) =>
+      filter.repeats.includes(slot.repeats),
+    )
+  ) {
+    return false;
+  }
 
-	return (
-		((!!slot.happening && filter.showRecurrings) ||
-			(!!slot.happening && filter.showSingles)) &&
-		(!filter || slot.title.toLowerCase().includes(filter.text))
-	);
+  return (
+    ((!!slot.happening && filter.showRecurrings) ||
+      (!!slot.happening && filter.showSingles)) &&
+    (!filter || slot.title.toLowerCase().includes(filter.text))
+  );
 }

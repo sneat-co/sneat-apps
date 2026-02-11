@@ -8,44 +8,44 @@ import { HappeningService } from '../../../../services/happening.service';
 import { SinglesTabComponent } from './singles-tab.component';
 
 describe('SinglesTabComponent', () => {
-	let component: SinglesTabComponent;
-	let fixture: ComponentFixture<SinglesTabComponent>;
+  let component: SinglesTabComponent;
+  let fixture: ComponentFixture<SinglesTabComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [SinglesTabComponent],
-			providers: [
-				{ provide: ClassName, useValue: 'SinglesTabComponent' },
-				{
-					provide: ErrorLogger,
-					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
-				},
-				{
-					provide: SpaceNavService,
-					useValue: { navigateForwardToSpacePage: vi.fn() },
-				},
-				{
-					provide: HappeningService,
-					useValue: {
-						watchUpcomingSingles: vi.fn(() => of([])),
-						watchPastSingles: vi.fn(() => of([])),
-						watchRecentlyCreatedSingles: vi.fn(() => of([])),
-					},
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(SinglesTabComponent, {
-				set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA], template: '' },
-			})
-			.compileComponents();
-		fixture = TestBed.createComponent(SinglesTabComponent);
-		component = fixture.componentInstance;
-		fixture.componentRef.setInput('$space', { id: 'test-space' });
-		fixture.componentRef.setInput('$contactusSpace', undefined);
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [SinglesTabComponent],
+      providers: [
+        { provide: ClassName, useValue: 'SinglesTabComponent' },
+        {
+          provide: ErrorLogger,
+          useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+        },
+        {
+          provide: SpaceNavService,
+          useValue: { navigateForwardToSpacePage: vi.fn() },
+        },
+        {
+          provide: HappeningService,
+          useValue: {
+            watchUpcomingSingles: vi.fn(() => of([])),
+            watchPastSingles: vi.fn(() => of([])),
+            watchRecentlyCreatedSingles: vi.fn(() => of([])),
+          },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(SinglesTabComponent, {
+        set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA], template: '' },
+      })
+      .compileComponents();
+    fixture = TestBed.createComponent(SinglesTabComponent);
+    component = fixture.componentInstance;
+    fixture.componentRef.setInput('$space', { id: 'test-space' });
+    fixture.componentRef.setInput('$contactusSpace', undefined);
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

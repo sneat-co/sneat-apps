@@ -1,17 +1,17 @@
 <ion-item [disabled]="!meetingId || !spaceID || !retroItemType">
-	<ion-input
-		[disabled]="isAdding"
-		[formControl]="titleControl"
-		expand="full"
-		fill="clear"
-		color="medium"
-		placeholder="New item"
-		(keyup.enter)="add()"
-	/>
-	<ion-buttons slot="end" style="margin-right: -0.8em">
-		<ion-button color="medium" (click)="add()" [disabled]="isAdding"
-			>Add</ion-button
-		>
-		<!--						<ion-button color="medium"><ion-icon name="close-outline"></ion-icon></ion-button>-->
-	</ion-buttons>
+  <ion-input
+    [disabled]="isAdding"
+    [formControl]="titleControl"
+    expand="full"
+    fill="clear"
+    color="medium"
+    placeholder="New item"
+    (keyup.enter)="add()"
+  />
+  <ion-buttons slot="end" style="margin-right: -0.8em">
+    <ion-button color="medium" (click)="add()" [disabled]="isAdding"
+      >Add</ion-button
+    >
+    <!--						<ion-button color="medium"><ion-icon name="close-outline"></ion-icon></ion-button>-->
+  </ion-buttons>
 </ion-item>

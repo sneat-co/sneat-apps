@@ -1,28 +1,28 @@
 <sneat-tracker-provider
-	[$spaceID]="$spaceID()"
-	[$trackerID]="$trackerID()"
-	(trackerChange)="$tracker.set($event)"
+  [$spaceID]="$spaceID()"
+  [$trackerID]="$trackerID()"
+  (trackerChange)="$tracker.set($event)"
 />
 <ion-header>
-	<ion-toolbar color="light" class="with-end-buttons">
-		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="$defaultBackUrl + '/trackers'" />
-		</ion-buttons>
-		<ion-title>
-			@if ($tracker(); as tracker) {
-				{{ tracker.dbo?.emoji }} {{ tracker.dbo?.title }}
-			} @else {
-				📊 Tracker
-			}
-			<!--			@if (space.brief?.title) {-->
-			<!--				&#64; {{ space.brief?.title }}-->
-			<!--			}-->
-		</ion-title>
-		<ion-buttons slot="end">
-			<ion-menu-button menu="mainMenu" />
-		</ion-buttons>
-	</ion-toolbar>
+  <ion-toolbar color="light" class="with-end-buttons">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="$defaultBackUrl + '/trackers'" />
+    </ion-buttons>
+    <ion-title>
+      @if ($tracker(); as tracker) {
+        {{ tracker.dbo?.emoji }} {{ tracker.dbo?.title }}
+      } @else {
+        📊 Tracker
+      }
+      <!--			@if (space.brief?.title) {-->
+      <!--				&#64; {{ space.brief?.title }}-->
+      <!--			}-->
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button menu="mainMenu" />
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 <ion-content>
-	<sneat-tracker [$tracker]="$tracker()" />
+  <sneat-tracker [$tracker]="$tracker()" />
 </ion-content>

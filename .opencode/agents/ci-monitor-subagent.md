@@ -38,9 +38,9 @@ When `expectedCommitSha` or `previousCipeUrl` is provided, you must detect wheth
 
 ```json
 {
-	"branch": "string (optional, defaults to current git branch)",
-	"select": "string (optional, comma-separated field names)",
-	"pageToken": "number (optional, 0-based pagination for long strings)"
+  "branch": "string (optional, defaults to current git branch)",
+  "select": "string (optional, comma-separated field names)",
+  "pageToken": "number (optional, 0-based pagination for long strings)"
 }
 ```
 
@@ -48,25 +48,25 @@ When `expectedCommitSha` or `previousCipeUrl` is provided, you must detect wheth
 
 ```json
 {
-	"cipeStatus": "NOT_STARTED | IN_PROGRESS | SUCCEEDED | FAILED | CANCELED | TIMED_OUT",
-	"cipeUrl": "string",
-	"branch": "string",
-	"commitSha": "string | null",
-	"failedTaskIds": "string[]",
-	"verifiedTaskIds": "string[]",
-	"selfHealingEnabled": "boolean",
-	"selfHealingStatus": "NOT_STARTED | IN_PROGRESS | COMPLETED | FAILED | NOT_EXECUTABLE | null",
-	"verificationStatus": "NOT_STARTED | IN_PROGRESS | COMPLETED | FAILED | NOT_EXECUTABLE | null",
-	"userAction": "NONE | APPLIED | REJECTED | APPLIED_LOCALLY | APPLIED_AUTOMATICALLY | null",
-	"failureClassification": "string | null",
-	"taskOutputSummary": "string | null",
-	"suggestedFixReasoning": "string | null",
-	"suggestedFixDescription": "string | null",
-	"suggestedFix": "string | null",
-	"shortLink": "string | null",
-	"couldAutoApplyTasks": "boolean | null",
-	"confidence": "number | null",
-	"confidenceReasoning": "string | null"
+  "cipeStatus": "NOT_STARTED | IN_PROGRESS | SUCCEEDED | FAILED | CANCELED | TIMED_OUT",
+  "cipeUrl": "string",
+  "branch": "string",
+  "commitSha": "string | null",
+  "failedTaskIds": "string[]",
+  "verifiedTaskIds": "string[]",
+  "selfHealingEnabled": "boolean",
+  "selfHealingStatus": "NOT_STARTED | IN_PROGRESS | COMPLETED | FAILED | NOT_EXECUTABLE | null",
+  "verificationStatus": "NOT_STARTED | IN_PROGRESS | COMPLETED | FAILED | NOT_EXECUTABLE | null",
+  "userAction": "NONE | APPLIED | REJECTED | APPLIED_LOCALLY | APPLIED_AUTOMATICALLY | null",
+  "failureClassification": "string | null",
+  "taskOutputSummary": "string | null",
+  "suggestedFixReasoning": "string | null",
+  "suggestedFixDescription": "string | null",
+  "suggestedFix": "string | null",
+  "shortLink": "string | null",
+  "couldAutoApplyTasks": "boolean | null",
+  "confidence": "number | null",
+  "confidenceReasoning": "string | null"
 }
 ```
 

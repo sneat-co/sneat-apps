@@ -5,17 +5,17 @@ import { SpaceModuleService } from '@sneat/space-services';
 
 @Injectable()
 export class ContactusSpaceService extends SpaceModuleService<IContactusSpaceDbo> {
-	public constructor() {
-		const afs = inject(AngularFirestore);
-		const injector = inject(Injector);
-		super(injector, 'contactus', afs);
-	}
+  public constructor() {
+    const afs = inject(AngularFirestore);
+    const injector = inject(Injector);
+    super(injector, 'contactus', afs);
+  }
 
-	public readonly watchContactBriefs = (spaceID: string) => {
-		console.log(`ContactusSpaceService.watchContactBriefs(${spaceID})`);
-		return this.watchBriefs<IContactBrief>(
-			spaceID,
-			(dto) => dto?.contacts || {},
-		);
-	};
+  public readonly watchContactBriefs = (spaceID: string) => {
+    console.log(`ContactusSpaceService.watchContactBriefs(${spaceID})`);
+    return this.watchBriefs<IContactBrief>(
+      spaceID,
+      (dto) => dto?.contacts || {},
+    );
+  };
 }

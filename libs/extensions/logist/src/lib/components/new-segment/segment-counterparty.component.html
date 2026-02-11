@@ -1,38 +1,38 @@
 <ion-card>
-	<ion-item-divider color="light">
-		<ion-label slot="start" style="font-weight: bold">{{
-			endpointDirection | titlecase
-		}}</ion-label>
-		<ion-segment
-			[(ngModel)]="endpointType"
-			(ionChange)="onEndpointTypeChanged($event)"
-		>
-			<ion-segment-button value="port">Port</ion-segment-button>
-			@if (endpointDirection === "from") {
-				<ion-segment-button value="dispatcher">Dispatcher</ion-segment-button>
-			}
-			@if (endpointDirection === "to") {
-				<ion-segment-button value="dispatcher">Receiver</ion-segment-button>
-			}
-		</ion-segment>
-	</ion-item-divider>
-	<sneat-contact-input
-		[label]="endpointType === 'port' ? 'Port' : 'At'"
-		[space]="order?.space"
-		[contactType]="endpointType === 'port' ? 'company' : 'location'"
-		[contactRole]="endpointType === 'port' ? 'port' : 'location'"
-		[contact]="contact"
-		[parentRole]="endpointType === 'port' ? undefined : 'dispatcher'"
-		[parentContact]="contact?.parentContact"
-		[readonly]="readonly"
-		(contactChange)="onContactChanged($event)"
-	/>
-	<ion-item>
-		<ion-label color="medium">On</ion-label>
-		<ion-input type="date" [(ngModel)]="date" (ionChange)="onDateChanged()" />
-	</ion-item>
-	<ion-item>
-		<ion-label color="medium">Ref #</ion-label>
-		<ion-input [(ngModel)]="refNumber" (ionInput)="onRefNumberChanged()" />
-	</ion-item>
+  <ion-item-divider color="light">
+    <ion-label slot="start" style="font-weight: bold">{{
+      endpointDirection | titlecase
+    }}</ion-label>
+    <ion-segment
+      [(ngModel)]="endpointType"
+      (ionChange)="onEndpointTypeChanged($event)"
+    >
+      <ion-segment-button value="port">Port</ion-segment-button>
+      @if (endpointDirection === "from") {
+        <ion-segment-button value="dispatcher">Dispatcher</ion-segment-button>
+      }
+      @if (endpointDirection === "to") {
+        <ion-segment-button value="dispatcher">Receiver</ion-segment-button>
+      }
+    </ion-segment>
+  </ion-item-divider>
+  <sneat-contact-input
+    [label]="endpointType === 'port' ? 'Port' : 'At'"
+    [space]="order?.space"
+    [contactType]="endpointType === 'port' ? 'company' : 'location'"
+    [contactRole]="endpointType === 'port' ? 'port' : 'location'"
+    [contact]="contact"
+    [parentRole]="endpointType === 'port' ? undefined : 'dispatcher'"
+    [parentContact]="contact?.parentContact"
+    [readonly]="readonly"
+    (contactChange)="onContactChanged($event)"
+  />
+  <ion-item>
+    <ion-label color="medium">On</ion-label>
+    <ion-input type="date" [(ngModel)]="date" (ionChange)="onDateChanged()" />
+  </ion-item>
+  <ion-item>
+    <ion-label color="medium">Ref #</ion-label>
+    <ion-input [(ngModel)]="refNumber" (ionInput)="onRefNumberChanged()" />
+  </ion-item>
 </ion-card>

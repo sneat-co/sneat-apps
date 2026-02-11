@@ -5,35 +5,35 @@ import { provideLogistMocks } from '../../testing/test-utils';
 import { NewLogistCompanyPageComponent } from './new-logist-company-page.component';
 
 describe('NewLogistCompanyPageComponent', () => {
-	let component: NewLogistCompanyPageComponent;
-	let fixture: ComponentFixture<NewLogistCompanyPageComponent>;
+  let component: NewLogistCompanyPageComponent;
+  let fixture: ComponentFixture<NewLogistCompanyPageComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [NewLogistCompanyPageComponent],
-			providers: [
-				...provideLogistMocks(),
-				{
-					provide: CONTACT_ROLES_BY_TYPE,
-					useValue: { company: [] },
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(NewLogistCompanyPageComponent, {
-				set: {
-					imports: [],
-					providers: [],
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
-				},
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [NewLogistCompanyPageComponent],
+      providers: [
+        ...provideLogistMocks(),
+        {
+          provide: CONTACT_ROLES_BY_TYPE,
+          useValue: { company: [] },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(NewLogistCompanyPageComponent, {
+        set: {
+          imports: [],
+          providers: [],
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(NewLogistCompanyPageComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(NewLogistCompanyPageComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

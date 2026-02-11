@@ -10,47 +10,47 @@ import { of } from 'rxjs';
 import { RelationshipFormComponent } from './relationship-form.component';
 
 describe('RelationshipFormComponent', () => {
-	let component: RelationshipFormComponent;
-	let fixture: ComponentFixture<RelationshipFormComponent>;
+  let component: RelationshipFormComponent;
+  let fixture: ComponentFixture<RelationshipFormComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [RelationshipFormComponent, NoopAnimationsModule],
-			providers: [
-				{ provide: ClassName, useValue: 'RelationshipFormComponent' },
-				{
-					provide: ErrorLogger,
-					useValue: {
-						logError: vi.fn(),
-						logErrorHandler: vi.fn(() => vi.fn()),
-					},
-				},
-				{ provide: SpaceNavService, useValue: {} },
-				{ provide: SpaceService, useValue: { updateRelated: vi.fn() } },
-				{
-					provide: SneatUserService,
-					useValue: { userState: of({}), userChanged: of(undefined) },
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(RelationshipFormComponent, {
-				set: { imports: [], template: '' },
-			})
-			.compileComponents();
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [RelationshipFormComponent, NoopAnimationsModule],
+      providers: [
+        { provide: ClassName, useValue: 'RelationshipFormComponent' },
+        {
+          provide: ErrorLogger,
+          useValue: {
+            logError: vi.fn(),
+            logErrorHandler: vi.fn(() => vi.fn()),
+          },
+        },
+        { provide: SpaceNavService, useValue: {} },
+        { provide: SpaceService, useValue: { updateRelated: vi.fn() } },
+        {
+          provide: SneatUserService,
+          useValue: { userState: of({}), userChanged: of(undefined) },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(RelationshipFormComponent, {
+        set: { imports: [], template: '' },
+      })
+      .compileComponents();
+  }));
 
-	beforeEach(() => {
-		fixture = TestBed.createComponent(RelationshipFormComponent);
-		component = fixture.componentInstance;
-		fixture.componentRef.setInput('$space', { id: 'test-space' });
-		fixture.componentRef.setInput('$itemRef', undefined);
-		fixture.componentRef.setInput('$relatedTo', undefined);
-		fixture.componentRef.setInput('$relationshipOptions', []);
-		fixture.detectChanges();
-	});
+  beforeEach(() => {
+    fixture = TestBed.createComponent(RelationshipFormComponent);
+    component = fixture.componentInstance;
+    fixture.componentRef.setInput('$space', { id: 'test-space' });
+    fixture.componentRef.setInput('$itemRef', undefined);
+    fixture.componentRef.setInput('$relatedTo', undefined);
+    fixture.componentRef.setInput('$relationshipOptions', []);
+    fixture.detectChanges();
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

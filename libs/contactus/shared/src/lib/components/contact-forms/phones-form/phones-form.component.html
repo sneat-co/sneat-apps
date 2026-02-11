@@ -1,46 +1,46 @@
 <ion-card>
-	@if (!hideHeader) {
-		<ion-item-divider [color]="isActiveInWizard ? 'primary' : 'light'">
-			<ion-label>
-				<ion-icon name="call" class="ion-margin-end" />
-				Phone numbers
-			</ion-label>
-		</ion-item-divider>
-	}
+  @if (!hideHeader) {
+    <ion-item-divider [color]="isActiveInWizard ? 'primary' : 'light'">
+      <ion-label>
+        <ion-icon name="call" class="ion-margin-end" />
+        Phone numbers
+      </ion-label>
+    </ion-item-divider>
+  }
 
-	<ion-grid class="ion-grid-layout">
-		@for (phone of phones; track phone.type + phone.number; let i = $index) {
-			<ion-row>
-				<ion-col size="auto">
-					<ion-item>
-						<ion-select
-							interface="popover"
-							[disabled]="true"
-							[value]="phone.type"
-							(ionChange)="typeChanged($event, i)"
-						>
-							@for (t of types; track t.id) {
-								<ion-select-option [value]="t.id" [disabled]="disabled">
-									{{ t.title }}
-								</ion-select-option>
-							}
-						</ion-select>
-					</ion-item>
-				</ion-col>
+  <ion-grid class="ion-grid-layout">
+    @for (phone of phones; track phone.type + phone.number; let i = $index) {
+      <ion-row>
+        <ion-col size="auto">
+          <ion-item>
+            <ion-select
+              interface="popover"
+              [disabled]="true"
+              [value]="phone.type"
+              (ionChange)="typeChanged($event, i)"
+            >
+              @for (t of types; track t.id) {
+                <ion-select-option [value]="t.id" [disabled]="disabled">
+                  {{ t.title }}
+                </ion-select-option>
+              }
+            </ion-select>
+          </ion-item>
+        </ion-col>
 
-				<ion-col>
-					<ion-item>
-						<ion-input
-							type="tel"
-							placeholder="phone #"
-							[disabled]="disabled"
-							[value]="phone.number"
-							(ionChange)="numberChanged($event, i)"
-							(ionBlur)="numberChanged($event, i)"
-						/>
-					</ion-item>
-				</ion-col>
-			</ion-row>
-		}
-	</ion-grid>
+        <ion-col>
+          <ion-item>
+            <ion-input
+              type="tel"
+              placeholder="phone #"
+              [disabled]="disabled"
+              [value]="phone.number"
+              (ionChange)="numberChanged($event, i)"
+              (ionBlur)="numberChanged($event, i)"
+            />
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    }
+  </ion-grid>
 </ion-card>

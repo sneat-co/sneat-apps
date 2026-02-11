@@ -1,125 +1,125 @@
 <ion-item color="light" class="sneat-tiny-end-padding">
-	<ion-label>When</ion-label>
-	<ion-buttons slot="end">
-		<ion-button
-			title="Add slot"
-			(click)="showAddSlot($event)"
-			[color]="$slots()?.length ? 'primary' : 'danger'"
-		>
-			<ion-icon name="add-outline" slot="start" />
-			<ion-label>Add slot</ion-label>
-		</ion-button>
-	</ion-buttons>
+  <ion-label>When</ion-label>
+  <ion-buttons slot="end">
+    <ion-button
+      title="Add slot"
+      (click)="showAddSlot($event)"
+      [color]="$slots()?.length ? 'primary' : 'danger'"
+    >
+      <ion-icon name="add-outline" slot="start" />
+      <ion-label>Add slot</ion-label>
+    </ion-button>
+  </ion-buttons>
 </ion-item>
 @if ($slots() && !$slots()?.length) {
-	<ion-item>
-		<ion-label><i>No slots have been added yet.</i></ion-label>
-	</ion-item>
+  <ion-item>
+    <ion-label><i>No slots have been added yet.</i></ion-label>
+  </ion-item>
 }
 @for (slot of $slots(); track slot.id; let last = $last) {
-	<ion-item
-		button="button"
-		class="with-buttons sneat-tiny-end-padding"
-		[lines]="last ? 'full' : 'inset'"
-		(click)="selectSlot($event, slot)"
-	>
-		@if (slot.start || slot.end) {
-			<ion-buttons slot="start">
-				<!-- TODO(help-wanted): align to the top -->
-				<div style="text-align: center">
-					@if (slot.start) {
-						<ion-badge style="display: block" color="light">
-							@if (slot.start.date) {
-								<b>{{ slot.start.date }}</b>
-							}
+  <ion-item
+    button="button"
+    class="with-buttons sneat-tiny-end-padding"
+    [lines]="last ? 'full' : 'inset'"
+    (click)="selectSlot($event, slot)"
+  >
+    @if (slot.start || slot.end) {
+      <ion-buttons slot="start">
+        <!-- TODO(help-wanted): align to the top -->
+        <div style="text-align: center">
+          @if (slot.start) {
+            <ion-badge style="display: block" color="light">
+              @if (slot.start.date) {
+                <b>{{ slot.start.date }}</b>
+              }
 
-							&#64; {{ slot.start.time }}
-						</ion-badge>
-					}
-					@if (slot.durationMinutes) {
-						<ion-text
-							color="medium"
-							style="display: block; font-size: small; margin-top: 0.75em"
-						>
-							{{ slot.durationMinutes }} mins
-						</ion-text>
-					}
-				</div>
-			</ion-buttons>
-		}
+              &#64; {{ slot.start.time }}
+            </ion-badge>
+          }
+          @if (slot.durationMinutes) {
+            <ion-text
+              color="medium"
+              style="display: block; font-size: small; margin-top: 0.75em"
+            >
+              {{ slot.durationMinutes }} mins
+            </ion-text>
+          }
+        </div>
+      </ion-buttons>
+    }
 
-		@if (slot.repeats === "monthly") {
-			@if (slot.start) {
-				on
-			} @else {
-				On
-			}
-			{{ slot.day | numeral }}
-			of every month
-		}
+    @if (slot.repeats === "monthly") {
+      @if (slot.start) {
+        on
+      } @else {
+        On
+      }
+      {{ slot.day | numeral }}
+      of every month
+    }
 
-		@if (slot.repeats === "yearly") {
-			Every year on {{ slot.day | numeral }} of {{ slot.month }}
-		}
+    @if (slot.repeats === "yearly") {
+      Every year on {{ slot.day | numeral }} of {{ slot.month }}
+    }
 
-		<ion-label text-wrap>
-			<p>
-				@if (slot.weekdays?.length === 7) {
-					Every day
-				} @else if (
-					slot.weekdays?.length === 5 && !hasAnyWd(slot, "sa", "su")
-				) {
-					Weekdays
-				} @else if (slot.weekdays?.length === 2 && hasAnyWd(slot, "sa", "su")) {
-					Weekends
-				} @else {
-					@for (wd of slot.weekdays; track wd) {
-						<ion-badge color="light" style="margin-right: 4px">
-							{{ wd | wdToWeekday }}
-						</ion-badge>
-					}
-				}
-			</p>
-			<p>
-				@if (slot.location && (slot.location.title || slot.location.address)) {
-					&#64; {{ slot.location.title || slot.location.address }}
-					@if (slot.end) {
-						, ends at
-						{{ slot.end.time }}
-					}
-				} @else if (slot.end) {
-					Ends at {{ slot.end.time }}
-				}
-			</p>
-		</ion-label>
-		<ion-buttons slot="end">
-			@if (!$deletingSlotIDs().includes(slot.id)) {
-				<ion-button
-					title="Edit"
-					color="medium"
-					(click)="showEditSlot($event, slot)"
-				>
-					<ion-icon name="create-outline" />
-				</ion-button>
-			}
-			@if (!happening().id || ($slots()?.length || 0) > 1) {
-				<ion-button
-					[disabled]="$deletingSlotIDs().includes(slot.id)"
-					(click)="removeSlot($event, slot)"
-					color="medium"
-				>
-					@if ($deletingSlotIDs().includes(slot.id)) {
-						@if ($deletingSlotIDs().includes(slot.id)) {
-							<ion-spinner name="lines-small" slot="end" />
-						}
-						<ion-label style="text-transform: none">Deleting...</ion-label>
-					} @else {
-						<ion-icon name="close-outline" />
-					}
-				</ion-button>
-			}
-		</ion-buttons>
-	</ion-item>
+    <ion-label text-wrap>
+      <p>
+        @if (slot.weekdays?.length === 7) {
+          Every day
+        } @else if (
+          slot.weekdays?.length === 5 && !hasAnyWd(slot, "sa", "su")
+        ) {
+          Weekdays
+        } @else if (slot.weekdays?.length === 2 && hasAnyWd(slot, "sa", "su")) {
+          Weekends
+        } @else {
+          @for (wd of slot.weekdays; track wd) {
+            <ion-badge color="light" style="margin-right: 4px">
+              {{ wd | wdToWeekday }}
+            </ion-badge>
+          }
+        }
+      </p>
+      <p>
+        @if (slot.location && (slot.location.title || slot.location.address)) {
+          &#64; {{ slot.location.title || slot.location.address }}
+          @if (slot.end) {
+            , ends at
+            {{ slot.end.time }}
+          }
+        } @else if (slot.end) {
+          Ends at {{ slot.end.time }}
+        }
+      </p>
+    </ion-label>
+    <ion-buttons slot="end">
+      @if (!$deletingSlotIDs().includes(slot.id)) {
+        <ion-button
+          title="Edit"
+          color="medium"
+          (click)="showEditSlot($event, slot)"
+        >
+          <ion-icon name="create-outline" />
+        </ion-button>
+      }
+      @if (!happening().id || ($slots()?.length || 0) > 1) {
+        <ion-button
+          [disabled]="$deletingSlotIDs().includes(slot.id)"
+          (click)="removeSlot($event, slot)"
+          color="medium"
+        >
+          @if ($deletingSlotIDs().includes(slot.id)) {
+            @if ($deletingSlotIDs().includes(slot.id)) {
+              <ion-spinner name="lines-small" slot="end" />
+            }
+            <ion-label style="text-transform: none">Deleting...</ion-label>
+          } @else {
+            <ion-icon name="close-outline" />
+          }
+        </ion-button>
+      }
+    </ion-buttons>
+  </ion-item>
 }
 <!--<ion-modal-->
 <!--	#addSlotModal-->

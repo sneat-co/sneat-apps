@@ -1,171 +1,171 @@
 @if (slotContext) {
-	<sneat-day-slot-item
-		[$space]="$space()"
-		[color]="undefined"
-		[$slotContext]="slotContext"
-		color="light"
-		mode="brief"
-	/>
+  <sneat-day-slot-item
+    [$space]="$space()"
+    [color]="undefined"
+    [$slotContext]="slotContext"
+    color="light"
+    mode="brief"
+  />
 }
 
 <ion-item-group>
-	<ion-item-divider color="light">
-		<ion-label>Adjust single for {{ dateID }}</ion-label>
-	</ion-item-divider>
-	@if (isCancelled) {
-		<ion-item
-			tappable
-			(click)="revokeCancellation($event)"
-			[disabled]="$disabled()"
-		>
-			<ion-icon name="close-circle-outline" slot="start" color="warning" />
-			@if ($happeningState() === "revoking-cancellation") {
-				<ion-label
-					>Activating
-					<ion-text
-						color="medium"
-						style="font-size: smaller; font-style: italic"
-						>(revoking cancellation)
-					</ion-text>
-					...
-				</ion-label>
-				<ion-spinner slot="end" />
-			} @else {
-				<ion-label>Revoke cancellation</ion-label>
-			}
-		</ion-item>
-	} @else {
-		@if (slotContext?.happening?.brief?.type === "recurring") {
-			<ion-item
-				tappable
-				(click)="edit($event, 'single')"
-				[disabled]="$disabled()"
-			>
-				<ion-icon slot="start" name="calendar-outline" />
-				<ion-label
-					>Adjust time for {{ dateID }} &#64;
-					{{ slotContext?.timing?.start?.time }}
-				</ion-label>
-			</ion-item>
-		}
+  <ion-item-divider color="light">
+    <ion-label>Adjust single for {{ dateID }}</ion-label>
+  </ion-item-divider>
+  @if (isCancelled) {
+    <ion-item
+      tappable
+      (click)="revokeCancellation($event)"
+      [disabled]="$disabled()"
+    >
+      <ion-icon name="close-circle-outline" slot="start" color="warning" />
+      @if ($happeningState() === "revoking-cancellation") {
+        <ion-label
+          >Activating
+          <ion-text
+            color="medium"
+            style="font-size: smaller; font-style: italic"
+            >(revoking cancellation)
+          </ion-text>
+          ...
+        </ion-label>
+        <ion-spinner slot="end" />
+      } @else {
+        <ion-label>Revoke cancellation</ion-label>
+      }
+    </ion-item>
+  } @else {
+    @if (slotContext?.happening?.brief?.type === "recurring") {
+      <ion-item
+        tappable
+        (click)="edit($event, 'single')"
+        [disabled]="$disabled()"
+      >
+        <ion-icon slot="start" name="calendar-outline" />
+        <ion-label
+          >Adjust time for {{ dateID }} &#64;
+          {{ slotContext?.timing?.start?.time }}
+        </ion-label>
+      </ion-item>
+    }
 
-		@if (slotContext?.adjustment) {
-			<ion-item
-				tappable
-				(click)="cancelAdjustment($event)"
-				[disabled]="$disabled()"
-			>
-				<ion-icon name="close-circle-outline" slot="start" color="warning" />
-				<ion-label>Cancel time adjustment</ion-label>
-			</ion-item>
-		}
+    @if (slotContext?.adjustment) {
+      <ion-item
+        tappable
+        (click)="cancelAdjustment($event)"
+        [disabled]="$disabled()"
+      >
+        <ion-icon name="close-circle-outline" slot="start" color="warning" />
+        <ion-label>Cancel time adjustment</ion-label>
+      </ion-item>
+    }
 
-		<ion-item
-			tappable
-			lines="full"
-			(click)="markCanceled($event, 'slot')"
-			[disabled]="$disabled()"
-		>
-			<ion-icon name="close-circle-outline" slot="start" color="danger" />
-			@if ($happeningState() === "cancelling-single") {
-				<ion-label>Marking as canceled...</ion-label>
-				<ion-spinner slot="end" />
-			} @else {
-				<ion-label>
-					Cancel 1 on {{ dateID }} "&#64;{{ slotContext?.timing?.start?.time }}
-				</ion-label>
-			}
-		</ion-item>
-	}
+    <ion-item
+      tappable
+      lines="full"
+      (click)="markCanceled($event, 'slot')"
+      [disabled]="$disabled()"
+    >
+      <ion-icon name="close-circle-outline" slot="start" color="danger" />
+      @if ($happeningState() === "cancelling-single") {
+        <ion-label>Marking as canceled...</ion-label>
+        <ion-spinner slot="end" />
+      } @else {
+        <ion-label>
+          Cancel 1 on {{ dateID }} "&#64;{{ slotContext?.timing?.start?.time }}
+        </ion-label>
+      }
+    </ion-item>
+  }
 </ion-item-group>
 <ion-item-group>
-	<ion-item-divider color="light">
-		<ion-label>Edit series</ion-label>
-	</ion-item-divider>
-	@if (!isCancelled) {
-		<ion-item
-			tappable
-			(click)="edit($event, 'series')"
-			[disabled]="$disabled()"
-		>
-			<ion-icon name="calendar-outline" slot="start" color="success" />
-			<ion-label>Change date or time</ion-label>
-		</ion-item>
-		<ion-item
-			tappable
-			(click)="assign($event, 'member')"
-			[disabled]="$disabled()"
-		>
-			<ion-icon name="person-add-outline" slot="start" color="primary" />
-			<ion-label>Assign to member</ion-label>
-		</ion-item>
-		<ion-item
-			tappable
-			(click)="markCanceled($event, 'whole')"
-			[disabled]="$disabled()"
-		>
-			<ion-icon name="close-circle-outline" slot="start" color="warning" />
+  <ion-item-divider color="light">
+    <ion-label>Edit series</ion-label>
+  </ion-item-divider>
+  @if (!isCancelled) {
+    <ion-item
+      tappable
+      (click)="edit($event, 'series')"
+      [disabled]="$disabled()"
+    >
+      <ion-icon name="calendar-outline" slot="start" color="success" />
+      <ion-label>Change date or time</ion-label>
+    </ion-item>
+    <ion-item
+      tappable
+      (click)="assign($event, 'member')"
+      [disabled]="$disabled()"
+    >
+      <ion-icon name="person-add-outline" slot="start" color="primary" />
+      <ion-label>Assign to member</ion-label>
+    </ion-item>
+    <ion-item
+      tappable
+      (click)="markCanceled($event, 'whole')"
+      [disabled]="$disabled()"
+    >
+      <ion-icon name="close-circle-outline" slot="start" color="warning" />
 
-			@if ($happeningState() === "cancelling-series") {
-				<ion-label>Marking as canceled...</ion-label>
-				<ion-spinner slot="end" />
-			} @else {
-				<ion-label
-					>Cancel series at {{ slotContext?.timing?.start?.time }}
-				</ion-label>
-			}
-		</ion-item>
-	}
-	<!--<ion-item tappable (click)="edit()" [disabled]="$disabled()">-->
-	<!--	<ion-icon name="create-outline" slot="start" color="success"></ion-icon>-->
-	<!--	<ion-label>Edit</ion-label>-->
-	<!--</ion-item>-->
-	<!--<ion-item tappable (click)="assign('contact')" [disabled]="$disabled()">-->
-	<!--	<ion-icon name="person-add-outline" slot="start" color="secondary"></ion-icon>-->
-	<!--	<ion-label>Assign to contact</ion-label>-->
-	<!--</ion-item>-->
+      @if ($happeningState() === "cancelling-series") {
+        <ion-label>Marking as canceled...</ion-label>
+        <ion-spinner slot="end" />
+      } @else {
+        <ion-label
+          >Cancel series at {{ slotContext?.timing?.start?.time }}
+        </ion-label>
+      }
+    </ion-item>
+  }
+  <!--<ion-item tappable (click)="edit()" [disabled]="$disabled()">-->
+  <!--	<ion-icon name="create-outline" slot="start" color="success"></ion-icon>-->
+  <!--	<ion-label>Edit</ion-label>-->
+  <!--</ion-item>-->
+  <!--<ion-item tappable (click)="assign('contact')" [disabled]="$disabled()">-->
+  <!--	<ion-icon name="person-add-outline" slot="start" color="secondary"></ion-icon>-->
+  <!--	<ion-label>Assign to contact</ion-label>-->
+  <!--</ion-item>-->
 
-	<!--<ion-item-divider color="light">-->
-	<!--	<ion-label color="medium">Remove from calendar</ion-label>-->
-	<!--</ion-item-divider>-->
+  <!--<ion-item-divider color="light">-->
+  <!--	<ion-label color="medium">Remove from calendar</ion-label>-->
+  <!--</ion-item-divider>-->
 
-	<!--<ion-item tappable (click)="archive()" [disabled]="$disabled()">-->
-	<!--	<ion-icon name="archive-outline" slot="start" color="medium"></ion-icon>-->
-	<!--	<ion-label color="medium">Archive</ion-label>-->
-	<!--</ion-item>-->
+  <!--<ion-item tappable (click)="archive()" [disabled]="$disabled()">-->
+  <!--	<ion-icon name="archive-outline" slot="start" color="medium"></ion-icon>-->
+  <!--	<ion-label color="medium">Archive</ion-label>-->
+  <!--</ion-item>-->
 
-	<ion-item tappable (click)="delete($event)" [disabled]="$disabled()">
-		<ion-icon name="trash-outline" slot="start" color="danger" />
-		@switch (slotContext?.happening?.brief?.type) {
-			@case ("recurring") {
-				@if ($happeningState() === "deleting") {
-					<ion-label color="danger">
-						<b>Deleting recurring...</b>
-						<!--			({{numberOfSlots(slot?.happening)}} slots)-->
-					</ion-label>
-				} @else {
-					<ion-label color="danger">
-						<b>Delete recurring slot</b>
-						<!--			({{numberOfSlots(slot?.happening)}} slots)-->
-					</ion-label>
-				}
-			}
-			@case ("single") {
-				@if ($happeningState() === "deleting") {
-					<ion-label color="danger">
-						<b>Deleting 1-timer...</b>
-						<!--			({{numberOfSlots(slot?.happening)}} slots)-->
-					</ion-label>
-				} @else {
-					<ion-label color="danger">
-						<b>Delete 1-timer slot</b>
-						<!--			({{numberOfSlots(slot?.happening)}} slots)-->
-					</ion-label>
-				}
-			}
-		}
-		@if ($happeningState() === "deleting") {
-			<ion-spinner slot="end" />
-		}
-	</ion-item>
+  <ion-item tappable (click)="delete($event)" [disabled]="$disabled()">
+    <ion-icon name="trash-outline" slot="start" color="danger" />
+    @switch (slotContext?.happening?.brief?.type) {
+      @case ("recurring") {
+        @if ($happeningState() === "deleting") {
+          <ion-label color="danger">
+            <b>Deleting recurring...</b>
+            <!--			({{numberOfSlots(slot?.happening)}} slots)-->
+          </ion-label>
+        } @else {
+          <ion-label color="danger">
+            <b>Delete recurring slot</b>
+            <!--			({{numberOfSlots(slot?.happening)}} slots)-->
+          </ion-label>
+        }
+      }
+      @case ("single") {
+        @if ($happeningState() === "deleting") {
+          <ion-label color="danger">
+            <b>Deleting 1-timer...</b>
+            <!--			({{numberOfSlots(slot?.happening)}} slots)-->
+          </ion-label>
+        } @else {
+          <ion-label color="danger">
+            <b>Delete 1-timer slot</b>
+            <!--			({{numberOfSlots(slot?.happening)}} slots)-->
+          </ion-label>
+        }
+      }
+    }
+    @if ($happeningState() === "deleting") {
+      <ion-spinner slot="end" />
+    }
+  </ion-item>
 </ion-item-group>

@@ -5,12 +5,12 @@ import { IExecuteRequest } from '../dto/request';
 import { IRequestCommand } from '../dto/requests';
 
 export interface ICommandExecutor {
-	executeCommand(command: IRequestCommand): Observable<ICommandResponse>;
+  executeCommand(command: IRequestCommand): Observable<ICommandResponse>;
 }
 
 export interface IRequestExecutor {
-	execute(
-		agentId: string,
-		request: IExecuteRequest,
-	): Observable<IExecuteResponse>;
+  execute(
+    agentId: string,
+    request: IExecuteRequest,
+  ): Observable<IExecuteResponse>;
 }

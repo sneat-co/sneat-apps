@@ -1,35 +1,35 @@
 <ion-header>
-	<ion-toolbar color="light">
-		<ion-title>Signing in with email link</ion-title>
-	</ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-title>Signing in with email link</ion-title>
+  </ion-toolbar>
 </ion-header>
 <ion-content>
-	<ion-card>
-		@if (!emailFromStorage) {
-			<p>
-				Welcome to our app! For your safety please re-type your email address to
-				sign-in.
-			</p>
-		}
-		<ion-item>
-			<ion-icon name="mail-outline" slot="start" />
-			<ion-input
-				label="Email"
-				[required]="true"
-				[readonly]="isSigning"
-				[value]="email"
-				[disabled]="emailFromStorage || isSigning"
-			/>
-		</ion-item>
+  <ion-card>
+    @if (!emailFromStorage) {
+      <p>
+        Welcome to our app! For your safety please re-type your email address to
+        sign-in.
+      </p>
+    }
+    <ion-item>
+      <ion-icon name="mail-outline" slot="start" />
+      <ion-input
+        label="Email"
+        [required]="true"
+        [readonly]="isSigning"
+        [value]="email"
+        [disabled]="emailFromStorage || isSigning"
+      />
+    </ion-item>
 
-		<ion-button [disabled]="isSigning" (click)="signIn()">
-			<ion-label>
-				@if (isSigning) {
-					Signing in...
-				} @else {
-					Sign in
-				}
-			</ion-label>
-		</ion-button>
-	</ion-card>
+    <ion-button [disabled]="isSigning" (click)="signIn()">
+      <ion-label>
+        @if (isSigning) {
+          Signing in...
+        } @else {
+          Sign in
+        }
+      </ion-label>
+    </ion-button>
+  </ion-card>
 </ion-content>

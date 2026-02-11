@@ -1,98 +1,98 @@
 import {
-	AfterViewInit,
-	Component,
-	Input,
-	ViewChild,
-	inject,
+  AfterViewInit,
+  Component,
+  Input,
+  ViewChild,
+  inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
-	IonButton,
-	IonCol,
-	IonContent,
-	IonFooter,
-	IonGrid,
-	IonHeader,
-	IonInput,
-	IonItem,
-	IonLabel,
-	IonList,
-	IonRadio,
-	IonRadioGroup,
-	IonRow,
-	IonTitle,
-	IonToolbar,
-	ModalController,
+  IonButton,
+  IonCol,
+  IonContent,
+  IonFooter,
+  IonGrid,
+  IonHeader,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonRadio,
+  IonRadioGroup,
+  IonRow,
+  IonTitle,
+  IonToolbar,
+  ModalController,
 } from '@ionic/angular/standalone';
 import { IListInfo, ListType } from '../../dto';
 import { ErrorLogger, IErrorLogger } from '@sneat/core';
 
 @Component({
-	selector: 'sneat-new-list-popover',
-	templateUrl: 'new-list-dialog.component.html',
-	imports: [
-		IonHeader,
-		IonContent,
-		IonList,
-		IonItem,
-		IonInput,
-		FormsModule,
-		IonTitle,
-		IonToolbar,
-		IonRadioGroup,
-		IonRadio,
-		IonLabel,
-		IonFooter,
-		IonGrid,
-		IonRow,
-		IonCol,
-		IonButton,
-	],
+  selector: 'sneat-new-list-popover',
+  templateUrl: 'new-list-dialog.component.html',
+  imports: [
+    IonHeader,
+    IonContent,
+    IonList,
+    IonItem,
+    IonInput,
+    FormsModule,
+    IonTitle,
+    IonToolbar,
+    IonRadioGroup,
+    IonRadio,
+    IonLabel,
+    IonFooter,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonButton,
+  ],
 })
 export class NewListDialogComponent implements AfterViewInit {
-	private readonly modalCtrl = inject(ModalController);
-	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+  private readonly modalCtrl = inject(ModalController);
+  private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
 
-	@ViewChild('listNameInput', { static: false }) listNameInput?: IonInput;
+  @ViewChild('listNameInput', { static: false }) listNameInput?: IonInput;
 
-	public listName = '';
-	public visibility: 'private' | 'family' = 'private';
+  public listName = '';
+  public visibility: 'private' | 'family' = 'private';
 
-	@Input() title?: string;
-	@Input() listType?: ListType;
-	@Input() modal?: ModalController;
+  @Input() title?: string;
+  @Input() listType?: ListType;
+  @Input() modal?: ModalController;
 
-	ngAfterViewInit(): void /* Intentionally not ngOnInit */ {
-		setTimeout(() => {
-			this.listNameInput?.setFocus().catch(this.errorLogger.logError);
-		}, 250);
-	}
+  ngAfterViewInit(): void /* Intentionally not ngOnInit */ {
+    setTimeout(() => {
+      this.listNameInput?.setFocus().catch(this.errorLogger.logError);
+    }, 250);
+  }
 
-	createList(): void {
-		if (!this.listType) {
-			this.errorLogger.logError('list type is not set');
-			return;
-		}
-		const listInfo: IListInfo = {
-			space: {
-				type: this.visibility,
-				title:
-					this.visibility.substr(0, 1).toUpperCase() +
-					this.visibility.substr(1),
-			},
-			type: this.listType,
-			title: this.listName,
-			emoji: '📝',
-		};
-		this.closeDialog(listInfo).catch(this.errorLogger.logError);
-	}
+  createList(): void {
+    if (!this.listType) {
+      this.errorLogger.logError('list type is not set');
+      return;
+    }
+    const listInfo: IListInfo = {
+      space: {
+        type: this.visibility,
+        title:
+          this.visibility.substr(0, 1).toUpperCase() +
+          this.visibility.substr(1),
+      },
+      type: this.listType,
+      title: this.listName,
+      emoji: '📝',
+    };
+    this.closeDialog(listInfo).catch(this.errorLogger.logError);
+  }
 
-	cancel(): void {
-		console.log('cancel()');
-		this.closeDialog().catch(this.errorLogger.logError);
-	}
+  cancel(): void {
+    console.log('cancel()');
+    this.closeDialog().catch(this.errorLogger.logError);
+  }
 
-	async closeDialog(listInfo?: IListInfo): Promise<void> {
-		await this.modal?.dismiss(listInfo, 'cancel');
-	}
+  async closeDialog(listInfo?: IListInfo): Promise<void> {
+    await this.modal?.dismiss(listInfo, 'cancel');
+  }
 }

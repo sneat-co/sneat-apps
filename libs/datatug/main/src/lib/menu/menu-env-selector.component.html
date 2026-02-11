@@ -1,47 +1,47 @@
 <ion-item class="ion-no-padding">
-	<ion-buttons slot="start" class="ion-no-margin">
-		<ion-button>
-			<ion-icon name="globe-outline" />
-		</ion-button>
-	</ion-buttons>
-	<ion-label>
-		@if (currentEnvId) {
-			Environment
-		} @else {
-			Environments
-		}
-		@if (!currentEnvId && project?.summary?.environments) {
-			<ion-badge color="light" class="ion-margin-start">
-				<ion-text color="medium" style="font-weight: normal"
-					>{{ project?.summary?.environments.length }}
-				</ion-text>
-			</ion-badge>
-		}
-	</ion-label>
-	@if (project?.summary?.environments?.length) {
-		<ion-select
-			[value]="currentEnvId"
-			interface="popover"
-			(ionChange)="switchEnv($event)"
-		>
-			@for (env of project.summary.environments; track env) {
-				<ion-select-option [value]="env.id"
-					>{{ env.title || env.id }}
-				</ion-select-option>
-			}
-		</ion-select>
-	}
-	@if (currentEnvId) {
-		<ion-buttons
-			slot="end"
-			class="ion-no-margin ion-no-padding"
-			style="margin-right: -1em"
-		>
-			<ion-button color="medium" (click)="clearEnv()">
-				<ion-icon name="close-outline" />
-			</ion-button>
-		</ion-buttons>
-	}
+  <ion-buttons slot="start" class="ion-no-margin">
+    <ion-button>
+      <ion-icon name="globe-outline" />
+    </ion-button>
+  </ion-buttons>
+  <ion-label>
+    @if (currentEnvId) {
+      Environment
+    } @else {
+      Environments
+    }
+    @if (!currentEnvId && project?.summary?.environments) {
+      <ion-badge color="light" class="ion-margin-start">
+        <ion-text color="medium" style="font-weight: normal"
+          >{{ project?.summary?.environments.length }}
+        </ion-text>
+      </ion-badge>
+    }
+  </ion-label>
+  @if (project?.summary?.environments?.length) {
+    <ion-select
+      [value]="currentEnvId"
+      interface="popover"
+      (ionChange)="switchEnv($event)"
+    >
+      @for (env of project.summary.environments; track env) {
+        <ion-select-option [value]="env.id"
+          >{{ env.title || env.id }}
+        </ion-select-option>
+      }
+    </ion-select>
+  }
+  @if (currentEnvId) {
+    <ion-buttons
+      slot="end"
+      class="ion-no-margin ion-no-padding"
+      style="margin-right: -1em"
+    >
+      <ion-button color="medium" (click)="clearEnv()">
+        <ion-icon name="close-outline" />
+      </ion-button>
+    </ion-buttons>
+  }
 </ion-item>
 <!--		<ion-item class="ion-no-padding" *ngIf="currentEnvId">-->
 <!--			<ion-buttons slot="start" class="ion-no-margin">-->

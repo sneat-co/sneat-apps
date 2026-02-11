@@ -7,11 +7,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { SpaceServiceModule } from '@sneat/space-services';
 
 export function getStandardSneatImports() {
-	return [
-		BrowserModule,
-		BrowserAnimationsModule, // TODO: Move to specific modules?
-		SneatLoggingModule,
-		// SpaceServiceModule, // Move to specific modules?
-		// RandomModule, // Move to specific modules?
-	];
+  return [
+    BrowserModule,
+    BrowserAnimationsModule, // TODO: Move to specific modules?
+    SneatLoggingModule,
+    // SpaceServiceModule, // Move to specific modules?
+    // RandomModule, // Move to specific modules?
+  ];
 }

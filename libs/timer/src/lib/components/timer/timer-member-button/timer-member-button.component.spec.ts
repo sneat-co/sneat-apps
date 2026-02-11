@@ -6,35 +6,35 @@ import { ErrorLogger } from '@sneat/core';
 import { TimerMemberButtonComponent } from './timer-member-button.component';
 
 describe('TimerMemberButtonComponent', () => {
-	let component: TimerMemberButtonComponent;
-	let fixture: ComponentFixture<TimerMemberButtonComponent>;
+  let component: TimerMemberButtonComponent;
+  let fixture: ComponentFixture<TimerMemberButtonComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [TimerMemberButtonComponent],
-			providers: [
-				{
-					provide: ErrorLogger,
-					useValue: {
-						logError: vi.fn(),
-						logErrorHandler: vi.fn(() => vi.fn()),
-					},
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(TimerMemberButtonComponent, {
-				remove: { imports: [IonButton] },
-				add: { schemas: [CUSTOM_ELEMENTS_SCHEMA] },
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [TimerMemberButtonComponent],
+      providers: [
+        {
+          provide: ErrorLogger,
+          useValue: {
+            logError: vi.fn(),
+            logErrorHandler: vi.fn(() => vi.fn()),
+          },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(TimerMemberButtonComponent, {
+        remove: { imports: [IonButton] },
+        add: { schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(TimerMemberButtonComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	}));
+    fixture = TestBed.createComponent(TimerMemberButtonComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

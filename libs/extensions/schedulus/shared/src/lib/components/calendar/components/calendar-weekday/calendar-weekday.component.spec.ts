@@ -7,29 +7,29 @@ import { ScheduleNavService } from '@sneat/mod-schedulus-core';
 import { CalendarWeekdayComponent } from './calendar-weekday.component';
 
 describe('ScheduleWeekdayComponent', () => {
-	let component: CalendarWeekdayComponent;
-	let fixture: ComponentFixture<CalendarWeekdayComponent>;
+  let component: CalendarWeekdayComponent;
+  let fixture: ComponentFixture<CalendarWeekdayComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [CalendarWeekdayComponent],
-			providers: [
-				{ provide: CalendarFilterService, useValue: { filter: of({}) } },
-				{ provide: ScheduleNavService, useValue: {} },
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [CalendarWeekdayComponent],
+      providers: [
+        { provide: CalendarFilterService, useValue: { filter: of({}) } },
+        { provide: ScheduleNavService, useValue: {} },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
+  }));
 
-	beforeEach(() => {
-		fixture = TestBed.createComponent(CalendarWeekdayComponent);
-		component = fixture.componentInstance;
-		fixture.componentRef.setInput('$space', { id: 'test-space' });
-		fixture.componentRef.setInput('$weekday', { id: 'test-wd' });
-		fixture.detectChanges();
-	});
+  beforeEach(() => {
+    fixture = TestBed.createComponent(CalendarWeekdayComponent);
+    component = fixture.componentInstance;
+    fixture.componentRef.setInput('$space', { id: 'test-space' });
+    fixture.componentRef.setInput('$weekday', { id: 'test-wd' });
+    fixture.detectChanges();
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

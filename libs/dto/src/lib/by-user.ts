@@ -1,4 +1,4 @@
 export interface IByUser {
-	uid: string;
-	title?: string;
+  uid: string;
+  title?: string;
 }

@@ -12,31 +12,31 @@ import { QueryEditorStateService } from './query-editor-state-service';
 import { QueriesUiService } from './queries-ui.service';
 
 @NgModule({
-	imports: [
-		DatatugServicesStoreModule,
-		ProjItemServiceModule,
-		DatatugServicesUnsortedModule,
-	],
-	providers: [
-		{
-			provide: QUERY_PROJ_ITEM_SERVICE,
-			deps: [AngularFirestore, ProjectItemServiceFactory, StoreApiService],
-			useFactory: (
-				db: AngularFirestore,
-				projectItemServiceFactory: ProjectItemServiceFactory,
-				repoProvider: StoreApiService,
-			) =>
-				projectItemServiceFactory.newProjectItemService(
-					db,
-					repoProvider,
-					'queries',
-					'query',
-				),
-		},
-		QueriesService,
-		QueryContextSqlService,
-		QueryEditorStateService,
-		QueriesUiService,
-	],
+  imports: [
+    DatatugServicesStoreModule,
+    ProjItemServiceModule,
+    DatatugServicesUnsortedModule,
+  ],
+  providers: [
+    {
+      provide: QUERY_PROJ_ITEM_SERVICE,
+      deps: [AngularFirestore, ProjectItemServiceFactory, StoreApiService],
+      useFactory: (
+        db: AngularFirestore,
+        projectItemServiceFactory: ProjectItemServiceFactory,
+        repoProvider: StoreApiService,
+      ) =>
+        projectItemServiceFactory.newProjectItemService(
+          db,
+          repoProvider,
+          'queries',
+          'query',
+        ),
+    },
+    QueriesService,
+    QueryContextSqlService,
+    QueryEditorStateService,
+    QueriesUiService,
+  ],
 })
 export class DatatugQueriesServicesModule {}

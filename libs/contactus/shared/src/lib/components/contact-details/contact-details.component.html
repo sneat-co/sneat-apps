@@ -5,120 +5,120 @@
 <!--<p>$relatedToContactOfCurrentUser: {{ $relatedToContactOfCurrentUser()|json }};</p>-->
 
 <ion-grid class="ion-grid-layout">
-	<ion-row>
-		<ion-col>
-			<ion-card>
-				<ion-item class="sneat-no-end-padding">
-					<ion-label style="font-weight: bold">
-						@if (contact?.brief?.gender) {
-							<span class="ion-margin-end">
-								@switch (contact?.brief?.gender) {
-									@case ("male") {
-										🧑
-									}
-									@case ("female") {
-										👩
-									}
-									@default {
-										<ion-icon name="person" />
-									}
-								}
-							</span>
-							{{
-								(contact | contactTitle) ||
-									contact?.brief?.shortTitle ||
-									(contact?.brief?.userID === currentUserId
-										? "Me"
-										: "(no title)")
-							}}
-						}
-						@if ($relatedToUserAsBadgeText(); as text) {
-							<ion-badge color="light" class="ion-margin-start">
-								<ion-text color="medium" style="font-weight: normal"
-									>{{ text }}
-								</ion-text>
-							</ion-badge>
-						}
-					</ion-label>
-					<ion-buttons slot="end">
-						<ion-button
-							color="medium"
-							title="Edit names"
-							(click)="openEditNamesDialog()"
-						>
-							<ion-icon name="create" />
-						</ion-button>
-					</ion-buttons>
-				</ion-item>
-				<sneat-contact-dob [$contact]="$contact()" />
-			</ion-card>
+  <ion-row>
+    <ion-col>
+      <ion-card>
+        <ion-item class="sneat-no-end-padding">
+          <ion-label style="font-weight: bold">
+            @if (contact?.brief?.gender) {
+              <span class="ion-margin-end">
+                @switch (contact?.brief?.gender) {
+                  @case ("male") {
+                    🧑
+                  }
+                  @case ("female") {
+                    👩
+                  }
+                  @default {
+                    <ion-icon name="person" />
+                  }
+                }
+              </span>
+              {{
+                (contact | contactTitle) ||
+                  contact?.brief?.shortTitle ||
+                  (contact?.brief?.userID === currentUserId
+                    ? "Me"
+                    : "(no title)")
+              }}
+            }
+            @if ($relatedToUserAsBadgeText(); as text) {
+              <ion-badge color="light" class="ion-margin-start">
+                <ion-text color="medium" style="font-weight: normal"
+                  >{{ text }}
+                </ion-text>
+              </ion-badge>
+            }
+          </ion-label>
+          <ion-buttons slot="end">
+            <ion-button
+              color="medium"
+              title="Edit names"
+              (click)="openEditNamesDialog()"
+            >
+              <ion-icon name="create" />
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+        <sneat-contact-dob [$contact]="$contact()" />
+      </ion-card>
 
-			<ion-card>
-				<sneat-gender-form
-					lastItemLines="none"
-					[hideSkipButton]="false"
-					[$spaceID]="$spaceID()"
-					[$contactID]="contact.id"
-					[$genderID]="contact.dbo?.gender"
-					(genderChange)="onGenderChanged($event)"
-				/>
-			</ion-card>
+      <ion-card>
+        <sneat-gender-form
+          lastItemLines="none"
+          [hideSkipButton]="false"
+          [$spaceID]="$spaceID()"
+          [$contactID]="contact.id"
+          [$genderID]="contact.dbo?.gender"
+          (genderChange)="onGenderChanged($event)"
+        />
+      </ion-card>
 
-			@if ($isMember() && contact?.brief?.userID !== currentUserID) {
-				<sneat-contact-relationship-form
-					[$contactID]="$contactID()"
-					[$userSpaceContactID]="$userSpaceContactID()"
-					[$space]="$space()"
-					[$relatedTo]="$relatedTo()"
-					[$ageGroup]="contact?.brief?.ageGroup"
-				/>
-			}
-		</ion-col>
-		<ion-col>
-			<ion-card>
-				<ion-list>
-					<sneat-contact-modules-menu
-						[$space]="$space()"
-						[contact]="$contactWithBriefAndOptionalDbo()"
-					/>
-				</ion-list>
-			</ion-card>
-		</ion-col>
-	</ion-row>
+      @if ($isMember() && contact?.brief?.userID !== currentUserID) {
+        <sneat-contact-relationship-form
+          [$contactID]="$contactID()"
+          [$userSpaceContactID]="$userSpaceContactID()"
+          [$space]="$space()"
+          [$relatedTo]="$relatedTo()"
+          [$ageGroup]="contact?.brief?.ageGroup"
+        />
+      }
+    </ion-col>
+    <ion-col>
+      <ion-card>
+        <ion-list>
+          <sneat-contact-modules-menu
+            [$space]="$space()"
+            [contact]="$contactWithBriefAndOptionalDbo()"
+          />
+        </ion-list>
+      </ion-card>
+    </ion-col>
+  </ion-row>
 </ion-grid>
 
 <div class="ion-padding-horizontal">
-	<ion-segment color="primary" [(ngModel)]="tab">
-		<ion-segment-button value="peers"> Peers</ion-segment-button>
-		@if (hideForContactTypes(["pet"])) {
-			<ion-segment-button value="communicationChannels">
-				Email/Phone
-			</ion-segment-button>
-			@if ($showRolesTab()) {
-				<ion-segment-button value="roles"> Roles</ion-segment-button>
-			}
-			<ion-segment-button value="locations"> Locations</ion-segment-button>
-		}
-	</ion-segment>
+  <ion-segment color="primary" [(ngModel)]="tab">
+    <ion-segment-button value="peers"> Peers</ion-segment-button>
+    @if (hideForContactTypes(["pet"])) {
+      <ion-segment-button value="communicationChannels">
+        Email/Phone
+      </ion-segment-button>
+      @if ($showRolesTab()) {
+        <ion-segment-button value="roles"> Roles</ion-segment-button>
+      }
+      <ion-segment-button value="locations"> Locations</ion-segment-button>
+    }
+  </ion-segment>
 </div>
 
 @switch (tab) {
-	@case ("communicationChannels") {
-		<sneat-contact-comm-channels [$contact]="$contact()" />
-	}
-	@case ("peers") {
-		<sneat-related-contacts [$space]="$space()" [$relatedTo]="$relatedTo()" />
-	}
-	@case ("locations") {
-		<sneat-contact-locations
-			[$space]="$space()"
-			[contact]="$contactWithBriefAndOptionalDbo()"
-		/>
-	}
-	@case ("roles") {
-		<sneat-contact-roles-input
-			[space]="$space()"
-			[contact]="$contactWithBriefAndOptionalDbo()"
-		/>
-	}
+  @case ("communicationChannels") {
+    <sneat-contact-comm-channels [$contact]="$contact()" />
+  }
+  @case ("peers") {
+    <sneat-related-contacts [$space]="$space()" [$relatedTo]="$relatedTo()" />
+  }
+  @case ("locations") {
+    <sneat-contact-locations
+      [$space]="$space()"
+      [contact]="$contactWithBriefAndOptionalDbo()"
+    />
+  }
+  @case ("roles") {
+    <sneat-contact-roles-input
+      [space]="$space()"
+      [contact]="$contactWithBriefAndOptionalDbo()"
+    />
+  }
 }

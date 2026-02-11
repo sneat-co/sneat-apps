@@ -1,183 +1,183 @@
 <ion-card>
-	@if (showHeader) {
-		<ion-item
-			color="light"
-			[routerLink]="'../order/' + order?.id"
-			class="sneat-tiny-end-padding"
-		>
-			<ion-label [color]="readonly ? 'primary' : undefined">
-				Order # {{ order?.id }} - {{ order?.brief?.direction }}
-			</ion-label>
-			<ion-buttons slot="end">
-				<ion-button
-					color="medium"
-					title="Copy to clipboard"
-					(click)="copyNumberToClipboard($event)"
-				>
-					<ion-icon name="clipboard-outline" slot="start" />
-					<ion-label>Copy #</ion-label>
-				</ion-button>
-				<ion-button color="medium" (click)="showPrintMenu($event)">
-					<ion-icon name="print-outline" slot="start" />
-					<ion-label>Print</ion-label>
-				</ion-button>
-			</ion-buttons>
-		</ion-item>
-	}
+  @if (showHeader) {
+    <ion-item
+      color="light"
+      [routerLink]="'../order/' + order?.id"
+      class="sneat-tiny-end-padding"
+    >
+      <ion-label [color]="readonly ? 'primary' : undefined">
+        Order # {{ order?.id }} - {{ order?.brief?.direction }}
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button
+          color="medium"
+          title="Copy to clipboard"
+          (click)="copyNumberToClipboard($event)"
+        >
+          <ion-icon name="clipboard-outline" slot="start" />
+          <ion-label>Copy #</ion-label>
+        </ion-button>
+        <ion-button color="medium" (click)="showPrintMenu($event)">
+          <ion-icon name="print-outline" slot="start" />
+          <ion-label>Print</ion-label>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  }
 
-	<ion-grid class="ion-grid-layout">
-		<ion-row>
-			<ion-col size="6">
-				<ion-item>
-					<ion-label color="medium">Created</ion-label>
-					<!--					<ion-input [value]="order?.dto?.created?.at" readonly="readonly"></ion-input>-->
-					<ion-input
-						[value]="
-							(order?.dbo?.createdAt?.seconds || 0) * 1000 | date: 'dd MMM yyyy'
-						"
-						readonly="readonly"
-					/>
-				</ion-item>
-			</ion-col>
-			<ion-col size="6">
-				<ion-item>
-					<ion-label color="medium">Status</ion-label>
-					<!--		<ion-input [value]="order?.dto?.status" readonly="readonly"></ion-input>-->
-					<ion-select
-						[disabled]="!space || !order?.id"
-						interface="popover"
-						[value]="order?.dbo?.status"
-						(ionChange)="onUserChangedOrderStatus($event)"
-					>
-						<ion-select-option value="active">Active</ion-select-option>
-						<ion-select-option value="completed">Completed</ion-select-option>
-						<ion-select-option value="canceled">Canceled</ion-select-option>
-					</ion-select>
-					<!--		<ion-buttons slot="end" >-->
-					<!--			<ion-button color="medium">-->
-					<!--				<ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>-->
-					<!--				<ion-label>Mark completed</ion-label>-->
-					<!--			</ion-button>-->
-					<!--			<ion-button color="medium">-->
-					<!--				<ion-icon name="close-circle-outline" slot="start"></ion-icon>-->
-					<!--				<ion-label>Cancel</ion-label>-->
-					<!--			</ion-button>-->
-					<!--		</ion-buttons>-->
-				</ion-item>
-			</ion-col>
-		</ion-row>
-	</ion-grid>
+  <ion-grid class="ion-grid-layout">
+    <ion-row>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label color="medium">Created</ion-label>
+          <!--					<ion-input [value]="order?.dto?.created?.at" readonly="readonly"></ion-input>-->
+          <ion-input
+            [value]="
+              (order?.dbo?.createdAt?.seconds || 0) * 1000 | date: 'dd MMM yyyy'
+            "
+            readonly="readonly"
+          />
+        </ion-item>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label color="medium">Status</ion-label>
+          <!--		<ion-input [value]="order?.dto?.status" readonly="readonly"></ion-input>-->
+          <ion-select
+            [disabled]="!space || !order?.id"
+            interface="popover"
+            [value]="order?.dbo?.status"
+            (ionChange)="onUserChangedOrderStatus($event)"
+          >
+            <ion-select-option value="active">Active</ion-select-option>
+            <ion-select-option value="completed">Completed</ion-select-option>
+            <ion-select-option value="canceled">Canceled</ion-select-option>
+          </ion-select>
+          <!--		<ion-buttons slot="end" >-->
+          <!--			<ion-button color="medium">-->
+          <!--				<ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>-->
+          <!--				<ion-label>Mark completed</ion-label>-->
+          <!--			</ion-button>-->
+          <!--			<ion-button color="medium">-->
+          <!--				<ion-icon name="close-circle-outline" slot="start"></ion-icon>-->
+          <!--				<ion-label>Cancel</ion-label>-->
+          <!--			</ion-button>-->
+          <!--		</ion-buttons>-->
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-	@if (readonly) {
-		<ion-grid class="ion-grid-layout">
-			<ion-row>
-				<ion-col size="6">
-					<ion-item tappable>
-						<ion-label>
-							<ion-text color="medium">Containers</ion-text>
-							2 x <b>20</b>ft, 1 x <b>40</b>ft
-						</ion-label>
-					</ion-item>
-				</ion-col>
-				<ion-col size="3">
-					<ion-item>
-						<ion-label color="medium">Gross (kg)</ion-label>
-						<ion-input value="32760" />
-					</ion-item>
-				</ion-col>
-				<ion-col size="3">
-					<ion-item>
-						<ion-label color="medium">Volume (m<sup>3</sup>)</ion-label>
-						<ion-input value="53" />
-					</ion-item>
-				</ion-col>
-			</ion-row>
-		</ion-grid>
-	}
+  @if (readonly) {
+    <ion-grid class="ion-grid-layout">
+      <ion-row>
+        <ion-col size="6">
+          <ion-item tappable>
+            <ion-label>
+              <ion-text color="medium">Containers</ion-text>
+              2 x <b>20</b>ft, 1 x <b>40</b>ft
+            </ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="3">
+          <ion-item>
+            <ion-label color="medium">Gross (kg)</ion-label>
+            <ion-input value="32760" />
+          </ion-item>
+        </ion-col>
+        <ion-col size="3">
+          <ion-item>
+            <ion-label color="medium">Volume (m<sup>3</sup>)</ion-label>
+            <ion-input value="53" />
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  }
 
-	<ion-item-group>
-		<ion-item-divider color="light">
-			<ion-label color="medium">Destination</ion-label>
-		</ion-item-divider>
-		<sneat-logist-order-counterparty
-			label="Buyer"
-			[space]="space"
-			[order]="order"
-			[readonly]="readonly"
-			counterpartyRole="buyer"
-			contactType="company"
-			contactRole="buyer"
-			labelPosition="fixed"
-		/>
-		<sneat-logist-order-counterparty
-			label="Consignee"
-			[space]="space"
-			[order]="order"
-			[readonly]="readonly"
-			counterpartyRole="consignee"
-			contactType="company"
-			contactRole="consignee"
-			labelPosition="fixed"
-		/>
-		<sneat-logist-order-counterparty
-			label="Notify party"
-			[space]="space"
-			[order]="order"
-			[readonly]="readonly"
-			counterpartyRole="notify_party"
-			contactType="company"
-			contactRole="notify_party"
-			labelPosition="fixed"
-		/>
-	</ion-item-group>
-	<ion-item-group>
-		<ion-item-divider color="light">
-			<ion-label color="medium">Shipping</ion-label>
-		</ion-item-divider>
-		<sneat-logist-order-counterparty
-			label="🏗️ From port"
-			[space]="space"
-			[order]="order"
-			[readonly]="readonly"
-			counterpartyRole="port_from"
-			contactRole="port"
-			contactType="company"
-			labelPosition="fixed"
-		/>
-		<sneat-logist-order-counterparty
-			label="🏗️ To port"
-			[space]="space"
-			[order]="order"
-			[readonly]="readonly"
-			counterpartyRole="port_to"
-			contactRole="port"
-			contactType="company"
-			labelPosition="fixed"
-		/>
-		<sneat-logist-order-counterparty
-			label="🚢 Ship"
-			[space]="space"
-			[order]="order"
-			[readonly]="readonly"
-			parentType="company"
-			parentRole="shipping_line"
-			contactRole="ship"
-			counterpartyRole="ship"
-			contactType="vehicle"
-			labelPosition="fixed"
-			refNumLabel="Voyage"
-		/>
-	</ion-item-group>
-	<sneat-order-agents [space]="space" [order]="order" />
+  <ion-item-group>
+    <ion-item-divider color="light">
+      <ion-label color="medium">Destination</ion-label>
+    </ion-item-divider>
+    <sneat-logist-order-counterparty
+      label="Buyer"
+      [space]="space"
+      [order]="order"
+      [readonly]="readonly"
+      counterpartyRole="buyer"
+      contactType="company"
+      contactRole="buyer"
+      labelPosition="fixed"
+    />
+    <sneat-logist-order-counterparty
+      label="Consignee"
+      [space]="space"
+      [order]="order"
+      [readonly]="readonly"
+      counterpartyRole="consignee"
+      contactType="company"
+      contactRole="consignee"
+      labelPosition="fixed"
+    />
+    <sneat-logist-order-counterparty
+      label="Notify party"
+      [space]="space"
+      [order]="order"
+      [readonly]="readonly"
+      counterpartyRole="notify_party"
+      contactType="company"
+      contactRole="notify_party"
+      labelPosition="fixed"
+    />
+  </ion-item-group>
+  <ion-item-group>
+    <ion-item-divider color="light">
+      <ion-label color="medium">Shipping</ion-label>
+    </ion-item-divider>
+    <sneat-logist-order-counterparty
+      label="🏗️ From port"
+      [space]="space"
+      [order]="order"
+      [readonly]="readonly"
+      counterpartyRole="port_from"
+      contactRole="port"
+      contactType="company"
+      labelPosition="fixed"
+    />
+    <sneat-logist-order-counterparty
+      label="🏗️ To port"
+      [space]="space"
+      [order]="order"
+      [readonly]="readonly"
+      counterpartyRole="port_to"
+      contactRole="port"
+      contactType="company"
+      labelPosition="fixed"
+    />
+    <sneat-logist-order-counterparty
+      label="🚢 Ship"
+      [space]="space"
+      [order]="order"
+      [readonly]="readonly"
+      parentType="company"
+      parentRole="shipping_line"
+      contactRole="ship"
+      counterpartyRole="ship"
+      contactType="vehicle"
+      labelPosition="fixed"
+      refNumLabel="Voyage"
+    />
+  </ion-item-group>
+  <sneat-order-agents [space]="space" [order]="order" />
 
-	<!--	<sneat-logist-order-counterparties-->
-	<!--		[team]="team"-->
-	<!--		[order]="order"-->
-	<!--		[contactRole]="'location'"-->
-	<!--		contactType="location"-->
-	<!--		parentRole="dispatcher"-->
-	<!--		emoji="🛒"-->
-	<!--		plural="Dispatchers"-->
-	<!--		singular="dispatcher"-->
-	<!--	></sneat-logist-order-counterparties>-->
+  <!--	<sneat-logist-order-counterparties-->
+  <!--		[team]="team"-->
+  <!--		[order]="order"-->
+  <!--		[contactRole]="'location'"-->
+  <!--		contactType="location"-->
+  <!--		parentRole="dispatcher"-->
+  <!--		emoji="🛒"-->
+  <!--		plural="Dispatchers"-->
+  <!--		singular="dispatcher"-->
+  <!--	></sneat-logist-order-counterparties>-->
 </ion-card>

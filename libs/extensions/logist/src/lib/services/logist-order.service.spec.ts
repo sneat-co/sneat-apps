@@ -7,27 +7,27 @@ import { LogistOrderService } from './logist-order.service';
 vi.mock('@angular/fire/firestore');
 
 describe('LogistOrderService', () => {
-	beforeEach(() => {
-		TestBed.configureTestingModule({
-			providers: [
-				LogistOrderService,
-				{
-					provide: SneatApiService,
-					useValue: {
-						post: vi.fn(() => of({})),
-						get: vi.fn(() => of({})),
-						delete: vi.fn(() => of({})),
-					},
-				},
-				{
-					provide: Firestore,
-					useValue: { type: 'Firestore', toJSON: () => ({}) },
-				},
-			],
-		});
-	});
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        LogistOrderService,
+        {
+          provide: SneatApiService,
+          useValue: {
+            post: vi.fn(() => of({})),
+            get: vi.fn(() => of({})),
+            delete: vi.fn(() => of({})),
+          },
+        },
+        {
+          provide: Firestore,
+          useValue: { type: 'Firestore', toJSON: () => ({}) },
+        },
+      ],
+    });
+  });
 
-	it('should be created', () => {
-		expect(TestBed.inject(LogistOrderService)).toBeTruthy();
-	});
+  it('should be created', () => {
+    expect(TestBed.inject(LogistOrderService)).toBeTruthy();
+  });
 });

@@ -1,44 +1,44 @@
 <ion-grid class="ion-grid-layout">
-	<ion-row>
-		<ion-col>
-			<ion-item>
-				<!--				<ion-checkbox slot="start" [(ngModel)]="container.checked" (ionChange)="toggled.emit(this.container)"></ion-checkbox>-->
-				<ion-label>
-					{{ container.type | uppercase }}
-					@if (container.number) {
-						<span>#</span>
-					}
-				</ion-label>
-				@if (container.number) {
-					<ion-input
-						readonly="readonly"
-						[value]="container.number"
-						style="font-weight: bold"
-					/>
-				}
-			</ion-item>
-		</ion-col>
-		<ion-col>
-			<ion-item lines="none">
-				<ion-checkbox
-					value="load"
-					slot="start"
-					[value]="load"
-					(ionChange)="onTaskCheckChanged($event, 'load')"
-				/>
-				<ion-label>Load</ion-label>
-			</ion-item>
-		</ion-col>
-		<ion-col>
-			<ion-item lines="none">
-				<ion-checkbox
-					value="unload"
-					slot="start"
-					[value]="unload"
-					(ionChange)="onTaskCheckChanged($event, 'unload')"
-				/>
-				<ion-label>Unload</ion-label>
-			</ion-item>
-		</ion-col>
-	</ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <!--				<ion-checkbox slot="start" [(ngModel)]="container.checked" (ionChange)="toggled.emit(this.container)"></ion-checkbox>-->
+        <ion-label>
+          {{ container.type | uppercase }}
+          @if (container.number) {
+            <span>#</span>
+          }
+        </ion-label>
+        @if (container.number) {
+          <ion-input
+            readonly="readonly"
+            [value]="container.number"
+            style="font-weight: bold"
+          />
+        }
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item lines="none">
+        <ion-checkbox
+          value="load"
+          slot="start"
+          [value]="load"
+          (ionChange)="onTaskCheckChanged($event, 'load')"
+        />
+        <ion-label>Load</ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item lines="none">
+        <ion-checkbox
+          value="unload"
+          slot="start"
+          [value]="unload"
+          (ionChange)="onTaskCheckChanged($event, 'unload')"
+        />
+        <ion-label>Unload</ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
 </ion-grid>

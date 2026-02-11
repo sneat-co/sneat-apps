@@ -1,19 +1,19 @@
-@if (jsonGrid) { }
+@if (jsonGrid) {}
 <table class="json-table">
-	<thead>
-		<tr>
-			@for (col of jsonGrid?.cols; track $index) {
-			<th>{{ col }}</th>
-			}
-		</tr>
-	</thead>
-	<tbody>
-		@for (row of jsonGrid?.rows; track $index; let i = $index) {
-		<tr>
-			@for (v of row; track $index) {
-			<td>{{ v | json }}</td>
-			}
-		</tr>
-		}
-	</tbody>
+  <thead>
+    <tr>
+      @for (col of jsonGrid?.cols; track $index) {
+        <th>{{ col }}</th>
+      }
+    </tr>
+  </thead>
+  <tbody>
+    @for (row of jsonGrid?.rows; track $index; let i = $index) {
+      <tr>
+        @for (v of row; track $index) {
+          <td>{{ v | json }}</td>
+        }
+      </tr>
+    }
+  </tbody>
 </table>

@@ -1,122 +1,122 @@
 @if (viewMode === "team" || showMember) {
-	<ion-card-header
-		class="ion-no-padding ion-padding-start"
-		tappable
-		(click)="expandCollapseMember($event)"
-	>
-		<ion-list lines="none" class="ion-no-padding ion-no-margin">
-			<ion-item class="ion-no-padding ion-no-margin">
-				@if (status.member.avatar) {
-					<ion-avatar slot="start">
-						@if (status.member.avatar.gravatar) {
-							<ion-img
-								title="avatar"
-								src="//www.gravatar.com/avatar/{{
-									status.member.avatar.gravatar
-								}}"
-							/>
-						}
-						@if (status.member.avatar.external) {
-							<ion-img
-								title="avatar"
-								[src]="status.member.avatar.external.url"
-							/>
-						}
-					</ion-avatar>
-				}
-				@if (!status.member.avatar) {
-					<ion-icon slot="start" name="person-outline" />
-				}
-				<ion-label color="dark">
-					<h3>{{ status.member.title }}</h3>
-					<ion-buttons class="counters">
-						@if (count("risk")) {
-							<ion-button color="danger" disabled>
-								<ion-badge color="danger">{{ count("risk") }}</ion-badge>
-								<!-- TODO(i18n): pluralise -->
-								@if (count("risk") === 1) {
-									risk
-								}
-								@if (count("risk") !== 1) {
-									risks
-								}
-							</ion-button>
-						}
-						@if (count("done")) {
-							<ion-button color="success" disabled>
-								<ion-badge color="success">{{ count("done") }}</ion-badge>
-								done
-							</ion-button>
-						}
-						@if (count("todo")) {
-							<ion-button color="dark" disabled>
-								<ion-badge color="dark">{{ count("todo") }}</ion-badge>
-								plans
-							</ion-button>
-						}
-						@if (count("qna")) {
-							<ion-button color="primary" disabled>
-								<ion-badge>{{ count("qna") }}</ion-badge>
-								@if (count("qna") === 1) {
-									question
-								}
-								@if (count("qna") !== 1) {
-									questions
-								}
-							</ion-button>
-						}
-					</ion-buttons>
-				</ion-label>
-				<ion-buttons slot="end">
-					<sneat-timer-member-button
-						[timer]="timer"
-						[spaceID]="space?.id"
-						[scrumId]="scrumId"
-						[scrum]="scrum"
-						[memberId]="status.member?.id"
-						(toggled)="onTimerToggled($event)"
-					/>
-					<ion-button color="medium">
-						<ion-icon
-							[name]="
-								isExpanded
-									? 'arrow-up-circle-outline'
-									: 'arrow-down-circle-outline'
-							"
-						/>
-					</ion-button>
-				</ion-buttons>
-			</ion-item>
-		</ion-list>
-	</ion-card-header>
+  <ion-card-header
+    class="ion-no-padding ion-padding-start"
+    tappable
+    (click)="expandCollapseMember($event)"
+  >
+    <ion-list lines="none" class="ion-no-padding ion-no-margin">
+      <ion-item class="ion-no-padding ion-no-margin">
+        @if (status.member.avatar) {
+          <ion-avatar slot="start">
+            @if (status.member.avatar.gravatar) {
+              <ion-img
+                title="avatar"
+                src="//www.gravatar.com/avatar/{{
+                  status.member.avatar.gravatar
+                }}"
+              />
+            }
+            @if (status.member.avatar.external) {
+              <ion-img
+                title="avatar"
+                [src]="status.member.avatar.external.url"
+              />
+            }
+          </ion-avatar>
+        }
+        @if (!status.member.avatar) {
+          <ion-icon slot="start" name="person-outline" />
+        }
+        <ion-label color="dark">
+          <h3>{{ status.member.title }}</h3>
+          <ion-buttons class="counters">
+            @if (count("risk")) {
+              <ion-button color="danger" disabled>
+                <ion-badge color="danger">{{ count("risk") }}</ion-badge>
+                <!-- TODO(i18n): pluralise -->
+                @if (count("risk") === 1) {
+                  risk
+                }
+                @if (count("risk") !== 1) {
+                  risks
+                }
+              </ion-button>
+            }
+            @if (count("done")) {
+              <ion-button color="success" disabled>
+                <ion-badge color="success">{{ count("done") }}</ion-badge>
+                done
+              </ion-button>
+            }
+            @if (count("todo")) {
+              <ion-button color="dark" disabled>
+                <ion-badge color="dark">{{ count("todo") }}</ion-badge>
+                plans
+              </ion-button>
+            }
+            @if (count("qna")) {
+              <ion-button color="primary" disabled>
+                <ion-badge>{{ count("qna") }}</ion-badge>
+                @if (count("qna") === 1) {
+                  question
+                }
+                @if (count("qna") !== 1) {
+                  questions
+                }
+              </ion-button>
+            }
+          </ion-buttons>
+        </ion-label>
+        <ion-buttons slot="end">
+          <sneat-timer-member-button
+            [timer]="timer"
+            [spaceID]="space?.id"
+            [scrumId]="scrumId"
+            [scrum]="scrum"
+            [memberId]="status.member?.id"
+            (toggled)="onTimerToggled($event)"
+          />
+          <ion-button color="medium">
+            <ion-icon
+              [name]="
+                isExpanded
+                  ? 'arrow-up-circle-outline'
+                  : 'arrow-down-circle-outline'
+              "
+            />
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-list>
+  </ion-card-header>
 }
 @if (isExpanded) {
-	<ion-list>
-		@if (viewMode === "single" && isExpanded) {
-			<sneat-scrum-tasks
-				[currentMemberId]="currentMemberId"
-				[space]="space"
-				[scrumId]="scrumId"
-				[member]="status?.member"
-				[taskType]="taskType"
-				[tasks]="(status?.byType && status?.byType[taskType]) || []"
-				[hideTitle]="showMember"
-			/>
-		}
-		@if (viewMode !== "single") {
-			@for (taskType of taskTypes; track taskType) {
-				@if (taskType !== "kudos" || count("kudos")) {
-					<sneat-scrum-tasks
-						[cardMode]="'by-person'"
-						[space]="space"
-						[currentMemberId]="currentMemberId"
-						[scrumId]="scrumId"
-						[member]="status.member"
-						[tasks]="(status?.byType && status?.byType[taskType]) || []"
-						[taskType]="taskType"
-					/>
-				}
-			}
-		}
-	</ion-list>
+  <ion-list>
+    @if (viewMode === "single" && isExpanded) {
+      <sneat-scrum-tasks
+        [currentMemberId]="currentMemberId"
+        [space]="space"
+        [scrumId]="scrumId"
+        [member]="status?.member"
+        [taskType]="taskType"
+        [tasks]="(status?.byType && status?.byType[taskType]) || []"
+        [hideTitle]="showMember"
+      />
+    }
+    @if (viewMode !== "single") {
+      @for (taskType of taskTypes; track taskType) {
+        @if (taskType !== "kudos" || count("kudos")) {
+          <sneat-scrum-tasks
+            [cardMode]="'by-person'"
+            [space]="space"
+            [currentMemberId]="currentMemberId"
+            [scrumId]="scrumId"
+            [member]="status.member"
+            [tasks]="(status?.byType && status?.byType[taskType]) || []"
+            [taskType]="taskType"
+          />
+        }
+      }
+    }
+  </ion-list>
 }

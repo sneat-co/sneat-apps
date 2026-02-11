@@ -10,44 +10,44 @@ import { OrderExpeditionPrintDocComponent } from './order-expedition-print-doc.c
 vi.mock('@angular/fire/firestore');
 
 describe('OrderExpeditionPrintDocComponent', () => {
-	let component: OrderExpeditionPrintDocComponent;
-	let fixture: ComponentFixture<OrderExpeditionPrintDocComponent>;
+  let component: OrderExpeditionPrintDocComponent;
+  let fixture: ComponentFixture<OrderExpeditionPrintDocComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [OrderExpeditionPrintDocComponent],
-			providers: [
-				...provideLogistMocks(),
-				LogistOrderService,
-				{
-					provide: SneatApiService,
-					useValue: {
-						post: vi.fn(() => of({})),
-						get: vi.fn(() => of({})),
-						delete: vi.fn(() => of({})),
-					},
-				},
-				{
-					provide: Firestore,
-					useValue: { type: 'Firestore', toJSON: () => ({}) },
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(OrderExpeditionPrintDocComponent, {
-				set: {
-					imports: [],
-					providers: [],
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
-				},
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [OrderExpeditionPrintDocComponent],
+      providers: [
+        ...provideLogistMocks(),
+        LogistOrderService,
+        {
+          provide: SneatApiService,
+          useValue: {
+            post: vi.fn(() => of({})),
+            get: vi.fn(() => of({})),
+            delete: vi.fn(() => of({})),
+          },
+        },
+        {
+          provide: Firestore,
+          useValue: { type: 'Firestore', toJSON: () => ({}) },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(OrderExpeditionPrintDocComponent, {
+        set: {
+          imports: [],
+          providers: [],
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(OrderExpeditionPrintDocComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(OrderExpeditionPrintDocComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

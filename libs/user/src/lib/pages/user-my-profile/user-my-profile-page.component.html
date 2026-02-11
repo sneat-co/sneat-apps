@@ -1,28 +1,28 @@
 <ion-header>
-	<ion-toolbar color="light">
-		<ion-buttons slot="start">
-			<ion-back-button defaultHref="/" />
-		</ion-buttons>
-		<ion-title>My profile &#64; Sneat.app</ion-title>
-	</ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" />
+    </ion-buttons>
+    <ion-title>My profile &#64; Sneat.app</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<sneat-user-country [doNotHide]="true" />
+  <sneat-user-country [doNotHide]="true" />
 
-	<ion-segment [(ngModel)]="tab">
-		<ion-segment-button value="authentication"
-			>Authentication
-		</ion-segment-button>
-		<ion-segment-button value="beta_testing">Beta testing</ion-segment-button>
-	</ion-segment>
+  <ion-segment [(ngModel)]="tab">
+    <ion-segment-button value="authentication"
+      >Authentication
+    </ion-segment-button>
+    <ion-segment-button value="beta_testing">Beta testing</ion-segment-button>
+  </ion-segment>
 
-	@switch (tab) {
-		@case ("authentication") {
-			<sneat-user-auth-accounts />
-		}
-		@case ("beta_testing") {
-			<sneat-beta-flags />
-		}
-	}
+  @switch (tab) {
+    @case ("authentication") {
+      <sneat-user-auth-accounts />
+    }
+    @case ("beta_testing") {
+      <sneat-beta-flags />
+    }
+  }
 </ion-content>

@@ -7,32 +7,32 @@ import { ClassName } from '@sneat/ui';
 import { DocumentsByTypeComponent } from './documents-by-type.component';
 
 describe('DocumentsByTypeComponent', () => {
-	let component: DocumentsByTypeComponent;
-	let fixture: ComponentFixture<DocumentsByTypeComponent>;
+  let component: DocumentsByTypeComponent;
+  let fixture: ComponentFixture<DocumentsByTypeComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [DocumentsByTypeComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			providers: [
-				{ provide: ClassName, useValue: 'DocumentsByTypeComponent' },
-				{
-					provide: ErrorLogger,
-					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
-				},
-				{ provide: AssetService, useValue: {} },
-			],
-		})
-			.overrideComponent(DocumentsByTypeComponent, {
-				set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [DocumentsByTypeComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        { provide: ClassName, useValue: 'DocumentsByTypeComponent' },
+        {
+          provide: ErrorLogger,
+          useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+        },
+        { provide: AssetService, useValue: {} },
+      ],
+    })
+      .overrideComponent(DocumentsByTypeComponent, {
+        set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(DocumentsByTypeComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(DocumentsByTypeComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

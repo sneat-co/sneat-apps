@@ -4,14 +4,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { InvitePersonalPageComponent } from './invite-personal-page.component';
 
 const routes: Routes = [
-	{
-		path: '',
-		component: InvitePersonalPageComponent,
-	},
+  {
+    path: '',
+    component: InvitePersonalPageComponent,
+  },
 ];
 
 @NgModule({
-	imports: [RouterModule.forChild(routes)],
-	exports: [RouterModule],
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
 export class InvitePersonalPageRoutingModule {}

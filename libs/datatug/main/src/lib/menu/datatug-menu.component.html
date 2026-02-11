@@ -1,18 +1,18 @@
 <ion-card>
-	<sneat-auth-menu-item />
+  <sneat-auth-menu-item />
 </ion-card>
 
 <ion-card>
-	<sneat-datatug-menu-store-selector [datatugUser]="datatugUserState?.record" />
-	@if (currentStoreId) {
-		<sneat-datatug-menu-project-selector
-			[datatugUser]="datatugUserState?.record"
-			(projectChanged)="onProjectChanged($event)"
-		/>
-	}
-	@if (currentProject) {
-		<sneat-datatug-menu-env-selector />
-	}
+  <sneat-datatug-menu-store-selector [datatugUser]="datatugUserState?.record" />
+  @if (currentStoreId) {
+    <sneat-datatug-menu-project-selector
+      [datatugUser]="datatugUserState?.record"
+      (projectChanged)="onProjectChanged($event)"
+    />
+  }
+  @if (currentProject) {
+    <sneat-datatug-menu-env-selector />
+  }
 </ion-card>
 
 <!--<sneat-datatug-context-card *ngIf="currentProjectId" [projectId]="currentProjectId"/>-->
@@ -20,9 +20,9 @@
 <!--<sneat-datatug-table-meta-card *ngIf="table" [meta]="table?.meta"/>-->
 <wormhole-exit tunnel="context-menu" />
 @if (currentProject) {
-	<sneat-datatug-project-menu />
+  <sneat-datatug-project-menu />
 }
 
 <ion-card>
-	<ion-card-content> 2020 - 2021 &copy; DataTug.app </ion-card-content>
+  <ion-card-content> 2020 - 2021 &copy; DataTug.app </ion-card-content>
 </ion-card>

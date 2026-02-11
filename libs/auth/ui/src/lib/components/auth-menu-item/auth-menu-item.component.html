@@ -1,59 +1,59 @@
 <ion-item-divider color="light">
-	@if ($authStatus() === "authenticated") {
-		<ion-label>Signed in as</ion-label>
-	} @else {
-		<ion-label>Authentication</ion-label>
-	}
+  @if ($authStatus() === "authenticated") {
+    <ion-label>Signed in as</ion-label>
+  } @else {
+    <ion-label>Authentication</ion-label>
+  }
 </ion-item-divider>
 @if (!$authState()) {
-	<ion-item>
-		<ion-label>Loading....</ion-label>
-	</ion-item>
+  <ion-item>
+    <ion-label>Loading....</ion-label>
+  </ion-item>
 } @else if ($isAuthenticating()) {
-	<ion-item routerLink="login">
-		<ion-label>Authenticating....</ion-label>
-	</ion-item>
+  <ion-item routerLink="login">
+    <ion-label>Authenticating....</ion-label>
+  </ion-item>
 }
 @if ($authStatus() === "notAuthenticated") {
-	<ion-item routerLink="/login" tappable="true">
-		<ion-icon slot="start" name="person-circle-outline" />
-		<ion-label color="primary"> Please sign in</ion-label>
-	</ion-item>
+  <ion-item routerLink="/login" tappable="true">
+    <ion-icon slot="start" name="person-circle-outline" />
+    <ion-label color="primary"> Please sign in</ion-label>
+  </ion-item>
 }
 @if ($authStatus() === "authenticated") {
-	<ion-item
-		tappable="true"
-		routerLink="/my"
-		routerDirection="forward"
-		(click)="closeMenu()"
-	>
-		<!--    <ion-buttons slot="start" class="ion-no-margin">-->
-		<!--      <ion-button disabled color="medium" >-->
-		<!--        <ion-icon  slot="start" name="person-circle-outline"></ion-icon>-->
-		<!--      </ion-button>-->
-		<!--    </ion-buttons>-->
-		<ion-icon slot="start" name="person-circle-outline" />
+  <ion-item
+    tappable="true"
+    routerLink="/my"
+    routerDirection="forward"
+    (click)="closeMenu()"
+  >
+    <!--    <ion-buttons slot="start" class="ion-no-margin">-->
+    <!--      <ion-button disabled color="medium" >-->
+    <!--        <ion-icon  slot="start" name="person-circle-outline"></ion-icon>-->
+    <!--      </ion-button>-->
+    <!--    </ion-buttons>-->
+    <ion-icon slot="start" name="person-circle-outline" />
 
-		<ion-label color="medium">
-			@if ($user()?.record?.names; as names) {
-				{{ names | personNames }}
-			} @else {
-				@if ($authState()?.user; as user) {
-					{{ user.displayName || user.email || user.phoneNumber || user.uid }}
-				}
-			}
-		</ion-label>
+    <ion-label color="medium">
+      @if ($user()?.record?.names; as names) {
+        {{ names | personNames }}
+      } @else {
+        @if ($authState()?.user; as user) {
+          {{ user.displayName || user.email || user.phoneNumber || user.uid }}
+        }
+      }
+    </ion-label>
 
-		<ion-buttons slot="end">
-			<!--		<ion-button color="medium" title="Settings">-->
-			<!--			<ion-icon name="settings-outline"></ion-icon>-->
-			<!--		</ion-button>-->
-			<ion-button color="medium" title="Sign-out" (click)="logout($event)">
-				<ion-icon name="log-out-outline" />
-			</ion-button>
-		</ion-buttons>
-	</ion-item>
+    <ion-buttons slot="end">
+      <!--		<ion-button color="medium" title="Settings">-->
+      <!--			<ion-icon name="settings-outline"></ion-icon>-->
+      <!--		</ion-button>-->
+      <ion-button color="medium" title="Sign-out" (click)="logout($event)">
+        <ion-icon name="log-out-outline" />
+      </ion-button>
+    </ion-buttons>
+  </ion-item>
 }
 @if ($err()) {
-	<ion-item> ERROR: {{ $err() | json }}</ion-item>
+  <ion-item> ERROR: {{ $err() | json }}</ion-item>
 }

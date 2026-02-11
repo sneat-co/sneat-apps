@@ -8,19 +8,19 @@ import { createProjItem } from '../base/create-object';
 
 @Injectable()
 export class SchemaService {
-	private readonly api = inject(SneatApiService);
+  private readonly api = inject(SneatApiService);
 
-	public createSchema = (
-		request: CreateNamedRequest,
-	): Observable<IRecord<ISchema>> => {
-		try {
-			return createProjItem<ISchema>(
-				this.api,
-				'datatug/schema/create_schema',
-				request,
-			);
-		} catch (err) {
-			return throwError(err);
-		}
-	};
+  public createSchema = (
+    request: CreateNamedRequest,
+  ): Observable<IRecord<ISchema>> => {
+    try {
+      return createProjItem<ISchema>(
+        this.api,
+        'datatug/schema/create_schema',
+        request,
+      );
+    } catch (err) {
+      return throwError(err);
+    }
+  };
 }

@@ -3,16 +3,16 @@ import { TestBed } from '@angular/core/testing';
 import { AppContextService } from './app-context.service';
 
 describe('AppContextService', () => {
-	let service: AppContextService;
+  let service: AppContextService;
 
-	beforeEach(() => {
-		TestBed.configureTestingModule({
-			providers: [AppContextService],
-		});
-		service = TestBed.inject(AppContextService);
-	});
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [AppContextService],
+    });
+    service = TestBed.inject(AppContextService);
+  });
 
-	it('should be created', () => {
-		expect(service).toBeTruthy();
-	});
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
 });

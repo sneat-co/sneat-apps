@@ -1,67 +1,67 @@
 <ion-header>
-	<ion-toolbar color="light" class="with-back-button with-end-buttons">
-		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="$defaultBackUrl()" />
-		</ion-buttons>
-		<sneat-space-page-title
-			[space]="$role() ? undefined : $space()"
-			[generalTitle]="$pageTitle()"
-			[icon]="$titleIcon()"
-			[titlesBySpaceType]="{
-				personal: 'Personal contacts',
-				family: 'Family contacts',
-			}"
-		/>
-		<ion-buttons slot="end">
-			<ion-button
-				color="primary"
-				size="small"
-				title="Add contact"
-				(click)="sendCommand($event, 'new_contact')"
-			>
-				<ion-icon name="add" slot="start" />
-				<ion-label>Add</ion-label>
-			</ion-button>
-			<ion-menu-button />
-		</ion-buttons>
-	</ion-toolbar>
+  <ion-toolbar color="light" class="with-back-button with-end-buttons">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="$defaultBackUrl()" />
+    </ion-buttons>
+    <sneat-space-page-title
+      [space]="$role() ? undefined : $space()"
+      [generalTitle]="$pageTitle()"
+      [icon]="$titleIcon()"
+      [titlesBySpaceType]="{
+        personal: 'Personal contacts',
+        family: 'Family contacts',
+      }"
+    />
+    <ion-buttons slot="end">
+      <ion-button
+        color="primary"
+        size="small"
+        title="Add contact"
+        (click)="sendCommand($event, 'new_contact')"
+      >
+        <ion-icon name="add" slot="start" />
+        <ion-label>Add</ion-label>
+      </ion-button>
+      <ion-menu-button />
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content class="cardy">
-	<sneat-contacts
-		[$space]="$space()"
-		[$roleID]="$role()"
-		[$allContacts]="$allContacts()"
-		[command]="command.asObservable()"
-		(contactsChange)="$allContacts.set($event)"
-		(roleChange)="onRoleChanged($event)"
-	/>
-	<div style="height: 30px"></div>
+  <sneat-contacts
+    [$space]="$space()"
+    [$roleID]="$role()"
+    [$allContacts]="$allContacts()"
+    [command]="command.asObservable()"
+    (contactsChange)="$allContacts.set($event)"
+    (roleChange)="onRoleChanged($event)"
+  />
+  <div style="height: 30px"></div>
 </ion-content>
 
 @if ($selectedContacts()?.length; as numberOfSelectedContacts) {
-	<ion-footer>
-		<ion-toolbar color="light">
-			<ion-buttons slot="start">
-				<ion-button
-					title="Reset"
-					(click)="sendCommand($event, 'reset_selected')"
-				>
-					<ion-icon name="close-circle-outline"></ion-icon>
-				</ion-button>
-			</ion-buttons>
-			<ion-title>
-				@if (numberOfSelectedContacts === 1) {
-					{{ numberOfSelectedContacts }} contact selected
-				} @else {
-					{{ numberOfSelectedContacts }} contacts selected
-				}
-			</ion-title>
-			<ion-buttons slot="end">
-				<ion-button color="success">Share</ion-button>
-				<ion-button color="warning">Archive</ion-button>
-				<!--				<ion-button color="danger">Delete</ion-button>-->
-			</ion-buttons>
-		</ion-toolbar>
-	</ion-footer>
+  <ion-footer>
+    <ion-toolbar color="light">
+      <ion-buttons slot="start">
+        <ion-button
+          title="Reset"
+          (click)="sendCommand($event, 'reset_selected')"
+        >
+          <ion-icon name="close-circle-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>
+        @if (numberOfSelectedContacts === 1) {
+          {{ numberOfSelectedContacts }} contact selected
+        } @else {
+          {{ numberOfSelectedContacts }} contacts selected
+        }
+      </ion-title>
+      <ion-buttons slot="end">
+        <ion-button color="success">Share</ion-button>
+        <ion-button color="warning">Archive</ion-button>
+        <!--				<ion-button color="danger">Delete</ion-button>-->
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
 }

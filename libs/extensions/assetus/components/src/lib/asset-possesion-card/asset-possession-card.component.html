@@ -1,15 +1,15 @@
 <ion-card>
-	@if (!asset?.dbo?.possession) {
-		<ion-item lines="full" color="light">
-			<ion-label>Possession</ion-label>
-		</ion-item>
-	}
-	<sneat-select-from-list
-		[items]="possessionOptions"
-		[value]="asset?.dbo?.possession || ''"
-		label="Possession"
-		[isFilterable]="false"
-		labelPlacement="end"
-		(valueChange)="onPossessionChanged($event)"
-	/>
+  @if (!asset?.dbo?.possession) {
+    <ion-item lines="full" color="light">
+      <ion-label>Possession</ion-label>
+    </ion-item>
+  }
+  <sneat-select-from-list
+    [items]="possessionOptions"
+    [value]="asset?.dbo?.possession || ''"
+    label="Possession"
+    [isFilterable]="false"
+    labelPlacement="end"
+    (valueChange)="onPossessionChanged($event)"
+  />
 </ion-card>

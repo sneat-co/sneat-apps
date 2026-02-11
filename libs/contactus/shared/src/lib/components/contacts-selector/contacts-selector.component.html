@@ -1,30 +1,30 @@
 <ion-header>
-	<ion-toolbar color="light">
-		<ion-label slot="start" color="medium" class="ion-padding-start">
-			@if (contactRoleID) {
-				{{ contactRoleID | titlecase }} selector
-			} @else {
-				{{ title }}
-			}
-		</ion-label>
+  <ion-toolbar color="light">
+    <ion-label slot="start" color="medium" class="ion-padding-start">
+      @if (contactRoleID) {
+        {{ contactRoleID | titlecase }} selector
+      } @else {
+        {{ title }}
+      }
+    </ion-label>
 
-		@if (!parentRole) {
-			<ion-segment
-				[value]="$contactTab()"
-				(ionChange)="onContactTabChanged($event)"
-				class="ion-margin-start ion-margin-end"
-			>
-				<ion-segment-button value="existing">Existing</ion-segment-button>
-				<ion-segment-button value="new">New</ion-segment-button>
-			</ion-segment>
-		}
+    @if (!parentRole) {
+      <ion-segment
+        [value]="$contactTab()"
+        (ionChange)="onContactTabChanged($event)"
+        class="ion-margin-start ion-margin-end"
+      >
+        <ion-segment-button value="existing">Existing</ion-segment-button>
+        <ion-segment-button value="new">New</ion-segment-button>
+      </ion-segment>
+    }
 
-		<ion-buttons slot="end">
-			<ion-button (click)="close($event)">
-				<ion-icon name="close-outline" />
-			</ion-button>
-		</ion-buttons>
-	</ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="close($event)">
+        <ion-icon name="close-outline" />
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 <!--<ion-item color="primary" class="sneat-tiny-end-padding">-->
 <!--	<ion-label>-->
@@ -42,170 +42,170 @@
 <!--</ion-item>-->
 
 <ion-content>
-	@if (parentRole) {
-		@if (!selectedParent) {
-			<ion-card-header>
-				<ion-card-subtitle>
-					Step 1 of 2: Select {{ parentRole }}
-				</ion-card-subtitle>
-			</ion-card-header>
-		}
-		<ion-card>
-			@if (!selectedParent) {
-				<ion-segment
-					[value]="$parentTab()"
-					(ionChange)="onParentTabChanged($event)"
-					class="ion-padding-horizontal"
-				>
-					<ion-segment-button value="existing">Existing</ion-segment-button>
-					<ion-segment-button value="new">New</ion-segment-button>
-				</ion-segment>
-			}
+  @if (parentRole) {
+    @if (!selectedParent) {
+      <ion-card-header>
+        <ion-card-subtitle>
+          Step 1 of 2: Select {{ parentRole }}
+        </ion-card-subtitle>
+      </ion-card-header>
+    }
+    <ion-card>
+      @if (!selectedParent) {
+        <ion-segment
+          [value]="$parentTab()"
+          (ionChange)="onParentTabChanged($event)"
+          class="ion-padding-horizontal"
+        >
+          <ion-segment-button value="existing">Existing</ion-segment-button>
+          <ion-segment-button value="new">New</ion-segment-button>
+        </ion-segment>
+      }
 
-			@switch ($parentTab()) {
-				@case ("existing") {
-					<sneat-select-from-list
-						[label]="(selectedParent ? parentRole : '') | titlecase"
-						[items]="parentItems"
-						[(ngModel)]="parentContactID"
-						(ngModelChange)="onParentContactIDChanged($event)"
-						[isFilterable]="true"
-						labelPlacement="start"
-					/>
-				}
-				@case ("new") {
-					<sneat-new-company-form
-						[$space]="$space()"
-						[$contact]="$contactWithDbo()"
-						[contactRoles]="contactRoles"
-						[contactRole]="contactRoleID"
-						[hideRole]="true"
-						(contactCreated)="onParentContactCreated($event)"
-						(contactChange)="onNewContactChanged($event)"
-					/>
-				}
-			}
-		</ion-card>
-		@if (selectedParent) {
-			<ion-card-header>
-				<ion-card-subtitle
-					>Step 2 of 2: Select {{ contactRoleID }}
-				</ion-card-subtitle>
-			</ion-card-header>
-		}
-	}
+      @switch ($parentTab()) {
+        @case ("existing") {
+          <sneat-select-from-list
+            [label]="(selectedParent ? parentRole : '') | titlecase"
+            [items]="parentItems"
+            [(ngModel)]="parentContactID"
+            (ngModelChange)="onParentContactIDChanged($event)"
+            [isFilterable]="true"
+            labelPlacement="start"
+          />
+        }
+        @case ("new") {
+          <sneat-new-company-form
+            [$space]="$space()"
+            [$contact]="$contactWithDbo()"
+            [contactRoles]="contactRoles"
+            [contactRole]="contactRoleID"
+            [hideRole]="true"
+            (contactCreated)="onParentContactCreated($event)"
+            (contactChange)="onNewContactChanged($event)"
+          />
+        }
+      }
+    </ion-card>
+    @if (selectedParent) {
+      <ion-card-header>
+        <ion-card-subtitle
+          >Step 2 of 2: Select {{ contactRoleID }}
+        </ion-card-subtitle>
+      </ion-card-header>
+    }
+  }
 
-	@if (!parentRole || selectedParent) {
-		@if (parentRole && selectedParent) {
-			<ion-segment
-				[value]="$contactTab()"
-				(ionChange)="onContactTabChanged($event)"
-				class="ion-margin-start ion-margin-end"
-			>
-				<ion-segment-button value="existing">Existing</ion-segment-button>
-				<ion-segment-button value="new">New</ion-segment-button>
-			</ion-segment>
-		}
+  @if (!parentRole || selectedParent) {
+    @if (parentRole && selectedParent) {
+      <ion-segment
+        [value]="$contactTab()"
+        (ionChange)="onContactTabChanged($event)"
+        class="ion-margin-start ion-margin-end"
+      >
+        <ion-segment-button value="existing">Existing</ion-segment-button>
+        <ion-segment-button value="new">New</ion-segment-button>
+      </ion-segment>
+    }
 
-		@switch ($contactTab()) {
-			@case ("existing") {
-				@if ($contacts(); as contacts) {
-					@if (selectedParent && !contacts.length) {
-						<ion-text color="medium" class="ion-padding">
-							<p>No locations for selected contact</p>
-						</ion-text>
-					}
-				}
-				<sneat-contacts
-					[$space]="$space()"
-					[$allContacts]="$contacts()"
-					(contactsChange)="$contacts.set($event)"
-					(addContactClick)="switchToNewContact($event)"
-					[goToNewContactPage]="false"
-					[contactClicked]="contactClicked"
-				/>
-				<!--					<sneat-select-from-list-->
-				<!--						[selectMode]="'multiple'"-->
-				<!--						label=""-->
-				<!--						labelPlacement="start"-->
-				<!--						[items]="contactItems"-->
-				<!--						[(ngModel)]="selectedSubContactID"-->
-				<!--						(ngModelChange)="onContactSelected($event)"-->
-				<!--						[isFilterable]="true"-->
-				<!--					/>-->
-			}
-			@case ("new") {
-				@if (contactRoleID) {
-					<!-- TODO: Not clear what it is for - needs a comment or removal or move to sneat-new-contact-form -->
-					<ion-item-divider>
-						<ion-label>{{ contactRoleID || "" | titlecase }}</ion-label>
-					</ion-item-divider>
-				}
+    @switch ($contactTab()) {
+      @case ("existing") {
+        @if ($contacts(); as contacts) {
+          @if (selectedParent && !contacts.length) {
+            <ion-text color="medium" class="ion-padding">
+              <p>No locations for selected contact</p>
+            </ion-text>
+          }
+        }
+        <sneat-contacts
+          [$space]="$space()"
+          [$allContacts]="$contacts()"
+          (contactsChange)="$contacts.set($event)"
+          (addContactClick)="switchToNewContact($event)"
+          [goToNewContactPage]="false"
+          [contactClicked]="contactClicked"
+        />
+        <!--					<sneat-select-from-list-->
+        <!--						[selectMode]="'multiple'"-->
+        <!--						label=""-->
+        <!--						labelPlacement="start"-->
+        <!--						[items]="contactItems"-->
+        <!--						[(ngModel)]="selectedSubContactID"-->
+        <!--						(ngModelChange)="onContactSelected($event)"-->
+        <!--						[isFilterable]="true"-->
+        <!--					/>-->
+      }
+      @case ("new") {
+        @if (contactRoleID) {
+          <!-- TODO: Not clear what it is for - needs a comment or removal or move to sneat-new-contact-form -->
+          <ion-item-divider>
+            <ion-label>{{ contactRoleID || "" | titlecase }}</ion-label>
+          </ion-item-divider>
+        }
 
-				<sneat-new-contact-form
-					[$space]="$space()"
-					[$contact]="$contactWithDbo()"
-					[command]="newContactCommand$"
-					[selectGroupAndRole$]="selectGroupAndRole$"
-					(creatingChange)="$isNewContactCreating.set($event)"
-				/>
-			}
-		}
-	}
+        <sneat-new-contact-form
+          [$space]="$space()"
+          [$contact]="$contactWithDbo()"
+          [command]="newContactCommand$"
+          [selectGroupAndRole$]="selectGroupAndRole$"
+          (creatingChange)="$isNewContactCreating.set($event)"
+        />
+      }
+    }
+  }
 </ion-content>
 
 @if (selectMode === "multiple") {
-	<ion-footer>
-		<ion-toolbar color="light">
-			@if ($selectedContactsCount(); as selectedContactsCount) {
-				<ion-label class="ion-margin-start ion-margin-end">
-					@if (selectedContactsCount === 1) {
-						{{ selectedContactsCount }} contact selected
-					} @else {
-						{{ selectedContactsCount }} contacts selected
-					}
-				</ion-label>
-			}
-			<!--			<ion-buttons slot="start">-->
-			<!--				<ion-button (click)="cancel($event)" color="medium">-->
-			<!--					<ion-icon name="close-outline" slot="start"></ion-icon>-->
-			<!--					<ion-label>Cancel</ion-label>-->
-			<!--				</ion-button>-->
-			<!--			</ion-buttons>-->
-			@if ($isSubmitting()) {
-				<ion-spinner name="lines-small" slot="end" />
-			}
-			<ion-buttons slot="end">
-				@switch ($contactTab()) {
-					@case ("existing") {
-						<ion-button
-							fill="solid"
-							(click)="submitSelected($event)"
-							color="primary"
-							[disabled]="!$selectedContactsCount() || $isSubmitting()"
-						>
-							<ion-icon name="save-outline" slot="start"></ion-icon>
-							<ion-label>{{ okButtonLabel }}</ion-label>
-						</ion-button>
-					}
-					@case ("new") {
-						<ion-button
-							fill="solid"
-							color="primary"
-							[disabled]="$isNewContactCreating()"
-							(click)="newContactCommand$.next('create')"
-						>
-							@if ($isNewContactCreating()) {
-								<ion-spinner name="lines-small" slot="start" />
-								<ion-label>Creating contact...</ion-label>
-							} @else {
-								<ion-icon name="save-outline" slot="start"></ion-icon>
-								<ion-label>Create contact</ion-label>
-							}
-						</ion-button>
-					}
-				}
-			</ion-buttons>
-		</ion-toolbar>
-	</ion-footer>
+  <ion-footer>
+    <ion-toolbar color="light">
+      @if ($selectedContactsCount(); as selectedContactsCount) {
+        <ion-label class="ion-margin-start ion-margin-end">
+          @if (selectedContactsCount === 1) {
+            {{ selectedContactsCount }} contact selected
+          } @else {
+            {{ selectedContactsCount }} contacts selected
+          }
+        </ion-label>
+      }
+      <!--			<ion-buttons slot="start">-->
+      <!--				<ion-button (click)="cancel($event)" color="medium">-->
+      <!--					<ion-icon name="close-outline" slot="start"></ion-icon>-->
+      <!--					<ion-label>Cancel</ion-label>-->
+      <!--				</ion-button>-->
+      <!--			</ion-buttons>-->
+      @if ($isSubmitting()) {
+        <ion-spinner name="lines-small" slot="end" />
+      }
+      <ion-buttons slot="end">
+        @switch ($contactTab()) {
+          @case ("existing") {
+            <ion-button
+              fill="solid"
+              (click)="submitSelected($event)"
+              color="primary"
+              [disabled]="!$selectedContactsCount() || $isSubmitting()"
+            >
+              <ion-icon name="save-outline" slot="start"></ion-icon>
+              <ion-label>{{ okButtonLabel }}</ion-label>
+            </ion-button>
+          }
+          @case ("new") {
+            <ion-button
+              fill="solid"
+              color="primary"
+              [disabled]="$isNewContactCreating()"
+              (click)="newContactCommand$.next('create')"
+            >
+              @if ($isNewContactCreating()) {
+                <ion-spinner name="lines-small" slot="start" />
+                <ion-label>Creating contact...</ion-label>
+              } @else {
+                <ion-icon name="save-outline" slot="start"></ion-icon>
+                <ion-label>Create contact</ion-label>
+              }
+            </ion-button>
+          }
+        }
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
 }

@@ -7,40 +7,40 @@ import { BoardCardTabService } from '../../board-card/board-card.component';
 import { AgentService } from '../../../../../services/repo/agent.service';
 
 describe('SqlQueryWidgetComponent', () => {
-	let component: SqlQueryWidgetComponent;
-	let fixture: ComponentFixture<SqlQueryWidgetComponent>;
+  let component: SqlQueryWidgetComponent;
+  let fixture: ComponentFixture<SqlQueryWidgetComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [SqlQueryWidgetComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			providers: [
-				BoardCardTabService,
-				{ provide: AgentService, useValue: { select: vi.fn() } },
-				{
-					provide: ErrorLogger,
-					useValue: {
-						logError: vi.fn(),
-						logErrorHandler: vi.fn(() => vi.fn()),
-					},
-				},
-			],
-		})
-			.overrideComponent(SqlQueryWidgetComponent, {
-				set: {
-					imports: [],
-					template: '',
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
-					providers: [],
-				},
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [SqlQueryWidgetComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        BoardCardTabService,
+        { provide: AgentService, useValue: { select: vi.fn() } },
+        {
+          provide: ErrorLogger,
+          useValue: {
+            logError: vi.fn(),
+            logErrorHandler: vi.fn(() => vi.fn()),
+          },
+        },
+      ],
+    })
+      .overrideComponent(SqlQueryWidgetComponent, {
+        set: {
+          imports: [],
+          template: '',
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+          providers: [],
+        },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(SqlQueryWidgetComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(SqlQueryWidgetComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

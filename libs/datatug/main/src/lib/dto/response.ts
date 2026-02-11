@@ -9,17 +9,17 @@ import { IRecordsetResult } from './execute';
 // }
 
 export interface ICommandHttpResponse extends ICommandResponseItem {
-	status?: number;
+  status?: number;
 }
 
 export interface ICommandResponseWithRecordsets extends ICommandResponseItem {
-	type: 'recordsets';
-	value: IRecordsetDef[];
+  type: 'recordsets';
+  value: IRecordsetDef[];
 }
 
 export interface ICommandResponseWithRecordset extends ICommandResponseItem {
-	type: 'recordset';
-	value: IRecordsetResult;
+  type: 'recordset';
+  value: IRecordsetResult;
 }
 
 // export interface IOutputParameter extends ICommandResponseItem {

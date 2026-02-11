@@ -1,20 +1,20 @@
 <sneat-pet-kind-and-breed-form
-	[$space]="$space()"
-	[$contact]="$contact()"
-	(contactChange)="onContactChanged($event)"
+  [$space]="$space()"
+  [$contact]="$contact()"
+  (contactChange)="onContactChanged($event)"
 />
 
 @if ($contact().dbo.petBreed) {
-	<ion-card>
-		<ion-item>
-			<ion-input label="Nickname" />
-		</ion-item>
+  <ion-card>
+    <ion-item>
+      <ion-input label="Nickname" />
+    </ion-item>
 
-		<ion-item>
-			<ion-input label="Full name" />
-		</ion-item>
-	</ion-card>
-	<ion-button>
-		<ion-label>Create</ion-label>
-	</ion-button>
+    <ion-item>
+      <ion-input label="Full name" />
+    </ion-item>
+  </ion-card>
+  <ion-button>
+    <ion-label>Create</ion-label>
+  </ion-button>
 }

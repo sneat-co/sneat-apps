@@ -1,33 +1,33 @@
 <ion-item class="sneat-tiny-end-padding" lines="none">
-	<ion-select
-		interface="popover"
-		[label]="label"
-		[(ngModel)]="countryID"
-		(ionChange)="onCountryChanged()"
-	>
-		<ion-select-option value="">All</ion-select-option>
-		@for (c of countries(); track c.id) {
-			<ion-select-option [value]="c.id">
-				{{ c.title }} {{ c.emoji }}
-			</ion-select-option>
-		}
-	</ion-select>
-	@if (countryID && canReset) {
-		<ion-buttons slot="end">
-			<ion-button color="medium" (click)="reset($event)">
-				<ion-icon name="close-outline" />
-			</ion-button>
-		</ion-buttons>
-	}
-	<!-- disable for now as select is showing incorrectyl and lookup us not linked-->
-	<!--	<ion-buttons slot="end" class="ion-no-margin ion-no-padding">-->
-	<!--		<ion-button *ngIf="canReset && countryID"-->
-	<!--								color="medium"-->
-	<!--								(click)="reset($event)" [disabled]="!canReset || !countryID">-->
-	<!--			<ion-icon name="close-outline"></ion-icon>-->
-	<!--		</ion-button>-->
-	<!--		<ion-button (click)="openCountrySelector($event)">-->
-	<!--			<ion-label>...</ion-label>-->
-	<!--		</ion-button>-->
-	<!--	</ion-buttons>-->
+  <ion-select
+    interface="popover"
+    [label]="label"
+    [(ngModel)]="countryID"
+    (ionChange)="onCountryChanged()"
+  >
+    <ion-select-option value="">All</ion-select-option>
+    @for (c of countries(); track c.id) {
+      <ion-select-option [value]="c.id">
+        {{ c.title }} {{ c.emoji }}
+      </ion-select-option>
+    }
+  </ion-select>
+  @if (countryID && canReset) {
+    <ion-buttons slot="end">
+      <ion-button color="medium" (click)="reset($event)">
+        <ion-icon name="close-outline" />
+      </ion-button>
+    </ion-buttons>
+  }
+  <!-- disable for now as select is showing incorrectyl and lookup us not linked-->
+  <!--	<ion-buttons slot="end" class="ion-no-margin ion-no-padding">-->
+  <!--		<ion-button *ngIf="canReset && countryID"-->
+  <!--								color="medium"-->
+  <!--								(click)="reset($event)" [disabled]="!canReset || !countryID">-->
+  <!--			<ion-icon name="close-outline"></ion-icon>-->
+  <!--		</ion-button>-->
+  <!--		<ion-button (click)="openCountrySelector($event)">-->
+  <!--			<ion-label>...</ion-label>-->
+  <!--		</ion-button>-->
+  <!--	</ion-buttons>-->
 </ion-item>

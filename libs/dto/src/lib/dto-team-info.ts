@@ -2,14 +2,14 @@ import { SpaceType } from '@sneat/core';
 import { IUserCommuneInfo } from './dto-user';
 
 export interface IShortSpaceInfo {
-	type: SpaceType;
-	id?: string;
-	// shortId?: CommuneShortId;
-	title?: string;
+  type: SpaceType;
+  id?: string;
+  // shortId?: CommuneShortId;
+  title?: string;
 }
 
 export function createShortCommuneInfoFromUserCommuneInfo(
-	v: IUserCommuneInfo,
+  v: IUserCommuneInfo,
 ): IShortSpaceInfo {
-	return { id: v.id, title: v.title, /*shortId: v.shortId,*/ type: v.type };
+  return { id: v.id, title: v.title, /*shortId: v.shortId,*/ type: v.type };
 }

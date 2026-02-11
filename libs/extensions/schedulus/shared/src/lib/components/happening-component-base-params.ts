@@ -5,16 +5,16 @@ import { HappeningService } from '../services/happening.service';
 
 @Injectable()
 export class HappeningComponentBaseParams {
-	readonly spaceParams = inject(SpaceComponentBaseParams);
-	readonly happeningService = inject(HappeningService);
-	readonly calendariumSpaceService = inject(CalendariumSpaceService);
+  readonly spaceParams = inject(SpaceComponentBaseParams);
+  readonly happeningService = inject(HappeningService);
+  readonly calendariumSpaceService = inject(CalendariumSpaceService);
 }
 
 @NgModule({
-	providers: [
-		HappeningComponentBaseParams,
-		SpaceComponentBaseParams,
-		CalendariumSpaceService,
-	],
+  providers: [
+    HappeningComponentBaseParams,
+    SpaceComponentBaseParams,
+    CalendariumSpaceService,
+  ],
 })
 export class HappeningComponentBaseParamsModule {}

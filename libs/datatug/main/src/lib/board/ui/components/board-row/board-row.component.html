@@ -1,10 +1,10 @@
 <ion-row class="ion-no-padding">
-	@for (boarCardDef of boardRowDef?.cards; track boarCardDef.id) {
-	<ion-col class="ion-no-padding">
-		<sneat-datatug-board-card
-			[boarCardDef]="boarCardDef"
-			[boardContext]="boardContext"
-		/>
-	</ion-col>
-	}
+  @for (boarCardDef of boardRowDef?.cards; track boarCardDef.id) {
+    <ion-col class="ion-no-padding">
+      <sneat-datatug-board-card
+        [boarCardDef]="boarCardDef"
+        [boardContext]="boardContext"
+      />
+    </ion-col>
+  }
 </ion-row>

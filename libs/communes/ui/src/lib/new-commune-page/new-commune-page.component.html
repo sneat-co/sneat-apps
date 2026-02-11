@@ -1,57 +1,57 @@
 <ion-header>
-	<ion-toolbar color="light">
-		<ion-buttons slot="start">
-			<ion-back-button defaultHref="communes" />
-		</ion-buttons>
-		<ion-title>New commune</ion-title>
-	</ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="communes" />
+    </ion-buttons>
+    <ion-title>New commune</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-	<ion-list>
-		@if (code) {
-			<ion-item>
-				<ion-label>Commune type</ion-label>
-				<ion-icon slot="start" name="home" />
-				<ion-select [(ngModel)]="code" interface="popover">
-					@for (type of types; track type.code) {
-						<ion-select-option
-							>{{ type.emoji }} {{ type.title }}</ion-select-option
-						>
-					}
-				</ion-select>
-			</ion-item>
-		} @else {
-			<ion-list-header>
-				<ion-label>Choose commune type</ion-label>
-			</ion-list-header>
-			<ion-radio-group [(ngModel)]="code" (ionChange)="onTypeChanged()">
-				@for (type of types; track type.code) {
-					<ion-item>
-						<ion-radio [value]="type.code"
-							>{{ type.emoji }} {{ type.title }}
-						</ion-radio>
-					</ion-item>
-				}
-			</ion-radio-group>
-		}
-		@if (!!code && code !== "family") {
-			<ion-item>
-				<ion-label>Commune name</ion-label>
-				<ion-input #nameInput [(ngModel)]="name" />
-			</ion-item>
-		}
-	</ion-list>
+  <ion-list>
+    @if (code) {
+      <ion-item>
+        <ion-label>Commune type</ion-label>
+        <ion-icon slot="start" name="home" />
+        <ion-select [(ngModel)]="code" interface="popover">
+          @for (type of types; track type.code) {
+            <ion-select-option
+              >{{ type.emoji }} {{ type.title }}</ion-select-option
+            >
+          }
+        </ion-select>
+      </ion-item>
+    } @else {
+      <ion-list-header>
+        <ion-label>Choose commune type</ion-label>
+      </ion-list-header>
+      <ion-radio-group [(ngModel)]="code" (ionChange)="onTypeChanged()">
+        @for (type of types; track type.code) {
+          <ion-item>
+            <ion-radio [value]="type.code"
+              >{{ type.emoji }} {{ type.title }}
+            </ion-radio>
+          </ion-item>
+        }
+      </ion-radio-group>
+    }
+    @if (!!code && code !== "family") {
+      <ion-item>
+        <ion-label>Commune name</ion-label>
+        <ion-input #nameInput [(ngModel)]="name" />
+      </ion-item>
+    }
+  </ion-list>
 
-	@if (code === "family") {
-		<ion-card>
-			<ion-card-content>
-				<sneat-new-family-wizard (ready)="onFormReadyChanged($event)" />
-			</ion-card-content>
-		</ion-card>
-	}
+  @if (code === "family") {
+    <ion-card>
+      <ion-card-content>
+        <sneat-new-family-wizard (ready)="onFormReadyChanged($event)" />
+      </ion-card-content>
+    </ion-card>
+  }
 
-	@if (formIsReady) {
-		<ion-button>Create commune</ion-button>
-	}
+  @if (formIsReady) {
+    <ion-button>Create commune</ion-button>
+  }
 </ion-content>

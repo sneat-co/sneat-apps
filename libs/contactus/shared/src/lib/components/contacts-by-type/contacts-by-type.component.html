@@ -1,100 +1,100 @@
 @for (
-	contactGroup of $contactGroups();
-	track contactGroup.id;
-	let isLastContactGroup = $last
+  contactGroup of $contactGroups();
+  track contactGroup.id;
+  let isLastContactGroup = $last
 ) {
-	<ion-item-group @listItem>
-		<ion-item color="light" lines="full" class="sneat-tiny-end-padding">
-			<ion-label>{{ contactGroup.brief.title }}</ion-label>
-			<ion-buttons slot="end">
-				<ion-button color="tertiary" (click)="addContact($event, contactGroup)">
-					<ion-icon name="add" slot="start" />
-					<ion-label>Add contact</ion-label>
-				</ion-button>
-			</ion-buttons>
-		</ion-item>
-		@for (role of contactGroup.roles; track role.id; let lastRole = $last) {
-			<ion-item
-				class="sneat-tiny-end-padding"
-				[lines]="lastRole && isLastContactGroup ? 'none' : 'full'"
-			>
-				<ion-label color="medium">
-					<span class="ion-margin-end">{{ role.brief.emoji }}</span>
-					<b class="ion-margin-end">{{
-						role.brief.titlePlural || role.brief.title
-					}}</b>
-					&mdash;
-					<i class="ion-margin-start">
-						@if (!role.contacts) {
-							loading...
-						} @else {
-							@switch (role.contacts.length) {
-								@case (0) {
-									not added yet
-								}
-								@default {
-									{{ role.contacts.length }}
-								}
-							}
-						}
-					</i>
-				</ion-label>
-				@if (!role.contacts) {
-					<ion-spinner name="lines-small" color="medium" slot="end" />
-				}
-				<ion-buttons slot="end">
-					@if (role.brief.finder) {
-						<ion-button
-							target="_blank"
-							color="medium"
-							[href]="'https:' + role.brief.finder"
-							[title]="'Find at https://' + role.brief.finder"
-							(click)="find($event)"
-						>
-							Find
-						</ion-button>
-					}
-					<ion-button
-						color="tertiary"
-						(click)="addContact($event, contactGroup, role)"
-					>
-						<ion-icon name="add-outline" slot="start" />
-						<ion-label>Add</ion-label>
-					</ion-button>
-				</ion-buttons>
-			</ion-item>
-			@for (
-				contact of role.contacts;
-				track contact.id;
-				let lastContact = $last
-			) {
-				<ion-item-sliding @listItem>
-					<sneat-contacts-list-item
-						[$space]="$space()"
-						[$contact]="contact"
-						[contactClicked]="contactClicked"
-						[showBorder]="lastContact ? 'full' : 'inset'"
-						(checkChange)="checkChanged($event, role.id)"
-					/>
-				</ion-item-sliding>
-			}
-		}
-	</ion-item-group>
+  <ion-item-group @listItem>
+    <ion-item color="light" lines="full" class="sneat-tiny-end-padding">
+      <ion-label>{{ contactGroup.brief.title }}</ion-label>
+      <ion-buttons slot="end">
+        <ion-button color="tertiary" (click)="addContact($event, contactGroup)">
+          <ion-icon name="add" slot="start" />
+          <ion-label>Add contact</ion-label>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+    @for (role of contactGroup.roles; track role.id; let lastRole = $last) {
+      <ion-item
+        class="sneat-tiny-end-padding"
+        [lines]="lastRole && isLastContactGroup ? 'none' : 'full'"
+      >
+        <ion-label color="medium">
+          <span class="ion-margin-end">{{ role.brief.emoji }}</span>
+          <b class="ion-margin-end">{{
+            role.brief.titlePlural || role.brief.title
+          }}</b>
+          &mdash;
+          <i class="ion-margin-start">
+            @if (!role.contacts) {
+              loading...
+            } @else {
+              @switch (role.contacts.length) {
+                @case (0) {
+                  not added yet
+                }
+                @default {
+                  {{ role.contacts.length }}
+                }
+              }
+            }
+          </i>
+        </ion-label>
+        @if (!role.contacts) {
+          <ion-spinner name="lines-small" color="medium" slot="end" />
+        }
+        <ion-buttons slot="end">
+          @if (role.brief.finder) {
+            <ion-button
+              target="_blank"
+              color="medium"
+              [href]="'https:' + role.brief.finder"
+              [title]="'Find at https://' + role.brief.finder"
+              (click)="find($event)"
+            >
+              Find
+            </ion-button>
+          }
+          <ion-button
+            color="tertiary"
+            (click)="addContact($event, contactGroup, role)"
+          >
+            <ion-icon name="add-outline" slot="start" />
+            <ion-label>Add</ion-label>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+      @for (
+        contact of role.contacts;
+        track contact.id;
+        let lastContact = $last
+      ) {
+        <ion-item-sliding @listItem>
+          <sneat-contacts-list-item
+            [$space]="$space()"
+            [$contact]="contact"
+            [contactClicked]="contactClicked"
+            [showBorder]="lastContact ? 'full' : 'inset'"
+            (checkChange)="checkChanged($event, role.id)"
+          />
+        </ion-item-sliding>
+      }
+    }
+  </ion-item-group>
 }
 
 @if ($otherContacts()?.length) {
-	<ion-item-group @listItem>
-		<ion-item-divider color="light">
-			<ion-label>Other</ion-label>
-		</ion-item-divider>
-		@for (contact of $contacts() || []; track contact.id) {
-			<ion-item-sliding @listItem>
-				<sneat-contacts-list-item
-					[$space]="$space()"
-					[$contact]="contact"
-					[contactClicked]="contactClicked"
-				/>
-			</ion-item-sliding>
-		}
-	</ion-item-group>
+  <ion-item-group @listItem>
+    <ion-item-divider color="light">
+      <ion-label>Other</ion-label>
+    </ion-item-divider>
+    @for (contact of $contacts() || []; track contact.id) {
+      <ion-item-sliding @listItem>
+        <sneat-contacts-list-item
+          [$space]="$space()"
+          [$contact]="contact"
+          [contactClicked]="contactClicked"
+        />
+      </ion-item-sliding>
+    }
+  </ion-item-group>
 }

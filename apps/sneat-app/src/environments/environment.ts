@@ -6,4 +6,4 @@ import { IEnvironmentConfig } from '@sneat/core';
 
 // See environment.prod.ts for production environment configuration
 export const sneatAppEnvironmentConfig: IEnvironmentConfig =
-	appSpecificConfig(environmentConfig);
+  appSpecificConfig(environmentConfig);

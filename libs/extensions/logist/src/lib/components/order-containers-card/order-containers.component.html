@@ -1,32 +1,32 @@
 @if (containers && !containers.length) {
-	<ion-card>
-		<ion-item-divider>
-			<ion-label>No container have been added yet</ion-label>
-		</ion-item-divider>
-	</ion-card>
+  <ion-card>
+    <ion-item-divider>
+      <ion-label>No container have been added yet</ion-label>
+    </ion-item-divider>
+  </ion-card>
 }
 
 <ion-grid class="ion-grid-layout">
-	<ion-row>
-		<ion-col [size]="selectedContainer ? 3 : 12">
-			<sneat-order-containers-grid
-				[order]="order"
-				(containerSelected)="onContainerSelected($event)"
-			/>
-		</ion-col>
-		@if (selectedContainer) {
-			<ion-col size="9">
-				<ion-card>
-					<sneat-order-container
-						[space]="space"
-						[order]="order"
-						[container]="selectedContainer"
-						[i]="indexOfContainer(selectedContainer)"
-					/>
-				</ion-card>
-			</ion-col>
-		}
-	</ion-row>
+  <ion-row>
+    <ion-col [size]="selectedContainer ? 3 : 12">
+      <sneat-order-containers-grid
+        [order]="order"
+        (containerSelected)="onContainerSelected($event)"
+      />
+    </ion-col>
+    @if (selectedContainer) {
+      <ion-col size="9">
+        <ion-card>
+          <sneat-order-container
+            [space]="space"
+            [order]="order"
+            [container]="selectedContainer"
+            [i]="indexOfContainer(selectedContainer)"
+          />
+        </ion-card>
+      </ion-col>
+    }
+  </ion-row>
 </ion-grid>
 
 <!--<ion-card *ngFor="let container of containers; let i = index; trackBy:id">-->

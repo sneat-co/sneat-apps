@@ -1,74 +1,74 @@
 <ion-header>
-	<ion-toolbar>
-		<ion-back-button slot="start" defaultHref="team?id={{spaceID}}" />
-		<ion-title>Retrospective</ion-title>
-	</ion-toolbar>
+  <ion-toolbar>
+    <ion-back-button slot="start" defaultHref="team?id={{spaceID}}" />
+    <ion-title>Retrospective</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<sneat-retro-timer />
+  <sneat-retro-timer />
 
-	@for (question of questions; track trackById($index, question)) {
-	<ion-card>
-		<ion-card-header>
-			<ion-card-title>{{question.title}}</ion-card-title>
-		</ion-card-header>
-		<!--		<sneat-retro-my-items-->
-		<!--			[question]="question.id"-->
-		<!--			[teamId]="teamId"-->
-		<!--			[retroId]="retroId"-->
-		<!--		></sneat-retro-my-items>-->
-	</ion-card>
-	}
+  @for (question of questions; track trackById($index, question)) {
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{question.title}}</ion-card-title>
+    </ion-card-header>
+    <!--		<sneat-retro-my-items-->
+    <!--			[question]="question.id"-->
+    <!--			[teamId]="teamId"-->
+    <!--			[retroId]="retroId"-->
+    <!--		></sneat-retro-my-items>-->
+  </ion-card>
+  }
 
-	<div class="ion-padding">
-		<ion-button size="large" (click)="goRetroReview()">
-			<ion-label>I am ready for review</ion-label>
-			<ion-icon name="chevron-forward-outline" slot="end" />
-		</ion-button>
-	</div>
+  <div class="ion-padding">
+    <ion-button size="large" (click)="goRetroReview()">
+      <ion-label>I am ready for review</ion-label>
+      <ion-icon name="chevron-forward-outline" slot="end" />
+    </ion-button>
+  </div>
 
-	<ion-card>
-		<ion-list>
-			<ion-item-divider>
-				<ion-label>Other participants</ion-label>
-			</ion-item-divider>
-			<ion-item>
-				<ion-icon slot="start" name="create-outline" />
-				<ion-label>John</ion-label>
-				<ion-buttons slot="end">
-					<ion-button>
-						<ion-label color="success" title="Good">0</ion-label>
-					</ion-button>
-					<ion-button>
-						<ion-label color="danger" title="Bad">0</ion-label>
-					</ion-button>
-					<ion-button>
-						<ion-label color="warning" title="Kudos">0</ion-label>
-					</ion-button>
-					<ion-button>
-						<ion-label color="primary" title="Ideas">0</ion-label>
-					</ion-button>
-				</ion-buttons>
-			</ion-item>
-			<ion-item>
-				<ion-icon slot="start" color="success" name="checkmark-done-outline" />
-				<ion-label>Jack</ion-label>
-				<ion-buttons slot="end">
-					<ion-button>
-						<ion-label color="success" title="Good">0</ion-label>
-					</ion-button>
-					<ion-button>
-						<ion-label color="danger" title="Bad">0</ion-label>
-					</ion-button>
-					<ion-button>
-						<ion-label color="warning" title="Kudos">0</ion-label>
-					</ion-button>
-					<ion-button>
-						<ion-label color="primary" title="Ideas">0</ion-label>
-					</ion-button>
-				</ion-buttons>
-			</ion-item>
-		</ion-list>
-	</ion-card>
+  <ion-card>
+    <ion-list>
+      <ion-item-divider>
+        <ion-label>Other participants</ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-icon slot="start" name="create-outline" />
+        <ion-label>John</ion-label>
+        <ion-buttons slot="end">
+          <ion-button>
+            <ion-label color="success" title="Good">0</ion-label>
+          </ion-button>
+          <ion-button>
+            <ion-label color="danger" title="Bad">0</ion-label>
+          </ion-button>
+          <ion-button>
+            <ion-label color="warning" title="Kudos">0</ion-label>
+          </ion-button>
+          <ion-button>
+            <ion-label color="primary" title="Ideas">0</ion-label>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="start" color="success" name="checkmark-done-outline" />
+        <ion-label>Jack</ion-label>
+        <ion-buttons slot="end">
+          <ion-button>
+            <ion-label color="success" title="Good">0</ion-label>
+          </ion-button>
+          <ion-button>
+            <ion-label color="danger" title="Bad">0</ion-label>
+          </ion-button>
+          <ion-button>
+            <ion-label color="warning" title="Kudos">0</ion-label>
+          </ion-button>
+          <ion-button>
+            <ion-label color="primary" title="Ideas">0</ion-label>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-list>
+  </ion-card>
 </ion-content>

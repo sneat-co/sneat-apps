@@ -9,26 +9,26 @@ export type SneatRecordStatus = 'active' | 'archived' | 'deleted';
 export type CommuneType = SpaceType;
 
 export type CountryId =
-	| 'IE'
-	| 'US'
-	| 'UK'
-	| 'RU'
-	| 'FR'
-	| 'ES'
-	| 'AU'
-	| 'ZA'
-	| string;
+  | 'IE'
+  | 'US'
+  | 'UK'
+  | 'RU'
+  | 'FR'
+  | 'ES'
+  | 'AU'
+  | 'ZA'
+  | string;
 
 export type CommuneItemCounter =
-	| 'activities'
-	| 'assets'
-	| 'assetGroups'
-	| 'contacts'
-	| 'documents'
-	| 'liabilities'
-	| 'members'
-	| 'memberGroups'
-	| 'overdues'
-	| 'regularTasks'
-	| 'todos'
-	| 'upcomings';
+  | 'activities'
+  | 'assets'
+  | 'assetGroups'
+  | 'contacts'
+  | 'documents'
+  | 'liabilities'
+  | 'members'
+  | 'memberGroups'
+  | 'overdues'
+  | 'regularTasks'
+  | 'todos'
+  | 'upcomings';

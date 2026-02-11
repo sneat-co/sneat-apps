@@ -1,25 +1,31 @@
 import { TestBed } from '@angular/core/testing';
+import { Firestore } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
-import { AssetService } from './asset-service.service';
+import { AssetService } from './asset-service';
+
+vi.mock('@angular/fire/firestore', () => ({
+  collection: vi.fn(),
+  Firestore: vi.fn(),
+}));
 
 describe('AssetService', () => {
-	beforeEach(() =>
-		TestBed.configureTestingModule({
-			providers: [
-				AssetService,
-				{ provide: SneatApiService, useValue: { post: vi.fn() } },
-			],
-		}),
-	);
+  beforeEach(() =>
+    TestBed.configureTestingModule({
+      providers: [
+        AssetService,
+        {
+          provide: Firestore,
+          useValue: {},
+        },
+        {
+          provide: SneatApiService,
+          useValue: { post: vi.fn(), delete: vi.fn() },
+        },
+      ],
+    }),
+  );
 
-	it('should be created', () => {
-		expect(TestBed.inject(AssetService)).toBeTruthy();
-	});
-
-	// Add specific test cases for your service methods
-	// Example:
-	// it('should handle API calls', () => {
-	//   const service = TestBed.inject(AssetService);
-	//   // Test your service logic
-	// });
+  it('should be created', () => {
+    expect(TestBed.inject(AssetService)).toBeTruthy();
+  });
 });

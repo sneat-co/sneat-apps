@@ -1,66 +1,66 @@
 <ion-item-group>
-	<ion-item-divider [color]="$hasSelectedContacts() ? 'light' : 'primary'">
-		<b>Belongs to</b>&nbsp;<i>- please choose</i>
-		<ion-buttons slot="end">
-			@if ($hasSelectedContacts()) {
-				<ion-button color="medium" (click)="clear()">
-					<ion-icon name="close-outline" />
-				</ion-button>
-			} @else {
-				<ion-button (click)="clear()">
-					<ion-label>Skip</ion-label>
-				</ion-button>
-			}
-		</ion-buttons>
-	</ion-item-divider>
+  <ion-item-divider [color]="$hasSelectedContacts() ? 'light' : 'primary'">
+    <b>Belongs to</b>&nbsp;<i>- please choose</i>
+    <ion-buttons slot="end">
+      @if ($hasSelectedContacts()) {
+        <ion-button color="medium" (click)="clear()">
+          <ion-icon name="close-outline" />
+        </ion-button>
+      } @else {
+        <ion-button (click)="clear()">
+          <ion-label>Skip</ion-label>
+        </ion-button>
+      }
+    </ion-buttons>
+  </ion-item-divider>
 
-	<sneat-contacts-list [$space]="$space()" [$contacts]="$contactsWithSpace()">
-		<!--	[(selectedMembers)]="selectedContacts"-->
-		<!--	(selectedMembersChange)="onSelectedMembersChanged($event)"-->
-		<!--	[max]="$max()"-->
-	</sneat-contacts-list>
+  <sneat-contacts-list [$space]="$space()" [$contacts]="$contactsWithSpace()">
+    <!--	[(selectedMembers)]="selectedContacts"-->
+    <!--	(selectedMembersChange)="onSelectedMembersChanged($event)"-->
+    <!--	[max]="$max()"-->
+  </sneat-contacts-list>
 
-	@if ($hasSelectedContacts()) {
-		@if ($max() === 1 && ($selectedContacts().length || 0) === 1) {
-			<ion-item>
-				<ion-icon name="person-outline" color="medium" slot="start" />
-				<ion-label color="medium">Member</ion-label>
-				<ion-select [value]="selectedContactID" interface="popover">
-					@for (contact of $contacts() || []; track contact.id) {
-						<ion-select-option [value]="contact.id">
-							{{ contact | contactTitle }}
-						</ion-select-option>
-					}
-				</ion-select>
-			</ion-item>
-		}
-		@if ($hasSelectedContacts() && ($max() !== 1 || !$hasSelectedContacts())) {
-			<ion-item>
-				@if (!$hasSelectedContacts()) {
-					<ion-label color="medium">
-						<sneat-contacts-as-badges
-							[$contacts]="$selectedContacts()"
-							(deleteContact)="onRemoveMember($event)"
-						/>
-						@if (!$hasSelectedContacts()) {
-							@if ($contacts()) {
-								Nobody assigned
-							} @else {
-								Loading...
-							}
-						}
-					</ion-label>
-				} @else {
-					<ion-label color="medium"> No members selected </ion-label>
-				}
+  @if ($hasSelectedContacts()) {
+    @if ($max() === 1 && ($selectedContacts().length || 0) === 1) {
+      <ion-item>
+        <ion-icon name="person-outline" color="medium" slot="start" />
+        <ion-label color="medium">Member</ion-label>
+        <ion-select [value]="selectedContactID" interface="popover">
+          @for (contact of $contacts() || []; track contact.id) {
+            <ion-select-option [value]="contact.id">
+              {{ contact | contactTitle }}
+            </ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+    }
+    @if ($hasSelectedContacts() && ($max() !== 1 || !$hasSelectedContacts())) {
+      <ion-item>
+        @if (!$hasSelectedContacts()) {
+          <ion-label color="medium">
+            <sneat-contacts-as-badges
+              [$contacts]="$selectedContacts()"
+              (deleteContact)="onRemoveMember($event)"
+            />
+            @if (!$hasSelectedContacts()) {
+              @if ($contacts()) {
+                Nobody assigned
+              } @else {
+                Loading...
+              }
+            }
+          </ion-label>
+        } @else {
+          <ion-label color="medium"> No members selected </ion-label>
+        }
 
-				<ion-buttons slot="end">
-					<ion-button color="tertiary" (click)="selectContacts($event)">
-						<ion-icon name="person-add-outline" slot="start" />
-						<ion-label>Add</ion-label>
-					</ion-button>
-				</ion-buttons>
-			</ion-item>
-		}
-	}
+        <ion-buttons slot="end">
+          <ion-button color="tertiary" (click)="selectContacts($event)">
+            <ion-icon name="person-add-outline" slot="start" />
+            <ion-label>Add</ion-label>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    }
+  }
 </ion-item-group>

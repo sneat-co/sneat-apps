@@ -2,40 +2,40 @@ import { IParameterDef, IParameterValueWithoutID } from '../parameter';
 import { WidgetDef } from './widget-def';
 
 export interface IBoardDef {
-	id: string;
-	title: string;
-	description?: string;
-	rows?: IBoardRowDef[];
-	parameters?: IParameterDef[];
-	tags?: string[];
-	related?: {
-		boards?: string[];
-	};
+  id: string;
+  title: string;
+  description?: string;
+  rows?: IBoardRowDef[];
+  parameters?: IParameterDef[];
+  tags?: string[];
+  related?: {
+    boards?: string[];
+  };
 }
 
 export interface IBoardRowDef {
-	minHeight?: string;
-	maxHeight?: string;
-	cards?: IBoardCardDef[]; // No more then 4 cards per row as we have only 12 available columns
+  minHeight?: string;
+  maxHeight?: string;
+  cards?: IBoardCardDef[]; // No more then 4 cards per row as we have only 12 available columns
 }
 
 export interface IBoardCardDef {
-	id: string; // Card ID, good to have for reordering for example
-	title: string;
-	cols?: number; // Specifies how many of 12 available columns it can take
-	widget?: WidgetDef;
+  id: string; // Card ID, good to have for reordering for example
+  title: string;
+  cols?: number; // Specifies how many of 12 available columns it can take
+  widget?: WidgetDef;
 }
 
 export interface IWidgetPosition {
-	rowIndex: number;
-	colIndex: number;
+  rowIndex: number;
+  colIndex: number;
 }
 
 export interface IBoardWidgetInstance {
-	initBoardWidget?: (position: IWidgetPosition) => void;
+  initBoardWidget?: (position: IWidgetPosition) => void;
 }
 
 export interface IBoardContext {
-	mode: 'edit' | 'view';
-	parameters: Record<string, IParameterValueWithoutID>;
+  mode: 'edit' | 'view';
+  parameters: Record<string, IParameterValueWithoutID>;
 }

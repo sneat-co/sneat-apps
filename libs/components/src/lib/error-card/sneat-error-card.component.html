@@ -1,20 +1,20 @@
 <ion-card>
-	<ion-card-header>
-		<ion-card-title color="danger">Error</ion-card-title>
-	</ion-card-header>
-	<ion-card-content>
-		@if (error?.message) {
-			<p>
-				{{ error?.message }}
-			</p>
-		}
-		<ion-item>
-			<ion-textarea
-				readonly="true"
-				[value]="error | json"
-				autoGrow="true"
-				color="medium"
-			/>
-		</ion-item>
-	</ion-card-content>
+  <ion-card-header>
+    <ion-card-title color="danger">Error</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    @if (error?.message) {
+      <p>
+        {{ error?.message }}
+      </p>
+    }
+    <ion-item>
+      <ion-textarea
+        readonly="true"
+        [value]="error | json"
+        autoGrow="true"
+        color="medium"
+      />
+    </ion-item>
+  </ion-card-content>
 </ion-card>

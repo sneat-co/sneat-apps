@@ -14,88 +14,88 @@ import { QueryEditorStateService } from '../../query-editor-state-service';
 import { EnvironmentService } from '../../../services/unsorted/environment.service';
 
 describe('SqlEditorPage', () => {
-	let component: QueryPageComponent;
-	let fixture: ComponentFixture<QueryPageComponent>;
+  let component: QueryPageComponent;
+  let fixture: ComponentFixture<QueryPageComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		Object.defineProperty(window, 'history', {
-			value: { ...window.history, state: { query: undefined } },
-			writable: true,
-			configurable: true,
-		});
-		await TestBed.configureTestingModule({
-			imports: [QueryPageComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			providers: [
-				{
-					provide: ErrorLogger,
-					useValue: {
-						logError: vi.fn(),
-						logErrorHandler: vi.fn(() => vi.fn()),
-					},
-				},
-				{
-					provide: RandomIdService,
-					useValue: { newRandomId: vi.fn(() => 'test-id') },
-				},
-				{
-					provide: DatatugNavContextService,
-					useValue: {
-						currentProject: of(undefined),
-						currentEnv: of(undefined),
-						setCurrentEnvironment: vi.fn(),
-					},
-				},
-				{
-					provide: ActivatedRoute,
-					useValue: {
-						queryParamMap: of({ get: () => null }),
-						paramMap: of({ get: () => null }),
-						snapshot: { paramMap: { get: () => null }, params: {} },
-					},
-				},
-				{
-					provide: Router,
-					useValue: {
-						navigate: vi.fn(() => Promise.resolve(true)),
-						events: of(),
-					},
-				},
-				{
-					provide: QueryContextSqlService,
-					useValue: { setSql: vi.fn(), setTarget: vi.fn() },
-				},
-				{ provide: QueriesService, useValue: {} },
-				{ provide: Coordinator, useValue: { execute: vi.fn() } },
-				{
-					provide: QueryEditorStateService,
-					useValue: {
-						queryEditorState: of(undefined),
-						updateQueryState: vi.fn(),
-						openQuery: vi.fn(),
-						newQuery: vi.fn(),
-						getQueryState: vi.fn(),
-						saveQuery: vi.fn(),
-					},
-				},
-				{ provide: EnvironmentService, useValue: { getEnvSummary: vi.fn() } },
-			],
-		})
-			.overrideComponent(QueryPageComponent, {
-				set: {
-					imports: [],
-					template: '',
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
-					providers: [],
-				},
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    Object.defineProperty(window, 'history', {
+      value: { ...window.history, state: { query: undefined } },
+      writable: true,
+      configurable: true,
+    });
+    await TestBed.configureTestingModule({
+      imports: [QueryPageComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        {
+          provide: ErrorLogger,
+          useValue: {
+            logError: vi.fn(),
+            logErrorHandler: vi.fn(() => vi.fn()),
+          },
+        },
+        {
+          provide: RandomIdService,
+          useValue: { newRandomId: vi.fn(() => 'test-id') },
+        },
+        {
+          provide: DatatugNavContextService,
+          useValue: {
+            currentProject: of(undefined),
+            currentEnv: of(undefined),
+            setCurrentEnvironment: vi.fn(),
+          },
+        },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            queryParamMap: of({ get: () => null }),
+            paramMap: of({ get: () => null }),
+            snapshot: { paramMap: { get: () => null }, params: {} },
+          },
+        },
+        {
+          provide: Router,
+          useValue: {
+            navigate: vi.fn(() => Promise.resolve(true)),
+            events: of(),
+          },
+        },
+        {
+          provide: QueryContextSqlService,
+          useValue: { setSql: vi.fn(), setTarget: vi.fn() },
+        },
+        { provide: QueriesService, useValue: {} },
+        { provide: Coordinator, useValue: { execute: vi.fn() } },
+        {
+          provide: QueryEditorStateService,
+          useValue: {
+            queryEditorState: of(undefined),
+            updateQueryState: vi.fn(),
+            openQuery: vi.fn(),
+            newQuery: vi.fn(),
+            getQueryState: vi.fn(),
+            saveQuery: vi.fn(),
+          },
+        },
+        { provide: EnvironmentService, useValue: { getEnvSummary: vi.fn() } },
+      ],
+    })
+      .overrideComponent(QueryPageComponent, {
+        set: {
+          imports: [],
+          template: '',
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+          providers: [],
+        },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(QueryPageComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(QueryPageComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

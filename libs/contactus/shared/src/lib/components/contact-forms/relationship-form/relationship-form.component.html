@@ -1,57 +1,57 @@
 <ion-card @formNextIn>
-	<!--	<p>$relatedTo: {{ $relatedTo() | json }}</p>-->
-	<!--	<p>$spaceType: {{ $spaceType() }}</p>-->
-	<!--	<p>$rolesOfItemRelatedToTarget(): {{ $rolesOfItemRelatedToTarget() | json }}</p>-->
-	<!--	<p>$relationshipOptions: {{ $relationshipOptions()|json }}</p>-->
+  <!--	<p>$relatedTo: {{ $relatedTo() | json }}</p>-->
+  <!--	<p>$spaceType: {{ $spaceType() }}</p>-->
+  <!--	<p>$rolesOfItemRelatedToTarget(): {{ $rolesOfItemRelatedToTarget() | json }}</p>-->
+  <!--	<p>$relationshipOptions: {{ $relationshipOptions()|json }}</p>-->
 
-	<ion-item-divider
-		[color]="isActive ? 'primary' : 'light'"
-		class="sneat-tiny-end-padding"
-	>
-		<ion-label>
-			<b>{{ label }}</b>
-		</ion-label>
-		@if (
-			$hasRelationships() && $relationshipsCount() < maxNumberOfRelationships
-		) {
-			<ion-buttons slot="end">
-				<ion-button (click)="openAddRelationship($event)" color="medium">
-					<ion-icon name="add" slot="start" />
-					<ion-label>Add</ion-label>
-				</ion-button>
-			</ion-buttons>
-		}
-	</ion-item-divider>
+  <ion-item-divider
+    [color]="isActive ? 'primary' : 'light'"
+    class="sneat-tiny-end-padding"
+  >
+    <ion-label>
+      <b>{{ label }}</b>
+    </ion-label>
+    @if (
+      $hasRelationships() && $relationshipsCount() < maxNumberOfRelationships
+    ) {
+      <ion-buttons slot="end">
+        <ion-button (click)="openAddRelationship($event)" color="medium">
+          <ion-icon name="add" slot="start" />
+          <ion-label>Add</ion-label>
+        </ion-button>
+      </ion-buttons>
+    }
+  </ion-item-divider>
 
-	<!-- we do not use select even if a single role selected as it requires a "replace" implementation that is quite complex without big benefits to UX -->
+  <!-- we do not use select even if a single role selected as it requires a "replace" implementation that is quite complex without big benefits to UX -->
 
-	@if ($rolesOfItemRelatedToTarget(); as rolesOfItemRelatedToTarget) {
-		@for (rel of rolesOfItemRelatedToTarget; track rel.id) {
-			<ion-item class="sneat-tiny-end-padding">
-				<ion-label>{{ rel.id }}</ion-label>
-				<ion-buttons slot="end">
-					<ion-button
-						color="medium"
-						title="Remove relationship"
-						(click)="removeRelationship($event, rel.id)"
-					>
-						<ion-icon name="close-outline" />
-					</ion-button>
-				</ion-buttons>
-			</ion-item>
-		} @empty {
-			<!-- we do use select from list when no roles selected for great UX -->
-			<sneat-select-from-list
-				[items]="$relationshipOptions()"
-				[label]="label"
-				[$isProcessing]="$isProcessing()"
-				(valueChange)="onRelationshipChanged($event)"
-			/>
-		}
-	} @else {
-		<ion-item>
-			<ion-label color="medium">Loading...</ion-label>
-			<ion-spinner name="lines-small" slot="end" />
-		</ion-item>
-	}
+  @if ($rolesOfItemRelatedToTarget(); as rolesOfItemRelatedToTarget) {
+    @for (rel of rolesOfItemRelatedToTarget; track rel.id) {
+      <ion-item class="sneat-tiny-end-padding">
+        <ion-label>{{ rel.id }}</ion-label>
+        <ion-buttons slot="end">
+          <ion-button
+            color="medium"
+            title="Remove relationship"
+            (click)="removeRelationship($event, rel.id)"
+          >
+            <ion-icon name="close-outline" />
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    } @empty {
+      <!-- we do use select from list when no roles selected for great UX -->
+      <sneat-select-from-list
+        [items]="$relationshipOptions()"
+        [label]="label"
+        [$isProcessing]="$isProcessing()"
+        (valueChange)="onRelationshipChanged($event)"
+      />
+    }
+  } @else {
+    <ion-item>
+      <ion-label color="medium">Loading...</ion-label>
+      <ion-spinner name="lines-small" slot="end" />
+    </ion-item>
+  }
 </ion-card>

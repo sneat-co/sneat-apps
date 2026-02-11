@@ -1,34 +1,34 @@
 {
-	"name": "scrumspace-retrospectives",
-	"$schema": "../../../node_modules/nx/schemas/project-schema.json",
-	"projectType": "library",
-	"sourceRoot": "libs/scrumspace/retrospectives/src",
-	"prefix": "sneat",
-	"targets": {
-		"build": {
-			"executor": "@nx/angular:ng-packagr-lite",
-			"outputs": ["{workspaceRoot}/dist/libs/scrumspace/retrospectives"],
-			"options": {
-				"project": "libs/scrumspace/retrospectives/ng-package.json",
-				"tsConfig": "libs/scrumspace/retrospectives/tsconfig.lib.json"
-			},
-			"configurations": {
-				"production": {
-					"tsConfig": "libs/scrumspace/retrospectives/tsconfig.lib.prod.json"
-				},
-				"development": {}
-			},
-			"defaultConfiguration": "production"
-		},
-		"test": {
-			"executor": "@nx/vitest:test",
-			"outputs": ["{workspaceRoot}/coverage/libs/scrumspace/retrospectives"],
-			"options": {
-				"tsConfig": "libs/scrumspace/retrospectives/tsconfig.spec.json"
-			}
-		},
-		"lint": {
-			"executor": "@nx/eslint:lint"
-		}
-	}
+  "name": "scrumspace-retrospectives",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/scrumspace/retrospectives/src",
+  "prefix": "sneat",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/libs/scrumspace/retrospectives"],
+      "options": {
+        "project": "libs/scrumspace/retrospectives/ng-package.json",
+        "tsConfig": "libs/scrumspace/retrospectives/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/scrumspace/retrospectives/tsconfig.lib.prod.json"
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{workspaceRoot}/coverage/libs/scrumspace/retrospectives"],
+      "options": {
+        "tsConfig": "libs/scrumspace/retrospectives/tsconfig.spec.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
 }

@@ -1,80 +1,80 @@
 <ion-item lines="full">
-	<ion-input
-		label="Title"
-		placeholder="Name of tracker here"
-		[formControl]="titleFormControl"
-		(ionChange)="onTitleChange($event)"
-	/>
+  <ion-input
+    label="Title"
+    placeholder="Name of tracker here"
+    [formControl]="titleFormControl"
+    (ionChange)="onTitleChange($event)"
+  />
 </ion-item>
 
 @if (!$categoryState()) {
-	<ion-item-divider color="light">
-		<ion-label>Category</ion-label>
-	</ion-item-divider>
+  <ion-item-divider color="light">
+    <ion-label>Category</ion-label>
+  </ion-item-divider>
 }
 <sneat-select-from-list
-	label="Category"
-	labelPlacement="start"
-	[items]="categories"
-	[value]="$categoryState()"
-	(valueChange)="$category.set($event)"
+  label="Category"
+  labelPlacement="start"
+  [items]="categories"
+  [value]="$categoryState()"
+  (valueChange)="$category.set($event)"
 />
 
 @if (!$valueType()) {
-	<ion-item-divider color="light">
-		<ion-label>Type</ion-label>
-	</ion-item-divider>
+  <ion-item-divider color="light">
+    <ion-label>Type</ion-label>
+  </ion-item-divider>
 }
 <sneat-select-from-list
-	label="Type"
-	labelPlacement="start"
-	[items]="typeOptions"
-	[value]="$valueType()"
-	selectMode="single"
-	(valueChange)="onValueTypeChange($event)"
+  label="Type"
+  labelPlacement="start"
+  [items]="typeOptions"
+  [value]="$valueType()"
+  selectMode="single"
+  (valueChange)="onValueTypeChange($event)"
 />
 
 @if ($askNumberKind()) {
-	@if (!$numberKind()) {
-		<ion-item-divider color="light">
-			<ion-label>Number Type</ion-label>
-		</ion-item-divider>
-	}
-	<sneat-select-from-list
-		label="Number Type"
-		labelPlacement="start"
-		[items]="numberTypes"
-		[value]="$numberKind()"
-		(valueChange)="onNumberTypeChange($event)"
-	/>
+  @if (!$numberKind()) {
+    <ion-item-divider color="light">
+      <ion-label>Number Type</ion-label>
+    </ion-item-divider>
+  }
+  <sneat-select-from-list
+    label="Number Type"
+    labelPlacement="start"
+    [items]="numberTypes"
+    [value]="$numberKind()"
+    (valueChange)="onNumberTypeChange($event)"
+  />
 }
 
 @if ($showTrackBy()) {
-	<ion-item-divider color="light">
-		<ion-label>Track by</ion-label>
-	</ion-item-divider>
-	<ion-item>
-		<ion-checkbox
-			value="contact"
-			labelPlacement="end"
-			(ionChange)="onTrackByChange('contact', $event)"
-		>
-			Contact
-		</ion-checkbox>
-	</ion-item>
-	<ion-item lines="full">
-		<ion-checkbox
-			value="asset"
-			labelPlacement="end"
-			(ionChange)="onTrackByChange('asset', $event)"
-		>
-			Asset
-		</ion-checkbox>
-	</ion-item>
+  <ion-item-divider color="light">
+    <ion-label>Track by</ion-label>
+  </ion-item-divider>
+  <ion-item>
+    <ion-checkbox
+      value="contact"
+      labelPlacement="end"
+      (ionChange)="onTrackByChange('contact', $event)"
+    >
+      Contact
+    </ion-checkbox>
+  </ion-item>
+  <ion-item lines="full">
+    <ion-checkbox
+      value="asset"
+      labelPlacement="end"
+      (ionChange)="onTrackByChange('asset', $event)"
+    >
+      Asset
+    </ion-checkbox>
+  </ion-item>
 }
 
 <div class="ion-padding">
-	<ion-button [disabled]="$submitDisabled()" (click)="submit()">
-		<ion-label>Create tracker</ion-label>
-	</ion-button>
+  <ion-button [disabled]="$submitDisabled()" (click)="submit()">
+    <ion-label>Create tracker</ion-label>
+  </ion-button>
 </div>

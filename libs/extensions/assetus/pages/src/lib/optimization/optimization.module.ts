@@ -5,14 +5,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { OptimizationPageComponent } from './optimization-page.component';
 
 const routes: Routes = [
-	{
-		path: '',
-		component: OptimizationPageComponent,
-	},
+  {
+    path: '',
+    component: OptimizationPageComponent,
+  },
 ];
 
 @NgModule({
-	imports: [FormsModule, RouterModule.forChild(routes)],
-	declarations: [OptimizationPageComponent],
+  imports: [FormsModule, RouterModule.forChild(routes)],
+  declarations: [OptimizationPageComponent],
 })
 export class OptimizationPageModule {}

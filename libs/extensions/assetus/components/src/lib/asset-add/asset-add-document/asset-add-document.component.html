@@ -1,65 +1,65 @@
 @if (documentType) {
-	<h1 class="ion-padding">New {{ documentType }}</h1>
+  <h1 class="ion-padding">New {{ documentType }}</h1>
 } @else {
-	<h1 class="ion-padding">New vehicle</h1>
+  <h1 class="ion-padding">New vehicle</h1>
 }
 
 @if (!documentType) {
-	<ion-card>
-		<sneat-select-from-list
-			[(ngModel)]="documentType"
-			(ngModelChange)="onVehicleTypeChanged()"
-			[isFilterable]="false"
-			title="Type"
-			[items]="documentTypes"
-		/>
-	</ion-card>
+  <ion-card>
+    <sneat-select-from-list
+      [(ngModel)]="documentType"
+      (ngModelChange)="onVehicleTypeChanged()"
+      [isFilterable]="false"
+      title="Type"
+      [items]="documentTypes"
+    />
+  </ion-card>
 }
 
 <ion-card>
-	<ion-item>
-		<!-- Datetime in popover with input -->
-		<ion-input label="Taxed till" [value]="taxExpires" />
-		<ion-buttons slot="end">
-			<ion-button fill="clear" id="open-date-input-2">
-				<ion-icon icon="calendar" />
-			</ion-button>
-		</ion-buttons>
-		<ion-popover trigger="open-date-input-2" show-backdrop="false">
-			<ng-template>
-				<ion-datetime
-					#popoverDatetime2
-					presentation="date"
-					(ionChange)="taxExpires = formatDate(popoverDatetime2.value)"
-				/>
-			</ng-template>
-		</ion-popover>
-	</ion-item>
-	<!--		<ion-item>-->
-	<!--			<ion-label>NCT till</ion-label>-->
-	<!--			<ion-datetime max="2021" [(ngModel)]="nctExpires"></ion-datetime>-->
-	<!--		</ion-item>-->
-	<!--		<ion-item>-->
-	<!--			<ion-label>Service due</ion-label>-->
-	<!--			<ion-datetime max="2021" [(ngModel)]="nextServiceDue"></ion-datetime>-->
-	<!--		</ion-item>-->
+  <ion-item>
+    <!-- Datetime in popover with input -->
+    <ion-input label="Taxed till" [value]="taxExpires" />
+    <ion-buttons slot="end">
+      <ion-button fill="clear" id="open-date-input-2">
+        <ion-icon icon="calendar" />
+      </ion-button>
+    </ion-buttons>
+    <ion-popover trigger="open-date-input-2" show-backdrop="false">
+      <ng-template>
+        <ion-datetime
+          #popoverDatetime2
+          presentation="date"
+          (ionChange)="taxExpires = formatDate(popoverDatetime2.value)"
+        />
+      </ng-template>
+    </ion-popover>
+  </ion-item>
+  <!--		<ion-item>-->
+  <!--			<ion-label>NCT till</ion-label>-->
+  <!--			<ion-datetime max="2021" [(ngModel)]="nctExpires"></ion-datetime>-->
+  <!--		</ion-item>-->
+  <!--		<ion-item>-->
+  <!--			<ion-label>Service due</ion-label>-->
+  <!--			<ion-datetime max="2021" [(ngModel)]="nextServiceDue"></ion-datetime>-->
+  <!--		</ion-item>-->
 </ion-card>
 
 @if (documentAsset?.dbo?.extra?.["regNumber"]) {
-	<ion-button
-		[color]="documentAsset?.dbo?.extra?.['regNumber'] ? 'primary' : 'light'"
-		size="large"
-		class="ion-margin"
-		expand="full"
-		[disabled]="!space || isSubmitting"
-		(click)="submitDocumentForm()"
-	>
-		@if (isSubmitting) {
-			Adding vehicle...
-		} @else {
-			Add vehicle
-		}
-	</ion-button>
+  <ion-button
+    [color]="documentAsset?.dbo?.extra?.['regNumber'] ? 'primary' : 'light'"
+    size="large"
+    class="ion-margin"
+    expand="full"
+    [disabled]="!space || isSubmitting"
+    (click)="submitDocumentForm()"
+  >
+    @if (isSubmitting) {
+      Adding vehicle...
+    } @else {
+      Add vehicle
+    }
+  </ion-button>
 }
 
 <div style="height: 300px"></div>

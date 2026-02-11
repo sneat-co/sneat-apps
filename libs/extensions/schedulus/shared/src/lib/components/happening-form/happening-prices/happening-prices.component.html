@@ -1,58 +1,58 @@
 <ion-card>
-	<ion-item-divider color="light" class="sneat-tiny-end-padding">
-		<ion-label>Pricing</ion-label>
-		<ion-buttons slot="end">
-			<ion-button color="primary" (click)="openNewPriceForm()">
-				<ion-icon name="add" slot="start" />
-				<ion-label>Add price</ion-label>
-			</ion-button>
-		</ion-buttons>
-	</ion-item-divider>
-	@if (!happening?.dbo) {
-		<ion-item>
-			<ion-spinner slot="start" name="lines-small" />
-			<ion-label>Loading...</ion-label>
-		</ion-item>
-	} @else {
-		@for (
-			price of happening?.dbo?.prices || happening?.brief?.prices || [];
-			track price.id
-		) {
-			<ion-item class="sneat-no-end-padding-margin">
-				<ion-checkbox
-					justify="start"
-					labelPlacement="end"
-					[value]="price.id"
-					[checked]="!!price.expenseQuantity"
-					[disabled]="updatingPriceIDs().includes(price.id)"
-					(ionChange)="priceChecked(price, $event)"
-				>
-					<b>{{
-						price.amount.value | decimal64p2 | currency: price.amount.currency
-					}}</b>
-					for {{ price.term.length }} {{ price.term.unit }}
-				</ion-checkbox>
-				@if (!updatingPriceIDs().includes(price.id)) {
-					<ion-buttons slot="end">
-						<ion-button color="medium" (click)="deletePrice(price)">
-							<ion-icon name="close-outline" />
-						</ion-button>
-					</ion-buttons>
-				}
-			</ion-item>
-		} @empty {
-			<ion-item>
-				<ion-label color="medium"
-					><i>No pricing information available</i></ion-label
-				>
-			</ion-item>
-		}
-	}
-	<ion-item>
-		<ion-label color="medium"
-			><i
-				>Check price above to add it as expense to budget calculation.</i
-			></ion-label
-		>
-	</ion-item>
+  <ion-item-divider color="light" class="sneat-tiny-end-padding">
+    <ion-label>Pricing</ion-label>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="openNewPriceForm()">
+        <ion-icon name="add" slot="start" />
+        <ion-label>Add price</ion-label>
+      </ion-button>
+    </ion-buttons>
+  </ion-item-divider>
+  @if (!happening?.dbo) {
+    <ion-item>
+      <ion-spinner slot="start" name="lines-small" />
+      <ion-label>Loading...</ion-label>
+    </ion-item>
+  } @else {
+    @for (
+      price of happening?.dbo?.prices || happening?.brief?.prices || [];
+      track price.id
+    ) {
+      <ion-item class="sneat-no-end-padding-margin">
+        <ion-checkbox
+          justify="start"
+          labelPlacement="end"
+          [value]="price.id"
+          [checked]="!!price.expenseQuantity"
+          [disabled]="updatingPriceIDs().includes(price.id)"
+          (ionChange)="priceChecked(price, $event)"
+        >
+          <b>{{
+            price.amount.value | decimal64p2 | currency: price.amount.currency
+          }}</b>
+          for {{ price.term.length }} {{ price.term.unit }}
+        </ion-checkbox>
+        @if (!updatingPriceIDs().includes(price.id)) {
+          <ion-buttons slot="end">
+            <ion-button color="medium" (click)="deletePrice(price)">
+              <ion-icon name="close-outline" />
+            </ion-button>
+          </ion-buttons>
+        }
+      </ion-item>
+    } @empty {
+      <ion-item>
+        <ion-label color="medium"
+          ><i>No pricing information available</i></ion-label
+        >
+      </ion-item>
+    }
+  }
+  <ion-item>
+    <ion-label color="medium"
+      ><i
+        >Check price above to add it as expense to budget calculation.</i
+      ></ion-label
+    >
+  </ion-item>
 </ion-card>

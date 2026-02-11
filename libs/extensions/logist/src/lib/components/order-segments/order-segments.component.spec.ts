@@ -3,24 +3,24 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { OrderSegmentsComponent } from './order-segments.component';
 
 describe('OrderSegmentsComponent', () => {
-	let component: OrderSegmentsComponent;
-	let fixture: ComponentFixture<OrderSegmentsComponent>;
+  let component: OrderSegmentsComponent;
+  let fixture: ComponentFixture<OrderSegmentsComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [OrderSegmentsComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(OrderSegmentsComponent, {
-				set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [OrderSegmentsComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(OrderSegmentsComponent, {
+        set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(OrderSegmentsComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(OrderSegmentsComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

@@ -4,19 +4,20 @@ import { IonicModule } from '@ionic/angular';
 import { DataGridComponent } from './data-grid.component';
 
 describe('DataGridComponent', () => {
-	let component: DataGridComponent;
-	let fixture: ComponentFixture<DataGridComponent>;
+  let component: DataGridComponent;
+  let fixture: ComponentFixture<DataGridComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [DataGridComponent, IonicModule.forRoot()]}).compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [DataGridComponent, IonicModule.forRoot()],
+    }).compileComponents();
 
-		fixture = TestBed.createComponent(DataGridComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	}));
+    fixture = TestBed.createComponent(DataGridComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

@@ -1,59 +1,59 @@
 <ion-card>
-	<ion-item color="light" lines="full" class="sneat-tiny-end-padding">
-		<ion-label color="medium" style="font-weight: bold"
-			>{{ $title() }}
-		</ion-label>
-		<ion-buttons slot="end">
-			@if ($contact().dbo && !$showAddForm()) {
-				<ion-button color="tertiary" (click)="$showAddForm.set(true)">
-					<ion-icon name="add-outline" slot="start" />
-					<ion-label>New</ion-label>
-				</ion-button>
-			}
-		</ion-buttons>
-	</ion-item>
+  <ion-item color="light" lines="full" class="sneat-tiny-end-padding">
+    <ion-label color="medium" style="font-weight: bold"
+      >{{ $title() }}
+    </ion-label>
+    <ion-buttons slot="end">
+      @if ($contact().dbo && !$showAddForm()) {
+        <ion-button color="tertiary" (click)="$showAddForm.set(true)">
+          <ion-icon name="add-outline" slot="start" />
+          <ion-label>New</ion-label>
+        </ion-button>
+      }
+    </ion-buttons>
+  </ion-item>
 
-	@if ($contact().dbo) {
-		@for (channel of $channels(); track channel.id) {
-			<sneat-comm-channel-item
-				[$spaceID]="$contact().space.id"
-				[$contactID]="$contact().id"
-				[$channel]="channel"
-				[$channelType]="channelType"
-				[$lines]="$showAddForm() && $last ? 'full' : $last ? 'none' : undefined"
-			/>
-		} @empty {
-			@if (!$showAddForm()) {
-				<ion-item>
-					<ion-label
-						color="medium"
-						style="font-style: italic; font-size: smaller"
-					>
-						Nothing added yet.
-					</ion-label>
-					<ion-buttons slot="start">
-						<ion-button
-							fill="outline"
-							color="tertiary"
-							class="ion-margin-start"
-							(click)="$showAddForm.set(true)"
-							>Add the 1st one
-						</ion-button>
-					</ion-buttons>
-				</ion-item>
-			}
-		}
-	} @else {
-		<ion-item lines="none">
-			<ion-label>Loading...</ion-label>
-		</ion-item>
-	}
-	@if ($showAddForm()) {
-		<sneat-comm-channel-form
-			[$contact]="$contact()"
-			[$channelType]="channelType"
-			[$placeholder]="$placeholder()"
-			(closeForm)="$showAddForm.set(false)"
-		/>
-	}
+  @if ($contact().dbo) {
+    @for (channel of $channels(); track channel.id) {
+      <sneat-comm-channel-item
+        [$spaceID]="$contact().space.id"
+        [$contactID]="$contact().id"
+        [$channel]="channel"
+        [$channelType]="channelType"
+        [$lines]="$showAddForm() && $last ? 'full' : $last ? 'none' : undefined"
+      />
+    } @empty {
+      @if (!$showAddForm()) {
+        <ion-item>
+          <ion-label
+            color="medium"
+            style="font-style: italic; font-size: smaller"
+          >
+            Nothing added yet.
+          </ion-label>
+          <ion-buttons slot="start">
+            <ion-button
+              fill="outline"
+              color="tertiary"
+              class="ion-margin-start"
+              (click)="$showAddForm.set(true)"
+              >Add the 1st one
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+      }
+    }
+  } @else {
+    <ion-item lines="none">
+      <ion-label>Loading...</ion-label>
+    </ion-item>
+  }
+  @if ($showAddForm()) {
+    <sneat-comm-channel-form
+      [$contact]="$contact()"
+      [$channelType]="channelType"
+      [$placeholder]="$placeholder()"
+      (closeForm)="$showAddForm.set(false)"
+    />
+  }
 </ion-card>

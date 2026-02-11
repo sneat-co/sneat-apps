@@ -4,29 +4,29 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { JsonTableComponent } from './json-table.component';
 
 describe('JsonTableComponent', () => {
-	let component: JsonTableComponent;
-	let fixture: ComponentFixture<JsonTableComponent>;
+  let component: JsonTableComponent;
+  let fixture: ComponentFixture<JsonTableComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [JsonTableComponent],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(JsonTableComponent, {
-				set: {
-					imports: [],
-					template: '',
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
-					providers: [],
-				},
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [JsonTableComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(JsonTableComponent, {
+        set: {
+          imports: [],
+          template: '',
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+          providers: [],
+        },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(JsonTableComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(JsonTableComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

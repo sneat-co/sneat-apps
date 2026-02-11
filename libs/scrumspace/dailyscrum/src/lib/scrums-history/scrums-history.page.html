@@ -1,36 +1,36 @@
 <ion-header>
-	<ion-toolbar>
-		@if (space) {
-		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="'/team?id='+space.id" />
-		</ion-buttons>
-		}
-		<ion-title
-			>Scrums @if (space?.dbo) { &#64; {{space.dbo.title}} }
-		</ion-title>
-	</ion-toolbar>
+  <ion-toolbar>
+    @if (space) {
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="'/team?id='+space.id" />
+    </ion-buttons>
+    }
+    <ion-title
+      >Scrums @if (space?.dbo) { &#64; {{space.dbo.title}} }
+    </ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	@if (!scrums) {
-	<ion-item>
-		<ion-spinner name="lines-small" slot="start" />
-		<ion-label color="medium"> Loading... </ion-label>
-	</ion-item>
-	} @if (scrums && !scrums.length) {
-	<ion-item>
-		<ion-icon slot="start" name="remove-circle-outline" />
-		<ion-label color="medium"> No records yet. </ion-label>
-	</ion-item>
-	} @for (scrum of scrums; track scrum) {
-	<ion-item tappable (click)="goScrum(scrum)">
-		<ion-icon name="checkmark-done-outline" slot="start" />
-		<ion-label> {{scrum.id}} </ion-label>
-		@if (scrum.dbo.risksCount) {
-		<ion-button slot="end" color="danger" title="Risks"
-			>{{scrum.dbo.risksCount}}</ion-button
-		>
-		}
-	</ion-item>
-	}
+  @if (!scrums) {
+  <ion-item>
+    <ion-spinner name="lines-small" slot="start" />
+    <ion-label color="medium"> Loading... </ion-label>
+  </ion-item>
+  } @if (scrums && !scrums.length) {
+  <ion-item>
+    <ion-icon slot="start" name="remove-circle-outline" />
+    <ion-label color="medium"> No records yet. </ion-label>
+  </ion-item>
+  } @for (scrum of scrums; track scrum) {
+  <ion-item tappable (click)="goScrum(scrum)">
+    <ion-icon name="checkmark-done-outline" slot="start" />
+    <ion-label> {{scrum.id}} </ion-label>
+    @if (scrum.dbo.risksCount) {
+    <ion-button slot="end" color="danger" title="Risks"
+      >{{scrum.dbo.risksCount}}</ion-button
+    >
+    }
+  </ion-item>
+  }
 </ion-content>

@@ -5,94 +5,94 @@
 @let listItem = $listItem();
 
 <ion-item-sliding #ionSliding @listItem>
-	<!--	<ion-item button (click)="goListItem(listItem)">-->
-	<ion-item>
-		@if (!$isReorderMode()) {
-			<ion-checkbox
-				color="light"
-				slot="start"
-				labelPlacement="end"
-				justify="start"
-				[checked]="listItem.status === 'done'"
-				[disabled]="$isSettingIsDone()"
-				[value]="listItem.status === 'done'"
-				(ionChange)="onIsDoneCheckboxChanged($event)"
-			/>
-		}
-		<ion-label
-			[class.done]="$doneFilter() !== 'completed' && $isDone()"
-			class="ion-text-wrap"
-			(click)="goListItem()"
-		>
-			@if (listItem.emoji) {
-				{{ listItem.emoji }}
-			} @else {
-				<!--
+  <!--	<ion-item button (click)="goListItem(listItem)">-->
+  <ion-item>
+    @if (!$isReorderMode()) {
+      <ion-checkbox
+        color="light"
+        slot="start"
+        labelPlacement="end"
+        justify="start"
+        [checked]="listItem.status === 'done'"
+        [disabled]="$isSettingIsDone()"
+        [value]="listItem.status === 'done'"
+        (ionChange)="onIsDoneCheckboxChanged($event)"
+      />
+    }
+    <ion-label
+      [class.done]="$doneFilter() !== 'completed' && $isDone()"
+      class="ion-text-wrap"
+      (click)="goListItem()"
+    >
+      @if (listItem.emoji) {
+        {{ listItem.emoji }}
+      } @else {
+        <!--
 				TODO(help-wanted): This is a hack to make an item with and without emoji to be aligned.
 				Needs a better solution.
 				-->
-				&nbsp;&nbsp;&nbsp;&nbsp;
-			}
-			{{ listItem.title }}
-			@if (listItem.quantity) {
-				<ion-text color="medium" style="font-style: italic">
-					&mdash; {{ listItem.quantity.value }}{{ listItem.quantity.unit }}
-				</ion-text>
-			}
-		</ion-label>
-		@if (listItem.category) {
-			<ion-badge slot="end" color="light" style="font-weight: normal">
-				{{ listItem.category }}
-			</ion-badge>
-		}
+        &nbsp;&nbsp;&nbsp;&nbsp;
+      }
+      {{ listItem.title }}
+      @if (listItem.quantity) {
+        <ion-text color="medium" style="font-style: italic">
+          &mdash; {{ listItem.quantity.value }}{{ listItem.quantity.unit }}
+        </ion-text>
+      }
+    </ion-label>
+    @if (listItem.category) {
+      <ion-badge slot="end" color="light" style="font-weight: normal">
+        {{ listItem.category }}
+      </ion-badge>
+    }
 
-		<ion-buttons slot="end">
-			<!--					<ion-button *ngIf="listType === 'to-cook'" (click)="openCopyListItemDialog(listItem, $event)">🛒</ion-button>-->
-			@if ($isReorderMode()) {
-				<ion-button (click)="deleteFromList(listItem)" color="medium">
-					<ion-icon name="close-outline" />
-				</ion-button>
-			}
-		</ion-buttons>
-		<!--		<ion-reorder slot="end"></ion-reorder>-->
-		@if (isSpinning()) {
-			<ion-spinner color="medium" />
-		}
+    <ion-buttons slot="end">
+      <!--					<ion-button *ngIf="listType === 'to-cook'" (click)="openCopyListItemDialog(listItem, $event)">🛒</ion-button>-->
+      @if ($isReorderMode()) {
+        <ion-button (click)="deleteFromList(listItem)" color="medium">
+          <ion-icon name="close-outline" />
+        </ion-button>
+      }
+    </ion-buttons>
+    <!--		<ion-reorder slot="end"></ion-reorder>-->
+    @if (isSpinning()) {
+      <ion-spinner color="medium" />
+    }
 
-		<ion-reorder slot="end"></ion-reorder>
-	</ion-item>
-	<ion-item-options side="start" (ionSwipe)="setIsDone(false, ionSliding)">
-		@if ($isDone()) {
-			<ion-item-option
-				expandable="true"
-				color="primary"
-				(click)="setIsDone(false, ionSliding)"
-			>
-				Not done
-			</ion-item-option>
-		} @else {
-			<ion-item-option
-				expandable="true"
-				color="success"
-				(click)="setIsDone(true, ionSliding)"
-			>
-				<ion-icon class="with-label" name="checkmark" />
-				Done
-			</ion-item-option>
-		}
-	</ion-item-options>
-	<!--suppress AngularUndefinedBinding -->
-	<ion-item-options
-		side="end"
-		(ionSwipe)="deleteFromList(listItem, ionSliding)"
-	>
-		<ion-item-option
-			expandable="true"
-			color="danger"
-			(click)="deleteFromList(listItem, ionSliding)"
-		>
-			<ion-icon name="trash" class="with-label" />
-			Remove
-		</ion-item-option>
-	</ion-item-options>
+    <ion-reorder slot="end"></ion-reorder>
+  </ion-item>
+  <ion-item-options side="start" (ionSwipe)="setIsDone(false, ionSliding)">
+    @if ($isDone()) {
+      <ion-item-option
+        expandable="true"
+        color="primary"
+        (click)="setIsDone(false, ionSliding)"
+      >
+        Not done
+      </ion-item-option>
+    } @else {
+      <ion-item-option
+        expandable="true"
+        color="success"
+        (click)="setIsDone(true, ionSliding)"
+      >
+        <ion-icon class="with-label" name="checkmark" />
+        Done
+      </ion-item-option>
+    }
+  </ion-item-options>
+  <!--suppress AngularUndefinedBinding -->
+  <ion-item-options
+    side="end"
+    (ionSwipe)="deleteFromList(listItem, ionSliding)"
+  >
+    <ion-item-option
+      expandable="true"
+      color="danger"
+      (click)="deleteFromList(listItem, ionSliding)"
+    >
+      <ion-icon name="trash" class="with-label" />
+      Remove
+    </ion-item-option>
+  </ion-item-options>
 </ion-item-sliding>

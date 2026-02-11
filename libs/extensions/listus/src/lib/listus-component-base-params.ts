@@ -4,6 +4,6 @@ import { ListService } from './services/list.service';
 
 @Injectable()
 export class ListusComponentBaseParams {
-	readonly spaceParams = inject(SpaceComponentBaseParams);
-	readonly listService = inject(ListService);
+  readonly spaceParams = inject(SpaceComponentBaseParams);
+  readonly listService = inject(ListService);
 }

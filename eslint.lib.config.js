@@ -11,7 +11,7 @@ const js = require('@eslint/js');
  * @returns {import('eslint').Linter.FlatConfig[]}
  */
 function sneatLibConfig(_dir) {
-	return [];
+  return [];
 }
 
 /**
@@ -20,10 +20,10 @@ function sneatLibConfig(_dir) {
  * This mirrors the compat used in the root eslint.config.js.
  */
 function compatConfig(baseDirectory) {
-	return new FlatCompat({
-		baseDirectory,
-		recommendedConfig: js.configs.recommended,
-	});
+  return new FlatCompat({
+    baseDirectory,
+    recommendedConfig: js.configs.recommended,
+  });
 }
 
 module.exports = { sneatLibConfig, compatConfig };

@@ -10,43 +10,43 @@ import { LogistOrdersPageComponent } from './logist-orders-page.component';
 vi.mock('@angular/fire/firestore');
 
 describe('LogistOrdersPageComponent', () => {
-	let component: LogistOrdersPageComponent;
-	let fixture: ComponentFixture<LogistOrdersPageComponent>;
+  let component: LogistOrdersPageComponent;
+  let fixture: ComponentFixture<LogistOrdersPageComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [LogistOrdersPageComponent],
-			providers: [
-				...provideLogistMocks(),
-				LogistOrderService,
-				{
-					provide: SneatApiService,
-					useValue: {
-						post: vi.fn(() => of({})),
-						get: vi.fn(() => of({})),
-					},
-				},
-				{
-					provide: Firestore,
-					useValue: { type: 'Firestore', toJSON: () => ({}) },
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(LogistOrdersPageComponent, {
-				set: {
-					imports: [],
-					providers: [],
-					schemas: [CUSTOM_ELEMENTS_SCHEMA],
-				},
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [LogistOrdersPageComponent],
+      providers: [
+        ...provideLogistMocks(),
+        LogistOrderService,
+        {
+          provide: SneatApiService,
+          useValue: {
+            post: vi.fn(() => of({})),
+            get: vi.fn(() => of({})),
+          },
+        },
+        {
+          provide: Firestore,
+          useValue: { type: 'Firestore', toJSON: () => ({}) },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(LogistOrdersPageComponent, {
+        set: {
+          imports: [],
+          providers: [],
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(LogistOrdersPageComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(LogistOrdersPageComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

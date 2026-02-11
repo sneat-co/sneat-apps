@@ -4,13 +4,13 @@ import { WithSpaceInput } from '@sneat/space-services';
 
 @Directive()
 export abstract class ContactFormBaseComponent extends WithSpaceInput {
-	// Should $hideRole be in NewContactFormBaseComponent?
-	public readonly $hideRole = input<boolean>();
+  // Should $hideRole be in NewContactFormBaseComponent?
+  public readonly $hideRole = input<boolean>();
 }
 
 @Directive()
 export abstract class EditContactFormBaseComponent extends ContactFormBaseComponent {
-	public readonly $contact = input.required<ContactDboWithSpaceRef>();
+  public readonly $contact = input.required<ContactDboWithSpaceRef>();
 
-	@Output() readonly contactChange = new EventEmitter<ContactDboWithSpaceRef>();
+  @Output() readonly contactChange = new EventEmitter<ContactDboWithSpaceRef>();
 }

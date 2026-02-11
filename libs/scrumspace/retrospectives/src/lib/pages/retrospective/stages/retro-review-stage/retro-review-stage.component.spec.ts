@@ -4,19 +4,20 @@ import { IonicModule } from '@ionic/angular';
 import { RetroReviewStageComponent } from './retro-review-stage.component';
 
 describe('RetroReviewStageComponent', () => {
-	let component: RetroReviewStageComponent;
-	let fixture: ComponentFixture<RetroReviewStageComponent>;
+  let component: RetroReviewStageComponent;
+  let fixture: ComponentFixture<RetroReviewStageComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [RetroReviewStageComponent, IonicModule.forRoot()]}).compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [RetroReviewStageComponent, IonicModule.forRoot()],
+    }).compileComponents();
 
-		fixture = TestBed.createComponent(RetroReviewStageComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	}));
+    fixture = TestBed.createComponent(RetroReviewStageComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

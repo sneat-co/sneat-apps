@@ -1,210 +1,210 @@
 <ion-card>
-	<ion-accordion-group
-		[multiple]="false"
-		(ionChange)="accordionChanged($event)"
-	>
-		<ion-accordion value="filter">
-			<ion-item slot="header">
-				<!-- [color]="$expanded() ? 'light' : undefined"-->
-				<ion-icon name="search-outline" slot="start" />
-				<!--				<ion-label color="medium" position="floating">Filter</ion-label>-->
-				<ion-input
-					label="Filter"
-					[formControl]="text"
-					(keyup)="onTextKeyUp()"
-					(click)="$event.stopPropagation()"
-					placeholder="text to search"
-				/>
-				@if ($hasFilter()) {
-					<ion-buttons slot="end">
-						<ion-button (click)="clearFilter($event)" title="Clear filter">
-							<ion-icon name="close-outline" color="medium" />
-						</ion-button>
-					</ion-buttons>
-				}
-			</ion-item>
-			<ion-item-group slot="content">
-				<!--				<ion-item>-->
-				<!--					<ion-checkbox (ionChange)="emitChanged()" slot="start" labelPlacement="end">Myself</ion-checkbox>-->
-				<!--				</ion-item>-->
-				@if (showWeekdays) {
-					<ion-item-divider color="light">Weekdays</ion-item-divider>
-					<ion-grid class="ion-grid-layout">
-						<ion-row>
-							<ion-col>
-								<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
-									<ion-checkbox
-										[checked]="weekdayMo()"
-										(ionChange)="onWeekdayChanged('mo', $event.detail.checked)"
-										slot="start"
-										labelPlacement="end"
-										class="sneat-small-end-margin"
-									/>
-									Mo
-								</ion-item>
-							</ion-col>
-							<ion-col>
-								<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
-									<ion-checkbox
-										[checked]="weekdayTu()"
-										(ionChange)="onWeekdayChanged('tu', $event.detail.checked)"
-										slot="start"
-										labelPlacement="end"
-										class="sneat-small-end-margin"
-									/>
-									Tu
-								</ion-item>
-							</ion-col>
-							<ion-col>
-								<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
-									<ion-checkbox
-										[checked]="weekdayWe()"
-										(ionChange)="onWeekdayChanged('we', $event.detail.checked)"
-										slot="start"
-										labelPlacement="end"
-										class="sneat-small-end-margin"
-									/>
-									We
-								</ion-item>
-							</ion-col>
-							<ion-col>
-								<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
-									<ion-checkbox
-										[checked]="weekdayTh()"
-										(ionChange)="onWeekdayChanged('th', $event.detail.checked)"
-										slot="start"
-										labelPlacement="end"
-										class="sneat-small-end-margin"
-									/>
-									Th
-								</ion-item>
-							</ion-col>
-							<ion-col>
-								<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
-									<ion-checkbox
-										[checked]="weekdayFr()"
-										(ionChange)="onWeekdayChanged('fr', $event.detail.checked)"
-										slot="start"
-										labelPlacement="end"
-										class="sneat-small-end-margin"
-									/>
-									Fr
-								</ion-item>
-							</ion-col>
-							<ion-col>
-								<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
-									<ion-checkbox
-										[checked]="weekdaySa()"
-										(ionChange)="onWeekdayChanged('sa', $event.detail.checked)"
-										slot="start"
-										labelPlacement="end"
-										class="sneat-small-end-margin"
-									/>
-									Sa
-								</ion-item>
-							</ion-col>
-							<ion-col>
-								<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
-									<ion-checkbox
-										[checked]="weekdaySu()"
-										(ionChange)="onWeekdayChanged('su', $event.detail.checked)"
-										slot="start"
-										labelPlacement="end"
-										class="sneat-small-end-margin"
-									/>
-									Su
-								</ion-item>
-							</ion-col>
-						</ion-row>
-					</ion-grid>
-				}
-				@if (showRepeats) {
-					<ion-item-divider color="light">Repeats</ion-item-divider>
-					<ion-grid class="ion-grid-layout">
-						<ion-row>
-							<ion-col>
-								<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
-									<ion-checkbox
-										value="weekly"
-										[checked]="$repeatsWeekly()"
-										(ionChange)="repeatChanged($event)"
-										slot="start"
-										labelPlacement="end"
-										class="sneat-small-end-margin"
-									/>
-									Weekly
-								</ion-item>
-							</ion-col>
-							<ion-col>
-								<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
-									<ion-checkbox
-										value="monthly"
-										[checked]="$repeatsMonthly()"
-										(ionChange)="repeatChanged($event)"
-										slot="start"
-										labelPlacement="end"
-										class="sneat-small-end-margin"
-									/>
-									Monthly
-								</ion-item>
-							</ion-col>
-							<ion-col>
-								<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
-									<ion-checkbox
-										value="quarterly"
-										[checked]="$repeatsQuarterly()"
-										(ionChange)="repeatChanged($event)"
-										slot="start"
-										labelPlacement="end"
-										class="sneat-small-end-margin"
-									/>
-									Quarterly
-								</ion-item>
-							</ion-col>
-							<ion-col>
-								<ion-item class="sneat-no-end-padding sneat-no-bottom-border">
-									<ion-checkbox
-										value="yearly"
-										(ionChange)="repeatChanged($event)"
-										slot="start"
-										labelPlacement="end"
-										class="sneat-small-end-margin"
-									/>
-									Yearly
-								</ion-item>
-							</ion-col>
-						</ion-row>
-					</ion-grid>
-				}
+  <ion-accordion-group
+    [multiple]="false"
+    (ionChange)="accordionChanged($event)"
+  >
+    <ion-accordion value="filter">
+      <ion-item slot="header">
+        <!-- [color]="$expanded() ? 'light' : undefined"-->
+        <ion-icon name="search-outline" slot="start" />
+        <!--				<ion-label color="medium" position="floating">Filter</ion-label>-->
+        <ion-input
+          label="Filter"
+          [formControl]="text"
+          (keyup)="onTextKeyUp()"
+          (click)="$event.stopPropagation()"
+          placeholder="text to search"
+        />
+        @if ($hasFilter()) {
+          <ion-buttons slot="end">
+            <ion-button (click)="clearFilter($event)" title="Clear filter">
+              <ion-icon name="close-outline" color="medium" />
+            </ion-button>
+          </ion-buttons>
+        }
+      </ion-item>
+      <ion-item-group slot="content">
+        <!--				<ion-item>-->
+        <!--					<ion-checkbox (ionChange)="emitChanged()" slot="start" labelPlacement="end">Myself</ion-checkbox>-->
+        <!--				</ion-item>-->
+        @if (showWeekdays) {
+          <ion-item-divider color="light">Weekdays</ion-item-divider>
+          <ion-grid class="ion-grid-layout">
+            <ion-row>
+              <ion-col>
+                <ion-item class="sneat-no-end-padding sneat-no-bottom-border">
+                  <ion-checkbox
+                    [checked]="weekdayMo()"
+                    (ionChange)="onWeekdayChanged('mo', $event.detail.checked)"
+                    slot="start"
+                    labelPlacement="end"
+                    class="sneat-small-end-margin"
+                  />
+                  Mo
+                </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item class="sneat-no-end-padding sneat-no-bottom-border">
+                  <ion-checkbox
+                    [checked]="weekdayTu()"
+                    (ionChange)="onWeekdayChanged('tu', $event.detail.checked)"
+                    slot="start"
+                    labelPlacement="end"
+                    class="sneat-small-end-margin"
+                  />
+                  Tu
+                </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item class="sneat-no-end-padding sneat-no-bottom-border">
+                  <ion-checkbox
+                    [checked]="weekdayWe()"
+                    (ionChange)="onWeekdayChanged('we', $event.detail.checked)"
+                    slot="start"
+                    labelPlacement="end"
+                    class="sneat-small-end-margin"
+                  />
+                  We
+                </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item class="sneat-no-end-padding sneat-no-bottom-border">
+                  <ion-checkbox
+                    [checked]="weekdayTh()"
+                    (ionChange)="onWeekdayChanged('th', $event.detail.checked)"
+                    slot="start"
+                    labelPlacement="end"
+                    class="sneat-small-end-margin"
+                  />
+                  Th
+                </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item class="sneat-no-end-padding sneat-no-bottom-border">
+                  <ion-checkbox
+                    [checked]="weekdayFr()"
+                    (ionChange)="onWeekdayChanged('fr', $event.detail.checked)"
+                    slot="start"
+                    labelPlacement="end"
+                    class="sneat-small-end-margin"
+                  />
+                  Fr
+                </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item class="sneat-no-end-padding sneat-no-bottom-border">
+                  <ion-checkbox
+                    [checked]="weekdaySa()"
+                    (ionChange)="onWeekdayChanged('sa', $event.detail.checked)"
+                    slot="start"
+                    labelPlacement="end"
+                    class="sneat-small-end-margin"
+                  />
+                  Sa
+                </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item class="sneat-no-end-padding sneat-no-bottom-border">
+                  <ion-checkbox
+                    [checked]="weekdaySu()"
+                    (ionChange)="onWeekdayChanged('su', $event.detail.checked)"
+                    slot="start"
+                    labelPlacement="end"
+                    class="sneat-small-end-margin"
+                  />
+                  Su
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        }
+        @if (showRepeats) {
+          <ion-item-divider color="light">Repeats</ion-item-divider>
+          <ion-grid class="ion-grid-layout">
+            <ion-row>
+              <ion-col>
+                <ion-item class="sneat-no-end-padding sneat-no-bottom-border">
+                  <ion-checkbox
+                    value="weekly"
+                    [checked]="$repeatsWeekly()"
+                    (ionChange)="repeatChanged($event)"
+                    slot="start"
+                    labelPlacement="end"
+                    class="sneat-small-end-margin"
+                  />
+                  Weekly
+                </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item class="sneat-no-end-padding sneat-no-bottom-border">
+                  <ion-checkbox
+                    value="monthly"
+                    [checked]="$repeatsMonthly()"
+                    (ionChange)="repeatChanged($event)"
+                    slot="start"
+                    labelPlacement="end"
+                    class="sneat-small-end-margin"
+                  />
+                  Monthly
+                </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item class="sneat-no-end-padding sneat-no-bottom-border">
+                  <ion-checkbox
+                    value="quarterly"
+                    [checked]="$repeatsQuarterly()"
+                    (ionChange)="repeatChanged($event)"
+                    slot="start"
+                    labelPlacement="end"
+                    class="sneat-small-end-margin"
+                  />
+                  Quarterly
+                </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item class="sneat-no-end-padding sneat-no-bottom-border">
+                  <ion-checkbox
+                    value="yearly"
+                    (ionChange)="repeatChanged($event)"
+                    slot="start"
+                    labelPlacement="end"
+                    class="sneat-small-end-margin"
+                  />
+                  Yearly
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        }
 
-				<sneat-contacts-filter
-					[$contactIDs]="$contactIDs()"
-					(contactIDsChange)="onSelectedContactsChanged($event)"
-				/>
-			</ion-item-group>
-		</ion-accordion>
-	</ion-accordion-group>
-	@if (!$expanded() && $filter().contactIDs.length) {
-		<ion-item>
-			<ion-label>
-				@if (selectedContacts.length === 1) {
-					Member:
-				}
-				@if (selectedContacts.length > 1) {
-					Members:
-				}
-				@for (contact of selectedContacts; track contact.id) {
-					<ion-badge style="margin: 0 0.5em" color="light">
-						{{ contact | contactTitle }}
-					</ion-badge>
-				}
-			</ion-label>
-			<ion-buttons slot="end">
-				<ion-button title="Clear participants" color="medium">
-					<!-- (click)="clearMembers()" -->
-					<ion-icon name="close-outline" />
-				</ion-button>
-			</ion-buttons>
-		</ion-item>
-	}
+        <sneat-contacts-filter
+          [$contactIDs]="$contactIDs()"
+          (contactIDsChange)="onSelectedContactsChanged($event)"
+        />
+      </ion-item-group>
+    </ion-accordion>
+  </ion-accordion-group>
+  @if (!$expanded() && $filter().contactIDs.length) {
+    <ion-item>
+      <ion-label>
+        @if (selectedContacts.length === 1) {
+          Member:
+        }
+        @if (selectedContacts.length > 1) {
+          Members:
+        }
+        @for (contact of selectedContacts; track contact.id) {
+          <ion-badge style="margin: 0 0.5em" color="light">
+            {{ contact | contactTitle }}
+          </ion-badge>
+        }
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button title="Clear participants" color="medium">
+          <!-- (click)="clearMembers()" -->
+          <ion-icon name="close-outline" />
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  }
 </ion-card>

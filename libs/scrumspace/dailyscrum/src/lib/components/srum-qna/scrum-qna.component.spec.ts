@@ -4,19 +4,20 @@ import { IonicModule } from '@ionic/angular';
 import { ScrumQnaComponent } from './scrum-qna.component';
 
 describe('SrumQnaComponent', () => {
-	let component: ScrumQnaComponent;
-	let fixture: ComponentFixture<ScrumQnaComponent>;
+  let component: ScrumQnaComponent;
+  let fixture: ComponentFixture<ScrumQnaComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [ScrumQnaComponent, IonicModule.forRoot()]}).compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ScrumQnaComponent, IonicModule.forRoot()],
+    }).compileComponents();
 
-		fixture = TestBed.createComponent(ScrumQnaComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	}));
+    fixture = TestBed.createComponent(ScrumQnaComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

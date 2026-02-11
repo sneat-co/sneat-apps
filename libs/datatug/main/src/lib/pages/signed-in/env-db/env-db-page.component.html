@@ -1,47 +1,51 @@
 <ion-header>
-	<ion-toolbar>
-		<ion-buttons slot="start">
-			<ion-menu-button />
-			<ion-back-button defaultHref="../.." />
-		</ion-buttons>
-		<ion-title>
-			@if (envDb) {
-			<b>{{ envDb.id }}</b> &#64; {{ env?.id }}
-			} @else { Database: loading... }
-		</ion-title>
-	</ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button />
+      <ion-back-button defaultHref="../.." />
+    </ion-buttons>
+    <ion-title>
+      @if (envDb) {
+        <b>{{ envDb.id }}</b> &#64; {{ env?.id }}
+      } @else {
+        Database: loading...
+      }
+    </ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<ion-card>
-		<ion-item>
-			<ion-input
-				label="Filter"
-				[(ngModel)]="filter"
-				(ionChange)="filterRows()"
-				placeholder="Filter"
-			/>
-		</ion-item>
+  <ion-card>
+    <ion-item>
+      <ion-input
+        label="Filter"
+        [(ngModel)]="filter"
+        (ionChange)="filterRows()"
+        placeholder="Filter"
+      />
+    </ion-item>
 
-		<ion-segment [(ngModel)]="tab" (ionChange)="tabChanged()">
-			<ion-segment-button value="tables">
-				<ion-label>
-					Tables @if (envDb) {
-					<ion-badge color="medium">{{ envDb.tables.length }}</ion-badge>
-					}
-				</ion-label>
-			</ion-segment-button>
-			<ion-segment-button value="views">
-				<ion-label>
-					Views @if (envDb) {
-					<ion-badge color="medium">{{ envDb.views.length }}</ion-badge>
-					}
-				</ion-label>
-			</ion-segment-button>
-		</ion-segment>
+    <ion-segment [(ngModel)]="tab" (ionChange)="tabChanged()">
+      <ion-segment-button value="tables">
+        <ion-label>
+          Tables
+          @if (envDb) {
+            <ion-badge color="medium">{{ envDb.tables.length }}</ion-badge>
+          }
+        </ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="views">
+        <ion-label>
+          Views
+          @if (envDb) {
+            <ion-badge color="medium">{{ envDb.views.length }}</ion-badge>
+          }
+        </ion-label>
+      </ion-segment-button>
+    </ion-segment>
 
-		<ion-card-content>
-			<div #grid></div>
-		</ion-card-content>
-	</ion-card>
+    <ion-card-content>
+      <div #grid></div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

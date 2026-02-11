@@ -1,26 +1,26 @@
 @for (page of projTopLevelPages; track page) {
-	<ion-item
-		(click)="goProjPage($event, page.path)"
-		tappable
-		[disabled]="!project?.ref"
-	>
-		<!--		[routerLink]="projectPageUrl(page.path)" routerDirection="root"-->
-		<ion-icon slot="start" [name]="page.icon" />
-		<ion-label [class.current]="(currentFolder | async) === page.path">{{
-			page.title
-		}}</ion-label>
-		@if (!page.path && !project?.brief) {
-			<ion-spinner name="lines-small" />
-		}
-		<!--		<ion-badge color="medium" *ngIf="page.count && currentProject">{{page.count(currentProject) || 0}}</ion-badge>-->
-		@if (page.buttons) {
-			<ion-buttons slot="end">
-				@for (button of page.buttons; track button) {
-					<ion-button (click)="goProjPage($event, button.path)">
-						<ion-icon [name]="button.icon" />
-					</ion-button>
-				}
-			</ion-buttons>
-		}
-	</ion-item>
+  <ion-item
+    (click)="goProjPage($event, page.path)"
+    tappable
+    [disabled]="!project?.ref"
+  >
+    <!--		[routerLink]="projectPageUrl(page.path)" routerDirection="root"-->
+    <ion-icon slot="start" [name]="page.icon" />
+    <ion-label [class.current]="(currentFolder | async) === page.path">{{
+      page.title
+    }}</ion-label>
+    @if (!page.path && !project?.brief) {
+      <ion-spinner name="lines-small" />
+    }
+    <!--		<ion-badge color="medium" *ngIf="page.count && currentProject">{{page.count(currentProject) || 0}}</ion-badge>-->
+    @if (page.buttons) {
+      <ion-buttons slot="end">
+        @for (button of page.buttons; track button) {
+          <ion-button (click)="goProjPage($event, button.path)">
+            <ion-icon [name]="button.icon" />
+          </ion-button>
+        }
+      </ion-buttons>
+    }
+  </ion-item>
 }

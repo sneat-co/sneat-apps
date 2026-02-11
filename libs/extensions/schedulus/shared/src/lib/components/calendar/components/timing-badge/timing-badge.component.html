@@ -1,27 +1,27 @@
 From
 @if ($adjustedStartTime() && $adjustedStartTime() !== $startTime()) {
-	<ion-text color="danger" title="Original: {{ $startTime() }}-{{ $endTime() }}"
-		>{{ $adjustedStartTime() }}
-	</ion-text>
+  <ion-text color="danger" title="Original: {{ $startTime() }}-{{ $endTime() }}"
+    >{{ $adjustedStartTime() }}
+  </ion-text>
 } @else {
-	{{ $startTime() }}
+  {{ $startTime() }}
 }
 
 @if ($hasAdjustedEnd() || $hasEnd()) {
-	<div style="font-size: small; color: #777; text-align: right">
-		<small>ends</small>
-		@if ($hasAdjustedEndTime() && $adjustedEndTime() !== $endTime()) {
-			<ion-text
-				[color]="
-					$adjustedStartTime() && $adjustedStartTime() !== $startTime()
-						? 'warning'
-						: 'danger'
-				"
-				title="Original: {{ $startTime() }}-{{ $endTime() }}"
-				>{{ $adjustedEndTime() }}
-			</ion-text>
-		} @else {
-			{{ $endTime() }}
-		}
-	</div>
+  <div style="font-size: small; color: #777; text-align: right">
+    <small>ends</small>
+    @if ($hasAdjustedEndTime() && $adjustedEndTime() !== $endTime()) {
+      <ion-text
+        [color]="
+          $adjustedStartTime() && $adjustedStartTime() !== $startTime()
+            ? 'warning'
+            : 'danger'
+        "
+        title="Original: {{ $startTime() }}-{{ $endTime() }}"
+        >{{ $adjustedEndTime() }}
+      </ion-text>
+    } @else {
+      {{ $endTime() }}
+    }
+  </div>
 }

@@ -1,71 +1,71 @@
 <ion-card [class.deleting]="deleting">
-	<ion-item
-		color="light"
-		class="sneat-no-end-padding"
-		tappable="true"
-		(click)="goHappening($event)"
-	>
-		<ion-label>
-			@if (date) {
-				<b>{{ wd | wdToWeekday }}</b
-				>, {{ date.getDate() }} {{ date.getMonth() | longMonthName }}
-				&mdash;
-			}
+  <ion-item
+    color="light"
+    class="sneat-no-end-padding"
+    tappable="true"
+    (click)="goHappening($event)"
+  >
+    <ion-label>
+      @if (date) {
+        <b>{{ wd | wdToWeekday }}</b
+        >, {{ date.getDate() }} {{ date.getMonth() | longMonthName }}
+        &mdash;
+      }
 
-			<ion-text color="primary" style="font-weight: bold">
-				{{
-					$happening().brief?.title || $happening().dbo?.title || "Loading..."
-				}}
-			</ion-text>
-			<!--			<p *ngIf='Object.keys(happening?.dto?.participants || {}).length'>-->
-			<!--				<ion-badge-->
-			<!--					color='medium'-->
-			<!--					style='margin-right: 0.5em'-->
-			<!--					*ngFor='-->
-			<!--						let participant of Object.keys( happening?.dto?.participants || {})-->
-			<!--					'-->
-			<!--				>-->
-			<!--					{{ participant }}-->
-			<!--				</ion-badge>-->
-			<!--			</p>-->
-		</ion-label>
-		<ion-buttons slot="end">
-			<ion-button (click)="delete($event)">
-				<ion-icon name="close-outline" />
-			</ion-button>
-		</ion-buttons>
-	</ion-item>
-	<sneat-happening-slots [happening]="$happening()" />
-	<!--	<sneat-happening-slot-->
-	<!--		[slot]="slot"-->
-	<!--		[happening]="happening"-->
-	<!--		*ngFor="-->
-	<!--			let slot of happening?.dbo?.slots || happening?.brief?.slots || [];-->
-	<!--			trackBy: index-->
-	<!--		"-->
-	<!--	/>-->
-	<ion-item>
-		<ion-label color="medium">
-			@if ($hasRelatedContacts()) {
-				<sneat-contacts-as-badges
-					[$contacts]="
-						$relatedContactIDs()
-							| selectedContacts: $contactusSpace()?.dbo?.contacts
-					"
-					(deleteContact)="removeContact($event)"
-				/>
-			} @else {
-				Nobody assigned
-			}
-		</ion-label>
-		<ion-buttons slot="end">
-			<ion-button color="tertiary" (click)="selectMembers($event)">
-				<ion-icon name="person-add-outline" slot="start" />
-				<ion-label>Add</ion-label>
-			</ion-button>
-		</ion-buttons>
-	</ion-item>
-	<!--	<ion-card-content>-->
-	<!--		Some note here?-->
-	<!--	</ion-card-content>-->
+      <ion-text color="primary" style="font-weight: bold">
+        {{
+          $happening().brief?.title || $happening().dbo?.title || "Loading..."
+        }}
+      </ion-text>
+      <!--			<p *ngIf='Object.keys(happening?.dto?.participants || {}).length'>-->
+      <!--				<ion-badge-->
+      <!--					color='medium'-->
+      <!--					style='margin-right: 0.5em'-->
+      <!--					*ngFor='-->
+      <!--						let participant of Object.keys( happening?.dto?.participants || {})-->
+      <!--					'-->
+      <!--				>-->
+      <!--					{{ participant }}-->
+      <!--				</ion-badge>-->
+      <!--			</p>-->
+    </ion-label>
+    <ion-buttons slot="end">
+      <ion-button (click)="delete($event)">
+        <ion-icon name="close-outline" />
+      </ion-button>
+    </ion-buttons>
+  </ion-item>
+  <sneat-happening-slots [happening]="$happening()" />
+  <!--	<sneat-happening-slot-->
+  <!--		[slot]="slot"-->
+  <!--		[happening]="happening"-->
+  <!--		*ngFor="-->
+  <!--			let slot of happening?.dbo?.slots || happening?.brief?.slots || [];-->
+  <!--			trackBy: index-->
+  <!--		"-->
+  <!--	/>-->
+  <ion-item>
+    <ion-label color="medium">
+      @if ($hasRelatedContacts()) {
+        <sneat-contacts-as-badges
+          [$contacts]="
+            $relatedContactIDs()
+              | selectedContacts: $contactusSpace()?.dbo?.contacts
+          "
+          (deleteContact)="removeContact($event)"
+        />
+      } @else {
+        Nobody assigned
+      }
+    </ion-label>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" (click)="selectMembers($event)">
+        <ion-icon name="person-add-outline" slot="start" />
+        <ion-label>Add</ion-label>
+      </ion-button>
+    </ion-buttons>
+  </ion-item>
+  <!--	<ion-card-content>-->
+  <!--		Some note here?-->
+  <!--	</ion-card-content>-->
 </ion-card>

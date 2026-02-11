@@ -2,6 +2,6 @@ import { NgModule } from '@angular/core';
 import { DiffPageComponent } from './diff-page.component';
 
 @NgModule({
-	declarations: [DiffPageComponent],
+  declarations: [DiffPageComponent],
 })
 export class DiffPageModule {}

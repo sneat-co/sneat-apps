@@ -1,199 +1,199 @@
 <ion-header>
-	<ion-toolbar color="light" class="with-end-buttons">
-		@if (appId === "listus") {
-			<ion-title>📜 Listus.app</ion-title>
-		} @else {
-			<ion-buttons slot="start">
-				<ion-back-button [text]="null" [defaultHref]="$defaultBackUrl()" />
-			</ion-buttons>
-			<ion-title
-				>📜 Lists
-				@if (space.brief?.title) {
-					&#64; {{ space.brief?.title }}
-				}
-			</ion-title>
-		}
-		<ion-buttons slot="end">
-			<ion-menu-button menu="mainMenu" />
-		</ion-buttons>
-	</ion-toolbar>
+  <ion-toolbar color="light" class="with-end-buttons">
+    @if (appId === "listus") {
+      <ion-title>📜 Listus.app</ion-title>
+    } @else {
+      <ion-buttons slot="start">
+        <ion-back-button [text]="null" [defaultHref]="$defaultBackUrl()" />
+      </ion-buttons>
+      <ion-title
+        >📜 Lists
+        @if (space.brief?.title) {
+          &#64; {{ space.brief?.title }}
+        }
+      </ion-title>
+    }
+    <ion-buttons slot="end">
+      <ion-menu-button menu="mainMenu" />
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<ion-card>
-		@for (
-			listGroup of listGroups;
-			track listGroup.id || listGroup.type;
-			let listGroupIndex = $index
-		) {
-			<ion-item-group>
-				<ion-item-divider
-					(click)="clickGroup(listGroup)"
-					color="light"
-					class="with-buttons"
-					tappable
-				>
-					<ion-icon
-						slot="start"
-						color="medium"
-						[name]="
-							isCollapsed(listGroup)
-								? 'chevron-down-outline'
-								: 'chevron-up-outline'
-						"
-					/>
-					<ion-label style="font-weight: bold">
-						@if (listGroup.emoji) {
-							<span style="margin-right: 0.5em">{{ listGroup.emoji }}</span>
-						}
+  <ion-card>
+    @for (
+      listGroup of listGroups;
+      track listGroup.id || listGroup.type;
+      let listGroupIndex = $index
+    ) {
+      <ion-item-group>
+        <ion-item-divider
+          (click)="clickGroup(listGroup)"
+          color="light"
+          class="with-buttons"
+          tappable
+        >
+          <ion-icon
+            slot="start"
+            color="medium"
+            [name]="
+              isCollapsed(listGroup)
+                ? 'chevron-down-outline'
+                : 'chevron-up-outline'
+            "
+          />
+          <ion-label style="font-weight: bold">
+            @if (listGroup.emoji) {
+              <span style="margin-right: 0.5em">{{ listGroup.emoji }}</span>
+            }
 
-						@if (listGroup.title === "Recipes") {
-							<span>
-								<a
-									href="https://yo.recipes/#utm_source=listus.app&utm_campaign=lists.page"
-									target="_blank"
-									(click)="$event.stopPropagation()"
-									>Yo.recipes</a
-								>
-							</span>
-						}
-						@if (listGroup.title !== "Recipes") {
-							<span>{{ listGroup.title }}</span>
-						}
-					</ion-label>
-					<ion-buttons slot="end">
-						<ion-button color="medium" (click)="addTo($event, listGroup.type)">
-							<ion-icon name="add" />
-						</ion-button>
-						<!--<ion-button>-->
-						<!--<ion-icon name="git-compare"></ion-icon>-->
-						<!--</ion-button>-->
-					</ion-buttons>
-				</ion-item-divider>
-				@if (!isCollapsed(listGroup)) {
-					<ion-reorder-group
-						[disabled]="false"
-						(ionItemReorder)="reorder($event, listGroup)"
-					>
-						@for (
-							list of listGroup.lists;
-							track trackById($index, list);
-							let listIndex = $index
-						) {
-							<ion-item-sliding #ionItemSliding>
-								<ion-item
-									tappable
-									detail="false"
-									(click)="goList(list)"
-									[lines]="
-										listGroupIndex + 1 === listGroups?.length &&
-										listIndex + 1 === listGroup.lists?.length
-											? 'none'
-											: undefined
-									"
-								>
-									<ion-label
-										[color]="list.itemsCount ? '' : 'medium'"
-										style="padding-left: 0.5em"
-									>
-										@if (list.emoji) {
-											{{ list.emoji }}
-										}
+            @if (listGroup.title === "Recipes") {
+              <span>
+                <a
+                  href="https://yo.recipes/#utm_source=listus.app&utm_campaign=lists.page"
+                  target="_blank"
+                  (click)="$event.stopPropagation()"
+                  >Yo.recipes</a
+                >
+              </span>
+            }
+            @if (listGroup.title !== "Recipes") {
+              <span>{{ listGroup.title }}</span>
+            }
+          </ion-label>
+          <ion-buttons slot="end">
+            <ion-button color="medium" (click)="addTo($event, listGroup.type)">
+              <ion-icon name="add" />
+            </ion-button>
+            <!--<ion-button>-->
+            <!--<ion-icon name="git-compare"></ion-icon>-->
+            <!--</ion-button>-->
+          </ion-buttons>
+        </ion-item-divider>
+        @if (!isCollapsed(listGroup)) {
+          <ion-reorder-group
+            [disabled]="false"
+            (ionItemReorder)="reorder($event, listGroup)"
+          >
+            @for (
+              list of listGroup.lists;
+              track trackById($index, list);
+              let listIndex = $index
+            ) {
+              <ion-item-sliding #ionItemSliding>
+                <ion-item
+                  tappable
+                  detail="false"
+                  (click)="goList(list)"
+                  [lines]="
+                    listGroupIndex + 1 === listGroups?.length &&
+                    listIndex + 1 === listGroup.lists?.length
+                      ? 'none'
+                      : undefined
+                  "
+                >
+                  <ion-label
+                    [color]="list.itemsCount ? '' : 'medium'"
+                    style="padding-left: 0.5em"
+                  >
+                    @if (list.emoji) {
+                      {{ list.emoji }}
+                    }
 
-										{{ list.title }}
+                    {{ list.title }}
 
-										@if (list.space) {
-											<ion-text color="medium" style="font-size: x-small">
-												&mdash; <i>{{ list.space.title }}</i>
-											</ion-text>
-										}
-									</ion-label>
-									@if (
-										list.restrictions &&
-										list.restrictions.includes("adults_only")
-									) {
-										<ion-badge
-											slot="end"
-											color="light"
-											style="font-weight: normal"
-										>
-											adults only
-										</ion-badge>
-									}
-									@if (list.itemsCount) {
-										<ion-badge slot="end" color="light">{{
-											list.itemsCount
-										}}</ion-badge>
-									}
-									<ion-reorder slot="end" />
-								</ion-item>
-								<ion-item-options slot="end">
-									<ion-item-option
-										color="danger"
-										expandable="true"
-										(click)="remove(listGroup, list, ionItemSliding)"
-									>
-										<ion-icon name="trash" class="with-label" />
-										Remove
-									</ion-item-option>
-								</ion-item-options>
-							</ion-item-sliding>
-						}
-						@if (addingToGroup === listGroup.type) {
-							<form (ngSubmit)="createList(listGroup)">
-								<ion-item-sliding>
-									<ion-item>
-										<ion-buttons slot="start" style="margin: 0">
-											<ion-button (click)="cancelListCreation()" color="medium">
-												<ion-icon name="close-outline" />
-											</ion-button>
-										</ion-buttons>
-										<ion-input
-											#newListTitle
-											name="title"
-											placeholder="List name"
-											[(ngModel)]="listTitle"
-										/>
-										<ion-button
-											fill="outline"
-											size="small"
-											[disabled]="!listTitle.trim()"
-											type="submit"
-											>Add
-										</ion-button>
-									</ion-item>
-									<!--suppress AngularUndefinedBinding -->
-									<ion-item-options
-										slot="start"
-										(ionSwipe)="clearAddingToGroup()"
-									>
-										<ion-item-option (click)="clearAddingToGroup()"
-											>Cancel
-										</ion-item-option>
-									</ion-item-options>
-									<!--suppress AngularUndefinedBinding -->
-									<ion-item-options
-										slot="end"
-										(ionSwipe)="clearAddingToGroup()"
-									>
-										<ion-item-option (click)="clearAddingToGroup()"
-											>Cancel
-										</ion-item-option>
-									</ion-item-options>
-								</ion-item-sliding>
-							</form>
-						}
-					</ion-reorder-group>
-				}
-				<!--				@if (listGroup.type === 'cook') {-->
-				<!--					<ion-item tappable="">-->
-				<!--						<ion-label>-->
-				<!--							<h2>Most popular</h2>-->
-				<!--							<p>by <a href="https://recipe.express/"><ion-text color="medium">recipe.express</ion-text></a></p>-->
-				<!--						</ion-label>-->
-				<!--					</ion-item>-->
-				<!--				}-->
-			</ion-item-group>
-		}
-	</ion-card>
+                    @if (list.space) {
+                      <ion-text color="medium" style="font-size: x-small">
+                        &mdash; <i>{{ list.space.title }}</i>
+                      </ion-text>
+                    }
+                  </ion-label>
+                  @if (
+                    list.restrictions &&
+                    list.restrictions.includes("adults_only")
+                  ) {
+                    <ion-badge
+                      slot="end"
+                      color="light"
+                      style="font-weight: normal"
+                    >
+                      adults only
+                    </ion-badge>
+                  }
+                  @if (list.itemsCount) {
+                    <ion-badge slot="end" color="light">{{
+                      list.itemsCount
+                    }}</ion-badge>
+                  }
+                  <ion-reorder slot="end" />
+                </ion-item>
+                <ion-item-options slot="end">
+                  <ion-item-option
+                    color="danger"
+                    expandable="true"
+                    (click)="remove(listGroup, list, ionItemSliding)"
+                  >
+                    <ion-icon name="trash" class="with-label" />
+                    Remove
+                  </ion-item-option>
+                </ion-item-options>
+              </ion-item-sliding>
+            }
+            @if (addingToGroup === listGroup.type) {
+              <form (ngSubmit)="createList(listGroup)">
+                <ion-item-sliding>
+                  <ion-item>
+                    <ion-buttons slot="start" style="margin: 0">
+                      <ion-button (click)="cancelListCreation()" color="medium">
+                        <ion-icon name="close-outline" />
+                      </ion-button>
+                    </ion-buttons>
+                    <ion-input
+                      #newListTitle
+                      name="title"
+                      placeholder="List name"
+                      [(ngModel)]="listTitle"
+                    />
+                    <ion-button
+                      fill="outline"
+                      size="small"
+                      [disabled]="!listTitle.trim()"
+                      type="submit"
+                      >Add
+                    </ion-button>
+                  </ion-item>
+                  <!--suppress AngularUndefinedBinding -->
+                  <ion-item-options
+                    slot="start"
+                    (ionSwipe)="clearAddingToGroup()"
+                  >
+                    <ion-item-option (click)="clearAddingToGroup()"
+                      >Cancel
+                    </ion-item-option>
+                  </ion-item-options>
+                  <!--suppress AngularUndefinedBinding -->
+                  <ion-item-options
+                    slot="end"
+                    (ionSwipe)="clearAddingToGroup()"
+                  >
+                    <ion-item-option (click)="clearAddingToGroup()"
+                      >Cancel
+                    </ion-item-option>
+                  </ion-item-options>
+                </ion-item-sliding>
+              </form>
+            }
+          </ion-reorder-group>
+        }
+        <!--				@if (listGroup.type === 'cook') {-->
+        <!--					<ion-item tappable="">-->
+        <!--						<ion-label>-->
+        <!--							<h2>Most popular</h2>-->
+        <!--							<p>by <a href="https://recipe.express/"><ion-text color="medium">recipe.express</ion-text></a></p>-->
+        <!--						</ion-label>-->
+        <!--					</ion-item>-->
+        <!--				}-->
+      </ion-item-group>
+    }
+  </ion-card>
 </ion-content>

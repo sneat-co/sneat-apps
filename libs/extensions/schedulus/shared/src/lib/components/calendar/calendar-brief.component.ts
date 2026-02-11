@@ -14,46 +14,46 @@ import { CalendarDayComponent } from './components/calendar-day/calendar-day.com
 import { Weekday } from './weekday';
 
 @Component({
-	imports: [
-		RouterLink,
-		CalendarAddButtonsComponent,
-		CalendariumServicesModule,
-		CalendarDayTitleComponent,
-		HappeningServiceModule,
-		CalendarDayServiceModule,
-		CalendarDayComponent,
-		IonCard,
-		IonItem,
-		IonIcon,
-		IonLabel,
-	],
-	providers: [
-		CalendarFilterService,
-		{ provide: ClassName, useValue: 'CalendarBriefComponent' },
-	],
-	changeDetection: ChangeDetectionStrategy.OnPush,
-	selector: 'sneat-calendar-brief',
-	templateUrl: './calendar-brief.component.html',
+  imports: [
+    RouterLink,
+    CalendarAddButtonsComponent,
+    CalendariumServicesModule,
+    CalendarDayTitleComponent,
+    HappeningServiceModule,
+    CalendarDayServiceModule,
+    CalendarDayComponent,
+    IonCard,
+    IonItem,
+    IonIcon,
+    IonLabel,
+  ],
+  providers: [
+    CalendarFilterService,
+    { provide: ClassName, useValue: 'CalendarBriefComponent' },
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'sneat-calendar-brief',
+  templateUrl: './calendar-brief.component.html',
 })
 export class CalendarBriefComponent extends CalendarBaseComponent {
-	protected readonly $today = signal<Weekday | undefined>(undefined);
-	protected readonly $tomorrow = signal<Weekday | undefined>(undefined);
+  protected readonly $today = signal<Weekday | undefined>(undefined);
+  protected readonly $tomorrow = signal<Weekday | undefined>(undefined);
 
-	public constructor() {
-		super();
+  public constructor() {
+    super();
 
-		const todayDate = new Date();
-		const today = createWeekday(todayDate, this.spaceDaysProvider);
-		this.$today.set(today);
+    const todayDate = new Date();
+    const today = createWeekday(todayDate, this.spaceDaysProvider);
+    this.$today.set(today);
 
-		const tomorrowDate = new Date();
-		tomorrowDate.setDate(todayDate.getDate() + 1);
-		const tomorrow = createWeekday(tomorrowDate, this.spaceDaysProvider);
-		this.$tomorrow.set(tomorrow);
-	}
+    const tomorrowDate = new Date();
+    tomorrowDate.setDate(todayDate.getDate() + 1);
+    const tomorrow = createWeekday(tomorrowDate, this.spaceDaysProvider);
+    this.$tomorrow.set(tomorrow);
+  }
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	protected onDayChanged(d: Date): void {
-		// do nothing
-	}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  protected onDayChanged(d: Date): void {
+    // do nothing
+  }
 }

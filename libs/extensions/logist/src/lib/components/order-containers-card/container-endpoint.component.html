@@ -1,53 +1,53 @@
 <ion-grid class="ion-grid-layout">
-	<ion-row>
-		<ion-col size="6">
-			<sneat-contact-input
-				contactRole="trucker"
-				[label]="endpointSide === 'arrival' ? 'Arrives by' : 'Departs by'"
-				[canReset]="true"
-				[space]="space"
-				[contact]="byContact"
-				(contactChange)="onByContactChanged($event)"
-			/>
-			<!--			<sneat-logist-order-counterparty-input-->
-			<!--				label="By" contactRole="trucker" contactType="company"-->
-			<!--				[canReset]="true"-->
-			<!--				[team]="order?.team"-->
-			<!--				[order]="order"-->
-			<!--				[contactID]="endpoint?.byContactID"-->
-			<!--				[counterpartyRole]="'trucker'"-->
-			<!--				(counterpartyChange)="onByChanged($event)"-->
-			<!--			></sneat-logist-order-counterparty-input>-->
-		</ion-col>
-		<ion-col size="6">
-			@if (dateTimeTab === "scheduled") {
-				<ion-item>
-					<ion-input
-						type="date"
-						[formControl]="scheduledDate"
-						(ionChange)="onScheduledDateChanged($event)"
-					/>
-					<ion-input
-						type="time"
-						[formControl]="scheduledTime"
-						(ionChange)="onScheduledTimeChanged($event)"
-					/>
-				</ion-item>
-			}
-			@if (dateTimeTab === "actual") {
-				<ion-item>
-					<ion-input
-						type="date"
-						[formControl]="actualDate"
-						(ionChange)="onActualDateChanged($event)"
-					/>
-					<ion-input
-						type="time"
-						[formControl]="actualTime"
-						(ionChange)="onActualTimeChanged($event)"
-					/>
-				</ion-item>
-			}
-		</ion-col>
-	</ion-row>
+  <ion-row>
+    <ion-col size="6">
+      <sneat-contact-input
+        contactRole="trucker"
+        [label]="endpointSide === 'arrival' ? 'Arrives by' : 'Departs by'"
+        [canReset]="true"
+        [space]="space"
+        [contact]="byContact"
+        (contactChange)="onByContactChanged($event)"
+      />
+      <!--			<sneat-logist-order-counterparty-input-->
+      <!--				label="By" contactRole="trucker" contactType="company"-->
+      <!--				[canReset]="true"-->
+      <!--				[team]="order?.team"-->
+      <!--				[order]="order"-->
+      <!--				[contactID]="endpoint?.byContactID"-->
+      <!--				[counterpartyRole]="'trucker'"-->
+      <!--				(counterpartyChange)="onByChanged($event)"-->
+      <!--			></sneat-logist-order-counterparty-input>-->
+    </ion-col>
+    <ion-col size="6">
+      @if (dateTimeTab === "scheduled") {
+        <ion-item>
+          <ion-input
+            type="date"
+            [formControl]="scheduledDate"
+            (ionChange)="onScheduledDateChanged($event)"
+          />
+          <ion-input
+            type="time"
+            [formControl]="scheduledTime"
+            (ionChange)="onScheduledTimeChanged($event)"
+          />
+        </ion-item>
+      }
+      @if (dateTimeTab === "actual") {
+        <ion-item>
+          <ion-input
+            type="date"
+            [formControl]="actualDate"
+            (ionChange)="onActualDateChanged($event)"
+          />
+          <ion-input
+            type="time"
+            [formControl]="actualTime"
+            (ionChange)="onActualTimeChanged($event)"
+          />
+        </ion-item>
+      }
+    </ion-col>
+  </ion-row>
 </ion-grid>

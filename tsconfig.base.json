@@ -1,99 +1,99 @@
 {
-	"extends": "./tsconfig.json",
-	"compileOnSave": false,
-	"compilerOptions": {
-		"rootDir": ".",
-		"sourceMap": true,
-		"declaration": false,
-		"target": "esnext",
-		"module": "esnext",
-		"moduleResolution": "bundler",
-		"incremental": true,
-		"emitDecoratorMetadata": true,
-		"experimentalDecorators": true,
-		"importHelpers": true,
-		"useDefineForClassFields": false,
-		"resolveJsonModule": true,
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-		"strict": true,
-		"noImplicitOverride": true,
-		"noPropertyAccessFromIndexSignature": true,
-		"noImplicitReturns": true,
-		"noFallthroughCasesInSwitch": true,
-		"lib": ["ES2023", "DOM"],
-		"skipLibCheck": true,
-		"baseUrl": ".",
-		"paths": {
-			"@sneat/app": ["libs/app/src/index.ts"],
-			"@sneat/api": ["libs/api/src/index.ts"],
-			"@sneat/auth-core": ["libs/auth/core/src/index.ts"],
-			"@sneat/auth-models": ["libs/auth/models/src/index.ts"],
-			"@sneat/auth-ui": ["libs/auth/ui/src/index.ts"],
-			"@sneat/communes-ui": ["libs/communes/ui/src/index.ts"],
-			"@sneat/components": ["libs/components/src/index.ts"],
-			"@sneat/contactus-core": ["libs/contactus/core/src/index.ts"],
-			"@sneat/contactus-internal": ["libs/contactus/internal/src/index.ts"],
-			"@sneat/contactus-services": ["libs/contactus/services/src/index.ts"],
-			"@sneat/contactus-shared": ["libs/contactus/shared/src/index.ts"],
-			"@sneat/core": ["libs/core/src/index.ts"],
-			"@sneat/core/testing-base": [
-				"libs/core/src/lib/testing/base-test-setup.ts"
-			],
-			"@sneat/core/testing": ["libs/core/src/lib/testing/test-setup.ts"],
-			"@sneat/data": ["libs/data/src/index.ts"],
-			"@sneat/datagrid": ["libs/datagrid/src/index.ts"],
-			"@sneat/datatug-main": ["libs/datatug/main/src/public_api.ts"],
-			"@sneat/datetime": ["libs/datetime/src/index.ts"],
-			"@sneat/dto": ["libs/dto/src/index.ts"],
-			"@sneat/ext-assetus-components": [
-				"libs/extensions/assetus/components/src/index.ts"
-			],
-			"@sneat/ext-debtus-internal": [
-				"libs/extensions/debtus/internal/src/index.ts"
-			],
-			"@sneat/ext-debtus-shared": [
-				"libs/extensions/debtus/shared/src/index.ts"
-			],
-			"@sneat/ext-meeting": ["libs/meeting/src/index.ts"],
-			"@sneat/ext-scrumspace-dailyscrum": [
-				"libs/scrumspace/dailyscrum/src/index.ts"
-			],
-			"@sneat/ext-scrumspace-retrospectives": [
-				"libs/scrumspace/retrospectives/src/index.ts"
-			],
-			"@sneat/ext-scrumspace-scrummodels": [
-				"libs/scrumspace/scrummodels/src/index.ts"
-			],
-			"@sneat/extensions-assetus-pages": [
-				"libs/extensions/assetus/pages/src/index.ts"
-			],
-			"@sneat/extensions-budgetus": ["libs/extensions/budgetus/src/index.ts"],
-			"@sneat/extensions-docus": ["libs/extensions/docus/src/index.ts"],
-			"@sneat/extensions-listus": ["libs/extensions/listus/src/index.ts"],
-			"@sneat/extensions-logist": ["libs/extensions/logist/src/index.ts"],
-			"@sneat/extensions-schedulus-main": [
-				"libs/extensions/schedulus/main/src/index.ts"
-			],
-			"@sneat/extensions-schedulus-shared": [
-				"libs/extensions/schedulus/shared/src/index.ts"
-			],
-			"@sneat/extensions-trackus": ["libs/extensions/trackus/src/index.ts"],
-			"@sneat/grid": ["libs/grid/src/index.ts"],
-			"@sneat/logging": ["libs/logging/src/index.ts"],
-			"@sneat/mod-assetus-core": ["libs/extensions/assetus/core/src/index.ts"],
-			"@sneat/mod-schedulus-core": [
-				"libs/extensions/schedulus/core/src/index.ts"
-			],
-			"@sneat/space-components": ["libs/space/components/src/index.ts"],
-			"@sneat/space-models": ["libs/space/models/src/index.ts"],
-			"@sneat/space-pages": ["libs/space/pages/src/index.ts"],
-			"@sneat/space-services": ["libs/space/services/src/index.ts"],
-			"@sneat/timer": ["libs/timer/src/index.ts"],
-			"@sneat/ui": ["libs/ui/src/index.ts"],
-			"@sneat/user": ["libs/user/src/index.ts"],
-			"@sneat/wizard": ["libs/wizard/src/index.ts"]
-		}
-	},
-	"exclude": ["node_modules", "tmp"]
+  "extends": "./tsconfig.json",
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "incremental": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "useDefineForClassFields": false,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "lib": ["ES2023", "DOM"],
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@sneat/app": ["libs/app/src/index.ts"],
+      "@sneat/api": ["libs/api/src/index.ts"],
+      "@sneat/auth-core": ["libs/auth/core/src/index.ts"],
+      "@sneat/auth-models": ["libs/auth/models/src/index.ts"],
+      "@sneat/auth-ui": ["libs/auth/ui/src/index.ts"],
+      "@sneat/communes-ui": ["libs/communes/ui/src/index.ts"],
+      "@sneat/components": ["libs/components/src/index.ts"],
+      "@sneat/contactus-core": ["libs/contactus/core/src/index.ts"],
+      "@sneat/contactus-internal": ["libs/contactus/internal/src/index.ts"],
+      "@sneat/contactus-services": ["libs/contactus/services/src/index.ts"],
+      "@sneat/contactus-shared": ["libs/contactus/shared/src/index.ts"],
+      "@sneat/core": ["libs/core/src/index.ts"],
+      "@sneat/core/testing-base": [
+        "libs/core/src/lib/testing/base-test-setup.ts"
+      ],
+      "@sneat/core/testing": ["libs/core/src/lib/testing/test-setup.ts"],
+      "@sneat/data": ["libs/data/src/index.ts"],
+      "@sneat/datagrid": ["libs/datagrid/src/index.ts"],
+      "@sneat/datatug-main": ["libs/datatug/main/src/public_api.ts"],
+      "@sneat/datetime": ["libs/datetime/src/index.ts"],
+      "@sneat/dto": ["libs/dto/src/index.ts"],
+      "@sneat/ext-assetus-components": [
+        "libs/extensions/assetus/components/src/index.ts"
+      ],
+      "@sneat/ext-debtus-internal": [
+        "libs/extensions/debtus/internal/src/index.ts"
+      ],
+      "@sneat/ext-debtus-shared": [
+        "libs/extensions/debtus/shared/src/index.ts"
+      ],
+      "@sneat/ext-meeting": ["libs/meeting/src/index.ts"],
+      "@sneat/ext-scrumspace-dailyscrum": [
+        "libs/scrumspace/dailyscrum/src/index.ts"
+      ],
+      "@sneat/ext-scrumspace-retrospectives": [
+        "libs/scrumspace/retrospectives/src/index.ts"
+      ],
+      "@sneat/ext-scrumspace-scrummodels": [
+        "libs/scrumspace/scrummodels/src/index.ts"
+      ],
+      "@sneat/extensions-assetus-pages": [
+        "libs/extensions/assetus/pages/src/index.ts"
+      ],
+      "@sneat/extensions-budgetus": ["libs/extensions/budgetus/src/index.ts"],
+      "@sneat/extensions-docus": ["libs/extensions/docus/src/index.ts"],
+      "@sneat/extensions-listus": ["libs/extensions/listus/src/index.ts"],
+      "@sneat/extensions-logist": ["libs/extensions/logist/src/index.ts"],
+      "@sneat/extensions-schedulus-main": [
+        "libs/extensions/schedulus/main/src/index.ts"
+      ],
+      "@sneat/extensions-schedulus-shared": [
+        "libs/extensions/schedulus/shared/src/index.ts"
+      ],
+      "@sneat/extensions-trackus": ["libs/extensions/trackus/src/index.ts"],
+      "@sneat/grid": ["libs/grid/src/index.ts"],
+      "@sneat/logging": ["libs/logging/src/index.ts"],
+      "@sneat/mod-assetus-core": ["libs/extensions/assetus/core/src/index.ts"],
+      "@sneat/mod-schedulus-core": [
+        "libs/extensions/schedulus/core/src/index.ts"
+      ],
+      "@sneat/space-components": ["libs/space/components/src/index.ts"],
+      "@sneat/space-models": ["libs/space/models/src/index.ts"],
+      "@sneat/space-pages": ["libs/space/pages/src/index.ts"],
+      "@sneat/space-services": ["libs/space/services/src/index.ts"],
+      "@sneat/timer": ["libs/timer/src/index.ts"],
+      "@sneat/ui": ["libs/ui/src/index.ts"],
+      "@sneat/user": ["libs/user/src/index.ts"],
+      "@sneat/wizard": ["libs/wizard/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
 }

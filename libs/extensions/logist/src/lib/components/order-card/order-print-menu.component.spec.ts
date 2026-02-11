@@ -5,34 +5,34 @@ import { ErrorLogger } from '@sneat/core';
 import { OrderPrintMenuComponent } from './order-print-menu.component';
 
 describe('OrderPrintMenuComponent', () => {
-	let component: OrderPrintMenuComponent;
-	let fixture: ComponentFixture<OrderPrintMenuComponent>;
+  let component: OrderPrintMenuComponent;
+  let fixture: ComponentFixture<OrderPrintMenuComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [OrderPrintMenuComponent],
-			providers: [
-				{
-					provide: ErrorLogger,
-					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
-				},
-				{
-					provide: PopoverController,
-					useValue: { dismiss: vi.fn(() => Promise.resolve()) },
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(OrderPrintMenuComponent, {
-				set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [OrderPrintMenuComponent],
+      providers: [
+        {
+          provide: ErrorLogger,
+          useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+        },
+        {
+          provide: PopoverController,
+          useValue: { dismiss: vi.fn(() => Promise.resolve()) },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(OrderPrintMenuComponent, {
+        set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(OrderPrintMenuComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(OrderPrintMenuComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

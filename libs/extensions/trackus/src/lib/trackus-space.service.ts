@@ -5,14 +5,14 @@ import { ITrackusSpaceDbo } from './dbo/i-trackus-space-dbo';
 
 @Injectable()
 export class TrackusSpaceService extends SpaceModuleService<ITrackusSpaceDbo> {
-	constructor() {
-		const afs = inject(AngularFirestore);
-		const injector = inject(Injector);
-		super(injector, 'trackus', afs);
-	}
+  constructor() {
+    const afs = inject(AngularFirestore);
+    const injector = inject(Injector);
+    super(injector, 'trackus', afs);
+  }
 }
 
 @NgModule({
-	providers: [TrackusSpaceService],
+  providers: [TrackusSpaceService],
 })
 export class TrackusSpaceServiceModule {}

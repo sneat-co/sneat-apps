@@ -1,92 +1,92 @@
 <ion-header>
-	<ion-toolbar color="primary">
-		<ion-title>New price</ion-title>
-		<ion-buttons slot="end">
-			<ion-button (click)="close()">
-				<ion-icon name="close-outline" />
-			</ion-button>
-		</ion-buttons>
-	</ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-title>New price</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon name="close-outline" />
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 <ion-content>
-	<ion-list lines="full" class="ion-no-padding">
-		<ion-item>
-			<ion-label color="medium">
-				<i>Choose term period and enter the price</i>
-			</ion-label>
-		</ion-item>
-		@if (termUnit) {
-			<ion-item>
-				@if (termUnit !== "single") {
-					<ion-input
-						label="Per"
-						type="number"
-						style="text-align: right"
-						[formControl]="termLength"
-						(ionChange)="onTermLengthChange()"
-					/>
-				}
-				<ion-select
-					[label]="termUnit === 'single' ? 'Per' : undefined"
-					[(ngModel)]="termUnit"
-					interface="popover"
-				>
-					@for (o of termPeriods; track o.value) {
-						<ion-select-option [value]="o.value"
-							>{{ o.title }}
-						</ion-select-option>
-					}
-				</ion-select>
-			</ion-item>
-		} @else {
-			<sneat-radio-group-to-select
-				label="Per"
-				[(ngModel)]="termUnit"
-				[selectOptions]="termPeriods"
-			/>
-		}
-		<ion-item>
-			<ion-input
-				type="number"
-				[formControl]="priceValue"
-				label="Price"
-				style="text-align: right"
-			/>
-			<ion-select [formControl]="priceCurrency">
-				<ion-select-option value="EUR">EUR</ion-select-option>
-				<ion-select-option value="USD">USD</ion-select-option>
-				<ion-select-option value="RUB">RUB</ion-select-option>
-			</ion-select>
-		</ion-item>
-	</ion-list>
+  <ion-list lines="full" class="ion-no-padding">
+    <ion-item>
+      <ion-label color="medium">
+        <i>Choose term period and enter the price</i>
+      </ion-label>
+    </ion-item>
+    @if (termUnit) {
+      <ion-item>
+        @if (termUnit !== "single") {
+          <ion-input
+            label="Per"
+            type="number"
+            style="text-align: right"
+            [formControl]="termLength"
+            (ionChange)="onTermLengthChange()"
+          />
+        }
+        <ion-select
+          [label]="termUnit === 'single' ? 'Per' : undefined"
+          [(ngModel)]="termUnit"
+          interface="popover"
+        >
+          @for (o of termPeriods; track o.value) {
+            <ion-select-option [value]="o.value"
+              >{{ o.title }}
+            </ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+    } @else {
+      <sneat-radio-group-to-select
+        label="Per"
+        [(ngModel)]="termUnit"
+        [selectOptions]="termPeriods"
+      />
+    }
+    <ion-item>
+      <ion-input
+        type="number"
+        [formControl]="priceValue"
+        label="Price"
+        style="text-align: right"
+      />
+      <ion-select [formControl]="priceCurrency">
+        <ion-select-option value="EUR">EUR</ion-select-option>
+        <ion-select-option value="USD">USD</ion-select-option>
+        <ion-select-option value="RUB">RUB</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
 </ion-content>
 <ion-footer>
-	<ion-toolbar>
-		@if (termUnit) {
-			<ion-item lines="none">
-				@if (!priceValue.value) {
-					<ion-label color="danger"><i>Price amount is required</i></ion-label>
-				}
-				@if (!termLength.value && priceValue.value) {
-					<ion-label color="danger"><i>Term length is required</i></ion-label>
-				}
-			</ion-item>
-		}
-		<ion-buttons slot="end">
-			<ion-button
-				slot="end"
-				fill="solid"
-				color="primary"
-				[disabled]="!priceValue.value || !termLength.value"
-				(click)="addPrice($event)"
-			>
-				<ion-icon name="add-outline" slot="start" />
-				<ion-label>Add price</ion-label>
-			</ion-button>
-			<ion-button (click)="close()">
-				<ion-icon name="close-outline" slot="start" />
-				<ion-label>Cancel</ion-label>
-			</ion-button>
-		</ion-buttons>
-	</ion-toolbar>
+  <ion-toolbar>
+    @if (termUnit) {
+      <ion-item lines="none">
+        @if (!priceValue.value) {
+          <ion-label color="danger"><i>Price amount is required</i></ion-label>
+        }
+        @if (!termLength.value && priceValue.value) {
+          <ion-label color="danger"><i>Term length is required</i></ion-label>
+        }
+      </ion-item>
+    }
+    <ion-buttons slot="end">
+      <ion-button
+        slot="end"
+        fill="solid"
+        color="primary"
+        [disabled]="!priceValue.value || !termLength.value"
+        (click)="addPrice($event)"
+      >
+        <ion-icon name="add-outline" slot="start" />
+        <ion-label>Add price</ion-label>
+      </ion-button>
+      <ion-button (click)="close()">
+        <ion-icon name="close-outline" slot="start" />
+        <ion-label>Cancel</ion-label>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-footer>

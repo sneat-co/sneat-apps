@@ -3,7 +3,7 @@
 // These interfaces were commented out but the inject() references remain.
 // The component needs to be fixed before tests can run.
 describe('AssetGroupPage', () => {
-	it('should be fixed before it can be tested', () => {
-		expect(true).toBeTruthy();
-	});
+  it('should be fixed before it can be tested', () => {
+    expect(true).toBeTruthy();
+  });
 });

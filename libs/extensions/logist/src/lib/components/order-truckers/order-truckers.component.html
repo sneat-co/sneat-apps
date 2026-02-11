@@ -1,21 +1,21 @@
 @if (truckers) {
-	@for (trucker of truckers || []; track trucker.contactID) {
-		<sneat-order-trucker [space]="space" [trucker]="trucker" [order]="order" />
-	} @empty {
-		<ion-card>
-			<ion-item-divider>
-				<ion-label>No trucking companies have been added yet.</ion-label>
-			</ion-item-divider>
-		</ion-card>
-	}
+  @for (trucker of truckers || []; track trucker.contactID) {
+    <sneat-order-trucker [space]="space" [trucker]="trucker" [order]="order" />
+  } @empty {
+    <ion-card>
+      <ion-item-divider>
+        <ion-label>No trucking companies have been added yet.</ion-label>
+      </ion-item-divider>
+    </ion-card>
+  }
 } @else {
-	<ion-card>
-		<ion-item-divider>
-			<ion-label>Loading...</ion-label>
-		</ion-item-divider>
-	</ion-card>
+  <ion-card>
+    <ion-item-divider>
+      <ion-label>Loading...</ion-label>
+    </ion-item-divider>
+  </ion-card>
 }
 
 @if (hasUnassignedSegments) {
-	<sneat-order-trucker [space]="space" [trucker]="undefined" [order]="order" />
+  <sneat-order-trucker [space]="space" [trucker]="undefined" [order]="order" />
 }

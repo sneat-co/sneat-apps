@@ -1,57 +1,57 @@
 <ion-card>
-	<ion-item-divider color="light">
-		<ion-label>Containers</ion-label>
-	</ion-item-divider>
-	<ion-grid class="ion-grid-layout">
-		<ion-row>
-			<ion-col size="12" size-sm="6">
-				<ion-item>
-					<ion-label color="medium">20ft</ion-label>
-					<ion-input
-						type="number"
-						min="0"
-						max="9"
-						[(ngModel)]="size20ft"
-						(ionChange)="onSizeChanged()"
-					/>
-				</ion-item>
-			</ion-col>
-			<ion-col size="12" size-sm="6">
-				<ion-item>
-					<ion-label color="medium">20ft High Cube</ion-label>
-					<ion-input
-						type="number"
-						min="0"
-						max="9"
-						[(ngModel)]="size20ftHighCube"
-						(ionChange)="onSizeChanged()"
-					/>
-				</ion-item>
-			</ion-col>
-			<ion-col size="12" size-sm="6">
-				<ion-item>
-					<ion-label color="medium">40ft</ion-label>
-					<ion-input
-						type="number"
-						min="0"
-						max="9"
-						[(ngModel)]="size40ft"
-						(ionChange)="onSizeChanged()"
-					/>
-				</ion-item>
-			</ion-col>
-			<ion-col size="12" size-sm="6">
-				<ion-item>
-					<ion-label color="medium">40ft High Cube</ion-label>
-					<ion-input
-						type="number"
-						min="0"
-						max="9"
-						[(ngModel)]="size40ftHighCube"
-						(ionChange)="onSizeChanged()"
-					/>
-				</ion-item>
-			</ion-col>
-		</ion-row>
-	</ion-grid>
+  <ion-item-divider color="light">
+    <ion-label>Containers</ion-label>
+  </ion-item-divider>
+  <ion-grid class="ion-grid-layout">
+    <ion-row>
+      <ion-col size="12" size-sm="6">
+        <ion-item>
+          <ion-label color="medium">20ft</ion-label>
+          <ion-input
+            type="number"
+            min="0"
+            max="9"
+            [(ngModel)]="size20ft"
+            (ionChange)="onSizeChanged()"
+          />
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" size-sm="6">
+        <ion-item>
+          <ion-label color="medium">20ft High Cube</ion-label>
+          <ion-input
+            type="number"
+            min="0"
+            max="9"
+            [(ngModel)]="size20ftHighCube"
+            (ionChange)="onSizeChanged()"
+          />
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" size-sm="6">
+        <ion-item>
+          <ion-label color="medium">40ft</ion-label>
+          <ion-input
+            type="number"
+            min="0"
+            max="9"
+            [(ngModel)]="size40ft"
+            (ionChange)="onSizeChanged()"
+          />
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" size-sm="6">
+        <ion-item>
+          <ion-label color="medium">40ft High Cube</ion-label>
+          <ion-input
+            type="number"
+            min="0"
+            max="9"
+            [(ngModel)]="size40ftHighCube"
+            (ionChange)="onSizeChanged()"
+          />
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-card>

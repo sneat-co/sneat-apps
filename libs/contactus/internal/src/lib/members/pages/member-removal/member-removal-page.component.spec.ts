@@ -5,27 +5,27 @@ import { MemberRemovalPageComponent } from './member-removal-page.component';
 import { provideContactusMocks } from '../../../testing/test-utils';
 
 describe('MemberRemovalPage', () => {
-	let component: MemberRemovalPageComponent;
-	let fixture: ComponentFixture<MemberRemovalPageComponent>;
+  let component: MemberRemovalPageComponent;
+  let fixture: ComponentFixture<MemberRemovalPageComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [MemberRemovalPageComponent],
-			providers: [provideContactusMocks()],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(MemberRemovalPageComponent, {
-				set: { imports: [], providers: [] },
-			})
-			.compileComponents();
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [MemberRemovalPageComponent],
+      providers: [provideContactusMocks()],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(MemberRemovalPageComponent, {
+        set: { imports: [], providers: [] },
+      })
+      .compileComponents();
+  }));
 
-	beforeEach(() => {
-		fixture = TestBed.createComponent(MemberRemovalPageComponent);
-		component = fixture.componentInstance;
-	});
+  beforeEach(() => {
+    fixture = TestBed.createComponent(MemberRemovalPageComponent);
+    component = fixture.componentInstance;
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

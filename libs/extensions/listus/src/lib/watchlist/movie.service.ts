@@ -9,15 +9,15 @@ import { Observable } from 'rxjs';
 import { IMovieService } from './interfaces';
 
 @Injectable({
-	providedIn: 'root',
+  providedIn: 'root',
 })
 // extends CommuneItemBaseService<typeof MovieKind, IMovieDto, ListusAppSchema>
 export class MovieService implements IMovieService {
-	addCommuneItem(
-		dto: IMovieDbo,
-		// tx?: IRxReadwriteTransaction<ListusAppSchema>,
-	): Observable<IMovieDbo> {
-		console.log('MovieService.addCommuneItem()', dto);
-		throw new Error('Not implemented');
-	}
+  addCommuneItem(
+    dto: IMovieDbo,
+    // tx?: IRxReadwriteTransaction<ListusAppSchema>,
+  ): Observable<IMovieDbo> {
+    console.log('MovieService.addCommuneItem()', dto);
+    throw new Error('Not implemented');
+  }
 }

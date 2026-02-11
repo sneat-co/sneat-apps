@@ -1,25 +1,26 @@
 import { TestBed } from '@angular/core/testing';
-import { SneatApiService } from '@sneat/api';
-import { AssetusSpaceService } from './assetus-space-service.service';
+import { Firestore } from '@angular/fire/firestore';
+import { AssetusSpaceService } from './assetus-space.service';
+
+vi.mock('@angular/fire/firestore', () => ({
+  collection: vi.fn(),
+  Firestore: vi.fn(),
+}));
 
 describe('AssetusSpaceService', () => {
-	beforeEach(() =>
-		TestBed.configureTestingModule({
-			providers: [
-				AssetusSpaceService,
-				{ provide: SneatApiService, useValue: { post: vi.fn() } },
-			],
-		}),
-	);
+  beforeEach(() =>
+    TestBed.configureTestingModule({
+      providers: [
+        AssetusSpaceService,
+        {
+          provide: Firestore,
+          useValue: {},
+        },
+      ],
+    }),
+  );
 
-	it('should be created', () => {
-		expect(TestBed.inject(AssetusSpaceService)).toBeTruthy();
-	});
-
-	// Add specific test cases for your service methods
-	// Example:
-	// it('should handle API calls', () => {
-	//   const service = TestBed.inject(AssetusSpaceService);
-	//   // Test your service logic
-	// });
+  it('should be created', () => {
+    expect(TestBed.inject(AssetusSpaceService)).toBeTruthy();
+  });
 });

@@ -7,26 +7,26 @@ import { HappeningService } from '../services/happening.service';
 import { HappeningBaseComponentParams } from './happening-base.component';
 
 describe('HappeningBaseComponentParams', () => {
-	beforeEach(() => {
-		TestBed.configureTestingModule({
-			providers: [
-				HappeningBaseComponentParams,
-				{
-					provide: ErrorLogger,
-					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
-				},
-				{ provide: HappeningService, useValue: {} },
-				{
-					provide: SpaceNavService,
-					useValue: { navigateForwardToSpacePage: vi.fn() },
-				},
-				{ provide: ContactsSelectorService, useValue: {} },
-				{ provide: ModalController, useValue: {} },
-			],
-		});
-	});
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        HappeningBaseComponentParams,
+        {
+          provide: ErrorLogger,
+          useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+        },
+        { provide: HappeningService, useValue: {} },
+        {
+          provide: SpaceNavService,
+          useValue: { navigateForwardToSpacePage: vi.fn() },
+        },
+        { provide: ContactsSelectorService, useValue: {} },
+        { provide: ModalController, useValue: {} },
+      ],
+    });
+  });
 
-	it('should be created', () => {
-		expect(TestBed.inject(HappeningBaseComponentParams)).toBeTruthy();
-	});
+  it('should be created', () => {
+    expect(TestBed.inject(HappeningBaseComponentParams)).toBeTruthy();
+  });
 });

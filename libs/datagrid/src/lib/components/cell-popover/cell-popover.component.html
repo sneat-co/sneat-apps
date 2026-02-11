@@ -1,64 +1,64 @@
 <ion-card-header>
-	<ion-card-title>Field: {{ column?.name }}</ion-card-title>
-	<ion-card-subtitle>Value: {{ value }}</ion-card-subtitle>
+  <ion-card-title>Field: {{ column?.name }}</ion-card-title>
+  <ion-card-subtitle>Value: {{ value }}</ion-card-subtitle>
 </ion-card-header>
 <h3 class="ion-margin">
-	References:
-	@if (fk?.refTable) {
-		<a routerLink="{{ fk?.refTable?.schema }}.{{ fk?.refTable?.name }}">
-			{{ fk?.refTable?.schema }}.{{ fk?.refTable?.name }}
-		</a>
-	}
+  References:
+  @if (fk?.refTable) {
+    <a routerLink="{{ fk?.refTable?.schema }}.{{ fk?.refTable?.name }}">
+      {{ fk?.refTable?.schema }}.{{ fk?.refTable?.name }}
+    </a>
+  }
 </h3>
 <ion-segment [(ngModel)]="tab">
-	<ion-segment-button value="rec">
-		<ion-label>Record</ion-label>
-	</ion-segment-button>
-	<ion-segment-button value="cols">
-		<ion-label>Columns</ion-label>
-	</ion-segment-button>
-	<ion-segment-button value="refs">
-		<ion-label>References</ion-label>
-	</ion-segment-button>
+  <ion-segment-button value="rec">
+    <ion-label>Record</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="cols">
+    <ion-label>Columns</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="refs">
+    <ion-label>References</ion-label>
+  </ion-segment-button>
 </ion-segment>
 
 @switch (tab) {
-	@case ("rec") {
-		<ion-list>
-			<ion-item>
-				<ion-label>Id</ion-label>
-				<ion-input
-					type="number"
-					style="text-align: right"
-					value="1"
-					readonly="true"
-				/>
-			</ion-item>
-			<ion-item>
-				<ion-label>Code</ion-label>
-				<ion-input
-					type="text"
-					style="text-align: right"
-					value="Something"
-					readonly="true"
-				/>
-			</ion-item>
-		</ion-list>
-	}
-	@case ("cols") {
-		<ion-list>
-			<ion-item>
-				<ion-label>Id</ion-label>
-				<ion-badge slot="end" color="light">
-					<ion-text color="medium">INT</ion-text>
-				</ion-badge>
-			</ion-item>
-			<ion-item>
-				<ion-label>Code</ion-label>
-				<ion-badge slot="end" color="light">
-					<ion-text color="medium">NVARCHAR</ion-text>
-				</ion-badge>
-			</ion-item>
-		</ion-list>
-	}
+  @case ("rec") {
+    <ion-list>
+      <ion-item>
+        <ion-label>Id</ion-label>
+        <ion-input
+          type="number"
+          style="text-align: right"
+          value="1"
+          readonly="true"
+        />
+      </ion-item>
+      <ion-item>
+        <ion-label>Code</ion-label>
+        <ion-input
+          type="text"
+          style="text-align: right"
+          value="Something"
+          readonly="true"
+        />
+      </ion-item>
+    </ion-list>
+  }
+  @case ("cols") {
+    <ion-list>
+      <ion-item>
+        <ion-label>Id</ion-label>
+        <ion-badge slot="end" color="light">
+          <ion-text color="medium">INT</ion-text>
+        </ion-badge>
+      </ion-item>
+      <ion-item>
+        <ion-label>Code</ion-label>
+        <ion-badge slot="end" color="light">
+          <ion-text color="medium">NVARCHAR</ion-text>
+        </ion-badge>
+      </ion-item>
+    </ion-list>
+  }
 }

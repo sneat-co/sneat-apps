@@ -1,188 +1,188 @@
 <ion-header>
-	<ion-toolbar color="light">
-		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="defaultBackUrl" />
-		</ion-buttons>
-		@if (document) {
-			<ion-title>{{ document.type | titlecase }}</ion-title>
-		} @else {
-			<ion-title>Document</ion-title>
-		}
-	</ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="defaultBackUrl" />
+    </ion-buttons>
+    @if (document) {
+      <ion-title>{{ document.type | titlecase }}</ion-title>
+    } @else {
+      <ion-title>Document</ion-title>
+    }
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	@if (document) {
-		<ion-list>
-			@if (document.countryId) {
-				<ion-item-divider>
-					<ion-label>Country: {{ document.countryId }}</ion-label>
-				</ion-item-divider>
-			}
-			<ion-item class="with-buttons">
-				<ion-label color="medium">Title</ion-label>
-				<ion-input [(ngModel)]="document.title" [readonly]="mode === 'view'" />
-			</ion-item>
-			@if (parentAsset) {
-				<ion-item>
-					<ion-label>For: {{ parentAsset.title }}</ion-label>
-				</ion-item>
-			}
-			@if (document.type !== "rent_lease") {
-				<ion-item class="with-buttons">
-					@switch (document.type) {
-						@case ("insurance") {
-							<ion-label>Policy #</ion-label>
-						}
-						@default {
-							<ion-label>Number {{ document.type }}</ion-label>
-						}
-					}
-					<ion-input
-						#docNumber
-						[(ngModel)]="document.number"
-						[readonly]="mode === 'view'"
-					/>
-					@if (mode === "view") {
-						<ion-buttons slot="end">
-							<ion-button color="medium">
-								<ion-icon name="copy" />
-							</ion-button>
-						</ion-buttons>
-					}
-				</ion-item>
-			}
-			@if (document.type !== "marriage_certificate") {
-				<ion-item>
-					<ion-label>Expires on</ion-label>
-					<ion-datetime
-						#docExpires
-						[(ngModel)]="document.expires"
-						[readonly]="mode === 'view'"
-					/>
-				</ion-item>
-			}
-			<ion-item>
-				@if (document.type !== "rent_lease") {
-					<ion-label>Issued on</ion-label>
-				}
-				@if (document.type === "rent_lease") {
-					<ion-label>Start date</ion-label>
-				}
-				<ion-datetime
-					#docIssued
-					[(ngModel)]="document.issued"
-					[readonly]="mode === 'view'"
-				/>
-			</ion-item>
-			@if (document.type !== "rent_lease") {
-				<ion-item>
-					<ion-label>Issued by</ion-label>
-					<ion-input
-						#docIssuedBy
-						[(ngModel)]="document.issuedBy"
-						[readonly]="mode === 'view'"
-					/>
-				</ion-item>
-			}
-		</ion-list>
-	}
+  @if (document) {
+    <ion-list>
+      @if (document.countryId) {
+        <ion-item-divider>
+          <ion-label>Country: {{ document.countryId }}</ion-label>
+        </ion-item-divider>
+      }
+      <ion-item class="with-buttons">
+        <ion-label color="medium">Title</ion-label>
+        <ion-input [(ngModel)]="document.title" [readonly]="mode === 'view'" />
+      </ion-item>
+      @if (parentAsset) {
+        <ion-item>
+          <ion-label>For: {{ parentAsset.title }}</ion-label>
+        </ion-item>
+      }
+      @if (document.type !== "rent_lease") {
+        <ion-item class="with-buttons">
+          @switch (document.type) {
+            @case ("insurance") {
+              <ion-label>Policy #</ion-label>
+            }
+            @default {
+              <ion-label>Number {{ document.type }}</ion-label>
+            }
+          }
+          <ion-input
+            #docNumber
+            [(ngModel)]="document.number"
+            [readonly]="mode === 'view'"
+          />
+          @if (mode === "view") {
+            <ion-buttons slot="end">
+              <ion-button color="medium">
+                <ion-icon name="copy" />
+              </ion-button>
+            </ion-buttons>
+          }
+        </ion-item>
+      }
+      @if (document.type !== "marriage_certificate") {
+        <ion-item>
+          <ion-label>Expires on</ion-label>
+          <ion-datetime
+            #docExpires
+            [(ngModel)]="document.expires"
+            [readonly]="mode === 'view'"
+          />
+        </ion-item>
+      }
+      <ion-item>
+        @if (document.type !== "rent_lease") {
+          <ion-label>Issued on</ion-label>
+        }
+        @if (document.type === "rent_lease") {
+          <ion-label>Start date</ion-label>
+        }
+        <ion-datetime
+          #docIssued
+          [(ngModel)]="document.issued"
+          [readonly]="mode === 'view'"
+        />
+      </ion-item>
+      @if (document.type !== "rent_lease") {
+        <ion-item>
+          <ion-label>Issued by</ion-label>
+          <ion-input
+            #docIssuedBy
+            [(ngModel)]="document.issuedBy"
+            [readonly]="mode === 'view'"
+          />
+        </ion-item>
+      }
+    </ion-list>
+  }
 
-	<ion-grid>
-		<ion-row>
-			@if (mode === "view") {
-				<ion-col size="6">
-					<ion-button color="light" expand="full" (click)="startEditing()">
-						<!--                    <ion-icon name="create"></ion-icon>-->
-						Edit
-					</ion-button>
-				</ion-col>
-			}
-			@if (mode === "view") {
-				<ion-col size="6">
-					<ion-button color="medium" expand="full">Delete</ion-button>
-				</ion-col>
-			}
-			@if (mode === "edit") {
-				<ion-col size="8">
-					<ion-button color="primary" expand="full" (click)="saveChanges()"
-						>Save changes</ion-button
-					>
-				</ion-col>
-			}
-			@if (mode === "edit") {
-				<ion-col size="4">
-					<ion-button color="light" expand="full" (click)="cancelEditing()"
-						>Cancel</ion-button
-					>
-				</ion-col>
-			}
-		</ion-row>
-	</ion-grid>
+  <ion-grid>
+    <ion-row>
+      @if (mode === "view") {
+        <ion-col size="6">
+          <ion-button color="light" expand="full" (click)="startEditing()">
+            <!--                    <ion-icon name="create"></ion-icon>-->
+            Edit
+          </ion-button>
+        </ion-col>
+      }
+      @if (mode === "view") {
+        <ion-col size="6">
+          <ion-button color="medium" expand="full">Delete</ion-button>
+        </ion-col>
+      }
+      @if (mode === "edit") {
+        <ion-col size="8">
+          <ion-button color="primary" expand="full" (click)="saveChanges()"
+            >Save changes</ion-button
+          >
+        </ion-col>
+      }
+      @if (mode === "edit") {
+        <ion-col size="4">
+          <ion-button color="light" expand="full" (click)="cancelEditing()"
+            >Cancel</ion-button
+          >
+        </ion-col>
+      }
+    </ion-row>
+  </ion-grid>
 
-	@if (mode === "view" && document) {
-		@if (document.membersInfo) {
-			<ion-item-group>
-				<ion-item-divider color="light">
-					@switch (document.type) {
-						@case ("passport") {
-							<ion-label>Owner</ion-label>
-						}
-						@default {
-							<ion-label>Members</ion-label>
-						}
-					}
-				</ion-item-divider>
-				@for (member of document.membersInfo; track member) {
-					<ion-item>
-						<ion-label>{{ member.title }}</ion-label>
-					</ion-item>
-				}
-			</ion-item-group>
-		}
-		@if (document.contacts) {
-			<ion-item-group>
-				<ion-item-divider color="light">
-					<ion-label>Contacts</ion-label>
-				</ion-item-divider>
-				@for (contact of document.contacts; track contact) {
-					<ion-item>
-						<ion-label>{{ contact.title }}</ion-label>
-						@if (contact.relation) {
-							<ion-badge slot="end" color="light" style="font-weight: normal">{{
-								contact.relation
-							}}</ion-badge>
-						}
-					</ion-item>
-				}
-			</ion-item-group>
-		}
-		@if (document.subAssets && document.subAssets.length) {
-			<ion-item-group>
-				<ion-item-divider color="light" class="with-buttons">
-					<ion-label>Visas</ion-label>
-					<ion-buttons slot="end">
-						<ion-button color="medium" title="Add visa">
-							<ion-icon name="add" />
-						</ion-button>
-					</ion-buttons>
-				</ion-item-divider>
-				@for (subAsset of document.subAssets; track subAsset) {
-					<ion-item>
-						<ion-label>
-							@if (subAsset.countryId) {
-								<ion-badge color="light">{{ subAsset.countryId }}</ion-badge>
-							}
-							{{ subAsset.title }}</ion-label
-						>
-						@if (subAsset.expires) {
-							<ion-badge color="light" style="font-weight: normal">
-								Exp: {{ subAsset.expires }}</ion-badge
-							>
-						}
-					</ion-item>
-				}
-			</ion-item-group>
-		}
-	}
+  @if (mode === "view" && document) {
+    @if (document.membersInfo) {
+      <ion-item-group>
+        <ion-item-divider color="light">
+          @switch (document.type) {
+            @case ("passport") {
+              <ion-label>Owner</ion-label>
+            }
+            @default {
+              <ion-label>Members</ion-label>
+            }
+          }
+        </ion-item-divider>
+        @for (member of document.membersInfo; track member) {
+          <ion-item>
+            <ion-label>{{ member.title }}</ion-label>
+          </ion-item>
+        }
+      </ion-item-group>
+    }
+    @if (document.contacts) {
+      <ion-item-group>
+        <ion-item-divider color="light">
+          <ion-label>Contacts</ion-label>
+        </ion-item-divider>
+        @for (contact of document.contacts; track contact) {
+          <ion-item>
+            <ion-label>{{ contact.title }}</ion-label>
+            @if (contact.relation) {
+              <ion-badge slot="end" color="light" style="font-weight: normal">{{
+                contact.relation
+              }}</ion-badge>
+            }
+          </ion-item>
+        }
+      </ion-item-group>
+    }
+    @if (document.subAssets && document.subAssets.length) {
+      <ion-item-group>
+        <ion-item-divider color="light" class="with-buttons">
+          <ion-label>Visas</ion-label>
+          <ion-buttons slot="end">
+            <ion-button color="medium" title="Add visa">
+              <ion-icon name="add" />
+            </ion-button>
+          </ion-buttons>
+        </ion-item-divider>
+        @for (subAsset of document.subAssets; track subAsset) {
+          <ion-item>
+            <ion-label>
+              @if (subAsset.countryId) {
+                <ion-badge color="light">{{ subAsset.countryId }}</ion-badge>
+              }
+              {{ subAsset.title }}</ion-label
+            >
+            @if (subAsset.expires) {
+              <ion-badge color="light" style="font-weight: normal">
+                Exp: {{ subAsset.expires }}</ion-badge
+              >
+            }
+          </ion-item>
+        }
+      </ion-item-group>
+    }
+  }
 </ion-content>

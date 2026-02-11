@@ -1,16 +1,16 @@
 <ion-card>
-	<ion-item-divider color="light">
-		<ion-label>Roles</ion-label>
-	</ion-item-divider>
-	@for (role of roles; track role) {
-		<ion-item>
-			<ion-checkbox
-				[value]="role.id"
-				[checked]="selectedRoles.includes(role.id)"
-				slot="start"
-				(ionChange)="onRoleChanged($event)"
-			/>
-			<ion-label>{{ role.title }}</ion-label>
-		</ion-item>
-	}
+  <ion-item-divider color="light">
+    <ion-label>Roles</ion-label>
+  </ion-item-divider>
+  @for (role of roles; track role) {
+    <ion-item>
+      <ion-checkbox
+        [value]="role.id"
+        [checked]="selectedRoles.includes(role.id)"
+        slot="start"
+        (ionChange)="onRoleChanged($event)"
+      />
+      <ion-label>{{ role.title }}</ion-label>
+    </ion-item>
+  }
 </ion-card>

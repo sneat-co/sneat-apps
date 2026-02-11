@@ -1,149 +1,149 @@
 <ion-header>
-	<ion-toolbar color="light">
-		<ion-item color="light" lines="none" class="sneat-tiny-end-padding">
-			<ion-icon
-				slot="start"
-				[name]="
-					!space.type
-						? 'cube-utline'
-						: space.type === 'family'
-							? 'people-outline'
-							: space.type === 'private'
-								? 'person-circle-outline'
-								: 'people-outline'
-				"
-			/>
-			<ion-label>
-				{{
-					space.brief?.title ||
-						(space.type | titlecase) ||
-						space.id ||
-						"Space: Loading..."
-				}}
-				@if (topMenuService.isTopMenuHidden | async) {
-					<ion-text color="medium" class="ion-margin">&#64;</ion-text>
-					<a
-						[routerLink]="'/'"
-						[routerDirection]="'root'"
-						style="text-decoration: none"
-						>sneat.app</a
-					>
-				}
-			</ion-label>
-			<ion-buttons slot="end">
-				<ion-menu-button />
-			</ion-buttons>
-		</ion-item>
-		<!--		<ion-buttons slot="end">-->
-		<!--			<ion-button>-->
-		<!--				<ion-icon name="settings" slot="start" />-->
-		<!--			</ion-button>-->
-		<!--		</ion-buttons>-->
-	</ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-item color="light" lines="none" class="sneat-tiny-end-padding">
+      <ion-icon
+        slot="start"
+        [name]="
+          !space.type
+            ? 'cube-utline'
+            : space.type === 'family'
+              ? 'people-outline'
+              : space.type === 'private'
+                ? 'person-circle-outline'
+                : 'people-outline'
+        "
+      />
+      <ion-label>
+        {{
+          space.brief?.title ||
+            (space.type | titlecase) ||
+            space.id ||
+            "Space: Loading..."
+        }}
+        @if (topMenuService.isTopMenuHidden | async) {
+          <ion-text color="medium" class="ion-margin">&#64;</ion-text>
+          <a
+            [routerLink]="'/'"
+            [routerDirection]="'root'"
+            style="text-decoration: none"
+            >sneat.app</a
+          >
+        }
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-menu-button />
+      </ion-buttons>
+    </ion-item>
+    <!--		<ion-buttons slot="end">-->
+    <!--			<ion-button>-->
+    <!--				<ion-icon name="settings" slot="start" />-->
+    <!--			</ion-button>-->
+    <!--		</ion-buttons>-->
+  </ion-toolbar>
 </ion-header>
 
 <ion-content class="cardy">
-	<!--	<ion-row class="ion-no-padding ion-no-margin">-->
-	<!--		&lt;!&ndash; TODO(StackOverflow): Is here better way to use grid without padding? &ndash;&gt;-->
-	<!--		<ion-col class="ion-no-padding ion-no-margin" size-md="6" size="12">-->
-	<!--			<sneat-team-scrums [team]="team"></sneat-team-scrums>-->
-	<!--		</ion-col>-->
-	<!--		<ion-col class="ion-no-padding ion-no-margin" size-md="6" size="12">-->
-	<!--			<sneat-team-retrospectives [team]="team"></sneat-team-retrospectives>-->
-	<!--		</ion-col>-->
-	<!--	</ion-row>-->
-	<!--	<ion-row class="ion-no-padding ion-no-margin">-->
-	<!--		<ion-col class="ion-no-padding ion-no-margin" size-xl="6" size="12">-->
-	<!--			<app-team-members [team]="team"></app-team-members>-->
-	<!--		</ion-col>-->
-	<!--		<ion-col class="ion-no-padding ion-no-margin" size-xl="6" size="12">-->
-	<!--			<app-team-metrics [team]="team"></app-team-metrics>-->
-	<!--		</ion-col>-->
-	<!--	</ion-row>-->
+  <!--	<ion-row class="ion-no-padding ion-no-margin">-->
+  <!--		&lt;!&ndash; TODO(StackOverflow): Is here better way to use grid without padding? &ndash;&gt;-->
+  <!--		<ion-col class="ion-no-padding ion-no-margin" size-md="6" size="12">-->
+  <!--			<sneat-team-scrums [team]="team"></sneat-team-scrums>-->
+  <!--		</ion-col>-->
+  <!--		<ion-col class="ion-no-padding ion-no-margin" size-md="6" size="12">-->
+  <!--			<sneat-team-retrospectives [team]="team"></sneat-team-retrospectives>-->
+  <!--		</ion-col>-->
+  <!--	</ion-row>-->
+  <!--	<ion-row class="ion-no-padding ion-no-margin">-->
+  <!--		<ion-col class="ion-no-padding ion-no-margin" size-xl="6" size="12">-->
+  <!--			<app-team-members [team]="team"></app-team-members>-->
+  <!--		</ion-col>-->
+  <!--		<ion-col class="ion-no-padding ion-no-margin" size-xl="6" size="12">-->
+  <!--			<app-team-metrics [team]="team"></app-team-metrics>-->
+  <!--		</ion-col>-->
+  <!--	</ion-row>-->
 
-	<ion-grid class="ion-grid-layout">
-		<ion-row>
-			@if ($showMembers()) {
-				<ion-col size="12" size-xl="6">
-					<sneat-members-short-list
-						role="member"
-						[$space]="$space()"
-						[$contactusSpaceDbo]="$contactusSpace()?.dbo"
-					/>
-				</ion-col>
-				<ion-col size="12" size-xl="6">
-					<sneat-calendar-brief [$space]="$space()" />
-				</ion-col>
-			} @else {
-				<ion-col size="12">
-					<sneat-calendar-brief [$space]="$space()" />
-				</ion-col>
-			}
-		</ion-row>
-		@if (topMenuService.isTopMenuHidden | async) {
-			<ion-row>
-				<ion-col class="ion-padding-bottom">
-					<ion-card class="last-child-no-border">
-						<ion-item
-							color="divider"
-							class="sneat-tiny-end-padding"
-							lines="full"
-						>
-							<ion-label color="medium">Extensions</ion-label>
-							<!--							<ion-buttons slot="end">-->
-							<!--								<ion-button>-->
-							<!--									<ion-icon name="settings" />-->
-							<!--								</ion-button>-->
-							<!--							</ion-buttons>-->
-						</ion-item>
-						<ion-item routerLink="./assets" tappable="true" detail="true">
-							<ion-icon name="car-sport-outline" slot="start" />
-							<ion-label>Assets</ion-label>
-						</ion-item>
-						<ion-item routerLink="./budget" tappable="true" detail="true">
-							<ion-icon name="cash-outline" slot="start" />
-							<ion-label>Budget</ion-label>
-						</ion-item>
-						<ion-item routerLink="./contacts" tappable="true" detail="true">
-							<ion-icon name="people-outline" slot="start" />
-							<ion-label>Contacts</ion-label>
-						</ion-item>
-						<ion-item routerLink="./debts" tappable="true" detail="true">
-							<ion-icon name="cash-outline" slot="start" />
-							<ion-label>Debts</ion-label>
-						</ion-item>
-						<ion-item routerLink="./documents" tappable="true" detail="true">
-							<ion-icon name="documents-outline" slot="start" />
-							<ion-label>Documents</ion-label>
-						</ion-item>
-						<ion-item routerLink="./lists" tappable="true" detail="true">
-							<ion-icon name="cart-outline" tappable slot="start" />
-							<ion-label>Lists</ion-label>
-							<ion-buttons slot="end">
-								<ion-button
-									routerLink="./list/buy/groceries"
-									(click)="$event.stopPropagation()"
-								>
-									<ion-label style="text-transform: none" color="primary">
-										<span>🛒</span>
-										<span
-											class="sneat-hide-if-width-less-320"
-											style="margin-left: 0.5em"
-											>Groceries</span
-										>
-									</ion-label>
-								</ion-button>
-							</ion-buttons>
-						</ion-item>
-						<ion-item routerLink="./trackers" tappable="true" detail="true">
-							<ion-icon name="bar-chart-outline" slot="start" />
-							<ion-label>Trackers</ion-label>
-						</ion-item>
-					</ion-card>
-				</ion-col>
-			</ion-row>
-		}
-	</ion-grid>
+  <ion-grid class="ion-grid-layout">
+    <ion-row>
+      @if ($showMembers()) {
+        <ion-col size="12" size-xl="6">
+          <sneat-members-short-list
+            role="member"
+            [$space]="$space()"
+            [$contactusSpaceDbo]="$contactusSpace()?.dbo"
+          />
+        </ion-col>
+        <ion-col size="12" size-xl="6">
+          <sneat-calendar-brief [$space]="$space()" />
+        </ion-col>
+      } @else {
+        <ion-col size="12">
+          <sneat-calendar-brief [$space]="$space()" />
+        </ion-col>
+      }
+    </ion-row>
+    @if (topMenuService.isTopMenuHidden | async) {
+      <ion-row>
+        <ion-col class="ion-padding-bottom">
+          <ion-card class="last-child-no-border">
+            <ion-item
+              color="divider"
+              class="sneat-tiny-end-padding"
+              lines="full"
+            >
+              <ion-label color="medium">Extensions</ion-label>
+              <!--							<ion-buttons slot="end">-->
+              <!--								<ion-button>-->
+              <!--									<ion-icon name="settings" />-->
+              <!--								</ion-button>-->
+              <!--							</ion-buttons>-->
+            </ion-item>
+            <ion-item routerLink="./assets" tappable="true" detail="true">
+              <ion-icon name="car-sport-outline" slot="start" />
+              <ion-label>Assets</ion-label>
+            </ion-item>
+            <ion-item routerLink="./budget" tappable="true" detail="true">
+              <ion-icon name="cash-outline" slot="start" />
+              <ion-label>Budget</ion-label>
+            </ion-item>
+            <ion-item routerLink="./contacts" tappable="true" detail="true">
+              <ion-icon name="people-outline" slot="start" />
+              <ion-label>Contacts</ion-label>
+            </ion-item>
+            <ion-item routerLink="./debts" tappable="true" detail="true">
+              <ion-icon name="cash-outline" slot="start" />
+              <ion-label>Debts</ion-label>
+            </ion-item>
+            <ion-item routerLink="./documents" tappable="true" detail="true">
+              <ion-icon name="documents-outline" slot="start" />
+              <ion-label>Documents</ion-label>
+            </ion-item>
+            <ion-item routerLink="./lists" tappable="true" detail="true">
+              <ion-icon name="cart-outline" tappable slot="start" />
+              <ion-label>Lists</ion-label>
+              <ion-buttons slot="end">
+                <ion-button
+                  routerLink="./list/buy/groceries"
+                  (click)="$event.stopPropagation()"
+                >
+                  <ion-label style="text-transform: none" color="primary">
+                    <span>🛒</span>
+                    <span
+                      class="sneat-hide-if-width-less-320"
+                      style="margin-left: 0.5em"
+                      >Groceries</span
+                    >
+                  </ion-label>
+                </ion-button>
+              </ion-buttons>
+            </ion-item>
+            <ion-item routerLink="./trackers" tappable="true" detail="true">
+              <ion-icon name="bar-chart-outline" slot="start" />
+              <ion-label>Trackers</ion-label>
+            </ion-item>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    }
+  </ion-grid>
 
-	<div class="ion-padding-bottom">&nbsp;</div>
+  <div class="ion-padding-bottom">&nbsp;</div>
 </ion-content>

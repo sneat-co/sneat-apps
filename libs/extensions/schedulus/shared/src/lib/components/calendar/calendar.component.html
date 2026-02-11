@@ -1,23 +1,23 @@
 <ion-segment [(ngModel)]="tab" (ionChange)="segmentChanged($event)">
-	<ion-segment-button value="day">
-		<ion-label class="smaller">📅 Day</ion-label>
-	</ion-segment-button>
-	<ion-segment-button value="week">
-		<ion-label class="smaller">🗓️ Week</ion-label>
-	</ion-segment-button>
-	<ion-segment-button value="recurrings">
-		<ion-label class="smaller">🔁 Repeats</ion-label>
-	</ion-segment-button>
-	<ion-segment-button value="singles">
-		<ion-label class="smaller">1️⃣-timers</ion-label>
-	</ion-segment-button>
+  <ion-segment-button value="day">
+    <ion-label class="smaller">📅 Day</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="week">
+    <ion-label class="smaller">🗓️ Week</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="recurrings">
+    <ion-label class="smaller">🔁 Repeats</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="singles">
+    <ion-label class="smaller">1️⃣-timers</ion-label>
+  </ion-segment-button>
 </ion-segment>
 
 <sneat-calendar-filter
-	#calendarFilterComponent
-	[space]="$space()"
-	[showWeekdays]="tab === 'recurrings'"
-	[showRepeats]="tab === 'recurrings'"
+  #calendarFilterComponent
+  [space]="$space()"
+  [showWeekdays]="tab === 'recurrings'"
+  [showRepeats]="tab === 'recurrings'"
 />
 
 <!--
@@ -25,9 +25,9 @@ We use style.display  instead of *ngIf to avoid re-creating of the component on 
 This is just a small performance optimization.
 -->
 <sneat-day-tab
-	[style.display]="tab === 'day' ? 'block' : 'none'"
-	[$space]="$space()"
-	[$spaceDaysProvider]="spaceDaysProvider"
+  [style.display]="tab === 'day' ? 'block' : 'none'"
+  [$space]="$space()"
+  [$spaceDaysProvider]="spaceDaysProvider"
 />
 
 <!--
@@ -39,27 +39,27 @@ This is probably due to the fact that we open 14 listeners (1 for each day of 2 
 [style.display]="tab === 'week' ? 'block' : 'none'"
 -->
 @if ($isWeekTabActivated()) {
-	<sneat-week-tab
-		[style.display]="tab === 'week' ? 'block' : 'none'"
-		[$space]="$space()"
-		[$spaceDaysProvider]="spaceDaysProvider"
-	/>
+  <sneat-week-tab
+    [style.display]="tab === 'week' ? 'block' : 'none'"
+    [$space]="$space()"
+    [$spaceDaysProvider]="spaceDaysProvider"
+  />
 }
 
 @switch (tab) {
-	@case ("recurrings") {
-		<sneat-recurrings-tab
-			[$space]="$space()"
-			[$recurrings]="$recurrings()"
-			[$allRecurrings]="$allRecurrings()"
-			[$contactusSpace]="$contactusSpace()"
-		/>
-	}
-	@case ("singles") {
-		<sneat-singles-tab
-			[$space]="$space()"
-			[onDateSelected]="onDateSelected"
-			[$contactusSpace]="$contactusSpace()"
-		/>
-	}
+  @case ("recurrings") {
+    <sneat-recurrings-tab
+      [$space]="$space()"
+      [$recurrings]="$recurrings()"
+      [$allRecurrings]="$allRecurrings()"
+      [$contactusSpace]="$contactusSpace()"
+    />
+  }
+  @case ("singles") {
+    <sneat-singles-tab
+      [$space]="$space()"
+      [onDateSelected]="onDateSelected"
+      [$contactusSpace]="$contactusSpace()"
+    />
+  }
 }

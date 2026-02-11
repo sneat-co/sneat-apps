@@ -1,210 +1,210 @@
 @if (value) {
-	<ion-item
-		[lines]="lastItemLines"
-		[class]="{ 'sneat-tiny-end-padding': !isReadonly }"
-	>
-		@if ($selectedItem()?.iconName) {
-			<ion-icon
-				slot="start"
-				[name]="$selectedItem()?.iconName"
-				[color]="
-					$selectedItem()?.iconColor || $selectedItem()?.labelColor || 'medium'
-				"
-			/>
-		}
-		<ion-select
-			#selectInput
-			interface="popover"
-			[label]="label"
-			[(ngModel)]="value"
-			(ionChange)="onSelectChanged($event)"
-			[disabled]="isReadonly || !!$isProcessing()"
-		>
-			@for (item of items; track item.id) {
-				<ion-select-option [value]="item.id">
-					{{ item.emoji }}
-					@if (item.shortTitle) {
-						{{ item.shortTitle }}
-					} @else {
-						{{ item.title }}
-					}
-				</ion-select-option>
-			}
-			<!--		<ion-select-option value="other">OTHER</ion-select-option>-->
-		</ion-select>
-		@if ($isProcessing()) {
-			<ion-spinner name="lines-small" color="medium" slot="end" />
-		} @else if (!isReadonly) {
-			<ion-buttons slot="end" class="ion-no-margin">
-				<ion-button color="medium" title="Deselect" (click)="deselect()">
-					<ion-icon name="close-outline" />
-				</ion-button>
-			</ion-buttons>
-		}
-	</ion-item>
+  <ion-item
+    [lines]="lastItemLines"
+    [class]="{ 'sneat-tiny-end-padding': !isReadonly }"
+  >
+    @if ($selectedItem()?.iconName) {
+      <ion-icon
+        slot="start"
+        [name]="$selectedItem()?.iconName"
+        [color]="
+          $selectedItem()?.iconColor || $selectedItem()?.labelColor || 'medium'
+        "
+      />
+    }
+    <ion-select
+      #selectInput
+      interface="popover"
+      [label]="label"
+      [(ngModel)]="value"
+      (ionChange)="onSelectChanged($event)"
+      [disabled]="isReadonly || !!$isProcessing()"
+    >
+      @for (item of items; track item.id) {
+        <ion-select-option [value]="item.id">
+          {{ item.emoji }}
+          @if (item.shortTitle) {
+            {{ item.shortTitle }}
+          } @else {
+            {{ item.title }}
+          }
+        </ion-select-option>
+      }
+      <!--		<ion-select-option value="other">OTHER</ion-select-option>-->
+    </ion-select>
+    @if ($isProcessing()) {
+      <ion-spinner name="lines-small" color="medium" slot="end" />
+    } @else if (!isReadonly) {
+      <ion-buttons slot="end" class="ion-no-margin">
+        <ion-button color="medium" title="Deselect" (click)="deselect()">
+          <ion-icon name="close-outline" />
+        </ion-button>
+      </ion-buttons>
+    }
+  </ion-item>
 } @else {
-	@if (isFilterable) {
-		<ion-item class="sneat-tiny-end-padding">
-			<ion-input
-				#filterInput
-				color="medium"
-				placeholder="filter"
-				[label]="filterLabel"
-				[value]="$filter()"
-				(ionChange)="onFilterChanged($event, 'ionChange')"
-				(ionInput)="onFilterChanged($event, 'ionInput')"
-			/>
-			@if ($filter()) {
-				<ion-buttons slot="end">
-					@if (canAdd && $hiddenCount()) {
-						<ion-button
-							title="Use this"
-							color="primary"
-							(click)="onAdd($event)"
-						>
-							<ion-icon name="add-outline" />
-							<ion-label>Add</ion-label>
-						</ion-button>
-					}
-					<ion-button (click)="clearFilter()" title="Clear filter">
-						<ion-icon name="close-outline" />
-					</ion-button>
-				</ion-buttons>
-			}
-		</ion-item>
-	}
+  @if (isFilterable) {
+    <ion-item class="sneat-tiny-end-padding">
+      <ion-input
+        #filterInput
+        color="medium"
+        placeholder="filter"
+        [label]="filterLabel"
+        [value]="$filter()"
+        (ionChange)="onFilterChanged($event, 'ionChange')"
+        (ionInput)="onFilterChanged($event, 'ionInput')"
+      />
+      @if ($filter()) {
+        <ion-buttons slot="end">
+          @if (canAdd && $hiddenCount()) {
+            <ion-button
+              title="Use this"
+              color="primary"
+              (click)="onAdd($event)"
+            >
+              <ion-icon name="add-outline" />
+              <ion-label>Add</ion-label>
+            </ion-button>
+          }
+          <ion-button (click)="clearFilter()" title="Clear filter">
+            <ion-icon name="close-outline" />
+          </ion-button>
+        </ion-buttons>
+      }
+    </ion-item>
+  }
 
-	@if (items && !items.length) {
-		<ion-item-divider>
-			<ion-label>No items yet.</ion-label>
-		</ion-item-divider>
-	}
+  @if (items && !items.length) {
+    <ion-item-divider>
+      <ion-label>No items yet.</ion-label>
+    </ion-item-divider>
+  }
 
-	@if (labelPlacement) {
-		<ion-radio-group [(ngModel)]="value" (ionChange)="onRadioChanged($event)">
-			<ion-list class="ion-no-padding" lines="full">
-				@if (listLabel === "divider") {
-					<ion-item [color]="listLabelColor">
-						<ion-label>{{ label }}</ion-label>
-					</ion-item>
-				}
-				@for (item of $displayItems(); track item.id) {
-					<ion-item
-						[lines]="item.description1 ? 'inset' : 'full'"
-						(click)="select(item)"
-						tappable="true"
-					>
-						@switch (selectMode) {
-							@case ("multiple") {
-								<ion-checkbox
-									slot="start"
-									[value]="item.id"
-									[checked]="false"
-									[disabled]="isDisabled"
-									(ionChange)="onCheckboxChange($event, item)"
-								/>
-								<ion-label>
-									<!-- TODO: duplicate code with the next case -->
-									{{ item.emoji }}
-									@if (item.shortTitle) {
-										@if (item.longTitle) {
-											{{ item.longTitle }} - {{ item.shortTitle }}
-										} @else {
-											{{ item.title }} - {{ item.shortTitle }}
-										}
-									} @else if (item.longTitle) {
-										{{ item.longTitle }}
-									} @else {
-										{{ item.title }}
-									}
-								</ion-label>
-							}
-							@case ("single") {
-								<ion-radio
-									[value]="item.id"
-									[labelPlacement]="labelPlacement"
-									[justify]="
-										justify ||
-										(!labelPlacement || labelPlacement === 'start'
-											? 'space-between'
-											: 'start')
-									"
-								>
-									{{ item.emoji }}
-									@if (item.shortTitle) {
-										@if (item.longTitle) {
-											{{ item.longTitle }} - {{ item.shortTitle }}
-										} @else {
-											{{ item.title }} - {{ item.shortTitle }}
-										}
-									} @else if (item.longTitle) {
-										{{ item.longTitle }}
-									} @else {
-										{{ item.title }}
-									}
-								</ion-radio>
-							}
-						}
-					</ion-item>
-					@if (item.description1) {
-						<ion-item-divider>
-							<ion-label>
-								{{ item.description1 }}
-								@if (item.description2) {
-									<i>{{ item.description2 }}</i>
-								}
-							</ion-label>
-						</ion-item-divider>
-					}
-				}
-			</ion-list>
-		</ion-radio-group>
-	} @else {
-		<ion-item-group>
-			@for (item of $displayItems(); track item.id; let last = $last) {
-				<ion-item
-					[lines]="item.description1 ? 'inset' : last ? lastItemLines : 'full'"
-					button
-					(click)="select(item)"
-				>
-					@if (item.iconName) {
-						<ion-icon
-							slot="start"
-							[name]="item.iconName"
-							[color]="item.iconColor || item.labelColor || 'medium'"
-						/>
-					}
-					@if (!labelPlacement) {
-						<ion-label [color]="item.labelColor">
-							<span class="ion-margin-end">{{ item.emoji }}</span>
-							{{ item.title }}
-						</ion-label>
-					}
-				</ion-item>
-				@if (item.description1) {
-					<ion-item [lines]="last ? lastItemLines : 'full'">
-						<ion-label color="medium">
-							{{ item.description1 }}
-							@if (item.description2) {
-								<i>{{ item.description2 }}</i>
-							}
-						</ion-label>
-					</ion-item>
-				}
-			}
-		</ion-item-group>
-	}
-	@if ($hiddenCount(); as hiddenCount) {
-		<ion-item-divider>
-			<ion-label color="medium"
-				>{{ hiddenCount }} out of {{ items?.length }} items are hidden by filter
-			</ion-label>
-			<ion-buttons slot="end">
-				<ion-button (click)="clearFilter()">
-					<ion-icon name="close-outline" slot="start" />
-					<ion-label>Clear filter</ion-label>
-				</ion-button>
-			</ion-buttons>
-		</ion-item-divider>
-	}
+  @if (labelPlacement) {
+    <ion-radio-group [(ngModel)]="value" (ionChange)="onRadioChanged($event)">
+      <ion-list class="ion-no-padding" lines="full">
+        @if (listLabel === "divider") {
+          <ion-item [color]="listLabelColor">
+            <ion-label>{{ label }}</ion-label>
+          </ion-item>
+        }
+        @for (item of $displayItems(); track item.id) {
+          <ion-item
+            [lines]="item.description1 ? 'inset' : 'full'"
+            (click)="select(item)"
+            tappable="true"
+          >
+            @switch (selectMode) {
+              @case ("multiple") {
+                <ion-checkbox
+                  slot="start"
+                  [value]="item.id"
+                  [checked]="false"
+                  [disabled]="isDisabled"
+                  (ionChange)="onCheckboxChange($event, item)"
+                />
+                <ion-label>
+                  <!-- TODO: duplicate code with the next case -->
+                  {{ item.emoji }}
+                  @if (item.shortTitle) {
+                    @if (item.longTitle) {
+                      {{ item.longTitle }} - {{ item.shortTitle }}
+                    } @else {
+                      {{ item.title }} - {{ item.shortTitle }}
+                    }
+                  } @else if (item.longTitle) {
+                    {{ item.longTitle }}
+                  } @else {
+                    {{ item.title }}
+                  }
+                </ion-label>
+              }
+              @case ("single") {
+                <ion-radio
+                  [value]="item.id"
+                  [labelPlacement]="labelPlacement"
+                  [justify]="
+                    justify ||
+                    (!labelPlacement || labelPlacement === 'start'
+                      ? 'space-between'
+                      : 'start')
+                  "
+                >
+                  {{ item.emoji }}
+                  @if (item.shortTitle) {
+                    @if (item.longTitle) {
+                      {{ item.longTitle }} - {{ item.shortTitle }}
+                    } @else {
+                      {{ item.title }} - {{ item.shortTitle }}
+                    }
+                  } @else if (item.longTitle) {
+                    {{ item.longTitle }}
+                  } @else {
+                    {{ item.title }}
+                  }
+                </ion-radio>
+              }
+            }
+          </ion-item>
+          @if (item.description1) {
+            <ion-item-divider>
+              <ion-label>
+                {{ item.description1 }}
+                @if (item.description2) {
+                  <i>{{ item.description2 }}</i>
+                }
+              </ion-label>
+            </ion-item-divider>
+          }
+        }
+      </ion-list>
+    </ion-radio-group>
+  } @else {
+    <ion-item-group>
+      @for (item of $displayItems(); track item.id; let last = $last) {
+        <ion-item
+          [lines]="item.description1 ? 'inset' : last ? lastItemLines : 'full'"
+          button
+          (click)="select(item)"
+        >
+          @if (item.iconName) {
+            <ion-icon
+              slot="start"
+              [name]="item.iconName"
+              [color]="item.iconColor || item.labelColor || 'medium'"
+            />
+          }
+          @if (!labelPlacement) {
+            <ion-label [color]="item.labelColor">
+              <span class="ion-margin-end">{{ item.emoji }}</span>
+              {{ item.title }}
+            </ion-label>
+          }
+        </ion-item>
+        @if (item.description1) {
+          <ion-item [lines]="last ? lastItemLines : 'full'">
+            <ion-label color="medium">
+              {{ item.description1 }}
+              @if (item.description2) {
+                <i>{{ item.description2 }}</i>
+              }
+            </ion-label>
+          </ion-item>
+        }
+      }
+    </ion-item-group>
+  }
+  @if ($hiddenCount(); as hiddenCount) {
+    <ion-item-divider>
+      <ion-label color="medium"
+        >{{ hiddenCount }} out of {{ items?.length }} items are hidden by filter
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button (click)="clearFilter()">
+          <ion-icon name="close-outline" slot="start" />
+          <ion-label>Clear filter</ion-label>
+        </ion-button>
+      </ion-buttons>
+    </ion-item-divider>
+  }
 }

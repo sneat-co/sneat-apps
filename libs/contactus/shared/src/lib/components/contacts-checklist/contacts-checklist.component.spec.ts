@@ -8,43 +8,43 @@ import { of } from 'rxjs';
 import { ContactsChecklistComponent } from './contacts-checklist.component';
 
 describe('ContactsChecklistComponent', () => {
-	let component: ContactsChecklistComponent;
-	let fixture: ComponentFixture<ContactsChecklistComponent>;
+  let component: ContactsChecklistComponent;
+  let fixture: ComponentFixture<ContactsChecklistComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [ContactsChecklistComponent],
-			providers: [
-				{ provide: ClassName, useValue: 'ContactsChecklistComponent' },
-				{
-					provide: ErrorLogger,
-					useValue: {
-						logError: vi.fn(),
-						logErrorHandler: vi.fn(() => vi.fn()),
-					},
-				},
-				{
-					provide: ContactusSpaceService,
-					useValue: { watchContactBriefs: vi.fn(() => of([])) },
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(ContactsChecklistComponent, {
-				set: { imports: [], template: '' },
-			})
-			.compileComponents();
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ContactsChecklistComponent],
+      providers: [
+        { provide: ClassName, useValue: 'ContactsChecklistComponent' },
+        {
+          provide: ErrorLogger,
+          useValue: {
+            logError: vi.fn(),
+            logErrorHandler: vi.fn(() => vi.fn()),
+          },
+        },
+        {
+          provide: ContactusSpaceService,
+          useValue: { watchContactBriefs: vi.fn(() => of([])) },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(ContactsChecklistComponent, {
+        set: { imports: [], template: '' },
+      })
+      .compileComponents();
+  }));
 
-	beforeEach(() => {
-		fixture = TestBed.createComponent(ContactsChecklistComponent);
-		component = fixture.componentInstance;
-		fixture.componentRef.setInput('$space', { id: 'test-space' });
-		fixture.componentRef.setInput('$checkedContactIDs', []);
-		fixture.detectChanges();
-	});
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ContactsChecklistComponent);
+    component = fixture.componentInstance;
+    fixture.componentRef.setInput('$space', { id: 'test-space' });
+    fixture.componentRef.setInput('$checkedContactIDs', []);
+    fixture.detectChanges();
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

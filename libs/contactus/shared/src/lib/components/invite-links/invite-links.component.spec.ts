@@ -10,46 +10,46 @@ import { of } from 'rxjs';
 import { InviteLinksComponent } from './invite-links.component';
 
 describe('InviteLinksComponent', () => {
-	let component: InviteLinksComponent;
-	let fixture: ComponentFixture<InviteLinksComponent>;
+  let component: InviteLinksComponent;
+  let fixture: ComponentFixture<InviteLinksComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [InviteLinksComponent],
-			providers: [
-				{
-					provide: ErrorLogger,
-					useValue: {
-						logError: vi.fn(),
-						logErrorHandler: vi.fn(() => vi.fn()),
-					},
-				},
-				{ provide: NavController, useValue: {} },
-				{ provide: SpaceNavService, useValue: {} },
-				{
-					provide: SneatUserService,
-					useValue: { userChanged: of(undefined), userState: of({}) },
-				},
-				{
-					provide: ContactusNavService,
-					useValue: { navigateToAddMember: vi.fn() },
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(InviteLinksComponent, {
-				set: { imports: [], template: '' },
-			})
-			.compileComponents();
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [InviteLinksComponent],
+      providers: [
+        {
+          provide: ErrorLogger,
+          useValue: {
+            logError: vi.fn(),
+            logErrorHandler: vi.fn(() => vi.fn()),
+          },
+        },
+        { provide: NavController, useValue: {} },
+        { provide: SpaceNavService, useValue: {} },
+        {
+          provide: SneatUserService,
+          useValue: { userChanged: of(undefined), userState: of({}) },
+        },
+        {
+          provide: ContactusNavService,
+          useValue: { navigateToAddMember: vi.fn() },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(InviteLinksComponent, {
+        set: { imports: [], template: '' },
+      })
+      .compileComponents();
+  }));
 
-	beforeEach(() => {
-		fixture = TestBed.createComponent(InviteLinksComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
+  beforeEach(() => {
+    fixture = TestBed.createComponent(InviteLinksComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

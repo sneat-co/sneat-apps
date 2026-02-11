@@ -1,109 +1,109 @@
 @let contact = $contact();
 
 <ion-item
-	tappable
-	class="with-buttons"
-	[lines]="showBorder"
-	(click)="contactClicked($event, contact)"
+  tappable
+  class="with-buttons"
+  [lines]="showBorder"
+  (click)="contactClicked($event, contact)"
 >
-	<ion-icon
-		slot="start"
-		[name]="contact.brief.gender | genderIconName"
-		[color]="contact.brief.gender | genderColor"
-	/>
+  <ion-icon
+    slot="start"
+    [name]="contact.brief.gender | genderIconName"
+    [color]="contact.brief.gender | genderColor"
+  />
 
-	<ion-label class="sneat-badges">
-		{{ contact | personTitle }}
-		@if (contact.brief.roles?.length) {
-			@for (role of contact.brief.roles || []; track role) {
-				@if (!hideRole(role)) {
-					<ion-badge color="light">
-						<ion-text color="medium">{{ role | titlecase }}</ion-text>
-					</ion-badge>
-				}
-			}
-		}
+  <ion-label class="sneat-badges">
+    {{ contact | personTitle }}
+    @if (contact.brief.roles?.length) {
+      @for (role of contact.brief.roles || []; track role) {
+        @if (!hideRole(role)) {
+          <ion-badge color="light">
+            <ion-text color="medium">{{ role | titlecase }}</ion-text>
+          </ion-badge>
+        }
+      }
+    }
 
-		@if (showRelatedAs && relatedTo) {
-			<sneat-related-as
-				[$moduleID]="'contactus'"
-				[$collectionID]="'contacts'"
-				[$spaceRef]="$space()"
-				[$itemID]="$contactID()"
-				[$relatedTo]="relatedTo"
-			/>
-		}
-		@if (showRelatedItems) {
-			<!--		@for (relatedContact of relatedContacts; track relatedContact.id) {-->
-			<!--			@if (firstRelated(relatedContact.brief.rolesOfItem)) {-->
-			<!--				<ion-badge>-->
-			<!--					<a [href]="relatedContact.id" (click)="clicked(relatedContact.id, $event)">-->
-			<!--						{{ relatedContact.id }} (TODO: lookup contact by ID);-->
-			<!--					</a>-->
-			<!--				</ion-badge>-->
-			<!--			}-->
-			<!--		}-->
-		}
+    @if (showRelatedAs && relatedTo) {
+      <sneat-related-as
+        [$moduleID]="'contactus'"
+        [$collectionID]="'contacts'"
+        [$spaceRef]="$space()"
+        [$itemID]="$contactID()"
+        [$relatedTo]="relatedTo"
+      />
+    }
+    @if (showRelatedItems) {
+      <!--		@for (relatedContact of relatedContacts; track relatedContact.id) {-->
+      <!--			@if (firstRelated(relatedContact.brief.rolesOfItem)) {-->
+      <!--				<ion-badge>-->
+      <!--					<a [href]="relatedContact.id" (click)="clicked(relatedContact.id, $event)">-->
+      <!--						{{ relatedContact.id }} (TODO: lookup contact by ID);-->
+      <!--					</a>-->
+      <!--				</ion-badge>-->
+      <!--			}-->
+      <!--		}-->
+    }
 
-		@if (contact.brief.countryID && contact.brief.countryID !== "--") {
-			<span
-				style="margin: 0 1em"
-				title="{{ contact.brief.countryID | countryTitle }}"
-			>
-				{{ contact.brief.countryID | countryFlag }}
-			</span>
-		}
-	</ion-label>
+    @if (contact.brief.countryID && contact.brief.countryID !== "--") {
+      <span
+        style="margin: 0 1em"
+        title="{{ contact.brief.countryID | countryTitle }}"
+      >
+        {{ contact.brief.countryID | countryFlag }}
+      </span>
+    }
+  </ion-label>
 
-	<ion-buttons slot="end">
-		@if (contact.dbo?.email) {
-			<ion-button
-				href="mailto:{{ contact.dbo?.email }}"
-				color="primary"
-				[title]="contact.dbo?.email"
-				(click)="$event.stopPropagation()"
-				>&#64;
-			</ion-button>
-		}
+  <ion-buttons slot="end">
+    @if (contact.dbo?.email) {
+      <ion-button
+        href="mailto:{{ contact.dbo?.email }}"
+        color="primary"
+        [title]="contact.dbo?.email"
+        (click)="$event.stopPropagation()"
+        >&#64;
+      </ion-button>
+    }
 
-		@if (contact.dbo?.phone) {
-			<ion-button
-				href="tel:{{ contact.dbo?.phone }}"
-				color="primary"
-				[title]="contact.dbo?.phone"
-				(click)="$event.stopPropagation()"
-			>
-				<ion-icon name="call" />
-			</ion-button>
-		}
-		@if (!contact.dbo?.email) {
-			<ion-button color="light">&#64;</ion-button>
-		}
-		@if (!contact.dbo?.phone) {
-			<ion-button color="light">
-				<ion-icon name="call" />
-			</ion-button>
-		}
-	</ion-buttons>
-	@if (!hideCheckbox) {
-		<ion-checkbox
-			slot="end"
-			[checked]="$contact().isChecked"
-			(ionChange)="checkboxChanged($event)"
-			(click)="$event.stopPropagation()"
-		/>
-	}
+    @if (contact.dbo?.phone) {
+      <ion-button
+        href="tel:{{ contact.dbo?.phone }}"
+        color="primary"
+        [title]="contact.dbo?.phone"
+        (click)="$event.stopPropagation()"
+      >
+        <ion-icon name="call" />
+      </ion-button>
+    }
+    @if (!contact.dbo?.email) {
+      <ion-button color="light">&#64;</ion-button>
+    }
+    @if (!contact.dbo?.phone) {
+      <ion-button color="light">
+        <ion-icon name="call" />
+      </ion-button>
+    }
+  </ion-buttons>
+  @if (!hideCheckbox) {
+    <ion-checkbox
+      slot="end"
+      [checked]="$contact().isChecked"
+      (ionChange)="checkboxChanged($event)"
+      (click)="$event.stopPropagation()"
+    />
+  }
 </ion-item>
 
 @if (showAddress && contact.dbo?.address) {
-	<ion-item>
-		<ion-label>Address</ion-label>
-		<ion-textarea readonly="readonly" [value]="contact.dbo?.address" />
-	</ion-item>
+  <ion-item>
+    <ion-label>Address</ion-label>
+    <ion-textarea readonly="readonly" [value]="contact.dbo?.address" />
+  </ion-item>
 }
 
 <ion-item-options slot="end">
-	<ion-item-option color="warning" (click)="archiveContact()"
-		>Archive
-	</ion-item-option>
+  <ion-item-option color="warning" (click)="archiveContact()"
+    >Archive
+  </ion-item-option>
 </ion-item-options>

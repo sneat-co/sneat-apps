@@ -6,31 +6,31 @@ import { NewHappeningPageComponent } from './new-happening-page.component';
 import { provideSchedulusMocks } from '../../testing/test-utils';
 
 describe('NewHappeningPage', () => {
-	let component: NewHappeningPageComponent;
-	let fixture: ComponentFixture<NewHappeningPageComponent>;
+  let component: NewHappeningPageComponent;
+  let fixture: ComponentFixture<NewHappeningPageComponent>;
 
-	beforeEach(() => {
-		window.history.replaceState({}, '', window.location.href);
-	});
+  beforeEach(() => {
+    window.history.replaceState({}, '', window.location.href);
+  });
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [NewHappeningPageComponent],
-			providers: [provideRouter([]), ...provideSchedulusMocks()],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(NewHappeningPageComponent, {
-				set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
-			})
-			.compileComponents();
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [NewHappeningPageComponent],
+      providers: [provideRouter([]), ...provideSchedulusMocks()],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(NewHappeningPageComponent, {
+        set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+      })
+      .compileComponents();
+  }));
 
-	beforeEach(() => {
-		fixture = TestBed.createComponent(NewHappeningPageComponent);
-		component = fixture.componentInstance;
-	});
+  beforeEach(() => {
+    fixture = TestBed.createComponent(NewHappeningPageComponent);
+    component = fixture.componentInstance;
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

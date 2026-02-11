@@ -9,43 +9,43 @@ import { of } from 'rxjs';
 import { SpacesListComponent } from './spaces-list.component';
 
 describe('SpacesListComponent', () => {
-	let component: SpacesListComponent;
-	let fixture: ComponentFixture<SpacesListComponent>;
+  let component: SpacesListComponent;
+  let fixture: ComponentFixture<SpacesListComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [SpacesListComponent],
-			providers: [
-				{ provide: ClassName, useValue: 'TestComponent' },
-				{
-					provide: ErrorLogger,
-					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
-				},
-				{
-					provide: SneatUserService,
-					useValue: { userState: of({ record: undefined }) },
-				},
-				{
-					provide: SpaceNavService,
-					useValue: { navigateToSpace: vi.fn() },
-				},
-				{ provide: SpaceService, useValue: { createSpace: vi.fn() } },
-				{
-					provide: UserRequiredFieldsService,
-					useValue: { open: vi.fn() },
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(SpacesListComponent, {
-				set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
-			})
-			.compileComponents();
-		fixture = TestBed.createComponent(SpacesListComponent);
-		component = fixture.componentInstance;
-	}));
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [SpacesListComponent],
+      providers: [
+        { provide: ClassName, useValue: 'TestComponent' },
+        {
+          provide: ErrorLogger,
+          useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+        },
+        {
+          provide: SneatUserService,
+          useValue: { userState: of({ record: undefined }) },
+        },
+        {
+          provide: SpaceNavService,
+          useValue: { navigateToSpace: vi.fn() },
+        },
+        { provide: SpaceService, useValue: { createSpace: vi.fn() } },
+        {
+          provide: UserRequiredFieldsService,
+          useValue: { open: vi.fn() },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(SpacesListComponent, {
+        set: { imports: [], schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+      })
+      .compileComponents();
+    fixture = TestBed.createComponent(SpacesListComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

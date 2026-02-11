@@ -1,120 +1,118 @@
 name: Build NX project
 
 on:
-    push:
-        branches:
-            # - renovate/* - do not build renovate branches as they'll be built by PRs
-            - main
-    pull_request:
-    merge_group:
+  push:
+    branches:
+      # - renovate/* - do not build renovate branches as they'll be built by PRs
+      - main
+  pull_request:
+  merge_group:
 
 jobs:
-    #    pnpm-cache:
-    #        runs-on: ubuntu-latest
-    #        steps:
-    #            -   name: Checkout repository
-    #                uses: actions/checkout@v4
-    #                with:
-    #                    fetch-depth: 0
-    #
-    #            -   uses: ./.github/actions/pnpm
+  #    pnpm-cache:
+  #        runs-on: ubuntu-latest
+  #        steps:
+  #            -   name: Checkout repository
+  #                uses: actions/checkout@v4
+  #                with:
+  #                    fetch-depth: 0
+  #
+  #            -   uses: ./.github/actions/pnpm
 
-    build-lint-e2e:
-        #        needs: pnpm-cache
-        runs-on: ubuntu-latest
-        steps:
-            -   name: Checkout repository
-                uses: actions/checkout@v6
-                with:
-                    # TODO: document why we need `fetch-depth` and check if it can be 2
-                    # currently it fails with:
-                    # pnpm run nx affected --target=build,lint --base=ea7a47aa562a54bea8e4be5237e603f1d5e5e196 --parallel=8
-                    # NX   Command failed: git diff --name-only --no-renames --relative "ea7a47aa562a54bea8e4be5237e603f1d5e5e196" "84733ee7b6cdce9397f6fc2cb4877184e4ad6432"
-                    # fatal: bad object ea7a47aa562a54bea8e4be5237e603f1d5e5e196
-                    # Error: Process completed with exit code 1.
-                    fetch-depth: 0
+  build-lint-e2e:
+    #        needs: pnpm-cache
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          # TODO: document why we need `fetch-depth` and check if it can be 2
+          # currently it fails with:
+          # pnpm run nx affected --target=build,lint --base=ea7a47aa562a54bea8e4be5237e603f1d5e5e196 --parallel=8
+          # NX   Command failed: git diff --name-only --no-renames --relative "ea7a47aa562a54bea8e4be5237e603f1d5e5e196" "84733ee7b6cdce9397f6fc2cb4877184e4ad6432"
+          # fatal: bad object ea7a47aa562a54bea8e4be5237e603f1d5e5e196
+          # Error: Process completed with exit code 1.
+          fetch-depth: 0
 
-            -   uses: ./.github/actions/pnpm
+      - uses: ./.github/actions/pnpm
 
-            -   name: Check circular dependencies
-                run: |
-                    npx madge --circular --extensions ts ./libs
-                    npx madge --circular --extensions ts ./apps
+      - name: Check circular dependencies
+        run: |
+          npx madge --circular --extensions ts ./libs
+          npx madge --circular --extensions ts ./apps
 
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v4
 
-            -   name: Derive appropriate SHAs for base and head for `nx affected` commands
-                uses: nrwl/nx-set-shas@v4
+      - name: nx build & lint affected
+        env:
+          # https://stackoverflow.com/a/73429959/1975086, https://github.com/angular/angular/issues/38216
+          BAZEL_TARGET: '1'
+        # https://stackoverflow.com/questions/73876647/using-nx-run-many-shows-another-process-with-id-is-currently-running-ngcc
+        # BE AWARE: Adding PARALLEL options may cause build to pass when it should have been failed
+        run: pnpm run nx affected --target=build,lint --base=${{ env.NX_BASE }} --parallel=8
 
-            -   name: nx build & lint affected
-                env:
-                    # https://stackoverflow.com/a/73429959/1975086, https://github.com/angular/angular/issues/38216
-                    BAZEL_TARGET: "1"
-                # https://stackoverflow.com/questions/73876647/using-nx-run-many-shows-another-process-with-id-is-currently-running-ngcc
-                # BE AWARE: Adding PARALLEL options may cause build to pass when it should have been failed
-                run: pnpm run nx affected --target=build,lint --base=${{ env.NX_BASE }} --parallel=8
+      #-   name: nx test
+      #    run: pnpm run nx test api
 
-            #-   name: nx test
-            #    run: pnpm run nx test api
+      # We have firebase-tools in devDependencies
+      #            -   uses: sneat-co/sneat-firebase/actions/install-firebase-tools@main
 
-            # We have firebase-tools in devDependencies
-            #            -   uses: sneat-co/sneat-firebase/actions/install-firebase-tools@main
+      - name: Download latest release of `sneat-go-server`
+        run: |
+          URL=$(curl -s \
+            https://api.github.com/repos/sneat-co/sneat-go-server/releases/latest \
+            | jq -r '.assets[] | select(.name | test("linux_amd64.tar.gz$")) | .browser_download_url')
 
-            -   name: Download latest release of `sneat-go-server`
-                run: |
-                    URL=$(curl -s \
-                      https://api.github.com/repos/sneat-co/sneat-go-server/releases/latest \
-                      | jq -r '.assets[] | select(.name | test("linux_amd64.tar.gz$")) | .browser_download_url')
+          echo "Downloading $URL"
+          curl -L -o app.tar.gz "$URL"
 
-                    echo "Downloading $URL"
-                    curl -L -o app.tar.gz "$URL"
+          tar -xzf app.tar.gz
+          chmod +x sneat-server
 
-                    tar -xzf app.tar.gz
-                    chmod +x sneat-server
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
 
+      - name: Cache Firebase Emulators
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/firebase/emulators
+          key: firebase-emulators-${{ runner.os }}
 
-            -   name: Set up Java 21
-                uses: actions/setup-java@v5
-                with:
-                    distribution: temurin
-                    java-version: '21'
+      - name: Get Playwright version
+        id: playwright-version
+        run: echo "version=$(pnpm exec playwright --version | awk '{print $2}')" >> $GITHUB_OUTPUT
 
-            -   name: Cache Firebase Emulators
-                uses: actions/cache@v5
-                with:
-                    path: ~/.cache/firebase/emulators
-                    key: firebase-emulators-${{ runner.os }}
+      - name: Cache Playwright Browsers
+        id: playwright-cache
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
 
-            -   name: Get Playwright version
-                id: playwright-version
-                run: echo "version=$(pnpm exec playwright --version | awk '{print $2}')" >> $GITHUB_OUTPUT
+      - name: Install Playwright Browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: pnpm exec playwright install chromium --with-deps
 
-            -   name: Cache Playwright Browsers
-                id: playwright-cache
-                uses: actions/cache@v5
-                with:
-                    path: ~/.cache/ms-playwright
-                    key: playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
+      - name: Install Playwright system dependencies
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: pnpm exec playwright install-deps chromium
 
-            -   name: Install Playwright Browsers
-                if: steps.playwright-cache.outputs.cache-hit != 'true'
-                run: pnpm exec playwright install chromium --with-deps
+      - name: Clone sneat-firebase
+        run: git clone --depth 1 https://github.com/sneat-co/sneat-firebase.git ../sneat-firebase
 
-            -   name: Install Playwright system dependencies
-                if: steps.playwright-cache.outputs.cache-hit == 'true'
-                run: pnpm exec playwright install-deps chromium
+      - name: Run Playwright tests
+        run: pnpm exec playwright test
+        env:
+          NODE_OPTIONS: '--no-deprecation nx'
+          GCLOUD_PROJECT: 'demo-sneat-app'
+        continue-on-error: true
 
-            -   name: Clone sneat-firebase
-                run: git clone --depth 1 https://github.com/sneat-co/sneat-firebase.git ../sneat-firebase
-
-            -   name: Run Playwright tests
-                run: pnpm exec playwright test
-                env:
-                    NODE_OPTIONS: "--no-deprecation nx"
-                    GCLOUD_PROJECT: "demo-sneat-app"
-                continue-on-error: true
-
-            -   uses: actions/upload-artifact@v6
-                with:
-                    name: playwright-report
-                    path: playwright-report/
-                    retention-days: 30
+      - uses: actions/upload-artifact@v6
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30

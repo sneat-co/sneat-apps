@@ -5,8 +5,8 @@ export const GenderFemale = 'female';
 export const GenderOther = 'other';
 
 export type Gender =
-	| typeof GenderUndisclosed
-	| typeof GenderUnknown
-	| typeof GenderMale
-	| typeof GenderFemale
-	| typeof GenderOther;
+  | typeof GenderUndisclosed
+  | typeof GenderUnknown
+  | typeof GenderMale
+  | typeof GenderFemale
+  | typeof GenderOther;

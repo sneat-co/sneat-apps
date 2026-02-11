@@ -1,41 +1,41 @@
 <ion-header>
-	<ion-toolbar color="primary" class="with-back-button with-end-buttons">
-		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="defaultBackUrl" />
-		</ion-buttons>
-		<ion-title>🏡 Properties</ion-title>
-		<ion-buttons slot="end">
-			<ion-button
-				[disabled]="!communeRealId"
-				(click)="goNew()"
-				title="Add property"
-			>
-				<ion-icon name="add" />
-			</ion-button>
-		</ion-buttons>
-	</ion-toolbar>
+  <ion-toolbar color="primary" class="with-back-button with-end-buttons">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="defaultBackUrl" />
+    </ion-buttons>
+    <ion-title>🏡 Properties</ion-title>
+    <ion-buttons slot="end">
+      <ion-button
+        [disabled]="!communeRealId"
+        (click)="goNew()"
+        title="Add property"
+      >
+        <ion-icon name="add" />
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<ion-item>
-		<ion-input
-			[(ngModel)]="filter"
-			name="filter"
-			placeholder="Filter"
-			(ionChange)="filterChanged($event)"
-		/>
-		<ion-buttons slot="end">
-			@if (filter) {
-				<ion-button fill="clear" color="medium" (click)="clearFilter()">
-					<ion-icon name="close-outline" />
-				</ion-button>
-			}
-		</ion-buttons>
-	</ion-item>
+  <ion-item>
+    <ion-input
+      [(ngModel)]="filter"
+      name="filter"
+      placeholder="Filter"
+      (ionChange)="filterChanged($event)"
+    />
+    <ion-buttons slot="end">
+      @if (filter) {
+        <ion-button fill="clear" color="medium" (click)="clearFilter()">
+          <ion-icon name="close-outline" />
+        </ion-button>
+      }
+    </ion-buttons>
+  </ion-item>
 
-	<sneat-assets-list
-		[assets]="assets"
-		[commune]="commune"
-		[filter]="filter && filter.toLowerCase()"
-	/>
+  <sneat-assets-list
+    [assets]="assets"
+    [commune]="commune"
+    [filter]="filter && filter.toLowerCase()"
+  />
 </ion-content>

@@ -1,63 +1,63 @@
 @if ($weekday(); as weekday) {
-	@if (!weekday.day?.slots?.length) {
-		<ion-item [lines]="hideLastBorder ? 'none' : 'full'">
-			@if (!weekday.day || weekday.day.$isLoading()) {
-				<ion-spinner name="lines-small" color="medium" slot="start" />
-				<ion-label color="medium">Loading...</ion-label>
-			} @else {
-				<ion-label color="medium">
-					@if ($isToday()) {
-						Nothing scheduled for today.
-					} @else if ($isTomorrow()) {
-						Nothing scheduled for tomorrow.
-					} @else {
-						Nothing scheduled for this day.
-					}
-				</ion-label>
-			}
-		</ion-item>
-	} @else {
-		@if (slotsHiddenByFilter) {
-			<ion-item-divider color="light">
-				<ion-label>{{ slotsHiddenByFilter }} hidden by filter.</ion-label>
-				<ion-buttons slot="end">
-					<ion-button (click)="resetFilter($event)">
-						<ion-icon color="medium" name="close-outline" slot="end" />
-						<ion-label color="medium">Reset filter</ion-label>
-					</ion-button>
-				</ion-buttons>
-			</ion-item-divider>
-		}
-		@for (slot of slots; track slot.slot.id) {
-			<sneat-day-slot-item
-				[$space]="$space()"
-				[dateID]="weekday.day?.dateID"
-				[$slotContext]="slot"
-			/>
-		}
-	}
-	@if (!hideAddButtons) {
-		<ion-item lines="none">
-			<ion-button
-				slot="end"
-				fill="clear"
-				(click)="goNewHappening({ type: 'recurring' })"
-			>
-				<ion-icon name="duplicate-outline" slot="start" />
-				<ion-label color="medium" style="text-transform: none"
-					>Add recurring
-				</ion-label>
-			</ion-button>
-			<ion-button
-				slot="end"
-				fill="clear"
-				(click)="goNewHappening({ type: 'single' })"
-			>
-				<ion-icon name="add-circle-outline" color="primary" slot="start" />
-				<ion-label color="medium" style="text-transform: none"
-					>Add one-timer
-				</ion-label>
-			</ion-button>
-		</ion-item>
-	}
+  @if (!weekday.day?.slots?.length) {
+    <ion-item [lines]="hideLastBorder ? 'none' : 'full'">
+      @if (!weekday.day || weekday.day.$isLoading()) {
+        <ion-spinner name="lines-small" color="medium" slot="start" />
+        <ion-label color="medium">Loading...</ion-label>
+      } @else {
+        <ion-label color="medium">
+          @if ($isToday()) {
+            Nothing scheduled for today.
+          } @else if ($isTomorrow()) {
+            Nothing scheduled for tomorrow.
+          } @else {
+            Nothing scheduled for this day.
+          }
+        </ion-label>
+      }
+    </ion-item>
+  } @else {
+    @if (slotsHiddenByFilter) {
+      <ion-item-divider color="light">
+        <ion-label>{{ slotsHiddenByFilter }} hidden by filter.</ion-label>
+        <ion-buttons slot="end">
+          <ion-button (click)="resetFilter($event)">
+            <ion-icon color="medium" name="close-outline" slot="end" />
+            <ion-label color="medium">Reset filter</ion-label>
+          </ion-button>
+        </ion-buttons>
+      </ion-item-divider>
+    }
+    @for (slot of slots; track slot.slot.id) {
+      <sneat-day-slot-item
+        [$space]="$space()"
+        [dateID]="weekday.day?.dateID"
+        [$slotContext]="slot"
+      />
+    }
+  }
+  @if (!hideAddButtons) {
+    <ion-item lines="none">
+      <ion-button
+        slot="end"
+        fill="clear"
+        (click)="goNewHappening({ type: 'recurring' })"
+      >
+        <ion-icon name="duplicate-outline" slot="start" />
+        <ion-label color="medium" style="text-transform: none"
+          >Add recurring
+        </ion-label>
+      </ion-button>
+      <ion-button
+        slot="end"
+        fill="clear"
+        (click)="goNewHappening({ type: 'single' })"
+      >
+        <ion-icon name="add-circle-outline" color="primary" slot="start" />
+        <ion-label color="medium" style="text-transform: none"
+          >Add one-timer
+        </ion-label>
+      </ion-button>
+    </ion-item>
+  }
 }

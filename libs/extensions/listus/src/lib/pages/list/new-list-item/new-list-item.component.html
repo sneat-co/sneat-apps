@@ -1,25 +1,25 @@
 <form (ngSubmit)="add()">
-	<ion-item lines="none">
-		<ion-icon name="bag-add-outline" slot="start" color="medium" />
-		<!--suppress AngularUndefinedBinding -->
-		<ion-input
-			[disabled]="disabled"
-			#newItemInput
-			autofocus="true"
-			[(ngModel)]="title"
-			name="title"
-			placeholder="New item"
-			(ionFocus)="focused()"
-		/>
-		<ion-button
-			[color]="isFocused && title.trim() ? 'primary' : 'medium'"
-			[disabled]="disabled"
-			[fill]="title.trim() ? 'solid' : 'outline'"
-			size="small"
-			(click)="add()"
-			slot="end"
-		>
-			Add
-		</ion-button>
-	</ion-item>
+  <ion-item lines="none">
+    <ion-icon name="bag-add-outline" slot="start" color="medium" />
+    <!--suppress AngularUndefinedBinding -->
+    <ion-input
+      [disabled]="disabled"
+      #newItemInput
+      autofocus="true"
+      [(ngModel)]="title"
+      name="title"
+      placeholder="New item"
+      (ionFocus)="focused()"
+    />
+    <ion-button
+      [color]="isFocused && title.trim() ? 'primary' : 'medium'"
+      [disabled]="disabled"
+      [fill]="title.trim() ? 'solid' : 'outline'"
+      size="small"
+      (click)="add()"
+      slot="end"
+    >
+      Add
+    </ion-button>
+  </ion-item>
 </form>

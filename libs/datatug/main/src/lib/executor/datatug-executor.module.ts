@@ -3,7 +3,7 @@ import { DatatugServicesStoreModule } from '../services/repo/datatug-services-st
 import { Coordinator } from './coordinator';
 
 @NgModule({
-	imports: [DatatugServicesStoreModule],
-	providers: [Coordinator],
+  imports: [DatatugServicesStoreModule],
+  providers: [Coordinator],
 })
 export class DatatugExecutorModule {}

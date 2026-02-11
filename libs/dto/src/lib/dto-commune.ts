@@ -2,21 +2,21 @@ import { IDemoRecord, ITitledRecord, ITotalsHolder } from './dto-models';
 import { CommuneType, CountryId } from './types';
 
 export const enum SpaceCounter {
-	activities = 'activities',
-	assets = 'assets',
-	assetGroups = 'assetGroups',
-	contacts = 'contacts',
-	documents = 'documents',
-	liabilities = 'liabilities',
-	members = 'members',
-	// membersByRole = 'membersByRole',
-	memberGroups = 'memberGroups',
-	overdues = 'overdues',
-	pupils = 'pupils',
-	regularTasks = 'regularTasks',
-	staff = 'staff',
-	todos = 'todos',
-	upcomings = 'upcomings',
+  activities = 'activities',
+  assets = 'assets',
+  assetGroups = 'assetGroups',
+  contacts = 'contacts',
+  documents = 'documents',
+  liabilities = 'liabilities',
+  members = 'members',
+  // membersByRole = 'membersByRole',
+  memberGroups = 'memberGroups',
+  overdues = 'overdues',
+  pupils = 'pupils',
+  regularTasks = 'regularTasks',
+  staff = 'staff',
+  todos = 'todos',
+  upcomings = 'upcomings',
 }
 
 // type TeamCounters = {
@@ -24,71 +24,71 @@ export const enum SpaceCounter {
 // };
 
 export interface SpaceCounts {
-	[SpaceCounter.activities]?: number;
-	[SpaceCounter.assets]?: number;
-	[SpaceCounter.assetGroups]?: number;
-	[SpaceCounter.contacts]?: number;
-	[SpaceCounter.documents]?: number;
-	[SpaceCounter.regularTasks]?: number;
-	[SpaceCounter.liabilities]?: number;
-	[SpaceCounter.pupils]?: number;
-	[SpaceCounter.staff]?: number;
-	[SpaceCounter.members]?: number;
-	[SpaceCounter.memberGroups]?: number;
-	[SpaceCounter.overdues]?: number;
-	[SpaceCounter.todos]?: number;
-	[SpaceCounter.upcomings]?: number;
-	// [CommuneCounter.membersByRole]?: { [role: string]: number }; this does not make sense here
+  [SpaceCounter.activities]?: number;
+  [SpaceCounter.assets]?: number;
+  [SpaceCounter.assetGroups]?: number;
+  [SpaceCounter.contacts]?: number;
+  [SpaceCounter.documents]?: number;
+  [SpaceCounter.regularTasks]?: number;
+  [SpaceCounter.liabilities]?: number;
+  [SpaceCounter.pupils]?: number;
+  [SpaceCounter.staff]?: number;
+  [SpaceCounter.members]?: number;
+  [SpaceCounter.memberGroups]?: number;
+  [SpaceCounter.overdues]?: number;
+  [SpaceCounter.todos]?: number;
+  [SpaceCounter.upcomings]?: number;
+  // [CommuneCounter.membersByRole]?: { [role: string]: number }; this does not make sense here
 }
 
 export function incrementNumberOf<
-	NumberOf,
-	Dbo extends { numberOf?: NumberOf },
+  NumberOf,
+  Dbo extends { numberOf?: NumberOf },
 >(dto: Dbo, init: () => NumberOf, counter: keyof NumberOf, v = 1): Dbo {
-	const current: number = ((dto.numberOf && dto.numberOf[counter]) ||
-		0) as unknown as number;
-	return {
-		...dto,
-		numberOf: {
-			...(dto.numberOf || init()),
-			[counter]: current + v,
-		},
-	};
+  const current: number = ((dto.numberOf && dto.numberOf[counter]) ||
+    0) as unknown as number;
+  return {
+    ...dto,
+    numberOf: {
+      ...(dto.numberOf || init()),
+      [counter]: current + v,
+    },
+  };
 }
 
 export function newSpaceCounts(numberOf?: SpaceCounts): SpaceCounts {
-	numberOf = numberOf || {};
-	return {
-		activities: numberOf.activities || 0,
-		assets: numberOf.assets || 0,
-		assetGroups: numberOf.assetGroups || 0,
-		contacts: numberOf.contacts || 0,
-		documents: numberOf.documents || 0,
-		members: numberOf.members || 0,
-		memberGroups: numberOf.memberGroups || 0,
-		liabilities: numberOf.liabilities || 0,
-		overdues: numberOf.overdues || 0,
-		regularTasks: numberOf.regularTasks || 0,
-		todos: numberOf.todos || 0,
-		upcomings: numberOf.upcomings || 0,
-	};
+  numberOf = numberOf || {};
+  return {
+    activities: numberOf.activities || 0,
+    assets: numberOf.assets || 0,
+    assetGroups: numberOf.assetGroups || 0,
+    contacts: numberOf.contacts || 0,
+    documents: numberOf.documents || 0,
+    members: numberOf.members || 0,
+    memberGroups: numberOf.memberGroups || 0,
+    liabilities: numberOf.liabilities || 0,
+    overdues: numberOf.overdues || 0,
+    regularTasks: numberOf.regularTasks || 0,
+    todos: numberOf.todos || 0,
+    upcomings: numberOf.upcomings || 0,
+  };
 }
 
 export interface ICommuneDbo extends IDemoRecord, ITitledRecord, ITotalsHolder {
-	readonly countryId?: CountryId;
-	readonly type: CommuneType;
-	readonly desc?: string;
-	readonly userID: string;
-	readonly order?: number;
-	readonly numberOf?: SpaceCounts;
-	readonly membersCountByRole?: Record<string, number>;
-	readonly noContactRoles?: string[];
-	// readonly groups?: ICommuneDtoMemberGroupInfo[];
-	// readonly members?: readonly ITeamMemberInfo[];
+  readonly countryId?: CountryId;
+  readonly type: CommuneType;
+  readonly desc?: string;
+  readonly userID: string;
+  readonly order?: number;
+  readonly numberOf?: SpaceCounts;
+  readonly membersCountByRole?: Record<string, number>;
+  readonly noContactRoles?: string[];
+  // readonly groups?: ICommuneDtoMemberGroupInfo[];
+  // readonly members?: readonly ITeamMemberInfo[];
 }
 
 export function isCommuneShouldHoldMembersInfo(type: CommuneType): boolean {
-	return type === 'family' || type === 'cohabit';
+  return type === 'family' || type === 'cohabit';
 }
 
 // export function findCommuneMemberInfo(
@@ -108,21 +108,21 @@ export function isCommuneShouldHoldMembersInfo(type: CommuneType): boolean {
 export const personalCommuneIdPrefix = 'u_';
 
 export function getUserPersonalCommuneID(userID?: string): string {
-	if (!userID) {
-		throw new Error('userID is required parameter');
-	}
-	return personalCommuneIdPrefix + userID;
+  if (!userID) {
+    throw new Error('userID is required parameter');
+  }
+  return personalCommuneIdPrefix + userID;
 }
 
 export function isPersonalCommuneId(id: string): boolean {
-	return !!id && id.startsWith(personalCommuneIdPrefix);
+  return !!id && id.startsWith(personalCommuneIdPrefix);
 }
 
 export function isUserPersonalCommune(
-	communeID: string,
-	userID?: string,
+  communeID: string,
+  userID?: string,
 ): boolean {
-	return !!userID && communeID === getUserPersonalCommuneID(userID);
+  return !!userID && communeID === getUserPersonalCommuneID(userID);
 }
 
 // export const CommuneModel = {

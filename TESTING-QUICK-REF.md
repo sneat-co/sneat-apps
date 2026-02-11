@@ -6,7 +6,7 @@
 # Service test
 node scripts/generate-extension-test.mjs service ServiceName extension subLib path
 
-# Component test  
+# Component test
 node scripts/generate-extension-test.mjs component ComponentName extension subLib path
 
 # Sanity test
@@ -59,14 +59,14 @@ pnpm nx test project-name --coverage
 
 ## Template Variables
 
-| Placeholder | Replaces With | Example |
-|-------------|---------------|---------|
-| `{{ServiceName}}` | PascalCase name | AssetService |
-| `{{service-name}}` | kebab-case name | asset-service |
-| `{{ComponentName}}` | PascalCase name | AssetFormComponent |
-| `{{component-name}}` | kebab-case name | asset-form |
-| `{{extension-name}}` | Extension name | assetus |
-| `{{sub-lib}}` | Sub-library | shared |
+| Placeholder          | Replaces With   | Example            |
+| -------------------- | --------------- | ------------------ |
+| `{{ServiceName}}`    | PascalCase name | AssetService       |
+| `{{service-name}}`   | kebab-case name | asset-service      |
+| `{{ComponentName}}`  | PascalCase name | AssetFormComponent |
+| `{{component-name}}` | kebab-case name | asset-form         |
+| `{{extension-name}}` | Extension name  | assetus            |
+| `{{sub-lib}}`        | Sub-library     | shared             |
 
 ## Sub-Libraries
 
@@ -91,33 +91,36 @@ pnpm nx test project-name --coverage
 ## Common Patterns
 
 ### Service with API
+
 ```typescript
 it('should call API', () => {
   const service = TestBed.inject(YourService);
   const api = TestBed.inject(SneatApiService);
-  
+
   service.method();
-  
+
   expect(api.post).toHaveBeenCalled();
 });
 ```
 
 ### Component Input
+
 ```typescript
 it('should accept input', () => {
   component.input = 'value';
   fixture.detectChanges();
-  
+
   expect(component.input).toBe('value');
 });
 ```
 
 ### Error Handling
+
 ```typescript
 it('should handle errors', async () => {
   const api = TestBed.inject(SneatApiService);
   api.post = vi.fn().mockRejectedValue(new Error('API Error'));
-  
+
   await expect(service.method()).rejects.toThrow('API Error');
 });
 ```

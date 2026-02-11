@@ -8,24 +8,24 @@ import { MyRetroItemsComponent } from '../../../../components/my-retro-items/my-
 import { RetroMembersComponent } from '../../retro-members/retro-members.component';
 
 @Component({
-	selector: 'sneat-retro-feedback-stage',
-	templateUrl: './retro-feedback-stage.component.html',
-	imports: [
-		MyRetroItemsComponent,
-		IonItem,
-		IonCheckbox,
-		IonLabel,
-		RetroMembersComponent,
-		FormsModule,
-	],
+  selector: 'sneat-retro-feedback-stage',
+  templateUrl: './retro-feedback-stage.component.html',
+  imports: [
+    MyRetroItemsComponent,
+    IonItem,
+    IonCheckbox,
+    IonLabel,
+    RetroMembersComponent,
+    FormsModule,
+  ],
 })
 export class RetroFeedbackStageComponent {
-	@Input({ required: true }) space: ISpaceContext = { id: '' };
-	@Input({ required: true }) retrospective?: IRecord<IRetrospective>;
+  @Input({ required: true }) space: ISpaceContext = { id: '' };
+  @Input({ required: true }) retrospective?: IRecord<IRetrospective>;
 
-	public iAmReady?: boolean;
+  public iAmReady?: boolean;
 
-	public setReady(value: boolean) {
-		this.iAmReady = value;
-	}
+  public setReady(value: boolean) {
+    this.iAmReady = value;
+  }
 }

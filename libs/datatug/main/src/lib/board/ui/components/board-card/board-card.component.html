@@ -1,35 +1,36 @@
 <ion-card>
-	@if (boarCardDef?.title) {
-	<ion-item>
-		@if (boarCardDef?.title) {
-		<ion-label>{{ boarCardDef?.title }}</ion-label>
-		} @if (boarCardDef?.widget?.name === "SQL") {
-		<ion-buttons slot="end">
-			<ion-segment
-				[ngModel]="boardCardTab.currentTab"
-				(ionChange)="setTab($event)"
-			>
-				<ion-segment-button value="grid" title="Grid">
-					<!--					<ion-icon name="grid-outline"></ion-icon>-->
-					Grid
-				</ion-segment-button>
-				<!--				<ion-segment-button value="card" title="Card">-->
-				<!--					&lt;!&ndash;					<ion-icon name="clipboard-outline"></ion-icon>&ndash;&gt;-->
-				<!--					Card-->
-				<!--				</ion-segment-button>-->
-				<ion-segment-button value="SQL"> SQL</ion-segment-button>
-			</ion-segment>
-			<ion-button color="medium">
-				<ion-icon name="settings-outline" />
-			</ion-button>
-		</ion-buttons>
-		}
-	</ion-item>
-	}
-	<sneat-datatug-board-widget
-		[level]="0"
-		[cardTab]="boardCardTab.currentTab"
-		[widgetDef]="boarCardDef?.widget"
-		[boardContext]="boardContext"
-	/>
+  @if (boarCardDef?.title) {
+    <ion-item>
+      @if (boarCardDef?.title) {
+        <ion-label>{{ boarCardDef?.title }}</ion-label>
+      }
+      @if (boarCardDef?.widget?.name === "SQL") {
+        <ion-buttons slot="end">
+          <ion-segment
+            [ngModel]="boardCardTab.currentTab"
+            (ionChange)="setTab($event)"
+          >
+            <ion-segment-button value="grid" title="Grid">
+              <!--					<ion-icon name="grid-outline"></ion-icon>-->
+              Grid
+            </ion-segment-button>
+            <!--				<ion-segment-button value="card" title="Card">-->
+            <!--					&lt;!&ndash;					<ion-icon name="clipboard-outline"></ion-icon>&ndash;&gt;-->
+            <!--					Card-->
+            <!--				</ion-segment-button>-->
+            <ion-segment-button value="SQL"> SQL</ion-segment-button>
+          </ion-segment>
+          <ion-button color="medium">
+            <ion-icon name="settings-outline" />
+          </ion-button>
+        </ion-buttons>
+      }
+    </ion-item>
+  }
+  <sneat-datatug-board-widget
+    [level]="0"
+    [cardTab]="boardCardTab.currentTab"
+    [widgetDef]="boarCardDef?.widget"
+    [boardContext]="boardContext"
+  />
 </ion-card>

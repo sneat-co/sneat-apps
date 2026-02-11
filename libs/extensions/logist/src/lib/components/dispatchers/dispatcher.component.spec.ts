@@ -11,43 +11,43 @@ import { DispatcherComponent } from './dispatcher.component';
 vi.mock('@angular/fire/firestore');
 
 describe('DispatcherComponent', () => {
-	let component: DispatcherComponent;
-	let fixture: ComponentFixture<DispatcherComponent>;
+  let component: DispatcherComponent;
+  let fixture: ComponentFixture<DispatcherComponent>;
 
-	beforeEach(waitForAsync(async () => {
-		await TestBed.configureTestingModule({
-			imports: [DispatcherComponent],
-			providers: [
-				{
-					provide: ErrorLogger,
-					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
-				},
-				{
-					provide: ContactsSelectorService,
-					useValue: { selectSingleInModal: vi.fn(() => Promise.resolve(null)) },
-				},
-				LogistOrderService,
-				{
-					provide: SneatApiService,
-					useValue: { post: vi.fn(() => of({})), delete: vi.fn(() => of({})) },
-				},
-				{
-					provide: Firestore,
-					useValue: { type: 'Firestore', toJSON: () => ({}) },
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		})
-			.overrideComponent(DispatcherComponent, {
-				set: { imports: [], template: '', schemas: [CUSTOM_ELEMENTS_SCHEMA] },
-			})
-			.compileComponents();
+  beforeEach(waitForAsync(async () => {
+    await TestBed.configureTestingModule({
+      imports: [DispatcherComponent],
+      providers: [
+        {
+          provide: ErrorLogger,
+          useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+        },
+        {
+          provide: ContactsSelectorService,
+          useValue: { selectSingleInModal: vi.fn(() => Promise.resolve(null)) },
+        },
+        LogistOrderService,
+        {
+          provide: SneatApiService,
+          useValue: { post: vi.fn(() => of({})), delete: vi.fn(() => of({})) },
+        },
+        {
+          provide: Firestore,
+          useValue: { type: 'Firestore', toJSON: () => ({}) },
+        },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .overrideComponent(DispatcherComponent, {
+        set: { imports: [], template: '', schemas: [CUSTOM_ELEMENTS_SCHEMA] },
+      })
+      .compileComponents();
 
-		fixture = TestBed.createComponent(DispatcherComponent);
-		component = fixture.componentInstance;
-	}));
+    fixture = TestBed.createComponent(DispatcherComponent);
+    component = fixture.componentInstance;
+  }));
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

@@ -4,7 +4,7 @@ import { WithSpaceInput } from '@sneat/space-services';
 
 @Directive()
 export class WithNewContactInput extends WithSpaceInput {
-	public readonly $contact = input.required<NewContactBaseDboAndSpaceRef>();
-	@Output() readonly contactChange =
-		new EventEmitter<NewContactBaseDboAndSpaceRef>();
+  public readonly $contact = input.required<NewContactBaseDboAndSpaceRef>();
+  @Output() readonly contactChange =
+    new EventEmitter<NewContactBaseDboAndSpaceRef>();
 }

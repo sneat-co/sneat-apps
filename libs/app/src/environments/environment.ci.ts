@@ -4,6 +4,6 @@ import { baseEnvironmentConfig } from './environment.base';
 const useEmulators = true;
 
 export const environmentConfig: IEnvironmentConfig = {
-	...baseEnvironmentConfig,
-	useEmulators,
+  ...baseEnvironmentConfig,
+  useEmulators,
 };

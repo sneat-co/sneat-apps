@@ -7,14 +7,14 @@ import { ContactusSpaceService } from './contactus-space.service';
 import { MemberService } from './member.service';
 
 @NgModule({
-	imports: [],
-	providers: [
-		ContactService,
-		ContactNavService,
-		ContactGroupService,
-		ContactRoleService,
-		ContactusSpaceService,
-		MemberService,
-	],
+  imports: [],
+  providers: [
+    ContactService,
+    ContactNavService,
+    ContactGroupService,
+    ContactRoleService,
+    ContactusSpaceService,
+    MemberService,
+  ],
 })
 export class ContactusServicesModule {}

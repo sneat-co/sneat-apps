@@ -1,27 +1,27 @@
 <ion-header>
-	<ion-toolbar>
-		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="$defaultBackUrl()" />
-		</ion-buttons>
-		<ion-title>
-			{{ title }}
-			@if (space) {
-				&#64; {{ space.data?.title || space.id }}
-			}
-		</ion-title>
-	</ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="$defaultBackUrl()" />
+    </ion-buttons>
+    <ion-title>
+      {{ title }}
+      @if (space) {
+        &#64; {{ space.data?.title || space.id }}
+      }
+    </ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<sneat-retro-timer [team]="space" [retrospective]="retrospective" />
+  <sneat-retro-timer [team]="space" [retrospective]="retrospective" />
 
-	@if (showPersonalFeedback()) {
-		<sneat-retro-feedback-stage
-			[space]="space"
-			[retrospective]="retrospective"
-		/>
-	}
-	@if (retrospective?.dbo?.stage === "review") {
-		<sneat-retro-review-stage [space]="space" [retrospective]="retrospective" />
-	}
+  @if (showPersonalFeedback()) {
+    <sneat-retro-feedback-stage
+      [space]="space"
+      [retrospective]="retrospective"
+    />
+  }
+  @if (retrospective?.dbo?.stage === "review") {
+    <sneat-retro-review-stage [space]="space" [retrospective]="retrospective" />
+  }
 </ion-content>

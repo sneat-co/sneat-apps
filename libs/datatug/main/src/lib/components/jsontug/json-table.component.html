@@ -1,35 +1,35 @@
 @if (rows) {
-	<table class="json-table">
-		@for (row of rows; track row) {
-			<tr>
-				<td style="vertical-align: top; text-align: right">
-					{{ row[0] }}
-				</td>
-				<td>
-					@if (isArray(row[1])) {
-						<sneat-datatug-json-grid [jsonGrid]="grid(row[1])" />
-					} @else {
-						@if (isObject(row[1])) {
-							@if (isEmptyObject(row[1])) {
-								<span>{{ row[1] | json }}</span>
-							} @else {
-								<sneat-datatug-json-table
-									[path]="path + '.' + row[0]"
-									[level]="level + 1"
-									[json]="row[1]"
-								/>
-							}
-						} @else {
-							@if (row[1] === null) {
-								<span style="color: grey; padding: 0.25em 0.5em">null</span>
-							}
-							@if (isSimpleType(row[1])) {
-								<span style="padding: 0.25em 0.5em">{{ row[1] }}</span>
-							}
-						}
-					}
-				</td>
-			</tr>
-		}
-	</table>
+  <table class="json-table">
+    @for (row of rows; track row) {
+      <tr>
+        <td style="vertical-align: top; text-align: right">
+          {{ row[0] }}
+        </td>
+        <td>
+          @if (isArray(row[1])) {
+            <sneat-datatug-json-grid [jsonGrid]="grid(row[1])" />
+          } @else {
+            @if (isObject(row[1])) {
+              @if (isEmptyObject(row[1])) {
+                <span>{{ row[1] | json }}</span>
+              } @else {
+                <sneat-datatug-json-table
+                  [path]="path + '.' + row[0]"
+                  [level]="level + 1"
+                  [json]="row[1]"
+                />
+              }
+            } @else {
+              @if (row[1] === null) {
+                <span style="color: grey; padding: 0.25em 0.5em">null</span>
+              }
+              @if (isSimpleType(row[1])) {
+                <span style="padding: 0.25em 0.5em">{{ row[1] }}</span>
+              }
+            }
+          }
+        </td>
+      </tr>
+    }
+  </table>
 }

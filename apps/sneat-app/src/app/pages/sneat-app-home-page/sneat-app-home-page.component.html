@@ -1,74 +1,74 @@
 <ion-header>
-	<ion-toolbar color="light">
-		<ion-buttons slot="end">
-			<ion-menu-button />
-		</ion-buttons>
-		<ion-title
-			>Sneat<span class="sneat-hide-if-width-less-320">.app</span></ion-title
-		>
-		@if ($authStatus() === "notAuthenticated") {
-			<ion-buttons slot="end" class="ion-padding-end">
-				<ion-button fill="solid" color="danger" routerLink="login">
-					<ion-icon name="log-in-outline" slot="start" />
-					<ion-label class="sneat-hide-if-width-less-240"
-						>Login
-						<span class="sneat-hide-if-width-less-420"
-							>to start</span
-						></ion-label
-					>
-				</ion-button>
-			</ion-buttons>
-		}
-	</ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-buttons slot="end">
+      <ion-menu-button />
+    </ion-buttons>
+    <ion-title
+      >Sneat<span class="sneat-hide-if-width-less-320">.app</span></ion-title
+    >
+    @if ($authStatus() === "notAuthenticated") {
+      <ion-buttons slot="end" class="ion-padding-end">
+        <ion-button fill="solid" color="danger" routerLink="login">
+          <ion-icon name="log-in-outline" slot="start" />
+          <ion-label class="sneat-hide-if-width-less-240"
+            >Login
+            <span class="sneat-hide-if-width-less-420"
+              >to start</span
+            ></ion-label
+          >
+        </ion-button>
+      </ion-buttons>
+    }
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<ion-grid class="ion-grid-layout">
-		<ion-row>
-			<ion-col>
-				<sneat-for-families />
-			</ion-col>
-			<ion-col>
-				<sneat-for-educators />
-			</ion-col>
-			<ion-col>
-				<sneat-for-work />
-			</ion-col>
-		</ion-row>
-	</ion-grid>
+  <ion-grid class="ion-grid-layout">
+    <ion-row>
+      <ion-col>
+        <sneat-for-families />
+      </ion-col>
+      <ion-col>
+        <sneat-for-educators />
+      </ion-col>
+      <ion-col>
+        <sneat-for-work />
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-	@if ($isAuthenticating()) {
-		<ion-card>
-			<ion-card-header>
-				<ion-card-title>
-					<ion-label color="medium">Authenticating...</ion-label>
-				</ion-card-title>
-			</ion-card-header>
-			<!--			<ion-card-content>-->
-			<!--				<h3>Debug info</h3>-->
-			<!--				<b>$authStatus</b>: {{ $authStatus() }}<br />-->
-			<!--				<b>App URL</b>: <a [href]="url" target="_blank">{{ url }}</a>-->
-			<!--			</ion-card-content>-->
-		</ion-card>
-	} @else if ($isAuthenticated()) {
-		<sneat-user-country />
-	} @else {
-		<ion-card>
-			<ion-card-content>
-				<ion-button routerLink="login">
-					<ion-icon name="log-in-outline" slot="start" />
-					<ion-label>Login</ion-label>
-				</ion-button>
-			</ion-card-content>
-		</ion-card>
-	}
+  @if ($isAuthenticating()) {
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          <ion-label color="medium">Authenticating...</ion-label>
+        </ion-card-title>
+      </ion-card-header>
+      <!--			<ion-card-content>-->
+      <!--				<h3>Debug info</h3>-->
+      <!--				<b>$authStatus</b>: {{ $authStatus() }}<br />-->
+      <!--				<b>App URL</b>: <a [href]="url" target="_blank">{{ url }}</a>-->
+      <!--			</ion-card-content>-->
+    </ion-card>
+  } @else if ($isAuthenticated()) {
+    <sneat-user-country />
+  } @else {
+    <ion-card>
+      <ion-card-content>
+        <ion-button routerLink="login">
+          <ion-icon name="log-in-outline" slot="start" />
+          <ion-label>Login</ion-label>
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  }
 
-	@if ($err(); as err) {
-		<ion-card>
-			<ion-card-header>
-				<ion-card-title color="danger">Error</ion-card-title>
-				<ion-card-content>{{ err | json }}</ion-card-content>
-			</ion-card-header>
-		</ion-card>
-	}
+  @if ($err(); as err) {
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title color="danger">Error</ion-card-title>
+        <ion-card-content>{{ err | json }}</ion-card-content>
+      </ion-card-header>
+    </ion-card>
+  }
 </ion-content>

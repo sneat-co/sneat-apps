@@ -1,108 +1,108 @@
 <ion-card>
-	@if (title) {
-		<ion-item (click)="cardTitleClick.emit()" tappable>
-			@if (itemIcon && !isLoading && !items?.length) {
-				<ion-icon [name]="itemIcon" slot="start" />
-			}
-			<ion-label style="font-weight: bold">{{ title }}</ion-label>
-			@if (isFilterable) {
-				<ion-input [(ngModel)]="filter" placeholder="(type to filter)" />
-			}
-			<ion-buttons slot="end">
-				@if (filter) {
-					<ion-button (click)="filter = ''" title="Clear filter">
-						<ion-icon name="close-outline" color="medium" />
-					</ion-button>
-				}
-				@if (mode !== "add" && create) {
-					<ion-button (click)="showAddForm($event)">
-						<ion-icon color="primary" slot="start" name="add" />
-						<ion-label color="medium">Add</ion-label>
-					</ion-button>
-				}
-			</ion-buttons>
-		</ion-item>
-	}
-	@if (tabs) {
-		<ion-segment [(ngModel)]="tab" (ionChange)="tabChanged.emit(tab || '')">
-			@for (tab of tabs; track tab.id) {
-				<ion-segment-button [value]="tab.id">
-					<ion-label>{{ tab.title }}</ion-label>
-				</ion-segment-button>
-			}
-		</ion-segment>
-		<ion-buttons>
-			@if (mode !== "add" && create) {
-				<ion-button (click)="showAddForm($event)">
-					<ion-icon color="primary" slot="start" name="add" />
-					<ion-label color="medium">Add</ion-label>
-				</ion-button>
-			}
-		</ion-buttons>
-	}
-	@if (isLoading) {
-		<ion-card-content>
-			<ion-skeleton-text animated="" style="width: 100%" />
-		</ion-card-content>
-	} @else {
-		<ion-list>
-			@for (item of items; track item.id) {
-				<ion-item
-					tappable
-					(click)="itemClick && click($event, item)"
-					[routerLink]="getRouterLink(item)"
-				>
-					@if (itemIcon) {
-						<ion-icon [name]="itemIcon" slot="start" />
-					}
-					<ion-label>{{ item.title || item.id }}</ion-label>
-				</ion-item>
-			}
-			@if (mode === "add") {
-				<ion-item>
-					<ion-icon name="earth-outline" slot="start" color="medium" />
-					<ion-input
-						[(ngModel)]="name"
-						placeholder="Name"
-						[disabled]="!!isAdding"
-					/>
-					<ion-buttons slot="end">
-						<ion-button
-							fill="solid"
-							color="primary"
-							[disabled]="isAdding || !name.trim()"
-							(click)="tryCreate()"
-						>
-							Create
-						</ion-button>
-						<ion-button
-							(click)="mode = 'list'"
-							color="medium"
-							title="Cancel"
-							[disabled]="isAdding"
-						>
-							<ion-icon name="close-outline" />
-						</ion-button>
-					</ion-buttons>
-				</ion-item>
-			}
-		</ion-list>
-		@if (!items?.length && mode !== "add") {
-			<ion-card-content>
-				@if (!noItemsText) {
-					<p>
-						{{ noItemsText }}
-					</p>
-				} @else {
-					<p>
-						Not defined for this project yet. Click the
-						<span style="background-color: whitesmoke; padding: 4px 8px"
-							>+ Add</span
-						>
-						button above in the header of this card to create a first one.
-					</p>
-				}
-			</ion-card-content>
-		}
-	}
+  @if (title) {
+    <ion-item (click)="cardTitleClick.emit()" tappable>
+      @if (itemIcon && !isLoading && !items?.length) {
+        <ion-icon [name]="itemIcon" slot="start" />
+      }
+      <ion-label style="font-weight: bold">{{ title }}</ion-label>
+      @if (isFilterable) {
+        <ion-input [(ngModel)]="filter" placeholder="(type to filter)" />
+      }
+      <ion-buttons slot="end">
+        @if (filter) {
+          <ion-button (click)="filter = ''" title="Clear filter">
+            <ion-icon name="close-outline" color="medium" />
+          </ion-button>
+        }
+        @if (mode !== "add" && create) {
+          <ion-button (click)="showAddForm($event)">
+            <ion-icon color="primary" slot="start" name="add" />
+            <ion-label color="medium">Add</ion-label>
+          </ion-button>
+        }
+      </ion-buttons>
+    </ion-item>
+  }
+  @if (tabs) {
+    <ion-segment [(ngModel)]="tab" (ionChange)="tabChanged.emit(tab || '')">
+      @for (tab of tabs; track tab.id) {
+        <ion-segment-button [value]="tab.id">
+          <ion-label>{{ tab.title }}</ion-label>
+        </ion-segment-button>
+      }
+    </ion-segment>
+    <ion-buttons>
+      @if (mode !== "add" && create) {
+        <ion-button (click)="showAddForm($event)">
+          <ion-icon color="primary" slot="start" name="add" />
+          <ion-label color="medium">Add</ion-label>
+        </ion-button>
+      }
+    </ion-buttons>
+  }
+  @if (isLoading) {
+    <ion-card-content>
+      <ion-skeleton-text animated="" style="width: 100%" />
+    </ion-card-content>
+  } @else {
+    <ion-list>
+      @for (item of items; track item.id) {
+        <ion-item
+          tappable
+          (click)="itemClick && click($event, item)"
+          [routerLink]="getRouterLink(item)"
+        >
+          @if (itemIcon) {
+            <ion-icon [name]="itemIcon" slot="start" />
+          }
+          <ion-label>{{ item.title || item.id }}</ion-label>
+        </ion-item>
+      }
+      @if (mode === "add") {
+        <ion-item>
+          <ion-icon name="earth-outline" slot="start" color="medium" />
+          <ion-input
+            [(ngModel)]="name"
+            placeholder="Name"
+            [disabled]="!!isAdding"
+          />
+          <ion-buttons slot="end">
+            <ion-button
+              fill="solid"
+              color="primary"
+              [disabled]="isAdding || !name.trim()"
+              (click)="tryCreate()"
+            >
+              Create
+            </ion-button>
+            <ion-button
+              (click)="mode = 'list'"
+              color="medium"
+              title="Cancel"
+              [disabled]="isAdding"
+            >
+              <ion-icon name="close-outline" />
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+      }
+    </ion-list>
+    @if (!items?.length && mode !== "add") {
+      <ion-card-content>
+        @if (!noItemsText) {
+          <p>
+            {{ noItemsText }}
+          </p>
+        } @else {
+          <p>
+            Not defined for this project yet. Click the
+            <span style="background-color: whitesmoke; padding: 4px 8px"
+              >+ Add</span
+            >
+            button above in the header of this card to create a first one.
+          </p>
+        }
+      </ion-card-content>
+    }
+  }
 </ion-card>

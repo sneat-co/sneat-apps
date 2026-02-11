@@ -5,21 +5,21 @@ import { ErrorLogger } from '@sneat/core';
 import { ListItemService } from './list-item.service';
 
 describe('ListItemService', () => {
-	beforeEach(() =>
-		TestBed.configureTestingModule({
-			imports: [HttpClientModule],
-			providers: [
-				ListItemService,
-				{
-					provide: ErrorLogger,
-					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
-				},
-			],
-		}),
-	);
+  beforeEach(() =>
+    TestBed.configureTestingModule({
+      imports: [HttpClientModule],
+      providers: [
+        ListItemService,
+        {
+          provide: ErrorLogger,
+          useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+        },
+      ],
+    }),
+  );
 
-	it('should be created', () => {
-		const service: ListItemService = TestBed.inject(ListItemService);
-		expect(service).toBeTruthy();
-	});
+  it('should be created', () => {
+    const service: ListItemService = TestBed.inject(ListItemService);
+    expect(service).toBeTruthy();
+  });
 });

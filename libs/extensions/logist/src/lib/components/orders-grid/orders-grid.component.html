@@ -1,12 +1,12 @@
 <ion-card style="padding: 0.5em">
-	@if (!orders) {
-		<ion-card-content>Loading...</ion-card-content>
-	}
-	<sneat-datagrid
-		[data]="rows"
-		[columns]="displayCols"
-		[rowClick]="rowClick"
-		height="200"
-		selectable="highlight"
-	/>
+  @if (!orders) {
+    <ion-card-content>Loading...</ion-card-content>
+  }
+  <sneat-datagrid
+    [data]="rows"
+    [columns]="displayCols"
+    [rowClick]="rowClick"
+    height="200"
+    selectable="highlight"
+  />
 </ion-card>

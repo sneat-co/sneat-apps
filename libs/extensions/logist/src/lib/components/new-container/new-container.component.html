@@ -1,44 +1,44 @@
 <ion-header>
-	<sneat-dialog-header dialogTitle="New container" />
+  <sneat-dialog-header dialogTitle="New container" />
 </ion-header>
 
 <ion-content>
-	<sneat-select-from-list
-		[(ngModel)]="containerType"
-		label="Container type/size"
-		[isFilterable]="false"
-		[items]="containerTypes"
-		(ngModelChange)="onContainerTypeChanged()"
-	/>
-	@if (containerType) {
-		<ion-item>
-			<ion-label color="medium">Container #</ion-label>
-			<ion-input
-				#containerNumberInput
-				type="text"
-				[(ngModel)]="containerNumber"
-			/>
-		</ion-item>
-		<sneat-shipping-points-selector
-			[order]="order"
-			(tasksByShippingPointChange)="onTasksByShippingPointChanged($event)"
-		/>
-	}
+  <sneat-select-from-list
+    [(ngModel)]="containerType"
+    label="Container type/size"
+    [isFilterable]="false"
+    [items]="containerTypes"
+    (ngModelChange)="onContainerTypeChanged()"
+  />
+  @if (containerType) {
+    <ion-item>
+      <ion-label color="medium">Container #</ion-label>
+      <ion-input
+        #containerNumberInput
+        type="text"
+        [(ngModel)]="containerNumber"
+      />
+    </ion-item>
+    <sneat-shipping-points-selector
+      [order]="order"
+      (tasksByShippingPointChange)="onTasksByShippingPointChanged($event)"
+    />
+  }
 </ion-content>
 
 @if (containerType) {
-	<ion-footer class="ion-padding">
-		<ion-button [disabled]="isSubmitting" (click)="addContainer($event)">
-			<ion-icon name="save-outline" slot="start" />
-			@if (!isSubmitting) {
-				<ion-label>Create container record</ion-label>
-			}
-			@if (isSubmitting) {
-				<ion-label>Creating container record...</ion-label>
-			}
-			@if (isSubmitting) {
-				<ion-spinner name="lines-small" slot="end" />
-			}
-		</ion-button>
-	</ion-footer>
+  <ion-footer class="ion-padding">
+    <ion-button [disabled]="isSubmitting" (click)="addContainer($event)">
+      <ion-icon name="save-outline" slot="start" />
+      @if (!isSubmitting) {
+        <ion-label>Create container record</ion-label>
+      }
+      @if (isSubmitting) {
+        <ion-label>Creating container record...</ion-label>
+      }
+      @if (isSubmitting) {
+        <ion-spinner name="lines-small" slot="end" />
+      }
+    </ion-button>
+  </ion-footer>
 }

@@ -1,12 +1,12 @@
 export interface IApiError {
-	code?: string;
-	message: string;
+  code?: string;
+  message: string;
 }
 
 export interface IErrorResponse {
-	error: IApiError;
+  error: IApiError;
 }
 
 export interface IFieldError extends IApiError {
-	field: string;
+  field: string;
 }

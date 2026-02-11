@@ -1,26 +1,26 @@
 <ion-nav />
 
 <ion-header>
-	<ion-toolbar color="light" class="with-back-button">
-		<ion-buttons slot="start">
-			<ion-back-button [defaultHref]="$defaultBackUrl()" />
-		</ion-buttons>
-		<ion-title>{{ $title() }}</ion-title>
-	</ion-toolbar>
+  <ion-toolbar color="light" class="with-back-button">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="$defaultBackUrl()" />
+    </ion-buttons>
+    <ion-title>{{ $title() }}</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<sneat-new-contact-form
-		[$space]="$space()"
-		[$contact]="$contact()"
-		(contactChange)="onContactChanged($event)"
-	/>
-	<!--	<sneat-new-person-form-->
-	<!--		[$fixedGroupID]="$contactGroupID()"-->
-	<!--		[$fixedRoleID]="$contactRoleID()"-->
-	<!--		[$parentContactID]="$parentContactID()"-->
-	<!--		(contactRoleChange)="$contactRole.set($event)"-->
-	<!--		(contactGroupChange)="$contactGroup.set($event)"-->
-	<!--		(contactChange)="$contact.set($event)"-->
-	<!--	/>-->
+  <sneat-new-contact-form
+    [$space]="$space()"
+    [$contact]="$contact()"
+    (contactChange)="onContactChanged($event)"
+  />
+  <!--	<sneat-new-person-form-->
+  <!--		[$fixedGroupID]="$contactGroupID()"-->
+  <!--		[$fixedRoleID]="$contactRoleID()"-->
+  <!--		[$parentContactID]="$parentContactID()"-->
+  <!--		(contactRoleChange)="$contactRole.set($event)"-->
+  <!--		(contactGroupChange)="$contactGroup.set($event)"-->
+  <!--		(contactChange)="$contact.set($event)"-->
+  <!--	/>-->
 </ion-content>

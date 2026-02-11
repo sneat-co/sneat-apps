@@ -1,29 +1,29 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import {
-	AlertController,
-	ModalController,
-	PopoverController,
-	IonButton,
-	IonButtons,
-	IonIcon,
-	IonItem,
-	IonItemGroup,
-	IonLabel,
+  AlertController,
+  ModalController,
+  PopoverController,
+  IonButton,
+  IonButtons,
+  IonIcon,
+  IonItem,
+  IonItemGroup,
+  IonLabel,
 } from '@ionic/angular/standalone';
 import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import {
-	DtoLiability,
-	DtoServiceType,
-	IAssetDboBase,
-	LiabilityServiceType,
+  DtoLiability,
+  DtoServiceType,
+  IAssetDboBase,
+  LiabilityServiceType,
 } from '@sneat/mod-assetus-core';
 import { ISelectItem, MultiSelectorComponent } from '@sneat/ui';
 import { AssetService } from '../services';
 
 interface AssetLiabilitiesByServiceType {
-	type: LiabilityServiceType;
-	title: string;
-	liabilities?: DtoLiability[];
+  type: LiabilityServiceType;
+  title: string;
+  liabilities?: DtoLiability[];
 }
 
 // interface IServiceTypeService {
@@ -40,49 +40,49 @@ interface AssetLiabilitiesByServiceType {
 // }
 
 @Component({
-	selector: 'sneat-asset-liabilities',
-	templateUrl: './asset-liabilities.component.html',
-	imports: [IonItemGroup, IonItem, IonLabel, IonButtons, IonButton, IonIcon],
+  selector: 'sneat-asset-liabilities',
+  templateUrl: './asset-liabilities.component.html',
+  imports: [IonItemGroup, IonItem, IonLabel, IonButtons, IonButton, IonIcon],
 })
 export class AssetLiabilitiesComponent {
-	private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
-	private readonly assetService = inject(AssetService);
-	// TODO: ILiabilityService injection token was never defined - commented out until properly implemented
-	// private readonly liabilityService = inject(ILiabilityService);
-	private readonly alertCtrl = inject(AlertController);
-	private readonly modalCtrl = inject(ModalController);
-	private readonly popoverCtrl = inject(PopoverController);
-	// TODO: IServiceTypeService injection token was never defined - commented out until properly implemented
-	// private readonly serviceTypeService = inject(IServiceTypeService);
+  private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
+  private readonly assetService = inject(AssetService);
+  // TODO: ILiabilityService injection token was never defined - commented out until properly implemented
+  // private readonly liabilityService = inject(ILiabilityService);
+  private readonly alertCtrl = inject(AlertController);
+  private readonly modalCtrl = inject(ModalController);
+  private readonly popoverCtrl = inject(PopoverController);
+  // TODO: IServiceTypeService injection token was never defined - commented out until properly implemented
+  // private readonly serviceTypeService = inject(IServiceTypeService);
 
-	assetDto: IAssetDboBase | undefined;
+  assetDto: IAssetDboBase | undefined;
 
-	@Input() addTitle?: string;
+  @Input() addTitle?: string;
 
-	@Input() liabilityType?: 'service' | 'tax';
+  @Input() liabilityType?: 'service' | 'tax';
 
-	serviceTypes?: DtoServiceType[];
+  serviceTypes?: DtoServiceType[];
 
-	liabilitiesByServiceType?: AssetLiabilitiesByServiceType[];
+  liabilitiesByServiceType?: AssetLiabilitiesByServiceType[];
 
-	@Output() serviceAdded = new EventEmitter<{ type: LiabilityServiceType }>();
+  @Output() serviceAdded = new EventEmitter<{ type: LiabilityServiceType }>();
 
-	@Input() set asset(v: IAssetDboBase | undefined) {
-		this.assetDto = v;
-		if (this.liabilityType) {
-			this.load();
-		}
-	}
+  @Input() set asset(v: IAssetDboBase | undefined) {
+    this.assetDto = v;
+    if (this.liabilityType) {
+      this.load();
+    }
+  }
 
-	handleError = (err: unknown): void => console.log(err);
+  handleError = (err: unknown): void => console.log(err);
 
-	load(): void {
-		if (!this.assetDto) {
-			return;
-		}
-		// TODO: load() body commented out because IServiceTypeService and ILiabilityService
-		// injection tokens were never defined - needs proper implementation
-		/*
+  load(): void {
+    if (!this.assetDto) {
+      return;
+    }
+    // TODO: load() body commented out because IServiceTypeService and ILiabilityService
+    // injection tokens were never defined - needs proper implementation
+    /*
 		const { assetDto } = this;
 
 		if (!assetDto) {
@@ -135,42 +135,42 @@ export class AssetLiabilitiesComponent {
 				});
 		}
 		*/
-	}
+  }
 
-	markAsNotUsed(service: AssetLiabilitiesByServiceType): void {
-		this.alertCtrl
-			.create({
-				header: this.assetDto && this.assetDto.title,
-				message: `Are you not using ${service.title}?`,
-				buttons: [
-					{
-						text: 'Yes, remove it',
-						handler: () => {
-							this.hideService(service);
-						},
-					},
-					'Cancel',
-				],
-			})
-			.then((alert) => {
-				alert.present().catch((err) => {
-					this.errorLogger.logError(err, 'Failed to present alert');
-				});
-			})
-			.catch((err) => {
-				this.errorLogger.logError(err, 'Failed to create alert');
-			});
-	}
+  markAsNotUsed(service: AssetLiabilitiesByServiceType): void {
+    this.alertCtrl
+      .create({
+        header: this.assetDto && this.assetDto.title,
+        message: `Are you not using ${service.title}?`,
+        buttons: [
+          {
+            text: 'Yes, remove it',
+            handler: () => {
+              this.hideService(service);
+            },
+          },
+          'Cancel',
+        ],
+      })
+      .then((alert) => {
+        alert.present().catch((err) => {
+          this.errorLogger.logError(err, 'Failed to present alert');
+        });
+      })
+      .catch((err) => {
+        this.errorLogger.logError(err, 'Failed to create alert');
+      });
+  }
 
-	hideService(service: AssetLiabilitiesByServiceType): void {
-		if (!this.assetDto) {
-			throw new Error('!this.assetDto');
-		}
-		if (!this.assetDto.id) {
-			throw new Error('!this.assetDto.id');
-		}
-		throw new Error('not implemented yet, serviceType=' + service);
-		/*
+  hideService(service: AssetLiabilitiesByServiceType): void {
+    if (!this.assetDto) {
+      throw new Error('!this.assetDto');
+    }
+    if (!this.assetDto.id) {
+      throw new Error('!this.assetDto.id');
+    }
+    throw new Error('not implemented yet, serviceType=' + service);
+    /*
 		this.assetService
 			.updateAsset(undefined, this.assetDto.id, (dto) => {
 				let changed = false;
@@ -192,46 +192,46 @@ export class AssetLiabilitiesComponent {
 				},
 			);
 			*/
-	}
+  }
 
-	async addService(type?: LiabilityServiceType): Promise<void> {
-		console.log(`addService(${type})`);
-		if (type) {
-			this.serviceAdded.emit({ type });
-		} else {
-			try {
-				const items: ISelectItem[] =
-					this.serviceTypes?.map((v) => ({
-						id: v.id || '',
-						title: v.title || (v.id as string),
-					})) || [];
-				const modal = await this.popoverCtrl.create({
-					component: MultiSelectorComponent,
-					componentProps: {
-						title: this.addTitle,
-						items,
-						onSelect: (item: ISelectItem) => {
-							this.serviceAdded.emit({
-								type: item.id as LiabilityServiceType,
-							});
-						},
-					},
-				});
-				modal
-					.onDidDismiss()
-					.then((result) => {
-						if (result.role === 'select') {
-							console.log('selected:', result);
-							this.serviceAdded.emit({
-								type: result.data.item.value as LiabilityServiceType,
-							});
-						}
-					})
-					.catch(this.handleError);
-				await modal.present();
-			} catch (e) {
-				this.handleError(e);
-			}
-		}
-	}
+  async addService(type?: LiabilityServiceType): Promise<void> {
+    console.log(`addService(${type})`);
+    if (type) {
+      this.serviceAdded.emit({ type });
+    } else {
+      try {
+        const items: ISelectItem[] =
+          this.serviceTypes?.map((v) => ({
+            id: v.id || '',
+            title: v.title || (v.id as string),
+          })) || [];
+        const modal = await this.popoverCtrl.create({
+          component: MultiSelectorComponent,
+          componentProps: {
+            title: this.addTitle,
+            items,
+            onSelect: (item: ISelectItem) => {
+              this.serviceAdded.emit({
+                type: item.id as LiabilityServiceType,
+              });
+            },
+          },
+        });
+        modal
+          .onDidDismiss()
+          .then((result) => {
+            if (result.role === 'select') {
+              console.log('selected:', result);
+              this.serviceAdded.emit({
+                type: result.data.item.value as LiabilityServiceType,
+              });
+            }
+          })
+          .catch(this.handleError);
+        await modal.present();
+      } catch (e) {
+        this.handleError(e);
+      }
+    }
+  }
 }

@@ -1,18 +1,18 @@
 @let contact = $contact();
 
 <ion-item [lines]="$isLast() ? $lastItemLine() : undefined">
-	<ion-checkbox
-		labelPlacement="end"
-		justify="start"
-		[value]="$contact().id"
-		[checked]="contact.isChecked"
-		[disabled]="$isDisabled()"
-		(ionChange)="onCheckboxChange($event, contact)"
-	>
-		{{ contact.brief.names | personNames }}
-		<!--TODO: use pipe-->
-	</ion-checkbox>
-	@if ($isDisabled()) {
-		<ion-spinner name="lines-small" slot="end" color="medium" />
-	}
+  <ion-checkbox
+    labelPlacement="end"
+    justify="start"
+    [value]="$contact().id"
+    [checked]="contact.isChecked"
+    [disabled]="$isDisabled()"
+    (ionChange)="onCheckboxChange($event, contact)"
+  >
+    {{ contact.brief.names | personNames }}
+    <!--TODO: use pipe-->
+  </ion-checkbox>
+  @if ($isDisabled()) {
+    <ion-spinner name="lines-small" slot="end" color="medium" />
+  }
 </ion-item>

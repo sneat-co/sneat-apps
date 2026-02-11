@@ -3,14 +3,14 @@ import { ErrorLogger } from '@sneat/core';
 import { ErrorLoggerService } from './error-logger.service';
 
 export function provideErrorLogger(): Provider {
-	return {
-		provide: ErrorLogger,
-		useClass: ErrorLoggerService,
-	};
+  return {
+    provide: ErrorLogger,
+    useClass: ErrorLoggerService,
+  };
 }
 
 @NgModule({
-	imports: [],
-	providers: [provideErrorLogger()],
+  imports: [],
+  providers: [provideErrorLogger()],
 })
 export class SneatLoggingModule {}

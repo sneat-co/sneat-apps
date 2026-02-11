@@ -1,9 +1,9 @@
 @for (contact of $contactsWithSpace(); track contact.id) {
-	<ion-item-sliding>
-		<sneat-contacts-list-item [$space]="$space()" [$contact]="contact" />
-	</ion-item-sliding>
+  <ion-item-sliding>
+    <sneat-contacts-list-item [$space]="$space()" [$contact]="contact" />
+  </ion-item-sliding>
 } @empty {
-	<ion-item lines="none">
-		<ion-label color="medium">{{ emptyText }}</ion-label>
-	</ion-item>
+  <ion-item lines="none">
+    <ion-label color="medium">{{ emptyText }}</ion-label>
+  </ion-item>
 }

@@ -1,10 +1,10 @@
 import { IWidgetDef } from './widget';
 
 export interface ITabsWidgetSettings {
-	tabs: ITab[];
+  tabs: ITab[];
 }
 
 export interface ITab {
-	title: string;
-	widget: IWidgetDef;
+  title: string;
+  widget: IWidgetDef;
 }

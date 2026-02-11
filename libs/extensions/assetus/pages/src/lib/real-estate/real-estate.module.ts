@@ -7,14 +7,14 @@ import { ModuleAssetRealEstate } from '../../module.asset.real-estate';
 import { AssetContactsGroupComponent } from '../../components/asset-contacts-group/asset-contacts-group.component';
 
 const routes: Routes = [
-	{
-		path: '',
-		component: RealEstatePageComponent,
-	},
+  {
+    path: '',
+    component: RealEstatePageComponent,
+  },
 ];
 
 @NgModule({
-	imports: [FormsModule, ModuleAssetRealEstate, RouterModule.forChild(routes)],
-	declarations: [RealEstatePageComponent, AssetContactsGroupComponent],
+  imports: [FormsModule, ModuleAssetRealEstate, RouterModule.forChild(routes)],
+  declarations: [RealEstatePageComponent, AssetContactsGroupComponent],
 })
 export class RealEstatePageModule {}
