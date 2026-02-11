@@ -68,67 +68,47 @@ The architecture follows a modular design pattern with:
 
 ## System Architecture
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        User Interfaces                          │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐         │
-│  │   Web App    │  │   iOS App    │  │ Android App  │         │
-│  │    (PWA)     │  │ (Capacitor)  │  │ (Capacitor)  │         │
-│  └──────────────┘  └──────────────┘  └──────────────┘         │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                   Frontend Layer (Nx Monorepo)                  │
-│                                                                  │
-│  ┌────────────────────────────────────────────────────────┐   │
-│  │                      Applications                       │   │
-│  │  • Sneat.app (Family & Personal)                       │   │
-│  │  • DataTug (SQL Workbench)                             │   │
-│  │  • Logist (Logistics)                                  │   │
-│  └────────────────────────────────────────────────────────┘   │
-│                                                                  │
-│  ┌────────────────────────────────────────────────────────┐   │
-│  │                   Core Libraries                        │   │
-│  │  @sneat/auth  @sneat/core  @sneat/space  @sneat/ui    │   │
-│  │  @sneat/api   @sneat/data  @sneat/dto   @sneat/app    │   │
-│  └────────────────────────────────────────────────────────┘   │
-│                                                                  │
-│  ┌────────────────────────────────────────────────────────┐   │
-│  │            Extension Modules (Contactus Built-in)       │   │
-│  │  • Contactus (Contacts Management)                     │   │
-│  │  • Assetus (Assets Management)                         │   │
-│  │  • Budgetus (Budgeting)                                │   │
-│  │  • Schedulus (Calendar & Events)                       │   │
-│  │  • Listus (Lists: ToDo, ToBuy, ToWatch)               │   │
-│  │  • Debtus (Debt Management)                            │   │
-│  │  • Docus (Document Management)                         │   │
-│  │  • Trackus (Activity Tracking)                         │   │
-│  │  • Logist (Logistics)                                  │   │
-│  └────────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                     Backend Services Layer                       │
-│                                                                  │
-│  ┌──────────────────────┐        ┌──────────────────────┐     │
-│  │  Firebase Services   │        │   Go Backend API     │     │
-│  │  ┌────────────────┐  │        │  (Google App Engine) │     │
-│  │  │ Authentication │  │◄───────┤                      │     │
-│  │  └────────────────┘  │        │  • User Management   │     │
-│  │  ┌────────────────┐  │        │  • Business Logic    │     │
-│  │  │   Firestore    │  │        │  • Data Validation   │     │
-│  │  │  (Database)    │  │◄───────┤  • API Endpoints     │     │
-│  │  └────────────────┘  │        │                      │     │
-│  │  ┌────────────────┐  │        └──────────────────────┘     │
-│  │  │ Cloud Storage  │  │                                      │
-│  │  └────────────────┘  │                                      │
-│  │  ┌────────────────┐  │                                      │
-│  │  │   Analytics    │  │                                      │
-│  │  └────────────────┘  │                                      │
-│  └──────────────────────┘                                      │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph UI["User Interfaces"]
+        WebApp["Web App<br/>(PWA)"]
+        iOS["iOS App<br/>(Capacitor)"]
+        Android["Android App<br/>(Capacitor)"]
+    end
+
+    subgraph Frontend["Frontend Layer (Nx Monorepo)"]
+        subgraph Apps["Applications"]
+            SneatApp["Sneat.app<br/>(Family & Personal)"]
+            DataTug["DataTug<br/>(SQL Workbench)"]
+            Logist["Logist<br/>(Logistics)"]
+        end
+
+        subgraph CoreLibs["Core Libraries"]
+            CoreLib["@sneat/auth @sneat/core @sneat/space @sneat/ui<br/>@sneat/api @sneat/data @sneat/dto @sneat/app"]
+        end
+
+        subgraph Extensions["Extension Modules (Contactus Built-in)"]
+            ExtList["• Contactus (Contacts Management)<br/>• Assetus (Assets Management)<br/>• Budgetus (Budgeting)<br/>• Schedulus (Calendar & Events)<br/>• Listus (Lists: ToDo, ToBuy, ToWatch)<br/>• Debtus (Debt Management)<br/>• Docus (Document Management)<br/>• Trackus (Activity Tracking)<br/>• Logist (Logistics)"]
+        end
+    end
+
+    subgraph Backend["Backend Services Layer"]
+        subgraph Firebase["Firebase Services"]
+            Auth["Authentication"]
+            Firestore["Firestore<br/>(Database)"]
+            Storage["Cloud Storage"]
+            Analytics["Analytics"]
+        end
+
+        subgraph GoBackend["Go Backend API<br/>(Google App Engine)"]
+            UserMgmt["• User Management<br/>• Business Logic<br/>• Data Validation<br/>• API Endpoints"]
+        end
+    end
+
+    UI --> Frontend
+    Frontend --> Backend
+    GoBackend --> Auth
+    GoBackend --> Firestore
 ```
 
 ---
@@ -306,8 +286,14 @@ The backend is developed separately in the [sneat-go-server](https://github.com/
 
 The application follows a unidirectional data flow pattern:
 
-```
-User Action → Component → Service → Firestore → Real-time Update → Component → UI Update
+```mermaid
+graph LR
+    A[User Action] --> B[Component]
+    B --> C[Service]
+    C --> D[Firestore]
+    D --> E[Real-time Update]
+    E --> F[Component]
+    F --> G[UI Update]
 ```
 
 ### Detailed Data Flow
@@ -557,8 +543,11 @@ pnpm prettier --write .
 
 ### CI/CD Pipeline
 
-```
-GitHub Push → GitHub Actions → Build & Test → Deploy
+```mermaid
+graph LR
+    A[GitHub Push] --> B[GitHub Actions]
+    B --> C[Build & Test]
+    C --> D[Deploy]
 ```
 
 **Workflow**:
