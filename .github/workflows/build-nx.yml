@@ -11,6 +11,8 @@ on:
     paths-ignore:
       - 'docs/**'
   merge_group:
+    paths-ignore:
+      - 'docs/**'
 
 jobs:
   #    pnpm-cache:
