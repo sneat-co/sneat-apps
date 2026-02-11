@@ -5,8 +5,14 @@ on:
     branches:
       # - renovate/* - do not build renovate branches as they'll be built by PRs
       - main
+    paths-ignore:
+      - 'docs/**'
   pull_request:
+    paths-ignore:
+      - 'docs/**'
   merge_group:
+    paths-ignore:
+      - 'docs/**'
 
 jobs:
   #    pnpm-cache:
