@@ -1,0 +1,46 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ErrorLogger } from '@sneat/core';
+import { {{ComponentName}} } from './{{component-name}}.component';
+
+describe('{{ComponentName}}', () => {
+	let component: {{ComponentName}};
+	let fixture: ComponentFixture<{{ComponentName}}>;
+
+	beforeEach(waitForAsync(async () => {
+		await TestBed.configureTestingModule({
+			imports: [{{ComponentName}}],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+			providers: [
+				{
+					provide: ErrorLogger,
+					useValue: { logError: vi.fn(), logErrorHandler: () => vi.fn() },
+				},
+				// Add additional providers as needed
+			],
+		})
+			.overrideComponent({{ComponentName}}, {
+				set: {
+					imports: [],
+					providers: [],
+					schemas: [CUSTOM_ELEMENTS_SCHEMA],
+				},
+			})
+			.compileComponents();
+
+		fixture = TestBed.createComponent({{ComponentName}});
+		component = fixture.componentInstance;
+	}));
+
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
+
+	// Add specific test cases for your component
+	// Example:
+	// it('should render title', () => {
+	//   fixture.detectChanges();
+	//   const compiled = fixture.nativeElement;
+	//   expect(compiled.querySelector('h1')?.textContent).toContain('Expected Title');
+	// });
+});

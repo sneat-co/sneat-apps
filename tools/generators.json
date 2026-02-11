@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "@sneat/tools",
+  "version": "1.0.0",
+  "generators": {
+    "extension-test": {
+      "factory": "./generators/extension-test/generator",
+      "schema": "./generators/extension-test/schema.json",
+      "description": "Generate test files for extension modules using templates"
+    }
+  }
+}

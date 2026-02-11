@@ -37,6 +37,23 @@ A suit of open source apps that help in work & personal life.
 If you want to contribute to this open source project you can
 read instructions on how to set up local dev environment in [README-DEV-SETUP.md](docs/README-DEV-SETUP.md).
 
+## Testing
+
+This repository includes comprehensive test templates and documentation for writing consistent tests:
+
+- 📖 [Testing Guide](docs/TESTING.md) - Comprehensive guide to testing patterns, best practices, and running tests
+- 💡 [Testing Examples](docs/TESTING-EXAMPLES.md) - Practical examples of generating and using test templates
+- 🛠️ [Test Templates](templates/) - Reusable templates for services, components, and sanity tests
+
+**Quick start:**
+```bash
+# Generate a test using templates
+node scripts/generate-extension-test.mjs service YourService extension-name shared services
+
+# Run tests
+pnpm nx test <project-name>
+```
+
 ## AI Agent Improvement Plan
 
 We've analyzed the codebase and created a prioritized list of **Top 10 high-ROI improvements** for AI agents:
