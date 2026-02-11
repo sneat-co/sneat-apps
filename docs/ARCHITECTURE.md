@@ -621,12 +621,12 @@ GitHub Push → GitHub Actions → Build & Test → Deploy
 
 ## Additional Resources
 
-- **Main README**: [README.md](README.md)
-- **Development Setup**: [docs/README-DEV-SETUP.md](docs/README-DEV-SETUP.md)
-- **Developer FAQ**: [README-DEV-FAQ.md](README-DEV-FAQ.md)
-- **Testing Guide**: [docs/TESTING.md](docs/TESTING.md)
-- **AI Improvement Plan**: [docs/AI-IMPROVEMENT-INDEX.md](docs/AI-IMPROVEMENT-INDEX.md)
-- **Extension READMEs**: [libs/extensions/README.md](libs/extensions/README.md)
+- **Main README**: [README.md](../README.md)
+- **Development Setup**: [docs/README-DEV-SETUP.md](README-DEV-SETUP.md)
+- **Developer FAQ**: [README-DEV-FAQ.md](../README-DEV-FAQ.md)
+- **Testing Guide**: [docs/TESTING.md](TESTING.md)
+- **AI Improvement Plan**: [docs/AI-IMPROVEMENT-INDEX.md](AI-IMPROVEMENT-INDEX.md)
+- **Extension READMEs**: [libs/extensions/README.md](../libs/extensions/README.md)
 - **Backend Repository**: [github.com/sneat-co/sneat-go-server](https://github.com/sneat-co/sneat-go-server)
 
 ---
