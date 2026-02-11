@@ -28,6 +28,7 @@ This document describes the architecture of the Sneat applications ecosystem, in
 Sneat apps is a suite of open source applications that help in work and personal life. The flagship application is [Sneat.app](https://sneat.app), a comprehensive family and personal management tool that provides features for members, scheduling, contacts, assets, budgeting, and various list management.
 
 The architecture follows a modular design pattern with:
+
 - **Nx monorepo** for code organization and tooling
 - **Extension-based architecture** for feature modularity
 - **Shared core libraries** for common functionality
@@ -39,6 +40,7 @@ The architecture follows a modular design pattern with:
 ## Technology Stack
 
 ### Frontend
+
 - **[Angular 21+](https://angular.io/)** - Modern web framework with standalone components and signals
 - **[TypeScript 5.9+](https://www.typescriptlang.org/)** - Type-safe JavaScript development
 - **[Ionic Framework 8+](https://ionicframework.com/)** - Mobile UI toolkit for cross-platform experiences
@@ -47,6 +49,7 @@ The architecture follows a modular design pattern with:
 - **[Nx 22+](https://nx.dev/)** - Monorepo tooling and build optimization
 
 ### Backend & Data
+
 - **[Firebase Authentication](https://firebase.google.com/docs/auth)** - User authentication and authorization
 - **[Cloud Firestore](https://firebase.google.com/docs/firestore)** - Real-time NoSQL database with offline support
 - **[Go](https://go.dev/)** - Backend API services (separate repository)
@@ -54,6 +57,7 @@ The architecture follows a modular design pattern with:
   - Backend repository: [github.com/sneat-co/sneat-go-server](https://github.com/sneat-co/sneat-go-server)
 
 ### Testing & Development
+
 - **[Vitest](https://vitest.dev/)** - Fast unit testing framework
 - **[Playwright](https://playwright.dev/)** - End-to-end testing
 - **[ESLint](https://eslint.org/)** - Code quality and linting
@@ -155,7 +159,9 @@ sneat-apps/
 ### Applications
 
 #### 1. Sneat.app (Primary Application)
+
 The flagship Progressive Web App for family and personal life management:
+
 - **Members management** - Family member profiles and roles
 - **Schedule/Calendar** - Event planning and calendar integration
 - **Contacts** - Contact management with relationships
@@ -165,29 +171,31 @@ The flagship Progressive Web App for family and personal life management:
 - **Multi-space support** - Separate spaces for family, work, etc.
 
 #### 2. DataTug
+
 SQL and HTTP queries workbench for developers and data analysts.
 
 #### 3. Logist
+
 Logistics and shipment management application.
 
 ### Core Libraries
 
 Core libraries provide foundational functionality used across applications:
 
-| Library | Purpose |
-|---------|---------|
-| **@sneat/core** | Core services, models, and utilities |
-| **@sneat/auth** | Authentication services and UI components |
-| **@sneat/app** | Application initialization and component services |
-| **@sneat/space** | Space (workspace) management services |
-| **@sneat/ui** | Shared UI components and design system |
-| **@sneat/api** | API communication and Firestore service |
-| **@sneat/data** | Data models and DTOs |
-| **@sneat/dto** | Data transfer objects |
-| **@sneat/datetime** | Date and time utilities |
-| **@sneat/components** | Reusable Angular components |
-| **@sneat/user** | User profile and preferences |
-| **@sneat/communes** | Community/group features |
+| Library               | Purpose                                           |
+| --------------------- | ------------------------------------------------- |
+| **@sneat/core**       | Core services, models, and utilities              |
+| **@sneat/auth**       | Authentication services and UI components         |
+| **@sneat/app**        | Application initialization and component services |
+| **@sneat/space**      | Space (workspace) management services             |
+| **@sneat/ui**         | Shared UI components and design system            |
+| **@sneat/api**        | API communication and Firestore service           |
+| **@sneat/data**       | Data models and DTOs                              |
+| **@sneat/dto**        | Data transfer objects                             |
+| **@sneat/datetime**   | Date and time utilities                           |
+| **@sneat/components** | Reusable Angular components                       |
+| **@sneat/user**       | User profile and preferences                      |
+| **@sneat/communes**   | Community/group features                          |
 
 ### Extension Modules
 
@@ -212,6 +220,7 @@ libs/extensions/{extension-name}/
 #### Built-in Extension: Contactus
 
 **Contactus** is a special built-in extension that cannot be disabled. It provides contact management functionality used throughout the application:
+
 - `@sneat/contactus-core` - Core services and models
 - `@sneat/contactus-shared` - Shared components
 - `@sneat/contactus-services` - Contact services
@@ -219,16 +228,16 @@ libs/extensions/{extension-name}/
 
 #### Optional Extensions
 
-| Extension | Description | Libraries |
-|-----------|-------------|-----------|
-| **Assetus** | Asset management and tracking | core, components, pages |
-| **Budgetus** | Budget and finance management | (single library) |
-| **Schedulus** | Calendar and event scheduling | core, shared, main |
-| **Listus** | List management (ToDo, ToBuy, etc.) | (single library) |
-| **Debtus** | Debt tracking and management | internal, shared |
-| **Docus** | Document management | (single library) |
-| **Trackus** | Activity and habit tracking | (single library) |
-| **Logist** | Logistics and shipping | (single library) |
+| Extension     | Description                         | Libraries               |
+| ------------- | ----------------------------------- | ----------------------- |
+| **Assetus**   | Asset management and tracking       | core, components, pages |
+| **Budgetus**  | Budget and finance management       | (single library)        |
+| **Schedulus** | Calendar and event scheduling       | core, shared, main      |
+| **Listus**    | List management (ToDo, ToBuy, etc.) | (single library)        |
+| **Debtus**    | Debt tracking and management        | internal, shared        |
+| **Docus**     | Document management                 | (single library)        |
+| **Trackus**   | Activity and habit tracking         | (single library)        |
+| **Logist**    | Logistics and shipping              | (single library)        |
 
 Each extension can be enabled or disabled independently, allowing for a modular and customizable application experience.
 
@@ -243,6 +252,7 @@ The backend is developed separately in the [sneat-go-server](https://github.com/
 **Technology**: Go language, hosted on Google App Engine Standard
 
 **Key Responsibilities**:
+
 - User management and authorization
 - Business logic execution
 - Data validation and integrity
@@ -253,6 +263,7 @@ The backend is developed separately in the [sneat-go-server](https://github.com/
 ### Firebase Services
 
 #### 1. Firebase Authentication
+
 - **Social authentication** - Google, Facebook, Apple, Microsoft
 - **Phone authentication** - SMS-based verification
 - **Email/password** - Traditional authentication
@@ -260,6 +271,7 @@ The backend is developed separately in the [sneat-go-server](https://github.com/
 - **Multi-factor authentication** - Enhanced security
 
 #### 2. Cloud Firestore
+
 - **Real-time database** - Automatic synchronization
 - **Offline support** - Local caching and sync
 - **Security rules** - Fine-grained access control
@@ -275,11 +287,13 @@ The backend is developed separately in the [sneat-go-server](https://github.com/
   ```
 
 #### 3. Cloud Storage
+
 - User-uploaded files and images
 - Asset documents and photos
 - Profile pictures
 
 #### 4. Analytics
+
 - User behavior tracking
 - Performance monitoring
 - Error reporting (via Sentry integration)
@@ -302,7 +316,7 @@ User Action → Component → Service → Firestore → Real-time Update → Com
 2. **Component Layer**: Angular component captures the interaction
 3. **Service Layer**: Business logic service processes the request
 4. **Data Layer**: SneatFirestoreService communicates with Firestore
-5. **Backend Processing**: 
+5. **Backend Processing**:
    - Direct Firestore operations for simple CRUD
    - Go backend API for complex business logic
 6. **Real-time Sync**: Firestore triggers real-time updates
@@ -313,12 +327,14 @@ User Action → Component → Service → Firestore → Real-time Update → Com
 ### Key Service: SneatFirestoreService
 
 Located in `@sneat/api`, this service provides:
+
 - **Observable-based queries** - Real-time data subscriptions
 - **Type-safe operations** - TypeScript generics for type safety
 - **Error handling** - Centralized error management
 - **Offline support** - Automatic caching and synchronization
 
 Example pattern:
+
 ```typescript
 // Watch a document by ID with real-time updates
 watchByID(collection, id): Observable<Data>
@@ -377,11 +393,13 @@ watchMany(collection, queryArgs): Observable<Data[]>
 Mobile apps are built using **Capacitor**, which wraps the Angular/Ionic web application into native iOS and Android apps.
 
 #### Configuration
+
 - **App ID**: `co.sneat.app`
 - **App Name**: Sneat.app
 - **Web Directory**: `dist/apps/sneat-app`
 
 #### Native Features
+
 - **Native authentication** - Platform-specific login flows
 - **Push notifications** - Firebase Cloud Messaging
 - **Camera access** - Photo capture for assets
@@ -390,6 +408,7 @@ Mobile apps are built using **Capacitor**, which wraps the Angular/Ionic web app
 - **Deep linking** - URL scheme handling
 
 #### Platform-Specific Code
+
 - **iOS**: Swift code in `ios/` directory
 - **Android**: Kotlin/Java code in `android/` directory
 - **Shared**: TypeScript/Angular code in `apps/sneat-app/`
@@ -415,6 +434,7 @@ npx cap open android
 ### Local Development Setup
 
 #### Prerequisites
+
 1. Node.js (current LTS)
 2. pnpm package manager
 3. Firebase Tools CLI
@@ -424,12 +444,14 @@ npx cap open android
 #### Running Locally
 
 **1. Firebase Emulators**
+
 ```bash
 cd ../sneat-go-backend
 firebase emulators:start --only auth,firestore
 ```
 
 **2. Go Backend** (optional)
+
 ```bash
 cd ../sneat-go-backend
 export GCLOUD_PROJECT="demo-sneat-app"
@@ -439,6 +461,7 @@ go run ./gae
 ```
 
 **3. Frontend Application**
+
 ```bash
 pnpm nx serve sneat-app
 # Access at http://localhost:4200
@@ -447,6 +470,7 @@ pnpm nx serve sneat-app
 ### Testing
 
 #### Unit Tests
+
 ```bash
 # Run tests for a specific project
 pnpm nx test <project-name>
@@ -459,12 +483,14 @@ pnpm nx affected --target=test
 ```
 
 #### E2E Tests
+
 ```bash
 # Run Playwright tests
 pnpm nx e2e <project-name>-e2e
 ```
 
 #### Code Coverage
+
 ```bash
 # Analyze test coverage
 pnpm run coverage:analyze
@@ -495,17 +521,20 @@ pnpm prettier --write .
 ### Frontend Deployment
 
 #### Progressive Web App (PWA)
+
 - **Hosting**: Firebase Hosting or similar CDN
 - **Build**: Production-optimized bundles
 - **Service Worker**: Offline support and caching
 - **Updates**: Automatic app updates
 
 #### iOS App Store
+
 - **Build**: Xcode project from Capacitor
 - **TestFlight**: Beta testing
 - **App Store**: Production distribution
 
 #### Google Play Store
+
 - **Build**: Android Studio project from Capacitor
 - **Internal testing**: Alpha/Beta tracks
 - **Play Store**: Production distribution
@@ -513,12 +542,14 @@ pnpm prettier --write .
 ### Backend Deployment
 
 #### Go Backend
+
 - **Platform**: Google App Engine Standard
 - **Deployment**: Git-based deployment
 - **Scaling**: Automatic scaling
 - **Version management**: Traffic splitting between versions
 
 #### Firebase Services
+
 - **Authentication**: Managed service
 - **Firestore**: Managed database
 - **Storage**: Managed file storage
@@ -531,6 +562,7 @@ GitHub Push → GitHub Actions → Build & Test → Deploy
 ```
 
 **Workflow**:
+
 1. Code pushed to GitHub
 2. GitHub Actions triggers build
 3. Run linting and tests
@@ -543,6 +575,7 @@ GitHub Push → GitHub Actions → Build & Test → Deploy
 ## Performance Optimization
 
 ### Build Optimization
+
 - **Nx caching** - Incremental builds
 - **Code splitting** - Lazy loading modules
 - **Tree shaking** - Remove unused code
@@ -550,6 +583,7 @@ GitHub Push → GitHub Actions → Build & Test → Deploy
 - **Source maps** - Debug production builds
 
 ### Runtime Optimization
+
 - **Lazy loading** - Load extensions on demand
 - **Virtual scrolling** - Efficient list rendering (Ionic)
 - **Change detection** - OnPush strategy
@@ -557,6 +591,7 @@ GitHub Push → GitHub Actions → Build & Test → Deploy
 - **Firestore pagination** - Limit query results
 
 ### Monitoring
+
 - **Sentry** - Error tracking and monitoring
 - **Firebase Analytics** - User behavior
 - **Performance monitoring** - Core Web Vitals
@@ -567,6 +602,7 @@ GitHub Push → GitHub Actions → Build & Test → Deploy
 ## Future Architecture Considerations
 
 ### Planned Improvements
+
 - **Offline-first architecture** - Enhanced offline capabilities
 - **GraphQL API** - Consider alternative to REST for Go backend
 - **State management library** - NgRx or similar for complex state
@@ -575,6 +611,7 @@ GitHub Push → GitHub Actions → Build & Test → Deploy
 - **Edge computing** - CloudFlare Workers for global performance
 
 ### Scalability
+
 - **Database sharding** - Firestore collection groups
 - **CDN optimization** - Global content delivery
 - **Caching strategy** - Redis or similar for backend
@@ -597,6 +634,7 @@ GitHub Push → GitHub Actions → Build & Test → Deploy
 ## Contributing
 
 To contribute to Sneat apps:
+
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes following the architecture patterns
