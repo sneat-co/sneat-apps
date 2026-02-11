@@ -6,15 +6,6 @@ export const routes: Routes = [
 	{
 		path: '',
 		pathMatch: 'full',
-		outlet: 'menu',
-		loadComponent: () =>
-			import('./sneat-app-menu-component/sneat-app-menu.component').then(
-				(m) => m.SneatAppMenuComponent,
-			),
-	},
-	{
-		path: '',
-		pathMatch: 'full',
 		loadComponent: () =>
 			import('./pages/sneat-app-home-page/sneat-app-home-page.component').then(
 				(m) => m.SneatAppHomePageComponent,
@@ -31,9 +22,9 @@ export const routes: Routes = [
 		path: 'telegram/mini-app',
 		pathMatch: 'full',
 		loadComponent: () =>
-			import(
-				'./pages/telegram-mini-app-home/telegram-mini-app-home-page.component'
-			).then((m) => m.TelegramMiniAppHomePageComponent),
+			import('./pages/telegram-mini-app-home/telegram-mini-app-home-page.component').then(
+				(m) => m.TelegramMiniAppHomePageComponent,
+			),
 	},
 	{
 		path: 'my',

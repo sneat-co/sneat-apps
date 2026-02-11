@@ -13,6 +13,7 @@ import {
 	IonToolbar,
 } from '@ionic/angular/standalone';
 import { BaseAppComponent } from '@sneat/app';
+import { SneatAppMenuComponent } from './sneat-app-menu-component/sneat-app-menu.component';
 
 @Component({
 	selector: 'sneat-app-root',
@@ -29,6 +30,7 @@ import { BaseAppComponent } from '@sneat/app';
 		IonContent,
 		IonRouterOutlet,
 		RouterLink,
+		SneatAppMenuComponent,
 	],
 })
 export class SneatAppComponent extends BaseAppComponent {}

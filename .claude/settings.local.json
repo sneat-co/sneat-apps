@@ -27,7 +27,8 @@
       "Bash(pnpm remove:*)",
       "Bash(pnpm add:*)",
       "Bash(pnpm nx build:*)",
-      "Bash(pnpm nx lint:*)"
+      "Bash(pnpm nx lint:*)",
+      "Bash(xxd:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

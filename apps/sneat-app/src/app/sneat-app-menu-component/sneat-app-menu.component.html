@@ -1,9 +1,18 @@
-<ion-list lines="full">
-	<!--	<ion-item>sneat-app-menu.component.html</ion-item>-->
-	@if (authState?.status === "authenticated") {
-		<sneat-spaces-menu />
-	}
-	<!--	<sneat-commune-menu></sneat-commune-menu>-->
-	<sneat-auth-menu-item />
+@if (isLoginPage()) {
+	<ion-list lines="none">
+		<ion-item>
+			<ion-label class="ion-text-wrap">
+				<p>Free to sign up. No credit card required.</p>
+			</ion-label>
+		</ion-item>
+	</ion-list>
 	<sneat-app-version />
-</ion-list>
+} @else {
+	<ion-list lines="full">
+		@if (authState?.status === "authenticated") {
+			<sneat-spaces-menu />
+		}
+		<sneat-auth-menu-item />
+		<sneat-app-version />
+	</ion-list>
+}
