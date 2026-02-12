@@ -71,10 +71,11 @@ The architecture follows a modular design pattern with:
 ```mermaid
 graph TB
     subgraph UI["User Interfaces"]
-        direction LR
         WebApp["Web App (PWA)"]
-        iOS["iOS App (Capacitor)"]
-        Android["Android App (Capacitor)"]
+        subgraph Capacitor["Capacitor"]
+          iOS["iOS App"]
+          Android["Android App"]
+        end
     end
 
     subgraph Frontend["Frontend Layer<br/>(Nx Monorepo)"]
