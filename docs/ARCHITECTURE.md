@@ -72,14 +72,20 @@ The architecture follows a modular design pattern with:
 graph TB
     subgraph UI["User Interfaces"]
         direction LR
-        web["Web App"] --- cap
-        cap["Capacitor"]
-        
+        web --- iOS
+        web --- Android
+
+        linkStyle 0 stroke-width:0px
+        linkStyle 1 stroke-width:0px
+
+        web["Web App"]
         subgraph Capacitor["Capacitor"]
             direction LR
-            iOS["iOS App"] --- Android["Android App"]
+            iOS["iOS App"]
+            Android["Android App"]
         end
     end
+
 
     subgraph Frontend["Frontend Layer<br/>(Nx Monorepo)"]
         subgraph Apps["Applications"]
