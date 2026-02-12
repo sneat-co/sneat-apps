@@ -54,6 +54,9 @@ test.describe('Email Auth', () => {
         ),
       ).not.toBeVisible();
 
+      // Navigate to spaces page
+      await page.goto('/my/spaces');
+
       // Verify new space button is visible
       await expect(
         page.locator('ion-fab-button[title="Create new space"]'),
@@ -66,6 +69,9 @@ test.describe('Email Auth', () => {
 
       // Sign in
       await loginViaUI(page, MOCK_USER_EMAIL, MOCK_USER_PASS);
+
+      // Navigate to spaces page
+      await page.goto('/my/spaces');
 
       // Verify new space button is visible
       await expect(

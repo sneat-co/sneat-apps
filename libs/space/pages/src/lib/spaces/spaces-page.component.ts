@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {
   IonButtons,
   IonContent,
+  IonFab,
+  IonFabButton,
   IonHeader,
+  IonIcon,
   IonMenuButton,
   IonTitle,
   IonToolbar,
@@ -20,6 +23,15 @@ import { SpacesCardComponent } from '@sneat/space-components';
     IonTitle,
     IonContent,
     IonMenuButton,
+    IonFab,
+    IonFabButton,
+    IonIcon,
   ],
 })
-export class SpacesPageComponent {}
+export class SpacesPageComponent {
+  @ViewChild(SpacesCardComponent) spacesCard?: SpacesCardComponent;
+
+  protected onCreateSpaceClick(): void {
+    this.spacesCard?.startAddingSpace();
+  }
+}
