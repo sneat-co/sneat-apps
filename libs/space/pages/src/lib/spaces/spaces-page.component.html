@@ -10,4 +10,10 @@
 <ion-content>
   <sneat-spaces-card />
   <!--	<app-intro></app-intro>-->
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button title="Create new space" (click)="onCreateSpaceClick()">
+      <ion-icon name="add" />
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
