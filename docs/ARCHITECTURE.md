@@ -132,6 +132,148 @@ graph TB
     GoBackend --> Firestore
 ```
 
+```mermaid
+graph TB
+    subgraph "User Interfaces"
+        WebApp["🌐 Web Application<br/>(Progressive Web App)"]
+        iOS["📱 iOS App<br/>(Capacitor)"]
+        Android["🤖 Android App<br/>(Capacitor)"]
+    end
+
+    subgraph "Frontend Layer - Nx Monorepo"
+        SneatApp["Sneat.app<br/>(Angular + Ionic)"]
+        DataTug["DataTug<br/>(SQL Workbench)"]
+        Logist["Logist<br/>(Logistics)"]
+
+        subgraph "Shared Libraries"
+            Auth["@sneat/auth"]
+            Space["@sneat/space"]
+            UI["@sneat/ui"]
+            Core["@sneat/core"]
+        end
+
+        subgraph "Extensions"
+            Assetus["assetus<br/>(Assets)"]
+            Budgetus["budgetus<br/>(Budget)"]
+            Schedulus["schedulus<br/>(Calendar)"]
+            Contactus["contactus<br/>(Contacts)"]
+            Listus["listus<br/>(Lists)"]
+        end
+    end
+
+    subgraph "Backend Services"
+        Firebase["🔥 Firebase"]
+        Firestore["Firestore<br/>(Database)"]
+        FireAuth["Firebase Auth"]
+        Analytics["Analytics"]
+        Storage["Cloud Storage"]
+    end
+
+    WebApp --> SneatApp
+    iOS --> SneatApp
+    Android --> SneatApp
+
+    SneatApp --> Auth
+    SneatApp --> Space
+    SneatApp --> Extensions
+    DataTug --> Core
+    Logist --> Core
+
+    Auth --> FireAuth
+    Space --> Firestore
+    Extensions --> Firestore
+    Core --> Firebase
+
+    Firebase --> Firestore
+    Firebase --> FireAuth
+    Firebase --> Analytics
+    Firebase --> Storage
+
+    style SneatApp fill:#4CAF50
+    style Extensions fill:#2196F3
+    style Firebase fill:#FF9800
+```
+
+### Extension Module System
+
+```mermaid
+graph LR
+    subgraph "Extension Architecture Pattern"
+        ExtCore["Extension Core<br/>Business Logic<br/>Services & State"]
+        ExtShared["Extension Shared<br/>Components<br/>Models & DTOs"]
+        ExtPages["Extension Pages<br/>Route Components<br/>Views"]
+    end
+
+    subgraph "Example: Assetus Extension"
+        AssetusCore["assetus-core<br/>Asset Services<br/>Asset Models"]
+        AssetusComp["assetus-components<br/>Asset Card<br/>Asset List"]
+        AssetusPages["assetus-pages<br/>Asset Details<br/>Asset Dashboard"]
+    end
+
+    subgraph "Example: Schedulus Extension"
+        SchedulusCore["schedulus-core<br/>Event Services<br/>Calendar Logic"]
+        SchedulusShared["schedulus-shared<br/>Event Components<br/>Calendar UI"]
+        SchedulusMain["schedulus-main<br/>Calendar Page<br/>Event Page"]
+    end
+
+    ExtCore --> ExtShared
+    ExtShared --> ExtPages
+
+    AssetusCore --> AssetusComp
+    AssetusComp --> AssetusPages
+
+    SchedulusCore --> SchedulusShared
+    SchedulusShared --> SchedulusMain
+
+    ExtPages --> App["Sneat.app<br/>Main Application"]
+    AssetusPages --> App
+    SchedulusMain --> App
+
+    style ExtCore fill:#E91E63
+    style ExtShared fill:#9C27B0
+    style ExtPages fill:#673AB7
+```
+
+### Data Flow Architecture
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Component as Angular Component<br/>(UI Layer)
+    participant Service as Feature Service<br/>(Business Logic)
+    participant Firestore as SneatFirestoreService<br/>(Data Layer)
+    participant Firebase as Firebase Firestore<br/>(Backend)
+    participant Auth as Firebase Auth
+
+    User->>Component: Interact with UI
+    Component->>Auth: Check Authentication
+    Auth-->>Component: User Authenticated
+
+    Component->>Service: Call Business Method<br/>(e.g., getSpaceMembers)
+    Service->>Firestore: Query Data<br/>(with RxJS Observable)
+    Firestore->>Firebase: Firestore Query<br/>(onSnapshot)
+
+    Firebase-->>Firestore: Real-time Data Stream
+    Firestore-->>Service: Observable Emissions
+    Service-->>Component: Transformed Data
+    Component-->>User: Update UI
+
+    Note over Firebase,Firestore: Real-time Sync
+
+    Firebase->>Firestore: Data Changed
+    Firestore->>Service: Auto-update via Observable
+    Service->>Component: New Data
+    Component->>User: UI Auto-updates
+
+    User->>Component: Modify Data
+    Component->>Service: Update Request
+    Service->>Firestore: Write Operation
+    Firestore->>Firebase: Commit to Firestore
+    Firebase-->>Firestore: Success
+    Firestore-->>Service: Update Confirmed
+    Service-->>Component: Operation Complete
+    Component-->>User: Show Confirmation
+```
 ---
 
 ## Frontend Architecture
