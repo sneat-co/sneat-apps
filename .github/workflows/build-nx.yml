@@ -63,7 +63,7 @@ jobs:
         run: pnpm run nx affected --target=lint --base=${{ env.NX_BASE }} --parallel=6
 
       - name: nx test affected
-        run: pnpm run nx affected --target=test --base=${{ env.NX_BASE }} --parallel=8
+        run: pnpm run nx affected --target=test --base=${{ env.NX_BASE }} --parallel=4
 
       # We have firebase-tools in devDependencies
       #            -   uses: sneat-co/sneat-firebase/actions/install-firebase-tools@main
