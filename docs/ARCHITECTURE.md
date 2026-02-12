@@ -71,12 +71,12 @@ The architecture follows a modular design pattern with:
 ```mermaid
 graph TB
     subgraph UI["User Interfaces"]
-        WebApp["Web App<br/>(PWA)"]
-        iOS["iOS App<br/>(Capacitor)"]
-        Android["Android App<br/>(Capacitor)"]
+        WebApp["Web App (PWA)"]
+        iOS["iOS App (Capacitor)"]
+        Android["Android App (Capacitor)"]
     end
 
-    subgraph Frontend["Frontend Layer (Nx Monorepo)"]
+    subgraph Frontend["Frontend Layer<br/>(Nx Monorepo)"]
         subgraph Apps["Applications"]
             SneatApp["Sneat.app<br/>(Family & Personal)"]
             DataTug["DataTug<br/>(SQL Workbench)"]
