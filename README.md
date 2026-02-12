@@ -73,7 +73,7 @@ This repository is configured for enhanced AI agent support with the **Nx MCP (M
 - Documentation lookup with `nx_docs` tool
 - Project configuration queries with `nx_project_details`
 
-See configuration files: `.vscode/mcp.json`, `.claude/settings.local.json`, `.gemini/settings.json`
+Configuration files: `.vscode/mcp.json` (new), `.claude/settings.local.json`, `.gemini/settings.json`, and `opencode.json` (pre-existing)
 
 ## AI Agent Improvement Plan
 

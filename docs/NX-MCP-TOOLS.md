@@ -10,11 +10,11 @@ The Nx MCP server provides AI agents with deep access to the Nx workspace contex
 
 The Nx MCP server is configured in multiple locations for different AI tools:
 
-- **VSCode/GitHub Copilot**: `.vscode/mcp.json`
-- **Claude Desktop**: `.claude/settings.local.json`
-- **Gemini**: `.gemini/settings.json`
-- **OpenCode**: `opencode.json`
-- **Generic**: `.ai/mcp/mcp.json`
+- **VSCode/GitHub Copilot**: `.vscode/mcp.json` (created in this PR)
+- **Claude Desktop**: `.claude/settings.local.json` (pre-existing, already configured)
+- **Gemini**: `.gemini/settings.json` (pre-existing, already configured)
+- **OpenCode**: `opencode.json` (pre-existing, already configured)
+- **Generic**: `.ai/mcp/mcp.json` (updated in this PR)
 
 ## Available MCP Tools
 
