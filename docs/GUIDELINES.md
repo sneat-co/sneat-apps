@@ -151,7 +151,8 @@ libs/                    # Shared libraries
 - **nx-run-tasks**: Use for executing build, test, lint, and other tasks
 - **nx-plugins**: Use for discovering and adding plugins
 
-**Important**: 
+**Important**:
+
 - Check `nx_docs` or `--help` when unfamiliar with flags
 - Don't guess CLI syntax
 - The `nx-generate` skill handles generator discovery internally
@@ -261,11 +262,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 describe('MyService', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
-      providers: [
-        MyService,
-        { provide: DependencyService, useValue: { method: vi.fn() } }
-      ],
-    })
+      providers: [MyService, { provide: DependencyService, useValue: { method: vi.fn() } }],
+    }),
   );
 
   it('should be created', () => {
@@ -365,6 +363,7 @@ pnpm coverage:analyze
 ### What Not to Commit
 
 **NEVER commit**:
+
 - `node_modules/`
 - Build artifacts (`dist/`, `.angular/`, etc.)
 - Coverage reports
@@ -502,14 +501,14 @@ pnpm outdated
 
 ### Code Documentation
 
-```typescript
+````typescript
 /**
  * Brief description of what this does
- * 
+ *
  * @param param1 Description of param1
  * @param param2 Description of param2
  * @returns Description of return value
- * 
+ *
  * @example
  * ```typescript
  * const result = myFunction('value1', 'value2');
@@ -518,7 +517,7 @@ pnpm outdated
 export function myFunction(param1: string, param2: string): string {
   // Implementation
 }
-```
+````
 
 ### Project Documentation
 
@@ -621,7 +620,10 @@ ng build my-app
 
 ### What NOT to Do
 
+- [src_old](../src_old) is a folder for deprecated code – do not investigate it unless explicitly asked to do so.
+
 **NEVER**:
+
 - Modify `.github/agents/` directory (agent-specific instructions)
 - Delete working code unless necessary
 - Fix unrelated bugs (out of scope)
@@ -636,6 +638,7 @@ ng build my-app
 ### Exceptions for Custom Agents
 
 **When a custom agent completes work**:
+
 - DO NOT run linters, builds, or tests on their changes
 - Accept their work as final
 - Trust the custom agent's expertise
