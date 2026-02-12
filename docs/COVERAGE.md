@@ -21,6 +21,15 @@ The coverage workflow is defined in `.github/workflows/build-nx.yml` and include
 - Generating the badge using `jaywcjlove/coverage-badges-cli@v1`
 - Committing the badge back to the repository
 
+### Security Considerations
+
+The workflow uses version pinning (`@v1`) for the badge generation action. While pinning to a specific commit SHA would provide maximum security, version tags offer a balance between:
+- **Security**: More secure than using `@main` branch
+- **Maintainability**: Allows receiving bug fixes and improvements within major version
+- **Reproducibility**: Version tags are more readable than commit SHAs
+
+If your security requirements mandate commit SHA pinning, you can replace `@v1` with the specific commit SHA of the release.
+
 ## Branch Protection Settings
 
 If you have branch protection rules enabled on `main`, you need to allow the workflow to commit:
