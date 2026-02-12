@@ -145,7 +145,7 @@ jobs:
 
       - name: Generate coverage badge
         if: github.ref == 'refs/heads/main' && success()
-        uses: jaywcjlove/coverage-badges-cli@v1
+        uses: jaywcjlove/coverage-badges-cli@main
         with:
           source: coverage-merged/coverage-summary.json
           output: .github/badges/coverage.svg
