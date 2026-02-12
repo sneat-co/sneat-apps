@@ -44,6 +44,9 @@ test.describe('Space Setup', () => {
         response.status() === 200,
     );
 
+    // Navigate to spaces page
+    await page.goto('/my/spaces');
+
     // Verify new space button is visible
     await assertNewSpaceButtonIsVisible(page);
 
