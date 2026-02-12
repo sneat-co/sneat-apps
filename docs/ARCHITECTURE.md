@@ -87,12 +87,7 @@ graph TB
     end
 
 
-    subgraph Frontend["Frontend Layer<br/>(Nx Monorepo)"]
-        subgraph Apps["Applications"]
-            SneatApp["Sneat.app<br/>(Family & Personal)"]
-            DataTug["DataTug<br/>(SQL Workbench)"]
-            Logist["Logist<br/>(Logistics)"]
-        end
+    subgraph Frontend["Frontend Layer"]
 
         subgraph CoreLibs["Core Libraries"]
             CoreLib["@sneat/auth @sneat/core @sneat/space @sneat/ui<br/>@sneat/api @sneat/data @sneat/dto @sneat/app"]
@@ -101,6 +96,21 @@ graph TB
         subgraph Extensions["Extension Modules (Contactus Built-in)"]
             ExtList["• Contactus (Contacts Management)<br/>• Assetus (Assets Management)<br/>• Budgetus (Budgeting)<br/>• Schedulus (Calendar & Events)<br/>• Listus (Lists: ToDo, ToBuy, ToWatch)<br/>• Debtus (Debt Management)<br/>• Docus (Document Management)<br/>• Trackus (Activity Tracking)<br/>• Logist (Logistics)"]
         end
+
+        subgraph Apps["Applications"]
+
+            SneatApp["Sneat.app<br/>(Family & Personal)"]
+            DataTug["DataTug<br/>(SQL Workbench)"]
+            Logist["Logist<br/>(Logistics)"]
+
+            direction LR
+            SneatApp --- DataTug
+            DataTug --- Logist
+
+            linkStyle 2 stroke-width:0px
+            linkStyle 3 stroke-width:0px
+        end
+
     end
 
     subgraph Backend["Backend Services Layer"]
