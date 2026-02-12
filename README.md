@@ -59,6 +59,22 @@ node scripts/generate-extension-test.mjs service YourService extension-name shar
 pnpm nx test <project-name>
 ```
 
+## AI Agent Configuration
+
+This repository is configured for enhanced AI agent support with the **Nx MCP (Model Context Protocol) Server**:
+
+- 🤖 [Nx MCP Tools Reference](docs/NX-MCP-TOOLS.md) - Complete guide to MCP tools available for AI agents
+- 📋 [Agent Guidelines](docs/GUIDELINES.md) - Comprehensive guidelines for AI agents and developers
+- ⚙️ **Supported Agents**: GitHub Copilot, Claude, Gemini, Cursor, and other MCP-compatible tools
+
+**Configured for:**
+- Deep workspace context and project graph access
+- Intelligent code generation with Nx generators
+- Documentation lookup with `nx_docs` tool
+- Project configuration queries with `nx_project_details`
+
+See configuration files: `.vscode/mcp.json`, `.claude/settings.local.json`, `.gemini/settings.json`
+
 ## AI Agent Improvement Plan
 
 We've analyzed the codebase and created a prioritized list of **Top 10 high-ROI improvements** for AI agents:
