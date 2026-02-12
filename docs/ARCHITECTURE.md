@@ -72,8 +72,8 @@ The architecture follows a modular design pattern with:
 graph TB
     subgraph UI["User Interfaces"]
         direction LR
-        web --- iOS
-        web --- Android
+        web --- Capacitor
+        iOS --- Android
 
         linkStyle 0 stroke-width:0px
         linkStyle 1 stroke-width:0px
