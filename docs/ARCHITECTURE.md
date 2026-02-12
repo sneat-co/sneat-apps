@@ -72,11 +72,12 @@ The architecture follows a modular design pattern with:
 graph TB
     subgraph UI["User Interfaces"]
         direction LR
-        web["Web App"]
+        web["Web App"] --- cap
+        cap["Capacitor"]
+        
         subgraph Capacitor["Capacitor"]
-          direction LR
-          iOS["iOS App"]
-          Android["Android App"]
+            direction LR
+            iOS["iOS App"] --- Android["Android App"]
         end
     end
 
