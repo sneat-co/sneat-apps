@@ -61,10 +61,10 @@ jobs:
           BAZEL_TARGET: '1'
         # https://stackoverflow.com/questions/73876647/using-nx-run-many-shows-another-process-with-id-is-currently-running-ngcc
         # BE AWARE: Adding PARALLEL options may cause build to pass when it should have been failed
-        run: pnpm run nx affected --target=build --base=${{ env.NX_BASE }} --parallel=7
+        run: pnpm run nx affected --target=build --base=${{ env.NX_BASE }} --parallel=8
 
       - name: nx lint affected
-        run: pnpm run nx affected --target=lint --base=${{ env.NX_BASE }} --parallel=6
+        run: pnpm run nx affected --target=lint --base=${{ env.NX_BASE }} --parallel=8
 
       - name: nx test affected
         run: pnpm run nx affected --target=test --base=${{ env.NX_BASE }} --parallel=4
