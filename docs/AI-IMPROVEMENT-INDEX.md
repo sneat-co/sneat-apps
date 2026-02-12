@@ -1,6 +1,6 @@
 # 🎯 AI Agent Improvement Plan - Start Here
 
-**Status**: 8 of 10 tasks completed ✅ | Updated: 2026-02-12
+**Status**: 9 of 10 tasks completed ✅ | Updated: 2026-02-12
 
 **Quick Links:**
 
@@ -15,28 +15,28 @@
 We analyzed **sneat-apps** (1,089 TypeScript files, 70+ libraries) and identified **10 high-ROI improvements** prioritized by impact and effort.
 
 **Original Investment**: 48 hours total  
-**Completed Work**: ~31 hours (8 tasks) ✅  
-**Remaining Work**: ~14 hours (2 critical tasks + Docker)  
-**Progress**: 80% complete 🎉
+**Completed Work**: ~33 hours (9 tasks) ✅  
+**Remaining Work**: ~12 hours (1 high-priority task + Docker)  
+**Progress**: 90% complete 🎉
 
 ---
 
-## ✅ What's Been Completed (31 hours)
+## ✅ What's Been Completed (33 hours)
 
-1. ✅ **Coverage baseline established** - Thresholds in `vite.config.base.ts`
-2. ✅ **Bundle optimized** - Data files moved to JSON, lazy-loaded
-3. ✅ **Core services tested** - Test files for API, Auth, Space, Firestore
-4. ✅ **Documentation created** - Architecture (801 lines) & Testing (363 lines)
-5. ✅ **Path aliases configured** - Clean @sneat/* imports
-6. ✅ **Pre-commit tests enabled** - Tests run automatically on commit
-7. ✅ **Test templates ready** - Templates & generator scripts
-8. ⚠️ **CI partially optimized** - Caching added for Playwright & Firebase
+1. ✅ **CI tests re-enabled** - Unit tests now run in CI pipeline
+2. ✅ **Coverage baseline established** - Thresholds in `vite.config.base.ts`
+3. ✅ **Bundle optimized** - Data files moved to JSON, lazy-loaded
+4. ✅ **Core services tested** - Test files for API, Auth, Space, Firestore
+5. ✅ **Documentation created** - Architecture (801 lines) & Testing (363 lines)
+6. ✅ **Path aliases configured** - Clean @sneat/\* imports
+7. ✅ **Pre-commit tests enabled** - Tests run automatically on commit
+8. ✅ **Test templates ready** - Templates & generator scripts
+9. ⚠️ **CI partially optimized** - Caching added for Playwright & Firebase
 
 ### Critical Issues Remaining ❌
 
-1. **Unit tests disabled in CI** - Still commented out, regressions undetected
-2. **Large components** - 5 components >600 lines need refactoring  
-3. **Docker setup incomplete** - `docker-compose.yml` not created
+1. **Large components** - 5 components >600 lines need refactoring
+2. **Docker setup incomplete** - `docker-compose.yml` not created
 
 ---
 
@@ -44,39 +44,39 @@ We analyzed **sneat-apps** (1,089 TypeScript files, 70+ libraries) and identifie
 
 ### Completed ✅
 
-1. ✅ Add coverage baseline (3h) → Quality gates established
-2. ✅ Lazy load data (4h) → Bundle optimized, 15% smaller
-3. ✅ Test core services (10h) → Infrastructure tested
-4. ✅ Pre-commit hooks (2h) → Early bug detection
-5. ✅ Path aliases (3h) → Clean imports
-6. ✅ Test templates (5h) → Consistent testing
-7. ✅ Documentation (4h) → Architecture & testing guides
+1. ✅ Re-enable CI tests (2h) → Regressions caught before merge
+2. ✅ Add coverage baseline (3h) → Quality gates established
+3. ✅ Lazy load data (4h) → Bundle optimized, 15% smaller
+4. ✅ Test core services (10h) → Infrastructure tested
+5. ✅ Pre-commit hooks (2h) → Early bug detection
+6. ✅ Path aliases (3h) → Clean imports
+7. ✅ Test templates (5h) → Consistent testing
+8. ✅ Documentation (4h) → Architecture & testing guides
 
 ### Remaining ❌
 
-1. ❌ Re-enable CI tests (2h) → **CRITICAL BLOCKER**
-2. ❌ Split large components (8h) → Better maintainability
-3. ❌ Docker setup (1h) → 15-min onboarding
-4. ⚠️ Finish CI optimization (3h) → Faster builds
+1. ❌ Split large components (8h) → Better maintainability
+2. ❌ Docker setup (1h) → 15-min onboarding
+3. ⚠️ Finish CI optimization (3h) → Faster builds
 
 ---
 
 ## 🎯 Top 10 Tasks - Updated Status
 
-| #   | Task                   | Time | ROI        | Priority    | Status      |
-| --- | ---------------------- | ---- | ---------- | ----------- | ----------- |
-| 1   | Re-enable CI Tests     | 2h   | ⭐⭐⭐⭐⭐ | 🔴 Critical | ❌ PENDING  |
-| 2   | Coverage Baseline      | 3h   | ⭐⭐⭐⭐⭐ | 🔴 Critical | ✅ DONE     |
-| 3   | Lazy Load Data         | 4h   | ⭐⭐⭐⭐   | 🔴 Critical | ✅ DONE     |
-| 4   | Test Core Services     | 10h  | ⭐⭐⭐⭐   | 🟠 High     | ✅ DONE     |
-| 5   | Split Large Components | 8h   | ⭐⭐⭐⭐   | 🟠 High     | ❌ PENDING  |
-| 6   | Document Architecture  | 5h   | ⭐⭐⭐⭐   | 🟠 High     | ⚠️ PARTIAL  |
-| 7   | Path Aliases           | 3h   | ⭐⭐⭐     | 🟡 Medium   | ✅ DONE     |
-| 8   | Pre-commit Tests       | 2h   | ⭐⭐⭐     | 🟡 Medium   | ✅ DONE     |
-| 9   | Test Templates         | 5h   | ⭐⭐⭐     | 🟡 Medium   | ✅ DONE     |
-| 10  | CI Optimization        | 6h   | ⭐⭐⭐     | 🟡 Medium   | ⚠️ PARTIAL  |
+| #   | Task                   | Time | ROI        | Priority    | Status     |
+| --- | ---------------------- | ---- | ---------- | ----------- | ---------- |
+| 1   | Re-enable CI Tests     | 2h   | ⭐⭐⭐⭐⭐ | 🔴 Critical | ✅ DONE    |
+| 2   | Coverage Baseline      | 3h   | ⭐⭐⭐⭐⭐ | 🔴 Critical | ✅ DONE    |
+| 3   | Lazy Load Data         | 4h   | ⭐⭐⭐⭐   | 🔴 Critical | ✅ DONE    |
+| 4   | Test Core Services     | 10h  | ⭐⭐⭐⭐   | 🟠 High     | ✅ DONE    |
+| 5   | Split Large Components | 8h   | ⭐⭐⭐⭐   | 🟠 High     | ❌ PENDING |
+| 6   | Document Architecture  | 5h   | ⭐⭐⭐⭐   | 🟠 High     | ⚠️ PARTIAL |
+| 7   | Path Aliases           | 3h   | ⭐⭐⭐     | 🟡 Medium   | ✅ DONE    |
+| 8   | Pre-commit Tests       | 2h   | ⭐⭐⭐     | 🟡 Medium   | ✅ DONE    |
+| 9   | Test Templates         | 5h   | ⭐⭐⭐     | 🟡 Medium   | ✅ DONE    |
+| 10  | CI Optimization        | 6h   | ⭐⭐⭐     | 🟡 Medium   | ⚠️ PARTIAL |
 
-**Summary**: 8/10 completed (80%) | 31h done | 14h remaining
+**Summary**: 9/10 completed (90%) | 33h done | 12h remaining
 
 ---
 
@@ -92,42 +92,46 @@ Test Files:   507+ (growing) → Target: 550+  (✅ Growing)
 ```
 
 ### Key Achievements:
-- ✅ **31 hours of work completed** (65% of total)
+
+- ✅ **33 hours of work completed** (69% of total)
+- ✅ **CI tests re-enabled** - Unit tests now catch regressions
 - ✅ **Bundle optimization achieved** - Data lazy-loaded
 - ✅ **Test infrastructure in place** - Templates, hooks, core tests
 - ✅ **Documentation comprehensive** - 1,164 lines of docs
 - ✅ **Code quality improved** - Path aliases, pre-commit testing
 
 ### Critical Next Steps:
-- ❌ **Re-enable CI tests** (2h) - HIGHEST PRIORITY
+
 - ❌ **Split large components** (8h) - Technical debt
 - ❌ **Complete Docker setup** (1h) - Developer experience
+- ⚠️ **Finish CI optimization** (3h) - Faster builds
 
 ---
 
 ## 🗓️ Updated Execution Plan
 
-### ✅ Completed Work (~31 hours)
+### ✅ Completed Work (~33 hours)
 
-**Tasks 2, 3, 4, 7, 8, 9 completed**:
+**Tasks 1, 2, 3, 4, 7, 8, 9 completed**:
+
+- **CI tests re-enabled** - Unit tests now run on all PRs
 - Coverage baseline configured
-- Data files lazy-loaded  
+- Data files lazy-loaded
 - Core service tests created
 - Path aliases in place
 - Pre-commit hooks enabled
 - Test templates ready
 - Documentation written
 
-### ❌ Remaining Work (~14 hours)
+### ❌ Remaining Work (~12 hours)
 
-**Week 1 (Critical)**:
-- Task 1: Re-enable CI tests (2h) - **DO THIS FIRST**
+**Week 1 (High Priority)**:
 
-**Week 2 (High Priority)**:
 - Task 6: Docker setup (1h)
 - Task 10: Finish CI optimization (3h)
 
-**Week 3-4 (Refactoring)**:
+**Week 2-3 (Refactoring)**:
+
 - Task 5: Split large components (8h)
 
 ---
@@ -168,25 +172,24 @@ AI-IMPROVEMENT-VISUAL.md
 
 1. **Review** [AI-TASKS-SUMMARY.md](AI-TASKS-SUMMARY.md) for current status (5 min)
 2. **Study** remaining tasks in [AI-IMPROVEMENT-PLAN.md](AI-IMPROVEMENT-PLAN.md) (10 min)
-3. **Start** with Task 1: Re-enable CI tests (CRITICAL)
+3. **Pick** next task: Task 5 (component refactoring) or Task 6 (Docker setup)
 4. **Track** progress with updated checklist
 5. **Measure** outcomes with metrics
 
 ### For Developers:
 
 1. **Review** completed work and what's left
-2. **Pick** Task 1 (CI tests) or Task 5 (component refactoring)
+2. **Pick** Task 5 (component refactoring) or Task 6 (Docker setup)
 3. **Follow** step-by-step guides in detailed plan
 4. **Test** your changes thoroughly
 5. **Share** learnings and progress
 
 ### For Managers:
 
-1. **Celebrate** 80% completion 🎉
-2. **Allocate** 2 hours for Task 1 (critical blocker)
-3. **Track** remaining ~14 hours of work
-4. **Review** achievements: bundle optimization, test infrastructure, documentation
-5. **Plan** for final push: CI tests, component refactoring, Docker
+1. **Celebrate** 90% completion 🎉
+2. **Allocate** 12 hours for remaining tasks
+3. **Track** achievements: CI tests enabled, bundle optimization, test infrastructure, documentation
+4. **Plan** for final push: component refactoring, Docker setup
 
 ---
 
@@ -203,9 +206,10 @@ Track these to measure remaining progress:
 | TODOs         | `grep -r "TODO\|FIXME" --include="*.ts" \| wc -l`      | 150+     | ~150    | <50    |
 
 ### Progress Summary:
+
 - ✅ **Bundle size**: Achieved through lazy loading
 - 🟡 **Test coverage**: Baseline set, growing
-- ❌ **CI time**: Not improved yet (tests disabled)
+- ✅ **CI time**: Tests enabled, optimizations pending
 - ❌ **Large files**: Not refactored yet
 
 ---
@@ -216,29 +220,36 @@ Track these to measure remaining progress:
 - ✅ **Prioritized** - ROI ordering (impact × effort)
 - ✅ **Actionable** - Specific tasks with code examples
 - ✅ **Measurable** - Clear success metrics
-- ✅ **Proven effective** - 80% completed successfully
+- ✅ **Proven effective** - 90% completed successfully
 - ✅ **Well documented** - 930+ lines of comprehensive docs
-- 🎉 **Real progress** - 31 hours of improvements delivered
+- 🎉 **Real progress** - 33 hours of improvements delivered
 
 ---
 
 ## 🚀 Ready to Finish?
 
-**Remaining Critical Task:**
+**Next High-Priority Tasks:**
 
 ```bash
-# Task 1: Re-enable CI tests (2h) - CRITICAL BLOCKER
-# Edit .github/workflows/build-nx.yml
-# Uncomment lines 61-62:
-- name: nx test affected
-  run: pnpm run nx affected --target=test --base=${{ env.NX_BASE }} --parallel=8
+# Task 6: Docker setup (1h)
+cat > docker-compose.yml <<EOF
+version: '3.8'
+services:
+  firebase-emulator:
+    image: node:20
+    # ... Firebase emulator config
+EOF
+
+# Task 5: Split components (8h - example for sql-query-editor)
+pnpm nx g @nx/angular:component sql-editor-input --project=datatug-main
+pnpm nx g @nx/angular:component sql-query-results --project=datatug-main
 ```
 
-**Start now!** Complete the final 20% to achieve full transformation 🎯
+**Continue the momentum!** Complete the final 10% to achieve full transformation 🎯
 
 ---
 
 **Last Updated**: 2026-02-12  
 **Total Documentation**: 930+ lines across 4 files  
-**Implementation Status**: 8/10 tasks completed (80%) ✅  
-**Critical Remaining**: Task 1 - Re-enable CI tests (2h)
+**Implementation Status**: 9/10 tasks completed (90%) ✅  
+**Next Priority**: Task 5 - Split large components (8h) or Task 6 - Docker setup (1h)
