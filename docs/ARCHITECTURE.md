@@ -71,6 +71,7 @@ The architecture follows a modular design pattern with:
 ```mermaid
 graph TB
     subgraph UI["User Interfaces"]
+        direction LR
         WebApp["Web App (PWA)"]
         iOS["iOS App (Capacitor)"]
         Android["Android App (Capacitor)"]
