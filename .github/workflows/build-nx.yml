@@ -58,8 +58,96 @@ jobs:
         # BE AWARE: Adding PARALLEL options may cause build to pass when it should have been failed
         run: pnpm run nx affected --target=build,lint --base=${{ env.NX_BASE }} --parallel=8
 
-      #-   name: nx test
-      #    run: pnpm run nx test api
+      - name: Run tests with coverage
+        if: github.ref == 'refs/heads/main'
+        run: pnpm run nx run-many --target=test --all --coverage --parallel=4
+        continue-on-error: true
+
+      - name: Merge coverage reports
+        if: github.ref == 'refs/heads/main'
+        run: |
+          # Create merged coverage directory
+          mkdir -p coverage-merged
+          
+          # Find all coverage-summary.json files and merge them
+          find coverage -name "coverage-summary.json" -type f > coverage-files.txt
+          
+          if [ -s coverage-files.txt ]; then
+            # Create a simple merged summary by calculating total coverage
+            node -e "
+              const fs = require('fs');
+              const files = fs.readFileSync('coverage-files.txt', 'utf8').trim().split('\n').filter(Boolean);
+              let totalLines = 0, coveredLines = 0;
+              let totalStatements = 0, coveredStatements = 0;
+              let totalFunctions = 0, coveredFunctions = 0;
+              let totalBranches = 0, coveredBranches = 0;
+              
+              files.forEach(file => {
+                try {
+                  const data = JSON.parse(fs.readFileSync(file, 'utf8'));
+                  const total = data.total;
+                  if (total) {
+                    totalLines += total.lines.total || 0;
+                    coveredLines += total.lines.covered || 0;
+                    totalStatements += total.statements.total || 0;
+                    coveredStatements += total.statements.covered || 0;
+                    totalFunctions += total.functions.total || 0;
+                    coveredFunctions += total.functions.covered || 0;
+                    totalBranches += total.branches.total || 0;
+                    coveredBranches += total.branches.covered || 0;
+                  }
+                } catch (e) {
+                  console.error('Error processing', file, e.message);
+                }
+              });
+              
+              const result = {
+                total: {
+                  lines: { 
+                    total: totalLines, 
+                    covered: coveredLines, 
+                    pct: totalLines > 0 ? Math.round((coveredLines / totalLines) * 10000) / 100 : 0 
+                  },
+                  statements: { 
+                    total: totalStatements, 
+                    covered: coveredStatements, 
+                    pct: totalStatements > 0 ? Math.round((coveredStatements / totalStatements) * 10000) / 100 : 0 
+                  },
+                  functions: { 
+                    total: totalFunctions, 
+                    covered: coveredFunctions, 
+                    pct: totalFunctions > 0 ? Math.round((coveredFunctions / totalFunctions) * 10000) / 100 : 0 
+                  },
+                  branches: { 
+                    total: totalBranches, 
+                    covered: coveredBranches, 
+                    pct: totalBranches > 0 ? Math.round((coveredBranches / totalBranches) * 10000) / 100 : 0 
+                  }
+                }
+              };
+              
+              fs.writeFileSync('coverage-merged/coverage-summary.json', JSON.stringify(result, null, 2));
+              console.log('Merged coverage:', result.total.lines.pct + '% lines');
+            "
+          else
+            echo '{"total":{"lines":{"pct":0},"statements":{"pct":0},"functions":{"pct":0},"branches":{"pct":0}}}' > coverage-merged/coverage-summary.json
+          fi
+
+      - name: Generate coverage badge
+        if: github.ref == 'refs/heads/main'
+        uses: jaywcjlove/coverage-badges-cli@main
+        with:
+          source: coverage-merged/coverage-summary.json
+          output: .github/badges/coverage.svg
+
+      - name: Commit coverage badge
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .github/badges/coverage.svg
+          git diff --staged --quiet || git commit -m "Update coverage badge [skip ci]"
+          git push
 
       # We have firebase-tools in devDependencies
       #            -   uses: sneat-co/sneat-firebase/actions/install-firebase-tools@main
