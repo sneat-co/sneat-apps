@@ -64,7 +64,7 @@ jobs:
 
       - name: Run tests with coverage
         if: github.ref == 'refs/heads/main'
-        run: pnpm run nx run-many --target=test --all --coverage --parallel=4
+        run: pnpm run nx affected --target=test --base=${{ env.NX_BASE }} --coverage --parallel=4
 
       - name: Merge coverage reports
         if: github.ref == 'refs/heads/main' && success()
@@ -145,6 +145,10 @@ jobs:
 
       - name: Commit coverage badge
         if: github.ref == 'refs/heads/main' && success()
+        # NOTE: This step requires branch protection to allow workflow commits.
+        # In repository settings, under Branch protection rules for 'main':
+        # - Enable "Allow specified actors to bypass required pull requests"
+        # - Add "github-actions" app to the allowed actors
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
