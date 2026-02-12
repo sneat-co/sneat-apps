@@ -58,8 +58,8 @@ jobs:
         # BE AWARE: Adding PARALLEL options may cause build to pass when it should have been failed
         run: pnpm run nx affected --target=build,lint --base=${{ env.NX_BASE }} --parallel=8
 
-      #-   name: nx test
-      #    run: pnpm run nx test api
+      - name: nx test affected
+        run: pnpm run nx affected --target=test --base=${{ env.NX_BASE }} --parallel=8
 
       # We have firebase-tools in devDependencies
       #            -   uses: sneat-co/sneat-firebase/actions/install-firebase-tools@main
