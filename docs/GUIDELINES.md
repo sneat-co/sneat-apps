@@ -157,6 +157,22 @@ libs/                    # Shared libraries
 - Don't guess CLI syntax
 - The `nx-generate` skill handles generator discovery internally
 
+### Nx MCP Server
+
+AI agents have access to the **Nx MCP (Model Context Protocol) Server**, which provides deep workspace context:
+
+- **What it is**: A specialized server that gives AI agents structured access to Nx monorepo context
+- **Available tools**: `nx_workspace`, `nx_project_details`, `nx_docs`, `nx_generators`, `nx_generator_schema`, and more
+- **Configuration**: Set up in `.vscode/mcp.json`, `.claude/settings.local.json`, `.gemini/settings.json`, etc.
+- **Reference**: See [NX-MCP-TOOLS.md](./NX-MCP-TOOLS.md) for complete tool documentation
+
+**When to use MCP tools**:
+- `nx_workspace` - Understand workspace structure and project graph
+- `nx_project_details` - Get full resolved configuration for a project (don't read `project.json` directly)
+- `nx_docs` - Look up Nx documentation for complex configurations or unfamiliar features
+- `nx_generators` - Discover available generators before scaffolding
+- `nx_generator_schema` - Check generator options and parameters
+
 ---
 
 ## Coding Standards

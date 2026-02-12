@@ -67,6 +67,14 @@ pnpm nx e2e <app-name>
   - Angular applications use SCSS, ESLint, Vitest, and Playwright
   - Libraries are buildable by default
 
+### Nx MCP Server
+
+- GitHub Copilot has access to the Nx MCP (Model Context Protocol) server
+- MCP provides deep workspace context to AI agents for better code generation
+- Available MCP tools include: `nx_workspace`, `nx_project_details`, `nx_docs`, `nx_generators`, and more
+- See [docs/NX-MCP-TOOLS.md](../docs/NX-MCP-TOOLS.md) for complete tool reference
+- MCP is configured in `.vscode/mcp.json` for VSCode/GitHub Copilot integration
+
 ## Coding Standards
 
 ### TypeScript
