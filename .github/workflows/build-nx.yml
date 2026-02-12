@@ -14,6 +14,10 @@ on:
     paths-ignore:
       - 'docs/**'
 
+permissions:
+  contents: write  # Required for committing coverage badge
+  actions: read
+
 jobs:
   #    pnpm-cache:
   #        runs-on: ubuntu-latest
@@ -61,10 +65,9 @@ jobs:
       - name: Run tests with coverage
         if: github.ref == 'refs/heads/main'
         run: pnpm run nx run-many --target=test --all --coverage --parallel=4
-        continue-on-error: true
 
       - name: Merge coverage reports
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && success()
         run: |
           # Create merged coverage directory
           mkdir -p coverage-merged
@@ -134,20 +137,28 @@ jobs:
           fi
 
       - name: Generate coverage badge
-        if: github.ref == 'refs/heads/main'
-        uses: jaywcjlove/coverage-badges-cli@main
+        if: github.ref == 'refs/heads/main' && success()
+        uses: jaywcjlove/coverage-badges-cli@v1
         with:
           source: coverage-merged/coverage-summary.json
           output: .github/badges/coverage.svg
 
       - name: Commit coverage badge
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && success()
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add .github/badges/coverage.svg
-          git diff --staged --quiet || git commit -m "Update coverage badge [skip ci]"
-          git push
+          if git diff --staged --quiet; then
+            echo "No changes to coverage badge"
+          else
+            git commit -m "Update coverage badge [skip ci]"
+            git push || {
+              echo "Failed to push coverage badge update. This may be due to branch protection rules."
+              echo "Please ensure the workflow has write permissions to the repository."
+              exit 1
+            }
+          fi
 
       # We have firebase-tools in devDependencies
       #            -   uses: sneat-co/sneat-firebase/actions/install-firebase-tools@main
