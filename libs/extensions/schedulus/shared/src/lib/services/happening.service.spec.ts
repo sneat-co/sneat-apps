@@ -1,18 +1,17 @@
 import { TestBed } from '@angular/core/testing';
-import { HappeningService } from './happening.service';
+import { HappeningService, ICreateHappeningRequest } from './happening.service';
 import { SneatApiService } from '@sneat/api';
 import { ErrorLogger } from '@sneat/core';
 import { Firestore } from '@angular/fire/firestore';
-import { Injector } from '@angular/core';
 import { of } from 'rxjs';
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import * as spaceServices from '@sneat/space-services';
+import { describe, it, expect, beforeEach, vi, Mock } from 'vitest';
+import { HappeningStatus, IHappeningContext } from '@sneat/mod-schedulus-core';
 
 vi.mock('@sneat/space-services', () => ({
-  ModuleSpaceItemService: vi.fn().mockImplementation(() => ({
-    watchSpaceItemByIdWithSpaceRef: vi.fn(),
-    watchModuleSpaceItemsWithSpaceRef: vi.fn(),
-  })),
+  ModuleSpaceItemService: class {
+    watchSpaceItemByIdWithSpaceRef = vi.fn();
+    watchModuleSpaceItemsWithSpaceRef = vi.fn();
+  },
 }));
 
 vi.mock('@angular/fire/firestore', () => ({
@@ -22,8 +21,8 @@ vi.mock('@angular/fire/firestore', () => ({
 
 describe('HappeningService', () => {
   let service: HappeningService;
-  let sneatApiServiceMock: { post: any; delete: any };
-  let errorLoggerMock: any;
+  let sneatApiServiceMock: { post: Mock; delete: Mock };
+  let errorLoggerMock: { logErrorHandler: Mock };
 
   beforeEach(() => {
     sneatApiServiceMock = {
@@ -40,7 +39,6 @@ describe('HappeningService', () => {
         { provide: SneatApiService, useValue: sneatApiServiceMock },
         { provide: ErrorLogger, useValue: errorLoggerMock },
         { provide: Firestore, useValue: {} },
-        { provide: Injector, useValue: { get: vi.fn() } },
       ],
     });
     service = TestBed.inject(HappeningService);
@@ -49,28 +47,44 @@ describe('HappeningService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-// ... rest of the tests
 
   describe('statusFilter', () => {
     it('should return == operator for single status', () => {
       const filter = HappeningService.statusFilter(['active']);
-      expect(filter).toEqual({ field: 'status', operator: '==', value: 'active' });
+      expect(filter).toEqual({
+        field: 'status',
+        operator: '==',
+        value: 'active',
+      });
     });
 
     it('should return in operator for multiple statuses', () => {
-      const filter = HappeningService.statusFilter(['active', 'canceled' as any]);
-      expect(filter).toEqual({ field: 'status', operator: 'in', value: ['active', 'canceled'] });
+      const filter = HappeningService.statusFilter([
+        'active',
+        'canceled' as HappeningStatus,
+      ]);
+      expect(filter).toEqual({
+        field: 'status',
+        operator: 'in',
+        value: ['active', 'canceled'],
+      });
     });
   });
 
   describe('createHappening', () => {
     it('should trim title and call api', () => {
-      const request: any = {
+      const request = {
         happening: {
           title: '  Test Title  ',
           type: 'single',
+          slots: {
+            s1: {
+              repeats: 'once',
+              start: { time: '10:00' },
+            },
+          },
         },
-      };
+      } as unknown as ICreateHappeningRequest;
       sneatApiServiceMock.post.mockReturnValue(of({}));
 
       service.createHappening(request).subscribe();
@@ -81,12 +95,12 @@ describe('HappeningService', () => {
           happening: expect.objectContaining({
             title: 'Test Title',
           }),
-        })
+        }),
       );
     });
 
     it('should throw error if single happening has recurring slots', async () => {
-      const request: any = {
+      const request = {
         happening: {
           title: 'Test',
           type: 'single',
@@ -94,7 +108,7 @@ describe('HappeningService', () => {
             s1: { repeats: 'weekly' },
           },
         },
-      };
+      } as unknown as ICreateHappeningRequest;
 
       try {
         await new Promise((resolve, reject) => {
@@ -105,17 +119,19 @@ describe('HappeningService', () => {
         });
         throw new Error('Should have thrown');
       } catch (err) {
-        expect(err).toBe('Single occurrence happening cannot have recurring slots');
+        expect(err).toBe(
+          'Single occurrence happening cannot have recurring slots',
+        );
       }
     });
   });
 
   describe('deleteHappening', () => {
     it('should call delete api', () => {
-      const happening: any = {
+      const happening = {
         id: 'h1',
         space: { id: 's1' },
-      };
+      } as unknown as IHappeningContext;
       sneatApiServiceMock.delete.mockReturnValue(of({}));
 
       service.deleteHappening(happening).subscribe();
@@ -126,7 +142,7 @@ describe('HappeningService', () => {
         expect.objectContaining({
           spaceID: 's1',
           happeningID: 'h1',
-        })
+        }),
       );
     });
   });

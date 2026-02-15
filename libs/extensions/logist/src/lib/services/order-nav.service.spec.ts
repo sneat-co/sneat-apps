@@ -2,11 +2,12 @@ import { TestBed } from '@angular/core/testing';
 import { NavController } from '@ionic/angular/standalone';
 import { ErrorLogger } from '@sneat/core';
 import { OrderNavService } from './order-nav.service';
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, vi, Mock } from 'vitest';
+import { ILogistOrderContext } from '../dto';
 
 describe('OrderNavService', () => {
   let service: OrderNavService;
-  let navMock: any;
+  let navMock: Partial<Record<keyof NavController, Mock>>;
 
   beforeEach(() => {
     navMock = {
@@ -35,16 +36,16 @@ describe('OrderNavService', () => {
   });
 
   describe('goOrderPage', () => {
-    const order: any = {
+    const order = {
       id: 'o1',
       space: { id: 's1', type: 'team' },
-    };
+    } as unknown as ILogistOrderContext;
 
     it('should navigate forward to basic order page', async () => {
       await service.goOrderPage('forward', order);
       expect(navMock.navigateForward).toHaveBeenCalledWith(
         '/space/team/s1/order/o1',
-        { state: undefined }
+        { state: undefined },
       );
     });
 
@@ -52,7 +53,7 @@ describe('OrderNavService', () => {
       await service.goOrderPage('back', order);
       expect(navMock.navigateBack).toHaveBeenCalledWith(
         '/space/team/s1/order/o1',
-        { state: undefined }
+        { state: undefined },
       );
     });
 
@@ -61,23 +62,22 @@ describe('OrderNavService', () => {
         'forward',
         order,
         { path: 'edit' },
-        { debug: 'true' }
+        { debug: 'true' },
       );
       expect(navMock.navigateForward).toHaveBeenCalledWith(
         '/space/team/s1/order/o1/edit?debug=true',
-        { state: undefined }
+        { state: undefined },
       );
     });
 
     it('should include fragment', async () => {
-      await service.goOrderPage(
-        'forward',
-        order,
-        { path: 'view', fragment: 'section1' }
-      );
+      await service.goOrderPage('forward', order, {
+        path: 'view',
+        fragment: 'section1',
+      });
       expect(navMock.navigateForward).toHaveBeenCalledWith(
         '/space/team/s1/order/o1/view#section1',
-        { state: undefined }
+        { state: undefined },
       );
     });
   });

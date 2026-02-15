@@ -8,8 +8,6 @@ import { ProjectService } from './project.service';
 import { DatatugStoreServiceFactory } from '../repo/datatug-store-service-factory.service';
 
 describe('ProjectService', () => {
-  let service: ProjectService;
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
