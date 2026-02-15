@@ -25,12 +25,19 @@ export class MultiSelectorService {
       };
       this.modalController
         .create(modalOptions)
-        .then((modal) =>
+        .then((modal) => {
+          modal
+            .onDidDismiss()
+            .then((res) => resolve(res.data?.selectedItems || []))
+            .catch((err) => {
+              this.errorLogger.logError(err, 'Failed to handle modal dismiss');
+              reject(err);
+            });
           modal.present().catch((err) => {
             reject(err);
             this.errorLogger.logError('Failed to present modal');
-          }),
-        )
+          });
+        })
         .catch((err) => {
           this.errorLogger.logError(err, 'Failed to create modal');
           reject(err);

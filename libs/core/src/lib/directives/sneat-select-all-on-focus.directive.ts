@@ -6,19 +6,32 @@ import { Directive, ElementRef, HostListener, inject } from '@angular/core';
 export class SneatSelectAllOnFocusDirective {
   private readonly el = inject(ElementRef);
 
-  @HostListener('focus') // TODO: Fix - for some reason does not get focus events
-  public selectAll() {
-    console.log('SneatSelectAllOnFocusDirective.selectAll()');
-    const input = this.el.nativeElement.querySelector('input');
+  @HostListener('focus', ['$event.target'])
+  public selectAll(target?: HTMLElement) {
+    console.log('SneatSelectAllOnFocusDirective.selectAll()', target);
+    const nativeElement = this.el.nativeElement;
+    const input =
+      nativeElement instanceof HTMLInputElement ||
+      nativeElement instanceof HTMLTextAreaElement
+        ? nativeElement
+        : nativeElement.querySelector('input') ||
+          nativeElement.querySelector('textarea');
+
     if (input) {
-      if (input.setSelectionRange) {
+      if ('setSelectionRange' in input) {
         try {
-          return input.setSelectionRange(0, input.value.length); // select the text from start to end
+          input.setSelectionRange(0, (input as HTMLInputElement).value.length);
+          return;
         } catch {
-          console.warn('Number elements does not support setSelectionRange');
+          console.warn('Element does not support setSelectionRange');
         }
       }
-      input.select();
+      if (
+        input instanceof HTMLInputElement ||
+        input instanceof HTMLTextAreaElement
+      ) {
+        input.select();
+      }
     }
   }
 }

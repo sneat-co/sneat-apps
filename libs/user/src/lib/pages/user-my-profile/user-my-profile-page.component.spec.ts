@@ -17,9 +17,15 @@ describe('UserMyProfilePageComponent', () => {
       .compileComponents();
     fixture = TestBed.createComponent(UserMyProfilePageComponent);
     component = fixture.componentInstance;
+    fixture.detectChanges();
   }));
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should have default tab set to authentication', () => {
+    // @ts-expect-error accessing protected member
+    expect(component.tab).toBe('authentication');
   });
 });
