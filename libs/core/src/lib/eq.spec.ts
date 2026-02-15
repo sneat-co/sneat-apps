@@ -7,7 +7,7 @@ describe('eq', () => {
   });
 
   it('should return true if both are null', () => {
-    expect(eq(null as any, null as any)).toBe(true);
+    expect(eq(null as unknown, null as unknown)).toBe(true);
   });
 
   it('should return true if both are same string', () => {
@@ -19,6 +19,6 @@ describe('eq', () => {
   });
 
   it('should return true if one is null and other is undefined', () => {
-    expect(eq(null as any, undefined)).toBe(true);
+    expect(eq(null as unknown, undefined)).toBe(true);
   });
 });

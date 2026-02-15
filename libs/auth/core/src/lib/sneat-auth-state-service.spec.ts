@@ -1,21 +1,26 @@
 import { TestBed } from '@angular/core/testing';
 import { Auth } from '@angular/fire/auth';
 import { AnalyticsService, ErrorLogger } from '@sneat/core';
-import { SneatAuthStateService, AuthStatuses } from './sneat-auth-state-service';
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { firstValueFrom } from 'rxjs';
+import {
+  SneatAuthStateService,
+  AuthStatuses,
+} from './sneat-auth-state-service';
+import { describe, it, expect, beforeEach, vi, Mock } from 'vitest';
+import { firstValueFrom, Observer } from 'rxjs';
+import { User } from '@angular/fire/auth';
 
 describe('SneatAuthStateService', () => {
   let service: SneatAuthStateService;
-  let authMock: any;
-  let onIdTokenChangedCallback: any;
-  let onAuthStateChangedCallback: any;
+  let authMock: {
+    onIdTokenChanged: Mock;
+    onAuthStateChanged: Mock;
+    signOut: Mock;
+  };
+  let onAuthStateChangedCallback: Observer<User | null>;
 
   beforeEach(() => {
     authMock = {
-      onIdTokenChanged: vi.fn().mockImplementation((obs) => {
-        onIdTokenChangedCallback = obs;
-      }),
+      onIdTokenChanged: vi.fn(),
       onAuthStateChanged: vi.fn().mockImplementation((obs) => {
         onAuthStateChangedCallback = obs;
       }),
@@ -59,11 +64,11 @@ describe('SneatAuthStateService', () => {
       providerData: [],
     };
 
-    onAuthStateChangedCallback.next(fbUser);
+    onAuthStateChangedCallback.next(fbUser as unknown as User);
 
     const status = await firstValueFrom(service.authStatus);
     expect(status).toBe(AuthStatuses.authenticated);
-    
+
     const user = await firstValueFrom(service.authUser);
     expect(user?.uid).toBe('u1');
   });
