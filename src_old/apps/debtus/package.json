@@ -1,6 +1,6 @@
 {
 	"name": "debtus",
 	"devDependencies": {
-		"@capacitor/cli": "8.0.2"
+		"@capacitor/cli": "8.1.0"
 	}
 }
