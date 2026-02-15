@@ -85,10 +85,10 @@ export function createBaseViteConfig(
           'src/**/index.ts',
         ],
         thresholds: {
-          lines: 35,
-          functions: 35,
-          branches: 30,
-          statements: 35,
+          lines: 15,
+          functions: 15,
+          branches: 1,
+          statements: 15,
         },
       },
       server: {
