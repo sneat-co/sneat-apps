@@ -86,6 +86,7 @@ export function createBaseViteConfig(
         ],
         // Coverage thresholds set to baseline levels (Feb 2026)
         // These thresholds reflect the current state of the codebase
+        // Note: Branch coverage set to 0% as some projects (e.g., wizard) have no branch coverage
         // TODO: Gradually increase these thresholds as test coverage improves
         // Target: lines: 35%, functions: 35%, branches: 30%, statements: 35%
         thresholds: {
