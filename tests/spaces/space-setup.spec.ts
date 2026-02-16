@@ -24,7 +24,9 @@ test.describe('Space Setup', () => {
     await page.goto('/');
   });
 
-  // TODO: Flaky test - button not appearing consistently in CI
+  // TODO: Fix flaky test - investigate why 'Create new space' button (ion-fab-button) doesn't appear
+  // consistently in CI after signup. Possible solutions: increase timeout beyond 15s, add proper loading
+  // state checks, verify async operations complete before checking button, or check if element selector changed.
   test.skip('should create a new space', async ({ page }) => {
     // Intercept the create space request
     await page.route('**/v0/spaces/create_space', async (route) => {
