@@ -84,7 +84,8 @@ See [README-DEV-SETUP.md](./README-DEV-SETUP.md) for detailed setup instructions
 
 ### Build & Testing Tools
 
-- **Nx 22+** - Extensible monorepo tools
+- **pnpm** - Fast package manager - use isntead of `npm` for all package management tasks
+- **Nx 22+** - Extensible monorepo tools - use `nx` to build, test, lint, and manage the workspace
 - **Vitest** - Unit testing framework
 - **@analogjs/vitest-angular** - Angular testing utilities
 - **Playwright** - E2E testing
@@ -167,6 +168,7 @@ AI agents have access to the **Nx MCP (Model Context Protocol) Server**, which p
 - **Reference**: See [NX-MCP-TOOLS.md](./NX-MCP-TOOLS.md) for complete tool documentation
 
 **When to use MCP tools**:
+
 - `nx_workspace` - Understand workspace structure and project graph
 - `nx_project_details` - Get full resolved configuration for a project (don't read `project.json` directly)
 - `nx_docs` - Look up Nx documentation for complex configurations or unfamiliar features
@@ -263,6 +265,8 @@ export class MyComponent {
 ---
 
 ## Testing Guidelines
+
+Use `pnpm` and `nx` to run tests.
 
 ### Test Framework
 
