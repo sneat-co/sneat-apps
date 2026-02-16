@@ -75,7 +75,7 @@ export function createBaseViteConfig(
       coverage: {
         reportsDirectory: reportsDirectory || coverageDir,
         provider: 'v8' as const,
-        reporter: ['text', 'json', 'json-summary', 'html'],
+        reporter: ['text', 'json', 'json-summary', 'html', 'lcov'],
         all: true,
         include: ['src/**/*.ts'],
         exclude: [
