@@ -187,7 +187,7 @@ export class QueryEditorStateService {
     if (this.currentProject) {
       this.queriesService.getQuery(this.currentProject.ref, id).subscribe({
         next: (def) => onCompleted(def),
-        error: (err) => onCompleted(undefined, err),
+        error: () => onCompleted(),
       });
     }
   }

@@ -113,7 +113,7 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
     this.navService.goProject(projectContext);
   }
 
-  addProject(event: Event): void {
-    this.newProjectService.openNewProjectDialog(event);
+  addProject(): void {
+    this.newProjectService.openNewProjectDialog();
   }
 }

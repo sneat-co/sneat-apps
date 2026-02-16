@@ -71,8 +71,8 @@ export class MenuProjectSelectorComponent implements OnChanges {
     }
   }
 
-  public newProject(event: Event): void {
-    this.newProjectService.openNewProjectDialog(event);
+  public newProject(): void {
+    this.newProjectService.openNewProjectDialog();
   }
 
   switchProject(event: CustomEvent): void {

@@ -279,7 +279,7 @@ export class SpaceService {
     );
   }
 
-  private unsubscribe(): void {
+  private unsubscribe(_reason?: string): void {
     try {
       this.subscriptions.forEach((s) => s.unsubscribe());
       this.subscriptions = [];

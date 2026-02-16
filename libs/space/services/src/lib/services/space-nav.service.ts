@@ -149,11 +149,11 @@ export class SpaceNavService {
     params?: Record<string, unknown>,
   ): void => {
     params = { ...params, space: space.id };
+    this.analyticsService.logEvent(eventName, params);
     this.navForward(
       navController,
       url,
       { queryParams: params, state: { space } },
-      { name: eventName, params },
     );
   };
 }

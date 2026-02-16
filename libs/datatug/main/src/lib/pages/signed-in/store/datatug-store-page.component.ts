@@ -227,7 +227,7 @@ export class DatatugStorePageComponent
     this.nav.goProject(projectContext);
   }
 
-  create(event: Event): void {
-    this.newProjectService.openNewProjectDialog(event);
+  create(): void {
+    this.newProjectService.openNewProjectDialog();
   }
 }

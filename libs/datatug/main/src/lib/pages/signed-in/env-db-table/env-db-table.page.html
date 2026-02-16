@@ -28,7 +28,7 @@
   <ion-segment
     class="ion-margin-start ion-margin-end"
     [(ngModel)]="tab"
-    (ionChange)="tabChanged($event)"
+    (ionChange)="tabChanged()"
   >
     <ion-segment-button value="grid">
       <ion-label>Grid</ion-label>
@@ -95,7 +95,7 @@
       <ion-select
         [(ngModel)]="groupByFk"
         interface="popover"
-        (ionChange)="onGroupByFkChanged($event)"
+        (ionChange)="onGroupByFkChanged()"
       >
         @for (fk of groupByFks; track fk.name) {
         <ion-select-option [value]="fk.name">
