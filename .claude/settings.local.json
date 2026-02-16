@@ -34,7 +34,16 @@
       "Bash(npx vitest run:*)",
       "WebFetch(domain:nx.dev)",
       "mcp__plugin_nx_nx-mcp__nx_docs",
-      "WebFetch(domain:docs.github.com)"
+      "WebFetch(domain:docs.github.com)",
+      "Bash(sysctl:*)",
+      "Bash(time pnpm run nx test:*)",
+      "Bash(time pnpm run nx run-many:*)",
+      "Bash(pnpm run nx test:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(pnpm run:*)",
+      "Bash(ls:*)"
     ]
   },
   "enableAllProjectMcpServers": true,
