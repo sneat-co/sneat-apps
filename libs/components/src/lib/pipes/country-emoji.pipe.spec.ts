@@ -77,5 +77,40 @@ describe('Country pipes', () => {
       expect(pipe.transform('US')).toBe('United States');
       expect(pipe.transform('UA')).toBe('Ukraine');
     }));
+
+    it('should return countryID for unknown country', fakeAsync(() => {
+      const pipe = TestBed.inject(CountryTitle);
+      tick();
+      expect(pipe.transform('XX')).toBe('XX');
+    }));
+
+    it('should return empty string for undefined input', () => {
+      const pipe = TestBed.inject(CountryTitle);
+      expect(pipe.transform(undefined)).toBe('');
+    });
+  });
+
+  describe('Error handling', () => {
+    it('should handle load error gracefully', fakeAsync(() => {
+      const errorLoader = {
+        getCountriesByID: vi.fn().mockReturnValue(Promise.reject(new Error('Load failed'))),
+      };
+
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        providers: [
+          CountryFlagPipe,
+          {
+            provide: CountriesLoaderService,
+            useValue: errorLoader,
+          },
+        ],
+      });
+
+      const pipe = TestBed.inject(CountryFlagPipe);
+      tick();
+      // After error, should return the countryID itself
+      expect(pipe.transform('US')).toBe('US');
+    }));
   });
 });

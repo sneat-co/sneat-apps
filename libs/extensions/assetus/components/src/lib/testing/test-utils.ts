@@ -27,6 +27,8 @@ export const mockAssetService = {
   updateAsset: vi.fn(() => of({})),
   watchAssetByID: vi.fn(() => of({})),
   createAsset: vi.fn(() => of({})),
+  addVehicleRecord: vi.fn(() => of({})),
+  deleteAsset: vi.fn(() => of({})),
 };
 
 export const mockSneatApiService = {

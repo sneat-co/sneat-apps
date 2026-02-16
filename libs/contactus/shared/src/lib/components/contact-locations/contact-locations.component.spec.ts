@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 
 import { ContactLocationsComponent } from './contact-locations.component';
 
@@ -27,5 +27,69 @@ describe('ContactLocationsComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('ngOnChanges', () => {
+    it('should do nothing if space is not set', () => {
+      fixture.componentRef.setInput('$space', undefined as any);
+      component.contact = { id: 'contact-1', brief: {} };
+      
+      const setSpy = vi.spyOn(component['$contactLocations'], 'set');
+      
+      component.ngOnChanges({
+        contact: new SimpleChange(undefined, component.contact, false),
+      });
+
+      expect(setSpy).not.toHaveBeenCalled();
+    });
+
+    it('should set contactLocations when contact changes and space exists', () => {
+      const space = { id: 'test-space', teamID: 'team-1' };
+      fixture.componentRef.setInput('$space', space);
+      component.contact = { id: 'contact-1', brief: {} };
+
+      const setSpy = vi.spyOn(component['$contactLocations'], 'set');
+
+      component.ngOnChanges({
+        contact: new SimpleChange(undefined, component.contact, false),
+      });
+
+      expect(setSpy).toHaveBeenCalledWith([]);
+    });
+
+    it('should not update contactLocations if contact did not change', () => {
+      const setSpy = vi.spyOn(component['$contactLocations'], 'set');
+
+      component.ngOnChanges({});
+
+      expect(setSpy).not.toHaveBeenCalled();
+    });
+
+    it('should call getContactLocations and add space to results', () => {
+      const space = { id: 'test-space', teamID: 'team-1' };
+      fixture.componentRef.setInput('$space', space);
+      component.contact = { id: 'contact-1', brief: {} };
+
+      const getLocationsSpy = vi.spyOn(component as any, 'getContactLocations');
+      getLocationsSpy.mockReturnValue([
+        { id: 'loc-1', brief: { title: 'Location 1' } },
+      ]);
+
+      component.ngOnChanges({
+        contact: new SimpleChange(undefined, component.contact, false),
+      });
+
+      expect(getLocationsSpy).toHaveBeenCalled();
+      expect(component['$contactLocations']()).toEqual([
+        { id: 'loc-1', brief: { title: 'Location 1' }, space },
+      ]);
+    });
+  });
+
+  describe('getContactLocations', () => {
+    it('should return empty array', () => {
+      const result = component['getContactLocations']();
+      expect(result).toEqual([]);
+    });
   });
 });
