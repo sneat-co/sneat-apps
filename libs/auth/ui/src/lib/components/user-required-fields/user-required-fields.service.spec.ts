@@ -194,22 +194,16 @@ describe('UserRequiredFieldsService', () => {
       await expect(service.open()).rejects.toThrow(error);
     });
 
-    it('should log the dismissal value when modal is dismissed', async () => {
+    it('should resolve when modal is dismissed', async () => {
       // Arrange
-      const consoleSpy = vi.spyOn(console, 'log');
       const dismissalValue = { data: 'test-value' };
       mockModal.onDidDismiss.mockResolvedValue(dismissalValue);
 
       // Act
-      await service.open();
+      const result = await service.open();
 
       // Assert
-      expect(consoleSpy).toHaveBeenCalledWith(
-        'UserRequiredFieldsService.open(): modal dismissed:',
-        dismissalValue,
-      );
-
-      consoleSpy.mockRestore();
+      expect(result).toBe(true);
     });
 
     it('should handle multiple sequential open calls independently', async () => {

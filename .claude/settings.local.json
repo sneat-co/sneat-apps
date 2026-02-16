@@ -43,7 +43,12 @@
       "Bash(git commit:*)",
       "Bash(git push:*)",
       "Bash(pnpm run:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(git -C /Users/alexandertrakhimenok/projects/sneat/sneat-apps status)",
+      "Bash(git -C /Users/alexandertrakhimenok/projects/sneat/sneat-apps diff)",
+      "Bash(git -C /Users/alexandertrakhimenok/projects/sneat/sneat-apps log --oneline -5)",
+      "Bash(git -C /Users/alexandertrakhimenok/projects/sneat/sneat-apps add libs/datagrid/src/lib/components/data-grid/data-grid.component.ts libs/ui/src/lib/selector/select-from-list/select-from-list.component.html)",
+      "Bash(git -C:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

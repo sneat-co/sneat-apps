@@ -49,28 +49,24 @@ describe('AppComponentService', () => {
     expect(splashScreenMock.hide).toHaveBeenCalled();
   });
 
-  it('should log when statusBar is not provided', async () => {
+  it('should skip statusBar when it is not provided', async () => {
     TestBed.overrideProvider(StatusBar, { useValue: null });
-    const consoleLogSpy = vi.spyOn(console, 'log');
     service = TestBed.inject(AppComponentService);
 
     service.initializeApp();
     await platformMock.ready();
 
-    expect(consoleLogSpy).toHaveBeenCalledWith('statusBar is not provided');
-    consoleLogSpy.mockRestore();
+    expect(splashScreenMock.hide).toHaveBeenCalled();
   });
 
-  it('should log when splashScreen is not provided', async () => {
+  it('should skip splashScreen when it is not provided', async () => {
     TestBed.overrideProvider(SplashScreen, { useValue: null });
-    const consoleLogSpy = vi.spyOn(console, 'log');
     service = TestBed.inject(AppComponentService);
 
     service.initializeApp();
     await platformMock.ready();
 
-    expect(consoleLogSpy).toHaveBeenCalledWith('splashScreen is not provided');
-    consoleLogSpy.mockRestore();
+    expect(statusBarMock.styleDefault).toHaveBeenCalled();
   });
 
   it('should handle errors during platform initialization', async () => {

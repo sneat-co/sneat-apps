@@ -262,14 +262,10 @@ describe('SelectFromListComponent', () => {
     });
 
     it('should handle checkbox change', () => {
-      const consoleSpy = vi.spyOn(console, 'log');
+      const itemBefore = component.value;
       // @ts-expect-error accessing protected member
       component.onCheckboxChange({} as Event, mockItems[0]);
-      expect(consoleSpy).toHaveBeenCalledWith(
-        'SelectFromListComponent.onCheckboxChange()',
-        {},
-        mockItems[0],
-      );
+      expect(component.value).toBe(itemBefore);
     });
 
     it('should handle onChange with an ID that does not exist in items', () => {

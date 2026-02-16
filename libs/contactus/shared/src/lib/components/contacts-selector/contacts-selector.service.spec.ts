@@ -32,7 +32,6 @@ describe('ContactsSelectorService', () => {
       ],
     });
     service = TestBed.inject(ContactsSelectorService);
-    modalController = TestBed.inject(ModalController);
   });
 
   it('should be created', () => {
