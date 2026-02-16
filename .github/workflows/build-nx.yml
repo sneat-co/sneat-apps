@@ -68,10 +68,12 @@ jobs:
       - name: nx test affected (without coverage)
         if: github.ref != 'refs/heads/main'
         run: pnpm run nx affected --target=test --base=${{ env.NX_BASE }} --parallel=4
+        timeout-minutes: 5
 
       - name: Run tests with coverage (only on main branch)
         if: github.ref == 'refs/heads/main'
         run: pnpm run nx affected --target=test --base=${{ env.NX_BASE }} --coverage --parallel=4 --skip-nx-cache
+        timeout-minutes: 5
 
       - name: Merge coverage reports
         if: github.ref == 'refs/heads/main' && success()
