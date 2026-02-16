@@ -170,9 +170,6 @@ jobs:
           npx madge --circular --extensions ts ./libs
           npx madge --circular --extensions ts ./apps
 
-      - name: Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v4
-
       - name: nx build affected
         env:
           # https://stackoverflow.com/a/73429959/1975086
