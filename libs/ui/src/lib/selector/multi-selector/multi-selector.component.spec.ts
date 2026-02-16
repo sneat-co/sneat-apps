@@ -7,6 +7,10 @@ import { OverlayController } from '../selector-base.component';
 import { MultiSelectorComponent } from './multi-selector.component';
 import { ISelectItem } from '../selector-interfaces';
 
+// Suppress Ionic icon warnings - mock console methods before tests run
+vi.spyOn(console, 'error').mockImplementation(() => undefined);
+vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+
 describe('MultiSelectorComponent', () => {
   let component: MultiSelectorComponent;
   let fixture: ComponentFixture<MultiSelectorComponent>;
