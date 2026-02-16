@@ -87,7 +87,7 @@ jobs:
             echo "Merged $(wc -l < coverage-files.txt) coverage files"
             echo "COVERAGE_GENERATED=true" >> $GITHUB_ENV
           else
-            echo "No coverage files found"
+            echo "::notice::No coverage files found - skipping Coveralls upload"
             echo "COVERAGE_GENERATED=false" >> $GITHUB_ENV
           fi
 
