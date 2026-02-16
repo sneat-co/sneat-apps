@@ -105,11 +105,44 @@ jobs:
             echo "Found $(wc -l < coverage-files.txt) coverage files to merge:"
             cat coverage-files.txt
             
-            echo "Sample from first coverage file:"
+            echo "Sample from first coverage file (before path fix):"
+            head -30 $(head -1 coverage-files.txt)
+            
+            # Fix paths in each lcov file to be relative to workspace root
+            echo "Fixing paths in coverage files..."
+            while IFS= read -r lcov_file; do
+              # Extract the project path from the coverage file path
+              # e.g., coverage/libs/components/lcov.info -> libs/components
+              project_path=$(dirname "$lcov_file" | sed 's|^coverage/||')
+              
+              echo "Processing $lcov_file with project path: $project_path"
+              
+              # Create a temp file with fixed paths
+              temp_file="${lcov_file}.tmp"
+              
+              # Process the file: prepend project_path to SF: lines that don't start with it
+              awk -v prefix="$project_path/" '
+                /^SF:/ {
+                  # Extract the path after SF:
+                  path = substr($0, 4)
+                  # If path does not start with prefix or is absolute, prepend prefix
+                  if (substr(path, 1, 1) != "/" && index(path, prefix) != 1) {
+                    print "SF:" prefix path
+                  } else {
+                    print $0
+                  }
+                  next
+                }
+                { print }
+              ' "$lcov_file" > "$temp_file"
+              
+              mv "$temp_file" "$lcov_file"
+            done < coverage-files.txt
+            
+            echo "Sample from first coverage file (after path fix):"
             head -30 $(head -1 coverage-files.txt)
             
             # Merge all lcov files into one
-            # Using simple concatenation as lcov tool may not be available
             cat $(cat coverage-files.txt) > coverage-merged/lcov.info
             
             # Check if merged file has actual coverage data
