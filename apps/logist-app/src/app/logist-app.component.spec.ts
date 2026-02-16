@@ -25,6 +25,13 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
+  it('should handle missing ionSplitPane in ngAfterViewInit', () => {
+    const fixture = TestBed.createComponent(LogistAppComponent);
+    const app = fixture.componentInstance;
+    app.ionSplitPane = null as any;
+    expect(() => app.ngAfterViewInit()).not.toThrow();
+  });
+
   it('should not disable split pane when hash is empty', () => {
     const fixture = TestBed.createComponent(LogistAppComponent);
     const app = fixture.componentInstance;
