@@ -4,7 +4,7 @@ A suit of open source apps that help in work & personal life.
 
 ---
 
-## [![Build and Test](https://github.com/sneat-co/sneat-apps/actions/workflows/build-nx.yml/badge.svg)](https://github.com/sneat-co/sneat-apps/actions/workflows/build-nx.yml)
+## [![Build and Test](https://github.com/sneat-co/sneat-apps/actions/workflows/build-nx.yml/badge.svg)](https://github.com/sneat-co/sneat-apps/actions/workflows/build-nx.yml) [![Coverage Status](https://coveralls.io/repos/github/sneat-co/sneat-apps/badge.svg?branch=main)](https://coveralls.io/github/sneat-co/sneat-apps?branch=main)
 
 ## Apps for family & personal life
 
