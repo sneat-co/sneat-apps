@@ -70,7 +70,7 @@ jobs:
 
       - name: Run tests with coverage
         if: github.ref == 'refs/heads/main'
-        run: pnpm run nx affected --target=test --base=${{ env.NX_BASE }} --coverage --parallel=4
+        run: pnpm run nx affected --target=test --base=${{ env.NX_BASE }} --coverage --parallel=4 --skip-nx-cache
 
       - name: Merge coverage reports
         if: github.ref == 'refs/heads/main' && success()
@@ -85,13 +85,14 @@ jobs:
             # Merge all lcov files into one
             cat $(cat coverage-files.txt) > coverage-merged/lcov.info
             echo "Merged $(wc -l < coverage-files.txt) coverage files"
+            echo "COVERAGE_GENERATED=true" >> $GITHUB_ENV
           else
             echo "No coverage files found"
-            touch coverage-merged/lcov.info
+            echo "COVERAGE_GENERATED=false" >> $GITHUB_ENV
           fi
 
       - name: Upload coverage to Coveralls
-        if: github.ref == 'refs/heads/main' && success()
+        if: github.ref == 'refs/heads/main' && success() && env.COVERAGE_GENERATED == 'true'
         uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
