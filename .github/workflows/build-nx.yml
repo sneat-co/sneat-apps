@@ -162,6 +162,9 @@ jobs:
 
       - uses: ./.github/actions/pnpm
 
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v4
+
       - name: Check circular dependencies
         run: |
           npx madge --circular --extensions ts ./libs
