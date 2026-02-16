@@ -140,7 +140,7 @@ export class MileAgeDialogComponent {
     };
 
     this.assetService.addVehicleRecord(request).subscribe({
-      next: (id) => {
+      next: (_id) => {
         this.modalCtrl
           .dismiss()
           .catch(

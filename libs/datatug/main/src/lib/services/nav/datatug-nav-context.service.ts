@@ -76,8 +76,7 @@ export class DatatugNavContextService {
   );
   public readonly currentEnv = this.$currentEnv.asObservable().pipe(
     distinctUntilChanged((x, y) => (!x && !y) || x?.id === y?.id),
-    tap((v) =>
-    ),
+    tap((v) => console.log('currentEnv changed:', v)),
   );
 
   private readonly $currentEnvDb = new BehaviorSubject<
@@ -124,6 +123,7 @@ export class DatatugNavContextService {
         if (this.navEndSubscription) {
           return;
         }
+        console.log(
           'DatatugNavContextService.constructor() => app:',
           app.appCode,
         );

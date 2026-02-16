@@ -149,9 +149,8 @@ export class ContactsSelectorComponent
   protected readonly $spaceRef = computeSpaceRefFromSpaceContext(this.$space);
   protected readonly $spaceID = computed(() => {
     const spaceID = this.$spaceRef().id;
-      `ContactsSelectorComponent.$spaceID(spaceID=${spaceID})`,
-      this.spaceIDChangesCount,
-    );
+    // `ContactsSelectorComponent.$spaceID(spaceID=${spaceID})`,
+    // this.spaceIDChangesCount,
     if (spaceID && !this.spaceIDChangesCount) {
       this.spaceIDChangesCount += 1;
       // this.setupEffects();
@@ -308,9 +307,8 @@ export class ContactsSelectorComponent
       )
       .subscribe((contacts) => {
         this.allContacts = contacts;
-          'ContactSelectorComponent.watchContactBriefs() => contacts:',
-          contacts,
-        );
+        // 'ContactSelectorComponent.watchContactBriefs() => contacts:',
+        // contacts,
         this.setContacts();
       });
   }
@@ -375,16 +373,15 @@ export class ContactsSelectorComponent
     // if (this.$contacts && !this.$contacts.length) {
     // 	this.contactTab = 'new';
     // }
-      'setContacts',
-      this.allContacts,
-      this.contactRoleID,
-      this.contactType,
-      this.$contacts,
-      this.parentType,
-      this.parentRole,
-      this.parentContactID,
-      this.parentContacts,
-    );
+    // 'setContacts',
+    // this.allContacts,
+    // this.contactRoleID,
+    // this.contactType,
+    // this.$contacts,
+    // this.parentType,
+    // this.parentRole,
+    // this.parentContactID,
+    // this.parentContacts,
   }
 
   private readonly getParentItem = (c: IContactContext): ISelectItem => ({
@@ -409,9 +406,8 @@ export class ContactsSelectorComponent
   };
 
   protected onParentContactIDChanged(contactID: string): void {
-      'ContactsSelectorComponent.onParentContactSelected()',
-      contactID,
-    );
+    // 'ContactsSelectorComponent.onParentContactSelected()',
+    // contactID,
     const parentContact = this.parentContacts?.find((c) => c.id === contactID);
     this.onParentContactChanged(parentContact);
   }
@@ -562,8 +558,7 @@ export class ContactsSelectorComponent
         c.id === contact.id ? { ...c, isChecked: !c.isChecked } : c,
       ),
     );
-      'ContactsSelectorComponent.contactClicked() => $selectedContacts:',
-      this.$selectedContacts(),
-    );
+    // 'ContactsSelectorComponent.contactClicked() => $selectedContacts:',
+    // this.$selectedContacts(),
   };
 }

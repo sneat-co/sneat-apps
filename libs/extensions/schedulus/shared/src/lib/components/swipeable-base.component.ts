@@ -101,10 +101,6 @@ export abstract class SwipeableBaseComponent extends SneatBaseComponent {
   }
 
   protected onDateChanged(changed: IDateChanged): void {
-    const changedToLog = { ...changed, date: dateToIso(changed.date) };
-      `${this.className} extends SwipeableBaseComponent.onDateChanged(), changed:`,
-      changedToLog,
-    );
     // this.parity = this.parity === 'odd' ? 'even' : 'odd';
     if (!this.oddSlide || !this.evenSlide) {
       return;

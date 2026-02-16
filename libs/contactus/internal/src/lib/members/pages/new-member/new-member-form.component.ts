@@ -232,7 +232,8 @@ export class NewMemberFormComponent
     this.$isSubmitting.set(true);
     this.addMemberForm.disable();
     this.memberService.createMember(request).subscribe({
-      next: (member) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      next: (_member) => {
         // console.log('member created:', member);
         if (this.hasNavHistory) {
           this.navController

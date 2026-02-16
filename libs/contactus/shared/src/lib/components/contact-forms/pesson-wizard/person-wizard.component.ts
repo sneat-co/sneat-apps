@@ -38,7 +38,6 @@ import {
   IPersonRequirements,
   IPhone,
   IRelatedPerson,
-  NewContactBaseDboAndSpaceRef,
 } from '@sneat/contactus-core';
 import {
   getRelatedItemIDs,
@@ -273,7 +272,7 @@ export class PersonWizardComponent
     );
   }
 
-  protected onContactChanged(contact: NewContactBaseDboAndSpaceRef): void {
+  protected onContactChanged(): void {
     // this.setRelatedPerson(
     // 	{ ...this.newPerson, petKind },
     // 	{ name: 'petKind', hasValue: !!petKind },
@@ -360,9 +359,8 @@ export class PersonWizardComponent
   }
 
   protected onRelatedAsChanged(rolesToTarget: IRelationshipRoles): void {
-      'PersonWizardState.onRelatedAsChanged() rolesToTarget=',
-      rolesToTarget,
-    );
+    // 'PersonWizardState.onRelatedAsChanged() rolesToTarget=',
+    // rolesToTarget,
 
     const itemID = this.userSpaceBrief.$userContactID();
     if (!itemID) {
@@ -460,10 +458,9 @@ export class PersonWizardComponent
     for (;;) {
       const i = this.formOrder.findIndex((step) => step.id === currentStepID);
       if (i < 0) {
-          `openNext have not found ${currentStepID} in this.formOrder=${this.formOrder.join(
-            ',',
-          )}`,
-        );
+        // `openNext have not found ${currentStepID} in this.formOrder=${this.formOrder.join(
+        //   ',',
+        // )}`,
         return;
       }
       if (i === this.formOrder.length - 1) {

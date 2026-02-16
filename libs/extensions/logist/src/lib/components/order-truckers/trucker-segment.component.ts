@@ -106,6 +106,7 @@ export class TruckerSegmentComponent implements OnChanges {
 
     this.deleting = true;
     this.orderService.deleteSegments(request).subscribe({
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
       next: () => {},
       error: (err) => {
         this.deleting = false;

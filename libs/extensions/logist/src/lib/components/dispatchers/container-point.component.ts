@@ -144,9 +144,12 @@ export class ContainerPointComponent implements OnChanges {
         this.departSegment,
       );
     }
+    console.log(
       'ContainerPointComponent.ngOnChanges',
       'order',
       this.order,
+    );
+    console.log(
       'container',
       this.container,
       'shippingPoint',
@@ -207,6 +210,7 @@ export class ContainerPointComponent implements OnChanges {
     }
   }
 
-  onFreightLoadChange(freightLoad?: IFreightLoad): void {
+  onFreightLoadChange(_freightLoad?: IFreightLoad): void {
+    // Empty function intentionally left blank
   }
 }

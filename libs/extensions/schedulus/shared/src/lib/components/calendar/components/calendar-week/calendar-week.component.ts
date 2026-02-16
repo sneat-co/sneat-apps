@@ -48,10 +48,6 @@ export class CalendarWeekComponent implements OnChanges {
   protected readonly $weekdays = signal(createWeekdays());
 
   ngOnChanges(changes: SimpleChanges): void {
-      'CalendarWeekComponent.ngOnChanges()',
-      this.$week().startDate,
-      changes,
-    );
     if (changes['$week']) {
       this.onWeekInputChanged(changes['$week']);
     }

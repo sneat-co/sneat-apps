@@ -47,7 +47,13 @@ export abstract class BaseListItemPage extends BaseListPage {
   }
 
   // NO_tslint:disable-next-line:prefer-function-over-method
-  protected onQueryParamsChanged(queryParams: ParamMap): void {}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  protected onQueryParamsChanged(_queryParams: ParamMap): void {
+    // Override in subclasses if needed
+  }
 
-  protected onListItemInfoChanged(listItemInfo?: IListItemBrief): void {}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  protected onListItemInfoChanged(_listItemInfo?: IListItemBrief): void {
+    // Override in subclasses if needed
+  }
 }

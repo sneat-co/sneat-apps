@@ -30,9 +30,6 @@ export abstract class SelectorBaseService<T = ISelectItem> {
     options = {
       ...options,
       onSelected: async (items?: T[]): Promise<void> => {
-          'SelectorBaseService.selectMultipleInModal().onSelected =>',
-          items,
-        );
         if (onSelected) {
           await onSelected(items);
         }
@@ -58,7 +55,7 @@ export abstract class SelectorBaseService<T = ISelectItem> {
     await modal.present();
 
     // 🔹 Track when the modal is dismissed
-    const { role, data } = await modal.onDidDismiss();
+    await modal.onDidDismiss();
 
     return result;
   }

@@ -512,6 +512,7 @@ describe('Timer', () => {
 
     it('should handle unknown operation', async () => {
       try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         await lastValueFrom(timer.setTimerState('unknown' as any));
         throw new Error('Should have thrown error');
       } catch (err) {

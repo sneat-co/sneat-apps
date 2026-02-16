@@ -49,6 +49,7 @@ export class MenuStoreSelectorComponent implements OnDestroy, OnChanges {
         ),
       )
       .subscribe((storeId: string) => {
+        console.log(
           'MenuStoreSelectorComponent => external store change:',
           storeId,
         );
@@ -69,6 +70,7 @@ export class MenuStoreSelectorComponent implements OnDestroy, OnChanges {
   }
 
   switchStore(event: CustomEvent): void {
+    console.log(
       'MenuStoreSelectorComponent.switchStore(event: CustomEvent)',
       this.externalChange,
       event,

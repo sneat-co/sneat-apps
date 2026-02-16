@@ -84,7 +84,7 @@ export class ForeignKeyCardComponent implements OnChanges {
           this.projectService
             .getFull(this.tableNavParams.project.ref)
             .subscribe({
-              next: (project) => {
+              next: (_) => {
                 // console.log('ForeignKeyCardComponent => project:', project);
                 // const env = project.environments.find(v => v.id === this.tableNavParams.env);
                 // const db = env.dbServer.find(v => v.id === this.tableNavParams.db);

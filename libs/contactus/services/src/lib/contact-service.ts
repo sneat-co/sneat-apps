@@ -210,6 +210,7 @@ export class ContactService extends ModuleSpaceItemService<
   public removeSpaceMember(
     request: IContactRequestWithOptionalMessage,
   ): Observable<ISpaceContext> {
+    console.log(
       `removeTeamMember(spaceID=${request.spaceID}, contactID=${request.contactID})`,
     );
     try {

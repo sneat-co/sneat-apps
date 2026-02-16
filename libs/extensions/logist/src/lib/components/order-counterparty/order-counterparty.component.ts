@@ -108,7 +108,7 @@ export class OrderCounterpartyComponent implements OnChanges {
     this.orderChange.emit(order);
   }
 
-  protected onRefNumberChanged(event: Event): void {
+  protected onRefNumberChanged(_event: Event): void {
     this.isRefNumberChanged =
       (this.counterparty?.refNumber || '') !== this.refNumber;
     if (this.counterparty) {

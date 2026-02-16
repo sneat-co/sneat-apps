@@ -1,4 +1,4 @@
-import { newEmptyHappeningContext, IHappeningContext } from './happening-context';
+import { newEmptyHappeningContext } from './happening-context';
 import { ISpaceContext } from '@sneat/space-models';
 
 describe('happening-context', () => {

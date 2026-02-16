@@ -111,7 +111,7 @@ export class SlotContextMenuComponent extends WithSpaceInput {
     super();
   }
 
-  protected assign(event: Event, to: 'member' | 'contact'): void {
+  protected assign(event: Event, _to: 'member' | 'contact'): void {
     event.stopPropagation();
     event.preventDefault();
     const space = this.$space();
@@ -140,9 +140,7 @@ export class SlotContextMenuComponent extends WithSpaceInput {
       onRemoved: this.onContactRemoved,
     };
     this.popoverController.dismiss().catch(console.error);
-    this.contactsSelectorService
-      .selectMultipleContacts(options)
-      .then((selectedContacts) => {});
+    this.contactsSelectorService.selectMultipleContacts(options);
   }
 
   protected move(): void {

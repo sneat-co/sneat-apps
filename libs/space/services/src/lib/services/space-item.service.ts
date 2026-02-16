@@ -35,8 +35,6 @@ abstract class SpaceItemBaseService<Brief, Dbo extends Brief> {
     if (!this.collectionName) {
       throw new Error('collectionName is required');
     }
-      `SpaceItemBaseService.constructor() collectionName=${this.collectionName}`,
-    );
     this.sfs = new SneatFirestoreService<Brief, Dbo>(this.injector);
   }
 
@@ -50,8 +48,6 @@ abstract class SpaceItemBaseService<Brief, Dbo extends Brief> {
     space: ISpaceRef,
     itemID: string,
   ): Observable<ISpaceItemNavContext<Brief, Dbo2>> {
-      `SpaceItemBaseService.watchSpaceItemByIdWithSpaceRef(space=${space.id}, itemID=${itemID}), collectionName=${this.collectionName}`,
-    );
 
     if (!space.id) {
       throw new Error('spaceID is required');

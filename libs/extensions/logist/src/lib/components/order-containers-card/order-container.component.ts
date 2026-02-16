@@ -121,6 +121,7 @@ export class OrderContainerComponent implements OnChanges {
             (s) => s.containerID === containerID,
           )
         : undefined;
+      console.log(
         'containerID',
         containerID,
         'containerSegments',

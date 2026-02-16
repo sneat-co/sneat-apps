@@ -73,8 +73,6 @@ export class HappeningSlotModalComponent
   @Output() readonly happeningSlotChange =
     new EventEmitter<IHappeningSlotWithID>();
 
-  constructor() {}
-
   onTimingChanged(timing: ITiming): void {
     if (timing == emptyHappeningSlot) {
       return;

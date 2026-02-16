@@ -97,9 +97,8 @@ export class FamilyMembersComponent
   private readonly processContactusSpaceDbo = (
     contactusSpaceDbo?: IContactusSpaceDbo | null,
   ): void => {
-      'MembersPageComponent.processContactusSpaceDbo()',
-      contactusSpaceDbo,
-    );
+    // 'MembersPageComponent.processContactusSpaceDbo()',
+    // contactusSpaceDbo,
     const space = this.$space();
     this.members = zipMapBriefsWithIDs(contactusSpaceDbo?.contacts).map((m) =>
       Object.assign(m, { space }),

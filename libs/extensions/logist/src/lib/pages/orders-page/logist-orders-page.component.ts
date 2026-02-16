@@ -81,6 +81,7 @@ export class LogistOrdersPageComponent extends SpaceBaseComponent {
         .pipe(takeUntil(this.destroyed$))
         .subscribe({
           next: (orders) => {
+            console.log(
               'LogistOrdersPageComponent.subscribeForOrders() => orders:',
               orders,
             );

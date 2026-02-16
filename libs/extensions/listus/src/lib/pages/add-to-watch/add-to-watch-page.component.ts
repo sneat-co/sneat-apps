@@ -100,6 +100,7 @@ export class AddToWatchPageComponent
     if (!movie) {
       throw new Error('Missing required parameter item');
     }
+    console.log(
       `AddToWatchPage.addListItem(item={id:${movie.id}, title: ${movie.title})`,
       'this.shortListId',
       this.shortListId,

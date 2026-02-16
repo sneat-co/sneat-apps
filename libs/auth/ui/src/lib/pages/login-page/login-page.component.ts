@@ -147,7 +147,6 @@ export class LoginPageComponent extends SneatBaseComponent {
   }
 
   protected async loginWith(provider: AuthProviderID) {
-    const logPrefix = `LoginPageComponent.loginWith(provider=${provider})`;
     this.signingWith.set(provider);
     try {
       await this.authStateService.signInWith(provider);

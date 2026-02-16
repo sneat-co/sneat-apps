@@ -150,8 +150,8 @@ export class LogistSpaceSettingsComponent
     });
     this.isSubmitting = true;
     this.logistSpaceService.setLogistSpaceSettings(request).subscribe({
-      next: () => {
-      },
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      next: () => {},
       error: (err) => {
         this.errorLogger.logError(err, 'Failed to set logist team settings.');
         this.isSubmitting = false;
@@ -183,6 +183,7 @@ export class LogistSpaceSettingsComponent
         .subscribe((contact) => {
           this.address = contact?.dbo?.address || this.address;
           this.roles = contact?.dbo?.roles || [];
+          console.log(
             'LogistTeamSettingsComponent.ngOnChanges(): roles:',
             this.roles,
           );

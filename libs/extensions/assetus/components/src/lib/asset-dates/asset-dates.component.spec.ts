@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AssetDatesComponent } from './asset-dates.component';
 import {
+  AssetCategory,
   IAssetDbo,
   IAssetDboBase,
   IAssetVehicleExtra,
@@ -79,7 +80,7 @@ describe('AssetDatesComponent', () => {
 
     it('should set empty items for other categories', () => {
       const otherAsset: IAssetDboBase = {
-        category: 'document' as any,
+        category: 'document' as AssetCategory,
         title: 'My Document',
       } as IAssetDboBase;
 

@@ -39,11 +39,9 @@ import { LogistOrderService } from '../../services';
 function debounce<T>(field: string, o: Subject<T>): Observable<T> {
   return o.asObservable().pipe(
     distinctUntilChanged(),
-    tap((value) =>
-    ),
+    tap((value) => console.log(`debounce ${field} (before debounce):`, value)),
     debounceTime(1000),
-    tap((value) =>
-    ),
+    tap((value) => console.log(`debounce ${field} (after debounce):`, value)),
   );
 }
 
@@ -141,19 +139,19 @@ export class ContainerEndpointComponent implements OnChanges {
       });
   }
 
-  protected onScheduledDateChanged(event: Event): void {
+  protected onScheduledDateChanged(_event: Event): void {
     this.$scheduledDate.next(this.scheduledDate.value || '');
   }
 
-  protected onScheduledTimeChanged(event: Event): void {
+  protected onScheduledTimeChanged(_event: Event): void {
     this.$scheduledTime.next(this.scheduledTime.value || '');
   }
 
-  protected onActualDateChanged(event: Event): void {
+  protected onActualDateChanged(_event: Event): void {
     this.$actualDate.next(this.actualDate.value || '');
   }
 
-  protected onActualTimeChanged(event: Event): void {
+  protected onActualTimeChanged(_event: Event): void {
     this.$actualTime.next(this.actualTime.value || '');
   }
 
@@ -173,6 +171,7 @@ export class ContainerEndpointComponent implements OnChanges {
       this.endpoint = this.endpointSide
         ? this.containerPoint?.[this.endpointSide]
         : undefined;
+      console.log(
         'ContainerEndpointComponent.ngOnChanges()',
         this.endpointSide,
         this.endpoint,
@@ -236,6 +235,7 @@ export class ContainerEndpointComponent implements OnChanges {
     if (value === this.endpoint?.[field]) {
       return;
     }
+    console.log(
       `ContainerEndpointComponent.setDateField(${field}, ${value})`,
       `endpoint.${field}`,
       this.endpoint?.[field],
@@ -251,6 +251,7 @@ export class ContainerEndpointComponent implements OnChanges {
     if (value === this.endpoint?.[field]) {
       return;
     }
+    console.log(
       `ContainerEndpointComponent.setDateField(${field}, ${value})`,
       `endpoint.${field}`,
       this.endpoint?.[field],
@@ -264,6 +265,7 @@ export class ContainerEndpointComponent implements OnChanges {
   ): void {
     this.orderService.setContainerEndpointFields(request).subscribe({
       next: () => {
+        console.log(
           'ContainerEndpointComponent.setContainerEndpointFields() success',
         );
       },

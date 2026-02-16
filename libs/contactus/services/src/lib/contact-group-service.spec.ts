@@ -5,7 +5,7 @@ import { firstValueFrom } from 'rxjs';
 import { ContactGroupService } from './contact-group-service';
 
 vi.mock('@angular/fire/firestore', async (importOriginal) => {
-  const actual = await importOriginal<any>();
+  const actual = await importOriginal<typeof import('@angular/fire/firestore')>();
   return {
     ...actual,
     collection: vi.fn().mockReturnValue({}),

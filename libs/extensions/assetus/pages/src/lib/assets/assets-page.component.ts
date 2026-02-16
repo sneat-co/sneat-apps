@@ -149,6 +149,7 @@ export class AssetsPageComponent extends AssetsBasePage implements OnInit {
         .pipe(takeUntil(this.destroyed$))
         .subscribe({
           next: (assets: IIdAndBrief<IAssetBrief>[]) => {
+            console.log(
               'AssetsPageComponent.watchSpaceAssets() => assets:',
               assets,
             );
@@ -156,6 +157,7 @@ export class AssetsPageComponent extends AssetsBasePage implements OnInit {
           },
           error: (err) => {
             const errStr: string = err.toString();
+            console.error(
               'AssetsPageComponent.watchSpaceAssets() => error:',
               errStr,
             );

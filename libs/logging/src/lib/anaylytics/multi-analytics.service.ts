@@ -8,6 +8,7 @@ const prefix = 'MultiAnalyticsService.';
 
 export class MultiAnalyticsService implements IAnalyticsService {
   constructor(private readonly as: readonly IAnalyticsService[]) {
+    console.log(
       prefix +
         `.constructor() as=[${as.map((a) => a.constructor.name).join(',')}]`,
     );

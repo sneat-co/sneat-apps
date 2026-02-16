@@ -10,7 +10,7 @@ import { ContactusSpaceService } from './contactus-space.service';
 import { SneatUserService } from '@sneat/auth-core';
 
 vi.mock('@angular/fire/firestore', async (importOriginal) => {
-  const actual = await importOriginal<any>();
+  const actual = await importOriginal<typeof import('@angular/fire/firestore')>();
   return {
     ...actual,
     collection: vi.fn().mockReturnValue({}),
@@ -46,7 +46,7 @@ describe('MemberService', () => {
         inviteID: 'invite1',
         pin: '1234',
         member: { id: 'member1' },
-      } as any;
+      } as unknown;
       const token = 'firebase-token';
       const mockResponse = { id: 'member1', title: 'John Doe' };
 
@@ -70,7 +70,7 @@ describe('MemberService', () => {
         inviteID: 'invite1',
         pin: '1234',
         member: { id: 'member1' },
-      } as any;
+      } as unknown;
 
       apiService.setApiAuthToken = vi.fn();
       apiService.post = vi.fn().mockReturnValue(of({}));
@@ -86,12 +86,12 @@ describe('MemberService', () => {
       const apiService = TestBed.inject(SneatApiService);
       const request = {
         spaceID: 'space1',
-        role: 'contributor' as any,
+        role: 'contributor' as unknown,
         names: {
           firstName: '  John  ',
           lastName: '  Doe  ',
         },
-      } as any;
+      } as unknown;
       const mockResponse = { id: 'member1' };
 
       apiService.post = vi.fn().mockReturnValue(of(mockResponse));

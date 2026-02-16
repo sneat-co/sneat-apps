@@ -110,7 +110,8 @@ export class AssetPageComponent extends AssetBasePage {
     //
   }
 
-  addService(type: LiabilityServiceType): void {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  addService(_type: LiabilityServiceType): void {
     if (!this.asset) {
       throw new Error('!this.asset');
     }

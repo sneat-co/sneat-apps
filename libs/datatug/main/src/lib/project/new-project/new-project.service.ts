@@ -8,7 +8,7 @@ export class NewProjectService {
   private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
   private readonly popoverController = inject(PopoverController);
 
-  public openNewProjectDialog(event: Event): void {
+  public openNewProjectDialog(_: Event): void {
     this.popoverController
       .create({
         component: NewProjectFormComponent,

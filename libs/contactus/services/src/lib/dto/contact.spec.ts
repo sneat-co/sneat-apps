@@ -83,7 +83,7 @@ describe('Contact DTO Validators', () => {
       const request: IUpdateContactRequest = {
         spaceID: 'space1',
         contactID: 'contact1',
-        ageGroup: 'adult' as any,
+        ageGroup: 'adult' as unknown,
       };
 
       expect(() => validateUpdateContactRequest(request)).not.toThrow();

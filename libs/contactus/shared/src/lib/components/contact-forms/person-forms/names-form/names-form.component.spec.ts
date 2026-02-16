@@ -47,6 +47,7 @@ describe('NamesFormComponent', () => {
     it('should generate full name from first and last name', () => {
       component.firstName.setValue('John');
       component.lastName.setValue('Doe');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const fullName = (component as any).generateFullName();
       expect(fullName).toBe('John Doe');
     });
@@ -55,6 +56,7 @@ describe('NamesFormComponent', () => {
       component.firstName.setValue('John');
       component.middleName.setValue('Michael');
       component.lastName.setValue('Doe');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const fullName = (component as any).generateFullName();
       expect(fullName).toBe('John Michael Doe');
     });
@@ -62,6 +64,7 @@ describe('NamesFormComponent', () => {
     it('should generate full name from first and middle name', () => {
       component.firstName.setValue('John');
       component.middleName.setValue('Michael');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const fullName = (component as any).generateFullName();
       expect(fullName).toBe('John Michael');
     });
@@ -69,12 +72,14 @@ describe('NamesFormComponent', () => {
     it('should generate full name from middle and last name', () => {
       component.middleName.setValue('Michael');
       component.lastName.setValue('Doe');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const fullName = (component as any).generateFullName();
       expect(fullName).toBe('Michael Doe');
     });
 
     it('should return empty string if only one name part is provided', () => {
       component.firstName.setValue('John');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const fullName = (component as any).generateFullName();
       expect(fullName).toBe('');
     });
@@ -82,11 +87,13 @@ describe('NamesFormComponent', () => {
     it('should handle extra whitespace', () => {
       component.firstName.setValue('  John  ');
       component.lastName.setValue('  Doe  ');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const fullName = (component as any).generateFullName();
       expect(fullName).toBe('John Doe');
     });
 
     it('should return empty string when all fields are empty', () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const fullName = (component as any).generateFullName();
       expect(fullName).toBe('');
     });

@@ -6,7 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Mock } from 'vitest';
 
 vi.mock('@sentry/angular', () => ({
-  captureException: vi.fn().mockImplementation((...args: any[]) => {
+  captureException: vi.fn().mockImplementation(() => {
     return 'event-id';
   }),
   showReportDialog: vi.fn(),
@@ -166,7 +166,7 @@ describe('ErrorLoggerService', () => {
     });
 
     it('should throw error if e is null (results in crash/throw)', () => {
-      expect(() => service.showError(null as any)).toThrow();
+      expect(() => service.showError(null as unknown as string)).toThrow();
     });
 
     it('should throw error for negative duration', () => {

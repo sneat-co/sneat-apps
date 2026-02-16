@@ -253,13 +253,12 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
     }
   }
 
-  onNameChanged(event: Event): void {
-      'onNameChanged()',
-      this.isFullNameChanged,
-      this.firstName.value,
-      this.lastName.value,
-      event,
-    );
+  onNameChanged(): void {
+    // 'onNameChanged()',
+    // this.isFullNameChanged,
+    // this.firstName.value,
+    // this.lastName.value,
+    // event,
     if (!this.isFullNameChanged) {
       const fullName = this.generateFullName();
 
@@ -308,12 +307,11 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
     return '';
   }
 
-  protected onFullNameChanged(event: Event): void {
-      'onFullNameChanged()',
-      this.firstName.value,
-      this.lastName.value,
-      event,
-    );
+  protected onFullNameChanged(): void {
+    // 'onFullNameChanged()',
+    // this.firstName.value,
+    // this.lastName.value,
+    // event,
     if (this.isFullNameChanged) {
       this.setName();
     } else {

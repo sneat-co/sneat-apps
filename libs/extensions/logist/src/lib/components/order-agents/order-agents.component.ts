@@ -133,6 +133,7 @@ export class AgentRoleMenuComponent {
     this.contactSelectorService
       .selectSingleInModal(selectorOptions)
       .then((contact) => {
+        console.log(
           'OrderAgentsComponent.openContactSelector() contact:',
           contact,
         );

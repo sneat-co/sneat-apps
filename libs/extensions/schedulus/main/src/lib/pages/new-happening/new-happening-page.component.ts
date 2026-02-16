@@ -71,6 +71,7 @@ export class NewHappeningPageComponent extends CalendarBasePage {
       .pipe(this.takeUntilDestroyed(), first())
       .subscribe({
         next: (queryParams) => {
+          console.log(
             'NewHappeningPage.constructor() => queryParams:',
             queryParams,
           );

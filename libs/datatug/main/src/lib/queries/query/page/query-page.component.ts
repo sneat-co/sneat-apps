@@ -374,6 +374,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
   private trackQueryParams(): void {
     this.route.queryParamMap.subscribe({
       next: (queryParams) => {
+        console.log(
           'QueryPageComponent.trackQueryParams(): queryParams:',
           queryParams,
         );
@@ -476,6 +477,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
   }
 
   catalogChanged(event: CustomEvent): void {
+    console.log(
       'catalogChanged',
       event.detail.value,
       this.activeEnv?.catalogId,

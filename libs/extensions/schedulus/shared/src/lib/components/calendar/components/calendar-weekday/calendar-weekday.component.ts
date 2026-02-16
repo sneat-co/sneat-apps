@@ -92,8 +92,6 @@ export class CalendarWeekdayComponent extends SneatBaseComponent {
 
   protected goNewHappening(type: HappeningType): void {
     const space = this.$space();
-      `ScheduleWeekdayComponent.goNewHappening() type=${type}, space=${JSON.stringify(space)}`,
-    );
     if (!space) {
       return;
     }

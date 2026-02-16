@@ -36,6 +36,7 @@ export class EmojisLoaderService {
               item[1]
                 .filter((kw) => !!kw)
                 .forEach((kw) => {
+                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                   this.emojiByKeyword![kw] = item[0];
                 });
             });

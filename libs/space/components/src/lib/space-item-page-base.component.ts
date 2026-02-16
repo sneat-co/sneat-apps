@@ -47,12 +47,6 @@ export abstract class SpaceItemPageBaseComponent<
   }
 
   protected setItemContext(item?: ISpaceItemNavContext<Brief, Dbo>): void {
-      `${this.className}.SpaceItemBaseComponent.setItemContext(itemID=${item?.id})`,
-      item,
-      {
-        ...this.$item(),
-      },
-    );
     const prevItem = this.$item();
     if (item && prevItem?.id === item?.id && item !== prevItem) {
       item = {
@@ -85,9 +79,6 @@ export abstract class SpaceItemPageBaseComponent<
   }
 
   protected trackRouteParamItemID(paramMap$: Observable<ParamMap>): void {
-      'SpaceItemBaseComponent.trackRouteParamItemID()',
-      this.itemName,
-    );
     if (!this.itemName) {
       return;
     }
@@ -138,21 +129,20 @@ export abstract class SpaceItemPageBaseComponent<
             this.spaceIDChanged$.pipe(
               // TODO: the below filter is a workaround for a bug in our implementation
               filter((spaceID) => spaceID !== space.id),
-              tap((spaceID) =>
-                  `cancelling item subscription as spaceID changed to "${spaceID}"`,
-                ),
-              ),
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              tap((_spaceID) => {
+                // Space ID changed
+              }),
             ),
           ),
           takeUntil(
             itemID$.pipe(
-              tap((itemID) =>
-                  `cancelling item subscription as itemID changed to "${itemID}"`,
-                ),
-              ),
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              tap((_itemID) => {
+                // Item ID changed
+              }),
             ),
           ),
-          tap((item) => console.log('watchItemChanges() => item:', item)),
         )
         .subscribe({
           next: (item) => {

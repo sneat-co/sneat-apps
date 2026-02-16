@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { swipeableDay, swipeableWeek, Parity } from './swipeable-ui';
+import { swipeableDay, swipeableWeek, Parity as _Parity } from './swipeable-ui';
 import { CalendarDataProvider } from '../services/calendar-data-provider';
 import { Subject } from 'rxjs';
 import { showVirtualSlide, hideVirtualSlide } from '@sneat/components';

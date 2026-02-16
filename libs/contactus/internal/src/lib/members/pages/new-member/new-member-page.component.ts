@@ -166,6 +166,7 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
         )
         .subscribe({
           next: (spaceType) => {
+            console.log(
               'NewMemberPageComponent: spaceTypeChanged$ =>',
               spaceType,
             );

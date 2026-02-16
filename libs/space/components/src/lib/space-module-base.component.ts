@@ -31,5 +31,6 @@ export abstract class SpaceModuleBaseComponent<
       });
   }
 
-  protected onSpaceModuleDboChanged(dbo: Dbo | null) {}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
+  protected onSpaceModuleDboChanged(_dbo: Dbo | null) {}
 }

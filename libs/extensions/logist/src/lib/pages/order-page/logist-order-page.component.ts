@@ -135,7 +135,7 @@ export class LogistOrderPageComponent
     await popover.present(event as MouseEvent);
   }
 
-  onTabChanged(event: Event): void {
+  onTabChanged(_event: Event): void {
     try {
       // this.changeDetector?.markForCheck();
       let { href } = location;

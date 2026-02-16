@@ -23,7 +23,7 @@ export class OrderPrintMenuComponent {
   @Input({ required: true }) space?: ISpaceContext;
   @Input() order?: ILogistOrderContext;
 
-  print(event: Event, path: string): void {
+  print(event: Event, _path: string): void {
     // TODO: can we dismiss popover declaratively?
     event.stopPropagation();
     this.popoverController

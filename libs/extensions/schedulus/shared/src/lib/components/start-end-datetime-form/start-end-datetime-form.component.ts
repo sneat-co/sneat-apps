@@ -183,12 +183,6 @@ export class StartEndDatetimeFormComponent implements OnChanges {
   }
 
   private onDateChanged(): void {
-      'StartEndDatetimeFormComponent.onDateChanged()',
-      'date:',
-      this.date,
-      'startDate:',
-      this.startDate.value,
-    );
 
     if (this.mode === 'single') {
       if (!this.startDate.dirty) {
@@ -328,12 +322,7 @@ export class StartEndDatetimeFormComponent implements OnChanges {
     }
   }
 
-  private emitTimingChanged(from: string): void {
-    if (!from) {
-        `StartEndDatetimeFormComponent.emitSlotChanged(from=${from})`,
-        this.timing,
-      );
-    }
+  private emitTimingChanged(_from: string): void {
     this.timingChange.emit(this.timing);
   }
 
@@ -355,9 +344,6 @@ export class StartEndDatetimeFormComponent implements OnChanges {
   }
 
   protected onStartDateChanged(): void {
-      'StartEndDatetimeFormComponent.onStartDateChanged()',
-      this.startDate.value,
-    );
     let startDate = this.startDate.value || '';
     if (startDate.includes('T')) {
       startDate = startDate.split('T')[0];
@@ -396,9 +382,6 @@ export class StartEndDatetimeFormComponent implements OnChanges {
         start: { ...this.timing.start, date: this.startDate.value },
       };
     }
-      'StartEndDatetimeFormComponent.onStartTimeChanged() =>',
-      this.timing,
-    );
     if (
       isValidaTimeString(this.startTime.value as string) &&
       this.duration.value
@@ -435,9 +418,6 @@ export class StartEndDatetimeFormComponent implements OnChanges {
     const endMin = toStr(startMin + durationMin);
     const endTime = `${endHour}:${endMin}`;
     this.timing = { ...this.timing, end: { time: endTime } };
-      'StartEndDatetimeFormComponent.setEndTime() => endTime:',
-      endTime,
-    );
     this.endTime.setValue(endTime);
     this.emitTimingChanged('setEndTime');
   }

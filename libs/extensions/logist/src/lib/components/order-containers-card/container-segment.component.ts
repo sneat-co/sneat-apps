@@ -124,7 +124,7 @@ export class ContainerSegmentComponent implements OnChanges {
     }
   }
 
-  onDepartDateChanged($event: Event): void {
+  onDepartDateChanged(_$event: Event): void {
     if (
       this.departDate.value &&
       (!this.arriveDate.value || this.arriveDate.value < this.departDate.value)
@@ -133,7 +133,7 @@ export class ContainerSegmentComponent implements OnChanges {
     }
   }
 
-  onArriveDateChanged($event: Event): void {
+  onArriveDateChanged(_$event: Event): void {
     if (
       this.departDate.value &&
       this.arriveDate.value &&
@@ -203,7 +203,7 @@ export class ContainerSegmentComponent implements OnChanges {
     this.setForm();
   }
 
-  saveChanges(event: Event): void {
+  saveChanges(_event: Event): void {
     if (!this.order || !this.fromPoint) {
       return;
     }

@@ -1,10 +1,12 @@
 import { MultiSelectorService } from './multi-selector.service';
 import { ISelectItem } from '../selector-interfaces';
+import { ErrorLogger } from '@sneat/core';
+import { ModalController } from '@ionic/angular/standalone';
 
 describe('MultiSelectorService', () => {
   let service: MultiSelectorService;
-  let errorLoggerMock: any;
-  let modalControllerMock: any;
+  let errorLoggerMock: ErrorLogger;
+  let modalControllerMock: ModalController;
 
   beforeEach(() => {
     errorLoggerMock = {

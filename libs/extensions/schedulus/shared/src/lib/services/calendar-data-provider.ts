@@ -205,7 +205,7 @@ export class CalendarDataProvider {
     // 	.pipe(ignoreElements());
   }
 
-  public getDays(...weekdays: CalendarDay[]): Observable<CalendarDay> {
+  public getDays(..._weekdays: CalendarDay[]): Observable<CalendarDay> {
     // console.log('SpaceDaysProvider.getDays()', weekdays);
     return EMPTY;
     // if (!weekdays?.length) {
@@ -266,7 +266,7 @@ export class CalendarDataProvider {
     // return weekdaysLoaded ? merge(weekdaysLoaded, loadWeekdays$) : loadWeekdays$;
   }
 
-  public loadForWeek(d: Date): void {
+  public loadForWeek(_d: Date): void {
     // console.log('SpaceDaysProvider.loadForWeek()', d);
   }
 
@@ -305,7 +305,7 @@ export class CalendarDataProvider {
   // }
 
   private loadEvents(
-    ...dates: Date[]
+    ..._dates: Date[]
   ): Observable<{ dateKey: string; events: ISlotUIContext[] }> {
     // console.log('loadEvents()', dates);
     return EMPTY;

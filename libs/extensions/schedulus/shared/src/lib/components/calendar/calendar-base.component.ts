@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import { IContactusSpaceDboAndID } from '@sneat/contactus-core';
 import { ContactusSpaceService } from '@sneat/contactus-services';
-import { dateToIso } from '@sneat/core';
 import { UiState } from '@sneat/dto';
 import { WithSpaceInput } from '@sneat/space-services';
 import { takeUntil, filter } from 'rxjs';
@@ -116,8 +115,6 @@ export abstract class CalendarBaseComponent
   }
 
   protected setDay(source: string, d: Date): void {
-      `CalendarBaseComponent.setDay(source=${source}), date=${dateToIso(d)}`,
-    );
     if (!d) {
       return;
     }

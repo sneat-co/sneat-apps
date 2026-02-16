@@ -61,10 +61,11 @@ export class SneatUserService {
 
   private _unsubscribeFromUserDoc?: Unsubscribe;
 
-  private unsubscribeFromUserDoc(from: string) {
+  private unsubscribeFromUserDoc(_from: string) {
     if (this._unsubscribeFromUserDoc) {
-        'SneatUserService.unsubscribeFromUserDoc() called from ' + from,
-      );
+      // console.log(
+      //   'SneatUserService.unsubscribeFromUserDoc() called from ' + _from,
+      // );
       this._unsubscribeFromUserDoc();
       this._unsubscribeFromUserDoc = undefined;
     }
@@ -123,8 +124,9 @@ export class SneatUserService {
   }
 
   private watchUserRecord(uid: string, authState: ISneatAuthState): void {
-      `SneatUserService.watchUserRecord(uid=${uid}): Loading user record...`,
-    );
+    // console.log(
+    //   `SneatUserService.watchUserRecord(uid=${uid}): Loading user record...`,
+    // );
     this.unsubscribeFromUserDoc('whatUserRecord()');
 
     // TODO: Remove - setTimeout() not needed but trying to troubleshoot user record issue
@@ -136,9 +138,10 @@ export class SneatUserService {
           () =>
             onSnapshot(userDocRef, {
               next: (userDocSnapshot) => {
-                  `SneatUserService.watchUserRecord(uid=${uid}) => userDocSnapshot:`,
-                  userDocSnapshot,
-                );
+                // console.log(
+                //   `SneatUserService.watchUserRecord(uid=${uid}) => userDocSnapshot:`,
+                //   userDocSnapshot,
+                // );
                 this.onAuthStateChanged(authState);
                 this.userDocChanged(userDocSnapshot, authState);
               },
@@ -175,13 +178,14 @@ export class SneatUserService {
     userDocSnapshot: DocumentSnapshot<IUserRecord>,
     authState: ISneatAuthState,
   ): void {
-      'SneatUserService.userDocChanged() => userDocSnapshot.exists:',
-      userDocSnapshot.exists(),
-      'authState:',
-      authState,
-      'userDocSnapshot:',
-      userDocSnapshot,
-    );
+    // console.log(
+    //   'SneatUserService.userDocChanged() => userDocSnapshot.exists:',
+    //   userDocSnapshot.exists(),
+    //   'authState:',
+    //   authState,
+    //   'userDocSnapshot:',
+    //   userDocSnapshot,
+    // );
     if (userDocSnapshot.ref.id !== this.uid) {
       console.error(
         'userDocSnapshot.ref.id !== this.uid - Should always be equal as we unsubscribe if uid changes',
@@ -215,7 +219,8 @@ export class SneatUserService {
       request = { ...request, names: { fullName: authUser.displayName } };
     }
     this.userRecordService.initUserRecord(request).subscribe({
-      next: (userDto) => {
+      next: (_userDto) => {
+        // User record created successfully - no additional action needed
       },
       error: this.errorLogger.logErrorHandler('failed to create user record'),
     });

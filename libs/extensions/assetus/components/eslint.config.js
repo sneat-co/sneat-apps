@@ -9,6 +9,13 @@ module.exports = [
     files: ['**/*.ts'],
     rules: {
       '@angular-eslint/prefer-standalone': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+        },
+      ],
     },
   },
 ];

@@ -2,6 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AssetContactsGroupComponent } from './asset-contacts-group.component';
+import { ContactType } from '@sneat/contactus-core';
 
 describe('AssetContactsGroupComponent', () => {
   let component: AssetContactsGroupComponent;
@@ -36,7 +37,7 @@ describe('AssetContactsGroupComponent', () => {
     });
 
     it('should return the contact relation as-is for other types', () => {
-      component.contactRelation = 'owner' as any;
+      component.contactRelation = 'owner' as ContactType;
       expect(component.title).toBe('owner');
     });
 
@@ -58,7 +59,7 @@ describe('AssetContactsGroupComponent', () => {
     });
 
     it('should return "Add" prefix for other types', () => {
-      component.contactRelation = 'owner' as any;
+      component.contactRelation = 'owner' as ContactType;
       expect(component.addTitle).toBe('Addowner');
     });
 

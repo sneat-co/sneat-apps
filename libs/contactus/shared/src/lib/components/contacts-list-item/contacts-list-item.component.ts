@@ -159,7 +159,9 @@ export class ContactsListItemComponent extends SneatBaseComponent {
           contactIDs: [contact.id],
         })
         .subscribe({
-          next: () => {},
+          next: () => {
+            // Success - no action needed
+          },
           error: this.errorLogger.logError,
         });
     }

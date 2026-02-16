@@ -104,6 +104,7 @@ export class QueryEditorStateService {
   }
 
   openQuery(id: string): void {
+    console.log(
       `QueryEditorStateService.openQuery(${id})`,
       this.currentProject,
     );
@@ -147,7 +148,7 @@ export class QueryEditorStateService {
   }
 
   private loadQuery(id: string): void {
-    const onCompleted = (def?: IQueryDef, error?: unknown) => {
+    const onCompleted = (def?: IQueryDef, _?: unknown) => {
       const activeQuery = $state.value?.activeQueries.find((q) => q.id === id);
       if (!activeQuery) {
         return;
@@ -237,6 +238,7 @@ export class QueryEditorStateService {
   private updateQueryStatesWithEnvs(
     state: IQueryEditorState,
   ): IQueryEditorState {
+    console.log(
       'updateQueryStatesWithEnvs',
       state.activeQueries,
       this.currentProject?.summary?.environments,

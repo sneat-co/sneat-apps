@@ -144,6 +144,7 @@ export class DispatcherComponent implements OnChanges {
     this.contactSelectorService
       .selectSingleInModal(selectorOptions)
       .then((contact) => {
+        console.log(
           'OrderCounterpartiesCardComponent.openContactSelector() contact:',
           contact,
         );
@@ -235,8 +236,8 @@ export class DispatcherComponent implements OnChanges {
     };
     this.deleting = true;
     this.ordersService.deleteCounterparty(request).subscribe({
-      next: () => {
-      },
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      next: () => {},
       error: (err) => {
         this.errorLogger.logError(err, 'Failed to delete dispatcher');
         this.deleting = false;

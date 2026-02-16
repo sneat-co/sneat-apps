@@ -79,7 +79,7 @@ export class NewProjectFormComponent implements ViewDidEnter {
       .createNewProject(storeId, { title: this.title, userIDs: [] })
       .subscribe({
         next: (projectId) => {
-          const m = 'New project ID: ' + projectId;
+          console.log('New project ID: ' + projectId);
           this.popoverController
             .dismiss()
             .catch(

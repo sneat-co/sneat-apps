@@ -182,8 +182,8 @@ export class HappeningFormComponent
 
   protected isToDo = false;
 
-  private readonly onHappeningTitleChanged = (): void => {
-  };
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  private readonly onHappeningTitleChanged = (): void => {};
 
   constructor() {
     super();
@@ -213,10 +213,6 @@ export class HappeningFormComponent
   protected onHappeningTypeChanged(event: Event): void {
     const happeningType = (event as CustomEvent).detail.value as HappeningType;
     let happening = this.$happening();
-      'HappeningFormComponent.onHappeningTypeChanged()',
-      happeningType,
-      happening,
-    );
     happening = {
       ...happening,
       brief: {
@@ -253,7 +249,7 @@ export class HappeningFormComponent
     // }
   }
 
-  protected onTitleEnter(event: Event): void {
+  protected onTitleEnter(_event: Event): void {
     this.changeDetectorRef.markForCheck();
   }
 
@@ -289,7 +285,7 @@ export class HappeningFormComponent
   // 	}
   // }
 
-  protected onSlotAdded(slot: IHappeningSlot): void {
+  protected onSlotAdded(_slot: IHappeningSlot): void {
     this.happeningForm.markAllAsTouched();
   }
 

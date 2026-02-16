@@ -163,7 +163,7 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
 
   private goProjItemPage(
     page: ProjectItemType,
-    projItem: IProjItemBrief,
+    _: IProjItemBrief,
   ): void {
     // console.log('goProjItemPage()', page, projItem, this.projectRef);
     if (!this.projectRef) {

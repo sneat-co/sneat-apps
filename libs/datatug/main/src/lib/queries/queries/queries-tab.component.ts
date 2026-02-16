@@ -218,6 +218,7 @@ export class QueriesTabComponent {
   private loadQueries(): void {
     this.dataTugNavContextService.currentProject.subscribe({
       next: (currentProject) => {
+        console.log(
           'QueryPage.constructor() => currentProject:',
           currentProject,
         );
@@ -228,6 +229,7 @@ export class QueriesTabComponent {
         if (this.queriesSub) {
           this.queriesSub.unsubscribe();
         }
+        console.log(
           'QueriesPage.constructor() => currentProject:',
           currentProject,
         );

@@ -104,7 +104,10 @@ export class DocumentsPageComponent extends SpaceItemsBaseComponent {
     }
   }
 
-  public goType(type: string) {}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public goType(_type: string) {
+    // TODO: Implement navigation to document type
+  }
 
   public goDoc(doc: IAssetDocumentContext) {
     if (!this.space) {

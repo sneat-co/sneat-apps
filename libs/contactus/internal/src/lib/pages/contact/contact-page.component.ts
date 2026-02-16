@@ -69,7 +69,10 @@ export class ContactPageComponent extends ContactBasePage {
       .watchChildContacts(space, contactID)
       .pipe(this.takeUntilDestroyed())
       .subscribe({
-        next: (children) => {},
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        next: (_children) => {
+          // Handle children if needed
+        },
         error: this.errorLogger.logErrorHandler('failed to get child contacts'),
       });
   }

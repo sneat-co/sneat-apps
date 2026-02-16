@@ -7,7 +7,6 @@ import { IContactSelectorOptions } from './contacts-selector.interfaces';
 
 describe('ContactsSelectorService', () => {
   let service: ContactsSelectorService;
-  let modalController: ModalController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -47,6 +46,7 @@ describe('ContactsSelectorService', () => {
     };
 
     const selectMultipleInModalSpy = vi.spyOn(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       service as any,
       'selectMultipleInModal',
     );

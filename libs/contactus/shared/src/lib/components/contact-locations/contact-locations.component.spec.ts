@@ -31,6 +31,7 @@ describe('ContactLocationsComponent', () => {
 
   describe('ngOnChanges', () => {
     it('should do nothing if space is not set', () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       fixture.componentRef.setInput('$space', undefined as any);
       component.contact = { id: 'contact-1', brief: {} };
       
@@ -70,6 +71,7 @@ describe('ContactLocationsComponent', () => {
       fixture.componentRef.setInput('$space', space);
       component.contact = { id: 'contact-1', brief: {} };
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const getLocationsSpy = vi.spyOn(component as any, 'getContactLocations');
       getLocationsSpy.mockReturnValue([
         { id: 'loc-1', brief: { title: 'Location 1' } },

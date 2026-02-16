@@ -36,7 +36,7 @@ export abstract class OrderPageBaseComponent extends SpaceBaseComponent {
     this.onOrderChanged(order);
   }
 
-  protected onOrderChanged(order: ILogistOrderContext): void {
+  protected onOrderChanged(_order: ILogistOrderContext): void {
     // override this method to handle order changes
   }
 }

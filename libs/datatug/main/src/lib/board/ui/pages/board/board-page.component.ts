@@ -128,6 +128,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
           if (p) {
             [this.storeId, this.projectId] = p.split('/');
           }
+          console.log(
             'this.store, this.projectId',
             p,
             this.storeId,

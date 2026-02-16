@@ -117,10 +117,6 @@ export class SneatFirestoreService<Brief, Dbo extends Brief> {
   ): Observable<INavContext<Brief, Dbo2>[]> {
     return this.watchSnapshotsByFilter(collectionRef, queryArgs).pipe(
       map((querySnapshot) => {
-          'watchByFilter() => querySnapshot: ',
-          querySnapshot,
-          querySnapshot.docs,
-        );
         return querySnapshot.docs.map(this.docSnapshotToContext.bind(this));
       }),
     );

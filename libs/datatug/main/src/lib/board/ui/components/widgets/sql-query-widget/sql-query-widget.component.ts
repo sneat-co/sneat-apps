@@ -107,6 +107,7 @@ export class SqlQueryWidgetComponent implements OnChanges, OnDestroy {
           });
       } else {
         // TODO: temporary debug thing
+        console.log(
           `Not issuing SELECT query as env=${this.data.env}, db=${this.data.db}`,
         );
       }

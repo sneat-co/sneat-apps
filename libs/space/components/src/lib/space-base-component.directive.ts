@@ -158,7 +158,6 @@ export abstract class SpaceBaseComponent
 
     effect(() => {
       const spaceID = this.$spaceID();
-      const logMsgPrefix = `${this.className}.SpaceBaseComponent.constructor() => effect($spaceID=${spaceID})`;
 
       if (spaceID === prevSpaceID) {
         // This seems to be a bag or a strange feature in Angular signals?

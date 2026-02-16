@@ -142,7 +142,9 @@ export class EntityEditPageComponent implements OnDestroy {
     }
   }
 
-  saveEntityChanges(): void {}
+  saveEntityChanges(): void {
+    // TODO: Implement entity changes save logic
+  }
 
   async addProperty(event: Event) {
     const popover = await this.popoverCtrl.create({

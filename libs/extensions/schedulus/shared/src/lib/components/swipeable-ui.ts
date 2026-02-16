@@ -53,7 +53,6 @@ export function swipeableDay(
     changed: IDateChanged,
     animationState: VirtualSlideAnimationsStates,
   ) => {
-    const changedToLog = { ...changed, date: dateToIso(changed.date) };
     // console.log(`swipeableDay.setDate(), changed:`, changedToLog);
     const { date } = changed;
     const v: SwipeableDay = {

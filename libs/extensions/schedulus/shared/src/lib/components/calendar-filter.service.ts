@@ -18,8 +18,6 @@ export class CalendarFilterService {
     .asObservable()
     .pipe(distinctUntilChanged());
 
-  constructor() {}
-
   next(filter: ICalendarFilter): void {
     if (this.filter$.value == filter) {
       return;

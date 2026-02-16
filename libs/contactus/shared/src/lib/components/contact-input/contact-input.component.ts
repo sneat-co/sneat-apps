@@ -166,9 +166,8 @@ export class ContactInputComponent implements OnChanges {
     this.contactSelectorService
       .selectSingleInModal(selectorOptions)
       .then((contact) => {
-          'ContactInputComponent.openContactSelector() contact:',
-          contact,
-        );
+        // 'ContactInputComponent.openContactSelector() contact:',
+        // contact,
         this.contact = contact || undefined;
         // this.parentContact = contact?.parentContact;
         if (contact) {

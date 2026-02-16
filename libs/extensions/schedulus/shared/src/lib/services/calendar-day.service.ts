@@ -31,12 +31,11 @@ export class CalendarDayService {
   }
 
   public watchSpaceDay(space: ISpaceContext, dateID: string) {
-      `CalendarDayService.watchSpaceDay(space={id=${space.id}, dateID=${dateID})`,
-    );
     return this.spaceItemService
       .watchSpaceItemByIdWithSpaceRef(space, dateID)
       .pipe(
         tap((scheduleDay) =>
+          console.log(
             'ScheduleDayService.watchTeamDay() => scheduleDay',
             scheduleDay,
             scheduleDay.dbo,

@@ -130,13 +130,8 @@ export class SpaceNavService {
     navController: NavController,
     url: string,
     navOptions: NavigationOptions,
-    analyticsEvent: { name: string; params?: Record<string, unknown> },
+    // _analyticsEvent: { name: string; params?: Record<string, unknown> },
   ): void {
-      'navForward()',
-      url,
-      analyticsEvent.name,
-      analyticsEvent.params,
-    );
     navController = navController || this.navController;
     // this.analyticsService.logEvent(analyticsEvent.name, analyticsEvent.params);
     navController

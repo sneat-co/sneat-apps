@@ -29,8 +29,6 @@ export const getStoreUrl = (storeId: string): string => {
 export class SneatApiServiceFactory {
   private services: Record<string, ISneatApiService> = {};
 
-  constructor() {}
-
   public getSneatApiService(storeId: string): ISneatApiService {
     if (!storeId) {
       throw new Error(

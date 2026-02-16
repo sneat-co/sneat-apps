@@ -80,6 +80,7 @@ export class AssetGroupPageComponent
       this.subs.add(
         this.assetGroupsService.watchById(groupId).subscribe({
           next: (assetGroup: IAssetDtoGroup) => {
+            console.log(
               'AssetGroupPage(): watchAssetGroup=',
               groupId,
               assetGroup,

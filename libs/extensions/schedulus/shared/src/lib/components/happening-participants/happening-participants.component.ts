@@ -208,8 +208,6 @@ export class HappeningParticipantsComponent extends WithSpaceInput {
         selectedItems: [],
         componentProps: componentProps,
         onSelected: (selectedContacts): Promise<void> => {
-            `${selectedContacts?.length || 0} contacts select by user to be added as participants`,
-          );
           return new Promise((resolve, reject) => {
             const existingContactIDs = this.$relatedContactIDs();
             const contactsToAdd = selectedContacts?.filter(
@@ -226,8 +224,6 @@ export class HappeningParticipantsComponent extends WithSpaceInput {
               this.happeningService.addParticipants(request).subscribe({
                 error: (err) => reject(err),
                 next: () => {
-                    `${contactsToAdd.length} contacts added as participants (api call completed)`,
-                  );
                   const args: readonly ICheckChangedArgs[] =
                     request.contacts.map((c) => ({
                       event,
@@ -241,14 +237,14 @@ export class HappeningParticipantsComponent extends WithSpaceInput {
                 },
               });
             } else {
+              // No contacts to add - resolve immediately
+              resolve();
             }
           });
         },
       })
-      .then((selectedContacts) => {
+      .then((_selectedContacts) => {
         this.$isAddingContact.set(false);
-          `${selectedContacts?.length || 0} contacts added added as participants`,
-        );
         // alert(
         // 	`${selectedContacts?.length || 0} contacts added added as participants`,
         // );

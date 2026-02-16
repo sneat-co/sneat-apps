@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Injector, runInInjectionContext } from '@angular/core';
+import { Injector } from '@angular/core';
 import { Firestore, collection } from '@angular/fire/firestore';
 import { SneatApiService } from '@sneat/api';
 import { firstValueFrom, of } from 'rxjs';
@@ -18,7 +18,7 @@ vi.mock('@angular/fire/firestore', async () => {
 });
 
 describe('GlobalSpaceItemService', () => {
-  let service: GlobalSpaceItemService<any, any>;
+  let service: GlobalSpaceItemService<unknown, unknown>;
   let mockInjector: Injector;
   let mockFirestore: Firestore;
   let mockSneatApiService: SneatApiService;
@@ -96,7 +96,7 @@ describe('GlobalSpaceItemService', () => {
   });
 
   it('should throw error if create response is empty', async () => {
-    vi.spyOn(mockSneatApiService, 'post').mockReturnValue(of(null as any));
+    vi.spyOn(mockSneatApiService, 'post').mockReturnValue(of(null as unknown));
 
     const spaceRef = { id: 'space1', type: 'team' as const };
     const request = { spaceID: 'space1' };
@@ -124,7 +124,7 @@ describe('GlobalSpaceItemService', () => {
 });
 
 describe('ModuleSpaceItemService', () => {
-  let service: ModuleSpaceItemService<any, any>;
+  let service: ModuleSpaceItemService<unknown, unknown>;
   let mockInjector: Injector;
   let mockFirestore: Firestore;
   let mockSneatApiService: SneatApiService;
@@ -139,7 +139,7 @@ describe('ModuleSpaceItemService', () => {
       post: vi.fn(),
     } as unknown as SneatApiService;
 
-    vi.mocked(collection).mockReturnValue({ id: 'spaces' } as any);
+    vi.mocked(collection).mockReturnValue({ id: 'spaces' } as unknown);
 
     service = new ModuleSpaceItemService(
       mockInjector,
@@ -172,8 +172,8 @@ describe('ModuleSpaceItemService', () => {
 
   it('should throw error when creating collection ref without spaceID', () => {
     expect(() => {
-      // Access protected method via any cast for testing
-      (service as any).collectionRef('');
+      // Access protected method via unknown cast for testing
+      (service as unknown as { collectionRef: (spaceID: string) => unknown }).collectionRef('');
     }).toThrow('spaceID is required');
   });
 });

@@ -125,6 +125,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
     this.contactSelectorService
       .selectSingleInModal(selectorOptions)
       .then((contact) => {
+        console.log(
           'OrderCounterpartiesCardComponent.openContactSelector() contact:',
           contact,
         );
@@ -161,8 +162,8 @@ export class OrderCounterpartiesComponent implements OnChanges {
           locationContactID: contact.id,
         };
         this.ordersService.addShippingPoint(space, request).subscribe({
-          next: () => {
-          },
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          next: () => {},
           error: (e) => {
             this.errorLogger.logError(
               e,
@@ -197,8 +198,8 @@ export class OrderCounterpartiesComponent implements OnChanges {
     };
     this.deleting.push(counterparty);
     this.ordersService.deleteCounterparty(request).subscribe({
-      next: () => {
-      },
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      next: () => {},
       error: this.errorLogger.logErrorHandler('failed to delete counterparty'),
     });
   }

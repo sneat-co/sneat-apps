@@ -14,6 +14,7 @@ import { IMovieService } from './interfaces';
 // extends CommuneItemBaseService<typeof MovieKind, IMovieDto, ListusAppSchema>
 export class MovieService implements IMovieService {
   addCommuneItem(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     dto: IMovieDbo,
     // tx?: IRxReadwriteTransaction<ListusAppSchema>,
   ): Observable<IMovieDbo> {

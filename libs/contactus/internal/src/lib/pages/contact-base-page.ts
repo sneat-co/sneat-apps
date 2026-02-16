@@ -61,6 +61,7 @@ export abstract class ContactBasePage extends SpaceItemPageBaseComponent<
         .pipe(this.takeUntilDestroyed(), takeUntil(this.spaceIDChanged$))
         .subscribe({
           next: (contacts) => {
+            console.log(
               'watchSpaceContactusEntry() => contacts:',
               contacts,
               'this.contact:',
@@ -70,6 +71,7 @@ export abstract class ContactBasePage extends SpaceItemPageBaseComponent<
               const contactID = this.contact.id;
               const contact = contacts.find((c) => c.id === contactID);
               if (contact) {
+                console.log(
                   'setItemContext from contact space brief',
                   contact.brief,
                 );

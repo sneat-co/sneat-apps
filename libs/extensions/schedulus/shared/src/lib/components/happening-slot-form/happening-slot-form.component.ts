@@ -241,11 +241,6 @@ export class HappeningSlotFormComponent
   private addWeeklySlot(timing?: ITiming): IHappeningSlot | undefined {
     // this.weekdaysForm.markAsTouched({ onlySelf: true });
     this.slotForm.markAsTouched();
-      'addSlot()',
-      timing,
-      ' => this.slotForm.errors:',
-      this.slotForm.controls['locationTitle']?.errors,
-    );
     if (this.$happeningType() === 'recurring' && !this.hasWeekdaySelected()) {
       this.error.set('At least 1 weekday should be selected');
     }
@@ -453,7 +448,7 @@ export class HappeningSlotFormComponent
     };
   }
 
-  private addMonthlySlot(timing?: ITiming): IHappeningSlot | undefined {
+  private addMonthlySlot(_timing?: ITiming): IHappeningSlot | undefined {
     if (this.monthlyMode() === 'monthly-day') {
       return this.addDaySlot();
     }
@@ -511,7 +506,7 @@ export class HappeningSlotFormComponent
     }
   }
 
-  protected addSlot(timing?: ITiming): void {
+  protected addSlot(_timing?: ITiming): void {
     if (this.$happeningID()) {
       this.saveChanges();
     } else {

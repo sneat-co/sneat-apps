@@ -177,9 +177,6 @@ export class SpaceService {
   }
 
   public onSpaceUpdated(space: ISpaceContext): void {
-      'SpaceService.onSpaceUpdated',
-      space ? { id: space.id, dto: { ...space.dbo } } : space,
-    );
     let team$ = this.spaces$[space.id];
     if (team$) {
       const prevTeam = team$.value;
@@ -222,9 +219,6 @@ export class SpaceService {
   private readonly subscribeForUserSpaceChanges = (
     userSpaceBrief: IIdAndBrief<IUserSpaceBrief>,
   ): void => {
-      'subscribeForUserSpaceChanges() => userSpaceBrief:',
-      userSpaceBrief,
-    );
     let subj = this.spaces$[userSpaceBrief.id];
     if (subj) {
       let space = subj.value;
@@ -265,17 +259,14 @@ export class SpaceService {
       .watchByID(spacesCollection, id)
       .pipe(
         map((team) => {
-          const prevTeam = this.spaces$[id].value;
+          // const _prevTeam = this.spaces$[id].value;
           // if (prevTeam.assets) {
           // 	team = { ...team, assets: prevTeam.assets};
           // 	console.log('Reusing assets from prev context');
           // }
           return team;
         }),
-        tap((space) => {
-            'SpaceService.subscribeForSpaceChanges() => New space from Firestore:',
-            space,
-          );
+        tap(() => {
           // subj.next(team);
         }),
       );
@@ -288,7 +279,7 @@ export class SpaceService {
     );
   }
 
-  private unsubscribe(on: string): void {
+  private unsubscribe(): void {
     try {
       this.subscriptions.forEach((s) => s.unsubscribe());
       this.subscriptions = [];

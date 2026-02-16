@@ -63,7 +63,7 @@ export class MakeModelCardComponent {
     this.modelSelector?.focus();
   }
 
-  protected onModelChanged(event: Event): void {
+  protected onModelChanged(_event: Event): void {
     this.modelChange.emit(this.model);
   }
 }

@@ -231,7 +231,8 @@ export class SpacesCardComponent implements OnInit, OnDestroy {
     });
   }
 
-  private unsubscribe(reason?: string): void {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private unsubscribe(_reason?: string): void {
     // console.log(`SpacesCardComponent.unsubscribe(reason: ${reason})`);
     this.subscriptions.forEach((s) => s.unsubscribe());
     this.subscriptions = [];

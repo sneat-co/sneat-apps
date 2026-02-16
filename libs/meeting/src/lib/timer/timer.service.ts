@@ -60,11 +60,9 @@ export class Timer {
     this.released();
   }
 
-  public updateTimerState(timerState?: ITimerState): ITimerState {
-      'Timer.updateTimerState()',
-      { ...timerState },
-      { ...this.state },
-    );
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public updateTimerState(__timerState?: ITimerState): ITimerState {
+    // console.log('Timer.updateTimerState()', { ...timerState }, { ...this.state });
     throw new Error('Not implemented - temporary disabled');
     // if (!timerState) {
     // 	this.state = {};
@@ -339,7 +337,6 @@ export class Timer {
     ) {
       this.lastTick = state;
       this.tick.next(state);
-    } else {
     }
   }
 }

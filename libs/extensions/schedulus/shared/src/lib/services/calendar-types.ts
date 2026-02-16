@@ -30,7 +30,6 @@ export const emptyRecurringsByWeekday = (): RecurringsByWeekday =>
 export const groupRecurringSlotsByWeekday = (
   calendariumSpace?: ICalendariumSpaceContext,
 ): RecurringSlots => {
-  const logPrefix = `groupRecurringSlotsByWeekday(spaceID=${calendariumSpace?.id})`;
   const slots: RecurringSlots = {
     byWeekday: {},
   };

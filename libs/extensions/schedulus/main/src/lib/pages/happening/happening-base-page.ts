@@ -35,7 +35,7 @@ export abstract class HappeningBasePage extends CalendarBasePage {
         .happening as unknown as IHappeningContext;
       if (happening) {
         this.happeningID$.next(happening.id);
-        this.setHappening(happening, 'history.state');
+        this.setHappening(happening);
         this.watchHappeningChanges(happening.id, happening.space);
       }
       this.trackHappeningIDFromUrl();
@@ -49,7 +49,7 @@ export abstract class HappeningBasePage extends CalendarBasePage {
       next: (space) => {
         const happening = this.$happening();
         if (space && happening) {
-          this.setHappening({ ...happening, space: space }, 'spaceChanged$');
+          this.setHappening({ ...happening, space: space });
         } else if (!space) {
           this.$happening.set(emptyHappeningContext);
         }
@@ -74,7 +74,6 @@ export abstract class HappeningBasePage extends CalendarBasePage {
             if (brief) {
               this.setHappening(
                 { ...happening, brief },
-                'calendariumSpaceDbo changed',
               );
             }
           }
@@ -84,7 +83,6 @@ export abstract class HappeningBasePage extends CalendarBasePage {
 
   protected readonly setHappening = (
     happening: IHappeningContext,
-    from: string,
   ): void => {
     const prevHappening = this.$happening();
     if (!happening.dbo && prevHappening.brief) {
@@ -108,7 +106,7 @@ export abstract class HappeningBasePage extends CalendarBasePage {
     if (!space) {
       console.error('Space is not defined');
     }
-    this.setHappening({ id, space }, 'url');
+    this.setHappening({ id, space });
     this.watchHappeningChanges(id);
   };
 
@@ -127,6 +125,7 @@ export abstract class HappeningBasePage extends CalendarBasePage {
         .subscribe({
           next: (happening) => {
             // This can be called twice - first for `snapshot.type=added`, then `snapshot.type=modified`
+            console.log(
               'watchHappeningChanges() => happeningService.watchHappeningByID() => happening:',
               happening,
             );

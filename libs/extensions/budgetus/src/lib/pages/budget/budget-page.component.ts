@@ -149,7 +149,7 @@ export class BudgetPageComponent extends SpaceBaseComponent {
     // 	) + membersTotal;
   }
 
-  public memberBalance(m: Member): number {
+  public memberBalance(_m: Member): number {
     // return m.totals.per(this.period, this.showIncomes(), this.showExpenses());
     return 0;
   }

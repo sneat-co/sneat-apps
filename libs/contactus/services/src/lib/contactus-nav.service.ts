@@ -11,6 +11,7 @@ export class ContactusNavService {
     this.spaceNavService.navigateForwardToSpacePage(space, 'add-member');
 
   public navigateToMember(memberContext: IContactContext): void {
+    console.log(
       `navigateToMember(team.id=${memberContext?.space?.id}, memberInfo.id=${memberContext?.id})`,
     );
     // const id = `${memberContext?.space?.id}:${memberContext?.id}`;

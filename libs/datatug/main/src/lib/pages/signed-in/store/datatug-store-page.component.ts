@@ -93,6 +93,7 @@ export class DatatugStorePageComponent
   constructor() {
     const route = this.route;
     const datatugUserService = this.datatugUserService;
+    console.log(
       'DatatugStorePageComponent.constructor(), window.history.state:',
       window.history.state,
     );

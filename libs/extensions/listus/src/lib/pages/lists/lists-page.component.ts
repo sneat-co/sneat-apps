@@ -125,7 +125,8 @@ export class ListsPageComponent extends SpaceBaseComponent {
     );
   }
 
-  reorder(event: Event, listGroup: IListGroup): void {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  reorder(_event: Event, _listGroup: IListGroup): void {
     this.errorLogger.logError('reorder is not implemented yet');
     // let dtoListGroup: IListGroup | undefined;
     // let reordered = false;
@@ -190,6 +191,7 @@ export class ListsPageComponent extends SpaceBaseComponent {
   }
 
   public goList(list: IListInfo): void {
+    console.log(
       `ListsPage.goList(id=${list.id}, shortId=${list.shortId}, title=${list.title}) => communeInfo:`,
       list.space,
     );
@@ -370,6 +372,7 @@ export class ListsPageComponent extends SpaceBaseComponent {
 
   // and personal lists (private to the current user).
   private updateListsFromSpace(listGroups?: IListGroup[]): void {
+    console.log(
       `ListsPageComponent.updateListsFromTeam()`,
       listGroups,
       '\n: passed:',
@@ -485,6 +488,7 @@ export class ListsPageComponent extends SpaceBaseComponent {
               currentList.title === 'Groceries' &&
               passedList.title === 'Groceries'
             ) {
+              console.log(
                 'passedList',
                 passedList,
                 'currentList',

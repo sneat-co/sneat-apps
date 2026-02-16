@@ -186,9 +186,8 @@ export class NewPersonFormComponent
         .pipe(first(), this.takeUntilDestroyed())
         .subscribe({
           next: (contactGroup) => {
-              'effect for $selectedContactGroupID loaded contactGroup:',
-              contactGroup,
-            );
+            // 'effect for $selectedContactGroupID loaded contactGroup:',
+            // contactGroup,
             this.$selectedContactGroup.set(contactGroup);
           },
           error: this.logErrorHandler('Failed to get contact group by ID'),
@@ -266,10 +265,9 @@ export class NewPersonFormComponent
       (r) => r.id === contactRoleID,
     );
     this.$selectedContactRole.set(contactRole);
-      'onContactRoleIDChanged()',
-      contactRoleID,
-      this.$selectedContactRole,
-    );
+    // 'onContactRoleIDChanged()',
+    // contactRoleID,
+    // this.$selectedContactRole,
   }
 
   public onContactChanged(contact: NewContactBaseDboAndSpaceRef): void {

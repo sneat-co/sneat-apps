@@ -167,8 +167,6 @@ export class NewTrackerFormComponent {
   };
 
   protected submit(): void {
-      `submit: category=${this.$category()}, valueType=${this.$valueType()}, numberType=${this.$numberKind()}`,
-    );
     if (!this.form.valid) {
       return;
     }
@@ -186,7 +184,8 @@ export class NewTrackerFormComponent {
       numberKind: this.$numberKind() || undefined,
     };
     this.trackusApiService.createTracker(request).subscribe({
-      next: (response) => {
+      next: () => {
+        // Tracker created successfully
       },
       error: (err) => {
         this.errorLogger.logError(err, 'Failed to create tracker');

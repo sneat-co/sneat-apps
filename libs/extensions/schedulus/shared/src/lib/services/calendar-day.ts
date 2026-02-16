@@ -143,9 +143,6 @@ export class CalendarDay {
             const changed = this.calendarDayDbo != calendarDay.dbo;
             if (changed) {
               this.calendarDayDbo = calendarDay.dbo;
-                'Received calendarDay record for ' + this.dateID,
-                calendarDay,
-              );
               this.joinRecurringsWithSinglesAndEmit();
             }
           },
@@ -163,9 +160,6 @@ export class CalendarDay {
       return;
     }
     try {
-      const date = this.dateID;
-        `SpaceDay[${this.dateID}].subscribeForSingles(), spaceID=${spaceID}, date=${date}`,
-      );
       this.subscriptions.push(
         this.happeningService
           .watchSinglesOnSpecificDay({ id: spaceID }, this.dateID)
@@ -230,12 +224,7 @@ export class CalendarDay {
     );
   }
 
-  private readonly processRecurrings = (slots: RecurringSlots): void => {
-      `SpaceDay[${this.dateID},wd=${this.wd}].processRecurrings(), ${
-        Object.keys(slots.byWeekday).length
-      } weekdays with slots:`,
-      slots,
-    );
+  private readonly processRecurrings = (_slots: RecurringSlots): void => {
     // this.recurringSlots = slots;
     this.joinRecurringsWithSinglesAndEmit();
   };
@@ -280,8 +269,5 @@ export class CalendarDay {
     // this.$slots.set(slots);
 
     this._isLoading.set(false);
-      'SpaceDay[${this.dateID}].joinRecurringsWithSinglesAndEmit() _isLoading=false',
-      slots,
-    );
   }
 }

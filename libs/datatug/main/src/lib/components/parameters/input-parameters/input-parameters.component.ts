@@ -57,7 +57,7 @@ export class InputParametersComponent implements OnChanges {
     return !!this.parameters?.find((p) => p.val !== undefined);
   }
 
-  public clearAllParams(event: Event): void {
+  public clearAllParams(_: Event): void {
     this.parameters?.forEach((p) => (p.val = undefined));
   }
 

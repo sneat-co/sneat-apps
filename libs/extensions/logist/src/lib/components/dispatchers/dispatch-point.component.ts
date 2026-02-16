@@ -114,6 +114,7 @@ export class DispatchPointComponent implements OnChanges {
           this.segments?.some((s) => s.containerID === c.id) ||
           this.containerPoints?.some((cp) => cp.containerID === c.id),
       );
+      console.log(
         'DispatchPointComponent.ngOnChanges();',
         shippingPointID,
         this.segments,
@@ -188,8 +189,8 @@ export class DispatchPointComponent implements OnChanges {
       };
       this.deleting = true;
       this.orderService.deleteShippingPoint(request).subscribe({
-        next: () => {
-        },
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        next: () => {},
         error: (err) => {
           this.errorLogger.logError(err, 'Failed to delete shipping point');
           this.deleting = false;

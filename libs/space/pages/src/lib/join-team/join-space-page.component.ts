@@ -173,8 +173,6 @@ export class JoinSpacePageComponent extends WithSpaceInput {
   }
 
   private processAction(): void {
-      `processAction(), authState=${this.authStatus}, action: ${this.action}`,
-    );
     switch (this.action) {
       case 'join':
         this.joinSpace();
@@ -290,7 +288,7 @@ export class JoinSpacePageComponent extends WithSpaceInput {
         this.inviteService
           .acceptInviteByAuthenticatedUser(inviteInfo)
           .subscribe({
-            next: (dto) => {
+            next: () => {
               const space: ISpaceContext = {
                 id: spaceID,
                 brief: inviteInfo.space,
@@ -310,7 +308,7 @@ export class JoinSpacePageComponent extends WithSpaceInput {
         this.inviteService
           .acceptInviteByUnauthenticatedUser(inviteInfo)
           .subscribe({
-            next: (dto) => {
+            next: () => {
               const space: ISpaceContext = {
                 id: spaceID,
                 brief: inviteInfo.space,

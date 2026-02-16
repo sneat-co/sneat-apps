@@ -158,7 +158,7 @@ export class OrderContainersGridComponent implements OnChanges {
     this.containerSelected.emit(this.selectedContainer);
   };
 
-  protected readonly rowClick = (event: Event, row: unknown) => {
+  protected readonly rowClick = (_event: Event, _row: unknown) => {
     // console.log('OrdersGridComponent.rowClick():', event, row);
     // 	if (!this.team) {
     // 		alert('No team context provided!');

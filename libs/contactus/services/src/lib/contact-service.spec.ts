@@ -8,7 +8,7 @@ import { ContactService } from './contact-service';
 import { ContactusSpaceService } from './contactus-space.service';
 
 vi.mock('@angular/fire/firestore', async (importOriginal) => {
-  const actual = await importOriginal<any>();
+  const actual = await importOriginal<typeof import('@angular/fire/firestore')>();
   return {
     ...actual,
     collection: vi.fn().mockReturnValue({}),
@@ -64,7 +64,7 @@ describe('ContactService', () => {
 
       vi.spyOn(apiService, 'post').mockReturnValue(of(mockResponse));
 
-      const result = await firstValueFrom(service.createContact(spaceRef, request as any));
+      const result = await firstValueFrom(service.createContact(spaceRef, request as unknown));
       expect(result).toEqual(mockResponse);
     });
   });
@@ -120,7 +120,7 @@ describe('ContactService', () => {
       const request = {
         spaceID: 'space1',
         contactID: 'contact1',
-        channelType: 'email' as any,
+        channelType: 'email' as unknown,
         channelID: 'test@example.com',
         type: 'work' as const,
       };
@@ -142,7 +142,7 @@ describe('ContactService', () => {
       const request = {
         spaceID: 'space1',
         contactID: 'contact1',
-        channelType: 'phone' as any,
+        channelType: 'phone' as unknown,
         channelID: '+1234567890',
         newChannelID: '+0987654321',
       };
@@ -164,7 +164,7 @@ describe('ContactService', () => {
       const request = {
         spaceID: 'space1',
         contactID: 'contact1',
-        channelType: 'email' as any,
+        channelType: 'email' as unknown,
         channelID: 'test@example.com',
       };
 
@@ -216,7 +216,7 @@ describe('ContactService', () => {
       const request = {
         spaceID: 'space1',
         contactID: 'contact1',
-        role: 'contributor' as any,
+        role: 'contributor' as unknown,
       };
 
       vi.spyOn(apiService, 'post').mockReturnValue(of(undefined));
@@ -239,7 +239,7 @@ describe('ContactService', () => {
         message: 'Goodbye',
       };
 
-      vi.spyOn(apiService, 'post').mockReturnValue(of({} as any));
+      vi.spyOn(apiService, 'post').mockReturnValue(of({} as unknown));
 
       await firstValueFrom(service.removeSpaceMember(request));
       expect(apiService.post).toHaveBeenCalledWith(
@@ -259,17 +259,17 @@ describe('ContactService', () => {
   describe('watchContactsByRole', () => {
     it('should call watchModuleSpaceItemsWithSpaceRef with status filter', async () => {
       const service = TestBed.inject(ContactService);
-      const space = { id: 'space1' } as any;
+      const space = { id: 'space1' } as unknown;
       const filter = { status: 'active' };
       const mockContacts = [{ id: 'contact1', brief: { title: 'Contact 1' } }];
 
-      vi.spyOn(service as any, 'watchModuleSpaceItemsWithSpaceRef').mockReturnValue(
+      vi.spyOn(service as unknown, 'watchModuleSpaceItemsWithSpaceRef').mockReturnValue(
         of(mockContacts),
       );
 
       const result = await firstValueFrom(service.watchContactsByRole(space, filter));
       expect(result).toEqual(mockContacts);
-      expect((service as any).watchModuleSpaceItemsWithSpaceRef).toHaveBeenCalledWith(
+      expect((service as unknown).watchModuleSpaceItemsWithSpaceRef).toHaveBeenCalledWith(
         space,
         {
           filter: [{ field: 'status', value: 'active', operator: '==' }],
@@ -279,14 +279,14 @@ describe('ContactService', () => {
 
     it('should call watchModuleSpaceItemsWithSpaceRef with no filter', async () => {
       const service = TestBed.inject(ContactService);
-      const space = { id: 'space1' } as any;
+      const space = { id: 'space1' } as unknown;
 
-      vi.spyOn(service as any, 'watchModuleSpaceItemsWithSpaceRef').mockReturnValue(
+      vi.spyOn(service as unknown, 'watchModuleSpaceItemsWithSpaceRef').mockReturnValue(
         of([]),
       );
 
       await firstValueFrom(service.watchContactsByRole(space));
-      expect((service as any).watchModuleSpaceItemsWithSpaceRef).toHaveBeenCalledWith(
+      expect((service as unknown).watchModuleSpaceItemsWithSpaceRef).toHaveBeenCalledWith(
         space,
         {
           filter: [],
@@ -296,15 +296,15 @@ describe('ContactService', () => {
 
     it('should call watchModuleSpaceItemsWithSpaceRef with role filter', async () => {
       const service = TestBed.inject(ContactService);
-      const space = { id: 'space1' } as any;
-      const filter = { role: 'member' as any };
+      const space = { id: 'space1' } as unknown;
+      const filter = { role: 'member' as unknown };
 
-      vi.spyOn(service as any, 'watchModuleSpaceItemsWithSpaceRef').mockReturnValue(
+      vi.spyOn(service as unknown, 'watchModuleSpaceItemsWithSpaceRef').mockReturnValue(
         of([]),
       );
 
       await firstValueFrom(service.watchContactsByRole(space, filter));
-      expect((service as any).watchModuleSpaceItemsWithSpaceRef).toHaveBeenCalledWith(
+      expect((service as unknown).watchModuleSpaceItemsWithSpaceRef).toHaveBeenCalledWith(
         space,
         {
           filter: [
@@ -320,15 +320,15 @@ describe('ContactService', () => {
 
     it('should call watchModuleSpaceItemsWithSpaceRef with both filters', async () => {
       const service = TestBed.inject(ContactService);
-      const space = { id: 'space1' } as any;
-      const filter = { status: 'archived', role: 'admin' as any };
+      const space = { id: 'space1' } as unknown;
+      const filter = { status: 'archived', role: 'admin' as unknown };
 
-      vi.spyOn(service as any, 'watchModuleSpaceItemsWithSpaceRef').mockReturnValue(
+      vi.spyOn(service as unknown, 'watchModuleSpaceItemsWithSpaceRef').mockReturnValue(
         of([]),
       );
 
       await firstValueFrom(service.watchContactsByRole(space, filter));
-      expect((service as any).watchModuleSpaceItemsWithSpaceRef).toHaveBeenCalledWith(
+      expect((service as unknown).watchModuleSpaceItemsWithSpaceRef).toHaveBeenCalledWith(
         space,
         {
           filter: [
@@ -347,17 +347,17 @@ describe('ContactService', () => {
   describe('watchChildContacts', () => {
     it('should watch child contacts with default active status', async () => {
       const service = TestBed.inject(ContactService);
-      const space = { id: 'space1' } as any;
+      const space = { id: 'space1' } as unknown;
       const parentID = 'parent1';
       const mockContacts = [{ id: 'child1', brief: { title: 'Child 1' } }];
 
-      vi.spyOn(service as any, 'watchModuleSpaceItemsWithSpaceRef').mockReturnValue(
+      vi.spyOn(service as unknown, 'watchModuleSpaceItemsWithSpaceRef').mockReturnValue(
         of(mockContacts),
       );
 
       const result = await firstValueFrom(service.watchChildContacts(space, parentID));
       expect(result).toEqual(mockContacts);
-      expect((service as any).watchModuleSpaceItemsWithSpaceRef).toHaveBeenCalledWith(
+      expect((service as unknown).watchModuleSpaceItemsWithSpaceRef).toHaveBeenCalledWith(
         space,
         {
           filter: [
@@ -370,17 +370,17 @@ describe('ContactService', () => {
 
     it('should watch child contacts with archived status', async () => {
       const service = TestBed.inject(ContactService);
-      const space = { id: 'space1' } as any;
+      const space = { id: 'space1' } as unknown;
       const parentID = 'parent1';
 
-      vi.spyOn(service as any, 'watchModuleSpaceItemsWithSpaceRef').mockReturnValue(
+      vi.spyOn(service as unknown, 'watchModuleSpaceItemsWithSpaceRef').mockReturnValue(
         of([]),
       );
 
       await firstValueFrom(
         service.watchChildContacts(space, parentID, { status: 'archived' }),
       );
-      expect((service as any).watchModuleSpaceItemsWithSpaceRef).toHaveBeenCalledWith(
+      expect((service as unknown).watchModuleSpaceItemsWithSpaceRef).toHaveBeenCalledWith(
         space,
         {
           filter: [
@@ -393,20 +393,20 @@ describe('ContactService', () => {
 
     it('should watch child contacts with role filter', async () => {
       const service = TestBed.inject(ContactService);
-      const space = { id: 'space1' } as any;
+      const space = { id: 'space1' } as unknown;
       const parentID = 'parent1';
 
-      vi.spyOn(service as any, 'watchModuleSpaceItemsWithSpaceRef').mockReturnValue(
+      vi.spyOn(service as unknown, 'watchModuleSpaceItemsWithSpaceRef').mockReturnValue(
         of([]),
       );
 
       await firstValueFrom(
         service.watchChildContacts(space, parentID, {
           status: 'active',
-          role: 'member' as any,
+          role: 'member' as unknown,
         }),
       );
-      expect((service as any).watchModuleSpaceItemsWithSpaceRef).toHaveBeenCalledWith(
+      expect((service as unknown).watchModuleSpaceItemsWithSpaceRef).toHaveBeenCalledWith(
         space,
         {
           filter: [
@@ -426,7 +426,7 @@ describe('ContactService', () => {
   describe('watchContactsWithRole', () => {
     it('should watch contacts with specific role', async () => {
       const service = TestBed.inject(ContactService);
-      const space = { id: 'space1' } as any;
+      const space = { id: 'space1' } as unknown;
       const role = 'admin';
       const mockContacts = [{ id: 'contact1', brief: { title: 'Admin User' } }];
 
@@ -443,7 +443,7 @@ describe('ContactService', () => {
 
     it('should watch contacts with role and archived status', async () => {
       const service = TestBed.inject(ContactService);
-      const space = { id: 'space1' } as any;
+      const space = { id: 'space1' } as unknown;
       const role = 'member';
 
       vi.spyOn(service, 'watchSpaceContacts').mockReturnValue(of([]));
@@ -456,14 +456,14 @@ describe('ContactService', () => {
 
     it('should watch contacts with role and custom filters', async () => {
       const service = TestBed.inject(ContactService);
-      const space = { id: 'space1' } as any;
+      const space = { id: 'space1' } as unknown;
       const role = 'contributor';
       const customFilter = [{ field: 'custom', operator: '==', value: 'test' }];
 
       vi.spyOn(service, 'watchSpaceContacts').mockReturnValue(of([]));
 
       await firstValueFrom(
-        service.watchContactsWithRole(space, role, 'active', customFilter as any),
+        service.watchContactsWithRole(space, role, 'active', customFilter as unknown),
       );
       expect(service.watchSpaceContacts).toHaveBeenCalledWith(space, 'active', [
         { field: 'custom', operator: '==', value: 'test' },

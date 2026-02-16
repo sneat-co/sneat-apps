@@ -173,6 +173,7 @@ export class NewLogistOrderPageComponent extends SpaceBaseComponent {
   }
 
   onNumberOfContainersChanged(v: Record<string, number>): void {
+    console.log(
       'NewLogistOrderPageComponent.onNumberOfContainersChanged():',
       v,
     );
@@ -246,6 +247,7 @@ export class NewLogistOrderPageComponent extends SpaceBaseComponent {
   }
 
   protected onCounterpartiesAdded(counterparties: IOrderCounterparty[]): void {
+    console.log(
       'NewLogistOrderPageComponent.onCounterpartiesAdded():',
       counterparties,
     );
@@ -267,6 +269,7 @@ export class NewLogistOrderPageComponent extends SpaceBaseComponent {
         counterparties: [...orderCounterparties, ...counterparties],
       },
     };
+    console.log(
       'NewLogistOrderPageComponent.onCounterpartiesAdded() =>',
       this.order,
     );

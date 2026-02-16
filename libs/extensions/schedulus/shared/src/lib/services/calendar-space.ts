@@ -62,8 +62,6 @@ export class CalendarSpace {
   // TODO: consider switching to a computed $recurringSlots signal
   public readonly recurringSlots$: Observable<RecurringSlots> =
     this.calendariumSpace$.pipe(
-      tap((calendariumSpace) =>
-      ),
       skip(1), // We are not interested in processing the first 'undefined' value of BehaviorSubject
       filter((schedulusSpace) => !!schedulusSpace), // Not sure if we need this.
       // TODO: Instead of providing all slots we can provide observables of slots for a specific day
@@ -97,9 +95,6 @@ export class CalendarSpace {
                 recurringHappenings:
                   calendariumSpace.dbo?.recurringHappenings || {},
               },
-        );
-          'recurring update from calendariumSpace:',
-          this.$recurrings(),
         );
         if (calendariumSpace.dbo) {
           this.setCalendariumSpace({
@@ -136,9 +131,6 @@ export class CalendarSpace {
   // }
 
   private processRecurringBriefs(): void {
-      'SpaceDaysProvider.processRecurringBriefs()',
-      this.calendariumSpace$.value,
-    );
     if (!this.calendariumSpace$.value?.dbo?.recurringHappenings) {
       return;
     }

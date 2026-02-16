@@ -65,9 +65,11 @@ export class ProjectService {
     }
     let subj = this.projSummary[id];
     if (subj) {
+      console.log(
         'ProjectService.watchProjectSummary() => reusing existing subject',
       );
     } else {
+      console.log(
         'ProjectService.watchProjectSummary() => creating new subject for',
         id,
       );
@@ -76,6 +78,7 @@ export class ProjectService {
         this.firestoreChanges(projectRef.projectId)
           .pipe(
             tap((summary) =>
+              console.log(
                 `ProjectService.watchProject(${id}) => summary:`,
                 summary,
               ),
@@ -92,7 +95,7 @@ export class ProjectService {
   }
 
   private firestoreChanges(
-    id: string,
+    _: string,
   ): Observable<IProjectSummary | undefined> {
     return throwError(() => 'Not implemented');
     // return this.projectsCollection

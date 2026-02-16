@@ -7,6 +7,8 @@ import { SneatAuthStateService } from './sneat-auth-state-service';
 export class LoginRequiredServiceService {
   constructor() {
     const authState = inject(SneatAuthStateService);
-    authState.authState.subscribe((state) => {});
+    authState.authState.subscribe(() => {
+      // Intentionally empty - just subscribing to trigger the observable
+    });
   }
 }

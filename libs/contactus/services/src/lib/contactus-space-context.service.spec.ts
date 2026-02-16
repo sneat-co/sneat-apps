@@ -7,7 +7,7 @@ import { ContactusSpaceService } from './contactus-space.service';
 import { Firestore } from '@angular/fire/firestore';
 
 vi.mock('@angular/fire/firestore', async (importOriginal) => {
-  const actual = await importOriginal<any>();
+  const actual = await importOriginal<typeof import('@angular/fire/firestore')>();
   return {
     ...actual,
     collection: vi.fn().mockReturnValue({}),

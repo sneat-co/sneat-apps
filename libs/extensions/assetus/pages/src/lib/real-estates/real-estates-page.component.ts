@@ -55,5 +55,8 @@ export class RealEstatesPageComponent extends AssetsBasePage {
     this.filter = '';
   }
 
-  filterChanged(event: Event): void {}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  filterChanged(_event: Event): void {
+    // TODO: Implement filter change handling
+  }
 }

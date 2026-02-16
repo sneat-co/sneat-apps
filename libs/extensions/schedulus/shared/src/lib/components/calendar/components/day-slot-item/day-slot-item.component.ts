@@ -105,9 +105,6 @@ export class DaySlotItemComponent extends WithSpaceInput {
     // Need to import dynamically due to circular depndency with DaySlotItemComponent
     import('./slot-context-menu.component').then(async (m) => {
       const slotContext = this.$slotContext();
-        'DaySlotItemComponent.showContextMenu() slotContext:',
-        slotContext,
-      );
       const popoverOptions: PopoverOptions = {
         component: m.SlotContextMenuComponent,
         componentProps: {

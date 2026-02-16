@@ -14,7 +14,7 @@ import { ISelectItem } from '../selector-interfaces';
 describe('SelectFromListComponent', () => {
   let component: SelectFromListComponent;
   let fixture: ComponentFixture<SelectFromListComponent>;
-  let errorLoggerMock: any;
+  let errorLoggerMock: ErrorLogger;
 
   const mockItems: ISelectItem[] = [
     { id: '1', title: 'Apple' },
@@ -78,7 +78,7 @@ describe('SelectFromListComponent', () => {
     it('should filter items by title', () => {
       // @ts-expect-error accessing protected member
       component.onFilterChanged(
-        { detail: { value: 'app' } } as any,
+        { detail: { value: 'app' } } as CustomEvent,
         'ionInput',
       );
       // @ts-expect-error accessing protected member
@@ -90,7 +90,7 @@ describe('SelectFromListComponent', () => {
     it('should filter items by longTitle', () => {
       // @ts-expect-error accessing protected member
       component.onFilterChanged(
-        { detail: { value: 'yellow' } } as any,
+        { detail: { value: 'yellow' } } as CustomEvent,
         'ionInput',
       );
       // @ts-expect-error accessing protected member
@@ -102,7 +102,7 @@ describe('SelectFromListComponent', () => {
     it('should use custom filter function if provided', () => {
       component.filterItem = (item, filter) => item.id === filter;
       // @ts-expect-error accessing protected member
-      component.onFilterChanged({ detail: { value: '3' } } as any, 'ionInput');
+      component.onFilterChanged({ detail: { value: '3' } } as CustomEvent, 'ionInput');
       // @ts-expect-error accessing protected member
       expect(component.$displayItems()?.length).toBe(1);
       // @ts-expect-error accessing protected member
@@ -112,7 +112,7 @@ describe('SelectFromListComponent', () => {
     it('should clear filter', () => {
       // @ts-expect-error accessing protected member
       component.onFilterChanged(
-        { detail: { value: 'app' } } as any,
+        { detail: { value: 'app' } } as CustomEvent,
         'ionInput',
       );
       // @ts-expect-error accessing protected member
@@ -173,7 +173,7 @@ describe('SelectFromListComponent', () => {
       const onChange = vi.fn();
       component.registerOnChange(onChange);
       // @ts-expect-error accessing protected member
-      component.onRadioChanged({ detail: { value: '2' } } as any);
+      component.onRadioChanged({ detail: { value: '2' } } as CustomEvent);
       expect(component.value).toBe('2');
       expect(onChange).toHaveBeenCalledWith('2');
     });
@@ -183,7 +183,7 @@ describe('SelectFromListComponent', () => {
       component.registerOnChange(onChange);
       component.value = '3';
       // @ts-expect-error accessing protected member
-      component.onSelectChanged({} as any);
+      component.onSelectChanged({} as Event);
       expect(onChange).toHaveBeenCalledWith('3');
     });
 
@@ -230,7 +230,7 @@ describe('SelectFromListComponent', () => {
       const filterInputMock = {
         setFocus: vi.fn(() => Promise.resolve()),
       };
-      component.filterInput = filterInputMock as any;
+      component.filterInput = filterInputMock as unknown;
       component.focus();
       tick(100);
       expect(filterInputMock.setFocus).toHaveBeenCalled();
@@ -245,7 +245,7 @@ describe('SelectFromListComponent', () => {
       component.$filter.set('New Item');
       const event = { preventDefault: vi.fn() };
       // @ts-expect-error accessing protected member
-      component.onAdd(event as any);
+      component.onAdd(event as Event);
       expect(event.preventDefault).toHaveBeenCalled();
       expect(component.value).toBe('New Item');
       expect(onChange).toHaveBeenCalledWith('New Item');
@@ -257,14 +257,14 @@ describe('SelectFromListComponent', () => {
       component.selectMode = 'multiple';
       component.value = '1';
       // @ts-expect-error accessing protected member
-      component.onRadioChanged({ detail: { value: '2' } } as any);
+      component.onRadioChanged({ detail: { value: '2' } } as CustomEvent);
       expect(component.value).toBe('1');
     });
 
     it('should handle checkbox change', () => {
       const consoleSpy = vi.spyOn(console, 'log');
       // @ts-expect-error accessing protected member
-      component.onCheckboxChange({} as any, mockItems[0]);
+      component.onCheckboxChange({} as Event, mockItems[0]);
       expect(consoleSpy).toHaveBeenCalledWith(
         'SelectFromListComponent.onCheckboxChange()',
         {},

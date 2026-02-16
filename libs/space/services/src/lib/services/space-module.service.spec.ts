@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Injector, runInInjectionContext } from '@angular/core';
+import { Injector } from '@angular/core';
 import { Firestore, collection } from '@angular/fire/firestore';
 import { SpaceModuleService } from './space-module.service';
 
@@ -28,7 +28,7 @@ describe('SpaceModuleService', () => {
       toJSON: () => ({}),
     } as unknown as Firestore;
 
-    vi.mocked(collection).mockReturnValue({ id: 'spaces' } as any);
+    vi.mocked(collection).mockReturnValue({ id: 'spaces' } as unknown);
 
     const injector = TestBed.inject(Injector);
     service = new TestSpaceModuleService(injector, mockFirestore);

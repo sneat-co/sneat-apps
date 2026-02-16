@@ -19,9 +19,12 @@ export abstract class MemberBasePage extends ContactBasePage {
   }
 
   protected goNew = (
-    event: Event,
-    type: 'new-contact' | 'new-document' | 'new-liability' | 'new-asset',
-    relation?: string,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _event: Event,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _type: 'new-contact' | 'new-document' | 'new-liability' | 'new-asset',
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _relation?: string,
   ): void => {
     // this.navigateForward(
     // 	type,

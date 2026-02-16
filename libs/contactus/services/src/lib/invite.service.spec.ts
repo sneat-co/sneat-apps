@@ -61,7 +61,7 @@ describe('InviteService', () => {
         spaceID: 'space1',
         to: { memberID: 'member1' },
         message: 'Welcome!',
-      } as any;
+      } as unknown;
       const mockResponse = { inviteID: 'invite1' };
 
       vi.spyOn(apiService, 'post').mockReturnValue(of(mockResponse));
@@ -85,12 +85,12 @@ describe('InviteService', () => {
         spaceID: 'space1',
         to: { memberID: 'member1' },
         message: undefined,
-      } as any;
+      } as unknown;
 
       vi.spyOn(apiService, 'post').mockReturnValue(of({}));
 
       await firstValueFrom(service.createInviteForMember(request));
-      const callArgs = (apiService.post as any).mock.calls[0][1];
+      const callArgs = (apiService.post as unknown).mock.calls[0][1];
       expect(callArgs.message).toBeUndefined();
     });
   });
@@ -102,7 +102,7 @@ describe('InviteService', () => {
       const request = {
         spaceID: 'space1',
         to: { memberID: 'member1' },
-      } as any;
+      } as unknown;
       const mockResponse = { inviteLink: 'https://example.com/invite/123' };
 
       vi.spyOn(apiService, 'get').mockReturnValue(of(mockResponse));
@@ -143,7 +143,7 @@ describe('InviteService', () => {
     it('should call API to reject invite', async () => {
       const service = TestBed.inject(InviteService);
       const apiService = TestBed.inject(SneatApiService);
-      const request = { inviteID: 'invite1', pin: '1234' } as any;
+      const request = { inviteID: 'invite1', pin: '1234' } as unknown;
 
       vi.spyOn(apiService, 'post').mockReturnValue(of(undefined));
 
@@ -163,7 +163,7 @@ describe('InviteService', () => {
         space: { id: 'space1' },
         invite: { id: 'invite1', pin: '1234' },
         member: { id: 'member1' },
-      } as any;
+      } as unknown;
       const mockResponse = { success: true };
 
       vi.spyOn(apiService, 'post').mockReturnValue(of(mockResponse));
@@ -193,7 +193,7 @@ describe('InviteService', () => {
           to: { channel: 'phone', address: '+1234567890' },
         },
         member: { id: 'member1' },
-      } as any;
+      } as unknown;
 
       await expect(firstValueFrom(service.acceptInviteByUnauthenticatedUser(inviteInfo))).rejects.toThrow('Only join from an email invites');
     });
@@ -208,7 +208,7 @@ describe('InviteService', () => {
           to: { channel: 'email', address: '' },
         },
         member: { id: 'member1' },
-      } as any;
+      } as unknown;
 
       await expect(firstValueFrom(service.acceptInviteByUnauthenticatedUser(inviteInfo))).rejects.toThrow('Only join from an email invites');
     });

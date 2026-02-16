@@ -210,6 +210,7 @@ export class ContainerPointLoadFormComponent implements OnChanges {
   }
 
   private setNumberField(name: FreightPointIntField, number?: number): void {
+    console.log(
       'ContainerPointLoadFormComponent.setNumberField()',
       name,
       number,

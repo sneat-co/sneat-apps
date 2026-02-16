@@ -4,7 +4,6 @@ import { SneatApiService } from '@sneat/api';
 import { SneatAuthStateService } from '@sneat/auth-core';
 import { ErrorLogger } from '@sneat/core';
 import { LoginWithTelegramComponent } from './login-with-telegram.component';
-import { SneatAuthWithTelegramService } from './sneat-auth-with-telegram.service';
 
 describe('LoginWithTelegramComponent', () => {
   let component: LoginWithTelegramComponent;

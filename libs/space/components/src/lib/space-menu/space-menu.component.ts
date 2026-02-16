@@ -116,7 +116,8 @@ export class SpaceMenuComponent extends SpaceBaseComponent {
     return false;
   }
 
-  protected goSpacePage(event: Event, p: string): boolean {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  protected goSpacePage(event: Event, _p: string): boolean {
     // At the moment we use routerLink for navigation
     event.stopPropagation();
     // event.preventDefault();

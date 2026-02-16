@@ -114,9 +114,6 @@ export class ContactsFilterComponent extends ContactusModuleBaseComponent {
   private onContactusSpaceChanged(
     contactusSpace?: IIdAndOptionalDbo<IContactusSpaceDbo>,
   ): void {
-      'ContactsFilterComponent.onContactusSpaceChanged()',
-      contactusSpace,
-    );
     const contactBriefs = zipMapBriefsWithIDs(
       contactusSpace?.dbo?.contacts,
     )?.map((m) => Object.assign(m, { space: this.space || { id: `` } }));

@@ -266,6 +266,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
     }
     this.orderService.setOrderCounterparties(request).subscribe({
       next: (counterparty) => {
+        console.log(
           'onContactChanged(): setOrderCounterparties() =>',
           counterparty,
         );

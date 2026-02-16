@@ -44,6 +44,7 @@ export class ShippingPointsSelectorDialogComponent {
   protected tasksByID?: TasksByID;
 
   protected onTasksByShippingPointIDChanged(tasksByID: TasksByID): void {
+    console.log(
       'ShippingPintsSelectorDialogComponent.onTasksByShippingPointIDChanged()',
       tasksByID,
     );

@@ -24,6 +24,7 @@ class TestMeetingService extends BaseMeetingService {
 describe('validateMeetingRequest', () => {
   it('should throw error when request is null', () => {
     return new Promise<void>((resolve, reject) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       validateMeetingRequest(null as any).subscribe({
         error: (err) => {
           try {
@@ -39,6 +40,7 @@ describe('validateMeetingRequest', () => {
 
   it('should throw error when request is undefined', () => {
     return new Promise<void>((resolve, reject) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       validateMeetingRequest(undefined as any).subscribe({
         error: (err) => {
           try {
@@ -145,6 +147,7 @@ describe('BaseMeetingService', () => {
   beforeEach(() => {
     mockApiService = {
       post: vi.fn(),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any;
 
     TestBed.configureTestingModule({
@@ -162,6 +165,7 @@ describe('BaseMeetingService', () => {
   describe('toggleMemberTimer', () => {
     it('should throw error when request is null', async () => {
       try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         await service.toggleMemberTimer(null as any).toPromise();
         fail('Should have thrown an error');
       } catch (err) {

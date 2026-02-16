@@ -114,9 +114,6 @@ export class CalendarFilterComponent extends WeekdaysFormBase {
   }
 
   protected onSelectedContactsChanged(contactIDs: readonly string[]): void {
-      'ScheduleFilterComponent.onSelectedContactsChanged()',
-      contactIDs,
-    );
     this.onFilterChanged({ ...this.$filter(), contactIDs: [...contactIDs] });
   }
 

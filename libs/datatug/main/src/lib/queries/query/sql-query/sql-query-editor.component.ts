@@ -365,6 +365,7 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
   private trackQueryParams(): void {
     this.route.queryParamMap.subscribe({
       next: (queryParams) => {
+        console.log(
           'SqlQueryPageComponent.trackQueryParams(): queryParams:',
           queryParams,
         );

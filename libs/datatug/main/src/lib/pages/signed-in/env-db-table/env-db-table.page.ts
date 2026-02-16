@@ -118,7 +118,6 @@ export class EnvDbTablePageComponent implements OnDestroy {
 
   constructor() {
     const route = this.route;
-    const errorLogger = this.errorLogger;
     // const projectTracker = new ProjectTracker(this.destroyed, route);
     try {
       const { paramMap } = route.snapshot;
@@ -138,6 +137,7 @@ export class EnvDbTablePageComponent implements OnDestroy {
 
       this.datatugNavContextService.currentProject.subscribe({
         next: (currentProject) => {
+          console.log(
             'EnvDbTablePage.constructor() => currentProject',
             currentProject,
           );
@@ -198,7 +198,8 @@ from ${from}`;
     this.destroyed.complete();
   }
 
-  public tabChanged(event: Event): void {
+  public tabChanged(_: Event): void {
+    // Tab change handler - no action needed
   }
 
   // public selectRow(event: RowDoubleClickedEvent): void {
@@ -219,7 +220,7 @@ from ${from}`;
     }
   }
 
-  public onGroupByFkChanged(event: Event): void {
+  public onGroupByFkChanged(_: Event): void {
     this.setupGrid();
   }
 

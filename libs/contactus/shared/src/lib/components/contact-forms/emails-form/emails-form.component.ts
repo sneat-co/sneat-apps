@@ -71,9 +71,8 @@ export class EmailsFormComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     const emailsChange = changes['emails'];
-      'EmailsFormComponent.ngOnChanges(), emailsChange',
-      emailsChange,
-    );
+    // 'EmailsFormComponent.ngOnChanges(), emailsChange',
+    // emailsChange,
     if (emailsChange && (this.emails?.length || 0) === 0) {
       this.emailInputs = emptyEmails;
     }

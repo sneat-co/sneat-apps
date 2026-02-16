@@ -100,7 +100,9 @@ export class AssetAddDocumentComponent
     }
   }
 
-  protected onAssetChanged(asset: IAssetContext): void {}
+  protected onAssetChanged(_asset: IAssetContext): void {
+    // TODO: Implement asset changed logic
+  }
 
   protected onVehicleTypeChanged(): void {
     if (this.documentAsset?.dbo) {

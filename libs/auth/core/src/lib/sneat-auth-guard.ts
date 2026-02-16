@@ -39,8 +39,8 @@ export class SneatAuthGuard /*implements CanLoad, CanActivate, CanActivateChild*
   private readonly auth = inject(Auth);
 
   public canLoad(
-    route: Route,
-    segments: UrlSegment[],
+    _route: Route,
+    _segments: UrlSegment[],
   ):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
@@ -80,16 +80,16 @@ export class SneatAuthGuard /*implements CanLoad, CanActivate, CanActivateChild*
   }
 
   public canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot, //: Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
+    _route: ActivatedRouteSnapshot,
+    _state: RouterStateSnapshot, //: Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
   ) {
     // console.log('SneatAuthGuard.canActivate', route, state);
     return true;
   }
 
   canActivateChild(
-    childRoute: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot, // : Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
+    _childRoute: ActivatedRouteSnapshot,
+    _state: RouterStateSnapshot, // : Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
   ) {
     // console.log('SneatAuthGuard.canActivateChild', childRoute, state);
     return true;

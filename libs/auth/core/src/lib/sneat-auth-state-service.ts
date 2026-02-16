@@ -141,9 +141,10 @@ export class SneatAuthStateService {
     this.fbAuth.onAuthStateChanged({
       complete: () => void 0,
       next: (fbUser) => {
-          `SneatAuthStateService => authStatus: ${this.authStatus$.value}; fbUser`,
-          fbUser,
-        );
+        // console.log(
+        //   `SneatAuthStateService => authStatus: ${this.authStatus$.value}; fbUser`,
+        //   fbUser,
+        // );
 
         const authUser = createSneatAuthUserFromFbUser(fbUser);
 
@@ -209,9 +210,10 @@ export class SneatAuthStateService {
       default:
         return Promise.reject('unsupported auth provider: ' + authProviderID);
     }
-      `SneatAuthStateService.signInWith(${authProviderID}) => signed in on native layer, authenticating in webview...`,
-      signInResult,
-    );
+    // console.log(
+    //   `SneatAuthStateService.signInWith(${authProviderID}) => signed in on native layer, authenticating in webview...`,
+    //   signInResult,
+    // );
     // we need to authenticate on webview layer using the id token and nonce from signInResult
     const userCredential = await this.authenticateOnWebviewLayer(
       authProviderID,
@@ -235,7 +237,7 @@ export class SneatAuthStateService {
     const userCredential = await signInWithCredential(auth, credential);
 
     // Get a valid Firebase ID token that has a 'kid' header
-    const firebaseIdToken = await userCredential.user.getIdToken();
+    const _firebaseIdToken = await userCredential.user.getIdToken();
 
     return Promise.resolve(userCredential);
   }
@@ -283,8 +285,9 @@ export class SneatAuthStateService {
   public async signInWith(
     authProviderID: AuthProviderID,
   ): Promise<UserCredential | undefined> {
-      `SneatAuthStateService.signInWith(${authProviderID}), isSigningInWith=${this.isSigningInWith}, location.protocol=${location.protocol}`,
-    );
+    // console.log(
+    //   `SneatAuthStateService.signInWith(${authProviderID}), isSigningInWith=${this.isSigningInWith}, location.protocol=${location.protocol}`,
+    // );
     this.analyticsService.logEvent('signingInWith', {
       provider: authProviderID,
     });

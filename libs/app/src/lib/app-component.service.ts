@@ -4,16 +4,16 @@ import { Platform } from '@ionic/angular/standalone';
 // import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ErrorLogger, IErrorLogger } from '@sneat/core';
 
-export const SplashScreen = new InjectionToken<any>('SplashScreen');
-export const StatusBar = new InjectionToken<any>('StatusBar');
+export const SplashScreen = new InjectionToken<unknown>('SplashScreen');
+export const StatusBar = new InjectionToken<unknown>('StatusBar');
 
 @Injectable()
 // TODO: check if it's used and probably remove
 export class AppComponentService {
   private readonly platform: Platform;
   private readonly errorLogger: IErrorLogger;
-  private readonly splashScreen?: any;
-  private readonly statusBar?: any;
+  private readonly splashScreen?: unknown;
+  private readonly statusBar?: unknown;
 
   constructor() {
     this.platform = inject(Platform);
@@ -28,12 +28,10 @@ export class AppComponentService {
       .then(() => {
         try {
           if (this.statusBar) {
-            this.statusBar.styleDefault();
-          } else {
+            (this.statusBar as { styleDefault: () => void }).styleDefault();
           }
           if (this.splashScreen) {
-            this.splashScreen.hide();
-          } else {
+            (this.splashScreen as { hide: () => void }).hide();
           }
           // this.analyticsService.logEvent('platform_ready');
         } catch (e) {

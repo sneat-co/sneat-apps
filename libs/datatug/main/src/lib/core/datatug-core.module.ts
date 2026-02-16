@@ -9,6 +9,4 @@ import { QueryParamsService } from './services/QueryParamsService';
     QueryParamsService,
   ],
 })
-export class DatatugCoreModule {
-  constructor() {}
-}
+export class DatatugCoreModule {}

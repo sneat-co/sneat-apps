@@ -118,6 +118,7 @@ export class ListItemComponent {
 
   protected goListItem(): void {
     const listItem = this.$listItem();
+    console.log(
       `goListItem(${listItem?.id}), subListId=${listItem?.subListId}`,
     );
     this.itemClicked.emit(listItem);

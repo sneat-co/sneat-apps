@@ -86,7 +86,9 @@ export class NewDebtFormComponent {
       currency: this.currency.value,
     };
     this.debtusService.createDebtRecord(request).subscribe({
-      next: (id) => {},
+      next: () => {
+        // Debt record created successfully
+      },
       error: (err) => {
         console.error('Failed to create debt record:', err);
       },

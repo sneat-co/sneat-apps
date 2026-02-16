@@ -206,7 +206,8 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
   // 	this.preloader.preload(['lists']);
   // }
 
-  public onIsDoneFilterChanged(event: Event): void {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public onIsDoneFilterChanged(_event: Event): void {
     this.applyFilter();
   }
 
@@ -337,6 +338,7 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
         }
       }, 1000);
     }
+    console.log(
       `ListPage.reorder(from=${event.detail.from}, to=${event.detail.to})`,
     );
 

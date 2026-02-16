@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MileAgeDialogComponent } from './mileage-dialog.component';
 import { provideAssetusMocks } from '../testing/test-utils';
 import { ModalController } from '@ionic/angular/standalone';
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
 import { AssetService } from '../services';
 
 describe('MileAgeDialogComponent', () => {

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnDestroy, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { WormholeModule } from '@sneat/wormhole';
 import { race, Subject } from 'rxjs';
@@ -81,7 +81,7 @@ import { SchemaService } from '../../../services/unsorted/schema.service';
   ],
 })
 export class ProjectPageComponent
-  implements OnInit, OnDestroy, ViewWillEnter, ViewDidLeave
+  implements OnDestroy, ViewWillEnter, ViewDidLeave
 {
   private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
   private readonly route = inject(ActivatedRoute);
@@ -106,6 +106,7 @@ export class ProjectPageComponent
 
   constructor() {
     const route = this.route;
+    console.log(
       'ProjectPageComponent.constructor()',
       route?.snapshot?.paramMap,
     );
@@ -153,9 +154,6 @@ export class ProjectPageComponent
 
   ionViewDidLeave(): void {
     this.isActiveView = false;
-  }
-
-  ngOnInit() {
   }
 
   ngOnDestroy(): void {
@@ -240,6 +238,7 @@ export class ProjectPageComponent
     ref: IProjectRef,
     summary?: IProjectSummary,
   ): void {
+    console.log(
       'ProjectPageComponent.onProjectSummaryChanged():',
       ref,
       summary,
@@ -257,7 +256,7 @@ export class ProjectPageComponent
 
   private goProjItemPage(
     page: ProjectItemType,
-    projItem: IProjItemBrief,
+    _: IProjItemBrief,
   ): void {
     switch (page) {
       case ProjectItem.environment:

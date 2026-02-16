@@ -137,24 +137,21 @@ export class AddressFormComponent implements OnChanges, OnInit {
   }
 
   onZipChanged(): void {
-    const address = this.mustAddress;
     this.address = { ...this.mustAddress, zipCode: this.zip.value || '' };
-      'AddressFormComponent.onZipChanged()',
-      this.zip.value,
-      address,
-      this.address,
-    );
+    // 'AddressFormComponent.onZipChanged()',
+    // this.zip.value,
+    // address,
+    // this.address,
     this.addressChange.emit(this.address);
   }
 
   onStateChanged(): void {
     const address = this.mustAddress;
     this.address = { ...address, state: this.state.value || '' };
-      'AddressFormComponent.onStateChanged()',
-      this.state.value,
-      address,
-      this.address,
-    );
+    // 'AddressFormComponent.onStateChanged()',
+    // this.state.value,
+    // address,
+    // this.address,
     this.addressChange.emit(this.address);
   }
 

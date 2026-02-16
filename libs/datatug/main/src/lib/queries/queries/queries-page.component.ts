@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
@@ -64,7 +64,7 @@ type OrderBy = (typeof orderBys)[number];
   ],
 })
 export class QueriesPageComponent
-  implements OnInit, ViewWillEnter, ViewDidEnter, ViewDidLeave
+  implements ViewWillEnter, ViewDidEnter, ViewDidLeave
 {
   private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
   private readonly route = inject(ActivatedRoute);
@@ -135,13 +135,13 @@ export class QueriesPageComponent
     this.isActiveView = true;
   }
 
-  ionViewDidEnter(): void {}
+  ionViewDidEnter(): void {
+    // Lifecycle hook - no action needed
+  }
 
   ionViewDidLeave(): void {
     this.isActiveView = false;
   }
-
-  ngOnInit(): void {}
 
   reloadQueries(): void {
     // this.loadQueries();

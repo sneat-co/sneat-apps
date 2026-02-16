@@ -76,9 +76,8 @@ export class SubcontactInputComponent {
     this.contactSelectorService
       .selectSingleInModal(selectorOptions)
       .then((contact) => {
-          'ContactInputComponent.openContactSelector() contact:',
-          contact,
-        );
+        // 'ContactInputComponent.openContactSelector() contact:',
+        // contact,
         if (contact) {
           this.contactChange.emit(contact);
         }

@@ -33,8 +33,6 @@ export function getAngularFireProviders(
       const firestore = getFirestore(fbApp);
       const { emulator } = firebaseConfig;
       if (emulator) {
-          `using firebase firestore emulator on ${emulator.firestoreHost}:${emulator.firestorePort}`,
-        );
         connectFirestoreEmulator(
           firestore,
           emulator.firestoreHost || '127.0.0.1',
@@ -78,12 +76,6 @@ export function getAngularFireProviders(
         // );
         // const fbAnalytics = getAnalytics(fbApp);
         const fbAnalytics = getAnalytics();
-          'AngularFire: provideAnalytics() => ',
-          // 'fbApp:',
-          // fbApp,
-          'fbAnalytics:',
-          fbAnalytics,
-        );
         return fbAnalytics;
       }),
     );
@@ -92,9 +84,5 @@ export function getAngularFireProviders(
 }
 
 function initFirebase(firebaseConfig: IFirebaseConfig): FirebaseApp {
-    'initFirebase()' +
-      (firebaseConfig.emulator ? ' - using firebase emulators' : ''),
-    firebaseConfig,
-  );
   return initializeApp(firebaseConfig);
 }

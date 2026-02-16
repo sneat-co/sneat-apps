@@ -109,6 +109,7 @@ export class NewListItemComponent {
   }
 
   protected createListItem(listItemBrief: ICreateListItemRequest): void {
+    console.log(
       'ListPage.createListItem',
       listItemBrief,
       this.list,

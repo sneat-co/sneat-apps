@@ -1,4 +1,3 @@
-import { dateToIso } from '@sneat/core';
 import {
   IDateChanged,
   CalendarStateService,
@@ -24,10 +23,6 @@ export abstract class CalendarDayBaseComponent extends SwipeableBaseComponent {
   }
 
   override onDateChanged(changed: IDateChanged): void {
-    const changedToLog = { ...changed, date: dateToIso(changed.date) };
-      `ScheduleDayBaseComponent.onDateChanged(), shiftDays=${this.shiftDays}, changed:`,
-      changedToLog,
-    );
     if (this.shiftDays) {
       const d = changed.date;
       changed = {

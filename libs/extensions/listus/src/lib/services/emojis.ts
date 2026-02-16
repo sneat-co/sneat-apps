@@ -5,7 +5,8 @@
  * For backwards compatibility, this synchronous function is kept but will console.warn.
  * In the future, all code should use the async EmojisLoaderService.
  */
-export function detectEmoji(s?: string): string | undefined {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function detectEmoji(_s?: string): string | undefined {
   console.warn(
     'detectEmoji() is deprecated. Use EmojisLoaderService.detectEmoji() for async loading.',
   );

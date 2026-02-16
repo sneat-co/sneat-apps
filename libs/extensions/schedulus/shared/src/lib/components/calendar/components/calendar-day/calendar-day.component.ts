@@ -141,8 +141,6 @@ export class CalendarDayComponent
     this.slotsSubscription?.unsubscribe();
     const weekday = this.$weekday();
     if (weekday?.day) {
-        `ScheduleDayComponent[wd=${weekday.id}, dateID=${weekday.day?.dateID}].subscribeForSlots()`,
-      );
       this.slotsSubscription = weekday.day.slots$
         .pipe(this.takeUntilDestroyed())
         .subscribe(this.processSlots);

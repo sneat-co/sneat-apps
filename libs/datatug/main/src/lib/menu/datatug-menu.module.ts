@@ -44,6 +44,4 @@ import { DatatugCoreModule } from '../core/datatug-core.module';
   ],
   exports: [DatatugMenuComponent],
 })
-export class DatatugMenuModule {
-  constructor() {}
-}
+export class DatatugMenuModule {}

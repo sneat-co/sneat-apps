@@ -10,7 +10,7 @@ import {
 import { WeekdayCode2 } from '@sneat/mod-schedulus-core';
 import { Parity } from './swipeable-ui';
 import {
-  VirtualSliderAnimationStates,
+  VirtualSliderAnimationStates as _VirtualSliderAnimationStates,
   VirtualSliderDirectPushedNext,
   VirtualSliderDirectPushedPrev,
   VirtualSliderReversePushedNext,

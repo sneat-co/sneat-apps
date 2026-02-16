@@ -89,7 +89,10 @@ export class SelectServiceProviderPageComponent extends AssetBasePage {
     }
   }
 
-  selectProvider(serviceProvider: DtoServiceProvider): void {}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  selectProvider(_serviceProvider: DtoServiceProvider): void {
+    // TODO: Implement service provider selection
+  }
 
   other(): void {
     this.isOtherSelected = true;

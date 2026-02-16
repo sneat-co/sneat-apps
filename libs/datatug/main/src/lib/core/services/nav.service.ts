@@ -81,6 +81,7 @@ export class NavService {
     space: ISpaceContext,
     memberInfo: IIdAndBrief<IMemberBrief>,
   ): void {
+    console.log(
       `navigateToMember(team.id=${space.id}, memberInfo.id=${memberInfo.id})`,
     );
     const id = `${space.id}:${memberInfo.id}`;

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { readFileSync, readdirSync, statSync, existsSync } from 'fs';
-import { join, sep } from 'path';
+import { join } from 'path';
 import { execSync } from 'child_process';
 
 /**
@@ -25,7 +25,7 @@ function getProjects() {
 			stdio: ['pipe', 'pipe', 'pipe'],
 		});
 		return JSON.parse(output);
-	} catch (error) {
+	} catch {
 		// Fallback: scan coverage directory for projects
 		console.warn('⚠️  Unable to run nx command, scanning coverage directory...');
 		return getProjectsFromCoverage();
@@ -42,7 +42,7 @@ function getProjectsWithTests() {
 			stdio: ['pipe', 'pipe', 'pipe'],
 		});
 		return JSON.parse(output);
-	} catch (error) {
+	} catch {
 		// Fallback: assume all projects have tests
 		return getProjects();
 	}
@@ -97,7 +97,7 @@ function runTestsWithCoverage() {
 			stdio: 'inherit',
 			encoding: 'utf-8',
 		});
-	} catch (error) {
+	} catch {
 		console.error('Some tests may have failed, but continuing with coverage analysis...\n');
 	}
 }
@@ -142,7 +142,7 @@ function parseUncoveredLines(coverageFile) {
 			coveredLines,
 			uncoveredLines: totalLines - coveredLines,
 		};
-	} catch (error) {
+	} catch {
 		return null;
 	}
 }
@@ -165,7 +165,7 @@ function parseJsonSummary(summaryFile) {
 		}
 		
 		return null;
-	} catch (error) {
+	} catch {
 		return null;
 	}
 }

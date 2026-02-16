@@ -128,7 +128,7 @@ export class CalendarComponent
     this.tabChanged.emit(this.tab);
   }
 
-  protected segmentChanged(event: Event): void {
+  protected segmentChanged(_event: Event): void {
     this.$isWeekTabActivated.set(true);
     history.replaceState(
       history.state,
@@ -246,13 +246,6 @@ export class CalendarComponent
       }
       return !hide;
     });
-      `CalendarComponent.filterRecurrings()`,
-      filter,
-      this.$allRecurrings(),
-      ' => ',
-      filtered,
-    );
-
     return filtered;
   }
 
