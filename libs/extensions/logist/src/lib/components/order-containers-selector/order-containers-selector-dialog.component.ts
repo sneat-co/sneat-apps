@@ -33,19 +33,10 @@ export class OrderContainersSelectorDialogComponent {
   private selectedContainers: IContainer[] = [];
 
   onSelectedContainersChanged(selectedContainers: IContainer[]): void {
-// console.log(
-      'OrderContainersSelectorDialogComponent.onSelectedContainersChanged():',
-      selectedContainers,
-    );
     this.selectedContainers = selectedContainers;
   }
 
   submit(): void {
-// console.log(
-      'OrderContainersSelectorDialogComponent.submit():',
-      this.selectedContainers,
-      this.onSelected,
-    );
     this.onSelected?.(this.selectedContainers);
   }
 }

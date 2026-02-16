@@ -51,7 +51,6 @@ export class ProjectService {
   public watchProjectSummary(
     projectRef: IProjectRef,
   ): Observable<IProjectSummary | undefined> {
-// console.log('ProjectService.watchProjectSummary', projectRef);
     if (!isValidProjectRef(projectRef)) {
       return throwError(
         () => 'Can not watch project by empty target parameter',
@@ -66,11 +65,9 @@ export class ProjectService {
     }
     let subj = this.projSummary[id];
     if (subj) {
-// console.log(
         'ProjectService.watchProjectSummary() => reusing existing subject',
       );
     } else {
-// console.log(
         'ProjectService.watchProjectSummary() => creating new subject for',
         id,
       );
@@ -79,7 +76,6 @@ export class ProjectService {
         this.firestoreChanges(projectRef.projectId)
           .pipe(
             tap((summary) =>
-// console.log(
                 `ProjectService.watchProject(${id}) => summary:`,
                 summary,
               ),
@@ -98,7 +94,6 @@ export class ProjectService {
   private firestoreChanges(
     id: string,
   ): Observable<IProjectSummary | undefined> {
-// console.log(`ProjectService.firestoreChanges(${id})`);
     return throwError(() => 'Not implemented');
     // return this.projectsCollection
     // 	.doc(id)
@@ -135,7 +130,6 @@ export class ProjectService {
   public getSummary(
     projectRef: IProjectRef,
   ): Observable<IProjectSummary | undefined> {
-// console.log('ProjectService.getSummary()', projectRef);
     if (projectRef.storeId === 'firestore') {
       return this.watchProjectSummary(projectRef).pipe(take(1));
     }
@@ -166,7 +160,6 @@ export class ProjectService {
     if (!storeId) {
       return throwError(() => 'target.storeId is a required parameter');
     }
-// console.log('getProjectSummaryRequest', storeId, projectId);
     if (
       storeId === STORE_ID_GITHUB_COM ||
       storeId === STORE_TYPE_GITHUB ||
@@ -186,7 +179,6 @@ export class ProjectService {
     storeId: string,
     projData: ICreateProjectData,
   ): Observable<string> {
-// console.log('createNewProject', storeId, projData);
     const sneatApiService =
       this.sneatApiServiceFactory.getSneatApiService(storeId);
     return sneatApiService

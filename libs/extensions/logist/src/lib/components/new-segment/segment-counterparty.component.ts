@@ -51,7 +51,6 @@ export class SegmentCounterpartyComponent {
     new EventEmitter<SegmentEndpointType>();
 
   onEndpointTypeChanged(event: Event): void {
-// console.log('onEndpointTypeChanged', event);
     const ce = event as CustomEvent;
     if (!ce.detail.value) {
       return; // Prevent emitting on initial load
@@ -60,7 +59,6 @@ export class SegmentCounterpartyComponent {
   }
 
   onContactChanged(contact?: IContactContext): void {
-// console.log('SegmentCounterpartyComponent.onContactChanged', contact);
     this.contactChange.emit(contact);
   }
 

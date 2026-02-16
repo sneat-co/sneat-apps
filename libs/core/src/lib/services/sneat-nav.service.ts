@@ -32,17 +32,10 @@ export class SneatNavService {
     if (this.previous) {
       this.navController.pop().then((isPopped) => {
         if (!isPopped) {
-// console.log('SneatNavService.goBack() - failed to pop');
           this.location.back();
-        } else {
-// console.log('SneatNavService.goBack() - popped');
         }
       });
     } else {
-// console.log(
-        'SneatNavService.goBack() - no previous page, navigating to',
-        url,
-      );
       this.router
         .navigateByUrl(url, extras)
         .catch((err) =>

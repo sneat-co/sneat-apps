@@ -125,7 +125,6 @@ export class HappeningPriceModalComponent extends SneatBaseModalComponent {
   }
 
   protected addPrice(event: Event): void {
-// console.log('submitAddPrice');
     event.stopPropagation();
     event.preventDefault();
 

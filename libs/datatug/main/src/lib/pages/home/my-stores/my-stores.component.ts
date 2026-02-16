@@ -66,7 +66,6 @@ export class MyStoresComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroyed))
       .subscribe({
         next: (agentState) => {
-// console.log('MyStoresComponent => agent state:', agentState);
           this.agentState = agentState;
         },
         error: this.errorLogger.logErrorHandler('failed to get agent state'),

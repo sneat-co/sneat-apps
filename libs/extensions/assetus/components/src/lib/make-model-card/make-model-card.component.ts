@@ -49,12 +49,10 @@ export class MakeModelCardComponent {
   }
 
   protected onMakeChanged(event: Event): void {
-// console.log('makeChanged', event, this.make);
     const make = this.make ? carMakes[this.make] : undefined;
     if (make) {
       this.models = make.models.map((v) => ({ id: v.id, title: v.id }));
     } else {
-// console.log('make not found by id: ' + this.make);
       this.models = [];
     }
     this.makeChange.emit(this.make);
@@ -66,7 +64,6 @@ export class MakeModelCardComponent {
   }
 
   protected onModelChanged(event: Event): void {
-// console.log('onModelChanged', event, this.model);
     this.modelChange.emit(this.model);
   }
 }

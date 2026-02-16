@@ -79,7 +79,6 @@ export class NewLogistCompanyPageComponent
   }
 
   onContactCreated(contact: IContactContext): void {
-// console.log('NewLogistCompanyPageComponent.onContactCreated()', contact);
     this.navController.pop().catch(() => {
       this.navController
         .navigateBack(['contacts'], { relativeTo: this.route })

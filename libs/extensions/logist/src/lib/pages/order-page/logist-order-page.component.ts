@@ -137,7 +137,6 @@ export class LogistOrderPageComponent
 
   onTabChanged(event: Event): void {
     try {
-// console.log('onTabChanged', event);
       // this.changeDetector?.markForCheck();
       let { href } = location;
       if (!href.includes('?')) {

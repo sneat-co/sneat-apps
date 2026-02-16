@@ -141,7 +141,6 @@ export class DatatugMenuComponent implements OnDestroy {
     if (storeId === this.currentStoreId) {
       return;
     }
-// console.log(
       'DatatugMenuComponent => storeId changed:',
       storeId,
       this.currentStoreId,
@@ -180,7 +179,6 @@ export class DatatugMenuComponent implements OnDestroy {
               table.name !== this.table?.name &&
               table.schema !== this.table?.schema
             ) {
-// console.log(
                 `DatatugMenuComponent => currentTable changed to: ${table.schema}.${table.name}, meta:`,
                 table.meta,
               );

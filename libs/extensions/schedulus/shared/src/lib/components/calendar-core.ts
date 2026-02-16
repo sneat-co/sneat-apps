@@ -91,6 +91,5 @@ export function animationState(
     default:
       throw new Error(`Unknown parity: ${activeParity}`);
   }
-// console.log(`animationState(${activeParity}): ${result}`);
   return result;
 }

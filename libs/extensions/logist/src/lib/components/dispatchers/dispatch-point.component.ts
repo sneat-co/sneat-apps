@@ -114,7 +114,6 @@ export class DispatchPointComponent implements OnChanges {
           this.segments?.some((s) => s.containerID === c.id) ||
           this.containerPoints?.some((cp) => cp.containerID === c.id),
       );
-// console.log(
         'DispatchPointComponent.ngOnChanges();',
         shippingPointID,
         this.segments,
@@ -128,7 +127,6 @@ export class DispatchPointComponent implements OnChanges {
     this.containersSelectorService
       .selectOrderContainersInModal(this.order)
       .then((containers) => {
-// console.log('assignContainers() => selected container: ', containers);
         const order = this.order;
         if (!order?.space?.id) {
           return;
@@ -191,7 +189,6 @@ export class DispatchPointComponent implements OnChanges {
       this.deleting = true;
       this.orderService.deleteShippingPoint(request).subscribe({
         next: () => {
-// console.log('deleted');
         },
         error: (err) => {
           this.errorLogger.logError(err, 'Failed to delete shipping point');

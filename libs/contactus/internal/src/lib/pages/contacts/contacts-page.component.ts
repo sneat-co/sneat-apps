@@ -144,7 +144,6 @@ export class ContactsPageComponent
   });
 
   private readonly setSpaceContacts = (contacts: IContactWithCheck[]): void => {
-// console.log('ContactsPageComponent.setSpaceContacts()', contacts);
     this.$allContacts.set(contacts);
   };
 

@@ -86,7 +86,6 @@ export abstract class HappeningBasePage extends CalendarBasePage {
     happening: IHappeningContext,
     from: string,
   ): void => {
-// console.log(`${this.className}.setHappening(from=${from})`, happening);
     const prevHappening = this.$happening();
     if (!happening.dbo && prevHappening.brief) {
       happening = { ...happening, brief: prevHappening.brief };
@@ -128,7 +127,6 @@ export abstract class HappeningBasePage extends CalendarBasePage {
         .subscribe({
           next: (happening) => {
             // This can be called twice - first for `snapshot.type=added`, then `snapshot.type=modified`
-// console.log(
               'watchHappeningChanges() => happeningService.watchHappeningByID() => happening:',
               happening,
             );

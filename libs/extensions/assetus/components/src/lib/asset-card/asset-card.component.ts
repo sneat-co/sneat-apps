@@ -41,7 +41,6 @@ export class AssetCardComponent implements OnChanges {
   }
 
   segmentChanged(ev: CustomEvent): void {
-// console.log('Segment changed', ev);
     this.segment = ev.detail.value;
   }
 }

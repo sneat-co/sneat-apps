@@ -48,7 +48,6 @@ export class CalendarAddButtonsComponent extends WithSpaceInput {
 
   protected goNewHappening(event: Event, type: HappeningType): boolean {
     const space = this.$space();
-// console.log('CalendarAddButtonsComponent.goNewHappening()', type, space);
     event.preventDefault();
     event.stopPropagation();
     const params: NewHappeningParams = {

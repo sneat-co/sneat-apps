@@ -144,7 +144,6 @@ export class ContactInputComponent implements OnChanges {
   openContactSelector(event: Event): void {
     event.stopPropagation();
     event.preventDefault();
-// console.log('ContactInputComponent.openContactSelector()');
     if (!this.canChangeContact || this.readonly) {
       return;
     }
@@ -167,7 +166,6 @@ export class ContactInputComponent implements OnChanges {
     this.contactSelectorService
       .selectSingleInModal(selectorOptions)
       .then((contact) => {
-// console.log(
           'ContactInputComponent.openContactSelector() contact:',
           contact,
         );

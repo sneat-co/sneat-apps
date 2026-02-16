@@ -18,12 +18,9 @@ export class CalendarFilterService {
     .asObservable()
     .pipe(distinctUntilChanged());
 
-  constructor() {
-// console.log('ScheduleFilterService.constructor()');
-  }
+  constructor() {}
 
   next(filter: ICalendarFilter): void {
-// console.log('ScheduleFilterService.next()', filter);
     if (this.filter$.value == filter) {
       return;
     }

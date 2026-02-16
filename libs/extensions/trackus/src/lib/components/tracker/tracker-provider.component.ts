@@ -48,7 +48,6 @@ export class TrackerProviderComponent
   private readonly onTrackerRefIDChanged = () => {
     const spaceID = this.$spaceID();
     const trackerID = this.$trackerID();
-// console.log(
       `TrackerProviderComponent.onTrackerRefIDChanged: spaceID=${spaceID}, trackerID=${trackerID}`,
     );
     this.trackerSub?.unsubscribe();

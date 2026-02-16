@@ -23,7 +23,6 @@ export class ScheduleNavService {
     space: ISpaceContext,
     params: NewHappeningParams,
   ): void {
-// console.log('ScheduleNavService.goNewHappening()', params);
     this.spaceNavService
       .navigateForwardToSpacePage(space, 'new-happening', {
         queryParams: excludeEmpty(params),

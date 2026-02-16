@@ -167,17 +167,14 @@ export class NewTrackerFormComponent {
   };
 
   protected submit(): void {
-// console.log(
       `submit: category=${this.$category()}, valueType=${this.$valueType()}, numberType=${this.$numberKind()}`,
     );
     if (!this.form.valid) {
-// console.log('Form is not valid');
       return;
     }
 
     const valueType = this.$valueType();
     if (!valueType) {
-// console.log('Value type is not selected');
       return;
     }
     const request: ICreateTrackerRequest = {
@@ -190,7 +187,6 @@ export class NewTrackerFormComponent {
     };
     this.trackusApiService.createTracker(request).subscribe({
       next: (response) => {
-// console.log(`Tracker created with ID=${response.trackerID}`);
       },
       error: (err) => {
         this.errorLogger.logError(err, 'Failed to create tracker');

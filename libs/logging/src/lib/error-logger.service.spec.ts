@@ -7,7 +7,6 @@ import { Mock } from 'vitest';
 
 vi.mock('@sentry/angular', () => ({
   captureException: vi.fn().mockImplementation((...args: any[]) => {
-// console.log('MOCK captureException CALLED with', args);
     return 'event-id';
   }),
   showReportDialog: vi.fn(),
@@ -43,7 +42,9 @@ describe('ErrorLoggerService', () => {
 
   describe('logError', () => {
     it('should log to console.error', () => {
-      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+      const consoleSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => undefined);
       service.logError(new Error('test'));
       expect(consoleSpy).toHaveBeenCalled();
     });
@@ -57,7 +58,6 @@ describe('ErrorLoggerService', () => {
 
     it('should capture exception if NOT on localhost', () => {
       vi.stubGlobal('location', { hostname: 'example.com' });
-// console.log('window.location.hostname:', window.location.hostname);
       service.logError(new Error('test'), 'msg', { report: true });
       expect(captureException).toHaveBeenCalled();
       vi.unstubAllGlobals();
@@ -69,7 +69,9 @@ describe('ErrorLoggerService', () => {
     });
 
     it('should handle boolean true value as error', () => {
-      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+      const consoleSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => undefined);
       service.logError(true, 'test message');
       expect(consoleSpy).toHaveBeenCalledWith(
         expect.stringContaining('Argument exception'),
@@ -80,7 +82,9 @@ describe('ErrorLoggerService', () => {
     });
 
     it('should handle boolean false value as error', () => {
-      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+      const consoleSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => undefined);
       service.logError(false, 'test message');
       expect(consoleSpy).toHaveBeenCalledWith(
         expect.stringContaining('Argument exception'),
@@ -92,7 +96,10 @@ describe('ErrorLoggerService', () => {
 
     it('should not show feedback dialog when feedback is false', () => {
       vi.stubGlobal('location', { hostname: 'example.com' });
-      service.logError(new Error('test'), 'msg', { report: true, feedback: false });
+      service.logError(new Error('test'), 'msg', {
+        report: true,
+        feedback: false,
+      });
       expect(showReportDialog).not.toHaveBeenCalled();
       vi.unstubAllGlobals();
     });
@@ -106,7 +113,9 @@ describe('ErrorLoggerService', () => {
 
     it('should handle Sentry exception gracefully', () => {
       vi.stubGlobal('location', { hostname: 'example.com' });
-      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+      const consoleSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => undefined);
       vi.mocked(captureException).mockImplementationOnce(() => {
         throw new Error('Sentry failed');
       });
@@ -165,7 +174,9 @@ describe('ErrorLoggerService', () => {
     });
 
     it('should warn when ToastController is not available', () => {
-      const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+      const consoleSpy = vi
+        .spyOn(console, 'warn')
+        .mockImplementation(() => undefined);
       TestBed.resetTestingModule();
       TestBed.configureTestingModule({
         providers: [
@@ -190,17 +201,19 @@ describe('ErrorLoggerService', () => {
           present: vi.fn().mockReturnValue(Promise.reject(presentError)),
         }),
       );
-      const logErrorSpy = vi.spyOn(service, 'logError').mockImplementation(() => undefined);
+      const logErrorSpy = vi
+        .spyOn(service, 'logError')
+        .mockImplementation(() => undefined);
 
       await service.showError(new Error('test'));
 
       // Wait for async operations
-      await new Promise(resolve => setTimeout(resolve, 0));
+      await new Promise((resolve) => setTimeout(resolve, 0));
 
       expect(logErrorSpy).toHaveBeenCalledWith(
         presentError,
         'Failed to present toast with error message:',
-        { show: false }
+        { show: false },
       );
       logErrorSpy.mockRestore();
     });
@@ -208,17 +221,19 @@ describe('ErrorLoggerService', () => {
     it('should handle toast creation failure', async () => {
       const createError = new Error('create failed');
       toastController.create.mockReturnValue(Promise.reject(createError));
-      const logErrorSpy = vi.spyOn(service, 'logError').mockImplementation(() => undefined);
+      const logErrorSpy = vi
+        .spyOn(service, 'logError')
+        .mockImplementation(() => undefined);
 
       await service.showError(new Error('test'));
 
       // Wait for async operations
-      await new Promise(resolve => setTimeout(resolve, 0));
+      await new Promise((resolve) => setTimeout(resolve, 0));
 
       expect(logErrorSpy).toHaveBeenCalledWith(
         createError,
         'Failed to create a toast with error message:',
-        { show: false }
+        { show: false },
       );
       logErrorSpy.mockRestore();
     });
@@ -226,7 +241,9 @@ describe('ErrorLoggerService', () => {
     it('should handle toast dismiss failure in button handler', async () => {
       const dismissError = new Error('dismiss failed');
       toastController.dismiss.mockReturnValue(Promise.reject(dismissError));
-      const logErrorSpy = vi.spyOn(service, 'logError').mockImplementation(() => undefined);
+      const logErrorSpy = vi
+        .spyOn(service, 'logError')
+        .mockImplementation(() => undefined);
 
       await service.showError(new Error('test'));
 
@@ -237,7 +254,7 @@ describe('ErrorLoggerService', () => {
       expect(logErrorSpy).toHaveBeenCalledWith(
         dismissError,
         'Failed to dismiss error dialog',
-        { show: false }
+        { show: false },
       );
       logErrorSpy.mockRestore();
     });
@@ -256,7 +273,9 @@ describe('ErrorLoggerService', () => {
 
   describe('logErrorHandler', () => {
     it('should return a function that calls logError', () => {
-      const logSpy = vi.spyOn(service, 'logError').mockImplementation(() => undefined);
+      const logSpy = vi
+        .spyOn(service, 'logError')
+        .mockImplementation(() => undefined);
       const handler = service.logErrorHandler('test msg');
       handler('error');
       expect(logSpy).toHaveBeenCalledWith('error', 'test msg', undefined);

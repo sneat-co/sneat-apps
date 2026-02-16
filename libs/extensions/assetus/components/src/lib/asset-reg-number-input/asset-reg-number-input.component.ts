@@ -75,13 +75,11 @@ export class AssetRegNumberInputComponent implements OnChanges {
     return this.validatedRegNumber === this.regNumberControl.value?.trim();
   }
   protected validate(): void {
-// console.log('validate');
     this.validatedRegNumber = this.regNumberControl.value?.trim();
     this.skipOrNext();
   }
 
   protected skipOrNext(): void {
-// console.log('skipOrNext');
     const regNumber = this.regNumberControl.value?.trim();
     if (regNumber) {
       this.regNumberChange.emit(regNumber);

@@ -132,22 +132,16 @@ export class QueriesPageComponent
   }
 
   ionViewWillEnter(): void {
-// console.log('ionViewWillEnter()');
     this.isActiveView = true;
   }
 
-  ionViewDidEnter(): void {
-// console.log('ionViewDidEnter()');
-  }
+  ionViewDidEnter(): void {}
 
   ionViewDidLeave(): void {
-// console.log('ionViewDidLeave()');
     this.isActiveView = false;
   }
 
-  ngOnInit(): void {
-// console.log('QueriesPage.ngOnInit()');
-  }
+  ngOnInit(): void {}
 
   reloadQueries(): void {
     // this.loadQueries();

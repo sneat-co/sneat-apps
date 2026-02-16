@@ -51,7 +51,6 @@ export class QueriesMenuComponent {
     try {
       this.queryEditorStateService.queryEditorState.subscribe({
         next: (state) => {
-// console.log(
             'QueriesMenuComponent.constructor() => QueryEditorStateService => QueryEditor state:',
             state,
           );

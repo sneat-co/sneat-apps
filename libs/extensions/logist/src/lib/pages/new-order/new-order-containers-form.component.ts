@@ -46,7 +46,6 @@ export class NewOrderContainersFormComponent {
       '40ft': this.size40ft,
       '40ftHighCube': this.size40ftHighCube,
     });
-// console.log(
       'NewOrderContainersFormComponent.onSizeChanged(): numberOfContainers:',
       numberOfContainers,
     );

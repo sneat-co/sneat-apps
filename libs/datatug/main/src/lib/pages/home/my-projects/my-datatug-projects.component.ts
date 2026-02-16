@@ -105,8 +105,6 @@ export class MyDatatugProjectsComponent implements OnInit, OnDestroy {
   }
 
   goProject(project: IProjectAndStore): void {
-// console.log('goProject()', project);
-
     const projectContext: IProjectContext = {
       ref: project.ref,
       brief: project.project,

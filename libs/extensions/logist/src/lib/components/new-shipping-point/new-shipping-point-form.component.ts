@@ -101,7 +101,6 @@ export class NewShippingPointFormComponent {
     this.creating = true;
     this.orderService.addShippingPoint(order.space, request).subscribe({
       next: (order) => {
-// console.log('Shipping point added');
         this.orderCreated.emit(order);
       },
       error: (e) => {

@@ -40,7 +40,6 @@ export class SneatFirestoreService<Brief, Dbo extends Brief> {
       id,
     }),
   ) {
-// console.log('SneatFirestoreService.constructor()');
     if (!dto2brief) {
       throw new Error('dto2brief is required');
     }
@@ -59,7 +58,6 @@ export class SneatFirestoreService<Brief, Dbo extends Brief> {
   watchByDocRef<Dbo2 extends Dbo>(
     docRef: DocumentReference<Dbo2>,
   ): Observable<IIdAndOptionalBriefAndOptionalDbo<Brief, Dbo2>> {
-// console.log(`SneatFirestoreService.watchByDocRef(${docRef.path})`);
     return runInInjectionContext(this.injector, () => {
       const subj = new Subject<DocumentSnapshot<Dbo2>>();
       // const snapshots = docSnapshots<Dbo2>(docRef);
@@ -87,7 +85,6 @@ export class SneatFirestoreService<Brief, Dbo extends Brief> {
   getByDocRef<Dbo2 extends Dbo>(
     docRef: DocumentReference<Dbo2>,
   ): Observable<INavContext<Brief, Dbo2>> {
-// console.log(`SneatFirestoreService.watchByDocRef(${docRef.path})`);
     return from(getDoc(docRef)).pipe(
       map((changes) =>
         docSnapshotToDto<Brief, Dbo2>(docRef.id, this.dto2brief, changes),
@@ -109,7 +106,6 @@ export class SneatFirestoreService<Brief, Dbo extends Brief> {
       ...(queryArgs?.orderBy || []),
       ...(queryArgs?.limit ? [limit(queryArgs.limit)] : []),
     );
-// console.log('watchSnapshotsByFilter()', collectionRef.path, queryArgs, q);
     const subj = new Subject<QuerySnapshot<Dbo2>>();
     onSnapshot(q, subj);
     return subj;
@@ -121,7 +117,6 @@ export class SneatFirestoreService<Brief, Dbo extends Brief> {
   ): Observable<INavContext<Brief, Dbo2>[]> {
     return this.watchSnapshotsByFilter(collectionRef, queryArgs).pipe(
       map((querySnapshot) => {
-// console.log(
           'watchByFilter() => querySnapshot: ',
           querySnapshot,
           querySnapshot.docs,

@@ -1,7 +1,6 @@
 import {
   Tree,
   formatFiles,
-  generateFiles,
   joinPathFragments,
 } from '@nx/devkit';
 import * as path from 'path';
@@ -116,20 +115,8 @@ export async function extensionTestGenerator(
   tree.write(filePath, fileContent);
 
   await formatFiles(tree);
-// console.log(`✅ Generated ${type} test: ${filePath}`);
 
-  return () => {
-// console.log(`
-📝 Test file created successfully!
-
-Location: ${filePath}
-
-Next steps:
-1. Review the generated test file
-2. Add specific test cases for your implementation
-3. Run tests: pnpm nx test ${extension}-${subLib}
-`);
-  };
+  return () => undefined;
 }
 
 export default extensionTestGenerator;

@@ -1,4 +1,4 @@
-import { mergeValuesWithIDs, IWithStringID } from './todo_move_funcs';
+import { mergeValuesWithIDs } from './todo_move_funcs';
 
 describe('todo_move_funcs', () => {
   describe('mergeValuesWithIDs', () => {

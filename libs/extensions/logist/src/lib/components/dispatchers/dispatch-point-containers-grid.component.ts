@@ -122,7 +122,6 @@ export class DispatchPointContainersGridComponent implements OnChanges {
       };
     };
     this.containerPoints = containerPoints?.map(containerPointToRow) || [];
-// console.log(
       'DispatchPointContainersGridComponent.ngOnChanges(): shippingPointID',
       shippingPointID,
       'containerPoints',

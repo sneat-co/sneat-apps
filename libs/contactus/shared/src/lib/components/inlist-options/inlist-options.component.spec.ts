@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import { InlistOptionsComponent, Option, OptionEvent } from './inlist-options.component';
+import { InlistOptionsComponent, Option } from './inlist-options.component';
 
 describe('InlistOptionsComponent', () => {
   let component: InlistOptionsComponent;

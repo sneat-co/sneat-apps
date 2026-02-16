@@ -35,7 +35,6 @@ export abstract class SpaceModuleService<Dbo> extends ModuleSpaceItemService<
 
   watchSpaceModuleRecord(spaceID: string): Observable<IIdAndOptionalDbo<Dbo>> {
     const logPrefix = `SpaceModuleService.watchSpaceModuleRecord(spaceID=${spaceID}, moduleID=${this.moduleID})`;
-// console.log(logPrefix);
     return runInInjectionContext(this.injector, () => {
       const collectionRef = collection(
         this.spacesCollection,

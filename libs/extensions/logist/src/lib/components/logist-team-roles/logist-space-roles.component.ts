@@ -25,7 +25,6 @@ export class LogistSpaceRolesComponent {
   @Output() selectedRolesChange = new EventEmitter<readonly string[]>();
 
   protected onRoleChanged(event: Event): void {
-// console.log('onRoleChanged', event);
     const ce: CustomEvent = event as CustomEvent;
     const role = ce.detail.value as LogistSpaceRole;
     if (ce.detail.checked) {

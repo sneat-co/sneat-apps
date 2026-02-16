@@ -67,7 +67,6 @@ export class EntityService {
     from: IProjectRef,
     forceReload?: boolean,
   ): Observable<IRecord<IEntity>[]> => {
-// console.log('EntityService.getAllEntities()');
     let o = this.cache.getItems$(from);
     if (!o || forceReload) {
       const entities$ = this.cache.byRepo$[from.storeId]?.[from.projectId];

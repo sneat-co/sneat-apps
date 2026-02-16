@@ -35,7 +35,6 @@ abstract class SpaceItemBaseService<Brief, Dbo extends Brief> {
     if (!this.collectionName) {
       throw new Error('collectionName is required');
     }
-// console.log(
       `SpaceItemBaseService.constructor() collectionName=${this.collectionName}`,
     );
     this.sfs = new SneatFirestoreService<Brief, Dbo>(this.injector);
@@ -51,7 +50,6 @@ abstract class SpaceItemBaseService<Brief, Dbo extends Brief> {
     space: ISpaceRef,
     itemID: string,
   ): Observable<ISpaceItemNavContext<Brief, Dbo2>> {
-// console.log(
       `SpaceItemBaseService.watchSpaceItemByIdWithSpaceRef(space=${space.id}, itemID=${itemID}), collectionName=${this.collectionName}`,
     );
 
@@ -112,7 +110,6 @@ abstract class SpaceItemBaseService<Brief, Dbo extends Brief> {
     spaceRef: ISpaceRef,
     request: ISpaceRequest,
   ): Observable<ISpaceItemWithBriefAndDbo<Brief, Dbo>> {
-// console.log(`SpaceItemBaseService.createTeamItem()`, request);
     return this.sneatApiService
       .post<ICreateSpaceItemResponse<Brief, Dbo>>(endpoint, request)
       .pipe(
@@ -153,7 +150,6 @@ export class GlobalSpaceItemService<
   public watchGlobalItems<Dbo2 extends Dbo>(
     queryArgs: IQueryArgs,
   ): Observable<IIdAndBriefAndDbo<Brief, Dbo2>[]> {
-// console.log('watchGlobalItems()', this.collectionName);
     const collectionRef = this.collectionRef<Dbo2>();
     return this.queryItems<Dbo2>(collectionRef, queryArgs);
   }
@@ -171,7 +167,6 @@ export class GlobalSpaceItemService<
     spaceID: string,
     queryArgs: IQueryArgs,
   ): Observable<IIdAndBriefAndDbo<Brief, Dbo2>[]> {
-// console.log('watchGlobalSpaceItems()', spaceID, this.collectionName);
     queryArgs = {
       ...queryArgs,
       filter: [
@@ -256,7 +251,6 @@ export class ModuleSpaceItemService<
     spaceID: string,
     queryArgs?: IQueryArgs,
   ): Observable<IIdAndBriefAndDbo<Brief, Dbo2>[]> {
-// console.log('watchModuleSpaceItems()', spaceID, this.collectionName);
     // filter = [
     // 	...(filter || []),
     // 	// { field: 'spaceIDs', operator: '==', value: spaceID },

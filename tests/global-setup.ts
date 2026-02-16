@@ -8,11 +8,8 @@ import { initializeFirebaseEmulators } from './common/firebase-helpers';
  * that should be initialized once before all tests run.
  */
 async function globalSetup(_config: FullConfig): Promise<void> {
-// console.log('Running global setup...');
-
   // Initialize Firebase emulators
   await initializeFirebaseEmulators();
-// console.log('Global setup complete');
 }
 
 export default globalSetup;

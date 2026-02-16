@@ -92,7 +92,6 @@ export class SpaceMenuComponent extends SpaceBaseComponent {
         filter((event) => event instanceof NavigationEnd),
       )
       .subscribe((event: NavigationEnd) => {
-// console.log('SpaceMenuComponent.router.events.subscribe():', event);
         let route = this.activatedRoute.firstChild;
         while (route?.firstChild) {
           route = route.firstChild;
@@ -118,7 +117,6 @@ export class SpaceMenuComponent extends SpaceBaseComponent {
   }
 
   protected goSpacePage(event: Event, p: string): boolean {
-// console.log('SpaceMenuComponent.goSpacePage()', p, event);
     // At the moment we use routerLink for navigation
     event.stopPropagation();
     // event.preventDefault();
@@ -151,7 +149,6 @@ export class SpaceMenuComponent extends SpaceBaseComponent {
   }
 
   private readonly onUserStateChanged = (userState: ISneatUserState): void => {
-// console.log('SpaceMenuComponent.onUserStateChanged():', userState);
     this.$spaces.set(
       userState?.record
         ? zipMapBriefsWithIDs(userState.record.spaces) || []

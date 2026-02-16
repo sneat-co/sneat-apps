@@ -67,7 +67,6 @@ export abstract class AssetBasePage extends CommuneBasePage implements OnInit {
         throw new Error('!assetId');
       }
       this.assetService.watchById(assetId).subscribe((asset) => {
-// console.log(
           `AssetPage.assetService.watchItemById(${assetId}) =>`,
           asset,
         );

@@ -184,7 +184,6 @@ export class HappeningService {
   }
 
   public deleteHappening(happening: IHappeningContext): Observable<void> {
-// console.log('deleteHappening', happening);
     const request: IHappeningRequest = {
       spaceID: happening.space?.id || '',
       happeningID: happening.id,
@@ -198,7 +197,6 @@ export class HappeningService {
   }
 
   public deleteSlot(request: IDeleteSlotRequest): Observable<void> {
-// console.log('deleteSlot', request);
     return this.sneatApiService.delete(
       'happenings/delete_slot',
       undefined,
@@ -326,7 +324,6 @@ export class HappeningService {
     space: ISpaceContext,
     id: string,
   ): Observable<IHappeningContext> {
-// console.log(
       `watchHappeningByID(space={id=${space.id}, type=${space.type}, id=${id})`,
     );
     return this.spaceItemService.watchSpaceItemByIdWithSpaceRef(space, id).pipe(
@@ -390,7 +387,6 @@ export class HappeningService {
     limit?: number,
   ): Observable<IHappeningContext[]> {
     const date = dateToIso(new Date());
-// console.log('watchSingles()', space.id, date, dateCondition);
     const typeCondition: IFilter = {
       field: 'type',
       operator: '==',
@@ -425,7 +421,6 @@ export class HappeningService {
     if (!date) {
       return throwError(() => 'missing required field "date"');
     }
-// console.log('watchSinglesOnSpecificDay()', space.id, date, status);
     // const teamDate = team.id + ':' + date;
     return this.spaceItemService
       .watchModuleSpaceItemsWithSpaceRef(space, {
@@ -436,7 +431,6 @@ export class HappeningService {
       })
       .pipe(
         tap((happenings) => {
-// console.log(
             'watchSinglesOnSpecificDay() =>',
             space.id,
             date,

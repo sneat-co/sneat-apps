@@ -20,7 +20,6 @@ export class LogistSpaceBaseComponent extends SpaceBaseComponent {
         .pipe(this.takeUntilDestroyed())
         .subscribe({
           next: (logistSpace) => {
-// console.log('logistSpace:', logistSpace);
             this.logistSpace = logistSpace;
           },
           error: (err) => {

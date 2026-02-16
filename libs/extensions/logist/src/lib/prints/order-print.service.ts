@@ -15,7 +15,6 @@ export class OrderPrintService {
     docID: string,
     orderDocContext: IOrderPrintedDocContext,
   ): void {
-// console.log('openOrderPrintedDocument()', docID, orderDocContext);
     const { id, space } = orderDocContext;
     let url = `/space/${space.type}/${space.id}/order/${id}/print/${docID}?`;
     Object.entries(orderDocContext.params as object).forEach(([k, v]) => {

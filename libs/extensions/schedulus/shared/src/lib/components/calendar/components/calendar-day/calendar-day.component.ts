@@ -141,7 +141,6 @@ export class CalendarDayComponent
     this.slotsSubscription?.unsubscribe();
     const weekday = this.$weekday();
     if (weekday?.day) {
-// console.log(
         `ScheduleDayComponent[wd=${weekday.id}, dateID=${weekday.day?.dateID}].subscribeForSlots()`,
       );
       this.slotsSubscription = weekday.day.slots$
@@ -154,7 +153,6 @@ export class CalendarDayComponent
   }
 
   private readonly processSlots = (slots?: ISlotUIContext[]) => {
-// console.log(this.logPrefix() + `.processSlots(), slots:`, slots);
     this.allSlots = slots;
     this.applyFilter();
   };
@@ -176,7 +174,6 @@ export class CalendarDayComponent
       wd: jsDayToWeekday(date.getDay() as WeekdayNumber),
       date: dateToIso(date),
     };
-// console.log('ScheduleDayComponent.goNewHappening()', date, params);
     this.scheduleNavService.goNewHappening(space, params);
   }
 }

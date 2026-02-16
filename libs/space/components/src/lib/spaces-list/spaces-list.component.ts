@@ -118,7 +118,6 @@ export class SpacesListComponent extends SneatBaseComponent {
       .pipe(this.takeUntilDestroyed())
       .subscribe({
         next: (value) => {
-// console.log('Space created:', value);
           this.navigateToSpace(value);
         },
         error: this.errorLogger.logErrorHandler(

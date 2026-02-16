@@ -149,7 +149,6 @@ export class HappeningFormComponent
   private readonly modalController = inject(ModalController);
 
   protected async editTitle(event: Event) {
-// console.log('editTitle()', event);
     event.preventDefault();
     event.stopPropagation();
     const modal = await this.modalController.create({
@@ -184,7 +183,6 @@ export class HappeningFormComponent
   protected isToDo = false;
 
   private readonly onHappeningTitleChanged = (): void => {
-// console.log('onHappeningTitleChanged', this.happeningTitle.value);
   };
 
   constructor() {
@@ -215,7 +213,6 @@ export class HappeningFormComponent
   protected onHappeningTypeChanged(event: Event): void {
     const happeningType = (event as CustomEvent).detail.value as HappeningType;
     let happening = this.$happening();
-// console.log(
       'HappeningFormComponent.onHappeningTypeChanged()',
       happeningType,
       happening,
@@ -257,12 +254,10 @@ export class HappeningFormComponent
   }
 
   protected onTitleEnter(event: Event): void {
-// console.log('onTitleEnter()', event);
     this.changeDetectorRef.markForCheck();
   }
 
   protected onTitleChanged(event: CustomEvent): void {
-// console.log('onTitleChanged()', event);
 
     if (event.detail.value === this.titleInput?.value) {
       this.happeningTitle.reset();
@@ -295,12 +290,10 @@ export class HappeningFormComponent
   // }
 
   protected onSlotAdded(slot: IHappeningSlot): void {
-// console.log('onSlotAdded()', slot, this.$happening());
     this.happeningForm.markAllAsTouched();
   }
 
   protected onHappeningChanged(happening: IHappeningContext): void {
-// console.log('HappeningFormComponent.onHappeningChanged()', happening);
     // this.happening = happening;
     this.happeningForm.markAllAsTouched(); // TODO: Document why we need it and if we can remove it
     this.happeningChange.emit(happening);
@@ -363,7 +356,6 @@ export class HappeningFormComponent
   }
 
   private createHappening(): void {
-// console.log('NewHappeningPageComponent.createHappening()');
     const space = this.$space();
     if (!space) {
       this.errorLogger.logError(new Error('!space context'));
@@ -403,7 +395,6 @@ export class HappeningFormComponent
         .pipe(takeUntil(this.destroyed$))
         .subscribe({
           next: () => {
-// console.log('new happening created');
             if (this.hasNavHistory) {
               this.navController
                 .pop()

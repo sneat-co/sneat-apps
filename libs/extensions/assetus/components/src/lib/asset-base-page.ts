@@ -42,7 +42,6 @@ export abstract class AssetBasePage extends SpaceItemPageBaseComponent<
   }
 
   protected override setItemContext(item?: IAssetContext) {
-// console.log('AssetBasePage/setItemContext', item);
     super.setItemContext(item);
     this.asset = item;
   }

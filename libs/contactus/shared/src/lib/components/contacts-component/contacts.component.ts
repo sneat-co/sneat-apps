@@ -129,7 +129,6 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
 
   public ngOnInit() {
     this.command?.pipe(this.takeUntilDestroyed()).subscribe((command) => {
-// console.log('ContactsComponent.ngOnInit() command=' + command);
       switch (command.name) {
         case 'new_contact':
           this.addNewContact(command.event).catch(
@@ -154,7 +153,6 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
   private $contactsByRole = computed<
     Record<string, readonly IContactWithCheck[]>
   >(() => {
-// console.log('$contactsByRole - started');
     const contacts = this.$allContacts() || [];
     const contactsByRole: Record<string, IContactWithBriefAndSpace[]> = {
       '': [],
@@ -172,7 +170,6 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
         }
       });
     });
-// console.log('$contactsByRole complete:', contacts, contactsByRole);
     return contactsByRole;
   });
 
@@ -203,7 +200,6 @@ export class ContactsComponent extends SneatBaseComponent implements OnInit {
     }
     const role = this.$roleID(),
       filter = this.$filter().trim().toLowerCase();
-// console.log('$contacts - started', allContacts);
 
     const space = this.$space();
 

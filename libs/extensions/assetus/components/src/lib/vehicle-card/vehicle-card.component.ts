@@ -98,7 +98,6 @@ export class VehicleCardComponent implements OnChanges {
   }
 
   countryChanged(value: string): void {
-// console.log('countryChanged', value, this.vehicleAsset?.dbo);
     if (this.vehicleAsset?.dbo) {
       this.vehicleAsset = {
         ...this.vehicleAsset,
@@ -155,7 +154,6 @@ export class VehicleCardComponent implements OnChanges {
   }
 
   protected onAssetChanged(asset: IAssetContext): void {
-// console.log('onVehicleAssetChanged', asset, this.vehicleAsset);
     this.vehicleAsset = asset as IAssetVehicleContext;
     this.vehicleAssetChange.emit(this.vehicleAsset);
   }

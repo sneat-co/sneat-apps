@@ -41,7 +41,6 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
     from: IProjectRef,
     folderPath: string,
   ): Observable<ProjItem[]> {
-// console.log('getProjItems', from, folderPath);
     return this.storeApiService
       .get<ProjItem[]>(
         from.storeId,
@@ -68,7 +67,6 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
     from: IProjectRef,
     folderPath: string,
   ): Observable<T | null | undefined> {
-// console.log('getFolder', from, folderPath);
     if (from.storeId === 'firestore') {
       return this.watchFirestoreFolder<T>(from.projectId, folderPath).pipe(
         take(1),
@@ -95,7 +93,6 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
     projectId: string,
     folderPath: string,
   ): Observable<T | null | undefined> {
-// console.log('watchFirestoreFolder', projectId, folderPath);
     const datatugProjects = collection(this.db, 'datatug_projects');
     const project = doc(datatugProjects, projectId);
     const queries = collection(project, 'queries');

@@ -95,7 +95,6 @@ export class ContainerPointLoadFormComponent implements OnChanges {
   // protected readonly onWeightChange = (event: Event): void => this.onNumberDebounced('grossWeightKg', this.weight.value || undefined);
 
   constructor() {
-// console.log('ContainerPointLoadFormComponent.constructor()');
     this.weight$.subscribe((v) => this.onNumberDebounced('grossWeightKg', v));
     this.pallets$.subscribe((v) =>
       this.onNumberDebounced('numberOfPallets', v),
@@ -167,7 +166,6 @@ export class ContainerPointLoadFormComponent implements OnChanges {
         'Failed to set container point task',
       ),
     });
-// console.log('onTaskChecked()', task, checked, this.containerPoint.tasks);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -212,7 +210,6 @@ export class ContainerPointLoadFormComponent implements OnChanges {
   }
 
   private setNumberField(name: FreightPointIntField, number?: number): void {
-// console.log(
       'ContainerPointLoadFormComponent.setNumberField()',
       name,
       number,
@@ -264,7 +261,6 @@ export class ContainerPointLoadFormComponent implements OnChanges {
       .setContainerPointFreightFields(excludeEmpty(request))
       .subscribe({
         next: () => {
-// console.log('setContainerPointNumber() success for ', name, number);
           complete();
           switch (name) {
             case 'grossWeightKg':

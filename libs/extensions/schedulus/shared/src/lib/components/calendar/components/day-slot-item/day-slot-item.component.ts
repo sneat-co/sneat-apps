@@ -80,7 +80,6 @@ export class DaySlotItemComponent extends WithSpaceInput {
   }
 
   protected onSlotClicked(event: Event): void {
-// console.log('DaySlotItemComponent.onSlotClicked()');
     event.stopPropagation();
     const slot = this.$slotContext();
     if (!slot) {
@@ -106,7 +105,6 @@ export class DaySlotItemComponent extends WithSpaceInput {
     // Need to import dynamically due to circular depndency with DaySlotItemComponent
     import('./slot-context-menu.component').then(async (m) => {
       const slotContext = this.$slotContext();
-// console.log(
         'DaySlotItemComponent.showContextMenu() slotContext:',
         slotContext,
       );

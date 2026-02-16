@@ -55,7 +55,6 @@ export class SelectServiceProviderPageComponent extends AssetBasePage {
     this.route.queryParamMap.subscribe((params) => {
       this.serviceType = params.get('type') as LiabilityServiceType;
       this.serviceTypeTitle = this.serviceType;
-// console.log('serviceType:', this.serviceType);
     });
   }
 
@@ -80,7 +79,6 @@ export class SelectServiceProviderPageComponent extends AssetBasePage {
           this.asset.dto.categoryId,
         )
         .subscribe((result) => {
-// console.log('serviceProviders:', result.values);
           const serviceType = this.serviceType;
           this.serviceProviders = this.serviceType
             ? result.values.filter(
@@ -91,9 +89,7 @@ export class SelectServiceProviderPageComponent extends AssetBasePage {
     }
   }
 
-  selectProvider(serviceProvider: DtoServiceProvider): void {
-// console.log('selectProvider() => id:', serviceProvider.id);
-  }
+  selectProvider(serviceProvider: DtoServiceProvider): void {}
 
   other(): void {
     this.isOtherSelected = true;

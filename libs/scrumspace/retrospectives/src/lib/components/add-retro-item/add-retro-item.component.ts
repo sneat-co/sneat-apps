@@ -30,7 +30,6 @@ export class AddRetroItemComponent implements OnDestroy {
   }
 
   public add(event?: Event): void {
-// console.log('add()');
     event?.stopPropagation();
     event?.preventDefault();
 
@@ -56,11 +55,7 @@ export class AddRetroItemComponent implements OnDestroy {
       .addRetroItem(request)
       .pipe(takeUntil(this.destroyed))
       .subscribe({
-        next: (response) => {
-// console.log(
-            'retrospectiveService.addRetroItem() => response:',
-            response,
-          );
+        next: () => {
           this.isAdding = false;
         },
         error: (err) => {

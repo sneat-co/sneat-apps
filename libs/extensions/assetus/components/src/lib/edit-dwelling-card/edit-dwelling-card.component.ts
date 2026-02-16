@@ -117,7 +117,6 @@ export class AddDwellingCardComponent implements OnChanges {
   }
 
   protected onCountryChanged(value: string): void {
-// console.log('countryChanged', value, this.dwellingAsset?.dbo);
     if (this.dwellingAsset?.dbo) {
       this.dwellingAsset = {
         ...this.dwellingAsset,
@@ -128,7 +127,6 @@ export class AddDwellingCardComponent implements OnChanges {
   }
 
   protected onAssetChanged(asset: IAssetContext): void {
-// console.log(asset.dbo);
     this.dwellingAsset = asset as IAssetDwellingContext;
     this.dwellingAssetChange.emit(this.dwellingAsset);
   }

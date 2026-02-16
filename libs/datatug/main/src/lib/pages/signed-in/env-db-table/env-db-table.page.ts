@@ -119,7 +119,6 @@ export class EnvDbTablePageComponent implements OnDestroy {
   constructor() {
     const route = this.route;
     const errorLogger = this.errorLogger;
-// console.log('EnvDbTablePage.constructor()', errorLogger);
     // const projectTracker = new ProjectTracker(this.destroyed, route);
     try {
       const { paramMap } = route.snapshot;
@@ -139,7 +138,6 @@ export class EnvDbTablePageComponent implements OnDestroy {
 
       this.datatugNavContextService.currentProject.subscribe({
         next: (currentProject) => {
-// console.log(
             'EnvDbTablePage.constructor() => currentProject',
             currentProject,
           );
@@ -157,7 +155,6 @@ export class EnvDbTablePageComponent implements OnDestroy {
       });
       this.datatugNavContextService.currentEnvDbTable.subscribe({
         next: (currentTable) => {
-// console.log('EnvDbTablePage => currentTable:', currentTable);
           try {
             this.table = currentTable;
             if (!currentTable) {
@@ -172,7 +169,6 @@ export class EnvDbTablePageComponent implements OnDestroy {
                 : `${currentTable.schema}.${currentTable.name}`;
             this.sql = `select *
 from ${from}`;
-// console.log('sql:', this.sql, currentTable);
             // this.codemirrorComponent?.codeMirror?.refresh();
             if (currentTable.meta) {
               this.grid = {
@@ -203,7 +199,6 @@ from ${from}`;
   }
 
   public tabChanged(event: Event): void {
-// console.log('tab changed:', this.tab, event);
   }
 
   // public selectRow(event: RowDoubleClickedEvent): void {
@@ -213,7 +208,6 @@ from ${from}`;
   // }
 
   public setCurrentRow(index: number, data?: Record<string, unknown>): void {
-// console.log('setCurrentRow()', index, data);
     try {
       if (!data) {
         const rows = this.grid?.rows;
@@ -226,7 +220,6 @@ from ${from}`;
   }
 
   public onGroupByFkChanged(event: Event): void {
-// console.log('onGroupByFkChanged()', event);
     this.setupGrid();
   }
 
@@ -274,7 +267,6 @@ from ${from}`;
           if (fk) {
             el.style.color = 'blue';
             el.onclick = (event) => {
-// console.log('Mouse clicked: ' + value, colDef, colDef.field);
               this.popoverController
                 .create({
                   component: CellPopoverComponent,
@@ -317,7 +309,6 @@ from ${from}`;
   }
 
   private loadData(): void {
-// console.log('EnvDbTablePage.loadData()', this.table);
     if (!this.project || !this.envId || !this.dbId || !this.table?.meta?.name) {
       return;
     }
@@ -346,7 +337,6 @@ from ${from}`;
   }
 
   private processResponse = (response: IExecuteResponse): void => {
-// console.log('processResponse()', response);
     try {
       this.step = 'processResponse';
       const firstCommand = response.commands?.length
@@ -356,14 +346,12 @@ from ${from}`;
       const itemWithRecordset = firstItem as ICommandResponseWithRecordset;
       this.recordset = itemWithRecordset?.value;
       this.setupGrid();
-// console.log('Grid was set up', 'grid:', this.grid);
     } catch (ex) {
       this.errorLogger.logError(ex, 'Failed to process response');
     }
   };
 
   private setupGrid(): void {
-// console.log('setupGrid()', this, this.recordset);
     this.step = 'setupGrid';
     const cols = this.recordset?.columns;
     if (!cols) {
@@ -400,7 +388,6 @@ from ${from}`;
           return r;
         }),
       };
-// console.log('grid:', this.grid);
       const gridRows = this.grid?.rows;
       const l = this.grid?.rows?.length;
       if (gridRows && l) {

@@ -79,7 +79,6 @@ export abstract class CalendarBaseComponent
 
   protected constructor() {
     super();
-// console.log(`${this.className}:CalendarBaseComponent.constructor()`);
     const calendariumSpaceService = inject(CalendariumSpaceService);
     const happeningService = inject(HappeningService);
     const calendarDayService = inject(CalendarDayService);
@@ -117,7 +116,6 @@ export abstract class CalendarBaseComponent
   }
 
   protected setDay(source: string, d: Date): void {
-// console.log(
       `CalendarBaseComponent.setDay(source=${source}), date=${dateToIso(d)}`,
     );
     if (!d) {

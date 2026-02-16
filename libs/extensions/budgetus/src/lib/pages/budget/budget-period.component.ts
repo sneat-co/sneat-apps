@@ -75,7 +75,6 @@ export class BudgetPeriodComponent implements OnChanges {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-// console.log('BudgetPeriodComponent.ngOnChanges()', this.$period(), changes);
     if (changes['liabilitiesByPeriod'] || changes['period']) {
       this.periodLiabilities = this.$period()
         ? this.liabilitiesByPeriod?.[this.$period()]

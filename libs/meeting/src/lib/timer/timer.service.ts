@@ -61,7 +61,6 @@ export class Timer {
   }
 
   public updateTimerState(timerState?: ITimerState): ITimerState {
-// console.log(
       'Timer.updateTimerState()',
       { ...timerState },
       { ...this.state },
@@ -166,7 +165,6 @@ export class Timer {
     operation: TimerOperation,
     member?: string,
   ): Observable<never> {
-// console.log(`Timer.toggleTimer(member=${member})`);
     const result = new Subject<never>();
     try {
       this.prevState = this.state;
@@ -272,7 +270,6 @@ export class Timer {
   };
 
   private onTimerResponse = (response: ITimerResponse): ITimerState => {
-// console.log('onTimerResponse()', response);
     this.prevState = undefined;
     this.state = {
       ...this.state,
@@ -303,7 +300,6 @@ export class Timer {
 
   private stopTicking(): void {
     this.unsubscribeInterval();
-// console.log('Timer.stopTicking()', this.state?.status);
     if (this.state?.status !== TimerStatusEnum.stopped) {
       this.state = {
         ...this.state,
@@ -342,10 +338,8 @@ export class Timer {
       state.isToggling !== lastTick.isToggling
     ) {
       this.lastTick = state;
-// console.log('Timer.emitTick()', JSON.stringify(state));
       this.tick.next(state);
     } else {
-// console.log('Timer.emitTick(): state not changed');
     }
   }
 }

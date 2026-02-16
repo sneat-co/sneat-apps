@@ -49,7 +49,6 @@ export class ScrumsHistoryPageComponent {
     const route = inject(ActivatedRoute);
 
     const space = history.state?.team as IRecord<ISpaceDbo>;
-// console.log('space', space);
     if (space?.id) {
       this.space = space;
     } else {
@@ -85,7 +84,7 @@ export class ScrumsHistoryPageComponent {
   }
 
   goScrum(scrum: IRecord<IScrumDbo>): void {
-// console.log('goScrum', scrum);
+    void scrum;
     // this.navService.navigateToScrum(scrum.id, this.team, scrum);
     throw new Error('not implemented');
   }

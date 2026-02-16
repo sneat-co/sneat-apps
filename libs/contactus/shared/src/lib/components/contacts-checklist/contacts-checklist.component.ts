@@ -115,12 +115,6 @@ export class ContactsChecklistComponent extends SneatBaseComponent {
     if (!contacts) {
       return undefined;
     }
-// console.log(
-      'ContactsChecklistComponent.subscribeForContactBriefs() =>',
-      contacts,
-      roles,
-      rolesToExclude,
-    );
 
     const spaceRef = this.$spaceRef();
 
@@ -150,9 +144,6 @@ export class ContactsChecklistComponent extends SneatBaseComponent {
   }
 
   private subscribeForContactBriefs(spaceID: string): void {
-// console.log(
-      `ContactsChecklistComponent.subscribeForContactBriefs(spaceID=${spaceID})`,
-    );
     this.contactusSpaceSubscription = this.contactusSpaceService
       .watchContactBriefs(spaceID)
       .pipe(this.takeUntilDestroyed())
@@ -169,7 +160,6 @@ export class ContactsChecklistComponent extends SneatBaseComponent {
   protected onCheckboxChange(event: Event, contact: IContactWithBrief): void {
     const ce = event as CustomEvent;
     const cID = contact.id;
-// console.log('onCheckboxChange()', ce);
     const checked = !!ce.detail.checked;
     if (checked) {
       if (!this.$checkedInProgress().includes(cID)) {
@@ -179,7 +169,6 @@ export class ContactsChecklistComponent extends SneatBaseComponent {
       this.$uncheckedInProgress.update((v) => [...v, cID]);
     }
     const clearInProgress = () => {
-// console.log('clearInProgress()', cID, checked);
       if (checked) {
         this.$checkedInProgress.update((v) => v.filter((id) => id !== cID));
       } else {

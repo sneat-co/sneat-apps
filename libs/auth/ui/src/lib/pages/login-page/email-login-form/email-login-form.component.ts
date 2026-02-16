@@ -325,7 +325,6 @@ export class EmailLoginFormComponent {
       this.analyticsService.logEvent(eventName, eventParams);
     }
     if ((err as FirebaseError).code === 'auth/wrong-password') {
-// console.log(err);
       this.wrongPassword = true;
       return;
     }

@@ -60,7 +60,6 @@ export class SubcontactInputComponent {
   openContactSelector(event: Event): void {
     event.stopPropagation();
     event.preventDefault();
-// console.log('ContactInputComponent.openContactSelector()');
     if (!this.space) {
       this.errorLogger.logError(
         'ContactInputComponent.openContactSelector(): team is required',
@@ -77,7 +76,6 @@ export class SubcontactInputComponent {
     this.contactSelectorService
       .selectSingleInModal(selectorOptions)
       .then((contact) => {
-// console.log(
           'ContactInputComponent.openContactSelector() contact:',
           contact,
         );

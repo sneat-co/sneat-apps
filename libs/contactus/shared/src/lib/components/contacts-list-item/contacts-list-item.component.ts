@@ -146,7 +146,6 @@ export class ContactsListItemComponent extends SneatBaseComponent {
   };
 
   archiveContact(): void {
-// console.log('ContactListItemComponent.removeContact()');
     const space = this.$space();
     if (!space.id) {
       return;
@@ -160,9 +159,7 @@ export class ContactsListItemComponent extends SneatBaseComponent {
           contactIDs: [contact.id],
         })
         .subscribe({
-          next: () => {
-// console.log('ContactListItemComponent.removeContact() => done');
-          },
+          next: () => {},
           error: this.errorLogger.logError,
         });
     }

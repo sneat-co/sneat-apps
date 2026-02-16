@@ -76,7 +76,7 @@ export class CommChannelItemComponent extends SneatBaseComponent {
     });
   }
 
-  protected deleteChannel(event: Event): void {
+  protected deleteChannel(): void {
     // console.log('deleteChannel', event);
     const channelID = this.$channel().id;
     if (!channelID) {
@@ -107,7 +107,7 @@ export class CommChannelItemComponent extends SneatBaseComponent {
       });
   }
 
-  protected saveChanges(event: Event): void {
+  protected saveChanges(): void {
     // console.log('saveChanges', event);
     const channelID = (this.channelID.value || '').trim();
     if (!channelID) {

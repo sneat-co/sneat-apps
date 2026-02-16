@@ -18,7 +18,6 @@ export class UserRecordService {
         ianaTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       };
     }
-// console.log(`initUserRecord()`, request);
     request = excludeUndefined(request);
     this.initUserRecord$ = this.sneatApiService
       .post<IUserDbo>('users/init_user_record', request)

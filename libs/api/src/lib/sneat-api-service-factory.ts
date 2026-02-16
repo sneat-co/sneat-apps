@@ -6,7 +6,6 @@ import { SneatApiService } from './sneat-api-service';
 export const getStoreUrl = (storeId: string): string => {
   if (storeId === 'firestore') {
     const v = 'http://localhost:4300/v0'; //environment.agents.firestoreStoreAgent;
-// console.log('firestoreStoreAgent', v);
     return v.endsWith('/') ? v.substring(0, v.length - 1) : v;
   }
   if (!storeId || storeId.match(/https?:\/\//)) {
@@ -30,9 +29,7 @@ export const getStoreUrl = (storeId: string): string => {
 export class SneatApiServiceFactory {
   private services: Record<string, ISneatApiService> = {};
 
-  constructor() {
-// console.log('SneatApiServiceFactory.constructor()');
-  }
+  constructor() {}
 
   public getSneatApiService(storeId: string): ISneatApiService {
     if (!storeId) {

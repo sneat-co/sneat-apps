@@ -171,7 +171,6 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
 
   constructor() {
     // private readonly changeDetector: ChangeDetectorRef,
-// console.log('SqlQueryEditorComponent.constructor()', location.hash);
     this.queryEditorStateService.queryEditorState
       .pipe(distinctUntilChanged())
       .subscribe({
@@ -221,7 +220,6 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
       if (!queryState) {
         return;
       }
-// console.log('onQueryEditorStateChanged', queryState);
       this.queryState = queryState;
       if (this.sql != (queryState.request as ISqlQueryRequest).text) {
         this.sql = (queryState.request as ISqlQueryRequest).text;
@@ -256,7 +254,6 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
   }
 
   public onParametersChanged(parameters: IParameter[]): void {
-// console.log('onParametersChanged:', parameters);
     this.parameters = parameters;
   }
 
@@ -313,7 +310,6 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
       .pipe(takeUntil(this.destroyed))
       .subscribe({
         next: (envSummary) => {
-// console.log('envSummary:', envSummary);
           if (!envSummary) {
             this.errorLogger.logError(
               'getEnvSummary returned nothing for envId=' + envId,
@@ -369,7 +365,6 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
   private trackQueryParams(): void {
     this.route.queryParamMap.subscribe({
       next: (queryParams) => {
-// console.log(
           'SqlQueryPageComponent.trackQueryParams(): queryParams:',
           queryParams,
         );
@@ -379,7 +374,6 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
           catalog: queryParams.get('catalog'),
           driver: queryParams.get('driver'),
         } as ISqlQueryTarget;
-// console.log('target', this.target);
         this.updateQueryContext();
       },
     });
@@ -399,7 +393,6 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
             repository: projectRef.storeId,
             project: projectRef.projectId,
           } as ISqlQueryTarget;
-// console.log('target', this.target);
           this.updateQueryContext();
         }
       },
@@ -470,7 +463,6 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
   }
 
   private updateQueryContext(): void {
-// console.log('updateQueryContext()', this.target);
     if (
       this.target &&
       this.target.repository &&
@@ -507,7 +499,6 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
   catalogChanged(event: Event): void {
     const { detail } = event as CustomEvent;
     const { value } = detail;
-// console.log('catalogChanged', value, this.activeEnv?.catalogId);
     if (value === this.activeEnv?.catalogId) {
       return;
     }
@@ -631,7 +622,6 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
       .pipe(takeUntil(this.destroyed))
       .subscribe({
         next: (response) => {
-// console.log('response:', response);
           let recordsets: IRecordsetResult[] = [];
 
           const mapRecordset = (result: IRecordsetResult): IRecordset => {
@@ -698,7 +688,6 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
     envState: IQueryEnvState,
     queryState?: IQueryState,
   ): IQueryEnvState {
-// console.log('updateEnvState', envState);
     if (!envState.id) {
       throw new Error('!envState.id');
     }
@@ -762,7 +751,6 @@ export class SqlQueryEditorComponent implements OnDestroy, ViewDidEnter {
       } else {
         this.updateUrl();
       }
-// console.log('this.queryAst:', this.queryAst);
     } catch (e) {
       this.errorLogger.logError(e, 'Failed to process onSqlChanged event');
     }

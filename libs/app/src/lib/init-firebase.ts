@@ -25,7 +25,6 @@ export function provideFireApp(firebaseConfig: IFirebaseConfig) {
 export function getAngularFireProviders(
   firebaseConfig: IFirebaseConfig,
 ): EnvironmentProviders[] {
-// console.log('getAngularFireProviders()');
   const providers = [
     provideFirebaseApp(() => initFirebase(firebaseConfig)),
     provideFirestore((injector) => {
@@ -34,7 +33,6 @@ export function getAngularFireProviders(
       const firestore = getFirestore(fbApp);
       const { emulator } = firebaseConfig;
       if (emulator) {
-// console.log(
           `using firebase firestore emulator on ${emulator.firestoreHost}:${emulator.firestorePort}`,
         );
         connectFirestoreEmulator(
@@ -80,7 +78,6 @@ export function getAngularFireProviders(
         // );
         // const fbAnalytics = getAnalytics(fbApp);
         const fbAnalytics = getAnalytics();
-// console.log(
           'AngularFire: provideAnalytics() => ',
           // 'fbApp:',
           // fbApp,
@@ -95,7 +92,6 @@ export function getAngularFireProviders(
 }
 
 function initFirebase(firebaseConfig: IFirebaseConfig): FirebaseApp {
-// console.log(
     'initFirebase()' +
       (firebaseConfig.emulator ? ' - using firebase emulators' : ''),
     firebaseConfig,

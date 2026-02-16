@@ -108,7 +108,6 @@ export class RetrospectivePageComponent
   protected override onSpaceIdChanged() {
     super.onSpaceIdChanged();
     try {
-// console.log('RetrospectivePage.onSpaceIdChanged()');
       if (this.retrospective?.id) {
         this.watchRetro();
       }
@@ -157,11 +156,9 @@ export class RetrospectivePageComponent
   }
 
   private watchRetro(): void {
-// console.log('RetrospectivePage.watchRetro()');
     this.userService.userChanged
       // .pipe(filter(uid => !!uid))
       .subscribe((userID) => {
-// console.log('RetrospectivePage.watchRetro() => userID:', userID);
         try {
           if (this.retroSub) {
             this.retroSub.unsubscribe();
@@ -192,7 +189,6 @@ export class RetrospectivePageComponent
     teamId: string,
     retrospective: IRecord<IRetrospective>,
   ): void {
-// console.log('RetrospectivePage.setRetro()');
     try {
       if (
         this.retrospective?.id === retrospective.id &&

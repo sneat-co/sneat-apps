@@ -69,13 +69,11 @@ export class SqlQueryWidgetComponent implements OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if ((changes['data'] || changes['boardContext']) && this.data) {
-// console.log('SqlQueryWidgetComponent.ngOnChanges()', this.data);
       let sql = this.data.query;
       const match = sql.match(reSqlParams);
       if (match) {
         const paramName = match[1];
         const parameter = this.boardContext?.parameters[paramName];
-// console.log('Parameter: ', paramName, parameter);
         if (parameter) {
           switch (parameter.type) {
             case 'string':
@@ -109,7 +107,6 @@ export class SqlQueryWidgetComponent implements OnChanges, OnDestroy {
           });
       } else {
         // TODO: temporary debug thing
-// console.log(
           `Not issuing SELECT query as env=${this.data.env}, db=${this.data.db}`,
         );
       }

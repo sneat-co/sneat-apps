@@ -139,7 +139,6 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 
     super(params);
     const listusAppStateService = this.listusAppStateService;
-// console.log('ListPageComponent.constructor(), userId:', this.currentUserId);
     this.preloader.markAsPreloaded('list');
     if (location.pathname.includes('/lists')) {
       // TODO: document why & how it is possible
@@ -154,7 +153,6 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
     if (this.newListItem) {
       this.newListItem?.adding.subscribe({
         next: (item: IListItemWithUiState) => {
-// console.log('newListItem?.adding => item:', item);
           this.addingItems.push(item);
           this.applyFilter();
         },
@@ -162,7 +160,6 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
       });
       this.newListItem.added.subscribe({
         next: (item: IListItemBrief) => {
-// console.log('added', item);
           this.addingItems = this.addingItems.filter(
             (v) => v.brief.id !== item.id,
           );
@@ -173,7 +170,6 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 
       this.newListItem.failedToAdd.subscribe({
         next: (id: string): void => {
-// console.log('failed to add:', id);
           this.addingItems = this.addingItems.filter((v) => v.brief.id !== id);
         },
         error: this.errorLogger.logError,
@@ -211,12 +207,10 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
   // }
 
   public onIsDoneFilterChanged(event: Event): void {
-// console.log('onIsDoneFilterChanged()', event);
     this.applyFilter();
   }
 
   protected override setList(list: IListContext): void {
-// console.log('setList()', list);
     if (this.isReordering) {
       return;
     }
@@ -283,7 +277,6 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
   }
 
   protected goListItem(item: IListItemBrief): void {
-// console.log(`goListItem(${item.id}), subListId=${item.subListId}`, item);
     if (!this.space) {
       return;
     }
@@ -344,7 +337,6 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
         }
       }, 1000);
     }
-// console.log(
       `ListPage.reorder(from=${event.detail.from}, to=${event.detail.to})`,
     );
 
@@ -422,7 +414,6 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
     listItem?: IListItemBrief,
     event?: Event,
   ): void {
-// console.log(`openCopyListItemsDialog()`, listItem);
     if (event) {
       event.stopPropagation();
     }
@@ -435,14 +426,12 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
   }
 
   protected deleteCompleted(): void {
-// console.log('deleteCompleted()');
     this.deleteItems(
       this.allListItems?.filter((li) => li.brief.status === 'done'),
     );
   }
 
   protected deleteAll(): void {
-// console.log('deleteAll()');
     this.deleteItems(this.allListItems);
   }
 
@@ -477,7 +466,6 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
   }
 
   protected reactivateCompleted(): void {
-// console.log('reactivateCompleted()');
     if (!this.list?.brief || !this.space || !this.allListItems) {
       return;
     }
@@ -500,7 +488,6 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
       .pipe(takeUntil(this.destroyed$))
       .subscribe({
         next: () => {
-// console.log('reactivated all previously completed items');
           this.performing = undefined;
         },
         error: (err) => {

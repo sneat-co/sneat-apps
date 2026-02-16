@@ -69,17 +69,13 @@ export class ContactPageComponent extends ContactBasePage {
       .watchChildContacts(space, contactID)
       .pipe(this.takeUntilDestroyed())
       .subscribe({
-        next: (children) => {
-// console.log('children', children);
-        },
+        next: (children) => {},
         error: this.errorLogger.logErrorHandler('failed to get child contacts'),
       });
   }
 
   // TODO: use or remove
   protected saveAddress(save: ISaveEvent<IAddress>): void {
-// console.log('ContactPageComponent.saveAddress()', save);
-
     const spaceID = this.space?.id,
       contactID = this.$contactID(),
       address = save.object;

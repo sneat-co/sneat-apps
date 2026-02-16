@@ -128,7 +128,6 @@ export class JoinSpacePageComponent extends WithSpaceInput {
       const errMsg = 'Failed to get team information';
       this.inviteService.getSpaceJoinInfo(this.id, this.pin).subscribe({
         next: (response) => {
-// console.log('join_team:', response);
           if (!response) {
             this.errorLogger.logError('EmptyResponse', errMsg);
             return;
@@ -174,7 +173,6 @@ export class JoinSpacePageComponent extends WithSpaceInput {
   }
 
   private processAction(): void {
-// console.log(
       `processAction(), authState=${this.authStatus}, action: ${this.action}`,
     );
     switch (this.action) {
@@ -293,7 +291,6 @@ export class JoinSpacePageComponent extends WithSpaceInput {
           .acceptInviteByAuthenticatedUser(inviteInfo)
           .subscribe({
             next: (dto) => {
-// console.log('joined team', dto);
               const space: ISpaceContext = {
                 id: spaceID,
                 brief: inviteInfo.space,
@@ -314,7 +311,6 @@ export class JoinSpacePageComponent extends WithSpaceInput {
           .acceptInviteByUnauthenticatedUser(inviteInfo)
           .subscribe({
             next: (dto) => {
-// console.log('joined team', dto);
               const space: ISpaceContext = {
                 id: spaceID,
                 brief: inviteInfo.space,

@@ -92,7 +92,6 @@ export class DocumentsPageComponent extends SpaceItemsBaseComponent {
   }
 
   loadDocuments() {
-// console.log('DocumentsPage.loadDocuments()');
     if (this.space?.id) {
       this.assetService
         .watchSpaceAssets<'document', IAssetDocumentExtra>(this.space)
@@ -105,9 +104,7 @@ export class DocumentsPageComponent extends SpaceItemsBaseComponent {
     }
   }
 
-  public goType(type: string) {
-// console.log(`goType(${type})`);
-  }
+  public goType(type: string) {}
 
   public goDoc(doc: IAssetDocumentContext) {
     if (!this.space) {

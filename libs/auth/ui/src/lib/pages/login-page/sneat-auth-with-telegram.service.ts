@@ -42,12 +42,9 @@ export class SneatAuthWithTelegramService {
       tgAuthData,
     ).subscribe({
       next: (response) => {
-// console.log('loginWithTelegram() response:', response);
         this.authService
           .signInWithToken(response.token)
-          .then(() => {
-// console.log('loginWithTelegram() signed in');
-          })
+          .then(() => {})
           .catch(
             this.errorLogger.logErrorHandler(
               'Failed to sign-in with custom token',

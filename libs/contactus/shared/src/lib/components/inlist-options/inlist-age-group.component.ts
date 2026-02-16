@@ -32,11 +32,6 @@ export class InlistAgeGroupComponent extends WithSpaceInput {
   ];
 
   protected onAgeGroupSelected(optionEvent: OptionEvent): void {
-// console.log(
-      'MembersListComponent.setAgeGroup()',
-      this.contactID,
-      optionEvent.option.id,
-    );
     optionEvent.uiEvent.preventDefault();
     optionEvent.uiEvent.stopPropagation();
     this.selectedOption = optionEvent.option;

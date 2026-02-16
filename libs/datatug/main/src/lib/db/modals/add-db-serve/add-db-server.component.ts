@@ -61,7 +61,6 @@ export class AddDbServerComponent implements OnDestroy {
     this.submitting = true;
     this.dbServerService.addDbServer(this.dbServer).subscribe({
       next: (dbServerSummary) => {
-// console.log('dbServerSummary', dbServerSummary);
         this.modalCtrl
           .dismiss(dbServerSummary)
           .catch((err) =>

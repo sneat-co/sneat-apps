@@ -241,7 +241,6 @@ export class HappeningSlotFormComponent
   private addWeeklySlot(timing?: ITiming): IHappeningSlot | undefined {
     // this.weekdaysForm.markAsTouched({ onlySelf: true });
     this.slotForm.markAsTouched();
-// console.log(
       'addSlot()',
       timing,
       ' => this.slotForm.errors:',
@@ -251,7 +250,6 @@ export class HappeningSlotFormComponent
       this.error.set('At least 1 weekday should be selected');
     }
     if (!this.startEndDatetimeForm?.isValid) {
-// console.log('startEndDatetimeForm is not valid');
       return undefined;
     }
     // if (!this.weekdaysForm.valid) {
@@ -444,7 +442,6 @@ export class HappeningSlotFormComponent
         slots: { ...happening.brief?.slots, [slotID]: slot },
       },
     };
-// console.log('happening:', happening);
     this.slotAdded.emit(slot);
     this.happeningChange.emit(happening);
   }
@@ -457,7 +454,6 @@ export class HappeningSlotFormComponent
   }
 
   private addMonthlySlot(timing?: ITiming): IHappeningSlot | undefined {
-// console.log('addMonthlySlot()', timing);
     if (this.monthlyMode() === 'monthly-day') {
       return this.addDaySlot();
     }
@@ -465,7 +461,6 @@ export class HappeningSlotFormComponent
   }
 
   protected saveChanges(): void {
-// console.log('saveChanges()');
     const slot = this.getSlot();
     const happening = this.$happening();
     const spaceID = happening.space.id;
@@ -517,7 +512,6 @@ export class HappeningSlotFormComponent
   }
 
   protected addSlot(timing?: ITiming): void {
-// console.log('addSlot()', timing);
     if (this.$happeningID()) {
       this.saveChanges();
     } else {
@@ -602,7 +596,6 @@ export class HappeningSlotFormComponent
   }
 
   protected onTimingChanged(timing: ITiming): void {
-// console.log('onTimingChanged()', timing);
     this.timing = timing;
   }
 

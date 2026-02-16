@@ -46,7 +46,6 @@ import { ClassName } from '@sneat/ui';
 })
 export class TrackersPageComponent extends SpaceBaseComponent {
   protected goNewTracker(category?: string): void {
-// console.log('goNewTracker', category);
     this.navController
       .navigateForward(this.spacePageUrl('trackers/new-tracker'), {
         queryParams: category ? { category } : undefined,

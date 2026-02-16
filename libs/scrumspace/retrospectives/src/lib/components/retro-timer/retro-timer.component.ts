@@ -77,7 +77,6 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-// console.log('RetroTimerComponent.ngOnChanges', changes);
     if (changes['space'] || changes['retrospective']) {
       if (this.space?.id && this.retrospective?.id) {
         if (
@@ -128,7 +127,6 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
   }
 
   updateRetrospective = (retrospective: IRecord<IRetrospective>): void => {
-// console.log('updateRetrospective()', retrospective);
     try {
       this.retrospective = retrospective;
       if (!this.timer) {
@@ -164,7 +162,6 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
   }
 
   public pauseRetro(): void {
-// console.log('pauseRetro()');
     if (!this.timer) {
       this.errorLogger.logError(
         'pauseRetro() called before timer has been initialized.',
@@ -193,7 +190,6 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
   }
 
   private onTimerTicked = (timer: ITimerState): void => {
-// console.log('onTimerTicked', timer);
     if (!this.space) {
       throw new Error('!this.team');
     }

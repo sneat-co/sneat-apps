@@ -90,7 +90,6 @@ export class TruckerSegmentComponent implements OnChanges {
   }
 
   deleteTruckerSegments(): void {
-// console.log('deleteTruckerSegments()');
     if (!this.order) {
       throw new Error('order is required');
     }
@@ -107,9 +106,7 @@ export class TruckerSegmentComponent implements OnChanges {
 
     this.deleting = true;
     this.orderService.deleteSegments(request).subscribe({
-      next: () => {
-// console.log('deleted trucker segments');
-      },
+      next: () => {},
       error: (err) => {
         this.deleting = false;
         this.errorLogger.logError(err, 'Failed to delete trucker segments');

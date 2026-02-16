@@ -58,13 +58,11 @@ export class InputParametersComponent implements OnChanges {
   }
 
   public clearAllParams(event: Event): void {
-// console.log('clearAllParams()', event);
     this.parameters?.forEach((p) => (p.val = undefined));
   }
 
   public onParamChanged(event: Event, parameter: IParamWithDefAndValue): void {
     const { value } = (event as CustomEvent).detail;
-// console.log('omParamChanged:', event, value, parameter);
     this.paramValues.emit(
       this.parameters?.map((p) => {
         const v = p.def.id === parameter.def.id ? value : p.val;

@@ -76,7 +76,6 @@ export class AddToWatchPageComponent
 
   public clickShowWatchedMovies(): void {
     this.showWatched = !this.showWatched;
-// console.log(this.showWatched);
   }
 
   // searchChanged(event: CustomEvent) {
@@ -87,16 +86,13 @@ export class AddToWatchPageComponent
   // }
 
   find(): void {
-// console.log('yes');
     const result = this.ts.searchMovies(this.searchText);
     result.subscribe((movies) => {
       movies.forEach((movie) => {
         movie.idTmdb = movie.id;
         delete movie.id;
-// console.log('add-to-watch-page: film', movie);
       });
       this.movies = movies;
-// console.log('movies1', movies);
     });
   }
 
@@ -104,7 +100,6 @@ export class AddToWatchPageComponent
     if (!movie) {
       throw new Error('Missing required parameter item');
     }
-// console.log(
       `AddToWatchPage.addListItem(item={id:${movie.id}, title: ${movie.title})`,
       'this.shortListId',
       this.shortListId,
@@ -125,7 +120,6 @@ export class AddToWatchPageComponent
       })
       .subscribe({
         next: (result) => {
-// console.log('ListPage.addListItem => result', result);
           // if (result.success) {
           //     (this.newListItem as NewListItem).clear();
           // } else if (result.message) {

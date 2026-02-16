@@ -23,7 +23,6 @@ export class SpaceNavService {
     inject<IAnalyticsService>(AnalyticsService);
 
   public navigateToSpaces(animationDirection?: 'forward' | 'back'): void {
-// console.log('navigateToSpaces()');
     this.analyticsService.logEvent('navigateToTeams');
     this.navController
       .navigateRoot('spaces', { animationDirection })
@@ -37,7 +36,6 @@ export class SpaceNavService {
     queryParams?: Params;
     // fragment?: string;
   }): void {
-// console.log('navigateToLogin()', options?.queryParams);
 
     // Do not log `returnTo` as it might holds sensitive info
     this.analyticsService.logEvent('navigateToLogin');
@@ -69,7 +67,6 @@ export class SpaceNavService {
     space: ISpaceContext,
     animationDirection?: 'forward' | 'back',
   ): Promise<boolean> {
-// console.log('navigateToSpace()', space);
     this.analyticsService.logEvent('navigateToSpace', { spaceID: space.id });
     const url = `space/${space.type || space.brief?.type}/${space.id}`;
     return new Promise<boolean>((resolve, reject) => {
@@ -126,7 +123,6 @@ export class SpaceNavService {
     const url = `space/${space?.type}/${space?.id}/${page}`;
     const state = navOptions.state || {};
     navOptions = { ...navOptions, state: { space, ...state } };
-// console.log('navigateToSpacePage()', url, navOptions);
     return this.navController.navigateForward(url, navOptions);
   }
 
@@ -136,7 +132,6 @@ export class SpaceNavService {
     navOptions: NavigationOptions,
     analyticsEvent: { name: string; params?: Record<string, unknown> },
   ): void {
-// console.log(
       'navForward()',
       url,
       analyticsEvent.name,

@@ -48,7 +48,6 @@ export class CalendarWeekComponent implements OnChanges {
   protected readonly $weekdays = signal(createWeekdays());
 
   ngOnChanges(changes: SimpleChanges): void {
-// console.log(
       'CalendarWeekComponent.ngOnChanges()',
       this.$week().startDate,
       changes,
@@ -69,7 +68,6 @@ export class CalendarWeekComponent implements OnChanges {
   }
 
   private recreateWeekdays(startDate: Date): void {
-// console.log('ScheduleWeekComponent.recreateWeekdays()', startDate);
     const spaceDaysProvider = this.$spaceDaysProvider();
     const startDateN = startDate.getDate();
     this.$weekdays.update((weekdays) =>

@@ -221,7 +221,7 @@ export class InviteModalComponent {
       address: address || '',
       send: true,
     }).subscribe({
-      next: async (response) => {
+      next: async () => {
         // console.log('personal invite created:', response);
         await this.showToast(
           'Invite has been created and will be sent shortly',

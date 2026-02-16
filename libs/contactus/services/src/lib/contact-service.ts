@@ -158,7 +158,6 @@ export class ContactService extends ModuleSpaceItemService<
     space: ISpaceContext,
     filter?: IContactsFilter,
   ): Observable<IContactContext[]> {
-// console.log('watchContactsByRole, filter:', filter);
     const f: IFilter[] = [
       // { field: 'spaceID', value: team.id, operator: '==' },
     ];
@@ -180,7 +179,6 @@ export class ContactService extends ModuleSpaceItemService<
     id: string,
     filter: IContactsFilter = { status: 'active' },
   ): Observable<IContactContext[]> {
-// console.log('watchRelatedContacts, id:', id);
     const f: IFilter[] = [
       { field: 'parentContactID', value: id, operator: '==' },
     ];
@@ -212,7 +210,6 @@ export class ContactService extends ModuleSpaceItemService<
   public removeSpaceMember(
     request: IContactRequestWithOptionalMessage,
   ): Observable<ISpaceContext> {
-// console.log(
       `removeTeamMember(spaceID=${request.spaceID}, contactID=${request.contactID})`,
     );
     try {

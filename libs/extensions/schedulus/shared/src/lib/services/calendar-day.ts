@@ -45,7 +45,6 @@ export class CalendarDay {
       .map((input) => input.$recurringSlots())
       .filter((v) => !!v);
     const result = recurringSlots.length ? recurringSlots[0] : undefined; // TODO: add support for multiple inputs
-// console.log('CalendarDay.$recurringSlots()', this.dateID, inputs, result);
     return result;
   });
 
@@ -104,14 +103,12 @@ export class CalendarDay {
     if (this.dateID === '1970-01-01') {
       throw new Error('an attempt to set an empty date 1970-01-01');
     }
-// console.log('SpaceDay.constructor()', this.dateID, this.date);
     this.wd = getWd2(date);
     this.wdLongTitle = wdCodeToWeekdayLongName(this.wd);
 
     runInInjectionContext(injector, () => {
       this.effectRef = effect(() => {
         const inputs = $inputs();
-// console.log('CalendarDay.effect($input) =>', this.dateID, inputs);
         inputs.forEach((input) => {
           this.subscriptions.forEach((s) => s.unsubscribe());
           this.subscriptions.length = 0;
@@ -129,7 +126,6 @@ export class CalendarDay {
   }
 
   private readonly processSpaceID = (spaceID: string | undefined) => {
-// console.log(`SpaceDay[${this.dateID}].processSpaceID(spaceID=${spaceID})`);
     this.singles = undefined;
     if (spaceID) {
       this.subscribeForSingles(spaceID);
@@ -147,7 +143,6 @@ export class CalendarDay {
             const changed = this.calendarDayDbo != calendarDay.dbo;
             if (changed) {
               this.calendarDayDbo = calendarDay.dbo;
-// console.log(
                 'Received calendarDay record for ' + this.dateID,
                 calendarDay,
               );
@@ -169,7 +164,6 @@ export class CalendarDay {
     }
     try {
       const date = this.dateID;
-// console.log(
         `SpaceDay[${this.dateID}].subscribeForSingles(), spaceID=${spaceID}, date=${date}`,
       );
       this.subscriptions.push(
@@ -194,7 +188,6 @@ export class CalendarDay {
   private readonly processSingles = (
     singleHappenings: IHappeningContext[],
   ): void => {
-// console.log('processSingles', singleHappenings);
     try {
       this.singles = [];
 
@@ -238,7 +231,6 @@ export class CalendarDay {
   }
 
   private readonly processRecurrings = (slots: RecurringSlots): void => {
-// console.log(
       `SpaceDay[${this.dateID},wd=${this.wd}].processRecurrings(), ${
         Object.keys(slots.byWeekday).length
       } weekdays with slots:`,
@@ -249,7 +241,6 @@ export class CalendarDay {
   };
 
   private joinRecurringsWithSinglesAndEmit(): void {
-// console.log('joinRecurringsWithSinglesAndEmit() day=', this.dateID);
     let slots: ISlotUIContext[] = [];
 
     const recurringSlots = this.$recurringSlots();
@@ -289,7 +280,6 @@ export class CalendarDay {
     // this.$slots.set(slots);
 
     this._isLoading.set(false);
-// console.log(
       'SpaceDay[${this.dateID}].joinRecurringsWithSinglesAndEmit() _isLoading=false',
       slots,
     );

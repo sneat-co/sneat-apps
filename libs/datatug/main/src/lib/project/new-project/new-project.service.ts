@@ -9,7 +9,6 @@ export class NewProjectService {
   private readonly popoverController = inject(PopoverController);
 
   public openNewProjectDialog(event: Event): void {
-// console.log('openNewProjectDialog', event);
     this.popoverController
       .create({
         component: NewProjectFormComponent,

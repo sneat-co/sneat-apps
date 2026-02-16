@@ -55,12 +55,10 @@ export class NewListItemComponent {
   public title = '';
 
   protected focused(): void {
-// console.log('focused');
     this.isFocused = true;
   }
 
   protected add(): void {
-// console.log('add()');
     if (!this.title.trim()) {
       return;
     }
@@ -98,13 +96,11 @@ export class NewListItemComponent {
   }
 
   protected clear(): void {
-// console.log('NewListItem.clear()');
     this.title = '';
   }
 
   // Is intentionally public to be called from wrapping component.
   public focus(): void {
-// console.log('NewListItem.focus()');
     if (!this.newItemInput) {
       this.errorLogger.logError('!this.newItemInput');
       return;
@@ -113,7 +109,6 @@ export class NewListItemComponent {
   }
 
   protected createListItem(listItemBrief: ICreateListItemRequest): void {
-// console.log(
       'ListPage.createListItem',
       listItemBrief,
       this.list,
@@ -139,7 +134,6 @@ export class NewListItemComponent {
       })
       .subscribe({
         next: (result) => {
-// console.log('ListPage.addListItem() => result:', result);
           if (result.success) {
             this.clear();
             this.focus();

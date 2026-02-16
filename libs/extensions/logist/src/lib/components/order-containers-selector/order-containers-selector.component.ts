@@ -32,16 +32,11 @@ export class OrderContainersSelectorComponent implements OnChanges, OnInit {
   }
 
   onToggled(container: IContainer): void {
-// console.log('OrderContainersSelectorComponent.onToggled():', container);
     this.containers = this.containers?.map((c) =>
       c.id === container.id ? container : c,
     );
     const selectedContainers = this.containers?.filter((c) => c.checked) || [];
     this.selectedContainerIDs = selectedContainers.map((c) => c.id);
-// console.log(
-      'OrderContainersSelectorComponent.selectedContainerIDs:',
-      this.selectedContainerIDs,
-    );
     this.selectedContainerIDsChange.emit(this.selectedContainerIDs);
     this.selectedContainersChange.emit(selectedContainers);
   }
@@ -52,7 +47,6 @@ export class OrderContainersSelectorComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-// console.log('OrderContainersSelectorComponent.ngOnChanges():', changes);
     if (changes['order'] || changes['container']) {
       // const previousOrder = orderChange.previousValue as ILogistOrderContext | undefined;
       this.setContainers();

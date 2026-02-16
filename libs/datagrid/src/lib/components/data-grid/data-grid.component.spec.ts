@@ -113,9 +113,7 @@ describe('DataGridComponent', () => {
     });
 
     it('should handle rowClick changes', () => {
-      const mockRowClick = (event: Event, row: unknown) => {
-// console.log('row clicked', event, row);
-      };
+      const mockRowClick = (_event: Event, _row: unknown) => undefined;
 
       component.rowClick = mockRowClick;
       component.data = [{ id: 1 }];
@@ -226,7 +224,7 @@ describe('DataGridComponent', () => {
     });
 
     it('should map column with tooltip', () => {
-      const tooltipFn = (cell: unknown) => 'Tooltip text';
+      const tooltipFn = (_cell: unknown) => 'Tooltip text';
       const columns: IGridColumn[] = [
         {
           field: 'testField',
@@ -557,9 +555,7 @@ describe('DataGridComponent', () => {
       const mockContextMenu = [
         {
           label: 'Edit',
-          action: (e: Event, row: unknown) => {
-// console.log('edit', row);
-          },
+          action: (_e: Event, _row: unknown) => undefined,
         },
       ];
 

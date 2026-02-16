@@ -49,7 +49,6 @@ export class SqlParser {
     }
     let m: RegExpMatchArray | null;
     while ((m = this.reJoin.exec(text)) !== null) {
-// console.log(m);
       if (m) {
         q.joins?.push({
           match: m,
@@ -71,7 +70,6 @@ export class SqlParser {
   }
 
   public commentOutJoin(text: string, join: IAstJoin): string {
-// console.log('commentOutJoin', join);
     if (!join.match.index || join.match.index !== 0) {
       return text;
     }
@@ -90,7 +88,6 @@ export class SqlParser {
       return text;
     }
     const joinSql = text.substr(join.match.index, join.match.length);
-// console.log('uncommentJoin', text, joinSql, join);
     return (
       text.substr(0, join.match.index) +
       (join.comment ? joinSql.replace(join.comment, '') : joinSql) +

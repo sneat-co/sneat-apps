@@ -77,7 +77,6 @@ export class HappeningPricesComponent {
             ] as EventEmitter<IHappeningContext>;
             modalHappeningChange.subscribe({
               next: (happening: IHappeningContext) => {
-// console.log('modalHappeningChange =>', happening);
                 this.happeningChange.emit(happening);
               },
             });
@@ -96,7 +95,6 @@ export class HappeningPricesComponent {
   }
 
   protected deletePrice(price: IHappeningPrice): void {
-// console.log('deletePrice()', price);
     if (!confirm('Are you sure you want delete this price?')) {
       return;
     }
@@ -147,7 +145,6 @@ export class HappeningPricesComponent {
   protected updatingPriceIDs = signal<readonly string[]>([]);
 
   protected priceChecked(price: IHappeningPrice, event: Event): void {
-// console.log('priceChecked()', event);
     event.stopPropagation();
     event.preventDefault();
 

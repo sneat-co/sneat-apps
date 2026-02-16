@@ -90,12 +90,10 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 
   constructor() {
     const dataTugNavContext = this.dataTugNavContext;
-// console.log('BoardPage.constructor()');
     this.projBoard = history.state?.projBoard;
     try {
       this.route.queryParamMap.subscribe({
         next: (queryParamMap) => {
-// console.log('BoardPage: queryParamMap =>', queryParamMap);
           this.envId = queryParamMap.get('env');
           if (this.envId) {
             this.dataTugNavContext.setCurrentEnvironment(this.envId);
@@ -108,7 +106,6 @@ export class BoardPageComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.destroyed$.asObservable()))
         .subscribe({
           next: (env) => {
-// console.log('BoardPage got current environment:', env);
             this.envId = env?.id;
             if (this.envId) {
               this.queryParamsService.setQueryParameter('env', this.envId);
@@ -131,7 +128,6 @@ export class BoardPageComponent implements OnInit, OnDestroy {
           if (p) {
             [this.storeId, this.projectId] = p.split('/');
           }
-// console.log(
             'this.store, this.projectId',
             p,
             this.storeId,
@@ -151,7 +147,6 @@ export class BoardPageComponent implements OnInit, OnDestroy {
                 .subscribe({
                   next: (board) => {
                     try {
-// console.log('Loaded board:', board);
                       this.projBoard = board;
                       this.boardDef = board;
                       this.parameters = board.parameters?.map((def) => ({
@@ -178,7 +173,6 @@ export class BoardPageComponent implements OnInit, OnDestroy {
         });
       dataTugNavContext.currentEnv.subscribe({
         next: (env) => {
-// console.log('currentEnv: ', env);
           this.envId = env?.id;
         },
         error: (err) =>
@@ -219,7 +213,6 @@ export class BoardPageComponent implements OnInit, OnDestroy {
       .lookupParameterValue(p.def, this.storeId, this.projectId, this.envId)
       .subscribe({
         next: (v) => {
-// console.log('Looked up:', v);
           p.val = v.value;
           this.boardContext = {
             ...this.boardContext,

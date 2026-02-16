@@ -89,7 +89,6 @@ export class EntityEditPageComponent implements OnDestroy {
       navContextService.currentProject.subscribe({
         next: (currentProject) => {
           try {
-// console.log('EntityEditPage: currentProject:', currentProject);
             this.project = currentProject;
             this.backUrl = currentProject
               ? `/store/${currentProject.ref.storeId}/project/${currentProject.ref.projectId}/entities`
@@ -125,7 +124,6 @@ export class EntityEditPageComponent implements OnDestroy {
   }
 
   createEntity(): void {
-// console.log('createEntity()');
     const project = this.project;
     if (!project) {
       return;
@@ -133,7 +131,6 @@ export class EntityEditPageComponent implements OnDestroy {
     try {
       this.entityService.createEntity(project.ref, this.entity).subscribe({
         next: (value) => {
-// console.log('Entity created:', value);
           this.datatugNavService.goEntity(project, {
             id: value.id,
             title: value.dbo?.title,
@@ -145,9 +142,7 @@ export class EntityEditPageComponent implements OnDestroy {
     }
   }
 
-  saveEntityChanges(): void {
-// console.log('saveEntityChanges()');
-  }
+  saveEntityChanges(): void {}
 
   async addProperty(event: Event) {
     const popover = await this.popoverCtrl.create({
@@ -155,18 +150,15 @@ export class EntityEditPageComponent implements OnDestroy {
       event,
     });
     popover.onDidDismiss().then((response) => {
-// console.log('response:', response);
       this.entity = {
         ...this.entity,
         fields: [...this.entity.fields, response.data as IEntityFieldDef],
       };
-// console.log('entity', this.entity);
     });
     return await popover.present();
   }
 
   deleteField(id: string): void {
-// console.log('deleteField', id);
     this.entity = {
       ...this.entity,
       fields: this.entity.fields.filter((f) => f.id !== id),

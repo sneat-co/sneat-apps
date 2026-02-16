@@ -10,7 +10,6 @@ export class CalendarNavService {
   private readonly spaceNavService = inject(SpaceNavService);
 
   public navigateToHappeningPage(args: ISlotUIEvent): void {
-// console.log('Navigating happeningPage', args);
     const happening: IHappeningContext = args.slot.happening;
     const page = `happening/${happening.id}`;
     this.spaceNavService

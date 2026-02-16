@@ -37,7 +37,6 @@ export class EnvSelectorComponent {
     });
     dataTugNavContext.currentEnv.subscribe({
       next: (currentEnv) => {
-// console.log('EnvSelectorComponent: currentEnv =>', currentEnv);
         this.currentEnvId = currentEnv?.id;
       },
       error: (err: unknown) =>
@@ -49,7 +48,6 @@ export class EnvSelectorComponent {
   }
 
   public envChanged(event: Event): void {
-// console.log('envChanged', event);
     this.dataTugNavContext.setCurrentEnvironment(this.currentEnvId);
   }
 }

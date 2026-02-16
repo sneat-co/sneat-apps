@@ -225,7 +225,6 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
   }
 
   private onInputChangeFields(): void {
-// console.log('onInputChangeFields()');
     const setValidators = (
       fc?: FormControl<string | null>,
       ff?: IFormField,
@@ -255,7 +254,6 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
   }
 
   onNameChanged(event: Event): void {
-// console.log(
       'onNameChanged()',
       this.isFullNameChanged,
       this.firstName.value,
@@ -311,7 +309,6 @@ export class NamesFormComponent implements OnChanges, AfterViewInit {
   }
 
   protected onFullNameChanged(event: Event): void {
-// console.log(
       'onFullNameChanged()',
       this.firstName.value,
       this.lastName.value,

@@ -94,7 +94,6 @@ export class QueriesTabComponent {
   public currentFolder: IQueryFolderContext = { path: '~', id: '' };
 
   constructor() {
-// console.log('QueriesPageComponent.constructor()');
     this.route.queryParamMap.subscribe({
       next: (queryParams) => {
         const id = queryParams.get('folder') || '';
@@ -135,7 +134,6 @@ export class QueriesTabComponent {
   }
 
   goQuery(q: IQueryDef, action?: 'execute' | 'edit', folders?: string[]): void {
-// console.log('goQuery', q, folders, this.currentFolder.path);
     const id = folders?.join('/').replace('~/', '');
     q = { ...q, id: `${id}/${q.id}` };
     if (this.project) {
@@ -172,7 +170,6 @@ export class QueriesTabComponent {
   }
 
   cd(path: string): void {
-// console.log('cd()', path);
     if (path === '~') {
       this.currentFolder = {
         ...this.parentFolders[0],
@@ -219,10 +216,8 @@ export class QueriesTabComponent {
   }
 
   private loadQueries(): void {
-// console.log('QueriesPage.loadQueries()');
     this.dataTugNavContextService.currentProject.subscribe({
       next: (currentProject) => {
-// console.log(
           'QueryPage.constructor() => currentProject:',
           currentProject,
         );
@@ -233,7 +228,6 @@ export class QueriesTabComponent {
         if (this.queriesSub) {
           this.queriesSub.unsubscribe();
         }
-// console.log(
           'QueriesPage.constructor() => currentProject:',
           currentProject,
         );
@@ -252,7 +246,6 @@ export class QueriesTabComponent {
   }
 
   private onFolderRetrieved(path: string, folder?: IQueryFolder | null): void {
-// console.log('onFolderRetrieved()', path, folder);
     if (!path) {
       throw new Error('path is a required parameter');
     }
@@ -279,7 +272,6 @@ export class QueriesTabComponent {
     path: string,
     folder: IQueryFolder,
   ): IQueryFolder {
-// console.log('getFolder()', path, folder);
     if (path === '~') {
       return folder;
     }

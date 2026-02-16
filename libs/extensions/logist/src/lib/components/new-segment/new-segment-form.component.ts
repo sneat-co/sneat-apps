@@ -104,11 +104,6 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
     what: 'from' | 'to',
     endpointType: SegmentEndpointType,
   ): void {
-// console.log(
-      'NewSegmentComponent.onEndpointTypeChanged()',
-      what,
-      endpointType,
-    );
     switch (what) {
       case 'from':
         if (this.from === 'port' && this.to === 'port') {
@@ -128,7 +123,6 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
   }
 
   onByContactChanged(contact?: IContactContext): void {
-// console.log('NewSegmentComponent.onByContactChanged()', contact);
     if (this.byContact && this.byRefNumber) {
       this.byRefNumber = '';
     }
@@ -136,7 +130,6 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-// console.log('NewSegmentComponent.ngOnInit()', this.order);
     this.autoFillPort();
   }
 
@@ -160,11 +153,10 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
         },
       };
     }
-// console.log('toContact', this.toContact);
   }
 
   submitAddSegment(event: Event): void {
-// console.log('submitAddSegment', event);
+    void event;
     if (!this.order?.id) {
       alert('order is required');
       return;
@@ -235,7 +227,7 @@ export class NewSegmentFormComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-// console.log('NewSegmentComponent.ngOnChanges()', changes);
+    void changes;
     this.autoFillPort();
   }
 

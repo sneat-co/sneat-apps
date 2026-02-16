@@ -73,12 +73,9 @@ export class HappeningSlotModalComponent
   @Output() readonly happeningSlotChange =
     new EventEmitter<IHappeningSlotWithID>();
 
-  constructor() {
-// console.log('SingleSlotFormComponent.constructor()');
-  }
+  constructor() {}
 
   onTimingChanged(timing: ITiming): void {
-// console.log('onTimingChanged', timing);
     if (timing == emptyHappeningSlot) {
       return;
     }
@@ -95,7 +92,6 @@ export class HappeningSlotModalComponent
   }
 
   protected onHappeningChanged(happening: IHappeningContext): void {
-// console.log('onHappeningChanged', happening);
     this.happening = happening;
     this.emitHappeningSlotChange();
   }

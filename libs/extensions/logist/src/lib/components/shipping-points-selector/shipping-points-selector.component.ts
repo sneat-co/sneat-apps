@@ -77,7 +77,6 @@ export class ShippingPointsSelectorComponent implements OnChanges {
   }
 
   setShippingPoints(): void {
-// console.log('setShippingPoints()');
     this.order?.dbo?.shippingPoints?.forEach((sp) => {
       const selected = this.tasksByShippingPoint[sp.id];
       if (!selected?.dirty) {
@@ -121,7 +120,6 @@ export class ShippingPointsSelectorComponent implements OnChanges {
     task: ShippingPointTask,
   ): void {
     const ce = event as CustomEvent;
-// console.log('checkboxChanged', ce);
     const selected = this.tasksByShippingPoint[shippingPointID] || {
       tasks: [],
       dirty: false,
@@ -165,7 +163,6 @@ export class ShippingPointsSelectorComponent implements OnChanges {
   }
 
   protected onContactChanged(contact: IContactContext): void {
-// console.log('onContactChanged()', contact);
     if (!contact) {
       return;
     }

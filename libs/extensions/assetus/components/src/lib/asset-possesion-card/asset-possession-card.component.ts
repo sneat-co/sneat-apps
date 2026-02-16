@@ -33,6 +33,5 @@ export class AssetPossessionCardComponent {
       };
       this.assetChange.emit(this.asset);
     }
-// console.log('onPossessionChanged', possession, this.asset);
   }
 }

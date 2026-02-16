@@ -14,12 +14,12 @@ export class MultiSelectorService {
     items: ISelectItem[],
     selectedItems: ISelectItem[],
   ): Promise<ISelectItem[]> {
-// console.log('MultiSelectorService.selectMultiple()', items, selectedItems);
     const result = new Promise<ISelectItem[]>((resolve, reject) => {
       const modalOptions: ModalOptions = {
         component: MultiSelectorComponent,
         componentProps: {
           items,
+          selectedItems,
         },
         keyboardClose: true,
       };

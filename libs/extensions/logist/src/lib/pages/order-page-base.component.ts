@@ -30,7 +30,6 @@ export abstract class OrderPageBaseComponent extends SpaceBaseComponent {
 
   private setOrder(order: ILogistOrderContext): void {
     this.order = order;
-// console.log('setOrder', order);
     this.numberOfDispatchers = order?.dbo?.counterparties?.filter(
       (c) => c.role === 'dispatcher',
     ).length;
@@ -39,6 +38,5 @@ export abstract class OrderPageBaseComponent extends SpaceBaseComponent {
 
   protected onOrderChanged(order: ILogistOrderContext): void {
     // override this method to handle order changes
-// console.log('onOrderChanged', order);
   }
 }

@@ -27,13 +27,8 @@ import { TabulatorColumn, TabulatorOptions } from '../../tabulator';
 class AdvertModule extends Module {
   public static override moduleName = 'advert';
 
-  constructor(table: Tabulator) {
-    super(table);
-// console.log('AdvertModule.constructor()');
-  }
-
   override initialize() {
-// console.log('AdvertModule.initialize()');
+    return;
   }
 }
 
@@ -44,7 +39,6 @@ Tabulator.registerModule([
   MenuModule,
 ]);
 
-// console.log('SelectRowModule', );
 
 // export interface IGridDef {
 // 	columns: IGridColumn[],
@@ -110,12 +104,7 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
   private tabulatorOptions?: TabulatorOptions;
   private clickEvent?: Event;
 
-  constructor() {
-// console.log('DataGridComponent.constructor()');
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
-// console.log('DataGridComponent.ngOnChanges():', changes);
     try {
       if (
         (changes['data'] && this.data && this.columns) ||
@@ -162,15 +151,6 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
       console.warn('drawTable()', 'columns:', this.columns, 'data:', this.data);
       return;
     }
-// console.log(
-      'drawTable()',
-      'columns:',
-      this.columns,
-      'groupBy:',
-      this.groupBy,
-      'data:',
-      this.data,
-    );
     try {
       if (!this.tabulatorDiv) {
         this.errorLogger.logError(new Error('!this.tabulatorDiv'));
@@ -206,16 +186,11 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
         // 	console.log('rowDeselect', row);
         // }
       };
-// console.log(
-        'createTabulatorGrid(): tabulatorOptions:',
-        this.tabulatorOptions,
-      );
       this.tabulator = new Tabulator(
         this.tabulatorDiv?.nativeElement,
         this.tabulatorOptions,
       );
       this.tabulator.on('rowClick', (event: Event, row: unknown) => {
-// console.log('rowClick event', event, row);
         this.clickEvent = event;
         if (this.rowClick) {
           this.rowClick(event, row);
@@ -225,7 +200,7 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
         this.rowSelected.emit({ row, event: this.clickEvent }),
       );
       this.tabulator.on('rowDeselected', (row: unknown) =>
-// console.log('rowDeselected event', row),
+        this.rowDeselected.emit({ row, event: this.clickEvent }),
       );
     }
   }
@@ -252,9 +227,9 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
             url: 'test-url',
           };
           col.cellClick = (e: Event, cell: unknown) => {
+            void cell;
             e.preventDefault();
             e.stopPropagation();
-// console.log('cellClick', cell);
           };
         }
         if (c.tooltip) {

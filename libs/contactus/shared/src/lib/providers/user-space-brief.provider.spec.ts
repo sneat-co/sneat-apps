@@ -1,5 +1,4 @@
 import { signal } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
 import { SneatUserService } from '@sneat/auth-core';
 import { IUserSpaceBrief } from '@sneat/auth-models';
 import { BehaviorSubject, Subject, of } from 'rxjs';

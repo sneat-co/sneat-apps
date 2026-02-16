@@ -25,11 +25,9 @@ export class DispatchersComponent implements OnChanges {
     `${c.contactID}&${c.role}`;
 
   constructor() {
-// console.log('DispatchersComponent.constructor()');
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-// console.log('DispatchersComponent.ngOnChanges', changes);
     if (this.order?.dbo) {
       this.dispatchers =
         this.order.dbo.counterparties?.filter((c) => c.role === 'dispatcher') ||
@@ -37,7 +35,6 @@ export class DispatchersComponent implements OnChanges {
     } else {
       this.dispatchers = undefined;
     }
-// console.log(
       'DispatchersComponent.ngOnChanges',
       this.order,
       this.dispatchers,

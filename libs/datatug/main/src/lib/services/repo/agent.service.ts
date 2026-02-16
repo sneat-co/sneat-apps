@@ -16,7 +16,6 @@ export class AgentService {
     agentId: string,
     request: ISelectRequest,
   ): Observable<IExecuteResponse> {
-// console.log(`AgentService.select(${agentId})`, request);
     if (!request.proj) {
       return throwError(() => 'Client side check failed: !request.proj');
     } else if (request.proj.includes('@')) {
@@ -55,7 +54,6 @@ export class AgentService {
     agentId: string,
     request: IExecuteRequest,
   ): Observable<IExecuteResponse> {
-// console.log(`AgentService.execute(${agentId})`, request);
     if (!request.projectId) {
       return throwError(() => 'request.projectId is required parameter');
     }

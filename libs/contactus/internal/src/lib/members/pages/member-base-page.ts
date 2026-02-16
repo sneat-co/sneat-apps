@@ -23,7 +23,6 @@ export abstract class MemberBasePage extends ContactBasePage {
     type: 'new-contact' | 'new-document' | 'new-liability' | 'new-asset',
     relation?: string,
   ): void => {
-// console.log('goNew', event, type, relation);
     // this.navigateForward(
     // 	type,
     // 	{ member: this.memberContext, relation },

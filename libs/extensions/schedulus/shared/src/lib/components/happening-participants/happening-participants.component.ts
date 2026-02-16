@@ -115,7 +115,6 @@ export class HappeningParticipantsComponent extends WithSpaceInput {
   }
 
   protected onCheckChanged(args: ICheckChangedArgs): void {
-// console.log('HappeningParticipantsComponent.onCheckChanged()', args);
     this.analytics.logEvent(
       `happening/participants/${args.checked ? 'checked' : 'unchecked'}`,
     );
@@ -209,7 +208,6 @@ export class HappeningParticipantsComponent extends WithSpaceInput {
         selectedItems: [],
         componentProps: componentProps,
         onSelected: (selectedContacts): Promise<void> => {
-// console.log(
             `${selectedContacts?.length || 0} contacts select by user to be added as participants`,
           );
           return new Promise((resolve, reject) => {
@@ -228,7 +226,6 @@ export class HappeningParticipantsComponent extends WithSpaceInput {
               this.happeningService.addParticipants(request).subscribe({
                 error: (err) => reject(err),
                 next: () => {
-// console.log(
                     `${contactsToAdd.length} contacts added as participants (api call completed)`,
                   );
                   const args: readonly ICheckChangedArgs[] =
@@ -244,14 +241,12 @@ export class HappeningParticipantsComponent extends WithSpaceInput {
                 },
               });
             } else {
-// console.log('selected contacts already added as participants');
             }
           });
         },
       })
       .then((selectedContacts) => {
         this.$isAddingContact.set(false);
-// console.log(
           `${selectedContacts?.length || 0} contacts added added as participants`,
         );
         // alert(

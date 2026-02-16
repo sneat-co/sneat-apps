@@ -77,6 +77,8 @@ export class ScrumService extends BaseMeetingService {
     teamId: string,
     limit = 10,
   ): Observable<IRecord<IScrumDbo>[]> {
+    void teamId;
+    void limit;
     // console.log('getScrums()', teamId, limit, this.userService.currentUserID);
     throw new Error('Not implemented');
     // const scrums = this.scrumsCollection(teamId);
@@ -102,6 +104,8 @@ export class ScrumService extends BaseMeetingService {
   }
 
   public watchScrum(teamId: string, scrumId: string): Observable<IScrumDbo> {
+    void teamId;
+    void scrumId;
     // console.log(`watchScrum(${teamId}, ${scrumId})`);
     throw new Error('Not implemented');
     // const scrumDoc = this.getScrumDoc(teamId, scrumId);
@@ -273,6 +277,10 @@ export class ScrumService extends BaseMeetingService {
 
     worker: (scrum: IScrumDbo, status: IStatus) => IScrumDbo,
   ): Observable<IScrumDbo> {
+    void teamId;
+    void scrumId;
+    void member;
+    void worker;
     // console.log('updateStatus', teamId, scrumId, member, worker);
     throw new Error('not implemented yet');
     // let scrum: IScrumDto;
