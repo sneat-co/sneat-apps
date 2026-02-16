@@ -1,7 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import { hasContact, isSlotVisible } from './calendar-slots';
 import { IRelatedModules } from '@sneat/dto';
-import { ISlotUIContext } from '@sneat/mod-schedulus-core';
+import {
+  ISlotUIContext,
+  IHappeningContext,
+} from '@sneat/mod-schedulus-core';
 import { ICalendarFilter } from './calendar/components/calendar-filter/calendar-filter';
 
 describe('calendar-slots utilities', () => {
@@ -207,7 +210,7 @@ describe('calendar-slots utilities', () => {
               slot1: { repeats: 'weekly' },
             },
           },
-        } as IHappeningSlotUIContext,
+        } as IHappeningContext,
       });
       const filter = createMockFilter({ repeats: ['weekly'] });
       const result = isSlotVisible(slot, filter);

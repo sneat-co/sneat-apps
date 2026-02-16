@@ -46,7 +46,6 @@ import {
   HappeningType,
   IHappeningContext,
   IHappeningDbo,
-  IHappeningSlot,
   IHappeningSlotWithID,
   mergeValuesWithIDs,
   WeekdayCode2,

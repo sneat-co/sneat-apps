@@ -29,7 +29,6 @@ import { IProjectRef } from '../../../core/project-context';
 import { DatatugFolderComponent } from '../../../folders/ui/datatug-folder.component';
 import {
   IProjBoard,
-  IProjDbModelBrief,
   IProjectSummary,
   IProjEntity,
   IProjEnv,
@@ -162,8 +161,8 @@ export class ProjectPageComponent
   }
 
   // noinspection JSUnusedGlobalSymbols
-  protected goDbModel(dbModelBrief: IProjDbModelBrief): void {
-    this.goProjItemPage(ProjectItem.dbModel, dbModelBrief);
+  protected goDbModel(): void {
+    this.goProjItemPage(ProjectItem.dbModel);
   }
 
   // public createEntity = (title: string) => {

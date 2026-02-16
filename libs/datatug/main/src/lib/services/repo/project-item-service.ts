@@ -68,7 +68,7 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
     folderPath: string,
   ): Observable<T | null | undefined> {
     if (from.storeId === 'firestore') {
-      return this.watchFirestoreFolder<T>(from.projectId, folderPath).pipe(
+      return this.watchFirestoreFolder<T>(from.projectId).pipe(
         take(1),
       );
     }

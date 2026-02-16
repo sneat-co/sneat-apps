@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { swipeableDay, swipeableWeek, Parity } from './swipeable-ui';
+import { swipeableDay, swipeableWeek } from './swipeable-ui';
 import { CalendarDataProvider } from '../services/calendar-data-provider';
 import { Subject } from 'rxjs';
 import { showVirtualSlide, hideVirtualSlide } from '@sneat/components';
@@ -10,9 +10,9 @@ describe('swipeable-ui utilities', () => {
     it('should create swipeable day with odd parity', () => {
       const date = new Date(2024, 0, 15);
       const destroyed$ = new Subject<void>();
-      const mockProvider: CalendarDataProvider = {
+      const mockProvider = {
         getCalendarDay: vi.fn().mockReturnValue(undefined),
-      } as any;
+      } as unknown as CalendarDataProvider;
 
       const result = swipeableDay('odd', date, mockProvider, destroyed$);
 
@@ -40,9 +40,9 @@ describe('swipeable-ui utilities', () => {
     it('should have setDate function that returns new swipeable day', () => {
       const date = new Date(2024, 0, 15);
       const destroyed$ = new Subject<void>();
-      const mockProvider: CalendarDataProvider = {
+      const mockProvider = {
         getCalendarDay: vi.fn().mockReturnValue(undefined),
-      } as any;
+      } as unknown as CalendarDataProvider;
 
       const swipeable = swipeableDay('odd', date, mockProvider, destroyed$);
       const newDate = new Date(2024, 0, 16);

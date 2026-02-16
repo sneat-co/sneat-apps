@@ -75,7 +75,7 @@ export class ProjectService {
       );
       this.projSummary[id] = subj = new ReplaySubject(1);
       if (projectRef.storeId === 'firestore') {
-        this.firestoreChanges(projectRef.projectId)
+        this.firestoreChanges()
           .pipe(
             tap((summary) =>
               console.log(

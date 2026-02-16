@@ -25,11 +25,11 @@ export function setupGlobalMocks() {
       constructor(url: string, base?: string | URL) {
         try {
           super(url, base);
-        } catch (e) {
+        } catch {
           // If the base is invalid, try with a default base
           try {
             super(url, 'http://localhost/');
-          } catch (err) {
+          } catch {
             // If URL is completely invalid, fall back to localhost with the path
             // This handles cases where Ionic/Stencil tries to load assets in tests
             const fallbackUrl = url.startsWith('/') ? `http://localhost${url}` : 'http://localhost/';

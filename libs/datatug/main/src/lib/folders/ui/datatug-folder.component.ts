@@ -138,7 +138,7 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
       return throwError(() => 'projectRef is not set');
     }
     return create({ projectRef: this.projectRef, name: name.trim() }).pipe(
-      tap((value) => {
+      tap(() => {
         // console.log('project item created:', value);
         try {
           // if (!this.project.summary.environments) {
@@ -147,7 +147,7 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
           // 		summary: {...this.project.summary, environments: []},
           // 	}
           // }
-          const projItemBrief = { id: value.id, title: value.dbo?.title };
+          // const projItemBrief = { id: value.id, title: value.dbo?.title };
           // this.project.environments.push(projItemBrief)
           this.goProjItemPage(projItemType);
         } catch (err) {

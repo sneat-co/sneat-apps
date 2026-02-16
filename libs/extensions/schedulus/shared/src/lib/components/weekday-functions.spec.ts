@@ -23,9 +23,9 @@ describe('weekday-functions', () => {
 
     it('should call getCalendarDay with correct date', () => {
       const date = new Date(2024, 0, 16); // Tuesday
-      const mockProvider: CalendarDataProvider = {
+      const mockProvider = {
         getCalendarDay: vi.fn().mockReturnValue({} as CalendarDay),
-      } as any;
+      } as unknown as CalendarDataProvider;
 
       createWeekday(date, mockProvider);
 
