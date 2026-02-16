@@ -77,7 +77,7 @@ jobs:
 
       - name: nx test affected (without coverage)
         if: github.ref != 'refs/heads/main'
-        run: pnpm run nx affected --target=test --base=${{ env.NX_BASE }} --parallel=8
+        run: pnpm run nx affected --target=test --parallel=4 --base=${{ env.NX_BASE }}
       #        timeout-minutes: 5
 
       - name: Run tests with coverage (only on main branch)
