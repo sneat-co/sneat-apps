@@ -167,7 +167,7 @@ export class CalendarDay {
           .subscribe({
             next: this.processSingles,
             error: this.errorLogger.logErrorHandler(
-              `Failed to get single happenings for a given day: spaceID=${spaceID}, date=${date}`,
+              `Failed to get single happenings for a given day: spaceID=${spaceID}, date=${this.dateID}`,
             ),
           }),
       );

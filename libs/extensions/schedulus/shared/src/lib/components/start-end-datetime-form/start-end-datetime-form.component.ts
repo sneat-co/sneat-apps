@@ -322,7 +322,7 @@ export class StartEndDatetimeFormComponent implements OnChanges {
     }
   }
 
-  private emitTimingChanged(): void {
+  private emitTimingChanged(_source?: string): void {
     this.timingChange.emit(this.timing);
   }
 

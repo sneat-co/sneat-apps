@@ -128,7 +128,7 @@ export class CalendarComponent
     this.tabChanged.emit(this.tab);
   }
 
-  protected segmentChanged(): void {
+  protected segmentChanged(_event?: Event): void {
     this.$isWeekTabActivated.set(true);
     history.replaceState(
       history.state,

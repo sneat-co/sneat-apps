@@ -31,7 +31,7 @@ export abstract class SpaceRelatedFormComponent
     }
   }
 
-  protected onSpaceTypeChanged(): void {
+  protected onSpaceTypeChanged(_space?: ISpaceContext): void {
     // TODO: remove in favor of $spaceType?
     // console.log('SpaceRelatedFormComponent.onSpaceTypeChanged()', team);
   }

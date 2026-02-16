@@ -130,10 +130,7 @@ export abstract class HappeningBasePage extends CalendarBasePage {
               happening,
             );
             if (happening.id === this.$happeningID()) {
-              this.setHappening(
-                happening,
-                'watchHappeningChanges() => watchHappeningByID',
-              );
+              this.setHappening(happening);
             }
           },
           error: this.logErrorHandler('failed to get happening by ID'),
