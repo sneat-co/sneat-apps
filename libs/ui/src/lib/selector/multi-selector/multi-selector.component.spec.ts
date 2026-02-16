@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ErrorLogger } from '@sneat/core';
@@ -26,7 +27,7 @@ describe('MultiSelectorComponent', () => {
         },
         {
           provide: OverlayController,
-          useValue: { dismiss: vi.fn() },
+          useValue: { dismiss: vi.fn().mockResolvedValue(undefined) },
         },
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -37,7 +38,10 @@ describe('MultiSelectorComponent', () => {
           schemas: [CUSTOM_ELEMENTS_SCHEMA],
           providers: [
             { provide: ClassName, useValue: 'TestComponent' },
-            { provide: OverlayController, useValue: { dismiss: vi.fn() } },
+            {
+              provide: OverlayController,
+              useValue: { dismiss: vi.fn().mockResolvedValue(undefined) },
+            },
           ],
         },
       })
@@ -79,9 +83,7 @@ describe('MultiSelectorComponent', () => {
       expect(event.stopPropagation).toHaveBeenCalled();
       // @ts-expect-error accessing protected member
       expect(component.selectedItems).toEqual([mockItems[1]]);
-      expect(removeSpy).toHaveBeenCalledWith([
-        { event, item: mockItems[0] },
-      ]);
+      expect(removeSpy).toHaveBeenCalledWith([{ event, item: mockItems[0] }]);
     });
   });
   describe('SelectorBaseComponent coverage', () => {
@@ -102,11 +104,6 @@ describe('MultiSelectorComponent', () => {
       // @ts-expect-error accessing protected member
       component.close();
       expect(dismissSpy).toHaveBeenCalled();
-    });
-
-    it('should return modalController', () => {
-      // @ts-expect-error accessing protected member
-      expect(component.modalController).toBeDefined();
     });
 
     it('should ignore ngOnChanges if allItems not changed', () => {

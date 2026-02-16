@@ -85,6 +85,14 @@ describe('SneatFirestoreService', () => {
     expect((result.brief as TestBrief).id).toBe('doc1');
   });
 
+  it('should throw error if dto2brief is explicitly null', () => {
+    // Use type assertion to bypass TypeScript and test runtime behavior
+    expect(() => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      new SneatFirestoreService(injector, null as any);
+    }).toThrow('dto2brief is required');
+  });
+
   describe('watchByID', () => {
     it('should watch document by ID', fakeAsync(() => {
       service = new SneatFirestoreService(injector, dto2brief);

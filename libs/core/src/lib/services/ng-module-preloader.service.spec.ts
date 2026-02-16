@@ -43,11 +43,30 @@ describe('NgModulePreloaderService', () => {
     const service: NgModulePreloaderService = TestBed.inject(
       NgModulePreloaderService,
     );
-    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+    const warnSpy = vi
+      .spyOn(console, 'warn')
+      .mockImplementation(() => undefined);
     service.preload(['path1']);
     expect(warnSpy).toHaveBeenCalledWith(
       expect.stringContaining('Preloading is disabled'),
     );
+    warnSpy.mockRestore();
+  });
+
+  it('should only warn once when preload is called multiple times', () => {
+    const service: NgModulePreloaderService = TestBed.inject(
+      NgModulePreloaderService,
+    );
+    const warnSpy = vi
+      .spyOn(console, 'warn')
+      .mockImplementation(() => undefined);
+
+    service.preload(['path1']);
+    service.preload(['path2']);
+    service.preload(['path3']);
+
+    // Should only warn once
+    expect(warnSpy).toHaveBeenCalledTimes(1);
     warnSpy.mockRestore();
   });
 });

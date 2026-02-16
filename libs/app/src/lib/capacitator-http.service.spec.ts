@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CapacitorHttpInterceptor } from './capacitator-http.service';
 import {
   HttpRequest,
   HttpResponse,
   HttpErrorResponse,
+  HttpParams,
+  HttpHeaders,
 } from '@angular/common/http';
 import { Capacitor, CapacitorHttp } from '@capacitor/core';
 import { firstValueFrom, of } from 'rxjs';
@@ -46,6 +49,47 @@ describe('CapacitorHttpInterceptor', () => {
     expect(event instanceof HttpResponse).toBe(true);
     expect(event.status).toBe(200);
     expect(event.body).toEqual({ message: 'success' });
+  });
+
+  it('should handle request with params', async () => {
+    (Capacitor.isNativePlatform as any).mockReturnValue(true);
+    const params = new HttpParams().set('foo', 'bar').set('baz', 'qux');
+    const req = new HttpRequest('GET', 'https://example.com', {
+      params,
+    });
+    const mockResponse = { status: 200, data: { message: 'success' } };
+    (CapacitorHttp.request as any).mockResolvedValue(mockResponse);
+
+    await firstValueFrom(interceptor.intercept(req, nextHandler));
+
+    expect(CapacitorHttp.request).toHaveBeenCalledWith(
+      expect.objectContaining({
+        params: { foo: 'bar', baz: 'qux' },
+      }),
+    );
+  });
+
+  it('should handle request with headers', async () => {
+    (Capacitor.isNativePlatform as any).mockReturnValue(true);
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', 'Bearer token');
+    const req = new HttpRequest('GET', 'https://example.com', {
+      headers,
+    });
+    const mockResponse = { status: 200, data: { message: 'success' } };
+    (CapacitorHttp.request as any).mockResolvedValue(mockResponse);
+
+    await firstValueFrom(interceptor.intercept(req, nextHandler));
+
+    expect(CapacitorHttp.request).toHaveBeenCalledWith(
+      expect.objectContaining({
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer token',
+        },
+      }),
+    );
   });
 
   it('should handle Capacitor HTTP errors', async () => {

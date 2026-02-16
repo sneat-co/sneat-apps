@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TestBed } from '@angular/core/testing';
 import {
   SneatApiServiceFactory,
@@ -6,6 +7,7 @@ import {
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Auth } from '@angular/fire/auth';
 import { SneatApiBaseUrl } from './sneat-api-service';
+import * as coreModule from '@sneat/core';
 
 const onIdTokenChangedMock = vi.fn();
 
@@ -42,8 +44,24 @@ describe('SneatApiServiceFactory', () => {
     });
 
     it('should throw error if storeRef.type is empty', () => {
-      // parseStoreRef will throw before we get to the type check
-      expect(() => factory.getSneatApiService('invalid-store')).toThrow();
+      // Mock parseStoreRef to return an object with empty type
+      const parseStoreRefSpy = vi.spyOn(coreModule, 'parseStoreRef');
+      parseStoreRefSpy.mockReturnValue({ type: '' } as any);
+
+      expect(() => factory.getSneatApiService('test')).toThrow(
+        'storeRef.type is a required parameter, got empty: string',
+      );
+
+      parseStoreRefSpy.mockRestore();
+    });
+
+    it('should throw error for unknown store type', () => {
+      TestBed.runInInjectionContext(() => {
+        // 'github' is a valid storeId for parseStoreRef but not handled by factory
+        expect(() => factory.getSneatApiService('github')).toThrow(
+          'unknown store type: github',
+        );
+      });
     });
 
     it('should return service for firestore type', () => {

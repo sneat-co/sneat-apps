@@ -71,4 +71,25 @@ describe('SneatNavService', () => {
 
     expect(location.back).toHaveBeenCalled();
   });
+
+  it('should handle navigation error when no previous page exists', async () => {
+    const service = TestBed.inject(SneatNavService);
+    const router = TestBed.inject(Router);
+    const consoleErrorSpy = vi
+      .spyOn(console, 'error')
+      .mockImplementation(() => undefined);
+    const error = new Error('Navigation failed');
+    router.navigateByUrl = vi.fn().mockReturnValue(Promise.reject(error));
+
+    service.goBack('/home');
+
+    // Wait for promise to reject
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      'SneatNavService.goBack() - failed to navigate',
+      error,
+    );
+    consoleErrorSpy.mockRestore();
+  });
 });
