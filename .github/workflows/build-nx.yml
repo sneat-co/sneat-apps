@@ -82,7 +82,8 @@ jobs:
 
       - name: Run tests with coverage (only on main branch)
         if: github.ref == 'refs/heads/main'
-        run: pnpm run nx affected --target=test --base=${{ env.NX_BASE }} --coverage --parallel=8 --skip-nx-cache
+        run: pnpm run nx affected --target=test --base=${{ env.NX_BASE }} --coverage --parallel=4
+#             --skip-nx-cache
       #        timeout-minutes: 5
 
       - name: Merge coverage reports
