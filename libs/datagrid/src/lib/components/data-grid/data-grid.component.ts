@@ -96,6 +96,11 @@ export class DataGridComponent implements AfterViewInit, OnChanges {
     event?: Event;
   }>();
 
+  @Output() readonly rowDeselected = new EventEmitter<{
+    row: unknown;
+    event?: Event;
+  }>();
+
   // private tab = document.createElement('div');
   private tabulator?: Tabulator;
 
