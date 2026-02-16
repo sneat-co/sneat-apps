@@ -40,7 +40,9 @@ test.describe('Email Auth', () => {
       await initializeFirebaseEmulators();
     });
 
-    // TODO: Flaky test - button not appearing consistently in CI
+    // TODO: Fix flaky test - investigate why 'Create new space' button (ion-fab-button) doesn't appear
+    // consistently in CI. Possible solutions: increase timeout, add proper loading state checks, or verify
+    // the button element selector hasn't changed in the UI.
     test.skip('should sign user in', async ({ page }) => {
       await createUser(MOCK_USER_EMAIL, MOCK_USER_PASS);
       await page.goto('/');
@@ -64,7 +66,9 @@ test.describe('Email Auth', () => {
       ).toBeVisible();
     });
 
-    // TODO: Flaky test - button not appearing consistently in CI
+    // TODO: Fix flaky test - investigate why 'Create new space' button (ion-fab-button) doesn't appear
+    // consistently in CI. Possible solutions: increase timeout, add proper loading state checks, or verify
+    // the button element selector hasn't changed in the UI.
     test.skip('should user sign out', async ({ page }) => {
       await createUser(MOCK_USER_EMAIL, MOCK_USER_PASS);
       await page.goto('/');
