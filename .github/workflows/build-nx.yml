@@ -28,39 +28,16 @@ jobs:
   #
   #            -   uses: ./.github/actions/pnpm
 
-  build-lint-e2e:
-    #        needs: pnpm-cache
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-        with:
-          # TODO: document why we need `fetch-depth` and check if it can be 2
-          # currently it fails with:
-          # pnpm run nx affected --target=build,lint --base=ea7a47aa562a54bea8e4be5237e603f1d5e5e196 --parallel=8
-          # NX   Command failed: git diff --name-only --no-renames --relative "ea7a47aa562a54bea8e4be5237e603f1d5e5e196" "84733ee7b6cdce9397f6fc2cb4877184e4ad6432"
-          # fatal: bad object ea7a47aa562a54bea8e4be5237e603f1d5e5e196
-          # Error: Process completed with exit code 1.
-          fetch-depth: 0
 
       - uses: ./.github/actions/pnpm
 
-      - name: Check circular dependencies
-        run: |
-          npx madge --circular --extensions ts ./libs
-          npx madge --circular --extensions ts ./apps
-
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v4
-
-      - name: nx build affected
-        env:
-          # https://stackoverflow.com/a/73429959/1975086
-          # https://github.com/angular/angular/issues/38216
-          BAZEL_TARGET: '1'
-        # https://stackoverflow.com/questions/73876647/using-nx-run-many-shows-another-process-with-id-is-currently-running-ngcc
-        # BE AWARE: Adding PARALLEL options may cause build to pass when it should have been failed
-        run: pnpm run nx affected --target=build --base=${{ env.NX_BASE }} --parallel=8
 
       - name: nx lint affected
         run: pnpm run nx affected --target=lint --base=${{ env.NX_BASE }} --parallel=8
@@ -68,12 +45,12 @@ jobs:
       - name: nx test affected (without coverage)
         if: github.ref != 'refs/heads/main'
         run: pnpm run nx affected --target=test --base=${{ env.NX_BASE }} --parallel=1
-#        timeout-minutes: 5
+      #        timeout-minutes: 5
 
       - name: Run tests with coverage (only on main branch)
         if: github.ref == 'refs/heads/main'
         run: pnpm run nx affected --target=test --base=${{ env.NX_BASE }} --coverage --parallel=1 --skip-nx-cache
-#        timeout-minutes: 5
+      #        timeout-minutes: 5
 
       - name: Merge coverage reports
         if: github.ref == 'refs/heads/main' && success()
@@ -101,8 +78,13 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: ./coverage-merged/lcov.info
 
-      # We have firebase-tools in devDependencies
-      #            -   uses: sneat-co/sneat-firebase/actions/install-firebase-tools@main
+  e2e-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - uses: ./.github/actions/pnpm
 
       - name: Download latest release of `sneat-go-server`
         run: |
@@ -162,3 +144,37 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+
+  build:
+    #        needs: pnpm-cache
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          # TODO: document why we need `fetch-depth` and check if it can be 2
+          # currently it fails with:
+          # pnpm run nx affected --target=build,lint --base=ea7a47aa562a54bea8e4be5237e603f1d5e5e196 --parallel=8
+          # NX   Command failed: git diff --name-only --no-renames --relative "ea7a47aa562a54bea8e4be5237e603f1d5e5e196" "84733ee7b6cdce9397f6fc2cb4877184e4ad6432"
+          # fatal: bad object ea7a47aa562a54bea8e4be5237e603f1d5e5e196
+          # Error: Process completed with exit code 1.
+          fetch-depth: 0
+
+      - uses: ./.github/actions/pnpm
+
+      - name: Check circular dependencies
+        run: |
+          npx madge --circular --extensions ts ./libs
+          npx madge --circular --extensions ts ./apps
+
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v4
+
+      - name: nx build affected
+        env:
+          # https://stackoverflow.com/a/73429959/1975086
+          # https://github.com/angular/angular/issues/38216
+          BAZEL_TARGET: '1'
+        # https://stackoverflow.com/questions/73876647/using-nx-run-many-shows-another-process-with-id-is-currently-running-ngcc
+        # BE AWARE: Adding PARALLEL options may cause build to pass when it should have been failed
+        run: pnpm run nx affected --target=build --base=${{ env.NX_BASE }} --parallel=8
