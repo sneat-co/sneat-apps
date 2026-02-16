@@ -47,9 +47,6 @@ jobs:
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v4
 
-      - name: nx lint affected
-        run: pnpm run nx affected --target=lint --base=${{ env.NX_BASE }} --parallel=8
-
       - name: nx test affected (without coverage)
         if: github.ref != 'refs/heads/main'
         run: pnpm run nx affected --target=test --base=${{ env.NX_BASE }} --parallel=1
@@ -177,6 +174,9 @@ jobs:
         run: |
           npx madge --circular --extensions ts ./libs
           npx madge --circular --extensions ts ./apps
+
+      - name: nx lint affected
+        run: pnpm run nx affected --target=lint --base=${{ env.NX_BASE }} --parallel=8
 
       - name: nx build affected
         env:
