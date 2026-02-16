@@ -32,7 +32,7 @@ export class SneatApiService implements ISneatApiService, OnDestroy {
     private readonly afAuth: Auth,
   ) {
     this.baseUrl = baseUrl ?? DefaultSneatAppApiBaseUrl;
-    console.log('SneatApiService.constructor()', this.baseUrl);
+    // console.log('SneatApiService.constructor()', this.baseUrl);
     onIdTokenChanged(this.afAuth, {
       next: (user) => {
         user
