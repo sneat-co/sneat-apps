@@ -77,6 +77,8 @@ export function createBaseViteConfig(
       include: ['src/**/*.spec.ts'],
       setupFiles: [join(dirname, 'src/test-setup.ts')],
       reporters: ['default'],
+      // Suppress console traces to avoid verbose debug output in CI logs
+      printConsoleTrace: false,
       coverage: {
         reportsDirectory: reportsDirectory || coverageDir,
         provider: 'v8' as const,
