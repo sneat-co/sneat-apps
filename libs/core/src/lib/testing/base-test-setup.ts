@@ -45,6 +45,12 @@ export function setupGlobalMocks() {
         get: () => 'http://localhost/',
         configurable: true,
       });
+
+      // Ensure document.dir is defined to prevent Ionic's isRTL() from throwing
+      // "Cannot read properties of undefined (reading 'toLowerCase')"
+      if ((window as any).document.dir === undefined) {
+        (window as any).document.dir = '';
+      }
     }
 
     if (!(window as any).location) {
