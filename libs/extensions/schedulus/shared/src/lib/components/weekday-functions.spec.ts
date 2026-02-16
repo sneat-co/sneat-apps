@@ -8,9 +8,9 @@ describe('weekday-functions', () => {
     it('should create weekday with correct properties', () => {
       const date = new Date(2024, 0, 15); // Monday, January 15, 2024
       const mockDay = {} as CalendarDay;
-      const mockProvider: CalendarDataProvider = {
+      const mockProvider = {
         getCalendarDay: vi.fn().mockReturnValue(mockDay),
-      } as any;
+      } as unknown as CalendarDataProvider;
 
       const result = createWeekday(date, mockProvider);
 
@@ -43,9 +43,9 @@ describe('weekday-functions', () => {
         { date: new Date(2024, 0, 21), expectedId: 'su' }, // Sunday
       ];
 
-      const mockProvider: CalendarDataProvider = {
+      const mockProvider = {
         getCalendarDay: vi.fn().mockReturnValue({} as CalendarDay),
-      } as any;
+      } as unknown as CalendarDataProvider;
 
       testCases.forEach(({ date, expectedId }) => {
         const result = createWeekday(date, mockProvider);
@@ -55,9 +55,9 @@ describe('weekday-functions', () => {
 
     it('should handle undefined day from provider', () => {
       const date = new Date(2024, 0, 15);
-      const mockProvider: CalendarDataProvider = {
+      const mockProvider = {
         getCalendarDay: vi.fn().mockReturnValue(undefined),
-      } as any;
+      } as unknown as CalendarDataProvider;
 
       const result = createWeekday(date, mockProvider);
 

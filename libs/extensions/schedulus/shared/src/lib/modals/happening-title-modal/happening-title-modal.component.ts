@@ -76,7 +76,7 @@ export class HappeningTitleModalComponent
   });
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  protected onEnter(_event: Event): void {}
+  protected onEnter(): void {}
 
   private happeningService = inject(HappeningService);
 

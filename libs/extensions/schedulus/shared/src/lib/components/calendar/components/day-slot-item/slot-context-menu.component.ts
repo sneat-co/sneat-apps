@@ -111,7 +111,7 @@ export class SlotContextMenuComponent extends WithSpaceInput {
     super();
   }
 
-  protected assign(event: Event, _to: 'member' | 'contact'): void {
+  protected assign(event: Event): void {
     event.stopPropagation();
     event.preventDefault();
     const space = this.$space();

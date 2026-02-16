@@ -448,7 +448,7 @@ export class HappeningSlotFormComponent
     };
   }
 
-  private addMonthlySlot(_timing?: ITiming): IHappeningSlot | undefined {
+  private addMonthlySlot(): IHappeningSlot | undefined {
     if (this.monthlyMode() === 'monthly-day') {
       return this.addDaySlot();
     }
@@ -506,7 +506,7 @@ export class HappeningSlotFormComponent
     }
   }
 
-  protected addSlot(_timing?: ITiming): void {
+  protected addSlot(): void {
     if (this.$happeningID()) {
       this.saveChanges();
     } else {

@@ -254,10 +254,7 @@ export class ProjectPageComponent
     };
   }
 
-  private goProjItemPage(
-    page: ProjectItemType,
-    _: IProjItemBrief,
-  ): void {
+  private goProjItemPage(page: ProjectItemType): void {
     switch (page) {
       case ProjectItem.environment:
         page = 'env' as ProjectItemType;

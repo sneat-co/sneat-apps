@@ -47,7 +47,7 @@ export class EnvSelectorComponent {
     });
   }
 
-  public envChanged(_: Event): void {
+  public envChanged(): void {
     this.dataTugNavContext.setCurrentEnvironment(this.currentEnvId);
   }
 }

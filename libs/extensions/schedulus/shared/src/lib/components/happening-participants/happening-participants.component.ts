@@ -243,7 +243,7 @@ export class HappeningParticipantsComponent extends WithSpaceInput {
           });
         },
       })
-      .then((_selectedContacts) => {
+      .then(() => {
         this.$isAddingContact.set(false);
         // alert(
         // 	`${selectedContacts?.length || 0} contacts added added as participants`,

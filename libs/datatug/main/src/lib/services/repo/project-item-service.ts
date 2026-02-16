@@ -89,10 +89,7 @@ export class ProjectItemService<ProjItem extends IProjItemBrief> {
       );
   }
 
-  private watchFirestoreFolder<T>(
-    projectId: string,
-    _: string,
-  ): Observable<T | null | undefined> {
+  private watchFirestoreFolder<T>(projectId: string): Observable<T | null | undefined> {
     const datatugProjects = collection(this.db, 'datatug_projects');
     const project = doc(datatugProjects, projectId);
     const queries = collection(project, 'queries');

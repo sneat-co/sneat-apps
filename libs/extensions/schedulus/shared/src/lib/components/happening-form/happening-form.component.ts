@@ -249,7 +249,7 @@ export class HappeningFormComponent
     // }
   }
 
-  protected onTitleEnter(_event: Event): void {
+  protected onTitleEnter(): void {
     this.changeDetectorRef.markForCheck();
   }
 
@@ -285,7 +285,7 @@ export class HappeningFormComponent
   // 	}
   // }
 
-  protected onSlotAdded(_slot: IHappeningSlot): void {
+  protected onSlotAdded(): void {
     this.happeningForm.markAllAsTouched();
   }
 

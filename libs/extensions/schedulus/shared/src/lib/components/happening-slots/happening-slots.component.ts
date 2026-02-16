@@ -182,7 +182,7 @@ export class HappeningSlotsComponent {
     // this.isShowingSlotFormModal = true;
   }
 
-  protected showAddSlot(event: Event, _params?: AddSlotParams): void {
+  protected showAddSlot(event: Event): void {
     const happening = this.happening();
     this.happeningSlotModalService
       .editSingleHappeningSlot(event, happening)

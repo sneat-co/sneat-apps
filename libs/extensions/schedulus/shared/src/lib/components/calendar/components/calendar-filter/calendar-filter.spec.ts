@@ -10,7 +10,7 @@ describe('calendar-filter utilities', () => {
     ): IHappeningContext =>
       ({
         id: 'happening1',
-        space: { id: 'space1' } as any,
+        space: { id: 'space1' },
         dbo: {
           title: 'Test Event',
         },
@@ -82,7 +82,7 @@ describe('calendar-filter utilities', () => {
       const happening = createMockHappening({
         dbo: undefined,
         brief: { title: 'Test Event' },
-      } as any);
+      } as Partial<IHappeningContext>);
       const filter = createMockFilter({ text: 'test' });
       const result = isMatchingScheduleFilter(happening, filter);
       expect(result).toBe(false);

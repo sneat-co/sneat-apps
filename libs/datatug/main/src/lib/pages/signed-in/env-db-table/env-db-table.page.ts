@@ -198,7 +198,7 @@ from ${from}`;
     this.destroyed.complete();
   }
 
-  public tabChanged(_: Event): void {
+  public tabChanged(): void {
     // Tab change handler - no action needed
   }
 
@@ -220,7 +220,7 @@ from ${from}`;
     }
   }
 
-  public onGroupByFkChanged(_: Event): void {
+  public onGroupByFkChanged(): void {
     this.setupGrid();
   }
 

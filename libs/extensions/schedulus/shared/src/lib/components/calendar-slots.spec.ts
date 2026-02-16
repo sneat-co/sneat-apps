@@ -207,7 +207,7 @@ describe('calendar-slots utilities', () => {
               slot1: { repeats: 'weekly' },
             },
           },
-        } as any,
+        } as IHappeningSlotUIContext,
       });
       const filter = createMockFilter({ repeats: ['weekly'] });
       const result = isSlotVisible(slot, filter);

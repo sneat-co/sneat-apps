@@ -224,7 +224,7 @@ export class CalendarDay {
     );
   }
 
-  private readonly processRecurrings = (_slots: RecurringSlots): void => {
+  private readonly processRecurrings = (): void => {
     // this.recurringSlots = slots;
     this.joinRecurringsWithSinglesAndEmit();
   };

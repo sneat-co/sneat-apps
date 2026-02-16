@@ -29,7 +29,7 @@ describe('calendar-types utilities', () => {
 
     it('should create independent arrays for each weekday', () => {
       const result = emptyRecurringsByWeekday();
-      result.mo.push({} as any);
+      result.mo.push({} as ISlotUIContext);
       expect(result.mo).toHaveLength(1);
       expect(result.tu).toHaveLength(0);
     });
@@ -42,19 +42,19 @@ describe('calendar-types utilities', () => {
     });
 
     it('should return empty slots when no recurring happenings', () => {
-      const space: ICalendariumSpaceContext = {
+      const space = {
         id: 'space1',
-        space: { id: 'space1' } as any,
+        space: { id: 'space1' },
         dbo: {},
-      } as any;
+      } as ICalendariumSpaceContext;
       const result = groupRecurringSlotsByWeekday(space);
       expect(result).toEqual({ byWeekday: {} });
     });
 
     it('should group slots by weekday', () => {
-      const space: ICalendariumSpaceContext = {
+      const space = {
         id: 'space1',
-        space: { id: 'space1' } as any,
+        space: { id: 'space1' },
         dbo: {
           recurringHappenings: {
             happening1: {
@@ -70,7 +70,7 @@ describe('calendar-types utilities', () => {
             },
           },
         },
-      } as any;
+      } as ICalendariumSpaceContext;
 
       const result = groupRecurringSlotsByWeekday(space);
       expect(result.byWeekday.mo).toBeDefined();
@@ -80,9 +80,9 @@ describe('calendar-types utilities', () => {
     });
 
     it('should handle multiple happenings', () => {
-      const space: ICalendariumSpaceContext = {
+      const space = {
         id: 'space1',
-        space: { id: 'space1' } as any,
+        space: { id: 'space1' },
         dbo: {
           recurringHappenings: {
             happening1: {
@@ -109,16 +109,16 @@ describe('calendar-types utilities', () => {
             },
           },
         },
-      } as any;
+      } as ICalendariumSpaceContext;
 
       const result = groupRecurringSlotsByWeekday(space);
       expect(result.byWeekday.mo?.length).toBe(2);
     });
 
     it('should handle slots without weekdays', () => {
-      const space: ICalendariumSpaceContext = {
+      const space = {
         id: 'space1',
-        space: { id: 'space1' } as any,
+        space: { id: 'space1' },
         dbo: {
           recurringHappenings: {
             happening1: {
@@ -133,7 +133,7 @@ describe('calendar-types utilities', () => {
             },
           },
         },
-      } as any;
+      } as ICalendariumSpaceContext;
 
       const result = groupRecurringSlotsByWeekday(space);
       // Slots without weekdays should still be included but not assigned to any weekday
@@ -141,9 +141,9 @@ describe('calendar-types utilities', () => {
     });
 
     it('should handle multiple slots per happening', () => {
-      const space: ICalendariumSpaceContext = {
+      const space = {
         id: 'space1',
-        space: { id: 'space1' } as any,
+        space: { id: 'space1' },
         dbo: {
           recurringHappenings: {
             happening1: {
@@ -165,7 +165,7 @@ describe('calendar-types utilities', () => {
             },
           },
         },
-      } as any;
+      } as ICalendariumSpaceContext;
 
       const result = groupRecurringSlotsByWeekday(space);
       expect(result.byWeekday.mo?.length).toBe(1);
@@ -173,9 +173,9 @@ describe('calendar-types utilities', () => {
     });
 
     it('should include slot and happening data in result', () => {
-      const space: ICalendariumSpaceContext = {
+      const space = {
         id: 'space1',
-        space: { id: 'space1' } as any,
+        space: { id: 'space1' },
         dbo: {
           recurringHappenings: {
             happening1: {
@@ -191,7 +191,7 @@ describe('calendar-types utilities', () => {
             },
           },
         },
-      } as any;
+      } as ICalendariumSpaceContext;
 
       const result = groupRecurringSlotsByWeekday(space);
       const mondaySlot = result.byWeekday.mo?.[0];

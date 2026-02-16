@@ -149,7 +149,7 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
           // }
           const projItemBrief = { id: value.id, title: value.dbo?.title };
           // this.project.environments.push(projItemBrief)
-          this.goProjItemPage(projItemType, projItemBrief);
+          this.goProjItemPage(projItemType);
         } catch (err) {
           this.errorLogger.logError(err, 'Failed to process API response');
         }
@@ -161,10 +161,7 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
     );
   }
 
-  private goProjItemPage(
-    page: ProjectItemType,
-    _: IProjItemBrief,
-  ): void {
+  private goProjItemPage(page: ProjectItemType): void {
     // console.log('goProjItemPage()', page, projItem, this.projectRef);
     if (!this.projectRef) {
       throw new Error('projectRef is not set');

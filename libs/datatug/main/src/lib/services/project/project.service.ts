@@ -94,9 +94,7 @@ export class ProjectService {
     return subj.asObservable();
   }
 
-  private firestoreChanges(
-    _: string,
-  ): Observable<IProjectSummary | undefined> {
+  private firestoreChanges(): Observable<IProjectSummary | undefined> {
     return throwError(() => 'Not implemented');
     // return this.projectsCollection
     // 	.doc(id)

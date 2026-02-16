@@ -148,7 +148,7 @@ export class QueryEditorStateService {
   }
 
   private loadQuery(id: string): void {
-    const onCompleted = (def?: IQueryDef, _?: unknown) => {
+    const onCompleted = (def?: IQueryDef) => {
       const activeQuery = $state.value?.activeQueries.find((q) => q.id === id);
       if (!activeQuery) {
         return;

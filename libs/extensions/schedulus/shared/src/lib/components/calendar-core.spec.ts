@@ -10,7 +10,6 @@ import {
 import { WeekdayCode2 } from '@sneat/mod-schedulus-core';
 import { Parity } from './swipeable-ui';
 import {
-  VirtualSliderAnimationStates as _VirtualSliderAnimationStates,
   VirtualSliderDirectPushedNext,
   VirtualSliderDirectPushedPrev,
   VirtualSliderReversePushedNext,
@@ -194,11 +193,11 @@ describe('calendar-core utilities', () => {
     });
 
     it('should throw error for invalid direction', () => {
-      expect(() => animationState('odd' as Parity, 'invalid' as any)).toThrow();
+      expect(() => animationState('odd' as Parity, 'invalid' as 'forward' | 'back')).toThrow();
     });
 
     it('should throw error for invalid parity', () => {
-      expect(() => animationState('invalid' as any, 'forward')).toThrow();
+      expect(() => animationState('invalid' as Parity, 'forward')).toThrow();
     });
   });
 });
