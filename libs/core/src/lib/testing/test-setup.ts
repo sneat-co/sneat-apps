@@ -67,10 +67,4 @@ export function setupTestEnvironment() {
   setupAngularTestingEnvironment();
   setupGlobalMocks();
   configureGlobalTestBed();
-
-  // Reset TestBed before each test so that sequential test files
-  // (fileParallelism: false) don't leak instantiated module state.
-  beforeEach(() => {
-    TestBed.resetTestingModule();
-  });
 }

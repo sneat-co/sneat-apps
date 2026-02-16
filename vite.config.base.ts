@@ -69,11 +69,6 @@ export function createBaseViteConfig(
       watch: false,
       globals: true,
       environment: 'happy-dom',
-      // Disabled because Nx handles parallelism across projects (--parallel flag).
-      // Without this, each Vitest instance spawns up to (CPU cores - 1) worker threads,
-      // causing severe CPU contention when multiple projects run simultaneously.
-      // To override for a single project run: pnpm run nx test <project> --fileParallelism
-      fileParallelism: false,
       include: ['src/**/*.spec.ts'],
       setupFiles: [join(dirname, 'src/test-setup.ts')],
       reporters: ['default'],
