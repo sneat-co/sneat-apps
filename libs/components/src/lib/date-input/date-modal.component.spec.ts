@@ -18,7 +18,7 @@ describe('DateModalComponent', () => {
 
     errorLogger = {
       logError: vi.fn(),
-      logErrorHandler: vi.fn().mockReturnValue(() => {}),
+      logErrorHandler: vi.fn().mockReturnValue(() => undefined),
     };
 
     await TestBed.configureTestingModule({

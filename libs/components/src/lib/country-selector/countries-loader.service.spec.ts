@@ -111,7 +111,7 @@ describe('CountriesLoaderService', () => {
   });
 
   it('should handle load error gracefully', async () => {
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => undefined);
     httpClient.get = vi.fn(() => throwError(() => new Error('Load failed')));
 
     const service2 = TestBed.inject(CountriesLoaderService);
@@ -123,7 +123,7 @@ describe('CountriesLoaderService', () => {
   });
 
   it('should return unknown country after load error', async () => {
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => undefined);
     httpClient.get = vi.fn(() => throwError(() => new Error('Load failed')));
 
     const service2 = TestBed.inject(CountriesLoaderService);

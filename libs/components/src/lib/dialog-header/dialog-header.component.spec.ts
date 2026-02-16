@@ -48,7 +48,7 @@ describe('DialogHeaderComponent', () => {
   });
 
   it('should handle dismiss error gracefully', async () => {
-    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => undefined);
     modalController.dismiss = vi.fn().mockRejectedValue(new Error('Dismiss failed'));
 
     const mockEvent = {
