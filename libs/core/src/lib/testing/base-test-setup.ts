@@ -19,6 +19,34 @@ export function setupAngularTestingEnvironment() {
 
 export function setupGlobalMocks() {
   if (typeof window !== 'undefined') {
+    // Wrap URL constructor to handle invalid bases gracefully (fixes Ionic/Stencil asset loading in tests)
+    const OriginalURL = (window as any).URL;
+    (window as any).URL = class extends OriginalURL {
+      constructor(url: string, base?: string | URL) {
+        try {
+          super(url, base);
+        } catch (e) {
+          // If the base is invalid, try with a default base
+          try {
+            super(url, 'http://localhost/');
+          } catch (err) {
+            // If URL is completely invalid, fall back to localhost with the path
+            // This handles cases where Ionic/Stencil tries to load assets in tests
+            const fallbackUrl = url.startsWith('/') ? `http://localhost${url}` : 'http://localhost/';
+            super(fallbackUrl);
+          }
+        }
+      }
+    };
+
+    // Set document.baseURI to prevent Ionic/Stencil "Invalid URL" errors
+    if ((window as any).document) {
+      Object.defineProperty((window as any).document, 'baseURI', {
+        get: () => 'http://localhost/',
+        configurable: true,
+      });
+    }
+
     if (!(window as any).location) {
       (window as any).location = {
         href: 'http://localhost',

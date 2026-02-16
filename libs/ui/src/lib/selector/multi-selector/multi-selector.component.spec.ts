@@ -7,9 +7,33 @@ import { OverlayController } from '../selector-base.component';
 import { MultiSelectorComponent } from './multi-selector.component';
 import { ISelectItem } from '../selector-interfaces';
 
-// Suppress Ionic icon warnings - mock console methods before tests run
-vi.spyOn(console, 'error').mockImplementation(() => undefined);
-vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+// Suppress Ionic icon warnings - mock console methods to filter Ionic-specific errors
+const originalWarn = console.warn;
+const originalError = console.error;
+
+vi.spyOn(console, 'error').mockImplementation((...args: any[]) => {
+  const message = args[0]?.toString() || '';
+  // Only suppress Ionic/Stencil icon loading errors
+  if (
+    message.includes('Ionicons') ||
+    message.includes('@ionic/core/components/icon') ||
+    message.includes('getAssetPath')
+  ) {
+    return;
+  }
+  // Let other errors through
+  originalError(...args);
+});
+
+vi.spyOn(console, 'warn').mockImplementation((...args: any[]) => {
+  const message = args[0]?.toString() || '';
+  // Only suppress Ionic icon warnings
+  if (message.includes('Ionicons') || message.includes('Could not load icon')) {
+    return;
+  }
+  // Let other warnings through
+  originalWarn(...args);
+});
 
 describe('MultiSelectorComponent', () => {
   let component: MultiSelectorComponent;
