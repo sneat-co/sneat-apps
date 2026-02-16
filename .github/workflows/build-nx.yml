@@ -84,10 +84,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           echo "Running affected tests with coverage..."
-          pnpm run nx affected --target=test --base=${{ env.NX_BASE }} --coverage --parallel=4 --skip-nx-cache || {
-            echo "::warning::Tests failed or no tests were affected"
-            exit 0
-          }
+          pnpm run nx affected --target=test --base=${{ env.NX_BASE }} --coverage --parallel=4 --skip-nx-cache
           echo "Tests completed. Checking for coverage files..."
           find coverage -name "lcov.info" -type f -exec ls -lh {} \; || echo "No coverage files found"
       #        timeout-minutes: 5
@@ -115,21 +112,35 @@ jobs:
               # e.g., coverage/libs/components/lcov.info -> libs/components
               project_path=$(dirname "$lcov_file" | sed 's|^coverage/||')
               
+              # Validate project_path is not empty and doesn't contain suspicious patterns
+              if [ -z "$project_path" ] || [ "$project_path" = "." ]; then
+                echo "::warning::Skipping $lcov_file - could not determine project path"
+                continue
+              fi
+              
               echo "Processing $lcov_file with project path: $project_path"
               
               # Create a temp file with fixed paths
               temp_file="${lcov_file}.tmp"
               
-              # Process the file: prepend project_path to SF: lines that don't start with it
+              # Process the file: prepend project_path to SF: lines that are relative paths
               awk -v prefix="$project_path/" '
                 /^SF:/ {
                   # Extract the path after SF:
                   path = substr($0, 4)
-                  # If path does not start with prefix or is absolute, prepend prefix
-                  if (substr(path, 1, 1) != "/" && index(path, prefix) != 1) {
-                    print "SF:" prefix path
-                  } else {
+                  # Normalize relative path markers
+                  gsub(/^\.\//, "", path)
+                  # Skip if path is absolute (starts with /)
+                  if (substr(path, 1, 1) == "/") {
                     print $0
+                  }
+                  # Skip if path already starts with prefix
+                  else if (index(path, prefix) == 1) {
+                    print $0
+                  }
+                  # Otherwise prepend prefix
+                  else {
+                    print "SF:" prefix path
                   }
                   next
                 }
