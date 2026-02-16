@@ -82,7 +82,11 @@ jobs:
 
       - name: Run tests with coverage (only on main branch)
         if: github.ref == 'refs/heads/main'
-        run: pnpm run nx affected --target=test --base=${{ env.NX_BASE }} --coverage --parallel=4
+        run: |
+          echo "Running affected tests with coverage..."
+          pnpm run nx affected --target=test --base=${{ env.NX_BASE }} --coverage --parallel=4
+          echo "Tests completed. Checking for coverage files..."
+          find coverage -name "lcov.info" -type f -exec ls -lh {} \; || echo "No coverage files found"
 #             --skip-nx-cache
       #        timeout-minutes: 5
 
@@ -93,13 +97,21 @@ jobs:
           mkdir -p coverage-merged
 
           # Find all lcov.info files and merge them
-          find coverage -name "lcov.info" -type f > coverage-files.txt
+          find coverage -name "lcov.info" -type f -size +0 > coverage-files.txt
 
           if [ -s coverage-files.txt ]; then
             # Merge all lcov files into one
             cat $(cat coverage-files.txt) > coverage-merged/lcov.info
-            echo "Merged $(wc -l < coverage-files.txt) coverage files"
-            echo "COVERAGE_GENERATED=true" >> $GITHUB_ENV
+            
+            # Check if merged file has actual coverage data
+            if [ -s coverage-merged/lcov.info ] && grep -q "^SF:" coverage-merged/lcov.info; then
+              echo "Merged $(wc -l < coverage-files.txt) coverage files"
+              echo "Merged coverage file size: $(wc -l < coverage-merged/lcov.info) lines"
+              echo "COVERAGE_GENERATED=true" >> $GITHUB_ENV
+            else
+              echo "::warning::Merged coverage file is empty or invalid"
+              echo "COVERAGE_GENERATED=false" >> $GITHUB_ENV
+            fi
           else
             echo "::notice::No coverage files found - skipping Coveralls upload"
             echo "COVERAGE_GENERATED=false" >> $GITHUB_ENV
