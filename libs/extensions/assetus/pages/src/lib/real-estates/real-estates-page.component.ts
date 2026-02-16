@@ -56,6 +56,6 @@ export class RealEstatesPageComponent extends AssetsBasePage {
   }
 
   filterChanged(event: Event): void {
-    console.log(this.filter, event);
+// console.log(this.filter, event);
   }
 }

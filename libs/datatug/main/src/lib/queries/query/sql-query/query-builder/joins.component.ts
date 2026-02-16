@@ -63,7 +63,7 @@ export class JoinsComponent {
   }
 
   public joinCheckChanged(event: Event, join: IAstJoin): void {
-    console.log('joinCheckChanged', event, join);
+    // console.log('joinCheckChanged', event, join);
     const ce = event as CustomEvent;
     const checked = !!ce.detail.checked;
     if (this.sql) {

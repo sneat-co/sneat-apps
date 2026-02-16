@@ -38,7 +38,7 @@ export class DbServerService {
   public getServerDatabases(
     request: GetServerDatabasesRequest,
   ): Observable<IDbCatalogSummary[]> {
-    console.log('DbServerService.getDatabaseCatalogs()', request);
+// console.log('DbServerService.getDatabaseCatalogs()', request);
     const target = this.projectContextService.current;
     if (!target) {
       throw new Error('projectContextService.current is not defined');
@@ -67,7 +67,7 @@ export class DbServerService {
   }
 
   public deleteDbServer(dbServer: IDbServer): Observable<void> {
-    console.log('deleteDbServer', dbServer);
+// console.log('deleteDbServer', dbServer);
     const target = this.projectContextService.current;
     if (!target) {
       throw new Error('this.projectContextService.current is not defined');
@@ -82,7 +82,7 @@ export class DbServerService {
   public getDbServers(
     projectRef: IProjectRef,
   ): Observable<IProjDbServerSummary[]> {
-    console.log('getDbServers()', projectRef);
+// console.log('getDbServers()', projectRef);
     return this.projectService.getFull(projectRef).pipe(
       map((p) =>
         p.dbServers?.map((dbServerFull) => ({

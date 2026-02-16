@@ -63,11 +63,11 @@ export class EnvironmentsPageComponent {
           show: false,
         }),
     });
-    console.log('EnvironmentsPage.constructor()', this.project);
+// console.log('EnvironmentsPage.constructor()', this.project);
   }
 
   private setProjSummary(p: IProjectSummary): void {
-    console.log('EnvironmentsPage.setProjSummary()', p);
+// console.log('EnvironmentsPage.setProjSummary()', p);
     if (!this.environments) {
       this.environments = this.project?.environments;
     }

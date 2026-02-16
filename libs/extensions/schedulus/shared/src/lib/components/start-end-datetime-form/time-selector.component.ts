@@ -78,7 +78,7 @@ export class TimeSelectorComponent {
   public hours: string[] = dayHours;
 
   constructor() {
-    console.log('TimeSelectorComponent.constructor()');
+    // console.log('TimeSelectorComponent.constructor()');
   }
 
   select(hh: string, mm: string) {

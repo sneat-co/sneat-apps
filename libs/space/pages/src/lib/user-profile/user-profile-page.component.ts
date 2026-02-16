@@ -47,7 +47,7 @@ export class UserProfilePageComponent {
     const userService = this.userService;
 
     userService.userState.subscribe((userState) => {
-      console.log('UserProfilePage => userState:', userState);
+// console.log('UserProfilePage => userState:', userState);
       this.user = userState.record;
       this.userTitle.setValue(userState?.record?.title || '');
     });

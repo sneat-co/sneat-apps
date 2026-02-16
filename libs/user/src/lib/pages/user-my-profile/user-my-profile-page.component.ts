@@ -38,6 +38,6 @@ export class UserMyProfilePageComponent {
   protected tab: 'authentication' | 'beta_testing' = 'authentication';
 
   constructor() {
-    console.log('UserMyPageComponent.constructor()');
+    // console.log('UserMyPageComponent.constructor()');
   }
 }

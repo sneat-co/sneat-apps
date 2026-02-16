@@ -37,7 +37,7 @@ export class AgentStateService {
       switchMap(() =>
         this.repoApiService.get<IAgentInfo>(storeId, '/agent-info').pipe(
           catchError((err) => {
-            console.log('Failed to get agent info:', err);
+// console.log('Failed to get agent info:', err);
             if (
               err.name === 'HttpErrorResponse' &&
               err.ok === false &&

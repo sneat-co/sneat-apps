@@ -128,7 +128,7 @@ export class MembersPageComponent extends MembersBasePage {
     if (!this.space) {
       throw new Error('!this.commune');
     }
-    console.log(`MembersPageComponent.onSpaceDboChanged()`);
+    // console.log(`MembersPageComponent.onSpaceDboChanged()`);
     // if (this.team?.dto?.numberOf?.members) {
     // 	this.loadingStubs = Array(this.team?.dto?.numberOf?.members).fill(1);
     // }
@@ -140,7 +140,7 @@ export class MembersPageComponent extends MembersBasePage {
   }
 
   private loadData(source: string): void {
-    console.log(`MembersPageComponent.loadData(source=${source})`);
+    // console.log(`MembersPageComponent.loadData(source=${source})`);
 
     // this.unsubscribe();
     const space = this.space;

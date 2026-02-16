@@ -116,11 +116,10 @@ export async function extensionTestGenerator(
   tree.write(filePath, fileContent);
 
   await formatFiles(tree);
-
-  console.log(`✅ Generated ${type} test: ${filePath}`);
+// console.log(`✅ Generated ${type} test: ${filePath}`);
 
   return () => {
-    console.log(`
+// console.log(`
 📝 Test file created successfully!
 
 Location: ${filePath}

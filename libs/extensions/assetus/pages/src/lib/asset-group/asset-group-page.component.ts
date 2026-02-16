@@ -74,14 +74,14 @@ export class AssetGroupPageComponent
     super.ngOnInit();
     this.route.queryParams.subscribe((params) => {
       const groupId = params['id'] as string | undefined;
-      console.log('AssetGroupPage(): params=', params, 'groupId:', groupId);
+// console.log('AssetGroupPage(): params=', params, 'groupId:', groupId);
       if (!groupId) {
         return;
       }
       this.subs.add(
         this.assetGroupsService.watchById(groupId).subscribe({
           next: (assetGroup: IAssetDtoGroup) => {
-            console.log(
+// console.log(
               'AssetGroupPage(): watchAssetGroup=',
               groupId,
               assetGroup,

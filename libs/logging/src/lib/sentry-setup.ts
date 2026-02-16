@@ -14,7 +14,7 @@ export const provideSentryAppInitializer = (options: BrowserOptions) => {
 };
 
 function initSentry(options: BrowserOptions): void {
-  console.log('initSentry()');
+  // console.log('initSentry()');
   init(options);
 }
 

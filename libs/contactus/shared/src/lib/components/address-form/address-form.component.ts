@@ -139,7 +139,7 @@ export class AddressFormComponent implements OnChanges, OnInit {
   onZipChanged(): void {
     const address = this.mustAddress;
     this.address = { ...this.mustAddress, zipCode: this.zip.value || '' };
-    console.log(
+// console.log(
       'AddressFormComponent.onZipChanged()',
       this.zip.value,
       address,
@@ -151,7 +151,7 @@ export class AddressFormComponent implements OnChanges, OnInit {
   onStateChanged(): void {
     const address = this.mustAddress;
     this.address = { ...address, state: this.state.value || '' };
-    console.log(
+// console.log(
       'AddressFormComponent.onStateChanged()',
       this.state.value,
       address,
@@ -202,7 +202,7 @@ export class AddressFormComponent implements OnChanges, OnInit {
   }
 
   protected cancelChanges(): void {
-    console.log('AddressFormComponent.cancelChanges()');
+// console.log('AddressFormComponent.cancelChanges()');
     this.countryID.setValue(this.address?.countryID || '');
     this.countryID.markAsPristine();
     this.zip.setValue(this.address?.zipCode || '');
@@ -212,7 +212,7 @@ export class AddressFormComponent implements OnChanges, OnInit {
   }
 
   protected saveChanges(): void {
-    console.log('AddressFormComponent.saveChanges()');
+// console.log('AddressFormComponent.saveChanges()');
     const success = (): void => {
       this.$saving.set(false);
       this.form.markAsPristine();

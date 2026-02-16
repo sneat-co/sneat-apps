@@ -125,7 +125,7 @@ export class HttpQueryEditorComponent {
         req = new HttpRequest(method, url, this.queryDef.body);
     }
     this.httpClient.request(req).subscribe((event) => {
-      console.log('RESPONSE:', event);
+      // console.log('RESPONSE:', event);
       if (event instanceof HttpResponse) {
         this.response = event;
       }

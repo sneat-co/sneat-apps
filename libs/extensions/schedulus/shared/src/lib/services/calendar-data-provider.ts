@@ -95,7 +95,7 @@ export class CalendarDataProvider {
     // private readonly regularService: IRegularHappeningService,
     // private readonly singleService: ISingleHappeningService,
   ) {
-    console.log('SpaceDaysProvider.constructor()');
+    // console.log('SpaceDaysProvider.constructor()');
     // this.recurringsSpaceItemService = new ModuleSpaceItemService(
     // 	'calendarium',
     // 	'recurring_happenings', // TODO: Is this obsolete? Should we use 'happenings' instead?
@@ -153,7 +153,7 @@ export class CalendarDataProvider {
     spaces.forEach((space) => {
       result[space.spaceID] = space.$recurrings()?.recurringHappenings || {};
     });
-    console.log('$recurringsBySpaceID():', result);
+    // console.log('$recurringsBySpaceID():', result);
     return result;
   });
 
@@ -206,7 +206,7 @@ export class CalendarDataProvider {
   }
 
   public getDays(...weekdays: CalendarDay[]): Observable<CalendarDay> {
-    console.log('SpaceDaysProvider.getDays()', weekdays);
+    // console.log('SpaceDaysProvider.getDays()', weekdays);
     return EMPTY;
     // if (!weekdays?.length) {
     // 	return EMPTY;
@@ -267,7 +267,7 @@ export class CalendarDataProvider {
   }
 
   public loadForWeek(d: Date): void {
-    console.log('SpaceDaysProvider.loadForWeek()', d);
+    // console.log('SpaceDaysProvider.loadForWeek()', d);
   }
 
   // private addEventsToSlotsGroup(weekday: SlotsGroup, date:)
@@ -307,7 +307,7 @@ export class CalendarDataProvider {
   private loadEvents(
     ...dates: Date[]
   ): Observable<{ dateKey: string; events: ISlotUIContext[] }> {
-    console.log('loadEvents()', dates);
+    // console.log('loadEvents()', dates);
     return EMPTY;
     // const dateISOs = dates.map(localDateToIso);
     //

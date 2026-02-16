@@ -63,7 +63,7 @@ export class CalendarSpace {
   public readonly recurringSlots$: Observable<RecurringSlots> =
     this.calendariumSpace$.pipe(
       tap((calendariumSpace) =>
-        console.log('SpaceDaysProvider.calendariumSpace$ =>', calendariumSpace),
+// console.log('SpaceDaysProvider.calendariumSpace$ =>', calendariumSpace),
       ),
       skip(1), // We are not interested in processing the first 'undefined' value of BehaviorSubject
       filter((schedulusSpace) => !!schedulusSpace), // Not sure if we need this.
@@ -71,7 +71,7 @@ export class CalendarSpace {
       // That would minimize number of handlers to be called on watching components
       map((schedulusSpace) => groupRecurringSlotsByWeekday(schedulusSpace)),
       tap((recurringSlots) => {
-        console.log('SpaceDaysProvider.recurrings$ =>', recurringSlots);
+// console.log('SpaceDaysProvider.recurrings$ =>', recurringSlots);
         this.$recurringSlots.set(recurringSlots);
       }),
       shareReplay(1),
@@ -89,7 +89,7 @@ export class CalendarSpace {
   ) {
     this.calendariumSpaceService.watchSpaceModuleRecord(spaceID).subscribe({
       next: (calendariumSpace) => {
-        console.log('calendariumSpace loaded', calendariumSpace);
+// console.log('calendariumSpace loaded', calendariumSpace);
         const newRH = calendariumSpace.dbo?.recurringHappenings || {};
         this.$recurrings.update((r) =>
           Object.keys(newRH).length === 0 &&
@@ -101,7 +101,7 @@ export class CalendarSpace {
                   calendariumSpace.dbo?.recurringHappenings || {},
               },
         );
-        console.log(
+// console.log(
           'recurring update from calendariumSpace:',
           this.$recurrings(),
         );
@@ -118,7 +118,7 @@ export class CalendarSpace {
   public setCalendariumSpace(
     calendariumSpace: ISpaceItemWithOptionalDbo<ICalendariumSpaceDbo>,
   ): void {
-    console.log('SpaceDaysProvider.setSchedulusSpace()', calendariumSpace);
+// console.log('SpaceDaysProvider.setSchedulusSpace()', calendariumSpace);
     this.$calendariumSpace.set(calendariumSpace);
     this.calendariumSpace$.next(calendariumSpace);
     this.processRecurringBriefs();
@@ -141,7 +141,7 @@ export class CalendarSpace {
   // }
 
   private processRecurringBriefs(): void {
-    console.log(
+// console.log(
       'SpaceDaysProvider.processRecurringBriefs()',
       this.calendariumSpace$.value,
     );
@@ -174,7 +174,7 @@ export class CalendarSpace {
     ) {
       return;
     }
-    console.log('SpaceDaysProvider.processRecurring()', recurring);
+// console.log('SpaceDaysProvider.processRecurring()', recurring);
     const recurringByWd = emptyRecurringsByWeekday();
     const { brief } = recurring;
     if (!brief) {

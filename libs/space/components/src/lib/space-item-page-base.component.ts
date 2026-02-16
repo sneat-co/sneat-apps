@@ -47,7 +47,7 @@ export abstract class SpaceItemPageBaseComponent<
   }
 
   protected setItemContext(item?: ISpaceItemNavContext<Brief, Dbo>): void {
-    console.log(
+// console.log(
       `${this.className}.SpaceItemBaseComponent.setItemContext(itemID=${item?.id})`,
       item,
       {
@@ -72,7 +72,7 @@ export abstract class SpaceItemPageBaseComponent<
 
   // Caller of this method will track changing of team & item IDs in route and close observable
   protected watchItemChanges(): Observable<INavContext<Brief, Dbo>> {
-    console.log('SpaceItemBaseComponent.watchItemChanges()', this.itemName);
+// console.log('SpaceItemBaseComponent.watchItemChanges()', this.itemName);
     const itemID = this.$itemID();
     if (!itemID) {
       throw throwError(() => 'no item ID');
@@ -87,7 +87,7 @@ export abstract class SpaceItemPageBaseComponent<
   }
 
   protected trackRouteParamItemID(paramMap$: Observable<ParamMap>): void {
-    console.log(
+// console.log(
       'SpaceItemBaseComponent.trackRouteParamItemID()',
       this.itemName,
     );
@@ -123,7 +123,7 @@ export abstract class SpaceItemPageBaseComponent<
   }
 
   private onItemIDChanged(itemID: string, itemID$: Observable<string>): void {
-    console.log('SpaceItemBaseComponent.onItemIDChanged()', itemID);
+// console.log('SpaceItemBaseComponent.onItemIDChanged()', itemID);
     if (!itemID) {
       this.setItemContext(undefined);
       return;
@@ -143,7 +143,7 @@ export abstract class SpaceItemPageBaseComponent<
               // TODO: the below filter is a workaround for a bug in our implementation
               filter((spaceID) => spaceID !== space.id),
               tap((spaceID) =>
-                console.log(
+// console.log(
                   `cancelling item subscription as spaceID changed to "${spaceID}"`,
                 ),
               ),
@@ -152,7 +152,7 @@ export abstract class SpaceItemPageBaseComponent<
           takeUntil(
             itemID$.pipe(
               tap((itemID) =>
-                console.log(
+// console.log(
                   `cancelling item subscription as itemID changed to "${itemID}"`,
                 ),
               ),
@@ -182,7 +182,7 @@ export abstract class SpaceItemPageBaseComponent<
       if (briefs) {
         const brief = briefs[id];
         if (brief) {
-          console.log('setItemContext from brief', brief);
+// console.log('setItemContext from brief', brief);
           this.setItemContext({ ...item, brief });
         }
       }

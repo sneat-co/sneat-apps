@@ -61,7 +61,7 @@ export class CalendarDayTabComponent extends WithSpaceInput {
 
     scheduleSateService.dateChanged.pipe(this.takeUntilDestroyed()).subscribe({
       next: (value) => {
-        console.log('ScheduleDayTabComponent => date changed:', value.date);
+        // console.log('ScheduleDayTabComponent => date changed:', value.date);
         this.$date.set(value.date);
       },
     });
@@ -72,7 +72,7 @@ export class CalendarDayTabComponent extends WithSpaceInput {
     event.stopPropagation();
     event.preventDefault();
     const value: string = ce.detail.value;
-    console.log('onPickerDateChanged()', value);
+    // console.log('onPickerDateChanged()', value);
     const date = isoStringsToDate(value);
     this.$date.set(date);
     this.scheduleSateService.setActiveDate(date);

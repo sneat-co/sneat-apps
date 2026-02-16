@@ -101,7 +101,7 @@ export class SpaceService {
   private readonly processUserRecordInSpaceService = (
     userState: ISneatUserState,
   ): void => {
-    console.log('SpaceService.processUserRecordInSpaceService()', userState);
+// console.log('SpaceService.processUserRecordInSpaceService()', userState);
     const user = userState?.record;
     if (!user) {
       // this.userID = undefined;
@@ -139,7 +139,7 @@ export class SpaceService {
   // }
 
   public watchSpace(id: string): Observable<ISpaceContext> {
-    console.log(`SpaceService.watchSpace(id=${id})`);
+// console.log(`SpaceService.watchSpace(id=${id})`);
     if (!id) {
       throw new Error('space id is a required parameter');
     }
@@ -179,7 +179,7 @@ export class SpaceService {
   }
 
   public onSpaceUpdated(space: ISpaceContext): void {
-    console.log(
+// console.log(
       'SpaceService.onSpaceUpdated',
       space ? { id: space.id, dto: { ...space.dbo } } : space,
     );
@@ -225,7 +225,7 @@ export class SpaceService {
   private readonly subscribeForUserSpaceChanges = (
     userSpaceBrief: IIdAndBrief<IUserSpaceBrief>,
   ): void => {
-    console.log(
+// console.log(
       'subscribeForUserSpaceChanges() => userSpaceBrief:',
       userSpaceBrief,
     );
@@ -258,9 +258,9 @@ export class SpaceService {
     id: string,
     subj: Subject<ISpaceContext | undefined>,
   ): void {
-    console.log(`SpaceService.subscribeForSpaceChanges(${id})`);
+// console.log(`SpaceService.subscribeForSpaceChanges(${id})`);
     if (id === 'contacts') {
-      console.log('subscribeForSpaceChanges() => contacts');
+// console.log('subscribeForSpaceChanges() => contacts');
       throw new Error('subscribeForSpaceChanges(id===contacts)');
     }
     const spacesCollection = runInInjectionContext(
@@ -272,7 +272,7 @@ export class SpaceService {
       .pipe(
         map((team) => {
           const prevTeam = this.spaces$[id].value;
-          console.log('prevTeam', prevTeam);
+// console.log('prevTeam', prevTeam);
           // if (prevTeam.assets) {
           // 	team = { ...team, assets: prevTeam.assets};
           // 	console.log('Reusing assets from prev context');
@@ -280,7 +280,7 @@ export class SpaceService {
           return team;
         }),
         tap((space) => {
-          console.log(
+// console.log(
             'SpaceService.subscribeForSpaceChanges() => New space from Firestore:',
             space,
           );
@@ -297,12 +297,12 @@ export class SpaceService {
   }
 
   private unsubscribe(on: string): void {
-    console.log(`SpaceService.unsubscribe(on=${on})`);
+// console.log(`SpaceService.unsubscribe(on=${on})`);
     try {
       this.subscriptions.forEach((s) => s.unsubscribe());
       this.subscriptions = [];
       this.spaces$ = {};
-      console.log('unsubscribed => teams$:', this.spaces$);
+// console.log('unsubscribed => teams$:', this.spaces$);
     } catch (e) {
       this.errorLogger.logError(e, 'SpaceService failed to unsubscribe');
     }

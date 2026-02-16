@@ -14,9 +14,9 @@ export class QueriesUiService {
   private readonly nav = inject(DatatugNavService);
 
   async openNewQuery(projectRef: IProjectRef): Promise<void> {
-    console.log('openNewQuery', projectRef);
+// console.log('openNewQuery', projectRef);
     const createNewQuery = (type: QueryType) => () => {
-      console.log(type);
+// console.log(type);
       const id = this.randomIdService.newRandomId({ len: 7 });
       const queryState = this.queryEditorStateService.newQuery({
         id: id,

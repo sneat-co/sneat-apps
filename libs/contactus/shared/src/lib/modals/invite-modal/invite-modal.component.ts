@@ -222,7 +222,7 @@ export class InviteModalComponent {
       send: true,
     }).subscribe({
       next: async (response) => {
-        console.log('personal invite created:', response);
+        // console.log('personal invite created:', response);
         await this.showToast(
           'Invite has been created and will be sent shortly',
           2000,
@@ -295,7 +295,7 @@ export class InviteModalComponent {
   }
 
   private generateLink(): void {
-    console.log('generateLink()', this.space, this.member);
+    // console.log('generateLink()', this.space, this.member);
     if (!this.space) {
       return;
     }
@@ -312,7 +312,7 @@ export class InviteModalComponent {
     };
     this.inviteService.getInviteLinkForMember(request).subscribe({
       next: (response) => {
-        console.log('response', response);
+        // console.log('response', response);
         const { id, pin } = response.invite;
         const host = location.host.startsWith('localhost:')
           ? location.host

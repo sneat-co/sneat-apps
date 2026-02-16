@@ -111,8 +111,7 @@ export class LoginPageComponent extends SneatBaseComponent {
   constructor() {
     super();
     const appInfo = this.appInfo;
-
-    console.log('LoginPageComponent.constructor()');
+// console.log('LoginPageComponent.constructor()');
     this.appTitle = appInfo.appTitle || 'Sneat.app';
     if (location.hash.startsWith('#/')) {
       this.redirectTo = location.hash.substring(1);
@@ -131,7 +130,7 @@ export class LoginPageComponent extends SneatBaseComponent {
           } else {
             return;
           }
-          console.log('this.redirectTo:', this.redirectTo);
+// console.log('this.redirectTo:', this.redirectTo);
           const redirectTo = this.redirectTo || '/'; // TODO: default one should be app specific.
           this.navController
             .navigateRoot(redirectTo)
@@ -151,7 +150,7 @@ export class LoginPageComponent extends SneatBaseComponent {
 
   protected async loginWith(provider: AuthProviderID) {
     const logPrefix = `LoginPageComponent.loginWith(provider=${provider})`;
-    console.log(logPrefix + ' started');
+// console.log(logPrefix + ' started');
     this.signingWith.set(provider);
     try {
       await this.authStateService.signInWith(provider);
@@ -172,7 +171,7 @@ export class LoginPageComponent extends SneatBaseComponent {
   }
 
   protected onLoggedIn(userCredential: UserCredential): void {
-    console.log('LoginPage.onLoggedIn(userCredential):', userCredential);
+// console.log('LoginPage.onLoggedIn(userCredential):', userCredential);
     this.signingWith.set(undefined);
     if (!userCredential.user) {
       return;

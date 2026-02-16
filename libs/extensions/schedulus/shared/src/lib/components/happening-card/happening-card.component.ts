@@ -67,7 +67,7 @@ export class HappeningCardComponent extends HappeningBaseComponent {
   }
 
   protected removeContact(contact: IContactWithBrief): void {
-    console.log('removeContact()', contact);
+    // console.log('removeContact()', contact);
     const [space, happening] = this.spaceAndHappening();
     if (!space || !happening) {
       return;

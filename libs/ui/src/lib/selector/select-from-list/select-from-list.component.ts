@@ -135,9 +135,9 @@ export class SelectFromListComponent
   protected readonly $filter = signal('');
 
   public focus(): void {
-    console.log('SelectFromListComponent.focus()');
+// console.log('SelectFromListComponent.focus()');
     setTimeout(() => {
-      console.log(
+// console.log(
         'SelectFromListComponent.focus(), filterInput:',
         this.filterInput,
       );
@@ -194,7 +194,7 @@ export class SelectFromListComponent
   }
 
   protected select(item: ISelectItem): void {
-    console.log(
+// console.log(
       `SelectFromListComponent.select(), selectMode=${this.selectMode}`,
       item,
     );
@@ -223,13 +223,13 @@ export class SelectFromListComponent
   }
 
   protected onSelectChanged(event: Event): void {
-    console.log('SelectFromListComponent.onSelectChanged()', event);
+// console.log('SelectFromListComponent.onSelectChanged()', event);
     // this.value = (event as CustomEvent).detail['value'] as string;
     this.onChange(this.value || '');
   }
 
   protected onChange = (id: string) => {
-    console.log('SelectFromListComponent.onChange()', id);
+// console.log('SelectFromListComponent.onChange()', id);
     this.value = id;
     if (this.$selectedItem()?.id !== id) {
       const selectedItem = this.items?.find((item) => item.id === id);
@@ -260,7 +260,7 @@ export class SelectFromListComponent
     event: CustomEvent,
     source: 'ionChange' | 'ionInput',
   ): void {
-    console.log(
+// console.log(
       `SelectFromListComponent.onFilterChanged(source=${source})`,
       event,
     );
@@ -287,7 +287,7 @@ export class SelectFromListComponent
   }
 
   protected onCheckboxChange(event: CustomEvent, item: ISelectItem): void {
-    console.log('SelectFromListComponent.onCheckboxChange()', event, item);
+// console.log('SelectFromListComponent.onCheckboxChange()', event, item);
   }
 
   ngOnDestroy(): void {

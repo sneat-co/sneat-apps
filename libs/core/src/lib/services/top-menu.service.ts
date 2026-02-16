@@ -13,7 +13,7 @@ export class TopMenuService {
 
   public readonly visibilityChanged = (event: Event): void => {
     const visible = !!(event as CustomEvent).detail['visible'];
-    console.log('visibilityChanged', visible);
+// console.log('visibilityChanged', visible);
     this.$isTopMenuVisible.next(visible);
     this.$isTopMenuHidden.next(!visible);
   };

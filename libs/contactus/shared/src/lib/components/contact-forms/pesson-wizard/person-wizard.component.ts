@@ -245,7 +245,7 @@ export class PersonWizardComponent
   ];
 
   public ngOnChanges(changes: SimpleChanges): void {
-    console.log('PersonWizardState.ngOnChanges()', changes);
+// console.log('PersonWizardState.ngOnChanges()', changes);
     if (changes['fields']) {
       this.openNext('contactType');
     }
@@ -258,7 +258,7 @@ export class PersonWizardComponent
       readonly hasValue: boolean;
     }>,
   ): void {
-    console.log('setContactData()', changedProp);
+// console.log('setContactData()', changedProp);
     this.contactChange.emit({ ...this.$contact(), dbo });
     if (changedProp.hasValue) {
       this.openNext(changedProp.name);
@@ -266,7 +266,7 @@ export class PersonWizardComponent
   }
 
   protected onNameChanged(name: IPersonNames): void {
-    console.log('PersonWizardState.onNameChanged()', name);
+// console.log('PersonWizardState.onNameChanged()', name);
     if (!this.show.nameNext && !isNameEmpty(name)) {
       this.show = { ...this.show, nameNext: true };
     }
@@ -277,7 +277,7 @@ export class PersonWizardComponent
   }
 
   protected onContactChanged(contact: NewContactBaseDboAndSpaceRef): void {
-    console.log('PersonWizardState.onContactChanged()', contact);
+// console.log('PersonWizardState.onContactChanged()', contact);
     // this.setRelatedPerson(
     // 	{ ...this.newPerson, petKind },
     // 	{ name: 'petKind', hasValue: !!petKind },
@@ -285,7 +285,7 @@ export class PersonWizardComponent
   }
 
   protected onGenderChanged(gender?: Gender): void {
-    console.log('PersonWizardState.onGenderChanged()', gender);
+// console.log('PersonWizardState.onGenderChanged()', gender);
     this.setContactData(
       { ...this.$contact().dbo, gender },
       { name: 'gender', hasValue: !!gender },
@@ -316,7 +316,7 @@ export class PersonWizardComponent
   }
 
   protected onAgeGroupChanged(ageGroup?: AgeGroupID): void {
-    console.log('PersonWizardComponent.onAgeGroupChanged()', ageGroup);
+// console.log('PersonWizardComponent.onAgeGroupChanged()', ageGroup);
     if (ageGroup) {
       this.show = { ...this.show, ageGroup: this.displayAgeGroupValue };
     }
@@ -366,7 +366,7 @@ export class PersonWizardComponent
   }
 
   protected onRelatedAsChanged(rolesToTarget: IRelationshipRoles): void {
-    console.log(
+// console.log(
       'PersonWizardState.onRelatedAsChanged() rolesToTarget=',
       rolesToTarget,
     );
@@ -465,10 +465,10 @@ export class PersonWizardComponent
 
   protected openNext(currentStepID: keyof PersonWizardState): void {
     for (;;) {
-      console.log('openNext()', currentStepID);
+// console.log('openNext()', currentStepID);
       const i = this.formOrder.findIndex((step) => step.id === currentStepID);
       if (i < 0) {
-        console.log(
+// console.log(
           `openNext have not found ${currentStepID} in this.formOrder=${this.formOrder.join(
             ',',
           )}`,
@@ -477,7 +477,7 @@ export class PersonWizardComponent
       }
       if (i === this.formOrder.length - 1) {
         // last element
-        console.log('openNext reached last element');
+// console.log('openNext reached last element');
         return;
       }
       const nextStep = this.formOrder[i + 1];

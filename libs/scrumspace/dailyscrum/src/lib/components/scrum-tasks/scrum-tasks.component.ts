@@ -124,7 +124,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
   }
 
   public addTask(event: Event): void {
-    console.log('addTask()');
+// console.log('addTask()');
     event.stopPropagation();
     if (this.showAddInput) {
       this.showAddInput = false;
@@ -165,7 +165,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
       )
       .subscribe({
         next: (task) => {
-          console.log('addTask() => ', { ...task });
+// console.log('addTask() => ', { ...task });
           if (task.uiStatus === 'adding') {
             this.addingTasks.push(task);
             return;
@@ -235,7 +235,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
       error: (err) =>
         this.errorLogger.logError(err, 'Failed to change thumbUp'),
     });
-    console.log(task.thumbUps);
+// console.log(task.thumbUps);
   }
 
   public deleteTask(event: Event, id: string): void {
@@ -344,7 +344,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['tasks']) {
       if (this.taskType === 'risk') {
-        console.log(
+// console.log(
           `ScrumTasksComponent.ngOnChanges: deletingTaskIds: ${this.deletingTaskIds}, tasks: ${this.tasks}`,
         );
       }
@@ -355,7 +355,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
   }
 
   async showTaskPopover(event: Event, task: ITask) {
-    console.log('showTaskPopover()', task);
+// console.log('showTaskPopover()', task);
     if (!this.space) {
       throw new Error('!this.team');
     }

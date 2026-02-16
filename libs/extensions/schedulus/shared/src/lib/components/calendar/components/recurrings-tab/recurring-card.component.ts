@@ -58,7 +58,7 @@ export class RecurringCardComponent implements OnDestroy {
     event: Event,
     happeningWithUiState?: IHappeningWithUiState,
   ): void {
-    console.log('deleteRecurring()', happeningWithUiState);
+// console.log('deleteRecurring()', happeningWithUiState);
     event.stopPropagation();
     if (!happeningWithUiState) {
       return;

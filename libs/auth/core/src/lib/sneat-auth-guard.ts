@@ -47,7 +47,7 @@ export class SneatAuthGuard /*implements CanLoad, CanActivate, CanActivateChild*
     | boolean
     | UrlTree {
     {
-      console.log('SneatAuthGuard.canLoad', route, segments);
+      // console.log('SneatAuthGuard.canLoad', route, segments);
       // const authPipeFactory =
       // 	(route.data && route.data['authCanLoadGuardPipe'] as AuthCanLoadPipeGenerator) ||
       // 	(() => redirectToLoginIfNotSignedIn);
@@ -83,7 +83,7 @@ export class SneatAuthGuard /*implements CanLoad, CanActivate, CanActivateChild*
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot, //: Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
   ) {
-    console.log('SneatAuthGuard.canActivate', route, state);
+    // console.log('SneatAuthGuard.canActivate', route, state);
     return true;
   }
 
@@ -91,7 +91,7 @@ export class SneatAuthGuard /*implements CanLoad, CanActivate, CanActivateChild*
     childRoute: ActivatedRouteSnapshot,
     state: RouterStateSnapshot, // : Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
   ) {
-    console.log('SneatAuthGuard.canActivateChild', childRoute, state);
+    // console.log('SneatAuthGuard.canActivateChild', childRoute, state);
     return true;
   }
 }

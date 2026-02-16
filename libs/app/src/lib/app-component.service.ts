@@ -30,12 +30,12 @@ export class AppComponentService {
           if (this.statusBar) {
             this.statusBar.styleDefault();
           } else {
-            console.log('statusBar is not provided');
+// console.log('statusBar is not provided');
           }
           if (this.splashScreen) {
             this.splashScreen.hide();
           } else {
-            console.log('splashScreen is not provided');
+// console.log('splashScreen is not provided');
           }
           // this.analyticsService.logEvent('platform_ready');
         } catch (e) {

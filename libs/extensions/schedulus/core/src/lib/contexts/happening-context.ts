@@ -24,7 +24,7 @@ export function newEmptyHappeningContext(
   kind: HappeningKind,
   status: HappeningStatus,
 ): IHappeningContext {
-  console.log('newEmptyHappeningContext', space, kind, status, kind);
+  // console.log('newEmptyHappeningContext', space, kind, status, kind);
   const brief: IHappeningBrief = {
     type,
     kind,

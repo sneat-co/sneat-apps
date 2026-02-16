@@ -7,7 +7,7 @@ import { Mock } from 'vitest';
 
 vi.mock('@sentry/angular', () => ({
   captureException: vi.fn().mockImplementation((...args: any[]) => {
-    console.log('MOCK captureException CALLED with', args);
+// console.log('MOCK captureException CALLED with', args);
     return 'event-id';
   }),
   showReportDialog: vi.fn(),
@@ -57,7 +57,7 @@ describe('ErrorLoggerService', () => {
 
     it('should capture exception if NOT on localhost', () => {
       vi.stubGlobal('location', { hostname: 'example.com' });
-      console.log('window.location.hostname:', window.location.hostname);
+// console.log('window.location.hostname:', window.location.hostname);
       service.logError(new Error('test'), 'msg', { report: true });
       expect(captureException).toHaveBeenCalled();
       vi.unstubAllGlobals();
@@ -110,9 +110,9 @@ describe('ErrorLoggerService', () => {
       vi.mocked(captureException).mockImplementationOnce(() => {
         throw new Error('Sentry failed');
       });
-      
+
       service.logError(new Error('test'), 'msg', { report: true });
-      
+
       expect(consoleSpy).toHaveBeenCalledWith(
         expect.stringContaining('Sentry failed'),
         expect.any(Error),
@@ -174,9 +174,9 @@ describe('ErrorLoggerService', () => {
         ],
       });
       const serviceWithoutToast = TestBed.inject(ErrorLoggerService);
-      
+
       serviceWithoutToast.showError(new Error('test'));
-      
+
       expect(consoleSpy).toHaveBeenCalledWith(
         expect.stringContaining('ToastController not available'),
       );
@@ -245,7 +245,7 @@ describe('ErrorLoggerService', () => {
     it('should use custom duration when provided', async () => {
       const customDuration = 5000;
       await service.showError(new Error('test'), customDuration);
-      
+
       expect(toastController.create).toHaveBeenCalledWith(
         expect.objectContaining({
           duration: customDuration,

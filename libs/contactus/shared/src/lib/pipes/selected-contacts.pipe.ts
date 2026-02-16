@@ -10,7 +10,7 @@ export class SelectedContactsPipe implements PipeTransform {
     selectedIDs: readonly string[],
     contactBriefs?: Record<string, IContactBrief>,
   ): IContactWithBriefAndSpace[] {
-    console.log(
+// console.log(
       'SelectedContactsPipe',
       selectedIDs?.length,
       `selectedIDs=${selectedIDs?.join(',')}`,

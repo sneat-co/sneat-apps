@@ -31,11 +31,11 @@ export class CalendarStateService {
   public readonly dateChanged = this.dateChanged$.asObservable();
 
   constructor() {
-    console.log('ScheduleStateService.constructor()');
+    // console.log('ScheduleStateService.constructor()');
   }
 
   public shiftDays(shiftDays: number): Date {
-    console.log('ScheduleStateService.shiftDays()', shiftDays);
+    // console.log('ScheduleStateService.shiftDays()', shiftDays);
     const date = addDays(this.date, shiftDays);
     this.setActiveDate(date);
     return date;
@@ -72,7 +72,7 @@ export class CalendarStateService {
   // }
 
   setToday(): void {
-    console.log('ScheduleComponent.setToday()');
+    // console.log('ScheduleComponent.setToday()');
     this.setActiveDate(getToday());
     // if (!this.activeDay.date) {
     // 	this.errorLogger.logError('!this.activeDay.date');

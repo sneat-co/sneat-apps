@@ -129,7 +129,7 @@ export class CalendarComponent
   }
 
   protected segmentChanged(event: Event): void {
-    console.log('ScheduleComponent.segmentChanged()', event);
+// console.log('ScheduleComponent.segmentChanged()', event);
     this.$isWeekTabActivated.set(true);
     history.replaceState(
       history.state,
@@ -245,10 +245,10 @@ export class CalendarComponent
       if (!hide && !this.hasRepeats(filter.repeats, slots)) {
         hide = 'repeats';
       }
-      console.log('hide =>', hide);
+// console.log('hide =>', hide);
       return !hide;
     });
-    console.log(
+// console.log(
       `CalendarComponent.filterRecurrings()`,
       filter,
       this.$allRecurrings(),

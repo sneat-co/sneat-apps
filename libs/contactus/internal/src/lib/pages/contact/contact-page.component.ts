@@ -70,7 +70,7 @@ export class ContactPageComponent extends ContactBasePage {
       .pipe(this.takeUntilDestroyed())
       .subscribe({
         next: (children) => {
-          console.log('children', children);
+// console.log('children', children);
         },
         error: this.errorLogger.logErrorHandler('failed to get child contacts'),
       });
@@ -78,7 +78,7 @@ export class ContactPageComponent extends ContactBasePage {
 
   // TODO: use or remove
   protected saveAddress(save: ISaveEvent<IAddress>): void {
-    console.log('ContactPageComponent.saveAddress()', save);
+// console.log('ContactPageComponent.saveAddress()', save);
 
     const spaceID = this.space?.id,
       contactID = this.$contactID(),

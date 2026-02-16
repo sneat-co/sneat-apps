@@ -61,7 +61,7 @@ export class BudgetPeriodsComponent extends WithSpaceInput {
         recurringHappenings,
         this.$space(),
       );
-      console.log('BudgetPeriodsComponent: lbp', lbp);
+      // console.log('BudgetPeriodsComponent: lbp', lbp);
       return lbp;
     },
   );

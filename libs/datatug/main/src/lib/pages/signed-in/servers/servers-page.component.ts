@@ -100,7 +100,7 @@ export class ServersPageComponent implements OnDestroy {
   }
 
   goDbServer(dbServer: IProjDbServerSummary): void {
-    console.log('goServer', dbServer);
+// console.log('goServer', dbServer);
     this.navCtrl
       .navigateForward([
         'project',
@@ -116,7 +116,7 @@ export class ServersPageComponent implements OnDestroy {
   }
 
   deleteDbServer(event: Event, dbServer: IProjDbServerSummary): void {
-    console.log('deleteDbServer', dbServer);
+// console.log('deleteDbServer', dbServer);
     event.preventDefault();
     event.stopPropagation();
     const id = serverId(dbServer.dbServer);
@@ -146,7 +146,7 @@ export class ServersPageComponent implements OnDestroy {
       .then((modal) => {
         modal.onDidDismiss().then((result) => {
           const projDbServerSummary = result.data as IProjDbServerSummary;
-          console.log('projDbServerSummary:', projDbServerSummary);
+// console.log('projDbServerSummary:', projDbServerSummary);
           this.dbServers?.push(projDbServerSummary);
         });
         modal
@@ -170,7 +170,7 @@ export class ServersPageComponent implements OnDestroy {
     this.dbServerService.getDbServers(target).subscribe({
       next: (dbServers) => {
         this.dbServers = dbServers || [];
-        console.log('dbServers:', dbServers);
+// console.log('dbServers:', dbServers);
       },
       error: (err) =>
         this.errorLogger.logError(err, 'Failed to load list of DB servers'),

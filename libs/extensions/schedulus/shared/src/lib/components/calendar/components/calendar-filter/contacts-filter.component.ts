@@ -114,7 +114,7 @@ export class ContactsFilterComponent extends ContactusModuleBaseComponent {
   private onContactusSpaceChanged(
     contactusSpace?: IIdAndOptionalDbo<IContactusSpaceDbo>,
   ): void {
-    console.log(
+// console.log(
       'ContactsFilterComponent.onContactusSpaceChanged()',
       contactusSpace,
     );
@@ -131,7 +131,7 @@ export class ContactsFilterComponent extends ContactusModuleBaseComponent {
   }
 
   protected onContactCheckChanged(event: Event): void {
-    console.log('ContactsFilterComponent.onContactCheckChanged()', event);
+// console.log('ContactsFilterComponent.onContactCheckChanged()', event);
     event.stopPropagation();
     const cs = event as CustomEvent;
     const { checked, value } = cs.detail;

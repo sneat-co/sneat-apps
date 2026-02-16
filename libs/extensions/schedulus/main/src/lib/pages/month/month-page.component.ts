@@ -80,7 +80,7 @@ export class MonthPageComponent {
   }
 
   segmentChanged(ev: CustomEvent): void {
-    console.log('Segment changed', ev);
+// console.log('Segment changed', ev);
     this.segment = ev.detail.value;
     // this.filterAndOrderAssets();
   }

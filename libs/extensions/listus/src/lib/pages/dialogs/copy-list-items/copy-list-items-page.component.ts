@@ -55,9 +55,9 @@ export class CopyListItemsPageComponent implements OnInit {
     if (!this.listItems) {
       this.loadList();
     } else {
-      console.log('from:', this.from);
-      console.log('to:', this.to);
-      console.log('listItems:', this.listItems);
+// console.log('from:', this.from);
+// console.log('to:', this.to);
+// console.log('listItems:', this.listItems);
       this.setSelected();
     }
   }
@@ -67,7 +67,7 @@ export class CopyListItemsPageComponent implements OnInit {
   }
 
   addSelected(): void {
-    console.log('addSelected');
+// console.log('addSelected');
     // this.userService.currentUserLoaded.pipe(
     // 	first(),
     // 	mergeMap(
@@ -109,7 +109,7 @@ export class CopyListItemsPageComponent implements OnInit {
       checked: boolean;
       value: string;
     };
-    console.log(`CopyListItemsPage.onItemToggled(${value}, ${checked})`);
+// console.log(`CopyListItemsPage.onItemToggled(${value}, ${checked})`);
     if (checked) {
       if (!this.selectedListItemIds.includes(value)) {
         this.selectedListItemIds.push(value);
@@ -122,7 +122,7 @@ export class CopyListItemsPageComponent implements OnInit {
   }
 
   private loadList(): void {
-    console.log(`CopyListItemsPage.loadList(${this.from?.id})`);
+// console.log(`CopyListItemsPage.loadList(${this.from?.id})`);
     if (this.from?.id) {
       this.listService
         .getListById(
@@ -132,7 +132,7 @@ export class CopyListItemsPageComponent implements OnInit {
         )
         .subscribe({
           next: (list) => {
-            console.log('loaded list:', list);
+// console.log('loaded list:', list);
             this.listItems = (list && list.dbo?.items) || [];
             this.setSelected();
           },
@@ -148,7 +148,7 @@ export class CopyListItemsPageComponent implements OnInit {
   }
 
   private async addSelectedCompleted(): Promise<void> {
-    console.log('CopyListItemsPage.addSelectedCompleted()');
+// console.log('CopyListItemsPage.addSelectedCompleted()');
     const toast = await this.toastCrl.create({
       message: `${this.selectedListItemIds.length} items copied`,
     });

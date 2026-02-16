@@ -64,7 +64,7 @@ export class OrderTruckerSummaryComponent extends OrderPrintPageBaseComponent {
     this.route.queryParams?.pipe(this.takeUntilDestroyed())?.subscribe({
       next: (params) => {
         this.truckerID = params['truckerID'];
-        console.log('truckerID', this.truckerID);
+        // console.log('truckerID', this.truckerID);
         if (this.order?.dbo) {
           this.setTrucker();
         }

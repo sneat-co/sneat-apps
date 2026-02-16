@@ -121,7 +121,7 @@ export class OrderContainerComponent implements OnChanges {
             (s) => s.containerID === containerID,
           )
         : undefined;
-      console.log(
+// console.log(
         'containerID',
         containerID,
         'containerSegments',
@@ -180,7 +180,7 @@ export class OrderContainerComponent implements OnChanges {
   }
 
   cancelEditing(event: Event): void {
-    console.log('cancelEditing()');
+// console.log('cancelEditing()');
     event.stopPropagation();
     event.preventDefault();
     this.setFormValues();
@@ -191,14 +191,14 @@ export class OrderContainerComponent implements OnChanges {
   }
 
   print(event: Event): boolean {
-    console.log('print()');
+// console.log('print()');
     event.stopPropagation();
     event.preventDefault();
     return false;
   }
 
   save(event: Event): void {
-    console.log('save()');
+// console.log('save()');
     event.stopPropagation();
     event.preventDefault();
     this.saving = true;
@@ -239,7 +239,7 @@ export class OrderContainerComponent implements OnChanges {
   }
 
   delete(event: Event): void {
-    console.log('delete()', this.container);
+// console.log('delete()', this.container);
     event.stopPropagation();
     event.preventDefault();
     if (!this.container) {
@@ -278,7 +278,7 @@ export class OrderContainerComponent implements OnChanges {
   }
 
   addPoints(event: Event): void {
-    console.log('addPoints()');
+// console.log('addPoints()');
     event.stopPropagation();
     event.preventDefault();
     const order = this.order;
@@ -315,7 +315,7 @@ export class OrderContainerComponent implements OnChanges {
   }
 
   async addSegment(event: Event): Promise<void> {
-    console.log('addSegment()', event);
+// console.log('addSegment()', event);
     event.stopPropagation();
     event.preventDefault();
     if (!this.order) {

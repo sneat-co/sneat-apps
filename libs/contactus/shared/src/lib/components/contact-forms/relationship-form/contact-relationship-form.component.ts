@@ -80,7 +80,7 @@ export class ContactRelationshipFormComponent extends WithSpaceInput {
   }
 
   protected onRelatedAsChanged(relatedChange: IRelatedChange): void {
-    console.log('onRelatedAsChanged(relatedChange)', relatedChange);
+// console.log('onRelatedAsChanged(relatedChange)', relatedChange);
     const contactID = this.$contactID();
     const spaceID = this.$spaceID();
     if (!contactID) {
@@ -122,7 +122,7 @@ export class ContactRelationshipFormComponent extends WithSpaceInput {
     this.$isProcessing.set(true);
     this.spaceService.updateRelated(request).subscribe({
       next: () => {
-        console.log('onRelatedAsChanged() - contact updated');
+// console.log('onRelatedAsChanged() - contact updated');
         this.$isProcessing.set(false);
       },
       error: (err) => {

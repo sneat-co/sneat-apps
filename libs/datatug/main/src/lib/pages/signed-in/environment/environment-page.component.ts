@@ -126,7 +126,7 @@ export class EnvironmentPageComponent {
   // }
 
   private loadEnvSummary(): void {
-    console.log('loadEnvSummary', this.project, this.envId);
+    // console.log('loadEnvSummary', this.project, this.envId);
     if (!this.project || !this.envId) {
       return;
     }

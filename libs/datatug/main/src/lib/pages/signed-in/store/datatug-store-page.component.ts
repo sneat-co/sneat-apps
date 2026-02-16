@@ -93,8 +93,7 @@ export class DatatugStorePageComponent
   constructor() {
     const route = this.route;
     const datatugUserService = this.datatugUserService;
-
-    console.log(
+// console.log(
       'DatatugStorePageComponent.constructor(), window.history.state:',
       window.history.state,
     );
@@ -111,19 +110,19 @@ export class DatatugStorePageComponent
   }
 
   ionViewDidLeave(): void {
-    console.log('DatatugStorePageComponent.ionViewDidLeave()');
+// console.log('DatatugStorePageComponent.ionViewDidLeave()');
     this.viewDidLeave.next();
   }
 
   ionViewDidEnter(): void {
-    console.log('DatatugStorePageComponent.ionViewDidEnter()', this.storeId);
+// console.log('DatatugStorePageComponent.ionViewDidEnter()', this.storeId);
     if (this.storeId) {
       this.processStoreId(this.storeId);
     }
   }
 
   ngOnInit() {
-    console.log('DatatugStorePageComponent.ngOnInit()');
+// console.log('DatatugStorePageComponent.ngOnInit()');
     this.trackStoreId();
   }
 
@@ -140,7 +139,7 @@ export class DatatugStorePageComponent
   }
 
   processStoreId = (storeId: string | null): void => {
-    console.log('DatatugStorePageComponent.processStoreId()', storeId);
+// console.log('DatatugStorePageComponent.processStoreId()', storeId);
     if (storeId === this.storeId) {
       return;
     }
@@ -159,7 +158,7 @@ export class DatatugStorePageComponent
         )
         .subscribe({
           next: (agentState) => {
-            console.log('processStoreId => agentState:', agentState);
+// console.log('processStoreId => agentState:', agentState);
             this.agentState = agentState;
             if (!agentState?.isNotAvailable && !this.projects) {
               this.loadProjects(storeId);
@@ -212,7 +211,7 @@ export class DatatugStorePageComponent
   }
 
   ngOnDestroy(): void {
-    console.log('DatatugStorePageComponent.ngOnDestroy()');
+// console.log('DatatugStorePageComponent.ngOnDestroy()');
     this.destroyed.next();
     this.destroyed.complete();
   }

@@ -54,7 +54,7 @@ export function swipeableDay(
     animationState: VirtualSlideAnimationsStates,
   ) => {
     const changedToLog = { ...changed, date: dateToIso(changed.date) };
-    console.log(`swipeableDay.setDate(), changed:`, changedToLog);
+    // console.log(`swipeableDay.setDate(), changed:`, changedToLog);
     const { date } = changed;
     const v: SwipeableDay = {
       ...result,
@@ -146,7 +146,7 @@ export function swipeableWeek(
   // spaceDaysProvider: SpaceDaysProvider,
   destroyed: Observable<void>,
 ): SwipeableWeek {
-  console.log('swipeableWeek', parity, date);
+  // console.log('swipeableWeek', parity, date);
   const activeDateID = dateToIso(date);
   const animationState = initialAnimationState(parity);
   let result: SwipeableWeek = {

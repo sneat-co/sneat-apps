@@ -78,7 +78,7 @@ export class TrackerComponent extends SneatBaseComponent {
         .pipe(this.takeUntilDestroyed())
         .subscribe({
           next: (contactusSpace) => {
-            console.log('contactusSpace:', contactusSpace);
+            // console.log('contactusSpace:', contactusSpace);
             this.$contactusSpace.set(contactusSpace?.dbo || undefined);
           },
         });

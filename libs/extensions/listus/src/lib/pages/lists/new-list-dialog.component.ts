@@ -88,7 +88,7 @@ export class NewListDialogComponent implements AfterViewInit {
   }
 
   cancel(): void {
-    console.log('cancel()');
+// console.log('cancel()');
     this.closeDialog().catch(this.errorLogger.logError);
   }
 

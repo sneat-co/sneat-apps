@@ -85,7 +85,7 @@ export class DocumentsByTypeComponent
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(
+// console.log(
       'DocumentsListComponent.ngOnChanges',
       changes,
       this.allDocuments && [...this.allDocuments],

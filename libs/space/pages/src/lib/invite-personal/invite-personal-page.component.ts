@@ -112,7 +112,7 @@ export class InvitePersonalPageComponent implements OnInit {
         )
         .subscribe({
           next: (response) => {
-            console.log('invite record:', response);
+// console.log('invite record:', response);
             this.invite = response.invite;
             this.members = zipMapBriefsWithIDsAndSpaceRef(
               { id: spaceID },
@@ -148,7 +148,7 @@ export class InvitePersonalPageComponent implements OnInit {
       }
       this.memberService.acceptPersonalInvite(request, token).subscribe({
         next: (/*memberInfo*/) => {
-          console.log('Joined team');
+// console.log('Joined team');
           this.navController
             .navigateRoot('space', { queryParams: { id: this.spaceID } })
             .catch((err) => {
@@ -204,7 +204,7 @@ export class InvitePersonalPageComponent implements OnInit {
     };
     this.inviteService.rejectPersonalInvite(request).subscribe(
       () => {
-        console.log('Refused to join team');
+// console.log('Refused to join team');
         this.navController.navigateRoot('spaces').catch((err) => {
           this.errorLogger.logError(
             err,

@@ -104,12 +104,12 @@ export class EntitiesPageComponent
   protected isActiveView = false;
 
   ionViewDidEnter(): void {
-    console.log('ionViewDidEnter()');
+    // console.log('ionViewDidEnter()');
     this.isActiveView = true;
   }
 
   ionViewDidLeave(): void {
-    console.log('ionViewDidLeave()');
+    // console.log('ionViewDidLeave()');
     this.isActiveView = false;
   }
 

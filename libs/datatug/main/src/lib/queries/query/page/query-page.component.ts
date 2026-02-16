@@ -125,7 +125,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
   private readonly destroyed = new Subject<void>();
 
   constructor() {
-    console.log('QueryPage.constructor()', location.hash);
+// console.log('QueryPage.constructor()', location.hash);
     this.trackQueryState();
     const query = history.state.query as IQueryDef;
     if (query) {
@@ -160,7 +160,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
       if (!queryState) {
         return;
       }
-      console.log('onQueryEditorStateChanged', queryState);
+// console.log('onQueryEditorStateChanged', queryState);
       this.queryState = queryState;
       if (this.queryState.environments && !this.queryState.activeEnv) {
         this.setActiveEnv(this.queryState.environments[0].id);
@@ -185,7 +185,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
   }
 
   public onParametersChanged(parameters: IParameter[]): void {
-    console.log('onParametersChanged:', parameters);
+// console.log('onParametersChanged:', parameters);
     this.parameters = parameters;
   }
 
@@ -205,7 +205,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
       .pipe(takeUntil(this.destroyed))
       .subscribe((currentEnv) => {
         try {
-          console.log('trackCurrentEnv() => ', currentEnv);
+// console.log('trackCurrentEnv() => ', currentEnv);
           if (!currentEnv) {
             return;
           }
@@ -251,7 +251,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
     this.datatugNavContextService.currentProject
       .pipe(takeUntil(this.destroyed))
       .subscribe((currentProject) => {
-        console.log('SqlQueryPage => currentProject:', currentProject);
+// console.log('SqlQueryPage => currentProject:', currentProject);
         if (
           !currentProject ||
           (this.project?.ref.projectId === currentProject.ref.projectId &&
@@ -328,7 +328,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
     envId: string,
     envSummary: IEnvironmentSummary,
   ): void {
-    console.log('envSummary:', envSummary);
+// console.log('envSummary:', envSummary);
     if (!envSummary) {
       this.errorLogger.logError(
         'getEnvSummary returned nothing for envId=' + envId,
@@ -380,7 +380,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
   private trackQueryParams(): void {
     this.route.queryParamMap.subscribe({
       next: (queryParams) => {
-        console.log(
+// console.log(
           'QueryPageComponent.trackQueryParams(): queryParams:',
           queryParams,
         );
@@ -483,7 +483,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
   }
 
   catalogChanged(event: CustomEvent): void {
-    console.log(
+// console.log(
       'catalogChanged',
       event.detail.value,
       this.activeEnv?.catalogId,
@@ -558,7 +558,7 @@ export class QueryPageComponent implements OnDestroy, ViewDidEnter {
     envState: IQueryEnvState,
     queryState?: IQueryState,
   ): IQueryEnvState | undefined {
-    console.log('updateEnvState', envState);
+// console.log('updateEnvState', envState);
     if (!envState.id) {
       throw new Error('!envState.id');
     }

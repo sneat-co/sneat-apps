@@ -122,7 +122,7 @@ export class ContactsSelectorInputComponent {
   onSelectedMembersChanged(
     members: readonly IContactWithBriefAndSpace[],
   ): void {
-    console.log('onSelectedMembersChanged()', members);
+// console.log('onSelectedMembersChanged()', members);
     this.selectedContactsChange.emit(members);
   }
 

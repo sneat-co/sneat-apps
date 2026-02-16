@@ -9,7 +9,7 @@ export class QueryParamsService {
     value: string | number | boolean,
   ): void {
     let url = this.location.href;
-    console.log('setQueryParameter', name, value);
+    // console.log('setQueryParameter', name, value);
     if (url.includes(name + '=')) {
       const re = new RegExp(name + '=.+?(?:&|$)', 'g');
       url = url.replace(re, name + '=' + value);

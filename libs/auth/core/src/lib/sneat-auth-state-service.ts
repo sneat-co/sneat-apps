@@ -96,8 +96,7 @@ export class SneatAuthStateService {
 
   constructor() {
     const errorLogger = this.errorLogger;
-
-    console.log(`SneatAuthStateService.constructor(): id=${this.id}`);
+// console.log(`SneatAuthStateService.constructor(): id=${this.id}`);
     this.fbAuth.onIdTokenChanged({
       next: (firebaseUser) => {
         const status: AuthStatus = firebaseUser
@@ -143,7 +142,7 @@ export class SneatAuthStateService {
     this.fbAuth.onAuthStateChanged({
       complete: () => void 0,
       next: (fbUser) => {
-        console.log(
+// console.log(
           `SneatAuthStateService => authStatus: ${this.authStatus$.value}; fbUser`,
           fbUser,
         );
@@ -212,8 +211,7 @@ export class SneatAuthStateService {
       default:
         return Promise.reject('unsupported auth provider: ' + authProviderID);
     }
-
-    console.log(
+// console.log(
       `SneatAuthStateService.signInWith(${authProviderID}) => signed in on native layer, authenticating in webview...`,
       signInResult,
     );
@@ -241,7 +239,7 @@ export class SneatAuthStateService {
 
     // Get a valid Firebase ID token that has a 'kid' header
     const firebaseIdToken = await userCredential.user.getIdToken();
-    console.log('firebaseIdToken:', firebaseIdToken);
+// console.log('firebaseIdToken:', firebaseIdToken);
 
     return Promise.resolve(userCredential);
   }
@@ -273,7 +271,7 @@ export class SneatAuthStateService {
     if (currentUser) {
       try {
         const updatedUser = await unlink(currentUser, authProviderID);
-        console.log(authProviderID + ' account unlinked successfully!');
+// console.log(authProviderID + ' account unlinked successfully!');
         const authUser = createSneatAuthUserFromFbUser(updatedUser);
         this.authUser$.next(authUser);
         return Promise.resolve();
@@ -290,7 +288,7 @@ export class SneatAuthStateService {
   public async signInWith(
     authProviderID: AuthProviderID,
   ): Promise<UserCredential | undefined> {
-    console.log(
+// console.log(
       `SneatAuthStateService.signInWith(${authProviderID}), isSigningInWith=${this.isSigningInWith}, location.protocol=${location.protocol}`,
     );
     this.analyticsService.logEvent('signingInWith', {

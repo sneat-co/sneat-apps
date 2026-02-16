@@ -33,7 +33,7 @@ export class OrderContainersSelectorDialogComponent {
   private selectedContainers: IContainer[] = [];
 
   onSelectedContainersChanged(selectedContainers: IContainer[]): void {
-    console.log(
+// console.log(
       'OrderContainersSelectorDialogComponent.onSelectedContainersChanged():',
       selectedContainers,
     );
@@ -41,7 +41,7 @@ export class OrderContainersSelectorDialogComponent {
   }
 
   submit(): void {
-    console.log(
+// console.log(
       'OrderContainersSelectorDialogComponent.submit():',
       this.selectedContainers,
       this.onSelected,

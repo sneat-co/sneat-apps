@@ -51,7 +51,7 @@ export class AddAssetServicePageComponent extends AssetBasePage {
   // Commented out until properly implemented.
   /*
 	selectProvider(serviceProvider: DtoServiceProvider): void {
-		console.log('selectProvider() => id:', serviceProvider.id);
+// console.log('selectProvider() => id:', serviceProvider.id);
 	}
 
 	protected onCommuneIdsChanged(communeIds: ICommuneIds): void {
@@ -59,7 +59,7 @@ export class AddAssetServicePageComponent extends AssetBasePage {
 		this.route.queryParamMap.subscribe((params) => {
 			this.serviceType = params.get('type') as LiabilityServiceType;
 			this.serviceTypeTitle = this.serviceType;
-			console.log('serviceType:', this.serviceType);
+// console.log('serviceType:', this.serviceType);
 		});
 	}
 
@@ -84,7 +84,7 @@ export class AddAssetServicePageComponent extends AssetBasePage {
 					this.asset.dbo.categoryId,
 				)
 				.subscribe((result) => {
-					console.log('serviceProviders:', result.values);
+// console.log('serviceProviders:', result.values);
 					const serviceType = this.serviceType;
 					this.serviceProviders = this.serviceType
 						? result.values.filter(

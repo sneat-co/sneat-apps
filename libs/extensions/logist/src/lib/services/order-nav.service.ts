@@ -29,7 +29,7 @@ export class OrderNavService {
     if (url?.fragment) {
       u += '#' + url.fragment;
     }
-    console.log('OrderNavService.goOrderPage()', u);
+// console.log('OrderNavService.goOrderPage()', u);
     switch (direction) {
       case 'forward':
         return this.navController.navigateForward(u, { state });

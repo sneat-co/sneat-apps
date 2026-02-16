@@ -101,7 +101,7 @@ export class LogistOrderService {
     spaceID: string,
     filter: IOrdersFilter,
   ): Observable<ILogistOrderContext[]> {
-    console.log('watchFreightOrders()', spaceID, filter);
+// console.log('watchFreightOrders()', spaceID, filter);
     if (!filter) {
       return throwError(() => 'filter is required parameter');
     }

@@ -133,13 +133,13 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
     name: string,
     create: (request: CreateNamedRequest) => Observable<IRecord<T>>,
   ): Observable<IRecord<T>> {
-    console.log('createProjItem()', projItemType, name);
+    // console.log('createProjItem()', projItemType, name);
     if (!this.projectRef) {
       return throwError(() => 'projectRef is not set');
     }
     return create({ projectRef: this.projectRef, name: name.trim() }).pipe(
       tap((value) => {
-        console.log('project item created:', value);
+        // console.log('project item created:', value);
         try {
           // if (!this.project.summary.environments) {
           // 	this.project = {
@@ -165,7 +165,7 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
     page: ProjectItemType,
     projItem: IProjItemBrief,
   ): void {
-    console.log('goProjItemPage()', page, projItem, this.projectRef);
+    // console.log('goProjItemPage()', page, projItem, this.projectRef);
     if (!this.projectRef) {
       throw new Error('projectRef is not set');
     }
@@ -197,7 +197,7 @@ export class DatatugFolderComponent implements OnChanges, OnDestroy {
                   title: v.name,
                 }))
               : [];
-            console.log('DatatugFolderComponent => folder:', folder);
+            // console.log('DatatugFolderComponent => folder:', folder);
           },
         });
     }

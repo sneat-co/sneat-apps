@@ -71,7 +71,7 @@ export class ListService extends ModuleSpaceItemService<IListBrief, IListDbo> {
   public createListItems(
     params: IListItemsCommandParams,
   ): Observable<IListItemResult> {
-    console.log('createListItems', params);
+// console.log('createListItems', params);
     if (!params.list.type) {
       return throwError(() => 'list is of unknown type: ' + params.list.type);
     }

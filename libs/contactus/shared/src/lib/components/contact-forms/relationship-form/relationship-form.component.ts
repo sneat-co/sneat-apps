@@ -82,7 +82,7 @@ export class RelationshipFormComponent extends SpaceRelatedFormComponent {
       return undefined;
     }
     const relatedItem = getRelatedItemByKey(relatedTo.related, relatedTo.key);
-    console.log('$rolesOfItemRelatedToTarget', relatedTo, relatedItem);
+    // console.log('$rolesOfItemRelatedToTarget', relatedTo, relatedItem);
     if (!relatedItem) {
       return []; // if we return undefined, the "loading..." spinner will be shown
     }
@@ -123,7 +123,7 @@ export class RelationshipFormComponent extends SpaceRelatedFormComponent {
   protected readonly label = 'Related to me as';
 
   protected onRelationshipChanged(value: string): void {
-    console.log('onRelationshipChanged()', value);
+    // console.log('onRelationshipChanged()', value);
     // this.relatedAsRelationships = [value];
     this.relatedAsChange.emit({ add: { rolesToItem: [value] } });
   }
@@ -139,7 +139,7 @@ export class RelationshipFormComponent extends SpaceRelatedFormComponent {
   protected removeRelationship(event: Event, id: string): void {
     event.preventDefault();
     event.stopPropagation();
-    console.log('removeRelationship()', event);
+    // console.log('removeRelationship()', event);
     const itemRef = this.$itemRef();
     if (!itemRef) {
       throw new Error('itemRef is not set');

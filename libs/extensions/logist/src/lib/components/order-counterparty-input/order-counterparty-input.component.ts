@@ -120,7 +120,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
   }
 
   protected onContactChanged(contact?: IContactContext): void {
-    console.log('onContactChanged(),', this.contactRole, contact);
+// console.log('onContactChanged(),', this.contactRole, contact);
     if (this.selectOnly) {
       return;
     }
@@ -267,7 +267,7 @@ export class OrderCounterpartyInputComponent implements OnChanges {
     }
     this.orderService.setOrderCounterparties(request).subscribe({
       next: (counterparty) => {
-        console.log(
+// console.log(
           'onContactChanged(): setOrderCounterparties() =>',
           counterparty,
         );

@@ -143,14 +143,14 @@ export class AssetsPageComponent extends AssetsBasePage implements OnInit {
   }
 
   private watchSpaceAssets(): void {
-    console.log('AssetsPageComponent.watchSpaceAssets() started');
+// console.log('AssetsPageComponent.watchSpaceAssets() started');
     if (this.space?.id) {
       this.assetusSpaceService
         .watchAssetBriefs(this.space)
         .pipe(takeUntil(this.destroyed$))
         .subscribe({
           next: (assets: IIdAndBrief<IAssetBrief>[]) => {
-            console.log(
+// console.log(
               'AssetsPageComponent.watchSpaceAssets() => assets:',
               assets,
             );
@@ -158,7 +158,7 @@ export class AssetsPageComponent extends AssetsBasePage implements OnInit {
           },
           error: (err) => {
             const errStr: string = err.toString();
-            console.log(
+// console.log(
               'AssetsPageComponent.watchSpaceAssets() => error:',
               errStr,
             );

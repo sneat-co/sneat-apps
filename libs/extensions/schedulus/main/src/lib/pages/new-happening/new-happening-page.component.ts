@@ -62,7 +62,7 @@ export class NewHappeningPageComponent extends CalendarBasePage {
     super();
     this.isToDo = location.pathname.includes('/new-task');
     this.date = (history.state.date as string) || '';
-    console.log('date', this.date);
+// console.log('date', this.date);
 
     const type = window.history.state?.type as HappeningType;
     if (type && this.space?.id && !this.$happening().id) {
@@ -72,7 +72,7 @@ export class NewHappeningPageComponent extends CalendarBasePage {
       .pipe(this.takeUntilDestroyed(), first())
       .subscribe({
         next: (queryParams) => {
-          console.log(
+// console.log(
             'NewHappeningPage.constructor() => queryParams:',
             queryParams,
           );
@@ -107,7 +107,7 @@ export class NewHappeningPageComponent extends CalendarBasePage {
   }
 
   private createHappeningContext(type: HappeningType): void {
-    console.log('createHappeningContext()', type);
+// console.log('createHappeningContext()', type);
     const space = this.space;
     if (!space) {
       throw new Error('!space');
@@ -128,7 +128,7 @@ export class NewHappeningPageComponent extends CalendarBasePage {
   // }
 
   protected onHappeningChanged(happening: IHappeningContext): void {
-    console.log('NewHappeningPageComponent.onHappeningChanged()', happening);
+// console.log('NewHappeningPageComponent.onHappeningChanged()', happening);
     const happeningType = happening.brief?.type;
     const typeChange = happeningType && happeningType !== happening.brief?.type;
     this.$happening.set(happening);
@@ -138,7 +138,7 @@ export class NewHappeningPageComponent extends CalendarBasePage {
   }
 
   private onHappeningTypeChanged(happeningType: HappeningType): void {
-    console.log('onHappeningTypeChanged()', happeningType);
+// console.log('onHappeningTypeChanged()', happeningType);
     let { href } = location;
     if (!href.includes('?')) {
       href += '?type=';

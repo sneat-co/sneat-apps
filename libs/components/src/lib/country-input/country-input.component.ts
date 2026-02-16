@@ -54,7 +54,7 @@ export class CountryInputComponent implements OnInit {
   // }
 
   public onCountryChanged(): void {
-    console.log('CountryInputComponent.onCountryChanged()', this.countryID);
+    // console.log('CountryInputComponent.onCountryChanged()', this.countryID);
     this.countryIDChange.emit(this.countryID);
   }
 

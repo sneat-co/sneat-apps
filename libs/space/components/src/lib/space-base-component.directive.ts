@@ -153,7 +153,7 @@ export abstract class SpaceBaseComponent
 
   public constructor() {
     super();
-    console.log(`${this.className}.SpaceBaseComponent.constructor()`);
+// console.log(`${this.className}.SpaceBaseComponent.constructor()`);
 
     let prevSpaceID: string | undefined;
 
@@ -165,11 +165,10 @@ export abstract class SpaceBaseComponent
         // This seems to be a bag or a strange feature in Angular signals?
         // this happens if we call this.spaceIDChanged.next(spaceID);
         // Giving up for now so not logging as a warning
-        console.log(logMsgPrefix + ` - called for the same id`);
+// console.log(logMsgPrefix + ` - called for the same id`);
         return;
       }
-
-      console.log(logMsgPrefix);
+// console.log(logMsgPrefix);
       prevSpaceID = spaceID;
       this.spaceIDChanged.next(spaceID); // This should be BEFORE onSpaceIdChanged()!
       this.onSpaceIdChanged(); // This should be AFTER spaceIDChanged.next()!

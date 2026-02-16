@@ -60,7 +60,7 @@ export class SneatApiService implements ISneatApiService, OnDestroy {
 
   public post<T>(endpoint: string, body: unknown): Observable<T> {
     const url = this.baseUrl + endpoint;
-    console.log('post()', endpoint, url, body);
+    // console.log('post()', endpoint, url, body);
     return (
       this.errorIfNotAuthenticated() ||
       this.httpClient.post<T>(url, body, {
@@ -108,7 +108,7 @@ export class SneatApiService implements ISneatApiService, OnDestroy {
     params?: HttpParams,
     body?: unknown,
   ): Observable<T> {
-    console.log('delete()', endpoint, params);
+    // console.log('delete()', endpoint, params);
     const url = this.baseUrl + endpoint;
     return (
       this.errorIfNotAuthenticated() ||

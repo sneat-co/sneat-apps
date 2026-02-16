@@ -58,12 +58,12 @@ export class RetroItemCardComponent implements OnChanges {
       event.preventDefault();
       event.stopPropagation();
     }
-    console.log(`like(${this.item.ID})`);
+// console.log(`like(${this.item.ID})`);
     this.isLiked = !this.isLiked;
   }
 
   public toggle(event?: Event): void {
-    console.log('toggle', this.treeNode);
+// console.log('toggle', this.treeNode);
     // if (this.treeNode.level !== 1) {
     // 	return;
     // }

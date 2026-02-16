@@ -77,7 +77,7 @@ export class DatatugNavContextService {
   public readonly currentEnv = this.$currentEnv.asObservable().pipe(
     distinctUntilChanged((x, y) => (!x && !y) || x?.id === y?.id),
     tap((v) =>
-      console.log('DatatugNavContextService => currentEnv changed:', v?.id),
+// console.log('DatatugNavContextService => currentEnv changed:', v?.id),
     ),
   );
 
@@ -96,8 +96,7 @@ export class DatatugNavContextService {
   constructor() {
     const appContext = this.appContext;
     const projectContextService = this.projectContextService;
-
-    console.log('DatatugNavContextService.constructor(), id=', this.id);
+// console.log('DatatugNavContextService.constructor(), id=', this.id);
     this.currentProject.subscribe({
       next: (p) => {
         const projRef = projectContextService.current;
@@ -127,7 +126,7 @@ export class DatatugNavContextService {
         if (this.navEndSubscription) {
           return;
         }
-        console.log(
+// console.log(
           'DatatugNavContextService.constructor() => app:',
           app.appCode,
         );
@@ -194,7 +193,7 @@ export class DatatugNavContextService {
       // 	`project: ${projectContext.brief.id} @ ${projectContext.storeId}`);
       return;
     }
-    console.log('DataTugNavContext => projectSummary:', summary);
+// console.log('DataTugNavContext => projectSummary:', summary);
     if (!summary.id) {
       summary = { ...summary, id: projRef.projectId };
     }
@@ -329,7 +328,7 @@ export class DatatugNavContextService {
     const project = this.$currentProj.value;
     if (currentTable?.name !== name || currentTable?.schema !== schema) {
       this.$currentEnvDbTable.next({ name, schema });
-      console.log('currentTable:', this.$currentEnvDbTable.value);
+// console.log('currentTable:', this.$currentEnvDbTable.value);
       this.projectService
         .getFull(project?.ref || { projectId: '', storeId: '' })
         .pipe(first())

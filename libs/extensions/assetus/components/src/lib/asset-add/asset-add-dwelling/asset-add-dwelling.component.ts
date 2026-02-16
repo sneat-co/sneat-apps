@@ -87,7 +87,7 @@ export class AssetAddDwellingComponent
   }
 
   protected submitDwellingForm(): void {
-    console.log('submitDwellingForm', this.dwellingAsset);
+    // console.log('submitDwellingForm', this.dwellingAsset);
     if (!this.space) {
       throw new Error('no team context');
     }

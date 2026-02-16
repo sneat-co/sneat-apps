@@ -27,12 +27,12 @@ export class GridWidgetComponent implements OnChanges {
   public grid?: IGridDef;
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('GridWidgetComponent.ngOnChanges()', changes);
+// console.log('GridWidgetComponent.ngOnChanges()', changes);
     try {
       if (changes['recordset'] && this.recordset) {
         this.grid = recordsetToGridDef(this.recordset, this.hideColumns);
         this.changeDetectorRef.markForCheck();
-        console.log('GridWidgetComponent.ngOnChanges(): grid:', this.grid);
+// console.log('GridWidgetComponent.ngOnChanges(): grid:', this.grid);
       }
     } catch (ex) {
       this.errorLogger.logError(

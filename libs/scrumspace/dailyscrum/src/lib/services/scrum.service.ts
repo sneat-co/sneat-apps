@@ -77,7 +77,7 @@ export class ScrumService extends BaseMeetingService {
     teamId: string,
     limit = 10,
   ): Observable<IRecord<IScrumDbo>[]> {
-    console.log('getScrums()', teamId, limit, this.userService.currentUserID);
+    // console.log('getScrums()', teamId, limit, this.userService.currentUserID);
     throw new Error('Not implemented');
     // const scrums = this.scrumsCollection(teamId);
     // const query = scrums.ref
@@ -102,7 +102,7 @@ export class ScrumService extends BaseMeetingService {
   }
 
   public watchScrum(teamId: string, scrumId: string): Observable<IScrumDbo> {
-    console.log(`watchScrum(${teamId}, ${scrumId})`);
+    // console.log(`watchScrum(${teamId}, ${scrumId})`);
     throw new Error('Not implemented');
     // const scrumDoc = this.getScrumDoc(teamId, scrumId);
     // return scrumDoc.snapshotChanges().pipe(
@@ -121,7 +121,7 @@ export class ScrumService extends BaseMeetingService {
     type: TaskType,
     id: string,
   ): Observable<void> {
-    console.log('deleteTask', spaceID, scrumId, member, type, id);
+    // console.log('deleteTask', spaceID, scrumId, member, type, id);
     const params = new HttpParams()
       .append('space', spaceID)
       .append('date', scrumId)
@@ -133,17 +133,17 @@ export class ScrumService extends BaseMeetingService {
   }
 
   public reorderTask(request: IReorderTaskRequest): Observable<void> {
-    console.log('reorderTask', request);
+    // console.log('reorderTask', request);
     return this.sneatApiService.post<void>('scrum/reorder_task', request);
   }
 
   public thumbUp(request: IThumbUpRequest): Observable<void> {
-    console.log('thumbUp', request);
+    // console.log('thumbUp', request);
     return this.sneatApiService.post<void>('scrum/thumb_up_task', request);
   }
 
   public addComment(request: IAddCommentRequest): Observable<string> {
-    console.log('addComment', request);
+    // console.log('addComment', request);
     if (!request.message) {
       return throwError(() => 'message required');
     }
@@ -273,7 +273,7 @@ export class ScrumService extends BaseMeetingService {
 
     worker: (scrum: IScrumDbo, status: IStatus) => IScrumDbo,
   ): Observable<IScrumDbo> {
-    console.log('updateStatus', teamId, scrumId, member, worker);
+    // console.log('updateStatus', teamId, scrumId, member, worker);
     throw new Error('not implemented yet');
     // let scrum: IScrumDto;
     // return from(

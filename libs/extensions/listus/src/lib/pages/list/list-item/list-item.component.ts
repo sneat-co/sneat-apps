@@ -118,7 +118,7 @@ export class ListItemComponent {
 
   protected goListItem(): void {
     const listItem = this.$listItem();
-    console.log(
+// console.log(
       `goListItem(${listItem?.id}), subListId=${listItem?.subListId}`,
     );
     this.itemClicked.emit(listItem);
@@ -142,7 +142,7 @@ export class ListItemComponent {
     if (checked === undefined) {
       return;
     }
-    console.log('onIsDoneCheckboxChanged()', checked, this.$doneFilter());
+// console.log('onIsDoneCheckboxChanged()', checked, this.$doneFilter());
     const isDone = !!checked;
     this.setIsDone(isDone);
   }
@@ -235,7 +235,7 @@ export class ListItemComponent {
     item: IListItemBrief,
     ionSliding?: IonItemSliding | HTMLElement,
   ): void {
-    console.log('ListItemComponent.deleteFromList()', item);
+// console.log('ListItemComponent.deleteFromList()', item);
     if (!item.id) {
       return;
     }
@@ -251,7 +251,7 @@ export class ListItemComponent {
     };
     this.listService.deleteListItems(request).subscribe({
       next: () => {
-        console.log('ListItemComponent => item deleted');
+// console.log('ListItemComponent => item deleted');
         // this.listChanged.emit(listDto);
       },
       error: this.errorLogger.logError,
@@ -269,7 +269,7 @@ export class ListItemComponent {
     listItem: IListItemBrief,
     event: Event,
   ): void {
-    console.log(`openCopyListItemDialog()`, listItem);
+// console.log(`openCopyListItemDialog()`, listItem);
     event.stopPropagation();
 
     this.listDialogs

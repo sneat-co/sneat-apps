@@ -151,7 +151,7 @@ export class LogistSpaceSettingsComponent
     this.isSubmitting = true;
     this.logistSpaceService.setLogistSpaceSettings(request).subscribe({
       next: () => {
-        console.log('success');
+// console.log('success');
       },
       error: (err) => {
         this.errorLogger.logError(err, 'Failed to set logist team settings.');
@@ -161,7 +161,7 @@ export class LogistSpaceSettingsComponent
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('LogistTeamSettingsComponent.ngOnChanges()', changes);
+// console.log('LogistTeamSettingsComponent.ngOnChanges()', changes);
     if (changes['logistTeam']) {
       if (!this.orderNumberPrefix.dirty) {
         this.orderNumberPrefix.setValue(
@@ -185,7 +185,7 @@ export class LogistSpaceSettingsComponent
         .subscribe((contact) => {
           this.address = contact?.dbo?.address || this.address;
           this.roles = contact?.dbo?.roles || [];
-          console.log(
+// console.log(
             'LogistTeamSettingsComponent.ngOnChanges(): roles:',
             this.roles,
           );

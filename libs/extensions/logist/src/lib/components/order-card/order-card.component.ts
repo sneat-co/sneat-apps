@@ -111,7 +111,7 @@ export class OrderCardComponent {
   protected onUserChangedOrderStatus(event: Event): void {
     // event.stopPropagation();
     // event.preventDefault();
-    console.log('onUserChangedOrderStatus', event);
+// console.log('onUserChangedOrderStatus', event);
     const ce = event as CustomEvent;
     const status = ce.detail.value as string;
     if (!status) {

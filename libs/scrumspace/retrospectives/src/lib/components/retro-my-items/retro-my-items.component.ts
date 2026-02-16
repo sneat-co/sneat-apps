@@ -104,8 +104,7 @@ export class RetroMyItemsComponent {
       this.titleControl.setValue('');
       this.retrospectiveService.addRetroItem(request).subscribe(
         (response) => {
-          console.log(response);
-
+          // console.log(response);
           // const item: IRetroItem = {id: response.id, title: request.title};
           // const items = this.itemsByType[type];
           // if (items) {

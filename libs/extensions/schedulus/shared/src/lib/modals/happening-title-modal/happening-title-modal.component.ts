@@ -76,7 +76,7 @@ export class HappeningTitleModalComponent
   });
 
   protected onEnter(event: Event): void {
-    console.log('onEnter()', event);
+// console.log('onEnter()', event);
   }
 
   private happeningService = inject(HappeningService);

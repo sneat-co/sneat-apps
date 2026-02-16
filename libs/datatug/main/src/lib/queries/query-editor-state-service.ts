@@ -70,8 +70,7 @@ export class QueryEditorStateService {
 
   constructor() {
     const datatugNavContextService = this.datatugNavContextService;
-
-    console.log('QueryEditorStateService.constructor()');
+// console.log('QueryEditorStateService.constructor()');
     datatugNavContextService.currentProject.subscribe((currentProject) => {
       this.currentProject = currentProject;
       if (this.currentProject?.summary) {
@@ -106,7 +105,7 @@ export class QueryEditorStateService {
   }
 
   openQuery(id: string): void {
-    console.log(
+// console.log(
       `QueryEditorStateService.openQuery(${id})`,
       this.currentProject,
     );
@@ -150,9 +149,9 @@ export class QueryEditorStateService {
   }
 
   private loadQuery(id: string): void {
-    console.log('loadQuery', id);
+// console.log('loadQuery', id);
     const onCompleted = (def?: IQueryDef, error?: unknown) => {
-      console.log('loadQuery.onCompleted', def, error);
+// console.log('loadQuery.onCompleted', def, error);
       const activeQuery = $state.value?.activeQueries.find((q) => q.id === id);
       if (!activeQuery) {
         return;
@@ -221,7 +220,7 @@ export class QueryEditorStateService {
   private updateQuerySatesWithProj(
     state: IQueryEditorState,
   ): IQueryEditorState {
-    console.log('updateQuerySatesWithProj', state);
+// console.log('updateQuerySatesWithProj', state);
     state = this.updateQueryStatesWithEnvs(state);
     if (!this.currentProject) {
       return state;
@@ -243,7 +242,7 @@ export class QueryEditorStateService {
   private updateQueryStatesWithEnvs(
     state: IQueryEditorState,
   ): IQueryEditorState {
-    console.log(
+// console.log(
       'updateQueryStatesWithEnvs',
       state.activeQueries,
       this.currentProject?.summary?.environments,
@@ -276,7 +275,7 @@ export class QueryEditorStateService {
   });
 
   updateQueryState(queryState: IQueryState): void {
-    console.log('updateQueryState', queryState);
+// console.log('updateQueryState', queryState);
     if (!$state.value) {
       return;
     }
@@ -334,7 +333,7 @@ export class QueryEditorStateService {
       };
       const result = this.queriesService.updateQuery(projectRef, query).pipe(
         tap((value: IQueryDef) => {
-          console.log('query updated', value);
+// console.log('query updated', value);
           const queryState = this.getQueryState(query.id);
           if (!queryState) {
             return throwError(() => `no state for query with id=${query.id}`);

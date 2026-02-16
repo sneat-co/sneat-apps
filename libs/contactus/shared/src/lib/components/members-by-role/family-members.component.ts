@@ -97,7 +97,7 @@ export class FamilyMembersComponent
   private readonly processContactusSpaceDbo = (
     contactusSpaceDbo?: IContactusSpaceDbo | null,
   ): void => {
-    console.log(
+// console.log(
       'MembersPageComponent.processContactusSpaceDbo()',
       contactusSpaceDbo,
     );
@@ -109,7 +109,7 @@ export class FamilyMembersComponent
   };
 
   private processMembers(): void {
-    console.log('MembersPageComponent.processMembers()', this.members);
+// console.log('MembersPageComponent.processMembers()', this.members);
     const space = this.$space();
     if (!space) {
       throw new Error('!this.$space()');

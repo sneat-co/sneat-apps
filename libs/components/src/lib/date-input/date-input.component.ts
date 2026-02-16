@@ -60,7 +60,7 @@ export class DateInputComponent {
 
   protected onValueChanged(event: CustomEvent): void {
     const newValue = event.detail.value as string;
-    console.log('onValueChanged', newValue);
+    // console.log('onValueChanged', newValue);
     this.$newValue.set(newValue);
   }
 

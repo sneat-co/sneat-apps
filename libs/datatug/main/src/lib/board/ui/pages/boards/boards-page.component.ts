@@ -111,7 +111,7 @@ export class BoardsPageComponent implements OnInit, OnDestroy {
   }
 
   private onFolderReceived = (path: string, folder?: IFolder | null): void => {
-    console.log('onFolderReceived', path, folder);
+// console.log('onFolderReceived', path, folder);
     if (this.folderPath !== path) {
       return;
     }
@@ -167,7 +167,7 @@ export class BoardsPageComponent implements OnInit, OnDestroy {
         {
           text: 'Create',
           handler: (value) => {
-            console.log('alert value:', value);
+// console.log('alert value:', value);
             // const store: IProjStoreRef = {
             // 	type: 'firestore',
             // };
@@ -181,7 +181,7 @@ export class BoardsPageComponent implements OnInit, OnDestroy {
               })
               .subscribe({
                 next: (board) => {
-                  console.log('Board created:', board);
+// console.log('Board created:', board);
                   this.boards?.push(board);
                 },
                 error: this.logError(

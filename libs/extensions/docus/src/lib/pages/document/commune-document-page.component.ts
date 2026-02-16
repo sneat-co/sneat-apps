@@ -106,7 +106,7 @@ export class CommuneDocumentPageComponent
     super.ngOnInit();
     this.route.queryParamMap.subscribe((params) => {
       const documentId = params.get('id');
-      console.log('id', documentId);
+      // console.log('id', documentId);
       if (documentId) {
         this.subscriptions.push(
           this.assetService.watchById(documentId).subscribe((document) => {

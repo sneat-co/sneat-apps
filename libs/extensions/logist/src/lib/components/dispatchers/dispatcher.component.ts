@@ -105,7 +105,7 @@ export class DispatcherComponent implements OnChanges {
   }
 
   addShippingPoint(event: Event): void {
-    console.log('addDispatchPoint(), event:', event);
+// console.log('addDispatchPoint(), event:', event);
     event.stopPropagation();
     event.preventDefault();
     const space = this.order?.space;
@@ -145,7 +145,7 @@ export class DispatcherComponent implements OnChanges {
     this.contactSelectorService
       .selectSingleInModal(selectorOptions)
       .then((contact) => {
-        console.log(
+// console.log(
           'OrderCounterpartiesCardComponent.openContactSelector() contact:',
           contact,
         );
@@ -173,7 +173,7 @@ export class DispatcherComponent implements OnChanges {
         };
         this.ordersService.addShippingPoint(space, request).subscribe({
           next: (order) => {
-            console.log('added shipping point added to order');
+// console.log('added shipping point added to order');
             this.order = { ...order, space: this.order?.space || space };
             this.orderChange.emit(this.order);
           },
@@ -239,7 +239,7 @@ export class DispatcherComponent implements OnChanges {
     this.deleting = true;
     this.ordersService.deleteCounterparty(request).subscribe({
       next: () => {
-        console.log('deleted dispatcher');
+// console.log('deleted dispatcher');
       },
       error: (err) => {
         this.errorLogger.logError(err, 'Failed to delete dispatcher');

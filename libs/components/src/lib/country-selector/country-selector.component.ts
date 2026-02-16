@@ -86,12 +86,12 @@ export class CountrySelectorComponent implements OnInit, OnChanges {
   // protected geoRegion: GeoRegion | 'All' | 'Americas' = 'All';
 
   protected onChanged(): void {
-    console.log('CountrySelectorComponent.onChanged()', this.countryID);
+// console.log('CountrySelectorComponent.onChanged()', this.countryID);
     this.countryIDChange.emit(this.countryID);
   }
 
   protected onFilterChanged(filter: string): void {
-    console.log('CountrySelectorComponent.onFilterChanged()', filter);
+// console.log('CountrySelectorComponent.onFilterChanged()', filter);
     this.filter.set(filter);
   }
 

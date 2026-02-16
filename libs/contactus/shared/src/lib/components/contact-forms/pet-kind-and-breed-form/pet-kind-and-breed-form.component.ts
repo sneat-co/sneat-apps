@@ -44,7 +44,7 @@ export class PetKindAndBreedFormComponent extends EditContactFormBaseComponent {
   }
 
   protected onPetKindChanged(petKind: string): void {
-    console.log('onPetKindChanged', petKind);
+// console.log('onPetKindChanged', petKind);
     const contact = this.$contact();
     this.contactChange.emit({
       ...contact,

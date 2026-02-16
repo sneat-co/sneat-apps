@@ -112,7 +112,7 @@ export class SlotContextMenuComponent extends WithSpaceInput {
   }
 
   protected assign(event: Event, to: 'member' | 'contact'): void {
-    console.log(`SlotContextMenuComponent.assign(${to})`);
+// console.log(`SlotContextMenuComponent.assign(${to})`);
     event.stopPropagation();
     event.preventDefault();
     const space = this.$space();
@@ -144,12 +144,12 @@ export class SlotContextMenuComponent extends WithSpaceInput {
     this.contactsSelectorService
       .selectMultipleContacts(options)
       .then((selectedContacts) => {
-        console.log('selected contacts:', selectedContacts);
+// console.log('selected contacts:', selectedContacts);
       });
   }
 
   protected move(): void {
-    console.log(`SlotContextMenuComponent.move()`);
+// console.log(`SlotContextMenuComponent.move()`);
     this.notImplemented();
   }
 
@@ -185,7 +185,7 @@ export class SlotContextMenuComponent extends WithSpaceInput {
   }
 
   protected edit(event: Event, editMode: 'series' | 'single'): void {
-    console.log(`SlotContextMenuComponent.edit()`);
+// console.log(`SlotContextMenuComponent.edit()`);
     const happening = this.slotContext?.happening;
     if (!happening) {
       return;
@@ -216,7 +216,7 @@ export class SlotContextMenuComponent extends WithSpaceInput {
   }
 
   delete(event: Event): void {
-    console.log(`SlotContextMenuComponent.delete()`);
+// console.log(`SlotContextMenuComponent.delete()`);
     const slot = this.slotContext;
     if (!slot) {
       return;
@@ -253,7 +253,7 @@ export class SlotContextMenuComponent extends WithSpaceInput {
   }
 
   archive(): void {
-    console.log(`SlotContextMenuComponent.archive()`);
+// console.log(`SlotContextMenuComponent.archive()`);
     this.notImplemented();
   }
 
@@ -340,7 +340,7 @@ export class SlotContextMenuComponent extends WithSpaceInput {
   }
 
   revokeCancellation(event: Event): void {
-    console.log(`SlotContextMenuComponent.revokeCancellation()`);
+// console.log(`SlotContextMenuComponent.revokeCancellation()`);
     this.$happeningState.set('revoking-cancellation');
     if (!this.slotContext) {
       return;
@@ -369,7 +369,7 @@ export class SlotContextMenuComponent extends WithSpaceInput {
   }
 
   markCanceled(event: Event, mode: 'whole' | 'slot'): void {
-    console.log(`SlotContextMenuComponent.markCanceled(mode=${mode})`);
+// console.log(`SlotContextMenuComponent.markCanceled(mode=${mode})`);
     this.$happeningState.set(
       mode == 'slot' ? 'cancelling-single' : 'cancelling-series',
     );
@@ -419,7 +419,7 @@ export class SlotContextMenuComponent extends WithSpaceInput {
   private readonly onContactAdded = (
     contact: IContactWithBrief,
   ): Observable<void> => {
-    console.log('SlotContextMenuComponent.onContactAdded()', contact);
+// console.log('SlotContextMenuComponent.onContactAdded()', contact);
     if (!this.slotContext) {
       return NEVER;
     }
@@ -441,7 +441,7 @@ export class SlotContextMenuComponent extends WithSpaceInput {
   private readonly onContactRemoved = (
     member: IContactWithBrief,
   ): Observable<void> => {
-    console.log('SlotContextMenuComponent.onMemberRemoved()', member);
+// console.log('SlotContextMenuComponent.onMemberRemoved()', member);
     if (!this.slotContext || !this.$space()) {
       return NEVER;
     }

@@ -98,11 +98,11 @@ export class MovieInfoPageComponent
           .loadMovieInfoById(movieIdTmdb)
           .subscribe((movieTmdb) => {
             this.onListItemInfoChanged(movieTmdb);
-            console.log(movieTmdb);
+// console.log(movieTmdb);
           }, this.errorLogger.logError);
       }
     }
-    console.log('movie', this.movie, 'id', this.movie && this.movie.id);
+// console.log('movie', this.movie, 'id', this.movie && this.movie.id);
   }
 
   // protected onListInfoChanged(): void {
@@ -139,12 +139,12 @@ export class MovieInfoPageComponent
   }
 
   public removeFromWatchlist(): void {
-    console.log('MovieCardComponent.removeFromWatchlist()', this.movie);
+// console.log('MovieCardComponent.removeFromWatchlist()', this.movie);
     /*
 		this.listusService
 			.deleteListItem(this.createListItemCommandParams())
 			.subscribe((listDto) => {
-				console.log('MovieCardComponent => movie deleted');
+// console.log('MovieCardComponent => movie deleted');
 				this.setList(listDto);
 			}, this.errorLogger.logError);
 		 */
@@ -154,7 +154,7 @@ export class MovieInfoPageComponent
     listItemInfo?: IListItemBrief,
   ): void {
     super.onListItemInfoChanged(listItemInfo);
-    console.log('MovieInfoPageComponent.onListItemInfoChanged', listItemInfo);
+// console.log('MovieInfoPageComponent.onListItemInfoChanged', listItemInfo);
     this.movie = listItemInfo as IMovie;
   }
 
@@ -193,7 +193,7 @@ export class MovieInfoPageComponent
 		if (!this.commune) {
 			throw new Error('!this.commune');
 		}
-		console.log(
+// console.log(
 			`AddToWatchPage.addListItem(item={id:${movie.id}, title: ${movie.title})`,
 			'this.shortListId',
 			this.shortListId,
@@ -210,7 +210,7 @@ export class MovieInfoPageComponent
 			})
 			.subscribe({
 				next: (result) => {
-					console.log('ListPage.addListItem', result);
+// console.log('ListPage.addListItem', result);
 				},
 				error: (err) => {
 					this.errorLogger.logError(err, 'Failed to add item to list');

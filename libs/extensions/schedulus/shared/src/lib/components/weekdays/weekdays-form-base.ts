@@ -78,7 +78,7 @@ export abstract class WeekdaysFormBase extends SneatBaseComponent {
   }
 
   protected onWeekdayChanged(wd: WeekdayCode2, checked: boolean): void {
-    console.log('onWeekdayChanged', wd, checked);
+// console.log('onWeekdayChanged', wd, checked);
     this.weekdayById[wd].set(checked);
   }
 

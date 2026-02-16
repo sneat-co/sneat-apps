@@ -138,7 +138,7 @@ export class NewLogistOrderPageComponent extends SpaceBaseComponent {
   }
 
   private readonly processSpaceContact = (contact: IContactContext): void => {
-    console.log('contact:', contact);
+// console.log('contact:', contact);
     const contactDto = contact.dbo;
     if (!contactDto) {
       return;
@@ -170,12 +170,12 @@ export class NewLogistOrderPageComponent extends SpaceBaseComponent {
   };
 
   onOrderChanged(order: ILogistOrderContext): void {
-    console.log('NewLogistOrderPageComponent.onOrderChanged():', order);
+// console.log('NewLogistOrderPageComponent.onOrderChanged():', order);
     this.order = order;
   }
 
   onNumberOfContainersChanged(v: Record<string, number>): void {
-    console.log(
+// console.log(
       'NewLogistOrderPageComponent.onNumberOfContainersChanged():',
       v,
     );
@@ -230,7 +230,7 @@ export class NewLogistOrderPageComponent extends SpaceBaseComponent {
 
     this.freightOrdersService.createOrder(request).subscribe({
       next: (response) => {
-        console.log('order created:', response);
+// console.log('order created:', response);
         this.navController
           .navigateRoot(['..', 'order', response.order.id], {
             relativeTo: this.route,
@@ -250,7 +250,7 @@ export class NewLogistOrderPageComponent extends SpaceBaseComponent {
   }
 
   protected onCounterpartiesAdded(counterparties: IOrderCounterparty[]): void {
-    console.log(
+// console.log(
       'NewLogistOrderPageComponent.onCounterpartiesAdded():',
       counterparties,
     );
@@ -272,7 +272,7 @@ export class NewLogistOrderPageComponent extends SpaceBaseComponent {
         counterparties: [...orderCounterparties, ...counterparties],
       },
     };
-    console.log(
+// console.log(
       'NewLogistOrderPageComponent.onCounterpartiesAdded() =>',
       this.order,
     );

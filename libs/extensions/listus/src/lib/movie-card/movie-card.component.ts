@@ -130,14 +130,14 @@ export class MovieCardComponent implements OnChanges {
   }
 
   public emitGoMovie(): void {
-    console.log('MovieCardComponent.emitGoMovie()', this.movie);
+    // console.log('MovieCardComponent.emitGoMovie()', this.movie);
     if (this.movie) {
       this.goMovie.emit(this.movie);
     }
   }
 
   public emitAddToWatchlist(): void {
-    console.log('MovieCardComponent.addToWatchlist()', this.movie);
+    // console.log('MovieCardComponent.addToWatchlist()', this.movie);
     this.addToWatchlist.emit(this.movie);
   }
 

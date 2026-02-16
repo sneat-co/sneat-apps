@@ -79,13 +79,13 @@ export class ForeignKeyCardComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['tableNavParams'] || changes['row'] || changes['fk']) {
       if (this.fk && this.tableNavParams && this.row) {
-        console.log('tableNavParams', this.tableNavParams);
+        // console.log('tableNavParams', this.tableNavParams);
         if (!this.table?.meta) {
           this.projectService
             .getFull(this.tableNavParams.project.ref)
             .subscribe({
               next: (project) => {
-                console.log('ForeignKeyCardComponent => project:', project);
+                // console.log('ForeignKeyCardComponent => project:', project);
                 // const env = project.environments.find(v => v.id === this.tableNavParams.env);
                 // const db = env.dbServer.find(v => v.id === this.tableNavParams.db);
                 // const table = db.tables.find(v =>

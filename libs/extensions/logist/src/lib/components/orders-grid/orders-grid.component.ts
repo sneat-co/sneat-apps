@@ -112,7 +112,7 @@ export class OrdersGridComponent implements OnChanges {
   displayCols = this.allCols;
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('OrdersGridComponent.ngOnChanges():', changes);
+    // console.log('OrdersGridComponent.ngOnChanges():', changes);
     if (changes['orders']) {
       this.rows = this.orders?.map((o) => ({
         id: o.id,
@@ -134,7 +134,7 @@ export class OrdersGridComponent implements OnChanges {
   }
 
   protected readonly rowClick = (event: Event, row: unknown) => {
-    console.log('OrdersGridComponent.rowClick():', event, row);
+    // console.log('OrdersGridComponent.rowClick():', event, row);
     if (!this.space) {
       alert('No team context provided!');
       return;

@@ -26,7 +26,7 @@ export class FilterItemComponent {
   @Output() readonly blured = new EventEmitter<Event>();
 
   protected clearFilter(event: Event): void {
-    console.log('clearFilter()');
+// console.log('clearFilter()');
     event.stopPropagation();
     event.preventDefault();
     this.emitChanged('');
@@ -38,7 +38,7 @@ export class FilterItemComponent {
   }
 
   protected onBlured(event: Event): void {
-    console.log(`FilterItemComponent.onBlured()`, event);
+// console.log(`FilterItemComponent.onBlured()`, event);
     this.blured.emit(event);
   }
 

@@ -65,7 +65,7 @@ export class SinglesTabComponent
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    console.log('SinglesTabComponent.ngOnChanges()', changes);
+    // console.log('SinglesTabComponent.ngOnChanges()', changes);
     const spaceChange = changes['$space'];
     if (spaceChange) {
       if (this.$spaceID() !== spaceChange.previousValue?.id) {

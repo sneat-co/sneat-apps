@@ -35,7 +35,7 @@ export const groupRecurringSlotsByWeekday = (
     byWeekday: {},
   };
   if (!calendariumSpace?.dbo?.recurringHappenings) {
-    console.log(logPrefix + ', no slots for team:', calendariumSpace);
+    // console.log(logPrefix + ', no slots for team:', calendariumSpace);
     return slots;
   }
   zipMapBriefsWithIDs(calendariumSpace.dbo.recurringHappenings).forEach(
@@ -64,7 +64,7 @@ export const groupRecurringSlotsByWeekday = (
       });
     },
   );
-  console.log(logPrefix + ', slots:', slots);
+  // console.log(logPrefix + ', slots:', slots);
   return slots;
 };
 

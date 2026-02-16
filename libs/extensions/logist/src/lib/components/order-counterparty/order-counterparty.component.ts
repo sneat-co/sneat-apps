@@ -100,7 +100,7 @@ export class OrderCounterpartyComponent implements OnChanges {
   }
 
   protected onOrderChanged(order: ILogistOrderContext): void {
-    console.log('OrderCounterpartyComponent.onOrderChanged():', order);
+// console.log('OrderCounterpartyComponent.onOrderChanged():', order);
     this.setAndEmitOrder(order);
   }
 
@@ -110,7 +110,7 @@ export class OrderCounterpartyComponent implements OnChanges {
   }
 
   protected onRefNumberChanged(event: Event): void {
-    console.log('onRefNumberChanged(), event:', event);
+// console.log('onRefNumberChanged(), event:', event);
     this.isRefNumberChanged =
       (this.counterparty?.refNumber || '') !== this.refNumber;
     if (this.counterparty) {
@@ -141,7 +141,7 @@ export class OrderCounterpartyComponent implements OnChanges {
   }
 
   protected saveRefNumber(event: Event): void {
-    console.log('saveRefNumber(), event:', event);
+// console.log('saveRefNumber(), event:', event);
     event.stopPropagation();
     event.preventDefault();
     if (!this.isRefNumberChanged) {

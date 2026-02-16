@@ -100,12 +100,12 @@ export class NewCompanyFormComponent
   }
 
   onContactChanged(contact: IContactWithOptionalDbo): void {
-    console.log('onContactChanged()', contact);
+    // console.log('onContactChanged()', contact);
     this.contact = contact;
   }
 
   create(): void {
-    console.log('create()', this.contactRole, this.contact);
+    // console.log('create()', this.contactRole, this.contact);
     if (!this.contact?.dbo?.title) {
       alert('Contact title is a required field');
       return;
@@ -131,7 +131,7 @@ export class NewCompanyFormComponent
       this.isCreating = true;
       this.contactService.createContact(spaceRef, request).subscribe({
         next: (contact) => {
-          console.log('created contact:', contact);
+          // console.log('created contact:', contact);
           this.contactCreated.emit(contact);
         },
         error: (err: unknown) => {

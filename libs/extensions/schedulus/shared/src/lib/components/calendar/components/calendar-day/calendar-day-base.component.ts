@@ -25,7 +25,7 @@ export abstract class CalendarDayBaseComponent extends SwipeableBaseComponent {
 
   override onDateChanged(changed: IDateChanged): void {
     const changedToLog = { ...changed, date: dateToIso(changed.date) };
-    console.log(
+// console.log(
       `ScheduleDayBaseComponent.onDateChanged(), shiftDays=${this.shiftDays}, changed:`,
       changedToLog,
     );

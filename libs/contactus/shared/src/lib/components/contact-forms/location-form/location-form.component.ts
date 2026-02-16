@@ -105,7 +105,7 @@ export class LocationFormComponent implements OnChanges {
   private readonly setFocusToInput = createSetFocusToInput(this.errorLogger);
 
   onAddressChanged(address: IAddress): void {
-    console.log('onAddressChanged()', address);
+// console.log('onAddressChanged()', address);
     if (!this.location) {
       return;
     }
@@ -121,7 +121,7 @@ export class LocationFormComponent implements OnChanges {
   }
 
   onTitleChanged(): void {
-    console.log('onTitleChanged()', this.title.value);
+// console.log('onTitleChanged()', this.title.value);
     if (!this.location) {
       const title = this.title.value || '';
       const brief: IContactBrief = { type: this.contactType, title };
@@ -148,14 +148,14 @@ export class LocationFormComponent implements OnChanges {
     contact: IContactWithDboAndSpace,
   ): void => {
     // contact = { ...contact, parentContact: this.parentContact };
-    console.log('LocationFormComponent.onContactCreated()', contact);
+// console.log('LocationFormComponent.onContactCreated()', contact);
     this.location = contact;
     this.emitContactChange();
     this.locationCreated.emit(contact);
   };
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('LocationFormComponent.ngOnChanges()', changes);
+// console.log('LocationFormComponent.ngOnChanges()', changes);
     if (changes['contactType']) {
       if (!this.location?.dbo && this.contactType) {
         this.location = {
@@ -195,7 +195,7 @@ export class LocationFormComponent implements OnChanges {
     // }
     const { title } = contactDto;
     const { address } = contactDto || { type: this.contactType };
-    console.log('submit', title, address);
+// console.log('submit', title, address);
     if (!title) {
       alert('title is required');
       return;

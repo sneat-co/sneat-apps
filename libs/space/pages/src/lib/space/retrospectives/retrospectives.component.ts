@@ -38,7 +38,7 @@ export class RetrospectivesComponent {
   @Input() public space?: IRecord<ISpaceDbo>;
 
   navigateToCurrentRetro(): void {
-    console.log('navigateToCurrentRetro()');
+    // console.log('navigateToCurrentRetro()');
     if (!this.space) {
       this.errorLogger.logError(
         'Can not navigate to retro without having team context',

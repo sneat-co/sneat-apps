@@ -189,7 +189,7 @@ export class ScrumPageComponent
   }
 
   public showChanged() {
-    console.log(
+// console.log(
       'showChanged(), tab:',
       this.tab,
       'location.hash:',
@@ -207,7 +207,7 @@ export class ScrumPageComponent
   }
 
   public changeDate(to: 'prev' | 'next' | 'today' | string): void {
-    console.log(`changeDate(to=${to}, currentScrumDate=${this.scrumDate})`);
+// console.log(`changeDate(to=${to}, currentScrumDate=${this.scrumDate})`);
     if (!this.space) {
       this.errorLogger.logError('can not change date without team context');
       return;
@@ -256,8 +256,7 @@ export class ScrumPageComponent
     }
 
     const path = this.location.path().split('?')[0];
-
-    console.log(
+// console.log(
       'location.replaceState',
       window.location.search,
       `date=${this.isToday ? 'today' : this.scrumID}&`,
@@ -269,7 +268,7 @@ export class ScrumPageComponent
         `date=${this.isToday ? 'today' : this.scrumID}&`,
       ),
     );
-    console.log('changeDate =>', to, this.scrumDate);
+// console.log('changeDate =>', to, this.scrumDate);
   }
 
   public onScrumExpandChanged(memberId: string, isExpanded: boolean) {
@@ -367,12 +366,12 @@ export class ScrumPageComponent
 
   private setCurrentScrumIdFromUrl(params: ParamMap) {
     let id = params.get('date') || 'today';
-    console.log('setCurrentScrumIdFromUrl()', id);
+// console.log('setCurrentScrumIdFromUrl()', id);
     if (id === 'today') {
       this.isToday = true;
       const today = getToday();
       id = getMeetingIdFromDate(today);
-      console.log(`date: ${id}, today:`, today);
+// console.log(`date: ${id}, today:`, today);
     }
     this.setScrumId(id);
   }
@@ -385,7 +384,7 @@ export class ScrumPageComponent
   // }
 
   private scrumLoaded(id: string, scrum: IScrumDbo, from: string): void {
-    console.log(
+// console.log(
       `${from}: scrumLoaded(${id}: currentScrumId=${this.scrumID}`,
       scrum,
     );
@@ -405,7 +404,7 @@ export class ScrumPageComponent
         // } else {
         // 	this.setTotalElapsed();
         // }
-        console.log('this.scrum', this.scrum);
+// console.log('this.scrum', this.scrum);
         if (this.space?.dbo) {
           throw new Error('not implemented yet');
           // this.merge(this.scrum, undefined, this.team.dto.members);
@@ -422,7 +421,7 @@ export class ScrumPageComponent
             this.nextScrumID,
           );
         }
-        console.log(`mapped to current scrum ${id}:`, this.scrum);
+// console.log(`mapped to current scrum ${id}:`, this.scrum);
         break;
       case this.prevScrumID:
         // this.prevScrum = scrum || {...this.prevScrum, statuses: []};
@@ -430,10 +429,10 @@ export class ScrumPageComponent
           throw new Error('not implemented yet');
           // this.merge(this.scrum, undefined, this.team.dto.members);
         }
-        console.log(`mapped to previous scrum ${id}:`, this.scrum);
+// console.log(`mapped to previous scrum ${id}:`, this.scrum);
         break;
       default:
-        console.log(
+// console.log(
           `loaded scrum(${id}) not related to current(${this.scrumID}) or previous(${this.prevScrumID}) or next(${this.nextScrumID}):`,
           scrum,
         );
@@ -441,7 +440,7 @@ export class ScrumPageComponent
   }
 
   private subscribeScrum(teamId: string, scrumId: string, from: string) {
-    console.log(`${from}: subscribeScrum(space=${teamId}, scrumId=${scrumId})`);
+// console.log(`${from}: subscribeScrum(space=${teamId}, scrumId=${scrumId})`);
     if (this.scrumsById[scrumId]) {
       return;
     }
@@ -476,7 +475,7 @@ export class ScrumPageComponent
     prevScrum?: IScrumDbo,
     members?: ISpaceMemberInfo[],
   ): void {
-    console.log(
+// console.log(
       'ScrumPage.merge(),\n\tscrum:',
       scrum,
       '\n\tprevScrum:',
@@ -581,14 +580,14 @@ export class ScrumPageComponent
   // }
 
   private setTimer(teamId: string, scrumId: string): void {
-    console.log('ScrumPage.setTimer()');
+// console.log('ScrumPage.setTimer()');
     this.timer = this.timerFactory.getTimer(this.scrumService, teamId, scrumId);
     this.timer.onTick.subscribe(this.onTimerTicked);
   }
 
   private onTimerTicked = (timerState: ITimerState): void => {
     try {
-      console.log(
+// console.log(
         'ScrumPage.onTimerTicked() => elapsedSeconds:',
         timerState?.elapsedSeconds,
         timerState,
@@ -608,7 +607,7 @@ export class ScrumPageComponent
   };
 
   private setScrumId(id: string): void {
-    console.log(`setCurrentScrum(${id})`);
+// console.log(`setCurrentScrum(${id})`);
     if (id === this.scrumID) {
       return;
     }

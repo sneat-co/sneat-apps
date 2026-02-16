@@ -250,7 +250,7 @@ export class EnvDbPageComponent implements OnDestroy, OnInit {
         });
       },
     };
-    console.log('createTabulator()', this.gridElRef?.nativeElement, options);
+// console.log('createTabulator()', this.gridElRef?.nativeElement, options);
     if (this.gridElRef) {
       this.tabulator = new Tabulator(
         this.gridElRef?.nativeElement,

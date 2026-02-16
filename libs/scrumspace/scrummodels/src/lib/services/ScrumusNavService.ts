@@ -17,7 +17,7 @@ export class ScrumusNavService {
     space?: IRecord<ISpaceDbo>,
     retrospective?: IRecord<IRetrospective>,
   ): void {
-    console.log(
+// console.log(
       `navigateToRetroReview(date=${date}, space=${space?.id}), scrum:`,
       retrospective?.dbo,
     );
@@ -48,7 +48,7 @@ export class ScrumusNavService {
     scrum?: IRecord<IScrumDbo>,
     tab?: ScrumPageTab,
   ): void {
-    console.log(
+// console.log(
       `navigateToScrum(date=${date}, space=${space?.id}, tab=${tab}), scrum:`,
       scrum?.dbo,
     );

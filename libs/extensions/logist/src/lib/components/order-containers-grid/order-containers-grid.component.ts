@@ -55,7 +55,7 @@ export class OrderContainersGridComponent implements OnChanges {
       action: (e: Event, row: RowComponent) => {
         row.select();
         const data = row.getData() as IOrderContainerWithIndex;
-        console.log('Delete row', data);
+        // console.log('Delete row', data);
         const orderID = this.order?.id,
           spaceID = this.order?.space?.id;
         if (!orderID || !spaceID) {
@@ -159,7 +159,7 @@ export class OrderContainersGridComponent implements OnChanges {
   };
 
   protected readonly rowClick = (event: Event, row: unknown) => {
-    console.log('OrdersGridComponent.rowClick():', event, row);
+    // console.log('OrdersGridComponent.rowClick():', event, row);
     // 	if (!this.team) {
     // 		alert('No team context provided!');
     // 		return;

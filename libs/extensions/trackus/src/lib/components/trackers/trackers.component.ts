@@ -148,7 +148,7 @@ export class TrackersComponent extends SneatBaseComponent {
   private readonly processTrackusSpace = (
     trackusSpace: IIdAndOptionalDbo<ITrackusSpaceDbo>,
   ) => {
-    console.log('trackusSpace: ' + JSON.stringify(trackusSpace));
+// console.log('trackusSpace: ' + JSON.stringify(trackusSpace));
     const trackers =
       Object.entries(trackusSpace.dbo?.trackers || {}).map(([id, brief]) => {
         if ((id.startsWith('_') && !brief.title) || !brief.emoji) {
@@ -259,7 +259,7 @@ export class TrackersComponent extends SneatBaseComponent {
   @Output() public readonly goNewTracker = new EventEmitter<string>();
 
   protected openNewTracker(event: Event, category: string): void {
-    console.log('goNewTracker', category);
+// console.log('goNewTracker', category);
     event.stopPropagation();
     event.preventDefault();
     this.goNewTracker.emit(category);

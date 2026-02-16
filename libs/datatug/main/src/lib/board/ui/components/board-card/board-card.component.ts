@@ -79,7 +79,7 @@ export class BoardCardComponent implements OnChanges {
   }
 
   setTab(event: Event) {
-    console.log('setTab', event);
+// console.log('setTab', event);
     const ce = event as CustomEvent;
     this.boardCardTab.setTab(ce.detail.value as WidgetName);
     this.changeDetectorRef.markForCheck();

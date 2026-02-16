@@ -66,7 +66,7 @@ export class RetroMembersComponent implements OnChanges {
   public absents?: IMeetingMember[];
 
   public ngOnChanges(changes: SimpleChanges): void {
-    console.log('ngOnChanges', this.space, this.retrospective);
+    // console.log('ngOnChanges', this.space, this.retrospective);
     try {
       if (changes.retrospective) {
         const retrospective = this.retrospective?.dbo;

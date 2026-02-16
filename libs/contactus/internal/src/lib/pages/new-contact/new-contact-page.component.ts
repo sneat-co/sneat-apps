@@ -146,7 +146,7 @@ export class NewContactPageComponent
   };
 
   protected onContactChanged(contact: NewContactBaseDboAndSpaceRef): void {
-    console.log('onContactChanged', contact);
+    // console.log('onContactChanged', contact);
     this.$contact.set(contact);
   }
 }

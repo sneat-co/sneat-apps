@@ -86,7 +86,7 @@ export class SingleHappeningsListComponent
   }
 
   private applyFilter(): void {
-    console.log('applyFilter()', this.filter, this.happenings);
+    // console.log('applyFilter()', this.filter, this.happenings);
     const f = this.filter;
     this.happeningsMatchingFilter = this.happenings?.filter((h) =>
       isMatchingScheduleFilter(h, f),

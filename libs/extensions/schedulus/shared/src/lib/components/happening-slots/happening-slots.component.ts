@@ -164,7 +164,7 @@ export class HappeningSlotsComponent {
   }
 
   protected onHappeningChanged(happening: IHappeningContext): void {
-    console.log('HappeningSlotsComponent.onHappeningChanged()');
+// console.log('HappeningSlotsComponent.onHappeningChanged()');
     this.happeningChange.emit(happening);
   }
 
@@ -184,7 +184,7 @@ export class HappeningSlotsComponent {
   }
 
   protected showAddSlot(event: Event, params?: AddSlotParams): void {
-    console.log('RecurringSlotsComponent.showAddSlot(), params:', params);
+// console.log('RecurringSlotsComponent.showAddSlot(), params:', params);
     const happening = this.happening();
     this.happeningSlotModalService
       .editSingleHappeningSlot(event, happening)

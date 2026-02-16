@@ -149,7 +149,7 @@ export class ContactsSelectorComponent
   protected readonly $spaceRef = computeSpaceRefFromSpaceContext(this.$space);
   protected readonly $spaceID = computed(() => {
     const spaceID = this.$spaceRef().id;
-    console.log(
+// console.log(
       `ContactsSelectorComponent.$spaceID(spaceID=${spaceID})`,
       this.spaceIDChangesCount,
     );
@@ -161,7 +161,7 @@ export class ContactsSelectorComponent
   });
 
   private setupEffects(): void {
-    console.log('ContactsSelectorComponent.setupEffects()');
+// console.log('ContactsSelectorComponent.setupEffects()');
     this.destroyEffects();
     this.effects = [effect(() => this.onSpaceIDChanged())];
     // runInInjectionContext(this.injector, () => {
@@ -289,7 +289,7 @@ export class ContactsSelectorComponent
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    console.log('ContactsSelectorComponent.ngOnChanges', this.space);
+// console.log('ContactsSelectorComponent.ngOnChanges', this.space);
     if (changes['space']) {
       // we use @Input() due to modal not able to set signal property
       this.$space.set(this.space || { id: '' });
@@ -297,7 +297,7 @@ export class ContactsSelectorComponent
   }
 
   private watchContactBriefs(): void {
-    console.log('ContactsSelectorComponent.watchContactBriefs()');
+// console.log('ContactsSelectorComponent.watchContactBriefs()');
     const spaceID = this.$spaceID();
     this.contactBriefsSub?.unsubscribe();
     this.contactBriefsSub = this.contactusSpaceService
@@ -312,7 +312,7 @@ export class ContactsSelectorComponent
       )
       .subscribe((contacts) => {
         this.allContacts = contacts;
-        console.log(
+// console.log(
           'ContactSelectorComponent.watchContactBriefs() => contacts:',
           contacts,
         );
@@ -364,7 +364,7 @@ export class ContactsSelectorComponent
     this.contactItems = this.$contacts()
       ?.filter(removeExcluded(this.excludeContactIDs))
       .map(this.getChildItem);
-    console.log('ContactsSelectorComponent.contactItems:', this.contactItems);
+// console.log('ContactsSelectorComponent.contactItems:', this.contactItems);
     this.parentItems = this.parentContacts
       ?.filter(removeExcluded(this.excludeParentIDs))
       .map(this.getChildItem);
@@ -381,7 +381,7 @@ export class ContactsSelectorComponent
     // if (this.$contacts && !this.$contacts.length) {
     // 	this.contactTab = 'new';
     // }
-    console.log(
+// console.log(
       'setContacts',
       this.allContacts,
       this.contactRoleID,
@@ -416,7 +416,7 @@ export class ContactsSelectorComponent
   };
 
   protected onParentContactIDChanged(contactID: string): void {
-    console.log(
+// console.log(
       'ContactsSelectorComponent.onParentContactSelected()',
       contactID,
     );
@@ -451,7 +451,7 @@ export class ContactsSelectorComponent
   }
 
   private onParentContactChanged(contact?: IContactWithBriefAndSpace): void {
-    console.log('ContactsSelectorComponent.onParentContactChanged()', contact);
+// console.log('ContactsSelectorComponent.onParentContactChanged()', contact);
     this.$parentTab.set('existing');
     this.selectedParent = contact || undefined;
     this.parentContactID = contact?.id;
@@ -460,7 +460,7 @@ export class ContactsSelectorComponent
   }
 
   protected onContactSelected(contactID: string): void {
-    console.log('ContactsSelectorComponent.onContactSelected()', contactID);
+// console.log('ContactsSelectorComponent.onContactSelected()', contactID);
     const selectedContact = this.$contacts()?.find((c) => c.id === contactID);
     if (!selectedContact) {
       console.error('contact not found by ID', contactID, this.$contacts);
@@ -483,7 +483,7 @@ export class ContactsSelectorComponent
   protected readonly $isSubmitting = signal(false);
 
   protected async submitSelected(event: Event): Promise<void> {
-    console.log('ContactsSelectorComponent.ok()');
+// console.log('ContactsSelectorComponent.ok()');
 
     event.stopPropagation();
     event.preventDefault();
@@ -528,7 +528,7 @@ export class ContactsSelectorComponent
   // }
 
   protected emitOnSelected(contact?: IContactWithBriefAndSpace): void {
-    console.log('ContactSelectorComponent.emitOnSelected()', contact);
+// console.log('ContactSelectorComponent.emitOnSelected()', contact);
     if (this.onSelected) {
       this.onSelected(contact ? [contact] : undefined).catch(
         this.errorLogger.logErrorHandler('Failed to call onSelected callback'),
@@ -557,7 +557,7 @@ export class ContactsSelectorComponent
   >(undefined);
 
   protected switchToNewContact(args: IContactAddEventArgs): void {
-    console.log('switchToNewContact', args);
+// console.log('switchToNewContact', args);
     args.event.stopPropagation();
     args.event.preventDefault();
     this.$contactTab.set('new');
@@ -568,7 +568,7 @@ export class ContactsSelectorComponent
     event: Event,
     contact: IContactWithBrief,
   ): void => {
-    console.log('ContactsSelectorComponent.contactClicked()', contact);
+// console.log('ContactsSelectorComponent.contactClicked()', contact);
     event.preventDefault();
     event.stopPropagation();
     this.$contacts.update((contacts) =>
@@ -576,7 +576,7 @@ export class ContactsSelectorComponent
         c.id === contact.id ? { ...c, isChecked: !c.isChecked } : c,
       ),
     );
-    console.log(
+// console.log(
       'ContactsSelectorComponent.contactClicked() => $selectedContacts:',
       this.$selectedContacts(),
     );

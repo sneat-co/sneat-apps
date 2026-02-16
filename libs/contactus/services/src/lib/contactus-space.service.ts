@@ -12,7 +12,7 @@ export class ContactusSpaceService extends SpaceModuleService<IContactusSpaceDbo
   }
 
   public readonly watchContactBriefs = (spaceID: string) => {
-    console.log(`ContactusSpaceService.watchContactBriefs(${spaceID})`);
+    // console.log(`ContactusSpaceService.watchContactBriefs(${spaceID})`);
     return this.watchBriefs<IContactBrief>(
       spaceID,
       (dto) => dto?.contacts || {},

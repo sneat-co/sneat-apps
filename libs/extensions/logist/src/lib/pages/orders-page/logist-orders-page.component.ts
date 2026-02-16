@@ -64,7 +64,7 @@ export class LogistOrdersPageComponent extends SpaceBaseComponent {
   }
 
   protected onFilterChanged(filter: IOrdersFilter) {
-    console.log('onFilterChanged()', filter);
+// console.log('onFilterChanged()', filter);
     this.filter = filter;
     this.subscribeForOrders();
   }
@@ -82,7 +82,7 @@ export class LogistOrdersPageComponent extends SpaceBaseComponent {
         .pipe(takeUntil(this.destroyed$))
         .subscribe({
           next: (orders) => {
-            console.log(
+// console.log(
               'LogistOrdersPageComponent.subscribeForOrders() => orders:',
               orders,
             );

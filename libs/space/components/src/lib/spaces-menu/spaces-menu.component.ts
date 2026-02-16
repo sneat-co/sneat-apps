@@ -98,7 +98,7 @@ export class SpacesMenuComponent extends SneatBaseComponent {
   });
 
   private onUserStateChanged = (user: ISneatUserState): void => {
-    console.log('SpacesMenuComponent.onUserStateChanged', user);
+// console.log('SpacesMenuComponent.onUserStateChanged', user);
     this.$userID.set(user.user?.uid || '');
     if (!user?.record) {
       this.$userSpaces.set(undefined);

@@ -168,7 +168,7 @@ export class OrderContainerPointComponent implements OnChanges {
   }
 
   delete(event: Event): void {
-    console.log('ContainerPointComponent.delete()', event);
+    // console.log('ContainerPointComponent.delete()', event);
     const spaceID = this.space?.id;
     if (!spaceID) {
       throw new Error(

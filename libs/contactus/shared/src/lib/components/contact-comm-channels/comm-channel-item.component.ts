@@ -77,7 +77,7 @@ export class CommChannelItemComponent extends SneatBaseComponent {
   }
 
   protected deleteChannel(event: Event): void {
-    console.log('deleteChannel', event);
+    // console.log('deleteChannel', event);
     const channelID = this.$channel().id;
     if (!channelID) {
       throw new Error('Unable to delete channel without ID');
@@ -108,7 +108,7 @@ export class CommChannelItemComponent extends SneatBaseComponent {
   }
 
   protected saveChanges(event: Event): void {
-    console.log('saveChanges', event);
+    // console.log('saveChanges', event);
     const channelID = (this.channelID.value || '').trim();
     if (!channelID) {
       this.channelID.markAsTouched();
@@ -138,7 +138,7 @@ export class CommChannelItemComponent extends SneatBaseComponent {
   }
 
   protected onTypeChanged(event: CustomEvent): void {
-    console.log('onTypeChanged', event);
+    // console.log('onTypeChanged', event);
     const type = event.detail.value as 'private' | 'work';
     this.$saving.set(true);
     const request: IUpdateContactCommChannelRequest = {

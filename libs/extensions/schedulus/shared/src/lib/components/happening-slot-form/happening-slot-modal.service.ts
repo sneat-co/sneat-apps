@@ -23,7 +23,7 @@ export class HappeningSlotModalService {
     recurring?: EditRecurringSlotParams,
     slot?: IHappeningSlotWithID,
   ): Promise<void> {
-    console.log('editSingleHappeningSlot()', happening, recurring, slot);
+    // console.log('editSingleHappeningSlot()', happening, recurring, slot);
     event.stopPropagation();
     event.preventDefault();
     const space = happening.space;

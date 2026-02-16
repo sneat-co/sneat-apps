@@ -100,7 +100,7 @@ export class NewContactFormComponent
   }
 
   protected onContactChanged(contact: NewContactBaseDboAndSpaceRef): void {
-    console.log('onContactChanged', contact);
+    // console.log('onContactChanged', contact);
     this.contactChange.emit(contact as ContactIdAndDboWithSpaceRef);
   }
 }

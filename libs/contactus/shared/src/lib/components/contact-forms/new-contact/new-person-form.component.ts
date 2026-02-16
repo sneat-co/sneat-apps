@@ -144,7 +144,7 @@ export class NewPersonFormComponent
   private readonly onSelectGroupAndRole = (
     args: IContactAddEventArgs | undefined,
   ) => {
-    console.log('selectedGroupAndRole:', args);
+// console.log('selectedGroupAndRole:', args);
     if (args?.group?.id && args.group.id !== this.$fixedGroupID()) {
       this.$selectedContactGroup.set({ id: args.group.id });
     }
@@ -173,13 +173,13 @@ export class NewPersonFormComponent
   };
 
   private setupEffects(): void {
-    console.log('NewContactFormComponent.setupEffects()');
+// console.log('NewContactFormComponent.setupEffects()');
     effect(() => {
       this.creatingChange.emit(this.$creating());
     });
     effect(() => {
       const contactGroupID = this.$selectedContactGroupID();
-      console.log('effect for $selectedContactGroupID', contactGroupID);
+// console.log('effect for $selectedContactGroupID', contactGroupID);
       if (!contactGroupID) {
         return;
       }
@@ -189,7 +189,7 @@ export class NewPersonFormComponent
         .pipe(first(), this.takeUntilDestroyed())
         .subscribe({
           next: (contactGroup) => {
-            console.log(
+// console.log(
               'effect for $selectedContactGroupID loaded contactGroup:',
               contactGroup,
             );
@@ -262,7 +262,7 @@ export class NewPersonFormComponent
   protected onContactGroupChanged(
     contactGroup?: IIdAndDbo<IContactGroupDbo>,
   ): void {
-    console.log('onContactGroupChanged()', contactGroup);
+// console.log('onContactGroupChanged()', contactGroup);
     this.$selectedContactGroup.set(contactGroup);
   }
 
@@ -271,7 +271,7 @@ export class NewPersonFormComponent
       (r) => r.id === contactRoleID,
     );
     this.$selectedContactRole.set(contactRole);
-    console.log(
+// console.log(
       'onContactRoleIDChanged()',
       contactRoleID,
       this.$selectedContactRole,

@@ -168,12 +168,12 @@ export class StartEndDatetimeFormComponent implements OnChanges {
   }
 
   constructor() {
-    console.log('StartEndDatetimeFormComponent.constructor()');
+// console.log('StartEndDatetimeFormComponent.constructor()');
     this.endTime.disable();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('StartEndDatetimeFormComponent.ngOnChanges', changes);
+// console.log('StartEndDatetimeFormComponent.ngOnChanges', changes);
     if (changes['date']) {
       this.onDateChanged();
     }
@@ -185,7 +185,7 @@ export class StartEndDatetimeFormComponent implements OnChanges {
   }
 
   private onDateChanged(): void {
-    console.log(
+// console.log(
       'StartEndDatetimeFormComponent.onDateChanged()',
       'date:',
       this.date,
@@ -197,16 +197,16 @@ export class StartEndDatetimeFormComponent implements OnChanges {
       if (!this.startDate.dirty) {
         const date = this.date || new Date().toISOString().substring(0, 10);
         this.startDate.setValue(date);
-        console.log('startDate.setValue()', this.startDate.value);
+// console.log('startDate.setValue()', this.startDate.value);
       }
     } else {
       this.startDate.setValue('');
-      console.log('startDate.setValue() to empty string');
+// console.log('startDate.setValue() to empty string');
     }
   }
 
   private onTimingChange(): void {
-    console.log('StartEndDatetimeFormComponent.onTimingChange', this.timing);
+// console.log('StartEndDatetimeFormComponent.onTimingChange', this.timing);
     // if (this.happeningSlot.repeats === 'UNKNOWN') {
     // 	this.setRepeatsBasedOnHappeningType();
     // }
@@ -214,7 +214,7 @@ export class StartEndDatetimeFormComponent implements OnChanges {
       const startDate = this.timing.start?.date;
       if (startDate) {
         this.startDate.setValue(startDate);
-        console.log('startDate.setValue()', this.startDate.value);
+// console.log('startDate.setValue()', this.startDate.value);
       }
     }
     if (!this.startTime.dirty) {
@@ -261,7 +261,7 @@ export class StartEndDatetimeFormComponent implements OnChanges {
   }
 
   protected addToStart(v: { days?: number; hours?: number }): void {
-    console.log('addToStart()', v, this.startDate.value, this.startTime.value);
+// console.log('addToStart()', v, this.startDate.value, this.startTime.value);
     let d: Date | undefined = undefined;
     try {
       let startDate = this.startDate.value || '';
@@ -281,7 +281,7 @@ export class StartEndDatetimeFormComponent implements OnChanges {
           start: { ...this.timing.start, date: startDate },
         };
         this.startDate.setValue(startDate);
-        console.log('startDate.setValue()', this.startDate.value);
+// console.log('startDate.setValue()', this.startDate.value);
       }
       if (this.startTime.value) {
         startTime = dateToTimeOnlyStr(d);
@@ -315,7 +315,7 @@ export class StartEndDatetimeFormComponent implements OnChanges {
   // }
 
   protected setStartDate(event: Event, code: 'today' | 'tomorrow'): void {
-    console.log('setStartDate()', event);
+// console.log('setStartDate()', event);
     const today = new Date();
     let d: Date;
     switch (code) {
@@ -330,7 +330,7 @@ export class StartEndDatetimeFormComponent implements OnChanges {
     if (d) {
       const date = dateToIso(d);
       this.startDate.setValue(date);
-      console.log('startDate.setValue()', this.startDate.value);
+// console.log('startDate.setValue()', this.startDate.value);
       this.timing = {
         ...this.timing,
         start: { ...this.timing.start, date: date },
@@ -341,7 +341,7 @@ export class StartEndDatetimeFormComponent implements OnChanges {
 
   private emitTimingChanged(from: string): void {
     if (!from) {
-      console.log(
+// console.log(
         `StartEndDatetimeFormComponent.emitSlotChanged(from=${from})`,
         this.timing,
       );
@@ -367,7 +367,7 @@ export class StartEndDatetimeFormComponent implements OnChanges {
   }
 
   protected onStartDateChanged(): void {
-    console.log(
+// console.log(
       'StartEndDatetimeFormComponent.onStartDateChanged()',
       this.startDate.value,
     );
@@ -375,7 +375,7 @@ export class StartEndDatetimeFormComponent implements OnChanges {
     if (startDate.includes('T')) {
       startDate = startDate.split('T')[0];
       this.startDate.setValue(startDate);
-      console.log('startDate.setValue()', this.startDate.value);
+// console.log('startDate.setValue()', this.startDate.value);
     }
     const slot = this.timing;
     this.timing = {
@@ -410,7 +410,7 @@ export class StartEndDatetimeFormComponent implements OnChanges {
         start: { ...this.timing.start, date: this.startDate.value },
       };
     }
-    console.log(
+// console.log(
       'StartEndDatetimeFormComponent.onStartTimeChanged() =>',
       this.timing,
     );
@@ -432,13 +432,13 @@ export class StartEndDatetimeFormComponent implements OnChanges {
   }
 
   private setEndTime(): void {
-    console.log('setEndTime()');
+// console.log('setEndTime()');
     const startTime = this.startTime.value as string;
     const startHour = Number(startTime.substring(0, 2));
     const startMin = Number(startTime.substring(3, 5));
 
     const duration = Number(this.duration.value);
-    console.log('starts:', startHour, startMin, 'duration:', duration);
+// console.log('starts:', startHour, startMin, 'duration:', duration);
 
     const durationHours = ~~(duration / 60);
     const durationMin = duration % 60;
@@ -452,7 +452,7 @@ export class StartEndDatetimeFormComponent implements OnChanges {
     const endMin = toStr(startMin + durationMin);
     const endTime = `${endHour}:${endMin}`;
     this.timing = { ...this.timing, end: { time: endTime } };
-    console.log(
+// console.log(
       'StartEndDatetimeFormComponent.setEndTime() => endTime:',
       endTime,
     );

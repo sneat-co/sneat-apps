@@ -120,7 +120,7 @@ export class AssetLiabilitiesComponent {
 							.getByAssetId(this.assetDto.id)
 							.subscribe((selectResult) => {
 								const liabilities = selectResult.values;
-								console.log('liabilities:', liabilities);
+// console.log('liabilities:', liabilities);
 								this.liabilitiesByServiceType =
 									this.liabilitiesByServiceType?.filter(
 										(service) =>
@@ -195,7 +195,7 @@ export class AssetLiabilitiesComponent {
   }
 
   async addService(type?: LiabilityServiceType): Promise<void> {
-    console.log(`addService(${type})`);
+// console.log(`addService(${type})`);
     if (type) {
       this.serviceAdded.emit({ type });
     } else {
@@ -221,7 +221,7 @@ export class AssetLiabilitiesComponent {
           .onDidDismiss()
           .then((result) => {
             if (result.role === 'select') {
-              console.log('selected:', result);
+// console.log('selected:', result);
               this.serviceAdded.emit({
                 type: result.data.item.value as LiabilityServiceType,
               });

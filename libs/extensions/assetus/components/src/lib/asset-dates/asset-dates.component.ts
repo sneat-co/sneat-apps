@@ -21,7 +21,7 @@ export class AssetDatesComponent {
   private assetDto?: IAssetDboBase;
 
   @Input() set asset(v: IAssetDboBase) {
-    console.log('AssetDatesComponent => asset:', v);
+// console.log('AssetDatesComponent => asset:', v);
     this.assetDto = v;
     switch (v.category) {
       case 'vehicle': {
@@ -73,7 +73,7 @@ export class AssetDatesComponent {
   }
 
   onChange(name: string, $event: CustomEvent): void {
-    console.log(`AssetDatesComponent.onChange ${name}: `, $event);
+// console.log(`AssetDatesComponent.onChange ${name}: `, $event);
     const value = $event.detail.value;
     this.changed.emit({ name, value });
     let title: string;

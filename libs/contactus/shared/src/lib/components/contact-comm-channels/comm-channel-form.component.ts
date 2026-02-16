@@ -82,7 +82,7 @@ export class CommChannelFormComponent extends SneatBaseComponent {
   protected addNewChannel(event: Event): void {
     event.stopPropagation();
     event.preventDefault();
-    console.log('addNewChannel');
+    // console.log('addNewChannel');
     const contact = this.$contact();
     if (!contact.id) {
       return;

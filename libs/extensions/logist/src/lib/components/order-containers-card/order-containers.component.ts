@@ -80,7 +80,7 @@ export class OrderContainersComponent implements OnChanges {
   // }
 
   onContainerSelected(container: IOrderContainer) {
-    console.log('OrderContainersComponent.onContainerSelected():', container);
+    // console.log('OrderContainersComponent.onContainerSelected():', container);
     this.selectedContainer = container;
   }
 

@@ -45,7 +45,7 @@ export class BoardComponent {
   @Input() boardContext?: IBoardContext;
 
   async newCard() {
-    console.log('newCard()');
+// console.log('newCard()');
     const modal = await this.modalCtrl.create({
       component: NewCardDialogComponent,
     });

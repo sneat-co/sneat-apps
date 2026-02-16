@@ -94,7 +94,7 @@ export class SneatCardListComponent {
     event.stopPropagation();
     this.mode = 'add';
     setTimeout(() => {
-      console.log(this.addInput);
+      // console.log(this.addInput);
       if (this.addInput) {
         this.addInput
           ?.setFocus()

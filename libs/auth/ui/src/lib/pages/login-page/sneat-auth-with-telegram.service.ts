@@ -42,11 +42,11 @@ export class SneatAuthWithTelegramService {
       tgAuthData,
     ).subscribe({
       next: (response) => {
-        console.log('loginWithTelegram() response:', response);
+// console.log('loginWithTelegram() response:', response);
         this.authService
           .signInWithToken(response.token)
           .then(() => {
-            console.log('loginWithTelegram() signed in');
+// console.log('loginWithTelegram() signed in');
           })
           .catch(
             this.errorLogger.logErrorHandler(

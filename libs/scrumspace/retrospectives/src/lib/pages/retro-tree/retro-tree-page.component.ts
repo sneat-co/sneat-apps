@@ -187,7 +187,7 @@ export class RetroTreePageComponent extends SpaceBaseComponent {
 
   public itemMoved(item: unknown /*IDraggedTreeItem<IRetroItem>*/): void {
     const itm = item as { node: { id: string }; dropTo: unknown };
-    console.log(`itemMoved: ${itm.node?.id}`, itm.dropTo);
+    // console.log(`itemMoved: ${itm.node?.id}`, itm.dropTo);
   }
 
   public isAllowedToAddItems(): boolean {

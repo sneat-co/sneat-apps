@@ -68,7 +68,7 @@ export class OrderTruckerComponent implements OnChanges {
   deleting = false;
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('OrderTruckerComponent.ngOnChanges', changes);
+    // console.log('OrderTruckerComponent.ngOnChanges', changes);
     if (changes['order'] || changes['trucker']) {
       const contactID = this.trucker?.contactID;
       this.orderSegments = getOrderSegments(
@@ -104,7 +104,7 @@ export class OrderTruckerComponent implements OnChanges {
     this.deleting = true;
     this.ordersService.deleteCounterparty(request).subscribe({
       next: () => {
-        console.log('deleted trucker');
+        // console.log('deleted trucker');
       },
       error: (err) => {
         this.errorLogger.logError(err, 'Failed to delete trucker');

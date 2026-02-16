@@ -17,7 +17,7 @@ export class MovieService implements IMovieService {
     dto: IMovieDbo,
     // tx?: IRxReadwriteTransaction<ListusAppSchema>,
   ): Observable<IMovieDbo> {
-    console.log('MovieService.addCommuneItem()', dto);
+// console.log('MovieService.addCommuneItem()', dto);
     throw new Error('Not implemented');
   }
 }

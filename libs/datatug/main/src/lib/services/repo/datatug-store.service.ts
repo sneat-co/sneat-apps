@@ -26,8 +26,7 @@ export class DatatugStoreService {
 
   constructor() {
     const datatugUserService = this.datatugUserService;
-
-    console.log('StoreService.constructor()');
+// console.log('StoreService.constructor()');
     datatugUserService.datatugUserState.subscribe({
       next: (datatugUserState) => {
         this.datatugUserState = datatugUserState;
@@ -36,7 +35,7 @@ export class DatatugStoreService {
   }
 
   public getProjects(storeId: string): Observable<IProjectBase[]> {
-    console.log('getProjects', storeId);
+// console.log('getProjects', storeId);
     if (!storeId) {
       return throwError(() => 'Parameter "storeId" is required');
     }
@@ -77,7 +76,7 @@ export const recordsetToGridDef = (
   recordset: IRecordset,
   hideColumns?: string[],
 ): IGridDef | undefined => {
-  console.log('recordsetToGridDef', recordset, hideColumns);
+// console.log('recordsetToGridDef', recordset, hideColumns);
   if (!recordset.result) {
     return undefined;
   }
@@ -118,6 +117,6 @@ export const recordsetToGridDef = (
     columns,
     rows: recordset.result.rows?.map((row) => row.reduce(reducer, {})),
   };
-  console.log('gridDef', gridDef);
+// console.log('gridDef', gridDef);
   return gridDef;
 };

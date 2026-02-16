@@ -106,7 +106,7 @@ export class EntityPageComponent implements OnDestroy {
         )
         .subscribe({
           next: (entity) => {
-            console.log('entity', entity);
+// console.log('entity', entity);
             this.projEntity = entity;
             this.entity = entity.dbo; // TODO: workaround cast
             const sourcesLen = entity.dbo?.options?.sources?.length;
@@ -130,7 +130,7 @@ export class EntityPageComponent implements OnDestroy {
                 .subscribe({
                   next: (rows) => {
                     this.sourceData = rows;
-                    console.log('sourceData:', rows);
+// console.log('sourceData:', rows);
                     this.sourceCols = [
                       { field: 'region', dbType: 'NVARCHAR', title: 'region' },
                       {

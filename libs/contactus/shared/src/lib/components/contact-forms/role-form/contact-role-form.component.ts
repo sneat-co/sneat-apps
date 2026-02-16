@@ -37,7 +37,7 @@ export class ContactRoleFormComponent extends SneatBaseComponent {
   protected $contactGroup = computed(() => {
     const id = this.$contactGroupID();
     const groups = this.$groups();
-    console.log(`ContactRoleFormComponent.$contactGroup(id=${id})`, groups);
+// console.log(`ContactRoleFormComponent.$contactGroup(id=${id})`, groups);
     const group = groups?.find((g) => g.id === id);
     this.contactGroupChange.emit(group);
     return group;
@@ -102,7 +102,7 @@ export class ContactRoleFormComponent extends SneatBaseComponent {
       .pipe(this.takeUntilDestroyed())
       .subscribe({
         next: (groups) => {
-          console.log('ContactRoleFormComponent loaded groups:', groups);
+// console.log('ContactRoleFormComponent loaded groups:', groups);
           this.$groups.set(groups);
         },
       });

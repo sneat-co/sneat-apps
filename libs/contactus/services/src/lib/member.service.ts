@@ -16,7 +16,7 @@ export class MemberService extends ContactService {
     request: IAcceptPersonalInviteRequest,
     firebaseToken: string,
   ): Observable<IMemberBrief> {
-    console.log('MemberService.acceptPersonalInvite()');
+    // console.log('MemberService.acceptPersonalInvite()');
     if (firebaseToken) {
       this.sneatApiService.setApiAuthToken(firebaseToken);
     }
@@ -26,7 +26,7 @@ export class MemberService extends ContactService {
   public createMember(
     request: ICreateSpaceMemberRequest,
   ): Observable<IAddSpaceMemberResponse> {
-    console.log(`MemberService.addMember()`, request);
+    // console.log(`MemberService.addMember()`, request);
     if (request.names) {
       request = { ...request, names: trimNames(request.names) };
     }

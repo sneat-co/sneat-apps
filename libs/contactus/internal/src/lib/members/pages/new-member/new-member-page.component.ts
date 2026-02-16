@@ -99,7 +99,7 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
     this.trackFirstSpaceTypeChanged();
     this.route.queryParams.subscribe((params) => {
       const group = params['group'];
-      console.log('group', group);
+// console.log('group', group);
       const setContactTypeAndAgeGroup = (
         contact: NewContactBaseDboAndSpaceRef,
         contactType: ContactType,
@@ -158,7 +158,7 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
   protected contactusSpace?: IContactusSpaceDboAndID;
 
   private readonly trackFirstSpaceTypeChanged = (): void => {
-    console.log('NewMemberPageComponent.trackFirstSpaceTypeChanged()');
+// console.log('NewMemberPageComponent.trackFirstSpaceTypeChanged()');
     try {
       this.spaceTypeChanged$
         .pipe(
@@ -168,7 +168,7 @@ export class NewMemberPageComponent extends SpacePageBaseComponent {
         )
         .subscribe({
           next: (spaceType) => {
-            console.log(
+// console.log(
               'NewMemberPageComponent: spaceTypeChanged$ =>',
               spaceType,
             );

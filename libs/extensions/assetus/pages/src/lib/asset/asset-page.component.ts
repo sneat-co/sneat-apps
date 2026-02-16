@@ -99,7 +99,7 @@ export class AssetPageComponent extends AssetBasePage {
   }
 
   public segmentChanged(ev: CustomEvent): void {
-    console.log('Segment changed', ev);
+// console.log('Segment changed', ev);
     this.segment = ev.detail.value;
   }
 
@@ -112,7 +112,7 @@ export class AssetPageComponent extends AssetBasePage {
   }
 
   addService(type: LiabilityServiceType): void {
-    console.log('AssetPage.addService:', type);
+// console.log('AssetPage.addService:', type);
     if (!this.asset) {
       throw new Error('!this.asset');
     }

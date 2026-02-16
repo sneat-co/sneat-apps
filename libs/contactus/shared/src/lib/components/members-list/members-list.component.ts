@@ -135,7 +135,7 @@ export class MembersListComponent extends WithSpaceInput {
   }
 
   public goMember(member?: IContactWithBrief): boolean {
-    console.log('MembersListComponent.goMember()', member);
+// console.log('MembersListComponent.goMember()', member);
     if (!this.$space()) {
       this.errorLogger.logError(
         'Can not navigate to space member without space context',
@@ -153,7 +153,7 @@ export class MembersListComponent extends WithSpaceInput {
   }
 
   public goSchedule(event: Event, contact: IContactWithBrief) {
-    console.log('MembersListComponent.goSchedule()');
+// console.log('MembersListComponent.goSchedule()');
     event.stopPropagation();
     event.preventDefault();
     const space = this.$space();
@@ -186,7 +186,7 @@ export class MembersListComponent extends WithSpaceInput {
           if (spaceID !== space?.id) {
             return;
           }
-          console.log('updated space:', space);
+// console.log('updated space:', space);
           if (this.$selfRemove()) {
             this.selfRemoved.emit();
           }
@@ -210,7 +210,7 @@ export class MembersListComponent extends WithSpaceInput {
     event: Event,
     member: IContactWithBrief,
   ): Promise<void> {
-    console.log('showInviteModal()', event, member);
+// console.log('showInviteModal()', event, member);
     event.stopPropagation();
     event.preventDefault();
     const modal = await this.modalController.create({

@@ -40,7 +40,7 @@ export class OrderRouteCardComponent {
   }
 
   onTransitPointChanged(point: ITransitPoint): void {
-    console.log('OrderRouteCardComponent.onTransitPointChanged()', point);
+    // console.log('OrderRouteCardComponent.onTransitPointChanged()', point);
     let order = this.order;
     if (!order?.dbo) {
       return;

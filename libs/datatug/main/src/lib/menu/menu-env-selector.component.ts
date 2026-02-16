@@ -31,11 +31,11 @@ export class MenuEnvSelectorComponent {
   }
 
   switchEnv(event: CustomEvent): void {
-    console.log('switchEnv', event);
+    // console.log('switchEnv', event);
     try {
       const envId = event.detail.value as string;
       if (envId !== this.currentEnvId) {
-        console.log('switchEnv', event);
+        // console.log('switchEnv', event);
         // const env = this.currentProject.environments.find(e => e.id === value);
         this.datatugNavContextService.setCurrentEnvironment(envId);
         if (this.project?.ref) {

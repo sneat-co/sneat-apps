@@ -125,7 +125,7 @@ export class ContainerSegmentComponent implements OnChanges {
   }
 
   onDepartDateChanged($event: Event): void {
-    console.log('onDepartDateChanged', $event);
+// console.log('onDepartDateChanged', $event);
     if (
       this.departDate.value &&
       (!this.arriveDate.value || this.arriveDate.value < this.departDate.value)
@@ -135,7 +135,7 @@ export class ContainerSegmentComponent implements OnChanges {
   }
 
   onArriveDateChanged($event: Event): void {
-    console.log('onArriveDateChanged', $event);
+// console.log('onArriveDateChanged', $event);
     if (
       this.departDate.value &&
       this.arriveDate.value &&
@@ -206,7 +206,7 @@ export class ContainerSegmentComponent implements OnChanges {
   }
 
   saveChanges(event: Event): void {
-    console.log('saveChanges', event);
+// console.log('saveChanges', event);
     if (!this.order || !this.fromPoint) {
       return;
     }
@@ -222,7 +222,7 @@ export class ContainerSegmentComponent implements OnChanges {
     this.form.disable();
     this.orderService.updateContainerPoint(request).subscribe({
       next: () => {
-        console.log('updateContainerPoint success');
+// console.log('updateContainerPoint success');
         this.form.markAsPristine();
       },
       error: (err) => {
@@ -232,7 +232,7 @@ export class ContainerSegmentComponent implements OnChanges {
         );
       },
       complete: () => {
-        console.log('updateContainerPoint complete');
+// console.log('updateContainerPoint complete');
         this.form.enable();
         this.saving = false;
         this.changedDetectorRef.markForCheck();

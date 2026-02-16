@@ -25,7 +25,7 @@ export class NavService {
     inject<IAnalyticsService>(AnalyticsService);
 
   public navigateToSpaces(animationDirection?: 'forward' | 'back'): void {
-    console.log('navigateToTeams()');
+// console.log('navigateToTeams()');
     this.analyticsService.logEvent('navigateToTeams');
     this.navController
       .navigateRoot('spaces', { animationDirection })
@@ -39,7 +39,7 @@ export class NavService {
     queryParams?: Params;
     fragment?: string;
   }): void {
-    console.log('navigateToLogin()', options);
+// console.log('navigateToLogin()', options);
     this.analyticsService.logEvent('navigateToLogin', {
       returnTo: options?.returnTo,
     });
@@ -83,7 +83,7 @@ export class NavService {
     space: ISpaceContext,
     memberInfo: IIdAndBrief<IMemberBrief>,
   ): void {
-    console.log(
+// console.log(
       `navigateToMember(team.id=${space.id}, memberInfo.id=${memberInfo.id})`,
     );
     const id = `${space.id}:${memberInfo.id}`;
@@ -152,7 +152,7 @@ export class NavService {
     navOptions: NavigationOptions,
     event: { name: string; params?: Record<string, unknown> },
   ): void {
-    console.log('navForward()', event.name, event.params);
+// console.log('navForward()', event.name, event.params);
     navController = navController || this.navController;
     this.analyticsService.logEvent(event.name, event.params);
     navController

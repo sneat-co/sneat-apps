@@ -18,7 +18,7 @@ export class PeriodSegmentComponent {
   @Output() changed = new EventEmitter<Period>();
 
   segmentChanged(ev: CustomEvent): void {
-    console.log('period segment changed', ev.detail);
+    // console.log('period segment changed', ev.detail);
     this.period = ev.detail.value;
     this.changed.emit(this.period);
   }

@@ -100,7 +100,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
   }
 
   addCounterparty(event: Event): void {
-    console.log('addCounterparty(), event:', event);
+// console.log('addCounterparty(), event:', event);
     event.stopPropagation();
     event.preventDefault();
     const space = this.space;
@@ -126,7 +126,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
     this.contactSelectorService
       .selectSingleInModal(selectorOptions)
       .then((contact) => {
-        console.log(
+// console.log(
           'OrderCounterpartiesCardComponent.openContactSelector() contact:',
           contact,
         );
@@ -164,7 +164,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
         };
         this.ordersService.addShippingPoint(space, request).subscribe({
           next: () => {
-            console.log('added shipping point added to order');
+// console.log('added shipping point added to order');
           },
           error: (e) => {
             this.errorLogger.logError(
@@ -201,7 +201,7 @@ export class OrderCounterpartiesComponent implements OnChanges {
     this.deleting.push(counterparty);
     this.ordersService.deleteCounterparty(request).subscribe({
       next: () => {
-        console.log('deleted counterparty');
+// console.log('deleted counterparty');
       },
       error: this.errorLogger.logErrorHandler('failed to delete counterparty'),
     });

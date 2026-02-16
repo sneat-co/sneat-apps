@@ -5,7 +5,7 @@ import {
 } from '@angular/platform-browser-dynamic/testing';
 
 export default function setup() {
-  console.log('Vitest Global Setup: Initializing Angular Test Environment');
+  // console.log('Vitest Global Setup: Initializing Angular Test Environment');
   try {
     TestBed.initTestEnvironment(
       BrowserDynamicTestingModule,

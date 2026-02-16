@@ -60,9 +60,9 @@ export class RadioGroupToSelectComponent implements ControlValueAccessor {
   }
 
   registerOnChange(fn: (v: unknown) => void): void {
-    console.log('registerOnChange', fn);
+// console.log('registerOnChange', fn);
     this.onChange = (v: unknown) => {
-      console.log('changed', v, this.value);
+// console.log('changed', v, this.value);
       fn(v);
     };
   }

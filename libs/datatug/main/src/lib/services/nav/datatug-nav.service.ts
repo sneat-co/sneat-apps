@@ -52,7 +52,7 @@ export class DatatugNavService {
   }
 
   goProject(project?: IProjectContext, page?: ProjectTopLevelPage): void {
-    console.log('DatatugNavService.goProject()', project, page);
+    // console.log('DatatugNavService.goProject()', project, page);
     const storeRef: IStoreRef | undefined = project?.store?.ref;
     const storeId: string =
       storeRef?.id || project?.ref?.storeId || storeRef?.type || '';
@@ -110,7 +110,7 @@ export class DatatugNavService {
     query: IQueryDef,
     action?: 'execute' | 'edit',
   ): void {
-    console.log('goQuery', query.id);
+    // console.log('goQuery', query.id);
     const url = this.projectPageUrl(project.ref, 'query');
     this.navForward(
       url,
@@ -196,7 +196,7 @@ export class DatatugNavService {
     errMessage: string,
     options?: NavigationOptions,
   ): void {
-    console.log('navRoot', url);
+    // console.log('navRoot', url);
     this.nav
       .navigateRoot(url, options)
       .catch((err) => this.errorLogger.logError(err, errMessage));
@@ -207,7 +207,7 @@ export class DatatugNavService {
     options: NavigationOptions,
     errMessage: string,
   ): void {
-    console.log('navForward()', url, options);
+    // console.log('navForward()', url, options);
     this.nav
       .navigateForward(url, options)
       .catch(this.errorLogger.logErrorHandler(errMessage));

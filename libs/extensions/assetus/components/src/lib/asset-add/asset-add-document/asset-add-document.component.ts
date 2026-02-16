@@ -101,7 +101,7 @@ export class AssetAddDocumentComponent
   }
 
   protected onAssetChanged(asset: IAssetContext): void {
-    console.log('onAssetChanged', asset, this.documentAsset);
+// console.log('onAssetChanged', asset, this.documentAsset);
   }
 
   protected onVehicleTypeChanged(): void {
@@ -125,7 +125,7 @@ export class AssetAddDocumentComponent
   }
 
   protected submitDocumentForm(): void {
-    console.log('submitDocumentForm', this.documentAsset);
+// console.log('submitDocumentForm', this.documentAsset);
     if (!this.space) {
       throw 'no team context';
     }

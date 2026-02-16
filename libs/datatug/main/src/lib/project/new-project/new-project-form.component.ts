@@ -73,7 +73,7 @@ export class NewProjectFormComponent implements ViewDidEnter {
   }
 
   create(): void {
-    console.log('NewProjectFormComponent.create()');
+// console.log('NewProjectFormComponent.create()');
     this.isCreating = true;
     const storeId = 'firestore';
     this.projectService
@@ -81,7 +81,7 @@ export class NewProjectFormComponent implements ViewDidEnter {
       .subscribe({
         next: (projectId) => {
           const m = 'New project ID: ' + projectId;
-          console.log(m);
+// console.log(m);
           this.popoverController
             .dismiss()
             .catch(

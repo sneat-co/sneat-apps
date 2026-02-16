@@ -61,7 +61,7 @@ export class CalendarDayCardComponent
 
   @Input() set activeDayPlus(value: number) {
     this.shiftDays = value;
-    console.log('set activeDayPlus()', value, 'shiftDays=', this.shiftDays);
+    // console.log('set activeDayPlus()', value, 'shiftDays=', this.shiftDays);
   }
 
   public constructor() {

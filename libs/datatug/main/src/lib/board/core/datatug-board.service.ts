@@ -45,7 +45,7 @@ export class DatatugBoardService {
   }
 
   createNewBoard(request: CreateNamedRequest): Observable<IProjBoard> {
-    console.log('BoardService.createNewBoard()', request);
+// console.log('BoardService.createNewBoard()', request);
     const { projectRef } = request;
     const service = this.sneatApiServiceFactory.getSneatApiService(
       projectRef.storeId,

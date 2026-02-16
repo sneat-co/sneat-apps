@@ -55,7 +55,7 @@ export class MenuProjectSelectorComponent implements OnChanges {
   }
 
   private setProject = (project: IProjectContext): void => {
-    console.log('MenuProjectSelectorComponent.setProject()', project);
+// console.log('MenuProjectSelectorComponent.setProject()', project);
     this.project = project;
     this.currentProjectId = project?.ref?.projectId;
   };
@@ -82,9 +82,9 @@ export class MenuProjectSelectorComponent implements OnChanges {
       if (!projectId) {
         return;
       }
-      console.log('DatatugMenuComponent.switchProject', projectId);
+// console.log('DatatugMenuComponent.switchProject', projectId);
       if (!this.currentStoreId) {
-        console.log('project changed but there is no store');
+// console.log('project changed but there is no store');
         return;
       }
       const brief = this.projects?.find((p) => p.id === projectId);

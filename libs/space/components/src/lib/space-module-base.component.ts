@@ -22,7 +22,7 @@ export abstract class SpaceModuleBaseComponent<
       .pipe(takeUntil(this.spaceIDChanged$))
       .subscribe({
         next: (o) => {
-          console.log('spaceModuleDto loaded', o.dbo);
+// console.log('spaceModuleDto loaded', o.dbo);
           this.spaceModuleDbo$.next(o.dbo);
           this.onSpaceModuleDboChanged(o.dbo || null);
         },
@@ -33,6 +33,6 @@ export abstract class SpaceModuleBaseComponent<
   }
 
   protected onSpaceModuleDboChanged(dbo: Dbo | null) {
-    console.log(`${this.className}.onSpaceModuleDtoChanged()`, dbo);
+// console.log(`${this.className}.onSpaceModuleDtoChanged()`, dbo);
   }
 }

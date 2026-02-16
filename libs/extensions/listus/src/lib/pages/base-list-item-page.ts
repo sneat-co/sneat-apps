@@ -48,10 +48,10 @@ export abstract class BaseListItemPage extends BaseListPage {
 
   // NO_tslint:disable-next-line:prefer-function-over-method
   protected onQueryParamsChanged(queryParams: ParamMap): void {
-    console.log('BaseListItemPage.onQueryParamsChanged', queryParams);
+// console.log('BaseListItemPage.onQueryParamsChanged', queryParams);
   }
 
   protected onListItemInfoChanged(listItemInfo?: IListItemBrief): void {
-    console.log('BaseListItemPage.onListItemInfoChanged', listItemInfo);
+// console.log('BaseListItemPage.onListItemInfoChanged', listItemInfo);
   }
 }

@@ -21,7 +21,7 @@ export class CalendarDayService {
     const afs = this.afs;
     const sneatApiService = inject(SneatApiService);
     const injector = inject(Injector);
-    console.log('CalendarDayService.constructor()');
+// console.log('CalendarDayService.constructor()');
     this.spaceItemService = new ModuleSpaceItemService(
       injector,
       'calendarium',
@@ -32,14 +32,14 @@ export class CalendarDayService {
   }
 
   public watchSpaceDay(space: ISpaceContext, dateID: string) {
-    console.log(
+// console.log(
       `CalendarDayService.watchSpaceDay(space={id=${space.id}, dateID=${dateID})`,
     );
     return this.spaceItemService
       .watchSpaceItemByIdWithSpaceRef(space, dateID)
       .pipe(
         tap((scheduleDay) =>
-          console.log(
+// console.log(
             'ScheduleDayService.watchTeamDay() => scheduleDay',
             scheduleDay,
             scheduleDay.dbo,

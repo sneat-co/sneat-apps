@@ -15,7 +15,7 @@ export class UserRequiredFieldsService {
       modal
         .onDidDismiss()
         .then((value) => {
-          console.log(
+// console.log(
             'UserRequiredFieldsService.open(): modal dismissed:',
             value,
           );

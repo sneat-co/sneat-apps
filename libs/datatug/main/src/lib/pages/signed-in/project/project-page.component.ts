@@ -106,8 +106,7 @@ export class ProjectPageComponent
 
   constructor() {
     const route = this.route;
-
-    console.log(
+// console.log(
       'ProjectPageComponent.constructor()',
       route?.snapshot?.paramMap,
     );
@@ -121,7 +120,7 @@ export class ProjectPageComponent
   }
 
   private setProjRef = (ref: IProjectRef) => {
-    console.log('ProjectPageComponent.setProjRef()', ref);
+// console.log('ProjectPageComponent.setProjRef()', ref);
     try {
       if (ref.projectId === this.project?.ref?.projectId) {
         this.project = { ref, store: { ref: parseStoreRef(ref.storeId) } };
@@ -159,11 +158,11 @@ export class ProjectPageComponent
   }
 
   ngOnInit() {
-    console.log('ProjectPageComponent.ngOnInit()');
+// console.log('ProjectPageComponent.ngOnInit()');
   }
 
   ngOnDestroy(): void {
-    console.log('ProjectPageComponent.ngOnDestroy()');
+// console.log('ProjectPageComponent.ngOnDestroy()');
     this.destroyed.next(true);
     this.destroyed.complete();
   }
@@ -184,7 +183,7 @@ export class ProjectPageComponent
 
   // noinspection JSUnusedGlobalSymbols
   protected goProjFolder(projItemType: ProjectItemType): void {
-    console.log('goProjFolder()', projItemType, this.project?.ref);
+// console.log('goProjFolder()', projItemType, this.project?.ref);
     if (!this.project?.ref?.projectId) {
       this.errorLogger.logError(
         new Error('Can not navigate to project folder'),
@@ -246,7 +245,7 @@ export class ProjectPageComponent
     ref: IProjectRef,
     summary?: IProjectSummary,
   ): void {
-    console.log(
+// console.log(
       'ProjectPageComponent.onProjectSummaryChanged():',
       ref,
       summary,
@@ -266,7 +265,7 @@ export class ProjectPageComponent
     page: ProjectItemType,
     projItem: IProjItemBrief,
   ): void {
-    console.log('goProjItemPage()', page, projItem, this.project);
+// console.log('goProjItemPage()', page, projItem, this.project);
     switch (page) {
       case ProjectItem.environment:
         page = 'env' as ProjectItemType;

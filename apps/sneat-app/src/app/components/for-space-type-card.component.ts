@@ -97,7 +97,7 @@ export class ForSpaceTypeCardComponent
               )
               .map((t) => spaceContextFromBrief(t.id, t.brief)),
           );
-          console.log(
+// console.log(
             'ForSpaceTypeCardComponent.watchUserRecord() =>',
             this.spaceTypes,
             user.record?.spaces,

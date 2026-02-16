@@ -11,7 +11,7 @@ export class ProjectItemsByAgent<T> {
 
   public getItems$(from: IProjectRef): Observable<T[]> {
     const { storeId, projectId } = from;
-    console.log('getItems$', storeId, projectId, this.byRepo$);
+// console.log('getItems$', storeId, projectId, this.byRepo$);
     const a = this.byRepo$[storeId];
     return a ? this.asObservable(a[projectId]) : EMPTY;
   }

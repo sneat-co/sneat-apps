@@ -71,7 +71,7 @@ export class EmailsFormComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     const emailsChange = changes['emails'];
-    console.log(
+// console.log(
       'EmailsFormComponent.ngOnChanges(), emailsChange',
       emailsChange,
     );
@@ -87,12 +87,12 @@ export class EmailsFormComponent implements OnChanges {
 
   addressChanged(event: Event): void {
     event.stopPropagation();
-    console.log('addressChanged');
+// console.log('addressChanged');
     this.setEmailsOnInputChanged();
   }
 
   private setEmailsOnInputChanged(): void {
-    console.log('setEmailsOnInputChanged()', this.emailInputs);
+// console.log('setEmailsOnInputChanged()', this.emailInputs);
     this.emails = [...this.emailInputs].filter((email) => !!email.address);
     if (this.emails.length === 0) {
       this.emails = undefined;

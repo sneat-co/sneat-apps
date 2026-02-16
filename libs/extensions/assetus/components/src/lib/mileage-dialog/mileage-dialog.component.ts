@@ -96,7 +96,7 @@ export class MileAgeDialogComponent {
   // }
 
   submit(): void {
-    console.log('MileageDialog.submit', this.addVehicleRecordForm.value);
+// console.log('MileageDialog.submit', this.addVehicleRecordForm.value);
 
     if (!this.asset?.id) {
       throw new Error('assetId is not set');
@@ -143,7 +143,7 @@ export class MileAgeDialogComponent {
 
     this.assetService.addVehicleRecord(request).subscribe({
       next: (id) => {
-        console.log('Vehicle record added:', id);
+// console.log('Vehicle record added:', id);
         this.modalCtrl
           .dismiss()
           .catch(

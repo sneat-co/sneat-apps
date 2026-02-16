@@ -45,7 +45,7 @@ export function provideSneatAnalytics(
     ],
     useFactory: (errorLogger: IErrorLogger, fbApp: FirebaseApp) => {
       const config = getAnalyticsConfig(environmentConfig);
-      console.log(`provideSneatAnalytics(), config: ${JSON.stringify(config)}`);
+// console.log(`provideSneatAnalytics(), config: ${JSON.stringify(config)}`);
       const as: IAnalyticsService[] = [];
       if (config?.addPosthog) {
         as.push(new PosthogAnalyticsService());

@@ -233,7 +233,7 @@ export class NewMemberFormComponent
     this.addMemberForm.disable();
     this.memberService.createMember(request).subscribe({
       next: (member) => {
-        console.log('member created:', member);
+        // console.log('member created:', member);
         if (this.hasNavHistory) {
           this.navController
             .pop()
@@ -292,7 +292,7 @@ export class NewMemberFormComponent
   }
 
   onContactChanged(contact: NewContactBaseDboAndSpaceRef): void {
-    console.log('NewMemberFormComponent.onContactChanged()', contact);
+    // console.log('NewMemberFormComponent.onContactChanged()', contact);
     this.setPersonRequirements(contact);
     this.contactChange.emit(contact);
   }

@@ -19,7 +19,7 @@ export class TransitPointItemComponent {
   @Output() transitPointChange = new EventEmitter<ITransitPoint>();
 
   public onCountryChanged(countryID: string): void {
-    console.log('TransitPointItemComponent.onCountryChanged()', countryID);
+    // console.log('TransitPointItemComponent.onCountryChanged()', countryID);
     const transitPoint = this.transitPoint;
     if (!transitPoint) {
       throw new Error('!transitPoint');

@@ -8,7 +8,7 @@ export class SneatSelectAllOnFocusDirective {
 
   @HostListener('focus', ['$event.target'])
   public selectAll(target?: EventTarget | null) {
-    console.log('SneatSelectAllOnFocusDirective.selectAll()', target);
+    // console.log('SneatSelectAllOnFocusDirective.selectAll()', target);
     const nativeElement = this.el.nativeElement;
     const input =
       nativeElement instanceof HTMLInputElement ||

@@ -63,7 +63,7 @@ export class SneatUserService {
 
   private unsubscribeFromUserDoc(from: string) {
     if (this._unsubscribeFromUserDoc) {
-      console.log(
+// console.log(
         'SneatUserService.unsubscribeFromUserDoc() called from ' + from,
       );
       this._unsubscribeFromUserDoc();
@@ -74,8 +74,7 @@ export class SneatUserService {
   constructor() {
     const afs = inject(AngularFirestore);
     const sneatAuthStateService = inject(SneatAuthStateService);
-
-    console.log('SneatUserService.constructor()');
+// console.log('SneatUserService.constructor()');
     this.userCollection = collection(
       afs,
       UsersCollection,
@@ -99,7 +98,7 @@ export class SneatUserService {
   }
 
   public onUserSignedIn(authState: ISneatAuthState): void {
-    console.log('onUserSignedIn()', authState);
+// console.log('onUserSignedIn()', authState);
     const authUser = authState.user;
     // afUser.getIdToken().then(idToken => {
     // 	console.log('Firebase idToken:', idToken);
@@ -127,7 +126,7 @@ export class SneatUserService {
   }
 
   private watchUserRecord(uid: string, authState: ISneatAuthState): void {
-    console.log(
+// console.log(
       `SneatUserService.watchUserRecord(uid=${uid}): Loading user record...`,
     );
     this.unsubscribeFromUserDoc('whatUserRecord()');
@@ -141,7 +140,7 @@ export class SneatUserService {
           () =>
             onSnapshot(userDocRef, {
               next: (userDocSnapshot) => {
-                console.log(
+// console.log(
                   `SneatUserService.watchUserRecord(uid=${uid}) => userDocSnapshot:`,
                   userDocSnapshot,
                 );
@@ -181,7 +180,7 @@ export class SneatUserService {
     userDocSnapshot: DocumentSnapshot<IUserRecord>,
     authState: ISneatAuthState,
   ): void {
-    console.log(
+// console.log(
       'SneatUserService.userDocChanged() => userDocSnapshot.exists:',
       userDocSnapshot.exists(),
       'authState:',
@@ -223,7 +222,7 @@ export class SneatUserService {
     }
     this.userRecordService.initUserRecord(request).subscribe({
       next: (userDto) => {
-        console.log('User record created:', userDto);
+// console.log('User record created:', userDto);
       },
       error: this.errorLogger.logErrorHandler('failed to create user record'),
     });

@@ -70,7 +70,7 @@ export class SpacesCardComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   public ngOnDestroy(): void {
-    console.log('SpacesCardComponent.ngOnDestroy()');
+    // console.log('SpacesCardComponent.ngOnDestroy()');
     this.destroyed.next();
     this.destroyed.complete();
     this.unsubscribe('ngOnDestroy');
@@ -207,7 +207,7 @@ export class SpacesCardComponent implements OnInit, OnDestroy {
   private watchUserRecord(): void {
     this.userService.userState.pipe(takeUntil(this.destroyed)).subscribe({
       next: (userState) => {
-        console.log('SpacesCardComponent => user state changed:', userState);
+        // console.log('SpacesCardComponent => user state changed:', userState);
         if (userState.status === 'authenticating') {
           if (this.loadingState === 'Authenticating') {
             this.loadingState = 'Loading';
@@ -232,13 +232,13 @@ export class SpacesCardComponent implements OnInit, OnDestroy {
   }
 
   private unsubscribe(reason?: string): void {
-    console.log(`SpacesCardComponent.unsubscribe(reason: ${reason})`);
+    // console.log(`SpacesCardComponent.unsubscribe(reason: ${reason})`);
     this.subscriptions.forEach((s) => s.unsubscribe());
     this.subscriptions = [];
   }
 
   private setUser = (userState: ISneatUserState): void => {
-    console.log('SpacesCardComponent => user:', userState);
+    // console.log('SpacesCardComponent => user:', userState);
     const user = userState.record;
     if (user) {
       this.spaces = Object.entries(user?.spaces ? user.spaces : {}).map(

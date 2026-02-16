@@ -50,7 +50,7 @@ export class AssetService extends ModuleSpaceItemService<
     space: ISpaceContext,
     request: ICreateAssetRequest<ExtraType, Extra>,
   ): Observable<IAssetContext<ExtraType, Extra>> {
-    console.log(`AssetService.createAsset()`, request);
+    // console.log(`AssetService.createAsset()`, request);
     request = { ...request, asset: { ...request.asset, isRequest: true } };
     return this.createSpaceItem<
       IAssetBrief<ExtraType, Extra>,

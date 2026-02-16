@@ -7,10 +7,9 @@ import { SneatAuthStateService } from './sneat-auth-state-service';
 export class LoginRequiredServiceService {
   constructor() {
     const authState = inject(SneatAuthStateService);
-
-    console.log('LoginRequiredServiceService.constructor()');
+// console.log('LoginRequiredServiceService.constructor()');
     authState.authState.subscribe((state) => {
-      console.log('LoginRequiredServiceService => authState:', state);
+// console.log('LoginRequiredServiceService => authState:', state);
     });
   }
 }

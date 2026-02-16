@@ -23,6 +23,6 @@ export function createProjItem<
   T extends IProjItemBrief,
   R extends CreateNamedRequest = CreateNamedRequest,
 >(api: PostService, endpoint: string, payload: R): Observable<IRecord<T>> {
-  console.log('createObject', endpoint, payload);
+  // console.log('createObject', endpoint, payload);
   return validateCreateNamedRequest(payload) || api.post(endpoint, payload);
 }

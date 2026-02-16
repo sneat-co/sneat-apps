@@ -19,11 +19,11 @@ export class CalendarFilterService {
     .pipe(distinctUntilChanged());
 
   constructor() {
-    console.log('ScheduleFilterService.constructor()');
+// console.log('ScheduleFilterService.constructor()');
   }
 
   next(filter: ICalendarFilter): void {
-    console.log('ScheduleFilterService.next()', filter);
+// console.log('ScheduleFilterService.next()', filter);
     if (this.filter$.value == filter) {
       return;
     }

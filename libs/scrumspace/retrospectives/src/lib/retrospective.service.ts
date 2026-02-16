@@ -79,7 +79,7 @@ export class RetrospectiveService extends BaseMeetingService {
     teamId: string,
     meetingId: string,
   ): Observable<IRetrospective> {
-    console.log(`watchRetro(${teamId}, ${meetingId})`);
+// console.log(`watchRetro(${teamId}, ${meetingId})`);
     // const teamsCollection = collection(this.db, 'spaces');
     // const teamDoc = doc(teamsCollection, teamId);
     // const retroCollection = collection(teamDoc, 'retrospectives');

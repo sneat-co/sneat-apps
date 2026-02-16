@@ -11,6 +11,6 @@ import { QueryParamsService } from './services/QueryParamsService';
 })
 export class DatatugCoreModule {
   constructor() {
-    console.log('DatatugCoreModule.constructor()');
+// console.log('DatatugCoreModule.constructor()');
   }
 }

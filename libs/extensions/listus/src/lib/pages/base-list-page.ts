@@ -24,7 +24,7 @@ export abstract class BaseListPage extends SpaceItemPageBaseComponent<
   }
 
   protected override setItemContext(item: IListContext): void {
-    console.log('BaseListPage.setItemContext()', item);
+// console.log('BaseListPage.setItemContext()', item);
     if (item && !item?.type) {
       item = { ...item, type: item.id.split('!')[0] as ListType };
     }
@@ -45,16 +45,16 @@ export abstract class BaseListPage extends SpaceItemPageBaseComponent<
   }
 
   protected setList(list: IListContext): void {
-    console.log('BaseListPage.setList()', list, 'this.list:', this.list);
+// console.log('BaseListPage.setList()', list, 'this.list:', this.list);
     if (!list.brief && list.id == this.list?.id && this.list.brief) {
       list = { ...list, brief: this.list.brief };
-      console.log('BaseListPage.setList() => new this.list:', list);
+// console.log('BaseListPage.setList() => new this.list:', list);
     }
     this.list = list;
   }
 
   protected goMoviePage(movie: IMovie): void {
-    console.log('goMoviePage', movie);
+// console.log('goMoviePage', movie);
     if (!this.list) {
       this.errorLogger.logError('not able to navigate without list context');
     }

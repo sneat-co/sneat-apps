@@ -121,7 +121,7 @@ export class ProjectMenuTopComponent implements OnDestroy {
   }
 
   private setProject = (project?: IProjectContext) => {
-    console.log('ProjectMenuTopComponent.setProject()', project);
+// console.log('ProjectMenuTopComponent.setProject()', project);
     this.project = project;
   };
 
@@ -131,7 +131,7 @@ export class ProjectMenuTopComponent implements OnDestroy {
   }
 
   goProjPage(event: Event, page: ProjectTopLevelPage): boolean {
-    console.log('goProjPage', page);
+// console.log('goProjPage', page);
     event.preventDefault();
     event.stopPropagation();
     const project = this.project;

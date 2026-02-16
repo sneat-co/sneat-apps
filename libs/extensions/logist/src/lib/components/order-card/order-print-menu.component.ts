@@ -25,7 +25,7 @@ export class OrderPrintMenuComponent {
 
   print(event: Event, path: string): void {
     // TODO: can we dismiss popover declaratively?
-    console.log('print()', path);
+// console.log('print()', path);
     event.stopPropagation();
     this.popoverController
       .dismiss()

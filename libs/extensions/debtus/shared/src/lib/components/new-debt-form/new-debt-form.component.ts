@@ -65,7 +65,7 @@ export class NewDebtFormComponent {
   protected readonly currencies = ['EUR', 'USD'];
 
   protected submit() {
-    console.log('NewDebtFormComponent.submit', this.newDebtForm.value);
+// console.log('NewDebtFormComponent.submit', this.newDebtForm.value);
     const spaceID = this.space?.id;
     if (!spaceID) {
       throw new Error('spaceID is not set');
@@ -88,7 +88,7 @@ export class NewDebtFormComponent {
     };
     this.debtusService.createDebtRecord(request).subscribe({
       next: (id) => {
-        console.log('Debt record created:', id);
+// console.log('Debt record created:', id);
       },
       error: (err) => {
         console.error('Failed to create debt record:', err);

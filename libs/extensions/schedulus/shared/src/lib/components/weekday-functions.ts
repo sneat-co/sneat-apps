@@ -13,6 +13,6 @@ export function createWeekday(
     day,
     longTitle: wdCodeToWeekdayLongName(id),
   };
-  console.log('createWeekday();', date, spaceDaysProvider, weekday);
+  // console.log('createWeekday();', date, spaceDaysProvider, weekday);
   return weekday;
 }

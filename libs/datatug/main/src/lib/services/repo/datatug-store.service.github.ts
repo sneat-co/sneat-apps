@@ -10,7 +10,7 @@ export class DatatugStoreGithubService implements IDatatugStoreService {
   private readonly http = inject(HttpClient);
 
   getProjectSummary(projectId: string): Observable<IProjectSummary> {
-    console.log('DatatugStoreGithubService.getProjectSummary()', projectId);
+// console.log('DatatugStoreGithubService.getProjectSummary()', projectId);
 
     interface urlAndHeaders {
       url: string;
@@ -20,8 +20,7 @@ export class DatatugStoreGithubService implements IDatatugStoreService {
     const [repo, org] = projectId.split('@');
 
     const url = `https://raw.githubusercontent.com/${org}/${repo}/main/datatug/datatug-project.json`;
-
-    console.log('URL:', url);
+// console.log('URL:', url);
 
     const connectTo: Observable<urlAndHeaders> = of({ url });
     // if (storeId.startsWith(GITLAB_REPO_PREFIX)) {

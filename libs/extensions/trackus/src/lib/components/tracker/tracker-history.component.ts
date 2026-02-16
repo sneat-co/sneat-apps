@@ -74,7 +74,7 @@ export class TrackerHistoryComponent extends SneatBaseComponent {
   private $targetInfos = computed<Readonly<Record<string, ITargetInfo>>>(() => {
     const contactusSpace = this.$contactusSpace();
     const contacts = contactusSpace?.contacts;
-    console.log('$targetInfos: contacts:', contacts);
+    // console.log('$targetInfos: contacts:', contacts);
     if (!contacts) {
       return {};
     }
@@ -93,7 +93,7 @@ export class TrackerHistoryComponent extends SneatBaseComponent {
   protected readonly $entriesByDateAndTarget = computed<ListOfEntriesForDate[]>(
     () => {
       const targetInfos = this.$targetInfos();
-      console.log('$entriesByDateAndTarget: targetInfos=', targetInfos);
+      // console.log('$entriesByDateAndTarget: targetInfos=', targetInfos);
       const tracker = this.$tracker();
       const entriesByDateAndTarget: Record<
         string,

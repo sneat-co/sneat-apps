@@ -55,7 +55,7 @@ export class LoginWithTelegramComponent implements OnInit {
         // After a successful authorization, the widget returns data
         // by calling the callback function data-onauth with the JSON-object containing
         // id, first_name, last_name, username, photo_url, auth_date and hash fields.
-        console.log('window.onTelegramAuth(): Logged in', tgAuthData);
+// console.log('window.onTelegramAuth(): Logged in', tgAuthData);
         authWithTelegramService.loginWithTelegram(
           botID,
           tgAuthData,

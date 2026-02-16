@@ -122,7 +122,7 @@ export class AssetAddVehicleComponent
   }
 
   protected submitVehicleForm(): void {
-    console.log('submitVehicleForm', this.vehicleAsset);
+// console.log('submitVehicleForm', this.vehicleAsset);
     if (!this.space) {
       throw 'no team context';
     }

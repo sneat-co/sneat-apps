@@ -114,7 +114,7 @@ describe('DataGridComponent', () => {
 
     it('should handle rowClick changes', () => {
       const mockRowClick = (event: Event, row: unknown) => {
-        console.log('row clicked', event, row);
+// console.log('row clicked', event, row);
       };
 
       component.rowClick = mockRowClick;
@@ -558,7 +558,7 @@ describe('DataGridComponent', () => {
         {
           label: 'Edit',
           action: (e: Event, row: unknown) => {
-            console.log('edit', row);
+// console.log('edit', row);
           },
         },
       ];

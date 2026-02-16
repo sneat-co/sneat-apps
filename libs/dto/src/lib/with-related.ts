@@ -150,7 +150,7 @@ export const getRelatedItemIDs = (
   if (!related) {
     return [];
   }
-  console.log('getRelatedItemIDs', module, collection, spaceID, related);
+  // console.log('getRelatedItemIDs', module, collection, spaceID, related);
   const collectionRelated = (related || {})[module] || {};
   const relatedItems = collectionRelated[collection];
   const keys = Object.keys(relatedItems);

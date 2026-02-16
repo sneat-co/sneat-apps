@@ -83,7 +83,7 @@ export class AssetsListComponent implements OnChanges {
       );
     }
     this.assets = this.assets?.toSorted(this.sorter);
-    console.log(
+// console.log(
       'AssetsListComponent.ngOnChanges =>',
       changes,
       this.assetType,

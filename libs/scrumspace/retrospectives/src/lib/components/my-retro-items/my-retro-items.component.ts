@@ -211,7 +211,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
     event?.stopPropagation();
     try {
       const type = this.typeControl.value as RetroItemType;
-      console.log('add()', type);
+// console.log('add()', type);
       const title = (this.titleControl.value as string).trim();
       this.titleControl.setValue(title);
       if (!title || !this.titleControl.valid) {
@@ -244,7 +244,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
       this.titleControl.setValue('');
       this.retrospectiveService.addRetroItem(request).subscribe(
         (response) => {
-          console.log(response);
+// console.log(response);
 
           // const item: IRetroItem = {id: response.id, title: request.title};
           // const items = this.itemsByType[type];
@@ -276,7 +276,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
   private processUserRecord(user: IRecord<IUserRecord>): void {
     try {
       const spaceInfo = user?.dbo?.spaces?.[this.spaceID || ''];
-      console.log(
+// console.log(
         `user.data.teams[${this.spaceID}].retroItems:`,
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore

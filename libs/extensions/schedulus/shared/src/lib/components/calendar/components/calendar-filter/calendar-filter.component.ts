@@ -114,7 +114,7 @@ export class CalendarFilterComponent extends WeekdaysFormBase {
   }
 
   protected onSelectedContactsChanged(contactIDs: readonly string[]): void {
-    console.log(
+// console.log(
       'ScheduleFilterComponent.onSelectedContactsChanged()',
       contactIDs,
     );
@@ -125,7 +125,7 @@ export class CalendarFilterComponent extends WeekdaysFormBase {
     if (this.$filter() === filter) {
       return;
     }
-    console.log('ScheduleFilterComponent.onFilterChanged()', filter);
+// console.log('ScheduleFilterComponent.onFilterChanged()', filter);
     this.$filter.set(filter);
     this.text.setValue(filter.text || '');
     const { contactIDs } = filter;
@@ -168,7 +168,7 @@ export class CalendarFilterComponent extends WeekdaysFormBase {
   }
 
   protected accordionChanged(event: Event): void {
-    console.log('accordionChanged', event);
+// console.log('accordionChanged', event);
     event.stopPropagation();
     this.$expanded.set(!!(event as CustomEvent).detail.value);
   }

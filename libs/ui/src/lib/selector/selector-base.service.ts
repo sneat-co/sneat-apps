@@ -14,7 +14,7 @@ export abstract class SelectorBaseService<T = ISelectItem> {
   public async selectSingleInModal(
     options: ISelectorOptions<T>,
   ): Promise<T | null> {
-    console.log('selectSingleInModal(), options:', options);
+// console.log('selectSingleInModal(), options:', options);
     const result = await this.selectMultipleInModal(options);
     return result ? result[0] : null;
   }
@@ -23,7 +23,7 @@ export abstract class SelectorBaseService<T = ISelectItem> {
   protected async selectMultipleInModal(
     options: ISelectorOptions<T>,
   ): Promise<T[] | undefined> {
-    console.log('selectMultipleInModal(), options:', options);
+// console.log('selectMultipleInModal(), options:', options);
 
     let result: readonly T[] | undefined = undefined;
 
@@ -32,7 +32,7 @@ export abstract class SelectorBaseService<T = ISelectItem> {
     options = {
       ...options,
       onSelected: async (items?: T[]): Promise<void> => {
-        console.log(
+// console.log(
           'SelectorBaseService.selectMultipleInModal().onSelected =>',
           items,
         );
@@ -62,7 +62,7 @@ export abstract class SelectorBaseService<T = ISelectItem> {
 
     // 🔹 Track when the modal is dismissed
     const { role, data } = await modal.onDidDismiss();
-    console.log('Modal closed with role:', role, 'data:', data);
+// console.log('Modal closed with role:', role, 'data:', data);
 
     return result;
   }

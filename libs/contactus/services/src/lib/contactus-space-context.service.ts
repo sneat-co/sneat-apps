@@ -42,10 +42,10 @@ export class ContactusSpaceContextService {
     this.userService.userChanged.pipe(takeUntil(destroyed$)).subscribe({
       next: (uid) => {
         if (uid) {
-          console.log('ContactusSpaceContextService: user changed: uid=', uid);
+// console.log('ContactusSpaceContextService: user changed: uid=', uid);
           this.subscribeForContactusSpaceChanges(this.spaceID);
         } else {
-          console.log('ContactusSpaceContextService: user signed out');
+// console.log('ContactusSpaceContextService: user signed out');
           this.spaceModuleRecordSub?.unsubscribe();
           this.contactusSpaceContext.next(undefined);
         }
@@ -60,7 +60,7 @@ export class ContactusSpaceContextService {
     if (!spaceID) {
       return;
     }
-    console.log(`subscribeForContactusSpaceChanges(spaceID=${spaceID})`);
+// console.log(`subscribeForContactusSpaceChanges(spaceID=${spaceID})`);
     this.spaceModuleRecordSub = this.contactusSpaceService
       .watchSpaceModuleRecord(spaceID)
       .pipe(takeUntil(this.spaceID$), takeUntil(this.destroyed$))
@@ -75,7 +75,7 @@ export class ContactusSpaceContextService {
   private readonly onContactusSpaceChanged = (
     contactusSpace: IContactusSpaceDboAndID,
   ): void => {
-    console.log(
+// console.log(
       'ContactusSpaceContextService.onContactusSpaceChanged()',
       contactusSpace,
     );

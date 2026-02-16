@@ -8,7 +8,7 @@ const prefix = 'MultiAnalyticsService.';
 
 export class MultiAnalyticsService implements IAnalyticsService {
   constructor(private readonly as: readonly IAnalyticsService[]) {
-    console.log(
+// console.log(
       prefix +
         `.constructor() as=[${as.map((a) => a.constructor.name).join(',')}]`,
     );
@@ -19,7 +19,7 @@ export class MultiAnalyticsService implements IAnalyticsService {
     userPropsToSet?: UserProperties,
     userPropsToSetOnce?: UserProperties,
   ): void {
-    console.log(prefix + `identify(userID=${userID})`);
+// console.log(prefix + `identify(userID=${userID})`);
     this.as.forEach((as) =>
       setTimeout(() => as.identify(userID, userPropsToSet, userPropsToSetOnce)),
     );
@@ -30,7 +30,7 @@ export class MultiAnalyticsService implements IAnalyticsService {
     eventParams?: Readonly<Record<string, unknown>>,
     options?: IAnalyticsCallOptions,
   ): void {
-    console.log(prefix + `logEvent(eventName=${eventName})`);
+// console.log(prefix + `logEvent(eventName=${eventName})`);
     this.as.forEach((as) =>
       setTimeout(() => as.logEvent(eventName, eventParams, options)),
     );
@@ -40,12 +40,12 @@ export class MultiAnalyticsService implements IAnalyticsService {
     screenName: string,
     options?: IAnalyticsCallOptions,
   ): void {
-    console.log(prefix + `setCurrentScreen(screenName=${screenName})`);
+// console.log(prefix + `setCurrentScreen(screenName=${screenName})`);
     this.as.forEach((as) => as.setCurrentScreen(screenName, options));
   }
 
   public loggedOut(): void {
-    console.log(prefix + 'loggedOut()');
+// console.log(prefix + 'loggedOut()');
     this.as.forEach((as) => setTimeout(() => as.loggedOut()));
   }
 }

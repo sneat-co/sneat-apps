@@ -101,7 +101,7 @@ export class DbserverPageComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('DbserverPage.ngOnDestroy()');
+    // console.log('DbserverPage.ngOnDestroy()');
     this.destroyed.next();
   }
 

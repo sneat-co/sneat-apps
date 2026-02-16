@@ -113,7 +113,7 @@ export class UserCountryComponent
       return;
     }
     this.$detectingCountry.set(true);
-    console.log('UserCountryComponent: Detecting IP country...');
+    // console.log('UserCountryComponent: Detecting IP country...');
     race(
       this.httpClient
         .get<string>('https://ipapi.co/country', {
@@ -127,7 +127,7 @@ export class UserCountryComponent
         ),
     ).subscribe({
       next: (response) => {
-        console.log('UserCountryComponent: Got IP country:', response);
+        // console.log('UserCountryComponent: Got IP country:', response);
         const ipCountryID = response.country;
         ipCountryCached = ipCountryID;
         this.$ipCountryID.set(ipCountryID);
@@ -157,7 +157,7 @@ export class UserCountryComponent
     this.$saving.set(true);
     this.userService.setUserCountry(countryID).subscribe({
       next: () => {
-        console.log('UserCountryComponent: User country set to', countryID);
+        // console.log('UserCountryComponent: User country set to', countryID);
         this.$userCountryID.set(countryID);
       },
       error: (err) => {

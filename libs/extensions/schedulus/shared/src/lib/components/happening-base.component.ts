@@ -108,7 +108,7 @@ export abstract class HappeningBaseComponent extends WithSpaceInput {
     if (!space || !happening) {
       return;
     }
-    console.log('goHappening()', happening, space);
+// console.log('goHappening()', happening, space);
     this.spaceNavService
       .navigateForwardToSpacePage(space, `happening/${happening.id}`, {
         state: { happening },
@@ -122,7 +122,7 @@ export abstract class HappeningBaseComponent extends WithSpaceInput {
   }
 
   protected delete(event: Event): void {
-    console.log('HappeningCardComponent.delete()');
+// console.log('HappeningCardComponent.delete()');
     event.stopPropagation();
     const [space, happening] = this.spaceAndHappening();
     if (!space || !happening) {
