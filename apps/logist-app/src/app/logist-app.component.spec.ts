@@ -24,4 +24,39 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
+
+  it('should handle missing ionSplitPane in ngAfterViewInit', () => {
+    const fixture = TestBed.createComponent(LogistAppComponent);
+    const app = fixture.componentInstance;
+    app.ionSplitPane = null as any;
+    expect(() => app.ngAfterViewInit()).not.toThrow();
+  });
+
+  it('should not disable split pane when hash is empty', () => {
+    const fixture = TestBed.createComponent(LogistAppComponent);
+    const app = fixture.componentInstance;
+    app.ionSplitPane = { disabled: false } as any;
+    app.ngAfterViewInit();
+    expect(app.ionSplitPane.disabled).toBe(false);
+  });
+
+  it('should disable split pane when hash is #print', () => {
+    const hashDesc = Object.getOwnPropertyDescriptor(location, 'hash')
+      || Object.getOwnPropertyDescriptor(Object.getPrototypeOf(location), 'hash');
+    Object.defineProperty(location, 'hash', {
+      get: () => '#print',
+      configurable: true,
+    });
+    try {
+      const fixture = TestBed.createComponent(LogistAppComponent);
+      const app = fixture.componentInstance;
+      app.ionSplitPane = { disabled: false } as any;
+      app.ngAfterViewInit();
+      expect(app.ionSplitPane.disabled).toBe(true);
+    } finally {
+      if (hashDesc) {
+        Object.defineProperty(location, 'hash', hashDesc);
+      }
+    }
+  });
 });

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
 import {
   IonApp,
   IonContent,
@@ -49,7 +49,9 @@ export class LogistAppComponent
 
   ngAfterViewInit(): void /* Intentionally not ngOnInit */ {
     if (this.ionSplitPane) {
-      this.ionSplitPane.disabled = location.hash === '#print';
+      if (location.hash === '#print') {
+        this.ionSplitPane.disabled = true;
+      }
     }
   }
 }
