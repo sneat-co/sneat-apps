@@ -405,13 +405,11 @@ describe('DataGridComponent', () => {
       const mockEvent = { preventDefault: vi.fn(), stopPropagation: vi.fn() };
       const cellClickHandler = (component as any).tabulatorOptions.columns[0]
         .cellClick;
-      const logSpy = vi.spyOn(console, 'log');
 
       cellClickHandler(mockEvent, { value: 123 });
 
       expect(mockEvent.preventDefault).toHaveBeenCalled();
       expect(mockEvent.stopPropagation).toHaveBeenCalled();
-      expect(logSpy).toHaveBeenCalledWith('cellClick', { value: 123 });
     });
 
     it('should not set link formatter for Id column', () => {
