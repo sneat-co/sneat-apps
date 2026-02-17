@@ -20,7 +20,9 @@
     "pw:test": "playwright test tests -c tests-out",
     "serve:help": "serve --help",
     "coverage:analyze": "node scripts/list-uncovered-lines.mjs",
-    "coverage:analyze:run": "node scripts/list-uncovered-lines.mjs --run-tests"
+    "coverage:analyze:run": "node scripts/list-uncovered-lines.mjs --run-tests",
+    "coverage:report": "node scripts/generate-coverage-report.mjs",
+    "coverage:report:run": "node scripts/generate-coverage-report.mjs --run-tests"
   },
   "private": true,
   "pnpm": {
