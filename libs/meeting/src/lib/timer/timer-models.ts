@@ -1,6 +1,14 @@
 import { IByUser } from '@sneat/dto';
 import { IMeetingRequest } from '../meeting-request';
-import { Timestamp } from '@firebase/firestore-types';
+
+// Lightweight stand-in for Firebase Timestamp to avoid pulling in Firebase at build/test time.
+// At runtime the value is either a Firestore Timestamp object or an ISO string.
+interface FirebaseTimestamp {
+  readonly seconds: number;
+  readonly nanoseconds: number;
+  toDate(): Date;
+  toMillis(): number;
+}
 
 export enum TimerOperationEnum {
   start = 'start',
@@ -33,7 +41,7 @@ export interface ITimerState {
   status?: TimerStatus;
   elapsedSeconds?: number;
   activeMemberId?: string;
-  at?: Timestamp | string;
+  at?: FirebaseTimestamp | string;
   by?: IByUser;
   secondsByMember?: Record<string, number>;
   isToggling?: boolean;
