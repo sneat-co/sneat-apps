@@ -1,15 +1,19 @@
-# Test Coverage Report
+# Test Coverage Documentation
 
-> **Note:** This document is auto-generated. To regenerate it, use the AI skill `generate-test-coverage-report` or run:
+This document provides an overview of test coverage across all projects in the sneat-apps monorepo.
+
+## Auto-Generated Coverage Report
+
+> **Note:** The metrics below are auto-generated. To regenerate them, use the AI skill `generate-test-coverage-report` or run:
 > ```bash
 > node scripts/generate-coverage-report.mjs
 > ```
 
 **Last Updated:** 2026-02-17
 
-## Overall Test Coverage Metrics
+### Overall Test Coverage Metrics
 
-### Summary
+#### Summary
 
 | Metric | Total | Covered | Uncovered | Coverage % |
 |--------|-------|---------|-----------|------------|
@@ -18,7 +22,7 @@
 | **Branches** | 6720 | 2688 | 4032 | 40.00% |
 | **Statements** | 47850 | 21532 | 26318 | 45.00% |
 
-### Coverage Visualization
+#### Coverage Visualization
 
 ```mermaid
 %%{init: {'theme':'base', 'themeVariables': { 'primaryColor':'#1f77b4', 'primaryTextColor':'#fff'}}}%%
@@ -27,7 +31,7 @@ pie title Overall Coverage Distribution
     "Lines Uncovered" : 24876
 ```
 
-## Top 10 Projects by Uncovered Lines
+### Top 10 Projects by Uncovered Lines
 
 | Rank | Project | Uncovered | Total | Coverage % |
 |------|---------|-----------|-------|------------|
@@ -42,144 +46,234 @@ pie title Overall Coverage Distribution
 | 9 | libs/extensions/crud/shared | 489 | 891 | 45.12% |
 | 10 | libs/wizard/shared | 456 | 1023 | 55.42% |
 
-### Visualization
+---
 
-```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor':'#ff6b6b'}}}%%
-graph TD
-    subgraph "Top 10 by Uncovered Lines"
-        P0["1. libs/extensions/schedulus/shared<br/>1416 uncovered<br/>35.1% coverage"] --> |▓▓▓▓▓▓▓▓▓▓▓▓▓▓| V0[ ]
-        P1["2. libs/contactus/shared<br/>1335 uncovered<br/>36.0% coverage"] --> |▓▓▓▓▓▓▓▓▓▓▓▓▓| V1[ ]
-        P2["3. apps/datatug/main<br/>2086 uncovered<br/>30.4% coverage"] --> |▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓| V2[ ]
-        P3["4. libs/team/shared<br/>845 uncovered<br/>51.0% coverage"] --> |▓▓▓▓▓▓▓▓| V3[ ]
-        P4["5. libs/datatug/services/unsorted<br/>782 uncovered<br/>46.3% coverage"] --> |▓▓▓▓▓▓▓| V4[ ]
-        P5["6. libs/budgetus/shared<br/>654 uncovered<br/>47.0% coverage"] --> |▓▓▓▓▓▓| V5[ ]
-        P6["7. libs/meeting/shared<br/>587 uncovered<br/>46.1% coverage"] --> |▓▓▓▓▓| V6[ ]
-        P7["8. libs/components/sneat-shared<br/>523 uncovered<br/>61.1% coverage"] --> |▓▓▓▓▓| V7[ ]
-        P8["9. libs/extensions/crud/shared<br/>489 uncovered<br/>45.1% coverage"] --> |▓▓▓▓| V8[ ]
-        P9["10. libs/wizard/shared<br/>456 uncovered<br/>55.4% coverage"] --> |▓▓▓▓| V9[ ]
-    end
-    style V0 fill:none,stroke:none
-    style V1 fill:none,stroke:none
-    style V2 fill:none,stroke:none
-    style V3 fill:none,stroke:none
-    style V4 fill:none,stroke:none
-    style V5 fill:none,stroke:none
-    style V6 fill:none,stroke:none
-    style V7 fill:none,stroke:none
-    style V8 fill:none,stroke:none
-    style V9 fill:none,stroke:none
+## Overview
+
+We use **Vitest** as our testing framework with `@analogjs/vitest-angular` for Angular-specific testing. Test coverage is continuously monitored and improved to ensure code quality and reliability.
+
+## Coverage Goals
+
+| Project Type | Target Coverage | Rationale |
+|--------------|-----------------|-----------|
+| Security-Critical (auth-*) | 70%+ | High-risk code requires thorough testing |
+| Core Libraries | 60%+ | Widely used, high impact on app stability |
+| Feature Extensions | 60%+ | Business logic requires validation |
+| UI Components | 50%+ | Visual components, harder to test comprehensively |
+| Applications | 50%+ | Integration-heavy, often tested via E2E |
+
+## Priority Projects for Improvement
+
+### Priority 1: Core Projects
+
+| Project | Current | Target | Gap | Status | Report |
+|---------|---------|--------|-----|--------|--------|
+| ext-schedulus-shared | 35.05% | 60% | -24.95% | 🟡 In Progress | [Report](../libs/extensions/schedulus/shared/COVERAGE-REPORT.md) |
+| contactus-shared | 36.03% | 60% | -23.97% | 🟡 In Progress | [Report](../libs/contactus/shared/COVERAGE-REPORT.md) |
+| auth-core | 21.82% | 70% | -48.18% | 🔴 Needs Attention | [Report](../libs/auth/core/COVERAGE-REPORT.md) |
+| core | 53.38% | 60% | -6.62% | 🟢 Near Target | [Report](../libs/core/COVERAGE-REPORT.md) |
+
+### Priority 2: Feature Extensions
+
+| Project | Current | Target | Gap | Status | Report |
+|---------|---------|--------|-----|--------|--------|
+| datatug-main | 30.42% | 60% | -29.58% | 🟡 In Progress | [Report](../libs/datatug/main/COVERAGE-REPORT.md) |
+
+## Using the Test Coverage Improver Agent
+
+We have a generic test coverage improver agent that can work on any project in the monorepo.
+
+### Invocation Example
+
+```
+@test-coverage-improver.agent.md
+
+Project ID: ext-schedulus-shared
+Target Coverage: 60%
+
+Please:
+1. Measure current coverage
+2. Generate COVERAGE-REPORT.md
+3. Identify top 5 priority files
+4. Create tests to increase coverage by 10%
+5. Update this documentation
 ```
 
-## Top 10 Projects by Uncovered Functions
+### What the Agent Does
 
-| Rank | Project | Uncovered | Total | Coverage % |
-|------|---------|-----------|-------|------------|
-| 1 | apps/datatug/main | 456 | 1245 | 63.37% |
-| 2 | libs/extensions/schedulus/shared | 298 | 645 | 53.80% |
-| 3 | libs/contactus/shared | 267 | 589 | 54.67% |
-| 4 | libs/team/shared | 198 | 423 | 53.19% |
-| 5 | libs/datatug/services/unsorted | 187 | 378 | 50.53% |
-| 6 | libs/budgetus/shared | 156 | 334 | 53.29% |
-| 7 | libs/meeting/shared | 143 | 298 | 52.01% |
-| 8 | libs/components/sneat-shared | 134 | 312 | 57.05% |
-| 9 | libs/extensions/crud/shared | 128 | 267 | 52.06% |
-| 10 | libs/wizard/shared | 119 | 278 | 57.19% |
+1. **Discovers** project details and structure
+2. **Measures** current test coverage
+3. **Analyzes** coverage gaps
+4. **Generates** detailed coverage report in project folder
+5. **Implements** tests to improve coverage
+6. **Updates** documentation (project README + this file)
 
-### Visualization
+## Coverage Reports
 
-```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor':'#ff6b6b'}}}%%
-graph TD
-    subgraph "Top 10 by Uncovered Functions"
-        P0["1. apps/datatug/main<br/>456 uncovered<br/>63.4% coverage"] --> |▓▓▓▓| V0[ ]
-        P1["2. libs/extensions/schedulus/shared<br/>298 uncovered<br/>53.8% coverage"] --> |▓▓▓| V1[ ]
-        P2["3. libs/contactus/shared<br/>267 uncovered<br/>54.7% coverage"] --> |▓▓| V2[ ]
-        P3["4. libs/team/shared<br/>198 uncovered<br/>53.2% coverage"] --> |▓▓| V3[ ]
-        P4["5. libs/datatug/services/unsorted<br/>187 uncovered<br/>50.5% coverage"] --> |▓▓| V4[ ]
-        P5["6. libs/budgetus/shared<br/>156 uncovered<br/>53.3% coverage"] --> |▓| V5[ ]
-        P6["7. libs/meeting/shared<br/>143 uncovered<br/>52.0% coverage"] --> |▓| V6[ ]
-        P7["8. libs/components/sneat-shared<br/>134 uncovered<br/>57.1% coverage"] --> |▓| V7[ ]
-        P8["9. libs/extensions/crud/shared<br/>128 uncovered<br/>52.1% coverage"] --> |▓| V8[ ]
-        P9["10. libs/wizard/shared<br/>119 uncovered<br/>57.2% coverage"] --> |▓| V9[ ]
-    end
-    style V0 fill:none,stroke:none
-    style V1 fill:none,stroke:none
-    style V2 fill:none,stroke:none
-    style V3 fill:none,stroke:none
-    style V4 fill:none,stroke:none
-    style V5 fill:none,stroke:none
-    style V6 fill:none,stroke:none
-    style V7 fill:none,stroke:none
-    style V8 fill:none,stroke:none
-    style V9 fill:none,stroke:none
+Each project has a detailed coverage report in its root directory:
+
+```
+libs/<project-path>/COVERAGE-REPORT.md
 ```
 
-## Top 10 Projects by Uncovered Branches
+These reports include:
+- Current coverage metrics (statements, branches, functions, lines)
+- Coverage by file category (high, medium, low, none)
+- Top priority targets for testing
+- Recent changes and improvements
 
-| Rank | Project | Uncovered | Total | Coverage % |
-|------|---------|-----------|-------|------------|
-| 1 | apps/datatug/main | 523 | 1245 | 58.00% |
-| 2 | libs/extensions/schedulus/shared | 312 | 678 | 53.98% |
-| 3 | libs/contactus/shared | 289 | 612 | 52.78% |
-| 4 | libs/team/shared | 234 | 489 | 52.15% |
-| 5 | libs/datatug/services/unsorted | 198 | 423 | 53.19% |
-| 6 | libs/budgetus/shared | 176 | 367 | 52.04% |
-| 7 | libs/meeting/shared | 165 | 334 | 50.60% |
-| 8 | libs/components/sneat-shared | 154 | 378 | 59.26% |
-| 9 | libs/extensions/crud/shared | 143 | 298 | 52.01% |
-| 10 | libs/wizard/shared | 132 | 312 | 57.69% |
+## Running Tests Locally
 
-### Visualization
+### Run Tests for a Specific Project
 
-```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor':'#ff6b6b'}}}%%
-graph TD
-    subgraph "Top 10 by Uncovered Branches"
-        P0["1. apps/datatug/main<br/>523 uncovered<br/>58.0% coverage"] --> |▓▓▓▓▓| V0[ ]
-        P1["2. libs/extensions/schedulus/shared<br/>312 uncovered<br/>54.0% coverage"] --> |▓▓▓| V1[ ]
-        P2["3. libs/contactus/shared<br/>289 uncovered<br/>52.8% coverage"] --> |▓▓| V2[ ]
-        P3["4. libs/team/shared<br/>234 uncovered<br/>52.2% coverage"] --> |▓▓| V3[ ]
-        P4["5. libs/datatug/services/unsorted<br/>198 uncovered<br/>53.2% coverage"] --> |▓▓| V4[ ]
-        P5["6. libs/budgetus/shared<br/>176 uncovered<br/>52.0% coverage"] --> |▓| V5[ ]
-        P6["7. libs/meeting/shared<br/>165 uncovered<br/>50.6% coverage"] --> |▓| V6[ ]
-        P7["8. libs/components/sneat-shared<br/>154 uncovered<br/>59.3% coverage"] --> |▓| V7[ ]
-        P8["9. libs/extensions/crud/shared<br/>143 uncovered<br/>52.0% coverage"] --> |▓| V8[ ]
-        P9["10. libs/wizard/shared<br/>132 uncovered<br/>57.7% coverage"] --> |▓| V9[ ]
-    end
-    style V0 fill:none,stroke:none
-    style V1 fill:none,stroke:none
-    style V2 fill:none,stroke:none
-    style V3 fill:none,stroke:none
-    style V4 fill:none,stroke:none
-    style V5 fill:none,stroke:none
-    style V6 fill:none,stroke:none
-    style V7 fill:none,stroke:none
-    style V8 fill:none,stroke:none
-    style V9 fill:none,stroke:none
+```bash
+# Run tests
+pnpm nx test <project-id>
+
+# Run with coverage
+pnpm nx test <project-id> --coverage
+
+# Run in watch mode
+pnpm nx test <project-id> --watch
 ```
 
-## How to Improve Coverage
+### Run Tests for Multiple Projects
 
-1. **Run coverage analysis:**
-   ```bash
-   pnpm nx test <project-name> --coverage.enabled=true
-   ```
+```bash
+# Run tests for all projects
+pnpm nx run-many --target=test --all
 
-2. **View detailed HTML reports:**
-   ```bash
-   open coverage/<project-path>/index.html
-   ```
+# Run tests for specific projects
+pnpm nx run-many --target=test --projects=ext-schedulus-shared,contactus-shared
 
-3. **Focus on high-impact areas:** Projects with the most uncovered lines/functions/branches
+# Run with coverage
+pnpm nx run-many --target=test --projects=ext-schedulus-shared,contactus-shared --coverage
+```
 
-4. **Write tests for critical paths:** Authentication, data persistence, business logic
+### View Coverage Reports
 
-5. **Use test templates:** See [Testing Guide](TESTING.md) and [templates/](../templates/)
+Coverage reports are generated in the `coverage/` directory:
 
-## Related Documentation
+```bash
+# View HTML coverage report
+open coverage/<project-path>/index.html
+```
 
-- [Coverage Configuration](COVERAGE-CONFIGURATION.md)
-- [Testing Guide](TESTING.md)
-- [Testing Examples](TESTING-EXAMPLES.md)
-- [Test Coverage Plan](../TEST_COVERAGE_PLAN.md)
+## Testing Best Practices
+
+### Test Structure
+
+Use the **Arrange-Act-Assert** pattern:
+
+```typescript
+import { describe, it, expect } from 'vitest';
+
+describe('MyService', () => {
+  it('should process data correctly', () => {
+    // Arrange: Set up test data
+    const input = { value: 42 };
+    const service = new MyService();
+    
+    // Act: Execute the code under test
+    const result = service.process(input);
+    
+    // Assert: Verify the outcome
+    expect(result).toEqual({ processed: true, value: 42 });
+  });
+});
+```
+
+### Test Categories
+
+1. **Unit Tests** - Test individual functions/methods in isolation
+2. **Component Tests** - Test Angular components with TestBed
+3. **Service Tests** - Test services with mocked dependencies
+4. **Integration Tests** - Test multiple components working together
+
+### Mocking Guidelines
+
+```typescript
+import { vi } from 'vitest';
+
+// Mock a function
+const mockFn = vi.fn().mockReturnValue(42);
+
+// Mock a module
+vi.mock('@angular/fire/auth', () => ({
+  Auth: vi.fn(),
+  signInWithEmailAndPassword: vi.fn()
+}));
+
+// Mock a service
+const mockService = {
+  getData: vi.fn().mockResolvedValue({ data: 'test' })
+};
+```
+
+## Coverage Improvement Workflow
+
+1. **Identify Target Project** - Select from priority list above
+2. **Invoke Agent** - Use test-coverage-improver agent
+3. **Review Coverage Report** - Check generated COVERAGE-REPORT.md
+4. **Run Tests** - Verify all tests pass locally
+5. **Commit Changes** - Agent uses report_progress automatically
+6. **Monitor CI** - Ensure tests pass in CI pipeline
+
+## Integration with CI/CD
+
+- Tests run automatically on every PR
+- Coverage reports are generated and cached by Nx Cloud
+- Failed tests block PR merges
+- Coverage trends tracked over time
+
+## Troubleshooting
+
+### Tests Not Running
+
+```bash
+# Clear Nx cache
+pnpm nx reset
+
+# Reinstall dependencies
+pnpm install
+
+# Check test configuration
+cat <project-root>/tsconfig.spec.json
+```
+
+### Low Coverage on New Code
+
+- Ensure new files have corresponding `.spec.ts` files
+- Review PR checklist for testing requirements
+- Use test coverage agent to identify gaps
+
+### Flaky Tests
+
+- Avoid time-dependent tests (use mocks)
+- Ensure proper cleanup in `afterEach`
+- Use `vi.useFakeTimers()` for time-based tests
+
+## Resources
+
+- **Test Coverage Plan:** [TEST_COVERAGE_PLAN.md](../TEST_COVERAGE_PLAN.md)
+- **Testing Guide:** [TESTING.md](./TESTING.md)
+- **Testing Examples:** [TESTING-EXAMPLES.md](./TESTING-EXAMPLES.md)
+- **Quick Reference:** [TESTING-QUICK-REF.md](../TESTING-QUICK-REF.md)
+- **Agent Documentation:** [.github/agents/README.md](../.github/agents/README.md)
+
+## Contributing
+
+When adding new code:
+1. Write tests alongside new functionality
+2. Aim for coverage targets based on project type
+3. Follow existing test patterns
+4. Include edge cases and error scenarios
+5. Update coverage documentation when significant improvements made
+
+## Contact
+
+For questions about test coverage:
+- Check this documentation first
+- Review existing tests for patterns
+- Use the test-coverage-improver agent
+- Open a GitHub discussion for complex scenarios
