@@ -86,12 +86,6 @@ jobs:
       - name: nx test affected
         run: pnpm run nx affected --target=test --parallel=4 --base=${{ env.NX_BASE }}
 
-      - name: Check coverage files (main branch only)
-        if: github.ref == 'refs/heads/main'
-        run: |
-          echo "Tests completed. Checking for coverage files..."
-          find coverage -name "lcov.info" -type f -exec ls -lh {} \; || echo "No coverage files found"
-
       - name: Merge coverage reports
         if: github.ref == 'refs/heads/main' && success()
         run: |
@@ -99,6 +93,12 @@ jobs:
           mkdir -p coverage-merged
 
           # Find all lcov.info files and check if any exist
+          # coverage/ may not exist if all results were served from Nx cache
+          if [ ! -d coverage ]; then
+            echo "::notice::No coverage directory found (likely all results from cache) - skipping"
+            echo "COVERAGE_GENERATED=false" >> $GITHUB_ENV
+            exit 0
+          fi
           find coverage -name "lcov.info" -type f -size +0 > coverage-files.txt
 
           if [ -s coverage-files.txt ]; then
