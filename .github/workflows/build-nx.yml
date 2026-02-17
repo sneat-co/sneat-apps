@@ -83,19 +83,14 @@ jobs:
           restore-keys: |
             vite-${{ runner.os }}-
 
-      - name: nx test affected (without coverage)
-        if: github.ref != 'refs/heads/main'
+      - name: nx test affected
         run: pnpm run nx affected --target=test --parallel=4 --base=${{ env.NX_BASE }}
-      #        timeout-minutes: 5
 
-      - name: Run tests with coverage (only on main branch)
+      - name: Check coverage files (main branch only)
         if: github.ref == 'refs/heads/main'
         run: |
-          echo "Running affected tests with coverage..."
-          pnpm run nx affected --target=test --base=${{ env.NX_BASE }} --coverage --parallel=4 --skip-nx-cache
           echo "Tests completed. Checking for coverage files..."
           find coverage -name "lcov.info" -type f -exec ls -lh {} \; || echo "No coverage files found"
-      #        timeout-minutes: 5
 
       - name: Merge coverage reports
         if: github.ref == 'refs/heads/main' && success()
