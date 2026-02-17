@@ -75,6 +75,14 @@ jobs:
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v4
 
+      - name: Cache Vite dependency pre-bundle
+        uses: actions/cache@v5
+        with:
+          path: node_modules/.vite
+          key: vite-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            vite-${{ runner.os }}-
+
       - name: nx test affected (without coverage)
         if: github.ref != 'refs/heads/main'
         run: pnpm run nx affected --target=test --parallel=4 --base=${{ env.NX_BASE }}

@@ -41,6 +41,9 @@
         "libs/core/src/lib/testing/base-test-setup.ts"
       ],
       "@sneat/core/testing": ["libs/core/src/lib/testing/test-setup.ts"],
+      "@sneat/core/testing-light": [
+        "libs/core/src/lib/testing/test-setup-light.ts"
+      ],
       "@sneat/data": ["libs/data/src/index.ts"],
       "@sneat/datagrid": ["libs/datagrid/src/index.ts"],
       "@sneat/datatug-main": ["libs/datatug/main/src/public_api.ts"],

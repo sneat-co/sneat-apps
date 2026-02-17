@@ -1,3 +1,1 @@
-import { setupTestEnvironment } from '@sneat/core/testing';
-
-setupTestEnvironment();
+import '@sneat/core/testing-light';
