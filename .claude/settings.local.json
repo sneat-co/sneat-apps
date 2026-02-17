@@ -50,7 +50,15 @@
       "Bash(git -C /Users/alexandertrakhimenok/projects/sneat/sneat-apps add libs/datagrid/src/lib/components/data-grid/data-grid.component.ts libs/ui/src/lib/selector/select-from-list/select-from-list.component.html)",
       "Bash(git -C:*)",
       "Bash(pnpm nx test:*)",
-      "Bash(tee:*)"
+      "Bash(tee:*)",
+      "Bash(python3:*)",
+      "Bash(git pull:*)",
+      "Bash(git stash:*)",
+      "Bash(gh run view:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh api:*)",
+      "Bash(pnpm nx show project:*)",
+      "Bash(pnpm nx graph:*)"
     ]
   },
   "enableAllProjectMcpServers": true,
