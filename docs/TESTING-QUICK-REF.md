@@ -84,9 +84,9 @@ pnpm nx test project-name --coverage
 
 ## Documentation
 
-- Full guide: [docs/TESTING.md](docs/TESTING.md)
-- Examples: [docs/TESTING-EXAMPLES.md](docs/TESTING-EXAMPLES.md)
-- Templates: [templates/README.md](templates/README.md)
+- Full guide: [docs/TESTING.md](TESTING.md)
+- Examples: [docs/TESTING-EXAMPLES.md](TESTING-EXAMPLES.md)
+- Templates: [templates/README.md](../templates/README.md)
 
 ## Common Patterns
 

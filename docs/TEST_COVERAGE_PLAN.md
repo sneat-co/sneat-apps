@@ -8,29 +8,10 @@ This plan outlines the strategy to increase test coverage across all NX projects
 
 1. **Priority 1: Core Projects.** These are fundamental libraries used across the application.
 2. **Priority 2: High Impact Projects.** Projects with the most uncovered lines.
-3. **Exclusion:** The `wizard` project is excluded as it is currently being improved.
 
-## Current Analysis (Summary)
+## Current Analysis
 
-| Project                       | Type     | Coverage % | Uncovered Lines | Priority |
-| :---------------------------- | :------- | :--------- | :-------------- | :------- |
-| `extensions-schedulus-shared` | Core     | 35.05%     | 1416            | 1        |
-| `contactus-shared`            | Core     | 36.03%     | 1335            | 2        |
-| `auth-core`                   | Core     | 21.82%     | 129             | 3        |
-| `core`                        | Core     | 53.38%     | 69              | 4        |
-| `datatug-main`                | Non-Core | 30.42%     | 2086            | 5        |
-
-## Top 5 Target Projects
-
-The following projects will be addressed in order:
-
-1. `extensions-schedulus-shared`
-2. `contactus-shared`
-3. `auth-core`
-4. `core`
-5. `datatug-main`
-
-_Note: `datatug-main` is included because it has the highest absolute number of uncovered lines (2086), making it a high-impact target once core projects are addressed._
+See [test-coverage.md](test-coverage.md).
 
 ## Implementation Workflow
 
