@@ -48,6 +48,7 @@ This repository includes comprehensive test templates and documentation for writ
 - 📖 [Testing Guide](docs/TESTING.md) - Comprehensive guide to testing patterns, best practices, and running tests
 - 💡 [Testing Examples](docs/TESTING-EXAMPLES.md) - Practical examples of generating and using test templates
 - 🛠️ [Test Templates](templates/) - Reusable templates for services, components, and sanity tests
+- 📊 [Test Coverage Report](docs/test-coverage.md) - Detailed coverage metrics and visualizations across all projects
 
 **Quick start:**
 
