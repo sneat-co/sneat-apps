@@ -88,6 +88,7 @@ jobs:
 
       - name: Merge coverage reports
         if: github.ref == 'refs/heads/main' && success()
+        continue-on-error: true
         run: |
           # Create merged coverage directory
           mkdir -p coverage-merged
@@ -176,7 +177,8 @@ jobs:
           fi
 
       - name: Upload coverage to Coveralls
-        if: github.ref == 'refs/heads/main' && success() && env.COVERAGE_GENERATED == 'true'
+        if: github.ref == 'refs/heads/main' && env.COVERAGE_GENERATED == 'true'
+        continue-on-error: true
         uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
