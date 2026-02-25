@@ -11,6 +11,12 @@
       "enabled": false,
       "description": "Disable lookup/updates for local workspace @sneat/* packages",
       "matchPackageNames": ["@sneat/{/,}**"]
+    },
+    {
+      "matchPackageNames": ["eslint", "@eslint/js", "jsonc-eslint-parser"],
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "description": "Block automerge of major ESLint upgrades until @nx/eslint adds support. @nx/eslint 22.5.x peer deps declare eslint '^8.0.0 || ^9.0.0' and are incompatible with ESLint v10. See: https://github.com/sneat-co/sneat-apps/pull/3299"
     }
   ]
 }
