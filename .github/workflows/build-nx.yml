@@ -247,7 +247,7 @@ jobs:
           GCLOUD_PROJECT: 'demo-sneat-app'
         continue-on-error: true
 
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: playwright-report
           path: playwright-report/
