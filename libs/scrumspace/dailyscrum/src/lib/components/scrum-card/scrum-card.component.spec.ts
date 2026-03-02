@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule, NavController } from '@ionic/angular';
-import { NavService } from '@sneat/datatug-main';
+import { IonicModule } from '@ionic/angular';
+import { SpaceNavService } from '@sneat/space-services';
 
 import { ScrumCardComponent } from './scrum-card.component';
 
@@ -13,8 +13,7 @@ describe('ScrumCardComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ScrumCardComponent, IonicModule.forRoot()],
       providers: [
-        { provide: NavController, useValue: {} },
-        { provide: NavService, useValue: { navigateToMember: vi.fn() } },
+        { provide: SpaceNavService, useValue: { navigateToMember: vi.fn() } },
       ],
     })
       .overrideComponent(ScrumCardComponent, {

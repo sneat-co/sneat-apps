@@ -12,4 +12,3 @@ export * from './lib/pages/my/page/datatug-my-page.component';
 export * from './lib/pages/home/datatug-home-page.component';
 export * from './lib/pages/home/my-projects/my-datatug-projects.component';
 export { DatatugHomePageComponent } from './lib/pages/home/datatug-home-page.component';
-export { NavService } from './lib/core/services/nav.service';

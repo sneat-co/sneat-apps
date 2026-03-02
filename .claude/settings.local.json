@@ -58,7 +58,10 @@
       "Bash(gh run list:*)",
       "Bash(gh api:*)",
       "Bash(pnpm nx show project:*)",
-      "Bash(pnpm nx graph:*)"
+      "Bash(pnpm nx graph:*)",
+      "Bash(pnpm nx:*)",
+      "Bash(do:*)",
+      "Bash(pnx build:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

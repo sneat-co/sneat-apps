@@ -7,7 +7,6 @@ import {
   inject,
 } from '@angular/core';
 import {
-  NavController,
   IonAvatar,
   IonBadge,
   IonButton,
@@ -20,7 +19,7 @@ import {
   IonList,
 } from '@ionic/angular/standalone';
 import { IRecord } from '@sneat/data';
-import { NavService } from '@sneat/datatug-main';
+import { SpaceNavService } from '@sneat/space-services';
 import { IMemberBrief, ISpaceDbo } from '@sneat/dto';
 import { Timer } from '@sneat/ext-meeting';
 import { IScrumDbo, IStatus, ITask } from '@sneat/ext-scrumspace-scrummodels';
@@ -51,8 +50,7 @@ import { ScrumTasksComponent } from '../scrum-tasks/scrum-tasks.component';
 export class ScrumCardComponent {
   showMember = inject(new HostAttributeToken('showMember'), { optional: true });
   viewMode = inject(new HostAttributeToken('viewMode'), { optional: true });
-  private readonly navController = inject(NavController);
-  private readonly navService = inject(NavService);
+  private readonly navService = inject(SpaceNavService);
 
   @Input() space?: IRecord<ISpaceDbo>;
   @Input() currentMemberId?: string;
@@ -93,7 +91,7 @@ export class ScrumCardComponent {
     if (!member) {
       throw new Error('!this.member');
     }
-    this.navService.navigateToMember(this.navController, this.space, member);
+    this.navService.navigateToMember(this.space, member);
   }
 
   public get gravatar(): string {

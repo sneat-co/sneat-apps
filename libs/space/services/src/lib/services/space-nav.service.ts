@@ -1,7 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { Params } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { AnalyticsService, IAnalyticsService, ISpaceRef } from '@sneat/core';
+import { AnalyticsService, IAnalyticsService, IIdAndBrief, ISpaceRef } from '@sneat/core';
+import { IMemberBrief } from '@sneat/contactus-core';
 
 type NavigationOptions = NonNullable<
   Parameters<NavController['navigateRoot']>[1]
@@ -84,6 +85,21 @@ export class SpaceNavService {
           reject(err);
         });
     });
+  }
+
+  public navigateToMember(
+    space: ISpaceContext,
+    memberInfo: IIdAndBrief<IMemberBrief>,
+  ): void {
+    const id = `${space.id}:${memberInfo.id}`;
+    this.navForward(
+      this.navController,
+      'member',
+      {
+        queryParams: { id },
+        state: { space, memberInfo },
+      },
+    );
   }
 
   public navigateToAddMetric = (
