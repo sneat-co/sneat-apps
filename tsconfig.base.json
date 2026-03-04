@@ -26,7 +26,6 @@
     "baseUrl": ".",
     "paths": {
       "@sneat/communes-ui": ["libs/communes/ui/src/index.ts"],
-      "@sneat/contactus-internal": ["libs/contactus/internal/src/index.ts"],
       "@sneat/core/testing-base": [
         "libs/testing/src/base-test-setup.ts"
       ],
@@ -58,17 +57,10 @@
       "@sneat/extensions-docus": ["libs/extensions/docus/src/index.ts"],
       "@sneat/extensions-listus": ["libs/extensions/listus/src/index.ts"],
       "@sneat/extensions-logist": ["libs/extensions/logist/src/index.ts"],
-      "@sneat/extensions-schedulus-main": [
-        "libs/extensions/schedulus/main/src/index.ts"
-      ],
-      "@sneat/extensions-schedulus-shared": [
-        "libs/extensions/schedulus/shared/src/index.ts"
-      ],
       "@sneat/extensions-trackus": ["libs/extensions/trackus/src/index.ts"],
       "@sneat/space-pages": ["libs/space/pages/src/index.ts"],
       "@sneat/timer": ["libs/timer/src/index.ts"],
-      "@sneat/user": ["libs/user/src/index.ts"],
-      "@sneat/wizard": ["libs/wizard/src/index.ts"]
+      "@sneat/user": ["libs/user/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

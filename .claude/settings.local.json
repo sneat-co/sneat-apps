@@ -88,7 +88,10 @@
       "Bash(rm:*)",
       "Bash(mkdir:*)",
       "Bash(do cp:*)",
-      "Bash(/tmp/deps_analysis.sh:*)"
+      "Bash(/tmp/deps_analysis.sh:*)",
+      "Bash(bash:*)",
+      "Bash(pnpm view:*)",
+      "Bash(curl:*)"
     ]
   },
   "enableAllProjectMcpServers": true,
