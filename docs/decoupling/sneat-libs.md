@@ -26,25 +26,26 @@
 Libraries must be migrated in topological order (dependencies before dependents).
 All are currently in `sneat-apps/libs/`.
 
-| # | Package | Source path in sneat-apps | Internal `@sneat/*` deps | Lib type |
-|---|---------|--------------------------|--------------------------|----------|
-| 1 | `@sneat/core` | `libs/core` | _(none)_ | Angular |
-| 2 | `@sneat/ui` | `libs/ui` | _(none)_ | Angular |
-| 3 | `@sneat/data` | `libs/data` | _(none — core is test-only)_ | TS |
-| 4 | `@sneat/grid` | `libs/grid` | _(none — core is test-only)_ | TS |
-| 5 | `@sneat/auth-models` | `libs/auth/models` | `core` | TS |
-| 6 | `@sneat/api` | `libs/api` | `core` | Angular |
-| 7 | `@sneat/logging` | `libs/logging` | `core` | Angular |
-| 8 | `@sneat/dto` | `libs/dto` | `auth-models`, `core` | TS |
-| 9 | `@sneat/space-models` | `libs/space/models` | `core`, `data`, `dto` | TS |
-| 10 | `@sneat/auth-core` | `libs/auth/core` | `api`, `auth-models`, `core`, `dto` | Angular |
-| 11 | `@sneat/datagrid` | `libs/datagrid` | `core`, `grid` | Angular |
-| 12 | `@sneat/contactus-core` | `libs/contactus/core` | `auth-models`, `core`, `dto`, `space-models` | TS/Angular |
-| 13 | `@sneat/components` | `libs/components` | `auth-core`, `core`, `data`, `ui` | Angular |
-| 14 | `@sneat/auth-ui` | `libs/auth/ui` | `api`, `auth-core`, `auth-models`, `core`, `space-models`, `ui` | Angular |
-| 15 | `@sneat/space-services` | `libs/space/services` | `api`, `auth-core`, `auth-models`, `contactus-core`, `core`, `data`, `dto`, `space-models`, `ui` | Angular |
+| #   | Package                 | Source path in sneat-apps | Internal `@sneat/*` deps                                                                         | Lib type   |
+| --- | ----------------------- | ------------------------- | ------------------------------------------------------------------------------------------------ | ---------- |
+| 1   | `@sneat/core`           | `libs/core`               | _(none)_                                                                                         | Angular    |
+| 2   | `@sneat/ui`             | `libs/ui`                 | _(none)_                                                                                         | Angular    |
+| 3   | `@sneat/data`           | `libs/data`               | _(none — core is test-only)_                                                                     | TS         |
+| 4   | `@sneat/grid`           | `libs/grid`               | _(none — core is test-only)_                                                                     | TS         |
+| 5   | `@sneat/auth-models`    | `libs/auth/models`        | `core`                                                                                           | TS         |
+| 6   | `@sneat/api`            | `libs/api`                | `core`                                                                                           | Angular    |
+| 7   | `@sneat/logging`        | `libs/logging`            | `core`                                                                                           | Angular    |
+| 8   | `@sneat/dto`            | `libs/dto`                | `auth-models`, `core`                                                                            | TS         |
+| 9   | `@sneat/space-models`   | `libs/space/models`       | `core`, `data`, `dto`                                                                            | TS         |
+| 10  | `@sneat/auth-core`      | `libs/auth/core`          | `api`, `auth-models`, `core`, `dto`                                                              | Angular    |
+| 11  | `@sneat/datagrid`       | `libs/datagrid`           | `core`, `grid`                                                                                   | Angular    |
+| 12  | `@sneat/contactus-core` | `libs/contactus/core`     | `auth-models`, `core`, `dto`, `space-models`                                                     | TS/Angular |
+| 13  | `@sneat/components`     | `libs/components`         | `auth-core`, `core`, `data`, `ui`                                                                | Angular    |
+| 14  | `@sneat/auth-ui`        | `libs/auth/ui`            | `api`, `auth-core`, `auth-models`, `core`, `space-models`, `ui`                                  | Angular    |
+| 15  | `@sneat/space-services` | `libs/space/services`     | `api`, `auth-core`, `auth-models`, `contactus-core`, `core`, `data`, `dto`, `space-models`, `ui` | Angular    |
 
 **External packages already on NPM** (not moving, just dependencies):
+
 - `@sneat/random` — used by `auth-core`, `auth-ui`
 - `@sneat/wormhole` — used by `datatug-main`
 
@@ -76,6 +77,7 @@ pnpm nx add @nx/vite          # vitest testing
 ```
 
 Match the Angular version in `sneat-apps`:
+
 ```bash
 # Check current version
 node -e "require('./node_modules/@angular/core/package.json').version" 2>/dev/null \
@@ -89,8 +91,8 @@ node -e "require('./node_modules/@angular/core/package.json').version" 2>/dev/nu
   "defaultBase": "main",
   "targetDefaults": {
     "build": { "dependsOn": ["^build"], "cache": true },
-    "test":  { "cache": true },
-    "lint":  { "cache": true }
+    "test": { "cache": true },
+    "lint": { "cache": true }
   },
   "release": {
     "projects": ["*"],
@@ -123,6 +125,7 @@ cp -r /path/to/sneat-apps/libs/core libs/core
 #### Step B — Generate Nx project config
 
 For **Angular libs** (types: Angular, Angular components/services):
+
 ```bash
 pnx generate @nx/angular:library \
   --name=<lib-name> \
@@ -135,6 +138,7 @@ pnx generate @nx/angular:library \
 ```
 
 For **pure TS libs** (data, grid, auth-models, dto, space-models, contactus-core):
+
 ```bash
 pnx generate @nx/js:library \
   --name=<lib-name> \
@@ -222,6 +226,7 @@ Configured in `nx.json` (see §2.3). Uses conventional commits for automatic ver
 ### 4.2 NPM Org
 
 Packages publish under `@sneat/` scope. Requires:
+
 - NPM org `sneat` to exist with public publishing enabled
 - `NPM_TOKEN` secret in CI
 
@@ -279,20 +284,20 @@ In `sneat-apps/package.json` (and similarly `datatug/package.json`):
 {
   "pnpm": {
     "overrides": {
-      "@sneat/core":           "file:../sneat-libs/dist/libs/core",
-      "@sneat/ui":             "file:../sneat-libs/dist/libs/ui",
-      "@sneat/data":           "file:../sneat-libs/dist/libs/data",
-      "@sneat/grid":           "file:../sneat-libs/dist/libs/grid",
-      "@sneat/auth-models":    "file:../sneat-libs/dist/libs/auth/models",
-      "@sneat/api":            "file:../sneat-libs/dist/libs/api",
-      "@sneat/logging":        "file:../sneat-libs/dist/libs/logging",
-      "@sneat/dto":            "file:../sneat-libs/dist/libs/dto",
-      "@sneat/space-models":   "file:../sneat-libs/dist/libs/space/models",
-      "@sneat/auth-core":      "file:../sneat-libs/dist/libs/auth/core",
-      "@sneat/datagrid":       "file:../sneat-libs/dist/libs/datagrid",
+      "@sneat/core": "file:../sneat-libs/dist/libs/core",
+      "@sneat/ui": "file:../sneat-libs/dist/libs/ui",
+      "@sneat/data": "file:../sneat-libs/dist/libs/data",
+      "@sneat/grid": "file:../sneat-libs/dist/libs/grid",
+      "@sneat/auth-models": "file:../sneat-libs/dist/libs/auth/models",
+      "@sneat/api": "file:../sneat-libs/dist/libs/api",
+      "@sneat/logging": "file:../sneat-libs/dist/libs/logging",
+      "@sneat/dto": "file:../sneat-libs/dist/libs/dto",
+      "@sneat/space-models": "file:../sneat-libs/dist/libs/space/models",
+      "@sneat/auth-core": "file:../sneat-libs/dist/libs/auth/core",
+      "@sneat/datagrid": "file:../sneat-libs/dist/libs/datagrid",
       "@sneat/contactus-core": "file:../sneat-libs/dist/libs/contactus/core",
-      "@sneat/components":     "file:../sneat-libs/dist/libs/components",
-      "@sneat/auth-ui":        "file:../sneat-libs/dist/libs/auth/ui",
+      "@sneat/components": "file:../sneat-libs/dist/libs/components",
+      "@sneat/auth-ui": "file:../sneat-libs/dist/libs/auth/ui",
       "@sneat/space-services": "file:../sneat-libs/dist/libs/space/services"
     }
   }
@@ -300,6 +305,7 @@ In `sneat-apps/package.json` (and similarly `datatug/package.json`):
 ```
 
 > **Assumes** sneat-libs and sneat-apps repos are sibling directories:
+>
 > ```
 > projects/
 >   sneat-libs/
@@ -338,6 +344,7 @@ pnpm add @sneat/core @sneat/ui @sneat/data @sneat/grid \
 ### 6.2 Remove libs from sneat-apps
 
 For each migrated lib:
+
 1. Delete `libs/<path>/` from `sneat-apps`
 2. Remove its path alias from `tsconfig.base.json`
 3. Remove its Nx project entry (or run `pnx generate @nx/workspace:remove --projectName=<name>`)
@@ -368,8 +375,19 @@ pnx run-many -t build,test,lint --all
 
 ### sneat-apps after transition
 
-- [ ] Zero `libs/` directories that belong in sneat-libs remain
-- [ ] Zero path aliases in `tsconfig.base.json` for moved libs
-- [ ] `pnx run-many -t build,test,lint --all` passes
-- [ ] `pnpm ls @sneat/core` shows the NPM version (not `file:`)
-- [ ] No `pnpm.overrides` in `package.json`
+- [x] Zero `libs/` directories that belong in sneat-libs remain (Mar 2026)
+- [x] Zero path aliases in `tsconfig.base.json` for moved libs (Mar 2026)
+- [x] `pnx run-many -t build,test,lint --all` passes (Mar 2026)
+- [x] `pnpm ls @sneat/core` shows the NPM version `0.1.4` (not `file:`) (Mar 2026)
+- [x] No `@sneat/*` `file:` overrides in `package.json` (Mar 2026)
+
+### sneat-libs publish fix — COMPLETE (v0.1.4)
+
+Root causes fixed in sneat-libs:
+
+- `tsconfig.lib.base.json` — added `"compilationMode": "partial"` (full mode blocked publish with prepublishOnly guard)
+- `nx.json` — added `release.publish` executor (`@nx/js:release-publish`) pointing to `dist/{projectRoot}`
+- `nx.json` — added `release.version.generatorOptions.packageRoot: "dist/{projectRoot}"`
+- `libs/components/ng-package.json` — added `assets: ["src/**/*.scss"]` so SCSS is in dist
+
+v0.1.4 published to NPM with correctly compiled dist output. All 39 sneat-apps projects pass build, test, and lint consuming from NPM.

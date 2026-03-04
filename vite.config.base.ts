@@ -107,6 +107,7 @@ export function createBaseViteConfig(
             '@ionic/angular/standalone',
             '@angular/fire',
             /@angular\//,
+            /@sneat\//,
             /@stencil\//,
             /tslib/,
           ],

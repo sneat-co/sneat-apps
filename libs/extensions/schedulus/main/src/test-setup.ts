@@ -1,3 +1,3 @@
-import { setupTestEnvironment } from '../../../../core/src/lib/testing/test-setup';
+import { setupTestEnvironment } from '@sneat/core/testing';
 
 setupTestEnvironment();

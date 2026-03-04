@@ -25,11 +25,8 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@sneat/app": ["libs/app/src/index.ts"],
       "@sneat/communes-ui": ["libs/communes/ui/src/index.ts"],
       "@sneat/contactus-internal": ["libs/contactus/internal/src/index.ts"],
-      "@sneat/contactus-services": ["libs/contactus/services/src/index.ts"],
-      "@sneat/contactus-shared": ["libs/contactus/shared/src/index.ts"],
       "@sneat/core/testing-base": [
         "libs/testing/src/base-test-setup.ts"
       ],
@@ -38,9 +35,6 @@
         "libs/testing/src/test-setup-light.ts"
       ],
 "@sneat/datetime": ["libs/datetime/src/index.ts"],
-      "@sneat/ext-assetus-components": [
-        "libs/extensions/assetus/components/src/index.ts"
-      ],
       "@sneat/ext-debtus-internal": [
         "libs/extensions/debtus/internal/src/index.ts"
       ],
@@ -71,11 +65,6 @@
         "libs/extensions/schedulus/shared/src/index.ts"
       ],
       "@sneat/extensions-trackus": ["libs/extensions/trackus/src/index.ts"],
-      "@sneat/mod-assetus-core": ["libs/extensions/assetus/core/src/index.ts"],
-      "@sneat/mod-schedulus-core": [
-        "libs/extensions/schedulus/core/src/index.ts"
-      ],
-      "@sneat/space-components": ["libs/space/components/src/index.ts"],
       "@sneat/space-pages": ["libs/space/pages/src/index.ts"],
       "@sneat/timer": ["libs/timer/src/index.ts"],
       "@sneat/user": ["libs/user/src/index.ts"],

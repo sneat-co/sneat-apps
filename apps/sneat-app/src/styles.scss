@@ -27,4 +27,4 @@
 @include meta.load-css('@ionic/angular/css/text-transformation.css');
 @include meta.load-css('@ionic/angular/css/flex-utils.css');
 
-@include meta.load-css('../../../libs/components/src/sneat-styles.scss');
+@include meta.load-css('@sneat/components/src/sneat-styles.scss');
