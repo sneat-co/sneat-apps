@@ -26,29 +26,18 @@
     "baseUrl": ".",
     "paths": {
       "@sneat/app": ["libs/app/src/index.ts"],
-      "@sneat/api": ["libs/api/src/index.ts"],
-      "@sneat/auth-core": ["libs/auth/core/src/index.ts"],
-      "@sneat/auth-models": ["libs/auth/models/src/index.ts"],
-      "@sneat/auth-ui": ["libs/auth/ui/src/index.ts"],
       "@sneat/communes-ui": ["libs/communes/ui/src/index.ts"],
-      "@sneat/components": ["libs/components/src/index.ts"],
-      "@sneat/contactus-core": ["libs/contactus/core/src/index.ts"],
       "@sneat/contactus-internal": ["libs/contactus/internal/src/index.ts"],
       "@sneat/contactus-services": ["libs/contactus/services/src/index.ts"],
       "@sneat/contactus-shared": ["libs/contactus/shared/src/index.ts"],
-      "@sneat/core": ["libs/core/src/index.ts"],
       "@sneat/core/testing-base": [
-        "libs/core/src/lib/testing/base-test-setup.ts"
+        "libs/testing/src/base-test-setup.ts"
       ],
-      "@sneat/core/testing": ["libs/core/src/lib/testing/test-setup.ts"],
+      "@sneat/core/testing": ["libs/testing/src/test-setup.ts"],
       "@sneat/core/testing-light": [
-        "libs/core/src/lib/testing/test-setup-light.ts"
+        "libs/testing/src/test-setup-light.ts"
       ],
-      "@sneat/data": ["libs/data/src/index.ts"],
-      "@sneat/datagrid": ["libs/datagrid/src/index.ts"],
-      "@sneat/datatug-main": ["libs/datatug/main/src/public_api.ts"],
-      "@sneat/datetime": ["libs/datetime/src/index.ts"],
-      "@sneat/dto": ["libs/dto/src/index.ts"],
+"@sneat/datetime": ["libs/datetime/src/index.ts"],
       "@sneat/ext-assetus-components": [
         "libs/extensions/assetus/components/src/index.ts"
       ],
@@ -82,18 +71,13 @@
         "libs/extensions/schedulus/shared/src/index.ts"
       ],
       "@sneat/extensions-trackus": ["libs/extensions/trackus/src/index.ts"],
-      "@sneat/grid": ["libs/grid/src/index.ts"],
-      "@sneat/logging": ["libs/logging/src/index.ts"],
       "@sneat/mod-assetus-core": ["libs/extensions/assetus/core/src/index.ts"],
       "@sneat/mod-schedulus-core": [
         "libs/extensions/schedulus/core/src/index.ts"
       ],
       "@sneat/space-components": ["libs/space/components/src/index.ts"],
-      "@sneat/space-models": ["libs/space/models/src/index.ts"],
       "@sneat/space-pages": ["libs/space/pages/src/index.ts"],
-      "@sneat/space-services": ["libs/space/services/src/index.ts"],
       "@sneat/timer": ["libs/timer/src/index.ts"],
-      "@sneat/ui": ["libs/ui/src/index.ts"],
       "@sneat/user": ["libs/user/src/index.ts"],
       "@sneat/wizard": ["libs/wizard/src/index.ts"]
     }
