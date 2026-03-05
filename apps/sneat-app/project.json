@@ -54,13 +54,7 @@
           "optimization": false,
           "extractLicenses": false,
           "sourceMap": true,
-          "namedChunks": true,
-          "fileReplacements": [
-            {
-              "replace": "libs/app/src/environments/environment.ts",
-              "with": "libs/app/src/environments/environment.local.ts"
-            }
-          ]
+          "namedChunks": true
         },
         "e2e-development": {
           "optimization": false,
@@ -68,13 +62,7 @@
           "sourceMap": true,
           "namedChunks": true,
           "aot": true,
-          "extractLicenses": false,
-          "fileReplacements": [
-            {
-              "replace": "libs/app/src/environments/environment.ts",
-              "with": "libs/app/src/environments/environment.e2e.ts"
-            }
-          ]
+          "extractLicenses": false
         },
         "e2e-production": {
           "optimization": true,
@@ -82,13 +70,7 @@
           "sourceMap": false,
           "namedChunks": false,
           "aot": true,
-          "extractLicenses": true,
-          "fileReplacements": [
-            {
-              "replace": "libs/app/src/environments/environment.ts",
-              "with": "libs/app/src/environments/environment.e2e.ts"
-            }
-          ]
+          "extractLicenses": true
         },
         "e2e-ci": {
           "optimization": true,
@@ -96,13 +78,7 @@
           "sourceMap": false,
           "namedChunks": false,
           "aot": true,
-          "extractLicenses": true,
-          "fileReplacements": [
-            {
-              "replace": "libs/app/src/environments/environment.ts",
-              "with": "libs/app/src/environments/environment.ci.ts"
-            }
-          ]
+          "extractLicenses": true
         }
       },
       "defaultConfiguration": "production"
