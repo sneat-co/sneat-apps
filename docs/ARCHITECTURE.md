@@ -323,6 +323,8 @@ Logistics and shipment management application.
 
 ### Core Libraries
 
+> See **[sneat-libs.md](sneat-libs.md)** for the full annotated list of shared `@sneat/*` packages with source dirs and npm links.
+
 Core libraries provide foundational functionality used across applications:
 
 | Library               | Purpose                                           |

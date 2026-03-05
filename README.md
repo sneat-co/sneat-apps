@@ -23,6 +23,10 @@ A suit of open source apps that help in work & personal life.
 [//]: # '    - [ScrumSpace](src/apps/scrumspace) - daily scrums & retrospectives for agile teams '
 [//]: # '    - [IssueNumber.One](src/apps/issuenumberone) - facilitates continuous **focused** feedback & improvements'
 
+## Apps
+
+See **[docs/apps/](docs/apps/)** for the full list of apps and their descriptions.
+
 ## Architecture Overview
 
 Read [ARCHITECTURE.md](docs/ARCHITECTURE.md).
