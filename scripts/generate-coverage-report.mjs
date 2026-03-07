@@ -188,7 +188,7 @@ function parseDetailedCoverage(coverageFile) {
 				pct: totalStatements > 0 ? (coveredStatements / totalStatements * 100) : 100,
 			},
 		};
-	} catch (error) {
+	} catch {
 		return null;
 	}
 }
