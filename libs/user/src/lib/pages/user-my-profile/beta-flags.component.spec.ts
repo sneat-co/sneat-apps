@@ -8,7 +8,7 @@ import { ClassName } from '@sneat/ui';
 describe('BetaFlagsComponent', () => {
   let component: BetaFlagsComponent;
   let fixture: ComponentFixture<BetaFlagsComponent>;
-  let userServiceMock: { userState: import('rxjs').Observable<any> };
+  let userServiceMock: { userState: import('rxjs').Observable<unknown> };
 
   beforeEach(async () => {
     userServiceMock = {

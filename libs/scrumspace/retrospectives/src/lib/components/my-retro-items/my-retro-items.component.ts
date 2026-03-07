@@ -69,7 +69,7 @@ import { IUserRecord } from '@sneat/auth-models';
 export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
   private readonly retrospectiveService = inject(RetrospectiveService);
   private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
-  private readonly userService = inject(SneatUserService);
+  // private readonly userService = inject(SneatUserService);
 
   @ViewChild(IonInput, { static: false }) titleInput?: IonInput; // TODO: IonInput;
 
@@ -187,12 +187,10 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
       })
       .subscribe({
         next: () => {
-          let list = this.retroLists?.find((l) => l.id === type);
-          if (list)
-            list = {
-              ...list,
-              items: list?.items?.filter((v) => v.ID !== item.ID),
-            };
+          const list = this.retroLists?.find((l) => l.id === type);
+          if (list) {
+            list.items = list?.items?.filter((v) => v.ID !== item.ID);
+          }
         },
         error: (err) => {
           item.isDeleting = false;
@@ -243,7 +241,6 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
       this.titleControl.setValue('');
       this.retrospectiveService.addRetroItem(request).subscribe(
         () => {
-
           // const item: IRetroItem = {id: response.id, title: request.title};
           // const items = this.itemsByType[type];
           // if (items) {
@@ -271,40 +268,40 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  private processUserRecord(user: IRecord<IUserRecord>): void {
-    try {
-      const spaceInfo = user?.dbo?.spaces?.[this.spaceID || ''];
-      if (!spaceInfo) {
-        return; // TODO: Log error & redirect to /teams
-      }
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      if (spaceInfo.retroItems) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        Object.entries(spaceInfo.retroItems).forEach(([itemType, items]) => {
-          const retroList = this.retroLists?.find((rl) => rl.id === itemType);
-          if (retroList) {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            if (items && items.length) {
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-              retroList.items = items;
-            } else {
-              delete retroList.items;
-            }
-          } else {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            this.retroLists.push({ id: itemType, title: itemType, items });
-          }
-        });
-      } else {
-        this.retroLists?.forEach((retroList) => delete retroList.items);
-      }
-    } catch (e) {
-      this.errorLogger.logError(e, 'Failed to process user record');
-    }
-  }
+  // private processUserRecord(user: IRecord<IUserRecord>): void {
+  //   try {
+  //     const spaceInfo = user?.dbo?.spaces?.[this.spaceID || ''];
+  //     if (!spaceInfo) {
+  //       return; // TODO: Log error & redirect to /teams
+  //     }
+  //     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //     // @ts-ignore
+  //     if (spaceInfo.retroItems) {
+  //       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //       // @ts-ignore
+  //       Object.entries(spaceInfo.retroItems).forEach(([itemType, items]) => {
+  //         const retroList = this.retroLists?.find((rl) => rl.id === itemType);
+  //         if (retroList) {
+  //           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //           // @ts-ignore
+  //           if (items && items.length) {
+  //             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //             // @ts-ignore
+  //             retroList.items = items;
+  //           } else {
+  //             delete retroList.items;
+  //           }
+  //         } else {
+  //           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //           // @ts-ignore
+  //           this.retroLists.push({ id: itemType, title: itemType, items });
+  //         }
+  //       });
+  //     } else {
+  //       this.retroLists?.forEach((retroList) => delete retroList.items);
+  //     }
+  //   } catch (e) {
+  //     this.errorLogger.logError(e, 'Failed to process user record');
+  //   }
+  // }
 }

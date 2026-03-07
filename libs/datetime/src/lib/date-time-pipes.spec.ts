@@ -2,8 +2,8 @@ import { secondsToStr } from './date-time-pipes';
 
 describe('secondsToStr', () => {
   it('should return undefined for undefined or null input', () => {
-    expect(secondsToStr(undefined as any)).toBeUndefined();
-    expect(secondsToStr(null as any)).toBeUndefined();
+    expect(secondsToStr(undefined as unknown as number)).toBeUndefined();
+    expect(secondsToStr(null as unknown as number)).toBeUndefined();
   });
 
   it('should format seconds to string correctly', () => {
