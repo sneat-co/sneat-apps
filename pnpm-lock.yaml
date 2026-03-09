@@ -145,7 +145,7 @@ importers:
         version: 0.3.0(@angular/common@21.2.1(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))
       '@sneat/logging':
         specifier: 0.3.0
-        version: 0.3.0(79c6860b648503f0763995ed396d1fcc)
+        version: 0.3.0(f4cd080d4d5bb54701833fa480a9e2c3)
       '@sneat/mod-assetus-core':
         specifier: 0.3.0
         version: 0.3.0(@angular/common@21.2.1(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))
@@ -166,7 +166,7 @@ importers:
         version: 0.3.0(@angular/common@21.2.1(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))(@angular/fire@20.0.1(cfad077ccb686a8beb69f1c970bca4d0))(@ionic/angular@8.8.1(5d8d43f5d74a4808a9d38d80e9c2ca6c))(firebase@12.10.0)
       '@sneat/ui':
         specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.1(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))(@ionic/angular@8.8.1(5d8d43f5d74a4808a9d38d80e9c2ca6c))(@sneat/logging@0.3.0(79c6860b648503f0763995ed396d1fcc))
+        version: 0.3.0(@angular/common@21.2.1(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))(@ionic/angular@8.8.1(5d8d43f5d74a4808a9d38d80e9c2ca6c))(@sneat/logging@0.3.0(f4cd080d4d5bb54701833fa480a9e2c3))
       '@sneat/wizard':
         specifier: 0.3.0
         version: 0.3.0(@angular/common@21.2.1(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))
@@ -192,8 +192,8 @@ importers:
         specifier: 8.0.13
         version: 8.0.13
       posthog-js:
-        specifier: 1.359.1
-        version: 1.359.1
+        specifier: 1.360.0
+        version: 1.360.0
       rxjs:
         specifier: 7.8.2
         version: 7.8.2
@@ -4109,8 +4109,8 @@ packages:
   '@posthog/core@1.23.2':
     resolution: {integrity: sha512-zTDdda9NuSHrnwSOfFMxX/pyXiycF4jtU1kTr8DL61dHhV+7LF6XF1ndRZZTuaGGbfbb/GJYkEsjEX9SXfNZeQ==}
 
-  '@posthog/types@1.359.1':
-    resolution: {integrity: sha512-oQihoHWLnOkSkzOToCWKNigbJ7UZcIkl+rSJuq2PLwL7EB0Q/r1UGSbVCkrPH8xtPbYpi7w4TVpMrg41TMT+LQ==}
+  '@posthog/types@1.360.0':
+    resolution: {integrity: sha512-roypbiJ49V3jWlV/lzhXGf0cKLLRj69L4H4ZHW6YsITHlnjQ12cgdPhPS88Bb9nW9xZTVSGWWDjfNGsdgAxsNg==}
 
   '@protobufjs/aspromise@1.1.2':
     resolution: {integrity: sha512-j+gKExEuLmKwvz3OgROXtrJ2UG2x8Ch2YZUxahh+s1F2HZ+wAceUNLkvy6zKCPVRkU++ZWQrdxsUeQXmcg4uoQ==}
@@ -10155,8 +10155,8 @@ packages:
     resolution: {integrity: sha512-9ZhXKM/rw350N1ovuWHbGxnGh/SNJ4cnxHiM0rxE4VN41wsg8P8zWn9hv/buK00RP4WvlOyr/RBDiptyxVbkZQ==}
     engines: {node: '>=0.10.0'}
 
-  posthog-js@1.359.1:
-    resolution: {integrity: sha512-Gy/eX02im6ON0zMxfTR61GNk1sjgLT9rVGfBQ5C757/WS4mN3vTUJveQYoX9jr3y0pqPZ57DqCcf6zcw++bpzQ==}
+  posthog-js@1.360.0:
+    resolution: {integrity: sha512-jkyO+T97yi6RuiexOaXC7AnEGiC+yIfGU5DIUzI5rqBH6MltmtJw/ve2Oxc4jeua2WDr5sXMzo+SS+acbpueAA==}
 
   powershell-utils@0.1.0:
     resolution: {integrity: sha512-dM0jVuXJPsDN6DvRpea484tCUaMiXWjuCn++HGTqUWzGDjv5tZkEZldAJ/UMlqRYGFrD/etByo4/xOuC/snX2A==}
@@ -16916,7 +16916,7 @@ snapshots:
     dependencies:
       cross-spawn: 7.0.6
 
-  '@posthog/types@1.359.1': {}
+  '@posthog/types@1.360.0': {}
 
   '@protobufjs/aspromise@1.1.2': {}
 
@@ -17403,14 +17403,14 @@ snapshots:
       '@angular/core': 21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1)
       tslib: 2.8.1
 
-  '@sneat/logging@0.3.0(79c6860b648503f0763995ed396d1fcc)':
+  '@sneat/logging@0.3.0(f4cd080d4d5bb54701833fa480a9e2c3)':
     dependencies:
       '@angular/common': 21.2.1(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
       '@angular/core': 21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1)
       '@angular/fire': 20.0.1(cfad077ccb686a8beb69f1c970bca4d0)
       '@sentry/angular': 10.42.0(@angular/common@21.2.1(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))(@angular/router@21.2.1(@angular/common@21.2.1(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))(@angular/platform-browser@21.2.1(@angular/animations@21.2.1(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1)))(@angular/common@21.2.1(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1)))(rxjs@7.8.2))(rxjs@7.8.2)
       firebase: 12.10.0
-      posthog-js: 1.359.1
+      posthog-js: 1.360.0
       tslib: 2.8.1
 
   '@sneat/mod-assetus-core@0.3.0(@angular/common@21.2.1(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))':
@@ -17453,12 +17453,12 @@ snapshots:
       firebase: 12.10.0
       tslib: 2.8.1
 
-  '@sneat/ui@0.3.0(@angular/common@21.2.1(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))(@ionic/angular@8.8.1(5d8d43f5d74a4808a9d38d80e9c2ca6c))(@sneat/logging@0.3.0(79c6860b648503f0763995ed396d1fcc))':
+  '@sneat/ui@0.3.0(@angular/common@21.2.1(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))(@ionic/angular@8.8.1(5d8d43f5d74a4808a9d38d80e9c2ca6c))(@sneat/logging@0.3.0(f4cd080d4d5bb54701833fa480a9e2c3))':
     dependencies:
       '@angular/common': 21.2.1(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
       '@angular/core': 21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1)
       '@ionic/angular': 8.8.1(5d8d43f5d74a4808a9d38d80e9c2ca6c)
-      '@sneat/logging': 0.3.0(79c6860b648503f0763995ed396d1fcc)
+      '@sneat/logging': 0.3.0(f4cd080d4d5bb54701833fa480a9e2c3)
       tslib: 2.8.1
 
   '@sneat/wizard@0.3.0(@angular/common@21.2.1(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.16.1))':
@@ -23989,7 +23989,7 @@ snapshots:
     dependencies:
       xtend: 4.0.2
 
-  posthog-js@1.359.1:
+  posthog-js@1.360.0:
     dependencies:
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/api-logs': 0.208.0
@@ -23997,7 +23997,7 @@ snapshots:
       '@opentelemetry/resources': 2.3.0(@opentelemetry/api@1.9.0)
       '@opentelemetry/sdk-logs': 0.208.0(@opentelemetry/api@1.9.0)
       '@posthog/core': 1.23.2
-      '@posthog/types': 1.359.1
+      '@posthog/types': 1.360.0
       core-js: 3.41.0
       dompurify: 3.3.2
       fflate: 0.4.8
