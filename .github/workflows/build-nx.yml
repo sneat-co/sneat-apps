@@ -37,7 +37,7 @@ jobs:
       - uses: ./.github/actions/pnpm
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v4
+        uses: nrwl/nx-set-shas@v5
 
       - name: Check circular dependencies
         run: |
@@ -73,7 +73,7 @@ jobs:
       - uses: ./.github/actions/pnpm
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v4
+        uses: nrwl/nx-set-shas@v5
 
       - name: Cache Vite dependency pre-bundle
         uses: actions/cache@v5
