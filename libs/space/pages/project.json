@@ -7,7 +7,9 @@
   "targets": {
     "build": {
       "executor": "@nx/angular:ng-packagr-lite",
-      "outputs": ["{workspaceRoot}/dist/libs/space/pages"],
+      "outputs": [
+        "{workspaceRoot}/dist/libs/space/pages"
+      ],
       "options": {
         "project": "libs/space/pages/ng-package.json",
         "tsConfig": "libs/space/pages/tsconfig.lib.json"
@@ -22,9 +24,11 @@
     },
     "test": {
       "executor": "@nx/vitest:test",
-      "outputs": ["{options.reportsDirectory}"],
+      "outputs": [
+        "{options.reportsDirectory}"
+      ],
       "options": {
-        "reportsDirectory": "../../../coverage/libs/space/pages"
+        "reportsDirectory": "{projectRoot}/../../../coverage/libs/space/pages"
       }
     },
     "lint": {
