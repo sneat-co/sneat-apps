@@ -1,0 +1,156 @@
+{
+  "name": "sneat-work",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/sneat-work/src",
+  "prefix": "sneat",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/sneat-work",
+        "index": "apps/sneat-work/src/index.html",
+        "browser": "apps/sneat-work/src/main.ts",
+        "polyfills": ["zone.js"],
+        "allowedCommonJsDependencies": ["qrcode"],
+        "tsConfig": "apps/sneat-work/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/sneat-work/src/favicon.ico",
+          "apps/sneat-work/src/assets",
+          {
+            "glob": "**/*.svg",
+            "input": "node_modules/ionicons/dist/ionicons/svg",
+            "output": "./svg"
+          }
+        ],
+        "styles": ["apps/sneat-work/src/styles.scss"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2.5mb",
+              "maximumError": "3mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/sneat-work/src/environments/environment.ts",
+              "with": "apps/sneat-work/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        },
+        "e2e-development": {
+          "optimization": false,
+          "outputHashing": "all",
+          "sourceMap": true,
+          "namedChunks": true,
+          "aot": true,
+          "extractLicenses": false
+        },
+        "e2e-production": {
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "aot": true,
+          "extractLicenses": true
+        },
+        "e2e-ci": {
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "aot": true,
+          "extractLicenses": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "sneat-work:build:production"
+        },
+        "development": {
+          "buildTarget": "sneat-work:build:development"
+        },
+        "e2e-development": {
+          "buildTarget": "sneat-work:build:e2e-development"
+        },
+        "e2e-production": {
+          "buildTarget": "sneat-work:build:e2e-production"
+        },
+        "e2e-ci": {
+          "buildTarget": "sneat-work:build:e2e-ci"
+        }
+      },
+      "defaultConfiguration": "development",
+      "continuous": true
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "sneat-work:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{workspaceRoot}/coverage/apps/sneat-work"],
+      "options": {
+        "tsConfig": "apps/sneat-work/tsconfig.spec.json"
+      }
+    },
+    "e2e": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx playwright test",
+        "cwd": "."
+      },
+      "configurations": {
+        "development": {
+          "command": "npx playwright test --project=chromium"
+        },
+        "production": {
+          "command": "npx playwright test --project=chromium"
+        },
+        "debug": {
+          "command": "npx playwright test --debug --project=chromium"
+        },
+        "ui": {
+          "command": "npx playwright test --ui --project=chromium"
+        }
+      }
+    },
+    "e2e-ci": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx playwright test",
+        "cwd": ".",
+        "env": {
+          "CI": "1"
+        }
+      }
+    }
+  }
+}
