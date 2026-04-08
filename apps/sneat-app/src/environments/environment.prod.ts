@@ -1,8 +1,18 @@
-import { appSpecificConfig, prodEnvironmentConfig } from '@sneat/app';
-import { IEnvironmentConfig } from '@sneat/core';
+import { IEnvironmentConfig, IFirebaseConfig } from '@sneat/core';
+
+const firebaseConfig: IFirebaseConfig = {
+  projectId: 'sneat-eur3-1',
+  appId: '1:588648831063:web:303af7e0c5f8a7b10d6b12',
+  apiKey: 'AIzaSyCeQu1WC182yD0VHrRm4nHUxVf27fY-MLQ',
+  authDomain: 'sneat.app',
+  messagingSenderId: '588648831063',
+  measurementId: 'G-TYBDTV738R',
+};
 
 export const sneatAppEnvironmentConfig: IEnvironmentConfig = {
-  ...appSpecificConfig(prodEnvironmentConfig), // TODO: Not sure why we need this, needs to be documented or cleaned up
+  production: true,
+  agents: {},
+  firebaseConfig,
   posthog: {
     token: 'phc_YBZyRpV92s1kC0D4vYjEQiWhVjK7U9vfyi9vh2jfbsD',
     config: {

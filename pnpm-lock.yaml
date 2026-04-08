@@ -93,86 +93,86 @@ importers:
         specifier: 10.45.0
         version: 10.45.0
       '@sneat/api':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@angular/fire@20.0.1(ff3492f0b7ae1bb93fe2866cd990a8f9))(firebase@12.11.0)
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@angular/fire@20.0.1(ff3492f0b7ae1bb93fe2866cd990a8f9))(firebase@12.11.0)
       '@sneat/app':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
       '@sneat/auth-core':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@angular/fire@20.0.1(ff3492f0b7ae1bb93fe2866cd990a8f9))(@sneat/random@0.0.4(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)))(firebase@12.11.0)
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@angular/fire@20.0.1(ff3492f0b7ae1bb93fe2866cd990a8f9))(@sneat/random@0.0.4(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)))(firebase@12.11.0)
       '@sneat/auth-models':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
       '@sneat/auth-ui':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@angular/fire@20.0.1(ff3492f0b7ae1bb93fe2866cd990a8f9))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))(@sneat/random@0.0.4(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)))(firebase@12.11.0)
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@angular/fire@20.0.1(ff3492f0b7ae1bb93fe2866cd990a8f9))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))(@sneat/random@0.0.4(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)))(firebase@12.11.0)
       '@sneat/components':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))
       '@sneat/contactus-core':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
       '@sneat/contactus-internal':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
       '@sneat/contactus-services':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
       '@sneat/contactus-shared':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))
       '@sneat/core':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
       '@sneat/data':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
       '@sneat/datagrid':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
       '@sneat/dto':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
       '@sneat/ext-assetus-components':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))
       '@sneat/extensions-schedulus-main':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
       '@sneat/extensions-schedulus-shared':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
       '@sneat/grid':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
       '@sneat/logging':
-        specifier: 0.3.0
-        version: 0.3.0(b57066ddd659390bd5a60805c4fc2d7a)
+        specifier: 0.4.0
+        version: 0.4.0(b57066ddd659390bd5a60805c4fc2d7a)
       '@sneat/mod-assetus-core':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
       '@sneat/mod-schedulus-core':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
       '@sneat/random':
         specifier: 0.0.4
         version: 0.0.4(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
       '@sneat/space-components':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))
       '@sneat/space-models':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
       '@sneat/space-services':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@angular/fire@20.0.1(ff3492f0b7ae1bb93fe2866cd990a8f9))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))(firebase@12.11.0)
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@angular/fire@20.0.1(ff3492f0b7ae1bb93fe2866cd990a8f9))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))(firebase@12.11.0)
       '@sneat/ui':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))(@sneat/logging@0.3.0(b57066ddd659390bd5a60805c4fc2d7a))
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))(@sneat/logging@0.4.0(b57066ddd659390bd5a60805c4fc2d7a))
       '@sneat/wizard':
-        specifier: 0.3.0
-        version: 0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
+        specifier: 0.4.0
+        version: 0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))
       '@sneat/wormhole':
         specifier: ^0.0.6
         version: 0.0.6(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
@@ -4792,22 +4792,22 @@ packages:
   '@sinonjs/fake-timers@13.0.5':
     resolution: {integrity: sha512-36/hTbH2uaWuGVERyC6da9YwGWnzUZXuPro/F2LfsdOsLnCojz/iSH8MxUt/FD2S5XBSVPhmArFUXcpCQ2Hkiw==}
 
-  '@sneat/api@0.3.0':
-    resolution: {integrity: sha512-uLty6paR0w1duOS13dlczFHyLMLYMr5vmlFC/Q3W9TnXEpJzLCPBKfoSvxzgKX6LDSkZfEVvMlsLNTtK8RCtBA==}
+  '@sneat/api@0.4.0':
+    resolution: {integrity: sha512-6OMsr/kEKXtL7v43FaGbK/Eis50LYQspCb8GnnOWZJURiSY8DlsSak0N7qsqpR7IKXvrqFQK+j1Tv4+odvi6Xg==}
     peerDependencies:
       '@angular/common': '>=21.0.0'
       '@angular/core': '>=21.0.0'
       '@angular/fire': '>=20'
       firebase: '*'
 
-  '@sneat/app@0.3.0':
-    resolution: {integrity: sha512-7W7YWqJX8ZQNPN/pBvNmvVXfP+vuzQXVmkjKzXWZXQDxEuJ5MsRTkuqpDlBNgPJZoWm+tNV0zJcWN5/R1fbQTg==}
+  '@sneat/app@0.4.0':
+    resolution: {integrity: sha512-KipWzzICjOKeO8SvgLzXPKbbvXPt9mTezVAOilkY+dT5IfzR9zg+utzNkP2ccirloAM6fHFJ7cEmUjvRE+y6Iw==}
     peerDependencies:
       '@angular/common': '>=21.0.0'
       '@angular/core': '>=21.0.0'
 
-  '@sneat/auth-core@0.3.0':
-    resolution: {integrity: sha512-0yv9r596kuRcbjUL09zfGczIJ5f4EbHRiXqpnFizQoUAgV4dqxSXv0DyM5owp++VkYm5GnnK08KMlZY4GI66Cg==}
+  '@sneat/auth-core@0.4.0':
+    resolution: {integrity: sha512-paygqJaS3iWlP2SJTBazTZDvVlNXXHQ+OCzREe+PImWOD37KphQAUoRPYNZOe3HK5CdI/bZsX40NHWscLJv9xQ==}
     peerDependencies:
       '@angular/common': '>=21.0.0'
       '@angular/core': '>=21.0.0'
@@ -4815,14 +4815,14 @@ packages:
       '@sneat/random': '*'
       firebase: '*'
 
-  '@sneat/auth-models@0.3.0':
-    resolution: {integrity: sha512-kX0Jg7bnQKgRccuBGd5Cai05engFxeUxMmQ3/NvRbDMMrFulY91GFfMh81kYljJ5LIKStTaMawnqtaGFDKvWtQ==}
+  '@sneat/auth-models@0.4.0':
+    resolution: {integrity: sha512-sMDbBgbLopK8+e9XC2EXDioPavEBHrtKHFXhiBUrY/iikGo6Z0+e0+P4NKJuNXDOn8vQSagrjwKxVc+0AK5ThQ==}
     peerDependencies:
       '@angular/common': '>=21.0.0'
       '@angular/core': '>=21.0.0'
 
-  '@sneat/auth-ui@0.3.0':
-    resolution: {integrity: sha512-wJO6lef5TtOeuTp6N8N3v9EI63GWViuT3bbghAOmH7pEKrAY3OTQ5ki/GvSmPBMz4DA5KMuWFuldKJnwbWE0aA==}
+  '@sneat/auth-ui@0.4.0':
+    resolution: {integrity: sha512-dJ6pUrw3gu+mWJXhbDSF9KoJ2IIud8txtZIMZSYvUVUfsdFGUxBhRwvrc2p4yuctHKcpDW7xhChJKkOFtIh/Hg==}
     peerDependencies:
       '@angular/common': '>=21.0.0'
       '@angular/core': '>=21.0.0'
@@ -4831,89 +4831,89 @@ packages:
       '@sneat/random': '*'
       firebase: '*'
 
-  '@sneat/components@0.3.0':
-    resolution: {integrity: sha512-CiAIVmCzJA4NVdQ3WzaIbiNci2OHo9wEwN9UcoNVBBivyUhB34yUVkCasUNUpMiI7goIMsYotqVc8ImAhhCYWQ==}
+  '@sneat/components@0.4.0':
+    resolution: {integrity: sha512-fJr5Cv3IHj+zH6MsMY8S/MKTLg63ABLkjs3dndRIlpS5L7Jb20jF4KZShPa8PqjiAVmo5HV3e2Fwiku+94lCjw==}
     peerDependencies:
       '@angular/common': '>=21.0.0'
       '@angular/core': '>=21.0.0'
       '@ionic/angular': '>=8'
 
-  '@sneat/contactus-core@0.3.0':
-    resolution: {integrity: sha512-keV8k8ipoe6mjl2MJWf2avD27o1LjI7XvGiXZuTf9a8LJhEDl2/EFOpJ0N3XofestZ8H9zso846CEGDLWdH24g==}
+  '@sneat/contactus-core@0.4.0':
+    resolution: {integrity: sha512-uP/bs6L6DPt2AjcpS/KgSfBUDryby4HJtm7Qqgtccw1diqdN/4EhchrxaW3VOaisPnmULpldXlnLV87GA5aqGg==}
     peerDependencies:
       '@angular/common': '>=21.0.0'
       '@angular/core': '>=21.0.0'
 
-  '@sneat/contactus-internal@0.3.0':
-    resolution: {integrity: sha512-YQOTcv7xD26Wi7+1C8mU2GEFUAnfspsXs7Lu/21ueKhyDsN0kFbFcHhRfToxtGx7er16qFHFv8LPC9XQ+8m1Xw==}
+  '@sneat/contactus-internal@0.4.0':
+    resolution: {integrity: sha512-O0qq7B0sogfGDhmklLWUeUl0NNO53MWDRsJf26YSUuLnCdDTG0bTo6hBMDBuVNbs67pyoy5guNMt1aopYRPPVw==}
     peerDependencies:
       '@angular/common': '>=21.0.0'
       '@angular/core': '>=21.0.0'
 
-  '@sneat/contactus-services@0.3.0':
-    resolution: {integrity: sha512-1n7BZumGhhZStoK8yni2l8ZKLpXbt7ZRkwOCXsazJJAPpqjv9zlScxVknYNyjxp6Mea71VKKvlD3ojW+aMhXMg==}
+  '@sneat/contactus-services@0.4.0':
+    resolution: {integrity: sha512-+K51LRXeFF93i/BzpfGNuUSMiicgWykfuoPnMLpgUJpKNOL7i0qt76c9G+XR9zEZnJ7JdZJ8da663uPbTHT10A==}
     peerDependencies:
       '@angular/common': '>=21.0.0'
       '@angular/core': '>=21.0.0'
 
-  '@sneat/contactus-shared@0.3.0':
-    resolution: {integrity: sha512-JZAzc2YtECZSG87anHe0XmpTjHX1KqtP9XFPW+Gg4r/npdbmShQXGCo/0omsJLgqIPqGU4fF4Txo/fs91BgiSA==}
-    peerDependencies:
-      '@angular/common': '>=21.0.0'
-      '@angular/core': '>=21.0.0'
-      '@ionic/angular': '>=8'
-
-  '@sneat/core@0.3.0':
-    resolution: {integrity: sha512-U1+A+OuASh43km07JoUSFFzVRHP/apFQVqs4EpVNEK+xLSqXzEzMd4LzFYHu+7EPv34CGEDw57hPNH4EmYp0mQ==}
-    peerDependencies:
-      '@angular/common': '>=21.0.0'
-      '@angular/core': '>=21.0.0'
-
-  '@sneat/data@0.3.0':
-    resolution: {integrity: sha512-hlrVI5aLFQI95ORVDbeMmsEKqQ53tRNibZ8AISUr3dZjUYWO2qEe9vuvxEfxFkwA0hs59ilMUKb2lkwhaEqAMQ==}
-    peerDependencies:
-      '@angular/common': '>=21.0.0'
-      '@angular/core': '>=21.0.0'
-
-  '@sneat/datagrid@0.3.0':
-    resolution: {integrity: sha512-v6WfvKOZyDxWo0VuMWIMSZnWhUCRt+91YG7Tjn5VXcCTYGII1A2aCMvscex/PQdKh58En4lh7eGqyhlFx2hjZA==}
-    peerDependencies:
-      '@angular/common': '>=21.0.0'
-      '@angular/core': '>=21.0.0'
-
-  '@sneat/dto@0.3.0':
-    resolution: {integrity: sha512-N6ezbzMgmHQICbDL6UDhnsTmTABfvd5Gkt2t4+fRYV5SW+4MTf9VaPY3p9Dyyh8Mh8k88DlLSJ8uqX5nTXdz/Q==}
-    peerDependencies:
-      '@angular/common': '>=21.0.0'
-      '@angular/core': '>=21.0.0'
-
-  '@sneat/ext-assetus-components@0.3.0':
-    resolution: {integrity: sha512-2r7d8vCp/K6iHHdXCEV6IzFeXfwp6OkmXkZvg0DJ5WKIA/2OBBL7sWdTjGqMJR1t1crLExKlOvZBQRf+ZKIkZQ==}
+  '@sneat/contactus-shared@0.4.0':
+    resolution: {integrity: sha512-M7xTH6F2RaI7M2VzZfz428gHRQlZZeSaCGTspeQW3uD22MVFts59BW9IHgHY8u4gHHWh34dv46kNDGjcNtWlkA==}
     peerDependencies:
       '@angular/common': '>=21.0.0'
       '@angular/core': '>=21.0.0'
       '@ionic/angular': '>=8'
 
-  '@sneat/extensions-schedulus-main@0.3.0':
-    resolution: {integrity: sha512-pcbaMa/XhzrAIPz+Xzm/Da12GTEjtxfkGEIRj0bBuiOin8Yc7XC0fe8HweipbovJL0Cu0y0sY/i07lyChupKqg==}
+  '@sneat/core@0.4.0':
+    resolution: {integrity: sha512-y7QrqSZsAZ46oA3lm88tNL6EIwC0viJxFl3qenXhYyiYVHxfFvprDjWIXyV8cNVcNfshCbZtyanq1Ku0izxRVA==}
     peerDependencies:
       '@angular/common': '>=21.0.0'
       '@angular/core': '>=21.0.0'
 
-  '@sneat/extensions-schedulus-shared@0.3.0':
-    resolution: {integrity: sha512-LifiuRQ8nRDgTVycLoUIgN4raqa2z0gusukdwlvwYg5I/WL1go/szDdYGGauxlG3LievBmFLBpd2k0NJFfn59w==}
+  '@sneat/data@0.4.0':
+    resolution: {integrity: sha512-iVI2gSrhpY0Z0J9gQ265SECGuV/qX/5cgRD9MW/V94/aghuRJb20esYh/RcUwxy29Wot/pcy7j+wu029h72YZA==}
     peerDependencies:
       '@angular/common': '>=21.0.0'
       '@angular/core': '>=21.0.0'
 
-  '@sneat/grid@0.3.0':
-    resolution: {integrity: sha512-+QBD1s6ye4XF3yFKeQ2rAnrS0dKGd7rJ6lgdfD3Gv+PKlk/DLZ92wRAC6lw1ozqEZI0LsZNl4B9lkbOwL1JM7g==}
+  '@sneat/datagrid@0.4.0':
+    resolution: {integrity: sha512-/1KxeSvbLvoDmrXx8sCDHD/dJNJKuEtioI0ZvAJsdT+fPe4fXF1vQwobVXwWAwI7iV72nztuvuC7209w7yz1RQ==}
     peerDependencies:
       '@angular/common': '>=21.0.0'
       '@angular/core': '>=21.0.0'
 
-  '@sneat/logging@0.3.0':
-    resolution: {integrity: sha512-8TMSuKCJA20sBAcPyt3NG9DSdHHwRjSFOcIuM9cmwocw2WKLB6vRS/NowFo6LVuMmqkdgHua3PewFZnx+AYN5w==}
+  '@sneat/dto@0.4.0':
+    resolution: {integrity: sha512-KfEUcNeVJblWbNhtwh7L7eDJGAM9yoB45GIJ48/5ICL9SuuweKkAaB3YgZuBZ4MYS9ceKJG9321oRJS1eLm8qw==}
+    peerDependencies:
+      '@angular/common': '>=21.0.0'
+      '@angular/core': '>=21.0.0'
+
+  '@sneat/ext-assetus-components@0.4.0':
+    resolution: {integrity: sha512-7CxT+IcV2bGDY6/Cu3qiIRSl1Jr3IDVh/SoEEFXvyHXzrulafue0yd+0wd15hYsngeir5gB/eiCbSjMAMIe7Og==}
+    peerDependencies:
+      '@angular/common': '>=21.0.0'
+      '@angular/core': '>=21.0.0'
+      '@ionic/angular': '>=8'
+
+  '@sneat/extensions-schedulus-main@0.4.0':
+    resolution: {integrity: sha512-dDgZKeghVjQ2SqFwiVjP71DN7v+oWyyUIHR+aPsZLUZL5N6UNiAaKvkAhjFp8Aen8FDXS3DwxoJ3vEyYiazrKg==}
+    peerDependencies:
+      '@angular/common': '>=21.0.0'
+      '@angular/core': '>=21.0.0'
+
+  '@sneat/extensions-schedulus-shared@0.4.0':
+    resolution: {integrity: sha512-2aRf+40IwBYmUrfTT05if7VvT1eSHiHvXC8YFpfESPzBTSxRM0iKT0dmrDl1Aw3Ysn5N29NM0XaIYcXVUdHHHg==}
+    peerDependencies:
+      '@angular/common': '>=21.0.0'
+      '@angular/core': '>=21.0.0'
+
+  '@sneat/grid@0.4.0':
+    resolution: {integrity: sha512-MzhqMcOsEzeeD9Nbvt3oqEoe0nCxu/ND+n+uhRBtQpK7jmkr6NyiBDgh6bCJOh6yMEpN+M4OVZqWBRQmJ9H2TQ==}
+    peerDependencies:
+      '@angular/common': '>=21.0.0'
+      '@angular/core': '>=21.0.0'
+
+  '@sneat/logging@0.4.0':
+    resolution: {integrity: sha512-ywooXLSsQhjfzcz5WRO+KUJXPWEFscs977SU/KVyft5ttwhpOx/7RuVa783nassvxNZUe2cI+o3qJWE1KjrBAQ==}
     peerDependencies:
       '@angular/common': '>=21.0.0'
       '@angular/core': '>=21.0.0'
@@ -4922,14 +4922,14 @@ packages:
       firebase: '*'
       posthog-js: '*'
 
-  '@sneat/mod-assetus-core@0.3.0':
-    resolution: {integrity: sha512-U60YOtZLzVoitJZhJq/peuGaVg4QLLQMw2cPkKQ4fXTiTFU95UhT0i88ug0BuNfWI3ZiWnFSdM8xx3UtnrRpPQ==}
+  '@sneat/mod-assetus-core@0.4.0':
+    resolution: {integrity: sha512-e+q3yKdnGenyBQBfx5Hnrgxif0WkYSf6VZw5RdpuP82WI9ptmSu5ywIbG11S57QQi3Yr8vOEaCzqEc5s1TnNHg==}
     peerDependencies:
       '@angular/common': '>=21.0.0'
       '@angular/core': '>=21.0.0'
 
-  '@sneat/mod-schedulus-core@0.3.0':
-    resolution: {integrity: sha512-CVs5LD1KeiuZDhQQozVIU5kC70ThQg/zeNFf8GWuKUQOnfUqEEQYyXdYpuhcBCOyV6OI7YwAiZ48za+hUDdS8Q==}
+  '@sneat/mod-schedulus-core@0.4.0':
+    resolution: {integrity: sha512-ouRVztsjK+S9qFV5EZ3CvDAGMIXWb4sueaNoKMXsvyK0fr90Dm3PCvWZ2kxMDbjgo+qHvFEQMO1YlVAfTMWUdw==}
     peerDependencies:
       '@angular/common': '>=21.0.0'
       '@angular/core': '>=21.0.0'
@@ -4940,21 +4940,21 @@ packages:
       '@angular/common': '>=12.0.0'
       '@angular/core': '>=12.0.0'
 
-  '@sneat/space-components@0.3.0':
-    resolution: {integrity: sha512-Je1MdrhwkV+KraVw9JFu/mP5JqAG5N1BfVK8QLCbG500vxyeq4Q80L1QEoi8DrZgCwQa+tYZJ3s8I31WhKxQzg==}
+  '@sneat/space-components@0.4.0':
+    resolution: {integrity: sha512-FHDV3s4vlmbo7+1XyhqM696zlo0RuMGZoaH0+XMr99qhljgMlF1E8L0mEZn97MQjYodgsAUArlgKpNK1N6kvVw==}
     peerDependencies:
       '@angular/common': '>=21.0.0'
       '@angular/core': '>=21.0.0'
       '@ionic/angular': '>=8'
 
-  '@sneat/space-models@0.3.0':
-    resolution: {integrity: sha512-/KYSIZgyPWyXOW1adOSAkBmQyQUkBIvdx4ikOTrvPQLyG0SJGWOJAqf2Kn6+3Pii90M2rJj9XXuG+sxdG7IPhg==}
+  '@sneat/space-models@0.4.0':
+    resolution: {integrity: sha512-6SbEQblYIHPi3TXeTzy69PwTAgAczzHHaRTccMXQumChTHoxY9NgCEqgozxPI2SWIQHhtYFfDMCEvqNv7XZw4w==}
     peerDependencies:
       '@angular/common': '>=21.0.0'
       '@angular/core': '>=21.0.0'
 
-  '@sneat/space-services@0.3.0':
-    resolution: {integrity: sha512-08MghDuSpSxPpvagcFpBN7Wm1WD7443eDdExo/GbfL/8gchAEJPi2rEFAbZK/A2ot9y3+KItc3PQPq5z82FIzg==}
+  '@sneat/space-services@0.4.0':
+    resolution: {integrity: sha512-2j5Dnf8BkQJL0Wc0/760XnVM+gXbJHC71MyxYOV4/W5AbRT0aqZ1yUzW5hBF1hH/esJM+EhJJDclZoRdG5JkpQ==}
     peerDependencies:
       '@angular/common': '>=21.0.0'
       '@angular/core': '>=21.0.0'
@@ -4962,16 +4962,16 @@ packages:
       '@ionic/angular': '>=8'
       firebase: '*'
 
-  '@sneat/ui@0.3.0':
-    resolution: {integrity: sha512-pW3HYOjelSToFcM9MOe6MIP9eDD2ng2vkSoBeqjccmpLDzO3LCW5DIpDre7YldvKFIbT13hQvgA3PHVVs/ru5w==}
+  '@sneat/ui@0.4.0':
+    resolution: {integrity: sha512-93RjDjhRvN1D22l3cNHACzCBpW2GM2rfYsmJfr1V61YnIbD1wDZoc3zEVSIyldIHd4b/U2xc/kIUgnHGTOlF3w==}
     peerDependencies:
       '@angular/common': '>=21.0.0'
       '@angular/core': '>=21.0.0'
       '@ionic/angular': '>=8'
       '@sneat/logging': '>=0.1.0'
 
-  '@sneat/wizard@0.3.0':
-    resolution: {integrity: sha512-JrnCF6I2PBCXnKDD0AOa6n8EkVo+KWUz3dDxdJ5wL5s1IIfXo1k3Lfuz9Vv15Ma5huZH72xOnVudZsKeB0rP0A==}
+  '@sneat/wizard@0.4.0':
+    resolution: {integrity: sha512-KylgxXP3MlFEPMuiQYpr+c/cXtGtWdxhS8uLpy+MU9D+FE2Gs+pD2W4mhN3ZFqa7malf9lVzGuK0dxziIAc/Zw==}
     peerDependencies:
       '@angular/common': '>=21.0.0'
       '@angular/core': '>=21.0.0'
@@ -17827,7 +17827,7 @@ snapshots:
       '@sinonjs/commons': 3.0.1
     optional: true
 
-  '@sneat/api@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@angular/fire@20.0.1(ff3492f0b7ae1bb93fe2866cd990a8f9))(firebase@12.11.0)':
+  '@sneat/api@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@angular/fire@20.0.1(ff3492f0b7ae1bb93fe2866cd990a8f9))(firebase@12.11.0)':
     dependencies:
       '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
       '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
@@ -17835,13 +17835,13 @@ snapshots:
       firebase: 12.11.0
       tslib: 2.8.1
 
-  '@sneat/app@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
+  '@sneat/app@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
     dependencies:
       '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
       '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
       tslib: 2.8.1
 
-  '@sneat/auth-core@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@angular/fire@20.0.1(ff3492f0b7ae1bb93fe2866cd990a8f9))(@sneat/random@0.0.4(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)))(firebase@12.11.0)':
+  '@sneat/auth-core@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@angular/fire@20.0.1(ff3492f0b7ae1bb93fe2866cd990a8f9))(@sneat/random@0.0.4(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)))(firebase@12.11.0)':
     dependencies:
       '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
       '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
@@ -17850,13 +17850,13 @@ snapshots:
       firebase: 12.11.0
       tslib: 2.8.1
 
-  '@sneat/auth-models@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
+  '@sneat/auth-models@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
     dependencies:
       '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
       '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
       tslib: 2.8.1
 
-  '@sneat/auth-ui@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@angular/fire@20.0.1(ff3492f0b7ae1bb93fe2866cd990a8f9))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))(@sneat/random@0.0.4(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)))(firebase@12.11.0)':
+  '@sneat/auth-ui@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@angular/fire@20.0.1(ff3492f0b7ae1bb93fe2866cd990a8f9))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))(@sneat/random@0.0.4(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)))(firebase@12.11.0)':
     dependencies:
       '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
       '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
@@ -17866,88 +17866,88 @@ snapshots:
       firebase: 12.11.0
       tslib: 2.8.1
 
-  '@sneat/components@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))':
+  '@sneat/components@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))':
     dependencies:
       '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
       '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
       '@ionic/angular': 8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01)
       tslib: 2.8.1
 
-  '@sneat/contactus-core@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
+  '@sneat/contactus-core@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
     dependencies:
       '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
       '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
       tslib: 2.8.1
 
-  '@sneat/contactus-internal@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
+  '@sneat/contactus-internal@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
     dependencies:
       '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
       '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
       tslib: 2.8.1
 
-  '@sneat/contactus-services@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
+  '@sneat/contactus-services@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
     dependencies:
       '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
       '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
       tslib: 2.8.1
 
-  '@sneat/contactus-shared@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))':
-    dependencies:
-      '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
-      '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
-      '@ionic/angular': 8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01)
-      tslib: 2.8.1
-
-  '@sneat/core@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
-    dependencies:
-      '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
-      '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
-      tslib: 2.8.1
-
-  '@sneat/data@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
-    dependencies:
-      '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
-      '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
-      tslib: 2.8.1
-
-  '@sneat/datagrid@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
-    dependencies:
-      '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
-      '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
-      tslib: 2.8.1
-
-  '@sneat/dto@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
-    dependencies:
-      '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
-      '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
-      tslib: 2.8.1
-
-  '@sneat/ext-assetus-components@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))':
+  '@sneat/contactus-shared@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))':
     dependencies:
       '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
       '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
       '@ionic/angular': 8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01)
       tslib: 2.8.1
 
-  '@sneat/extensions-schedulus-main@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
+  '@sneat/core@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
     dependencies:
       '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
       '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
       tslib: 2.8.1
 
-  '@sneat/extensions-schedulus-shared@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
+  '@sneat/data@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
     dependencies:
       '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
       '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
       tslib: 2.8.1
 
-  '@sneat/grid@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
+  '@sneat/datagrid@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
     dependencies:
       '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
       '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
       tslib: 2.8.1
 
-  '@sneat/logging@0.3.0(b57066ddd659390bd5a60805c4fc2d7a)':
+  '@sneat/dto@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
+    dependencies:
+      '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
+      '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
+      tslib: 2.8.1
+
+  '@sneat/ext-assetus-components@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))':
+    dependencies:
+      '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
+      '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
+      '@ionic/angular': 8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01)
+      tslib: 2.8.1
+
+  '@sneat/extensions-schedulus-main@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
+    dependencies:
+      '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
+      '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
+      tslib: 2.8.1
+
+  '@sneat/extensions-schedulus-shared@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
+    dependencies:
+      '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
+      '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
+      tslib: 2.8.1
+
+  '@sneat/grid@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
+    dependencies:
+      '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
+      '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
+      tslib: 2.8.1
+
+  '@sneat/logging@0.4.0(b57066ddd659390bd5a60805c4fc2d7a)':
     dependencies:
       '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
       '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
@@ -17957,13 +17957,13 @@ snapshots:
       posthog-js: 1.363.3
       tslib: 2.8.1
 
-  '@sneat/mod-assetus-core@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
+  '@sneat/mod-assetus-core@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
     dependencies:
       '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
       '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
       tslib: 2.8.1
 
-  '@sneat/mod-schedulus-core@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
+  '@sneat/mod-schedulus-core@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
     dependencies:
       '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
       '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
@@ -17975,20 +17975,20 @@ snapshots:
       '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
       tslib: 2.3.1
 
-  '@sneat/space-components@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))':
+  '@sneat/space-components@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))':
     dependencies:
       '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
       '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
       '@ionic/angular': 8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01)
       tslib: 2.8.1
 
-  '@sneat/space-models@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
+  '@sneat/space-models@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
     dependencies:
       '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
       '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
       tslib: 2.8.1
 
-  '@sneat/space-services@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@angular/fire@20.0.1(ff3492f0b7ae1bb93fe2866cd990a8f9))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))(firebase@12.11.0)':
+  '@sneat/space-services@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@angular/fire@20.0.1(ff3492f0b7ae1bb93fe2866cd990a8f9))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))(firebase@12.11.0)':
     dependencies:
       '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
       '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
@@ -17997,15 +17997,15 @@ snapshots:
       firebase: 12.11.0
       tslib: 2.8.1
 
-  '@sneat/ui@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))(@sneat/logging@0.3.0(b57066ddd659390bd5a60805c4fc2d7a))':
+  '@sneat/ui@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(@ionic/angular@8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01))(@sneat/logging@0.4.0(b57066ddd659390bd5a60805c4fc2d7a))':
     dependencies:
       '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
       '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
       '@ionic/angular': 8.8.1(b7eb9374b6d9d6778cb292ad2d53cd01)
-      '@sneat/logging': 0.3.0(b57066ddd659390bd5a60805c4fc2d7a)
+      '@sneat/logging': 0.4.0(b57066ddd659390bd5a60805c4fc2d7a)
       tslib: 2.8.1
 
-  '@sneat/wizard@0.3.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
+  '@sneat/wizard@0.4.0(@angular/common@21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))':
     dependencies:
       '@angular/common': 21.2.5(@angular/core@21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2)
       '@angular/core': 21.2.5(@angular/compiler@21.2.5)(rxjs@7.8.2)(zone.js@0.16.1)
