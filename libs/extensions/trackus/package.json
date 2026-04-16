@@ -15,7 +15,7 @@
     "@ionic/angular": "8.8.4",
     "rxjs": "7.8.2",
     "@angular/common": "21.2.9",
-    "@firebase/firestore": "4.13.0",
+    "@firebase/firestore": "4.14.0",
     "@angular/router": "21.2.9",
     "@angular/fire": "20.0.1",
     "@sneat/api": "0.3.0",
