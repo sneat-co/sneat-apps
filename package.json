@@ -151,7 +151,7 @@
     "autoprefixer": "10.5.0",
     "browserslist": "^4.28.1",
     "cross-env": "^10.0.0",
-    "eslint": "10.2.0",
+    "eslint": "10.2.1",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-json": "4.0.1",
     "firebase-tools": "^15.5.1",
