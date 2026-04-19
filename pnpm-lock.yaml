@@ -181,7 +181,7 @@ importers:
         version: 6.3.1
       '@types/telegram-web-app':
         specifier: ^9.0.0
-        version: 9.5.0
+        version: 9.6.0
       angularx-qrcode:
         specifier: ^21.0.0
         version: 21.0.5(@angular/common@21.2.9(@angular/core@21.2.9(@angular/compiler@21.2.9)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.2.9(@angular/compiler@21.2.9)(rxjs@7.8.2)(zone.js@0.16.1))
@@ -5318,8 +5318,8 @@ packages:
   '@types/tabulator-tables@6.3.1':
     resolution: {integrity: sha512-qL05wGXVy0yfWcF8LCE9+9uSeUIpeKdgpm8YmOAPTjLd3FaoZziPOhVxIiLzEhLTFfOvbuwnaWDm4v4i87diRQ==}
 
-  '@types/telegram-web-app@9.5.0':
-    resolution: {integrity: sha512-B7vqoQpyBTbetA4tJW0NHSHpv4EDvd+qUB/3gx12wAhaWB/JwTGwcxGBfFOP39mTzzIhQKVj1yolEBonuGc+Ag==}
+  '@types/telegram-web-app@9.6.0':
+    resolution: {integrity: sha512-t7/6NKZy0iJrE+U3kGhMI7lEkcA/44K2sQiTo25JRsFGC0vKiSl9GNv/1h3lAXYYhc0PX6iYlvTxnOBUzezU5w==}
 
   '@types/tough-cookie@4.0.5':
     resolution: {integrity: sha512-/Ad8+nIOV7Rl++6f1BdKxFSMgmoqEoYbHRpPcx3JEfv8VRsQe9Z4mCXeJBzxs7mbHY/XOZZuXlRNfhpVPbs6ZA==}
@@ -18444,7 +18444,7 @@ snapshots:
 
   '@types/tabulator-tables@6.3.1': {}
 
-  '@types/telegram-web-app@9.5.0': {}
+  '@types/telegram-web-app@9.6.0': {}
 
   '@types/tough-cookie@4.0.5':
     optional: true
