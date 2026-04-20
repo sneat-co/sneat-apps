@@ -70,7 +70,7 @@
     "@ionic/angular": "8.8.4",
     "@ionic/core": "8.8.4",
     "@nx/angular": "22.6.5",
-    "@oxc-project/runtime": "0.126.0",
+    "@oxc-project/runtime": "0.127.0",
     "@sentry/angular": "10.49.0",
     "@sentry/browser": "10.49.0",
     "@sneat/api": "0.4.0",
