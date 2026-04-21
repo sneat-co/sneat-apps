@@ -96,7 +96,7 @@
     "date-fns": "4.1.0",
     "firebase": "12.12.1",
     "ionicons": "8.0.13",
-    "posthog-js": "1.369.3",
+    "posthog-js": "1.369.4",
     "rxjs": "7.8.2",
     "tabulator-tables": "6.4.0",
     "ts-md5": "2.0.1",
