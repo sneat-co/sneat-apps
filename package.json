@@ -2,7 +2,7 @@
   "name": "sneat-apps",
   "version": "0.0.0",
   "license": "MIT",
-  "packageManager": "pnpm@10.33.1",
+  "packageManager": "pnpm@10.33.2",
   "scripts": {
     "nx": "NODE_OPTIONS=--no-deprecation nx",
     "ng": "nx",
@@ -71,8 +71,8 @@
     "@ionic/core": "8.8.4",
     "@nx/angular": "22.6.5",
     "@oxc-project/runtime": "0.127.0",
-    "@sentry/angular": "10.49.0",
-    "@sentry/browser": "10.49.0",
+    "@sentry/angular": "10.50.0",
+    "@sentry/browser": "10.50.0",
     "@sneat/api": "0.4.0",
     "@sneat/auth-core": "0.4.0",
     "@sneat/auth-models": "0.4.0",
@@ -96,7 +96,7 @@
     "date-fns": "4.1.0",
     "firebase": "12.12.1",
     "ionicons": "8.0.13",
-    "posthog-js": "1.370.1",
+    "posthog-js": "1.371.1",
     "rxjs": "7.8.2",
     "tabulator-tables": "6.4.0",
     "ts-md5": "2.0.1",
@@ -174,7 +174,7 @@
     "ts-node": "10.9.2",
     "typescript": "5.9.3",
     "verdaccio": "^6.0.5",
-    "vite": "8.0.9",
+    "vite": "8.0.10",
     "vitest": "^4.0.18"
   },
   "lint-staged": {
