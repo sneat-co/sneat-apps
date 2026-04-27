@@ -13,7 +13,7 @@ runs:
     #            shell: sh
 
     - name: Setup pnpm
-      uses: pnpm/action-setup@v5 # Use the official pnpm setup action
+      uses: pnpm/action-setup@v6 # Use the official pnpm setup action
 
     - name: Setup NodeJS
       uses: actions/setup-node@v6
