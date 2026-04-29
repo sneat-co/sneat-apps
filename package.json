@@ -70,7 +70,7 @@
     "@ionic/angular": "8.8.4",
     "@ionic/core": "8.8.4",
     "@nx/angular": "22.7.1",
-    "@oxc-project/runtime": "0.127.0",
+    "@oxc-project/runtime": "0.128.0",
     "@sentry/angular": "10.50.0",
     "@sentry/browser": "10.50.0",
     "@sneat/api": "0.4.0",
@@ -96,7 +96,7 @@
     "date-fns": "4.1.0",
     "firebase": "12.12.1",
     "ionicons": "8.0.13",
-    "posthog-js": "1.372.2",
+    "posthog-js": "1.372.5",
     "rxjs": "7.8.2",
     "tabulator-tables": "6.4.0",
     "ts-md5": "2.0.1",
@@ -115,8 +115,8 @@
     "@sneat/extensions-schedulus-main": "0.4.0"
   },
   "devDependencies": {
-    "@analogjs/vite-plugin-angular": "~2.4.0",
-    "@analogjs/vitest-angular": "~2.4.0",
+    "@analogjs/vite-plugin-angular": "~2.5.0",
+    "@analogjs/vitest-angular": "~2.5.0",
     "@angular-devkit/architect": "0.2102.8",
     "@angular-devkit/build-angular": "21.2.8",
     "@angular-devkit/core": "21.2.8",
