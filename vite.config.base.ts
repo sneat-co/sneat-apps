@@ -3,16 +3,33 @@ import angular from '@analogjs/vite-plugin-angular';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { join } from 'path';
 
+export interface CoverageThresholds {
+  lines?: number;
+  statements?: number;
+  branches?: number;
+  functions?: number;
+}
+
 export interface BaseViteConfigOptions {
   dirname: string;
   name: string;
   reportsDirectory?: string;
+  /** Override per-project coverage thresholds. Use when a project has minimal tests (e.g. sanity-only). */
+  coverageThresholds?: CoverageThresholds;
 }
 
 export function createBaseViteConfig(
   options: BaseViteConfigOptions,
 ): ViteUserConfig {
-  const { dirname, name, reportsDirectory } = options;
+  const { dirname, name, reportsDirectory, coverageThresholds } = options;
+
+  // Default thresholds (set to min across all projects - 1% as of Feb 2026)
+  const defaultThresholds: CoverageThresholds = {
+    lines: 18,
+    statements: 19,
+    branches: 0,
+    functions: 9,
+  };
 
   // Better way to calculate relative path to root based on distance from root
   const rootPath = process.cwd();
@@ -94,10 +111,9 @@ export function createBaseViteConfig(
         // TODO: Gradually increase these thresholds as test coverage improves
         // Target: lines: 35%, functions: 35%, branches: 30%, statements: 35%
         thresholds: {
-          lines: 18,
-          statements: 19,
-          branches: 0,
-          functions: 9,
+          ...(coverageThresholds !== undefined
+            ? coverageThresholds
+            : defaultThresholds),
         },
       },
       server: {
