@@ -166,7 +166,7 @@
     "nx": "22.7.1",
     "nx-oxlint": "^0.1.1",
     "oxlint": "^1.43.0",
-    "postcss": "8.5.12",
+    "postcss": "8.5.13",
     "postcss-import": "16.1.1",
     "postcss-preset-env": "11.2.1",
     "postcss-url": "10.1.3",
