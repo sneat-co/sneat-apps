@@ -71,8 +71,8 @@
     "@ionic/core": "8.8.6",
     "@nx/angular": "22.7.1",
     "@oxc-project/runtime": "0.129.0",
-    "@sentry/angular": "10.51.0",
-    "@sentry/browser": "10.51.0",
+    "@sentry/angular": "10.52.0",
+    "@sentry/browser": "10.52.0",
     "@sneat/api": "0.4.0",
     "@sneat/auth-core": "0.4.0",
     "@sneat/auth-models": "0.4.0",
@@ -101,7 +101,7 @@
     "tabulator-tables": "6.4.0",
     "ts-md5": "2.0.1",
     "tslib": "2.8.1",
-    "zone.js": "0.16.1",
+    "zone.js": "0.16.2",
     "@sneat/app": "0.4.0",
     "@sneat/contactus-services": "0.4.0",
     "@sneat/contactus-shared": "0.4.0",
@@ -174,7 +174,7 @@
     "ts-node": "10.9.2",
     "typescript": "5.9.3",
     "verdaccio": "^6.0.5",
-    "vite": "8.0.10",
+    "vite": "8.0.11",
     "vitest": "^4.0.18"
   },
   "lint-staged": {
