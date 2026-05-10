@@ -1,5 +1,9 @@
 # pnpm workspace configuration
 # See https://pnpm.io/pnpm-workspace_yaml
+# In pnpm v11, overrides and build settings moved from package.json to pnpm-workspace.yaml
+
+overrides:
+  rxfire>tslib: "~2.8.0"
 
 # allowBuilds replaces onlyBuiltDependencies (removed in pnpm v11)
 # See https://pnpm.io/11.x/migration
