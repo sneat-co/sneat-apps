@@ -23,6 +23,7 @@
     "noFallthroughCasesInSwitch": true,
     "lib": ["ES2023", "DOM"],
     "skipLibCheck": true,
+    "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "paths": {
       "@sneat/communes-ui": ["libs/communes/ui/src/index.ts"],
