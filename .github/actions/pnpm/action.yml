@@ -44,5 +44,5 @@ runs:
       shell: sh
 
     - name: Install dependencies
-      run: pnpm install
+      run: pnpm ci
       shell: sh
