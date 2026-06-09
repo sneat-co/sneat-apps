@@ -1,5 +1,7 @@
 # Consumer and Work App Split — Implementation Plan
 
+> ⚠️ **SUPERSEDED IN PART (2026-06-09).** Identity is now a **single shared Firebase project (`sneat-eur3-1`)** for all products. **Do not** create the separate `sneat-work` project or use its hardcoded keys (tasks C8, D3), and treat Phase A's `@sneat/app` config refactor as optional. See **`specs/2026-06-09-single-identity-addendum.md`** before executing. The non-identity mechanics (Nx app scaffolding, hosting deploy) remain useful reference.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Ship `apps/sneat-work` (B2B sibling of `apps/sneat-app`), wire `issue-number-one` to authenticate against the new sneat-work Firebase project, and deploy sneat-work to Firebase Hosting using the existing sneat-sites mechanism.

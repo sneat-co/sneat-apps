@@ -1,5 +1,7 @@
 # Consumer and Work App Split — Design
 
+> ⚠️ **SUPERSEDED IN PART (2026-06-09).** The two-Firebase-project / no-SSO split described here is obsolete. Identity is now a **single shared Firebase project (`sneat-eur3-1`)** for all products (consumer + business), with consumer-vs-business modeled as a data claim, not separate projects. Ignore the separate `sneat-work` project and its keys; treat the `@sneat/app` config refactor as optional. See **`specs/2026-06-09-single-identity-addendum.md`** for the current decision and rationale.
+
 **Date:** 2026-04-08
 **Status:** Draft (pending implementation plan)
 **Scope:** Introduce a B2B sibling (`sneat.work`) to the existing consumer app (`sneat.app`), and wire a third app (`issue-number-one`) in a separate repo to share the sneat.work Firebase project for authentication.
