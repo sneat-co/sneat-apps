@@ -1,12 +1,12 @@
 import { IEnvironmentConfig, IFirebaseConfig } from '@sneat/core';
 
 const firebaseConfig: IFirebaseConfig = {
-  projectId: 'sneat-work',
-  apiKey: 'AIzaSyB2566A1kaT7H2qXSFHwBLcvmw7-nowp78',
-  authDomain: 'sneat-work.firebaseapp.com',
-  messagingSenderId: '125224789205',
-  appId: '1:125224789205:web:d9fdf66322b9a871a5ae5c',
-  measurementId: 'G-3KWL5H12LW',
+  projectId: 'sneat-eur3-1',
+  appId: '1:588648831063:web:303af7e0c5f8a7b10d6b12',
+  apiKey: 'AIzaSyCeQu1WC182yD0VHrRm4nHUxVf27fY-MLQ',
+  authDomain: 'sneat.app',
+  messagingSenderId: '588648831063',
+  measurementId: 'G-TYBDTV738R',
 };
 
 export const sneatWorkEnvironmentConfig: IEnvironmentConfig = {
