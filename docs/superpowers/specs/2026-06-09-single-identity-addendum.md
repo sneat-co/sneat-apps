@@ -19,7 +19,7 @@ The 2026-04-08 design split identity along consumer-vs-business lines: `sneat-eu
 
 **No Firebase project has any users yet**, so consolidation is still essentially free — it requires repointing existing code, not migrating users.
 
-Picking the work back up (now with `datatag.app`/`datatag.io` as the flagship focus, alongside `sneat.work` as a team-management umbrella and pluggable small apps like `issue-number-one`) surfaced two facts that reverse the split:
+Picking the work back up (now with `datatug.app`/`datatug.io` as the flagship focus, alongside `sneat.work` as a team-management umbrella and pluggable small apps like `issue-number-one`) surfaced two facts that reverse the split:
 
 1. **Solo operator.** Every additional Firebase project is a permanent, recurring tax paid by one person: GitHub/Google/Microsoft OAuth apps registered and maintained per project, duplicated authorized-domains lists, security rules, provider config, key rotation, and monitoring. Multi-project doubles (or triples) ongoing ops for zero current benefit.
 2. **Audience overlap is unknown.** Whether the same humans use consumer and business products can't be predicted yet. Under that uncertainty the regret is asymmetric: **merging two identity pools later is a migration nightmare** (overlapping emails, account-linking, dedup); **splitting later is additive** (add a GCIP tenant for a specific enterprise customer, existing users untouched).
@@ -28,7 +28,7 @@ With zero users today, consolidation is nearly free. It only gets more expensive
 
 ## Decision
 
-**One Firebase project — `sneat-eur3-1` — is the single Sneat identity pool for every product** (consumer and business): `sneat.app`, `datatag.app`/`datatag.io`, `sneat.work`, `issue-number-one`, and future apps.
+**One Firebase project — `sneat-eur3-1` — is the single Sneat identity pool for every product** (consumer and business): `sneat.app`, `datatug.app`, `sneat.work`, `issue-number-one`, and future apps. (`datatug.io` is a landing-only marketing site with no authentication, so it is **not** part of the identity pool.)
 
 - **Why `sneat-eur3-1`:** it already has the most auth setup (OAuth providers wired against `sneat.app/__/auth/handler`), its brand _is_ "Sneat", and `eur3` is a safe EU data-residency default. Reusing it means **no OAuth re-registration**.
 - **One set of OAuth registrations**, branded "Sneat." Adding a new product = adding its domain to the project's Authorized domains. Near-zero marginal ops per product.
@@ -52,7 +52,7 @@ With zero users today, consolidation is nearly free. It only gets more expensive
 
 **Required config (one-time):**
 
-- Add `datatag.app`, `datatag.io`, `sneat.work`, the `issue-number-one` domain, and `localhost` to `sneat-eur3-1`'s **Authorized domains**.
+- Add each authenticated product's domain to `sneat-eur3-1`'s **Authorized domains**. Done on 2026-06-09: `datatug.app`, `sneat.work`, `issuenumber.one`, `ingitdb.com` (joining the existing `localhost`, `sneat.app`, `sneat-eur3-1.firebaseapp.com`, `sneat-eur3-1.web.app`). **`datatug.io` is intentionally excluded** — landing-only, no auth.
 - Each product's `firebaseConfig` points at `sneat-eur3-1`.
 - If Telegram (or any consumer-only provider) is enabled on `sneat-eur3-1`, hide it in business UI as desired.
 
