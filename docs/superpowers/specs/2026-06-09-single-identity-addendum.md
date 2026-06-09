@@ -7,7 +7,17 @@
 
 ## Context
 
-The 2026-04-08 design split identity along consumer-vs-business lines: `sneat-eur3-1` for `sneat.app`, a separate `sneat-work` project for the B2B side (shared by `sneat-work` + `issue-number-one`). That was a theoretical decision; no implementation followed and **no project has any users yet**.
+The 2026-04-08 design split identity along consumer-vs-business lines: `sneat-eur3-1` for `sneat.app`, a separate `sneat-work` project for the B2B side (shared by `sneat-work` + `issue-number-one`).
+
+**The plan was essentially fully executed** (it was not theoretical, contrary to first recollection). Audit on 2026-06-09:
+
+- **Phase A — done:** `@sneat/app` dropped `firebaseConfigForSneatApp`/`prodEnvironmentConfig`, renamed `baseEnvironmentConfig` → `emulatorEnvironmentConfig`, and published `0.4.0`.
+- **Phase B — done:** `apps/sneat-app` inlines the `sneat-eur3-1` config and consumes `@sneat/app@0.4.0`.
+- **Phase C — done:** `apps/sneat-work` scaffolded and committed (commit `8da884120`), env files pointing at `projectId: 'sneat-work'`.
+- **Phase D — done:** `issue-number-one` wired to `@sneat/*@0.4.0`, env files pointing at `projectId: 'sneat-work'`.
+- **Phase E — partial:** `sneat-sites/websites/sneat.work/` landing page exists; `.firebaserc`/`firebase.json` have a `sneat-work` hosting target.
+
+**No Firebase project has any users yet**, so consolidation is still essentially free — it requires repointing existing code, not migrating users.
 
 Picking the work back up (now with `datatag.app`/`datatag.io` as the flagship focus, alongside `sneat.work` as a team-management umbrella and pluggable small apps like `issue-number-one`) surfaced two facts that reverse the split:
 
@@ -32,7 +42,13 @@ With zero users today, consolidation is nearly free. It only gets more expensive
 
 - The greenfield **`sneat-work` Firebase project** — abandon it (no users).
 - The **hardcoded `sneat-work` Firebase keys** in the 2026-04-08 plan (tasks C8, D3) — do not use.
-- The **`@sneat/app` library refactor** (Apr-08 Phase A: extracting `firebaseConfig` out of the lib so each app declares its own) becomes **optional hygiene, not load-bearing** — all apps now share the one `sneat-eur3-1` config. Skip it unless the lib-hardcoding cleanup is wanted for its own sake.
+- The **`@sneat/app` library refactor** (Apr-08 Phase A) is **already done and shipped in `0.4.0` — keep it.** It is fully compatible with single-identity: every app declares its own config, and they will all simply declare the _same_ `sneat-eur3-1` config. Nothing to revert.
+
+**Already-built code to reconcile (not greenfield) — repoint the dead `sneat-work` auth project to `sneat-eur3-1`:**
+
+- `apps/sneat-work/src/environments/environment.ts` + `environment.prod.ts` — change `firebaseConfig` from `projectId: 'sneat-work'` to the shared `sneat-eur3-1` config. **Keep the app.**
+- `issue-number-one/src/environments/environment.ts` + `environment.prod.ts` — same repoint to `sneat-eur3-1`.
+- `sneat-sites/.firebaserc` + `firebase.json` carry a `sneat-work` **hosting** target. Hosting is orthogonal to auth — the sneat.work site can stay where it deploys and still authenticate against `sneat-eur3-1` via the app's `firebaseConfig`. Only revisit this if fully decommissioning the `sneat-work` Firebase project (then move the hosting site under `sneat-eur3-1`).
 
 **Required config (one-time):**
 
