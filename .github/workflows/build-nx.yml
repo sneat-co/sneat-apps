@@ -22,6 +22,7 @@ jobs:
   build:
     #        needs: pnpm-cache
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -58,6 +59,7 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -188,6 +190,7 @@ jobs:
 
   e2e-tests:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -231,16 +234,19 @@ jobs:
 
       - name: Install Playwright Browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
+        timeout-minutes: 10
         run: pnpm exec playwright install chromium --with-deps
 
       - name: Install Playwright system dependencies
         if: steps.playwright-cache.outputs.cache-hit == 'true'
+        timeout-minutes: 10
         run: pnpm exec playwright install-deps chromium
 
       - name: Clone sneat-firebase
         run: git clone --depth 1 https://github.com/sneat-co/sneat-firebase.git ../sneat-firebase
 
       - name: Run Playwright tests
+        timeout-minutes: 20
         run: pnpm exec playwright test
         env:
           NODE_OPTIONS: '--no-deprecation nx'
