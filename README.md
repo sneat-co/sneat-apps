@@ -4,6 +4,20 @@ A suit of open source apps that help in work & personal life.
 
 ---
 
+<!-- dev-approach:v1 -->
+
+## Our approach to development
+
+We build with our own tooling:
+
+- **[SpecScore](https://specscore.md)** — specify requirements as `SpecScore.md` artifacts
+- **[SpecStudio](https://specscore.studio)** — author & manage specs across their lifecycle
+- **[inGitDB](https://ingitdb.com)** — store structured data in Git where applicable
+- **[DALgo](https://dalgo.io)** — data access layer for Go
+- **[cover100.dev](https://cover100.dev)** — drive toward 100% test coverage
+- **[DataTug](https://datatug.io)** — query & explore data
+<!-- /dev-approach -->
+
 ## [![Build and Test](https://github.com/sneat-co/sneat-apps/actions/workflows/build-nx.yml/badge.svg)](https://github.com/sneat-co/sneat-apps/actions/workflows/build-nx.yml) [![Coverage Status](https://coveralls.io/repos/github/sneat-co/sneat-apps/badge.svg?branch=main)](https://coveralls.io/github/sneat-co/sneat-apps?branch=main)
 
 ## Apps for family & personal life
@@ -73,6 +87,7 @@ This repository is configured for enhanced AI agent support with the **Nx MCP (M
 - ⚙️ **Supported Agents**: GitHub Copilot, Claude, Gemini, Cursor, and other MCP-compatible tools
 
 **Configured for:**
+
 - Deep workspace context and project graph access
 - Intelligent code generation with Nx generators
 - Documentation lookup with `nx_docs` tool
