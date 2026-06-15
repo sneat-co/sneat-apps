@@ -234,8 +234,25 @@ jobs:
 
       - name: Install Playwright Browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
-        timeout-minutes: 10
-        run: pnpm exec playwright install chromium --with-deps
+        timeout-minutes: 25
+        run: |
+          # cdn.playwright.dev occasionally stalls mid-download of the Chrome
+          # build. Retry each attempt under its own timeout so a hung download
+          # is killed and retried (a fresh connection usually succeeds) rather
+          # than blocking until the step/job timeout with nothing to show.
+          for attempt in 1 2 3 4 5; do
+            echo "::group::Playwright install attempt $attempt"
+            if timeout 240 pnpm exec playwright install chromium --with-deps; then
+              echo "::endgroup::"
+              echo "Playwright browsers installed on attempt $attempt"
+              exit 0
+            fi
+            echo "::endgroup::"
+            echo "::warning::Playwright install attempt $attempt failed or timed out; retrying after backoff"
+            sleep 20
+          done
+          echo "::error::Playwright browser install failed after 5 attempts"
+          exit 1
 
       - name: Install Playwright system dependencies
         if: steps.playwright-cache.outputs.cache-hit == 'true'
