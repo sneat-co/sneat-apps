@@ -1,8 +1,6 @@
 # Running sneat-app locally (full stack)
 
-The local stack has **three** services. Start them in this order. All share the
-Firebase project id **`local-sneat-app`** (this is what the Angular app's
-emulator config uses — keep every service on the same id).
+The local stack has **three** services. Start them in this order.
 
 | #   | Service                               | Where                     | Port(s)                                  |
 | --- | ------------------------------------- | ------------------------- | ---------------------------------------- |
@@ -13,11 +11,18 @@ emulator config uses — keep every service on the same id).
 > Repos are sibling checkouts under the same parent directory
 > (e.g. `~/projects/sneat-co/{sneat-apps,sneat-go,sneat-firebase}`).
 
+## Firebase project id — `demo-local-sneat-app`
+
+The web app's emulator config sets `projectId: 'local-sneat-app'`, but
+`appSpecificConfig` **prepends `demo-` when emulators are used**, so the app
+actually talks to project **`demo-local-sneat-app`**. The emulators and
+`sneat-go-server` must use that same id, or auth/firestore data won't line up.
+
 ## 1. Firebase emulators
 
 ```bash
 cd ../sneat-firebase/firebase
-firebase emulators:start --only auth,firestore --project local-sneat-app
+firebase emulators:start --only auth,firestore --project demo-local-sneat-app
 ```
 
 - Auth UI: <http://127.0.0.1:8070/auth> · Firestore UI: <http://127.0.0.1:8070/firestore>
@@ -26,7 +31,7 @@ firebase emulators:start --only auth,firestore --project local-sneat-app
 
 ```bash
 cd ../sneat-go
-GOOGLE_CLOUD_PROJECT=local-sneat-app \
+GOOGLE_CLOUD_PROJECT=demo-local-sneat-app \
 FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 \
 FIRESTORE_EMULATOR_HOST=localhost:8080 \
 go run ./cmd/sneatserver          # serves on :4300 (PORT overrides)
@@ -36,8 +41,7 @@ go run ./cmd/sneatserver          # serves on :4300 (PORT overrides)
 > build single-threaded: `go build -p 1 -o /tmp/sneatserver ./cmd/sneatserver`
 > then run `/tmp/sneatserver` with the same env vars.
 >
-> Note: the `sneat-go` README's `GOOGLE_CLOUD_PROJECT="demo-sneat"` is stale —
-> use `local-sneat-app` to match the web app.
+> The `sneat-go` README's `GOOGLE_CLOUD_PROJECT="demo-sneat"` is stale.
 
 ## 3. Web app — sneat-app
 
@@ -47,13 +51,38 @@ pnpm install
 pnpm nx serve sneat-app           # http://localhost:4200
 ```
 
+## Networking — proper setup vs quick smoke test
+
+The app is wired for an **nginx HTTPS proxy** (see `sneat-devenv/nginx-conf/`):
+`/etc/hosts` maps `local-*.sneat.ws` → `127.0.0.1`, and the app calls
+`https://local-api.sneat.ws/v0` (api → `:4300`), with `local-app/-fb-auth/`
+`-firestore.sneat.ws:443` proxying to `:4200/:9099/:8080`. Access the app at
+**<https://local-app.sneat.ws>** when nginx + self-signed certs are set up.
+
+### Quick smoke test on plain `localhost` (no nginx)
+
+Open the app at **<http://localhost:4200>** instead. Because the hostname is
+`localhost` (not `local-app.sneat.ws`), the app already points auth/firestore at
+`127.0.0.1:9099`/`:8080` directly. Only the **API base** stays at
+`https://local-api.sneat.ws`, so override it for the smoke test (uncommitted):
+
+```ts
+// apps/sneat-app/src/main.ts — TEMP, do not commit
+import { SneatApiBaseUrl } from '@sneat/api';
+// ...providers: after ...getStandardSneatProviders(...):
+{ provide: SneatApiBaseUrl, useValue: 'http://localhost:4300/v0/' },
+```
+
+CORS allows `localhost` origins (`sneat-go-core/security/known_origins.go`), so
+the go-server accepts requests from `http://localhost:4200`.
+
 ## Verify
 
-1. Open <http://localhost:4200/> and sign in (creates a user in the **auth
-   emulator** — watch it at <http://127.0.0.1:8070/auth>).
-2. Open/create a space and go to **`…/lists`** — list pages are served by the
-   published `@sneat/extension-listus` package; their data flows
+1. Open the app and **sign in** (creates a user in the **auth emulator** —
+   watch it at <http://127.0.0.1:8070/auth>).
+2. Open/create a space and go to **`…/lists`** — list pages come from the
+   published `@sneat/extension-listus` package; data flows
    app → `sneat-go-server` (`:4300`) → firestore emulator (`:8080`).
 
-Auth + navigation work with just steps 1 & 3; **list data needs step 2** (the
-backend).
+Auth + navigation work with just the emulators + app; **list data needs the
+backend (step 2)**.
