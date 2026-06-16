@@ -5,7 +5,7 @@ import { spacePagesRoutes } from '@sneat/ext-debtus-internal';
 import { AssetusRoutingModule } from '@sneat/extensions-assetus-pages';
 import { budgetusRoutes } from '@sneat/extensions-budgetus';
 import { docusRoutes } from '@sneat/extensions-docus';
-import { listusRoutes } from '@sneat/extensions-listus';
+import { listusRoutes } from '@sneat/extension-listus';
 import { calendariumRoutes } from '@sneat/extensions-schedulus-main';
 import { trackusSpaceRoutes } from '@sneat/extensions-trackus';
 import {
