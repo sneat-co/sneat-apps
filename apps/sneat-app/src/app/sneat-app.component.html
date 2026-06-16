@@ -39,7 +39,11 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <sneat-app-menu />
+        @if (showRouteMenu()) {
+          <ion-router-outlet name="menu" [animated]="false" />
+        } @else {
+          <sneat-app-menu />
+        }
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main" />
