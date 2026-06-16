@@ -5,7 +5,7 @@ status: Approved
 
 # Plan: Extract Listus Standalone Repo
 
-**Status:** pending
+**Status:** Approved
 **Source Feature:** extract-listus-standalone-repo
 **Date:** 2026-06-16
 **Owner:** alexandertrakhimenok
@@ -65,7 +65,7 @@ In `sneat-apps`, remove the local tsconfig path for the old in-repo listus libra
 
 **Verifies:** extract-listus-standalone-repo#ac:sneat-apps-consumes-published-version
 **Depends-On:** 5
-**Status:** pending
+**Status:** done
 
 Publish `@sneat/extension-listus` at a first pinned version (e.g. `0.0.1`) — creating the GitHub remote at this step — replace the pnpm local link in `sneat-apps` with that versioned dependency in `package.json`, and confirm `sneat-apps` builds and passes CI against the published package with no functional regression.
 
