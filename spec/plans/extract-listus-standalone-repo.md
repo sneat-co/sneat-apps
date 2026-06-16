@@ -5,7 +5,7 @@ status: Approved
 
 # Plan: Extract Listus Standalone Repo
 
-**Status:** Approved
+**Status:** pending
 **Source Feature:** extract-listus-standalone-repo
 **Date:** 2026-06-16
 **Owner:** alexandertrakhimenok
@@ -25,7 +25,7 @@ Strictly linear, matching the Idea's sequenced MVP and respecting cross-task dep
 
 **Verifies:** extract-listus-standalone-repo#ac:repo-scaffold-structure
 **Depends-On:** —
-**Status:** pending
+**Status:** done
 
 Create the new repo locally (`git init`, no remote) with an AGPL-3.0 `LICENSE` at the root, a `frontend/` pnpm-managed Nx/Angular workspace (`frontend/package.json`), a `backend/` Go module (`backend/go.mod`, module path `github.com/sneat-co/listus/backend`), and a brief `README.md` at the root and in `frontend/` and `backend/`. Neither `package.json` nor `go.mod` sits at the repo root.
 
@@ -33,7 +33,7 @@ Create the new repo locally (`git init`, no remote) with an AGPL-3.0 `LICENSE` a
 
 **Verifies:** extract-listus-standalone-repo#ac:backend-builds-and-serves-health
 **Depends-On:** 1
-**Status:** pending
+**Status:** done
 
 In `backend/`, implement a minimal HTTP server exposing `GET /health` returning HTTP 200, confirm `go build ./...` succeeds and the endpoint responds. No listus domain endpoints in this iteration.
 
@@ -41,7 +41,7 @@ In `backend/`, implement a minimal HTTP server exposing `GET /health` returning 
 
 **Verifies:** extract-listus-standalone-repo#ac:ext-listus-builds-under-singular-name
 **Depends-On:** 1
-**Status:** pending
+**Status:** done
 
 Move the listus source from `sneat-apps/libs/extensions/listus` into `frontend/libs/ext-listus`, set the package `name` to `@sneat/extension-listus`, add the existing published `@sneat/*` dependencies (v0.4.0) via pnpm, and confirm the library type-checks and builds while preserving its public API (notably the `listusRoutes` export).
 
@@ -49,7 +49,7 @@ Move the listus source from `sneat-apps/libs/extensions/listus` into `frontend/l
 
 **Verifies:** extract-listus-standalone-repo#ac:listus-app-renders-lists
 **Depends-On:** 3
-**Status:** pending
+**Status:** done
 
 Create `frontend/apps/listus-app` mirroring the sneat-app shell pattern (reusing published `@sneat/*` auth + space libs), wire `listusRoutes` from `@sneat/extension-listus`, and confirm an authenticated user can navigate to the lists route and the listus lists UI renders without runtime errors.
 
@@ -57,7 +57,7 @@ Create `frontend/apps/listus-app` mirroring the sneat-app shell pattern (reusing
 
 **Verifies:** extract-listus-standalone-repo#ac:sneat-apps-local-link-no-regression
 **Depends-On:** 4
-**Status:** pending
+**Status:** done
 
 In `sneat-apps`, remove the local tsconfig path for the old in-repo listus library, update the import in `space-routing.module.ts` to the singular `@sneat/extension-listus`, link the package locally via pnpm, build, and smoke-test the lists feature on a dev machine for no functional regression. This gates the publish.
 
@@ -73,7 +73,7 @@ Publish `@sneat/extension-listus` at a first pinned version (e.g. `0.0.1`) — c
 
 **Verifies:** extract-listus-standalone-repo#ac:naming-convention-documented
 **Depends-On:** —
-**Status:** pending
+**Status:** done
 
 Update the `sneat-libs` repository `README.md` to document the singular `@sneat/extension-<name>` naming convention as the standard for extension packages (listus only; schedulus/contactus not renamed this iteration).
 
@@ -81,7 +81,7 @@ Update the `sneat-libs` repository `README.md` to document the singular `@sneat/
 
 **Verifies:** extract-listus-standalone-repo#ac:listus-app-renders-lists
 **Depends-On:** 4
-**Status:** pending
+**Status:** done
 
 Add an end-to-end test for `frontend/apps/listus-app` (Nx e2e project, e.g. Playwright/Cypress per the workspace default) that boots the app and asserts the lists route renders, and run a smoke test confirming the app starts and the lists UI loads without console errors. Added per user request; complements the runtime check in Task 4.
 

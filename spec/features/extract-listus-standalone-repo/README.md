@@ -6,8 +6,9 @@ status: Approved
 # Feature: Extract Listus into a Dedicated Full-Stack Repo
 
 > [SpecScore.**Studio**](https://specscore.studio): | [Explore](https://specscore.studio/app/github.com/sneat-co/sneat-apps/spec/features/extract-listus-standalone-repo?op=explore) | [Edit](https://specscore.studio/app/github.com/sneat-co/sneat-apps/spec/features/extract-listus-standalone-repo?op=edit) | [Ask question](https://specscore.studio/app/github.com/sneat-co/sneat-apps/spec/features/extract-listus-standalone-repo?op=ask) | [Request change](https://specscore.studio/app/github.com/sneat-co/sneat-apps/spec/features/extract-listus-standalone-repo?op=request-change) |
-> **Status:** Approved
-> **Source Ideas:** extract-listus-standalone-repo
+
+**Status:** Approved
+**Source Ideas:** extract-listus-standalone-repo
 
 ## Summary
 
