@@ -1,4 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
 import {
   IonItem,
@@ -6,7 +7,7 @@ import {
   IonList,
   ModalController,
 } from '@ionic/angular/standalone';
-import { ISneatAuthState, SneatAuthStateService } from '@sneat/auth-core';
+import { SneatAuthStateService } from '@sneat/auth-core';
 import { AuthMenuItemComponent } from '@sneat/auth-ui';
 import { AppVersionComponent } from '@sneat/components';
 import { SpacesMenuComponent } from '@sneat/space-components';
@@ -31,7 +32,10 @@ export class SneatAppMenuComponent {
   private readonly authStateService = inject(SneatAuthStateService);
   private readonly router = inject(Router);
 
-  public authState?: ISneatAuthState;
+  // Signal-backed so the menu renders reactively under zoneless change
+  // detection — fixes the empty side-menu on large screens and the
+  // NG0100 ExpressionChangedAfterItHasBeenChecked error.
+  protected readonly authState = toSignal(this.authStateService.authState);
 
   protected readonly isLoginPage = signal(false);
 
@@ -45,9 +49,5 @@ export class SneatAppMenuComponent {
           (e as NavigationEnd).urlAfterRedirects === '/login',
         );
       });
-
-    this.authStateService.authState.subscribe((authState) => {
-      this.authState = authState;
-    });
   }
 }

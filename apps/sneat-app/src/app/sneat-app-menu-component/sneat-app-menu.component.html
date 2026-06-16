@@ -9,7 +9,7 @@
   <sneat-app-version />
 } @else {
   <ion-list lines="full">
-    @if (authState?.status === "authenticated") {
+    @if (authState()?.status === "authenticated") {
       <sneat-spaces-menu />
     }
     <sneat-auth-menu-item />
