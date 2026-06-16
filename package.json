@@ -68,6 +68,8 @@
     "@sneat/datagrid": "0.5.2",
     "@sneat/dto": "0.5.2",
     "@sneat/ext-assetus-components": "0.5.2",
+    "@sneat/ext-debtus-internal": "0.0.1",
+    "@sneat/ext-debtus-shared": "0.0.1",
     "@sneat/extension-listus": "0.0.1",
     "@sneat/extensions-schedulus-main": "0.5.2",
     "@sneat/extensions-schedulus-shared": "0.5.2",

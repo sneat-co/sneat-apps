@@ -44,12 +44,6 @@
       "@sneat/datetime": [
         "libs/datetime/src/index.ts"
       ],
-      "@sneat/ext-debtus-internal": [
-        "libs/extensions/debtus/internal/src/index.ts"
-      ],
-      "@sneat/ext-debtus-shared": [
-        "libs/extensions/debtus/shared/src/index.ts"
-      ],
       "@sneat/ext-meeting": [
         "libs/meeting/src/index.ts"
       ],
