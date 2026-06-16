@@ -7,13 +7,19 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/sneat-app",
         "index": "apps/sneat-app/src/index.html",
         "browser": "apps/sneat-app/src/main.ts",
-        "polyfills": ["zone.js"],
-        "allowedCommonJsDependencies": ["qrcode"],
+        "polyfills": [
+          "zone.js"
+        ],
+        "allowedCommonJsDependencies": [
+          "qrcode"
+        ],
         "tsConfig": "apps/sneat-app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -23,9 +29,16 @@
             "glob": "**/*.svg",
             "input": "node_modules/ionicons/dist/ionicons/svg",
             "output": "./svg"
+          },
+          {
+            "glob": "**/*",
+            "input": "node_modules/@sneat/extension-listus/src/assets",
+            "output": "assets"
           }
         ],
-        "styles": ["apps/sneat-app/src/styles.scss"],
+        "styles": [
+          "apps/sneat-app/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -116,7 +129,9 @@
     },
     "test": {
       "executor": "@nx/vitest:test",
-      "outputs": ["{workspaceRoot}/coverage/apps/sneat-app"],
+      "outputs": [
+        "{workspaceRoot}/coverage/apps/sneat-app"
+      ],
       "options": {
         "tsConfig": "apps/sneat-app/tsconfig.spec.json"
       }
