@@ -189,6 +189,11 @@ jobs:
           debug: true
 
   e2e-tests:
+    # TEMPORARILY DISABLED: cdn.playwright.dev is stalling mid-download of the
+    # Chrome build, hanging/failing e2e for every PR. Re-enable by removing this
+    # `if` and re-adding "e2e-tests" to branch protection's required checks once
+    # the CDN recovers. Timeout + retry hardening below is kept for that point.
+    if: ${{ false }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
