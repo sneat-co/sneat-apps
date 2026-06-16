@@ -1,6 +1,6 @@
 # Running sneat-app locally (full stack)
 
-The local stack has **four** parts. Start them in this order. All share the
+The local stack has **three** services. Start them in this order. All share the
 Firebase project id **`local-sneat-app`** (this is what the Angular app's
 emulator config uses — keep every service on the same id).
 
