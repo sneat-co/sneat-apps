@@ -3,7 +3,7 @@ import { TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, EMPTY } from 'rxjs';
 import { SneatAuthStateService, TelegramAuthService } from '@sneat/auth-core';
-import { AnalyticsService, ErrorLogger, TopMenuService } from '@sneat/core';
+import { AnalyticsService, TopMenuService } from '@sneat/core';
 
 import { SneatAppComponent } from './sneat-app.component';
 
@@ -12,7 +12,6 @@ describe('AppComponent', () => {
     const router = {
       events: EMPTY,
       url: '/',
-      navigateByUrl: vi.fn().mockResolvedValue(true),
     };
 
     await TestBed.configureTestingModule({
@@ -37,13 +36,6 @@ describe('AppComponent', () => {
           useValue: { authenticateIfTelegramWebApp: vi.fn() },
         },
         { provide: AnalyticsService, useValue: { logEvent: vi.fn() } },
-        {
-          provide: ErrorLogger,
-          useValue: {
-            logError: vi.fn(),
-            logErrorHandler: vi.fn(() => vi.fn()),
-          },
-        },
         { provide: TopMenuService, useValue: { visibilityChanged: vi.fn() } },
         {
           provide: SneatAuthStateService,
