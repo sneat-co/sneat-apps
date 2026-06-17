@@ -3,10 +3,9 @@ import {
   Component,
   computed,
   effect,
-  EventEmitter,
   inject,
   input,
-  Output,
+  output,
   signal,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -255,7 +254,7 @@ export class TrackersComponent extends SneatBaseComponent {
     this.$category.set(selectedValue);
   };
 
-  @Output() public readonly goNewTracker = new EventEmitter<string>();
+  public readonly goNewTracker = output<string>();
 
   protected openNewTracker(event: Event, category: string): void {
     event.stopPropagation();

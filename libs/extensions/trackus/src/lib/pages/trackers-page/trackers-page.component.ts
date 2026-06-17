@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
   IonBackButton,
   IonButton,
@@ -43,6 +43,7 @@ import { ClassName } from '@sneat/ui';
     },
     SpaceComponentBaseParams,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrackersPageComponent extends SpaceBaseComponent {
   protected goNewTracker(category?: string): void {

@@ -1,10 +1,11 @@
-import { EventEmitter, Output } from '@angular/core';
 import {
+  ChangeDetectionStrategy,
   Component,
   effect,
   inject,
   input,
   OnDestroy,
+  output,
   signal,
 } from '@angular/core';
 import { ClassName, SneatBaseComponent } from '@sneat/ui';
@@ -23,6 +24,7 @@ import { TrackersService } from '../../trackers-service';
     TrackersService,
     { provide: ClassName, useValue: 'TrackerProviderComponent' },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrackerProviderComponent
   extends SneatBaseComponent
@@ -30,7 +32,7 @@ export class TrackerProviderComponent
 {
   // @ContentChild(TemplateRef) contentTemplate!: TemplateRef<{$tracker: Signal<IIdAndOptionalBriefAndOptionalDbo<ITrackerBrief, ITrackerDbo> | undefined>}>;
 
-  @Output() trackerChange = new EventEmitter<ITracker>();
+  readonly trackerChange = output<ITracker>();
 
   public readonly $spaceID = input.required<string | undefined>();
   public readonly $trackerID = input.required<string | undefined>();

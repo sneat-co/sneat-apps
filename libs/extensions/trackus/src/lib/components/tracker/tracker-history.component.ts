@@ -1,5 +1,12 @@
 import { DatePipe } from '@angular/common';
-import { Component, computed, inject, input, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+  signal,
+} from '@angular/core';
 import { Timestamp } from '@firebase/firestore';
 import {
   IonButton,
@@ -58,6 +65,7 @@ interface ITargetInfo {
       useValue: 'TrackerHistoryComponent',
     },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrackerHistoryComponent extends SneatBaseComponent {
   public readonly $tracker = input.required<ITracker | undefined>();

@@ -1,7 +1,8 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   signal,
-  ViewChild,
+  viewChild,
   AfterViewInit,
   inject,
   input,
@@ -44,6 +45,7 @@ import {
       useValue: 'TrackerFormComponent',
     },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrackerFormComponent
   extends SneatBaseComponent
@@ -54,7 +56,7 @@ export class TrackerFormComponent
 
   private trackBy: 'contact' | 'space' = 'contact';
   protected $trackByID = signal<string>('');
-  @ViewChild('numberInput') numberInput?: IonInput;
+  readonly numberInput = viewChild<IonInput>('numberInput');
 
   protected readonly $isSubmitting = signal<boolean>(false);
 
@@ -78,12 +80,13 @@ export class TrackerFormComponent
   }
 
   public ngAfterViewInit(): void {
-    this.setFocusToInput(this.numberInput);
+    this.setFocusToInput(this.numberInput());
   }
 
   protected addTrackerRecord(): void {
     const tracker = this.$tracker();
-    let value: unknown = this.numberInput?.value;
+    const numberInput = this.numberInput();
+    let value: unknown = numberInput?.value;
     if (!tracker || value === undefined || value === '') {
       return;
     }
@@ -104,9 +107,9 @@ export class TrackerFormComponent
     this.trackusApiService.addTrackerPoint(request).subscribe({
       next: () => {
         this.$isSubmitting.set(false);
-        if (this.numberInput) {
-          this.numberInput.value = '';
-          this.setFocusToInput(this.numberInput);
+        if (numberInput) {
+          numberInput.value = '';
+          this.setFocusToInput(numberInput);
         }
       },
       error: (err) => {
