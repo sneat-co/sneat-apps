@@ -1,8 +1,9 @@
 import {
+  ChangeDetectionStrategy,
   Component,
-  Input,
-  OnChanges,
-  SimpleChanges,
+  effect,
+  input,
+  signal,
   inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -44,41 +45,42 @@ import { SpaceNavService, SpaceService } from '@sneat/space-services';
     IonSegmentButton,
     IonBadge,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 }) // TODO: use or delete unused MembersComponent
-export class MembersComponent implements OnChanges {
+export class MembersComponent {
   private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
   private readonly spaceService = inject(SpaceService);
   private readonly navController = inject(NavController);
   readonly navService = inject(SpaceNavService);
 
-  @Input({ required: true }) public contactusSpace?: IContactusSpaceDboAndID;
+  public readonly contactusSpace = input.required<IContactusSpaceDboAndID>();
 
-  public membersRoleTab: MemberRole | '*' = MemberRoleContributor;
-  public contributorsCount?: number;
-  public spectatorsCount?: number;
+  public readonly membersRoleTab = signal<MemberRole | '*'>(
+    MemberRoleContributor,
+  );
+  public readonly contributorsCount = signal<number | undefined>(undefined);
+  public readonly spectatorsCount = signal<number | undefined>(undefined);
+
+  constructor() {
+    effect(() => {
+      try {
+        this.setMembersCount(this.contactusSpace()?.dbo);
+      } catch (e) {
+        this.errorLogger.logError(e, 'Failed to process team changes');
+      }
+    });
+  }
 
   public goAddMember(event?: Event): void {
     if (event) {
       event.preventDefault();
       event.stopPropagation();
     }
-    if (!this.contactusSpace) {
+    const contactusSpace = this.contactusSpace();
+    if (!contactusSpace) {
       throw 'no team';
     }
-    this.navService.navigateToAddMember(
-      this.navController,
-      this.contactusSpace,
-    );
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['contactusTeam']) {
-      try {
-        this.setMembersCount(this.contactusSpace?.dbo);
-      } catch (e) {
-        this.errorLogger.logError(e, 'Failed to process team changes');
-      }
-    }
+    this.navService.navigateToAddMember(this.navController, contactusSpace);
   }
 
   public onSelfRemoved(): void {
@@ -91,11 +93,11 @@ export class MembersComponent implements OnChanges {
         zipMapBriefsWithIDs(team.contacts)?.filter((m) =>
           m.brief.roles?.includes(role),
         )?.length || 0;
-      this.contributorsCount = count(MemberRoleContributor);
-      this.spectatorsCount = count(MemberRoleSpectator);
+      this.contributorsCount.set(count(MemberRoleContributor));
+      this.spectatorsCount.set(count(MemberRoleSpectator));
     } else {
-      this.contributorsCount = undefined;
-      this.spectatorsCount = undefined;
+      this.contributorsCount.set(undefined);
+      this.spectatorsCount.set(undefined);
     }
   }
 }

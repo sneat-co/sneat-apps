@@ -1,4 +1,11 @@
-import { Component, Input, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+  signal,
+  inject,
+} from '@angular/core';
 import {
   IonButton,
   IonButtons,
@@ -34,6 +41,7 @@ import { SpaceNavService, SpaceService } from '@sneat/space-services';
     IonCard,
     IonText,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MetricsComponent {
   private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
@@ -41,32 +49,33 @@ export class MetricsComponent {
   private readonly navController = inject(NavController);
   readonly navService = inject(SpaceNavService);
 
-  @Input() public space?: IRecord<ISpaceDbo>;
+  public readonly space = input<IRecord<ISpaceDbo>>();
 
-  public deletingMetrics: string[] = [];
+  public readonly deletingMetrics = signal<string[]>([]);
 
   private readonly demoMetrics = ['cc', 'bb', 'wfh'];
 
-  public get isDemoMetricsOnly(): boolean {
-    const metrics = this.space?.dbo?.metrics;
+  public readonly isDemoMetricsOnly = computed<boolean>(() => {
+    const metrics = this.space()?.dbo?.metrics;
     if (!metrics || metrics.length !== this.demoMetrics.length) {
       return false;
     }
     return !metrics.find((m, i) => m.id !== this.demoMetrics[i]);
-  }
+  });
 
   public deleteDemoMetrics(event: Event): void {
     event.preventDefault();
     event.stopPropagation();
-    if (!this.space) {
+    const space = this.space();
+    if (!space) {
       throw 'no team';
     }
-    this.deletingMetrics.push(...this.demoMetrics);
+    this.deletingMetrics.update((v) => [...v, ...this.demoMetrics]);
     const complete = () =>
-      (this.deletingMetrics = this.deletingMetrics.filter(
-        (v) => !this.demoMetrics.includes(v),
-      ));
-    this.spaceService.deleteMetrics(this.space.id, this.demoMetrics).subscribe({
+      this.deletingMetrics.update((v) =>
+        v.filter((m) => !this.demoMetrics.includes(m)),
+      );
+    this.spaceService.deleteMetrics(space.id, this.demoMetrics).subscribe({
       complete,
       error: (err) => {
         complete();
@@ -76,22 +85,22 @@ export class MetricsComponent {
   }
 
   public isDeletingMetric(metric: ISpaceMetric): boolean {
-    return !!metric.id && this.deletingMetrics.includes(metric.id);
+    return !!metric.id && this.deletingMetrics().includes(metric.id);
   }
 
   public deleteMetric(metric: ISpaceMetric): void {
     if (!metric.id) {
       throw 'metric has no id';
     }
-    if (!this.space) {
+    const space = this.space();
+    if (!space) {
       throw 'no team';
     }
-    this.deletingMetrics.push(metric.id);
+    const metricId = metric.id;
+    this.deletingMetrics.update((v) => [...v, metricId]);
     const complete = () =>
-      (this.deletingMetrics = this.deletingMetrics.filter(
-        (v) => v !== metric.id,
-      ));
-    this.spaceService.deleteMetrics(this.space.id, [metric.id]).subscribe({
+      this.deletingMetrics.update((v) => v.filter((m) => m !== metricId));
+    this.spaceService.deleteMetrics(space.id, [metricId]).subscribe({
       error: (err) => {
         complete();
         this.errorLogger.logError(err, 'Failed to delete metric');
@@ -105,10 +114,11 @@ export class MetricsComponent {
       event.preventDefault();
       event.stopPropagation();
     }
-    if (!this.space) {
+    const space = this.space();
+    if (!space) {
       throw 'no team';
     }
-    this.navService.navigateToAddMetric(this.navController, this.space);
+    this.navService.navigateToAddMetric(this.navController, space);
   }
 
   metricColor(v?: IBoolMetricVal): string {

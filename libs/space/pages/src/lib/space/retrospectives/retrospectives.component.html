@@ -4,7 +4,7 @@
     <ion-buttons slot="end">
       <ion-button
         color="primary"
-        (click)="navService.navigateToRetroTree('today', space)"
+        (click)="navService.navigateToRetroTree('today', space())"
         >Tree</ion-button
       >
     </ion-buttons>
@@ -12,14 +12,14 @@
   <ion-item
     tappable
     (click)="navigateToCurrentRetro()"
-    [disabled]="!space?.dbo"
+    [disabled]="!space()?.dbo"
   >
     <!--		<ion-label color="primary">{{-->
     <!--			team?.dto?.active?.retrospective-->
     <!--				? 'Active retrospective'-->
     <!--				: 'Upcoming retrospective'-->
     <!--		}}</ion-label>-->
-    @if (space?.dbo?.upcomingRetro) {
+    @if (space()?.dbo?.upcomingRetro) {
       <ion-buttons slot="end">
         <ion-button color="success">{{ retroCount("good") }}</ion-button>
         <ion-button color="danger">{{ retroCount("bad") }}</ion-button>

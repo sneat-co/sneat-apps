@@ -6,7 +6,7 @@
 
 <ion-content>
   <div class="ion-padding">
-    @if (invite) {
+    @if (invite(); as invite) {
       <p>
         You've been invited by <b>{{ invite.from.title }}</b>
         <br />
@@ -22,7 +22,11 @@
     </ion-item-divider>
     <ion-item>
       <ion-label position="fixed">Full name</ion-label>
-      <ion-input [disabled]="working" [(ngModel)]="fullName" />
+      <ion-input
+        [disabled]="working()"
+        [ngModel]="fullName()"
+        (ngModelChange)="fullName.set($event)"
+      />
     </ion-item>
     <ion-item>
       <ion-label position="fixed">Email</ion-label>
@@ -31,22 +35,28 @@
         [disabled]="true"
         id="email"
         type="email"
-        [(ngModel)]="email"
+        [ngModel]="email()"
+        (ngModelChange)="email.set($event)"
       />
     </ion-item>
-    @if (!hidePin) {
+    @if (!hidePin()) {
       <ion-item-divider>
         <ion-label>Secret</ion-label>
       </ion-item-divider>
       <ion-item>
         <ion-label>PIN</ion-label>
-        <ion-input [disabled]="working" type="number" [(ngModel)]="pin" />
+        <ion-input
+          [disabled]="working()"
+          type="number"
+          [ngModel]="pin()"
+          (ngModelChange)="pin.set($event)"
+        />
       </ion-item>
     }
   </ion-list>
   <div class="ion-padding">
-    <ion-button [disabled]="working" (click)="join()">
-      @if (accepting) {
+    <ion-button [disabled]="working()" (click)="join()">
+      @if (accepting()) {
         <ion-spinner name="lines-small" slot="start" />
         <ion-label>Joining team...</ion-label>
       } @else {
@@ -55,12 +65,12 @@
       }
     </ion-button>
     <ion-button
-      [disabled]="working"
+      [disabled]="working()"
       color="medium"
       fill="outline"
       (click)="reject()"
     >
-      @if (rejecting) {
+      @if (rejecting()) {
         <ion-spinner name="lines-small" slot="start" />
         <ion-label>Rejecting invite...</ion-label>
       } @else {
@@ -72,7 +82,7 @@
     <!--			<ion-progress-bar type="indeterminate" color="medium"></ion-progress-bar>-->
     <!--		}-->
   </div>
-  @if (members) {
+  @if (members(); as members) {
     <ion-list>
       <ion-item-divider>
         <ion-label>Team members</ion-label>

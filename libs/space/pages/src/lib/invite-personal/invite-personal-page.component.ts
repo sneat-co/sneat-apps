@@ -1,4 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  signal,
+  inject,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
@@ -54,6 +60,7 @@ import { InviteService } from '@sneat/contactus-services';
     IonSpinner,
   ],
   providers: [InviteService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'sneat-invite-personal-page',
   templateUrl: './invite-personal-page.component.html',
 })
@@ -68,18 +75,20 @@ export class InvitePersonalPageComponent implements OnInit {
   private readonly navController = inject(NavController);
   private readonly randomIdService = inject(RandomIdService);
 
-  public fullName = '';
-  public email = '';
-  public pin = '';
+  public readonly fullName = signal('');
+  public readonly email = signal('');
+  public readonly pin = signal('');
 
-  public hidePin?: boolean;
+  public readonly hidePin = signal<boolean | undefined>(undefined);
 
-  public working = false;
-  public accepting = false;
-  public rejecting = false;
+  public readonly working = signal(false);
+  public readonly accepting = signal(false);
+  public readonly rejecting = signal(false);
 
-  public invite?: IPersonalInvite;
-  public members?: readonly IContactWithBriefAndSpace[];
+  public readonly invite = signal<IPersonalInvite | undefined>(undefined);
+  public readonly members = signal<
+    readonly IContactWithBriefAndSpace[] | undefined
+  >(undefined);
 
   private inviteId = '';
   private spaceID = '';
@@ -112,15 +121,17 @@ export class InvitePersonalPageComponent implements OnInit {
         )
         .subscribe({
           next: (response) => {
-            this.invite = response.invite;
-            this.members = zipMapBriefsWithIDsAndSpaceRef(
-              { id: spaceID },
-              response.members,
-            )?.filter((m) => m.id !== response.invite?.memberID);
+            this.invite.set(response.invite);
+            this.members.set(
+              zipMapBriefsWithIDsAndSpaceRef(
+                { id: spaceID },
+                response.members,
+              )?.filter((m) => m.id !== response.invite?.memberID),
+            );
             if (response.invite) {
-              this.fullName = response.invite.to.title || '';
+              this.fullName.set(response.invite.to.title || '');
               if (response.invite.to.channel === 'email') {
-                this.email = response.invite.to.address || '';
+                this.email.set(response.invite.to.address || '');
               }
             }
           },
@@ -131,14 +142,14 @@ export class InvitePersonalPageComponent implements OnInit {
   }
 
   public join(): void {
-    this.accepting = true;
-    this.working = true;
+    this.accepting.set(true);
+    this.working.set(true);
 
     const acceptInvite = (token?: string) => {
       const request: IAcceptPersonalInviteRequest = {
         spaceID: this.spaceID,
         inviteID: this.inviteId,
-        pin: this.pin,
+        pin: this.pin(),
         // email: this.email,
         // fullName: this.fullName,
       };
@@ -158,8 +169,8 @@ export class InvitePersonalPageComponent implements OnInit {
         },
         error: (error) => {
           this.errorLogger.logError(error, 'Failed to join team');
-          this.accepting = false;
-          this.working = false;
+          this.accepting.set(false);
+          this.working.set(false);
         },
       });
     };
@@ -169,7 +180,7 @@ export class InvitePersonalPageComponent implements OnInit {
     } else {
       // Move into service?
       const password = this.randomIdService.newRandomId();
-      createUserWithEmailAndPassword(this.afAuth, this.email, password)
+      createUserWithEmailAndPassword(this.afAuth, this.email(), password)
         .then((userCredential) => {
           if (!userCredential?.user) {
             return;
@@ -185,20 +196,20 @@ export class InvitePersonalPageComponent implements OnInit {
             });
         })
         .catch((err) => {
-          this.accepting = false;
-          this.working = false;
+          this.accepting.set(false);
+          this.working.set(false);
           this.errorLogger.logError(err, 'Failed to create Firebase user');
         });
     }
   }
 
   public reject(): void {
-    this.rejecting = true;
-    this.working = true;
+    this.rejecting.set(true);
+    this.working.set(true);
     const request: IRejectPersonalInviteRequest = {
       spaceID: this.spaceID,
       inviteID: this.inviteId,
-      pin: this.pin,
+      pin: this.pin(),
     };
     this.inviteService.rejectPersonalInvite(request).subscribe(
       () => {
@@ -211,8 +222,8 @@ export class InvitePersonalPageComponent implements OnInit {
       },
       (error) => {
         this.errorLogger.logError(error, 'Failed to join team');
-        this.working = false;
-        this.rejecting = false;
+        this.working.set(false);
+        this.rejecting.set(false);
       },
     );
   }
@@ -220,8 +231,8 @@ export class InvitePersonalPageComponent implements OnInit {
   private getPinFromUrl(): void {
     const m = location.hash.match(/[#&]pin=(\d+)($|&)/);
     if (m) {
-      this.pin = m[1];
-      this.hidePin = true;
+      this.pin.set(m[1]);
+      this.hidePin.set(true);
     }
   }
 }

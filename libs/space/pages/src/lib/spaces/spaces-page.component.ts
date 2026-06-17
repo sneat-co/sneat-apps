@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import {
   IonButtons,
   IonContent,
@@ -27,11 +27,12 @@ import { SpacesCardComponent } from '@sneat/space-components';
     IonFabButton,
     IonIcon,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpacesPageComponent {
-  @ViewChild(SpacesCardComponent) spacesCard?: SpacesCardComponent;
+  protected readonly spacesCard = viewChild(SpacesCardComponent);
 
   protected onCreateSpaceClick(): void {
-    this.spacesCard?.startAddingSpace();
+    this.spacesCard()?.startAddingSpace();
   }
 }

@@ -1,4 +1,9 @@
-import { Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  signal,
+  inject,
+} from '@angular/core';
 import {
   FormControl,
   FormsModule,
@@ -34,20 +39,21 @@ import { IUserRecord } from '@sneat/auth-models';
     IonInput,
     IonBackButton,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserProfilePageComponent {
   private readonly userService = inject(SneatUserService);
 
-  public user?: IUserRecord | null;
+  public readonly user = signal<IUserRecord | null | undefined>(undefined);
   public userTitle = new FormControl<string>('', [Validators.required]);
 
-  edit = false;
+  readonly edit = signal(false);
 
   constructor() {
     const userService = this.userService;
 
     userService.userState.subscribe((userState) => {
-      this.user = userState.record;
+      this.user.set(userState.record);
       this.userTitle.setValue(userState?.record?.title || '');
     });
   }

@@ -1,12 +1,12 @@
 <ion-card>
   <ion-item-divider>
-    <ion-label color="dark" (click)="membersRoleTab = '*'" tappable>
+    <ion-label color="dark" (click)="membersRoleTab.set('*')" tappable>
       <b>Members</b>
-      @if (spectatorsCount || contributorsCount) {
+      @if (spectatorsCount() || contributorsCount()) {
         <span
           >:
           <span id="space_members_count">{{
-            (spectatorsCount || 0) + (contributorsCount || 0)
+            (spectatorsCount() || 0) + (contributorsCount() || 0)
           }}</span></span
         >
       }
@@ -18,7 +18,11 @@
       </ion-button>
     </ion-buttons>
   </ion-item-divider>
-  <ion-segment [(ngModel)]="membersRoleTab" [disabled]="!contactusSpace?.dbo">
+  <ion-segment
+    [ngModel]="membersRoleTab()"
+    (ngModelChange)="membersRoleTab.set($event)"
+    [disabled]="!contactusSpace()?.dbo"
+  >
     <ion-segment-button value="*">
       <ion-label>
         All
@@ -28,16 +32,16 @@
     <ion-segment-button value="contributor">
       <ion-label
         >Contributors
-        @if (contributorsCount) {
-          <ion-badge>{{ contributorsCount }}</ion-badge>
+        @if (contributorsCount()) {
+          <ion-badge>{{ contributorsCount() }}</ion-badge>
         }
       </ion-label>
     </ion-segment-button>
     <ion-segment-button value="spectator">
       <ion-label
         >Spectators
-        @if (spectatorsCount) {
-          <ion-badge color="medium">{{ spectatorsCount }}</ion-badge>
+        @if (spectatorsCount()) {
+          <ion-badge color="medium">{{ spectatorsCount() }}</ion-badge>
         }
       </ion-label>
     </ion-segment-button>

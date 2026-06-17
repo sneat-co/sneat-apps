@@ -1,4 +1,9 @@
-import { Component, Input, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  inject,
+} from '@angular/core';
 import {
   IonButton,
   IonButtons,
@@ -28,6 +33,7 @@ import { RetroItemType } from '@sneat/ext-scrumspace-scrummodels';
     IonItem,
     IonText,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RetrospectivesComponent {
   private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
@@ -35,11 +41,11 @@ export class RetrospectivesComponent {
   private readonly navController = inject(NavController);
   readonly navService = inject(SpaceNavService);
 
-  @Input() public space?: IRecord<ISpaceDbo>;
+  public readonly space = input<IRecord<ISpaceDbo>>();
 
   navigateToCurrentRetro(): void {
     // console.log('navigateToCurrentRetro()');
-    if (!this.space) {
+    if (!this.space()) {
       this.errorLogger.logError(
         'Can not navigate to retro without having team context',
       );
@@ -62,7 +68,7 @@ export class RetrospectivesComponent {
     const userID = this.userService.currentUserID;
     return (
       (userID
-        ? this.space?.dbo?.upcomingRetro?.itemsByUserAndType?.[userID]?.[
+        ? this.space()?.dbo?.upcomingRetro?.itemsByUserAndType?.[userID]?.[
             itemType
           ]
         : 0) || 0

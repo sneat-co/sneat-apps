@@ -20,14 +20,14 @@
       <ion-text color="tertiary" style="font-weight: bold">Today</ion-text>
     </ion-label>
     <ion-buttons slot="end">
-      @if (todayScrum?.risksCount) {
+      @if (todayScrum()?.risksCount) {
         <ion-button color="danger" title="Risks or blockers">{{
-          todayScrum?.risksCount
+          todayScrum()?.risksCount
         }}</ion-button>
       }
-      @if (todayScrum?.questionsCount) {
+      @if (todayScrum()?.questionsCount) {
         <ion-button color="primary" title="Questions">{{
-          todayScrum?.questionsCount
+          todayScrum()?.questionsCount
         }}</ion-button>
       }
       <ion-button
@@ -41,14 +41,14 @@
     </ion-buttons>
   </ion-item>
   <ion-item
-    [disabled]="!prevScrumId"
+    [disabled]="!prevScrumId()"
     detail
     tappable
-    (click)="goScrum(prevScrumId, 'team')"
+    (click)="goScrum(prevScrumId(), 'team')"
   >
     <ion-label class="ion-text-wrap">
       <b>Previous</b>
-      @if (!prevScrumId) {
+      @if (!prevScrumId()) {
         <ion-text class="ion-margin-start" style="font-style: italic">
           (no records yet - will be available on next day after the 1st recorded
           stand-up)

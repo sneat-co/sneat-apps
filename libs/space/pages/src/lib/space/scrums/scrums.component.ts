@@ -1,9 +1,10 @@
 import {
+  ChangeDetectionStrategy,
   Component,
-  Input,
-  OnChanges,
   OnDestroy,
-  SimpleChanges,
+  effect,
+  input,
+  signal,
   inject,
 } from '@angular/core';
 import {
@@ -39,23 +40,25 @@ import { SpaceNavService } from '@sneat/space-services';
     IonIcon,
     IonItem,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ScrumsComponent implements OnChanges, OnDestroy {
+export class ScrumsComponent implements OnDestroy {
   private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
   private readonly navController = inject(NavController);
   readonly navService = inject(SpaceNavService);
 
-  @Input() public space?: IRecord<ISpaceDbo>;
+  public readonly space = input<IRecord<ISpaceDbo>>();
 
-  public prevScrumId?: string;
-  public todayScrum?: IScrumDbo;
+  public readonly prevScrumId = signal<string | undefined>(undefined);
+  public readonly todayScrum = signal<IScrumDbo | undefined>(undefined);
 
   protected readonly destroyed = new Subject<boolean>();
 
   private spaceID?: string;
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['space']) {
+  constructor() {
+    effect(() => {
+      this.space();
       try {
         throw new Error('not implemented due to refactoring');
         // if (this.team && this.teamId !== this.team.id) {
@@ -90,7 +93,7 @@ export class ScrumsComponent implements OnChanges, OnDestroy {
       } catch (e) {
         this.errorLogger.logError(e, 'Failed to process team changes');
       }
-    }
+    });
   }
 
   protected goScrum(
@@ -107,13 +110,15 @@ export class ScrumsComponent implements OnChanges, OnDestroy {
         event.preventDefault();
         event.stopPropagation();
       }
+      const todayScrum = this.todayScrum();
       const scrum = date === 'today' &&
-        this.todayScrum && {
+        todayScrum && {
           id: getMeetingIdFromDate(getToday()),
-          data: this.todayScrum,
+          data: todayScrum,
         };
-      if (this.space && scrum) {
-        this.navService.navigateToScrum(date, this.space, scrum, tab);
+      const space = this.space();
+      if (space && scrum) {
+        this.navService.navigateToScrum(date, space, scrum, tab);
       }
     } catch (e) {
       this.errorLogger.logError(e, 'Failed to navigate to scrum');
@@ -125,8 +130,9 @@ export class ScrumsComponent implements OnChanges, OnDestroy {
       event.preventDefault();
       event.stopPropagation();
     }
-    if (this.space) {
-      this.navService.navigateToScrums(this.navController, this.space);
+    const space = this.space();
+    if (space) {
+      this.navService.navigateToScrums(this.navController, space);
     }
   }
 

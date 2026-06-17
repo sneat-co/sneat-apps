@@ -15,13 +15,13 @@
           Metrics allow you to collect some quantitative measures or flags
           during your daily stand-up meetings.
         </p>
-        @if (isDemoMetricsOnly) {
+        @if (isDemoMetricsOnly()) {
           <p>
             We've created few demo metrics but you can
             <a href="#" (click)="deleteDemoMetrics($event)">delete them</a>
             and/or
             <a
-              href="add-metric?space={{ space?.id }}"
+              href="add-metric?space={{ space()?.id }}"
               (click)="goAddMetric($event)"
               >add your own</a
             >.
@@ -30,8 +30,8 @@
       </ion-label>
     </ion-item>
 
-    @if (space?.dbo?.metrics?.length) {
-      @for (metric of space?.dbo?.metrics || []; track metric.id) {
+    @if (space()?.dbo?.metrics?.length) {
+      @for (metric of space()?.dbo?.metrics || []; track metric.id) {
         <ion-item>
           @if (isDeletingMetric(metric)) {
             <ion-spinner slot="start" name="lines-small" color="medium" />
@@ -72,7 +72,7 @@
       }
     }
   </ion-list>
-  @if (space?.dbo && !space?.dbo?.metrics?.length) {
+  @if (space()?.dbo && !space()?.dbo?.metrics?.length) {
     <ion-card-content>
       <p>No metrics for your team yet.</p>
     </ion-card-content>
