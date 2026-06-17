@@ -2,11 +2,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Input,
-  OnChanges,
+  effect,
+  input,
   OnDestroy,
   signal,
-  SimpleChanges,
   inject,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -56,17 +55,17 @@ import { Subscription, takeUntil } from 'rxjs';
 })
 export class ForSpaceTypeCardComponent
   extends SneatBaseComponent
-  implements OnChanges, OnDestroy
+  implements OnDestroy
 {
   private readonly userService = inject(SneatUserService);
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
-  @Input() emptyTitle?: string;
-  @Input() itemsTitle?: string;
-  @Input() buttonColor?: string;
-  @Input() newSpaceButtonText?: string;
-  @Input() singleSpaceButtonText?: string;
-  @Input() spaceTypes?: SpaceType[];
+  readonly emptyTitle = input<string>();
+  readonly itemsTitle = input<string>();
+  readonly buttonColor = input<string>();
+  readonly newSpaceButtonText = input<string>();
+  readonly singleSpaceButtonText = input<string>();
+  readonly spaceTypes = input<SpaceType[]>();
 
   protected readonly $spaces = signal<ISpaceContext[] | undefined>(undefined);
 
@@ -74,15 +73,14 @@ export class ForSpaceTypeCardComponent
 
   public constructor() {
     super();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['spaceTypes']) {
+    effect(() => {
+      // React to spaceTypes input changes (previously ngOnChanges).
+      this.spaceTypes();
       if (this.subscription) {
         this.subscription.unsubscribe();
       }
       this.watchUserRecord();
-    }
+    });
   }
 
   private watchUserRecord(): void {
@@ -93,7 +91,7 @@ export class ForSpaceTypeCardComponent
           this.$spaces.set(
             zipMapBriefsWithIDs(user.record?.spaces)
               ?.filter((t) =>
-                this.spaceTypes?.some((tt) => tt === t.brief.type),
+                this.spaceTypes()?.some((tt) => tt === t.brief.type),
               )
               .map((t) => spaceContextFromBrief(t.id, t.brief)),
           );

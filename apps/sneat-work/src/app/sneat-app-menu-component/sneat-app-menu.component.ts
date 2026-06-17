@@ -1,4 +1,9 @@
-import { Component, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import {
   IonItem,
@@ -16,6 +21,7 @@ import { filter } from 'rxjs';
 @Component({
   selector: 'sneat-app-menu',
   templateUrl: './sneat-app-menu.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ModalController],
   imports: [
     SpacesMenuComponent,
@@ -31,7 +37,7 @@ export class SneatAppMenuComponent {
   private readonly authStateService = inject(SneatAuthStateService);
   private readonly router = inject(Router);
 
-  public authState?: ISneatAuthState;
+  public readonly authState = signal<ISneatAuthState | undefined>(undefined);
 
   protected readonly isLoginPage = signal(false);
 
@@ -47,7 +53,7 @@ export class SneatAppMenuComponent {
       });
 
     this.authStateService.authState.subscribe((authState) => {
-      this.authState = authState;
+      this.authState.set(authState);
     });
   }
 }
