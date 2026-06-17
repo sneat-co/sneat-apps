@@ -1,4 +1,9 @@
-import { Component, signal, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  signal,
+  inject,
+} from '@angular/core';
 import {
   IonCard,
   IonCheckbox,
@@ -14,6 +19,7 @@ import { ClassName, SneatBaseComponent } from '@sneat/ui';
 @Component({
   selector: 'sneat-beta-flags',
   templateUrl: './beta-flags.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     IonCard,
     IonItemGroup,

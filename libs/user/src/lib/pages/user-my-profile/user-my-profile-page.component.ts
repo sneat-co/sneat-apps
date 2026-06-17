@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   IonBackButton,
@@ -18,6 +18,7 @@ import { BetaFlagsComponent } from './beta-flags.component';
 @Component({
   selector: 'sneat-user-my--profile-page',
   templateUrl: 'user-my-profile-page.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     UserCountryComponent,
     ContactusServicesModule,
@@ -35,7 +36,9 @@ import { BetaFlagsComponent } from './beta-flags.component';
   ],
 })
 export class UserMyProfilePageComponent {
-  protected tab: 'authentication' | 'beta_testing' = 'authentication';
+  protected readonly tab = signal<'authentication' | 'beta_testing'>(
+    'authentication',
+  );
 
   constructor() {
     // console.log('UserMyPageComponent.constructor()');

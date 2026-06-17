@@ -26,6 +26,6 @@ describe('UserMyProfilePageComponent', () => {
 
   it('should have default tab set to authentication', () => {
     // @ts-expect-error accessing protected member
-    expect(component.tab).toBe('authentication');
+    expect(component.tab()).toBe('authentication');
   });
 });

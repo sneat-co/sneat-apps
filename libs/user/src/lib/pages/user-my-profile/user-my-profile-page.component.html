@@ -10,14 +10,14 @@
 <ion-content>
   <sneat-user-country [doNotHide]="true" />
 
-  <ion-segment [(ngModel)]="tab">
+  <ion-segment [ngModel]="tab()" (ngModelChange)="tab.set($event)">
     <ion-segment-button value="authentication"
       >Authentication
     </ion-segment-button>
     <ion-segment-button value="beta_testing">Beta testing</ion-segment-button>
   </ion-segment>
 
-  @switch (tab) {
+  @switch (tab()) {
     @case ("authentication") {
       <sneat-user-auth-accounts />
     }
