@@ -6,29 +6,29 @@
   >
     <ion-list lines="none" class="ion-no-padding ion-no-margin">
       <ion-item class="ion-no-padding ion-no-margin">
-        @if (status.member.avatar) {
+        @if (status().member.avatar) {
           <ion-avatar slot="start">
-            @if (status.member.avatar.gravatar) {
+            @if (status().member.avatar.gravatar) {
               <ion-img
                 title="avatar"
                 src="//www.gravatar.com/avatar/{{
-                  status.member.avatar.gravatar
+                  status().member.avatar.gravatar
                 }}"
               />
             }
-            @if (status.member.avatar.external) {
+            @if (status().member.avatar.external) {
               <ion-img
                 title="avatar"
-                [src]="status.member.avatar.external.url"
+                [src]="status().member.avatar.external.url"
               />
             }
           </ion-avatar>
         }
-        @if (!status.member.avatar) {
+        @if (!status().member.avatar) {
           <ion-icon slot="start" name="person-outline" />
         }
         <ion-label color="dark">
-          <h3>{{ status.member.title }}</h3>
+          <h3>{{ status().member.title }}</h3>
           <ion-buttons class="counters">
             @if (count("risk")) {
               <ion-button color="danger" disabled>
@@ -69,11 +69,11 @@
         </ion-label>
         <ion-buttons slot="end">
           <sneat-timer-member-button
-            [timer]="timer"
-            [spaceID]="space?.id"
-            [scrumId]="scrumId"
-            [scrum]="scrum"
-            [memberId]="status.member?.id"
+            [timer]="timer()"
+            [spaceID]="space()?.id"
+            [scrumId]="scrumId()"
+            [scrum]="scrum()"
+            [memberId]="status().member?.id"
             (toggled)="onTimerToggled($event)"
           />
           <ion-button color="medium">
@@ -94,12 +94,12 @@
   <ion-list>
     @if (viewMode === "single" && isExpanded) {
       <sneat-scrum-tasks
-        [currentMemberId]="currentMemberId"
-        [space]="space"
-        [scrumId]="scrumId"
-        [member]="status?.member"
+        [currentMemberId]="currentMemberId()"
+        [space]="space()"
+        [scrumId]="scrumId()"
+        [member]="status()?.member"
         [taskType]="taskType"
-        [tasks]="(status?.byType && status?.byType[taskType]) || []"
+        [tasks]="(status()?.byType && status()?.byType[taskType]) || []"
         [hideTitle]="showMember"
       />
     }
@@ -108,11 +108,11 @@
         @if (taskType !== "kudos" || count("kudos")) {
           <sneat-scrum-tasks
             [cardMode]="'by-person'"
-            [space]="space"
-            [currentMemberId]="currentMemberId"
-            [scrumId]="scrumId"
-            [member]="status.member"
-            [tasks]="(status?.byType && status?.byType[taskType]) || []"
+            [space]="space()"
+            [currentMemberId]="currentMemberId()"
+            [scrumId]="scrumId()"
+            [member]="status().member"
+            [tasks]="(status()?.byType && status()?.byType[taskType]) || []"
             [taskType]="taskType"
           />
         }

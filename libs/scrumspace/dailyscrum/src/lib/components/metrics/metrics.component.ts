@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   IonInput,
@@ -22,9 +22,10 @@ import { IMetric } from '../../interfaces';
     IonItem,
     IonToggle,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MetricsComponent {
-  @Input() public metrics?: IMetric[];
+  public readonly metrics = input<IMetric[]>();
 
   public hasValue = (m?: IMetric) => !isNaN(m?.value as unknown as number);
 

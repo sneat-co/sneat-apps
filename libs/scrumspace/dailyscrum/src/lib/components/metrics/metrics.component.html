@@ -1,5 +1,5 @@
-@if (metrics) {
-  @for (metric of metrics; track trackById($index, metric)) {
+@if (metrics()) {
+  @for (metric of metrics(); track trackById($index, metric)) {
     @switch (metric.type) {
       @case ("int") {
         <ion-item>

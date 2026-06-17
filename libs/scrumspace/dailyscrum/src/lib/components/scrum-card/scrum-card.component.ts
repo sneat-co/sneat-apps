@@ -1,10 +1,11 @@
 import {
+  ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   Input,
-  Output,
   HostAttributeToken,
   inject,
+  input,
+  output,
 } from '@angular/core';
 import {
   IonAvatar,
@@ -46,27 +47,28 @@ import { ScrumTasksComponent } from '../scrum-tasks/scrum-tasks.component';
     TimerMemberButtonComponent,
     ScrumTasksComponent,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ScrumCardComponent {
   showMember = inject(new HostAttributeToken('showMember'), { optional: true });
   viewMode = inject(new HostAttributeToken('viewMode'), { optional: true });
   private readonly navService = inject(SpaceNavService);
 
-  @Input() space?: IRecord<ISpaceDbo>;
-  @Input() currentMemberId?: string;
-  @Input() public scrumId?: string;
-  @Input() public scrum?: IScrumDbo;
-  @Input() public status?: IStatus;
+  readonly space = input<IRecord<ISpaceDbo>>();
+  readonly currentMemberId = input<string>();
+  public readonly scrumId = input<string>();
+  public readonly scrum = input<IScrumDbo>();
+  public readonly status = input<IStatus>();
   // @Input() public taskType: TaskType;
   @Input() public isExpanded = false;
-  @Input() public timer?: Timer;
+  public readonly timer = input<Timer>();
 
-  @Output() newTask = new EventEmitter<{
+  readonly newTask = output<{
     member: IMemberBrief;
     task: ITask;
     // type: TaskType;
   }>();
-  @Output() expandChanged = new EventEmitter<boolean>();
+  readonly expandChanged = output<boolean>();
 
   public readonly taskTypes: TaskType[] = [
     'done',
@@ -85,17 +87,18 @@ export class ScrumCardComponent {
   }
 
   public goMember(member?: IMemberBrief) {
-    if (!this.space) {
+    const space = this.space();
+    if (!space) {
       throw new Error('!this.team');
     }
     if (!member) {
       throw new Error('!this.member');
     }
-    this.navService.navigateToMember(this.space, member);
+    this.navService.navigateToMember(space, member);
   }
 
   public get gravatar(): string {
-    const m = this.status?.member;
+    const m = this.status()?.member;
     return (
       m?.avatar?.gravatar ||
       m?.avatar?.external?.url ||
@@ -107,7 +110,7 @@ export class ScrumCardComponent {
     );
   }
 
-  public count = (type: TaskType) => this.status?.byType?.[type]?.length || 0;
+  public count = (type: TaskType) => this.status()?.byType?.[type]?.length || 0;
 
   public onTimerToggled(expand: boolean): void {
     if (expand && !this.isExpanded) {

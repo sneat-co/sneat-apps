@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, ViewChild, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+  inject,
+  viewChild,
+} from '@angular/core';
 import {
   IonInput,
   ModalController,
@@ -37,6 +44,7 @@ import { ITask, TaskType } from '@sneat/ext-scrumspace-scrummodels';
     IonLabel,
     IonItem,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ScrumTaskComponent implements OnInit {
   private errorLogger = inject<IErrorLogger>(ErrorLogger);
@@ -50,7 +58,7 @@ export class ScrumTaskComponent implements OnInit {
   @Input() type?: TaskType;
   @Input() task?: ITask;
 
-  @ViewChild('commentInput', { static: false }) commentInput?: IonInput; // TODO: strong typing : IonInput;
+  readonly commentInput = viewChild<IonInput>('commentInput'); // TODO: strong typing : IonInput;
 
   public tab: 'comments' | 'thumbups' = 'comments';
 
@@ -66,7 +74,7 @@ export class ScrumTaskComponent implements OnInit {
   ngOnInit() {
     if (this.tab === 'comments') {
       setTimeout(() => {
-        this.commentInput
+        this.commentInput()
           ?.setFocus()
           .catch((err) =>
             this.errorLogger.logError(

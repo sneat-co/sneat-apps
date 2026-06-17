@@ -5,8 +5,9 @@ import {
   OnChanges,
   OnDestroy,
   SimpleChanges,
-  ViewChild,
   inject,
+  input,
+  viewChild,
 } from '@angular/core';
 import {
   ModalController,
@@ -59,20 +60,20 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
   private readonly scrumService = inject(ScrumService);
   private modalController = inject(ModalController);
 
-  @Input() space?: IRecord<ISpaceDbo>;
-  @Input() public scrumId?: string;
+  readonly space = input<IRecord<ISpaceDbo>>();
+  public readonly scrumId = input<string>();
 
-  @Input() member?: IMemberBrief;
-  @Input() taskType?: TaskType | 'qna';
+  readonly member = input<IMemberBrief>();
+  readonly taskType = input<TaskType | 'qna'>();
 
   @Input() public disabled?: boolean;
 
   @Input() tasks?: ITaskWithUiStatus[];
-  @Input() currentMemberId?: string;
-  @Input() public hideTitle?: boolean;
-  @Input() public cardMode?: 'by-person';
+  readonly currentMemberId = input<string>();
+  public readonly hideTitle = input<boolean>();
+  public readonly cardMode = input<'by-person'>();
 
-  @ViewChild(IonInput, { static: false }) titleInput?: IonInput; // TODO: IonInput;
+  readonly titleInput = viewChild(IonInput); // TODO: IonInput;
 
   public visibleTasks?: ITaskWithUiStatus[];
 
@@ -99,7 +100,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
   }
 
   public get newTaskPlaceholder(): string {
-    switch (this.taskType) {
+    switch (this.taskType()) {
       case 'done':
         return 'New completed task';
       case 'plan':
@@ -132,7 +133,7 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
     if (!this.newTaskTitle.trim()) {
       this.showAddInput = true;
       setTimeout(() => {
-        this.titleInput
+        this.titleInput()
           ?.setFocus()
           .catch((err) =>
             this.errorLogger.logError(
@@ -148,18 +149,20 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
     }
     const title = this.newTaskTitle;
     this.newTaskTitle = '';
-    if (!this.member) {
+    const member = this.member();
+    if (!member) {
       throw new Error('!this.member');
     }
-    if (!this.space) {
+    const space = this.space();
+    if (!space) {
       throw new Error('!this.team');
     }
     this.scrumService
       .addTask(
-        this.space,
-        this.scrumId || 'EMPTY_SCRUM_ID',
-        this.member,
-        this.taskType as TaskType,
+        space,
+        this.scrumId() || 'EMPTY_SCRUM_ID',
+        member,
+        this.taskType() as TaskType,
         title,
       )
       .subscribe({
@@ -192,7 +195,8 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
 
   public thumbUp(event: Event, memberId: string, task: ITaskWithUiStatus) {
     event.stopPropagation();
-    if (memberId === this.currentMemberId) {
+    const currentMemberId = this.currentMemberId();
+    if (memberId === currentMemberId) {
       this.errorLogger.logError(
         'You can not upvote your own tasks',
         'You can not upvote your own tasks',
@@ -203,28 +207,31 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
     if (!task.thumbUps) {
       task.thumbUps = [];
     }
-    if (!this.currentMemberId) {
+    if (!currentMemberId) {
       throw new Error('!currentMemberId');
     }
-    if (!this.space) {
+    const space = this.space();
+    if (!space) {
       throw new Error('!team');
     }
-    if (!this.taskType) {
+    const taskType = this.taskType();
+    if (!taskType) {
       throw new Error('!taskType');
     }
-    if (!this.member) {
+    const member = this.member();
+    if (!member) {
       throw new Error('!member');
     }
-    const oldState = task.thumbUps.includes(this.currentMemberId || '');
+    const oldState = task.thumbUps.includes(currentMemberId || '');
     if (oldState) {
-      task.thumbUps = task.thumbUps.filter((v) => v !== this.currentMemberId);
+      task.thumbUps = task.thumbUps.filter((v) => v !== currentMemberId);
     } else {
-      task.thumbUps.push(this.currentMemberId);
+      task.thumbUps.push(currentMemberId);
     }
     const request: IThumbUpRequest = {
-      spaceID: this.space.id,
-      memberID: this.member.id,
-      type: this.taskType,
+      spaceID: space.id,
+      memberID: member.id,
+      type: taskType,
       // meetingID: this.scrumId,
       task: task.id,
       value: !oldState,
@@ -246,23 +253,20 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
     tasks.splice(index, 1);
     this.tasks = [...tasks];
     this.deletingTaskIds.push(id);
-    if (!this.scrumId) {
+    const scrumId = this.scrumId();
+    if (!scrumId) {
       throw new Error('!this.scrumID');
     }
-    if (!this.member) {
+    const member = this.member();
+    if (!member) {
       throw new Error('!this.member');
     }
-    if (!this.space) {
+    const space = this.space();
+    if (!space) {
       throw new Error('!this.team');
     }
     this.scrumService
-      .deleteTask(
-        this.space.id,
-        this.scrumId,
-        this.member,
-        this.taskType as TaskType,
-        id,
-      )
+      .deleteTask(space.id, scrumId, member, this.taskType() as TaskType, id)
       .subscribe({
         next: () => {
           this.visibleTasks = this.visibleTasks?.filter((t) => t.id !== id);
@@ -295,13 +299,15 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
       ); // Should be before setting & after values
       return;
     }
-    if (!this.taskType) {
+    const taskType = this.taskType();
+    if (!taskType) {
       throw new Error('!this.taskType');
     }
-    if (!this.member) {
+    const member = this.member();
+    if (!member) {
       throw new Error('!this.member');
     }
-    if (!this.scrumId) {
+    if (!this.scrumId()) {
       throw new Error('!this.scrumId');
     }
     if (!this.visibleTasks) {
@@ -311,14 +317,15 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
     if (!taskID) {
       throw new Error(`!this.visibleTasks[${event.detail.from}]`);
     }
-    if (!this.space) {
+    const space = this.space();
+    if (!space) {
       throw new Error('!this.team');
     }
     const request: IReorderTaskRequest = {
-      spaceID: this.space.id,
+      spaceID: space.id,
       // meetingID: this.scrumId,
-      type: this.taskType,
-      memberID: this.member.id,
+      type: taskType,
+      memberID: member.id,
       task: taskID,
       len: this.tasks?.length || 0,
       from: event.detail.from,
@@ -347,7 +354,8 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
   }
 
   async showTaskPopover(event: Event, task: ITask) {
-    if (!this.space) {
+    const space = this.space();
+    if (!space) {
       throw new Error('!this.team');
     }
     try {
@@ -356,10 +364,10 @@ export class ScrumTasksComponent implements OnDestroy, OnChanges {
         componentProps: {
           event,
           task,
-          spaceID: this.space.id,
-          date: this.scrumId,
-          memberId: this.member?.id,
-          type: this.taskType,
+          spaceID: space.id,
+          date: this.scrumId(),
+          memberId: this.member()?.id,
+          type: this.taskType(),
         },
       });
       // popover.style.cssText = '--min-width: 500px;';

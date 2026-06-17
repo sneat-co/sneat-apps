@@ -1,6 +1,6 @@
-@if (taskType !== "plan" && !hideTitle) {
+@if (taskType() !== "plan" && !hideTitle()) {
   <ion-item-divider tappable (click)="addTask($event)">
-    @if (cardMode === "by-person") {
+    @if (cardMode() === "by-person") {
       <ion-icon
         [name]="
           showAddInput ? 'chevron-down-outline' : 'chevron-forward-outline'
@@ -10,7 +10,7 @@
       />
     }
     <ion-label tappable color="tertiary">
-      @switch (taskType) {
+      @switch (taskType()) {
         @case ("done") {
           What was done?
         }
@@ -28,7 +28,7 @@
         }
       }
     </ion-label>
-    @if (cardMode === "by-person" && !showAddInput) {
+    @if (cardMode() === "by-person" && !showAddInput) {
       <ion-buttons slot="end">
         <ion-button [title]="newTaskPlaceholder" (click)="addTask($event)">
           <ion-icon name="add" />
@@ -37,7 +37,7 @@
     }
   </ion-item-divider>
 }
-@if (taskType === "plan") {
+@if (taskType() === "plan") {
   @if (tasks && !tasks.length) {
     <ion-card-content>Nothing was planned</ion-card-content>
   }
@@ -67,9 +67,9 @@
         </ion-reorder>
         <ion-label
           [color]="
-            taskType === 'risk'
+            taskType() === 'risk'
               ? 'danger'
-              : taskType === 'qna'
+              : taskType() === 'qna'
                 ? 'primary'
                 : undefined
           "
@@ -85,11 +85,11 @@
           }
           <ion-button
             [color]="
-              task.thumbUps && task.thumbUps.includes(currentMemberId)
+              task.thumbUps && task.thumbUps.includes(currentMemberId())
                 ? 'success'
                 : 'medium'
             "
-            (click)="thumbUp($event, member.id, task)"
+            (click)="thumbUp($event, member().id, task)"
           >
             @if (task.thumbUps?.length) {
               {{ task.thumbUps.length }}
@@ -112,18 +112,18 @@
     <!--	<ion-spinner color="medium" slot="start" name="lines-small"></ion-spinner>-->
     <ion-label
       [style]="visibleTasks?.length ? 'margin-left: 3em' : ''"
-      [color]="taskType === 'risk' ? 'danger' : undefined"
+      [color]="taskType() === 'risk' ? 'danger' : undefined"
       >{{ task.title }}</ion-label
     >
   </ion-item>
 }
-@if (!member) {
+@if (!member()) {
   <ion-item>
     <ion-spinner name="lines-small" slot="start" color="medium" />
     <ion-label color="medium">Loading...</ion-label>
   </ion-item>
 }
-@if ((member && cardMode !== "by-person") || showAddInput) {
+@if ((member() && cardMode() !== "by-person") || showAddInput) {
   <ion-item>
     <ion-input
       [placeholder]="newTaskPlaceholder"
