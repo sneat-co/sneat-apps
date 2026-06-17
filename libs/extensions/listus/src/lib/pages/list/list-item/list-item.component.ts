@@ -2,10 +2,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  EventEmitter,
   input,
-  Input,
-  Output,
+  output,
   signal,
   inject,
 } from '@angular/core';
@@ -65,8 +63,7 @@ export class ListItemComponent {
   private readonly listDialogs = inject(ListDialogsService);
   private readonly toastCtrl = inject(ToastController);
 
-  @Input()
-  public showDoneCheckbox = false;
+  public readonly showDoneCheckbox = input(false);
 
   public readonly $doneFilter = input.required<
     'all' | 'active' | 'completed'
@@ -82,17 +79,14 @@ export class ListItemComponent {
 
   protected readonly $isSettingIsDone = signal(false);
 
-  @Output()
-  public readonly itemClicked = new EventEmitter<IListItemBrief>();
+  public readonly itemClicked = output<IListItemBrief>();
 
-  @Output()
-  public readonly itemChanged = new EventEmitter<{
+  public readonly itemChanged = output<{
     old: IListItemWithUiState;
     new: IListItemWithUiState;
   }>();
 
-  @Output()
-  public readonly listChanged = new EventEmitter<IListContext>();
+  public readonly listChanged = output<IListContext>();
 
   protected readonly $listItem = computed(
     () => this.$listItemWithUiState().brief,

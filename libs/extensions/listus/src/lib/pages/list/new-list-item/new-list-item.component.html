@@ -3,18 +3,19 @@
     <ion-icon name="bag-add-outline" slot="start" color="medium" />
     <!--suppress AngularUndefinedBinding -->
     <ion-input
-      [disabled]="disabled"
+      [disabled]="disabled()"
       #newItemInput
       autofocus="true"
-      [(ngModel)]="title"
+      [ngModel]="title()"
+      (ngModelChange)="title.set($event)"
       name="title"
       placeholder="New item"
       (ionFocus)="focused()"
     />
     <ion-button
-      [color]="isFocused && title.trim() ? 'primary' : 'medium'"
-      [disabled]="disabled"
-      [fill]="title.trim() ? 'solid' : 'outline'"
+      [color]="isFocused() && title().trim() ? 'primary' : 'medium'"
+      [disabled]="disabled()"
+      [fill]="title().trim() ? 'solid' : 'outline'"
       size="small"
       (click)="add()"
       slot="end"

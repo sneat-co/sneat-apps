@@ -151,28 +151,19 @@ export class ListPageComponent extends BaseListPage implements AfterViewInit {
 
   ngAfterViewInit(): void /* Intentionally not ngOnInit */ {
     if (this.newListItem) {
-      this.newListItem?.adding.subscribe({
-        next: (item: IListItemWithUiState) => {
-          this.addingItems.push(item);
-          this.applyFilter();
-        },
-        error: this.errorLogger.logError,
+      this.newListItem?.adding.subscribe((item: IListItemWithUiState) => {
+        this.addingItems.push(item);
+        this.applyFilter();
       });
-      this.newListItem.added.subscribe({
-        next: (item: IListItemBrief) => {
-          this.addingItems = this.addingItems.filter(
-            (v) => v.brief.id !== item.id,
-          );
-          this.applyFilter();
-        },
-        error: this.errorLogger.logError,
+      this.newListItem.added.subscribe((item: IListItemWithUiState) => {
+        this.addingItems = this.addingItems.filter(
+          (v) => v.brief.id !== (item as unknown as IListItemBrief).id,
+        );
+        this.applyFilter();
       });
 
-      this.newListItem.failedToAdd.subscribe({
-        next: (id: string): void => {
-          this.addingItems = this.addingItems.filter((v) => v.brief.id !== id);
-        },
-        error: this.errorLogger.logError,
+      this.newListItem.failedToAdd.subscribe((id: string): void => {
+        this.addingItems = this.addingItems.filter((v) => v.brief.id !== id);
       });
     } else {
       this.errorLogger.logError('newListItem component is not initialized');

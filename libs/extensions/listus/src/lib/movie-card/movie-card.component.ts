@@ -1,11 +1,10 @@
 import { NgOptimizedImage } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-  SimpleChanges,
+  effect,
+  input,
+  output,
   inject,
 } from '@angular/core';
 import {
@@ -53,21 +52,39 @@ import { ITmdbService } from '../watchlist';
     IonCardContent,
     IonText,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MovieCardComponent implements OnChanges {
+export class MovieCardComponent {
   private readonly param = inject(ListusComponentBaseParams);
   private readonly tmdbService = inject(ITmdbService);
 
-  @Input()
-  public movie?: IMovie;
-  @Input()
-  public showWatchedMovies = false;
-  @Input() public space?: ISpaceContext;
-  @Input() public list?: IListContext;
-  @Output() addToWatchlist = new EventEmitter<IMovie>();
-  @Output() goMovie = new EventEmitter<IMovie>();
-  @Output() movieChanged = new EventEmitter<IMovieDbo>();
-  @Output() public readonly listChanged = new EventEmitter<IListContext>();
+  public readonly movie = input<IMovie>();
+  public readonly showWatchedMovies = input(false);
+  public readonly space = input<ISpaceContext>();
+  public readonly list = input<IListContext>();
+  readonly addToWatchlist = output<IMovie>();
+  readonly goMovie = output<IMovie>();
+  readonly movieChanged = output<IMovieDbo>();
+  public readonly listChanged = output<IListContext>();
+
+  constructor() {
+    effect(() => {
+      if (this.movie()) {
+        console.error('not implemented yet');
+        // this.movieService.getById(this.movie.id)
+        // 	.subscribe(
+        // 		movie => {
+        // 			console.log('movie-card-movie', movie);
+        //
+        // 			if (movie) {
+        // 				this.movie = movie;
+        // 			}
+        // 		},
+        // 		this.errorLogger.logError,
+        // 	);
+      }
+    });
+  }
 
   get userId(): string | undefined {
     return this.param.spaceParams.userService.currentUserID;
@@ -77,27 +94,6 @@ export class MovieCardComponent implements OnChanges {
     console.warn('isWatched is not implemented yet');
     return false;
     // return this.listusDbService.isWatched(this.movie, this.userId);
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    const mode = changes['mode'];
-    if (mode && !mode.currentValue) {
-      throw new Error('mode is required');
-    }
-    if (changes['movie'] && this.movie) {
-      console.error('not implemented yet');
-      // this.movieService.getById(this.movie.id)
-      // 	.subscribe(
-      // 		movie => {
-      // 			console.log('movie-card-movie', movie);
-      //
-      // 			if (movie) {
-      // 				this.movie = movie;
-      // 			}
-      // 		},
-      // 		this.errorLogger.logError,
-      // 	);
-    }
   }
 
   public removeFromWatchlist(movie?: IMovie): void {
@@ -131,14 +127,15 @@ export class MovieCardComponent implements OnChanges {
 
   public emitGoMovie(): void {
     // console.log('MovieCardComponent.emitGoMovie()', this.movie);
-    if (this.movie) {
-      this.goMovie.emit(this.movie);
+    const movie = this.movie();
+    if (movie) {
+      this.goMovie.emit(movie);
     }
   }
 
   public emitAddToWatchlist(): void {
     // console.log('MovieCardComponent.addToWatchlist()', this.movie);
-    this.addToWatchlist.emit(this.movie);
+    this.addToWatchlist.emit(this.movie() as IMovie);
   }
 
   public checkMovieId(): boolean {

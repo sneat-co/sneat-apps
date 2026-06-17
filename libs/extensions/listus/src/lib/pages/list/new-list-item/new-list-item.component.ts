@@ -1,9 +1,10 @@
 import {
+  ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
+  input,
+  output,
+  signal,
+  viewChild,
   inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -29,6 +30,7 @@ import { IListItemWithUiState } from '../list-item-with-ui-state';
   selector: 'sneat-new-list-item',
   imports: [FormsModule, IonItem, IonIcon, IonInput, IonButton],
   templateUrl: './new-list-item.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewListItemComponent {
   private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
@@ -37,41 +39,41 @@ export class NewListItemComponent {
   private readonly listService = inject(ListService);
   private readonly emojisLoader = inject(EmojisLoaderService);
 
-  isFocused = false;
+  protected readonly isFocused = signal(false);
 
-  public isAdding = false;
+  public readonly isAdding = signal(false);
 
-  @Input() isDone = false;
-  @Input() disabled = false;
-  @Input({ required: true }) space?: ISpaceContext;
-  @Input({ required: true }) list?: IListContext;
+  readonly isDone = input(false);
+  readonly disabled = input(false);
+  readonly space = input.required<ISpaceContext | undefined>();
+  readonly list = input.required<IListContext | undefined>();
 
-  @ViewChild('newItemInput', { static: false }) newItemInput?: IonInput;
+  readonly newItemInput = viewChild<IonInput>('newItemInput');
 
-  @Output() readonly adding = new EventEmitter<IListItemWithUiState>();
-  @Output() readonly added = new EventEmitter<IListItemWithUiState>();
-  @Output() readonly failedToAdd = new EventEmitter<string>();
+  readonly adding = output<IListItemWithUiState>();
+  readonly added = output<IListItemWithUiState>();
+  readonly failedToAdd = output<string>();
 
-  public title = '';
+  public readonly title = signal('');
 
   protected focused(): void {
-    this.isFocused = true;
+    this.isFocused.set(true);
   }
 
   protected add(): void {
-    if (!this.title.trim()) {
+    if (!this.title().trim()) {
       return;
     }
     let id = '';
     for (let i = 0; i < 100; i++) {
       id = this.randomService.newRandomId({ len: 3 });
-      if (!this.list?.dbo?.items?.some((item) => item.id === id)) {
+      if (!this.list()?.dbo?.items?.some((item) => item.id === id)) {
         break;
       }
     }
     let item: ICreateListItemRequest = {
       id,
-      title: this.title,
+      title: this.title(),
     };
 
     // Async emoji detection
@@ -88,7 +90,7 @@ export class NewListItemComponent {
       })
       .finally(() => {
         // Always apply isDone and create the item
-        if (this.isDone) {
+        if (this.isDone()) {
           item = { ...item, isDone: true };
         }
         this.createListItem(item);
@@ -96,41 +98,39 @@ export class NewListItemComponent {
   }
 
   protected clear(): void {
-    this.title = '';
+    this.title.set('');
   }
 
   // Is intentionally public to be called from wrapping component.
   public focus(): void {
-    if (!this.newItemInput) {
+    const newItemInput = this.newItemInput();
+    if (!newItemInput) {
       this.errorLogger.logError('!this.newItemInput');
       return;
     }
-    this.newItemInput.setFocus().catch(this.errorLogger.logError);
+    newItemInput.setFocus().catch(this.errorLogger.logError);
   }
 
   protected createListItem(listItemBrief: ICreateListItemRequest): void {
-    console.log(
-      'ListPage.createListItem',
-      listItemBrief,
-      this.list,
-      this.space,
-    );
+    const space = this.space();
+    const list = this.list();
+    console.log('ListPage.createListItem', listItemBrief, list, space);
     if (!listItemBrief) {
       throw new Error('movie is a required parameter');
     }
-    if (!this.space) {
+    if (!space) {
       throw new Error('no team context');
     }
-    this.isAdding = true;
-    if (!this.list) {
+    this.isAdding.set(true);
+    if (!list) {
       throw new Error('no list context');
     }
-    this.title = '';
+    this.title.set('');
     this.adding.emit({ brief: listItemBrief, state: { isAdding: true } });
     this.listService
       .createListItems({
-        space: this.space,
-        list: this.list,
+        space: space,
+        list: list,
         items: [listItemBrief],
       })
       .subscribe({
@@ -152,7 +152,7 @@ export class NewListItemComponent {
           // 		result.communeDto,
           // 	);
           // }
-          this.isAdding = false;
+          this.isAdding.set(false);
           this.added.emit({ brief: listItemBrief, state: {} });
           setTimeout(() => {
             this.focus();
@@ -160,7 +160,7 @@ export class NewListItemComponent {
         },
         error: (err) => {
           this.errorLogger.logError(err, 'Failed to add item to list');
-          this.isAdding = false;
+          this.isAdding.set(false);
           this.failedToAdd.emit(listItemBrief.id);
           this.focus();
         },
