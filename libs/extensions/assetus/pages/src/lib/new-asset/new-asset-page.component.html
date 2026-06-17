@@ -16,7 +16,7 @@
 </ion-header>
 
 <ion-content class="cardy">
-  @if (!category) {
+  @if (!category()) {
     <ion-card>
       <ion-item color="light" lines="full">
         <ion-label>Select asset kind</ion-label>
@@ -36,7 +36,7 @@
       </ion-list>
     </ion-card>
   } @else {
-    @switch (category.id) {
+    @switch (category()?.id) {
       @case ("vehicle") {
         <sneat-asset-add-vehicle />
       }
@@ -47,7 +47,7 @@
         <sneat-asset-add-document />
       }
       @default {
-        unknown category {{ category.id }}
+        unknown category {{ category()?.id }}
       }
     }
   }

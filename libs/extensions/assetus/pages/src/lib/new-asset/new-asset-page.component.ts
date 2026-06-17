@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   IonBackButton,
@@ -55,11 +55,12 @@ import { ClassName } from '@sneat/ui';
   ],
   selector: 'sneat-new-asset-page',
   templateUrl: './new-asset-page.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewAssetPageComponent extends SpaceBaseComponent {
   protected name?: string;
 
-  protected category?: IAssetCategory;
+  protected readonly category = signal<IAssetCategory | undefined>(undefined);
 
   public categories: IAssetCategory[] = [
     { id: 'vehicle', title: 'Vehicle', order: 1 },
@@ -71,12 +72,12 @@ export class NewAssetPageComponent extends SpaceBaseComponent {
     super();
     const assetType = window.history.state['assetType'];
     if (assetType) {
-      this.category = this.categories.find((c) => c.id === assetType);
+      this.category.set(this.categories.find((c) => c.id === assetType));
     }
     // this.categories = assetCategoryService.allAssetCategories();
   }
 
   public selectCategory(category: IAssetCategory): void {
-    this.category = category;
+    this.category.set(category);
   }
 }
