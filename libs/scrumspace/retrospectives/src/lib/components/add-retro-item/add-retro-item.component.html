@@ -1,6 +1,6 @@
-<ion-item [disabled]="!meetingId || !spaceID || !retroItemType">
+<ion-item [disabled]="!meetingId() || !spaceID() || !retroItemType">
   <ion-input
-    [disabled]="isAdding"
+    [disabled]="isAdding()"
     [formControl]="titleControl"
     expand="full"
     fill="clear"
@@ -9,7 +9,7 @@
     (keyup.enter)="add()"
   />
   <ion-buttons slot="end" style="margin-right: -0.8em">
-    <ion-button color="medium" (click)="add()" [disabled]="isAdding"
+    <ion-button color="medium" (click)="add()" [disabled]="isAdding()"
       >Add</ion-button
     >
     <!--						<ion-button color="medium"><ion-icon name="close-outline"></ion-icon></ion-button>-->

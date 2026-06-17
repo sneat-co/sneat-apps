@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   Input,
   OnChanges,
@@ -50,6 +51,7 @@ import {
     IonSelect,
     IonSelectOption,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RetroTimerComponent implements OnDestroy, OnChanges {
   private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
@@ -59,13 +61,13 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
   @Input() public space?: IRecord<ISpaceDbo>;
   @Input() retrospective?: IRecord<IRetrospective>;
 
-  public timer?: Timer;
+  public readonly timer = signal<Timer | undefined>(undefined);
 
   public $feedbackDuration = signal<number>(10);
   public $reviewDuration = signal<number>(50);
 
   leftInSeconds = 600;
-  public totalElapsed?: string;
+  public readonly totalElapsed = signal<string | undefined>(undefined);
   private timerSubscription?: Subscription;
 
   get minutesLeft(): number {
@@ -79,11 +81,12 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['space'] || changes['retrospective']) {
       if (this.space?.id && this.retrospective?.id) {
+        const timer = this.timer();
         if (
-          this.timer?.spaceID !== this.space.id ||
-          this.timer.meetingId !== this.retrospective.id
+          timer?.spaceID !== this.space.id ||
+          timer.meetingId !== this.retrospective.id
         ) {
-          if (this.timer) {
+          if (timer) {
             this.timerSubscription?.unsubscribe();
           }
           if (this.retrospective.id !== 'upcoming') {
@@ -92,7 +95,7 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
         }
       }
       if (changes['retrospective'] && this.retrospective?.dbo?.timer) {
-        this.timer?.updateTimerState(this.retrospective.dbo.timer);
+        this.timer()?.updateTimerState(this.retrospective.dbo.timer);
       }
     }
   }
@@ -129,10 +132,10 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
   updateRetrospective = (retrospective: IRecord<IRetrospective>): void => {
     try {
       this.retrospective = retrospective;
-      if (!this.timer) {
+      if (!this.timer()) {
         this.createTimer();
       }
-      this.timer?.updateTimerState(retrospective.dbo?.timer);
+      this.timer()?.updateTimerState(retrospective.dbo?.timer);
     } catch (e) {
       this.errorLogger.logError(
         e,
@@ -155,20 +158,26 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
   }
 
   public resumeTimer(): void {
-    this.timer?.startTimer().subscribe({
-      error: (err) =>
-        this.errorLogger.logError(err, 'Failed to resume retrospective timer'),
-    });
+    this.timer()
+      ?.startTimer()
+      .subscribe({
+        error: (err) =>
+          this.errorLogger.logError(
+            err,
+            'Failed to resume retrospective timer',
+          ),
+      });
   }
 
   public pauseRetro(): void {
-    if (!this.timer) {
+    const timer = this.timer();
+    if (!timer) {
       this.errorLogger.logError(
         'pauseRetro() called before timer has been initialized.',
       );
       return;
     }
-    this.timer.pauseTimer().subscribe({
+    timer.pauseTimer().subscribe({
       error: (err) =>
         this.errorLogger.logError(err, 'Failed to pause retrospective timer'),
     });
@@ -181,12 +190,13 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
     if (!this.retrospective) {
       throw new Error('!this.retrospective');
     }
-    this.timer = this.timerFactory.getTimer(
+    const timer = this.timerFactory.getTimer(
       this.retrospectiveService,
       this.space.id,
       this.retrospective.id,
     );
-    this.timerSubscription = this.timer.onTick.subscribe(this.onTimerTicked);
+    this.timer.set(timer);
+    this.timerSubscription = timer.onTick.subscribe(this.onTimerTicked);
   }
 
   private onTimerTicked = (timer: ITimerState): void => {
@@ -204,8 +214,9 @@ export class RetroTimerComponent implements OnDestroy, OnChanges {
       //     timer,
       //   },
       // };
-      this.totalElapsed =
-        (timer?.elapsedSeconds && secondsToStr(timer.elapsedSeconds)) || '0';
+      this.totalElapsed.set(
+        (timer?.elapsedSeconds && secondsToStr(timer.elapsedSeconds)) || '0',
+      );
       throw new Error('not implemented yet');
     } catch (e) {
       this.errorLogger.logError(e, 'Failed to process timer ticked event');

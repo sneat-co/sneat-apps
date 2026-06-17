@@ -6,9 +6,9 @@
     <ion-item
       tappable
       [color]="
-        treeNode.isDragging || isHovered
+        treeNode.isDragging || isHovered()
           ? 'medium'
-          : item?.children?.length && 'light'
+          : item()?.children?.length && 'light'
       "
       [class.expandable]="isExpandable"
       (click)="toggle()"
@@ -28,7 +28,7 @@
       }
       <ion-label>
         <!--			<i>{{num}}</i>:-->
-        {{ item?.title }}
+        {{ item()?.title }}
         @if (!treeNode?.isExpanded && treeNode.childrenCount) {
           <i
             ><ion-text color="medium"
@@ -61,18 +61,18 @@
         @if (treeNode.isDragging) {
           <b style="margin-left: 1em">dragging</b>
         }
-        @if (isHovered) {
+        @if (isHovered()) {
           <b style="margin-left: 1em">hovered</b>
         }
       </ion-label>
       <ion-buttons slot="end">
         @if (treeNode.level === 1) {
           <ion-button
-            [color]="isLiked ? 'primary' : 'medium'"
+            [color]="isLiked() ? 'primary' : 'medium'"
             (click)="like($event)"
           >
-            @if (item?.likedUserIDs?.length) {
-              <ion-label>{{ item.likedUserIDs.length }}</ion-label>
+            @if (item()?.likedUserIDs?.length) {
+              <ion-label>{{ item()?.likedUserIDs?.length }}</ion-label>
             }
             <ion-icon name="thumbs-up-outline" />
           </ion-button>

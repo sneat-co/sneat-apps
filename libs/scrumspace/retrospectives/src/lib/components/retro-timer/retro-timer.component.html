@@ -58,7 +58,7 @@
           <ion-button
             color="primary"
             (click)="pauseRetro()"
-            [disabled]="!timer"
+            [disabled]="!timer()"
           >
             <ion-icon name="pause-circle-outline" slot="start" />
             <ion-label>Pause</ion-label>
@@ -72,7 +72,7 @@
           <ion-button
             color="primary"
             (click)="startRetro()"
-            [disabled]="!timer"
+            [disabled]="!timer()"
           >
             <ion-icon name="play-outline" slot="start" />
             <ion-label>Resume</ion-label>
@@ -85,7 +85,7 @@
         } @else {
           <b>Stage</b>: Gather feedback &mdash;
           <i>ends in {{ minutesLeft }} min {{ secondsLeft }} sec</i>
-          {{ totalElapsed }}
+          {{ totalElapsed() }}
         }
       </ion-label>
       <ion-buttons>

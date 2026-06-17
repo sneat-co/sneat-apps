@@ -1,11 +1,12 @@
 import {
+  ChangeDetectionStrategy,
   Component,
-  Input,
-  OnChanges,
   OnDestroy,
   OnInit,
-  SimpleChanges,
-  ViewChild,
+  effect,
+  input,
+  signal,
+  viewChild,
   inject,
 } from '@angular/core';
 import {
@@ -65,19 +66,20 @@ import { IUserRecord } from '@sneat/auth-models';
     IonSpinner,
     IonInput,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
+export class MyRetroItemsComponent implements OnInit, OnDestroy {
   private readonly retrospectiveService = inject(RetrospectiveService);
   private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
   // private readonly userService = inject(SneatUserService);
 
-  @ViewChild(IonInput, { static: false }) titleInput?: IonInput; // TODO: IonInput;
+  readonly titleInput = viewChild(IonInput); // TODO: IonInput;
 
-  @Input() isEditable = true;
-  @Input() noExpandCollapse?: boolean;
-  @Input() tabAutoSelect?: string;
-  @Input() spaceID?: string;
-  @Input() title = 'My feedback for next retrospective';
+  readonly isEditable = input(true);
+  readonly noExpandCollapse = input<boolean>();
+  readonly tabAutoSelect = input<string>();
+  readonly spaceID = input<string>();
+  readonly title = input('My feedback for next retrospective');
 
   public typeControl = new FormControl('', [Validators.required]);
 
@@ -91,12 +93,12 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 
   public adding = false;
 
-  public retroLists?: IRetroList[] = [
+  public readonly retroLists = signal<IRetroList[] | undefined>([
     { id: RetroItemTypeEnum.good, title: '👍 Good' },
     { id: RetroItemTypeEnum.bad, title: '👎 Bad' },
     { id: RetroItemTypeEnum.endorsement, title: '🥇 Kudos' },
     { id: RetroItemTypeEnum.idea, title: '💡 Ideas' },
-  ];
+  ]);
 
   private userSubscription?: Subscription;
 
@@ -105,12 +107,22 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public get currentItems(): IRetroItem[] | undefined {
-    return this.retroLists && this.items(this.currentType);
+    return this.retroLists() && this.items(this.currentType);
   }
 
   public trackById = (_: number, item: { id: string }) => item.id;
 
   public trackByID = (i: number, item: IRetroItem) => item.ID;
+
+  constructor() {
+    effect(() => {
+      if (this.tabAutoSelect()) {
+        if (!this.typeControl.value) {
+          this.typeControl.setValue('good');
+        }
+      }
+    });
+  }
 
   public ngOnInit(): void {
     console.error('commented out');
@@ -125,17 +137,9 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['tabAutoSelect'] && this.tabAutoSelect) {
-      if (!this.typeControl.value) {
-        this.typeControl.setValue('good');
-      }
-    }
-  }
-
   public typeChanged(): void {
     setTimeout(() => {
-      this.titleInput
+      this.titleInput()
         ?.setFocus()
         .catch((err) =>
           this.errorLogger.logError(
@@ -157,7 +161,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public items(type: string): IRetroListItem[] {
-    return this.retroLists?.find((rl) => rl.id === type)?.items || [];
+    return this.retroLists()?.find((rl) => rl.id === type)?.items || [];
   }
 
   public listColor(id: RetroItemType): string {
@@ -177,23 +181,30 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
 
   public delete(item: IRetroListItem): void {
     item.isDeleting = true;
+    this.retroLists.set(this.retroLists() && [...(this.retroLists() || [])]);
     const type = this.typeControl.value as RetroItemType;
     this.retrospectiveService
       .deleteRetroItem({
         type,
-        spaceID: this.spaceID || '',
+        spaceID: this.spaceID() || '',
         meeting: RetrospectiveStage.upcoming,
         item: item.ID,
       })
       .subscribe({
         next: () => {
-          const list = this.retroLists?.find((l) => l.id === type);
+          const list = this.retroLists()?.find((l) => l.id === type);
           if (list) {
             list.items = list?.items?.filter((v) => v.ID !== item.ID);
+            this.retroLists.set(
+              this.retroLists() && [...(this.retroLists() || [])],
+            );
           }
         },
         error: (err) => {
           item.isDeleting = false;
+          this.retroLists.set(
+            this.retroLists() && [...(this.retroLists() || [])],
+          );
           this.errorLogger.logError(err, 'Failed to delete scrum item');
         },
       });
@@ -215,18 +226,19 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
         return;
       }
       const request: IAddRetroItemRequest = {
-        spaceID: this.spaceID || '',
+        spaceID: this.spaceID() || '',
         meeting: RetrospectiveStage.upcoming,
         type,
         title,
       };
-      if (!this.retroLists) {
-        this.retroLists = [];
+      if (!this.retroLists()) {
+        this.retroLists.set([]);
       }
-      const retroList = this.retroLists.find((l) => l.id === type);
+      const retroLists = this.retroLists() as IRetroList[];
+      const retroList = retroLists.find((l) => l.id === type);
       if (!retroList) {
         this.errorLogger.logError(
-          `list not found by id "${type}", have: ${this.retroLists
+          `list not found by id "${type}", have: ${retroLists
             .map((l) => l.id)
             .join(', ')}`,
         );
@@ -238,6 +250,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
       }
 
       items.push({ ID: '', title });
+      this.retroLists.set([...retroLists]);
       this.titleControl.setValue('');
       this.retrospectiveService.addRetroItem(request).subscribe(
         () => {
@@ -250,7 +263,7 @@ export class MyRetroItemsComponent implements OnInit, OnDestroy, OnChanges {
           // }
         },
         (err) => {
-          if (this.retroLists) {
+          if (this.retroLists()) {
             // this.retroLists[type] = this.retroLists[type].filter(
             // 	(item) => item.Id || item.title !== title,
             // );

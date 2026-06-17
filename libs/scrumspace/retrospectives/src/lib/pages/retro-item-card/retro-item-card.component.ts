@@ -1,4 +1,12 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  input,
+  signal,
+} from '@angular/core';
 import {
   IonButton,
   IonButtons,
@@ -24,15 +32,16 @@ import { ITreeNode } from '@angular-dnd/tree';
     IonLabel,
     IonText,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RetroItemCardComponent implements OnChanges {
   @Input() treeNode: ITreeNode<IRetroItem>;
-  @Input() isPreview: boolean;
+  readonly isPreview = input<boolean>();
 
-  public item: IRetroItem;
-  public isHovered: boolean;
-  public num: string;
-  public isLiked: boolean;
+  public readonly item = signal<IRetroItem | undefined>(undefined);
+  public readonly isHovered = signal<boolean | undefined>(undefined);
+  public readonly num = signal<string | undefined>(undefined);
+  public readonly isLiked = signal<boolean | undefined>(undefined);
 
   public get isExpandable(): boolean {
     return (
@@ -44,8 +53,8 @@ export class RetroItemCardComponent implements OnChanges {
 
   ngOnChanges({ treeNode }: SimpleChanges): void {
     if (treeNode) {
-      this.item = this.treeNode?.data;
-      this.num = this.getItemNumber();
+      this.item.set(this.treeNode?.data);
+      this.num.set(this.getItemNumber());
       // this.treeNode.dropTarget?.listen(m => {
       // 	console.log('dropTarget', m);
       // 	this.isHovered = m.isOver();
@@ -58,7 +67,7 @@ export class RetroItemCardComponent implements OnChanges {
       event.preventDefault();
       event.stopPropagation();
     }
-    this.isLiked = !this.isLiked;
+    this.isLiked.set(!this.isLiked());
   }
 
   public toggle(event?: Event): void {

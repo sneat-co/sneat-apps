@@ -1,4 +1,11 @@
-import { Component, Input, ViewChild, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  signal,
+  viewChild,
+  inject,
+} from '@angular/core';
 import {
   FormControl,
   ReactiveFormsModule,
@@ -37,16 +44,17 @@ import {
     IonIcon,
     IonSpinner,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RetroMyItemsComponent {
   private readonly retrospectiveService = inject(RetrospectiveService);
   private readonly errorLogger = inject<IErrorLogger>(ErrorLogger);
 
-  @ViewChild(IonInput, { static: true }) titleInput?: IonInput; // TODO: strong typing : IonInput;
+  readonly titleInput = viewChild(IonInput); // TODO: strong typing : IonInput;
 
-  @Input() public question?: RetroItemType;
-  @Input() public spaceID?: string;
-  @Input() public retroId?: string;
+  readonly question = input<RetroItemType>();
+  readonly spaceID = input<string>();
+  readonly retroId = input<string>();
 
   public titleControl = new FormControl<string>('', [Validators.required]);
 
@@ -54,17 +62,19 @@ export class RetroMyItemsComponent {
     titleControl: this.titleControl,
   });
 
-  public items?: IRetroItem[];
+  public readonly items = signal<IRetroItem[] | undefined>(undefined);
 
   public trackById = (i: number, item: IRetroItem) => item.ID;
 
   public delete(item: IRetroItem): void {
-    if (!this.spaceID || !this.retroId || !item.type) {
+    const spaceID = this.spaceID();
+    const retroId = this.retroId();
+    if (!spaceID || !retroId || !item.type) {
       return;
     }
     const request: IRetroItemRequest = {
-      spaceID: this.spaceID,
-      meeting: this.retroId,
+      spaceID,
+      meeting: retroId,
       item: item.ID,
       type: item.type,
     };
@@ -76,7 +86,10 @@ export class RetroMyItemsComponent {
   }
 
   public add(): void {
-    if (!this.spaceID || !this.question || !this.retroId) {
+    const spaceID = this.spaceID();
+    const question = this.question();
+    const retroId = this.retroId();
+    if (!spaceID || !question || !retroId) {
       this.errorLogger.logError(
         'addFailed',
         'RetroMyItemsComponent is not properly initialized',
@@ -91,16 +104,16 @@ export class RetroMyItemsComponent {
       }
       const title = this.titleControl.value as string;
       const request: IAddRetroItemRequest = {
-        spaceID: this.spaceID,
-        meeting: this.retroId,
-        type: this.question,
+        spaceID,
+        meeting: retroId,
+        type: question,
         title,
       };
-      if (!this.items) {
-        this.items = [];
+      if (!this.items()) {
+        this.items.set([]);
       }
 
-      this.items.push({ ID: '', title });
+      this.items.set([...(this.items() || []), { ID: '', title }]);
       this.titleControl.setValue('');
       this.retrospectiveService.addRetroItem(request).subscribe(
         () => {
@@ -114,15 +127,16 @@ export class RetroMyItemsComponent {
           // }
         },
         (err) => {
-          this.items = this.items?.filter(
-            (item) => item.ID || item.title !== title,
+          this.items.set(
+            this.items()?.filter((item) => item.ID || item.title !== title),
           );
-          if (this.titleInput && !this.titleInput?.value) {
-            this.titleInput.value = title;
+          const titleInput = this.titleInput();
+          if (titleInput && !titleInput?.value) {
+            titleInput.value = title;
           }
           this.errorLogger.logError(err, 'Failed to add a retrospective item');
-          if (this.titleInput) {
-            this.titleInput.ionFocus.emit();
+          if (titleInput) {
+            titleInput.ionFocus.emit();
           }
         },
       );

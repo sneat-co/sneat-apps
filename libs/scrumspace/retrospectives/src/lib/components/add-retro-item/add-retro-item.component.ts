@@ -1,4 +1,11 @@
-import { Component, Input, OnDestroy, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  input,
+  signal,
+  inject,
+} from '@angular/core';
 import {
   IAddRetroItemRequest,
   RetrospectiveService,
@@ -11,16 +18,17 @@ import { Subject } from 'rxjs';
 @Component({
   selector: 'sneat-add-retro-item',
   templateUrl: './add-retro-item.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddRetroItemComponent implements OnDestroy {
   private retrospectiveService = inject(RetrospectiveService);
   private errorLogger = inject<IErrorLogger>(ErrorLogger);
 
   // @Input() retroItemType: RetroItemType;
-  @Input() spaceID?: string;
-  @Input() meetingId?: string;
+  readonly spaceID = input<string>();
+  readonly meetingId = input<string>();
   public titleControl = new FormControl('', [Validators.required]);
-  public isAdding = false;
+  public readonly isAdding = signal(false);
   private destroyed = new Subject<boolean>();
 
   ngOnDestroy() {
@@ -38,8 +46,8 @@ export class AddRetroItemComponent implements OnDestroy {
       return;
     }
     const title = this.titleControl.value as string;
-    const spaceID = this.spaceID || '',
-      meetingID = this.meetingId || '';
+    const spaceID = this.spaceID() || '',
+      meetingID = this.meetingId() || '';
     if (spaceID || meetingID) {
       alert('no team or meeting id');
       return;
@@ -50,17 +58,17 @@ export class AddRetroItemComponent implements OnDestroy {
       type: 'this.retroItemType',
       title,
     };
-    this.isAdding = true;
+    this.isAdding.set(true);
     this.retrospectiveService
       .addRetroItem(request)
       .pipe(takeUntil(this.destroyed))
       .subscribe({
         next: () => {
-          this.isAdding = false;
+          this.isAdding.set(false);
         },
         error: (err) => {
           this.errorLogger.logError(err, 'Failed to add a retrospective item');
-          this.isAdding = false;
+          this.isAdding.set(false);
         },
       });
   }

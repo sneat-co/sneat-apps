@@ -1,8 +1,8 @@
 <ion-card>
   <ion-list lines="none">
     <ion-item-divider>
-      <ion-label>{{ title }}</ion-label>
-      @if (!noExpandCollapse && typeControl.value) {
+      <ion-label>{{ title() }}</ion-label>
+      @if (!noExpandCollapse() && typeControl.value) {
         <ion-buttons slot="end">
           <ion-button (click)="typeControl.setValue(undefined)">
             <ion-icon name="chevron-up-circle-outline" />
@@ -13,7 +13,7 @@
   </ion-list>
   <form [formGroup]="addRetroItemForm">
     <ion-segment [formControl]="typeControl" (ionChange)="typeChanged()">
-      @for (retroList of retroLists; track trackById($index, retroList)) {
+      @for (retroList of retroLists(); track trackById($index, retroList)) {
         <ion-segment-button [value]="retroList.id">
           <ion-label>
             {{ retroList.title }}
@@ -47,11 +47,11 @@
         </ion-item>
       }
     </ion-list>
-    @if (isEditable && typeControl.value) {
+    @if (isEditable() && typeControl.value) {
       <ion-item>
         <ion-input
           [formControl]="titleControl"
-          [disabled]="!isEditable"
+          [disabled]="!isEditable()"
           placeholder="New item"
           (keyup.enter)="add()"
           (ionBlur)="add($event)"
@@ -60,7 +60,7 @@
           <ion-button
             [color]="titleControl.value.trim().length ? 'primary' : 'medium'"
             (click)="add()"
-            [disabled]="!isEditable"
+            [disabled]="!isEditable()"
           >
             Add
           </ion-button>

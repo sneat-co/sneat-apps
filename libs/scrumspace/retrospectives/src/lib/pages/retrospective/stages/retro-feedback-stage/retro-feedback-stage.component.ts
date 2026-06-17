@@ -1,4 +1,9 @@
-import { Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonCheckbox, IonItem, IonLabel } from '@ionic/angular/standalone';
 import { IRecord } from '@sneat/data';
@@ -18,14 +23,15 @@ import { RetroMembersComponent } from '../../retro-members/retro-members.compone
     RetroMembersComponent,
     FormsModule,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RetroFeedbackStageComponent {
-  @Input({ required: true }) space: ISpaceContext = { id: '' };
-  @Input({ required: true }) retrospective?: IRecord<IRetrospective>;
+  readonly space = input<ISpaceContext>({ id: '' });
+  readonly retrospective = input<IRecord<IRetrospective>>();
 
-  public iAmReady?: boolean;
+  public readonly iAmReady = signal<boolean | undefined>(undefined);
 
   public setReady(value: boolean) {
-    this.iAmReady = value;
+    this.iAmReady.set(value);
   }
 }

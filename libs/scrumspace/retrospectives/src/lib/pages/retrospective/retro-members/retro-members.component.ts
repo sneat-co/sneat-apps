@@ -1,8 +1,9 @@
 import {
+  ChangeDetectionStrategy,
   Component,
-  Input,
-  OnChanges,
-  SimpleChanges,
+  effect,
+  input,
+  signal,
   inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -52,50 +53,50 @@ interface IMeetingMemberWithCounts extends IMeetingMember {
     IonIcon,
     FormsModule,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RetroMembersComponent implements OnChanges {
+export class RetroMembersComponent {
   private errorLogger = inject<IErrorLogger>(ErrorLogger);
 
-  @Input({ required: true }) space?: ISpaceContext;
-  @Input({ required: true }) retrospective?: IRecord<IRetrospective>;
+  readonly space = input<ISpaceContext>();
+  readonly retrospective = input<IRecord<IRetrospective>>();
 
-  public membersTab: 'participants' | 'spectators' | 'absent' = 'participants';
+  public readonly membersTab = signal<'participants' | 'spectators' | 'absent'>(
+    'participants',
+  );
 
-  public participants?: IMeetingMemberWithCounts[];
-  public spectators?: IMeetingMemberWithCounts[];
-  public absents?: IMeetingMember[];
+  public readonly participants = signal<IMeetingMemberWithCounts[] | undefined>(
+    undefined,
+  );
+  public readonly spectators = signal<IMeetingMemberWithCounts[] | undefined>(
+    undefined,
+  );
+  public readonly absents = signal<IMeetingMember[] | undefined>(undefined);
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    // console.log('ngOnChanges', this.space, this.retrospective);
-    try {
-      if (changes.retrospective) {
-        const retrospective = this.retrospective?.dbo;
+  constructor() {
+    effect(() => {
+      const retro = this.retrospective();
+      // console.log('ngOnChanges', this.space, this.retrospective);
+      try {
+        const retrospective = retro?.dbo;
         if (retrospective) {
-          const members = this.retrospective?.dbo?.members;
+          const members = retro?.dbo?.members;
           if (members) {
-            this.participants = members.filter((m) =>
-              m.roles?.includes(MemberRoleEnum.contributor),
+            this.participants.set(
+              members.filter((m) =>
+                m.roles?.includes(MemberRoleEnum.contributor),
+              ),
             );
-            this.spectators = members?.filter((m) =>
-              m.roles?.includes(MemberRoleEnum.spectator),
+            this.spectators.set(
+              members?.filter((m) =>
+                m.roles?.includes(MemberRoleEnum.spectator),
+              ),
             );
           }
         }
+      } catch (e) {
+        this.errorLogger.logError(e, 'Failed to process ngOnChanges event');
       }
-      if (changes.team) {
-        // Check for this.retrospective?.data?.userIDs is not great
-        if (this.space?.dbo && !this.retrospective?.dbo?.userIDs) {
-          const { dbo } = this.space;
-          this.participants = dbo.members?.filter((m) =>
-            m.roles?.includes(MemberRoleEnum.contributor),
-          );
-          this.spectators = dbo.members?.filter((m) =>
-            m.roles?.includes(MemberRoleEnum.spectator),
-          );
-        }
-      }
-    } catch (e) {
-      this.errorLogger.logError(e, 'Failed to process ngOnChanges event');
-    }
+    });
   }
 }

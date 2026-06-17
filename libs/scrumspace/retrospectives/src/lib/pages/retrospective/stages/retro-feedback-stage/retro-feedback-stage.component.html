@@ -1,15 +1,19 @@
 <sneat-my-retro-items
-  [spaceID]="space?.id"
+  [spaceID]="space()?.id"
   tabAutoSelect="true"
   [noExpandCollapse]="true"
-  [isEditable]="!iAmReady"
+  [isEditable]="!iAmReady()"
 />
 
-@if (retrospective?.data?.stage === "feedback") {
+@if (retrospective()?.data?.stage === "feedback") {
   <ion-item>
-    <ion-checkbox [(ngModel)]="iAmReady" slot="start" />
+    <ion-checkbox
+      [ngModel]="iAmReady()"
+      (ngModelChange)="iAmReady.set($event)"
+      slot="start"
+    />
     <ion-label>I've done with my feedback &amp; ready for review</ion-label>
   </ion-item>
 }
 
-<sneat-retro-members [team]="space" [retrospective]="retrospective" />
+<sneat-retro-members [team]="space()" [retrospective]="retrospective()" />
