@@ -3,7 +3,7 @@
     <ion-label
       >{{ $period() || "" | titlecase }} {{ $liabilitiesMode() }}</ion-label
     >
-    @if (activePeriod === $period()) {
+    @if (activePeriod() === $period()) {
       <ion-buttons slot="end">
         <ion-button color="medium" (click)="changeShowBy('event', $event)">
           <ion-label

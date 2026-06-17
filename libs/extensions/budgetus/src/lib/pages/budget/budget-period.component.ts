@@ -2,13 +2,10 @@ import { CurrencyPipe, TitleCasePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
+  effect,
   input,
-  Input,
-  OnChanges,
-  Output,
+  output,
   signal,
-  SimpleChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -48,36 +45,30 @@ import {
   selector: 'sneat-budget-period',
   templateUrl: 'budget-period.component.html',
 })
-export class BudgetPeriodComponent implements OnChanges {
+export class BudgetPeriodComponent {
   tab: 'by_event' | 'by_contact' = 'by_event';
 
-  @Input({ required: true }) activePeriod?: RepeatPeriod;
+  public readonly activePeriod = input.required<RepeatPeriod | undefined>();
 
   public readonly $showBy = input.required<ShowBy>();
 
   public readonly $period = input.required<RepeatPeriod>();
   public readonly $liabilitiesMode = input.required<LiabilitiesMode>();
 
-  @Input({ required: true }) liabilitiesByPeriod?: LiabilitiesByPeriod;
+  public readonly liabilitiesByPeriod = input<LiabilitiesByPeriod>();
 
-  @Output() readonly showByChange = new EventEmitter<ShowBy>();
+  readonly showByChange = output<ShowBy>();
 
   protected periodLiabilities?: IPeriodLiabilities;
 
   protected readonly totalToBePaid = signal<IAmount[]>([]);
 
-  protected getAmounts(liability: ILiabilityBase): readonly IAmount[] {
-    const result: IAmount[] = [];
-    Object.entries(liability.valuesByCurrency).forEach(([currency, value]) => {
-      result.push({ currency, value });
-    });
-    return result;
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['liabilitiesByPeriod'] || changes['period']) {
-      this.periodLiabilities = this.$period()
-        ? this.liabilitiesByPeriod?.[this.$period()]
+  constructor() {
+    effect(() => {
+      const period = this.$period();
+      const liabilitiesByPeriod = this.liabilitiesByPeriod();
+      this.periodLiabilities = period
+        ? liabilitiesByPeriod?.[period]
         : undefined;
       if (this.periodLiabilities) {
         const total: IAmount[] = [];
@@ -93,7 +84,15 @@ export class BudgetPeriodComponent implements OnChanges {
         });
         this.totalToBePaid.set(total);
       }
-    }
+    });
+  }
+
+  protected getAmounts(liability: ILiabilityBase): readonly IAmount[] {
+    const result: IAmount[] = [];
+    Object.entries(liability.valuesByCurrency).forEach(([currency, value]) => {
+      result.push({ currency, value });
+    });
+    return result;
   }
 
   protected changeShowBy(showBy: 'event' | 'contact', event: Event): boolean {

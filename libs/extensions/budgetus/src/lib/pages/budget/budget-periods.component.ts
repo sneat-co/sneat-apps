@@ -1,10 +1,9 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
-  EventEmitter,
   input,
-  Input,
-  Output,
+  output,
   signal,
 } from '@angular/core';
 import { IonAccordionGroup } from '@ionic/angular/standalone';
@@ -24,6 +23,7 @@ import { BudgetPeriodComponent } from './budget-period.component';
   templateUrl: './budget-periods.component.html',
   imports: [BudgetPeriodComponent, IonAccordionGroup],
   providers: [{ provide: ClassName, useValue: 'BudgetPeriodsComponent' }],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BudgetPeriodsComponent extends WithSpaceInput {
   public readonly $recurringHappenings = input.required<
@@ -32,7 +32,7 @@ export class BudgetPeriodsComponent extends WithSpaceInput {
 
   public readonly $liabilitiesMode = input.required<LiabilitiesMode>();
 
-  @Input({ required: true }) activePeriod: RepeatPeriod = 'weekly';
+  public readonly activePeriod = input<RepeatPeriod>('weekly');
 
   protected readonly periods: RepeatPeriod[] = [
     // 'daily',
@@ -43,11 +43,10 @@ export class BudgetPeriodsComponent extends WithSpaceInput {
 
   protected readonly $showBy = signal<ShowBy>('event');
 
-  @Output() readonly activePeriodChange = new EventEmitter<RepeatPeriod>();
+  readonly activePeriodChange = output<RepeatPeriod>();
 
   protected onPeriodChanged(event: Event): void {
-    this.activePeriod = (event as CustomEvent).detail.value;
-    this.activePeriodChange.emit(this.activePeriod);
+    this.activePeriodChange.emit((event as CustomEvent).detail.value);
   }
 
   protected readonly $liabilitiesByPeriod = computed<LiabilitiesByPeriod>(

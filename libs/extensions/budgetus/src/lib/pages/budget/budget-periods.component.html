@@ -1,6 +1,6 @@
 <!--happeningLiabilitiesByPeriod: {{happeningLiabilitiesByPeriod()|json}}-->
 <ion-accordion-group
-  [value]="activePeriod"
+  [value]="activePeriod()"
   (ionChange)="onPeriodChanged($event)"
 >
   @for (period of periods; track period) {
@@ -8,7 +8,7 @@
       [$showBy]="$showBy()"
       (showByChange)="$showBy.set($event)"
       [$liabilitiesMode]="$liabilitiesMode()"
-      [activePeriod]="activePeriod"
+      [activePeriod]="activePeriod()"
       [$period]="period"
       [liabilitiesByPeriod]="$liabilitiesByPeriod()"
     />
