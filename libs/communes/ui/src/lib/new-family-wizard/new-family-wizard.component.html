@@ -3,9 +3,10 @@
   It's optional but by telling a bit about yourself will help to get you
   started.
 </p>
-@if (relationship) {
+@if (relationship()) {
   <sneat-radio-group-to-select
-    [(ngModel)]="relationship"
+    [ngModel]="relationship()"
+    (ngModelChange)="relationship.set($event)"
     radioGroupLabel="#1 of 3: Do you have a spouse or partner?"
     selectLabel="Relationship status"
     [selectOptions]="relationshipOptions"
@@ -13,7 +14,8 @@
   />
 } @else {
   <sneat-radio-group-to-select
-    [(ngModel)]="numberOfKids"
+    [ngModel]="numberOfKids()"
+    (ngModelChange)="numberOfKids.set($event)"
     radioGroupLabel="#2 of 3: How many kids is in your household?"
     label="Number of kids in household"
     [selectOptions]="rangeOptions0to7"
@@ -21,9 +23,10 @@
   />
 }
 
-@if (!!numberOfKids) {
+@if (!!numberOfKids()) {
   <sneat-radio-group-to-select
-    [(ngModel)]="dwelling"
+    [ngModel]="dwelling()"
+    (ngModelChange)="dwelling.set($event)"
     radioGroupLabel="#3 of 3: Do you rent or own your own property?"
     selectLabel="Dwelling"
     [selectOptions]="dwellingOptions"

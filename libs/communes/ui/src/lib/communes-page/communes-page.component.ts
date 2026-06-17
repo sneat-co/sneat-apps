@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
   IonButton,
   IonButtons,
@@ -23,5 +23,6 @@ import {
     IonLabel,
     IonContent,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommunesPageComponent {}

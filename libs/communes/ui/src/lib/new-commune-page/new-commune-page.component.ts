@@ -1,4 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   IonBackButton,
@@ -55,25 +60,28 @@ interface ICommuneType {
     FormsModule,
     IonButton,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewCommunePageComponent {
   public types: ICommuneType[] = [
     { code: 'family', title: 'Family', emoji: '👨‍👩‍👧‍👦' },
     { code: 'friends', title: 'Friends', emoji: '🤝' },
   ];
-  public code?: string;
+  public readonly code = signal<string | undefined>(undefined);
   public icon?: string;
-  public name = '';
-  formIsReady?: boolean;
-  @ViewChild('nameInput') nameInput?: IonInput;
+  public readonly name = signal('');
+  readonly formIsReady = signal<boolean | undefined>(undefined);
+  readonly nameInput = viewChild<IonInput>('nameInput');
 
   public onTypeChanged(): void {
     setTimeout(() => {
-      this.nameInput?.setFocus().then(() => console.log('set focus to name'));
+      this.nameInput()
+        ?.setFocus()
+        .then(() => console.log('set focus to name'));
     }, 100);
   }
 
   public onFormReadyChanged(value: boolean): void {
-    this.formIsReady = value;
+    this.formIsReady.set(value);
   }
 }

@@ -9,11 +9,15 @@
 
 <ion-content class="ion-padding">
   <ion-list>
-    @if (code) {
+    @if (code()) {
       <ion-item>
         <ion-label>Commune type</ion-label>
         <ion-icon slot="start" name="home" />
-        <ion-select [(ngModel)]="code" interface="popover">
+        <ion-select
+          [ngModel]="code()"
+          (ngModelChange)="code.set($event)"
+          interface="popover"
+        >
           @for (type of types; track type.code) {
             <ion-select-option
               >{{ type.emoji }} {{ type.title }}</ion-select-option
@@ -25,7 +29,11 @@
       <ion-list-header>
         <ion-label>Choose commune type</ion-label>
       </ion-list-header>
-      <ion-radio-group [(ngModel)]="code" (ionChange)="onTypeChanged()">
+      <ion-radio-group
+        [ngModel]="code()"
+        (ngModelChange)="code.set($event)"
+        (ionChange)="onTypeChanged()"
+      >
         @for (type of types; track type.code) {
           <ion-item>
             <ion-radio [value]="type.code"
@@ -35,15 +43,19 @@
         }
       </ion-radio-group>
     }
-    @if (!!code && code !== "family") {
+    @if (!!code() && code() !== "family") {
       <ion-item>
         <ion-label>Commune name</ion-label>
-        <ion-input #nameInput [(ngModel)]="name" />
+        <ion-input
+          #nameInput
+          [ngModel]="name()"
+          (ngModelChange)="name.set($event)"
+        />
       </ion-item>
     }
   </ion-list>
 
-  @if (code === "family") {
+  @if (code() === "family") {
     <ion-card>
       <ion-card-content>
         <sneat-new-family-wizard (ready)="onFormReadyChanged($event)" />
@@ -51,7 +63,7 @@
     </ion-card>
   }
 
-  @if (formIsReady) {
+  @if (formIsReady()) {
     <ion-button>Create commune</ion-button>
   }
 </ion-content>

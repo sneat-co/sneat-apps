@@ -1,4 +1,9 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  output,
+  signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RadioGroupToSelectComponent, SelectOption } from '@sneat/wizard';
 
@@ -6,13 +11,14 @@ import { RadioGroupToSelectComponent, SelectOption } from '@sneat/wizard';
   selector: 'sneat-new-family-wizard',
   templateUrl: './new-family-wizard.component.html',
   imports: [RadioGroupToSelectComponent, FormsModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewFamilyWizardComponent {
-  @Output() ready = new EventEmitter<boolean>();
+  readonly ready = output<boolean>();
 
-  dwelling?: string;
-  relationship?: string;
-  numberOfKids?: string;
+  readonly dwelling = signal<string | undefined>(undefined);
+  readonly relationship = signal<string | undefined>(undefined);
+  readonly numberOfKids = signal<string | undefined>(undefined);
 
   public readonly dwellingOptions: SelectOption[] = [
     { value: 'renter', title: 'We are renting the place we live in' },
@@ -41,7 +47,7 @@ export class NewFamilyWizardComponent {
   ];
 
   get isReady(): boolean {
-    return !!this.relationship && !!this.numberOfKids && !!this.dwelling;
+    return !!this.relationship() && !!this.numberOfKids() && !!this.dwelling();
   }
 
   onFormChanged(): void {
