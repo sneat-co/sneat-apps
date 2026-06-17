@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { IonButton } from '@ionic/angular/standalone';
 import { IScrumDbo } from '@sneat/ext-scrumspace-scrummodels';
 
@@ -6,9 +6,10 @@ import { IScrumDbo } from '@sneat/ext-scrumspace-scrummodels';
   selector: 'sneat-timer-meeting-button',
   templateUrl: './timer-meeting-button.component.html',
   imports: [IonButton],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TimerMeetingButtonComponent {
-  @Input() public scrumID?: string;
-  @Input() public scrum?: IScrumDbo;
-  @Input() public spaceID?: string;
+  public readonly scrumID = input<string>();
+  public readonly scrum = input<IScrumDbo>();
+  public readonly spaceID = input<string>();
 }
