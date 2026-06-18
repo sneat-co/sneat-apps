@@ -45,7 +45,7 @@ Implement the settings screen component that renders each extension from the vie
 **Depends-On:** 1, 2
 **Status:** pending
 
-Render, for each non-trusted extension, only its currently-granted scopes using each scope's human-readable catalog label (Consent & Scopes Feature); a scope that was never granted, declined, or revoked is not shown as granted.
+Render, for each non-trusted extension, only its currently-granted scopes using each scope's human-readable catalog label (Consent & Scopes Feature); a scope that was never granted, declined, or revoked is not shown as granted. An extension renders exactly ONE of two mutually-exclusive branches: the scope list here (untrusted) or the trusted full-access badge (Task 4) — never both.
 
 ### Task 4: Trusted extension full-access badge
 

@@ -44,7 +44,7 @@ Add the semantic filter that takes an extension's raw requested scopes (recorded
 **Depends-On:** 1
 **Status:** pending
 
-Implement `ConsentStore` persisting grant decisions per `(user, extension, scope)` under the signed-in user's own data space/record (document shape pinned here), exposing record-grant, record-decline, list-granted, and a synchronous `isGranted(user, extension, scope)` query, with strict keying so grants never leak across extensions or users.
+Implement `ConsentStore` persisting grant decisions per `(user, extension, scope)` under the signed-in user's own data space/record. Document shape: one doc per `(user, extension)` keyed by `extId` (origin host[:port]) under the user's space, carrying a `grants` map of `scopeId -> { state: "granted" | "declined", decidedAt }`; absence of an entry means not-decided. Expose `record-grant`, `record-decline`, `list-granted`, and a synchronous `isGranted(user, extension, scope)` query, with strict keying so grants never leak across extensions or users.
 
 ### Task 4: Granular consent dialog with origin display
 
@@ -79,7 +79,7 @@ Implement revoke on the consent store (individual scope, or all scopes of an ext
 **Depends-On:** 3, 4
 **Status:** pending
 
-On load of an already-installed extension whose manifest now requests catalog scopes the user has not yet decided, compute the not-yet-decided subset and prompt only for those via the dialog, leaving previously-granted scopes granted and un-asked; a newly-requested scope becomes granted only if the user grants it in this incremental prompt.
+On load of an already-installed extension whose manifest now requests catalog scopes the user has not yet decided, compute the not-yet-decided subset and prompt only for those via the dialog, leaving previously-granted scopes granted and un-asked; a newly-requested scope becomes granted only if the user grants it in this incremental prompt. Depends-On (cross-plan): the host load/embed path (extension-host-and-bridge Task 5) is the trigger point that fires this on-load incremental check.
 
 ### Task 8: Authoritative not-granted-is-denied contract
 

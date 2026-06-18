@@ -78,7 +78,7 @@ Implement `contacts.pick` as a parent-side single-selection contact picker that 
 
 **Status:** pending
 
-Implement `contacts.list` (scope `contacts:read`) that enumerates the user's contacts as basic `{ id, names, roles }`, then consults the consent store for `contacts_details:read` and includes each contact's email/phone detail fields only when that second scope is granted, omitting them from every contact otherwise (never defaulted in).
+Implement `contacts.list` (scope `contacts:read`) that enumerates the user's contacts as basic `{ id, names, roles }`, then consults the consent store for `contacts_details:read` and includes each contact's email/phone detail fields only when that second scope is granted, omitting them from every contact otherwise (never defaulted in). Pagination of large address books is out of MVP scope (no AC asserts it); the method returns the full basic list — revisit pagination only if real address-book sizes demand it.
 
 ## Open Questions
 
