@@ -14,3 +14,6 @@ export * from './lib/scope-catalog';
 export * from './lib/consent-store.service';
 export * from './lib/consent-dialog.component';
 export * from './lib/consent-flow.service';
+export * from './lib/gateway-methods';
+export * from './lib/gateway-data-source';
+export * from './lib/protected-data-gateway.service';

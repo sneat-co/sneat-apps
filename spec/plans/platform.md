@@ -58,7 +58,7 @@ In worktree/branch `feat/ext-platform-consent`, a dedicated subagent executes th
 ### Task 4: Execute F3 — protected-data-gateway
 
 **Depends-On:** 3
-**Status:** pending
+**Status:** done
 
 In worktree/branch `feat/ext-platform-gateway`, a dedicated subagent executes the `protected-data-gateway` child plan (method-scope map, enforcement against the consent store, picker, field-gating) until its ACs are verified and green; then merge into `feat/ext-platform`. Runs in parallel with Task 5.
 
