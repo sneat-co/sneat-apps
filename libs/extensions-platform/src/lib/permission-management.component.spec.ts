@@ -7,6 +7,7 @@ import { FrameSrcAllowlistService } from './frame-src-allowlist.service';
 import { IS_TRUSTED_ORIGIN, IsTrustedOrigin } from './is-trusted-origin';
 import { ExtensionRegistration } from './models';
 import { PermissionManagementComponent } from './permission-management.component';
+import { isTrustedOrigin } from './trusted-origin-allowlist';
 
 const USER = 'user-1';
 
@@ -131,6 +132,25 @@ describe('PermissionManagementComponent', () => {
     const el = render(fixture);
     expect(el.querySelector('[data-test="trusted-badge"]')).toBeNull();
     expect(el.querySelector('[data-test="scope-list"]')).not.toBeNull();
+  });
+
+  // AC: trusted-extension-shows-full-access-badge (real allowlist predicate)
+  it('lights the full-access badge for a real trusted-allowlist origin via the real predicate', () => {
+    const { fixture, registry, consent } = setup(isTrustedOrigin);
+    registry.create(registrationOf('listus.app', 'Listus'));
+    registry.create(registrationOf('acme.example', 'Acme'));
+    consent.recordGrant(USER, 'acme.example', 'profile:read');
+
+    const el = render(fixture);
+
+    const trusted = el.querySelector('[data-test-ext="listus.app"]');
+    const untrusted = el.querySelector('[data-test-ext="acme.example"]');
+    expect(
+      trusted?.querySelector('[data-test="trusted-badge"]')?.textContent,
+    ).toContain('Trusted — full account access');
+    expect(trusted?.querySelector('[data-test="scope-list"]')).toBeNull();
+    expect(untrusted?.querySelector('[data-test="trusted-badge"]')).toBeNull();
+    expect(untrusted?.querySelector('[data-test="scope-list"]')).not.toBeNull();
   });
 
   // AC: revoke-single-scope

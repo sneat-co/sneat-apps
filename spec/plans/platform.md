@@ -72,7 +72,7 @@ In worktree/branch `feat/ext-platform-permissions-ui`, a dedicated subagent exec
 ### Task 6: Execute F5 — trusted-first-party-extensions
 
 **Depends-On:** 2
-**Status:** pending
+**Status:** done
 
 In worktree/branch `feat/ext-platform-trusted`, a dedicated subagent executes the `trusted-first-party-extensions` child plan (trusted-origin allowlist, token handoff/refresh, install-time fork ownership, gateway-bypass, full-access disclosure) until its ACs are verified and green; then merge into `feat/ext-platform` last so the trusted/untrusted fork reconciles against the integrated untrusted path.
 
