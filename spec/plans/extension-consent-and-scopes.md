@@ -10,6 +10,7 @@ status: Approved
 **Date:** 2026-06-18
 **Owner:** alex
 **Supersedes:** —
+**Parent:** platform
 **Grade:** A
 
 ## Summary
