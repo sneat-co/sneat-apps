@@ -11,3 +11,6 @@
 /.nx/workspace-data
 
 .nx/self-healing
+# SpecScore artifacts use a metadata format prettier would corrupt
+/spec
+/.specscore

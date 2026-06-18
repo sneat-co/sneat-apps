@@ -1,13 +1,14 @@
 ---
 format: https://specscore.md/feature-specification
-status: In Review
+status: Approved
 ---
 
 # Feature: Extension Permission Management UI
 
 > [SpecScore.**Studio**](https://specscore.studio): | [Explore](https://specscore.studio/app/github.com/sneat-co/sneat-apps/spec/features/extension-permission-management-ui?op=explore) | [Edit](https://specscore.studio/app/github.com/sneat-co/sneat-apps/spec/features/extension-permission-management-ui?op=edit) | [Ask question](https://specscore.studio/app/github.com/sneat-co/sneat-apps/spec/features/extension-permission-management-ui?op=ask) | [Request change](https://specscore.studio/app/github.com/sneat-co/sneat-apps/spec/features/extension-permission-management-ui?op=request-change) |
-**Status:** In Review
+**Status:** Approved
 **Source Ideas:** third-party-extension-platform
+**Grade:** A
 
 ## Summary
 
@@ -30,6 +31,12 @@ The settings screen lists every extension the signed-in user has installed, each
 #### REQ: per-extension-granted-scopes
 
 For each installed extension, the screen displays the scopes currently granted to it, using each scope's human-readable label from the catalog (Consent & Scopes Feature). A scope that is not currently granted (never granted, declined, or revoked) is not shown as granted.
+
+### Trusted Extensions
+
+#### REQ: trusted-extension-display
+
+A trusted first-party extension (Trusted First-Party Extensions Feature) has no per-scope grants — it holds the user's token for full access. An extension is treated as trusted iff its origin is on the trusted allowlist (that allowlist is the discriminator — it distinguishes a trusted extension from an untrusted one that merely has zero currently-granted scopes). Such an extension is listed like any other but, instead of a scope list, shows a clear "Trusted — full account access" indicator. Removing a trusted extension uses the same Remove action (deregistration), which stops it being embedded and therefore stops any token handoff; there are no per-scope grants to revoke.
 
 ### Revoke a Scope
 
@@ -74,6 +81,14 @@ When the user views that extension on the screen
 Then `profile:read` and `contacts:read` are shown as granted using their catalog labels, and `contacts_details:read` is not shown as granted.
 Verifies REQ: per-extension-granted-scopes
 
+### AC: trusted-extension-shows-full-access-badge
+
+Scenario: A trusted extension shows a full-access badge, not an empty scope list
+Given an installed trusted first-party extension (no per-scope grants)
+When the user views it on the permission-management screen
+Then it is shown with a "Trusted — full account access" indicator instead of a scope list, and the Remove action is available.
+Verifies REQ: trusted-extension-display
+
 ### AC: revoke-single-scope
 
 Scenario: Revoking one scope updates the list and blocks access
@@ -100,9 +115,10 @@ Verifies REQ: remove-extension-action
 
 ## Open Questions
 
-- **Re-grant from settings:** MVP supports review + revoke + remove. Whether the user can re-grant a previously declined/revoked scope directly from this screen (vs. only via the extension re-requesting it through incremental consent) is deferred.
-- **Live session on revoke/remove:** for an extension currently open in an iframe, data access stops immediately (the gateway denies on the next call per the Consent & Scopes Feature). Whether revoke/remove also visibly tears down the live iframe then and there, or only blocks re-embedding on next load, is a Plan/UX detail.
-- **Rehearse stubs:** all six ACs are testable (list rendering, empty state, granted-scope display, revoke flow + gateway effect, full removal + allowlist effect); `_tests/` stubs are deferred to the Plan.
+- **Re-grant from settings (decided):** out of MVP. The settings screen does review + revoke + remove only; re-granting happens by the extension re-requesting via incremental consent (Consent & Scopes Feature).
+- **Live session on revoke/remove (decided):** data access stops immediately (the gateway denies on the next call). The MVP does NOT actively tear down a currently-open iframe; re-embedding is blocked on the next navigation/reload. Active teardown can be revisited later.
+- **Rehearse stubs:** all seven ACs are testable (list rendering, empty state, granted-scope display, trusted full-access badge, revoke flow + gateway effect, full removal + allowlist effect); `_tests/` stubs are deferred to the Plan.
 
 ---
-*This document follows the https://specscore.md/feature-specification*
+
+_This document follows the https://specscore.md/feature-specification_

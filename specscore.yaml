@@ -16,3 +16,10 @@ gates:
               prompt: .specscore/reviewers/spec-reviewer.md
             - name: human-approval
               type: human
+    plan.approved:
+        reviewers:
+            - name: plan-reviewer
+              type: ai
+              prompt: .specscore/reviewers/plan-reviewer.md
+            - name: human-approval
+              type: human
