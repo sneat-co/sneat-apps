@@ -14,17 +14,15 @@ name: Deploy sneat-app
 # Both are single gcloud commands; see the deploy doc.
 
 on:
+  # Manual trigger (e.g. to redeploy without a code change).
   workflow_dispatch:
-  push:
+  # Auto-deploy on main only AFTER the build/test workflow ("Build NX project")
+  # finishes successfully — so we never ship a red build. workflow_run can't take
+  # a paths filter, so this deploys after every green main build.
+  workflow_run:
+    workflows: ['Build NX project']
+    types: [completed]
     branches: [main]
-    paths:
-      - 'apps/sneat-app/**'
-      - 'libs/**'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
-      - 'firebase.json'
-      - '.firebaserc'
-      - '.github/workflows/deploy.yml'
 
 permissions:
   contents: read
@@ -32,6 +30,8 @@ permissions:
 
 jobs:
   deploy:
+    # Manual runs always proceed; auto runs only when the build/test succeeded.
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
