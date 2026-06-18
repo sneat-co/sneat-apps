@@ -1,10 +1,10 @@
 ---
 format: https://specscore.md/plan-specification
-status: Approved
+status: Implemented
 ---
 # Plan: Platform: Third-Party Extension Platform (master)
 
-**Status:** Approved
+**Status:** Implemented
 **Source:** none
 **Date:** 2026-06-18
 **Owner:** alex
@@ -37,49 +37,49 @@ F5 may begin in parallel with Wave 2/3 (it needs only F1), but it integrates las
 ### Task 1: Establish umbrella branch and per-plan worktrees
 
 **Depends-On:** —
-**Status:** pending
+**Status:** done
 
 Cut the umbrella branch `feat/ext-platform` from `main`. For each child plan, create a dedicated git worktree on a dedicated branch `feat/ext-platform-<feature>` cut from the umbrella. No implementation happens in the shared working tree.
 
 ### Task 2: Execute F1 — extension-host-and-bridge (foundation)
 
 **Depends-On:** 1
-**Status:** pending
+**Status:** done
 
 In worktree/branch `feat/ext-platform-host-bridge`, a dedicated subagent executes every task of the `extension-host-and-bridge` child plan until its 13 Feature ACs are verified and lint/build/tests are green; then merge the branch into `feat/ext-platform`. This is the foundation and must integrate before Waves 2–4.
 
 ### Task 3: Execute F2 — extension-consent-and-scopes
 
 **Depends-On:** 2
-**Status:** pending
+**Status:** done
 
 In worktree/branch `feat/ext-platform-consent`, a dedicated subagent executes the `extension-consent-and-scopes` child plan (catalog, consent store, untrusted install/consent flow) until its ACs are verified and green; then merge into `feat/ext-platform`. Provides the consent-store interface F3 and F4 consume.
 
 ### Task 4: Execute F3 — protected-data-gateway
 
 **Depends-On:** 3
-**Status:** pending
+**Status:** done
 
 In worktree/branch `feat/ext-platform-gateway`, a dedicated subagent executes the `protected-data-gateway` child plan (method-scope map, enforcement against the consent store, picker, field-gating) until its ACs are verified and green; then merge into `feat/ext-platform`. Runs in parallel with Task 5.
 
 ### Task 5: Execute F4 — extension-permission-management-ui
 
 **Depends-On:** 3
-**Status:** pending
+**Status:** done
 
 In worktree/branch `feat/ext-platform-permissions-ui`, a dedicated subagent executes the `extension-permission-management-ui` child plan (pure consumer: list, granted-scopes, trusted badge, revoke, remove) until its ACs are verified and green; then merge into `feat/ext-platform`. Runs in parallel with Task 4. Note: F4's **trusted-badge** path reads F5's `isTrustedOrigin` predicate (the static trusted-origin allowlist, `trusted-first-party-extensions` Task 1), which integrates with F5 in Task 6 — so F4's own ACs (list, empty-state, granted-scopes, revoke, remove) are fully verifiable at this wave, while the `trusted-extension-shows-full-access-badge` AC is verified at umbrella integration (Task 7) once F5's allowlist is present.
 
 ### Task 6: Execute F5 — trusted-first-party-extensions
 
 **Depends-On:** 2
-**Status:** pending
+**Status:** done
 
 In worktree/branch `feat/ext-platform-trusted`, a dedicated subagent executes the `trusted-first-party-extensions` child plan (trusted-origin allowlist, token handoff/refresh, install-time fork ownership, gateway-bypass, full-access disclosure) until its ACs are verified and green; then merge into `feat/ext-platform` last so the trusted/untrusted fork reconciles against the integrated untrusted path.
 
 ### Task 7: Integrate on the umbrella and open one pull request
 
 **Depends-On:** 2, 3, 4, 5, 6
-**Status:** pending
+**Status:** done
 
 On `feat/ext-platform` with all child branches merged, run the full lint/build/test suite and a cross-plan end-to-end check, resolve any integration issues, then open a single pull request `feat/ext-platform` → `main`. The integration check MUST cover the cross-wave couplings that no single child wave can fully exercise: (a) the kept demo extension exercising host + consent + read-only gateway + permission UI end to end (untrusted path); (b) F4's `trusted-extension-shows-full-access-badge` against F5's now-present trusted-origin allowlist; (c) a trusted-class smoke test exercising F5's token-handoff path (not the untrusted gateway path); and (d) the install-time `isTrustedOrigin` fork routes a trusted origin to F5's full-access disclosure and an untrusted origin to F2's per-scope consent.
 

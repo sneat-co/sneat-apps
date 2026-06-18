@@ -1,11 +1,11 @@
 ---
 format: https://specscore.md/plan-specification
-status: Approved
+status: Implemented
 ---
 
 # Plan: Extension Consent And Scopes
 
-**Status:** Approved
+**Status:** Implemented
 **Source Feature:** extension-consent-and-scopes
 **Date:** 2026-06-18
 **Owner:** alex
@@ -27,7 +27,7 @@ The decomposition is bottom-up and rides on F1's foundation. It assumes F1 Task 
 
 **Verifies:** extension-consent-and-scopes#ac:catalog-defines-mvp-scopes
 **Depends-On:** —
-**Status:** pending
+**Status:** done
 
 Implement an immutable `ScopeCatalog` in `libs/extensions-platform` exposing exactly the four MVP read-only scopes (`profile:read`, `contact_details:read`, `contacts:read`, `contacts_details:read`), each with a stable id, a distinct human-readable label (e.g. "Your contact details" vs. "Your contacts' contact details"), and a description, plus a `has(scopeId)` membership check.
 
@@ -35,7 +35,7 @@ Implement an immutable `ScopeCatalog` in `libs/extensions-platform` exposing exa
 
 **Verifies:** extension-consent-and-scopes#ac:unknown-scope-rejected
 **Depends-On:** 1
-**Status:** pending
+**Status:** done
 
 Add the semantic filter that takes an extension's raw requested scopes (recorded structurally by F1's registry/manifest validation) and keeps only catalog members, so a scope absent from the catalog is never offered for consent and never treated as granted. This is the catalog-membership check applied at consent/enforcement time, distinct from F1's structural manifest validation.
 
@@ -43,7 +43,7 @@ Add the semantic filter that takes an extension's raw requested scopes (recorded
 
 **Verifies:** extension-consent-and-scopes#ac:grants-isolated-per-user-and-extension
 **Depends-On:** 1
-**Status:** pending
+**Status:** done
 
 Implement `ConsentStore` persisting grant decisions per `(user, extension, scope)` under the signed-in user's own data space/record. Document shape: one doc per `(user, extension)` keyed by `extId` (origin host[:port]) under the user's space, carrying a `grants` map of `scopeId -> { state: "granted" | "declined", decidedAt }`; absence of an entry means not-decided. Expose `record-grant`, `record-decline`, `list-granted`, and a synchronous `isGranted(user, extension, scope)` query, with strict keying so grants never leak across extensions or users.
 
@@ -52,7 +52,7 @@ Implement `ConsentStore` persisting grant decisions per `(user, extension, scope
 **Verifies:** extension-consent-and-scopes#ac:granular-grant-and-decline
 **Verifies:** extension-consent-and-scopes#ac:consent-shows-origin
 **Depends-On:** 1
-**Status:** pending
+**Status:** done
 
 Build the consent dialog component that prominently displays the extension's identity and origin and lists each requested catalog scope with its label and description, letting the user grant or decline each scope independently and returning the per-scope decisions; nothing is granted implicitly.
 
@@ -60,7 +60,7 @@ Build the consent dialog component that prominently displays the extension's ide
 
 **Verifies:** extension-consent-and-scopes#ac:granular-grant-and-decline
 **Depends-On:** 2, 3, 4
-**Status:** pending
+**Status:** done
 
 Wire the install-time per-scope consent flow for untrusted origins (origin not on the Trusted allowlist) that takes the catalog-filtered requested scopes (Task 2), shows the granular dialog (Task 4), and persists the user's per-scope decisions to the store (Task 3) — recording granted scopes as granted and not recording declined scopes as granted. This flow is reached only for untrusted origins via the install-time trusted/untrusted branch owned by Trusted Task 5; this plan owns only the untrusted per-scope path. The extension is still installed/registered (by F1 Task 4) even when the user declines every scope — an all-declined consent simply records no grants; gating of F1 Task 4's record + allowlist step for the trusted abort-on-decline path is owned by Trusted Task 5, not here. Hooks into F1's add-by-URL / registration flow without re-planning it.
 
@@ -70,7 +70,7 @@ Wire the install-time per-scope consent flow for untrusted origins (origin not o
 
 **Verifies:** extension-consent-and-scopes#ac:revoke-takes-effect-immediately
 **Depends-On:** 3
-**Status:** pending
+**Status:** done
 
 Implement revoke on the consent store (individual scope, or all scopes of an extension at once) such that after revocation `isGranted` reports the scope as not-granted immediately, so a subsequent data read for that scope is denied without the extension reloading.
 
@@ -78,7 +78,7 @@ Implement revoke on the consent store (individual scope, or all scopes of an ext
 
 **Verifies:** extension-consent-and-scopes#ac:incremental-consent-on-new-scope
 **Depends-On:** 3, 4
-**Status:** pending
+**Status:** done
 
 On load of an already-installed extension whose manifest now requests catalog scopes the user has not yet decided, compute the not-yet-decided subset and prompt only for those via the dialog, leaving previously-granted scopes granted and un-asked; a newly-requested scope becomes granted only if the user grants it in this incremental prompt. Depends-On (cross-plan): the host load/embed path (extension-host-and-bridge Task 5) is the trigger point that fires this on-load incremental check.
 
@@ -86,7 +86,7 @@ On load of an already-installed extension whose manifest now requests catalog sc
 
 **Verifies:** extension-consent-and-scopes#ac:ungranted-scope-treated-as-denied
 **Depends-On:** 3, 6
-**Status:** pending
+**Status:** done
 
 Establish and test the store's authoritative contract that any scope not currently granted — never granted, declined, or revoked — is reported as not granted by `isGranted`, so a consumer (notably the Protected-Data Gateway) denies access; this task adds the `_tests/` coverage proving the source-of-truth guarantee across all three not-granted cases.
 

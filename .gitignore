@@ -66,3 +66,5 @@ specscore.local.yaml
 
 # Firebase Hosting deploy cache
 .firebase/
+
+__screenshots__/

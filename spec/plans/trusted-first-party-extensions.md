@@ -1,11 +1,11 @@
 ---
 format: https://specscore.md/plan-specification
-status: Approved
+status: Implemented
 ---
 
 # Plan: Trusted First Party Extensions
 
-**Status:** Approved
+**Status:** Implemented
 **Source Feature:** trusted-first-party-extensions
 **Date:** 2026-06-18
 **Owner:** alex
@@ -29,7 +29,7 @@ We start with the static trusted-origin allowlist plus its eligibility predicate
 
 **Verifies:** trusted-first-party-extensions#ac:only-allowlisted-origin-eligible
 **Depends-On:** —
-**Status:** pending
+**Status:** done
 
 Add a statically-configured, code-reviewed trusted-origin allowlist (e.g. `https://listus.app`) to `libs/extensions-platform` as deployment/app config that is not user-editable and not mutated at runtime, distinct from F1's dynamic `frame-src` embed allowlist, plus an `isTrustedOrigin(origin)` predicate so an allowlisted origin is eligible for the token handoff and every other origin is not.
 
@@ -38,7 +38,7 @@ Add a statically-configured, code-reviewed trusted-origin allowlist (e.g. `https
 **Verifies:** trusted-first-party-extensions#ac:trusted-receives-token-untrusted-does-not
 **Verifies:** trusted-first-party-extensions#ac:token-only-to-verified-origin
 **Depends-On:** 1
-**Status:** pending
+**Status:** done
 
 After F1's origin-verified handshake (F1 Task 6) establishes the channel, hand the signed-in user's current Firebase ID token to the iframe over F1's RPC envelope (F1 Task 7) only when the browser-verified `event.origin` is on the trusted allowlist (Task 1); an untrusted/non-allowlisted verified origin receives no token and must use the gateway. Include tests asserting the trusted iframe receives the token, the untrusted one receives none, and a non-allowlisted verified origin is never targeted.
 
@@ -46,7 +46,7 @@ After F1's origin-verified handshake (F1 Task 6) establishes the channel, hand t
 
 **Verifies:** trusted-first-party-extensions#ac:token-refreshed-before-expiry
 **Depends-On:** 2
-**Status:** pending
+**Status:** done
 
 For a long-lived trusted extension, schedule a refresh that obtains a fresh Firebase ID token (via the Firebase Auth SDK) before/at the ~1-hour expiry and pushes it over the bridge to the trusted iframe so it keeps working without a full reload; the refreshed token is sent only to the same already-verified trusted origin.
 
@@ -54,7 +54,7 @@ For a long-lived trusted extension, schedule a refresh that obtains a fresh Fire
 
 **Verifies:** trusted-first-party-extensions#ac:trusted-skips-consent-and-gateway
 **Depends-On:** 1, 2
-**Status:** pending
+**Status:** done
 
 Make the trusted allowlist (Task 1) the discriminator in the install/data path so a trusted extension shows no per-scope consent dialog (Consent & Scopes Feature) and makes no Protected-Data Gateway calls (Protected-Data Gateway Feature) — it uses the handed-off token directly; the scope catalog/grants/gateway apply only to untrusted extensions. This task owns the bypass enforcement point at handler-attachment time: for a trusted origin, the gateway request handler (protected-data-gateway Task 3) is not registered on that iframe's port; the token handoff (Task 2) is used instead. Add a test asserting no consent dialog and no gateway handler/call for a trusted extension.
 
@@ -65,7 +65,7 @@ Make the trusted allowlist (Task 1) the discriminator in the install/data path s
 **Verifies:** trusted-first-party-extensions#ac:install-shows-full-access-disclosure
 **Verifies:** trusted-first-party-extensions#ac:declined-disclosure-aborts-install
 **Depends-On:** 1, 2, 4
-**Status:** pending
+**Status:** done
 
 This task owns the install-time trusted/untrusted fork inserted into F1 Task 4's add-by-URL flow: after F1 Task 3's manifest validation succeeds and before F1 Task 4 records the extension and appends its origin to the `frame-src` allowlist, branch on `isTrustedOrigin(origin)` (Task 1). For a trusted origin, show a one-time disclosure stating it is a trusted first-party Sneat extension with full account access in place of the per-scope consent dialog; the extension is registered (F1 Task 4's record + allowlist step proceeds) only if the user accepts, and on decline the install aborts with nothing recorded, nothing allowlisted, and no token ever handed off (Task 2). For an untrusted origin, fall through to the Consent plan's untrusted install flow (extension-consent-and-scopes Task 5) — this plan does not show the per-scope dialog. Include tests for the trusted accept (installed) and trusted decline (not installed, no handoff) paths, and a test asserting an untrusted origin is routed to the consent path and not shown the disclosure.
 

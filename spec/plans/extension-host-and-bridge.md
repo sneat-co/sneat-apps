@@ -1,11 +1,11 @@
 ---
 format: https://specscore.md/plan-specification
-status: Approved
+status: Implemented
 ---
 
 # Plan: Extension Host And Bridge
 
-**Status:** Approved
+**Status:** Implemented
 **Source Feature:** extension-host-and-bridge
 **Date:** 2026-06-18
 **Owner:** alex
@@ -27,7 +27,7 @@ The decomposition starts bottom-up with the data/registry layer that everything 
 
 **Verifies:** extension-host-and-bridge#ac:manifest-add-success
 **Depends-On:** —
-**Status:** pending
+**Status:** done
 
 Generate the `libs/extensions-platform` Nx Angular library and implement the `ExtensionRegistry` (a Firestore-or-local-store service plus model) that records a registration keyed by id = origin `host[:port]`, holding URL, manifest metadata, and requested scopes, with create/read/list/delete operations.
 
@@ -35,7 +35,7 @@ Generate the `libs/extensions-platform` Nx Angular library and implement the `Ex
 
 **Verifies:** extension-host-and-bridge#ac:frame-src-allowlist-blocks-unknown-origin
 **Depends-On:** 1
-**Status:** pending
+**Status:** done
 
 Implement the dynamic `frame-src` allowlist derived from registered origins and wire it into the host page's Content-Security-Policy so only explicitly-added origins can be framed; an origin absent from the allowlist is blocked by CSP and its iframe never loads.
 
@@ -44,7 +44,7 @@ Implement the dynamic `frame-src` allowlist derived from registered origins and 
 **Verifies:** extension-host-and-bridge#ac:manifest-invalid-rejected
 **Verifies:** extension-host-and-bridge#ac:manifest-format-and-origin-checks
 **Depends-On:** 1
-**Status:** pending
+**Status:** done
 
 Implement fetching the manifest from `/.well-known/sneat-extension.json` and structural validation: URL is `https`, manifest is fetchable and parses as JSON, required fields present with correct types (`name`, `author.name`, valid `author.email`, `https` `icon` URL, `scopes` string array), and self-declared origin equals the fetch origin; any failure surfaces a user-visible error and records/allowlists nothing.
 
@@ -52,7 +52,7 @@ Implement fetching the manifest from `/.well-known/sneat-extension.json` and str
 
 **Verifies:** extension-host-and-bridge#ac:manifest-add-success
 **Depends-On:** 1, 2, 3
-**Status:** pending
+**Status:** done
 
 Wire the user-facing "add extension by https URL" flow that runs validation (Task 3) and, only on success, records the extension via the registry (Task 1) and appends its origin to the `frame-src` allowlist (Task 2).
 
@@ -61,7 +61,7 @@ Wire the user-facing "add extension by https URL" flow that runs validation (Tas
 **Verifies:** extension-host-and-bridge#ac:cross-origin-isolation-from-host
 **Verifies:** extension-host-and-bridge#ac:extension-has-own-origin-storage
 **Depends-On:** 1, 2
-**Status:** pending
+**Status:** done
 
 Implement the host component that renders a registered extension in a single `<iframe sandbox="allow-scripts allow-same-origin">` pointed at the extension's own `https` origin, so the same-origin policy isolates it from sneat-app's session/storage while letting it persist to its own-origin `localStorage`/`IndexedDB`.
 
@@ -69,7 +69,7 @@ Implement the host component that renders a registered extension in a single `<i
 
 **Verifies:** extension-host-and-bridge#ac:handshake-origin-verified
 **Depends-On:** 5
-**Status:** pending
+**Status:** done
 
 On iframe load, establish a private `MessageChannel` (via Penpal) and transfer exactly one `MessagePort` to the framed extension, accepting the handshake only when `event.origin` equals the extension's registered origin and ignoring handshake messages from any other origin.
 
@@ -77,7 +77,7 @@ On iframe load, establish a private `MessageChannel` (via Penpal) and transfer e
 
 **Verifies:** extension-host-and-bridge#ac:rpc-correlates-and-errors
 **Depends-On:** 6
-**Status:** pending
+**Status:** done
 
 Define the versioned transport envelope (protocol version, message id, type, payload) over the transferred port: correlate responses to requests by message id, return an error response for unknown/unsupported message types, and reject protocol-version mismatches.
 
@@ -86,7 +86,7 @@ Define the versioned transport envelope (protocol version, message id, type, pay
 **Verifies:** extension-host-and-bridge#ac:menu-items-rendered-and-route
 **Verifies:** extension-host-and-bridge#ac:single-iframe-only
 **Depends-On:** 7
-**Status:** pending
+**Status:** done
 
 Receive `{ title, emoji, path, args? }` menu items over the bridge, render well-formed items (non-empty `title` and `path`) as native sub-menu entries while ignoring malformed ones, and route the single existing content iframe to `path` (with `args`) on activation — never spawning a second iframe or a direct iframe-to-iframe channel.
 
@@ -94,7 +94,7 @@ Receive `{ title, emoji, path, args? }` menu items over the bridge, render well-
 
 **Verifies:** extension-host-and-bridge#ac:deregistration-drops-allowlist
 **Depends-On:** 1, 2
-**Status:** pending
+**Status:** done
 
 Implement host deregistration that deletes the registration record and removes the extension's origin from the `frame-src` allowlist so subsequent embedding of that origin is CSP-blocked, touching only Sneat-side state.
 
@@ -103,7 +103,7 @@ Implement host deregistration that deletes the registration record and removes t
 **Verifies:** extension-host-and-bridge#ac:backendless-extension-works
 **Verifies:** extension-host-and-bridge#ac:no-secret-exchange
 **Depends-On:** 4, 5, 6, 7, 8
-**Status:** pending
+**Status:** done
 
 Add an end-to-end test fixture for a static, backend-less extension (assets + manifest over `https`) that adds, embeds, handshakes, and reads data over the bridge with no backend running, and assert no shared secret, API key, or server-to-server credential is ever exchanged with any extension, and that an UNTRUSTED extension receives no credential. Scope the assertion exactly as F1 REQ:no-secret-exchange does — it MUST NOT forbid the intentional trusted client-side Firebase-token handoff, which is out of scope here and owned/verified by trusted-first-party-extensions Task 2.
 

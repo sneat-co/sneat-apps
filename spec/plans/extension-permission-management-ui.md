@@ -1,11 +1,11 @@
 ---
 format: https://specscore.md/plan-specification
-status: Approved
+status: Implemented
 ---
 
 # Plan: Extension Permission Management Ui
 
-**Status:** Approved
+**Status:** Implemented
 **Source Feature:** extension-permission-management-ui
 **Date:** 2026-06-18
 **Owner:** alex
@@ -27,7 +27,7 @@ The decomposition is UI-up over already-existing interfaces. It assumes the foun
 
 **Verifies:** extension-permission-management-ui#ac:list-shows-installed-extensions
 **Depends-On:** —
-**Status:** pending
+**Status:** done
 
 Build a read-only view-model service in `libs/extensions-platform` that, for the signed-in user, lists installed extensions from F1's `ExtensionRegistry` (F1 Task 1) and joins each with its currently-granted scopes from the Consent & Scopes grant store, its catalog scope labels, and a trusted flag derived from the Trusted First-Party trusted-origin allowlist — producing a per-extension display model carrying name, icon, origin, granted-scope labels, and `isTrusted`. Depends-On (cross-plan): extension-host-and-bridge Task 1 (`ExtensionRegistry` list/read), extension-consent-and-scopes Task 1 (scope catalog labels) and Task 3 (grant-store list-granted), trusted-first-party-extensions Task 1 (`isTrustedOrigin`) — this plan is a pure consumer of those interfaces.
 
@@ -36,7 +36,7 @@ Build a read-only view-model service in `libs/extensions-platform` that, for the
 **Verifies:** extension-permission-management-ui#ac:list-shows-installed-extensions
 **Verifies:** extension-permission-management-ui#ac:empty-state-when-none-installed
 **Depends-On:** 1
-**Status:** pending
+**Status:** done
 
 Implement the settings screen component that renders each extension from the view-model (Task 1) showing its name, icon, and origin, and renders a non-error empty state when the user has no installed extensions.
 
@@ -44,7 +44,7 @@ Implement the settings screen component that renders each extension from the vie
 
 **Verifies:** extension-permission-management-ui#ac:shows-currently-granted-scopes
 **Depends-On:** 1, 2
-**Status:** pending
+**Status:** done
 
 Render, for each non-trusted extension, only its currently-granted scopes using each scope's human-readable catalog label (Consent & Scopes Feature); a scope that was never granted, declined, or revoked is not shown as granted. An extension renders exactly ONE of two mutually-exclusive branches: the scope list here (untrusted) or the trusted full-access badge (Task 4) — never both.
 
@@ -52,7 +52,7 @@ Render, for each non-trusted extension, only its currently-granted scopes using 
 
 **Verifies:** extension-permission-management-ui#ac:trusted-extension-shows-full-access-badge
 **Depends-On:** 1, 2
-**Status:** pending
+**Status:** done
 
 For an extension whose origin is on the trusted allowlist (the discriminator, per Trusted First-Party Extensions Feature), show a "Trusted — full account access" indicator instead of a scope list while still exposing the Remove action.
 
@@ -60,7 +60,7 @@ For an extension whose origin is on the trusted allowlist (the discriminator, pe
 
 **Verifies:** extension-permission-management-ui#ac:revoke-single-scope
 **Depends-On:** 3
-**Status:** pending
+**Status:** done
 
 Wire the per-scope revoke control to delegate to the Consent & Scopes store's immediate revoke; on success the scope disappears from that extension's granted list and, per the consent store, a subsequent gateway call for that scope is denied. Include a test asserting the list update plus the denied follow-on gateway access.
 
@@ -68,7 +68,7 @@ Wire the per-scope revoke control to delegate to the Consent & Scopes store's im
 
 **Verifies:** extension-permission-management-ui#ac:remove-extension-fully
 **Depends-On:** 2, 4
-**Status:** pending
+**Status:** done
 
 Wire the Remove action to revoke all of the extension's scopes (Consent & Scopes Feature) and then deregister it via the host's `extension-deregistration` (F1 Task 9), which deletes the registration record and drops the origin from the `frame-src` allowlist so it can no longer be embedded; assert grants, registration, and allowlist entry are all cleared.
 
@@ -76,7 +76,7 @@ Wire the Remove action to revoke all of the extension's scopes (Consent & Scopes
 
 **Verifies:** extension-permission-management-ui#ac:remove-does-not-touch-external-data
 **Depends-On:** 6
-**Status:** pending
+**Status:** done
 
 Add a test fixture/assertion confirming the Remove flow (Task 6) clears only Sneat-side state (registration, grants, allowlist entry) and issues no call against the extension's own external backend, so externally-stored data is not touched by Sneat.
 
