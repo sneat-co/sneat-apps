@@ -1,14 +1,14 @@
 ---
 format: https://specscore.md/idea-specification
-status: Specifying
+status: Approved
 ---
 
 # Idea: Third-Party Extension Platform (sandboxed iframe + scoped API)
 
-**Status:** Specifying
+**Status:** Approved
 **Date:** 2026-06-17
 **Owner:** alex
-**Promotes To:** extension-consent-and-scopes, extension-host-and-bridge, protected-data-gateway
+**Promotes To:** —
 **Supersedes:** —
 **Related Ideas:** depends_on:extract-listus-standalone-repo
 
@@ -24,11 +24,9 @@ Scope is deliberately narrowed: **Sneat is not a storage backend for extensions.
 
 ## Recommended Direction
 
-Build a sandboxed-iframe extension host with a parent-proxied, scope-enforced data bridge. The parent renders the third-party extension in an iframe with sandbox=`allow-scripts allow-same-origin` under a strict CSP frame-src allowlist. `allow-same-origin` lets the extension keep its own origin so it can use its own `localStorage`/`IndexedDB`; isolation from Sneat is provided by the cross-origin same-origin policy (an extension is always a different origin than sneat-app and cannot read Sneat's Firebase session/storage), not by an opaque origin. A versioned RPC bridge over a private MessageChannel (established during an origin-checked handshake) carries scope requests and API calls. A parent-side API gateway is the single security choke point: it maps each whitelisted API method to a required scope, checks it against the scopes the user granted THIS extension, executes against existing Sneat data services, and returns sanitized results; the untrusted iframe never sees a credential or token. MVP scopes are read-only: profile:read (name, gender, ...), contact_details:read (email, phone, ...), contacts:read (the user's contacts). Each extension declares itself via a well-known `sneat-extension.json` manifest on its own origin (name, author name, author email, icon, and the scopes it requests); when a user adds the extension the platform fetches this manifest to drive auto-registration and the consent prompt. The extension contributes navigation by sending menu items over the bridge - each `{ title, emoji, path, args? }` - which the host renders as native sub-menu entries; activating one routes the extension's single content iframe to that path. This is a critical UX requirement: the host stays the single content surface (no second iframe, no direct iframe-to-iframe messaging). A Facebook-style consent dialog captures grants at install and prominently shows the extension's origin; a settings screen lets the user review and revoke per extension.
+Build a sandboxed-iframe extension host with a parent-proxied, scope-enforced data bridge. The parent renders the third-party extension in an iframe with sandbox=allow-scripts (NO allow-same-origin, so the iframe gets an opaque origin and cannot reach Sneat's Firebase session/storage) under a strict CSP frame-src allowlist. A versioned RPC bridge over a private MessageChannel (established during an origin-checked handshake) carries scope requests and API calls. A parent-side API gateway is the single security choke point: it maps each whitelisted API method to a required scope, checks it against the scopes the user granted THIS extension, executes against existing Sneat data services, and returns sanitized results; the untrusted iframe never sees a credential or token. MVP scopes are read-only: profile:read (name, gender, ...), contact_details:read (email, phone, ...), contacts:read (the user's contacts). Each extension declares itself via a well-known `sneat-extension.json` manifest on its own origin (name, author name, author email, icon, and the scopes it requests); when a user adds the extension the platform fetches this manifest to drive auto-registration and the consent prompt. The extension contributes navigation by sending menu items over the bridge - each `{ title, emoji, path, args? }` - which the host renders as native sub-menu entries; activating one routes the extension's single content iframe to that path. This is a critical UX requirement: the host stays the single content surface (no second iframe, no direct iframe-to-iframe messaging). A Facebook-style consent dialog captures grants at install and prominently shows the extension's origin; a settings screen lets the user review and revoke per extension.
 
-**Extensions own their data.** The platform brokers *read* access to Sneat's protected user data only. An extension persists its own data either in its own-origin browser storage (`localStorage`/`IndexedDB`, available because of `allow-same-origin`) or on its own external backend (the MVP demo uses `https://openvaultdb.com`). Sneat does not host, store, or proxy extension data - there is no Sneat Firestore namespace, scoped token, security rule, or write-command channel for extensions.
-
-**No backend, no secret required.** An extension is a static frontend + manifest served over `https`; hosting one needs no backend, and **no shared secret, API key, or server-to-server credential is ever exchanged between Sneat and an extension.** An untrusted extension receives no credential at all (it reads consented data over the bridge); a trusted extension receives the user's own Firebase token via a client-side handoff, not a server-issued secret. A backend is optional - needed only if the extension wants to persist beyond its own-origin browser storage.
+**Extensions own their data.** The platform brokers *read* access to Sneat's protected user data only. Each extension persists its own data on its own external backend (the MVP demo uses `https://openvaultdb.com`). Sneat does not host, store, or proxy extension data - there is no Sneat Firestore namespace, scoped token, security rule, or write-command channel for extensions.
 
 **Two extension classes.** The difference between them is solely whether a Sneat credential is handed over, gated by a trusted-origin allowlist:
 
