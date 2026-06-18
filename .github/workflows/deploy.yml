@@ -64,3 +64,8 @@ jobs:
 
       - name: Deploy to Firebase Hosting (live)
         run: npx --yes firebase-tools@15 deploy --only hosting --project sneat-eur3-1 --non-interactive
+
+      - name: Post-deploy smoke test (no emulator in prod)
+        run: |
+          pnpm exec playwright install chromium --with-deps
+          node scripts/post-deploy-smoke.mjs https://sneat.app

@@ -12,7 +12,7 @@ Pre-spec one-pagers. Each Idea is a lint-clean problem-direction-MVP one-pager t
 |------|--------|------|-------|-------------|
 | [extract-debtus-standalone-repo](extract-debtus-standalone-repo.md) | Approved | 2026-06-16 | alex | — |
 | [extract-listus-standalone-repo](extract-listus-standalone-repo.md) | Specified | 2026-06-16 | alex | extract-listus-standalone-repo |
-| [third-party-extension-platform](third-party-extension-platform.md) | Approved | 2026-06-17 | alex | — |
+| [third-party-extension-platform](third-party-extension-platform.md) | Specifying | 2026-06-17 | alex | extension-consent-and-scopes, extension-host-and-bridge, protected-data-gateway |
 
 ## Open Questions
 

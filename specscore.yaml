@@ -5,3 +5,14 @@ project:
     host: github.com
     org: sneat-co
     repo: sneat-apps
+
+# Reviewer gates. Keyed by gate-point event (NOT command name).
+# specstudio:specify consumes gates.feature.approved.
+gates:
+    feature.approved:
+        reviewers:
+            - name: spec-reviewer
+              type: ai
+              prompt: .specscore/reviewers/spec-reviewer.md
+            - name: human-approval
+              type: human

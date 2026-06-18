@@ -7,13 +7,19 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/sneat-work",
         "index": "apps/sneat-work/src/index.html",
         "browser": "apps/sneat-work/src/main.ts",
-        "polyfills": ["zone.js"],
-        "allowedCommonJsDependencies": ["qrcode"],
+        "polyfills": [
+          "zone.js"
+        ],
+        "allowedCommonJsDependencies": [
+          "qrcode"
+        ],
         "tsConfig": "apps/sneat-work/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -25,7 +31,9 @@
             "output": "./svg"
           }
         ],
-        "styles": ["apps/sneat-work/src/styles.scss"],
+        "styles": [
+          "apps/sneat-work/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -40,12 +48,6 @@
               "type": "anyComponentStyle",
               "maximumWarning": "2kb",
               "maximumError": "4kb"
-            }
-          ],
-          "fileReplacements": [
-            {
-              "replace": "apps/sneat-work/src/environments/environment.ts",
-              "with": "apps/sneat-work/src/environments/environment.prod.ts"
             }
           ],
           "outputHashing": "all"
@@ -116,7 +118,9 @@
     },
     "test": {
       "executor": "@nx/vitest:test",
-      "outputs": ["{workspaceRoot}/coverage/apps/sneat-work"],
+      "outputs": [
+        "{workspaceRoot}/coverage/apps/sneat-work"
+      ],
       "options": {
         "tsConfig": "apps/sneat-work/tsconfig.spec.json"
       }
