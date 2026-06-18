@@ -51,7 +51,7 @@ In worktree/branch `feat/ext-platform-host-bridge`, a dedicated subagent execute
 ### Task 3: Execute F2 — extension-consent-and-scopes
 
 **Depends-On:** 2
-**Status:** pending
+**Status:** done
 
 In worktree/branch `feat/ext-platform-consent`, a dedicated subagent executes the `extension-consent-and-scopes` child plan (catalog, consent store, untrusted install/consent flow) until its ACs are verified and green; then merge into `feat/ext-platform`. Provides the consent-store interface F3 and F4 consume.
 

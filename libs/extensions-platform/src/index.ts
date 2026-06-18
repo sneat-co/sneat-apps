@@ -10,3 +10,7 @@ export * from './lib/bridge-host';
 export * from './lib/penpal-bridge';
 export * from './lib/menu-contribution';
 export * from './lib/extension-host.component';
+export * from './lib/scope-catalog';
+export * from './lib/consent-store.service';
+export * from './lib/consent-dialog.component';
+export * from './lib/consent-flow.service';
