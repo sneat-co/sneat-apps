@@ -20,7 +20,7 @@ bootstrapApplication(SneatWorkComponent, {
     // NOTE: 'sneat-work' is not yet in the SneatApp union type in @sneat/core@0.4.0;
     // cast applied here as a temporary deviation from the plan. Follow-up: extend
     // SneatApp in sneat-libs/libs/core/src/lib/app.service.ts and republish.
-    provideAppInfo({ appId: 'sneat-work' as SneatApp, appTitle: 'sneat.work' }),
+    provideAppInfo({ appId: 'sneat-work' as SneatApp, appTitle: 'Sneat.work' }),
     provideRouter([...routes, ...authRoutes]),
     provideRolesByType(undefined),
   ],

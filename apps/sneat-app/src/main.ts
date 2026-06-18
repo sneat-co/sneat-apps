@@ -17,7 +17,7 @@ bootstrapApplication(SneatAppComponent, {
   providers: [
     ...getStandardSneatProviders(sneatAppEnvironmentConfig),
     // App-specific providers
-    provideAppInfo({ appId: 'sneat', appTitle: 'sneat.app' }),
+    provideAppInfo({ appId: 'sneat', appTitle: 'Sneat.app' }),
     provideRouter([...routes, ...authRoutes]),
     provideRolesByType(undefined),
   ],
