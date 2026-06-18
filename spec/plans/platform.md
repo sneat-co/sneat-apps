@@ -9,7 +9,7 @@ status: Approved
 **Date:** 2026-06-18
 **Owner:** alex
 **Supersedes:** —
-**Grade:** B
+**Grade:** A
 
 ## Summary
 
@@ -19,7 +19,7 @@ Master plan that executes the third-party extension platform by orchestrating it
 
 **Isolation policy (mandatory).** Every child plan is implemented by a dedicated subagent working in its **own git worktree on its own dedicated branch** — never in the shared working tree, never two agents on one branch. Per-plan branches are named `feat/ext-platform-<feature>` (e.g. `feat/ext-platform-host-bridge`) and cut from the umbrella branch `feat/ext-platform` (itself cut from `main`). When a child plan completes (its tasks done, its Feature ACs verified, lint/build/tests green in its worktree), its branch is merged into `feat/ext-platform` and its worktree removed. Final integration is a **single pull request** `feat/ext-platform` → `main`. This policy applies to any subagent execution of these plans, whether driven from this master plan or a child plan directly.
 
-**Agent granularity (plan-level, fixed).** Exactly **one dedicated subagent owns each child plan** and executes all of that plan's tasks itself, sequentially, in the plan's `Depends-On` order, inside that plan's single worktree. Child plans do **not** fan out further subagents per task — task-level parallelism is intentionally not used, so there is exactly **one worktree + one branch per child plan** and no intra-plan branch merging. Concurrency therefore exists **across plans only**: the plans whose dependencies are satisfied run at once, with peak concurrency of ~3 (F3, F4, and F5 once F2 has integrated). Five plan-owning subagents exist over the lifetime of the effort, never one-per-task.
+**Agent granularity (plan-level, fixed).** Exactly **one dedicated subagent owns each child plan** and executes all of that plan's tasks itself, sequentially, in the plan's `Depends-On` order, inside that plan's single worktree. Child plans do **not** fan out further subagents per task — task-level parallelism is intentionally not used, so there is exactly **one worktree + one branch per child plan** and no intra-plan branch merging. Concurrency therefore exists **across plans only**: the plans whose dependencies are satisfied run at once, with peak concurrency of ~3 (F3, F4, and F5 — F5 needs only F1 so it may already be in flight before F2 integrates; see the F5-start-timing note). Five plan-owning subagents exist over the lifetime of the effort, never one-per-task.
 
 **Quality bar (definition of done).** Every child plan must land with **good unit-test coverage of the code it adds** — not merely its acceptance criteria. Each plan-owning subagent writes unit tests alongside the implementation, so a child branch's merge gate into `feat/ext-platform` is: **its Feature ACs verified + lint + build + unit tests green, with good coverage of the new/changed code.** "Good coverage" means the meaningful branches and edge cases of the new logic are exercised — e.g. origin verification (accept/reject), scope enforcement (granted vs. ungranted/declined/revoked), manifest structural-validation failures, field-gating on/off, revoke/remove effects, and the trusted/untrusted fork — favouring behaviour-covering tests over a raw percentage. A child plan is not "done" (and its branch must not merge) until this bar is met; Task 7 additionally runs the full suite across the integrated umbrella.
 
@@ -81,7 +81,7 @@ In worktree/branch `feat/ext-platform-trusted`, a dedicated subagent executes th
 **Depends-On:** 2, 3, 4, 5, 6
 **Status:** pending
 
-On `feat/ext-platform` with all child branches merged, run the full lint/build/test suite and a cross-plan end-to-end check, resolve any integration issues, then open a single pull request `feat/ext-platform` → `main`. The integration check MUST cover the cross-wave couplings that no single child wave can fully exercise: (a) the kept demo extension exercising host + consent + read-only gateway + permission UI end to end (untrusted path); (b) F4's `trusted-extension-shows-full-access-badge` against F5's now-present trusted-origin allowlist; and (c) a trusted-class smoke test exercising F5's token-handoff path (not the untrusted gateway path).
+On `feat/ext-platform` with all child branches merged, run the full lint/build/test suite and a cross-plan end-to-end check, resolve any integration issues, then open a single pull request `feat/ext-platform` → `main`. The integration check MUST cover the cross-wave couplings that no single child wave can fully exercise: (a) the kept demo extension exercising host + consent + read-only gateway + permission UI end to end (untrusted path); (b) F4's `trusted-extension-shows-full-access-badge` against F5's now-present trusted-origin allowlist; (c) a trusted-class smoke test exercising F5's token-handoff path (not the untrusted gateway path); and (d) the install-time `isTrustedOrigin` fork routes a trusted origin to F5's full-access disclosure and an untrusted origin to F2's per-scope consent.
 
 ## Open Questions
 
