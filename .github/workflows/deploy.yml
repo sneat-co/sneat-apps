@@ -1,0 +1,66 @@
+name: Deploy sneat-app
+
+# Builds sneat-app and deploys it to the Firebase Hosting "sneat-app-eur3-1"
+# site (project sneat-eur3-1, custom domain sneat.app).
+#
+# Auth is keyless via Workload Identity Federation (the org disables SA JSON
+# keys): GitHub OIDC -> GCP service account deployer-to-gae (the org's shared
+# deployer, also used by sneat-go) through the org-wide "sneat-co" WIF provider.
+# No secrets.
+#
+# NOTE: first run may fail on two checks that need a one-off gcloud grant:
+#   1. deployer-to-gae needs roles/firebasehosting.admin on sneat-eur3-1.
+#   2. the "sneat-co" WIF provider must allow the sneat-co/sneat-apps repo.
+# Both are single gcloud commands; see the deploy doc.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/sneat-app/**'
+      - 'libs/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'firebase.json'
+      - '.firebaserc'
+      - '.github/workflows/deploy.yml'
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 11
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build sneat-app
+        run: pnpm exec nx build sneat-app
+
+      - name: Authenticate to Google Cloud (Workload Identity Federation)
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/588648831063/locations/global/workloadIdentityPools/github/providers/sneat-co
+          service_account: deployer-to-gae@sneat-eur3-1.iam.gserviceaccount.com
+
+      - name: Deploy to Firebase Hosting (live)
+        run: npx --yes firebase-tools@15 deploy --only hosting --project sneat-eur3-1 --non-interactive
