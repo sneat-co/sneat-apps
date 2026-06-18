@@ -17,3 +17,6 @@ export * from './lib/consent-flow.service';
 export * from './lib/gateway-methods';
 export * from './lib/gateway-data-source';
 export * from './lib/protected-data-gateway.service';
+export * from './lib/is-trusted-origin';
+export * from './lib/permission-management.service';
+export * from './lib/permission-management.component';

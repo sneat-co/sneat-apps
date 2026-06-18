@@ -65,7 +65,7 @@ In worktree/branch `feat/ext-platform-gateway`, a dedicated subagent executes th
 ### Task 5: Execute F4 — extension-permission-management-ui
 
 **Depends-On:** 3
-**Status:** pending
+**Status:** done
 
 In worktree/branch `feat/ext-platform-permissions-ui`, a dedicated subagent executes the `extension-permission-management-ui` child plan (pure consumer: list, granted-scopes, trusted badge, revoke, remove) until its ACs are verified and green; then merge into `feat/ext-platform`. Runs in parallel with Task 4. Note: F4's **trusted-badge** path reads F5's `isTrustedOrigin` predicate (the static trusted-origin allowlist, `trusted-first-party-extensions` Task 1), which integrates with F5 in Task 6 — so F4's own ACs (list, empty-state, granted-scopes, revoke, remove) are fully verifiable at this wave, while the `trusted-extension-shows-full-access-badge` AC is verified at umbrella integration (Task 7) once F5's allowlist is present.
 
