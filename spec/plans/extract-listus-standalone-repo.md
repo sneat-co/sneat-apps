@@ -5,7 +5,7 @@ status: Approved
 
 # Plan: Extract Listus Standalone Repo
 
-**Status:** Approved
+**Status:** Implemented
 **Source Feature:** extract-listus-standalone-repo
 **Date:** 2026-06-16
 **Owner:** alexandertrakhimenok

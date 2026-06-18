@@ -63,3 +63,6 @@ vitest.config.*.timestamp*
 .claude/worktrees
 .claude/settings.local.json
 specscore.local.yaml
+
+# Firebase Hosting deploy cache
+.firebase/

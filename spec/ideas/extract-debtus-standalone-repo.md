@@ -1,16 +1,16 @@
 ---
 format: https://specscore.md/idea-specification
-status: Specified
+status: Approved
 ---
 
 # Idea: Extract Debtus into a Dedicated Full-Stack Repo
 
-**Status:** Specified
+**Status:** Approved
 **Date:** 2026-06-16
 **Owner:** alex
-**Promotes To:** extract-debtus-standalone-repo
+**Promotes To:** —
 **Supersedes:** —
-**Related Ideas:** extract-listus-standalone-repo
+**Related Ideas:** extends:extract-listus-standalone-repo
 
 ## Problem Statement
 
