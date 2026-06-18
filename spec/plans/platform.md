@@ -1,10 +1,10 @@
 ---
 format: https://specscore.md/plan-specification
-status: Executing
+status: Implemented
 ---
 # Plan: Platform: Third-Party Extension Platform (master)
 
-**Status:** Executing
+**Status:** Implemented
 **Source:** none
 **Date:** 2026-06-18
 **Owner:** alex
@@ -79,7 +79,7 @@ In worktree/branch `feat/ext-platform-trusted`, a dedicated subagent executes th
 ### Task 7: Integrate on the umbrella and open one pull request
 
 **Depends-On:** 2, 3, 4, 5, 6
-**Status:** pending
+**Status:** done
 
 On `feat/ext-platform` with all child branches merged, run the full lint/build/test suite and a cross-plan end-to-end check, resolve any integration issues, then open a single pull request `feat/ext-platform` → `main`. The integration check MUST cover the cross-wave couplings that no single child wave can fully exercise: (a) the kept demo extension exercising host + consent + read-only gateway + permission UI end to end (untrusted path); (b) F4's `trusted-extension-shows-full-access-badge` against F5's now-present trusted-origin allowlist; (c) a trusted-class smoke test exercising F5's token-handoff path (not the untrusted gateway path); and (d) the install-time `isTrustedOrigin` fork routes a trusted origin to F5's full-access disclosure and an untrusted origin to F2's per-scope consent.
 
