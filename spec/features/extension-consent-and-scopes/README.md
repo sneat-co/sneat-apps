@@ -24,7 +24,14 @@ An untrusted extension must never read the user's Sneat data without explicit, i
 
 #### REQ: scope-catalog
 
-The platform defines a fixed catalog of supported read-only scopes, each with a stable id, a human-readable label, and a description shown in the consent dialog. The MVP catalog is exactly: `profile:read` (the user's profile — name, gender, …), `contact_details:read` (the user's own contact details — email, phone, …), and `contacts:read` (the user's contacts). A scope requested in a manifest that is not in the catalog is rejected: it is never offered for consent and never treated as granted.
+The platform defines a fixed catalog of supported read-only scopes, each with a stable id, a human-readable label, and a description shown in the consent dialog. The MVP catalog is exactly:
+
+- `profile:read` — the user's profile (name, gender, …);
+- `contact_details:read` — the user's OWN contact details (email, phone, …);
+- `contacts:read` — enumerate the user's contacts as basic fields (`{ id, names, roles }`; no per-contact email/phone);
+- `contacts_details:read` — the additional contact details (email, phone, …) OF the user's contacts.
+
+`contact_details:read` (the signed-in user's own details) and `contacts_details:read` (the details of the user's contacts) are deliberately distinct scopes; their consent-dialog labels make the difference explicit (e.g. "Your contact details" vs. "Your contacts' contact details"). Note that picking a *single* contact the user explicitly chooses needs **no scope at all** — that is the Protected-Data Gateway's user-mediated `contacts.pick`, which returns only basic `{ id, names, roles }`; the catalog scopes above gate *enumeration* (`contacts:read`) and *details* (`contacts_details:read`), not user-mediated picking. A scope requested in a manifest that is not in the catalog is rejected: it is never offered for consent and never treated as granted.
 
 This is the *semantic* (catalog-membership) check, applied at consent/enforcement time. *Structural* manifest validation — fetch, parseability, field types, and that `scopes` is an array of strings — is owned by the Host & Bridge Feature at registration; the Host & Bridge Feature records the raw requested scopes without filtering them, and this catalog filters them here when consent is sought.
 
@@ -38,7 +45,7 @@ When an extension is being installed, the host presents a consent dialog that pr
 
 #### REQ: grant-storage
 
-Consent decisions are persisted per `(user, extension, scope)`. A granted scope is recorded as granted for that user+extension; a declined scope is not recorded as granted (it is either absent or recorded as declined). Grants for one extension never apply to another, and grants for one user never apply to another.
+Consent decisions are persisted per `(user, extension, scope)` under the signed-in user's own data space/record. A granted scope is recorded as granted for that user+extension; a declined scope is not recorded as granted (it is either absent or recorded as declined). Grants for one extension never apply to another, and grants for one user never apply to another.
 
 ### Revocation
 
@@ -66,10 +73,10 @@ The per-`(user, extension, scope)` grant store is the single authoritative sourc
 
 ### AC: catalog-defines-mvp-scopes
 
-Scenario: The catalog exposes exactly the three MVP read scopes
+Scenario: The catalog exposes exactly the four MVP read scopes
 Given the scope catalog
 When it is read
-Then it contains exactly `profile:read`, `contact_details:read`, and `contacts:read`, each with a label and a description, and all are read-only.
+Then it contains exactly `profile:read`, `contact_details:read`, `contacts:read`, and `contacts_details:read`, each with a label and a description, and all are read-only.
 Verifies REQ: scope-catalog
 
 ### AC: unknown-scope-rejected
@@ -130,7 +137,7 @@ Verifies REQ: consent-source-of-truth
 
 ## Open Questions
 
-- **Consent record storage location:** where the per-`(user, extension, scope)` grants live (the user's space vs. a central extensions collection) and the exact document shape — deferred to the Plan. Carries over the source Idea's open question on consent-record location and revocation propagation.
+- **Consent record storage (decided):** grants live under the signed-in user's own data space/record. The exact document shape and how revocation propagates to in-flight sessions are pinned at Plan time.
 - **Manifest scope-set shrink:** if a manifest later stops requesting a previously-granted scope, does the stale grant get pruned automatically or left until revoked? MVP leaves it until the user revokes; revisit if it causes confusion.
 - **Rehearse stubs:** all eight ACs are testable (catalog inspection, consent-dialog interaction, grant-store reads/writes, revoke and incremental-consent flows); `_tests/` stubs are deferred to the Plan.
 

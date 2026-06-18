@@ -43,6 +43,12 @@ Before an extension is registered, its manifest MUST pass structural validation.
 
 This is *structural* validation only. Whether each requested scope is a *supported* scope is NOT checked here; that semantic check is owned by the Consent & Scopes Feature's catalog at consent time.
 
+### Extension Removal
+
+#### REQ: extension-deregistration
+
+The host can deregister a previously-registered extension: it deletes the extension's registration record and drops the extension's origin from the dynamic `frame-src` allowlist, so that origin can no longer be framed. Consent grants are owned and cleared by the Consent & Scopes Feature; the Permission Management UI orchestrates the full removal (grants + deregistration). Deregistration affects only Sneat-side state and never touches data the extension stored on its own external backend.
+
 ### Bridge Handshake & Origin Verification
 
 #### REQ: bridge-handshake
@@ -174,12 +180,20 @@ When it is registered and loaded
 Then no shared secret, API key, or server-to-server credential is exchanged between Sneat and the extension — an untrusted extension receives no credential, and a trusted extension receives only the user's own Firebase token via a client-side handoff.
 Verifies REQ: no-backend-no-secret
 
+### AC: deregistration-drops-allowlist
+
+Scenario: Deregistering an extension removes it from the allowlist
+Given a registered extension whose origin is on the `frame-src` allowlist
+When the host deregisters the extension
+Then its registration record is deleted and its origin is removed from the `frame-src` allowlist, so a subsequent attempt to embed that origin is blocked by CSP.
+Verifies REQ: extension-deregistration
+
 ## Open Questions
 
-- **postMessage RPC transport:** use Penpal, Comlink, or a hand-rolled ~100–150-line layer? Deferred to the Plan; origin verification and (later) scope→method authorization stay in Sneat's own code regardless of the library. Carries over the source Idea's open question.
-- **CSP enforcement on native:** do sandboxed iframes + `frame-src` behave identically inside the Capacitor Android/iOS webviews as on the web? Must be validated during implementation (source Idea Should-be-true assumption).
+- **postMessage RPC transport (decided):** Penpal. Origin verification and scope→method authorization remain in Sneat's own gateway regardless of the library.
+- **Platform target (decided):** web-first MVP. Sandbox + CSP behavior inside the Capacitor Android/iOS webviews is a post-MVP validation spike, not an MVP acceptance criterion.
 - **Deferred to sibling Features (not this one):** per-scope consent + grant/revoke storage, the read-only protected-data gateway, the permission-management UI, and the trusted-origin allowlist + Firebase-token handoff. The source Idea's Must-be-true assumptions about protected-data readability and the trusted allowlist are owned by those Features; this Feature's ACs cover the sandbox-isolation and `MessageChannel`-RPC Must-be-true assumptions.
-- **Rehearse stubs:** all twelve ACs are testable (DOM/CSP, own-origin storage, `postMessage`/`MessageChannel` events, and manifest-fetch surfaces); `_tests/` stubs are deferred to the Plan rather than scaffolded now.
+- **Rehearse stubs:** all thirteen ACs are testable (DOM/CSP, own-origin storage, `postMessage`/`MessageChannel` events, manifest-fetch, and deregistration/allowlist surfaces); `_tests/` stubs are deferred to the Plan rather than scaffolded now.
 
 ---
 *This document follows the https://specscore.md/feature-specification*

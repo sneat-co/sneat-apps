@@ -8,7 +8,7 @@ status: Specifying
 **Status:** Specifying
 **Date:** 2026-06-17
 **Owner:** alex
-**Promotes To:** extension-consent-and-scopes, extension-host-and-bridge, protected-data-gateway
+**Promotes To:** extension-consent-and-scopes, extension-host-and-bridge, extension-permission-management-ui, protected-data-gateway
 **Supersedes:** —
 **Related Ideas:** depends_on:extract-listus-standalone-repo
 

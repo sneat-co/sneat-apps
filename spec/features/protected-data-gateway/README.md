@@ -1,17 +1,18 @@
 ---
 format: https://specscore.md/feature-specification
-status: In Review
+status: Approved
 ---
 
 # Feature: Protected-Data Gateway
 
 > [SpecScore.**Studio**](https://specscore.studio): | [Explore](https://specscore.studio/app/github.com/sneat-co/sneat-apps/spec/features/protected-data-gateway?op=explore) | [Edit](https://specscore.studio/app/github.com/sneat-co/sneat-apps/spec/features/protected-data-gateway?op=edit) | [Ask question](https://specscore.studio/app/github.com/sneat-co/sneat-apps/spec/features/protected-data-gateway?op=ask) | [Request change](https://specscore.studio/app/github.com/sneat-co/sneat-apps/spec/features/protected-data-gateway?op=request-change) |
-**Status:** In Review
+**Status:** Approved
 **Source Ideas:** third-party-extension-platform
+**Grade:** B
 
 ## Summary
 
-Parent-side, scope-enforced gateway that answers an untrusted extension's read requests over the bridge: a fixed whitelist of read-only methods (profile.get, contactDetails.get, contacts.list) each mapped to one required scope, enforced against the consent store, executed with the user's own session, and returned as sanitized DTOs. The iframe never receives a credential.
+Parent-side, scope-enforced gateway that answers an untrusted extension's read requests over the bridge: a fixed whitelist of read-only methods — `profile.get`, `contactDetails.get`, a permissionless user-mediated `contacts.pick`, and `contacts.list` (with each contact's details field-gated behind `contacts_details:read`) — enforced against the consent store, executed with the user's own session, and returned as sanitized DTOs. The iframe never receives a credential.
 
 ## Problem
 
@@ -23,19 +24,22 @@ An untrusted extension must be able to read the user's Sneat data it was granted
 
 #### REQ: method-scope-map
 
-The gateway exposes a fixed whitelist of read-only data methods, each mapped to exactly one required scope:
+The gateway exposes a fixed whitelist of read-only data methods. Each method either requires a mapped scope, or is **user-mediated** (the user explicitly selects the single item returned, so no scope is required). MVP methods:
 
 - `profile.get` → requires `profile:read` → returns the signed-in user's profile (e.g. name, gender);
-- `contactDetails.get` → requires `contact_details:read` → returns the signed-in user's own contact details (e.g. email, phone);
-- `contacts.list` → requires `contacts:read` → returns the signed-in user's contacts (each with name and contact details).
+- `contactDetails.get` → requires `contact_details:read` → returns the signed-in user's OWN contact details (e.g. email, phone);
+- `contacts.pick` → **no scope required** (user-mediated picker) → opens a contact picker; the picker UI enforces single selection, so the user selects exactly one contact and the extension receives only that contact's basic fields `{ id, names, roles }`. Because the user explicitly picks the single contact returned, no consent scope is needed and no other contact is exposed;
+- `contacts.list` → requires `contacts:read` → enumerates all the user's contacts as basic `{ id, names, roles }`. Each contact's additional details (email, phone, …) are included ONLY when `contacts_details:read` is also granted; otherwise those detail fields are omitted from every contact.
 
-A bridge request naming any method not on this whitelist is rejected with an error and returns no data.
+A bridge request naming any method not on this whitelist is rejected with an error and returns no data. Field-level gating (here, `contacts_details:read` on `contacts.list`) is enforced the same way as method-level scopes: the consent store is consulted and ungranted fields are omitted, never defaulted in.
 
 ### Scope Enforcement
 
 #### REQ: scope-enforcement
 
-For every data-method call, the gateway resolves the calling extension and the signed-in user, looks up the method's required scope, and consults the consent store (Consent & Scopes Feature) as the authoritative source of truth. It executes and returns data ONLY if that scope is currently granted for that `(user, extension)`. If the scope is not currently granted — never granted, declined, or revoked — the call is denied with an error and no data is returned.
+For every scope-gated data-method call, the gateway resolves the calling extension and the signed-in user, looks up the method's required scope, and consults the consent store (Consent & Scopes Feature) as the authoritative source of truth. It executes and returns data ONLY if that scope is currently granted for that `(user, extension)`. If the scope is not currently granted — never granted, declined, or revoked — the call is denied with an error and no data is returned.
+
+A **user-mediated** method (e.g. `contacts.pick`) is exempt from scope lookup: it requires no grant because the user explicitly selects the single item returned and only basic fields (`{ id, names, roles }`) are exposed. A user-mediated method is never used to enumerate data the user did not pick.
 
 ### Credential-Free Execution
 
@@ -64,10 +68,26 @@ Every MVP gateway method is read-only. The gateway exposes no method that create
 
 ### AC: whitelisted-methods-mapped-to-scopes
 
-Scenario: The three MVP methods map to their required scopes
+Scenario: The MVP methods map to their required scopes
 Given the gateway method whitelist
 When it is inspected
-Then it contains exactly `profile.get` (requires `profile:read`), `contactDetails.get` (requires `contact_details:read`), and `contacts.list` (requires `contacts:read`), all read-only.
+Then it contains exactly `profile.get` (requires `profile:read`), `contactDetails.get` (requires `contact_details:read`), `contacts.pick` (no scope; user-mediated), and `contacts.list` (requires `contacts:read`, with `contacts_details:read` gating each contact's details), all read-only.
+Verifies REQ: method-scope-map
+
+### AC: contact-picker-permissionless
+
+Scenario: The picker returns one user-chosen contact without any scope
+Given an extension that has been granted no contacts scopes
+When it calls `contacts.pick` and the user selects one contact
+Then the extension receives only that contact's basic fields `{ id, names, roles }`, no other contact is exposed, and no scope was required.
+Verifies REQ: method-scope-map
+
+### AC: contacts-details-field-gated
+
+Scenario: Contact details are gated by a second scope
+Given an extension granted `contacts:read` but NOT `contacts_details:read`
+When it calls `contacts.list`
+Then every contact is returned as basic `{ id, names, roles }` with email/phone omitted; and when `contacts_details:read` is also granted, those detail fields are included.
 Verifies REQ: method-scope-map
 
 ### AC: unknown-method-rejected
@@ -128,9 +148,9 @@ Verifies REQ: read-only-gateway
 
 ## Open Questions
 
-- **Contact-detail granularity:** `contacts.list` currently returns each contact with their name and contact details under the single `contacts:read` scope. Should a contact's email/phone require a finer scope than the contact list itself? MVP keeps it coarse (`contacts:read` includes contacts' details); revisit if finer control is wanted.
-- **Response DTO shapes:** the exact fields returned by each method (and `contacts.list` pagination for large address books) are pinned at Plan time.
-- **Rehearse stubs:** all eight ACs are testable (method-registry inspection, bridge request/response with granted vs. ungranted/revoked scopes, payload shape assertions); `_tests/` stubs are deferred to the Plan.
+- **Contact access model (decided):** three tiers — `contacts.pick` (no scope; user-mediated; basic `{ id, names, roles }` of one picked contact), `contacts:read` (enumerate all contacts as basic `{ id, names, roles }`), and `contacts_details:read` (adds each contact's email/phone, …). `contact_details:read` remains the user's OWN details and is separate.
+- **Response DTO shapes:** the exact basic vs. detail field sets per method, and `contacts.list` pagination for large address books, are pinned at Plan time. A `contacts.get(id)`-style detail fetch for an already-picked contact is a possible future addition, not MVP.
+- **Rehearse stubs:** all ten ACs are testable (method-registry inspection, the user-mediated picker flow, bridge request/response with granted vs. ungranted/revoked scopes, and field-gating/payload-shape assertions); `_tests/` stubs are deferred to the Plan.
 
 ---
 *This document follows the https://specscore.md/feature-specification*
