@@ -1,10 +1,10 @@
 ---
 format: https://specscore.md/plan-specification
-status: Approved
+status: Executing
 ---
 # Plan: Platform: Third-Party Extension Platform (master)
 
-**Status:** Approved
+**Status:** Executing
 **Source:** none
 **Date:** 2026-06-18
 **Owner:** alex
@@ -37,14 +37,14 @@ F5 may begin in parallel with Wave 2/3 (it needs only F1), but it integrates las
 ### Task 1: Establish umbrella branch and per-plan worktrees
 
 **Depends-On:** —
-**Status:** pending
+**Status:** done
 
 Cut the umbrella branch `feat/ext-platform` from `main`. For each child plan, create a dedicated git worktree on a dedicated branch `feat/ext-platform-<feature>` cut from the umbrella. No implementation happens in the shared working tree.
 
 ### Task 2: Execute F1 — extension-host-and-bridge (foundation)
 
 **Depends-On:** 1
-**Status:** pending
+**Status:** done
 
 In worktree/branch `feat/ext-platform-host-bridge`, a dedicated subagent executes every task of the `extension-host-and-bridge` child plan until its 13 Feature ACs are verified and lint/build/tests are green; then merge the branch into `feat/ext-platform`. This is the foundation and must integrate before Waves 2–4.
 

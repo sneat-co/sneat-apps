@@ -1,0 +1,34 @@
+{
+  "name": "extensions-platform",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/extensions-platform/src",
+  "prefix": "sneat",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/libs/extensions-platform"],
+      "options": {
+        "project": "libs/extensions-platform/ng-package.json",
+        "tsConfig": "libs/extensions-platform/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/extensions-platform/tsconfig.lib.prod.json"
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{workspaceRoot}/coverage/libs/extensions-platform"],
+      "options": {
+        "tsConfig": "libs/extensions-platform/tsconfig.spec.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

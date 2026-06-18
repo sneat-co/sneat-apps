@@ -76,6 +76,9 @@
       ],
       "@sneat/user": [
         "libs/user/src/index.ts"
+      ],
+      "@sneat/extensions-platform": [
+        "libs/extensions-platform/src/index.ts"
       ]
     }
   },
