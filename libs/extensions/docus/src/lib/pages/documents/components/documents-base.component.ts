@@ -1,8 +1,7 @@
 import { Directive, inject, Input } from '@angular/core';
 import { IonItemSliding, ToastController } from '@ionic/angular/standalone';
 import { eq } from '@sneat/core';
-import { IAssetDocumentContext } from '@sneat/mod-assetus-core';
-import { AssetService } from '@sneat/ext-assetus-components';
+import { IAssetDocumentContext, AssetService } from '@sneat/extension-assetus';
 import { ISpaceContext } from '@sneat/space-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { ignoreElements } from 'rxjs/operators';
@@ -28,7 +27,7 @@ export abstract class DocumentsBaseComponent extends SneatBaseComponent {
     slidingItem: IonItemSliding,
   ): void {
     this.asset
-      .deleteAsset(this.space?.id || '', asset.id)
+      .removeAsset({ spaceID: this.space?.id || '', assetID: asset.id })
       .pipe(ignoreElements(), this.takeUntilDestroyed())
       .subscribe({
         complete: async () => {

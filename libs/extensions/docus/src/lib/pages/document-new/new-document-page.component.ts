@@ -44,14 +44,12 @@ import {
   AssetDocumentType,
   standardDocTypesByID,
   IAssetDocumentExtra,
-  IAssetDboBase,
-  IAssetDocumentContext,
-} from '@sneat/mod-assetus-core';
-import {
   AddAssetBaseComponent,
-  AssetusServicesModule,
+  AssetusCoreServicesModule,
   ICreateAssetRequest,
-} from '@sneat/ext-assetus-components';
+  IAssetResponse,
+} from '@sneat/extension-assetus';
+import { docTypeListItems } from '../documents/doc-type-presentation';
 import { SpaceComponentBaseParams } from '@sneat/space-components';
 import {
   ContactService,
@@ -67,7 +65,7 @@ import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';
     CountrySelectorComponent,
     SpaceServiceModule,
     SelectFromListComponent,
-    AssetusServicesModule,
+    AssetusCoreServicesModule,
     ContactusServicesModule,
     ContactsSelectorInputComponent,
     IonHeader,
@@ -105,17 +103,24 @@ export class NewDocumentPageComponent
   private readonly spaceNavService = inject(SpaceNavService);
 
   // @Input() public override space?: ISpaceContext;
-  @Input() public override contactusSpace?: IContactusSpaceDboAndID;
+  // contactusSpace and country were inherited from the legacy AddAssetBaseComponent;
+  // the new @sneat/extension-assetus base no longer declares them, so they are
+  // now owned locally (same fields, same behaviour).
+  @Input() public contactusSpace?: IContactusSpaceDboAndID;
+  protected country?: string;
 
   protected contact?: IContactContext;
 
   protected isMissingRequiredParams = false;
 
-  protected readonly docTypes: ISelectItem[] =
-    Object.values(standardDocTypesByID);
+  protected readonly docTypes: ISelectItem[] = [...docTypeListItems];
 
   protected docTitle = '';
-  protected docType: AssetDocumentType = 'unspecified';
+  // Unset until the user picks a type. The legacy lib modelled "no type chosen"
+  // as the 'unspecified' member of AssetDocumentType, which the live
+  // @sneat/extension-assetus no longer defines; undefined carries the same
+  // "not yet selected" meaning the template guards rely on.
+  protected docType?: AssetDocumentType | 'other';
   protected docFields: IDocTypeStandardFields = {};
   protected docNumber = '';
 
@@ -138,7 +143,7 @@ export class NewDocumentPageComponent
     this.trackUrl();
   }
 
-  onDocTypeChange(docType: AssetDocumentType): void {
+  onDocTypeChange(docType: AssetDocumentType | 'other'): void {
     this.docFields = standardDocTypesByID[docType].fields || {};
   }
 
@@ -148,6 +153,9 @@ export class NewDocumentPageComponent
   }
 
   protected get isFormValid(): boolean {
+    if (!this.docType) {
+      return false;
+    }
     const fields = standardDocTypesByID[this.docType].fields;
     this.docFields = fields || {};
     if (!fields) {
@@ -199,7 +207,7 @@ export class NewDocumentPageComponent
         distinctUntilChanged(),
       )
       .subscribe((docType) => {
-        this.docType = docType as AssetDocumentType;
+        this.docType = docType as AssetDocumentType | 'other';
       });
   }
 
@@ -222,45 +230,37 @@ export class NewDocumentPageComponent
     if (!this.space) {
       return;
     }
-    const dto: IAssetDboBase<'document', IAssetDocumentExtra> = {
-      status: 'draft',
+    const extra: IAssetDocumentExtra = {
+      number: this.docNumber,
+    };
+    const request: ICreateAssetRequest = {
+      spaceID: this.space.id,
+      name: this.docTitle,
       category: 'document',
+      condition: 'good',
+      status: 'draft',
       possession: 'owning',
-      createdAt: { seconds: 0, nanoseconds: 0 },
-      createdBy: '-',
-      updatedAt: { seconds: 0, nanoseconds: 0 },
-      updatedBy: '-',
-      title: this.docTitle,
       type: this.docType,
       memberIDs: this.contact?.id ? [this.contact.id] : undefined,
       extraType: 'document',
-      extra: {
-        number: this.docNumber,
-      },
-    };
-    const request: ICreateAssetRequest<'document', IAssetDocumentExtra> = {
-      spaceID: this.space.id,
-      memberID: this?.contact?.id,
-      asset: dto,
+      extra: extra as Record<string, unknown>,
     };
 
-    this.assetService
-      .createAsset<'document', IAssetDocumentExtra>(this.space, request)
-      .subscribe({
-        next: this.onDocCreated,
-        error: (err: unknown) => {
-          this.errorLogger.logError(err, 'Failed to create new document');
-        },
-      });
+    this.assetService.createAsset(request).subscribe({
+      next: this.onDocCreated,
+      error: (err: unknown) => {
+        this.errorLogger.logError(err, 'Failed to create new document');
+      },
+    });
   }
 
-  private onDocCreated = (doc: IAssetDocumentContext): void => {
+  private onDocCreated = (resp: IAssetResponse): void => {
     const space = this.space;
     if (!space) {
       return;
     }
     this.spaceNavService
-      .navigateForwardToSpacePage(space, 'document/' + doc.id)
+      .navigateForwardToSpacePage(space, 'document/' + resp.id)
       .catch(
         this.errorLogger.logErrorHandler('Failed to navigate to document page'),
       );

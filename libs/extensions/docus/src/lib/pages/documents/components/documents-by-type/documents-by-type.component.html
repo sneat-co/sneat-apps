@@ -38,8 +38,8 @@
             } @else {
               <ion-badge slot="start" style="opacity: 0">-- </ion-badge>
             }
-            @if (doc.brief?.title) {
-              <ion-label>{{ doc.brief?.title }}</ion-label>
+            @if (doc.dbo?.name) {
+              <ion-label>{{ doc.dbo?.name }}</ion-label>
             }
 
             @if (doc.dbo?.extra?.number) {

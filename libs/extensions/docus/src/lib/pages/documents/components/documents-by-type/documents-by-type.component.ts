@@ -13,11 +13,9 @@ import {
 } from '@ionic/angular/standalone';
 import { listItemAnimations } from '@sneat/core';
 import { eq } from '@sneat/core';
-import {
-  IAssetDocumentContext,
-  standardDocTypesByID,
-} from '@sneat/mod-assetus-core';
+import { IAssetDocumentContext } from '@sneat/extension-assetus';
 import { DocumentsBaseComponent } from '../documents-base.component';
+import { docTypeListItems } from '../../doc-type-presentation';
 import {
   Component,
   EventEmitter,
@@ -58,9 +56,7 @@ export class DocumentsByTypeComponent
   extends DocumentsBaseComponent
   implements OnChanges
 {
-  docTypes: IDocumentType[] = Object.values(standardDocTypesByID).map((v) => ({
-    ...v,
-  }));
+  docTypes: IDocumentType[] = docTypeListItems.map((v) => ({ ...v }));
 
   @Output() goNewDoc = new EventEmitter<string>();
   @Output() goDocType = new EventEmitter<string>();
@@ -97,9 +93,13 @@ export class DocumentsByTypeComponent
 
   protected onDocsChanged(): void {
     this.docTypes.forEach((dt) => (dt.documents = []));
-    const other = this.docTypes[this.docTypes.length - 1];
+    // The catch-all 'other' bucket is selected by id (in the live
+    // standardDocTypesByID it is no longer guaranteed to be the last entry).
+    const other =
+      this.docTypes.find((dt) => eq(dt.id, 'other')) ??
+      this.docTypes[this.docTypes.length - 1];
     this.allDocuments?.forEach((d) => {
-      const docType = this.docTypes.find((dt) => eq(dt.id, d.brief?.type));
+      const docType = this.docTypes.find((dt) => eq(dt.id, d.dbo?.type));
       if (docType) {
         if (!docType.documents) {
           docType.documents = [];
