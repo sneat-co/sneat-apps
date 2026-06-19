@@ -1,6 +1,7 @@
 // Main entry point for sneat.work
 
 import { bootstrapApplication } from '@angular/platform-browser';
+import { SneatApiBaseUrl } from '@sneat/api';
 import {
   getStandardSneatProviders,
   provideAppInfo,
@@ -8,6 +9,7 @@ import {
 } from '@sneat/app';
 import { authRoutes } from '@sneat/auth-ui';
 import { SneatApp } from '@sneat/core';
+import { EVENTUS_API_BASE_URL } from '@sneat/extension-eventus';
 import { routes } from './app/sneat-work-routing.module';
 import { SneatWorkComponent } from './app/sneat-work.component';
 import { provideRouter } from '@angular/router';
@@ -23,6 +25,14 @@ bootstrapApplication(SneatWorkComponent, {
     provideAppInfo({ appId: 'sneat-work' as SneatApp, appTitle: 'Sneat.work' }),
     provideRouter([...routes, ...authRoutes]),
     provideRolesByType(undefined),
+    // Eventus is mounted in the shared space routes, so it is reachable here
+    // too. Point its API at the same sneat-go backend (SneatApiBaseUrl is
+    // .../v0/; eventus uses /api4eventus, so strip the /v0/ suffix).
+    {
+      provide: EVENTUS_API_BASE_URL,
+      useFactory: (apiBaseUrl: string) => apiBaseUrl.replace(/\/v0\/?$/, ''),
+      deps: [SneatApiBaseUrl],
+    },
   ],
 }).catch((err) => console.error(err));
 
