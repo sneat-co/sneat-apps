@@ -12,8 +12,8 @@
         <ion-item tappable (click)="goDoc.emit(document)">
           <ion-label>
             <h2>
-              {{ document?.brief?.type }}
-              {{ document.brief?.title || document.dbo?.extra?.number }}
+              {{ document?.dbo?.type }}
+              {{ document.dbo?.name || document.dbo?.extra?.number }}
             </h2>
             <p>Expires in 25 days on 23/11/2022</p>
           </ion-label>

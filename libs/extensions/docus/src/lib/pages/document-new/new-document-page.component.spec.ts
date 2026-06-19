@@ -11,7 +11,7 @@ import {
   NgModulePreloaderService,
 } from '@sneat/core';
 import { ContactService } from '@sneat/contactus-services';
-import { AssetService } from '@sneat/ext-assetus-components';
+import { AssetService } from '@sneat/extension-assetus';
 import { SpaceComponentBaseParams } from '@sneat/space-components';
 import { SpaceNavService, SpaceService } from '@sneat/space-services';
 import { ClassName } from '@sneat/ui';
@@ -71,7 +71,9 @@ describe('DocumentNewPage', () => {
         },
         {
           provide: SpaceNavService,
-          useValue: { navigateForwardToSpacePage: vi.fn() },
+          useValue: {
+            navigateForwardToSpacePage: vi.fn(() => Promise.resolve(true)),
+          },
         },
         {
           provide: NgModulePreloaderService,
@@ -124,7 +126,64 @@ describe('DocumentNewPage', () => {
     component = fixture.componentInstance;
   }));
 
+  const c = () => component as unknown as Record<string, any>;
+  const setSpace = (id: string) =>
+    c()['setSpaceRef'] ? c()['setSpaceRef']({ id }) : (c()['space'] = { id });
+
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('onDocTypeChange loads the standard fields for the chosen type', () => {
+    component.onDocTypeChange('passport');
+    expect(c()['docFields'].number?.required).toBe(true);
+  });
+
+  it('isFormValid is false until a type is chosen', () => {
+    c()['docType'] = undefined;
+    expect(c()['isFormValid']).toBe(false);
+  });
+
+  it('isFormValid enforces a required number for passports', () => {
+    c()['docType'] = 'passport';
+    c()['docNumber'] = '';
+    expect(c()['isFormValid']).toBe(false);
+    c()['docNumber'] = 'X123';
+    expect(c()['isFormValid']).toBe(true);
+  });
+
+  it('submit builds a flat document create request and navigates on success', () => {
+    const created = { id: 'newDoc1', asset: { id: 'newDoc1' } };
+    const svc = TestBed.inject(AssetService) as unknown as {
+      createAsset: ReturnType<typeof vi.fn>;
+    };
+    svc.createAsset = vi.fn(() => of(created));
+    setSpace('space1');
+    c()['docTitle'] = 'My Passport';
+    c()['docType'] = 'passport';
+    c()['docNumber'] = 'X123';
+    c()['contact'] = { id: 'contact1' };
+
+    c()['submit']();
+
+    expect(svc.createAsset).toHaveBeenCalledWith(
+      expect.objectContaining({
+        spaceID: 'space1',
+        name: 'My Passport',
+        category: 'document',
+        condition: 'good',
+        status: 'draft',
+        type: 'passport',
+        extraType: 'document',
+        memberIDs: ['contact1'],
+        extra: expect.objectContaining({ number: 'X123' }),
+      }),
+    );
+    expect(
+      c()['spaceNavService'].navigateForwardToSpacePage,
+    ).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'space1' }),
+      'document/newDoc1',
+    );
   });
 });

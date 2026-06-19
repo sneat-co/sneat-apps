@@ -69,7 +69,7 @@ describe('BudgetPageComponent', () => {
               userState: of({ record: undefined }),
             },
             spaceNavService: {
-              navigateForwardToSpacePage: vi.fn(),
+              navigateForwardToSpacePage: vi.fn(() => Promise.resolve(true)),
             },
             preloader: {
               preload: vi.fn(),
@@ -109,7 +109,104 @@ describe('BudgetPageComponent', () => {
     component = fixture.componentInstance;
   }));
 
+  // Helper to reach protected/private members without widening the component API.
+  const c = () => component as unknown as Record<string, any>;
+
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('liabilities mode', () => {
+    it('defaults to expenses', () => {
+      expect(c()['$liabilitiesMode']()).toBe('expenses');
+    });
+
+    it('liabilitiesModeChanged updates the mode from the event', () => {
+      const ev = { detail: { value: 'incomes' } } as unknown as Event;
+      c()['liabilitiesModeChanged'](ev);
+      expect(c()['$liabilitiesMode']()).toBe('incomes');
+    });
+
+    it('$showIncomes / $showExpenses follow the mode', () => {
+      c()['$liabilitiesMode'].set('incomes');
+      expect(c()['$showIncomes']()).toBe(true);
+      expect(c()['$showExpenses']()).toBe(false);
+
+      c()['$liabilitiesMode'].set('expenses');
+      expect(c()['$showIncomes']()).toBe(false);
+      expect(c()['$showExpenses']()).toBe(true);
+
+      c()['$liabilitiesMode'].set('balance');
+      expect(c()['$showIncomes']()).toBe(true);
+      expect(c()['$showExpenses']()).toBe(true);
+    });
+  });
+
+  describe('totals helpers', () => {
+    it('totals getter returns undefined', () => {
+      expect(component.totals).toBeUndefined();
+    });
+
+    it('calcTotal is a no-op without asset groups', () => {
+      c()['assetGroups'] = undefined;
+      expect(() => component.calcTotal()).not.toThrow();
+    });
+
+    it('calcTotal returns without throwing when asset groups exist', () => {
+      c()['assetGroups'] = [];
+      expect(() => component.calcTotal()).not.toThrow();
+    });
+
+    it('memberBalance returns 0', () => {
+      expect(component.memberBalance()).toBe(0);
+    });
+  });
+
+  // `space` is a read-only getter on SpaceBaseComponent backed by the $spaceRef
+  // signal; set the ref to control what `this.space` returns.
+  const setSpace = (id: string) => c()['setSpaceRef']({ id });
+
+  describe('navigation', () => {
+    it('goAssetGroup navigates to the asset group page', () => {
+      setSpace('space1');
+      const assetGroup = {
+        id: 'g1',
+        context: { id: 'g1' },
+      } as unknown as import('@sneat/extension-assetus').AssetGroup;
+      component.goAssetGroup(assetGroup);
+      const nav = c()['spaceParams'].spaceNavService.navigateForwardToSpacePage;
+      expect(nav).toHaveBeenCalledWith(
+        expect.objectContaining({ id: 'space1' }),
+        'assets-group/g1',
+        { state: { assetGroup: assetGroup.context } },
+      );
+    });
+
+    it('goNew navigates to the new-liability page', () => {
+      setSpace('space1');
+      component.goNew();
+      const nav = c()['spaceParams'].spaceNavService.navigateForwardToSpacePage;
+      expect(nav).toHaveBeenCalledWith(
+        expect.objectContaining({ id: 'space1' }),
+        'new-liability',
+      );
+    });
+  });
+
+  describe('onSpaceIdChanged', () => {
+    it('returns early when the space has no id', () => {
+      setSpace('');
+      expect(() => c()['onSpaceIdChanged']()).not.toThrow();
+    });
+
+    it('subscribes to the calendarium record and stores the dbo', () => {
+      const dbo = { type: 'calendarium' };
+      const svc = c()['calendariumSpaceService'];
+      svc.watchSpaceModuleRecord = vi.fn(() => of({ dbo }));
+      setSpace('space1');
+      c()['onSpaceIdChanged']();
+      expect(svc.watchSpaceModuleRecord).toHaveBeenCalledWith('space1');
+      expect(c()['$calendariumSpaceDbo']()).toBe(dbo);
+    });
   });
 });

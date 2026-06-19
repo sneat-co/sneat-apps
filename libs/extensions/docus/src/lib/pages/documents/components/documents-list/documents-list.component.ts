@@ -15,7 +15,7 @@ import {
   IonLabel,
   IonList,
 } from '@ionic/angular/standalone';
-import { IAssetDocumentContext } from '@sneat/mod-assetus-core';
+import { IAssetDocumentContext } from '@sneat/extension-assetus';
 import { DocumentsBaseComponent } from '../documents-base.component';
 
 @Component({
@@ -62,8 +62,8 @@ export class DocumentsListComponent
       this.allDocuments?.filter(
         (d) =>
           !text ||
-          (d.brief?.title && d.brief.title.toLowerCase().includes(text)) ||
-          (d.brief?.type && d.brief.type.toLowerCase().includes(text)),
+          (d.dbo?.name && d.dbo.name.toLowerCase().includes(text)) ||
+          (d.dbo?.type && d.dbo.type.toLowerCase().includes(text)),
       ) || [];
   }
 }

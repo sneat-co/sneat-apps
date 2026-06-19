@@ -20,18 +20,15 @@ import { IMemberContext } from '@sneat/contactus-core';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import {
   AssetService,
-  AssetusServicesModule,
-} from '@sneat/ext-assetus-components';
+  AssetusCoreServicesModule,
+  IAssetDocumentContext,
+} from '@sneat/extension-assetus';
 import {
   SpaceComponentBaseParams,
   SpaceItemsBaseComponent,
   SpacePageTitleComponent,
 } from '@sneat/space-components';
-import {
-  IAssetContext,
-  IAssetDocumentContext,
-  IAssetDocumentExtra,
-} from '@sneat/mod-assetus-core';
+import { map } from 'rxjs';
 import { SpaceServiceModule } from '@sneat/space-services';
 import { ClassName } from '@sneat/ui';
 import { DocumentsByTypeComponent } from './components/documents-by-type/documents-by-type.component';
@@ -47,7 +44,7 @@ import { DocumentsListComponent } from './components/documents-list/documents-li
     FormsModule,
     SpacePageTitleComponent,
     ContactusServicesModule,
-    AssetusServicesModule,
+    AssetusCoreServicesModule,
     SpaceServiceModule,
     IonHeader,
     IonToolbar,
@@ -80,10 +77,7 @@ export class DocumentsPageComponent extends SpaceItemsBaseComponent {
 
   constructor() {
     super('');
-    this.documents = window.history.state?.documents as IAssetContext<
-      'document',
-      IAssetDocumentExtra
-    >[];
+    this.documents = window.history.state?.documents as IAssetDocumentContext[];
   }
 
   protected override onSpaceIdChanged() {
@@ -92,10 +86,28 @@ export class DocumentsPageComponent extends SpaceItemsBaseComponent {
   }
 
   loadDocuments() {
-    if (this.space?.id) {
+    const space = this.space;
+    if (space?.id) {
+      // The live AssetService exposes watchAssets(spaceID) (all assets in the
+      // space). Filter to the document category and wrap each as an
+      // IAssetDocumentContext, preserving the legacy watchSpaceAssets('document')
+      // behaviour.
       this.assetService
-        .watchSpaceAssets<'document', IAssetDocumentExtra>(this.space)
-        .pipe(this.takeUntilDestroyed())
+        .watchAssets(space.id)
+        .pipe(
+          map((assets) =>
+            assets
+              .filter((a) => a.dbo.category === 'document')
+              .map(
+                (a): IAssetDocumentContext => ({
+                  id: a.id,
+                  space,
+                  dbo: a.dbo,
+                }),
+              ),
+          ),
+          this.takeUntilDestroyed(),
+        )
         .subscribe({
           next: (documents) => {
             this.documents = documents;

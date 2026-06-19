@@ -25,7 +25,7 @@ import {
 } from '@ionic/angular/standalone';
 import { Member } from '@sneat/contactus-core';
 import { ContactusServicesModule } from '@sneat/contactus-services';
-import { AssetGroup } from '@sneat/mod-assetus-core';
+import { AssetGroup } from '@sneat/extension-assetus';
 import { ICalendariumSpaceDbo, RepeatPeriod } from '@sneat/mod-schedulus-core';
 import {
   SpaceBaseComponent,
