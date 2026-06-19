@@ -330,16 +330,16 @@ it('should handle errors gracefully', async () => {
 
 As of February 2026:
 
-| Extension | Test Files | Status              |
-| --------- | ---------- | ------------------- |
-| assetus   | 32         | ✅ Good             |
-| budgetus  | 4          | ⚠️ Needs more tests |
-| debtus    | 3          | ⚠️ Needs more tests |
-| docus     | 5          | ⚠️ Needs more tests |
-| listus    | 12         | ✅ Good             |
-| logist    | 75+        | ✅ Excellent        |
-| schedulus | 58         | ✅ Excellent        |
-| trackus   | 12         | ✅ Good             |
+| Extension   | Test Files | Status              |
+| ----------- | ---------- | ------------------- |
+| assetus     | 32         | ✅ Good             |
+| budgetus    | 4          | ⚠️ Needs more tests |
+| debtus      | 3          | ⚠️ Needs more tests |
+| docus       | 5          | ⚠️ Needs more tests |
+| listus      | 12         | ✅ Good             |
+| logist      | 75+        | ✅ Excellent        |
+| calendarius | 58         | ✅ Excellent        |
+| trackus     | 12         | ✅ Good             |
 
 **Total: 200+ test files**
 

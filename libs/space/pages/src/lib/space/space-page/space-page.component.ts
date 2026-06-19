@@ -37,7 +37,7 @@ import { IIdAndOptionalDbo, TopMenuService } from '@sneat/core';
 import { SpaceServiceModule } from '@sneat/space-services';
 import { ClassName } from '@sneat/ui';
 import { SpacePageBaseComponent } from './SpacePageBaseComponent';
-import { CalendarBriefComponent } from '@sneat/extensions-schedulus-shared';
+import { CalendarBriefComponent } from '@sneat/extensions-calendarius-shared';
 
 @Component({
   imports: [

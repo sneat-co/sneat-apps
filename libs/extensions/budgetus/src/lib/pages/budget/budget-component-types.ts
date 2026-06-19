@@ -3,7 +3,7 @@ import {
   IAmount,
   IHappeningContext,
   RepeatPeriod,
-} from '@sneat/mod-schedulus-core';
+} from '@sneat/mod-calendarius-core';
 
 export type LiabilitiesMode = 'incomes' | 'expenses' | 'balance';
 

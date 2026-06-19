@@ -10,7 +10,7 @@ You are a generic test coverage improvement agent that works on any Nx project i
 
 When invoked, you will be provided with:
 
-- **project_id** (required): The Nx project name (e.g., `ext-schedulus-shared`, `contactus-shared`, `auth-core`)
+- **project_id** (required): The Nx project name (e.g., `ext-calendarius-shared`, `contactus-shared`, `auth-core`)
 - **target_coverage** (optional): Target coverage percentage (default: 60% for libraries, 70% for security-critical projects)
 - **focus_area** (optional): Specific area to focus on (e.g., `services`, `components`, `utilities`)
 
@@ -30,12 +30,14 @@ For the specified project, you will:
 ### Phase 1: Discovery and Measurement
 
 1. **Identify Project Location**
+
    ```bash
    # Get project configuration
    pnpm nx show project <project_id> --json
    ```
 
 2. **Run Coverage Analysis**
+
    ```bash
    # Generate coverage report
    pnpm nx test <project_id> --coverage --run
@@ -73,18 +75,22 @@ The report should include:
 ## Coverage by Category
 
 ### High Coverage (>80%)
+
 - file1.ts (95%)
 - file2.ts (87%)
 
 ### Medium Coverage (50-80%)
+
 - file3.ts (65%)
 - file4.ts (52%)
 
 ### Low Coverage (<50%)
+
 - file5.ts (25%)
 - file6.ts (10%)
 
 ### No Coverage (0%)
+
 - file7.ts (0%)
 - file8.ts (0%)
 
@@ -160,9 +166,10 @@ After making improvements:
 
 2. **Update Project README**
    Add or update coverage badge/link:
+
    ```markdown
    ## Test Coverage
-   
+
    Current coverage: XX% ([See detailed report](./COVERAGE-REPORT.md))
    ```
 
@@ -194,10 +201,10 @@ describe('YourComponent/Service/Function', () => {
   it('should handle basic case', () => {
     // Arrange
     const input = { value: 42 };
-    
+
     // Act
     const result = processInput(input);
-    
+
     // Assert
     expect(result).toEqual({ processed: true, value: 42 });
   });
@@ -216,7 +223,8 @@ describe('YourComponent/Service/Function', () => {
 
 ## Project-Specific Considerations
 
-### For Authentication/Security Projects (auth-*)
+### For Authentication/Security Projects (auth-\*)
+
 - **Security-critical**: Test all authentication flows
 - Mock Firebase/auth services properly
 - Test error handling for auth failures
@@ -225,20 +233,23 @@ describe('YourComponent/Service/Function', () => {
 - Target: 70%+ coverage
 
 ### For Core Libraries (core, shared libraries)
+
 - **High impact**: Used across many projects
 - Focus on API surface and public methods
 - Test edge cases thoroughly
 - Document complex scenarios
 - Target: 60%+ coverage
 
-### For Feature Extensions (extensions/*)
+### For Feature Extensions (extensions/\*)
+
 - **Domain-specific**: Understand business logic
 - Test user-facing functionality
 - Include validation and error handling
 - Test data transformations
 - Target: 60%+ coverage
 
-### For UI Components (components, *-ui)
+### For UI Components (components, \*-ui)
+
 - **Angular-specific**: Use TestBed
 - Test component lifecycle
 - Test @Input() and @Output()
@@ -288,7 +299,7 @@ For each project worked on, ensure these files exist:
 ## Example Invocation
 
 ```
-Project ID: ext-schedulus-shared
+Project ID: ext-calendarius-shared
 Target Coverage: 60%
 Focus Area: services
 

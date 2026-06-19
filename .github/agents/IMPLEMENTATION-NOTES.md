@@ -7,11 +7,13 @@ This document provides technical details about the test coverage agent implement
 This update refactors the test coverage system from 3 specialized agents to 1 generic agent:
 
 ### Before (Specialized Agents)
-- `test-coverage-ext-schedulus-shared.agent.md` - For schedule management project only
-- `test-coverage-contactus-shared.agent.md` - For contact management project only  
+
+- `test-coverage-ext-calendarius-shared.agent.md` - For schedule management project only
+- `test-coverage-contactus-shared.agent.md` - For contact management project only
 - `test-coverage-auth-core.agent.md` - For authentication project only
 
 ### After (Generic Agent)
+
 - `test-coverage-improver.agent.md` - Works on any Nx project in the workspace
 
 ## Rationale for Change
@@ -80,11 +82,13 @@ Agent instructions and guidelines...
 ### Why a Single Generic Agent?
 
 The 3 specialized agents shared 90% of their content. The only differences were:
+
 - Project name and location
 - Current coverage statistics
 - Domain-specific context (schedules vs contacts vs auth)
 
 By parameterizing the project_id, we can:
+
 - Dynamically discover project location via Nx
 - Measure current coverage via test command
 - Generate project-specific reports
@@ -93,6 +97,7 @@ By parameterizing the project_id, we can:
 ### Input Parameters
 
 The agent accepts:
+
 - **project_id** (required): Identifies which project to work on
 - **target_coverage** (optional): Allows customizing coverage goals
 - **focus_area** (optional): Enables targeting specific areas (services, components, etc.)
@@ -102,6 +107,7 @@ The agent accepts:
 Key innovation: The agent now **generates and persists** coverage reports.
 
 **COVERAGE-REPORT.md structure:**
+
 ```markdown
 # Test Coverage Report: <project_id>
 
@@ -110,23 +116,28 @@ Key innovation: The agent now **generates and persists** coverage reports.
 **Target:** <target>%
 
 ## Summary
+
 - Metrics (statements, branches, functions, lines)
 - Uncovered lines count
 
 ## Coverage by Category
+
 - High Coverage (>80%)
 - Medium Coverage (50-80%)
 - Low Coverage (<50%)
 - No Coverage (0%)
 
 ## Top Priority Targets
+
 - Prioritized list based on complexity and impact
 
 ## Recent Changes
+
 - History of improvements
 ```
 
 This report:
+
 - Lives in the project folder (version controlled)
 - Tracks coverage over time
 - Guides future testing efforts
@@ -141,6 +152,7 @@ The agent integrates with 3 documentation layers:
 3. **Central docs**: `/docs/test-coverage.md` - Workspace-wide status
 
 This creates a comprehensive documentation hierarchy:
+
 ```
 /docs/test-coverage.md (overview of all projects)
     ↓ links to
@@ -153,25 +165,29 @@ libs/<project-path>/README.md (project home)
 
 The agent adapts its approach based on project characteristics:
 
-### Security-Critical Projects (auth-*)
+### Security-Critical Projects (auth-\*)
+
 - Higher coverage target (70%+)
 - Focus on authentication flows
 - Test error handling thoroughly
 - Validate security constraints
 
 ### Core Libraries
+
 - Standard coverage target (60%+)
 - Focus on API surface
 - Test edge cases
 - Ensure stability
 
 ### Feature Extensions
+
 - Standard coverage target (60%+)
 - Focus on business logic
 - Test user-facing functionality
 - Validate data transformations
 
 ### UI Components
+
 - Lower coverage target (50%+)
 - Use Angular TestBed
 - Test component lifecycle
@@ -190,30 +206,35 @@ The agent leverages existing workspace infrastructure:
 ## Workflow Phases
 
 ### Phase 1: Discovery and Measurement
+
 ```bash
 pnpm nx show project <project_id> --json  # Get project details
 pnpm nx test <project_id> --coverage      # Measure coverage
 ```
 
 ### Phase 2: Generate Coverage Report
+
 - Parse coverage output
 - Categorize files by coverage level
 - Identify priority targets
 - Write COVERAGE-REPORT.md
 
 ### Phase 3: Analysis and Planning
+
 - Review coverage gaps
 - Categorize by testing difficulty
 - Prioritize by impact
 - Plan testing approach
 
 ### Phase 4: Implementation
+
 - Write tests following patterns
 - Start with low-hanging fruit
 - Progress to complex logic
 - Validate tests pass
 
 ### Phase 5: Update Documentation
+
 - Update COVERAGE-REPORT.md
 - Update project README.md
 - Update /docs/test-coverage.md
@@ -223,15 +244,17 @@ pnpm nx test <project_id> --coverage      # Measure coverage
 Projects previously using specialized agents can now use the generic agent:
 
 **Before:**
+
 ```
-@test-coverage-ext-schedulus-shared.agent.md
+@test-coverage-ext-calendarius-shared.agent.md
 Analyze coverage and create tests.
 ```
 
 **After:**
+
 ```
 @test-coverage-improver.agent.md
-Project ID: ext-schedulus-shared
+Project ID: ext-calendarius-shared
 Analyze coverage and create tests.
 ```
 
@@ -240,6 +263,7 @@ The only change is specifying `project_id` parameter.
 ## Validation
 
 Before removing old agents, we verified:
+
 1. Generic agent has all functionality from specialized agents
 2. Parameterization works correctly
 3. Coverage reports can be generated
@@ -249,6 +273,7 @@ Before removing old agents, we verified:
 ## Future Enhancements
 
 Possible improvements:
+
 - Automated coverage trending (track improvements over time)
 - Coverage visualization (charts/graphs in reports)
 - Integration with PR comments (post coverage delta)
@@ -260,6 +285,7 @@ Possible improvements:
 ### Updating Coverage Statistics
 
 When coverage improves, the agent automatically updates:
+
 - COVERAGE-REPORT.md (in project folder)
 - /docs/test-coverage.md (central docs)
 
@@ -268,6 +294,7 @@ No manual updates needed to agent configuration.
 ### Adding Support for New Project Types
 
 To add support for a new project type:
+
 1. Update "Project-Specific Considerations" section in agent
 2. Specify target coverage percentage
 3. Add any special testing requirements
@@ -292,7 +319,7 @@ To add support for a new project type:
 ## Changelog
 
 - **2024-02-17**: Refactored from 3 specialized agents to 1 generic agent
-  - Removed: test-coverage-ext-schedulus-shared.agent.md
+  - Removed: test-coverage-ext-calendarius-shared.agent.md
   - Removed: test-coverage-contactus-shared.agent.md
   - Removed: test-coverage-auth-core.agent.md
   - Created: test-coverage-improver.agent.md

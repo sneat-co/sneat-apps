@@ -29,9 +29,9 @@ node scripts/generate-extension-test.mjs sanity budgetus internal
 node scripts/generate-extension-test.mjs service ListService listus shared services
 node scripts/generate-extension-test.mjs component ListItemComponent listus components list-item
 
-# Schedulus extension
-node scripts/generate-extension-test.mjs service ScheduleService schedulus shared services
-node scripts/generate-extension-test.mjs component CalendarViewComponent schedulus components calendar-view
+# Calendarius extension
+node scripts/generate-extension-test.mjs service ScheduleService calendarius shared services
+node scripts/generate-extension-test.mjs component CalendarViewComponent calendarius components calendar-view
 
 # Trackus extension
 node scripts/generate-extension-test.mjs service TrackerService trackus shared services

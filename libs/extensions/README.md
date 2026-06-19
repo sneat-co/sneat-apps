@@ -15,4 +15,4 @@ Each extension should have at least 2 libraries:
 - [budgetus](budgetus) - budget management
 - [debtus](debtus) - debt management
 - [listus](listus) - ToDo & other list management
-- [schedulus](schedulus) - scheduling
+- [calendarius](calendarius) - scheduling

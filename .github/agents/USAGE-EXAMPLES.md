@@ -9,7 +9,7 @@ This document provides practical examples of how to use the test-coverage-improv
 ```
 @test-coverage-improver.agent.md
 
-Project ID: ext-schedulus-shared
+Project ID: ext-calendarius-shared
 
 Please:
 1. Measure current coverage
@@ -60,23 +60,25 @@ This is security-critical. Please:
 ## Iterative Testing Sessions
 
 ### Initial Session
+
 ```
 @test-coverage-improver.agent.md
 
-Project ID: ext-schedulus-shared
+Project ID: ext-calendarius-shared
 Focus Area: utilities
 
 Start with low-hanging fruit:
-- Test all utility functions in libs/extensions/schedulus/shared/src/lib/utils/
+- Test all utility functions in libs/extensions/calendarius/shared/src/lib/utils/
 - Generate COVERAGE-REPORT.md with baseline
 - Report current coverage percentage
 ```
 
 ### Follow-up Session
+
 ```
 @test-coverage-improver.agent.md
 
-Project ID: ext-schedulus-shared
+Project ID: ext-calendarius-shared
 
 Continue from previous session:
 - Review COVERAGE-REPORT.md
@@ -89,10 +91,11 @@ Continue from previous session:
 ## Batch Testing Across Projects
 
 ### Test Multiple Priority Projects
+
 ```
 I need to improve test coverage across multiple core projects.
 
-For each project (ext-schedulus-shared, contactus-shared, auth-core):
+For each project (ext-calendarius-shared, contactus-shared, auth-core):
 
 @test-coverage-improver.agent.md
 Project ID: <project-name>
@@ -103,16 +106,17 @@ Project ID: <project-name>
 4. Validate tests pass
 5. Update documentation
 
-Start with auth-core (security-critical), then contactus-shared, then ext-schedulus-shared.
+Start with auth-core (security-critical), then contactus-shared, then ext-calendarius-shared.
 ```
 
 ## Targeted Testing Scenarios
 
 ### Testing Pure Functions
+
 ```
 @test-coverage-improver.agent.md
 
-Project ID: ext-schedulus-shared
+Project ID: ext-calendarius-shared
 Focus Area: utilities
 
 Focus on pure functions only:
@@ -124,6 +128,7 @@ Focus on pure functions only:
 ```
 
 ### Testing Components
+
 ```
 @test-coverage-improver.agent.md
 
@@ -140,6 +145,7 @@ Focus on component testing:
 ```
 
 ### Testing Services with Dependencies
+
 ```
 @test-coverage-improver.agent.md
 
@@ -158,6 +164,7 @@ Focus on service testing with mocks:
 ## Coverage Goal Sessions
 
 ### Reaching Specific Coverage Target
+
 ```
 @test-coverage-improver.agent.md
 
@@ -180,10 +187,11 @@ Please work systematically to close this gap:
 ## Advanced Usage
 
 ### Coverage Analysis and Planning
+
 ```
 @test-coverage-improver.agent.md
 
-Project ID: ext-schedulus-shared
+Project ID: ext-calendarius-shared
 
 Please perform a coverage analysis:
 1. Run coverage report
@@ -200,6 +208,7 @@ Please perform a coverage analysis:
 ```
 
 ### Test Review and Improvement
+
 ```
 @test-coverage-improver.agent.md
 
@@ -218,6 +227,7 @@ Review existing tests and improve them:
 ## Working with Different Project Types
 
 ### Core Library
+
 ```
 @test-coverage-improver.agent.md
 
@@ -232,6 +242,7 @@ This is a core library used across the application:
 ```
 
 ### Feature Extension
+
 ```
 @test-coverage-improver.agent.md
 
@@ -246,6 +257,7 @@ This is a feature extension with domain-specific logic:
 ```
 
 ### UI Components
+
 ```
 @test-coverage-improver.agent.md
 
@@ -264,10 +276,11 @@ Angular component testing:
 ## Comprehensive Testing Session
 
 ### Full Coverage Improvement Workflow
+
 ```
 @test-coverage-improver.agent.md
 
-Project ID: ext-schedulus-shared
+Project ID: ext-calendarius-shared
 Target Coverage: 60%
 
 Let's do a comprehensive testing session:
@@ -303,6 +316,7 @@ Report progress after each phase and provide final summary.
 ## Monitoring Progress
 
 ### Check Coverage Dashboard
+
 ```
 After running the test-coverage-improver agent, check coverage locally:
 
@@ -313,6 +327,7 @@ pnpm nx run-many --target=test --projects=<project1>,<project2> --coverage
 ```
 
 ### Generate Coverage Report
+
 ```
 # View coverage report in browser
 open coverage/<project-path>/index.html
@@ -334,6 +349,7 @@ cat libs/<project-path>/COVERAGE-REPORT.md
 ## Troubleshooting
 
 ### Tests Failing
+
 ```
 @test-coverage-improver.agent.md
 
@@ -348,6 +364,7 @@ The tests you created are failing. Please:
 ```
 
 ### Low Coverage Increase
+
 ```
 @test-coverage-improver.agent.md
 
@@ -364,16 +381,17 @@ Please analyze why and adjust strategy:
 ```
 
 ### Missing Coverage Report
+
 ```
 @test-coverage-improver.agent.md
 
-Project ID: ext-schedulus-shared
+Project ID: ext-calendarius-shared
 
 The COVERAGE-REPORT.md file is missing or outdated.
 Please:
 1. Run fresh coverage analysis
 2. Generate comprehensive COVERAGE-REPORT.md
-3. Ensure it's saved in libs/extensions/schedulus/shared/
+3. Ensure it's saved in libs/extensions/calendarius/shared/
 4. Update project README.md with link to report
 5. Update /docs/test-coverage.md with project status
 ```
@@ -381,6 +399,7 @@ Please:
 ## Integration with Documentation
 
 The agent automatically updates:
+
 - **Project COVERAGE-REPORT.md**: Detailed coverage metrics and priorities
 - **Project README.md**: Link to coverage report
 - **/docs/test-coverage.md**: Central coverage documentation
