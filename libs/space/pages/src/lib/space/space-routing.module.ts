@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { contactusRoutes } from '@sneat/contactus-internal';
 import { spacePagesRoutes } from '@sneat/ext-debtus-internal';
-import { AssetusRoutingModule } from '@sneat/extensions-assetus-pages';
+import { assetusRoutes } from '@sneat/extension-assetus';
 import { budgetusRoutes } from '@sneat/extensions-budgetus';
 import { docusRoutes } from '@sneat/extensions-docus';
 import { listusRoutes } from '@sneat/extension-listus';
@@ -36,10 +36,12 @@ const routes: Routes = [
   ...listusRoutes,
   ...calendariumRoutes,
   ...trackusSpaceRoutes,
+  { path: 'asset', pathMatch: 'full', redirectTo: 'assets' },
+  ...assetusRoutes,
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), AssetusRoutingModule],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   providers: [SpaceComponentBaseParams],
 })
