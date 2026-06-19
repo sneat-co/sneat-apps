@@ -1,8 +1,8 @@
 # Calendarius
 
 App wiring for the calendar module (happenings, slots, scheduling). The implementation lives in the
-published libraries `@sneat/mod-calendarius-core`, `@sneat/extensions-calendarius-shared` and
-`@sneat/extensions-calendarius-main` (repo `sneat-libs`).
+published libraries `@sneat/extension-calendarius-core`, `@sneat/extension-calendarius-shared` and
+`@sneat/extension-calendarius-main` (repo `sneat-libs`).
 
 ## Why `calendarius`?
 

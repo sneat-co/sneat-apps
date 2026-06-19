@@ -120,8 +120,8 @@ importers:
         specifier: 0.11.0
         version: 0.11.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))
       '@sneat/contactus-shared':
-        specifier: 0.12.0
-        version: 0.12.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@ionic/angular@8.8.6(7ecac1ee21440b011f7d93d0de99aa03))(@sneat/extension-assetus@0.0.3(e30677fbec417f2a757c1e5d25c70f4d))
+        specifier: 0.12.1
+        version: 0.12.1(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@ionic/angular@8.8.6(7ecac1ee21440b011f7d93d0de99aa03))(@sneat/extension-assetus@0.0.3(e30677fbec417f2a757c1e5d25c70f4d))
       '@sneat/core':
         specifier: 0.11.0
         version: 0.11.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))
@@ -146,18 +146,21 @@ importers:
       '@sneat/extension-assetus':
         specifier: 0.0.3
         version: 0.0.3(e30677fbec417f2a757c1e5d25c70f4d)
+      '@sneat/extension-calendarius-core':
+        specifier: 0.12.0
+        version: 0.12.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))
+      '@sneat/extension-calendarius-main':
+        specifier: 0.12.0
+        version: 0.12.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))
+      '@sneat/extension-calendarius-shared':
+        specifier: 0.12.0
+        version: 0.12.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))
       '@sneat/extension-eventus':
         specifier: 0.0.1
         version: 0.0.1(b8a987d15454d96dba85a223fe0798f8)
       '@sneat/extension-listus':
         specifier: 0.0.1
-        version: 0.0.1(8db30f38588adb31f802ae13d969492c)
-      '@sneat/extensions-calendarius-main':
-        specifier: 0.12.0
-        version: 0.12.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))
-      '@sneat/extensions-calendarius-shared':
-        specifier: 0.12.0
-        version: 0.12.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))
+        version: 0.0.1(f489fcdc3ab832d1f0dc8b8e06834e15)
       '@sneat/grid':
         specifier: 0.11.0
         version: 0.11.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))
@@ -167,9 +170,6 @@ importers:
       '@sneat/mod-assetus-core':
         specifier: 0.11.0
         version: 0.11.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))
-      '@sneat/mod-calendarius-core':
-        specifier: 0.12.0
-        version: 0.12.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))
       '@sneat/random':
         specifier: 0.0.4
         version: 0.0.4(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))
@@ -5023,8 +5023,8 @@ packages:
       '@angular/common': '>=21.0.0'
       '@angular/core': '>=21.0.0'
 
-  '@sneat/contactus-shared@0.12.0':
-    resolution: {integrity: sha512-CEBVVc5ydoUP1ur9CY19L2Tmo2dB7zHCWcWmKMhrvkvdiRdN8D/uhnExWhXLLFGfaWuH4lhkoHkw/Av4v4uhYw==}
+  '@sneat/contactus-shared@0.12.1':
+    resolution: {integrity: sha512-3b+vaIh2qxatd56dki2fHZYECUn08wFSUuHMPKBHfcUQea0e1u73aQ0TCQ7gY9jnBHWINlKOGMIMmf4cb+7XBg==}
     peerDependencies:
       '@angular/common': '>=21.0.0'
       '@angular/core': '>=21.0.0'
@@ -5120,6 +5120,24 @@ packages:
       rxjs: ^7.0.0
       vitest: ^4.0.9
 
+  '@sneat/extension-calendarius-core@0.12.0':
+    resolution: {integrity: sha512-v80LsnL3s483IZkgHu80ZPOXeDY55KNuJ83M0cNDu5Hy7qh4IXbi7BVf7IO4VTca/akCG8u/YLdt7iDBlHzUVQ==}
+    peerDependencies:
+      '@angular/common': '>=21.0.0'
+      '@angular/core': '>=21.0.0'
+
+  '@sneat/extension-calendarius-main@0.12.0':
+    resolution: {integrity: sha512-IAV9daKuQXJU4anTRXCVcXd2bdM7wDbRmCEbe63Ls2BRzHWNbHSYE6D+QrmipDZiMWa0e31ex8VMgGUBnqRMbw==}
+    peerDependencies:
+      '@angular/common': '>=21.0.0'
+      '@angular/core': '>=21.0.0'
+
+  '@sneat/extension-calendarius-shared@0.12.0':
+    resolution: {integrity: sha512-/5KlKIYO5kMYkUhoTr8YjRN+9XYnG/m3DDgOYu/I2LCsXGd/cSor+aBTYz8ixu2wOSh4tHZEH0HJYLtjCKrrFA==}
+    peerDependencies:
+      '@angular/common': '>=21.0.0'
+      '@angular/core': '>=21.0.0'
+
   '@sneat/extension-eventus@0.0.1':
     resolution: {integrity: sha512-buzo80w2XhzoWmKOUunqIUJ6l5Y1Dedfej8u0fq9mnRklVvU3yTpz6B1mW19/0es0qjDX7JfGm2NAw3aPak1ig==}
     peerDependencies:
@@ -5163,18 +5181,6 @@ packages:
       '@sneat/ui': ^0.4.0
       rxjs: ^7.0.0
 
-  '@sneat/extensions-calendarius-main@0.12.0':
-    resolution: {integrity: sha512-FEXTKq5c4tzBpDnti+3sITZONj4kCIpm/GjcpZXIw2aOJNirOb44cvWJYaORdIzVqdlMupbJF7fOIpZz7DAwCQ==}
-    peerDependencies:
-      '@angular/common': '>=21.0.0'
-      '@angular/core': '>=21.0.0'
-
-  '@sneat/extensions-calendarius-shared@0.12.0':
-    resolution: {integrity: sha512-y/WpyLv5tPHytI/t9avy2dPpnVHNxXNzEMSmRw7tPELeC95RRFtSFhk11sMw9JRHRZEMBST2PUDBJnFRyR0onA==}
-    peerDependencies:
-      '@angular/common': '>=21.0.0'
-      '@angular/core': '>=21.0.0'
-
   '@sneat/grid@0.11.0':
     resolution: {integrity: sha512-jT+ahRTOQmQIP1KOyuf57iUkCils458709DclzX1nTvJKwT9Z4s2PYoQqlSiOEa9WJAC6d46rAnC0hyK7LzKVQ==}
     peerDependencies:
@@ -5193,12 +5199,6 @@ packages:
 
   '@sneat/mod-assetus-core@0.11.0':
     resolution: {integrity: sha512-YSAN0sIq+BRfUF6Da1WGg0hxuPVfNc3B0Jx2DEGXOLPMf664fO3R1cD30oi4pkqemUD+hV95oA70eEK40zXe7A==}
-    peerDependencies:
-      '@angular/common': '>=21.0.0'
-      '@angular/core': '>=21.0.0'
-
-  '@sneat/mod-calendarius-core@0.12.0':
-    resolution: {integrity: sha512-6HbmqCyqFJc/aSxHmfgsp5ojePDhZ1D62jnNfeCKvj8G7D99kzB1jOu1j1IjpVd2X2YrlJckqeg2PWjm8QnhZg==}
     peerDependencies:
       '@angular/common': '>=21.0.0'
       '@angular/core': '>=21.0.0'
@@ -17585,7 +17585,7 @@ snapshots:
       '@angular/core': 21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)
       tslib: 2.8.1
 
-  '@sneat/contactus-shared@0.12.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@ionic/angular@8.8.6(7ecac1ee21440b011f7d93d0de99aa03))(@sneat/extension-assetus@0.0.3(e30677fbec417f2a757c1e5d25c70f4d))':
+  '@sneat/contactus-shared@0.12.1(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@ionic/angular@8.8.6(7ecac1ee21440b011f7d93d0de99aa03))(@sneat/extension-assetus@0.0.3(e30677fbec417f2a757c1e5d25c70f4d))':
     dependencies:
       '@angular/common': 21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
       '@angular/core': 21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)
@@ -17682,6 +17682,24 @@ snapshots:
       tslib: 2.8.1
       vitest: 4.1.9(@opentelemetry/api@1.9.1)(@types/node@24.12.3)(@vitest/coverage-v8@4.1.9)(@vitest/ui@4.1.9)(happy-dom@20.10.6)(jsdom@29.1.1)(vite@8.0.11(@types/node@24.12.3)(esbuild@0.27.3)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.86.3)(sass@1.97.3)(terser@5.46.0)(yaml@2.8.4))
 
+  '@sneat/extension-calendarius-core@0.12.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))':
+    dependencies:
+      '@angular/common': 21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
+      '@angular/core': 21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)
+      tslib: 2.8.1
+
+  '@sneat/extension-calendarius-main@0.12.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))':
+    dependencies:
+      '@angular/common': 21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
+      '@angular/core': 21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)
+      tslib: 2.8.1
+
+  '@sneat/extension-calendarius-shared@0.12.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))':
+    dependencies:
+      '@angular/common': 21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
+      '@angular/core': 21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)
+      tslib: 2.8.1
+
   '@sneat/extension-eventus@0.0.1(b8a987d15454d96dba85a223fe0798f8)':
     dependencies:
       '@angular/common': 21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
@@ -17702,7 +17720,7 @@ snapshots:
       rxjs: 7.8.2
       tslib: 2.8.1
 
-  '@sneat/extension-listus@0.0.1(8db30f38588adb31f802ae13d969492c)':
+  '@sneat/extension-listus@0.0.1(f489fcdc3ab832d1f0dc8b8e06834e15)':
     dependencies:
       '@angular/common': 21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
       '@angular/core': 21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)
@@ -17713,7 +17731,7 @@ snapshots:
       '@ionic/core': 8.8.6
       '@sneat/api': 0.11.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/fire@20.0.1(04633def964669eecbd6fcd61d95c495))(firebase@12.13.0)
       '@sneat/contactus-services': 0.11.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))
-      '@sneat/contactus-shared': 0.12.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@ionic/angular@8.8.6(7ecac1ee21440b011f7d93d0de99aa03))(@sneat/extension-assetus@0.0.3(e30677fbec417f2a757c1e5d25c70f4d))
+      '@sneat/contactus-shared': 0.12.1(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@ionic/angular@8.8.6(7ecac1ee21440b011f7d93d0de99aa03))(@sneat/extension-assetus@0.0.3(e30677fbec417f2a757c1e5d25c70f4d))
       '@sneat/core': 0.11.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))
       '@sneat/data': 0.11.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))
       '@sneat/dto': 0.11.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))
@@ -17723,18 +17741,6 @@ snapshots:
       '@sneat/space-services': 0.11.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/fire@20.0.1(04633def964669eecbd6fcd61d95c495))(@ionic/angular@8.8.6(7ecac1ee21440b011f7d93d0de99aa03))(firebase@12.13.0)
       '@sneat/ui': 0.11.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@ionic/angular@8.8.6(7ecac1ee21440b011f7d93d0de99aa03))(@sneat/logging@0.11.0(572911c45e1476b99ebc3ab5ad2d03d9))
       rxjs: 7.8.2
-      tslib: 2.8.1
-
-  '@sneat/extensions-calendarius-main@0.12.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))':
-    dependencies:
-      '@angular/common': 21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
-      '@angular/core': 21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)
-      tslib: 2.8.1
-
-  '@sneat/extensions-calendarius-shared@0.12.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))':
-    dependencies:
-      '@angular/common': 21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
-      '@angular/core': 21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)
       tslib: 2.8.1
 
   '@sneat/grid@0.11.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))':
@@ -17754,12 +17760,6 @@ snapshots:
       tslib: 2.8.1
 
   '@sneat/mod-assetus-core@0.11.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))':
-    dependencies:
-      '@angular/common': 21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
-      '@angular/core': 21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)
-      tslib: 2.8.1
-
-  '@sneat/mod-calendarius-core@0.12.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))':
     dependencies:
       '@angular/common': 21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
       '@angular/core': 21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)

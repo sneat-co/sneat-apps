@@ -29,7 +29,7 @@ import { AssetGroup } from '@sneat/extension-assetus';
 import {
   ICalendariusSpaceDbo,
   RepeatPeriod,
-} from '@sneat/mod-calendarius-core';
+} from '@sneat/extension-calendarius-core';
 import {
   SpaceBaseComponent,
   SpaceComponentBaseParams,
@@ -41,7 +41,7 @@ import { takeUntil } from 'rxjs';
 import { LiabilitiesMode } from './budget-component-types';
 import { BudgetPeriodsComponent } from './budget-periods.component';
 
-import { CalendariusSpaceService } from '@sneat/extensions-calendarius-shared';
+import { CalendariusSpaceService } from '@sneat/extension-calendarius-shared';
 
 @Component({
   imports: [

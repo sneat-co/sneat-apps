@@ -18,7 +18,11 @@ import {
   IonText,
 } from '@ionic/angular/standalone';
 import { Decimal64p2Pipe } from '@sneat/components';
-import { IAmount, RepeatPeriod, ShowBy } from '@sneat/mod-calendarius-core';
+import {
+  IAmount,
+  RepeatPeriod,
+  ShowBy,
+} from '@sneat/extension-calendarius-core';
 import {
   ILiabilityBase,
   IPeriodLiabilities,

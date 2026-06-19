@@ -9,7 +9,7 @@ import {
   LOGGER_FACTORY,
   NgModulePreloaderService,
 } from '@sneat/core';
-import { CalendariusSpaceService } from '@sneat/extensions-calendarius-shared';
+import { CalendariusSpaceService } from '@sneat/extension-calendarius-shared';
 import { SpaceComponentBaseParams } from '@sneat/space-components';
 import { SpaceNavService, SpaceService } from '@sneat/space-services';
 import { ClassName } from '@sneat/ui';
