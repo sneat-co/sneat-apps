@@ -144,8 +144,8 @@ importers:
         specifier: 0.0.1
         version: 0.0.1(01a99b33404c4b3c023a7add3fd2a53e)
       '@sneat/extension-assetus':
-        specifier: 0.0.1
-        version: 0.0.1(8249bff5e0637b7eb912e528e20e7f8c)
+        specifier: 0.0.2
+        version: 0.0.2(8249bff5e0637b7eb912e528e20e7f8c)
       '@sneat/extension-eventus':
         specifier: 0.0.1
         version: 0.0.1(43c42319c846808cb7660741951933a1)
@@ -4964,8 +4964,8 @@ packages:
       '@sneat/ui': ^0.5.0
       rxjs: ^7.0.0
 
-  '@sneat/extension-assetus@0.0.1':
-    resolution: {integrity: sha512-WUiskwouHV9adZm5ZQIlVPFh6jZbPtzg3G/Td2h07paA/d4rZ+OgC2ZXBgBLq6AYntWyEHcXIvRjbJ8wrlSb6g==}
+  '@sneat/extension-assetus@0.0.2':
+    resolution: {integrity: sha512-mfxosBvERlAF1OjdcIeatkJhe4LYIWhvhA+YwYcu9JgtPg0s4gOL3+/G+tgi9VeIJ6e8YKLAwUCRCZEn0a7FaQ==}
     peerDependencies:
       '@angular/common': ^21.0.0
       '@angular/core': ^21.0.0
@@ -17517,7 +17517,7 @@ snapshots:
       rxjs: 7.8.2
       tslib: 2.8.1
 
-  '@sneat/extension-assetus@0.0.1(8249bff5e0637b7eb912e528e20e7f8c)':
+  '@sneat/extension-assetus@0.0.2(8249bff5e0637b7eb912e528e20e7f8c)':
     dependencies:
       '@angular/common': 21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
       '@angular/core': 21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)
