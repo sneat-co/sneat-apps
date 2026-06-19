@@ -5,6 +5,7 @@ import { spacePagesRoutes } from '@sneat/ext-debtus-internal';
 import { assetusRoutes } from '@sneat/extension-assetus';
 import { budgetusRoutes } from '@sneat/extensions-budgetus';
 import { docusRoutes } from '@sneat/extensions-docus';
+import { eventusRoutes } from '@sneat/extension-eventus';
 import { listusRoutes } from '@sneat/extension-listus';
 import { calendariumRoutes } from '@sneat/extensions-schedulus-main';
 import { trackusSpaceRoutes } from '@sneat/extensions-trackus';
@@ -34,6 +35,7 @@ const routes: Routes = [
   ...budgetusRoutes,
   ...docusRoutes,
   ...listusRoutes,
+  ...eventusRoutes,
   ...calendariumRoutes,
   ...trackusSpaceRoutes,
   { path: 'asset', pathMatch: 'full', redirectTo: 'assets' },
