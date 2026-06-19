@@ -4,6 +4,9 @@
 
 overrides:
   rxfire>tslib: "~2.8.0"
+  # TEMPORARY — remove before merge. Points @sneat/extension-assetus at the
+  # locally-built dist until 0.0.1 is published to npmjs. See PR banner.
+  "@sneat/extension-assetus": "file:/Users/alexandertrakhimenok/projects/sneat-co/assetus/frontend/dist/libs/ext-assetus"
 
 # allowBuilds replaces onlyBuiltDependencies (removed in pnpm v11)
 # See https://pnpm.io/11.x/migration

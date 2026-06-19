@@ -70,6 +70,7 @@
     "@sneat/ext-assetus-components": "0.8.0",
     "@sneat/ext-debtus-internal": "0.0.1",
     "@sneat/ext-debtus-shared": "0.0.1",
+    "@sneat/extension-assetus": "0.0.1",
     "@sneat/extension-listus": "0.0.1",
     "@sneat/extensions-schedulus-main": "0.8.0",
     "@sneat/extensions-schedulus-shared": "0.8.0",
