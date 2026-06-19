@@ -121,7 +121,7 @@ importers:
         version: 0.11.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))
       '@sneat/contactus-shared':
         specifier: 0.12.0
-        version: 0.12.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@ionic/angular@8.8.6(7ecac1ee21440b011f7d93d0de99aa03))(@sneat/extension-assetus@0.0.2(e30677fbec417f2a757c1e5d25c70f4d))
+        version: 0.12.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@ionic/angular@8.8.6(7ecac1ee21440b011f7d93d0de99aa03))(@sneat/extension-assetus@0.0.3(e30677fbec417f2a757c1e5d25c70f4d))
       '@sneat/core':
         specifier: 0.11.0
         version: 0.11.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))
@@ -144,14 +144,14 @@ importers:
         specifier: 0.0.1
         version: 0.0.1(992ce0ed825805f3addaafba7bfa1bf5)
       '@sneat/extension-assetus':
-        specifier: 0.0.2
-        version: 0.0.2(e30677fbec417f2a757c1e5d25c70f4d)
+        specifier: 0.0.3
+        version: 0.0.3(e30677fbec417f2a757c1e5d25c70f4d)
       '@sneat/extension-eventus':
         specifier: 0.0.1
         version: 0.0.1(b8a987d15454d96dba85a223fe0798f8)
       '@sneat/extension-listus':
         specifier: 0.0.1
-        version: 0.0.1(a2f9ca65fc4ef92164f52644fca76077)
+        version: 0.0.1(8db30f38588adb31f802ae13d969492c)
       '@sneat/extensions-calendarius-main':
         specifier: 0.12.0
         version: 0.12.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))
@@ -5093,8 +5093,8 @@ packages:
       '@sneat/ui': ^0.5.0
       rxjs: ^7.0.0
 
-  '@sneat/extension-assetus@0.0.2':
-    resolution: {integrity: sha512-mfxosBvERlAF1OjdcIeatkJhe4LYIWhvhA+YwYcu9JgtPg0s4gOL3+/G+tgi9VeIJ6e8YKLAwUCRCZEn0a7FaQ==}
+  '@sneat/extension-assetus@0.0.3':
+    resolution: {integrity: sha512-FzqF/OD7xkTaXhJZjHlD4F1yeBB1WX0DUCgLckeGMu+Xd39huBuvPQBWB/beyDH5wLMQKJmFbILksB0FKvKsKQ==}
     peerDependencies:
       '@angular/common': ^21.0.0
       '@angular/core': ^21.0.0
@@ -17585,12 +17585,12 @@ snapshots:
       '@angular/core': 21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)
       tslib: 2.8.1
 
-  '@sneat/contactus-shared@0.12.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@ionic/angular@8.8.6(7ecac1ee21440b011f7d93d0de99aa03))(@sneat/extension-assetus@0.0.2(e30677fbec417f2a757c1e5d25c70f4d))':
+  '@sneat/contactus-shared@0.12.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@ionic/angular@8.8.6(7ecac1ee21440b011f7d93d0de99aa03))(@sneat/extension-assetus@0.0.3(e30677fbec417f2a757c1e5d25c70f4d))':
     dependencies:
       '@angular/common': 21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
       '@angular/core': 21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)
       '@ionic/angular': 8.8.6(7ecac1ee21440b011f7d93d0de99aa03)
-      '@sneat/extension-assetus': 0.0.2(e30677fbec417f2a757c1e5d25c70f4d)
+      '@sneat/extension-assetus': 0.0.3(e30677fbec417f2a757c1e5d25c70f4d)
       tslib: 2.8.1
 
   '@sneat/core@0.11.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))':
@@ -17655,7 +17655,7 @@ snapshots:
       rxjs: 7.8.2
       tslib: 2.8.1
 
-  '@sneat/extension-assetus@0.0.2(e30677fbec417f2a757c1e5d25c70f4d)':
+  '@sneat/extension-assetus@0.0.3(e30677fbec417f2a757c1e5d25c70f4d)':
     dependencies:
       '@angular/common': 21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
       '@angular/core': 21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)
@@ -17702,7 +17702,7 @@ snapshots:
       rxjs: 7.8.2
       tslib: 2.8.1
 
-  '@sneat/extension-listus@0.0.1(a2f9ca65fc4ef92164f52644fca76077)':
+  '@sneat/extension-listus@0.0.1(8db30f38588adb31f802ae13d969492c)':
     dependencies:
       '@angular/common': 21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
       '@angular/core': 21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2)
@@ -17713,7 +17713,7 @@ snapshots:
       '@ionic/core': 8.8.6
       '@sneat/api': 0.11.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/fire@20.0.1(04633def964669eecbd6fcd61d95c495))(firebase@12.13.0)
       '@sneat/contactus-services': 0.11.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))
-      '@sneat/contactus-shared': 0.12.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@ionic/angular@8.8.6(7ecac1ee21440b011f7d93d0de99aa03))(@sneat/extension-assetus@0.0.2(e30677fbec417f2a757c1e5d25c70f4d))
+      '@sneat/contactus-shared': 0.12.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(@ionic/angular@8.8.6(7ecac1ee21440b011f7d93d0de99aa03))(@sneat/extension-assetus@0.0.3(e30677fbec417f2a757c1e5d25c70f4d))
       '@sneat/core': 0.11.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))
       '@sneat/data': 0.11.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))
       '@sneat/dto': 0.11.0(@angular/common@21.2.12(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@21.2.12(@angular/compiler@21.2.12)(rxjs@7.8.2)(zone.js@0.16.2))
