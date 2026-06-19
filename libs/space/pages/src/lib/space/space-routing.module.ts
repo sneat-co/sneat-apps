@@ -7,7 +7,7 @@ import { budgetusRoutes } from '@sneat/extensions-budgetus';
 import { docusRoutes } from '@sneat/extensions-docus';
 import { eventusRoutes } from '@sneat/extension-eventus';
 import { listusRoutes } from '@sneat/extension-listus';
-import { calendariusRoutes } from '@sneat/extensions-calendarius-main';
+import { calendariusRoutes } from '@sneat/extension-calendarius-main';
 import { trackusSpaceRoutes } from '@sneat/extensions-trackus';
 import {
   SpaceComponentBaseParams,

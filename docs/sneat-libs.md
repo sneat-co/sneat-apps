@@ -71,13 +71,13 @@ A "space" is a collaborative workspace (e.g. a family group or team).
 
 These extension modules are shared enough to live in `sneat-libs`:
 
-| Package                                                                                                      | Source dir                                                                                  | Description                    |
-| ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- | ------------------------------ |
-| [`@sneat/mod-assetus-core`](https://www.npmjs.com/package/@sneat/mod-assetus-core)                           | [`libs/extensions/assetus/core`](../../sneat-libs/libs/extensions/assetus/core)             | Asset management core logic    |
-| [`@sneat/ext-assetus-components`](https://www.npmjs.com/package/@sneat/ext-assetus-components)               | [`libs/extensions/assetus/components`](../../sneat-libs/libs/extensions/assetus/components) | Asset management UI components |
-| [`@sneat/mod-calendarius-core`](https://www.npmjs.com/package/@sneat/mod-calendarius-core)                   | [`libs/extensions/calendarius/core`](../../sneat-libs/libs/extensions/calendarius/core)     | Scheduling/calendar core logic |
-| [`@sneat/extensions-calendarius-shared`](https://www.npmjs.com/package/@sneat/extensions-calendarius-shared) | [`libs/extensions/calendarius/shared`](../../sneat-libs/libs/extensions/calendarius/shared) | Shared scheduling components   |
-| [`@sneat/extensions-calendarius-main`](https://www.npmjs.com/package/@sneat/extensions-calendarius-main)     | [`libs/extensions/calendarius/main`](../../sneat-libs/libs/extensions/calendarius/main)     | Calendarius main module        |
+| Package                                                                                                    | Source dir                                                                                  | Description                    |
+| ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------ |
+| [`@sneat/mod-assetus-core`](https://www.npmjs.com/package/@sneat/mod-assetus-core)                         | [`libs/extensions/assetus/core`](../../sneat-libs/libs/extensions/assetus/core)             | Asset management core logic    |
+| [`@sneat/ext-assetus-components`](https://www.npmjs.com/package/@sneat/ext-assetus-components)             | [`libs/extensions/assetus/components`](../../sneat-libs/libs/extensions/assetus/components) | Asset management UI components |
+| [`@sneat/extension-calendarius-core`](https://www.npmjs.com/package/@sneat/extension-calendarius-core)     | [`libs/extensions/calendarius/core`](../../sneat-libs/libs/extensions/calendarius/core)     | Scheduling/calendar core logic |
+| [`@sneat/extension-calendarius-shared`](https://www.npmjs.com/package/@sneat/extension-calendarius-shared) | [`libs/extensions/calendarius/shared`](../../sneat-libs/libs/extensions/calendarius/shared) | Shared scheduling components   |
+| [`@sneat/extension-calendarius-main`](https://www.npmjs.com/package/@sneat/extension-calendarius-main)     | [`libs/extensions/calendarius/main`](../../sneat-libs/libs/extensions/calendarius/main)     | Calendarius main module        |
 
 ---
 
