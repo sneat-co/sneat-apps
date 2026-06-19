@@ -58,7 +58,7 @@ The listus source from `sneat-apps/libs/extensions/listus` is migrated into `fro
 
 #### REQ: naming-convention-doc
 
-The singular `@sneat/extension-<name>` naming convention is documented in the `sneat-libs` repository `README.md`, establishing it as the standard for extension packages (listus only; schedulus/contactus are not renamed in this iteration).
+The singular `@sneat/extension-<name>` naming convention is documented in the `sneat-libs` repository `README.md`, establishing it as the standard for extension packages (listus only; calendarius/contactus are not renamed in this iteration).
 
 ## Acceptance Criteria
 
@@ -113,7 +113,7 @@ Then it documents the singular `@sneat/extension-<name>` naming convention for e
 
 ## Open Questions
 
-- **Registry choice** for the publish step: public npm (matches schedulus precedent) vs GitHub Packages. Working assumption: public npm.
+- **Registry choice** for the publish step: public npm (matches calendarius precedent) vs GitHub Packages. Working assumption: public npm.
 - **GitHub remote timing:** the remote is created together with the first publish (REQ: publish-and-swap); local `git init` only through the local-link milestone.
 - **Frontend toolchain versions:** match sneat-apps' current Angular/Ionic/Nx versions vs latest compatible with `@sneat/*` peer ranges. Working assumption: match sneat-apps.
 

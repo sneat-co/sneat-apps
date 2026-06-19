@@ -7,7 +7,7 @@ import { budgetusRoutes } from '@sneat/extensions-budgetus';
 import { docusRoutes } from '@sneat/extensions-docus';
 import { eventusRoutes } from '@sneat/extension-eventus';
 import { listusRoutes } from '@sneat/extension-listus';
-import { calendariumRoutes } from '@sneat/extensions-schedulus-main';
+import { calendariusRoutes } from '@sneat/extensions-calendarius-main';
 import { trackusSpaceRoutes } from '@sneat/extensions-trackus';
 import {
   SpaceComponentBaseParams,
@@ -36,7 +36,7 @@ const routes: Routes = [
   ...docusRoutes,
   ...listusRoutes,
   ...eventusRoutes,
-  ...calendariumRoutes,
+  ...calendariusRoutes,
   ...trackusSpaceRoutes,
   { path: 'asset', pathMatch: 'full', redirectTo: 'assets' },
   ...assetusRoutes,

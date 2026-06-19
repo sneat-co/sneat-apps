@@ -21,7 +21,7 @@ This directory contains GitHub Copilot agents focused on increasing test coverag
 ```
 @test-coverage-improver.agent.md
 
-Project ID: ext-schedulus-shared
+Project ID: ext-calendarius-shared
 Target Coverage: 60%
 
 Please:
@@ -34,20 +34,22 @@ Please:
 
 ### Invocation Parameters
 
-- **project_id** (required): Nx project name (e.g., `ext-schedulus-shared`, `contactus-shared`, `auth-core`)
+- **project_id** (required): Nx project name (e.g., `ext-calendarius-shared`, `contactus-shared`, `auth-core`)
 - **target_coverage** (optional): Target coverage % (default: 60% for libraries, 70% for security-critical)
 - **focus_area** (optional): Specific area to focus on (e.g., `services`, `components`, `utilities`)
 
 ### Examples for Different Projects
 
 **Schedule Management:**
+
 ```
 @test-coverage-improver.agent.md
-Project ID: ext-schedulus-shared
+Project ID: ext-calendarius-shared
 Focus on schedule calculation services and date utilities.
 ```
 
 **Contact Management:**
+
 ```
 @test-coverage-improver.agent.md
 Project ID: contactus-shared
@@ -56,6 +58,7 @@ Focus on contact services and form validation.
 ```
 
 **Authentication (Security Critical):**
+
 ```
 @test-coverage-improver.agent.md
 Project ID: auth-core
@@ -87,18 +90,21 @@ The agent follows a systematic workflow:
 ## Test Strategy
 
 ### Phase 1: Low-Hanging Fruit
+
 - Pure functions and utilities
 - Simple models and interfaces
 - Data transformations
 - Validators and formatters
 
 ### Phase 2: Business Logic
+
 - Services with dependencies (mocked)
 - Complex algorithms
 - State management
 - Error handling
 
 ### Phase 3: Integration
+
 - Component testing
 - Service integration
 - End-to-end scenarios
@@ -107,16 +113,17 @@ The agent follows a systematic workflow:
 
 See [/docs/test-coverage.md](/docs/test-coverage.md) for current coverage status across all projects.
 
-| Project Type | Target Coverage |
-|--------------|-----------------|
-| Security-Critical (auth-*) | 70%+ |
-| Core Libraries | 60%+ |
-| Feature Extensions | 60%+ |
-| UI Components | 50%+ |
+| Project Type                | Target Coverage |
+| --------------------------- | --------------- |
+| Security-Critical (auth-\*) | 70%+            |
+| Core Libraries              | 60%+            |
+| Feature Extensions          | 60%+            |
+| UI Components               | 50%+            |
 
 ## Running Tests
 
 ### Individual Project
+
 ```bash
 # Run tests for specific project
 pnpm nx test <project-id>
@@ -129,6 +136,7 @@ pnpm nx test <project-id> --watch
 ```
 
 ### Multiple Projects
+
 ```bash
 # Run tests for multiple projects
 pnpm nx run-many --target=test --projects=<project1>,<project2> --coverage
@@ -168,6 +176,7 @@ For each project worked on, the agent creates:
 **Target:** 60%
 
 ## Summary
+
 - Total Files: 50
 - Test Files: 25
 - Statements: 45.5%
@@ -176,6 +185,7 @@ For each project worked on, the agent creates:
 - Lines: 45.5%
 
 ## Top Priority Targets
+
 1. core-service.ts - 0% coverage, 200 lines
 2. utils.ts - 15% coverage, 150 lines
 3. validators.ts - 30% coverage, 100 lines
@@ -198,7 +208,8 @@ For each project worked on, the agent creates:
 ## Migrating from Old Agents
 
 This generic agent replaces the previous specialized agents:
-- ~~test-coverage-ext-schedulus-shared.agent.md~~ (removed)
+
+- ~~test-coverage-ext-calendarius-shared.agent.md~~ (removed)
 - ~~test-coverage-contactus-shared.agent.md~~ (removed)
 - ~~test-coverage-auth-core.agent.md~~ (removed)
 
@@ -207,6 +218,7 @@ The new agent provides the same functionality but works on any project in the wo
 ## Support
 
 For issues or questions about test coverage:
+
 1. Check [/docs/test-coverage.md](/docs/test-coverage.md) for guidance
 2. Review existing tests in the project for patterns
 3. Consult the testing documentation

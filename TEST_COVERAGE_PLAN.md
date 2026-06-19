@@ -12,19 +12,19 @@ This plan outlines the strategy to increase test coverage across all NX projects
 
 ## Current Analysis (Summary)
 
-| Project                       | Type     | Coverage % | Uncovered Lines | Priority |
-| :---------------------------- | :------- | :--------- | :-------------- | :------- |
-| `extensions-schedulus-shared` | Core     | 35.05%     | 1416            | 1        |
-| `contactus-shared`            | Core     | 36.03%     | 1335            | 2        |
-| `auth-core`                   | Core     | 21.82%     | 129             | 3        |
-| `core`                        | Core     | 53.38%     | 69              | 4        |
-| `datatug-main`                | Non-Core | 30.42%     | 2086            | 5        |
+| Project                         | Type     | Coverage % | Uncovered Lines | Priority |
+| :------------------------------ | :------- | :--------- | :-------------- | :------- |
+| `extensions-calendarius-shared` | Core     | 35.05%     | 1416            | 1        |
+| `contactus-shared`              | Core     | 36.03%     | 1335            | 2        |
+| `auth-core`                     | Core     | 21.82%     | 129             | 3        |
+| `core`                          | Core     | 53.38%     | 69              | 4        |
+| `datatug-main`                  | Non-Core | 30.42%     | 2086            | 5        |
 
 ## Top 5 Target Projects
 
 The following projects will be addressed in order:
 
-1. `extensions-schedulus-shared`
+1. `extensions-calendarius-shared`
 2. `contactus-shared`
 3. `auth-core`
 4. `core`

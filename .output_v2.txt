@@ -7,10 +7,10 @@ The remote cache will not be read from or written to during this run.
  NX   Running target test for 47 projects:
 
 - ext-assetus-components
-- ext-schedulus-shared
+- ext-calendarius-shared
 - ext-debtus-internal
-- ext-schedulus-core
-- ext-schedulus-main
+- ext-calendarius-core
+- ext-calendarius-main
 - scrumspace-retrospectives
 - ext-assetus-pages
 - ext-debtus-shared
@@ -652,20 +652,20 @@ The remote cache will not be read from or written to during this run.
 [2m   Duration [22m 621ms[2m (transform 0ms, setup 0ms, import 0ms, tests 0ms, environment 1.72s)[22m
 
 
-> nx run ext-schedulus-core:test
+> nx run ext-calendarius-core:test
 
 
-[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/Users/alexandertrakhimenok/projects/sneat/sneat-apps/libs/extensions/schedulus/core[39m
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/Users/alexandertrakhimenok/projects/sneat/sneat-apps/libs/extensions/calendarius/core[39m
 
- [31m❯[39m [30m[46m ext-schedulus-core [49m[39m src/lib/sanity.spec.ts [2m([22m[2m0 test[22m[2m)[22m
+ [31m❯[39m [30m[46m ext-calendarius-core [49m[39m src/lib/sanity.spec.ts [2m([22m[2m0 test[22m[2m)[22m
 
 [31m⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Suites 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
 
-[41m[1m FAIL [22m[49m [30m[46m ext-schedulus-core [49m[39m src/lib/sanity.spec.ts[2m [ src/lib/sanity.spec.ts ][22m
+[41m[1m FAIL [22m[49m [30m[46m ext-calendarius-core [49m[39m src/lib/sanity.spec.ts[2m [ src/lib/sanity.spec.ts ][22m
 [31m[1mError[22m: Transform failed with 1 error:
-/Users/alexandertrakhimenok/projects/sneat/sneat-apps/libs/extensions/schedulus/core/src/test-setup.ts:10:11: ERROR: Unexpected "{"[39m
+/Users/alexandertrakhimenok/projects/sneat/sneat-apps/libs/extensions/calendarius/core/src/test-setup.ts:10:11: ERROR: Unexpected "{"[39m
   Plugin: [35m@analogjs/vitest-angular-sourcemap-plugin[39m
-  File: [36m/Users/alexandertrakhimenok/projects/sneat/sneat-apps/libs/extensions/schedulus/core/src/test-setup.ts[39m:10:11
+  File: [36m/Users/alexandertrakhimenok/projects/sneat/sneat-apps/libs/extensions/calendarius/core/src/test-setup.ts[39m:10:11
 [33m  
   [33mUnexpected "{"[33m
   8  |  }
@@ -1020,36 +1020,36 @@ The remote cache will not be read from or written to during this run.
 [2m   Duration [22m 453ms[2m (transform 0ms, setup 0ms, import 0ms, tests 0ms, environment 628ms)[22m
 
 
-> nx run ext-schedulus-shared:test
+> nx run ext-calendarius-shared:test
 
 
-[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/Users/alexandertrakhimenok/projects/sneat/sneat-apps/libs/extensions/schedulus/shared[39m
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/Users/alexandertrakhimenok/projects/sneat/sneat-apps/libs/extensions/calendarius/shared[39m
 
- [31m❯[39m [30m[43m ext-schedulus-shared [49m[39m src/lib/components/calendar/components/day-slot-item/day-slot-item.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
- [31m❯[39m [30m[43m ext-schedulus-shared [49m[39m src/lib/components/day-tasks/day-tasks.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
- [31m❯[39m [30m[43m ext-schedulus-shared [49m[39m src/lib/components/calendar/components/calendar-day/calendar-day.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
- [31m❯[39m [30m[43m ext-schedulus-shared [49m[39m src/lib/components/happening-slots/happening-slots.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
- [31m❯[39m [30m[43m ext-schedulus-shared [49m[39m src/lib/components/calendar/components/calendar-weekday/calendar-weekday.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
- [31m❯[39m [30m[43m ext-schedulus-shared [49m[39m src/lib/components/calendar/components/calendar-week/calendar-week.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
- [31m❯[39m [30m[43m ext-schedulus-shared [49m[39m src/lib/components/participants/participants.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
- [31m❯[39m [30m[43m ext-schedulus-shared [49m[39m src/lib/components/happening-slot-form/happening-slot-modal.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
- [31m❯[39m [30m[43m ext-schedulus-shared [49m[39m src/lib/components/happening-slot-form/happening-slot-form.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
+ [31m❯[39m [30m[43m ext-calendarius-shared [49m[39m src/lib/components/calendar/components/day-slot-item/day-slot-item.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
+ [31m❯[39m [30m[43m ext-calendarius-shared [49m[39m src/lib/components/day-tasks/day-tasks.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
+ [31m❯[39m [30m[43m ext-calendarius-shared [49m[39m src/lib/components/calendar/components/calendar-day/calendar-day.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
+ [31m❯[39m [30m[43m ext-calendarius-shared [49m[39m src/lib/components/happening-slots/happening-slots.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
+ [31m❯[39m [30m[43m ext-calendarius-shared [49m[39m src/lib/components/calendar/components/calendar-weekday/calendar-weekday.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
+ [31m❯[39m [30m[43m ext-calendarius-shared [49m[39m src/lib/components/calendar/components/calendar-week/calendar-week.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
+ [31m❯[39m [30m[43m ext-calendarius-shared [49m[39m src/lib/components/participants/participants.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
+ [31m❯[39m [30m[43m ext-calendarius-shared [49m[39m src/lib/components/happening-slot-form/happening-slot-modal.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
+ [31m❯[39m [30m[43m ext-calendarius-shared [49m[39m src/lib/components/happening-slot-form/happening-slot-form.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
 
 [31m⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Suites 9 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
 
-[41m[1m FAIL [22m[49m [30m[43m ext-schedulus-shared [49m[39m src/lib/components/day-tasks/day-tasks.component.spec.ts[2m [ src/lib/components/day-tasks/day-tasks.component.spec.ts ][22m
-[41m[1m FAIL [22m[49m [30m[43m ext-schedulus-shared [49m[39m src/lib/components/happening-slot-form/happening-slot-form.component.spec.ts[2m [ src/lib/components/happening-slot-form/happening-slot-form.component.spec.ts ][22m
-[41m[1m FAIL [22m[49m [30m[43m ext-schedulus-shared [49m[39m src/lib/components/happening-slot-form/happening-slot-modal.component.spec.ts[2m [ src/lib/components/happening-slot-form/happening-slot-modal.component.spec.ts ][22m
-[41m[1m FAIL [22m[49m [30m[43m ext-schedulus-shared [49m[39m src/lib/components/happening-slots/happening-slots.component.spec.ts[2m [ src/lib/components/happening-slots/happening-slots.component.spec.ts ][22m
-[41m[1m FAIL [22m[49m [30m[43m ext-schedulus-shared [49m[39m src/lib/components/participants/participants.component.spec.ts[2m [ src/lib/components/participants/participants.component.spec.ts ][22m
-[41m[1m FAIL [22m[49m [30m[43m ext-schedulus-shared [49m[39m src/lib/components/calendar/components/calendar-day/calendar-day.component.spec.ts[2m [ src/lib/components/calendar/components/calendar-day/calendar-day.component.spec.ts ][22m
-[41m[1m FAIL [22m[49m [30m[43m ext-schedulus-shared [49m[39m src/lib/components/calendar/components/calendar-week/calendar-week.component.spec.ts[2m [ src/lib/components/calendar/components/calendar-week/calendar-week.component.spec.ts ][22m
-[41m[1m FAIL [22m[49m [30m[43m ext-schedulus-shared [49m[39m src/lib/components/calendar/components/calendar-weekday/calendar-weekday.component.spec.ts[2m [ src/lib/components/calendar/components/calendar-weekday/calendar-weekday.component.spec.ts ][22m
-[41m[1m FAIL [22m[49m [30m[43m ext-schedulus-shared [49m[39m src/lib/components/calendar/components/day-slot-item/day-slot-item.component.spec.ts[2m [ src/lib/components/calendar/components/day-slot-item/day-slot-item.component.spec.ts ][22m
+[41m[1m FAIL [22m[49m [30m[43m ext-calendarius-shared [49m[39m src/lib/components/day-tasks/day-tasks.component.spec.ts[2m [ src/lib/components/day-tasks/day-tasks.component.spec.ts ][22m
+[41m[1m FAIL [22m[49m [30m[43m ext-calendarius-shared [49m[39m src/lib/components/happening-slot-form/happening-slot-form.component.spec.ts[2m [ src/lib/components/happening-slot-form/happening-slot-form.component.spec.ts ][22m
+[41m[1m FAIL [22m[49m [30m[43m ext-calendarius-shared [49m[39m src/lib/components/happening-slot-form/happening-slot-modal.component.spec.ts[2m [ src/lib/components/happening-slot-form/happening-slot-modal.component.spec.ts ][22m
+[41m[1m FAIL [22m[49m [30m[43m ext-calendarius-shared [49m[39m src/lib/components/happening-slots/happening-slots.component.spec.ts[2m [ src/lib/components/happening-slots/happening-slots.component.spec.ts ][22m
+[41m[1m FAIL [22m[49m [30m[43m ext-calendarius-shared [49m[39m src/lib/components/participants/participants.component.spec.ts[2m [ src/lib/components/participants/participants.component.spec.ts ][22m
+[41m[1m FAIL [22m[49m [30m[43m ext-calendarius-shared [49m[39m src/lib/components/calendar/components/calendar-day/calendar-day.component.spec.ts[2m [ src/lib/components/calendar/components/calendar-day/calendar-day.component.spec.ts ][22m
+[41m[1m FAIL [22m[49m [30m[43m ext-calendarius-shared [49m[39m src/lib/components/calendar/components/calendar-week/calendar-week.component.spec.ts[2m [ src/lib/components/calendar/components/calendar-week/calendar-week.component.spec.ts ][22m
+[41m[1m FAIL [22m[49m [30m[43m ext-calendarius-shared [49m[39m src/lib/components/calendar/components/calendar-weekday/calendar-weekday.component.spec.ts[2m [ src/lib/components/calendar/components/calendar-weekday/calendar-weekday.component.spec.ts ][22m
+[41m[1m FAIL [22m[49m [30m[43m ext-calendarius-shared [49m[39m src/lib/components/calendar/components/day-slot-item/day-slot-item.component.spec.ts[2m [ src/lib/components/calendar/components/day-slot-item/day-slot-item.component.spec.ts ][22m
 [31m[1mError[22m: Transform failed with 1 error:
-/Users/alexandertrakhimenok/projects/sneat/sneat-apps/libs/extensions/schedulus/shared/src/test-setup.ts:10:11: ERROR: Unexpected "{"[39m
+/Users/alexandertrakhimenok/projects/sneat/sneat-apps/libs/extensions/calendarius/shared/src/test-setup.ts:10:11: ERROR: Unexpected "{"[39m
   Plugin: [35m@analogjs/vitest-angular-sourcemap-plugin[39m
-  File: [36m/Users/alexandertrakhimenok/projects/sneat/sneat-apps/libs/extensions/schedulus/shared/src/test-setup.ts[39m:10:11
+  File: [36m/Users/alexandertrakhimenok/projects/sneat/sneat-apps/libs/extensions/calendarius/shared/src/test-setup.ts[39m:10:11
 [33m  
   [33mUnexpected "{"[33m
   8  |  }
@@ -1194,22 +1194,22 @@ The remote cache will not be read from or written to during this run.
 [2m   Duration [22m 4.54s[2m (transform 16.03s, setup 0ms, import 0ms, tests 0ms, environment 3.57s)[22m
 
 
-> nx run ext-schedulus-main:test
+> nx run ext-calendarius-main:test
 
 
-[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/Users/alexandertrakhimenok/projects/sneat/sneat-apps/libs/extensions/schedulus/main[39m
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/Users/alexandertrakhimenok/projects/sneat/sneat-apps/libs/extensions/calendarius/main[39m
 
- [31m❯[39m [30m[46m ext-schedulus-main [49m[39m src/lib/pages/happening/happening-page.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
- [31m❯[39m [30m[46m ext-schedulus-main [49m[39m src/lib/pages/calendar/calendar-page.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
- [31m❯[39m [30m[46m ext-schedulus-main [49m[39m src/lib/pages/month/month-page.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
- [31m❯[39m [30m[46m ext-schedulus-main [49m[39m src/lib/pages/new-happening/new-happening-page.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
+ [31m❯[39m [30m[46m ext-calendarius-main [49m[39m src/lib/pages/happening/happening-page.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
+ [31m❯[39m [30m[46m ext-calendarius-main [49m[39m src/lib/pages/calendar/calendar-page.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
+ [31m❯[39m [30m[46m ext-calendarius-main [49m[39m src/lib/pages/month/month-page.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
+ [31m❯[39m [30m[46m ext-calendarius-main [49m[39m src/lib/pages/new-happening/new-happening-page.component.spec.ts [2m([22m[2m0 test[22m[2m)[22m
 
 [31m⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Suites 4 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
 
-[41m[1m FAIL [22m[49m [30m[46m ext-schedulus-main [49m[39m src/lib/pages/calendar/calendar-page.component.spec.ts[2m [ src/lib/pages/calendar/calendar-page.component.spec.ts ][22m
-[41m[1m FAIL [22m[49m [30m[46m ext-schedulus-main [49m[39m src/lib/pages/happening/happening-page.component.spec.ts[2m [ src/lib/pages/happening/happening-page.component.spec.ts ][22m
-[41m[1m FAIL [22m[49m [30m[46m ext-schedulus-main [49m[39m src/lib/pages/month/month-page.component.spec.ts[2m [ src/lib/pages/month/month-page.component.spec.ts ][22m
-[41m[1m FAIL [22m[49m [30m[46m ext-schedulus-main [49m[39m src/lib/pages/new-happening/new-happening-page.component.spec.ts[2m [ src/lib/pages/new-happening/new-happening-page.component.spec.ts ][22m
+[41m[1m FAIL [22m[49m [30m[46m ext-calendarius-main [49m[39m src/lib/pages/calendar/calendar-page.component.spec.ts[2m [ src/lib/pages/calendar/calendar-page.component.spec.ts ][22m
+[41m[1m FAIL [22m[49m [30m[46m ext-calendarius-main [49m[39m src/lib/pages/happening/happening-page.component.spec.ts[2m [ src/lib/pages/happening/happening-page.component.spec.ts ][22m
+[41m[1m FAIL [22m[49m [30m[46m ext-calendarius-main [49m[39m src/lib/pages/month/month-page.component.spec.ts[2m [ src/lib/pages/month/month-page.component.spec.ts ][22m
+[41m[1m FAIL [22m[49m [30m[46m ext-calendarius-main [49m[39m src/lib/pages/new-happening/new-happening-page.component.spec.ts[2m [ src/lib/pages/new-happening/new-happening-page.component.spec.ts ][22m
 [31m[1mTypeError[22m: Cannot convert undefined or null to object[39m
 [36m [2m❯[22m ../../../../node_modules/.pnpm/@stencil+core@4.38.0/node_modules/@stencil/core/internal/client/index.js:[2m266:124[22m[39m
 
@@ -2039,7 +2039,7 @@ Failed tasks:
 - components:test
 - contactus-services:test
 - space-components:test
-- ext-schedulus-core:test
+- ext-calendarius-core:test
 - app:test
 - ext-assetus-components:test
 - ext-assetus-core:test
@@ -2048,11 +2048,11 @@ Failed tasks:
 - contactus-shared:test
 - grid:test
 - datagrid:test
-- ext-schedulus-shared:test
+- ext-calendarius-shared:test
 - scrumspace-scrummodels:test
 - ext-debtus-shared:test
 - contactus-internal:test
-- ext-schedulus-main:test
+- ext-calendarius-main:test
 - timer:test
 - ext-trackus:test
 - ext-docus:test

@@ -26,7 +26,10 @@ import {
 import { Member } from '@sneat/contactus-core';
 import { ContactusServicesModule } from '@sneat/contactus-services';
 import { AssetGroup } from '@sneat/extension-assetus';
-import { ICalendariumSpaceDbo, RepeatPeriod } from '@sneat/mod-schedulus-core';
+import {
+  ICalendariusSpaceDbo,
+  RepeatPeriod,
+} from '@sneat/mod-calendarius-core';
 import {
   SpaceBaseComponent,
   SpaceComponentBaseParams,
@@ -38,7 +41,7 @@ import { takeUntil } from 'rxjs';
 import { LiabilitiesMode } from './budget-component-types';
 import { BudgetPeriodsComponent } from './budget-periods.component';
 
-import { CalendariumSpaceService } from '@sneat/extensions-schedulus-shared';
+import { CalendariusSpaceService } from '@sneat/extensions-calendarius-shared';
 
 @Component({
   imports: [
@@ -65,14 +68,14 @@ import { CalendariumSpaceService } from '@sneat/extensions-schedulus-shared';
   providers: [
     { provide: ClassName, useValue: 'BudgetPageComponent' },
     SpaceComponentBaseParams,
-    CalendariumSpaceService,
+    CalendariusSpaceService,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'sneat-budget-page',
   templateUrl: './budget-page.component.html',
 })
 export class BudgetPageComponent extends SpaceBaseComponent {
-  private readonly calendariumSpaceService = inject(CalendariumSpaceService);
+  private readonly calendariusSpaceService = inject(CalendariusSpaceService);
 
   protected readonly $total = signal<number | undefined>(undefined);
   protected readonly $liabilitiesMode = signal<LiabilitiesMode>('expenses');
@@ -100,20 +103,20 @@ export class BudgetPageComponent extends SpaceBaseComponent {
     });
   }
 
-  protected readonly $calendariumSpaceDbo = signal<
-    ICalendariumSpaceDbo | undefined
+  protected readonly $calendariusSpaceDbo = signal<
+    ICalendariusSpaceDbo | undefined
   >(undefined);
 
   protected override onSpaceIdChanged(): void {
     if (!this.space.id) {
       return;
     }
-    this.calendariumSpaceService
+    this.calendariusSpaceService
       .watchSpaceModuleRecord(this.space?.id)
       .pipe(this.takeUntilDestroyed(), takeUntil(this.spaceIDChanged$))
       .subscribe({
-        next: (spaceCalendarium) => {
-          this.$calendariumSpaceDbo.set(spaceCalendarium.dbo || undefined);
+        next: (spaceCalendarius) => {
+          this.$calendariusSpaceDbo.set(spaceCalendarius.dbo || undefined);
         },
       });
   }

@@ -94,7 +94,7 @@ graph TB
         end
 
         subgraph Extensions["Extension Modules (Contactus Built-in)"]
-            ExtList["• Contactus (Contacts Management)<br/>• Assetus (Assets Management)<br/>• Budgetus (Budgeting)<br/>• Schedulus (Calendar & Events)<br/>• Listus (Lists: ToDo, ToBuy, ToWatch)<br/>• Debtus (Debt Management)<br/>• Docus (Document Management)<br/>• Trackus (Activity Tracking)<br/>• Logist (Logistics)"]
+            ExtList["• Contactus (Contacts Management)<br/>• Assetus (Assets Management)<br/>• Budgetus (Budgeting)<br/>• Calendarius (Calendar & Events)<br/>• Listus (Lists: ToDo, ToBuy, ToWatch)<br/>• Debtus (Debt Management)<br/>• Docus (Document Management)<br/>• Trackus (Activity Tracking)<br/>• Logist (Logistics)"]
         end
 
         subgraph Apps["Applications"]
@@ -155,7 +155,7 @@ graph TB
         subgraph "Extensions"
             Assetus["assetus<br/>(Assets)"]
             Budgetus["budgetus<br/>(Budget)"]
-            Schedulus["schedulus<br/>(Calendar)"]
+            Calendarius["calendarius<br/>(Calendar)"]
             Contactus["contactus<br/>(Contacts)"]
             Listus["listus<br/>(Lists)"]
         end
@@ -210,10 +210,10 @@ graph LR
         AssetusPages["assetus-pages<br/>Asset Details<br/>Asset Dashboard"]
     end
 
-    subgraph "Example: Schedulus Extension"
-        SchedulusCore["schedulus-core<br/>Event Services<br/>Calendar Logic"]
-        SchedulusShared["schedulus-shared<br/>Event Components<br/>Calendar UI"]
-        SchedulusMain["schedulus-main<br/>Calendar Page<br/>Event Page"]
+    subgraph "Example: Calendarius Extension"
+        CalendariusCore["calendarius-core<br/>Event Services<br/>Calendar Logic"]
+        CalendariusShared["calendarius-shared<br/>Event Components<br/>Calendar UI"]
+        CalendariusMain["calendarius-main<br/>Calendar Page<br/>Event Page"]
     end
 
     ExtCore --> ExtShared
@@ -222,12 +222,12 @@ graph LR
     AssetusCore --> AssetusComp
     AssetusComp --> AssetusPages
 
-    SchedulusCore --> SchedulusShared
-    SchedulusShared --> SchedulusMain
+    CalendariusCore --> CalendariusShared
+    CalendariusShared --> CalendariusMain
 
     ExtPages --> App["Sneat.app<br/>Main Application"]
     AssetusPages --> App
-    SchedulusMain --> App
+    CalendariusMain --> App
 
     style ExtCore fill:#E91E63
     style ExtShared fill:#9C27B0
@@ -274,6 +274,7 @@ sequenceDiagram
     Service-->>Component: Operation Complete
     Component-->>User: Show Confirmation
 ```
+
 ---
 
 ## Frontend Architecture
@@ -373,16 +374,16 @@ libs/extensions/{extension-name}/
 
 #### Optional Extensions
 
-| Extension     | Description                         | Libraries               |
-| ------------- | ----------------------------------- | ----------------------- |
-| **Assetus**   | Asset management and tracking       | core, components, pages |
-| **Budgetus**  | Budget and finance management       | (single library)        |
-| **Schedulus** | Calendar and event scheduling       | core, shared, main      |
-| **Listus**    | List management (ToDo, ToBuy, etc.) | (single library)        |
-| **Debtus**    | Debt tracking and management        | internal, shared        |
-| **Docus**     | Document management                 | (single library)        |
-| **Trackus**   | Activity and habit tracking         | (single library)        |
-| **Logist**    | Logistics and shipping              | (single library)        |
+| Extension       | Description                         | Libraries               |
+| --------------- | ----------------------------------- | ----------------------- |
+| **Assetus**     | Asset management and tracking       | core, components, pages |
+| **Budgetus**    | Budget and finance management       | (single library)        |
+| **Calendarius** | Calendar and event scheduling       | core, shared, main      |
+| **Listus**      | List management (ToDo, ToBuy, etc.) | (single library)        |
+| **Debtus**      | Debt tracking and management        | internal, shared        |
+| **Docus**       | Document management                 | (single library)        |
+| **Trackus**     | Activity and habit tracking         | (single library)        |
+| **Logist**      | Logistics and shipping              | (single library)        |
 
 Each extension can be enabled or disabled independently, allowing for a modular and customizable application experience.
 

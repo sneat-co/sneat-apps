@@ -146,7 +146,7 @@ Multiple components exceed 500 lines, violating Single Responsibility Principle:
 - `libs/datatug/main/src/lib/queries/query/sql-query/sql-query-editor.component.ts` (775 lines)
 - `libs/scrumspace/dailyscrum/src/lib/scrum-page/scrum-page.component.ts` (661 lines)
 - `libs/extensions/listus/src/lib/pages/list/list-page.component.ts` (607 lines)
-- `libs/extensions/schedulus/shared/src/lib/components/happening-slot-form/happening-slot-form.component.ts` (652 lines)
+- `libs/extensions/calendarius/shared/src/lib/components/happening-slot-form/happening-slot-form.component.ts` (652 lines)
 - `libs/datatug/main/src/lib/queries/query/page/query-page.component.ts` (594 lines)
 
 **Solution**:

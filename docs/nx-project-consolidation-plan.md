@@ -17,15 +17,15 @@
 
 > The following 7 merge tasks can be executed together without introducing cycles, and reduce project count by **8** total.
 
-| Merge task | Projects to merge                                                 | Planned resulting project   | Agent    | Status   | Notes                                                             |
-| ---------- | ----------------------------------------------------------------- | --------------------------- | -------- | -------- | ----------------------------------------------------------------- |
-| M1         | `ext-assetus-components`, `ext-assetus-core`, `ext-assetus-pages` | `ext-assetus`               | ts-coder | Proposed | Highest reduction in one domain (3 -> 1)                          |
-| M2         | `ext-debtus-internal`, `ext-debtus-shared`                        | `ext-debtus`                | ts-coder | Proposed | Straightforward internal split collapse                           |
-| M3         | `contactus-core`, `contactus-services`                            | `contactus-core-services`   | ts-coder | Proposed | Keep `contactus-internal` and `contactus-shared` separate for now |
-| M4         | `contactus-internal`, `contactus-shared`                          | `contactus-internal-shared` | ts-coder | Proposed | Safe together with M3                                             |
-| M5         | `ext-schedulus-main`, `ext-schedulus-shared`                      | `ext-schedulus-main-shared` | ts-coder | Proposed | Do not include `ext-schedulus-core` in this batch                 |
-| M6         | `scrumspace-dailyscrum`, `scrumspace-retrospectives`              | `scrumspace-features`       | ts-coder | Proposed | Keep `scrumspace-scrummodels` separate                            |
-| M7A        | `auth-core`, `auth-ui`                                            | `auth-core-ui`              | ts-coder | Proposed | **Mutually exclusive** with M7B                                   |
+| Merge task | Projects to merge                                                 | Planned resulting project     | Agent    | Status   | Notes                                                             |
+| ---------- | ----------------------------------------------------------------- | ----------------------------- | -------- | -------- | ----------------------------------------------------------------- |
+| M1         | `ext-assetus-components`, `ext-assetus-core`, `ext-assetus-pages` | `ext-assetus`                 | ts-coder | Proposed | Highest reduction in one domain (3 -> 1)                          |
+| M2         | `ext-debtus-internal`, `ext-debtus-shared`                        | `ext-debtus`                  | ts-coder | Proposed | Straightforward internal split collapse                           |
+| M3         | `contactus-core`, `contactus-services`                            | `contactus-core-services`     | ts-coder | Proposed | Keep `contactus-internal` and `contactus-shared` separate for now |
+| M4         | `contactus-internal`, `contactus-shared`                          | `contactus-internal-shared`   | ts-coder | Proposed | Safe together with M3                                             |
+| M5         | `ext-calendarius-main`, `ext-calendarius-shared`                  | `ext-calendarius-main-shared` | ts-coder | Proposed | Do not include `ext-calendarius-core` in this batch               |
+| M6         | `scrumspace-dailyscrum`, `scrumspace-retrospectives`              | `scrumspace-features`         | ts-coder | Proposed | Keep `scrumspace-scrummodels` separate                            |
+| M7A        | `auth-core`, `auth-ui`                                            | `auth-core-ui`                | ts-coder | Proposed | **Mutually exclusive** with M7B                                   |
 
 ### Alternative to M7A
 
@@ -45,7 +45,7 @@ These introduced cycles in contraction simulation and should not be done as one-
 - `contactus-core + contactus-internal + contactus-services + contactus-shared`
 - `space-components + space-models + space-pages + space-services`
 - `scrumspace-dailyscrum + scrumspace-retrospectives + scrumspace-scrummodels`
-- `ext-schedulus-core + ext-schedulus-main + ext-schedulus-shared`
+- `ext-calendarius-core + ext-calendarius-main + ext-calendarius-shared`
 - all `ext-*` projects into one mega-project
 
 ## Coordination board

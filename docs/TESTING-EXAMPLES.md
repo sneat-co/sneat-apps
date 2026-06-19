@@ -83,16 +83,16 @@ node scripts/generate-extension-test.mjs service AssetusSpaceService assetus com
 
 Based on analysis of the repository:
 
-| Extension     | Test Files | Coverage Level | Action Needed                   |
-| ------------- | ---------- | -------------- | ------------------------------- |
-| **assetus**   | 22         | Good           | Added 2 service tests           |
-| **budgetus**  | 4          | Good           | Has sanity + component tests    |
-| **listus**    | 16         | Good           | Well covered                    |
-| **schedulus** | 57         | Excellent      | Comprehensive coverage          |
-| **trackus**   | 12         | Good           | Services and components covered |
-| **logist**    | 75+        | Excellent      | Best coverage in repo           |
-| **debtus**    | 3          | Minimal        | Could use more tests            |
-| **docus**     | 5          | Minimal        | Could use more tests            |
+| Extension       | Test Files | Coverage Level | Action Needed                   |
+| --------------- | ---------- | -------------- | ------------------------------- |
+| **assetus**     | 22         | Good           | Added 2 service tests           |
+| **budgetus**    | 4          | Good           | Has sanity + component tests    |
+| **listus**      | 16         | Good           | Well covered                    |
+| **calendarius** | 57         | Excellent      | Comprehensive coverage          |
+| **trackus**     | 12         | Good           | Services and components covered |
+| **logist**      | 75+        | Excellent      | Best coverage in repo           |
+| **debtus**      | 3          | Minimal        | Could use more tests            |
+| **docus**       | 5          | Minimal        | Could use more tests            |
 
 **Total: 200+ test files** across all extensions
 
@@ -130,12 +130,12 @@ node scripts/generate-extension-test.mjs sanity budgetus shared
 node scripts/generate-extension-test.mjs service ListService listus shared services
 ```
 
-### 4. Schedulus (Scheduling)
+### 4. Calendarius (Scheduling)
 
 ```bash
 # Excellent coverage with 57 test files
 # Example for new components:
-node scripts/generate-extension-test.mjs component ScheduleViewComponent schedulus components schedule-view
+node scripts/generate-extension-test.mjs component ScheduleViewComponent calendarius components schedule-view
 ```
 
 ### 5. Trackus (Tracking)
@@ -228,7 +228,7 @@ pnpm nx test assetus-components --watch
 ### Run all extension tests:
 
 ```bash
-pnpm nx run-many --target=test --projects=assetus-*,budgetus-*,listus-*,schedulus-*,trackus-*
+pnpm nx run-many --target=test --projects=assetus-*,budgetus-*,listus-*,calendarius-*,trackus-*
 ```
 
 ## Time Savings

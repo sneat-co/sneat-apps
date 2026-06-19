@@ -9,7 +9,7 @@ import {
   LOGGER_FACTORY,
   NgModulePreloaderService,
 } from '@sneat/core';
-import { CalendariumSpaceService } from '@sneat/extensions-schedulus-shared';
+import { CalendariusSpaceService } from '@sneat/extensions-calendarius-shared';
 import { SpaceComponentBaseParams } from '@sneat/space-components';
 import { SpaceNavService, SpaceService } from '@sneat/space-services';
 import { ClassName } from '@sneat/ui';
@@ -90,7 +90,7 @@ describe('BudgetPageComponent', () => {
           useValue: { preload: vi.fn() },
         },
         {
-          provide: CalendariumSpaceService,
+          provide: CalendariusSpaceService,
           useValue: { watchSpaceModuleRecord: vi.fn() },
         },
       ],
@@ -199,14 +199,14 @@ describe('BudgetPageComponent', () => {
       expect(() => c()['onSpaceIdChanged']()).not.toThrow();
     });
 
-    it('subscribes to the calendarium record and stores the dbo', () => {
-      const dbo = { type: 'calendarium' };
-      const svc = c()['calendariumSpaceService'];
+    it('subscribes to the calendarius record and stores the dbo', () => {
+      const dbo = { type: 'calendarius' };
+      const svc = c()['calendariusSpaceService'];
       svc.watchSpaceModuleRecord = vi.fn(() => of({ dbo }));
       setSpace('space1');
       c()['onSpaceIdChanged']();
       expect(svc.watchSpaceModuleRecord).toHaveBeenCalledWith('space1');
-      expect(c()['$calendariumSpaceDbo']()).toBe(dbo);
+      expect(c()['$calendariusSpaceDbo']()).toBe(dbo);
     });
   });
 });

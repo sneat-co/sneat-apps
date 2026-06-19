@@ -75,7 +75,7 @@ Publish `@sneat/extension-listus` at a first pinned version (e.g. `0.0.1`) — c
 **Depends-On:** —
 **Status:** done
 
-Update the `sneat-libs` repository `README.md` to document the singular `@sneat/extension-<name>` naming convention as the standard for extension packages (listus only; schedulus/contactus not renamed this iteration).
+Update the `sneat-libs` repository `README.md` to document the singular `@sneat/extension-<name>` naming convention as the standard for extension packages (listus only; calendarius/contactus not renamed this iteration).
 
 ### Task 8: E2E + smoke test for listus-app
 
