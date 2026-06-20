@@ -71,7 +71,7 @@
     "@sneat/ext-debtus-internal": "0.0.1",
     "@sneat/ext-debtus-shared": "0.0.1",
     "@sneat/extension-assetus": "0.0.5",
-    "@sneat/extension-eventus": "0.0.1",
+    "@sneat/extension-eventus": "0.0.2",
     "@sneat/extension-listus": "0.0.1",
     "@sneat/extension-calendarius-main": "0.12.0",
     "@sneat/extension-calendarius-shared": "0.12.0",
