@@ -11,7 +11,11 @@ import { authRoutes } from '@sneat/auth-ui';
 import { EVENTUS_API_BASE_URL } from '@sneat/extension-eventus';
 import { routes } from './app/sneat-app-routing.module';
 import { SneatAppComponent } from './app/sneat-app.component';
-import { provideRouter } from '@angular/router';
+import {
+  provideRouter,
+  withComponentInputBinding,
+  withRouterConfig,
+} from '@angular/router';
 import { sneatAppEnvironmentConfig } from './environments/environment';
 import { registerIonicons } from './register-ionicons';
 //
@@ -20,7 +24,16 @@ bootstrapApplication(SneatAppComponent, {
     ...getStandardSneatProviders(sneatAppEnvironmentConfig),
     // App-specific providers
     provideAppInfo({ appId: 'sneat', appTitle: 'Sneat.app' }),
-    provideRouter([...routes, ...authRoutes]),
+    // withComponentInputBinding: lets routed pages receive route params as
+    // component inputs (e.g. eventus pages inject `spaceID`/`spaceType` directly
+    // — simpler than SpaceComponentBaseParams when only the id is needed).
+    // paramsInheritanceStrategy 'always': child routes (e.g. events/:eventID)
+    // inherit the parent space route's :spaceType/:spaceID params too.
+    provideRouter(
+      [...routes, ...authRoutes],
+      withComponentInputBinding(),
+      withRouterConfig({ paramsInheritanceStrategy: 'always' }),
+    ),
     provideRolesByType(undefined),
     // Eventus calls /api4eventus on the same sneat-go backend as the rest of
     // the app. SneatApiBaseUrl is e.g. https://api.sneat.ws/v0/, but eventus
