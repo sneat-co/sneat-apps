@@ -1,6 +1,10 @@
 import { IAvatar } from '@sneat/auth-models';
 import { Modified } from '@sneat/data';
-import { IMemberBrief, MemberRole, IBy } from '@sneat/contactus-core';
+import {
+  IMemberBrief,
+  MemberRole,
+  IBy,
+} from '@sneat/extension-contactus-contract';
 import { IMeeting } from '@sneat/ext-meeting';
 import { ISpaceItemNavContext } from '@sneat/space-models';
 

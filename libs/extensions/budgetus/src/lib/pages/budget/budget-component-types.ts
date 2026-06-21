@@ -1,4 +1,4 @@
-import { IContactContext } from '@sneat/contactus-core';
+import { IContactContext } from '@sneat/extension-contactus-contract';
 import {
   IAmount,
   IHappeningContext,

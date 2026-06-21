@@ -28,18 +28,18 @@ import {
   IAcceptPersonalInviteRequest,
   IPersonalInvite,
   IContactWithBriefAndSpace,
-} from '@sneat/contactus-core';
+} from '@sneat/extension-contactus-contract';
 import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { SneatUserService } from '@sneat/auth-core';
-import { MemberService } from '@sneat/contactus-services';
+import { MemberService } from '@sneat/extension-contactus-internal';
 import {
   IRejectPersonalInviteRequest,
   zipMapBriefsWithIDsAndSpaceRef,
 } from '@sneat/space-models';
 import { SneatApiService } from '@sneat/api';
 import { RandomIdService } from '@sneat/random';
-import { InviteService } from '@sneat/contactus-services';
+import { InviteService } from '@sneat/extension-contactus-internal';
 
 @Component({
   imports: [

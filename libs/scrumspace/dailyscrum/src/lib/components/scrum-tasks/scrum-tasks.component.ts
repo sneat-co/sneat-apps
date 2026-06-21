@@ -22,7 +22,7 @@ import {
   IonReorderGroup,
   IonSpinner,
 } from '@ionic/angular/standalone';
-import { IMemberBrief } from '@sneat/contactus-core';
+import { IMemberBrief } from '@sneat/extension-contactus-contract';
 import { listAddRemoveAnimation } from '@sneat/core';
 import { IRecord } from '@sneat/data';
 import { ISpaceDbo } from '@sneat/dto';

@@ -2,7 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { SneatAuthStateService, SneatUserService } from '@sneat/auth-core';
-import { InviteService } from '@sneat/contactus-services';
+import { InviteService } from '@sneat/extension-contactus-internal';
 import { ErrorLogger } from '@sneat/core';
 import { SpaceNavService } from '@sneat/space-services';
 import { ClassName } from '@sneat/ui';

@@ -25,7 +25,7 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
-import { ContactusServicesModule } from '@sneat/contactus-services';
+import { ContactusServicesModule } from '@sneat/extension-contactus-internal';
 import { APP_INFO, eq, IAppInfo } from '@sneat/core';
 import { SpaceServiceModule } from '@sneat/space-services';
 import { IListGroup, IListInfo, ListType } from '../../dto';

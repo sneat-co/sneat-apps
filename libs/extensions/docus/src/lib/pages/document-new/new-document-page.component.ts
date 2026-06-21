@@ -29,7 +29,7 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
-import { ContactsSelectorInputComponent } from '@sneat/contactus-shared';
+import { ContactsSelectorInputComponent } from '@sneat/extension-contactus-shared';
 import { ClassName, ISelectItem, SelectFromListComponent } from '@sneat/ui';
 import { CountrySelectorComponent } from '@sneat/components';
 import {
@@ -38,7 +38,7 @@ import {
   IContactusSpaceDboAndID,
   IContactWithBrief,
   IContactWithBriefAndSpace,
-} from '@sneat/contactus-core';
+} from '@sneat/extension-contactus-contract';
 import {
   IDocTypeStandardFields,
   AssetDocumentType,
@@ -54,7 +54,7 @@ import { SpaceComponentBaseParams } from '@sneat/space-components';
 import {
   ContactService,
   ContactusServicesModule,
-} from '@sneat/contactus-services';
+} from '@sneat/extension-contactus-internal';
 import { zipMapBriefsWithIDs } from '@sneat/space-models';
 import { SpaceNavService, SpaceServiceModule } from '@sneat/space-services';
 import { distinctUntilChanged, map, Subject, takeUntil } from 'rxjs';

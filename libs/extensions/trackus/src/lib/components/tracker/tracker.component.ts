@@ -14,11 +14,11 @@ import {
   IonItem,
   IonLabel,
 } from '@ionic/angular/standalone';
-import { IContactusSpaceDbo } from '@sneat/contactus-core';
+import { IContactusSpaceDbo } from '@sneat/extension-contactus-contract';
 import {
   ContactusServicesModule,
   ContactusSpaceService,
-} from '@sneat/contactus-services';
+} from '@sneat/extension-contactus-internal';
 import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { Subscription } from 'rxjs';
 import { ITracker } from '../../dbo/i-tracker-dbo';

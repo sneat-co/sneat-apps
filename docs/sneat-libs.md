@@ -58,12 +58,13 @@ A "space" is a collaborative workspace (e.g. a family group or team).
 
 ## Contacts
 
-| Package                                                                                | Source dir                                                            | Description                                 |
-| -------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------- |
-| [`@sneat/contactus-core`](https://www.npmjs.com/package/@sneat/contactus-core)         | [`libs/contactus/core`](../../sneat-libs/libs/contactus/core)         | Contact management core services and models |
-| [`@sneat/contactus-shared`](https://www.npmjs.com/package/@sneat/contactus-shared)     | [`libs/contactus/shared`](../../sneat-libs/libs/contactus/shared)     | Shared contact components and pipes         |
-| [`@sneat/contactus-services`](https://www.npmjs.com/package/@sneat/contactus-services) | [`libs/contactus/services`](../../sneat-libs/libs/contactus/services) | Contact data services                       |
-| [`@sneat/contactus-internal`](https://www.npmjs.com/package/@sneat/contactus-internal) | [`libs/contactus/internal`](../../sneat-libs/libs/contactus/internal) | Internal contact components (non-exported)  |
+Published by the dedicated [`contactus`](../../contactus) repo:
+
+| Package                                                                                                    | Source dir                                                                                          | Description                                         |
+| ---------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| [`@sneat/extension-contactus-contract`](https://www.npmjs.com/package/@sneat/extension-contactus-contract) | [`libs/extensions/contactus/contract`](../../contactus/frontend/libs/extensions/contactus/contract) | Contact DTOs, contexts and service contracts/tokens |
+| [`@sneat/extension-contactus-shared`](https://www.npmjs.com/package/@sneat/extension-contactus-shared)     | [`libs/extensions/contactus/shared`](../../contactus/frontend/libs/extensions/contactus/shared)     | Shared contact components and pipes                 |
+| [`@sneat/extension-contactus-internal`](https://www.npmjs.com/package/@sneat/extension-contactus-internal) | [`libs/extensions/contactus/internal`](../../contactus/frontend/libs/extensions/contactus/internal) | Contact services, impl module and routes            |
 
 ---
 

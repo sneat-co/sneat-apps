@@ -16,8 +16,8 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { FilterItemComponent } from '@sneat/components';
-import { IMemberContext } from '@sneat/contactus-core';
-import { ContactusServicesModule } from '@sneat/contactus-services';
+import { IMemberContext } from '@sneat/extension-contactus-contract';
+import { ContactusServicesModule } from '@sneat/extension-contactus-internal';
 import {
   AssetService,
   AssetusCoreServicesModule,

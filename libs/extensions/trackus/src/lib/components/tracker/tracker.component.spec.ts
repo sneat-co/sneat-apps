@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ErrorLogger } from '@sneat/core';
-import { ContactusSpaceService } from '@sneat/contactus-services';
+import { ContactusSpaceService } from '@sneat/extension-contactus-internal';
 import { ClassName } from '@sneat/ui';
 import { TrackerComponent } from './tracker.component';
 

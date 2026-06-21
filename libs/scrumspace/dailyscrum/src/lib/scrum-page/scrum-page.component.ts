@@ -26,7 +26,7 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
-import { ISpaceMemberInfo } from '@sneat/contactus-core';
+import { ISpaceMemberInfo } from '@sneat/extension-contactus-contract';
 import { AnalyticsService, IAnalyticsService } from '@sneat/core';
 import { IRecord } from '@sneat/data';
 import { secondsToStr } from '@sneat/datetime';

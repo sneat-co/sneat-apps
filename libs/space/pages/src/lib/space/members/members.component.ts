@@ -25,7 +25,7 @@ import {
   MemberRoleSpectator,
   IContactusSpaceDbo,
   IContactusSpaceDboAndID,
-} from '@sneat/contactus-core';
+} from '@sneat/extension-contactus-contract';
 import { ErrorLogger, IErrorLogger } from '@sneat/core';
 import { zipMapBriefsWithIDs } from '@sneat/space-models';
 import { SpaceNavService, SpaceService } from '@sneat/space-services';

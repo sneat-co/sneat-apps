@@ -26,13 +26,13 @@ import {
   IonText,
   IonToolbar,
 } from '@ionic/angular/standalone';
-import { IContactusSpaceDbo } from '@sneat/contactus-core';
+import { IContactusSpaceDbo } from '@sneat/extension-contactus-contract';
 import {
   ContactusNavService,
   ContactusServicesModule,
   ContactusSpaceContextService,
-} from '@sneat/contactus-services';
-import { MembersShortListCardComponent } from '@sneat/contactus-shared';
+} from '@sneat/extension-contactus-internal';
+import { MembersShortListCardComponent } from '@sneat/extension-contactus-shared';
 import { IIdAndOptionalDbo, TopMenuService } from '@sneat/core';
 import { SpaceServiceModule } from '@sneat/space-services';
 import { ClassName } from '@sneat/ui';

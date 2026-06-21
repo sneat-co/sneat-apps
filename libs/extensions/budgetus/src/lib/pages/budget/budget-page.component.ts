@@ -23,8 +23,8 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
-import { Member } from '@sneat/contactus-core';
-import { ContactusServicesModule } from '@sneat/contactus-services';
+import { Member } from '@sneat/extension-contactus-contract';
+import { ContactusServicesModule } from '@sneat/extension-contactus-internal';
 import { AssetGroup } from '@sneat/extension-assetus';
 import {
   ICalendariusSpaceDbo,

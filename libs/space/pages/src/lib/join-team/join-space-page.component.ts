@@ -32,12 +32,12 @@ import {
   INamesFormFields,
   IPersonFormWizardFields,
   PersonWizardComponent,
-} from '@sneat/contactus-shared';
+} from '@sneat/extension-contactus-shared';
 import {
   IJoinSpaceInfoResponse,
   ContactIdAndDboWithSpaceRef,
   NewContactBaseDboAndSpaceRef,
-} from '@sneat/contactus-core';
+} from '@sneat/extension-contactus-contract';
 import { WithSpaceInput } from '@sneat/space-services';
 import {
   IRejectPersonalInviteRequest,
@@ -46,7 +46,7 @@ import {
 import { SpaceNavService } from '@sneat/space-services';
 import { ClassName } from '@sneat/ui';
 import { takeUntil } from 'rxjs/operators';
-import { InviteService } from '@sneat/contactus-services';
+import { InviteService } from '@sneat/extension-contactus-internal';
 
 export const getPinFromUrl: () => string = () => {
   const m = location.hash.match(/[#&]pin=(\d+)($|&)/);
