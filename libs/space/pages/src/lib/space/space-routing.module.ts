@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { contactusRoutes } from '@sneat/contactus-internal';
+import { contactusRoutes } from '@sneat/extension-contactus-internal';
 import { spacePagesRoutes } from '@sneat/ext-debtus-internal';
 import { assetusRoutes } from '@sneat/extension-assetus';
 import { budgetusRoutes } from '@sneat/extensions-budgetus';

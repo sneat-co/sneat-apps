@@ -18,7 +18,7 @@ import {
   IonItemDivider,
   IonLabel,
 } from '@ionic/angular/standalone';
-import { IContactusSpaceDbo } from '@sneat/contactus-core';
+import { IContactusSpaceDbo } from '@sneat/extension-contactus-contract';
 import { IIdAndBrief } from '@sneat/core';
 import { ClassName, SneatBaseComponent } from '@sneat/ui';
 import { ITracker, TrackerPointBrief } from '../../dbo/i-tracker-dbo';

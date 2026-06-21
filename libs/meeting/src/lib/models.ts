@@ -1,4 +1,4 @@
-import { IMemberBrief } from '@sneat/contactus-core';
+import { IMemberBrief } from '@sneat/extension-contactus-contract';
 import { ITimerState } from './timer';
 
 export type IMeetingMember = IMemberBrief;

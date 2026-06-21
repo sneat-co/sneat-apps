@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular/standalone';
 import { SneatUserService } from '@sneat/auth-core';
-import { ContactusSpaceService } from '@sneat/contactus-services';
+import { ContactusSpaceService } from '@sneat/extension-contactus-internal';
 import {
   APP_INFO,
   ErrorLogger,

@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { IMemberBrief } from '@sneat/contactus-core';
+import { IMemberBrief } from '@sneat/extension-contactus-contract';
 import { ISpaceDbo } from '@sneat/dto';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import {

@@ -12,7 +12,7 @@ import {
 } from '@ionic/angular/standalone';
 import { UserAuthAccountsComponent } from '@sneat/auth-ui';
 import { UserCountryComponent } from '@sneat/components';
-import { ContactusServicesModule } from '@sneat/contactus-services';
+import { ContactusServicesModule } from '@sneat/extension-contactus-internal';
 import { BetaFlagsComponent } from './beta-flags.component';
 
 @Component({

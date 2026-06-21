@@ -4,7 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular/standalone';
 import { Auth } from '@angular/fire/auth';
 import { SneatUserService } from '@sneat/auth-core';
-import { MemberService, InviteService } from '@sneat/contactus-services';
+import {
+  MemberService,
+  InviteService,
+} from '@sneat/extension-contactus-internal';
 import { ErrorLogger } from '@sneat/core';
 import { SneatApiService } from '@sneat/api';
 import { RandomIdService } from '@sneat/random';
