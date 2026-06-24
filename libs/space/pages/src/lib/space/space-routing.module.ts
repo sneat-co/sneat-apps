@@ -7,7 +7,7 @@ import { listusRoutes } from '@sneat/extension-listus-shared';
 import { spacePagesRoutes } from '@sneat/extension-debtus-shared';
 import { budgetusRoutes } from '@sneat/extensions-budgetus';
 import { docusRoutes } from '@sneat/extensions-docus';
-import { eventusRoutes } from '@sneat/extension-eventus';
+import { eventusRoutes } from '@sneat/extension-eventus-shared';
 import { trackusSpaceRoutes } from '@sneat/extensions-trackus';
 import {
   SpaceComponentBaseParams,

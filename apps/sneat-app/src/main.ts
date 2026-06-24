@@ -11,7 +11,8 @@ import { authRoutes } from '@sneat/auth-ui';
 import { provideAssetusInternal } from '@sneat/extension-assetus-internal';
 import { provideCalendariusInternal } from '@sneat/extension-calendarius-internal';
 import { provideContactusInternal } from '@sneat/extension-contactus-internal';
-import { EVENTUS_API_BASE_URL } from '@sneat/extension-eventus';
+import { EVENTUS_API_BASE_URL } from '@sneat/extension-eventus-contract';
+import { provideEventusInternal } from '@sneat/extension-eventus-internal';
 import { routes } from './app/sneat-app-routing.module';
 import { SneatAppComponent } from './app/sneat-app.component';
 import {
@@ -38,6 +39,11 @@ bootstrapApplication(SneatAppComponent, {
     // Binds SCHEDULE_NAV_SERVICE to ScheduleNavService for space pages that
     // surface schedule/happenings (handover §4.4).
     ...provideCalendariusInternal(),
+    // Binds the eventus service tokens (EVENT_SERVICE, RSVP_SERVICE, etc.) to
+    // their concrete services. Eventus pages (mounted via the shared space
+    // routes) now inject by token after the contract/internal/shared split, so
+    // without this they throw NG0201.
+    ...provideEventusInternal(),
     // withComponentInputBinding: lets routed pages receive route params as
     // component inputs (e.g. eventus pages inject `spaceID`/`spaceType` directly
     // — simpler than SpaceComponentBaseParams when only the id is needed).

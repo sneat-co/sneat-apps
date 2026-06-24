@@ -12,7 +12,8 @@ import { SneatApp } from '@sneat/core';
 import { provideAssetusInternal } from '@sneat/extension-assetus-internal';
 import { provideCalendariusInternal } from '@sneat/extension-calendarius-internal';
 import { provideContactusInternal } from '@sneat/extension-contactus-internal';
-import { EVENTUS_API_BASE_URL } from '@sneat/extension-eventus';
+import { EVENTUS_API_BASE_URL } from '@sneat/extension-eventus-contract';
+import { provideEventusInternal } from '@sneat/extension-eventus-internal';
 import { routes } from './app/sneat-work-routing.module';
 import { SneatWorkComponent } from './app/sneat-work.component';
 import {
@@ -37,6 +38,9 @@ bootstrapApplication(SneatWorkComponent, {
     ...provideAssetusInternal(),
     ...provideContactusInternal(),
     ...provideCalendariusInternal(),
+    // Eventus pages (mounted via the shared space routes) inject service tokens
+    // after the contract/internal/shared split, so bind them here too.
+    ...provideEventusInternal(),
     // withComponentInputBinding + paramsInheritanceStrategy 'always': lets
     // routed pages receive route params (incl. inherited parent space params)
     // as component inputs — e.g. eventus pages inject `spaceID`/`spaceType`.
