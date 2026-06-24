@@ -1,5 +1,5 @@
 {
-  "name": "@sneat/extensions-trackus",
+  "name": "@sneat/extension-trackus",
   "version": "workspace:*",
   "peerDependencies": {
     "@sneat/core": "workspace:*",
