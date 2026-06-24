@@ -56,13 +56,13 @@
       "@sneat/ext-scrumspace-scrummodels": [
         "libs/scrumspace/scrummodels/src/index.ts"
       ],
-      "@sneat/extensions-budgetus": [
+      "@sneat/extension-budgetus": [
         "libs/extensions/budgetus/src/index.ts"
       ],
-      "@sneat/extensions-docus": [
+      "@sneat/extension-docus": [
         "libs/extensions/docus/src/index.ts"
       ],
-      "@sneat/extensions-trackus": [
+      "@sneat/extension-trackus": [
         "libs/extensions/trackus/src/index.ts"
       ],
       "@sneat/space-pages": [
@@ -74,7 +74,7 @@
       "@sneat/user": [
         "libs/user/src/index.ts"
       ],
-      "@sneat/extensions-platform": [
+      "@sneat/extension-platform": [
         "libs/extensions-platform/src/index.ts"
       ]
     }
