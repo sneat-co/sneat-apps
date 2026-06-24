@@ -1,4 +1,4 @@
-import { standardDocTypesByID } from '@sneat/extension-assetus';
+import { standardDocTypesByID } from '@sneat/extension-assetus-contract';
 
 // Display title + emoji for each document type.
 //

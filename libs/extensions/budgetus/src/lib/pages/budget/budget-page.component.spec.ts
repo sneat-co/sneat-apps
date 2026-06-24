@@ -172,7 +172,7 @@ describe('BudgetPageComponent', () => {
       const assetGroup = {
         id: 'g1',
         context: { id: 'g1' },
-      } as unknown as import('@sneat/extension-assetus').AssetGroup;
+      } as unknown as import('@sneat/extension-assetus-contract').AssetGroup;
       component.goAssetGroup(assetGroup);
       const nav = c()['spaceParams'].spaceNavService.navigateForwardToSpacePage;
       expect(nav).toHaveBeenCalledWith(

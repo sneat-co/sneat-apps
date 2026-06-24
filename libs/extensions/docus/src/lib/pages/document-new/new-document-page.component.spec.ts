@@ -11,7 +11,7 @@ import {
   NgModulePreloaderService,
 } from '@sneat/core';
 import { ContactService } from '@sneat/extension-contactus-internal';
-import { AssetService } from '@sneat/extension-assetus';
+import { ASSET_SERVICE } from '@sneat/extension-assetus-contract';
 import { SpaceComponentBaseParams } from '@sneat/space-components';
 import { SpaceNavService, SpaceService } from '@sneat/space-services';
 import { ClassName } from '@sneat/ui';
@@ -86,7 +86,7 @@ describe('DocumentNewPage', () => {
           useValue: { watchContactById: vi.fn(() => of(null)) },
         },
         {
-          provide: AssetService,
+          provide: ASSET_SERVICE,
           useValue: {
             createAsset: vi.fn(() => of(null)),
           },
@@ -154,7 +154,7 @@ describe('DocumentNewPage', () => {
 
   it('submit builds a flat document create request and navigates on success', () => {
     const created = { id: 'newDoc1', asset: { id: 'newDoc1' } };
-    const svc = TestBed.inject(AssetService) as unknown as {
+    const svc = TestBed.inject(ASSET_SERVICE) as unknown as {
       createAsset: ReturnType<typeof vi.fn>;
     };
     svc.createAsset = vi.fn(() => of(created));

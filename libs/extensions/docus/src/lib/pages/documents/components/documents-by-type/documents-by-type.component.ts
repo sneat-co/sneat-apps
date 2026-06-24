@@ -13,7 +13,7 @@ import {
 } from '@ionic/angular/standalone';
 import { listItemAnimations } from '@sneat/core';
 import { eq } from '@sneat/core';
-import { IAssetDocumentContext } from '@sneat/extension-assetus';
+import { IAssetDocumentContext } from '@sneat/extension-assetus-contract';
 import { DocumentsBaseComponent } from '../documents-base.component';
 import { docTypeListItems } from '../../doc-type-presentation';
 import {

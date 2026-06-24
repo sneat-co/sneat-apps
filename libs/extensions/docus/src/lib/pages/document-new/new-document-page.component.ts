@@ -39,16 +39,16 @@ import {
   IContactWithBrief,
   IContactWithBriefAndSpace,
 } from '@sneat/extension-contactus-contract';
+import { AddAssetBaseComponent } from '@sneat/extension-assetus-shared';
+import { AssetusCoreServicesModule } from '@sneat/extension-assetus-internal';
 import {
   IDocTypeStandardFields,
   AssetDocumentType,
   standardDocTypesByID,
   IAssetDocumentExtra,
-  AddAssetBaseComponent,
-  AssetusCoreServicesModule,
   ICreateAssetRequest,
   IAssetResponse,
-} from '@sneat/extension-assetus';
+} from '@sneat/extension-assetus-contract';
 import { docTypeListItems } from '../documents/doc-type-presentation';
 import { SpaceComponentBaseParams } from '@sneat/space-components';
 import {

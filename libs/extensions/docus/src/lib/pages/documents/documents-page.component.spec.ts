@@ -10,7 +10,7 @@ import {
   LOGGER_FACTORY,
   NgModulePreloaderService,
 } from '@sneat/core';
-import { AssetService } from '@sneat/extension-assetus';
+import { AssetService } from '@sneat/extension-assetus-internal';
 import { SpaceComponentBaseParams } from '@sneat/space-components';
 import { SpaceNavService, SpaceService } from '@sneat/space-services';
 import { ClassName } from '@sneat/ui';

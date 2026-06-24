@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { contactusRoutes } from '@sneat/extension-contactus-internal';
-import { spacePagesRoutes } from '@sneat/ext-debtus-internal';
-import { assetusRoutes } from '@sneat/extension-assetus';
+import { assetusRoutes } from '@sneat/extension-assetus-shared';
+import { calendariusRoutes } from '@sneat/extension-calendarius-internal';
+import { listusRoutes } from '@sneat/extension-listus-shared';
+import { spacePagesRoutes } from '@sneat/extension-debtus-shared';
 import { budgetusRoutes } from '@sneat/extensions-budgetus';
 import { docusRoutes } from '@sneat/extensions-docus';
 import { eventusRoutes } from '@sneat/extension-eventus';
-import { listusRoutes } from '@sneat/extension-listus';
-import { calendariusRoutes } from '@sneat/extension-calendarius-main';
 import { trackusSpaceRoutes } from '@sneat/extensions-trackus';
 import {
   SpaceComponentBaseParams,

@@ -1,7 +1,7 @@
 import {
   ICalendarHappeningBrief,
   IHappeningSlot,
-} from '@sneat/extension-calendarius-core';
+} from '@sneat/extension-calendarius-contract';
 import { ISpaceContext } from '@sneat/space-models';
 import { getLiabilitiesByPeriod } from './budget-calc-periods';
 
