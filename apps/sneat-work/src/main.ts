@@ -9,6 +9,9 @@ import {
 } from '@sneat/app';
 import { authRoutes } from '@sneat/auth-ui';
 import { SneatApp } from '@sneat/core';
+import { provideAssetusInternal } from '@sneat/extension-assetus-internal';
+import { provideCalendariusInternal } from '@sneat/extension-calendarius-internal';
+import { provideContactusInternal } from '@sneat/extension-contactus-internal';
 import { EVENTUS_API_BASE_URL } from '@sneat/extension-eventus';
 import { routes } from './app/sneat-work-routing.module';
 import { SneatWorkComponent } from './app/sneat-work.component';
@@ -27,6 +30,13 @@ bootstrapApplication(SneatWorkComponent, {
     // cast applied here as a temporary deviation from the plan. Follow-up: extend
     // SneatApp in sneat-libs/libs/core/src/lib/app.service.ts and republish.
     provideAppInfo({ appId: 'sneat-work' as SneatApp, appTitle: 'Sneat.work' }),
+    // sneat-work mounts the shared space routes (@sneat/space-pages), so the
+    // same contactus/assetus/calendarius DI tokens those pages inject must be
+    // bound here too — otherwise space pages throw NG0201 (as sneat-app did
+    // before the same wiring was added). See apps/sneat-app/src/main.ts.
+    ...provideAssetusInternal(),
+    ...provideContactusInternal(),
+    ...provideCalendariusInternal(),
     // withComponentInputBinding + paramsInheritanceStrategy 'always': lets
     // routed pages receive route params (incl. inherited parent space params)
     // as component inputs — e.g. eventus pages inject `spaceID`/`spaceType`.
