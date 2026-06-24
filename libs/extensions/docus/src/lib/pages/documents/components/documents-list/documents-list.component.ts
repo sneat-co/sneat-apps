@@ -15,7 +15,7 @@ import {
   IonLabel,
   IonList,
 } from '@ionic/angular/standalone';
-import { IAssetDocumentContext } from '@sneat/extension-assetus';
+import { IAssetDocumentContext } from '@sneat/extension-assetus-contract';
 import { DocumentsBaseComponent } from '../documents-base.component';
 
 @Component({

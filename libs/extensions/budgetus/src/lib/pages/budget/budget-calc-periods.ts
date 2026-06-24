@@ -3,7 +3,7 @@ import {
   ICalendarHappeningBrief,
   IHappeningPrice,
   IHappeningSlot,
-} from '@sneat/extension-calendarius-core';
+} from '@sneat/extension-calendarius-contract';
 import { ISpaceContext } from '@sneat/space-models';
 import {
   IHappeningLiability,

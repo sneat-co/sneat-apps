@@ -11,7 +11,7 @@ import {
   ICalendarHappeningBrief,
   RepeatPeriod,
   ShowBy,
-} from '@sneat/extension-calendarius-core';
+} from '@sneat/extension-calendarius-contract';
 import { WithSpaceInput } from '@sneat/space-services';
 import { ClassName } from '@sneat/ui';
 import { getLiabilitiesByPeriod } from './budget-calc-periods';

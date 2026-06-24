@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ErrorLogger } from '@sneat/core';
-import { AssetService } from '@sneat/extension-assetus';
+import { AssetService } from '@sneat/extension-assetus-internal';
 import { ClassName } from '@sneat/ui';
 
 import { DocumentsListComponent } from './documents-list.component';

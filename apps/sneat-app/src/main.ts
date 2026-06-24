@@ -8,6 +8,7 @@ import {
   provideRolesByType,
 } from '@sneat/app';
 import { authRoutes } from '@sneat/auth-ui';
+import { provideAssetusInternal } from '@sneat/extension-assetus-internal';
 import { EVENTUS_API_BASE_URL } from '@sneat/extension-eventus';
 import { routes } from './app/sneat-app-routing.module';
 import { SneatAppComponent } from './app/sneat-app.component';
@@ -24,6 +25,9 @@ bootstrapApplication(SneatAppComponent, {
     ...getStandardSneatProviders(sneatAppEnvironmentConfig),
     // App-specific providers
     provideAppInfo({ appId: 'sneat', appTitle: 'Sneat.app' }),
+    // Binds the ASSET_SERVICE token to the concrete AssetService so pages that
+    // extend AddAssetBaseComponent (e.g. docus new-document) resolve it.
+    ...provideAssetusInternal(),
     // withComponentInputBinding: lets routed pages receive route params as
     // component inputs (e.g. eventus pages inject `spaceID`/`spaceType` directly
     // — simpler than SpaceComponentBaseParams when only the id is needed).

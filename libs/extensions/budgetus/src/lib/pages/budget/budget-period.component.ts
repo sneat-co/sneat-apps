@@ -22,7 +22,7 @@ import {
   IAmount,
   RepeatPeriod,
   ShowBy,
-} from '@sneat/extension-calendarius-core';
+} from '@sneat/extension-calendarius-contract';
 import {
   ILiabilityBase,
   IPeriodLiabilities,

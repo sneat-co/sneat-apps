@@ -21,8 +21,8 @@ import { ContactusServicesModule } from '@sneat/extension-contactus-internal';
 import {
   AssetService,
   AssetusCoreServicesModule,
-  IAssetDocumentContext,
-} from '@sneat/extension-assetus';
+} from '@sneat/extension-assetus-internal';
+import { IAssetDocumentContext } from '@sneat/extension-assetus-contract';
 import {
   SpaceComponentBaseParams,
   SpaceItemsBaseComponent,

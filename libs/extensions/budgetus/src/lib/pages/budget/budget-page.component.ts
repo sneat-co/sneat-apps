@@ -25,11 +25,11 @@ import {
 } from '@ionic/angular/standalone';
 import { Member } from '@sneat/extension-contactus-contract';
 import { ContactusServicesModule } from '@sneat/extension-contactus-internal';
-import { AssetGroup } from '@sneat/extension-assetus';
+import { AssetGroup } from '@sneat/extension-assetus-contract';
 import {
   ICalendariusSpaceDbo,
   RepeatPeriod,
-} from '@sneat/extension-calendarius-core';
+} from '@sneat/extension-calendarius-contract';
 import {
   SpaceBaseComponent,
   SpaceComponentBaseParams,

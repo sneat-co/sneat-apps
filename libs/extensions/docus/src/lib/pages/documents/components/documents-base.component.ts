@@ -1,7 +1,8 @@
 import { Directive, inject, Input } from '@angular/core';
 import { IonItemSliding, ToastController } from '@ionic/angular/standalone';
 import { eq } from '@sneat/core';
-import { IAssetDocumentContext, AssetService } from '@sneat/extension-assetus';
+import { AssetService } from '@sneat/extension-assetus-internal';
+import { IAssetDocumentContext } from '@sneat/extension-assetus-contract';
 import { ISpaceContext } from '@sneat/space-models';
 import { SneatBaseComponent } from '@sneat/ui';
 import { ignoreElements } from 'rxjs/operators';
