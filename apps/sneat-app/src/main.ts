@@ -10,10 +10,7 @@ import {
 import { authRoutes } from '@sneat/auth-ui';
 import { provideAssetusInternal } from '@sneat/extension-assetus-internal';
 import { provideCalendariusInternal } from '@sneat/extension-calendarius-internal';
-import {
-  provideContactusInternal,
-  ContactusSpaceContextService,
-} from '@sneat/extension-contactus-internal';
+import { provideContactusInternal } from '@sneat/extension-contactus-internal';
 import { EVENTUS_API_BASE_URL } from '@sneat/extension-eventus';
 import { routes } from './app/sneat-app-routing.module';
 import { SneatAppComponent } from './app/sneat-app.component';
@@ -37,15 +34,7 @@ bootstrapApplication(SneatAppComponent, {
     // CONTACT_NAV_SERVICE, etc.) to their concrete services so space pages that
     // inject them via token (e.g. family-space selection / side menu, and on a
     // hard page refresh) resolve instead of throwing NG0201.
-    // NOTE: provideContactusInternal() (as published in
-    // @sneat/extension-contactus-internal@0.12.2) wrongly lists
-    // ContactusSpaceContextService as a DI provider, but that class is
-    // manually instantiated (its constructor takes plain Observables, no
-    // @Injectable) — registering it at root throws NG0204. It is `new`-ed
-    // directly by space-page.component, so filter it out of the DI providers.
-    ...provideContactusInternal().filter(
-      (p) => p !== ContactusSpaceContextService,
-    ),
+    ...provideContactusInternal(),
     // Binds SCHEDULE_NAV_SERVICE to ScheduleNavService for space pages that
     // surface schedule/happenings (handover §4.4).
     ...provideCalendariusInternal(),

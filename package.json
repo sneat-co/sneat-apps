@@ -70,7 +70,7 @@
     "@sneat/extension-calendarius-internal": "0.12.1",
     "@sneat/extension-calendarius-shared": "0.12.1",
     "@sneat/extension-contactus-contract": "0.12.1",
-    "@sneat/extension-contactus-internal": "0.12.2",
+    "@sneat/extension-contactus-internal": "0.12.3",
     "@sneat/extension-contactus-shared": "0.12.2",
     "@sneat/extension-debtus-contract": "0.0.1",
     "@sneat/extension-debtus-internal": "0.0.1",

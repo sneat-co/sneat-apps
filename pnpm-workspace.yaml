@@ -4,6 +4,11 @@
 
 overrides:
   rxfire>tslib: "~2.8.0"
+  # Dedupe @sneat/extension-contactus-internal to a single 0.12.3. The split
+  # -shared packages peer-pin exactly 0.12.2, but we need 0.12.3 (which drops a
+  # mis-listed DI provider); without this override pnpm keeps both copies and
+  # fractures DI class identity. 0.12.3 is API-compatible with 0.12.2.
+  "@sneat/extension-contactus-internal": "0.12.3"
   # Dedupe @sneat/* to a single 0.12.1 so the new split extension packages
   # (which peer-pin older 0.9.0/0.11.0) don't pull duplicate copies, which
   # would break DI token / class identity across the bundle.
