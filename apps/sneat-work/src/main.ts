@@ -8,7 +8,6 @@ import {
   provideRolesByType,
 } from '@sneat/app';
 import { authRoutes } from '@sneat/auth-ui';
-import { SneatApp } from '@sneat/core';
 import { provideAssetusInternal } from '@sneat/extension-assetus-internal';
 import { provideCalendariusInternal } from '@sneat/extension-calendarius-internal';
 import { provideContactusInternal } from '@sneat/extension-contactus-internal';
@@ -28,10 +27,7 @@ import { registerIonicons } from './register-ionicons';
 bootstrapApplication(SneatWorkComponent, {
   providers: [
     ...getStandardSneatProviders(sneatWorkEnvironmentConfig),
-    // NOTE: 'sneat-work' is not yet in the SneatApp union type in @sneat/core@0.4.0;
-    // cast applied here as a temporary deviation from the plan. Follow-up: extend
-    // SneatApp in sneat-libs/libs/core/src/lib/app.service.ts and republish.
-    provideAppInfo({ appId: 'sneat-work' as SneatApp, appTitle: 'Sneat.work' }),
+    provideAppInfo({ appId: 'sneat-work', appTitle: 'Sneat.work' }),
     // sneat-work mounts the shared space routes (@sneat/space-pages), so the
     // same contactus/assetus/calendarius DI tokens those pages inject must be
     // bound here too — otherwise space pages throw NG0201 (as sneat-app did
