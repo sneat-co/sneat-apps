@@ -5,10 +5,10 @@ import { assetusRoutes } from '@sneat/extension-assetus-shared';
 import { calendariusRoutes } from '@sneat/extension-calendarius-internal';
 import { listusRoutes } from '@sneat/extension-listus-shared';
 import { spacePagesRoutes } from '@sneat/extension-debtus-shared';
-import { budgetusRoutes } from '@sneat/extension-budgetus';
-import { docusRoutes } from '@sneat/extension-docus';
+import { budgetusRoutes } from '@sneat/extension-budgetus-shared';
+import { docusRoutes } from '@sneat/extension-docus-shared';
 import { eventusRoutes } from '@sneat/extension-eventus-shared';
-import { trackusSpaceRoutes } from '@sneat/extension-trackus';
+import { trackusSpaceRoutes } from '@sneat/extension-trackus-shared';
 import {
   SpaceComponentBaseParams,
   SpaceMenuComponent,
