@@ -13,6 +13,7 @@ import { provideCalendariusInternal } from '@sneat/extension-calendarius-interna
 import { provideContactusInternal } from '@sneat/extension-contactus-internal';
 import { EVENTUS_API_BASE_URL } from '@sneat/extension-eventus-contract';
 import { provideEventusInternal } from '@sneat/extension-eventus-internal';
+import { provideTrackusInternal } from '@sneat/extension-trackus-internal';
 import { routes } from './app/sneat-app-routing.module';
 import { SneatAppComponent } from './app/sneat-app.component';
 import {
@@ -44,6 +45,10 @@ bootstrapApplication(SneatAppComponent, {
     // routes) now inject by token after the contract/internal/shared split, so
     // without this they throw NG0201.
     ...provideEventusInternal(),
+    // trackus pages (mounted via the shared space routes) inject the
+    // TRACKUS_*_SERVICE tokens after the contract/internal/shared split, so bind
+    // the concrete services at the composition root.
+    ...provideTrackusInternal(),
     // withComponentInputBinding: lets routed pages receive route params as
     // component inputs (e.g. eventus pages inject `spaceID`/`spaceType` directly
     // — simpler than SpaceComponentBaseParams when only the id is needed).
