@@ -9,8 +9,10 @@ import { budgetusRoutes } from '@sneat/extension-budgetus-shared';
 import { docusRoutes } from '@sneat/extension-docus-shared';
 import { eventusRoutes } from '@sneat/extension-eventus-shared';
 import { trackusSpaceRoutes } from '@sneat/extension-trackus-shared';
-import { requoterOnboardingRoutes } from '@sneat/extension-requoter-shared';
-import { requoterProfileRoutes } from '@sneat/extension-requoter-internal';
+import {
+  requoterOnboardingRoutes,
+  requoterProfileRoutes,
+} from '@sneat/extension-requoter-internal';
 import {
   SpaceComponentBaseParams,
   SpaceMenuComponent,
