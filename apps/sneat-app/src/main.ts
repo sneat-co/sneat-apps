@@ -13,6 +13,7 @@ import { provideCalendariusInternal } from '@sneat/extension-calendarius-interna
 import { provideContactusInternal } from '@sneat/extension-contactus-internal';
 import { EVENTUS_API_BASE_URL } from '@sneat/extension-eventus-contract';
 import { provideEventusInternal } from '@sneat/extension-eventus-internal';
+import { provideListusInternal } from '@sneat/extension-listus-internal';
 import { provideRequoterInternal } from '@sneat/extension-requoter-internal';
 import { provideTrackusInternal } from '@sneat/extension-trackus-internal';
 import { routes } from './app/sneat-app-routing.module';
@@ -46,6 +47,12 @@ bootstrapApplication(SneatAppComponent, {
     // routes) now inject by token after the contract/internal/shared split, so
     // without this they throw NG0201.
     ...provideEventusInternal(),
+    // Binds the LISTUS_SERVICE token to the concrete ListService. listus pages
+    // (mounted via the shared space routes' listusRoutes) inject this token, so
+    // without this binding the Lists tab throws NG0201/NG0204 ("no provider for
+    // LISTUS_SERVICE") on load — this was missing here (prod bug on sneat.app),
+    // even though listus.app's own composition root already wires it.
+    ...provideListusInternal(),
     // trackus pages (mounted via the shared space routes) inject the
     // TRACKUS_*_SERVICE tokens after the contract/internal/shared split, so bind
     // the concrete services at the composition root.

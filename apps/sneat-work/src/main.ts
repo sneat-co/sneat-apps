@@ -13,6 +13,7 @@ import { provideCalendariusInternal } from '@sneat/extension-calendarius-interna
 import { provideContactusInternal } from '@sneat/extension-contactus-internal';
 import { EVENTUS_API_BASE_URL } from '@sneat/extension-eventus-contract';
 import { provideEventusInternal } from '@sneat/extension-eventus-internal';
+import { provideListusInternal } from '@sneat/extension-listus-internal';
 import { provideTrackusInternal } from '@sneat/extension-trackus-internal';
 import { routes } from './app/sneat-work-routing.module';
 import { SneatWorkComponent } from './app/sneat-work.component';
@@ -38,6 +39,10 @@ bootstrapApplication(SneatWorkComponent, {
     // Eventus pages (mounted via the shared space routes) inject service tokens
     // after the contract/internal/shared split, so bind them here too.
     ...provideEventusInternal(),
+    // listus pages (mounted via the shared space routes' listusRoutes) inject
+    // LISTUS_SERVICE, so bind it here too — same latent gap fixed on sneat-app,
+    // see apps/sneat-app/src/main.ts.
+    ...provideListusInternal(),
     // trackus pages inject TRACKUS_*_SERVICE tokens; bind concrete services here.
     ...provideTrackusInternal(),
     // withComponentInputBinding + paramsInheritanceStrategy 'always': lets
