@@ -11,6 +11,7 @@ import { authRoutes } from '@sneat/auth-ui';
 import { provideAssetusInternal } from '@sneat/extension-assetus-internal';
 import { provideCalendariusInternal } from '@sneat/extension-calendarius-internal';
 import { provideContactusInternal } from '@sneat/extension-contactus-internal';
+import { provideDebtusInternal } from '@sneat/extension-debtus-internal';
 import { EVENTUS_API_BASE_URL } from '@sneat/extension-eventus-contract';
 import { provideEventusInternal } from '@sneat/extension-eventus-internal';
 import { provideListusInternal } from '@sneat/extension-listus-internal';
@@ -36,6 +37,10 @@ bootstrapApplication(SneatWorkComponent, {
     ...provideAssetusInternal(),
     ...provideContactusInternal(),
     ...provideCalendariusInternal(),
+    // debtus pages (mounted via the shared space routes' spacePagesRoutes) inject
+    // DEBTUS_SERVICE, so bind it here too — same latent gap fixed on sneat-app,
+    // see apps/sneat-app/src/main.ts.
+    ...provideDebtusInternal(),
     // Eventus pages (mounted via the shared space routes) inject service tokens
     // after the contract/internal/shared split, so bind them here too.
     ...provideEventusInternal(),

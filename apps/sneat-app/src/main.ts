@@ -11,6 +11,7 @@ import { authRoutes } from '@sneat/auth-ui';
 import { provideAssetusInternal } from '@sneat/extension-assetus-internal';
 import { provideCalendariusInternal } from '@sneat/extension-calendarius-internal';
 import { provideContactusInternal } from '@sneat/extension-contactus-internal';
+import { provideDebtusInternal } from '@sneat/extension-debtus-internal';
 import { EVENTUS_API_BASE_URL } from '@sneat/extension-eventus-contract';
 import { provideEventusInternal } from '@sneat/extension-eventus-internal';
 import { provideListusInternal } from '@sneat/extension-listus-internal';
@@ -39,6 +40,11 @@ bootstrapApplication(SneatAppComponent, {
     // inject them via token (e.g. family-space selection / side menu, and on a
     // hard page refresh) resolve instead of throwing NG0201.
     ...provideContactusInternal(),
+    // Binds the DEBTUS_SERVICE token to the concrete DebtusService. debtus pages
+    // (mounted via the shared space routes' spacePagesRoutes) inject this token,
+    // so without this binding they throw NG0201/NG0204 ("no provider for
+    // DEBTUS_SERVICE") — same latent gap as listus, fixed the same way.
+    ...provideDebtusInternal(),
     // Binds SCHEDULE_NAV_SERVICE to ScheduleNavService for space pages that
     // surface schedule/happenings (handover §4.4).
     ...provideCalendariusInternal(),
