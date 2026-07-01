@@ -11,8 +11,11 @@ import { authRoutes } from '@sneat/auth-ui';
 import { provideAssetusInternal } from '@sneat/extension-assetus-internal';
 import { provideCalendariusInternal } from '@sneat/extension-calendarius-internal';
 import { provideContactusInternal } from '@sneat/extension-contactus-internal';
+import { provideDebtusInternal } from '@sneat/extension-debtus-internal';
 import { EVENTUS_API_BASE_URL } from '@sneat/extension-eventus-contract';
 import { provideEventusInternal } from '@sneat/extension-eventus-internal';
+import { provideListusInternal } from '@sneat/extension-listus-internal';
+import { provideRequoterInternal } from '@sneat/extension-requoter-internal';
 import { provideTrackusInternal } from '@sneat/extension-trackus-internal';
 import { routes } from './app/sneat-work-routing.module';
 import { SneatWorkComponent } from './app/sneat-work.component';
@@ -35,9 +38,24 @@ bootstrapApplication(SneatWorkComponent, {
     ...provideAssetusInternal(),
     ...provideContactusInternal(),
     ...provideCalendariusInternal(),
+    // debtus pages (mounted via the shared space routes' spacePagesRoutes) inject
+    // DEBTUS_SERVICE, so bind it here too — same latent gap fixed on sneat-app,
+    // see apps/sneat-app/src/main.ts.
+    ...provideDebtusInternal(),
     // Eventus pages (mounted via the shared space routes) inject service tokens
     // after the contract/internal/shared split, so bind them here too.
     ...provideEventusInternal(),
+    // listus pages (mounted via the shared space routes' listusRoutes) inject
+    // LISTUS_SERVICE, so bind it here too — same latent gap fixed on sneat-app,
+    // see apps/sneat-app/src/main.ts.
+    ...provideListusInternal(),
+    // requoterOnboardingRoutes/requoterProfileRoutes are mounted via the same
+    // shared space routes (@sneat/space-pages) that sneat-app uses, so
+    // REQUOTER_SERVICE/REQUOTER_ONBOARD_SERVICE must be bound here too — this
+    // was missed when requoter onboarding was wired into sneat-app only (#3435).
+    // The profile view's heavier deps (Assetus AssetService) stay route-scoped
+    // via requoterProfileRoutes, not bound here.
+    ...provideRequoterInternal(),
     // trackus pages inject TRACKUS_*_SERVICE tokens; bind concrete services here.
     ...provideTrackusInternal(),
     // withComponentInputBinding + paramsInheritanceStrategy 'always': lets
