@@ -13,6 +13,7 @@ import { provideCalendariusInternal } from '@sneat/extension-calendarius-interna
 import { provideContactusInternal } from '@sneat/extension-contactus-internal';
 import { EVENTUS_API_BASE_URL } from '@sneat/extension-eventus-contract';
 import { provideEventusInternal } from '@sneat/extension-eventus-internal';
+import { provideRequoterInternal } from '@sneat/extension-requoter-internal';
 import { provideTrackusInternal } from '@sneat/extension-trackus-internal';
 import { routes } from './app/sneat-app-routing.module';
 import { SneatAppComponent } from './app/sneat-app.component';
@@ -49,6 +50,11 @@ bootstrapApplication(SneatAppComponent, {
     // TRACKUS_*_SERVICE tokens after the contract/internal/shared split, so bind
     // the concrete services at the composition root.
     ...provideTrackusInternal(),
+    // Binds REQUOTER_SERVICE + REQUOTER_ONBOARD_SERVICE so the requoter onboarding
+    // form (mounted via the shared space routes) resolves them. The profile view's
+    // heavier deps (Assetus AssetService) are NOT bound here — they load lazily via
+    // requoterProfileRoutes' route-scoped providers.
+    ...provideRequoterInternal(),
     // withComponentInputBinding: lets routed pages receive route params as
     // component inputs (e.g. eventus pages inject `spaceID`/`spaceType` directly
     // — simpler than SpaceComponentBaseParams when only the id is needed).

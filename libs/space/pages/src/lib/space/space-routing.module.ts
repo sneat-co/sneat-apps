@@ -9,6 +9,8 @@ import { budgetusRoutes } from '@sneat/extension-budgetus-shared';
 import { docusRoutes } from '@sneat/extension-docus-shared';
 import { eventusRoutes } from '@sneat/extension-eventus-shared';
 import { trackusSpaceRoutes } from '@sneat/extension-trackus-shared';
+import { requoterOnboardingRoutes } from '@sneat/extension-requoter-shared';
+import { requoterProfileRoutes } from '@sneat/extension-requoter-internal';
 import {
   SpaceComponentBaseParams,
   SpaceMenuComponent,
@@ -38,6 +40,10 @@ const routes: Routes = [
   ...eventusRoutes,
   ...calendariusRoutes,
   ...trackusSpaceRoutes,
+  // requoter single-form onboarding + its profile-details exit (the latter carries
+  // route-scoped providers for the Assetus-backed profile read view).
+  ...requoterOnboardingRoutes,
+  ...requoterProfileRoutes,
   { path: 'asset', pathMatch: 'full', redirectTo: 'assets' },
   ...assetusRoutes,
 ];
