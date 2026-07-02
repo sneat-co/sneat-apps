@@ -34,6 +34,16 @@ const routes: Routes = [
         (m) => m.SpacePageComponent,
       ),
   },
+  // Space settings ▸ Data storage · GitHub (OpenVaultDB) — Experimental per-space
+  // storage grant UI (backstage/docs/roadmaps/space-storage-strategy.md).
+  {
+    path: 'settings/data-storage',
+    data: { title: 'Data storage' },
+    loadComponent: () =>
+      import('./data-storage/data-storage-github-page.component').then(
+        (m) => m.DataStorageGithubPageComponent,
+      ),
+  },
   ...contactusRoutes,
   ...spacePagesRoutes,
   ...budgetusRoutes,
