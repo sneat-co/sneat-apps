@@ -46,7 +46,18 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v6
         with:
-          node-version: 22
+          # Pinned exact (not a bare '22'): Node 22.23.0 shipped an http.Agent
+          # keep-alive regression (nodejs/node#63989) that makes gaxios/
+          # google-auth-library throw "Premature close" on the
+          # sts.googleapis.com / oauth2.googleapis.com token exchange. This is
+          # what actually broke this workflow's "Deploy to Firebase Hosting"
+          # step — firebase-tools swallows the real error and reports the
+          # generic "Failed to authenticate, have you run `firebase login`?"
+          # even though the WIF credentials (from the auth step below) are
+          # valid. Fixed in 22.23.1 (see firebase/firebase-tools#10716). A
+          # bare '22' is not enough — setup-node can serve a runner-cached
+          # pre-fix patch. Bump/relax once newer 22.x are uniformly safe.
+          node-version: '22.23.1'
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
 
