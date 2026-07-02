@@ -38,6 +38,18 @@ const routes: Routes = [
   ...spacePagesRoutes,
   ...budgetusRoutes,
   ...docusRoutes,
+  // Discover (AI vague-description movie search) for the listus To-Watch list.
+  // Lives here (not in @sneat/extension-listus-shared) because the published
+  // listus packages predate the movies/identify endpoint; must be registered
+  // BEFORE listusRoutes so it wins over their `list/:listType/:listID` route.
+  {
+    path: 'list/:listType/:listID/discover',
+    data: { title: 'Discover movies' },
+    loadComponent: () =>
+      import('./discover-movies/discover-movies-page.component').then(
+        (m) => m.DiscoverMoviesPageComponent,
+      ),
+  },
   ...listusRoutes,
   ...eventusRoutes,
   ...calendariusRoutes,

@@ -133,6 +133,20 @@
                     >
                   </ion-label>
                 </ion-button>
+                <ion-button
+                  routerLink="./list/watch/movies/discover"
+                  title="Discover movies to watch"
+                  (click)="$event.stopPropagation()"
+                >
+                  <ion-label style="text-transform: none" color="primary">
+                    <span>🎬</span>
+                    <span
+                      class="sneat-hide-if-width-less-320"
+                      style="margin-left: 0.5em"
+                      >Discover</span
+                    >
+                  </ion-label>
+                </ion-button>
               </ion-buttons>
             </ion-item>
             <ion-item routerLink="./trackers" tappable="true" detail="true">

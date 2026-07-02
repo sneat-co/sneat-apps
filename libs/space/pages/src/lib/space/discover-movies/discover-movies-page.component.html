@@ -1,0 +1,142 @@
+<ion-header>
+  <ion-toolbar color="light" class="with-back-button">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="$defaultBackUrl()" />
+    </ion-buttons>
+    <ion-title>🧭 Discover movies</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="cardy">
+  <ion-card>
+    <ion-item>
+      <ion-textarea
+        label="Describe a movie you half-remember"
+        labelPlacement="stacked"
+        placeholder="e.g. that movie about a chef who opens a food truck with his son"
+        [autoGrow]="true"
+        rows="2"
+        [ngModel]="$description()"
+        (ngModelChange)="$description.set($event)"
+        (keyup.enter)="identify()"
+      />
+    </ion-item>
+    <div class="ion-padding">
+      <ion-button
+        expand="block"
+        color="primary"
+        [disabled]="$isIdentifying() || !$description().trim()"
+        (click)="identify()"
+      >
+        @if ($isIdentifying()) {
+          <ion-spinner name="lines-small" slot="start" />
+        } @else {
+          <ion-icon name="sparkles-outline" slot="start" />
+        }
+        <ion-label>Find matching movies</ion-label>
+      </ion-button>
+    </div>
+  </ion-card>
+
+  @if ($identifyError(); as identifyError) {
+    <ion-card>
+      <ion-card-content>
+        <ion-text color="danger">{{ identifyError }}</ion-text>
+      </ion-card-content>
+    </ion-card>
+  }
+
+  @if ($candidates(); as candidates) {
+    <ion-card>
+      <ion-list>
+        @for (movie of candidates; track movie.tmdbID) {
+          <ion-item button (click)="toggleDetails(movie)">
+            @if (movie.posterURL) {
+              <img
+                slot="start"
+                [src]="movie.posterURL"
+                alt="{{ movie.title }} poster"
+                width="46"
+                height="69"
+              />
+            } @else {
+              <ion-icon
+                slot="start"
+                name="film-outline"
+                size="large"
+                color="medium"
+              />
+            }
+            <ion-label class="ion-text-wrap">
+              {{ movie.title }}
+              @if (movie.year) {
+                <ion-text color="medium"> ({{ movie.year }})</ion-text>
+              }
+              @if ($expandedTmdbID() === movie.tmdbID) {
+                @if ($loadingOverviewIDs().has(movie.tmdbID)) {
+                  <p><ion-spinner name="lines-small" /></p>
+                } @else if (
+                  $overviewByTmdbID().get(movie.tmdbID);
+                  as overview
+                ) {
+                  <p>
+                    <ion-text color="medium">{{ overview }}</ion-text>
+                  </p>
+                } @else if ($overviewByTmdbID().has(movie.tmdbID)) {
+                  <p>
+                    <ion-text color="medium"
+                      ><i>No overview available.</i></ion-text
+                    >
+                  </p>
+                }
+              }
+            </ion-label>
+            @if (isOnWatchlist(movie)) {
+              <ion-button
+                slot="end"
+                fill="clear"
+                color="success"
+                disabled="true"
+              >
+                <ion-icon name="checkmark-circle-outline" slot="start" />
+                <ion-label>On the list</ion-label>
+              </ion-button>
+            } @else {
+              <ion-button
+                slot="end"
+                fill="outline"
+                color="primary"
+                [disabled]="isAdding(movie)"
+                (click)="addToWatchlist($event, movie)"
+              >
+                @if (isAdding(movie)) {
+                  <ion-spinner name="lines-small" slot="start" />
+                } @else {
+                  <ion-icon name="add-circle-outline" slot="start" />
+                }
+                <ion-label>Add</ion-label>
+              </ion-button>
+            }
+          </ion-item>
+        } @empty {
+          <ion-item lines="none">
+            <ion-label color="medium" class="ion-text-wrap">
+              No matching movies found. Try describing the plot, an actor, or
+              the setting differently.
+            </ion-label>
+          </ion-item>
+        }
+      </ion-list>
+    </ion-card>
+  } @else if (!$isIdentifying() && !$identifyError()) {
+    <ion-card>
+      <ion-card-content>
+        <ion-text color="medium">
+          Can’t remember a movie’s name? Describe what you do remember — the
+          plot, an actor, a scene — and we’ll suggest up to 10 likely matches
+          you can add to your To-Watch list.
+        </ion-text>
+      </ion-card-content>
+    </ion-card>
+  }
+</ion-content>
